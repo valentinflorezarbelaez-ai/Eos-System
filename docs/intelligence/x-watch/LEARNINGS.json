@@ -1,7 +1,17 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:27:57.468Z",
+  "updated_at": "2026-08-26T23:31:58.013Z",
   "learnings": [
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
+      "title": "IMDEX uses Cursor to build integrated subsurface data and analytics platform in months, not years",
+      "source_url": "https://cursor.com/blog/imdex",
+      "published_at": "2026-08-25T12:00:00.000Z",
+      "summary": "IMDEX uses Cursor to build integrated subsurface data and analytics platform in months, not years",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
     {
       "learning_id": "LRN-CURSOR-08-19-26",
       "title": "Cloud Agents and Cursor Harness Improvements",
@@ -9,6 +19,16 @@
       "published_at": "Wed, 19 Aug 2026 00:00:00 GMT",
       "summary": "We're continuing to improve cloud agents and the Cursor harness so always-on agents can operate as a system, building and shipping software on their own without the need for intervention at each loop. With this release, cloud agents can automatically pick up work in response to events, hold a goal until it's met, and stay on course through long-running sessions. Subscriptions Cursor can now monit…",
       "apply_in_eos": "Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-git-at-any-scale",
+      "title": "git at any scale",
+      "source_url": "https://cursor.com/blog/git-at-any-scale",
+      "published_at": "2026-08-18T12:00:00.000Z",
+      "summary": "git at any scale",
+      "apply_in_eos": "Vendor git-scale narrative. GitHub remains source of truth for this repo unless Origin is explicitly adopted.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -29,6 +49,46 @@
       "published_at": "Mon, 17 Aug 2026 00:00:00 GMT",
       "summary": "Cursor can now host your code. Origin begins rolling out today in early beta on all paid plans. We're starting with the essentials, designed for agent scale: repos, pull requests, code browsing, and GitHub sync. Agent-native features ship soon. Origin Repos The new **Codebase** tab is home for Origin repos. Click **+New** to create a new repo and name it. Once you do, a page shows you how to inst…",
       "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-joining-spacex",
+      "title": "Cursor is now a part of SpaceX",
+      "source_url": "https://cursor.com/blog/joining-spacex",
+      "published_at": "2026-08-14T12:00:00.000Z",
+      "summary": "Cursor has officially been acquired by SpaceX.",
+      "apply_in_eos": "Org/acquisition news. Do not change EOS governance from vendor ownership claims; keep FUNDACION frozen.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-firetiger",
+      "title": "Firetiger joins Cursor",
+      "source_url": "https://cursor.com/blog/firetiger",
+      "published_at": "2026-08-13T19:00:00.000Z",
+      "summary": "Firetiger joins Cursor",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-aiuc-1",
+      "title": "Cursor earns AIUC-1 certification for agent security and reliability",
+      "source_url": "https://cursor.com/blog/aiuc-1",
+      "published_at": "2026-08-13T12:00:00.000Z",
+      "summary": "Cursor earns AIUC-1 certification for agent security and reliability",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-builds",
+      "title": "Cloud agents start 3x faster with builds",
+      "source_url": "https://cursor.com/blog/builds",
+      "published_at": "2026-08-13T12:00:00.000Z",
+      "summary": "Cloud agents start 3x faster with builds",
+      "apply_in_eos": "Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -63,12 +123,42 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-grok-4-6",
+      "title": "Introducing Grok 4.6",
+      "source_url": "https://cursor.com/blog/grok-4-6",
+      "published_at": "2026-08-12T00:00:00.000Z",
+      "summary": "Built for long-running agents and more ambitious interactive and visual work.",
+      "apply_in_eos": "Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-forum-cursor-com-t-introducing-grok-bot-168053",
       "title": "Introducing Grok Bot",
       "source_url": "https://forum.cursor.com/t/introducing-grok-bot/168053",
       "published_at": "Tue, 11 Aug 2026 19:34:40 +0000",
       "summary": "Introducing Grok Bot Blog · Docs · Get started Today we’re launching Grok Bot in early beta: AI teammates you can give real work to. Bots sign in to the tools you already use and work in them just like you do, on a persistent cloud computer with a browser, filesystem, and terminal. They finish jobs end to end and only come back when something needs your approval. You work with a Bot like you woul…",
       "apply_in_eos": "Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-how-cursor-router-works",
+      "title": "How Cursor Router chooses the right model for the task",
+      "source_url": "https://cursor.com/blog/how-cursor-router-works",
+      "published_at": "2026-08-06T12:00:00.000Z",
+      "summary": "How Cursor Router chooses the right model for the task",
+      "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-mixture-of-kittens",
+      "title": "Mixture-of-Kittens: our open-source MoE megakernel for NVL72s",
+      "source_url": "https://cursor.com/blog/mixture-of-kittens",
+      "published_at": "2026-08-04T12:00:00.000Z",
+      "summary": "Mixture-of-Kittens: our open-source MoE megakernel for NVL72s",
+      "apply_in_eos": "Vendor research post. Do not treat model-training writeups as EOS production evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -83,12 +173,42 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-cloud-agent-environment",
+      "title": "How we set up our cloud agent environment",
+      "source_url": "https://cursor.com/blog/cloud-agent-environment",
+      "published_at": "2026-07-30T12:00:00.000Z",
+      "summary": "How we set up our cloud agent environment",
+      "apply_in_eos": "Put install work in environment.json install and keep start for live services. Builds consume that split.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-ipad",
       "title": "Cursor, now on iPad",
       "source_url": "https://cursor.com/changelog/ipad",
       "published_at": "Wed, 29 Jul 2026 00:00:00 GMT",
       "summary": "Cursor for iPad is now available on all paid plans. New to both iPhone and iPad: an inbox to stay organized, and a review experience that covers the full PR. Create, review, and merge from anywhere. Built for the bigger screen The iPad layout is rebuilt around the extra space. Sidebar chats stay pinned so you can watch several agents run at once. Split screen keeps a review open next to a chat, a…",
       "apply_in_eos": "iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-cursor-start-india",
+      "title": "Introducing Cursor Start",
+      "source_url": "https://cursor.com/blog/cursor-start-india",
+      "published_at": "2026-07-28T12:00:00.000Z",
+      "summary": "Introducing Cursor Start",
+      "apply_in_eos": "Cursor Start is India regional pricing. No EOS governance change.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-vercel",
+      "title": "How Vercel used Cursor to build Queues",
+      "source_url": "https://cursor.com/blog/vercel",
+      "published_at": "2026-07-28T12:00:00.000Z",
+      "summary": "How Vercel used Cursor to build Queues",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -133,12 +253,32 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-router",
+      "title": "Introducing Cursor Router",
+      "source_url": "https://cursor.com/blog/router",
+      "published_at": "2026-07-22T00:00:00.000Z",
+      "summary": "Introducing Cursor Router",
+      "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-router",
       "title": "Cursor Router",
       "source_url": "https://cursor.com/changelog/router",
       "published_at": "Wed, 22 Jul 2026 00:00:00 GMT",
       "summary": "Auto mode is now powered by Cursor Router. Cursor Router is our intelligent model router. It analyzes each request and sends it to the right model for the job. Frontier models handle work that demands them. Price-efficient models handle the rest. Optimization modes Select Auto, then choose how the router optimizes: **Intelligence:** Frontier quality, matching the most expensive and powerful model…",
       "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-agent-swarm-model-economics",
+      "title": "Agent swarms and the new model economics",
+      "source_url": "https://cursor.com/blog/agent-swarm-model-economics",
+      "published_at": "2026-07-20T12:00:00.000Z",
+      "summary": "Agent swarms and the new model economics",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -263,6 +403,16 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-coinbase",
+      "title": "Coinbase reduces time from idea to production by 90% with Cursor",
+      "source_url": "https://cursor.com/blog/coinbase",
+      "published_at": "2026-06-23T12:00:00.000Z",
+      "summary": "Coinbase reduces time from idea to production by 90% with Cursor",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-customize",
       "title": "Customize Cursor",
       "source_url": "https://cursor.com/changelog/customize",
@@ -289,6 +439,16 @@
       "published_at": "Wed, 17 Jun 2026 00:00:00 GMT",
       "summary": "This release introduces updates to cloud agents in the Agents Window of the Cursor desktop app. Cloud environment setup Cursor can now help you set up your dev environment in the cloud in less than 10 minutes. You can watch the agent's progress in a shared terminal session as it handles setup tasks like installing dependencies. Your environment is captured in a reusable snapshot, so future cloud…",
       "apply_in_eos": "Run isolated subagents on their own VMs when work must not collide with the parent branch.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-wayfair",
+      "title": "How Wayfair cut ML model costs by 90% (twice!) with Cursor",
+      "source_url": "https://cursor.com/blog/wayfair",
+      "published_at": "2026-06-15T12:00:00.000Z",
+      "summary": "How Wayfair cut ML model costs by 90% (twice!) with Cursor",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
