@@ -21,7 +21,7 @@ node --test tests/x-learning-watch.test.js
 npm run watch:x
 ```
 
-`npm run watch:x` writes `STATE.json`, merges `LEARNINGS.json`, refreshes `CURRENT.md`, and writes a briefing under `briefings/` only when there are new official feed items (changelog, announcements, or blog index).
+`npm run watch:x` writes `STATE.json`, merges `LEARNINGS.json`, refreshes `CURRENT.md`, and writes a briefing under `briefings/` only when there are new official feed items (changelog, announcements, or blog index). Blog cards are enriched from each official article page (`og:description`); article fetches stay on `cursor.com`.
 
 Add handles without fetching X:
 

@@ -109,6 +109,48 @@ export function parseOfficialSource(text, kind) {
   return parseFeed(text);
 }
 
+export function parseCursorBlogArticle(html) {
+  const text = String(html || '');
+  const metaContent = (property) => {
+    const escaped = property.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const named = text.match(new RegExp(`<meta\\b[^>]*(?:property|name)=["']${escaped}["'][^>]*content=["']([^"']*)["']`, 'i'));
+    if (named) return decodeXmlEntities(named[1]);
+    const reversed = text.match(new RegExp(`<meta\\b[^>]*content=["']([^"']*)["'][^>]*(?:property|name)=["']${escaped}["']`, 'i'));
+    return reversed ? decodeXmlEntities(reversed[1]) : '';
+  };
+  const stripBrand = (value) => stripTags(value).replace(/\s*·\s*Cursor\s*$/i, '').trim();
+  const titleTag = text.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+  const time = text.match(/<time\b[^>]*dateTime=["']([^"']+)["']/i);
+  return {
+    title: stripBrand(metaContent('og:title') || (titleTag ? titleTag[1] : '')),
+    summary: stripTags(metaContent('og:description') || metaContent('description')),
+    publishedAt: time ? time[1] : ''
+  };
+}
+
+export async function enrichOfficialBlogItems(items, fetchImpl) {
+  const out = [];
+  for (const item of items || []) {
+    if (!item?.link || isBlockedFetchUrl(item.link)) {
+      out.push(item);
+      continue;
+    }
+    const response = await fetchImpl(item.link);
+    if (!response?.ok) {
+      out.push(item);
+      continue;
+    }
+    const article = parseCursorBlogArticle(response.text);
+    out.push({
+      ...item,
+      title: article.title || item.title,
+      summary: article.summary || item.summary,
+      publishedAt: article.publishedAt || item.publishedAt
+    });
+  }
+  return out;
+}
+
 export function parseFeed(xml) {
   const text = String(xml || '');
   if (/<entry\b/i.test(text) && /<feed\b/i.test(text)) {
@@ -314,6 +356,9 @@ export function applyHint(item) {
   if (title.includes('mindgard')) {
     return 'Vendor security-response post. Run EOS security-auditor on our diffs; do not treat the forum thread as VERIFIED.';
   }
+  if (link.includes('aiuc-1') || title.includes('aiuc')) {
+    return 'Vendor security certification marketing. EOS security-auditor on our diffs remains the Control Plane check.';
+  }
   if (link.includes('cursor.com/blog/')) {
     return 'Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.';
   }
@@ -501,7 +546,11 @@ export async function ingest({ watchlist, state = { seen_ids: [] }, fetchImpl = 
       });
       continue;
     }
-    for (const item of parseOfficialSource(response.text, feed.kind)) {
+    let parsed = parseOfficialSource(response.text, feed.kind);
+    if (String(feed.kind || '').toLowerCase() === 'html') {
+      parsed = await enrichOfficialBlogItems(parsed, fetchImpl);
+    }
+    for (const item of parsed) {
       items.push({ ...item, feed_id: feed.feed_id });
     }
   }

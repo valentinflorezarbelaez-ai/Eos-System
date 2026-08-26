@@ -11,6 +11,7 @@ import {
   ingest,
   isBlockedFetchUrl,
   mergeLearnings,
+  parseCursorBlogArticle,
   parseCursorBlogIndex,
   parseFeed,
   parseOfficialSource,
@@ -248,7 +249,8 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Addressing the recent Mindgard report', link: 'https://forum.cursor.com/t/addressing-the-recent-mindgard-report/165817' },
     { title: 'Claude Opus 5 now available!', link: 'https://forum.cursor.com/t/claude-opus-5-now-available/166583' },
     { title: 'Cursor is now a part of SpaceX', link: 'https://cursor.com/blog/joining-spacex' },
-    { title: 'Introducing Grok 4.6', link: 'https://cursor.com/blog/grok-4-6' }
+    { title: 'Introducing Grok 4.6', link: 'https://cursor.com/blog/grok-4-6' },
+    { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
     const hint = applyHint({ ...sample, summary: sample.title });
@@ -338,6 +340,7 @@ test('parseCursorBlogIndex extracts official blog cards and skips topic crumbs',
 
 test('ingest fetches the official blog index as HTML', async () => {
   const html = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/blog-index.html'), 'utf8');
+  const articleHtml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/blog-article.html'), 'utf8');
   const calls = [];
   const result = await ingest({
     watchlist: {
@@ -354,13 +357,27 @@ test('ingest fetches the official blog index as HTML', async () => {
     state: { seen_ids: [] },
     fetchImpl: async (url) => {
       calls.push(url);
-      return { ok: true, text: html };
+      if (url === 'https://cursor.com/blog') return { ok: true, text: html };
+      return { ok: true, text: articleHtml };
     }
   });
-  assert.deepEqual(calls, ['https://cursor.com/blog']);
+  assert.equal(calls[0], 'https://cursor.com/blog');
+  assert.equal(calls.includes('https://cursor.com/blog/joining-spacex'), true);
+  assert.equal(calls.includes('https://cursor.com/blog/grok-4-6'), true);
+  assert.equal(calls.includes('https://x.com/cursor_ai'), false);
   assert.equal(result.items.length, 3);
   assert.equal(result.newItems.length, 3);
+  const grok = result.items.find((item) => item.link === 'https://cursor.com/blog/grok-4-6');
+  assert.match(grok.summary, /long-running agents/i);
   assert.equal(result.learnings.every((row) => row.epistemic_status === 'OBSERVED'), true);
+});
+
+test('parseCursorBlogArticle reads official og tags', () => {
+  const html = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/blog-article.html'), 'utf8');
+  const article = parseCursorBlogArticle(html);
+  assert.equal(article.title, 'Introducing Grok 4.6');
+  assert.match(article.summary, /long-running agents/i);
+  assert.match(article.publishedAt, /2026-08-12/);
 });
 
 test('cited X posts never claim an X fetch', () => {
