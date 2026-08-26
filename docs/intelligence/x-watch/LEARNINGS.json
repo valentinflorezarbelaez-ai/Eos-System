@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:44:25.952Z",
+  "updated_at": "2026-08-26T23:48:31.119Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -913,12 +913,42 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-builds",
+      "title": "Cloud Agent Builds",
+      "source_url": "https://cursor.com/docs/cloud-agent/builds",
+      "published_at": null,
+      "summary": "Start Cloud Agents from pre-built, verified development environments.",
+      "apply_in_eos": "Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-models-and-pricing",
       "title": "Models & Pricing",
       "source_url": "https://cursor.com/docs/models-and-pricing",
       "published_at": null,
       "summary": "Explore frontier models, two usage pools, plan pricing, and per-model rates.",
       "apply_in_eos": "Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin",
+      "title": "Origin",
+      "source_url": "https://cursor.com/docs/origin",
+      "published_at": null,
+      "summary": "Store and share code on Origin, Cursor's git forge. Create repos, mirror from GitHub, and browse at cursor.com/codebase.",
+      "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-automations",
+      "title": "Automations",
+      "source_url": "https://cursor.com/help/ai-features/automations",
+      "published_at": null,
+      "summary": "Run cloud agents on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more.",
+      "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

@@ -91,10 +91,13 @@
     "https://cursor.com/changelog/side-chat",
     "https://cursor.com/changelog/slack-improvements",
     "https://cursor.com/changelog/team-marketplace-updates",
+    "https://cursor.com/docs/cloud-agent/builds",
     "https://cursor.com/docs/models-and-pricing",
+    "https://cursor.com/docs/origin",
+    "https://cursor.com/help/ai-features/automations",
     "https://cursor.com/help/models-and-usage/grok-4-6"
   ],
-  "last_ingest_at": "2026-08-26T23:44:25.944Z",
-  "last_item_count": 93,
-  "last_new_item_count": 0
+  "last_ingest_at": "2026-08-26T23:48:31.108Z",
+  "last_item_count": 96,
+  "last_new_item_count": 3
 }
