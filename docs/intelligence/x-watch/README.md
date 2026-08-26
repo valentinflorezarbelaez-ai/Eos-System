@@ -6,7 +6,7 @@ Keep EOS current on Cursor product changes starting from the requested account [
 - Official changelog RSS: `https://cursor.com/changelog/rss.xml`
 - Official forum announcements RSS: `https://forum.cursor.com/c/announcements/11.rss` (`/c/announcements.rss` redirects here; do not use `latest.rss`)
 - Official blog index HTML: `https://cursor.com/blog` (no public blog RSS; parser reads article cards only)
-- Official docs/help HTML pages (no public docs RSS): `https://cursor.com/help/models-and-usage/grok-4-6` and `https://cursor.com/docs/models-and-pricing`
+- Official docs/help HTML pages (no public docs RSS): Grok 4.6 help, Models & Pricing, Cloud Agent automations, Cloud Agent Builds, and Origin
 - Watchlist of X handles (seed: `@cursor_ai`)
 - Daily Cloud Agent timer (see run subscriptions)
 - Cited `@cursor_ai` status URLs recorded from third-party articles in `CITED_X_POSTS.json` (`CITED_NOT_FETCHED`, never fetched from X)

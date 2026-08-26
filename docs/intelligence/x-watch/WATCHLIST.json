@@ -52,6 +52,27 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_MODELS_PRICING",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-AUTOMATIONS",
+      "url": "https://cursor.com/help/ai-features/automations",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_AUTOMATIONS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-BUILDS",
+      "url": "https://cursor.com/docs/cloud-agent/builds",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_BUILDS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN",
+      "url": "https://cursor.com/docs/origin",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN",
+      "fetchable": true
     }
   ]
 }

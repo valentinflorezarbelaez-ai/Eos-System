@@ -10,3 +10,4 @@
 9. [x] Persist OBSERVED learnings in LEARNINGS.json / CURRENT.md without scraping X
 10. [ ] Expand watchlist when Valentin supplies more handles
 11. [x] Ingest official Grok 4.6 help and Models & Pricing docs pages (`html-page`); cluster Grok 4.6 in CURRENT.md
+12. [x] Ingest Cloud Agent automations, Builds, and Origin living docs; cluster them onto changelog URLs in CURRENT.md

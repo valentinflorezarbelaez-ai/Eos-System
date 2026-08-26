@@ -466,6 +466,29 @@ function currentClusterKey(learning) {
   if (title.includes('grok 4.6') || url.includes('grok-4-6')) {
     return 'cluster:grok-4-6';
   }
+  if (
+    url.includes('changelog/08-19-26')
+    || url.includes('cloud-agent/automations')
+    || url.includes('help/ai-features/automations')
+    || title === 'automations'
+  ) {
+    return 'cluster:cloud-agent-harness';
+  }
+  if (
+    url.includes('changelog/08-13-26')
+    || url.includes('cloud-agent/builds')
+    || url.includes('cursor.com/blog/builds')
+  ) {
+    return 'cluster:cloud-agent-builds';
+  }
+  if (
+    url.includes('origin-code-hosting')
+    || url.includes('cursor.com/docs/origin')
+    || title.includes('origin code hosting')
+    || (title === 'origin' && url.includes('/origin'))
+  ) {
+    return 'cluster:origin';
+  }
   return normalizeTitleKey(learning?.title);
 }
 
@@ -498,7 +521,7 @@ export function selectCurrentLearnings(learnings, limit = 10) {
   const reserved = ranked
     .filter((row) => isLivingOfficialDoc(row.source_url))
     .filter((row) => !top.some((item) => item.source_url === row.source_url))
-    .slice(0, limit);
+    .slice(0, Math.min(3, limit));
   if (reserved.length === 0) return top;
   const head = ranked
     .filter((row) => !reserved.some((item) => item.source_url === row.source_url))

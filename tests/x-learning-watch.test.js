@@ -158,6 +158,18 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/automations' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/builds' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/origin' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -267,6 +279,9 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Introducing Grok 4.6', link: 'https://cursor.com/blog/grok-4-6' },
     { title: 'Grok 4.6', link: 'https://cursor.com/help/models-and-usage/grok-4-6' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
+    { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
+    { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
+    { title: 'Origin', link: 'https://cursor.com/docs/origin' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -422,6 +437,34 @@ test('parseOfficialSource html-page decodes docs titles and pricing pools', () =
   assert.equal(applyHint(items[0]).includes('EOS budget evidence'), true);
 });
 
+test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Origin', () => {
+  const automations = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-automations.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/ai-features/automations'
+  );
+  assert.equal(automations[0].title, 'Automations');
+  assert.match(automations[0].summary, /GitHub, GitLab, Slack/i);
+  assert.match(applyHint(automations[0]), /GitHub\/Slack|not X/i);
+
+  const builds = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-builds.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/builds'
+  );
+  assert.equal(builds[0].title, 'Cloud Agent Builds');
+  assert.match(applyHint(builds[0]), /Builds/i);
+
+  const origin = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-origin.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/origin'
+  );
+  assert.equal(origin[0].title, 'Origin');
+  assert.match(origin[0].summary, /git forge/i);
+  assert.match(applyHint(origin[0]), /Origin|GitHub/i);
+});
+
 test('ingest fetches official docs/help html-page feeds once and not x.com', async () => {
   const grokHtml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-grok-4-6.html'), 'utf8');
   const pricingHtml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-models-pricing.html'), 'utf8');
@@ -565,6 +608,53 @@ test('selectCurrentLearnings clusters Grok 4.6 onto official docs/help', () => {
   assert.equal(selected.some((row) => row.source_url === 'https://forum.cursor.com/t/grok-4-6-is-now-live/168189'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
+});
+
+test('selectCurrentLearnings clusters automations, builds, and Origin onto changelog', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'Automations',
+      source_url: 'https://cursor.com/help/ai-features/automations',
+      published_at: null,
+      apply_in_eos: 'Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.'
+    },
+    {
+      title: 'Cloud Agents and Cursor Harness Improvements',
+      source_url: 'https://cursor.com/changelog/08-19-26',
+      published_at: 'Wed, 19 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.'
+    },
+    {
+      title: 'Cloud Agent Builds',
+      source_url: 'https://cursor.com/docs/cloud-agent/builds',
+      published_at: null,
+      apply_in_eos: 'Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.'
+    },
+    {
+      title: 'Cloud Agents Start 3x Faster with Builds',
+      source_url: 'https://cursor.com/changelog/08-13-26',
+      published_at: 'Thu, 13 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.'
+    },
+    {
+      title: 'Origin',
+      source_url: 'https://cursor.com/docs/origin',
+      published_at: null,
+      apply_in_eos: 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.'
+    },
+    {
+      title: 'Origin Code Hosting',
+      source_url: 'https://cursor.com/changelog/origin-code-hosting',
+      published_at: 'Mon, 17 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.'
+    }
+  ], 5);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/automations'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/origin-code-hosting'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin'), false);
 });
 
 test('selectCurrentLearnings keeps undated official docs/help pages in CURRENT', () => {
