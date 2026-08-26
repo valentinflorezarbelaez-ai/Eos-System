@@ -220,6 +220,24 @@ export function applyHint(item) {
   if (titleOrLink.includes('/btw') || titleOrLink.includes('cli debug')) {
     return '/btw is a side-channel. Keep changelog ingest on the main Cloud Agent thread.';
   }
+  if (titleOrLink.includes('development environment')) {
+    return 'Put install work in environment.json install and keep start for live services. Builds consume that split.';
+  }
+  if (titleOrLink.includes('full-screen') || titleOrLink.includes('compact chat') || title.includes('new cursor interface') || titleOrLink.includes('tiled layout') || titleOrLink.includes('voice input')) {
+    return 'Editor chrome only. No EOS Control Plane change.';
+  }
+  if (titleOrLink.includes('split pr') || titleOrLink.includes('build plan in parallel')) {
+    return 'Parallel plans/PRs are optional. EOS still prefers one purpose per branch and evidence-gated commits.';
+  }
+  if (titleOrLink.includes('context usage')) {
+    return 'Inspect context usage before stuffing the prompt. This watch should stay on changelog + citations, not full-thread dumps.';
+  }
+  if (titleOrLink.includes('spend') || titleOrLink.includes('usage analytics') || titleOrLink.includes('model control')) {
+    return 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.';
+  }
+  if (titleOrLink.includes('mermaid')) {
+    return 'Mermaid in CLI is optional documentation. LEARNINGS.json remains the evidence store for this watch.';
+  }
   return `Review this official Cursor changelog item against EOS governance before adopting: ${item?.title || 'untitled'}.`;
 }
 

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:19:19.794Z",
+  "updated_at": "2026-08-26T23:20:38.267Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-08-19-26",
@@ -248,7 +248,7 @@
       "source_url": "https://cursor.com/changelog/05-13-26",
       "published_at": "Wed, 13 May 2026 00:00:00 GMT",
       "summary": "To take engineering tasks from start to finish, agents need a development environment similar to the setup on your laptop: cloned repositories, installed dependencies, credentials for internal toolchains, and access to build systems. This release introduces new tools for teams to configure development environments for their agents. Cursor also can use these tools to set up and maintain environmen…",
-      "apply_in_eos": "Review this official Cursor changelog item against EOS governance before adopting: Development environments for cloud agents.",
+      "apply_in_eos": "Put install work in environment.json install and keep start for live services. Builds consume that split.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -258,7 +258,7 @@
       "source_url": "https://cursor.com/changelog/3-4",
       "published_at": "Wed, 13 May 2026 00:00:00 GMT",
       "summary": "This release introduces quality-of-life improvements to the Agents Window . Full-screen tabs Full screen maximizes the right panel so you can focus on a single tab. Files, changes, canvases, PRs, browsers, and terminals can expand to fill the entire working area. This replaces the agent chat with a floating prompt bar. Enter and exit full screen by clicking on the expand/contract button in the pa…",
-      "apply_in_eos": "Review this official Cursor changelog item against EOS governance before adopting: Full-screen Tabs and Compact Chats.",
+      "apply_in_eos": "Editor chrome only. No EOS Control Plane change.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -288,7 +288,7 @@
       "source_url": "https://cursor.com/changelog/05-07-26",
       "published_at": "Thu, 07 May 2026 00:00:00 GMT",
       "summary": "This release introduces a new PR review experience, faster execution on plans through parallel agents, and new quick-action pills for common workflows. PR review A new PR review experience is now available in Cursor 3. Take PRs from creation to merge all in one place. The Reviews tab now shows inline review threads and top-level PR comments. The Commits tab gives you a focused view of commit hist…",
-      "apply_in_eos": "Review this official Cursor changelog item against EOS governance before adopting: PR Review, Build Plan in Parallel, and Split PRs.",
+      "apply_in_eos": "Parallel plans/PRs are optional. EOS still prefers one purpose per branch and evidence-gated commits.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -298,7 +298,7 @@
       "source_url": "https://cursor.com/changelog/05-06-26",
       "published_at": "Wed, 06 May 2026 00:00:00 GMT",
       "summary": "You can now see a breakdown of your agent's context usage . Use these stats to diagnose context issues and improve your setup across rules, skills, MCPs, and subagents.",
-      "apply_in_eos": "Review this official Cursor changelog item against EOS governance before adopting: Context Usage Breakdown.",
+      "apply_in_eos": "Inspect context usage before stuffing the prompt. This watch should stay on changelog + citations, not full-thread dumps.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -308,7 +308,7 @@
       "source_url": "https://cursor.com/changelog/05-04-26",
       "published_at": "Mon, 04 May 2026 00:00:00 GMT",
       "summary": "This release introduces updates for Enterprise admins: a new system for model controls, updated spend management, and more detail for usage analytics. Model access controls Admins can now set more granular allow or blocklists at the model and provider level. You can block entire providers or specific model configurations for speed and context window size. Enterprises also have the option to block…",
-      "apply_in_eos": "Review this official Cursor changelog item against EOS governance before adopting: Model controls, spend management, and usage analytics.",
+      "apply_in_eos": "Honor included quota. Stop this daily watch rather than switching to paid on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -378,7 +378,7 @@
       "source_url": "https://cursor.com/changelog/3-1",
       "published_at": "Mon, 13 Apr 2026 00:00:00 GMT",
       "summary": "This release introduces improvements to our Agents Window interface as part of Cursor 3. Tiled layout Split your current view into panes to run and manage several agents in parallel. The tiled layout makes it easier to multi-task and compare outputs across agents without jumping between tabs. Expand panes to focus on a conversation, drag agents into tiles, and use keybindings for quick navigation…",
-      "apply_in_eos": "Review this official Cursor changelog item against EOS governance before adopting: Tiled Layout and Upgraded Voice Input in the Agents Window.",
+      "apply_in_eos": "Editor chrome only. No EOS Control Plane change.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -398,7 +398,7 @@
       "source_url": "https://cursor.com/changelog/3-0",
       "published_at": "Thu, 02 Apr 2026 00:00:00 GMT",
       "summary": "Cursor 3 is now available. Agents Window The new Cursor interface allows you to run many agents in parallel across repos and environments: locally, in worktrees, in the cloud, and on remote SSH. It's simpler, more powerful, and centered around agents, while keeping the depth of a development environment. To try the Agents Window , upgrade Cursor and type `Cmd+Shift+P -> Agents Window`. You can sw…",
-      "apply_in_eos": "Review this official Cursor changelog item against EOS governance before adopting: New Cursor Interface.",
+      "apply_in_eos": "Editor chrome only. No EOS Control Plane change.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -488,7 +488,7 @@
       "source_url": "https://cursor.com/changelog/cli-feb-18-2026",
       "published_at": "Wed, 18 Feb 2026 00:00:00 GMT",
       "summary": "This release introduces the ability to hand off plans from the CLI to the cloud, in-line rendering of ASCII diagrams, and many quality-of-life improvements. Plan mode improvements in CLI When a plan is generated, the CLI now shows a persistent decision menu. You can choose to build in the cloud or build locally to execute the plan. Typing `/plan` takes you back to your current plan and its action…",
-      "apply_in_eos": "Review this official Cursor changelog item against EOS governance before adopting: CLI Improvements and Mermaid ASCII Diagrams.",
+      "apply_in_eos": "Mermaid in CLI is optional documentation. LEARNINGS.json remains the evidence store for this watch.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

@@ -220,6 +220,9 @@ test('cited X posts never claim an X fetch', () => {
   const result = validateCitedXPosts(doc);
   assert.equal(result.valid, true);
   assert.equal(doc.citations.every((row) => row.fetched_from_x === false), true);
+  const official = doc.citations.map((row) => row.official_source);
+  assert.equal(official.includes('https://cursor.com/changelog/origin-code-hosting'), true);
+  assert.equal(official.includes('https://cursor.com/changelog/08-13-26'), true);
   assert.equal(
     validateCitedXPosts({
       citations: [{

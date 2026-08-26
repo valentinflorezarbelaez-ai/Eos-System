@@ -42,6 +42,26 @@
       "published_date": "2026-08-19",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2089399057659596847",
+      "handle": "cursor_ai",
+      "about": "Origin, our code hosting platform, is now live",
+      "cited_by": "https://www.unrollnow.com/status/2089399057659596847",
+      "official_source": "https://cursor.com/changelog/origin-code-hosting",
+      "published_date": "2026-08-17",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2087941307624980753",
+      "handle": "cursor_ai",
+      "about": "Cloud agents now start 3x faster so you can hand them ambitious, long-running tasks",
+      "cited_by": "https://www.unrollnow.com/status/2087941307624980753",
+      "official_source": "https://cursor.com/changelog/08-13-26",
+      "published_date": "2026-08-13",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
     }
   ]
 }

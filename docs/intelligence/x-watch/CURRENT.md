@@ -2,7 +2,7 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-26T23:19:19.794Z
+Updated: 2026-08-26T23:20:38.267Z
 Store size: 50
 
 ## Official changelog actions
@@ -36,4 +36,8 @@ Store size: 50
   https://x.com/cursor_ai/status/2090136962376081531
 - Use /goal — cited by https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents (not fetched from X)
   https://x.com/cursor_ai/status/2090136966121599117
+- Origin, our code hosting platform, is now live — cited by https://www.unrollnow.com/status/2089399057659596847 (not fetched from X)
+  https://x.com/cursor_ai/status/2089399057659596847
+- Cloud agents now start 3x faster so you can hand them ambitious, long-running tasks — cited by https://www.unrollnow.com/status/2087941307624980753 (not fetched from X)
+  https://x.com/cursor_ai/status/2087941307624980753
 
