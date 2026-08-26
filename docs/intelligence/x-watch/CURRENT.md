@@ -2,7 +2,7 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-26T23:20:38.267Z
+Updated: 2026-08-26T23:21:45.820Z
 Store size: 50
 
 ## Official changelog actions
@@ -40,4 +40,7 @@ Store size: 50
   https://x.com/cursor_ai/status/2089399057659596847
 - Cloud agents now start 3x faster so you can hand them ambitious, long-running tasks — cited by https://www.unrollnow.com/status/2087941307624980753 (not fetched from X)
   https://x.com/cursor_ai/status/2087941307624980753
+- Cursor is now part of @SpaceX. Today, we have officially closed our acquisition. — cited by https://www.unrollnow.com/status/2088249881718919393 (not fetched from X)
+  Cited X announcement, not present in changelog RSS. Do not treat SpaceX/Grok marketing as EOS production evidence. Product truth for this watch remains cursor.com/changelog.
+  https://x.com/cursor_ai/status/2088249881718919393
 

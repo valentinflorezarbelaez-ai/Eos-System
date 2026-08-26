@@ -490,7 +490,10 @@ export function writeIngestArtifacts(rootDir, result, now = new Date()) {
   if (fs.existsSync(citationsFile)) {
     const cited = JSON.parse(fs.readFileSync(citationsFile, 'utf8'));
     if (validateCitedXPosts(cited).valid) {
-      citationLines = cited.citations.map((row) => `- ${row.about} — cited by ${row.cited_by} (not fetched from X)\n  ${row.x_url}`);
+      citationLines = cited.citations.map((row) => {
+        const note = row.eos_note ? `\n  ${row.eos_note}` : '';
+        return `- ${row.about} — cited by ${row.cited_by} (not fetched from X)${note}\n  ${row.x_url}`;
+      });
     }
   }
   const currentMd = [

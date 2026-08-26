@@ -224,6 +224,10 @@ test('cited X posts never claim an X fetch', () => {
   assert.equal(official.includes('https://cursor.com/changelog/origin-code-hosting'), true);
   assert.equal(official.includes('https://cursor.com/changelog/08-13-26'), true);
   assert.equal(
+    doc.citations.some((row) => row.x_url === 'https://x.com/cursor_ai/status/2088249881718919393' && row.official_source === null),
+    true
+  );
+  assert.equal(
     validateCitedXPosts({
       citations: [{
         x_url: 'https://x.com/cursor_ai/status/1',
