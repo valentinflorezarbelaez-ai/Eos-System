@@ -73,6 +73,20 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_ORIGIN",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CURSOR-ROUTER",
+      "url": "https://cursor.com/docs/cursor-router",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CURSOR_ROUTER",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-USAGE-LIMITS",
+      "url": "https://cursor.com/help/models-and-usage/usage-limits",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_USAGE_LIMITS",
+      "fetchable": true
     }
   ]
 }

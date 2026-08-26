@@ -1,7 +1,7 @@
 {
   "$schema": "./schema.json",
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:55:00Z",
+  "updated_at": "2026-08-26T23:58:00Z",
   "sources": [
     {
       "source_id": "SRC-0001",
@@ -325,6 +325,40 @@
       "relevance_to_eos": "HIGH",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/origin"
+    },
+    {
+      "source_id": "SRC-0020",
+      "name": "Cursor Docs — Cursor Router",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Router marketing metrics are not EOS evidence. Not an X timeline.",
+      "relevance_to_eos": "HIGH",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/cursor-router"
+    },
+    {
+      "source_id": "SRC-0021",
+      "name": "Cursor Help — Usage and limits",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor help page; living document with no RSS. Honor included quota; do not treat vendor spend UI as EOS budget evidence. Not an X timeline.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/help/models-and-usage/usage-limits"
     }
   ]
 }

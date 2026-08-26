@@ -170,6 +170,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/origin' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cursor-router' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/models-and-usage/usage-limits' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -283,6 +291,8 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
     { title: 'Origin', link: 'https://cursor.com/docs/origin' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
+    { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
+    { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -475,6 +485,26 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(origin[0]), /Origin|GitHub/i);
 });
 
+test('parseOfficialSource html-page maps Cursor Router and usage limits', () => {
+  const router = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cursor-router.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cursor-router'
+  );
+  assert.equal(router[0].title, 'Cursor Router');
+  assert.match(router[0].summary, /optimization modes/i);
+  assert.match(applyHint(router[0]), /Auto mode/i);
+
+  const usage = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-usage-limits.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/models-and-usage/usage-limits'
+  );
+  assert.equal(usage[0].title, 'Usage and limits');
+  assert.match(usage[0].summary, /Spending/i);
+  assert.match(applyHint(usage[0]), /included quota/i);
+});
+
 test('ingest fetches official docs/help html-page feeds once and not x.com', async () => {
   const grokHtml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-grok-4-6.html'), 'utf8');
   const pricingHtml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-models-pricing.html'), 'utf8');
@@ -665,6 +695,39 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/origin-code-hosting'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin'), false);
+});
+
+test('selectCurrentLearnings clusters Cursor Router onto changelog', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'How Cursor Router chooses the right model for the task',
+      source_url: 'https://cursor.com/blog/how-cursor-router-works',
+      published_at: '2026-08-06T12:00:00.000Z',
+      apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
+    },
+    {
+      title: 'Cursor Router',
+      source_url: 'https://cursor.com/docs/cursor-router',
+      published_at: null,
+      apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
+    },
+    {
+      title: 'Cursor Router',
+      source_url: 'https://cursor.com/changelog/router',
+      published_at: 'Wed, 22 Jul 2026 00:00:00 GMT',
+      apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
+    },
+    {
+      title: 'Usage and limits',
+      source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
+      published_at: null,
+      apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+    }
+  ], 3);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/router'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/blog/how-cursor-router-works'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cursor-router'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
 test('selectCurrentLearnings keeps undated official docs/help pages in CURRENT', () => {

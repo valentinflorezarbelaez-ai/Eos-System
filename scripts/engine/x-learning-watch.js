@@ -355,7 +355,7 @@ export function applyHint(item) {
   if (titleOrLink.includes('context usage')) {
     return 'Inspect context usage before stuffing the prompt. This watch should stay on changelog + citations, not full-thread dumps.';
   }
-  if (titleOrLink.includes('spend') || titleOrLink.includes('usage analytics') || titleOrLink.includes('model control')) {
+  if (titleOrLink.includes('spend') || titleOrLink.includes('usage analytics') || titleOrLink.includes('model control') || link.includes('usage-limits') || title.includes('usage and limits')) {
     return 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.';
   }
   if (titleOrLink.includes('mermaid')) {
@@ -490,6 +490,16 @@ function currentClusterKey(learning) {
     || (title === 'origin' && url.includes('/origin'))
   ) {
     return 'cluster:origin';
+  }
+  if (
+    url.includes('changelog/router')
+    || url.includes('docs/cursor-router')
+    || url.includes('help/models-and-usage/cursor-router')
+    || url.includes('blog/how-cursor-router-works')
+    || url.includes('blog/router')
+    || title.includes('cursor router')
+  ) {
+    return 'cluster:cursor-router';
   }
   return normalizeTitleKey(learning?.title);
 }
