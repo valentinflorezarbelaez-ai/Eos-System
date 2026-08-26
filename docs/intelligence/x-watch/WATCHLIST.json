@@ -1,0 +1,29 @@
+{
+  "$schema": "./schema.json",
+  "watch_id": "X-WATCH-001",
+  "requested_platform": "X",
+  "requested_url": "https://x.com/cursor_ai",
+  "platform_connection": {
+    "status": "BLOCKED",
+    "reason": "NO_X_MCP_AND_NO_OFFICIAL_PUBLIC_TIMELINE_API",
+    "native_cloud_agent_subscriptions": ["github_pr", "github_ci", "slack", "timer"]
+  },
+  "accounts": [
+    {
+      "handle": "cursor_ai",
+      "url": "https://x.com/cursor_ai",
+      "priority": "PRIMARY",
+      "timeline_access": "BLOCKED",
+      "notes": "Requested seed account. Timeline is not fetchable from this agent."
+    }
+  ],
+  "feeds": [
+    {
+      "feed_id": "FEED-CURSOR-CHANGELOG",
+      "url": "https://cursor.com/changelog/rss.xml",
+      "kind": "rss",
+      "role": "PRIMARY_PRODUCT_UPDATES",
+      "fetchable": true
+    }
+  ]
+}
