@@ -130,7 +130,7 @@ export function applyHint(item) {
   if (blob.includes('/goal') || (link.includes('changelog/08-19-26') && blob.includes('goal'))) {
     return 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.';
   }
-  if (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git'))) {
+  if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
   }
   if (title.includes('builds') || link.includes('changelog/08-13-26') || blob.includes('3x faster with builds')) {
@@ -238,7 +238,28 @@ export function applyHint(item) {
   if (titleOrLink.includes('mermaid')) {
     return 'Mermaid in CLI is optional documentation. LEARNINGS.json remains the evidence store for this watch.';
   }
-  return `Review this official Cursor changelog item against EOS governance before adopting: ${item?.title || 'untitled'}.`;
+  if (title.includes('share your thoughts')) {
+    return 'Vendor feedback thread. Do not treat forum sentiment as EOS evidence.';
+  }
+  if (title.includes('campus')) {
+    return 'Campus community is vendor outreach. No EOS Control Plane change.';
+  }
+  if (title.includes('grok bot')) {
+    return 'Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.';
+  }
+  if (title.includes('grok')) {
+    return 'Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.';
+  }
+  if (title.includes('opus') || title.includes('claude')) {
+    return 'Claude/Opus availability is vendor catalog news. Do not treat a forum post as a production-quality certificate.';
+  }
+  if (title.includes('gpt-5') || title.includes('gpt 5') || title.includes('gpt-5.6')) {
+    return 'GPT availability is vendor catalog news. EOS model policy stays in workspace rules.';
+  }
+  if (title.includes('mindgard')) {
+    return 'Vendor security-response post. Run EOS security-auditor on our diffs; do not treat the forum thread as VERIFIED.';
+  }
+  return `Review this official Cursor item against EOS governance before adopting: ${item?.title || 'untitled'}.`;
 }
 
 export function extractActionableLearnings(items) {
@@ -504,7 +525,7 @@ export function writeIngestArtifacts(rootDir, result, now = new Date()) {
     `Updated: ${merged.store.updated_at}`,
     `Store size: ${merged.store.learnings.length}`,
     '',
-    '## Official changelog actions',
+    '## Official feed actions',
     ...latest.map((learning) => `- **${learning.title}** — ${learning.apply_in_eos}\n  ${learning.source_url}`),
     '',
     '## @cursor_ai posts cited by third parties (not fetched)',

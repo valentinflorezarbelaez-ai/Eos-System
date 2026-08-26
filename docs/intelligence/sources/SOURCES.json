@@ -1,7 +1,7 @@
 {
   "$schema": "./schema.json",
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:10:00Z",
+  "updated_at": "2026-08-26T23:30:00Z",
   "sources": [
     {
       "source_id": "SRC-0001",
@@ -206,6 +206,23 @@
       "relevance_to_eos": "HIGH",
       "verification_status": "BLOCKED",
       "url_or_reference": "https://x.com/cursor_ai"
+    },
+    {
+      "source_id": "SRC-0013",
+      "name": "Cursor Forum Announcements RSS",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "COMMUNITY_PATTERN",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Official Discourse announcements category; includes product news and vendor feedback threads. Not an X timeline.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://forum.cursor.com/c/announcements/11.rss"
     }
   ]
 }

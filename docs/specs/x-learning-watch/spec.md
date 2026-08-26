@@ -10,7 +10,7 @@ A local learning watch that records requested X accounts, fetches only official 
 
 ## 2. Product & Functional Requirements
 - **FR-1:** Persist a watchlist that includes `cursor_ai` (`https://x.com/cursor_ai`) plus additional handles without requiring an X API.
-- **FR-2:** Fetch and parse RSS 2.0 and Atom 1.0 from configured official feeds.
+- **FR-2:** Fetch and parse RSS 2.0 and Atom 1.0 from configured official feeds (changelog RSS and forum announcements RSS). Do not ingest `latest.rss`.
 - **FR-3:** Refuse to fetch `x.com` / `twitter.com` URLs; mark those sources `BLOCKED`.
 - **FR-4:** Compute a delta of unseen items by stable `id` (guid / atom id / link).
 - **FR-5:** Render a markdown briefing from new items, preserving source URL and published date.
@@ -40,6 +40,7 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-7:** New official items produce `OBSERVED` learnings with `x_timeline_verified = false`.
 - [x] **AC-8:** Merging the same learnings twice does not duplicate `source_url`.
 - [x] **AC-9:** Operator handles are added as `BLOCKED`; duplicates and invalid tokens are skipped.
+- [x] **AC-10:** Forum announcements fixture parses and every title maps to a specific `apply_in_eos` (not the generic review fallback).
 
 ## 6. Verification & Evidence Plan
 ```bash

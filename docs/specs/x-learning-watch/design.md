@@ -4,7 +4,7 @@
 `scripts/engine/x-learning-watch.js` — pure functions plus an `ingest()` orchestrator.
 
 ## Data
-- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds
+- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`)
 - `docs/intelligence/x-watch/STATE.json` — `seen_ids`, last ingest timestamp
 - `docs/intelligence/x-watch/briefings/YYYY-MM-DD.md` — human briefing
 
@@ -25,4 +25,4 @@ Prefer `guid`, then Atom `id`, then `link`. IDs are stored as strings in a set.
 Markdown with date, blocked X accounts, new official items (title, date, URL, summary). If `newItems.length === 0`, briefing states no new official items.
 
 ## Recurrence
-Cloud Agent `subscribe_timer` (daily 12:00 UTC) re-runs ingest and only commits when `newItems.length > 0`.
+Cloud Agent `subscribe_timer` (daily 12:00 UTC) re-runs ingest of changelog + forum announcements and only commits when `newItems.length > 0`.

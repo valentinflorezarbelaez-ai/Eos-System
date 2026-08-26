@@ -63,6 +63,17 @@ test('parseFeed extracts RSS items', () => {
   assert.match(items[0].summary, /subscribe to events/);
 });
 
+test('parseFeed extracts forum announcement items', () => {
+  const forumXml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/announcements.rss.xml'), 'utf8');
+  const items = parseFeed(forumXml);
+  assert.equal(items.length, 8);
+  assert.equal(items[0].title, 'Origin Code Hosting');
+  assert.equal(items[0].id, 'forum.cursor.com-topic-168670');
+  assert.equal(items[0].link, 'https://forum.cursor.com/t/origin-code-hosting/168670');
+  assert.equal(items[1].title, 'Grok 4.6 is now Live!');
+  assert.equal(items[2].title, 'Introducing Grok Bot');
+});
+
 test('parseFeed extracts Atom entries', () => {
   const items = parseFeed(atomXml);
   assert.equal(items.length, 1);
@@ -85,6 +96,7 @@ test('isBlockedFetchUrl flags X hosts', () => {
   assert.equal(isBlockedFetchUrl('https://x.com/cursor_ai'), true);
   assert.equal(isBlockedFetchUrl('https://twitter.com/cursor_ai'), true);
   assert.equal(isBlockedFetchUrl('https://cursor.com/changelog/rss.xml'), false);
+  assert.equal(isBlockedFetchUrl('https://forum.cursor.com/c/announcements/11.rss'), false);
 });
 
 test('ingest does not fetch x.com and records BLOCKED', async () => {
@@ -121,6 +133,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   assert.equal(result.handles.includes('cursor_ai'), true);
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/changelog/rss.xml'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://forum.cursor.com/c/announcements/11.rss'),
     true
   );
 });
@@ -197,8 +213,13 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.ok(store.learnings.length >= 1);
   assert.equal(store.learnings.every((row) => row.epistemic_status === 'OBSERVED'), true);
   assert.equal(store.learnings.every((row) => row.x_timeline_verified === false), true);
-  assert.equal(store.learnings[0].source_url, 'https://cursor.com/changelog/08-19-26');
-  assert.match(store.learnings[0].apply_in_eos, /timer|Slack|PR/i);
+  const times = store.learnings.map((row) => Date.parse(row.published_at) || 0);
+  for (let i = 1; i < times.length; i += 1) {
+    assert.ok(times[i - 1] >= times[i], 'LEARNINGS.json must stay newest-first');
+  }
+  const harness = store.learnings.find((row) => row.source_url === 'https://cursor.com/changelog/08-19-26');
+  assert.ok(harness);
+  assert.match(harness.apply_in_eos, /timer|Slack|PR/i);
 });
 
 test('applyHint is specific for current official product titles', () => {
@@ -207,12 +228,59 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Improvements to Cursor in Slack', link: 'https://cursor.com/changelog/slack-improvements' },
     { title: 'Cursor Router', link: 'https://cursor.com/changelog/router' },
     { title: 'Side Chats and Conversation Search', link: 'https://cursor.com/changelog/side-chat' },
-    { title: 'MCPs and Organizations in Team Marketplaces', link: 'https://cursor.com/changelog/team-marketplace-updates' }
+    { title: 'MCPs and Organizations in Team Marketplaces', link: 'https://cursor.com/changelog/team-marketplace-updates' },
+    { title: 'Grok 4.6 is now Live!', link: 'https://forum.cursor.com/t/grok-4-6-is-now-live/168189' },
+    { title: 'Introducing Grok Bot', link: 'https://forum.cursor.com/t/introducing-grok-bot/168053' },
+    { title: 'Share your Thoughts on Grok 4.6', link: 'https://forum.cursor.com/t/share-your-thoughts-on-grok-4-6/168190' },
+    { title: 'New Campus Community Launches', link: 'https://forum.cursor.com/t/new-campus-community-launches/164026' },
+    { title: 'Addressing the recent Mindgard report', link: 'https://forum.cursor.com/t/addressing-the-recent-mindgard-report/165817' },
+    { title: 'Claude Opus 5 now available!', link: 'https://forum.cursor.com/t/claude-opus-5-now-available/166583' }
   ];
   for (const sample of samples) {
     const hint = applyHint({ ...sample, summary: sample.title });
     assert.equal(hint.startsWith('Review this official'), false, sample.title);
   }
+});
+
+test('applyHint is specific for every forum announcement fixture title', () => {
+  const forumXml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/announcements.rss.xml'), 'utf8');
+  for (const item of parseFeed(forumXml)) {
+    const hint = applyHint(item);
+    assert.equal(hint.startsWith('Review this official'), false, item.title);
+  }
+});
+
+test('ingest fetches changelog and forum announcements independently', async () => {
+  const forumXml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/announcements.rss.xml'), 'utf8');
+  const calls = [];
+  const result = await ingest({
+    watchlist: {
+      ...validWatchlist,
+      feeds: [
+        ...validWatchlist.feeds,
+        {
+          feed_id: 'FEED-CURSOR-FORUM-ANNOUNCEMENTS',
+          url: 'https://forum.cursor.com/c/announcements/11.rss',
+          kind: 'rss',
+          fetchable: true
+        }
+      ]
+    },
+    state: { seen_ids: [] },
+    fetchImpl: async (url) => {
+      calls.push(url);
+      if (String(url).includes('forum.cursor.com')) return { ok: true, text: forumXml };
+      return { ok: true, text: rssXml };
+    }
+  });
+  assert.deepEqual(calls, [
+    'https://cursor.com/changelog/rss.xml',
+    'https://forum.cursor.com/c/announcements/11.rss'
+  ]);
+  assert.equal(result.blocked.length, 0);
+  assert.equal(result.items.length, 10);
+  assert.equal(result.newItems.length, 10);
+  assert.equal(result.items.some((item) => item.feed_id === 'FEED-CURSOR-FORUM-ANNOUNCEMENTS'), true);
 });
 
 test('cited X posts never claim an X fetch', () => {

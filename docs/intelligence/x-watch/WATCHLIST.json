@@ -24,6 +24,13 @@
       "kind": "rss",
       "role": "PRIMARY_PRODUCT_UPDATES",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-FORUM-ANNOUNCEMENTS",
+      "url": "https://forum.cursor.com/c/announcements/11.rss",
+      "kind": "rss",
+      "role": "OFFICIAL_FORUM_ANNOUNCEMENTS",
+      "fetchable": true
     }
   ]
 }

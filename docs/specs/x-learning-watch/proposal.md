@@ -13,7 +13,7 @@ Keep EOS current on what Cursor publishes, starting from the requested account `
 Cursor Cloud Agents have no X MCP and no native X subscription. `x.com` returns HTTP 403 to unauthenticated fetch. X API access is paid and out of scope. Nitter received a cease-and-desist on 2026-08-24. Therefore this watch **must not scrape X**.
 
 ## Substitute (authorized)
-Ingest official, fetchable Cursor feeds and keep an extensible watchlist of X handles whose timelines remain `BLOCKED` until a lawful connector exists.
+Ingest official, fetchable Cursor feeds (changelog RSS and forum announcements RSS) and keep an extensible watchlist of X handles whose timelines remain `BLOCKED` until a lawful connector exists.
 
 ## Out of scope
 - Personal X home timeline ("everyone I follow") without OAuth
