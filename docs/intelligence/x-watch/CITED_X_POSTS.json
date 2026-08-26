@@ -68,9 +68,9 @@
       "handle": "cursor_ai",
       "about": "Cursor is now part of @SpaceX. Today, we have officially closed our acquisition.",
       "cited_by": "https://www.unrollnow.com/status/2088249881718919393",
-      "official_source": null,
+      "official_source": "https://cursor.com/blog/joining-spacex",
       "published_date": "2026-08-19",
-      "eos_note": "Cited X announcement, not present in changelog or forum-announcements RSS. Do not treat SpaceX/Grok marketing as EOS production evidence. Product truth for this watch remains official Cursor feeds.",
+      "eos_note": "Cited X announcement mirrored by official blog https://cursor.com/blog/joining-spacex. Do not treat SpaceX/Grok marketing as EOS production evidence.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     }

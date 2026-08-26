@@ -66,6 +66,49 @@ export function validateWatchlist(watchlist) {
   return { valid: true, handles };
 }
 
+export function parseCursorBlogIndex(html, origin = 'https://cursor.com') {
+  const text = String(html || '');
+  const byPath = new Map();
+  const re = /<a\b[^>]*href="(\/blog\/(?!topic\/)[^"#?]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+  let match;
+  while ((match = re.exec(text))) {
+    const blogPath = match[1];
+    const inner = match[2] || '';
+    const previous = byPath.get(blogPath);
+    if (previous && previous.innerLength >= inner.length) continue;
+    const alt = inner.match(/<img\b[^>]*\balt="([^"]*)"/i);
+    const pretty = inner.match(/<p\b[^>]*text-pretty[^>]*>([\s\S]*?)<\/p>/i);
+    const title = stripTags((alt && alt[1]) || (pretty && pretty[1]) || '');
+    const time = inner.match(/<time\b[^>]*dateTime="([^"]+)"/i);
+    byPath.set(blogPath, {
+      innerLength: inner.length,
+      title,
+      publishedAt: time ? time[1] : '',
+      summary: stripTags((pretty && pretty[1]) || (alt && alt[1]) || title)
+    });
+  }
+  return [...byPath.entries()]
+    .filter(([, row]) => row.innerLength >= 80)
+    .map(([blogPath, row]) => {
+      const link = `${origin}${blogPath}`;
+      const fallbackTitle = blogPath.split('/').pop().replace(/-/g, ' ');
+      return {
+        id: link,
+        title: row.title || fallbackTitle,
+        link,
+        publishedAt: row.publishedAt,
+        summary: row.summary || row.title || fallbackTitle
+      };
+    });
+}
+
+export function parseOfficialSource(text, kind) {
+  if (String(kind || '').toLowerCase() === 'html') {
+    return parseCursorBlogIndex(text);
+  }
+  return parseFeed(text);
+}
+
 export function parseFeed(xml) {
   const text = String(xml || '');
   if (/<entry\b/i.test(text) && /<feed\b/i.test(text)) {
@@ -132,6 +175,18 @@ export function applyHint(item) {
   }
   if (title.includes('campus')) {
     return 'Campus community is vendor outreach. No EOS Control Plane change.';
+  }
+  if (titleOrLink.includes('spacex') || link.includes('joining-spacex')) {
+    return 'Org/acquisition news. Do not change EOS governance from vendor ownership claims; keep FUNDACION frozen.';
+  }
+  if (link.includes('git-at-any-scale') || title.includes('git at any scale')) {
+    return 'Vendor git-scale narrative. GitHub remains source of truth for this repo unless Origin is explicitly adopted.';
+  }
+  if (link.includes('cloud-agent-environment') || titleOrLink.includes('cloud agent environment')) {
+    return 'Put install work in environment.json install and keep start for live services. Builds consume that split.';
+  }
+  if (link.includes('mixture-of-kittens') || title.includes('kitten')) {
+    return 'Vendor research post. Do not treat model-training writeups as EOS production evidence.';
   }
   if (blob.includes('/goal') || (link.includes('changelog/08-19-26') && blob.includes('goal'))) {
     return 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.';
@@ -258,6 +313,9 @@ export function applyHint(item) {
   }
   if (title.includes('mindgard')) {
     return 'Vendor security-response post. Run EOS security-auditor on our diffs; do not treat the forum thread as VERIFIED.';
+  }
+  if (link.includes('cursor.com/blog/')) {
+    return 'Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.';
   }
   return `Review this official Cursor item against EOS governance before adopting: ${item?.title || 'untitled'}.`;
 }
@@ -443,7 +501,7 @@ export async function ingest({ watchlist, state = { seen_ids: [] }, fetchImpl = 
       });
       continue;
     }
-    for (const item of parseFeed(response.text)) {
+    for (const item of parseOfficialSource(response.text, feed.kind)) {
       items.push({ ...item, feed_id: feed.feed_id });
     }
   }

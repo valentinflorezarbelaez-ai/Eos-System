@@ -1,7 +1,7 @@
 {
   "$schema": "./schema.json",
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:30:00Z",
+  "updated_at": "2026-08-26T23:35:00Z",
   "sources": [
     {
       "source_id": "SRC-0001",
@@ -223,6 +223,23 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://forum.cursor.com/c/announcements/11.rss"
+    },
+    {
+      "source_id": "SRC-0014",
+      "name": "Cursor Official Blog Index",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "ENGINEERING_BLOG",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor marketing blog; no public RSS. HTML index cards only. Not an X timeline.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/blog"
     }
   ]
 }

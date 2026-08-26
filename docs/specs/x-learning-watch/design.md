@@ -4,7 +4,7 @@
 `scripts/engine/x-learning-watch.js` — pure functions plus an `ingest()` orchestrator.
 
 ## Data
-- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`)
+- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`)
 - `docs/intelligence/x-watch/STATE.json` — `seen_ids`, last ingest timestamp
 - `docs/intelligence/x-watch/briefings/YYYY-MM-DD.md` — human briefing
 

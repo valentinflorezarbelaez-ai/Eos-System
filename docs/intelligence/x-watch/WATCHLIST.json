@@ -31,6 +31,13 @@
       "kind": "rss",
       "role": "OFFICIAL_FORUM_ANNOUNCEMENTS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-BLOG-INDEX",
+      "url": "https://cursor.com/blog",
+      "kind": "html",
+      "role": "OFFICIAL_BLOG_INDEX",
+      "fetchable": true
     }
   ]
 }

@@ -11,7 +11,9 @@ import {
   ingest,
   isBlockedFetchUrl,
   mergeLearnings,
+  parseCursorBlogIndex,
   parseFeed,
+  parseOfficialSource,
   renderBriefing,
   validateCitedXPosts,
   validateWatchlist
@@ -97,6 +99,7 @@ test('isBlockedFetchUrl flags X hosts', () => {
   assert.equal(isBlockedFetchUrl('https://twitter.com/cursor_ai'), true);
   assert.equal(isBlockedFetchUrl('https://cursor.com/changelog/rss.xml'), false);
   assert.equal(isBlockedFetchUrl('https://forum.cursor.com/c/announcements/11.rss'), false);
+  assert.equal(isBlockedFetchUrl('https://cursor.com/blog'), false);
 });
 
 test('ingest does not fetch x.com and records BLOCKED', async () => {
@@ -137,6 +140,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://forum.cursor.com/c/announcements/11.rss'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/blog' && feed.kind === 'html'),
     true
   );
 });
@@ -239,7 +246,9 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Share your Thoughts on Grok 4.6', link: 'https://forum.cursor.com/t/share-your-thoughts-on-grok-4-6/168190' },
     { title: 'New Campus Community Launches', link: 'https://forum.cursor.com/t/new-campus-community-launches/164026' },
     { title: 'Addressing the recent Mindgard report', link: 'https://forum.cursor.com/t/addressing-the-recent-mindgard-report/165817' },
-    { title: 'Claude Opus 5 now available!', link: 'https://forum.cursor.com/t/claude-opus-5-now-available/166583' }
+    { title: 'Claude Opus 5 now available!', link: 'https://forum.cursor.com/t/claude-opus-5-now-available/166583' },
+    { title: 'Cursor is now a part of SpaceX', link: 'https://cursor.com/blog/joining-spacex' },
+    { title: 'Introducing Grok 4.6', link: 'https://cursor.com/blog/grok-4-6' }
   ];
   for (const sample of samples) {
     const hint = applyHint({ ...sample, summary: sample.title });
@@ -313,6 +322,47 @@ test('ingest fetches changelog and forum announcements independently', async () 
   assert.equal(result.items.some((item) => item.feed_id === 'FEED-CURSOR-FORUM-ANNOUNCEMENTS'), true);
 });
 
+test('parseCursorBlogIndex extracts official blog cards and skips topic crumbs', () => {
+  const html = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/blog-index.html'), 'utf8');
+  const items = parseCursorBlogIndex(html);
+  assert.equal(items.length, 3);
+  assert.equal(items[0].id, 'https://cursor.com/blog/joining-spacex');
+  assert.equal(items[0].title, 'Cursor is now a part of SpaceX');
+  assert.match(items[0].publishedAt, /2026-08-14/);
+  assert.equal(items[1].title, 'Introducing Grok 4.6');
+  assert.equal(items[2].title, 'Introducing Cursor Start');
+  assert.equal(parseOfficialSource(html, 'html').length, 3);
+  assert.equal(applyHint(items[0]).includes('FUNDACION'), true);
+  assert.match(applyHint(items[1]), /Grok/i);
+});
+
+test('ingest fetches the official blog index as HTML', async () => {
+  const html = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/blog-index.html'), 'utf8');
+  const calls = [];
+  const result = await ingest({
+    watchlist: {
+      ...validWatchlist,
+      feeds: [
+        {
+          feed_id: 'FEED-CURSOR-BLOG-INDEX',
+          url: 'https://cursor.com/blog',
+          kind: 'html',
+          fetchable: true
+        }
+      ]
+    },
+    state: { seen_ids: [] },
+    fetchImpl: async (url) => {
+      calls.push(url);
+      return { ok: true, text: html };
+    }
+  });
+  assert.deepEqual(calls, ['https://cursor.com/blog']);
+  assert.equal(result.items.length, 3);
+  assert.equal(result.newItems.length, 3);
+  assert.equal(result.learnings.every((row) => row.epistemic_status === 'OBSERVED'), true);
+});
+
 test('cited X posts never claim an X fetch', () => {
   const doc = JSON.parse(fs.readFileSync(path.join(__dirname, '../docs/intelligence/x-watch/CITED_X_POSTS.json'), 'utf8'));
   const result = validateCitedXPosts(doc);
@@ -322,7 +372,7 @@ test('cited X posts never claim an X fetch', () => {
   assert.equal(official.includes('https://cursor.com/changelog/origin-code-hosting'), true);
   assert.equal(official.includes('https://cursor.com/changelog/08-13-26'), true);
   assert.equal(
-    doc.citations.some((row) => row.x_url === 'https://x.com/cursor_ai/status/2088249881718919393' && row.official_source === null),
+    doc.citations.some((row) => row.x_url === 'https://x.com/cursor_ai/status/2088249881718919393' && row.official_source === 'https://cursor.com/blog/joining-spacex'),
     true
   );
   assert.equal(
