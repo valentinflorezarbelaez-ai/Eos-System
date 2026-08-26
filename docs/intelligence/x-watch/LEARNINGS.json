@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:48:31.119Z",
+  "updated_at": "2026-08-26T23:51:16.319Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -909,6 +909,16 @@
       "published_at": "Tue, 17 Feb 2026 00:00:00 GMT",
       "summary": "This release introduces plugins for extending Cursor, improvements to core agent capabilities like subagents, and fine-grained network controls for sandboxed commands. Plugins on the Cursor Marketplace Plugins package skills, subagents, MCP servers, hooks, and rules, into a single install. The Cursor Marketplace lets you discover and install plugins to extend Cursor with pre-built capabilities. O…",
       "apply_in_eos": "Run isolated subagents on their own VMs when work must not collide with the parent branch.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-self-driving-codebases",
+      "title": "Towards self-driving codebases",
+      "source_url": "https://cursor.com/blog/self-driving-codebases",
+      "published_at": "2026-02-05T12:00:00.000Z",
+      "summary": "We're making a part of our multi-agent research harness available to try today in preview.",
+      "apply_in_eos": "Vendor multi-agent research preview. Do not treat research harness writeups as EOS production evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

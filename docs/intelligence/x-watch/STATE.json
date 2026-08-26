@@ -39,6 +39,7 @@
     "https://cursor.com/blog/joining-spacex",
     "https://cursor.com/blog/mixture-of-kittens",
     "https://cursor.com/blog/router",
+    "https://cursor.com/blog/self-driving-codebases",
     "https://cursor.com/blog/vercel",
     "https://cursor.com/blog/wayfair",
     "https://cursor.com/changelog/02-24-26",
@@ -97,7 +98,7 @@
     "https://cursor.com/help/ai-features/automations",
     "https://cursor.com/help/models-and-usage/grok-4-6"
   ],
-  "last_ingest_at": "2026-08-26T23:48:31.108Z",
-  "last_item_count": 96,
-  "last_new_item_count": 3
+  "last_ingest_at": "2026-08-26T23:51:16.312Z",
+  "last_item_count": 97,
+  "last_new_item_count": 1
 }
