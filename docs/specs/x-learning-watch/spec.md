@@ -40,7 +40,7 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-7:** New official items produce `OBSERVED` learnings with `x_timeline_verified = false`.
 - [x] **AC-8:** Merging the same learnings twice does not duplicate `source_url`.
 - [x] **AC-9:** Operator handles are added as `BLOCKED`; duplicates and invalid tokens are skipped.
-- [x] **AC-12:** Official blog article HTML yields `og:title` / `og:description`; ingest fetches article pages on `cursor.com` only.
+- [x] **AC-13:** CURRENT.md product actions dedupe duplicate titles (prefer changelog) and rank customer/press stories after product news.
 
 ## 6. Verification & Evidence Plan
 ```bash

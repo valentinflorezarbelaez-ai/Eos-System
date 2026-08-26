@@ -392,10 +392,6 @@ export function mergeLearnings(store, incoming) {
     }
     byUrl.set(learning.source_url, { ...previous, ...learning });
   }
-  const publishedMs = (value) => {
-    const ms = Date.parse(value);
-    return Number.isNaN(ms) ? 0 : ms;
-  };
   const learnings = [...byUrl.values()].sort((left, right) => {
     const byDate = publishedMs(right.published_at) - publishedMs(left.published_at);
     return byDate !== 0 ? byDate : String(left.source_url).localeCompare(String(right.source_url));
@@ -408,6 +404,54 @@ export function mergeLearnings(store, incoming) {
       learnings
     }
   };
+}
+
+function publishedMs(value) {
+  const ms = Date.parse(value);
+  return Number.isNaN(ms) ? 0 : ms;
+}
+
+function sourcePriority(url) {
+  const value = String(url || '');
+  if (value.includes('cursor.com/changelog/')) return 0;
+  if (value.includes('forum.cursor.com/t/')) return 1;
+  if (value.includes('cursor.com/blog/')) return 2;
+  return 3;
+}
+
+function isCustomerStory(row) {
+  return String(row?.apply_in_eos || '').includes('customer/press stories');
+}
+
+function normalizeTitleKey(title) {
+  return String(title || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+export function selectCurrentLearnings(learnings, limit = 10) {
+  const byTitle = new Map();
+  for (const row of learnings || []) {
+    const key = normalizeTitleKey(row?.title);
+    if (!key) continue;
+    const previous = byTitle.get(key);
+    if (!previous) {
+      byTitle.set(key, row);
+      continue;
+    }
+    const bySource = sourcePriority(row.source_url) - sourcePriority(previous.source_url);
+    if (bySource < 0 || (bySource === 0 && publishedMs(row.published_at) > publishedMs(previous.published_at))) {
+      byTitle.set(key, row);
+    }
+  }
+  return [...byTitle.values()]
+    .sort((left, right) => {
+      const customerDelta = Number(isCustomerStory(left)) - Number(isCustomerStory(right));
+      if (customerDelta !== 0) return customerDelta;
+      return publishedMs(right.published_at) - publishedMs(left.published_at);
+    })
+    .slice(0, limit);
 }
 
 export function normalizeHandle(raw) {
@@ -613,7 +657,7 @@ export function writeIngestArtifacts(rootDir, result, now = new Date()) {
   fs.writeFileSync(path.join(dir, 'LEARNINGS.json'), `${JSON.stringify(merged.store, null, 2)}\n`);
   result.learningsAdded = merged.added;
   result.learningsStore = merged.store;
-  const latest = (merged.store.learnings || []).slice(0, 10);
+  const latest = selectCurrentLearnings(merged.store.learnings, 10);
   const citationsFile = path.join(dir, 'CITED_X_POSTS.json');
   let citationLines = ['- none recorded'];
   if (fs.existsSync(citationsFile)) {
@@ -633,7 +677,7 @@ export function writeIngestArtifacts(rootDir, result, now = new Date()) {
     `Updated: ${merged.store.updated_at}`,
     `Store size: ${merged.store.learnings.length}`,
     '',
-    '## Official feed actions',
+    '## Official product actions',
     ...latest.map((learning) => `- **${learning.title}** — ${learning.apply_in_eos}\n  ${learning.source_url}`),
     '',
     '## @cursor_ai posts cited by third parties (not fetched)',

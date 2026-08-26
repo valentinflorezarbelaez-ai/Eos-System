@@ -16,6 +16,7 @@ import {
   parseFeed,
   parseOfficialSource,
   renderBriefing,
+  selectCurrentLearnings,
   validateCitedXPosts,
   validateWatchlist
 } from '../scripts/engine/x-learning-watch.js';
@@ -383,6 +384,56 @@ test('parseCursorBlogArticle reads official og tags', () => {
   assert.match(article.summary, /long-running agents/i);
   assert.match(article.summary, /They're stronger/);
   assert.match(article.publishedAt, /2026-08-12/);
+});
+
+test('selectCurrentLearnings prefers changelog product news over customer stories', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'IMDEX uses Cursor',
+      source_url: 'https://cursor.com/blog/imdex',
+      published_at: '2026-08-25T12:00:00.000Z',
+      apply_in_eos: 'Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.'
+    },
+    {
+      title: 'Origin Code Hosting',
+      source_url: 'https://forum.cursor.com/t/origin-code-hosting/168670',
+      published_at: 'Mon, 17 Aug 2026 17:42:08 +0000',
+      apply_in_eos: 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.'
+    },
+    {
+      title: 'Origin Code Hosting',
+      source_url: 'https://cursor.com/changelog/origin-code-hosting',
+      published_at: 'Mon, 17 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.'
+    },
+    {
+      title: 'Introducing Grok 4.6',
+      source_url: 'https://cursor.com/blog/grok-4-6',
+      published_at: '2026-08-12T00:00:00.000Z',
+      apply_in_eos: 'Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.'
+    },
+    {
+      title: 'Cloud Agents and Cursor Harness Improvements',
+      source_url: 'https://cursor.com/changelog/08-19-26',
+      published_at: 'Wed, 19 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.'
+    }
+  ], 4);
+  assert.equal(selected[0].source_url, 'https://cursor.com/changelog/08-19-26');
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/origin-code-hosting'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://forum.cursor.com/t/origin-code-hosting/168670'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/blog/grok-4-6'), true);
+  assert.equal(selected.at(-1).source_url, 'https://cursor.com/blog/imdex');
+});
+
+test('repo CURRENT.md leads with product actions, not customer stories', () => {
+  const current = fs.readFileSync(path.join(__dirname, '../docs/intelligence/x-watch/CURRENT.md'), 'utf8');
+  assert.match(current, /## Official product actions/);
+  const section = current.split('## Official product actions')[1] || '';
+  const first = section.split('\n').find((line) => line.startsWith('- **'));
+  assert.ok(first);
+  assert.equal(first.includes('IMDEX'), false);
+  assert.equal(first.includes('customer/press'), false);
 });
 
 test('cited X posts never claim an X fetch', () => {
