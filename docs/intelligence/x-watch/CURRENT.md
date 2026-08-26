@@ -2,8 +2,8 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-26T23:36:54.998Z
-Store size: 91
+Updated: 2026-08-26T23:44:25.952Z
+Store size: 93
 
 ## Official product actions
 - **Cloud Agents and Cursor Harness Improvements** — Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.
@@ -18,14 +18,14 @@ Store size: 91
   https://cursor.com/blog/aiuc-1
 - **Cloud Agents Start 3x Faster with Builds** — Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.
   https://cursor.com/changelog/08-13-26
-- **Grok 4.6 is now Live!** — Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.
-  https://forum.cursor.com/t/grok-4-6-is-now-live/168189
-- **Introducing Grok 4.6** — Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.
-  https://cursor.com/blog/grok-4-6
+- **Grok 4.6** — Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.
+  https://cursor.com/help/models-and-usage/grok-4-6
 - **Introducing Grok Bot** — Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.
   https://forum.cursor.com/t/introducing-grok-bot/168053
 - **How Cursor Router chooses the right model for the task** — Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.
   https://cursor.com/blog/how-cursor-router-works
+- **Models & Pricing** — Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.
+  https://cursor.com/docs/models-and-pricing
 
 ## @cursor_ai posts cited by third parties (not fetched)
 - We're continuing to improve cloud agents — cited by https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents (not fetched from X)

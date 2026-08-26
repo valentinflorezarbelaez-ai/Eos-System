@@ -90,9 +90,11 @@
     "https://cursor.com/changelog/shared-canvases",
     "https://cursor.com/changelog/side-chat",
     "https://cursor.com/changelog/slack-improvements",
-    "https://cursor.com/changelog/team-marketplace-updates"
+    "https://cursor.com/changelog/team-marketplace-updates",
+    "https://cursor.com/docs/models-and-pricing",
+    "https://cursor.com/help/models-and-usage/grok-4-6"
   ],
-  "last_ingest_at": "2026-08-26T23:36:54.991Z",
-  "last_item_count": 91,
+  "last_ingest_at": "2026-08-26T23:44:25.944Z",
+  "last_item_count": 93,
   "last_new_item_count": 0
 }

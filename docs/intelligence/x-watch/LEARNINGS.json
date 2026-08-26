@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:36:54.998Z",
+  "updated_at": "2026-08-26T23:44:25.952Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -909,6 +909,26 @@
       "published_at": "Tue, 17 Feb 2026 00:00:00 GMT",
       "summary": "This release introduces plugins for extending Cursor, improvements to core agent capabilities like subagents, and fine-grained network controls for sandboxed commands. Plugins on the Cursor Marketplace Plugins package skills, subagents, MCP servers, hooks, and rules, into a single install. The Cursor Marketplace lets you discover and install plugins to extend Cursor with pre-built capabilities. O…",
       "apply_in_eos": "Run isolated subagents on their own VMs when work must not collide with the parent branch.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-models-and-pricing",
+      "title": "Models & Pricing",
+      "source_url": "https://cursor.com/docs/models-and-pricing",
+      "published_at": null,
+      "summary": "Explore frontier models, two usage pools, plan pricing, and per-model rates.",
+      "apply_in_eos": "Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-models-and-usage-grok-4-6",
+      "title": "Grok 4.6",
+      "source_url": "https://cursor.com/help/models-and-usage/grok-4-6",
+      "published_at": null,
+      "summary": "What Grok 4.6 is, which plans include it, and how it compares to Composer.",
+      "apply_in_eos": "Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     }

@@ -443,6 +443,11 @@ function sourcePriority(url) {
   return 4;
 }
 
+function isLivingOfficialDoc(url) {
+  const value = String(url || '');
+  return value.includes('cursor.com/docs/') || value.includes('cursor.com/help/');
+}
+
 function isLowPriorityBriefing(row) {
   const hint = String(row?.apply_in_eos || '');
   return hint.includes('customer/press stories') || hint.includes('feedback thread') || hint.includes('Campus community');
@@ -482,14 +487,23 @@ export function selectCurrentLearnings(learnings, limit = 10) {
       previous.clusterPublished = clusterPublished;
     }
   }
-  return [...byKey.values()]
+  const ranked = [...byKey.values()]
     .sort((left, right) => {
       const priorityDelta = Number(isLowPriorityBriefing(left.row)) - Number(isLowPriorityBriefing(right.row));
       if (priorityDelta !== 0) return priorityDelta;
       return right.clusterPublished - left.clusterPublished;
     })
-    .slice(0, limit)
     .map((entry) => entry.row);
+  const top = ranked.slice(0, limit);
+  const reserved = ranked
+    .filter((row) => isLivingOfficialDoc(row.source_url))
+    .filter((row) => !top.some((item) => item.source_url === row.source_url))
+    .slice(0, limit);
+  if (reserved.length === 0) return top;
+  const head = ranked
+    .filter((row) => !reserved.some((item) => item.source_url === row.source_url))
+    .slice(0, Math.max(0, limit - reserved.length));
+  return [...head, ...reserved];
 }
 
 export function normalizeHandle(raw) {

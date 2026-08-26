@@ -567,6 +567,28 @@ test('selectCurrentLearnings clusters Grok 4.6 onto official docs/help', () => {
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
 });
 
+test('selectCurrentLearnings keeps undated official docs/help pages in CURRENT', () => {
+  const dated = [];
+  for (let i = 0; i < 12; i += 1) {
+    dated.push({
+      title: `Changelog ${i}`,
+      source_url: `https://cursor.com/changelog/item-${i}`,
+      published_at: `2026-08-${String(26 - i).padStart(2, '0')}T00:00:00.000Z`,
+      apply_in_eos: 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.'
+    });
+  }
+  dated.push({
+    title: 'Models & Pricing',
+    source_url: 'https://cursor.com/docs/models-and-pricing',
+    published_at: null,
+    apply_in_eos: 'Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.'
+  });
+  const selected = selectCurrentLearnings(dated, 10);
+  assert.equal(selected[0].source_url, 'https://cursor.com/changelog/item-0');
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
+  assert.equal(selected.length, 10);
+});
+
 test('repo CURRENT.md leads with product actions, not customer stories', () => {
   const current = fs.readFileSync(path.join(__dirname, '../docs/intelligence/x-watch/CURRENT.md'), 'utf8');
   assert.match(current, /## Official product actions/);
@@ -575,6 +597,8 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.ok(first);
   assert.equal(first.includes('IMDEX'), false);
   assert.equal(first.includes('customer/press'), false);
+  assert.match(current, /cursor.com\/help\/models-and-usage\/grok-4-6/);
+  assert.match(current, /cursor.com\/docs\/models-and-pricing/);
 });
 
 test('cited X posts never claim an X fetch', () => {
