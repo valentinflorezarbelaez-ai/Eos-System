@@ -2,30 +2,30 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-26T23:34:42.648Z
+Updated: 2026-08-26T23:36:54.998Z
 Store size: 91
 
-## Official feed actions
-- **IMDEX uses Cursor to build integrated subsurface data and analytics platform in months, not years** — Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.
-  https://cursor.com/blog/imdex
+## Official product actions
 - **Cloud Agents and Cursor Harness Improvements** — Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.
   https://cursor.com/changelog/08-19-26
 - **Git at any scale** — Vendor git-scale narrative. GitHub remains source of truth for this repo unless Origin is explicitly adopted.
   https://cursor.com/blog/git-at-any-scale
 - **Origin Code Hosting** — Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.
-  https://forum.cursor.com/t/origin-code-hosting/168670
-- **Origin Code Hosting** — Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.
   https://cursor.com/changelog/origin-code-hosting
 - **Cursor is now a part of SpaceX** — Org/acquisition news. Do not change EOS governance from vendor ownership claims; keep FUNDACION frozen.
   https://cursor.com/blog/joining-spacex
-- **Firetiger joins Cursor** — Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.
-  https://cursor.com/blog/firetiger
 - **Cursor earns AIUC-1 certification for agent security and reliability** — Vendor security certification marketing. EOS security-auditor on our diffs remains the Control Plane check.
   https://cursor.com/blog/aiuc-1
-- **Cloud agents start 3x faster with builds** — Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.
-  https://cursor.com/blog/builds
 - **Cloud Agents Start 3x Faster with Builds** — Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.
   https://cursor.com/changelog/08-13-26
+- **Grok 4.6 is now Live!** — Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.
+  https://forum.cursor.com/t/grok-4-6-is-now-live/168189
+- **Introducing Grok 4.6** — Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.
+  https://cursor.com/blog/grok-4-6
+- **Introducing Grok Bot** — Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.
+  https://forum.cursor.com/t/introducing-grok-bot/168053
+- **How Cursor Router chooses the right model for the task** — Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.
+  https://cursor.com/blog/how-cursor-router-works
 
 ## @cursor_ai posts cited by third parties (not fetched)
 - We're continuing to improve cloud agents — cited by https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents (not fetched from X)

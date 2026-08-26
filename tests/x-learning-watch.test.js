@@ -395,6 +395,12 @@ test('selectCurrentLearnings prefers changelog product news over customer storie
       apply_in_eos: 'Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.'
     },
     {
+      title: 'Share your Thoughts on Grok 4.6',
+      source_url: 'https://forum.cursor.com/t/share-your-thoughts-on-grok-4-6/168190',
+      published_at: '2026-08-12T17:37:00.000Z',
+      apply_in_eos: 'Vendor feedback thread. Do not treat forum sentiment as EOS evidence.'
+    },
+    {
       title: 'Origin Code Hosting',
       source_url: 'https://forum.cursor.com/t/origin-code-hosting/168670',
       published_at: 'Mon, 17 Aug 2026 17:42:08 +0000',

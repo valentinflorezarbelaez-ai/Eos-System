@@ -419,8 +419,9 @@ function sourcePriority(url) {
   return 3;
 }
 
-function isCustomerStory(row) {
-  return String(row?.apply_in_eos || '').includes('customer/press stories');
+function isLowPriorityBriefing(row) {
+  const hint = String(row?.apply_in_eos || '');
+  return hint.includes('customer/press stories') || hint.includes('feedback thread') || hint.includes('Campus community');
 }
 
 function normalizeTitleKey(title) {
@@ -447,8 +448,8 @@ export function selectCurrentLearnings(learnings, limit = 10) {
   }
   return [...byTitle.values()]
     .sort((left, right) => {
-      const customerDelta = Number(isCustomerStory(left)) - Number(isCustomerStory(right));
-      if (customerDelta !== 0) return customerDelta;
+      const priorityDelta = Number(isLowPriorityBriefing(left)) - Number(isLowPriorityBriefing(right));
+      if (priorityDelta !== 0) return priorityDelta;
       return publishedMs(right.published_at) - publishedMs(left.published_at);
     })
     .slice(0, limit);
