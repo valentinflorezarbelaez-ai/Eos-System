@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   addWatchedHandles,
+  applyHint,
   computeNewItems,
   extractActionableLearnings,
   ingest,
@@ -12,6 +13,7 @@ import {
   mergeLearnings,
   parseFeed,
   renderBriefing,
+  validateCitedXPosts,
   validateWatchlist
 } from '../scripts/engine/x-learning-watch.js';
 
@@ -197,4 +199,36 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(store.learnings.every((row) => row.x_timeline_verified === false), true);
   assert.equal(store.learnings[0].source_url, 'https://cursor.com/changelog/08-19-26');
   assert.match(store.learnings[0].apply_in_eos, /timer|Slack|PR/i);
+});
+
+test('applyHint is specific for current official product titles', () => {
+  const samples = [
+    { title: 'Google Workspace Plugins', link: 'https://cursor.com/changelog/google-workspace-plugins' },
+    { title: 'Improvements to Cursor in Slack', link: 'https://cursor.com/changelog/slack-improvements' },
+    { title: 'Cursor Router', link: 'https://cursor.com/changelog/router' },
+    { title: 'Side Chats and Conversation Search', link: 'https://cursor.com/changelog/side-chat' },
+    { title: 'MCPs and Organizations in Team Marketplaces', link: 'https://cursor.com/changelog/team-marketplace-updates' }
+  ];
+  for (const sample of samples) {
+    const hint = applyHint({ ...sample, summary: sample.title });
+    assert.equal(hint.startsWith('Review this official'), false, sample.title);
+  }
+});
+
+test('cited X posts never claim an X fetch', () => {
+  const doc = JSON.parse(fs.readFileSync(path.join(__dirname, '../docs/intelligence/x-watch/CITED_X_POSTS.json'), 'utf8'));
+  const result = validateCitedXPosts(doc);
+  assert.equal(result.valid, true);
+  assert.equal(doc.citations.every((row) => row.fetched_from_x === false), true);
+  assert.equal(
+    validateCitedXPosts({
+      citations: [{
+        x_url: 'https://x.com/cursor_ai/status/1',
+        cited_by: 'https://x.com/cursor_ai',
+        fetched_from_x: false,
+        epistemic_status: 'CITED_NOT_FETCHED'
+      }]
+    }).valid,
+    false
+  );
 });

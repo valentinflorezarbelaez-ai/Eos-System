@@ -6,6 +6,7 @@ Keep EOS current on Cursor product changes starting from the requested account [
 - Official changelog RSS: `https://cursor.com/changelog/rss.xml`
 - Watchlist of X handles (seed: `@cursor_ai`)
 - Daily Cloud Agent timer (see run subscriptions)
+- Cited `@cursor_ai` status URLs recorded from third-party articles in `CITED_X_POSTS.json` (`CITED_NOT_FETCHED`, never fetched from X)
 
 ## What is not connected
 - X OAuth / X MCP (does not exist in this environment)
