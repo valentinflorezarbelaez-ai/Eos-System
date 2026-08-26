@@ -70,7 +70,7 @@ export function validateWatchlist(watchlist) {
 export function parseCursorBlogIndex(html, origin = 'https://cursor.com') {
   const text = String(html || '');
   const byPath = new Map();
-  const re = /<a\b[^>]*href="(\/blog\/(?!topic\/)[^"#?]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+  const re = /<a\b[^>]*href="(\/blog\/(?!topic\/)(?!page\/)[^"#?]+)"[^>]*>([\s\S]*?)<\/a>/gi;
   let match;
   while ((match = re.exec(text))) {
     const blogPath = match[1];
@@ -89,7 +89,6 @@ export function parseCursorBlogIndex(html, origin = 'https://cursor.com') {
     });
   }
   return [...byPath.entries()]
-    .filter(([, row]) => row.innerLength >= 80)
     .map(([blogPath, row]) => {
       const link = `${origin}${blogPath}`;
       const fallbackTitle = blogPath.split('/').pop().replace(/-/g, ' ');
@@ -247,6 +246,9 @@ export function applyHint(item) {
   }
   if (link.includes('mixture-of-kittens') || title.includes('kitten')) {
     return 'Vendor research post. Do not treat model-training writeups as EOS production evidence.';
+  }
+  if (link.includes('self-driving-codebases') || title.includes('self-driving')) {
+    return 'Vendor multi-agent research preview. Do not treat research harness writeups as EOS production evidence.';
   }
   if (blob.includes('/goal') || (link.includes('changelog/08-19-26') && blob.includes('goal'))) {
     return 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.';

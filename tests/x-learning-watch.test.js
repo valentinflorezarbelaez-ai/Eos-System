@@ -282,6 +282,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
     { title: 'Origin', link: 'https://cursor.com/docs/origin' },
+    { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -359,20 +360,24 @@ test('ingest fetches changelog and forum announcements independently', async () 
 test('parseCursorBlogIndex extracts official blog cards and skips topic crumbs', () => {
   const html = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/blog-index.html'), 'utf8');
   const items = parseCursorBlogIndex(html);
-  assert.equal(items.length, 3);
+  assert.equal(items.length, 4);
   assert.equal(items[0].id, 'https://cursor.com/blog/joining-spacex');
   assert.equal(items[0].title, 'Cursor is now a part of SpaceX');
   assert.match(items[0].publishedAt, /2026-08-14/);
   assert.equal(items[1].title, 'Introducing Grok 4.6');
   assert.equal(items[2].title, 'Introducing Cursor Start');
-  assert.equal(parseOfficialSource(html, 'html').length, 3);
+  assert.equal(items[3].id, 'https://cursor.com/blog/self-driving-codebases');
+  assert.equal(items[3].title, 'self driving codebases');
+  assert.equal(parseOfficialSource(html, 'html').length, 4);
   assert.equal(applyHint(items[0]).includes('FUNDACION'), true);
   assert.match(applyHint(items[1]), /Grok/i);
+  assert.match(applyHint(items[3]), /research/i);
 });
 
 test('ingest fetches the official blog index as HTML', async () => {
   const html = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/blog-index.html'), 'utf8');
   const articleHtml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/blog-article.html'), 'utf8');
+  const researchHtml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/blog-self-driving.html'), 'utf8');
   const calls = [];
   const result = await ingest({
     watchlist: {
@@ -390,17 +395,22 @@ test('ingest fetches the official blog index as HTML', async () => {
     fetchImpl: async (url) => {
       calls.push(url);
       if (url === 'https://cursor.com/blog') return { ok: true, text: html };
+      if (String(url).includes('self-driving-codebases')) return { ok: true, text: researchHtml };
       return { ok: true, text: articleHtml };
     }
   });
   assert.equal(calls[0], 'https://cursor.com/blog');
   assert.equal(calls.includes('https://cursor.com/blog/joining-spacex'), true);
   assert.equal(calls.includes('https://cursor.com/blog/grok-4-6'), true);
+  assert.equal(calls.includes('https://cursor.com/blog/self-driving-codebases'), true);
   assert.equal(calls.includes('https://x.com/cursor_ai'), false);
-  assert.equal(result.items.length, 3);
-  assert.equal(result.newItems.length, 3);
+  assert.equal(result.items.length, 4);
+  assert.equal(result.newItems.length, 4);
   const grok = result.items.find((item) => item.link === 'https://cursor.com/blog/grok-4-6');
   assert.match(grok.summary, /long-running agents/i);
+  const research = result.items.find((item) => item.link === 'https://cursor.com/blog/self-driving-codebases');
+  assert.equal(research.title, 'Towards self-driving codebases');
+  assert.match(research.summary, /research harness/i);
   assert.equal(result.learnings.every((row) => row.epistemic_status === 'OBSERVED'), true);
 });
 
