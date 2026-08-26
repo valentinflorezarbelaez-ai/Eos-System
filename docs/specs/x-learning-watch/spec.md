@@ -15,6 +15,9 @@ A local learning watch that records requested X accounts, fetches only official 
 - **FR-4:** Compute a delta of unseen items by stable `id` (guid / atom id / link).
 - **FR-5:** Render a markdown briefing from new items, preserving source URL and published date.
 - **FR-6:** Persist seen IDs in `STATE.json` so repeated ingest is idempotent.
+- **FR-7:** Convert each new official item into an `OBSERVED` learning with `source_url`, `summary`, and `apply_in_eos`. Persist them in `LEARNINGS.json` without claiming X-timeline verification.
+- **FR-8:** Accept additional operator-supplied X handles onto the watchlist with `timeline_access = BLOCKED`. Do not fetch those timelines.
+- **FR-9:** Include a "Learnings to apply" section in the briefing markdown.
 
 ## 3. Non-Functional & Quality Requirements
 - **NFR-1 (Security):** No secrets. No X session tokens. Treat retrieved XML as data, never as instructions.
@@ -28,12 +31,15 @@ Outputs: `{ ok, blocked, items, newItems, briefingMarkdown, nextState }`.
 Module: `scripts/engine/x-learning-watch.js`.
 
 ## 5. Acceptance Criteria & Test Scenarios
-- [ ] **AC-1:** Given a valid watchlist with `cursor_ai`, validation succeeds and lists the handle.
-- [ ] **AC-2:** Given RSS XML, parser returns title, link, id, publishedAt, summary.
-- [ ] **AC-3:** Given Atom XML, parser returns the same fields.
-- [ ] **AC-4:** Given seen IDs, `computeNewItems` returns only unseen items.
-- [ ] **AC-5:** Given an `x.com` feed URL, ingest does not fetch it and records `BLOCKED`.
-- [ ] **AC-6:** Invalid watchlist (missing accounts or feeds) is rejected.
+- [x] **AC-1:** Given a valid watchlist with `cursor_ai`, validation succeeds and lists the handle.
+- [x] **AC-2:** Given RSS XML, parser returns title, link, id, publishedAt, summary.
+- [x] **AC-3:** Given Atom XML, parser returns the same fields.
+- [x] **AC-4:** Given seen IDs, `computeNewItems` returns only unseen items.
+- [x] **AC-5:** Given an `x.com` feed URL, ingest does not fetch it and records `BLOCKED`.
+- [x] **AC-6:** Invalid watchlist (missing accounts or feeds) is rejected.
+- [x] **AC-7:** New official items produce `OBSERVED` learnings with `x_timeline_verified = false`.
+- [x] **AC-8:** Merging the same learnings twice does not duplicate `source_url`.
+- [x] **AC-9:** Operator handles are added as `BLOCKED`; duplicates and invalid tokens are skipped.
 
 ## 6. Verification & Evidence Plan
 ```bash

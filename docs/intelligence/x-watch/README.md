@@ -18,7 +18,13 @@ node --test tests/x-learning-watch.test.js
 npm run watch:x
 ```
 
-`npm run watch:x` writes `STATE.json` and a briefing under `briefings/` only when there are new changelog items.
+`npm run watch:x` writes `STATE.json`, merges `LEARNINGS.json`, refreshes `CURRENT.md`, and writes a briefing under `briefings/` only when there are new changelog items.
+
+Add handles without fetching X:
+
+```bash
+node scripts/engine/x-learning-watch.js --add-handles anysphere some_handle
+```
 
 ## Add more accounts
 Edit `WATCHLIST.json` and append to `accounts`:

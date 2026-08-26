@@ -4,9 +4,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  addWatchedHandles,
   computeNewItems,
+  extractActionableLearnings,
   ingest,
   isBlockedFetchUrl,
+  mergeLearnings,
   parseFeed,
   renderBriefing,
   validateWatchlist
@@ -131,4 +134,67 @@ test('ingest fetches official RSS and updates seen ids', async () => {
   assert.equal(result.nextState.seen_ids.includes('https://cursor.com/changelog/origin-code-hosting'), true);
   assert.match(renderBriefing(result), /Origin Code Hosting/);
   assert.match(renderBriefing(result), /cursor_ai/);
+  assert.equal(result.learnings.length, 1);
+  assert.equal(result.learnings[0].source_url, 'https://cursor.com/changelog/origin-code-hosting');
+  assert.equal(result.learnings[0].epistemic_status, 'OBSERVED');
+  assert.equal(result.learnings[0].x_timeline_verified, false);
+  assert.match(result.learnings[0].apply_in_eos, /Origin|GitHub|host/i);
+  assert.match(renderBriefing(result), /Learnings to apply/);
+});
+
+test('extractActionableLearnings maps changelog items to OBSERVED lessons', () => {
+  const items = parseFeed(rssXml);
+  const learnings = extractActionableLearnings(items);
+  assert.equal(learnings.length, 2);
+  assert.equal(learnings[0].learning_id.startsWith('LRN-CURSOR-'), true);
+  assert.equal(learnings[0].x_timeline_verified, false);
+  assert.match(learnings[0].apply_in_eos, /timer|PR|Slack|subscription/i);
+});
+
+test('mergeLearnings is idempotent by source_url', () => {
+  const learnings = extractActionableLearnings(parseFeed(rssXml));
+  const first = mergeLearnings({ learnings: [] }, learnings);
+  assert.equal(first.added, 2);
+  const second = mergeLearnings(first.store, learnings);
+  assert.equal(second.added, 0);
+  assert.equal(second.store.learnings.length, 2);
+});
+
+test('mergeLearnings refreshes a row when the incoming summary is richer', () => {
+  const seed = extractActionableLearnings(parseFeed(rssXml));
+  const first = mergeLearnings({ learnings: [] }, seed);
+  const richer = {
+    ...seed[0],
+    summary: `${seed[0].summary} Subscriptions /goal isolated subagents custom modes steering.`
+  };
+  const second = mergeLearnings(first.store, [richer]);
+  assert.equal(second.added, 0);
+  assert.match(second.store.learnings.find((row) => row.source_url === seed[0].source_url).summary, /steering/);
+});
+
+test('mergeLearnings sorts by parsed publication date, newest first', () => {
+  const merged = mergeLearnings({ learnings: [] }, [
+    { source_url: 'https://cursor.com/changelog/ipad', title: 'iPad', published_at: 'Wed, 29 Jul 2026 00:00:00 GMT', summary: 'old' },
+    { source_url: 'https://cursor.com/changelog/08-19-26', title: 'Harness', published_at: 'Wed, 19 Aug 2026 00:00:00 GMT', summary: 'new' }
+  ]);
+  assert.equal(merged.store.learnings[0].source_url, 'https://cursor.com/changelog/08-19-26');
+});
+
+test('addWatchedHandles records operator handles as BLOCKED timelines', () => {
+  const result = addWatchedHandles(validWatchlist, ['@anysphere', 'https://x.com/cursor_ai', 'bad handle!', '']);
+  assert.deepEqual(result.added, ['anysphere']);
+  assert.equal(result.skipped.some((row) => row.reason === 'DUPLICATE'), true);
+  assert.equal(result.skipped.some((row) => row.reason === 'INVALID'), true);
+  const extra = result.watchlist.accounts.find((account) => account.handle === 'anysphere');
+  assert.equal(extra.timeline_access, 'BLOCKED');
+  assert.equal(extra.url, 'https://x.com/anysphere');
+});
+
+test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
+  const store = JSON.parse(fs.readFileSync(path.join(__dirname, '../docs/intelligence/x-watch/LEARNINGS.json'), 'utf8'));
+  assert.ok(store.learnings.length >= 1);
+  assert.equal(store.learnings.every((row) => row.epistemic_status === 'OBSERVED'), true);
+  assert.equal(store.learnings.every((row) => row.x_timeline_verified === false), true);
+  assert.equal(store.learnings[0].source_url, 'https://cursor.com/changelog/08-19-26');
+  assert.match(store.learnings[0].apply_in_eos, /timer|Slack|PR/i);
 });
