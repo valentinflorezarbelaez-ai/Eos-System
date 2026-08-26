@@ -32,7 +32,7 @@
         "properties": {
           "feed_id": { "type": "string" },
           "url": { "type": "string" },
-          "kind": { "type": "string", "enum": ["rss", "atom", "html"] },
+          "kind": { "type": "string", "enum": ["rss", "atom", "html", "html-page"] },
           "role": { "type": "string" },
           "fetchable": { "type": "boolean" }
         }

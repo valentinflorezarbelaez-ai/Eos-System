@@ -103,8 +103,25 @@ export function parseCursorBlogIndex(html, origin = 'https://cursor.com') {
     });
 }
 
-export function parseOfficialSource(text, kind) {
-  if (String(kind || '').toLowerCase() === 'html') {
+export function parseOfficialHtmlPage(html, sourceUrl) {
+  const link = String(sourceUrl || '').trim();
+  if (!link) return [];
+  const article = parseCursorBlogArticle(html);
+  return [{
+    id: link,
+    title: article.title || link,
+    link,
+    publishedAt: article.publishedAt || '',
+    summary: article.summary || article.title || link
+  }];
+}
+
+export function parseOfficialSource(text, kind, sourceUrl) {
+  const normalized = String(kind || '').toLowerCase();
+  if (normalized === 'html-page') {
+    return parseOfficialHtmlPage(text, sourceUrl);
+  }
+  if (normalized === 'html') {
     return parseCursorBlogIndex(text);
   }
   return parseFeed(text);
@@ -119,7 +136,7 @@ export function parseCursorBlogArticle(html) {
     const reversed = text.match(new RegExp(`<meta\\b[^>]*content=["']([^"']*)["'][^>]*(?:property|name)=["']${escaped}["']`, 'i'));
     return reversed ? decodeXmlEntities(reversed[1]) : '';
   };
-  const stripBrand = (value) => stripTags(value).replace(/\s*·\s*Cursor\s*$/i, '').trim();
+  const stripBrand = (value) => stripTags(value).replace(/\s*[·|]\s*Cursor(?:\s+Docs)?\s*$/i, '').trim();
   const titleTag = text.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   const time = text.match(/<time\b[^>]*dateTime=["']([^"']+)["']/i);
   return {
@@ -342,6 +359,12 @@ export function applyHint(item) {
   if (titleOrLink.includes('mermaid')) {
     return 'Mermaid in CLI is optional documentation. LEARNINGS.json remains the evidence store for this watch.';
   }
+  if (link.includes('/help/models-and-usage/grok-4-6') || link.includes('cursor.com/help/models-and-usage/grok')) {
+    return 'Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.';
+  }
+  if (link.includes('cursor.com/docs/models-and-pricing') || title.includes('models & pricing')) {
+    return 'Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.';
+  }
   if (title.includes('grok bot')) {
     return 'Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.';
   }
@@ -414,9 +437,10 @@ function publishedMs(value) {
 function sourcePriority(url) {
   const value = String(url || '');
   if (value.includes('cursor.com/changelog/')) return 0;
-  if (value.includes('forum.cursor.com/t/')) return 1;
+  if (value.includes('cursor.com/docs/') || value.includes('cursor.com/help/')) return 1;
   if (value.includes('cursor.com/blog/')) return 2;
-  return 3;
+  if (value.includes('forum.cursor.com')) return 3;
+  return 4;
 }
 
 function isLowPriorityBriefing(row) {
@@ -431,28 +455,41 @@ function normalizeTitleKey(title) {
     .trim();
 }
 
+function currentClusterKey(learning) {
+  const url = String(learning?.source_url || '').toLowerCase();
+  const title = String(learning?.title || '').toLowerCase();
+  if (title.includes('grok 4.6') || url.includes('grok-4-6')) {
+    return 'cluster:grok-4-6';
+  }
+  return normalizeTitleKey(learning?.title);
+}
+
 export function selectCurrentLearnings(learnings, limit = 10) {
-  const byTitle = new Map();
+  const byKey = new Map();
   for (const row of learnings || []) {
-    const key = normalizeTitleKey(row?.title);
+    const key = currentClusterKey(row);
     if (!key) continue;
-    const previous = byTitle.get(key);
+    const previous = byKey.get(key);
     if (!previous) {
-      byTitle.set(key, row);
+      byKey.set(key, { row, clusterPublished: publishedMs(row.published_at) });
       continue;
     }
-    const bySource = sourcePriority(row.source_url) - sourcePriority(previous.source_url);
-    if (bySource < 0 || (bySource === 0 && publishedMs(row.published_at) > publishedMs(previous.published_at))) {
-      byTitle.set(key, row);
+    const clusterPublished = Math.max(previous.clusterPublished, publishedMs(row.published_at));
+    const bySource = sourcePriority(row.source_url) - sourcePriority(previous.row.source_url);
+    if (bySource < 0 || (bySource === 0 && publishedMs(row.published_at) > publishedMs(previous.row.published_at))) {
+      byKey.set(key, { row, clusterPublished });
+    } else {
+      previous.clusterPublished = clusterPublished;
     }
   }
-  return [...byTitle.values()]
+  return [...byKey.values()]
     .sort((left, right) => {
-      const priorityDelta = Number(isLowPriorityBriefing(left)) - Number(isLowPriorityBriefing(right));
+      const priorityDelta = Number(isLowPriorityBriefing(left.row)) - Number(isLowPriorityBriefing(right.row));
       if (priorityDelta !== 0) return priorityDelta;
-      return publishedMs(right.published_at) - publishedMs(left.published_at);
+      return right.clusterPublished - left.clusterPublished;
     })
-    .slice(0, limit);
+    .slice(0, limit)
+    .map((entry) => entry.row);
 }
 
 export function normalizeHandle(raw) {
@@ -592,8 +629,9 @@ export async function ingest({ watchlist, state = { seen_ids: [] }, fetchImpl = 
       });
       continue;
     }
-    let parsed = parseOfficialSource(response.text, feed.kind);
-    if (String(feed.kind || '').toLowerCase() === 'html') {
+    const kind = String(feed.kind || '').toLowerCase();
+    let parsed = parseOfficialSource(response.text, kind, feed.url);
+    if (kind === 'html') {
       parsed = await enrichOfficialBlogItems(parsed, fetchImpl);
     }
     for (const item of parsed) {

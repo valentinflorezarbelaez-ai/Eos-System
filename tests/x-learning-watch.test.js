@@ -102,6 +102,8 @@ test('isBlockedFetchUrl flags X hosts', () => {
   assert.equal(isBlockedFetchUrl('https://cursor.com/changelog/rss.xml'), false);
   assert.equal(isBlockedFetchUrl('https://forum.cursor.com/c/announcements/11.rss'), false);
   assert.equal(isBlockedFetchUrl('https://cursor.com/blog'), false);
+  assert.equal(isBlockedFetchUrl('https://cursor.com/help/models-and-usage/grok-4-6'), false);
+  assert.equal(isBlockedFetchUrl('https://cursor.com/docs/models-and-pricing'), false);
 });
 
 test('ingest does not fetch x.com and records BLOCKED', async () => {
@@ -146,6 +148,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/blog' && feed.kind === 'html'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/models-and-usage/grok-4-6' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
 });
@@ -255,6 +265,8 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Claude Opus 5 now available!', link: 'https://forum.cursor.com/t/claude-opus-5-now-available/166583' },
     { title: 'Cursor is now a part of SpaceX', link: 'https://cursor.com/blog/joining-spacex' },
     { title: 'Introducing Grok 4.6', link: 'https://cursor.com/blog/grok-4-6' },
+    { title: 'Grok 4.6', link: 'https://cursor.com/help/models-and-usage/grok-4-6' },
+    { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -386,6 +398,81 @@ test('parseCursorBlogArticle reads official og tags', () => {
   assert.match(article.publishedAt, /2026-08-12/);
 });
 
+test('parseOfficialSource html-page uses the page URL as a stable id', () => {
+  const html = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-grok-4-6.html'), 'utf8');
+  const url = 'https://cursor.com/help/models-and-usage/grok-4-6';
+  const items = parseOfficialSource(html, 'html-page', url);
+  assert.equal(items.length, 1);
+  assert.equal(items[0].id, url);
+  assert.equal(items[0].link, url);
+  assert.equal(items[0].title, 'Grok 4.6');
+  assert.match(items[0].summary, /plans include/i);
+  assert.match(applyHint(items[0]), /pool|credit/i);
+  assert.equal(applyHint(items[0]).startsWith('Review this official'), false);
+});
+
+test('parseOfficialSource html-page decodes docs titles and pricing pools', () => {
+  const html = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-models-pricing.html'), 'utf8');
+  const url = 'https://cursor.com/docs/models-and-pricing';
+  const items = parseOfficialSource(html, 'html-page', url);
+  assert.equal(items.length, 1);
+  assert.equal(items[0].title, 'Models & Pricing');
+  assert.match(items[0].summary, /two usage pools/i);
+  assert.match(applyHint(items[0]), /Cursor Models vs Other Models/i);
+  assert.equal(applyHint(items[0]).includes('EOS budget evidence'), true);
+});
+
+test('ingest fetches official docs/help html-page feeds once and not x.com', async () => {
+  const grokHtml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-grok-4-6.html'), 'utf8');
+  const pricingHtml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-models-pricing.html'), 'utf8');
+  const calls = [];
+  const watchlist = {
+    ...validWatchlist,
+    feeds: [
+      {
+        feed_id: 'FEED-CURSOR-DOCS-GROK-46',
+        url: 'https://cursor.com/help/models-and-usage/grok-4-6',
+        kind: 'html-page',
+        fetchable: true
+      },
+      {
+        feed_id: 'FEED-CURSOR-DOCS-MODELS-PRICING',
+        url: 'https://cursor.com/docs/models-and-pricing',
+        kind: 'html-page',
+        fetchable: true
+      }
+    ]
+  };
+  const result = await ingest({
+    watchlist,
+    state: { seen_ids: [] },
+    fetchImpl: async (url) => {
+      calls.push(url);
+      if (String(url).includes('grok-4-6')) return { ok: true, text: grokHtml };
+      return { ok: true, text: pricingHtml };
+    }
+  });
+  assert.deepEqual(calls, [
+    'https://cursor.com/help/models-and-usage/grok-4-6',
+    'https://cursor.com/docs/models-and-pricing'
+  ]);
+  assert.equal(result.blocked.length, 0);
+  assert.equal(result.items.length, 2);
+  assert.equal(result.newItems.length, 2);
+  assert.equal(result.items[0].id, 'https://cursor.com/help/models-and-usage/grok-4-6');
+  const again = await ingest({
+    watchlist,
+    state: result.nextState,
+    fetchImpl: async (url) => {
+      calls.push(url);
+      if (String(url).includes('grok-4-6')) return { ok: true, text: grokHtml };
+      return { ok: true, text: pricingHtml };
+    }
+  });
+  assert.equal(again.newItems.length, 0);
+  assert.equal(again.items.length, 2);
+});
+
 test('selectCurrentLearnings prefers changelog product news over customer stories', () => {
   const selected = selectCurrentLearnings([
     {
@@ -430,6 +517,54 @@ test('selectCurrentLearnings prefers changelog product news over customer storie
   assert.equal(selected.some((row) => row.source_url === 'https://forum.cursor.com/t/origin-code-hosting/168670'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/blog/grok-4-6'), true);
   assert.equal(selected.at(-1).source_url, 'https://cursor.com/blog/imdex');
+});
+
+test('selectCurrentLearnings clusters Grok 4.6 onto official docs/help', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'Grok 4.6 is now Live!',
+      source_url: 'https://forum.cursor.com/t/grok-4-6-is-now-live/168189',
+      published_at: '2026-08-12T17:37:00.000Z',
+      apply_in_eos: 'Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.'
+    },
+    {
+      title: 'Introducing Grok 4.6',
+      source_url: 'https://cursor.com/blog/grok-4-6',
+      published_at: '2026-08-12T00:00:00.000Z',
+      apply_in_eos: 'Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.'
+    },
+    {
+      title: 'Grok 4.6',
+      source_url: 'https://cursor.com/help/models-and-usage/grok-4-6',
+      published_at: null,
+      apply_in_eos: 'Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.'
+    },
+    {
+      title: 'Introducing Grok Bot',
+      source_url: 'https://forum.cursor.com/t/introducing-grok-bot/168053',
+      published_at: '2026-08-12T16:00:00.000Z',
+      apply_in_eos: 'Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.'
+    },
+    {
+      title: 'Models & Pricing',
+      source_url: 'https://cursor.com/docs/models-and-pricing',
+      published_at: null,
+      apply_in_eos: 'Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.'
+    },
+    {
+      title: 'Cloud Agents and Cursor Harness Improvements',
+      source_url: 'https://cursor.com/changelog/08-19-26',
+      published_at: 'Wed, 19 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.'
+    }
+  ], 4);
+  assert.equal(selected[0].source_url, 'https://cursor.com/changelog/08-19-26');
+  assert.equal(selected.filter((row) => /grok 4\.6/i.test(row.title)).length, 1);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/grok-4-6'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/blog/grok-4-6'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://forum.cursor.com/t/grok-4-6-is-now-live/168189'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
 });
 
 test('repo CURRENT.md leads with product actions, not customer stories', () => {
