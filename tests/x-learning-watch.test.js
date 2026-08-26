@@ -220,6 +220,11 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   const harness = store.learnings.find((row) => row.source_url === 'https://cursor.com/changelog/08-19-26');
   assert.ok(harness);
   assert.match(harness.apply_in_eos, /timer|Slack|PR/i);
+  const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
+  if (grokBot) {
+    assert.match(grokBot.apply_in_eos, /Grok Bot/i);
+    assert.equal(grokBot.apply_in_eos.includes('timers'), false);
+  }
 });
 
 test('applyHint is specific for current official product titles', () => {
@@ -240,6 +245,31 @@ test('applyHint is specific for current official product titles', () => {
     const hint = applyHint({ ...sample, summary: sample.title });
     assert.equal(hint.startsWith('Review this official'), false, sample.title);
   }
+});
+
+test('applyHint does not treat forum subscription wording as changelog harness news', () => {
+  const grokBot = applyHint({
+    title: 'Introducing Grok Bot',
+    link: 'https://forum.cursor.com/t/introducing-grok-bot/168053',
+    summary: 'Available today for SuperGrok Heavy, Cursor Ultra, and Cursor Teams Premium subscribers.'
+  });
+  assert.match(grokBot, /Grok Bot/i);
+  assert.equal(grokBot.includes('timers'), false);
+
+  const start = applyHint({
+    title: 'Cursor Start: a new plan for developers in India',
+    link: 'https://forum.cursor.com/t/cursor-start-a-new-plan-for-developers-in-india/166792',
+    summary: 'Today we’re launching Cursor Start, a new subscription plan available in India.'
+  });
+  assert.match(start, /India regional pricing/i);
+  assert.equal(start.includes('timers'), false);
+
+  const composerThoughts = applyHint({
+    title: 'Share your Thoughts on Composer 2.5!',
+    link: 'https://forum.cursor.com/t/share-your-thoughts-on-composer-2-5/160935',
+    summary: 'Composer 2.5 feedback thread for subscribers.'
+  });
+  assert.match(composerThoughts, /feedback thread/i);
 });
 
 test('applyHint is specific for every forum announcement fixture title', () => {

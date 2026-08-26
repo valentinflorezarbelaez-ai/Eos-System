@@ -70,7 +70,7 @@
       "cited_by": "https://www.unrollnow.com/status/2088249881718919393",
       "official_source": null,
       "published_date": "2026-08-19",
-      "eos_note": "Cited X announcement, not present in changelog RSS. Do not treat SpaceX/Grok marketing as EOS production evidence. Product truth for this watch remains cursor.com/changelog.",
+      "eos_note": "Cited X announcement, not present in changelog or forum-announcements RSS. Do not treat SpaceX/Grok marketing as EOS production evidence. Product truth for this watch remains official Cursor feeds.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     }

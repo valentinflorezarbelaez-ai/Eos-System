@@ -124,8 +124,14 @@ export function applyHint(item) {
   const blob = `${title} ${item?.summary || ''} ${link}`.toLowerCase();
   const titleOrLink = `${title} ${link}`;
 
-  if (blob.includes('subscri') || link.includes('changelog/08-19-26')) {
+  if (title.includes('harness') || link.includes('changelog/08-19-26')) {
     return 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.';
+  }
+  if (title.includes('share your thoughts')) {
+    return 'Vendor feedback thread. Do not treat forum sentiment as EOS evidence.';
+  }
+  if (title.includes('campus')) {
+    return 'Campus community is vendor outreach. No EOS Control Plane change.';
   }
   if (blob.includes('/goal') || (link.includes('changelog/08-19-26') && blob.includes('goal'))) {
     return 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.';
@@ -237,12 +243,6 @@ export function applyHint(item) {
   }
   if (titleOrLink.includes('mermaid')) {
     return 'Mermaid in CLI is optional documentation. LEARNINGS.json remains the evidence store for this watch.';
-  }
-  if (title.includes('share your thoughts')) {
-    return 'Vendor feedback thread. Do not treat forum sentiment as EOS evidence.';
-  }
-  if (title.includes('campus')) {
-    return 'Campus community is vendor outreach. No EOS Control Plane change.';
   }
   if (title.includes('grok bot')) {
     return 'Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.';
