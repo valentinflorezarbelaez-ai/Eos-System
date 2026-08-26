@@ -2,7 +2,7 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-26T23:31:58.013Z
+Updated: 2026-08-26T23:34:42.648Z
 Store size: 91
 
 ## Official feed actions
@@ -10,7 +10,7 @@ Store size: 91
   https://cursor.com/blog/imdex
 - **Cloud Agents and Cursor Harness Improvements** — Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.
   https://cursor.com/changelog/08-19-26
-- **git at any scale** — Vendor git-scale narrative. GitHub remains source of truth for this repo unless Origin is explicitly adopted.
+- **Git at any scale** — Vendor git-scale narrative. GitHub remains source of truth for this repo unless Origin is explicitly adopted.
   https://cursor.com/blog/git-at-any-scale
 - **Origin Code Hosting** — Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.
   https://forum.cursor.com/t/origin-code-hosting/168670
@@ -20,7 +20,7 @@ Store size: 91
   https://cursor.com/blog/joining-spacex
 - **Firetiger joins Cursor** — Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.
   https://cursor.com/blog/firetiger
-- **Cursor earns AIUC-1 certification for agent security and reliability** — Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.
+- **Cursor earns AIUC-1 certification for agent security and reliability** — Vendor security certification marketing. EOS security-auditor on our diffs remains the Control Plane check.
   https://cursor.com/blog/aiuc-1
 - **Cloud agents start 3x faster with builds** — Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.
   https://cursor.com/blog/builds

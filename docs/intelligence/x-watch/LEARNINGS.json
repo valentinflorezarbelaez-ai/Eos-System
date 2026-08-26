@@ -1,13 +1,13 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:31:58.013Z",
+  "updated_at": "2026-08-26T23:34:42.648Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
       "title": "IMDEX uses Cursor to build integrated subsurface data and analytics platform in months, not years",
       "source_url": "https://cursor.com/blog/imdex",
       "published_at": "2026-08-25T12:00:00.000Z",
-      "summary": "IMDEX uses Cursor to build integrated subsurface data and analytics platform in months, not years",
+      "summary": "Global mining technology leader, IMDEX, is using Cursor to consolidate fragmented geological data systems and re-platform legacy applications at 10x the pace of its pre-AI development model.",
       "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -24,7 +24,7 @@
     },
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-git-at-any-scale",
-      "title": "git at any scale",
+      "title": "Git at any scale",
       "source_url": "https://cursor.com/blog/git-at-any-scale",
       "published_at": "2026-08-18T12:00:00.000Z",
       "summary": "git at any scale",
@@ -67,7 +67,7 @@
       "title": "Firetiger joins Cursor",
       "source_url": "https://cursor.com/blog/firetiger",
       "published_at": "2026-08-13T19:00:00.000Z",
-      "summary": "Firetiger joins Cursor",
+      "summary": "Firetiger builds agents that work on software once it reaches production. They're joining Cursor to close the loop from writing code to running it.",
       "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -77,8 +77,8 @@
       "title": "Cursor earns AIUC-1 certification for agent security and reliability",
       "source_url": "https://cursor.com/blog/aiuc-1",
       "published_at": "2026-08-13T12:00:00.000Z",
-      "summary": "Cursor earns AIUC-1 certification for agent security and reliability",
-      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "summary": "Cursor is now AIUC-1 certified after an independent audit of our controls and adversarial testing of our agents.",
+      "apply_in_eos": "Vendor security certification marketing. EOS security-auditor on our diffs remains the Control Plane check.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -87,7 +87,7 @@
       "title": "Cloud agents start 3x faster with builds",
       "source_url": "https://cursor.com/blog/builds",
       "published_at": "2026-08-13T12:00:00.000Z",
-      "summary": "Cloud agents start 3x faster with builds",
+      "summary": "Builds are ready-to-use copies of your development environment that Cursor prepares in the background, so cloud agents start up to 3x faster at no additional cost.",
       "apply_in_eos": "Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -147,7 +147,7 @@
       "title": "How Cursor Router chooses the right model for the task",
       "source_url": "https://cursor.com/blog/how-cursor-router-works",
       "published_at": "2026-08-06T12:00:00.000Z",
-      "summary": "How Cursor Router chooses the right model for the task",
+      "summary": "Auto Intelligence now delivers above Fable-level satisfaction at 68% lower cost. Here's how Compass and the task router choose models from real developer traffic.",
       "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -157,7 +157,7 @@
       "title": "Mixture-of-Kittens: our open-source MoE megakernel for NVL72s",
       "source_url": "https://cursor.com/blog/mixture-of-kittens",
       "published_at": "2026-08-04T12:00:00.000Z",
-      "summary": "Mixture-of-Kittens: our open-source MoE megakernel for NVL72s",
+      "summary": "We're open-sourcing Mixture-of-Kittens, a deterministic MoE training megakernel for NVL72s that fuses communication and computation into a single kernel.",
       "apply_in_eos": "Vendor research post. Do not treat model-training writeups as EOS production evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -177,7 +177,7 @@
       "title": "How we set up our cloud agent environment",
       "source_url": "https://cursor.com/blog/cloud-agent-environment",
       "published_at": "2026-07-30T12:00:00.000Z",
-      "summary": "How we set up our cloud agent environment",
+      "summary": "Getting our monorepo working for cloud agents taught us that the development environment is a product in its own right, only one whose users are agents.",
       "apply_in_eos": "Put install work in environment.json install and keep start for live services. Builds consume that split.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -197,7 +197,7 @@
       "title": "Introducing Cursor Start",
       "source_url": "https://cursor.com/blog/cursor-start-india",
       "published_at": "2026-07-28T12:00:00.000Z",
-      "summary": "Introducing Cursor Start",
+      "summary": "Cursor Start is a new plan for developers in India",
       "apply_in_eos": "Cursor Start is India regional pricing. No EOS governance change.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -207,7 +207,7 @@
       "title": "How Vercel used Cursor to build Queues",
       "source_url": "https://cursor.com/blog/vercel",
       "published_at": "2026-07-28T12:00:00.000Z",
-      "summary": "How Vercel used Cursor to build Queues",
+      "summary": "Vercel Queues was built entirely with Cursor. Power users saw a 54% increase in PR throughput, an 89% decrease in PR cycle time, and 104 hours saved per developer annually.",
       "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -257,7 +257,7 @@
       "title": "Introducing Cursor Router",
       "source_url": "https://cursor.com/blog/router",
       "published_at": "2026-07-22T00:00:00.000Z",
-      "summary": "Introducing Cursor Router",
+      "summary": "Cursor Router is now generally available for Teams and Enterprises",
       "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -277,7 +277,7 @@
       "title": "Agent swarms and the new model economics",
       "source_url": "https://cursor.com/blog/agent-swarm-model-economics",
       "published_at": "2026-07-20T12:00:00.000Z",
-      "summary": "Agent swarms and the new model economics",
+      "summary": "We compared old and new agent swarms building SQLite from scratch and found that better coordination delivers similar quality at a fraction of the cost.",
       "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -407,7 +407,7 @@
       "title": "Coinbase reduces time from idea to production by 90% with Cursor",
       "source_url": "https://cursor.com/blog/coinbase",
       "published_at": "2026-06-23T12:00:00.000Z",
-      "summary": "Coinbase reduces time from idea to production by 90% with Cursor",
+      "summary": "Over 2,400 developers at Coinbase use Cursor as a part of an agent-first engineering model. 75% of all PRs are created by agents, with the average engineer merging 55% more PRs since the beginning of the year.",
       "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -447,7 +447,7 @@
       "title": "How Wayfair cut ML model costs by 90% (twice!) with Cursor",
       "source_url": "https://cursor.com/blog/wayfair",
       "published_at": "2026-06-15T12:00:00.000Z",
-      "summary": "How Wayfair cut ML model costs by 90% (twice!) with Cursor",
+      "summary": "With Cursor handling experiment execution, Wayfair compressed months of ML research into days. Five researchers tested over 110 model variants and cut tag-validation model costs by 94%.",
       "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false

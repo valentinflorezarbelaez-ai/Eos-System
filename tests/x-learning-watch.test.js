@@ -233,6 +233,10 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
     assert.equal(grokBot.apply_in_eos.includes('timers'), false);
   }
+  const aiuc = store.learnings.find((row) => row.source_url === 'https://cursor.com/blog/aiuc-1');
+  if (aiuc) {
+    assert.match(aiuc.apply_in_eos, /security-auditor/i);
+  }
 });
 
 test('applyHint is specific for current official product titles', () => {
@@ -377,6 +381,7 @@ test('parseCursorBlogArticle reads official og tags', () => {
   const article = parseCursorBlogArticle(html);
   assert.equal(article.title, 'Introducing Grok 4.6');
   assert.match(article.summary, /long-running agents/i);
+  assert.match(article.summary, /They're stronger/);
   assert.match(article.publishedAt, /2026-08-12/);
 });
 
