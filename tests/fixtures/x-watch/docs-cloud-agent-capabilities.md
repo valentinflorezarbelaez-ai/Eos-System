@@ -11,3 +11,8 @@ Subscriptions let a cloud agent wait for GitHub, Slack, Linear, or timer events 
 ## Fixing CI Failures
 
 Cloud Agents automatically try to fix CI failures in PRs they create. This currently supports GitHub Actions only.
+
+## Sitemap
+
+Overview of all docs pages
+

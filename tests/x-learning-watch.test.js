@@ -584,6 +584,8 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(parsed.summary, /Subscriptions/i);
   assert.match(parsed.summary, /GitHub, Slack, Linear, or timer/i);
   assert.match(parsed.summary, /Fixing CI Failures/i);
+  assert.equal(parsed.summary.includes('Sitemap'), false);
+  assert.equal(parsed.summary.includes('Overview of all docs pages'), false);
 });
 
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {

@@ -158,6 +158,15 @@ function firstSentence(value) {
   return (match ? match[0] : clean.slice(0, 220)).trim();
 }
 
+function shouldSkipMarkdownHeading(heading) {
+  const key = String(heading || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  return key === 'sitemap'
+    || key === 'related'
+    || key === 'command palette'
+    || key === 'get started'
+    || key === 'was this article helpful';
+}
+
 export function parseOfficialMarkdown(md) {
   let raw = String(md || '').replace(/^\uFEFF/, '');
   raw = raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
@@ -169,6 +178,7 @@ export function parseOfficialMarkdown(md) {
   for (const part of parts.slice(1)) {
     const newline = part.indexOf('\n');
     const heading = stripMarkdown(newline === -1 ? part : part.slice(0, newline));
+    if (shouldSkipMarkdownHeading(heading)) continue;
     const body = newline === -1 ? '' : part.slice(newline + 1);
     const sentence = firstSentence(body);
     if (heading && sentence) chunks.push(`${heading} — ${sentence}`);
