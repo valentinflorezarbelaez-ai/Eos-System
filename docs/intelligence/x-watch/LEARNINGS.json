@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T00:13:42.763Z",
+  "updated_at": "2026-08-27T00:18:27.837Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -927,7 +927,7 @@
       "title": "Overview",
       "source_url": "https://cursor.com/docs/agent/overview",
       "published_at": null,
-      "summary": "Assistant for autonomous coding tasks, terminal commands, and code editing",
+      "summary": "Agent is Cursor's assistant that can complete complex coding tasks independently, run terminal commands, and edit code. How Agent works — An agent is built on three components: 1. Tools — Tools are the building blocks of Agent. Checkpoints — Checkpoints save snapshots of your codebase during an Agent session. Queued messages — You have two ways to talk to an agent while it works. Goals with /goal — Agent reads each message as a new job.",
       "apply_in_eos": "Keep long-lived EOS objectives in /goal instead of one-shot prompts.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -937,7 +937,7 @@
       "title": "Cloud Agents",
       "source_url": "https://cursor.com/docs/cloud-agent",
       "published_at": null,
-      "summary": "Run Agent in the cloud for continuous coding assistance.",
+      "summary": "Cloud agents use the same agent fundamentals but run in isolated VMs in the cloud with full development environments instead of on your local machine. Why use Cloud Agents? — You can run as many agents as you want in parallel, and they do not require your local machine to be connected to the internet. How to access — Before anyone can start a cloud agent from a repository, a Cursor account admin needs to connect source control for the account. How it works — Repository provider connection Cloud agents clone your repo from GitHub, GitLab, Azure DevOps Services, or Bitbucket Cloud and work on a separate branch, then push changes to your repo for handoff. Models — Cloud Agents use a curated selection of models. MCP support — Cloud agents can use MCP (Model Context Protocol) servers configure…",
       "apply_in_eos": "Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -947,7 +947,7 @@
       "title": "Cloud Agent Builds",
       "source_url": "https://cursor.com/docs/cloud-agent/builds",
       "published_at": null,
-      "summary": "Start Cloud Agents from pre-built, verified development environments.",
+      "summary": "Builds prepare your Cloud Agent environment in the background. How Builds work — A Build is a bootable snapshot of a prepared Cloud Agent environment. When Builds occur — Cursor starts a Build for four reasons. What runs during a Build and an agent start — Use each environment command for a distinct phase: Make complete and idempotent. How Builds handle Git state — A Build records the commit checked out for each repository when it runs. How secrets work with Builds — Builds can access team and environment secrets. Manage Builds — Open an environment's Builds tab to: See every Build's type, status, and start time Open a Build to inspect its details and logs Select Trigger build to run a Build on demand Activate a draft Build or deactivate a Build Debug a Build — Open a failed Build to insp…",
       "apply_in_eos": "Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -957,7 +957,7 @@
       "title": "Capabilities",
       "source_url": "https://cursor.com/docs/cloud-agent/capabilities",
       "published_at": null,
-      "summary": "What Cloud Agents can do.",
+      "summary": "Computer use — Each cloud agent runs in its own isolated VM with a full desktop environment. Demos and Artifacts — Agents create artifacts such as screenshots, videos, and log references to demonstrate their work. Remote desktop control — You can take control of the agent's remote desktop to interact with the software the agent is building. MCP tools — Cloud agents can use MCP (Model Context Protocol) servers configured for your team. Subscriptions — Agent tasks rarely end with the last commit. Fixing CI Failures — Cloud Agents automatically try to fix CI failures in PRs they create. OIDC identity tokens — Cursor-managed Cloud Agent VMs can mint short-lived OIDC JWTs from a local socket. Agent metadata — The same socket also serves agent metadata.",
       "apply_in_eos": "Honor Cloud Agent subscriptions (GitHub PR, Slack, timers) and auto-CI-fix on PRs this agent opens. Do not scrape X.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -967,7 +967,7 @@
       "title": "Cursor Router",
       "source_url": "https://cursor.com/docs/cursor-router",
       "published_at": null,
-      "summary": "How Cursor Router picks a model for each Auto request, with optimization modes, pricing, and team settings.",
+      "summary": "Cursor Router is the model routing system behind Auto . How it works — When you select Auto and choose Balance or Intelligence in the model picker, Cursor Router runs a classifier on each agent request and routes it based on task type and complexity. Optimization modes — Open the model picker, select Auto , and pick a mode under Optimize For : Cost : Uses the previous Auto routing logic. Pricing — All Auto modes bill at the list price of the model each request is routed to. Team settings — Admins configure Cursor Router from the team dashboard. Use Router through the SDK — The TypeScript SDK and Python SDK expose Cursor Router as model id with parameter ( , , or ).",
       "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -977,7 +977,7 @@
       "title": "Models & Pricing",
       "source_url": "https://cursor.com/docs/models-and-pricing",
       "published_at": null,
-      "summary": "Explore frontier models, two usage pools, plan pricing, and per-model rates.",
+      "summary": "Cursor supports frontier models from OpenAI, Anthropic, Google, SpaceXAI, and more. Usage pools — There are two separate usage pools, each resetting with your monthly billing cycle: Cursor Models : Significantly more included usage for Cursor Grok 4.6, Grok 4.5, and Composer 2.5. Cursor Models — The Cursor Models pool includes Cursor Grok 4.6, Grok 4.5, and Composer 2.5. Other Models — When you select a specific third-party model, usage is drawn from the Other Models pool at that model's API rate. Plans — Pro, Pro Plus, and Ultra include unlimited tab completions, extended agent usage limits on all models, access to Bugbot, and access to Cloud Agents. Cursor Token Rate — On Teams and Enterprise plans, third-party model requests include a Cursor Token Rate of $0.25 per million tokens. Auto…",
       "apply_in_eos": "Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -987,7 +987,7 @@
       "title": "Origin",
       "source_url": "https://cursor.com/docs/origin",
       "published_at": null,
-      "summary": "Store and share code on Origin, Cursor's git forge. Create repos, mirror from GitHub, and browse at cursor.com/codebase.",
+      "summary": "Origin is currently released in early beta. What you can do — In early beta you can: Create Origin repositories, including from Cursor agents Clone, push, and pull with standard git Mirror a GitHub repository into Origin Open, review, and merge pull requests Browse and search code Who can access — Origin code storage is available on Pro, Teams, and Enterprise plans. Privacy — Origin follows the Privacy Mode of the namespace owner: the team or the individual who owns the repo. Enable Origin — Before your team can use Origin, someone has to claim a codebase name. Repo list — After Origin is enabled, cursor.com/codebase shows your team's repositories. Next steps — Install the Origin CLI Create a repository Mirror a GitHub repo Pull requests Browse & Search Repository settings Codebase settin…",
       "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -997,7 +997,7 @@
       "title": "Agent Skills",
       "source_url": "https://cursor.com/docs/skills",
       "published_at": null,
-      "summary": "Extend AI agents with specialized capabilities using Agent Skills, an open standard for packaging reusable knowledge and scripts.",
+      "summary": "Agent Skills is an open standard for extending AI agents with specialized capabilities. What are skills? — A skill is a portable, version-controlled package that teaches agents how to perform domain-specific tasks. How skills work — When Cursor starts, it automatically discovers skills from skill directories and makes them available to Agent. Built-in Cursor skills — Cursor includes a small set of built in skills to improve your general workflows. Skill directories — Skills are automatically loaded from these locations: Cursor loads user-level skills from the machine the agent runs on. SKILL.md file format — Each skill is defined in a file with YAML frontmatter: ```markdown --- name: my-skill description: Short description of what this skill does and when to use it. When to Use — Use this…",
       "apply_in_eos": "Pin an EOS skill as a Custom Mode when a session must stay on one playbook.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1007,7 +1007,7 @@
       "title": "Subagents",
       "source_url": "https://cursor.com/docs/subagents",
       "published_at": null,
-      "summary": "Create specialized AI subagents for task-specific workflows and context management.",
+      "summary": "Subagents are specialized AI assistants that Cursor's agent can delegate tasks to. How subagents work — When Agent encounters a complex task, it can launch a subagent automatically. Built-in subagents — Cursor includes three built-in subagents that handle context-heavy operations automatically. When to use subagents — If you find yourself creating a subagent for a simple, single-purpose task like \"generate a changelog\" or \"format imports,\" consider using a skill instead. Quick start — Agent automatically uses subagents when appropriate. Custom subagents — Define custom subagents to encode specialized knowledge, enforce team standards, or automate repetitive workflows. Using subagents — Automatic delegation Agent proactively delegates tasks based on: The task complexity and scope Custom su…",
       "apply_in_eos": "Run isolated subagents on their own VMs when work must not collide with the parent branch.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1017,7 +1017,7 @@
       "title": "Automations",
       "source_url": "https://cursor.com/help/ai-features/automations",
       "published_at": null,
-      "summary": "Run cloud agents on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more.",
+      "summary": "Cursor Automations run Cloud Agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. What can Automations do? — Automations let you run Cloud Agents without manual input. How do I create an automation? — Create a new automation in the Agents Window, at cursor.com/automations/new, or from a template in the Cursor Marketplace. Can I create automations without connecting a repository? — Yes. Which triggers are available? — An automation can have more than one trigger. Which tools can automations use? — Comment on pull request : Posts review comments, inline code comments, or approvals on a target PR Request reviewers : Assigns reviewers on a target PR Send to Slack : Sends messages to a Slack channel Read Slack channel H…",
       "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1027,7 +1027,7 @@
       "title": "Grok 4.6",
       "source_url": "https://cursor.com/help/models-and-usage/grok-4-6",
       "published_at": null,
-      "summary": "What Grok 4.6 is, which plans include it, and how it compares to Composer.",
+      "summary": "Grok 4.6 is a first-party Cursor model, built together with SpaceXAI for coding and other knowledge work. What is Grok 4.6? — Grok 4.6 is designed for difficult, long-running tasks that require creative tool use, whether in software engineering, data science, finance, legal work, or anything else you do on a computer. What are Grok 4.6 effort levels? — Grok 4.6 supports four effort levels: low , medium , high , and xhigh , so you can match compute to how hard the task is. When should I choose Grok 4.6 over Composer? — Choose Grok 4.6 for harder, longer-running work: multi-step agents, ambitious interactive or visual first passes, large codebases, and tasks that stalled or felt short on Grok 4.5. Which plans include Grok 4.6? — Grok 4.6 uses the same first-party / Composer credit treatment…",
       "apply_in_eos": "Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1037,7 +1037,7 @@
       "title": "Usage and limits",
       "source_url": "https://cursor.com/help/models-and-usage/usage-limits",
       "published_at": null,
-      "summary": "How AI usage is counted, where to check Spending, and when limits reset.",
+      "summary": "Most Cursor plans include two monthly usage pools: Cursor Models : Cursor Grok 4.6, Cursor Grok 4.5, and Composer 2.5 Other Models : Third-party models, charged at model provider prices Pro, Pro Plus, and Ultra include b How do I check my usage? — Go to the Spending tab in your dashboard. What happens when I hit my usage limit? — You'll see a notification in the editor. When does my usage reset? — Usage resets monthly with your billing cycle. How do I get more usage? — Use Cursor Models : Cursor Grok 4.6, Cursor Grok 4.5, and Composer 2.5 draw from the Cursor Models pool, tracked separately and included with your plan Enable on-demand usage : Pay for additional requests at the same API How does Cursor Router interact with my plan's usage pools and limits? — Cursor Router requests are bill…",
       "apply_in_eos": "Honor included quota. Stop this daily watch rather than switching to paid on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
