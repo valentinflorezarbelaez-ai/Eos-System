@@ -239,6 +239,22 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/account/teams/pricing' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/account/teams/setup'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/account/teams/admin-api'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/enterprise'),
+    false
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://github.com/cursor/sdk-bridge'),
     false
   );
@@ -1265,6 +1281,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Cursor TypeScript SDK', link: 'https://cursor.com/docs/sdk/typescript' },
     { title: 'Cursor Python SDK', link: 'https://cursor.com/docs/sdk/python' },
     { title: 'Cursor SDK Bridge', link: 'https://cursor.com/docs/sdk/bridge' },
+    { title: 'Team Pricing', link: 'https://cursor.com/docs/account/teams/pricing' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1648,6 +1665,27 @@ test('applyHint for SDK Bridge keeps this watch on official feeds', () => {
   assert.match(hint, /GitHub/);
   assert.match(hint, /environment\.json/);
   assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('curl'), false);
+});
+
+test('applyHint for Team Pricing keeps included quota and rejects vendor seat prices', () => {
+  const hint = applyHint({
+    title: 'Team Pricing',
+    link: 'https://cursor.com/docs/account/teams/pricing',
+    summary: 'There are two business plans: Teams and Enterprise (Custom).'
+  });
+  assert.match(hint, /vendor Teams and Enterprise billing/i);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.match(hint, /vendor team seat prices/i);
+  assert.match(hint, /EOS budget evidence/i);
+  assert.match(hint, /not a Teams admin dashboard/i);
+  assert.match(hint, /environment\.json/);
+  assert.equal(hint.includes('Slack'), false);
   assert.equal(/enable/i.test(hint), false);
   assert.equal(hint.includes('Custom Mode'), false);
   assert.equal(hint.includes('Vercel'), false);
@@ -2503,6 +2541,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(cursorSdkBridge[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(cursorSdkBridge[0]).includes('curl'), false);
 
+  const teamPricing = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-account-teams-pricing.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/account/teams/pricing'
+  );
+  assert.equal(teamPricing[0].id, 'https://cursor.com/docs/account/teams/pricing');
+  assert.equal(teamPricing[0].title, 'Team Pricing');
+  assert.match(teamPricing[0].summary, /business plans/);
+  assert.match(applyHint(teamPricing[0]), /vendor Teams and Enterprise billing/i);
+  assert.match(applyHint(teamPricing[0]), /vendor team seat prices/i);
+  assert.equal(/enable/i.test(applyHint(teamPricing[0])), false);
+  assert.equal(applyHint(teamPricing[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(teamPricing[0]).includes('Slack'), false);
+  assert.equal(applyHint(teamPricing[0]).includes('curl'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3128,6 +3181,19 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Related —/.test(cursorSdkBridgeMd.summary), false);
   assert.equal(cursorSdkBridgeMd.summary.toLowerCase().includes('pip install'), false);
   assert.equal(cursorSdkBridgeMd.summary.toLowerCase().includes('curl'), false);
+
+  const teamPricingMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-account-teams-pricing.md'), 'utf8')
+  );
+  assert.equal(teamPricingMd.title, 'Team Pricing');
+  assert.match(teamPricingMd.summary, /How pricing works/);
+  assert.match(teamPricingMd.summary, /Active seats/);
+  assert.match(teamPricingMd.summary, /Spending controls/);
+  assert.match(teamPricingMd.summary, /Model Pricing/);
+  assert.equal(teamPricingMd.summary.includes('Sitemap'), false);
+  assert.equal(/Get started —/.test(teamPricingMd.summary), false);
+  assert.equal(/FAQ —/.test(teamPricingMd.summary), false);
+  assert.equal(teamPricingMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -3984,6 +4050,18 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'The SDK Bridge is optional local protocol for languages without a first-party SDK. This watch uses official feeds, not cursor-sdk-bridge or api.cursor.com. Do not install the SDK Bridge or rotate this watch into adapter scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Models & Pricing',
+      source_url: 'https://cursor.com/docs/models-and-pricing',
+      published_at: null,
+      apply_in_eos: 'Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.'
+    },
+    {
+      title: 'Team Pricing',
+      source_url: 'https://cursor.com/docs/account/teams/pricing',
+      published_at: null,
+      apply_in_eos: 'Team Pricing is vendor Teams and Enterprise billing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor team seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard. Keep environment.json + Builds.'
+    },
+    {
       title: 'Agents Window',
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
@@ -4049,6 +4127,8 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/python'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/bridge'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/pricing'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/capabilities'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -4361,6 +4441,18 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'The SDK Bridge is optional local protocol for languages without a first-party SDK. This watch uses official feeds, not cursor-sdk-bridge or api.cursor.com. Do not install the SDK Bridge or rotate this watch into adapter scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Models & Pricing',
+      source_url: 'https://cursor.com/docs/models-and-pricing',
+      published_at: null,
+      apply_in_eos: 'Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.'
+    },
+    {
+      title: 'Team Pricing',
+      source_url: 'https://cursor.com/docs/account/teams/pricing',
+      published_at: null,
+      apply_in_eos: 'Team Pricing is vendor Teams and Enterprise billing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor team seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard. Keep environment.json + Builds.'
+    },
+    {
       title: 'Agents Window',
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
@@ -4383,6 +4475,8 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/python'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/bridge'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/pricing'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices'), false);
@@ -4493,9 +4587,16 @@ test('selectCurrentLearnings keeps undated official docs/help pages in CURRENT',
     published_at: null,
     apply_in_eos: 'Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.'
   });
+  dated.push({
+    title: 'Team Pricing',
+    source_url: 'https://cursor.com/docs/account/teams/pricing',
+    published_at: null,
+    apply_in_eos: 'Team Pricing is vendor Teams and Enterprise billing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor team seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard. Keep environment.json + Builds.'
+  });
   const selected = selectCurrentLearnings(dated, 10);
   assert.equal(selected[0].source_url, 'https://cursor.com/changelog/item-0');
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/pricing'), false);
   assert.equal(selected.length, 10);
 });
 
@@ -4548,6 +4649,10 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/sdk/python'), false);
   assert.equal(current.includes('cursor.com/docs/sdk/bridge'), false);
   assert.equal(current.includes('cursor.com/docs/sdk/changelog'), false);
+  assert.equal(current.includes('cursor.com/docs/account/teams/pricing'), false);
+  assert.equal(current.includes('cursor.com/docs/account/teams/setup'), false);
+  assert.equal(current.includes('cursor.com/docs/account/teams/admin-api'), false);
+  assert.equal(current.includes('cursor.com/docs/enterprise'), false);
   assert.equal(current.includes('cursor.com/docs/agent/design-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/browser'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/terminal'), false);

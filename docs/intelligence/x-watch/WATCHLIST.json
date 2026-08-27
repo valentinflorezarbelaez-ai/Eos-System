@@ -451,6 +451,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_CUSTOMIZE_CURSOR",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-TEAM-PRICING",
+      "url": "https://cursor.com/docs/account/teams/pricing",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_TEAM_PRICING",
+      "fetchable": true
     }
   ]
 }
