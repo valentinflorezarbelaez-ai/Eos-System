@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:22:24.740Z",
+  "updated_at": "2026-08-27T13:26:11.063Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -999,6 +999,16 @@
       "published_at": null,
       "summary": "Agent can control a web browser to test applications, audit accessibility, convert designs into code, and more. Native integration — Agent displays browser actions like screenshots and actions in the chat, as well as the browser window itself either in a separate window or an inline pane. Browser capabilities — Agent has access to the following browser tools: Navigate — Visit URLs and browse web pages. Click — Interact with buttons, links, and form elements. Type — Enter text into input fields and forms. Scroll — Navigate through long pages and content. Screenshot — Capture visual representations of web pages. Console Output — Read browser console messages, errors, and logs. Network Traffic — Monitor HTTP requests and responses made by the page. Session persistence — Browser state persist…",
       "apply_in_eos": "Browser is optional desktop browser control. This watch already runs in the Cloud Agent VM and uses official feeds, not live sites. Do not rotate this Cloud Agent into Browser for daily ingest. Keep environment.json + Builds. Team MCP dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-tools-canvas",
+      "title": "Canvases",
+      "source_url": "https://cursor.com/docs/agent/tools/canvas",
+      "published_at": null,
+      "summary": "Canvases let Cursor create interactive artifacts that render next to the chat. How it works — Cursor decides that your task benefits from a visual or interactive view, or you ask for one directly. Opening a canvas — From Cursor : when Cursor creates a canvas, a card appears at the end of the response. Open Canvas Sharing canvases — Shared canvases turn an interactive artifact into something your whole team can open, not just you. Iterating on a canvas — Canvases are designed to be easy to refine. Packaging in skills — Common canvas workflows can be packaged as skills so Cursor produces a consistent layout every time you ask.",
+      "apply_in_eos": "Canvases are optional desktop interactive artifacts in the Agents Window. This watch already runs in the Cloud Agent VM. Do not rotate this Cloud Agent into desktop Canvases for daily ingest. Keep environment.json + Builds. Shared canvases and team dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
