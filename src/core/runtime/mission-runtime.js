@@ -1071,19 +1071,34 @@ export class MissionRuntime {
       );
     }
 
-    // Retain the submitted return package so later gates can derive evidence from the
-    // actual observed test results instead of a re-asserted claim.
+    // An accepted assessment is never overwritten by a later non-accepted submission.
+    // Otherwise replaying a package would destroy the evidence of the legitimate submission
+    // that preceded it and strand the mission, turning a replay into an evidence attack.
     const returnsDir = path.join(missionDir, 'cursor', 'returns');
+    const assessmentFile = path.join(missionDir, 'evidence', `return-${taskId}-assessment.json`);
+    const priorAssessment = fs.existsSync(assessmentFile)
+      ? JSON.parse(fs.readFileSync(assessmentFile, 'utf8'))
+      : null;
+    const supersedesAccepted = priorAssessment?.verdict === 'ACCEPT' && evaluation.verdict !== 'ACCEPT';
+
     fs.mkdirSync(returnsDir, { recursive: true });
     const retainedStr = JSON.stringify(returnPkg, null, 2);
-    fs.writeFileSync(path.join(returnsDir, `${taskId}.json`), retainedStr, 'utf8');
-    this._updateManifestFile(missionDir, `cursor/returns/${taskId}.json`, retainedStr);
-
-    // Save assessment to evidence folder
-    const assessmentFile = path.join(missionDir, 'evidence', `return-${taskId}-assessment.json`);
     const assessmentStr = JSON.stringify(evaluation, null, 2);
-    fs.writeFileSync(assessmentFile, assessmentStr, 'utf8');
-    this._updateManifestFile(missionDir, `evidence/return-${taskId}-assessment.json`, assessmentStr);
+
+    if (supersedesAccepted) {
+      const attemptsDir = path.join(missionDir, 'evidence', 'rejected-attempts');
+      fs.mkdirSync(attemptsDir, { recursive: true });
+      const stamp = `${taskId}-${Date.now()}`;
+      fs.writeFileSync(path.join(attemptsDir, `${stamp}-return.json`), retainedStr, 'utf8');
+      fs.writeFileSync(path.join(attemptsDir, `${stamp}-assessment.json`), assessmentStr, 'utf8');
+      this._updateManifestFile(missionDir, `evidence/rejected-attempts/${stamp}-return.json`, retainedStr);
+      this._updateManifestFile(missionDir, `evidence/rejected-attempts/${stamp}-assessment.json`, assessmentStr);
+    } else {
+      fs.writeFileSync(path.join(returnsDir, `${taskId}.json`), retainedStr, 'utf8');
+      this._updateManifestFile(missionDir, `cursor/returns/${taskId}.json`, retainedStr);
+      fs.writeFileSync(assessmentFile, assessmentStr, 'utf8');
+      this._updateManifestFile(missionDir, `evidence/return-${taskId}-assessment.json`, assessmentStr);
+    }
 
     // Load selection record if available
     const selectionFile = path.join(missionDir, 'selections', `SEL-${taskId}.json`);
@@ -1103,7 +1118,8 @@ export class MissionRuntime {
       verdict: evaluation.verdict,
       reconciliation_hash: evaluation.reconciliation_hash,
       deviations_count: evaluation.deviations.length,
-      nonce: returnPkg.nonce || null
+      nonce: returnPkg.nonce || null,
+      quarantined_as_rejected_attempt: supersedesAccepted
     });
     ledger.appendEvent(missionId, 'TASK_SUPERVISED', {
       task_id: taskId,

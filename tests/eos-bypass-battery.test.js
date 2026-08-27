@@ -553,3 +553,35 @@ test('BYPASS-CONTROL: the compliant path reaches COMPLETED and verifies clean', 
   assert.equal(verification.ledger_chain.valid, true);
   assert.equal(verification.authority_snapshot.code, 'ATS_SNAPSHOT_VERIFIED');
 });
+
+test('BYPASS-V9 (regression): a replayed submission cannot destroy an accepted assessment', () => {
+  const { root, rt, id, dir, planned } = plannedMission('evidence destruction');
+  const taskId = planned.plan.tasks[0].task_id;
+  const file = writeReturn(
+    root,
+    'legit',
+    returnPackage(id, taskId, {
+      affected_files: [{ path: 'src/example.js', action: 'MODIFY' }],
+      nonce: 'NONCE-V9-01'
+    })
+  );
+
+  assert.equal(rt.submitReturnPackage(id, file).verdict, 'ACCEPT');
+  const acceptedPath = path.join(dir, 'evidence', `return-${taskId}-assessment.json`);
+  const acceptedBefore = fs.readFileSync(acceptedPath, 'utf8');
+
+  // Replay from a new process: rejected, and must not overwrite the accepted record.
+  const attacker = new MissionRuntime({ baseDir: root });
+  assert.equal(attacker.submitReturnPackage(id, file).verdict, 'REJECT');
+
+  assert.equal(fs.readFileSync(acceptedPath, 'utf8'), acceptedBefore);
+  assert.ok(
+    fs.readdirSync(path.join(dir, 'evidence', 'rejected-attempts')).length >= 2,
+    'the rejected attempt must still be retained for audit'
+  );
+
+  // The mission remains able to progress on its legitimate evidence.
+  walkToState(rt.ats, id, SDD_STATES.SUPERVISE);
+  assert.doesNotThrow(() => rt.advanceMission(id));
+  assert.equal(rt.ats.getSnapshot(id).state, SDD_STATES.VERIFY);
+});
