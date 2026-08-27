@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T00:40:59.382Z",
+  "updated_at": "2026-08-27T00:47:18.417Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -953,6 +953,16 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-automations",
+      "title": "Automations",
+      "source_url": "https://cursor.com/docs/cloud-agent/automations",
+      "published_at": null,
+      "summary": "Cursor Automations run cloud agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. Getting started — Create a new automation in the Agents Window, at cursor.com/automations, with the skill from a local agent session, or from a template in the Cursor Marketplace. Billing — Automations create cloud agents and are billed based on cloud agent usage. Triggers — Triggers decide when an automation runs. Scheduled triggers — Scheduled triggers run on a recurring schedule. Source control triggers — Source control triggers respond to pull request and push events from your connected Git provider: GitHub, GitLab, and Bitbucket Cloud. Slack triggers — Slack triggers respond to events from the Cursor Slack integration. Webhook tr…",
+      "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-builds",
       "title": "Cloud Agent Builds",
       "source_url": "https://cursor.com/docs/cloud-agent/builds",
@@ -969,6 +979,16 @@
       "published_at": null,
       "summary": "Computer use — Each cloud agent runs in its own isolated VM with a full desktop environment. Demos and Artifacts — Agents create artifacts such as screenshots, videos, and log references to demonstrate their work. Remote desktop control — You can take control of the agent's remote desktop to interact with the software the agent is building. MCP tools — Cloud agents can use MCP (Model Context Protocol) servers configured for your team. Subscriptions — Agent tasks rarely end with the last commit. How subscriptions work — Subscriptions belong to a single agent conversation. Fixing CI Failures — Cloud Agents automatically try to fix CI failures in PRs they create. OIDC identity tokens — Cursor-managed Cloud Agent VMs can mint short-lived OIDC JWTs from a local socket. Agent metadata — The sam…",
       "apply_in_eos": "Honor Cloud Agent subscriptions (GitHub PR, Slack, timers) and auto-CI-fix on PRs this agent opens. Do not scrape X.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-setup",
+      "title": "Cloud Environment Setup",
+      "source_url": "https://cursor.com/docs/cloud-agent/setup",
+      "published_at": null,
+      "summary": "Cloud agents run on isolated Ubuntu machines. What is a cloud agent environment? — The development environment for a cloud agent is similar to the setup on your laptop: cloned repos, installed dependencies, secrets, startup commands, and network access. Why does environment configuration matter? — Agents are only as capable as the environments they run in. Environment setup options — There are two main ways to configure the environment for your cloud agent: 1. Agent-driven setup (recommended) — Cursor can set up your dev environment in the cloud in less than 10 minutes. Install script — The install script was previously called the update script in the dashboard and docs. Install script idempotency — The install script must be idempotent. How Builds use the install script — Cursor starts f…",
+      "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
