@@ -1003,7 +1003,10 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(hooksMd.summary.includes('audit.sh'), false);
   assert.equal(hooksMd.summary.includes('home directory'), false);
   assert.equal(hooksMd.summary.includes('ecosystem partners'), false);
+  assert.equal(hooksMd.summary.includes('hooks partners'), false);
   assert.equal(/Configuration —/.test(hooksMd.summary), false);
+  assert.equal(/Hook categories —/.test(hooksMd.summary), false);
+  assert.equal(/Secrets management —/.test(hooksMd.summary), false);
 });
 
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {

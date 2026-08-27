@@ -4,7 +4,7 @@ Hooks let you observe, control, and extend the agent loop using custom scripts. 
 
 ## Hook categories
 
-Hooks fall into three categories based on what triggers them.
+Hooks fall into three categories based on what triggers them. Agent hooks include `sessionStart`.
 
 ## Cloud agent support
 
@@ -41,6 +41,10 @@ Create a hooks.json file in your home directory.
 ## Partner Integrations
 
 Looking for ready-to-use integrations from ecosystem partners.
+
+### Secrets management
+
+For more details about our hooks partners, see the Hooks for security and platform teams blog post.
 
 ## Sitemap
 

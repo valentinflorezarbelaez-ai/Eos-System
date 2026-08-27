@@ -205,6 +205,7 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'environment variables'
     || key === 'team distribution'
     || key === 'hook types'
+    || key === 'hook categories'
     || key === 'configuration';
 }
 
@@ -233,6 +234,7 @@ export function parseOfficialMarkdown(md) {
     const newline = part.indexOf('\n');
     const heading = stripMarkdown(newline === -1 ? part : part.slice(0, newline));
     const body = newline === -1 ? '' : part.slice(newline + 1);
+    if (shouldSkipMarkdownHeading(heading)) continue;
     const h3parts = body.split(/^###\s+/m);
     appendHeadingChunk(chunks, heading, h3parts[0]);
     for (const h3part of h3parts.slice(1)) {
