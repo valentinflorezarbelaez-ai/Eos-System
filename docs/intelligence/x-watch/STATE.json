@@ -92,13 +92,17 @@
     "https://cursor.com/changelog/side-chat",
     "https://cursor.com/changelog/slack-improvements",
     "https://cursor.com/changelog/team-marketplace-updates",
+    "https://cursor.com/docs/cloud-agent",
     "https://cursor.com/docs/cloud-agent/builds",
+    "https://cursor.com/docs/cursor-router",
     "https://cursor.com/docs/models-and-pricing",
     "https://cursor.com/docs/origin",
+    "https://cursor.com/docs/subagents",
     "https://cursor.com/help/ai-features/automations",
-    "https://cursor.com/help/models-and-usage/grok-4-6"
+    "https://cursor.com/help/models-and-usage/grok-4-6",
+    "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-26T23:51:16.312Z",
-  "last_item_count": 97,
-  "last_new_item_count": 1
+  "last_ingest_at": "2026-08-26T23:59:37.411Z",
+  "last_item_count": 101,
+  "last_new_item_count": 2
 }

@@ -87,6 +87,20 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_USAGE_LIMITS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT",
+      "url": "https://cursor.com/docs/cloud-agent",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-SUBAGENTS",
+      "url": "https://cursor.com/docs/subagents",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_SUBAGENTS",
+      "fetchable": true
     }
   ]
 }

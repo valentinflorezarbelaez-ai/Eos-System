@@ -10,7 +10,7 @@ A local learning watch that records requested X accounts, fetches official Curso
 
 ## 2. Product & Functional Requirements
 - **FR-1:** Persist a watchlist that includes `cursor_ai` (`https://x.com/cursor_ai`) plus additional handles without requiring an X API.
-- **FR-2:** Fetch and parse RSS 2.0, Atom 1.0, the official Cursor blog HTML index, and named official docs/help HTML pages from configured feeds (changelog RSS, forum announcements RSS, `https://cursor.com/blog`, Grok 4.6 help, Models & Pricing, Cloud Agent automations, Cloud Agent Builds, Origin, Cursor Router, Usage and limits). Do not ingest `latest.rss`. Do not scrape X. Docs/help pages use `kind: html-page` with a stable id equal to the page URL.
+- **FR-2:** Fetch and parse RSS 2.0, Atom 1.0, the official Cursor blog HTML index, and named official docs/help HTML pages from configured feeds (changelog RSS, forum announcements RSS, `https://cursor.com/blog`, Grok 4.6 help, Models & Pricing, Cloud Agent automations, Cloud Agent Builds, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Subagents). Do not ingest `latest.rss`. Do not scrape X. Docs/help pages use `kind: html-page` with a stable id equal to the page URL.
 - **FR-3:** Refuse to fetch `x.com` / `twitter.com` URLs; mark those sources `BLOCKED`.
 - **FR-4:** Compute a delta of unseen items by stable `id` (guid / atom id / link).
 - **FR-5:** Render a markdown briefing from new items, preserving source URL and published date.
@@ -45,6 +45,7 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-15:** CURRENT.md clusters Grok 4.6 titles onto official docs/help (prefer changelog > docs/help > blog > forum) and keeps Grok Bot as a separate row.
 - [x] **AC-16:** CURRENT.md clusters Cloud Agent automations, Builds, and Origin living docs onto their changelog URLs.
 - [x] **AC-17:** CURRENT.md clusters Cursor Router blog/docs onto the changelog URL and keeps Usage and limits as a living docs row.
+- [x] **AC-18:** CURRENT.md clusters Subagents onto `changelog/08-19-26`, keeps `docs/cloud-agent` as a living overview row, and does not collapse Cloud Agent Builds into that overview.
 
 ## 6. Verification & Evidence Plan
 ```bash

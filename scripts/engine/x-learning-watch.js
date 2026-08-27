@@ -229,6 +229,9 @@ export function applyHint(item) {
   if (title.includes('harness') || link.includes('changelog/08-19-26')) {
     return 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.';
   }
+  if (isCloudAgentOverviewUrl(item?.link)) {
+    return 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.';
+  }
   if (title.includes('share your thoughts')) {
     return 'Vendor feedback thread. Do not treat forum sentiment as EOS evidence.';
   }
@@ -259,7 +262,7 @@ export function applyHint(item) {
   if (title.includes('builds') || link.includes('changelog/08-13-26') || blob.includes('3x faster with builds')) {
     return 'Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.';
   }
-  if (title.includes('subagent') || link.includes('changelog/cloud-in-agents-window')) {
+  if (title.includes('subagent') || link.includes('changelog/cloud-in-agents-window') || link.includes('/docs/subagents')) {
     return 'Run isolated subagents on their own VMs when work must not collide with the parent branch.';
   }
   if (blob.includes('custom mode') || blob.includes('sticky skill')) {
@@ -450,6 +453,11 @@ function isLivingOfficialDoc(url) {
   return value.includes('cursor.com/docs/') || value.includes('cursor.com/help/');
 }
 
+function isCloudAgentOverviewUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent' || value === 'https://www.cursor.com/docs/cloud-agent';
+}
+
 function isLowPriorityBriefing(row) {
   const hint = String(row?.apply_in_eos || '');
   return hint.includes('customer/press stories') || hint.includes('feedback thread') || hint.includes('Campus community');
@@ -472,7 +480,10 @@ function currentClusterKey(learning) {
     url.includes('changelog/08-19-26')
     || url.includes('cloud-agent/automations')
     || url.includes('help/ai-features/automations')
+    || url.includes('/docs/subagents')
+    || url.includes('changelog/cloud-in-agents-window')
     || title === 'automations'
+    || title === 'subagents'
   ) {
     return 'cluster:cloud-agent-harness';
   }
@@ -530,15 +541,29 @@ export function selectCurrentLearnings(learnings, limit = 10) {
     })
     .map((entry) => entry.row);
   const top = ranked.slice(0, limit);
-  const reserved = ranked
-    .filter((row) => isLivingOfficialDoc(row.source_url))
-    .filter((row) => !top.some((item) => item.source_url === row.source_url))
-    .slice(0, Math.min(3, limit));
-  if (reserved.length === 0) return top;
-  const head = ranked
-    .filter((row) => !reserved.some((item) => item.source_url === row.source_url))
-    .slice(0, Math.max(0, limit - reserved.length));
-  return [...head, ...reserved];
+  const living = ranked.filter((row) => isLivingOfficialDoc(row.source_url)).slice(0, Math.min(4, limit));
+  const livingUrls = new Set(living.map((row) => row.source_url));
+  const changelogKeep = top.filter((row) => sourcePriority(row.source_url) === 0);
+  const fill = ranked.filter((row) => sourcePriority(row.source_url) !== 0 && !livingUrls.has(row.source_url));
+  const picked = [];
+  const used = new Set();
+  const push = (row) => {
+    if (!row || used.has(row.source_url) || picked.length >= limit) return;
+    used.add(row.source_url);
+    picked.push(row);
+  };
+  const livingBudget = Math.min(living.length, limit);
+  const otherBudget = Math.max(0, limit - livingBudget);
+  for (const row of changelogKeep) {
+    if (picked.length >= otherBudget) break;
+    push(row);
+  }
+  for (const row of fill) {
+    if (picked.length >= otherBudget) break;
+    push(row);
+  }
+  for (const row of living) push(row);
+  return picked;
 }
 
 export function normalizeHandle(raw) {

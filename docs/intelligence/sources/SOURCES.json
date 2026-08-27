@@ -1,7 +1,7 @@
 {
   "$schema": "./schema.json",
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:58:00Z",
+  "updated_at": "2026-08-27T00:05:00Z",
   "sources": [
     {
       "source_id": "SRC-0001",
@@ -359,6 +359,40 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/help/models-and-usage/usage-limits"
+    },
+    {
+      "source_id": "SRC-0022",
+      "name": "Cursor Docs — Cloud Agents",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Cloud Agent marketing is not EOS production evidence. Not an X timeline.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/cloud-agent"
+    },
+    {
+      "source_id": "SRC-0023",
+      "name": "Cursor Docs — Subagents",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Isolated VM subagents are vendor catalog, not an X timeline.",
+      "relevance_to_eos": "HIGH",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/subagents"
     }
   ]
 }

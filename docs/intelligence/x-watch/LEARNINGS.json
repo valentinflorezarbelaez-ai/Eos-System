@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:51:16.319Z",
+  "updated_at": "2026-08-26T23:59:37.419Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -923,12 +923,32 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent",
+      "title": "Cloud Agents",
+      "source_url": "https://cursor.com/docs/cloud-agent",
+      "published_at": null,
+      "summary": "Run Agent in the cloud for continuous coding assistance.",
+      "apply_in_eos": "Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-builds",
       "title": "Cloud Agent Builds",
       "source_url": "https://cursor.com/docs/cloud-agent/builds",
       "published_at": null,
       "summary": "Start Cloud Agents from pre-built, verified development environments.",
       "apply_in_eos": "Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cursor-router",
+      "title": "Cursor Router",
+      "source_url": "https://cursor.com/docs/cursor-router",
+      "published_at": null,
+      "summary": "How Cursor Router picks a model for each Auto request, with optimization modes, pricing, and team settings.",
+      "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -953,6 +973,16 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-subagents",
+      "title": "Subagents",
+      "source_url": "https://cursor.com/docs/subagents",
+      "published_at": null,
+      "summary": "Create specialized AI subagents for task-specific workflows and context management.",
+      "apply_in_eos": "Run isolated subagents on their own VMs when work must not collide with the parent branch.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-automations",
       "title": "Automations",
       "source_url": "https://cursor.com/help/ai-features/automations",
@@ -969,6 +999,16 @@
       "published_at": null,
       "summary": "What Grok 4.6 is, which plans include it, and how it compares to Composer.",
       "apply_in_eos": "Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-models-and-usage-usage-limits",
+      "title": "Usage and limits",
+      "source_url": "https://cursor.com/help/models-and-usage/usage-limits",
+      "published_at": null,
+      "summary": "How AI usage is counted, where to check Spending, and when limits reset.",
+      "apply_in_eos": "Honor included quota. Stop this daily watch rather than switching to paid on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     }

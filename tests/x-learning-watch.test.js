@@ -178,6 +178,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/models-and-usage/usage-limits' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/subagents' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -293,6 +301,8 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
+    { title: 'Cloud Agents', link: 'https://cursor.com/docs/cloud-agent' },
+    { title: 'Subagents', link: 'https://cursor.com/docs/subagents' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -503,6 +513,36 @@ test('parseOfficialSource html-page maps Cursor Router and usage limits', () => 
   assert.equal(usage[0].title, 'Usage and limits');
   assert.match(usage[0].summary, /Spending/i);
   assert.match(applyHint(usage[0]), /included quota/i);
+});
+
+test('parseOfficialSource html-page maps Cloud Agents overview and Subagents', () => {
+  const overview = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent'
+  );
+  assert.equal(overview[0].id, 'https://cursor.com/docs/cloud-agent');
+  assert.equal(overview[0].title, 'Cloud Agents');
+  assert.match(overview[0].summary, /cloud/i);
+  assert.match(applyHint(overview[0]), /isolated VMs/i);
+  assert.equal(applyHint(overview[0]).includes('timers'), false);
+  assert.equal(applyHint(overview[0]).includes('included quota'), false);
+
+  const buildsHint = applyHint({
+    title: 'Cloud Agent Builds',
+    link: 'https://cursor.com/docs/cloud-agent/builds',
+    summary: 'Start Cloud Agents from pre-built, verified development environments.'
+  });
+  assert.match(buildsHint, /Builds/i);
+  assert.equal(buildsHint.includes('isolated VMs'), false);
+
+  const subagents = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-subagents.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/subagents'
+  );
+  assert.equal(subagents[0].title, 'Subagents');
+  assert.match(applyHint(subagents[0]), /isolated subagents/i);
 });
 
 test('ingest fetches official docs/help html-page feeds once and not x.com', async () => {
@@ -730,6 +770,87 @@ test('selectCurrentLearnings clusters Cursor Router onto changelog', () => {
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
+test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps Cloud Agents overview off Builds', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'Cloud Agents and Cursor Harness Improvements',
+      source_url: 'https://cursor.com/changelog/08-19-26',
+      published_at: 'Wed, 19 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.'
+    },
+    {
+      title: 'Subagents',
+      source_url: 'https://cursor.com/docs/subagents',
+      published_at: null,
+      apply_in_eos: 'Run isolated subagents on their own VMs when work must not collide with the parent branch.'
+    },
+    {
+      title: 'Cloud Agents',
+      source_url: 'https://cursor.com/docs/cloud-agent',
+      published_at: null,
+      apply_in_eos: 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.'
+    },
+    {
+      title: 'Cloud Agent Builds',
+      source_url: 'https://cursor.com/docs/cloud-agent/builds',
+      published_at: null,
+      apply_in_eos: 'Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.'
+    },
+    {
+      title: 'Cloud Agents Start 3x Faster with Builds',
+      source_url: 'https://cursor.com/changelog/08-13-26',
+      published_at: 'Thu, 13 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.'
+    },
+    {
+      title: 'Usage and limits',
+      source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
+      published_at: null,
+      apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+    }
+  ], 6);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/subagents'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
+});
+
+test('selectCurrentLearnings does not drop changelog rows for reserved docs', () => {
+  const rows = [];
+  for (let i = 0; i < 8; i += 1) {
+    rows.push({
+      title: `Blog ${i}`,
+      source_url: `https://cursor.com/blog/post-${i}`,
+      published_at: `2026-08-${String(20 - i).padStart(2, '0')}T00:00:00.000Z`,
+      apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
+    });
+  }
+  rows.push({
+    title: 'Cursor Router',
+    source_url: 'https://cursor.com/changelog/router',
+    published_at: '2026-08-06T00:00:00.000Z',
+    apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
+  });
+  rows.push({
+    title: 'Models & Pricing',
+    source_url: 'https://cursor.com/docs/models-and-pricing',
+    published_at: null,
+    apply_in_eos: 'Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.'
+  });
+  rows.push({
+    title: 'Usage and limits',
+    source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
+    published_at: null,
+    apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+  });
+  const selected = selectCurrentLearnings(rows, 10);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/router'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
+});
+
 test('selectCurrentLearnings keeps undated official docs/help pages in CURRENT', () => {
   const dated = [];
   for (let i = 0; i < 12; i += 1) {
@@ -762,6 +883,9 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(first.includes('customer/press'), false);
   assert.match(current, /cursor.com\/help\/models-and-usage\/grok-4-6/);
   assert.match(current, /cursor.com\/docs\/models-and-pricing/);
+  assert.match(current, /cursor.com\/changelog\/router/);
+  assert.match(current, /cursor.com\/help\/models-and-usage\/usage-limits/);
+  assert.match(current, /cursor.com\/docs\/cloud-agent(?!\/)/);
 });
 
 test('cited X posts never claim an X fetch', () => {
