@@ -186,7 +186,7 @@ function headingBodySummary(body) {
   if (!first) return '';
   const clean = stripMarkdown(body);
   const extras = [];
-  for (const cmd of ['/goal', '/automate', '/create-rule']) {
+  for (const cmd of ['/goal', '/automate', '/create-rule', '/worktree', '/best-of-n', '/apply-worktree', '/delete-worktree']) {
     const token = new RegExp(`(?:^|[^\\w/])${cmd}(?=$|[^\\w-])`, 'i');
     if (token.test(clean) && !first.toLowerCase().includes(cmd)) {
       extras.push(cmd);
@@ -221,6 +221,7 @@ function headingBodySummary(body) {
   if (/\bsandbox\.json\b/i.test(clean) && !/\bsandbox\.json\b/i.test(first)) extras.push('sandbox.json');
   if (/\.cursor\/keys\b/i.test(clean) && !/\.cursor\/keys\b/i.test(first)) extras.push('.cursor/keys');
   if (/\bOpen Canvas\b/i.test(clean) && !/\bOpen Canvas\b/i.test(first)) extras.push('Open Canvas');
+  if (/\.cursor\/worktrees\.json/i.test(clean) && !/\.cursor\/worktrees\.json/i.test(first)) extras.push('.cursor/worktrees.json');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -238,6 +239,8 @@ function shouldSkipMarkdownHeading(heading, body) {
     || key === 'was this article helpful'
     || key === 'faq'
     || key === 'examples'
+    || key === 'example setup configurations'
+    || key === 'debugging'
     || key === 'preview'
     || key === 'quickstart'
     || key === 'partner integrations'
@@ -323,7 +326,7 @@ function shouldSkipMarkdownHeading(heading, body) {
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|\/agent-review|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit|select an element|select multiple elements|draw on the page|narrate by voice|console output|network traffic|tool approval|allow and block lists|browser context|authentication and isolation|^navigate$|^click$|^type$|^scroll$|^screenshot$|cursor_agent|disable heavy prompts|sandbox\.json|instant grep|explore subagent|path encryption|multi-root|open canvas|sharing canvases|packaging in skills/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|\/agent-review|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit|select an element|select multiple elements|draw on the page|narrate by voice|console output|network traffic|tool approval|allow and block lists|browser context|authentication and isolation|^navigate$|^click$|^type$|^scroll$|^screenshot$|cursor_agent|disable heavy prompts|sandbox\.json|instant grep|explore subagent|path encryption|multi-root|open canvas|sharing canvases|packaging in skills|worktrees\.json|setup-worktree|\/worktree|\/best-of-n|\/apply-worktree|\/delete-worktree|configuration options/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -616,6 +619,9 @@ export function applyHint(item) {
   if (isCanvasToolDocUrl(item?.link)) {
     return 'Canvases are optional desktop interactive artifacts in the Agents Window. This watch already runs in the Cloud Agent VM. Do not rotate this Cloud Agent into desktop Canvases for daily ingest. Keep environment.json + Builds. Shared canvases and team dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.';
   }
+  if (isWorktreesDocUrl(item?.link)) {
+    return 'Worktrees are optional desktop isolated Git checkouts in the Agents Window. This Cloud Agent VM already has its own checkout. Do not rotate this Cloud Agent into desktop worktrees for daily ingest. Keep environment.json + Builds. Do not put secrets in .cursor/worktrees.json. Honor included quota; do not switch this watch to on-demand.';
+  }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
   }
@@ -815,7 +821,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -968,6 +974,12 @@ function isCanvasToolDocUrl(url) {
     || value === 'https://www.cursor.com/docs/agent/tools/canvas';
 }
 
+function isWorktreesDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/configuration/worktrees'
+    || value === 'https://www.cursor.com/docs/configuration/worktrees';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -1043,6 +1055,7 @@ function currentClusterKey(learning) {
     || isTerminalToolDocUrl(learning?.source_url)
     || isSearchToolDocUrl(learning?.source_url)
     || isCanvasToolDocUrl(learning?.source_url)
+    || isWorktreesDocUrl(learning?.source_url)
     || url.includes('changelog/cloud-in-agents-window')
     || title === 'automations'
     || title === 'subagents'

@@ -971,6 +971,23 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/agent/tools/canvas"
+    },
+    {
+      "source_id": "SRC-0058",
+      "name": "Cursor Docs — Worktrees",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Desktop Worktrees are optional isolated Git checkouts in the Agents Window. This Cloud Agent VM already has its own checkout and does not rotate into desktop worktrees for daily ingest. Do not put secrets in .cursor/worktrees.json.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/configuration/worktrees"
     }
   ]
 }

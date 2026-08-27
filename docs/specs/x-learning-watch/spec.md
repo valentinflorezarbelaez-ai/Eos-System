@@ -114,6 +114,8 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-84:** `apply_in_eos` for `docs/agent/tools/search` states that Search is optional desktop Instant Grep and Explore subagent, that this Cloud Agent VM already searches the workspace, not to rotate this Cloud Agent into desktop Search for daily ingest, that `environment.json` + Builds stay the start path, not to put `.cursor/keys` in git, and to honor included quota without switching this watch to on-demand.
 - [x] **AC-85:** CURRENT.md clusters `docs/agent/tools/canvas` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
 - [x] **AC-86:** `apply_in_eos` for `docs/agent/tools/canvas` states that Canvases are optional desktop interactive artifacts in the Agents Window, that this watch already runs in the Cloud Agent VM, not to rotate this Cloud Agent into desktop Canvases for daily ingest, that `environment.json` + Builds stay the start path, that shared canvases and team dashboard controls are not EOS governance, and to honor included quota without switching this watch to on-demand.
+- [x] **AC-87:** CURRENT.md clusters `docs/configuration/worktrees` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
+- [x] **AC-88:** `apply_in_eos` for `docs/configuration/worktrees` states that Worktrees are optional desktop isolated Git checkouts in the Agents Window, that this Cloud Agent VM already has its own checkout, not to rotate this Cloud Agent into desktop worktrees for daily ingest, that `environment.json` + Builds stay the start path, not to put secrets in `.cursor/worktrees.json`, and to honor included quota without switching this watch to on-demand.
 
 ## 6. Verification & Evidence Plan
 ```bash

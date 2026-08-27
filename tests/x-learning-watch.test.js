@@ -319,6 +319,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/configuration/worktrees' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -1297,6 +1301,25 @@ test('applyHint for Canvases keeps this watch in the Cloud Agent VM', () => {
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Worktrees keeps this Cloud Agent VM on its own checkout', () => {
+  const hint = applyHint({
+    title: 'Worktrees',
+    link: 'https://cursor.com/docs/configuration/worktrees',
+    summary: 'Run agents in isolated Git worktrees from the Agents Window.'
+  });
+  assert.match(hint, /optional desktop isolated Git checkouts/i);
+  assert.match(hint, /Agents Window/);
+  assert.match(hint, /Cloud Agent VM/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop worktrees/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /\.cursor\/worktrees\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('/best-of-n'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1807,6 +1830,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(/enable/i.test(applyHint(canvasTool[0])), false);
   assert.equal(applyHint(canvasTool[0]).includes('Custom Mode'), false);
 
+  const worktrees = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-configuration-worktrees.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/configuration/worktrees'
+  );
+  assert.equal(worktrees[0].id, 'https://cursor.com/docs/configuration/worktrees');
+  assert.equal(worktrees[0].title, 'Worktrees');
+  assert.match(worktrees[0].summary, /isolated Git worktrees/i);
+  assert.match(applyHint(worktrees[0]), /Cloud Agent VM/);
+  assert.match(applyHint(worktrees[0]), /optional desktop isolated Git checkouts/i);
+  assert.equal(/enable/i.test(applyHint(worktrees[0])), false);
+  assert.equal(applyHint(worktrees[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(worktrees[0]).includes('/best-of-n'), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -2239,6 +2276,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(canvasToolMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(canvasToolMd.summary), false);
   assert.equal(canvasToolMd.summary.includes('Custom Mode'), false);
+
+  const worktreesMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-configuration-worktrees.md'), 'utf8')
+  );
+  assert.equal(worktreesMd.title, 'Worktrees');
+  assert.match(worktreesMd.summary, /Agents Window/);
+  assert.match(worktreesMd.summary, /\.cursor\/worktrees\.json/);
+  assert.match(worktreesMd.summary, /Worktree Skills/);
+  assert.equal(worktreesMd.summary.includes('Sitemap'), false);
+  assert.equal(/Example setup configurations —/.test(worktreesMd.summary), false);
+  assert.equal(worktreesMd.summary.includes('Custom Mode'), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2729,6 +2777,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       source_url: 'https://cursor.com/docs/agent/tools/canvas',
       published_at: null,
       apply_in_eos: 'Canvases are optional desktop interactive artifacts in the Agents Window. This watch already runs in the Cloud Agent VM. Do not rotate this Cloud Agent into desktop Canvases for daily ingest. Keep environment.json + Builds. Shared canvases and team dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'Worktrees',
+      source_url: 'https://cursor.com/docs/configuration/worktrees',
+      published_at: null,
+      apply_in_eos: 'Worktrees are optional desktop isolated Git checkouts in the Agents Window. This Cloud Agent VM already has its own checkout. Do not rotate this Cloud Agent into desktop worktrees for daily ingest. Keep environment.json + Builds. Do not put secrets in .cursor/worktrees.json. Honor included quota; do not switch this watch to on-demand.'
     }
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
@@ -2739,6 +2793,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/terminal'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/search'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/canvas'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/configuration/worktrees'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
@@ -3165,6 +3220,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/tools/terminal'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/search'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/canvas'), false);
+  assert.equal(current.includes('cursor.com/docs/configuration/worktrees'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
