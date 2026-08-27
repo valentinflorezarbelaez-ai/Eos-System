@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T00:03:20.850Z",
+  "updated_at": "2026-08-27T00:13:42.763Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -949,6 +949,16 @@
       "published_at": null,
       "summary": "Start Cloud Agents from pre-built, verified development environments.",
       "apply_in_eos": "Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-capabilities",
+      "title": "Capabilities",
+      "source_url": "https://cursor.com/docs/cloud-agent/capabilities",
+      "published_at": null,
+      "summary": "What Cloud Agents can do.",
+      "apply_in_eos": "Honor Cloud Agent subscriptions (GitHub PR, Slack, timers) and auto-CI-fix on PRs this agent opens. Do not scrape X.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

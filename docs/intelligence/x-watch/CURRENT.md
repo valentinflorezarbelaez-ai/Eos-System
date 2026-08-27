@@ -2,8 +2,8 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-27T00:03:20.850Z
-Store size: 103
+Updated: 2026-08-27T00:13:42.763Z
+Store size: 104
 
 ## Official product actions
 - **Cloud Agents and Cursor Harness Improvements** — Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.
