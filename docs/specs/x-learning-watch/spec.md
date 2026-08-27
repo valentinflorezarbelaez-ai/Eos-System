@@ -94,6 +94,8 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-64:** `apply_in_eos` for `docs/approval-agents` states that PR Routing & Approval is optional vendor automation, that it does not replace EOS TDD or human review, that exact `APPROVAL_POLICY.md` and `.cursor/approval-policies/ROUTING.md` are the policy files, not to treat vendor auto-approve as EOS evidence, that GitHub remains source of truth, not to ingest Slack or Teams setup, and to honor included quota without switching this watch to on-demand.
 - [x] **AC-65:** CURRENT.md clusters `docs/cloud-agent/mobile` onto `changelog/ios-mobile-app` and keeps Usage and limits as a living row.
 - [x] **AC-66:** `apply_in_eos` for `docs/cloud-agent/mobile` states that this watch runs in the Cloud Agent VM not on iPhone/iPad, that Cursor for iOS is an optional beta client, that `environment.json` + Builds stay on the web, that `/remote-control` hands a local session to the cloud while tool calls stay on the computer, that Privacy Mode (Legacy) is not supported, not to ingest GitHub or GitLab setup pages, and to honor included quota without switching this watch to on-demand.
+- [x] **AC-67:** CURRENT.md clusters `docs/cloud-agent/api/endpoints` onto `docs/cloud-agent` and keeps Usage and limits as a living row.
+- [x] **AC-68:** `apply_in_eos` for `docs/cloud-agent/api/endpoints` states that this watch uses official feeds not the Cloud Agents API, not to treat `api.cursor.com` as this ingest path, not to put API keys in git, that GitHub remains source of truth, and to honor included quota without switching this watch to on-demand.
 
 ## 6. Verification & Evidence Plan
 ```bash

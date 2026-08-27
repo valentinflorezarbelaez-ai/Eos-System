@@ -296,7 +296,8 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'admin configuration api'
     || key === 'pricing'
     || key === 'billing'
-    || key === 'viewing runs';
+    || key === 'viewing runs'
+    || key === 'endpoints';
 }
 
 function isProductSubheading(heading) {
@@ -561,6 +562,9 @@ export function applyHint(item) {
   if (isCloudAgentMobileUrl(item?.link)) {
     return 'This watch runs in the Cloud Agent VM, not on iPhone or iPad. Cursor for iOS is an optional beta client. Keep environment.json + Builds on the web. /remote-control hands a local session to the cloud; tool calls stay on the computer. Privacy Mode (Legacy) is not supported. Do not ingest GitHub or GitLab setup pages. Honor included quota; do not switch this watch to on-demand.';
   }
+  if (isCloudAgentApiEndpointsUrl(item?.link)) {
+    return 'This watch uses official feeds, not the Cloud Agents API. Do not treat api.cursor.com as this ingest path. Do not put API keys in git. Keep GitHub as source of truth. Honor included quota; do not switch this watch to on-demand.';
+  }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
   }
@@ -760,7 +764,9 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url)) return sourcePriority(url) + 0.5;
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCloudAgentApiEndpointsUrl(url)) {
+    return sourcePriority(url) + 0.5;
+  }
   return sourcePriority(url);
 }
 
@@ -861,6 +867,12 @@ function isCloudAgentMobileUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/cloud-agent/mobile'
     || value === 'https://www.cursor.com/docs/cloud-agent/mobile';
+}
+
+function isCloudAgentApiEndpointsUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent/api/endpoints'
+    || value === 'https://www.cursor.com/docs/cloud-agent/api/endpoints';
 }
 
 function isAgentOverviewUrl(url) {
@@ -982,6 +994,9 @@ function currentClusterKey(learning) {
     || url.includes('forum.cursor.com/t/cursor-mobile-app-for-ios')
   ) {
     return 'cluster:cursor-ios';
+  }
+  if (isCloudAgentOverviewUrl(learning?.source_url) || isCloudAgentApiEndpointsUrl(learning?.source_url)) {
+    return 'cluster:cloud-agent-overview';
   }
   return normalizeTitleKey(learning?.title);
 }

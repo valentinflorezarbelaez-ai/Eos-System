@@ -257,6 +257,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-API-ENDPOINTS",
+      "url": "https://cursor.com/docs/cloud-agent/api/endpoints",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_API_ENDPOINTS",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-MCP",
       "url": "https://cursor.com/docs/mcp",
       "kind": "html-page",

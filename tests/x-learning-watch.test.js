@@ -279,6 +279,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/api/endpoints' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -913,6 +917,23 @@ test('applyHint for Cursor for iOS keeps this watch in the Cloud Agent VM', () =
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Cloud Agents API keeps this watch on official feeds', () => {
+  const hint = applyHint({
+    title: 'Cloud Agents API',
+    link: 'https://cursor.com/docs/cloud-agent/api/endpoints',
+    summary: 'The Cloud Agents API lets you programmatically launch and manage cloud agents.'
+  });
+  assert.match(hint, /official feeds/i);
+  assert.match(hint, /not the Cloud Agents API/i);
+  assert.match(hint, /api\.cursor\.com/);
+  assert.match(hint, /API keys/i);
+  assert.match(hint, /GitHub/i);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1302,6 +1323,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(mobile[0]), /Cloud Agent VM/);
   assert.equal(/enable/i.test(applyHint(mobile[0])), false);
 
+  const apiEndpoints = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-api-endpoints.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/api/endpoints'
+  );
+  assert.equal(apiEndpoints[0].id, 'https://cursor.com/docs/cloud-agent/api/endpoints');
+  assert.equal(apiEndpoints[0].title, 'Cloud Agents API');
+  assert.match(apiEndpoints[0].summary, /programmatically/i);
+  assert.match(applyHint(apiEndpoints[0]), /official feeds/i);
+  assert.match(applyHint(apiEndpoints[0]), /api\.cursor\.com/);
+  assert.equal(/enable/i.test(applyHint(apiEndpoints[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1616,6 +1649,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Team controls —/.test(mobileMd.summary), false);
   assert.equal(mobileMd.summary.includes('github.md'), false);
   assert.equal(mobileMd.summary.includes('gitlab.md'), false);
+
+  const apiEndpointsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-api-endpoints.md'), 'utf8')
+  );
+  assert.equal(apiEndpointsMd.title, 'Cloud Agents API');
+  assert.match(apiEndpointsMd.summary, /public beta/i);
+  assert.match(apiEndpointsMd.summary, /Cloud Agents API/);
+  assert.equal(apiEndpointsMd.summary.includes('YOUR_API_KEY'), false);
+  assert.equal(apiEndpointsMd.summary.includes('YOUR_GITHUB_TOKEN'), false);
+  assert.equal(apiEndpointsMd.summary.includes('Sitemap'), false);
+  assert.equal(/Endpoints —/.test(apiEndpointsMd.summary), false);
+  assert.equal(/Create An Agent —/.test(apiEndpointsMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2064,6 +2109,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
       apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+    },
+    {
+      title: 'Cloud Agents API',
+      source_url: 'https://cursor.com/docs/cloud-agent/api/endpoints',
+      published_at: null,
+      apply_in_eos: 'This watch uses official feeds, not the Cloud Agents API. Do not treat api.cursor.com as this ingest path. Do not put API keys in git. Keep GitHub as source of truth. Honor included quota; do not switch this watch to on-demand.'
     }
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
@@ -2071,6 +2122,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/capabilities'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -2285,6 +2337,18 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'This watch runs in the Cloud Agent VM, not on iPhone or iPad. Cursor for iOS is an optional beta client. Keep environment.json + Builds on the web. /remote-control hands a local session to the cloud; tool calls stay on the computer. Privacy Mode (Legacy) is not supported. Do not ingest GitHub or GitLab setup pages. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Cloud Agents',
+      source_url: 'https://cursor.com/docs/cloud-agent',
+      published_at: null,
+      apply_in_eos: 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.'
+    },
+    {
+      title: 'Cloud Agents API',
+      source_url: 'https://cursor.com/docs/cloud-agent/api/endpoints',
+      published_at: null,
+      apply_in_eos: 'This watch uses official feeds, not the Cloud Agents API. Do not treat api.cursor.com as this ingest path. Do not put API keys in git. Keep GitHub as source of truth. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -2296,6 +2360,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/hooks'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/approval-agents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/mobile'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices'), false);
@@ -2397,6 +2462,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/security-agents'), false);
   assert.equal(current.includes('cursor.com/docs/approval-agents'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/mobile'), false);
+  assert.equal(current.includes('cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
