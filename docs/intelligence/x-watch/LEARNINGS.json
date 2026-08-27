@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T15:14:40.169Z",
+  "updated_at": "2026-08-27T15:23:00.627Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1529,6 +1529,16 @@
       "published_at": null,
       "summary": "Cursor supports a range of AI models from multiple providers. Which models are available? — Cursor offers its own models (Grok 4.5 and Composer) in the Cursor Models pool alongside other frontier models from OpenAI, Anthropic, and Google. Which model should I use? — Auto selects models that balance intelligence, cost, and reliability. Which models does Cursor Router route across? — Cursor Router routes across these models: GPT-5.5 Claude Opus 5 Grok 4.5 Claude Fable 5 Required: Grok 4.5. Can I see which model Cursor Router used for my request? — By default, the routed model identity is hidden so you judge results on merit. How much does Auto cost? — All Auto modes bill at the list price of the model each request is routed to. How much does Grok 4.5 cost? — Grok 4.5 has two speeds, each wi…",
       "apply_in_eos": "Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep environment.json + Builds.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-models-and-usage-cursor-router",
+      "title": "Cursor Router",
+      "source_url": "https://cursor.com/help/models-and-usage/cursor-router",
+      "published_at": null,
+      "summary": "Cursor Router is the intelligent routing behind Auto. What is Cursor Router and how is it different from the previous Auto mode? — Cursor Router is the relaunched Auto mode. How does Cursor Router decide which model to use for my request? — An ML classifier runs on each agent request and routes by task type and complexity. What are the Cost, Balance, and Intelligence optimization modes and how do I switch between them? — Open the model picker, select Auto , then choose an optimization mode: Cost : Optimizes token spend. Can I use Cursor Router from the SDK? — Yes.",
+      "apply_in_eos": "Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules still bind model and governance choices. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put API keys in git. Keep environment.json + Builds.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
