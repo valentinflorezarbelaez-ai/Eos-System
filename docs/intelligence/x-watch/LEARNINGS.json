@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T01:23:58.703Z",
+  "updated_at": "2026-08-27T01:30:42.308Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1029,6 +1029,16 @@
       "published_at": null,
       "summary": "Cursor Router is the model routing system behind Auto . How it works — When you select Auto and choose Balance or Intelligence in the model picker, Cursor Router runs a classifier on each agent request and routes it based on task type and complexity. Optimization modes — Open the model picker, select Auto , and pick a mode under Optimize For : Cost : Uses the previous Auto routing logic. Pricing — All Auto modes bill at the list price of the model each request is routed to. Team settings — Admins configure Cursor Router from the team dashboard. Use Router through the SDK — The TypeScript SDK and Python SDK expose Cursor Router as model id with parameter ( , , or ).",
       "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-hooks",
+      "title": "Hooks",
+      "source_url": "https://cursor.com/docs/hooks",
+      "published_at": null,
+      "summary": "Hooks let you observe, control, and extend the agent loop using custom scripts. Cloud agent support — Cloud agents run command-based hooks from your repository. .cursor/hooks.json Supported hooks — The following hooks run in cloud agents: Hooks not available in cloud agents — Some hooks don't apply to cloud agents due to differences in the execution environment: Configuration sources — Cloud agents load hooks from these sources: Project hooks ( .cursor/hooks.json in your repo): Loaded and run during cloud agent work. Execution type limits — Cloud agents run command-based hooks only.",
+      "apply_in_eos": "Commit command-based hooks as .cursor/hooks.json at the repo root so Cloud Agents pick them up. User-level ~/.cursor/hooks.json is not available in Cloud Agents. Do not rely on Tab, sessionStart, or prompt-based hooks in this environment.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

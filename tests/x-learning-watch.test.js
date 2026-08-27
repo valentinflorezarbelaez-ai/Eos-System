@@ -364,6 +364,18 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.match(metadata.apply_in_eos, /not a credential/i);
   assert.match(metadata.apply_in_eos, /OIDC/i);
   assert.match(metadata.apply_in_eos, /Cloud Agents API/i);
+  const hooks = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/hooks');
+  assert.ok(hooks);
+  assert.match(hooks.summary, /\.cursor\/hooks\.json/);
+  assert.match(hooks.summary, /Cloud agent support/i);
+  assert.match(hooks.summary, /command-based/i);
+  assert.match(hooks.apply_in_eos, /\.cursor\/hooks\.json/);
+  assert.match(hooks.apply_in_eos, /User-level/i);
+  assert.match(hooks.apply_in_eos, /prompt-based/i);
+  assert.match(hooks.apply_in_eos, /Tab/);
+  assert.match(hooks.apply_in_eos, /sessionStart/);
+  assert.equal(hooks.summary.includes('hooks partners'), false);
+  assert.equal(hooks.apply_in_eos.includes('Custom Mode'), false);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
@@ -1646,6 +1658,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cloud-agent/identity'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/metadata'), false);
   assert.equal(current.includes('cursor.com/docs/hooks'), false);
+  assert.match(current, /cursor.com\/changelog\/08-19-26/);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);
   assert.match(current, /Steer running agents/);
