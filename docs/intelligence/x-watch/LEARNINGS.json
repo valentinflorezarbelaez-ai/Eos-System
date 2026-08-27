@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T01:35:16.336Z",
+  "updated_at": "2026-08-27T12:01:02.738Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1053,6 +1053,16 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-mcp",
+      "title": "Model Context Protocol (MCP)",
+      "source_url": "https://cursor.com/docs/mcp",
+      "published_at": null,
+      "summary": "What is MCP? — Model Context Protocol (MCP) enables Cursor to connect to external tools and data sources. Installing MCP servers Using mcp.json — Configure custom MCP servers with a JSON file: Project Configuration — Create .cursor/mcp.json in your project for project-specific tools. Global Configuration — Create ~/.cursor/mcp.json in your home directory for tools available everywhere. Config interpolation — Use variables in mcp.json values. .cursor/mcp.json Enterprise admin controls — MCP distribution and MCP policy are configured separately. Team MCP distribution — Configure shared Team MCP servers under Dashboard > Integrations & MCP *. Security considerations — When installing MCP servers, consider these security practices: Verify the source : Only install MCP servers from trusted dev…",
+      "apply_in_eos": "Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-models-and-pricing",
       "title": "Models & Pricing",
       "source_url": "https://cursor.com/docs/models-and-pricing",
@@ -1117,7 +1127,7 @@
       "title": "Agent Skills",
       "source_url": "https://cursor.com/docs/skills",
       "published_at": null,
-      "summary": "Agent Skills is an open standard for extending AI agents with specialized capabilities. What are skills? — A skill is a portable, version-controlled package that teaches agents how to perform domain-specific tasks. How skills work — When Cursor starts, it automatically discovers skills from skill directories and makes them available to Agent. Built-in Cursor skills — Cursor includes a small set of built in skills to improve your general workflows. Skill directories — Skills are automatically loaded from these locations: Cursor loads user-level skills from the machine the agent runs on. SKILL.md file format — Each skill is defined in a SKILL.md file with YAML frontmatter: Scoping a skill to specific files — Use the field to limit a skill to files that match one or more glob patterns. Disab…",
+      "summary": "Agent Skills is an open standard for extending AI agents with specialized capabilities. What are skills? — A skill is a portable, version-controlled package that teaches agents how to perform domain-specific tasks. How skills work — When Cursor starts, it automatically discovers skills from skill directories and makes them available to Agent. Built-in Cursor skills — Cursor includes a small set of built in skills to improve your general workflows. Skill directories — Skills are automatically loaded from these locations: Cursor loads user-level skills from the machine where the agent runs. SKILL.md file format — Each skill is defined in a SKILL.md file with YAML frontmatter: Scoping a skill to specific files — Use the field to limit a skill to files that match one or more glob patterns. Di…",
       "apply_in_eos": "Pin an EOS skill as a Custom Mode when a session must stay on one playbook.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false

@@ -395,6 +395,18 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.match(securityNetwork.apply_in_eos, /Privacy Mode \(Legacy\)/);
   assert.equal(/enable/i.test(securityNetwork.apply_in_eos), false);
   assert.equal(securityNetwork.apply_in_eos.includes('Custom Mode'), false);
+  const mcp = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/mcp');
+  assert.ok(mcp);
+  assert.match(mcp.summary, /\.cursor\/mcp\.json/);
+  assert.match(mcp.apply_in_eos, /\.cursor\/mcp\.json/);
+  assert.match(mcp.apply_in_eos, /User-level/i);
+  assert.match(mcp.apply_in_eos, /not EOS governance/i);
+  assert.match(mcp.apply_in_eos, /API keys/i);
+  assert.equal(/enable/i.test(mcp.apply_in_eos), false);
+  assert.equal(mcp.apply_in_eos.includes('Custom Mode'), false);
+  const cloudAgents = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cloud-agent');
+  assert.ok(cloudAgents);
+  assert.equal(cloudAgents.summary.includes(' Cloud Agents How to access'), false);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
