@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T14:03:11.008Z",
+  "updated_at": "2026-08-27T14:09:42.449Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1289,6 +1289,16 @@
       "published_at": null,
       "summary": "Origin is currently released in early beta. macOS, Linux and Windows (WSL) — Install the Origin CLI with a single command: The installer puts the binary at . Verification — After installation, verify that the Origin CLI is working correctly: Sign in — Sign in to your Cursor account: Complete the browser flow with the Cursor account that has Origin access. Manage repositories — The CLI can create and delete Origin repositories, so you do not have to open the web UI: without a slash creates the repository in your account's namespace. Updates — To update the Origin CLI to the current release: Next steps — Commands Pull request commands Create a repository Clone, Push & Pull Mirror a GitHub repo Browse & Search Integrations ---",
       "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-codebase-settings",
+      "title": "Codebase settings",
+      "source_url": "https://cursor.com/docs/origin/codebase-settings",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Permissions — Team-level permissions control who can use Origin for your codebase: who can access repos under your claimed codebase name, and how Origin relates to your Cursor team membership. Apps — Apps under codebase settings (also at cursor.com/codebase/settings/apps) is where you install and manage apps for your codebase: Third-party apps such as Vercel, Depot, and Buildkite: install them here, then see which ap",
+      "apply_in_eos": "Origin codebase settings are optional team-level Origin hosting. GitHub remains source of truth for this synced repo. Do not claim a codebase name, turn Origin on or off, or manage Origin Apps for this watch. Do not put Origin API tokens in git. This Cloud Agent VM already uses its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
