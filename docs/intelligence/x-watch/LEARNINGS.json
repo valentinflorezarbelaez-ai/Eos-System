@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T12:51:17.804Z",
+  "updated_at": "2026-08-27T12:56:47.892Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -919,6 +919,16 @@
       "published_at": "2026-02-05T12:00:00.000Z",
       "summary": "We're making a part of our multi-agent research harness available to try today in preview.",
       "apply_in_eos": "Vendor multi-agent research preview. Do not treat research harness writeups as EOS production evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-agent-review",
+      "title": "Agent Review",
+      "source_url": "https://cursor.com/docs/agent/agent-review",
+      "published_at": null,
+      "summary": "Agent Review runs a dedicated code review on your local changes from inside Cursor. Running a review — There are three ways to start a review: Automatic : When enabled in settings, Agent Review runs after every commit is made. /agent-review Review depth — Agent Review supports two depth levels. BUGBOT.md",
+      "apply_in_eos": "Agent Review is optional in-editor review of local changes. EOS TDD evidence remains required. /agent-review is not a substitute for tests. Keep BUGBOT.md if this repo uses Bugbot rules. This watch already runs in the Cloud Agent VM, not the desktop Agents Window. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
