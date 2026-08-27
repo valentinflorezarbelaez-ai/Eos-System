@@ -39,7 +39,9 @@ export class McpProvisioningEngine {
       activeData = JSON.parse(fs.readFileSync(this.activeToolsFile, 'utf8'));
     }
 
-    const currentMcpNames = new Set(activeData.governed_mcps.map(m => m.name.toLowerCase()));
+    const roster = activeData.governed_mcps || [];
+    const currentMcpNames = new Set(roster.map(m => m.name.toLowerCase()));
+    let rosterChanged = false;
 
     for (const name of normalized) {
       if (catalog[name]) {
@@ -53,8 +55,9 @@ export class McpProvisioningEngine {
         };
 
         if (!currentMcpNames.has(name)) {
-          activeData.governed_mcps.push(mcpEntry);
+          roster.push(mcpEntry);
           currentMcpNames.add(name);
+          rosterChanged = true;
         }
 
         provisioned.push(mcpEntry);
@@ -66,8 +69,11 @@ export class McpProvisioningEngine {
       }
     }
 
-    // Save updated active tools
-    fs.writeFileSync(this.activeToolsFile, JSON.stringify(activeData, null, 2));
+    // Persist only real roster changes: a fully rejected request must leave governed state untouched
+    if (rosterChanged) {
+      activeData.governed_mcps = roster;
+      fs.writeFileSync(this.activeToolsFile, JSON.stringify(activeData, null, 2));
+    }
 
     return {
       provisionedCount: provisioned.length,

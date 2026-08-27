@@ -45,13 +45,15 @@ test('MCP Provisioning: Dynamically provisions catalog servers into Mission Cont
   }
 });
 
-test('MCP Provisioning: Rejects unknown unverified servers under Default-Deny', (t) => {
-  preserveActiveTools(t);
-
+test('MCP Provisioning: Rejects unknown unverified servers under Default-Deny', () => {
   const engine = new McpProvisioningEngine();
+  const rosterBefore = fs.readFileSync(activeToolsFile);
+
   const result = engine.provisionMcps(['malicious_unknown_server']);
 
   assert.equal(result.provisionedCount, 0);
   assert.equal(result.rejectedCount, 1);
   assert.equal(result.rejected[0].reason, 'MCP_NOT_FOUND_IN_OFFICIAL_CATALOG');
+  // A fully rejected request must leave governed Mission Control state untouched
+  assert.deepEqual(fs.readFileSync(activeToolsFile), rosterBefore);
 });
