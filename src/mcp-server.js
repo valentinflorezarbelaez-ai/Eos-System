@@ -6,8 +6,6 @@
  */
 
 import readline from 'node:readline';
-import fs from 'node:fs';
-import path from 'node:path';
 import { ContextCompiler } from '../scripts/engine/context-compiler.js';
 import { MissionLedger } from '../scripts/engine/mission-ledger.js';
 import { AuthorityAdapter } from '../scripts/engine/authority-adapter.js';
@@ -203,30 +201,7 @@ class EosMcpServer {
         }));
 
       case 'eos.evidence.record':
-        return this._guarded(toolDef, env, () => {
-          const missionId = args.missionId || args.mission_id;
-          if (!missionId) {
-            const err = new Error('MISSING_MISSION_ID');
-            err.code = 'MISSING_MISSION_ID';
-            throw err;
-          }
-          const missionDir = this.bridge.runtime.getMissionDir(missionId);
-          const evidenceDir = path.join(missionDir, 'evidence');
-          const id = args.id || `EVD-${Date.now()}`;
-          const receipt = {
-            id,
-            mission_id: missionId,
-            status: args.status || 'RECORDED',
-            category: args.category || 'MANUAL',
-            recorded_at: new Date().toISOString(),
-            payload: args.payload || {},
-            epistemic_class: 'RECORDED_NOT_VERIFIED'
-          };
-          fs.mkdirSync(evidenceDir, { recursive: true });
-          const file = path.join(evidenceDir, `${id}.json`);
-          fs.writeFileSync(file, JSON.stringify(receipt, null, 2), 'utf8');
-          return { evidence: receipt, path: file };
-        });
+        return this._guarded(toolDef, env, () => this.bridge.recordEvidence(args));
 
       case 'eos.verifier.run':
         return this._guarded(toolDef, env, () => ({
@@ -296,13 +271,66 @@ class EosMcpServer {
       default:
         return {
           tool: name,
-          status: 'SIMULATION_ONLY',
+          status: 'DENIED',
           executed: false,
           sideEffects: 'NONE',
-          governance: 'DEFAULT_DENY_SUPERVISED',
-          message: `Tool '${name}' is registered but has no active handler.`
+          reason: `NO_HANDLER_REGISTERED: '${name}' is declared in CANONICAL_TOOLS without a handler`
         };
     }
+  }
+
+  async handleRequest(request) {
+    const { id, method, params } = request;
+
+    if (method === 'initialize') {
+      return {
+        jsonrpc: '2.0',
+        id,
+        result: {
+          protocolVersion: '2024-11-05',
+          capabilities: { tools: {} },
+          serverInfo: { name: 'eos-mission-os', version: '1.3.0' }
+        }
+      };
+    }
+
+    if (method === 'tools/list') {
+      return {
+        jsonrpc: '2.0',
+        id,
+        result: {
+          tools: CANONICAL_TOOLS.map((t) => ({
+            name: t.name,
+            description: t.description,
+            inputSchema: { type: 'object' }
+          }))
+        }
+      };
+    }
+
+    if (method === 'tools/call') {
+      if (!params || !params.name) {
+        return {
+          jsonrpc: '2.0',
+          id,
+          error: { code: -32602, message: 'Invalid params: tools/call requires params.name' }
+        };
+      }
+      const result = await this.handleToolCall(params.name, params.arguments || {});
+      return {
+        jsonrpc: '2.0',
+        id,
+        result: {
+          content: [{ type: 'text', text: JSON.stringify(result, null, 2) }]
+        }
+      };
+    }
+
+    return {
+      jsonrpc: '2.0',
+      id,
+      error: { code: -32601, message: `Method '${method}' not found` }
+    };
   }
 
   start() {
@@ -312,68 +340,37 @@ class EosMcpServer {
       terminal: false
     });
 
+    const write = (response) => process.stdout.write(JSON.stringify(response) + '\n');
+
     rl.on('line', async (line) => {
       if (!line.trim()) return;
 
+      let request;
       try {
-        const request = JSON.parse(line);
-        const { id, method, params } = request;
-
-        if (method === 'initialize') {
-          const response = {
-            jsonrpc: '2.0',
-            id,
-            result: {
-              protocolVersion: '2024-11-05',
-              capabilities: { tools: {} },
-              serverInfo: { name: 'eos-mission-os', version: '1.3.0' }
-            }
-          };
-          process.stdout.write(JSON.stringify(response) + '\n');
-        } else if (method === 'tools/list') {
-          const response = {
-            jsonrpc: '2.0',
-            id,
-            result: {
-              tools: CANONICAL_TOOLS.map((t) => ({
-                name: t.name,
-                description: t.description,
-                inputSchema: { type: 'object' }
-              }))
-            }
-          };
-          process.stdout.write(JSON.stringify(response) + '\n');
-        } else if (method === 'tools/call') {
-          const result = await this.handleToolCall(params.name, params.arguments || {});
-          const response = {
-            jsonrpc: '2.0',
-            id,
-            result: {
-              content: [{ type: 'text', text: JSON.stringify(result, null, 2) }]
-            }
-          };
-          process.stdout.write(JSON.stringify(response) + '\n');
-        } else {
-          const response = {
-            jsonrpc: '2.0',
-            id,
-            error: { code: -32601, message: `Method '${method}' not found` }
-          };
-          process.stdout.write(JSON.stringify(response) + '\n');
-        }
+        request = JSON.parse(line);
       } catch (err) {
-        const errorResponse = {
+        write({
           jsonrpc: '2.0',
           id: null,
           error: { code: -32700, message: 'Parse error', data: err.message }
-        };
-        process.stdout.write(JSON.stringify(errorResponse) + '\n');
+        });
+        return;
+      }
+
+      try {
+        write(await this.handleRequest(request));
+      } catch (err) {
+        write({
+          jsonrpc: '2.0',
+          id: request.id ?? null,
+          error: { code: -32603, message: 'Internal error', data: err.message }
+        });
       }
     });
   }
 }
 
-export { EosMcpServer, CANONICAL_TOOLS, normalizeToolName };
+export { EosMcpServer, CANONICAL_TOOLS };
 
 if (process.argv[1] && process.argv[1].endsWith('mcp-server.js')) {
   const server = new EosMcpServer();

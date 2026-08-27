@@ -1,6 +1,38 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { spawn } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { EosMcpServer, CANONICAL_TOOLS } from '../src/mcp-server.js';
+
+const SERVER_PATH = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src/mcp-server.js');
+
+/** Drives the real stdio loop with raw lines and returns the parsed JSON-RPC responses. */
+function runStdioSession(rawLines) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [SERVER_PATH], {
+      cwd: fs.mkdtempSync(path.join(os.tmpdir(), 'eos-mcp-stdio-')),
+      env: { ...process.env, EOS_MODE: 'read-only', EOS_AUTONOMY_LEVEL: 'LEVEL_0' }
+    });
+
+    let stdout = '';
+    let stderr = '';
+    child.stdout.on('data', (chunk) => { stdout += chunk; });
+    child.stderr.on('data', (chunk) => { stderr += chunk; });
+    child.on('error', reject);
+    child.on('close', (code) => {
+      if (code !== 0) {
+        reject(new Error(`MCP server exited with code ${code}: ${stderr}`));
+        return;
+      }
+      resolve(stdout.split('\n').filter((line) => line.trim()).map((line) => JSON.parse(line)));
+    });
+
+    child.stdin.end(rawLines.join('\n') + '\n');
+  });
+}
 
 test('MCP-01: tools/list returns exactly 20 canonical tools', () => {
   assert.equal(CANONICAL_TOOLS.length, 20);
@@ -60,4 +92,35 @@ test('MCP-06: workspace.discover is wired (MEASURED)', async () => {
   assert.equal(res.status, 'SUCCESS');
   assert.equal(res.executed, true);
   assert.ok(res.workspace.has_mcp_server);
+});
+
+test('MCP-07: stdio loop answers JSON-RPC and classifies malformed input', async () => {
+  const responses = await runStdioSession([
+    JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'initialize' }),
+    JSON.stringify({ jsonrpc: '2.0', id: 2, method: 'tools/list' }),
+    JSON.stringify({
+      jsonrpc: '2.0',
+      id: 3,
+      method: 'tools/call',
+      params: { name: 'eos_authority_check', arguments: { requiredLevel: 'LEVEL_0', grantedLevel: 'LEVEL_0' } }
+    }),
+    JSON.stringify({ jsonrpc: '2.0', id: 4, method: 'tools/call' }),
+    JSON.stringify({ jsonrpc: '2.0', id: 5, method: 'nope' }),
+    '{ not json'
+  ]);
+
+  // Responses are correlated by id: JSON-RPC does not guarantee ordering
+  const byId = new Map(responses.map((res) => [res.id, res]));
+  assert.equal(responses.length, 6);
+  assert.equal(byId.get(1).result.serverInfo.name, 'eos-mission-os');
+  assert.equal(byId.get(2).result.tools.length, CANONICAL_TOOLS.length);
+
+  const toolResult = JSON.parse(byId.get(3).result.content[0].text);
+  assert.equal(toolResult.tool, 'eos.authority.check');
+  assert.equal(toolResult.status, 'SUCCESS');
+
+  // A malformed request keeps its id and is not misreported as a parse error
+  assert.equal(byId.get(4).error.code, -32602);
+  assert.equal(byId.get(5).error.code, -32601);
+  assert.equal(byId.get(null).error.code, -32700);
 });

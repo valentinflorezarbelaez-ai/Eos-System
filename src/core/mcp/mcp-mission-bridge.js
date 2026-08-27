@@ -9,11 +9,29 @@ import path from 'node:path';
 import { execSync } from 'node:child_process';
 
 import { MissionRuntime } from '../runtime/mission-runtime.js';
-import { IntegrationGatekeeper } from '../governance/integration-gatekeeper.js';
 import { SchemaValidator } from '../contracts/schema-validator.js';
 import { CanonicalRulesIndex } from '../rules/canonical-rules-index.js';
 
-export function normalizeToolName(name = '') {
+const LOCAL_SCHEMAS = [
+  'direction.local.schema.json',
+  'mission-package.local.schema.json',
+  'hitl-receipt.local.schema.json'
+];
+
+// Mission and evidence ids are concatenated into filesystem paths, so any
+// separator or traversal segment must be rejected before touching the disk.
+const SAFE_ID_PATTERN = /^[A-Za-z0-9._-]+$/;
+
+function assertSafeId(kind, value) {
+  if (typeof value !== 'string' || !SAFE_ID_PATTERN.test(value)) {
+    const err = new Error(`INVALID_${kind}: '${value}' must match ${SAFE_ID_PATTERN}`);
+    err.code = `INVALID_${kind}`;
+    throw err;
+  }
+  return value;
+}
+
+export function normalizeToolName(name) {
   if (!name || typeof name !== 'string') return '';
   // Cursor/adapters often use underscores: eos_mission_status → eos.mission.status
   if (name.includes('_') && !name.includes('.')) {
@@ -26,19 +44,44 @@ export class McpMissionBridge {
   /**
    * @param {object} [options]
    * @param {string} [options.baseDir]
-   * @param {MissionRuntime} [options.runtime]
    */
   constructor(options = {}) {
     this.baseDir = options.baseDir || process.cwd();
-    this.runtime =
-      options.runtime ||
-      new MissionRuntime({
+    // Pure read-only readers: they load their source file on first use only.
+    this.schemas = new SchemaValidator();
+    this.rules = new CanonicalRulesIndex();
+    this._runtime = null;
+  }
+
+  /**
+   * Built on first use: constructing MissionRuntime provisions .missions/ and the
+   * full engine graph, which must not happen for tool calls that never need it.
+   */
+  get runtime() {
+    if (!this._runtime) {
+      this._runtime = new MissionRuntime({
         baseDir: this.baseDir,
         allowLocalDirectorReceipt: true
       });
-    this.integrationGate = options.integrationGate || this.runtime.integrationGate || new IntegrationGatekeeper();
-    this.schemas = options.schemas || new SchemaValidator();
-    this.rules = options.rules || new CanonicalRulesIndex();
+    }
+    return this._runtime;
+  }
+
+  /** @private */
+  _missionIdFrom(args, aliases = ['missionId', 'mission_id']) {
+    const key = aliases.find((alias) => args[alias]);
+    return key ? assertSafeId('MISSION_ID', args[key]) : null;
+  }
+
+  /** @private */
+  _requireMissionId(args) {
+    const missionId = this._missionIdFrom(args);
+    if (!missionId) {
+      const err = new Error('MISSING_MISSION_ID');
+      err.code = 'MISSING_MISSION_ID';
+      throw err;
+    }
+    return missionId;
   }
 
   resolveIntent(args = {}) {
@@ -52,7 +95,7 @@ export class McpMissionBridge {
       schema_version: '1.0.0',
       epistemic_class: 'PROPOSED',
       goal,
-      project_path: args.projectPath || args.project_path || '.',
+      project_path: args.projectPath || args.project_path || this.baseDir,
       suggested_pipeline: [
         'mission.create',
         'mission.plan (canonical FSM + HITL)',
@@ -81,7 +124,7 @@ export class McpMissionBridge {
   }
 
   missionStatus(args = {}) {
-    const missionId = args.missionId || args.mission_id || args.id;
+    const missionId = this._missionIdFrom(args, ['missionId', 'mission_id', 'id']);
     if (missionId) {
       return this.runtime.inspectMission(missionId);
     }
@@ -111,27 +154,8 @@ export class McpMissionBridge {
     return { missions, count: missions.length, baseDir: this.baseDir };
   }
 
-  planMission(args = {}) {
-    const missionId = args.missionId || args.mission_id;
-    if (!missionId) {
-      const err = new Error('MISSING_MISSION_ID');
-      err.code = 'MISSING_MISSION_ID';
-      throw err;
-    }
-    return this.runtime.planMission(missionId, {
-      hitlReceipt: args.hitlReceipt || null,
-      requireExternalHitl: args.requireExternalHitl === true
-    });
-  }
-
   reportMission(args = {}) {
-    const missionId = args.missionId || args.mission_id;
-    if (!missionId) {
-      const err = new Error('MISSING_MISSION_ID');
-      err.code = 'MISSING_MISSION_ID';
-      throw err;
-    }
-    return this.runtime.reportMission(missionId, args.format || 'json');
+    return this.runtime.reportMission(this._requireMissionId(args), args.format || 'json');
   }
 
   discoverWorkspace(args = {}) {
@@ -163,7 +187,13 @@ export class McpMissionBridge {
   }
 
   barrierCheck(args = {}) {
-    const writePath = path.resolve(args.path || args.target || '');
+    const requested = args.path || args.target;
+    if (!requested) {
+      const err = new Error('MISSING_PATH: provide path/target for eos.workspace.barrier_check');
+      err.code = 'MISSING_PATH';
+      throw err;
+    }
+    const writePath = path.resolve(this.baseDir, requested);
     const protectedRoots = [
       path.resolve(this.baseDir, 'Fundacion'),
       path.resolve(this.baseDir, 'docs', 'governance')
@@ -181,27 +211,29 @@ export class McpMissionBridge {
   }
 
   fdirStatus() {
+    const gate = this.runtime.integrationGate;
     return {
-      fdirSafeModeTripped: Boolean(this.integrationGate.fdirSafeModeTripped),
-      trippedReason: this.integrationGate.trippedReason || null,
+      fdirSafeModeTripped: Boolean(gate.fdirSafeModeTripped),
+      trippedReason: gate.trippedReason || null,
       epistemic_class: 'MEASURED'
     };
   }
 
   fdirTrip(args = {}) {
-    return this.integrationGate.tripFdirKillSwitch(args.reason || 'MCP eos.fdir.trip');
+    return this.runtime.integrationGate.tripFdirKillSwitch(args.reason || 'MCP eos.fdir.trip');
   }
 
   verifierRun(args = {}) {
-    const missionId = args.missionId || args.mission_id;
+    const missionId = this._missionIdFrom(args);
     if (!missionId) {
-      // Verify local schemas load
-      const directionSchema = this.schemas.loadSchema('direction.local.schema.json');
+      // No mission scope: prove the local schema catalog is loadable
       return {
         mode: 'schema_catalog',
         ok: true,
-        schemas: ['direction.local.schema.json', 'mission-package.local.schema.json', 'hitl-receipt.local.schema.json'],
-        sample: directionSchema.title,
+        schemas: LOCAL_SCHEMAS.map((file) => ({
+          file,
+          title: this.schemas.loadSchema(file).title
+        })),
         epistemic_class: 'MEASURED'
       };
     }
@@ -221,27 +253,46 @@ export class McpMissionBridge {
   }
 
   policyValidate(args = {}) {
-    const action = args.action || 'unknown';
-    const cited = this.rules.cite(args.ruleIds || ['R-ATS-01', 'R-BOUNDARY-01', 'R-HITL-01']);
+    const action = String(args.action || 'unknown');
+    const normalized = action.toLowerCase();
     return {
       action,
-      allowed_local: !String(action).includes('production') && !String(action).includes('fundacion'),
-      rules: cited,
+      allowed_local: !normalized.includes('production') && !normalized.includes('fundacion'),
+      rules: this.rules.cite(args.ruleIds || ['R-ATS-01', 'R-BOUNDARY-01', 'R-HITL-01']),
       epistemic_class: 'MEASURED'
     };
   }
 
+  recordEvidence(args = {}) {
+    const missionId = this._requireMissionId(args);
+    const id = assertSafeId('EVIDENCE_ID', args.id || `EVD-${Date.now()}`);
+    const receipt = {
+      id,
+      mission_id: missionId,
+      status: args.status || 'RECORDED',
+      category: args.category || 'MANUAL',
+      recorded_at: new Date().toISOString(),
+      payload: args.payload || {},
+      epistemic_class: 'RECORDED_NOT_VERIFIED'
+    };
+    const evidenceDir = path.join(this.runtime.getMissionDir(missionId), 'evidence');
+    fs.mkdirSync(evidenceDir, { recursive: true });
+    const file = path.join(evidenceDir, `${id}.json`);
+    fs.writeFileSync(file, JSON.stringify(receipt, null, 2), 'utf8');
+    return { evidence: receipt, path: file };
+  }
+
   getEvidence(args = {}) {
-    const id = args.id || args.evidenceId || args.evidence_id;
-    const missionId = args.missionId || args.mission_id;
-    if (!missionId || !id) {
+    const rawId = args.id || args.evidenceId || args.evidence_id;
+    const missionId = this._missionIdFrom(args);
+    if (!missionId || !rawId) {
       return { found: false, reason: 'Provide missionId and id' };
     }
-    const evidenceDir = path.join(this.runtime.getMissionDir(missionId), 'evidence');
-    if (!fs.existsSync(evidenceDir)) return { found: false, reason: 'No evidence directory' };
-    const candidates = fs.readdirSync(evidenceDir).filter((f) => f.includes(id) || f === `${id}.json`);
-    if (candidates.length === 0) return { found: false, id, mission_id: missionId };
-    const file = path.join(evidenceDir, candidates[0]);
+    const id = assertSafeId('EVIDENCE_ID', rawId);
+    const file = path.join(this.runtime.getMissionDir(missionId), 'evidence', `${id}.json`);
+    if (!fs.existsSync(file)) {
+      return { found: false, id, mission_id: missionId };
+    }
     return {
       found: true,
       id,
