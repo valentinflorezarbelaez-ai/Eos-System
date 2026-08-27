@@ -187,6 +187,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-SDK-TYPESCRIPT",
+      "url": "https://cursor.com/docs/sdk/typescript",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_SDK_TYPESCRIPT",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-CURSOR-ROUTER",
       "url": "https://cursor.com/docs/cursor-router",
       "kind": "html-page",

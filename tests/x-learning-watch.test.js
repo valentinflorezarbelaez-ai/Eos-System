@@ -227,6 +227,26 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/sdk/typescript' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/sdk/python'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/sdk/bridge'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/sdk/changelog'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://github.com/cursor/cookbook'),
+    false
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/installation'),
     false
   );
@@ -1065,6 +1085,14 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(cliChangelog, undefined);
   const cliGithubActions = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cli/github-actions');
   assert.equal(cliGithubActions, undefined);
+  const sdkTypescript = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript');
+  assert.equal(sdkTypescript, undefined);
+  const sdkPython = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/sdk/python');
+  assert.equal(sdkPython, undefined);
+  const sdkBridge = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/sdk/bridge');
+  assert.equal(sdkBridge, undefined);
+  const sdkChangelog = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/sdk/changelog');
+  assert.equal(sdkChangelog, undefined);
   const mcp = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/mcp');
   assert.ok(mcp);
   assert.match(mcp.summary, /\.cursor\/mcp\.json/);
@@ -1150,6 +1178,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Shell Mode', link: 'https://cursor.com/docs/cli/shell-mode' },
     { title: 'ACP', link: 'https://cursor.com/docs/cli/acp' },
     { title: 'Using Headless CLI', link: 'https://cursor.com/docs/cli/headless' },
+    { title: 'Cursor TypeScript SDK', link: 'https://cursor.com/docs/sdk/typescript' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1461,6 +1490,29 @@ test('applyHint for Headless CLI keeps this watch without print mode', () => {
   assert.match(hint, /--force/);
   assert.match(hint, /Do not put CURSOR_API_KEY in git/);
   assert.match(hint, /\/goal/);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('curl'), false);
+});
+
+test('applyHint for TypeScript SDK keeps this watch on official feeds', () => {
+  const hint = applyHint({
+    title: 'Cursor TypeScript SDK',
+    link: 'https://cursor.com/docs/sdk/typescript',
+    summary: 'Cursor TypeScript SDK lets you create and manage Cursor agents programmatically with the @cursor/sdk TypeScript package.'
+  });
+  assert.match(hint, /optional agent scripting/i);
+  assert.match(hint, /official feeds/i);
+  assert.match(hint, /@cursor\/sdk/);
+  assert.match(hint, /api\.cursor\.com/);
+  assert.match(hint, /Do not install @cursor\/sdk/i);
+  assert.match(hint, /SDK scripts/i);
+  assert.match(hint, /Do not put CURSOR_API_KEY in git/);
+  assert.match(hint, /GitHub/);
   assert.match(hint, /environment\.json/);
   assert.match(hint, /included quota/i);
   assert.equal(/enable/i.test(hint), false);
@@ -2276,6 +2328,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(cursorCliHeadless[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(cursorCliHeadless[0]).includes('curl'), false);
 
+  const cursorSdkTypescript = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-sdk-typescript.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/sdk/typescript'
+  );
+  assert.equal(cursorSdkTypescript[0].id, 'https://cursor.com/docs/sdk/typescript');
+  assert.equal(cursorSdkTypescript[0].title, 'Cursor TypeScript SDK');
+  assert.match(cursorSdkTypescript[0].summary, /@cursor\/sdk TypeScript package/);
+  assert.match(applyHint(cursorSdkTypescript[0]), /optional agent scripting/i);
+  assert.match(applyHint(cursorSdkTypescript[0]), /official feeds/i);
+  assert.equal(/enable/i.test(applyHint(cursorSdkTypescript[0])), false);
+  assert.equal(applyHint(cursorSdkTypescript[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(cursorSdkTypescript[0]).includes('curl'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -2848,6 +2914,24 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(cursorCliHeadlessMd.summary.includes('Sitemap'), false);
   assert.equal(cursorCliHeadlessMd.summary.includes('cursor.com/install'), false);
   assert.equal(cursorCliHeadlessMd.summary.toLowerCase().includes('curl'), false);
+
+  const cursorSdkTypescriptMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-sdk-typescript.md'), 'utf8')
+  );
+  assert.equal(cursorSdkTypescriptMd.title, 'Cursor TypeScript SDK');
+  assert.match(cursorSdkTypescriptMd.summary, /Overview/);
+  assert.match(cursorSdkTypescriptMd.summary, /Authentication/);
+  assert.match(cursorSdkTypescriptMd.summary, /Usage and billing/);
+  assert.match(cursorSdkTypescriptMd.summary, /Installation/);
+  assert.match(cursorSdkTypescriptMd.summary, /Quick start/);
+  assert.match(cursorSdkTypescriptMd.summary, /Creating agents/);
+  assert.match(cursorSdkTypescriptMd.summary, /Sending messages/);
+  assert.match(cursorSdkTypescriptMd.summary, /Stream events/);
+  assert.match(cursorSdkTypescriptMd.summary, /Known limitations/);
+  assert.equal(cursorSdkTypescriptMd.summary.includes('Sitemap'), false);
+  assert.equal(/MCP servers —/.test(cursorSdkTypescriptMd.summary), false);
+  assert.equal(cursorSdkTypescriptMd.summary.toLowerCase().includes('npm install'), false);
+  assert.equal(cursorSdkTypescriptMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -3686,6 +3770,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'This watch uses official feeds, not the Cloud Agents API. Do not treat api.cursor.com as this ingest path. Do not put API keys in git. Keep GitHub as source of truth. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Cursor TypeScript SDK',
+      source_url: 'https://cursor.com/docs/sdk/typescript',
+      published_at: null,
+      apply_in_eos: 'The TypeScript SDK is optional agent scripting. This watch uses official feeds, not @cursor/sdk or api.cursor.com. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agents Window',
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
@@ -3748,6 +3838,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/capabilities'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -4042,6 +4133,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'This watch uses official feeds, not the Cloud Agents API. Do not treat api.cursor.com as this ingest path. Do not put API keys in git. Keep GitHub as source of truth. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Cursor TypeScript SDK',
+      source_url: 'https://cursor.com/docs/sdk/typescript',
+      published_at: null,
+      apply_in_eos: 'The TypeScript SDK is optional agent scripting. This watch uses official feeds, not @cursor/sdk or api.cursor.com. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agents Window',
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
@@ -4061,6 +4158,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/agents-window'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/mobile'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices'), false);
@@ -4222,6 +4320,10 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cli/reference/permissions'), false);
   assert.equal(current.includes('cursor.com/docs/cli/changelog'), false);
   assert.equal(current.includes('cursor.com/docs/cli/github-actions'), false);
+  assert.equal(current.includes('cursor.com/docs/sdk/typescript'), false);
+  assert.equal(current.includes('cursor.com/docs/sdk/python'), false);
+  assert.equal(current.includes('cursor.com/docs/sdk/bridge'), false);
+  assert.equal(current.includes('cursor.com/docs/sdk/changelog'), false);
   assert.equal(current.includes('cursor.com/docs/agent/design-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/browser'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/terminal'), false);
