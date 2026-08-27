@@ -299,6 +299,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/design-mode' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -1098,6 +1102,23 @@ test('applyHint for Debug Mode keeps EOS TDD in the Cloud Agent VM', () => {
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Design Mode keeps this watch in the Cloud Agent VM', () => {
+  const hint = applyHint({
+    title: 'Design Mode',
+    link: 'https://cursor.com/docs/agent/design-mode',
+    summary: 'Design Mode lets you direct agents with visual prompts in the Agents Window browser.'
+  });
+  assert.match(hint, /optional desktop visual prompting/i);
+  assert.match(hint, /Agents Window/);
+  assert.match(hint, /Cloud Agent VM/);
+  assert.match(hint, /do not rotate this Cloud Agent into Design Mode/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1547,6 +1568,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(debugMode[0]), /TDD/);
   assert.equal(/enable/i.test(applyHint(debugMode[0])), false);
 
+  const designMode = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-design-mode.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/agent/design-mode'
+  );
+  assert.equal(designMode[0].id, 'https://cursor.com/docs/agent/design-mode');
+  assert.equal(designMode[0].title, 'Design Mode');
+  assert.match(designMode[0].summary, /visual prompts|Point, draw, or narrate/i);
+  assert.match(applyHint(designMode[0]), /Cloud Agent VM/);
+  assert.match(applyHint(designMode[0]), /optional desktop visual prompting/i);
+  assert.equal(/enable/i.test(applyHint(designMode[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1918,6 +1951,20 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(debugModeMd.summary.includes('Sitemap'), false);
   assert.equal(/Switching modes —/.test(debugModeMd.summary), false);
   assert.equal(/Related —/.test(debugModeMd.summary), false);
+
+  const designModeMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-design-mode.md'), 'utf8')
+  );
+  assert.equal(designModeMd.title, 'Design Mode');
+  assert.match(designModeMd.summary, /Ways to direct the agent/);
+  assert.match(designModeMd.summary, /Select an element/);
+  assert.match(designModeMd.summary, /Draw on the page/);
+  assert.match(designModeMd.summary, /What the agent sees/);
+  assert.match(designModeMd.summary, /Work in flow/);
+  assert.equal(designModeMd.summary.includes('Sitemap'), false);
+  assert.equal(/Open Design Mode —/.test(designModeMd.summary), false);
+  assert.equal(/Keyboard shortcuts —/.test(designModeMd.summary), false);
+  assert.equal(/Related —/.test(designModeMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2378,11 +2425,18 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
       apply_in_eos: 'This watch already runs in the Cloud Agent VM, not in the desktop Agents Window. Use /in-cloud or /babysit when a local session must hand work to its own VM. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'Design Mode',
+      source_url: 'https://cursor.com/docs/agent/design-mode',
+      published_at: null,
+      apply_in_eos: 'Design Mode is optional desktop visual prompting in the Agents Window. This watch already runs in the Cloud Agent VM, not the desktop Agents Window. Do not rotate this Cloud Agent into Design Mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     }
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/subagents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/agents-window'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/design-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
@@ -2804,6 +2858,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/agent-review'), false);
   assert.equal(current.includes('cursor.com/docs/agent/plan-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/debug-mode'), false);
+  assert.equal(current.includes('cursor.com/docs/agent/design-mode'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
