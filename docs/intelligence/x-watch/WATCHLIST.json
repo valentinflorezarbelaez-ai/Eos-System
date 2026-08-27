@@ -124,6 +124,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-PULL-REQUESTS",
+      "url": "https://cursor.com/docs/origin/pull-requests",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_PULL_REQUESTS",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-CURSOR-ROUTER",
       "url": "https://cursor.com/docs/cursor-router",
       "kind": "html-page",

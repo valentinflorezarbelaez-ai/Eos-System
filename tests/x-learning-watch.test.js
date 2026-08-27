@@ -191,6 +191,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/origin/pull-requests' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/origin/git'),
+    false
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cursor-router' && feed.kind === 'html-page'),
     true
   );
@@ -806,6 +814,8 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(agentSecurity.apply_in_eos.includes('Custom Mode'), false);
   const runModes = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/security/run-modes');
   assert.equal(runModes, undefined);
+  const originGit = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/origin/git');
+  assert.equal(originGit, undefined);
   const mcp = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/mcp');
   assert.ok(mcp);
   assert.match(mcp.summary, /\.cursor\/mcp\.json/);
@@ -881,6 +891,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Origin integrations', link: 'https://cursor.com/docs/origin/integrations' },
     { title: 'Mirror a GitHub repository', link: 'https://cursor.com/docs/origin/mirror-github' },
     { title: 'Create an Origin repository', link: 'https://cursor.com/docs/origin/create-repository' },
+    { title: 'Pull requests', link: 'https://cursor.com/docs/origin/pull-requests' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1016,6 +1027,24 @@ test('applyHint for Origin create-repository keeps GitHub as source of truth', (
   assert.match(hint, /Do not create an Origin repo/i);
   assert.match(hint, /Do not create an Origin repo or Detach/i);
   assert.match(hint, /Cloud Agent VM already has its GitHub checkout/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
+test('applyHint for Origin pull-requests keeps GitHub as source of truth', () => {
+  const hint = applyHint({
+    title: 'Pull requests',
+    link: 'https://cursor.com/docs/origin/pull-requests',
+    summary: 'Open, review, and merge pull requests on Origin. Mirrored GitHub pull requests sync back to GitHub.'
+  });
+  assert.match(hint, /optional Origin hosting/i);
+  assert.match(hint, /GitHub remains source of truth/i);
+  assert.match(hint, /Do not open Origin PRs/i);
+  assert.match(hint, /Do not open Origin PRs or Detach/i);
+  assert.match(hint, /Cloud Agent VM already opens GitHub PRs/i);
   assert.match(hint, /environment\.json/);
   assert.match(hint, /included quota/i);
   assert.equal(/enable/i.test(hint), false);
@@ -1705,6 +1734,19 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(/enable/i.test(applyHint(originCreateRepo[0])), false);
   assert.equal(applyHint(originCreateRepo[0]).includes('Custom Mode'), false);
 
+  const originPullRequests = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-origin-pull-requests.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/origin/pull-requests'
+  );
+  assert.equal(originPullRequests[0].id, 'https://cursor.com/docs/origin/pull-requests');
+  assert.equal(originPullRequests[0].title, 'Pull requests');
+  assert.match(originPullRequests[0].summary, /Open, review, and merge pull requests/i);
+  assert.match(applyHint(originPullRequests[0]), /optional Origin hosting/i);
+  assert.match(applyHint(originPullRequests[0]), /Do not open Origin PRs/i);
+  assert.equal(/enable/i.test(applyHint(originPullRequests[0])), false);
+  assert.equal(applyHint(originPullRequests[0]).includes('Custom Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -2163,6 +2205,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(originCreateRepoMd.summary.includes('Sitemap'), false);
   assert.equal(/Push your first commit —/.test(originCreateRepoMd.summary), false);
   assert.equal(originCreateRepoMd.summary.includes('origin.cursor.com'), false);
+
+  const originPullRequestsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-origin-pull-requests.md'), 'utf8')
+  );
+  assert.equal(originPullRequestsMd.title, 'Pull requests');
+  assert.match(originPullRequestsMd.summary, /Pull request list/);
+  assert.match(originPullRequestsMd.summary, /Open a pull request/);
+  assert.match(originPullRequestsMd.summary, /Pull request page/);
+  assert.match(originPullRequestsMd.summary, /Mirrored GitHub/);
+  assert.equal(originPullRequestsMd.summary.includes('Sitemap'), false);
+  assert.equal(originPullRequestsMd.summary.includes('origin.cursor.com'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -2870,6 +2923,12 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
       apply_in_eos: 'Creating an Origin repository is optional paid git hosting. GitHub remains source of truth for this synced repo. Do not create an Origin repo or Detach from GitHub for this watch. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Pull requests',
+      source_url: 'https://cursor.com/docs/origin/pull-requests',
+      published_at: null,
+      apply_in_eos: 'Origin pull requests are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not open Origin PRs or Detach from GitHub for this watch. This Cloud Agent VM already opens GitHub PRs. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -2886,6 +2945,7 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/integrations'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/mirror-github'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/create-repository'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/pull-requests'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -3491,6 +3551,8 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/origin/integrations'), false);
   assert.equal(current.includes('cursor.com/docs/origin/mirror-github'), false);
   assert.equal(current.includes('cursor.com/docs/origin/create-repository'), false);
+  assert.equal(current.includes('cursor.com/docs/origin/pull-requests'), false);
+  assert.equal(current.includes('cursor.com/docs/origin/git'), false);
 });
 
 test('cited X posts never claim an X fetch', () => {
