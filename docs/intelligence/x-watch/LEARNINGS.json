@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T12:15:04.991Z",
+  "updated_at": "2026-08-27T12:21:33.757Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1013,6 +1013,16 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-private-connectivity",
+      "title": "Private Connectivity",
+      "source_url": "https://cursor.com/docs/cloud-agent/private-connectivity",
+      "published_at": null,
+      "summary": "Cursor supports private network connectivity for Enterprise teams that need Cursor to work with systems that are not reachable from the public internet. Supported options How to choose — Use AWS PrivateLink when your private Git provider or package registry is in AWS or can sit behind an AWS Network Load Balancer. Cloudflare Tunnel",
+      "apply_in_eos": "This Cloud Agent run is public cloud. Private Connectivity is Enterprise-only (AWS PrivateLink or Cloudflare Tunnel) for private Git/registries. It is not required for this watch. Keep GitHub as source of truth. Do not put tunnel tokens in git.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-security",
       "title": "Security overview",
       "source_url": "https://cursor.com/docs/cloud-agent/security",
@@ -1127,7 +1137,7 @@
       "title": "Mirror a GitHub repository",
       "source_url": "https://cursor.com/docs/origin/mirror-github",
       "published_at": null,
-      "summary": "Origin is currently released in early beta. Prerequisites — A Cursor account with Origin access on a Pro, Teams, or Enterprise plan The Cursor GitHub app connected to the org or account that owns the repo GitHub admin access on the repository you want to sync (required to enable Sync a repo — Open cursor.com/codebase 2. What syncs — Pull requests on a mirrored repo work on Origin and sync back to GitHub. After you mirror — Browse and search at cursor.com/codebase Clone the Origin remote from the green Code button if you want a local checkout from Origin. Detach from GitHub — To stop syncing, open Settings → General and select Detach from GitHub under Danger Zone *. Sync lag — If browse looks stale: Confirm the GitHub app still has access (GitHub integration) Confirm you are a GitHub admin…",
+      "summary": "Origin is currently released in early beta. Sync a repo — Open cursor.com/codebase 2. What syncs — Pull requests on a mirrored repo work on Origin and sync back to GitHub. After you mirror — Browse and search at cursor.com/codebase Clone the Origin remote from the green Code button if you want a local checkout from Origin. Detach from GitHub — To stop syncing, open Settings → General and select Detach from GitHub under Danger Zone *. Sync lag — If browse looks stale: Confirm the GitHub app still has access (GitHub integration) Confirm you are a GitHub admin on the source repo Re-run Sync from GitHub from cursor.com/codebase, or check Settings → General for sync When not to mirror — If you only want automated review comments on GitHub PRs, Cursor Review and Bugbot do that without moving st…",
       "apply_in_eos": "Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
