@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T01:00:12.546Z",
+  "updated_at": "2026-08-27T01:03:39.691Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1039,6 +1039,16 @@
       "published_at": null,
       "summary": "Origin is currently released in early beta. Automations — Automations run cloud agents on a schedule or when source-control events fire. /automate Cloud agents — Cloud agents can work against Origin repositories: clone, branch, commit, push, and open pull requests.",
       "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-mirror-github",
+      "title": "Mirror a GitHub repository",
+      "source_url": "https://cursor.com/docs/origin/mirror-github",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Prerequisites — A Cursor account with Origin access on a Pro, Teams, or Enterprise plan The Cursor GitHub app connected to the org or account that owns the repo GitHub admin access on the repository you want to sync (required to enable Sync a repo — 1. What syncs — Pull requests on a mirrored repo work on Origin and sync back to GitHub. After you mirror — Browse and search at cursor.com/codebase Clone the Origin remote from the green Code button if you want a local checkout from Origin. Detach from GitHub — To stop syncing, open Settings → General and select Detach from GitHub under Danger Zone . Sync lag — If browse looks stale: Confirm the GitHub app still has access (GitHub integration) Confirm you are a GitHub admin on the source repo Re-run…",
+      "apply_in_eos": "Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

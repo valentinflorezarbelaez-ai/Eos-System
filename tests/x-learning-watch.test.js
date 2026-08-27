@@ -315,6 +315,10 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.ok(originIntegrations);
   assert.match(originIntegrations.summary, /\/automate/);
   assert.match(originIntegrations.apply_in_eos, /Origin|GitHub/i);
+  const originMirror = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/origin/mirror-github');
+  assert.ok(originMirror);
+  assert.match(originMirror.apply_in_eos, /Do not Detach/i);
+  assert.match(originMirror.apply_in_eos, /source of truth/i);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
