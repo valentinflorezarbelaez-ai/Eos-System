@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T12:06:27.567Z",
+  "updated_at": "2026-08-27T12:11:41.789Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1009,6 +1009,16 @@
       "published_at": null,
       "summary": "Preview Agent metadata is in preview and subject to change, including breaking changes. Read a value — The agent reads keys over the Unix socket at . When keys appear — Install scripts can read the same socket. Keys — Missing keys are omitted from listings and return if requested directly. Who can read metadata — Any process that can reach the socket can read every key: the agent, code it runs, and hooks. OIDC Rate limits and errors — Each agent VM can make 120 metadata requests per minute, in bursts of up to 20. OIDC",
       "apply_in_eos": "Read Cloud Agent run metadata from the VM socket; it is not a credential. Use OIDC JWTs when something outside the VM must verify identity. Do not confuse this with SDK/Cloud Agents API metadata tags.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-security",
+      "title": "Security overview",
+      "source_url": "https://cursor.com/docs/cloud-agent/security",
+      "published_at": null,
+      "summary": "This page explains how Cloud Agents are built and secured. Access and authorization — Cloud Agents reach your code through the Cursor GitHub or GitLab App, not through any single person's credentials. never widened Isolation and infrastructure — Each agent runs in its own VM boundary, not a shared process sandbox. Privacy and model data — Cloud Agents run in Privacy Mode. Autonomy and prompt injection — Cloud Agents auto-run terminal commands so they can iterate on tests without stopping for approval on every step. .cursorignore",
+      "apply_in_eos": "Treat this page as the Cloud Agent security model, not the config reference. Honor isolated VMs, access that is never widened past the triggering user, Runtime Secrets/OIDC, network allowlists, .cursorignore, and draft-PR handoff. Privacy Mode (Legacy) is not supported. Do not treat SOC 2 or Trust Center claims as EOS evidence.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
