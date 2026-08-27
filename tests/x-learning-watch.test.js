@@ -242,6 +242,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/metadata' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/hooks' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -409,6 +413,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Cloud Agent Best Practices', link: 'https://cursor.com/docs/cloud-agent/best-practices' },
     { title: 'OIDC tokens', link: 'https://cursor.com/docs/cloud-agent/identity' },
     { title: 'Agent metadata', link: 'https://cursor.com/docs/cloud-agent/metadata' },
+    { title: 'Hooks', link: 'https://cursor.com/docs/hooks' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -557,6 +562,21 @@ test('applyHint for Cloud Agent metadata treats values as not a credential', () 
   assert.match(hint, /OIDC/i);
   assert.match(hint, /Cloud Agents API/i);
   assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
+test('applyHint for Hooks keeps .cursor/hooks.json for Cloud Agents', () => {
+  const hint = applyHint({
+    title: 'Hooks',
+    link: 'https://cursor.com/docs/hooks',
+    summary: 'Cloud agents run command-based hooks from .cursor/hooks.json.'
+  });
+  assert.match(hint, /\.cursor\/hooks\.json/);
+  assert.match(hint, /User-level/i);
+  assert.match(hint, /prompt-based/i);
+  assert.match(hint, /Tab/);
+  assert.match(hint, /sessionStart/);
+  assert.equal(hint.includes('Custom Mode'), false);
   assert.equal(hint.includes('timers'), false);
 });
 
@@ -810,6 +830,17 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(metadata[0]), /not a credential/i);
   assert.match(applyHint(metadata[0]), /OIDC/i);
   assert.equal(/enable/i.test(applyHint(metadata[0])), false);
+
+  const hooks = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-hooks.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/hooks'
+  );
+  assert.equal(hooks[0].id, 'https://cursor.com/docs/hooks');
+  assert.equal(hooks[0].title, 'Hooks');
+  assert.match(hooks[0].summary, /hooks/i);
+  assert.match(applyHint(hooks[0]), /\.cursor\/hooks\.json/);
+  assert.equal(applyHint(hooks[0]).includes('Custom Mode'), false);
 });
 
 test('parseOfficialSource html-page maps Cursor Router and usage limits', () => {
@@ -959,6 +990,20 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(metadataMd.summary.includes('Sitemap'), false);
   assert.equal(metadataMd.summary.includes('Related pages'), false);
   assert.equal(metadataMd.summary.includes('curl the socket'), false);
+
+  const hooksMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-hooks.md'), 'utf8')
+  );
+  assert.equal(hooksMd.title, 'Hooks');
+  assert.match(hooksMd.summary, /\.cursor\/hooks\.json/);
+  assert.match(hooksMd.summary, /Cloud agent support/i);
+  assert.match(hooksMd.summary, /command-based/i);
+  assert.match(hooksMd.summary, /Cloud agents load hooks from these sources/);
+  assert.equal(hooksMd.summary.includes('Sitemap'), false);
+  assert.equal(hooksMd.summary.includes('audit.sh'), false);
+  assert.equal(hooksMd.summary.includes('home directory'), false);
+  assert.equal(hooksMd.summary.includes('ecosystem partners'), false);
+  assert.equal(/Configuration —/.test(hooksMd.summary), false);
 });
 
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {
@@ -1466,6 +1511,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.'
     },
     {
+      title: 'Hooks',
+      source_url: 'https://cursor.com/docs/hooks',
+      published_at: null,
+      apply_in_eos: 'Commit command-based hooks as .cursor/hooks.json at the repo root so Cloud Agents pick them up.'
+    },
+    {
       title: 'Cloud Environment Setup',
       source_url: 'https://cursor.com/docs/cloud-agent/setup',
       published_at: null,
@@ -1504,6 +1555,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/automations'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/hooks'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices'), false);
@@ -1590,6 +1642,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cloud-agent/best-practices'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/identity'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/metadata'), false);
+  assert.equal(current.includes('cursor.com/docs/hooks'), false);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);
   assert.match(current, /Steer running agents/);

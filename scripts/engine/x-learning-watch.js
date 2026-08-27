@@ -182,6 +182,7 @@ function headingBodySummary(body) {
   }
   if (/\bOIDC\b/i.test(clean) && !/\bOIDC\b/i.test(first)) extras.push('OIDC');
   if (/\bJWKS\b/i.test(clean) && !/\bJWKS\b/i.test(first)) extras.push('JWKS');
+  if (/\.cursor\/hooks\.json/i.test(clean) && !/\.cursor\/hooks\.json/i.test(first)) extras.push('.cursor/hooks.json');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -196,12 +197,20 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'was this article helpful'
     || key === 'faq'
     || key === 'examples'
-    || key === 'preview';
+    || key === 'preview'
+    || key === 'quickstart'
+    || key === 'partner integrations'
+    || key === 'reference'
+    || key === 'troubleshooting'
+    || key === 'environment variables'
+    || key === 'team distribution'
+    || key === 'hook types'
+    || key === 'configuration';
 }
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -422,6 +431,9 @@ export function applyHint(item) {
   }
   if (isCloudAgentMetadataUrl(item?.link)) {
     return 'Read Cloud Agent run metadata from the VM socket; it is not a credential. Use OIDC JWTs when something outside the VM must verify identity. Do not confuse this with SDK/Cloud Agents API metadata tags.';
+  }
+  if (isHooksDocUrl(item?.link)) {
+    return 'Commit command-based hooks as .cursor/hooks.json at the repo root so Cloud Agents pick them up. User-level ~/.cursor/hooks.json is not available in Cloud Agents. Do not rely on Tab, sessionStart, or prompt-based hooks in this environment.';
   }
   if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
@@ -666,6 +678,11 @@ function isCloudAgentMetadataUrl(url) {
     || value === 'https://www.cursor.com/docs/cloud-agent/metadata';
 }
 
+function isHooksDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/hooks' || value === 'https://www.cursor.com/docs/hooks';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -711,6 +728,7 @@ function currentClusterKey(learning) {
     || url.includes('cloud-agent/capabilities')
     || url.includes('help/ai-features/automations')
     || url.includes('/docs/subagents')
+    || isHooksDocUrl(learning?.source_url)
     || url.includes('changelog/cloud-in-agents-window')
     || title === 'automations'
     || title === 'subagents'
