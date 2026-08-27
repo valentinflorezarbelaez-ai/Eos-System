@@ -1,7 +1,7 @@
 {
   "campaign": "final_readiness_exams_2026",
-  "sealed_at": "2026-08-27T00:27:11.265577Z",
-  "git_head": "ref: refs/heads/cursor/final-readiness-exams-421e",
+  "sealed_at": "2026-08-27T00:27:31.359888Z",
+  "git_head": "cursor/final-readiness-exams-421e",
   "declaration": "NOT_YET_OPERATIONALLY_COMPLETE_WITHIN_VERIFIED_SCOPE",
   "exams": {
     "exam1": "PASS_WITH_CONDITIONS",
@@ -16,7 +16,12 @@
       "sha256": "e11dc62563a3fad6ba9bcfc6755804b86c0f942a70b67cec9284a67a3ff7d1a7"
     },
     {
-      "path": "EXAM1_CLEAN_CLONE.log",
+      "path": "EVIDENCE_MANIFEST.json",
+      "bytes": 2113,
+      "sha256": "c1e4e991a3b7e2b5c307d649f69040b6ba232ca7205b52e89b90b8b6477e36f4"
+    },
+    {
+      "path": "EXAM1_CLEAN_CLONE.txt",
       "bytes": 7848,
       "sha256": "735f02e84b51157418535a98cfff0ab3b41caecb33eac71ec95692c60378de5b"
     },
@@ -31,7 +36,7 @@
       "sha256": "a69ba3d26b35d644e6136383dab9ddbf32cff73ccb425ee4c41bdef1b62dd4b5"
     },
     {
-      "path": "EXAM3_REAL_MISSION_E2E.log",
+      "path": "EXAM3_REAL_MISSION_E2E.txt",
       "bytes": 8976,
       "sha256": "b002b8daad78c7f8962f589d4e579c3a50ec8286b146c2d78740d7e2c1bdc8bc"
     },
