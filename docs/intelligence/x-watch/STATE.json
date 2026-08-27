@@ -92,6 +92,7 @@
     "https://cursor.com/changelog/side-chat",
     "https://cursor.com/changelog/slack-improvements",
     "https://cursor.com/changelog/team-marketplace-updates",
+    "https://cursor.com/docs/account/teams/pricing",
     "https://cursor.com/docs/agent/agent-review",
     "https://cursor.com/docs/agent/agents-window",
     "https://cursor.com/docs/agent/debug-mode",
@@ -152,7 +153,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-27T14:49:59.892Z",
-  "last_item_count": 151,
+  "last_ingest_at": "2026-08-27T14:57:28.247Z",
+  "last_item_count": 152,
   "last_new_item_count": 1
 }

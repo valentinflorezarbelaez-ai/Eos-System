@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T14:49:59.903Z",
+  "updated_at": "2026-08-27T14:57:28.258Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -919,6 +919,16 @@
       "published_at": "2026-02-05T12:00:00.000Z",
       "summary": "We're making a part of our multi-agent research harness available to try today in preview.",
       "apply_in_eos": "Vendor multi-agent research preview. Do not treat research harness writeups as EOS production evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-account-teams-pricing",
+      "title": "Team Pricing",
+      "source_url": "https://cursor.com/docs/account/teams/pricing",
+      "published_at": null,
+      "summary": "There are two business plans: Teams and Enterprise (Custom). How pricing works — Teams pricing is based on paid seats and usage. Active seats — Cursor bills per active paid seat, not pre-allocated seats. Spending controls — Teams can configure monthly team-wide spending limits. Model Pricing — All prices are per million tokens.",
+      "apply_in_eos": "Team Pricing is vendor Teams and Enterprise billing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor team seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard. Keep environment.json + Builds.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
