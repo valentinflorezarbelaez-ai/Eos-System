@@ -42,3 +42,4 @@
 41. [x] Ingest Cloud Agent settings living docs; cluster onto Builds changelog; dashboard settings are not EOS governance; do not turn on team follow-ups (secret exposure)
 42. [x] Ingest Cloud Agent Private Connectivity living docs; cluster onto Builds changelog; Enterprise-only; not required for this public-cloud watch; no tunnel tokens in git
 43. [x] Ingest Bugbot living docs; cluster onto `changelog/bugbot-updates-june-2026` without dropping Usage and limits; optional PR review; `/review-bugbot` is not TDD evidence; no GitHub/GitLab/Bitbucket integration setup ingest; no API keys in git
+44. [x] Ingest Security Agents living docs; cluster onto `changelog/04-30-26` without dropping Usage and limits; vendor PR reviewer; EOS security-auditor remains Control Plane check; `/review-security` is not a substitute; no vendor finding counts as EOS evidence

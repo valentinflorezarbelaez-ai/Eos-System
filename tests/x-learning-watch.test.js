@@ -267,6 +267,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/security-agents' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -544,6 +548,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Dashboard settings', link: 'https://cursor.com/docs/cloud-agent/settings' },
     { title: 'Private Connectivity', link: 'https://cursor.com/docs/cloud-agent/private-connectivity' },
     { title: 'Bugbot', link: 'https://cursor.com/docs/bugbot' },
+    { title: 'Security Agents', link: 'https://cursor.com/docs/security-agents' },
     { title: 'Model Context Protocol (MCP)', link: 'https://cursor.com/docs/mcp' },
     { title: 'Plugins', link: 'https://cursor.com/docs/plugins' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
@@ -795,6 +800,24 @@ test('applyHint for Bugbot keeps TDD evidence and GitHub as source of truth', ()
   assert.match(hint, /GitHub/i);
   assert.match(hint, /integration setup/i);
   assert.match(hint, /API keys/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
+test('applyHint for Security Agents keeps EOS security-auditor as Control Plane check', () => {
+  const hint = applyHint({
+    title: 'Security Agents',
+    link: 'https://cursor.com/docs/security-agents',
+    summary: 'Security Agents include Security Reviewer and Vulnerability Scanner. Use /review-security before you push.'
+  });
+  assert.match(hint, /vendor PR reviewer/i);
+  assert.match(hint, /security-auditor/);
+  assert.match(hint, /Control Plane check/i);
+  assert.match(hint, /\/review-security/);
+  assert.match(hint, /not a substitute/i);
+  assert.match(hint, /vendor finding counts/i);
+  assert.match(hint, /included quota/i);
   assert.equal(/enable/i.test(hint), false);
   assert.equal(hint.includes('Custom Mode'), false);
   assert.equal(hint.includes('timers'), false);
@@ -1153,6 +1176,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(bugbot[0]), /TDD evidence remains required/i);
   assert.equal(/enable/i.test(applyHint(bugbot[0])), false);
 
+  const securityAgents = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-security-agents.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/security-agents'
+  );
+  assert.equal(securityAgents[0].id, 'https://cursor.com/docs/security-agents');
+  assert.equal(securityAgents[0].title, 'Security Agents');
+  assert.match(securityAgents[0].summary, /vulnerabilit/i);
+  assert.match(applyHint(securityAgents[0]), /\/review-security/);
+  assert.match(applyHint(securityAgents[0]), /security-auditor/);
+  assert.equal(/enable/i.test(applyHint(securityAgents[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1420,6 +1455,21 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Admin Configuration API —/.test(bugbotMd.summary), false);
   assert.equal(/Pricing —/.test(bugbotMd.summary), false);
   assert.equal(/Troubleshooting —/.test(bugbotMd.summary), false);
+
+  const securityAgentsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-security-agents.md'), 'utf8')
+  );
+  assert.equal(securityAgentsMd.title, 'Security Agents');
+  assert.match(securityAgentsMd.summary, /How it works/);
+  assert.match(securityAgentsMd.summary, /Security Reviewer/);
+  assert.match(securityAgentsMd.summary, /Vulnerability Scanner/);
+  assert.match(securityAgentsMd.summary, /\/review-security/);
+  assert.equal(securityAgentsMd.summary.includes('on-demand spend'), false);
+  assert.equal(securityAgentsMd.summary.includes('Sitemap'), false);
+  assert.equal(/Setup —/.test(securityAgentsMd.summary), false);
+  assert.equal(/Billing —/.test(securityAgentsMd.summary), false);
+  assert.equal(/Analytics —/.test(securityAgentsMd.summary), false);
+  assert.equal(/Viewing Runs —/.test(securityAgentsMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2059,6 +2109,18 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.'
     },
     {
+      title: 'Cursor Security Review',
+      source_url: 'https://cursor.com/changelog/04-30-26',
+      published_at: 'Thu, 30 Apr 2026 00:00:00 GMT',
+      apply_in_eos: 'Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane check.'
+    },
+    {
+      title: 'Security Agents',
+      source_url: 'https://cursor.com/docs/security-agents',
+      published_at: null,
+      apply_in_eos: 'Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane check. /review-security is in-agent review, not a substitute for that check. Do not treat vendor finding counts as EOS evidence. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -2078,6 +2140,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/settings'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/private-connectivity'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/bugbot'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/security-agents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -2165,6 +2228,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cloud-agent/settings'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/private-connectivity'), false);
   assert.equal(current.includes('cursor.com/docs/bugbot'), false);
+  assert.equal(current.includes('cursor.com/docs/security-agents'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);

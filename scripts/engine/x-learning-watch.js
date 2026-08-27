@@ -199,7 +199,10 @@ function headingBodySummary(body) {
   if (/\bAWS PrivateLink\b/i.test(clean) && !/\bAWS PrivateLink\b/i.test(first)) extras.push('AWS PrivateLink');
   if (/\bCloudflare Tunnel\b/i.test(clean) && !/\bCloudflare Tunnel\b/i.test(first)) extras.push('Cloudflare Tunnel');
   if (/\/review-bugbot/i.test(clean) && !/\/review-bugbot/i.test(first)) extras.push('/review-bugbot');
+  if (/\/review-security/i.test(clean) && !/\/review-security/i.test(first)) extras.push('/review-security');
   if (/\.cursor\/BUGBOT\.md/i.test(clean) && !/\.cursor\/BUGBOT\.md/i.test(first)) extras.push('.cursor/BUGBOT.md');
+  if (/\bSecurity Reviewer\b/i.test(clean) && !/\bSecurity Reviewer\b/i.test(first)) extras.push('Security Reviewer');
+  if (/\bVulnerability Scanner\b/i.test(clean) && !/\bVulnerability Scanner\b/i.test(first)) extras.push('Vulnerability Scanner');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -283,12 +286,14 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'analytics'
     || key === 'api'
     || key === 'admin configuration api'
-    || key === 'pricing';
+    || key === 'pricing'
+    || key === 'billing'
+    || key === 'viewing runs';
 }
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -528,6 +533,9 @@ export function applyHint(item) {
   }
   if (isBugbotDocUrl(item?.link)) {
     return 'Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.';
+  }
+  if (isSecurityAgentsDocUrl(item?.link)) {
+    return 'Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane check. /review-security is in-agent review, not a substitute for that check. Do not treat vendor finding counts as EOS evidence. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
@@ -813,6 +821,12 @@ function isBugbotDocUrl(url) {
     || value === 'https://www.cursor.com/docs/bugbot';
 }
 
+function isSecurityAgentsDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/security-agents'
+    || value === 'https://www.cursor.com/docs/security-agents';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -917,6 +931,12 @@ function currentClusterKey(learning) {
     || url.includes('help/ai-features/bugbot')
   ) {
     return 'cluster:bugbot';
+  }
+  if (
+    isSecurityAgentsDocUrl(learning?.source_url)
+    || url.includes('changelog/04-30-26')
+  ) {
+    return 'cluster:security-agents';
   }
   return normalizeTitleKey(learning?.title);
 }
