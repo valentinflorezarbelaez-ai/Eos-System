@@ -35,3 +35,4 @@
 34. [x] Ingest Cloud Agent identity / OIDC living docs; cluster onto Builds changelog; prefer short-lived JWTs over long-lived secrets
 35. [x] Ingest Cloud Agent metadata living docs; cluster onto Builds changelog; treat metadata as not a credential
 36. [x] Ingest Hooks living docs; cluster onto harness changelog; commit `.cursor/hooks.json` at repo root (not user-level; not Tab/sessionStart/prompt-based)
+37. [x] Ingest Cloud Agent Secrets & Network living docs; cluster onto Builds changelog; prefer Runtime Secrets/OIDC; honor network allowlists

@@ -4,7 +4,7 @@
 `scripts/engine/x-learning-watch.js` — pure functions plus an `ingest()` orchestrator.
 
 ## Data
-- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Builds, Cloud Agent setup, Cloud Agent best practices, Cloud Agent identity / OIDC, Cloud Agent metadata, Origin, Origin CLI, Origin integrations, Origin GitHub mirror, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, Agent prompting / Custom Modes, Rules, and Hooks)
+- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Builds, Cloud Agent setup, Cloud Agent best practices, Cloud Agent identity / OIDC, Cloud Agent metadata, Origin, Origin CLI, Origin integrations, Origin GitHub mirror, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, Agent prompting / Custom Modes, Rules, Hooks, and Cloud Agent Secrets & Network)
 - `docs/intelligence/x-watch/STATE.json` — `seen_ids`, last ingest timestamp
 - `docs/intelligence/x-watch/briefings/YYYY-MM-DD.md` — human briefing
 
@@ -23,7 +23,7 @@ Living docs/help pages have no RSS. `html-page` items use `id = feed.url` so the
 CURRENT.md clusters related product titles onto one row, preferring changelog > docs/help > blog > forum:
 - Grok 4.6 (`grok 4.6` / `grok-4-6`)
 - Cloud Agent harness (`changelog/08-19-26`, automations help, `docs/cloud-agent/automations`, `docs/cloud-agent/capabilities`, `docs/hooks`)
-- Cloud Agent Builds (`changelog/08-13-26`, `docs/cloud-agent/builds`, `docs/cloud-agent/setup`, `docs/cloud-agent/best-practices`, `docs/cloud-agent/identity`, `docs/cloud-agent/metadata`, `blog/builds`)
+- Cloud Agent Builds (`changelog/08-13-26`, `docs/cloud-agent/builds`, `docs/cloud-agent/setup`, `docs/cloud-agent/best-practices`, `docs/cloud-agent/identity`, `docs/cloud-agent/metadata`, `docs/cloud-agent/security-network`, `blog/builds`)
 - Origin (`origin-code-hosting`, `docs/origin`, `docs/origin/cli`, `docs/origin/integrations`, `docs/origin/mirror-github`)
 - Cursor Router (`changelog/router`, `docs/cursor-router`, router blog posts)
 - Cloud Agent harness also includes `docs/subagents` and `changelog/cloud-in-agents-window`
@@ -35,6 +35,7 @@ CURRENT.md clusters related product titles onto one row, preferring changelog > 
 - Cloud Agent identity (`docs/cloud-agent/identity`) clusters onto the Builds changelog; `apply_in_eos` prefers short-lived OIDC JWTs, does not treat the VM socket as the Cloud Agents API, and tells verifiers to reject unexpected `aud`
 - Cloud Agent metadata (`docs/cloud-agent/metadata`) clusters onto the Builds changelog; `apply_in_eos` treats VM metadata as not a credential and prefers OIDC for identity proof
 - Hooks (`docs/hooks`) clusters onto the harness changelog; `apply_in_eos` commits command-based hooks as `.cursor/hooks.json` at the repo root (user-level `~/.cursor/hooks.json` and Tab/sessionStart/prompt-based hooks are not available in Cloud Agents)
+- Cloud Agent Secrets & Network (`docs/cloud-agent/security-network`) clusters onto the Builds changelog; `apply_in_eos` prefers Runtime Secrets or OIDC over long-lived keys in git, treats `[REDACTED]` as expected, and honors network allowlists without `*.s3` wildcards
 
 Clusters rank by the newest sibling date. Up to six unclustered living `cursor.com/docs/` or `cursor.com/help/` pages are reserved in CURRENT even when they have no `<time>` stamp. Changelog URLs that already made the date-ranked top N are not evicted to make room for those reserved pages.
 

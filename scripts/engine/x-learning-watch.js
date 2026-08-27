@@ -141,7 +141,9 @@ function keepInlineCodeToken(trimmed) {
   return /^\/[A-Za-z][\w:-]*$/.test(trimmed)
     || /^\.[A-Za-z0-9]+$/.test(trimmed)
     || /^[A-Za-z][\w-]*\.[A-Za-z0-9]+$/.test(trimmed)
-    || /^\.[\w-]+(?:\/[\w.-]+)+$/.test(trimmed);
+    || /^\.[\w-]+(?:\/[\w.-]+)+$/.test(trimmed)
+    || trimmed === '[REDACTED]'
+    || /^\*\.[A-Za-z0-9.-]+$/.test(trimmed);
 }
 
 function stripMarkdown(value) {
@@ -156,7 +158,9 @@ function stripMarkdown(value) {
     .replace(/^\s*\|.*\|$/gm, ' ')
     .replace(/^>\s?/gm, '')
     .replace(/^[-*]\s+/gm, '')
+    .replace(/\*\./g, '\u0000DOTSTAR.')
     .replace(/[*_#]+/g, ' ')
+    .replace(/\u0000DOTSTAR\./g, '*.')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -183,6 +187,7 @@ function headingBodySummary(body) {
   if (/\bOIDC\b/i.test(clean) && !/\bOIDC\b/i.test(first)) extras.push('OIDC');
   if (/\bJWKS\b/i.test(clean) && !/\bJWKS\b/i.test(first)) extras.push('JWKS');
   if (/\.cursor\/hooks\.json/i.test(clean) && !/\.cursor\/hooks\.json/i.test(first)) extras.push('.cursor/hooks.json');
+  if (/\[REDACTED\]/i.test(clean) && !/\[REDACTED\]/i.test(first)) extras.push('[REDACTED]');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -206,12 +211,27 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'team distribution'
     || key === 'hook types'
     || key === 'hook categories'
-    || key === 'configuration';
+    || key === 'configuration'
+    || key === 'what you should know'
+    || key === 'data retention'
+    || key === 'protected git scopes'
+    || key === 'private network access'
+    || key === 'egress ip ranges'
+    || key === 'user level settings'
+    || key === 'environment level settings'
+    || key === 'team level settings'
+    || key === 'locking the setting'
+    || key.startsWith('locking the setting ')
+    || key === 'relationship to sandbox network policy'
+    || key === 'api endpoint'
+    || key === 'using the ip ranges'
+    || key === 'git egress proxy and ip allow list'
+    || key === 'cursor review ips';
 }
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -436,6 +456,9 @@ export function applyHint(item) {
   }
   if (isHooksDocUrl(item?.link)) {
     return 'Commit command-based hooks as .cursor/hooks.json at the repo root so Cloud Agents pick them up. User-level ~/.cursor/hooks.json is not available in Cloud Agents. Do not rely on Tab, sessionStart, or prompt-based hooks in this environment.';
+  }
+  if (isCloudAgentSecurityNetworkUrl(item?.link)) {
+    return 'Prefer Runtime Secrets or short-lived OIDC over long-lived keys in git. Treat [REDACTED] in transcripts as expected, not a missing secret. Honor Cloud Agent network allowlists; do not open *.s3 wildcards. Privacy Mode (Legacy) is not supported for Cloud Agents.';
   }
   if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
@@ -685,6 +708,12 @@ function isHooksDocUrl(url) {
   return value === 'https://cursor.com/docs/hooks' || value === 'https://www.cursor.com/docs/hooks';
 }
 
+function isCloudAgentSecurityNetworkUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent/security-network'
+    || value === 'https://www.cursor.com/docs/cloud-agent/security-network';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -744,6 +773,7 @@ function currentClusterKey(learning) {
     || url.includes('cloud-agent/best-practices')
     || url.includes('cloud-agent/identity')
     || url.includes('cloud-agent/metadata')
+    || url.includes('cloud-agent/security-network')
     || url.includes('cursor.com/blog/builds')
   ) {
     return 'cluster:cloud-agent-builds';

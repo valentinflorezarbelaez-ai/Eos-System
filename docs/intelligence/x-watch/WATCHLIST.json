@@ -199,6 +199,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_HOOKS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-SECURITY-NETWORK",
+      "url": "https://cursor.com/docs/cloud-agent/security-network",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_SECURITY_NETWORK",
+      "fetchable": true
     }
   ]
 }
