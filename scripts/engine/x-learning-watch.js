@@ -115,6 +115,89 @@ export function parseOfficialHtmlPage(html, sourceUrl) {
   }];
 }
 
+export function cursorOfficialMarkdownUrl(url) {
+  if (!url || isBlockedFetchUrl(url)) return null;
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase();
+    if (host !== 'cursor.com' && host !== 'www.cursor.com') return null;
+    const pathname = parsed.pathname.replace(/\/$/, '');
+    if (!pathname.startsWith('/docs/') && !pathname.startsWith('/help/')) return null;
+    if (pathname.endsWith('.md')) return `${parsed.origin}${pathname}`;
+    return `${parsed.origin}${pathname}.md`;
+  } catch {
+    return null;
+  }
+}
+
+export function looksLikeOfficialMarkdown(text) {
+  const trimmed = String(text || '').trim();
+  if (!trimmed) return false;
+  if (/^<!DOCTYPE/i.test(trimmed) || /<html[\s>]/i.test(trimmed)) return false;
+  return /^#\s+\S/m.test(trimmed);
+}
+
+function stripMarkdown(value) {
+  return String(value || '')
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`[^`]+`/g, ' ')
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/^\s*\|.*\|$/gm, ' ')
+    .replace(/^>\s?/gm, '')
+    .replace(/^[-*]\s+/gm, '')
+    .replace(/[*_#]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function firstSentence(value) {
+  const clean = stripMarkdown(value);
+  if (!clean) return '';
+  const match = clean.match(/^.{1,220}?(?:[.!?](?:\s|$)|$)/);
+  return (match ? match[0] : clean.slice(0, 220)).trim();
+}
+
+export function parseOfficialMarkdown(md) {
+  let raw = String(md || '').replace(/^\uFEFF/, '');
+  raw = raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
+  const title = stripTags((raw.match(/^#\s+(.+)$/m) || [])[1] || '').trim();
+  const chunks = [];
+  const parts = raw.split(/^##\s+/m);
+  const intro = firstSentence(parts[0].replace(/^#\s+.+$/m, ''));
+  if (intro) chunks.push(intro);
+  for (const part of parts.slice(1)) {
+    const newline = part.indexOf('\n');
+    const heading = stripMarkdown(newline === -1 ? part : part.slice(0, newline));
+    const body = newline === -1 ? '' : part.slice(newline + 1);
+    const sentence = firstSentence(body);
+    if (heading && sentence) chunks.push(`${heading} — ${sentence}`);
+    else if (heading) chunks.push(heading);
+  }
+  return { title, summary: chunks.join(' ') };
+}
+
+export async function enrichOfficialHtmlPages(items, fetchImpl) {
+  const out = [];
+  for (const item of items || []) {
+    const mdUrl = cursorOfficialMarkdownUrl(item?.link);
+    if (!mdUrl || mdUrl === item.link) {
+      out.push(item);
+      continue;
+    }
+    const response = await fetchImpl(mdUrl);
+    if (!response?.ok || !looksLikeOfficialMarkdown(response.text)) {
+      out.push(item);
+      continue;
+    }
+    const parsed = parseOfficialMarkdown(response.text);
+    const current = String(item.summary || '');
+    const summary = parsed.summary && parsed.summary.length > current.length ? parsed.summary : item.summary;
+    out.push({ ...item, summary });
+  }
+  return out;
+}
+
 export function parseOfficialSource(text, kind, sourceUrl) {
   const normalized = String(kind || '').toLowerCase();
   if (normalized === 'html-page') {
@@ -409,7 +492,7 @@ export function extractActionableLearnings(items) {
     title: item.title || 'Untitled official item',
     source_url: item.link || item.id,
     published_at: item.publishedAt || null,
-    summary: truncate(item.summary),
+    summary: truncate(item.summary, isLivingOfficialDoc(item.link || item.id) ? 800 : 400),
     apply_in_eos: applyHint(item),
     epistemic_status: 'OBSERVED',
     x_timeline_verified: false
@@ -733,6 +816,9 @@ export async function ingest({ watchlist, state = { seen_ids: [] }, fetchImpl = 
     let parsed = parseOfficialSource(response.text, kind, feed.url);
     if (kind === 'html') {
       parsed = await enrichOfficialBlogItems(parsed, fetchImpl);
+    }
+    if (kind === 'html-page') {
+      parsed = await enrichOfficialHtmlPages(parsed, fetchImpl);
     }
     for (const item of parsed) {
       items.push({ ...item, feed_id: feed.feed_id });

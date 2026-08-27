@@ -16,6 +16,8 @@ import {
   parseCursorBlogIndex,
   parseFeed,
   parseOfficialSource,
+  parseOfficialMarkdown,
+  cursorOfficialMarkdownUrl,
   renderBriefing,
   selectCurrentLearnings,
   writeIngestArtifacts,
@@ -562,6 +564,28 @@ test('parseOfficialSource html-page maps Cloud Agents overview and Subagents', (
   assert.match(applyHint(subagents[0]), /isolated subagents/i);
 });
 
+test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/docs/cloud-agent/capabilities'),
+    'https://cursor.com/docs/cloud-agent/capabilities.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/models-and-usage/grok-4-6'),
+    'https://cursor.com/help/models-and-usage/grok-4-6.md'
+  );
+  assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
+  assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
+});
+
+test('parseOfficialMarkdown summarizes H2 sections from official docs markdown', () => {
+  const md = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-capabilities.md'), 'utf8');
+  const parsed = parseOfficialMarkdown(md);
+  assert.equal(parsed.title, 'Capabilities');
+  assert.match(parsed.summary, /Subscriptions/i);
+  assert.match(parsed.summary, /GitHub, Slack, Linear, or timer/i);
+  assert.match(parsed.summary, /Fixing CI Failures/i);
+});
+
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {
   const capabilities = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-capabilities.html'), 'utf8'),
@@ -637,12 +661,15 @@ test('ingest fetches official docs/help html-page feeds once and not x.com', asy
   });
   assert.deepEqual(calls, [
     'https://cursor.com/help/models-and-usage/grok-4-6',
-    'https://cursor.com/docs/models-and-pricing'
+    'https://cursor.com/help/models-and-usage/grok-4-6.md',
+    'https://cursor.com/docs/models-and-pricing',
+    'https://cursor.com/docs/models-and-pricing.md'
   ]);
   assert.equal(result.blocked.length, 0);
   assert.equal(result.items.length, 2);
   assert.equal(result.newItems.length, 2);
   assert.equal(result.items[0].id, 'https://cursor.com/help/models-and-usage/grok-4-6');
+  assert.equal(calls.includes('https://x.com/cursor_ai'), false);
   const again = await ingest({
     watchlist,
     state: result.nextState,
@@ -654,6 +681,39 @@ test('ingest fetches official docs/help html-page feeds once and not x.com', asy
   });
   assert.equal(again.newItems.length, 0);
   assert.equal(again.items.length, 2);
+});
+
+test('ingest enriches html-page summaries from official markdown and keeps the HTML URL id', async () => {
+  const html = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-capabilities.html'), 'utf8');
+  const md = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-capabilities.md'), 'utf8');
+  const calls = [];
+  const result = await ingest({
+    watchlist: {
+      ...validWatchlist,
+      feeds: [{
+        feed_id: 'FEED-CURSOR-DOCS-CLOUD-AGENT-CAPABILITIES',
+        url: 'https://cursor.com/docs/cloud-agent/capabilities',
+        kind: 'html-page',
+        fetchable: true
+      }]
+    },
+    state: { seen_ids: [] },
+    fetchImpl: async (url) => {
+      calls.push(url);
+      if (String(url).endsWith('.md')) return { ok: true, text: md };
+      return { ok: true, text: html };
+    }
+  });
+  assert.deepEqual(calls, [
+    'https://cursor.com/docs/cloud-agent/capabilities',
+    'https://cursor.com/docs/cloud-agent/capabilities.md'
+  ]);
+  assert.equal(result.items[0].id, 'https://cursor.com/docs/cloud-agent/capabilities');
+  assert.equal(result.items[0].title, 'Capabilities');
+  assert.match(result.items[0].summary, /Subscriptions/i);
+  assert.match(result.items[0].summary, /Fixing CI Failures/i);
+  assert.equal(result.learnings[0].x_timeline_verified, false);
+  assert.match(result.learnings[0].apply_in_eos, /subscriptions|auto-CI-fix/i);
 });
 
 test('selectCurrentLearnings prefers changelog product news over customer stories', () => {

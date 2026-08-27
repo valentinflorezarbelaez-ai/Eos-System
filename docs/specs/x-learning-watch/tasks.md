@@ -16,3 +16,4 @@
 15. [x] Ingest Agent overview (`/goal`) and Agent Skills living docs; keep them off the harness changelog row
 16. [x] Skip timestamp-only artifact writes on no-op ingest
 17. [x] Ingest Cloud Agent capabilities living docs; cluster onto harness changelog without collapsing Cloud Agents overview
+18. [x] Enrich docs/help `html-page` summaries from official cursor.com `.md` companions without scraping X

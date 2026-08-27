@@ -22,7 +22,7 @@ node --test tests/x-learning-watch.test.js
 npm run watch:x
 ```
 
-`npm run watch:x` writes `STATE.json`, merges `LEARNINGS.json`, refreshes `CURRENT.md` (product news first; customer stories last; Grok 4.6 cluster prefers docs/help over blog/forum; duplicate titles keep the changelog URL), and writes a briefing under `briefings/` only when there are new official feed items (changelog, announcements, blog index, or docs/help pages). Blog cards are enriched from each official article page (`og:description`); article fetches stay on `cursor.com`. Docs/help `html-page` feeds use the page URL as a stable id and overwrite the same learning when official og tags change.
+`npm run watch:x` writes `STATE.json`, merges `LEARNINGS.json`, refreshes `CURRENT.md` (product news first; customer stories last; Grok 4.6 cluster prefers docs/help over blog/forum; duplicate titles keep the changelog URL), and writes a briefing under `briefings/` only when there are new official feed items (changelog, announcements, blog index, or docs/help pages). Blog cards are enriched from each official article page (`og:description`); article fetches stay on `cursor.com`. Docs/help `html-page` feeds use the page URL as a stable id, fetch the official `.md` companion on `cursor.com` when present, and overwrite the same learning when that summary gets richer.
 
 Add handles without fetching X:
 
