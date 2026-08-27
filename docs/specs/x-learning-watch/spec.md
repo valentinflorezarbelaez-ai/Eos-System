@@ -10,7 +10,7 @@ A local learning watch that records requested X accounts, fetches official Curso
 
 ## 2. Product & Functional Requirements
 - **FR-1:** Persist a watchlist that includes `cursor_ai` (`https://x.com/cursor_ai`) plus additional handles without requiring an X API.
-- **FR-2:** Fetch and parse RSS 2.0, Atom 1.0, the official Cursor blog HTML index, and named official docs/help HTML pages from configured feeds (changelog RSS, forum announcements RSS, `https://cursor.com/blog`, Grok 4.6 help, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Cloud Agent Builds, Cloud Agent setup, Origin, Origin CLI, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview `/goal`, Agent Skills, Agent prompting / Custom Modes). Do not ingest `latest.rss`. Do not scrape X. Docs/help pages use `kind: html-page` with a stable id equal to the page URL. For those pages, also fetch the official `cursor.com` `.md` companion when present and keep the longer summary, including official slash-commands that appear as inline code.
+- **FR-2:** Fetch and parse RSS 2.0, Atom 1.0, the official Cursor blog HTML index, and named official docs/help HTML pages from configured feeds (changelog RSS, forum announcements RSS, `https://cursor.com/blog`, Grok 4.6 help, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Cloud Agent Builds, Cloud Agent setup, Origin, Origin CLI, Origin integrations, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview `/goal`, Agent Skills, Agent prompting / Custom Modes). Do not ingest `latest.rss`. Do not scrape X. Docs/help pages use `kind: html-page` with a stable id equal to the page URL. For those pages, also fetch the official `cursor.com` `.md` companion when present and keep the longer summary, including official slash-commands that appear as inline code.
 - **FR-3:** Refuse to fetch `x.com` / `twitter.com` URLs; mark those sources `BLOCKED`.
 - **FR-4:** Compute a delta of unseen items by stable `id` (guid / atom id / link).
 - **FR-5:** Render a markdown briefing from new items, preserving source URL and published date.
@@ -56,10 +56,12 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-26:** `parseOfficialMarkdown` includes product `###` subheadings (for example Steer a running agent, Custom Modes, Which Build, Slack triggers, Agent-driven setup) and still skips docs chrome and generic tool H3s.
 - [x] **AC-27:** CURRENT.md clusters `docs/cloud-agent/automations` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
 - [x] **AC-28:** CURRENT.md clusters `docs/cloud-agent/setup` onto `changelog/08-13-26`. `apply_in_eos` for that setup page treats Builds as the default start path and does not tell operators to click Enable Builds.
-- [x] **AC-29:** `parseOfficialMarkdown` keeps official slash-commands (`/goal`, `/automate`) that appear as inline code in living-doc summaries.
+- [x] **AC-29:** `parseOfficialMarkdown` keeps official slash-commands (`/goal`, `/automate`) that appear as inline code in living-doc summaries, including when they are not in the first sentence of an H2.
 - [x] **AC-30:** `CITED_X_POSTS.json` records the Custom Mode and Steering `@cursor_ai` status IDs cited by unrollnow for the 2026-08-19 harness thread, with `fetched_from_x = false`.
 - [x] **AC-31:** CURRENT.md clusters `docs/origin/cli` onto `changelog/origin-code-hosting`.
 - [x] **AC-32:** `CITED_X_POSTS.json` records the Origin thread follow-up `@cursor_ai` status IDs cited by unrollnow (GitHub integrations and beta rollout), with `fetched_from_x = false`.
+- [x] **AC-33:** CURRENT.md clusters `docs/origin/integrations` onto `changelog/origin-code-hosting` and keeps Usage and limits as a living row. This page is Automations/cloud agents against Origin repos, not the Origin tweet about Vercel/Buildkite/Depot.
+- [x] **AC-34:** `CITED_X_POSTS.json` records the Builds thread follow-up `@cursor_ai` status IDs cited by unrollnow (failed new build never goes live; Faire/Headway/Descript marketing with `eos_note`), with `fetched_from_x = false`.
 
 ## 6. Verification & Evidence Plan
 ```bash

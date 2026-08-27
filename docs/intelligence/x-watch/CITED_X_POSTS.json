@@ -105,6 +105,27 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2087941309013397970",
+      "handle": "cursor_ai",
+      "about": "Builds also make agents more resilient. A failed new build never goes live. Agents keep using the last successful build.",
+      "cited_by": "https://www.unrollnow.com/status/2087941307624980753",
+      "official_source": "https://cursor.com/changelog/08-13-26",
+      "published_date": "2026-08-13",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2087941310217064850",
+      "handle": "cursor_ai",
+      "about": "Customers like Faire, Headway, and Descript are seeing agent start times drop from minutes to seconds with builds",
+      "cited_by": "https://www.unrollnow.com/status/2087941307624980753",
+      "official_source": "https://cursor.com/changelog/08-13-26",
+      "published_date": "2026-08-13",
+      "eos_note": "Customer names are vendor marketing, not EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2088249881718919393",
       "handle": "cursor_ai",
       "about": "Cursor is now part of @SpaceX. Today, we have officially closed our acquisition.",

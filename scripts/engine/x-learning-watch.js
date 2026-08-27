@@ -161,6 +161,21 @@ function firstSentence(value) {
   return (match ? match[0] : clean.slice(0, 220)).trim();
 }
 
+function headingBodySummary(body) {
+  const first = firstSentence(body);
+  if (!first) return '';
+  const clean = stripMarkdown(body);
+  const commands = [];
+  for (const cmd of ['/goal', '/automate']) {
+    const token = new RegExp(`(?:^|[^\\w/])${cmd}(?=$|[^\\w-])`, 'i');
+    if (token.test(clean) && !first.toLowerCase().includes(cmd)) {
+      commands.push(cmd);
+    }
+  }
+  if (commands.length === 0) return first;
+  return `${first} ${commands.join(' ')}`.trim();
+}
+
 function shouldSkipMarkdownHeading(heading) {
   const key = String(heading || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
   return key === 'sitemap'
@@ -177,7 +192,7 @@ function isProductSubheading(heading) {
 
 function appendHeadingChunk(chunks, heading, body) {
   if (shouldSkipMarkdownHeading(heading)) return;
-  const sentence = firstSentence(body);
+  const sentence = headingBodySummary(body);
   if (heading && sentence) chunks.push(`${heading} — ${sentence}`);
   else if (heading) chunks.push(heading);
 }

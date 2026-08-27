@@ -49,6 +49,11 @@ Store size: 108
   https://x.com/cursor_ai/status/2089399061040308603
 - Cloud agents now start 3x faster so you can hand them ambitious, long-running tasks — cited by https://www.unrollnow.com/status/2087941307624980753 (not fetched from X)
   https://x.com/cursor_ai/status/2087941307624980753
+- Builds also make agents more resilient. A failed new build never goes live. Agents keep using the last successful build. — cited by https://www.unrollnow.com/status/2087941307624980753 (not fetched from X)
+  https://x.com/cursor_ai/status/2087941309013397970
+- Customers like Faire, Headway, and Descript are seeing agent start times drop from minutes to seconds with builds — cited by https://www.unrollnow.com/status/2087941307624980753 (not fetched from X)
+  Customer names are vendor marketing, not EOS evidence.
+  https://x.com/cursor_ai/status/2087941310217064850
 - Cursor is now part of @SpaceX. Today, we have officially closed our acquisition. — cited by https://www.unrollnow.com/status/2088249881718919393 (not fetched from X)
   Cited X announcement mirrored by official blog https://cursor.com/blog/joining-spacex. Do not treat SpaceX/Grok marketing as EOS production evidence.
   https://x.com/cursor_ai/status/2088249881718919393
