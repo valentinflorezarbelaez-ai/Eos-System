@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T14:18:15.449Z",
+  "updated_at": "2026-08-27T14:23:57.054Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1069,6 +1069,16 @@
       "published_at": null,
       "summary": "Cursor CLI lets you interact with AI agents directly from your terminal to write, review, and modify code. Interactive mode — Start a conversational session with the agent to describe your goals, review proposed changes, and approve commands: Modes — The CLI supports the same modes as the editor. Non-interactive mode — Use print mode for non-interactive scenarios like scripts, CI pipelines, or automation: Cloud Agent handoff — Push your conversation to a Cloud Agent to continue running while you're away. Sessions — Resume previous conversations to maintain context across multiple interactions: Sandbox controls — Configure command execution settings with /sandbox or the flag ( or ). Sudo password prompting — Run commands requiring elevated privileges without leaving the CLI.",
       "apply_in_eos": "Cursor CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI or rotate this watch into print mode, sandbox, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cli-shell-mode",
+      "title": "Shell Mode",
+      "source_url": "https://cursor.com/docs/cli/shell-mode",
+      "published_at": null,
+      "summary": "Shell Mode runs shell commands directly from the CLI without leaving your conversation. Command execution — Commands run in your login shell ( ) with the CLI's working directory and environment. Output — Large outputs are truncated automatically and long-running processes timeout to maintain performance. Limitations — Commands timeout after 30 seconds Long-running processes, servers, and interactive prompts are not supported Use short, non-interactive commands for best results Permissions — Commands are checked against your permissions and team settings before execution. Usage guidelines — Shell Mode works well for status checks, quick builds, file operations, and environment inspection.",
+      "apply_in_eos": "Shell Mode is optional local Cursor CLI. This Cloud Agent VM already runs shell commands. Do not rotate this watch into Cursor CLI Shell Mode for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
