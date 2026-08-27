@@ -117,6 +117,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-CREATE-REPOSITORY",
+      "url": "https://cursor.com/docs/origin/create-repository",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_CREATE_REPOSITORY",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-CURSOR-ROUTER",
       "url": "https://cursor.com/docs/cursor-router",
       "kind": "html-page",

@@ -187,6 +187,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/origin/create-repository' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cursor-router' && feed.kind === 'html-page'),
     true
   );
@@ -860,6 +864,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Install the Origin CLI', link: 'https://cursor.com/docs/origin/cli' },
     { title: 'Origin integrations', link: 'https://cursor.com/docs/origin/integrations' },
     { title: 'Mirror a GitHub repository', link: 'https://cursor.com/docs/origin/mirror-github' },
+    { title: 'Create an Origin repository', link: 'https://cursor.com/docs/origin/create-repository' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -981,6 +986,24 @@ test('applyHint for Origin mirror keeps GitHub as source of truth', () => {
   assert.match(hint, /Do not Detach/i);
   assert.match(hint, /GitHub as the source of truth/i);
   assert.match(hint, /Bugbot/i);
+  assert.equal(hint.includes('timers'), false);
+});
+
+test('applyHint for Origin create-repository keeps GitHub as source of truth', () => {
+  const hint = applyHint({
+    title: 'Create an Origin repository',
+    link: 'https://cursor.com/docs/origin/create-repository',
+    summary: 'Create a new Origin repository in the UI or with a Cursor agent, then push your first commit.'
+  });
+  assert.match(hint, /optional paid git hosting/i);
+  assert.match(hint, /GitHub remains source of truth/i);
+  assert.match(hint, /Do not create an Origin repo/i);
+  assert.match(hint, /Do not create an Origin repo or Detach/i);
+  assert.match(hint, /Cloud Agent VM already has its GitHub checkout/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
   assert.equal(hint.includes('timers'), false);
 });
 
@@ -1653,6 +1676,19 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(originMirror[0]).includes('timers'), false);
   assert.equal(/enable/i.test(applyHint(originMirror[0])), false);
 
+  const originCreateRepo = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-origin-create-repository.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/origin/create-repository'
+  );
+  assert.equal(originCreateRepo[0].id, 'https://cursor.com/docs/origin/create-repository');
+  assert.equal(originCreateRepo[0].title, 'Create an Origin repository');
+  assert.match(originCreateRepo[0].summary, /Create a new Origin repository/i);
+  assert.match(applyHint(originCreateRepo[0]), /optional paid git hosting/i);
+  assert.match(applyHint(originCreateRepo[0]), /Do not create an Origin repo/i);
+  assert.equal(/enable/i.test(applyHint(originCreateRepo[0])), false);
+  assert.equal(applyHint(originCreateRepo[0]).includes('Custom Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -2100,6 +2136,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(originMirrorMd.summary, /Bugbot/i);
   assert.equal(originMirrorMd.summary.includes('Sitemap'), false);
   assert.equal(originMirrorMd.summary.includes('Overview of all docs pages'), false);
+
+  const originCreateRepoMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-origin-create-repository.md'), 'utf8')
+  );
+  assert.equal(originCreateRepoMd.title, 'Create an Origin repository');
+  assert.match(originCreateRepoMd.summary, /Create in the UI/);
+  assert.match(originCreateRepoMd.summary, /Sync from GitHub/);
+  assert.match(originCreateRepoMd.summary, /Create with a Cursor agent/);
+  assert.equal(originCreateRepoMd.summary.includes('Sitemap'), false);
+  assert.equal(/Push your first commit —/.test(originCreateRepoMd.summary), false);
+  assert.equal(originCreateRepoMd.summary.includes('origin.cursor.com'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -2801,6 +2848,12 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
       apply_in_eos: 'Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.'
     },
     {
+      title: 'Create an Origin repository',
+      source_url: 'https://cursor.com/docs/origin/create-repository',
+      published_at: null,
+      apply_in_eos: 'Creating an Origin repository is optional paid git hosting. GitHub remains source of truth for this synced repo. Do not create an Origin repo or Detach from GitHub for this watch. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -2816,6 +2869,7 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/cli'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/integrations'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/mirror-github'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/create-repository'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -3420,6 +3474,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
   assert.equal(current.includes('cursor.com/docs/origin/integrations'), false);
   assert.equal(current.includes('cursor.com/docs/origin/mirror-github'), false);
+  assert.equal(current.includes('cursor.com/docs/origin/create-repository'), false);
 });
 
 test('cited X posts never claim an X fetch', () => {

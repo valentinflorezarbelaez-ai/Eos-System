@@ -24,13 +24,14 @@ CURRENT.md clusters related product titles onto one row, preferring changelog > 
 - Grok 4.6 (`grok 4.6` / `grok-4-6`)
 - Cloud Agent harness (`changelog/08-19-26`, automations help, `docs/cloud-agent/automations`, `docs/cloud-agent/capabilities`, `docs/hooks`)
 - Cloud Agent Builds (`changelog/08-13-26`, `docs/cloud-agent/builds`, `docs/cloud-agent/setup`, `docs/cloud-agent/best-practices`, `docs/cloud-agent/identity`, `docs/cloud-agent/metadata`, `docs/cloud-agent/security-network`, `docs/cloud-agent/security`, `docs/cloud-agent/settings`, `docs/cloud-agent/private-connectivity`, `blog/builds`)
-- Origin (`origin-code-hosting`, `docs/origin`, `docs/origin/cli`, `docs/origin/integrations`, `docs/origin/mirror-github`)
+- Origin (`origin-code-hosting`, `docs/origin`, `docs/origin/cli`, `docs/origin/integrations`, `docs/origin/mirror-github`, `docs/origin/create-repository`)
 - Cursor Router (`changelog/router`, `docs/cursor-router`, router blog posts)
 - Cloud Agent harness also includes `docs/subagents` and `changelog/cloud-in-agents-window`
 - Cloud Agents overview (`docs/cloud-agent` exact URL) stays a living row and must not match `docs/cloud-agent/builds` or `docs/cloud-agent/capabilities`
 - Agent overview (`docs/agent/overview`) stays a living `/goal` row; `apply_in_eos` also covers steering follow-ups from that page
 - Agent Skills (`docs/skills`) stays a living Custom Mode row; `docs/agent/prompting`, `docs/rules`, `docs/mcp`, and `docs/plugins` cluster onto that row so Usage and limits is not evicted. `apply_in_eos` for Rules keeps `.mdc` / `AGENTS.md` / `/create-rule` and does not treat team-dashboard rules as EOS governance. `apply_in_eos` for MCP commits `.cursor/mcp.json` and does not treat team-dashboard MCP as EOS governance. `apply_in_eos` for Plugins keeps repo skills/rules/hooks/`.cursor/mcp.json` and does not treat team marketplace plugins as EOS governance.
 - Origin GitHub mirror (`docs/origin/mirror-github`) clusters onto the Origin changelog; `apply_in_eos` keeps GitHub as source of truth and does not tell operators to Detach
+- Create an Origin repository (`docs/origin/create-repository`) clusters onto the Origin changelog so Usage and limits is not evicted; `apply_in_eos` treats creating an Origin repo as optional paid git hosting, keeps GitHub as source of truth, does not create an Origin repo or Detach from GitHub for this watch, and keeps this Cloud Agent VM on its GitHub checkout
 - Cloud Agent best practices (`docs/cloud-agent/best-practices`) clusters onto the Builds changelog; `apply_in_eos` prefers OIDC over long-lived secrets and uses skills/`AGENTS.md`/`.cursor/rules`
 - Cloud Agent identity (`docs/cloud-agent/identity`) clusters onto the Builds changelog; `apply_in_eos` prefers short-lived OIDC JWTs, does not treat the VM socket as the Cloud Agents API, and tells verifiers to reject unexpected `aud`
 - Cloud Agent metadata (`docs/cloud-agent/metadata`) clusters onto the Builds changelog; `apply_in_eos` treats VM metadata as not a credential and prefers OIDC for identity proof
