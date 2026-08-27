@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T14:23:57.054Z",
+  "updated_at": "2026-08-27T14:29:10.881Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1059,6 +1059,16 @@
       "published_at": null,
       "summary": "Bugbot reviews pull requests and identifies bugs, security issues, and code quality problems. How it works — Bugbot analyzes PR diffs and leaves comments with explanations and fix suggestions. Incremental reviews — By default, Bugbot reviews only the changes since the previous Bugbot review. Effort Levels — Effort levels control how much time Bugbot spends reasoning during a review. Rules — Guide reviews with team rules, repository rules, and project .cursor/BUGBOT.md files. Run in your agent — Use the /review-bugbot or /review skills to run Bugbot from your agent before you push the code. Autofix — Bugbot Autofix automatically spawns a Cloud Agent to fix bugs found during PR reviews. MCP support — Bugbot is integrated with your MCP servers so your AI tools can interact with Bugbot direct…",
       "apply_in_eos": "Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cli-acp",
+      "title": "ACP",
+      "source_url": "https://cursor.com/docs/cli/acp",
+      "published_at": null,
+      "summary": "Overview — Cursor CLI supports ACP (Agent Client Protocol) for advanced integrations. Start ACP server — Start Cursor CLI in ACP mode: Transport and message format — Transport: Protocol envelope: JSON-RPC 2.0 Framing: newline-delimited JSON (one message per line) Direction: - Client writes requests/notifications to - Cursor CLI writes responses/notifications to - Logs may be written Request flow — Typical ACP session flow: 1. Authentication — Cursor CLI advertises as the ACP auth method. Sessions, modes, and permissions Cursor extension methods — Cursor sends ACP extension methods for richer client UX. Minimal Node.js client — This example shows the minimum control flow for a custom ACP client: IDE integrations — ACP enables Cursor's AI agent to work with editors beyond the Cursor desktop…",
+      "apply_in_eos": "ACP is optional local Cursor CLI protocol for custom clients. This Cloud Agent VM already runs ingest without an ACP client. Do not rotate this watch into agent acp, custom stdio clients, or IDE integrations for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
