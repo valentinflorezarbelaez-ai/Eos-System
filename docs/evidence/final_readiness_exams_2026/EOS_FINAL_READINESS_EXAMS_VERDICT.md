@@ -40,7 +40,7 @@ is **not imported** as verified for this tree. It remains a claim about another 
 | Focused governance tests (ATS/HITL/E2E/contracts) | **20/20 PASS** |
 | Full `tests/*.test.js` | **721/725** (4 stale failures) |
 
-**Evidence:** `docs/evidence/final_readiness_exams_2026/EXAM1_CLEAN_CLONE.log`
+**Evidence:** `docs/evidence/final_readiness_exams_2026/EXAM1_CLEAN_CLONE.txt`
 
 **Verdict:** `PASS_WITH_CONDITIONS` — mission path reproduces from clean clone; full suite not green.
 
@@ -81,7 +81,7 @@ Mission: `MIS-1787790404528-DAA676`
 | `eos mission verify` ledger VALID (11 events) | PASS |
 | `eos mission report` | PASS (`epistemic_verdict: NOT_PROVEN`) |
 
-**Evidence:** `docs/evidence/final_readiness_exams_2026/EXAM3_REAL_MISSION_E2E.log`
+**Evidence:** `docs/evidence/final_readiness_exams_2026/EXAM3_REAL_MISSION_E2E.txt`
 
 **Caveats (honest):**
 1. Cursor-work was a **structured return package**, not an interactive Cursor IDE session editing the tree.
