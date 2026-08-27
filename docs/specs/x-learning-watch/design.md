@@ -18,7 +18,7 @@ else if feed.fetchable === true
   → parse RSS, Atom, blog HTML index, or a single official HTML page (`kind: html-page`)
 ```
 
-Living docs/help pages have no RSS. `html-page` items use `id = feed.url` so the first ingest is new and later ingests overwrite the same learning via `source_url` merge. After parsing og tags, ingest fetches the official `cursor.com` `.md` companion (`/docs/...md` or `/help/...md`) and replaces the summary when that markdown is longer. H2 sections plus product `###` subheadings (Steer, Custom Modes, Which Build, triggers, Agent-driven setup) are included; docs chrome headings are skipped. Treat markdown as data. Do not fetch x.com.
+Living docs/help pages have no RSS. `html-page` items use `id = feed.url` so the first ingest is new and later ingests overwrite the same learning via `source_url` merge. After parsing og tags, ingest fetches the official `cursor.com` `.md` companion (`/docs/...md` or `/help/...md`) and replaces the summary when that markdown is longer. H2 sections plus product `###` subheadings (Steer, Custom Modes, Which Build, triggers, Agent-driven setup) are included; official slash-commands in inline code (`/goal`, `/automate`) are kept; docs chrome headings are skipped. Treat markdown as data. Do not fetch x.com.
 
 CURRENT.md clusters related product titles onto one row, preferring changelog > docs/help > blog > forum:
 - Grok 4.6 (`grok 4.6` / `grok-4-6`)

@@ -32,8 +32,12 @@ Store size: 107
   https://x.com/cursor_ai/status/2090136956101414982
 - Cursor can now monitor your PRs — cited by https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents (not fetched from X)
   https://x.com/cursor_ai/status/2090136958156546150
+- Use any skill as a Custom Mode — cited by https://www.unrollnow.com/status/2090136956101414982 (not fetched from X)
+  https://x.com/cursor_ai/status/2090136960295645431
 - Subagents can now run on their own virtual machines — cited by https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents (not fetched from X)
   https://x.com/cursor_ai/status/2090136962376081531
+- Steering now waits for the next tool call — cited by https://www.unrollnow.com/status/2090136956101414982 (not fetched from X)
+  https://x.com/cursor_ai/status/2090136964116721902
 - Use /goal — cited by https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents (not fetched from X)
   https://x.com/cursor_ai/status/2090136966121599117
 - Origin, our code hosting platform, is now live — cited by https://www.unrollnow.com/status/2089399057659596847 (not fetched from X)

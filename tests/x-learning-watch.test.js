@@ -682,6 +682,8 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(parsed.summary, /Steer a running agent/i);
   assert.match(parsed.summary, /Slack triggers/i);
   assert.match(parsed.summary, /Agent-driven setup/i);
+  assert.match(parsed.summary, /\/goal/);
+  assert.match(parsed.summary, /\/automate/);
   assert.equal(parsed.summary.includes('Sitemap'), false);
   assert.equal(parsed.summary.includes('Overview of all docs pages'), false);
   assert.equal(parsed.summary.includes('Search files and folders'), false);
@@ -1247,6 +1249,8 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);
   assert.match(current, /Steer running agents/);
+  assert.match(current, /2090136960295645431/);
+  assert.match(current, /2090136964116721902/);
 });
 
 test('cited X posts never claim an X fetch', () => {
@@ -1263,6 +1267,24 @@ test('cited X posts never claim an X fetch', () => {
   );
   assert.equal(
     doc.citations.some((row) => row.x_url === 'https://x.com/cursor_ai/status/2084317547608911986' && row.fetched_from_x === false),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2090136960295645431'
+      && row.cited_by === 'https://www.unrollnow.com/status/2090136956101414982'
+      && /Custom Mode/i.test(row.about)
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2090136964116721902'
+      && row.cited_by === 'https://www.unrollnow.com/status/2090136956101414982'
+      && /Steer/i.test(row.about)
+      && row.fetched_from_x === false
+    )),
     true
   );
   assert.equal(

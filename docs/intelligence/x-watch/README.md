@@ -9,7 +9,7 @@ Keep EOS current on Cursor product changes starting from the requested account [
 - Official docs/help HTML pages (no public docs RSS): Grok 4.6 help, Models & Pricing, Cloud Agent automations (help + `docs/cloud-agent/automations`), Cloud Agent Builds, Cloud Agent setup, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview (`/goal`), Agent Skills, and Agent prompting / Custom Modes
 - Watchlist of X handles (seed: `@cursor_ai`)
 - Daily Cloud Agent timer (see run subscriptions)
-- Cited `@cursor_ai` status URLs recorded from third-party articles in `CITED_X_POSTS.json` (`CITED_NOT_FETCHED`, never fetched from X)
+- Cited `@cursor_ai` status URLs recorded from third-party articles in `CITED_X_POSTS.json` (`CITED_NOT_FETCHED`, never fetched from X). The 2026-08-19 harness thread is recorded as six cited tweets (including Custom Mode and Steering from unrollnow).
 
 ## What is not connected
 - X OAuth / X MCP (does not exist in this environment)

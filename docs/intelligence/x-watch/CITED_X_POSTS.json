@@ -24,10 +24,30 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2090136960295645431",
+      "handle": "cursor_ai",
+      "about": "Use any skill as a Custom Mode",
+      "cited_by": "https://www.unrollnow.com/status/2090136956101414982",
+      "official_source": "https://cursor.com/changelog/08-19-26",
+      "published_date": "2026-08-19",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2090136962376081531",
       "handle": "cursor_ai",
       "about": "Subagents can now run on their own virtual machines",
       "cited_by": "https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents",
+      "official_source": "https://cursor.com/changelog/08-19-26",
+      "published_date": "2026-08-19",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2090136964116721902",
+      "handle": "cursor_ai",
+      "about": "Steering now waits for the next tool call",
+      "cited_by": "https://www.unrollnow.com/status/2090136956101414982",
       "official_source": "https://cursor.com/changelog/08-19-26",
       "published_date": "2026-08-19",
       "epistemic_status": "CITED_NOT_FETCHED",

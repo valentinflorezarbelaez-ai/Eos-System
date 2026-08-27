@@ -140,7 +140,10 @@ export function looksLikeOfficialMarkdown(text) {
 function stripMarkdown(value) {
   return String(value || '')
     .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/`[^`]+`/g, ' ')
+    .replace(/`([^`]+)`/g, (_, code) => {
+      const trimmed = String(code || '').trim();
+      return /^\/[A-Za-z][\w:-]*$/.test(trimmed) ? ` ${trimmed} ` : ' ';
+    })
     .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
     .replace(/^\s*\|.*\|$/gm, ' ')
