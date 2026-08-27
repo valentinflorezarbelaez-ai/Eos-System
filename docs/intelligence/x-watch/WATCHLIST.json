@@ -178,6 +178,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_RULES",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-IDENTITY",
+      "url": "https://cursor.com/docs/cloud-agent/identity",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_IDENTITY",
+      "fetchable": true
     }
   ]
 }

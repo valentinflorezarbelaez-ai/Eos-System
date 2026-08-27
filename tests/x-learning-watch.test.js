@@ -234,6 +234,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/best-practices' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/identity' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -387,6 +391,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Automations', link: 'https://cursor.com/docs/cloud-agent/automations' },
     { title: 'Cloud Environment Setup', link: 'https://cursor.com/docs/cloud-agent/setup' },
     { title: 'Cloud Agent Best Practices', link: 'https://cursor.com/docs/cloud-agent/best-practices' },
+    { title: 'OIDC tokens', link: 'https://cursor.com/docs/cloud-agent/identity' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -509,6 +514,20 @@ test('applyHint for Rules keeps .mdc, AGENTS.md, and /create-rule', () => {
   assert.match(hint, /\/create-rule/i);
   assert.match(hint, /Team dashboard rules are not EOS governance/i);
   assert.equal(hint.includes('Custom Mode'), false);
+});
+
+test('applyHint for Cloud Agent identity prefers short-lived OIDC JWTs', () => {
+  const hint = applyHint({
+    title: 'OIDC tokens',
+    link: 'https://cursor.com/docs/cloud-agent/identity',
+    summary: 'Mint short-lived JWTs from a Cloud Agent VM and verify them with Cursor OIDC discovery.'
+  });
+  assert.match(hint, /OIDC/i);
+  assert.match(hint, /docs\/cloud-agent\/identity/);
+  assert.match(hint, /Cloud Agents API/i);
+  assert.match(hint, /unexpected aud/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('timers'), false);
 });
 
 test('applyHint is specific for every forum announcement fixture title', () => {
@@ -737,6 +756,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(bestPractices[0].summary, /running Cloud Agents/i);
   assert.match(applyHint(bestPractices[0]), /OIDC/i);
   assert.equal(/enable/i.test(applyHint(bestPractices[0])), false);
+
+  const identity = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-identity.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/identity'
+  );
+  assert.equal(identity[0].id, 'https://cursor.com/docs/cloud-agent/identity');
+  assert.equal(identity[0].title, 'OIDC tokens');
+  assert.match(identity[0].summary, /short-lived JWTs/i);
+  assert.match(applyHint(identity[0]), /OIDC/i);
+  assert.match(applyHint(identity[0]), /Cloud Agents API/i);
+  assert.equal(/enable/i.test(applyHint(identity[0])), false);
 });
 
 test('parseOfficialSource html-page maps Cursor Router and usage limits', () => {
@@ -861,6 +892,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(rulesMd.summary.includes('frontend components'), false);
   assert.equal(rulesMd.summary.includes('Why isn'), false);
   assert.equal(rulesMd.summary.includes('Code Style'), false);
+
+  const identityMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-identity.md'), 'utf8')
+  );
+  assert.equal(identityMd.title, 'OIDC tokens');
+  assert.match(identityMd.summary, /OIDC/i);
+  assert.match(identityMd.summary, /JWKS/i);
+  assert.match(identityMd.summary, /Cloud Agents API/i);
+  assert.match(identityMd.summary, /When claims appear/i);
+  assert.equal(identityMd.summary.includes('Sitemap'), false);
+  assert.equal(identityMd.summary.includes('Related pages'), false);
 });
 
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {
@@ -1386,6 +1428,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Honor Cloud Agent setup (environment.json + Builds). Prefer OIDC over long-lived secrets. Use skills, AGENTS.md, and .cursor/rules for repo conventions. Do not put secrets in git.'
     },
     {
+      title: 'OIDC tokens',
+      source_url: 'https://cursor.com/docs/cloud-agent/identity',
+      published_at: null,
+      apply_in_eos: 'Prefer short-lived OIDC JWTs minted in the Cloud Agent VM over long-lived secrets. Point agents at docs/cloud-agent/identity. Do not treat this socket as the Cloud Agents API. Verifiers must reject unexpected aud.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -1397,6 +1445,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/identity'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -1476,6 +1525,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cloud-agent/automations'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/best-practices'), false);
+  assert.equal(current.includes('cursor.com/docs/cloud-agent/identity'), false);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);
   assert.match(current, /Steer running agents/);

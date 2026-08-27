@@ -32,3 +32,4 @@
 31. [x] Ingest Origin GitHub mirror living docs; keep GitHub as source of truth and do not Detach
 32. [x] Ingest Cloud Agent best practices living docs; cluster onto Builds changelog; prefer OIDC and repo conventions
 33. [x] Ingest Rules living docs; cluster onto Skills without dropping Usage and limits; keep `.mdc` / `AGENTS.md` / `/create-rule`
+34. [x] Ingest Cloud Agent identity / OIDC living docs; cluster onto Builds changelog; prefer short-lived JWTs over long-lived secrets
