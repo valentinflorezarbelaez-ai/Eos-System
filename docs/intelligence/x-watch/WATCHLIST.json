@@ -101,6 +101,20 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_SUBAGENTS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-OVERVIEW",
+      "url": "https://cursor.com/docs/agent/overview",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_OVERVIEW",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-SKILLS",
+      "url": "https://cursor.com/docs/skills",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_SKILLS",
+      "fetchable": true
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "$schema": "./schema.json",
   "version": "1.0.0",
-  "updated_at": "2026-08-27T00:05:00Z",
+  "updated_at": "2026-08-27T00:10:00Z",
   "sources": [
     {
       "source_id": "SRC-0001",
@@ -393,6 +393,40 @@
       "relevance_to_eos": "HIGH",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/subagents"
+    },
+    {
+      "source_id": "SRC-0024",
+      "name": "Cursor Docs — Agent overview",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. /goal is a vendor control, not an X timeline.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/agent/overview"
+    },
+    {
+      "source_id": "SRC-0025",
+      "name": "Cursor Docs — Agent Skills",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Custom Modes are vendor catalog, not an X timeline.",
+      "relevance_to_eos": "HIGH",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/skills"
     }
   ]
 }

@@ -186,6 +186,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/subagents' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/overview' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/skills' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -303,6 +311,8 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
     { title: 'Cloud Agents', link: 'https://cursor.com/docs/cloud-agent' },
     { title: 'Subagents', link: 'https://cursor.com/docs/subagents' },
+    { title: 'Overview', link: 'https://cursor.com/docs/agent/overview' },
+    { title: 'Agent Skills', link: 'https://cursor.com/docs/skills' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -543,6 +553,27 @@ test('parseOfficialSource html-page maps Cloud Agents overview and Subagents', (
   );
   assert.equal(subagents[0].title, 'Subagents');
   assert.match(applyHint(subagents[0]), /isolated subagents/i);
+});
+
+test('parseOfficialSource html-page maps agent overview /goal and Agent Skills', () => {
+  const overview = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-overview.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/agent/overview'
+  );
+  assert.equal(overview[0].id, 'https://cursor.com/docs/agent/overview');
+  assert.equal(overview[0].title, 'Overview');
+  assert.match(applyHint(overview[0]), /\/goal/i);
+  assert.equal(applyHint(overview[0]).includes('timers'), false);
+
+  const skills = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-skills.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/skills'
+  );
+  assert.equal(skills[0].title, 'Agent Skills');
+  assert.match(applyHint(skills[0]), /Custom Mode/i);
+  assert.equal(applyHint(skills[0]).includes('timers'), false);
 });
 
 test('ingest fetches official docs/help html-page feeds once and not x.com', async () => {
@@ -817,6 +848,39 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
+test('selectCurrentLearnings keeps /goal overview and skills off the harness changelog row', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'Cloud Agents and Cursor Harness Improvements',
+      source_url: 'https://cursor.com/changelog/08-19-26',
+      published_at: 'Wed, 19 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.'
+    },
+    {
+      title: 'Overview',
+      source_url: 'https://cursor.com/docs/agent/overview',
+      published_at: null,
+      apply_in_eos: 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.'
+    },
+    {
+      title: 'Agent Skills',
+      source_url: 'https://cursor.com/docs/skills',
+      published_at: null,
+      apply_in_eos: 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.'
+    },
+    {
+      title: 'Usage and limits',
+      source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
+      published_at: null,
+      apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+    }
+  ], 6);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/overview'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
+});
+
 test('selectCurrentLearnings does not drop changelog rows for reserved docs', () => {
   const rows = [];
   for (let i = 0; i < 8; i += 1) {
@@ -886,6 +950,8 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /cursor.com\/changelog\/router/);
   assert.match(current, /cursor.com\/help\/models-and-usage\/usage-limits/);
   assert.match(current, /cursor.com\/docs\/cloud-agent(?!\/)/);
+  assert.match(current, /cursor.com\/docs\/agent\/overview/);
+  assert.match(current, /cursor.com\/docs\/skills/);
 });
 
 test('cited X posts never claim an X fetch', () => {
@@ -898,6 +964,10 @@ test('cited X posts never claim an X fetch', () => {
   assert.equal(official.includes('https://cursor.com/changelog/08-13-26'), true);
   assert.equal(
     doc.citations.some((row) => row.x_url === 'https://x.com/cursor_ai/status/2088249881718919393' && row.official_source === 'https://cursor.com/blog/joining-spacex'),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => row.x_url === 'https://x.com/cursor_ai/status/2084317547608911986' && row.fetched_from_x === false),
     true
   );
   assert.equal(

@@ -73,6 +73,17 @@
       "eos_note": "Cited X announcement mirrored by official blog https://cursor.com/blog/joining-spacex. Do not treat SpaceX/Grok marketing as EOS production evidence.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2084317547608911986",
+      "handle": "cursor_ai",
+      "about": "Cloud agents are now 20-30% more token efficient, and 80% more efficient on runs with computer use",
+      "cited_by": "https://aicatchup.com/news/cursor-cloud-agents-token-efficiency-computer-use",
+      "official_source": "https://cursor.com/blog/cloud-agent-environment",
+      "published_date": "2026-08-03",
+      "eos_note": "Vendor efficiency claim cited by a third party. Do not treat token-percentage marketing as EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
     }
   ]
 }

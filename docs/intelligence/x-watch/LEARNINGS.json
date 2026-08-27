@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-26T23:59:37.419Z",
+  "updated_at": "2026-08-27T00:03:20.850Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -923,6 +923,16 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-overview",
+      "title": "Overview",
+      "source_url": "https://cursor.com/docs/agent/overview",
+      "published_at": null,
+      "summary": "Assistant for autonomous coding tasks, terminal commands, and code editing",
+      "apply_in_eos": "Keep long-lived EOS objectives in /goal instead of one-shot prompts.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent",
       "title": "Cloud Agents",
       "source_url": "https://cursor.com/docs/cloud-agent",
@@ -969,6 +979,16 @@
       "published_at": null,
       "summary": "Store and share code on Origin, Cursor's git forge. Create repos, mirror from GitHub, and browse at cursor.com/codebase.",
       "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-skills",
+      "title": "Agent Skills",
+      "source_url": "https://cursor.com/docs/skills",
+      "published_at": null,
+      "summary": "Extend AI agents with specialized capabilities using Agent Skills, an open standard for packaging reusable knowledge and scripts.",
+      "apply_in_eos": "Pin an EOS skill as a Custom Mode when a session must stay on one playbook.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

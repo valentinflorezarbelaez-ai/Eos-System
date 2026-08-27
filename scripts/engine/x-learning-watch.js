@@ -232,6 +232,12 @@ export function applyHint(item) {
   if (isCloudAgentOverviewUrl(item?.link)) {
     return 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.';
   }
+  if (isAgentOverviewUrl(item?.link)) {
+    return 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.';
+  }
+  if (isSkillsDocUrl(item?.link)) {
+    return 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.';
+  }
   if (title.includes('share your thoughts')) {
     return 'Vendor feedback thread. Do not treat forum sentiment as EOS evidence.';
   }
@@ -458,6 +464,16 @@ function isCloudAgentOverviewUrl(url) {
   return value === 'https://cursor.com/docs/cloud-agent' || value === 'https://www.cursor.com/docs/cloud-agent';
 }
 
+function isAgentOverviewUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
+}
+
+function isSkillsDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/skills' || value === 'https://www.cursor.com/docs/skills';
+}
+
 function isLowPriorityBriefing(row) {
   const hint = String(row?.apply_in_eos || '');
   return hint.includes('customer/press stories') || hint.includes('feedback thread') || hint.includes('Campus community');
@@ -541,7 +557,7 @@ export function selectCurrentLearnings(learnings, limit = 10) {
     })
     .map((entry) => entry.row);
   const top = ranked.slice(0, limit);
-  const living = ranked.filter((row) => isLivingOfficialDoc(row.source_url)).slice(0, Math.min(4, limit));
+  const living = ranked.filter((row) => isLivingOfficialDoc(row.source_url)).slice(0, Math.min(6, limit));
   const livingUrls = new Set(living.map((row) => row.source_url));
   const changelogKeep = top.filter((row) => sourcePriority(row.source_url) === 0);
   const fill = ranked.filter((row) => sourcePriority(row.source_url) !== 0 && !livingUrls.has(row.source_url));
