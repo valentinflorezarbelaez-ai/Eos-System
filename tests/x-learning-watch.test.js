@@ -247,6 +247,38 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/account-and-billing/pricing' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/account-and-billing/billing'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/account-and-billing/cancel'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/account-and-billing/cursor-start'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/account-and-billing/payment-not-applied'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/pricing'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/account/teams/dashboard'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/account/teams/analytics'),
+    false
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/account/teams/setup'),
     false
   );
@@ -1342,6 +1374,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Cursor SDK Bridge', link: 'https://cursor.com/docs/sdk/bridge' },
     { title: 'Team Pricing', link: 'https://cursor.com/docs/account/teams/pricing' },
     { title: 'Members, Roles, and Seat Types', link: 'https://cursor.com/docs/account/teams/members' },
+    { title: 'Pricing and plans', link: 'https://cursor.com/help/account-and-billing/pricing' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1765,6 +1798,27 @@ test('applyHint for Team Members keeps this Cloud Agent off the Teams dashboard'
   assert.match(hint, /on-demand/i);
   assert.match(hint, /not a Teams admin dashboard/i);
   assert.match(hint, /Teams setup or SSO pages/i);
+  assert.match(hint, /environment\.json/);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('curl'), false);
+});
+
+test('applyHint for Help Pricing keeps included quota and rejects dashboard billing changes', () => {
+  const hint = applyHint({
+    title: 'Pricing and plans',
+    link: 'https://cursor.com/help/account-and-billing/pricing',
+    summary: 'Cursor Router will launch for Teams and Enterprise plans. Individual plans (Hobby, Pro, Pro+, Ultra) will receive this update a few months after launch.'
+  });
+  assert.match(hint, /vendor individual and Teams plan names/i);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.match(hint, /vendor plan prices/i);
+  assert.match(hint, /EOS budget evidence/i);
+  assert.match(hint, /Do not change this Cloud Agent billing from the dashboard/i);
   assert.match(hint, /environment\.json/);
   assert.equal(hint.includes('Slack'), false);
   assert.equal(/enable/i.test(hint), false);
@@ -2652,6 +2706,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(teamMembers[0]).includes('Slack'), false);
   assert.equal(applyHint(teamMembers[0]).includes('curl'), false);
 
+  const helpPricing = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-account-and-billing-pricing.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/account-and-billing/pricing'
+  );
+  assert.equal(helpPricing[0].id, 'https://cursor.com/help/account-and-billing/pricing');
+  assert.equal(helpPricing[0].title, 'Pricing and plans');
+  assert.match(helpPricing[0].summary, /Compare plans and manage upgrades/);
+  assert.match(applyHint(helpPricing[0]), /vendor individual and Teams plan names/i);
+  assert.match(applyHint(helpPricing[0]), /Do not change this Cloud Agent billing from the dashboard/i);
+  assert.equal(/enable/i.test(applyHint(helpPricing[0])), false);
+  assert.equal(applyHint(helpPricing[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpPricing[0]).includes('Slack'), false);
+  assert.equal(applyHint(helpPricing[0]).includes('curl'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3306,6 +3375,25 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Billing —/.test(teamMembersMd.summary), false);
   assert.equal(/Get started —/.test(teamMembersMd.summary), false);
   assert.equal(teamMembersMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpPricingMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-account-and-billing-pricing.md'), 'utf8')
+  );
+  assert.equal(helpPricingMd.title, 'Pricing and plans');
+  assert.match(helpPricingMd.summary, /What plans are available/);
+  assert.match(helpPricingMd.summary, /What is Auto/);
+  assert.match(helpPricingMd.summary, /Is Cursor Router available on my plan/);
+  assert.match(helpPricingMd.summary, /Cost mode/);
+  assert.match(helpPricingMd.summary, /Hobby plan/);
+  assert.equal(helpPricingMd.summary.includes('Sitemap'), false);
+  assert.equal(/How do I upgrade my plan —/.test(helpPricingMd.summary), false);
+  assert.equal(/How do I downgrade my plan —/.test(helpPricingMd.summary), false);
+  assert.equal(/Where do I manage my subscription —/.test(helpPricingMd.summary), false);
+  assert.equal(/What if I move from an individual plan to a Teams plan —/.test(helpPricingMd.summary), false);
+  assert.equal(/Can I switch between monthly and yearly billing —/.test(helpPricingMd.summary), false);
+  assert.equal(/Related —/.test(helpPricingMd.summary), false);
+  assert.equal(helpPricingMd.summary.toLowerCase().includes('stripe'), false);
+  assert.equal(helpPricingMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -4180,6 +4268,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'Members, roles, and seat types are vendor Teams admin config. Honor included quota. Do not switch this watch to on-demand. This Cloud Agent is not a Teams admin dashboard. Do not ingest Teams setup or SSO pages. Keep environment.json + Builds.'
     },
     {
+      title: 'Pricing and plans',
+      source_url: 'https://cursor.com/help/account-and-billing/pricing',
+      published_at: null,
+      apply_in_eos: 'Help Pricing and plans lists vendor individual and Teams plan names. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor plan prices as EOS budget evidence. Do not change this Cloud Agent billing from the dashboard. Keep environment.json + Builds.'
+    },
+    {
       title: 'Agents Window',
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
@@ -4247,6 +4341,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/bridge'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/pricing'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/members'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/account-and-billing/pricing'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/capabilities'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
@@ -4578,6 +4673,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Members, roles, and seat types are vendor Teams admin config. Honor included quota. Do not switch this watch to on-demand. This Cloud Agent is not a Teams admin dashboard. Do not ingest Teams setup or SSO pages. Keep environment.json + Builds.'
     },
     {
+      title: 'Pricing and plans',
+      source_url: 'https://cursor.com/help/account-and-billing/pricing',
+      published_at: null,
+      apply_in_eos: 'Help Pricing and plans lists vendor individual and Teams plan names. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor plan prices as EOS budget evidence. Do not change this Cloud Agent billing from the dashboard. Keep environment.json + Builds.'
+    },
+    {
       title: 'Agents Window',
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
@@ -4602,6 +4703,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/bridge'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/pricing'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/members'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/account-and-billing/pricing'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
@@ -4725,11 +4827,18 @@ test('selectCurrentLearnings keeps undated official docs/help pages in CURRENT',
     published_at: null,
     apply_in_eos: 'Members, roles, and seat types are vendor Teams admin config. Honor included quota. Do not switch this watch to on-demand. This Cloud Agent is not a Teams admin dashboard. Do not ingest Teams setup or SSO pages. Keep environment.json + Builds.'
   });
+  dated.push({
+    title: 'Pricing and plans',
+    source_url: 'https://cursor.com/help/account-and-billing/pricing',
+    published_at: null,
+    apply_in_eos: 'Help Pricing and plans lists vendor individual and Teams plan names. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor plan prices as EOS budget evidence. Do not change this Cloud Agent billing from the dashboard. Keep environment.json + Builds.'
+  });
   const selected = selectCurrentLearnings(dated, 10);
   assert.equal(selected[0].source_url, 'https://cursor.com/changelog/item-0');
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/pricing'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/members'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/account-and-billing/pricing'), false);
   assert.equal(selected.length, 10);
 });
 
@@ -4784,6 +4893,10 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/sdk/changelog'), false);
   assert.equal(current.includes('cursor.com/docs/account/teams/pricing'), false);
   assert.equal(current.includes('cursor.com/docs/account/teams/members'), false);
+  assert.equal(current.includes('cursor.com/help/account-and-billing/pricing'), false);
+  assert.equal(current.includes('cursor.com/help/account-and-billing/billing'), false);
+  assert.equal(current.includes('cursor.com/help/account-and-billing/cancel'), false);
+  assert.equal(current.includes('cursor.com/help/account-and-billing/cursor-start'), false);
   assert.equal(current.includes('cursor.com/docs/account/teams/setup'), false);
   assert.equal(current.includes('cursor.com/docs/account/teams/sso'), false);
   assert.equal(current.includes('cursor.com/docs/account/teams/admin-api'), false);

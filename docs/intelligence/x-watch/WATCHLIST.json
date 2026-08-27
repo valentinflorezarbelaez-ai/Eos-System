@@ -465,6 +465,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_TEAM_MEMBERS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-PRICING",
+      "url": "https://cursor.com/help/account-and-billing/pricing",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_PRICING_AND_PLANS",
+      "fetchable": true
     }
   ]
 }
