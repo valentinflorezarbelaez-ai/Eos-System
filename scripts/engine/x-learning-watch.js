@@ -144,6 +144,7 @@ function keepInlineCodeToken(trimmed) {
     || /^\.[\w-]+(?:\/[\w.-]+)+$/.test(trimmed)
     || trimmed === '[REDACTED]'
     || trimmed === '~/.cursor/mcp.json'
+    || trimmed === '~/.cursor/plugins/local'
     || /^\*\.[A-Za-z0-9.-]+$/.test(trimmed);
 }
 
@@ -189,6 +190,8 @@ function headingBodySummary(body) {
   if (/\bJWKS\b/i.test(clean) && !/\bJWKS\b/i.test(first)) extras.push('JWKS');
   if (/\.cursor\/hooks\.json/i.test(clean) && !/\.cursor\/hooks\.json/i.test(first)) extras.push('.cursor/hooks.json');
   if (/\.cursor\/mcp\.json/i.test(clean) && !/\.cursor\/mcp\.json/i.test(first)) extras.push('.cursor/mcp.json');
+  if (/\.cursor-plugin\/plugin\.json/i.test(clean) && !/\.cursor-plugin\/plugin\.json/i.test(first)) extras.push('.cursor-plugin/plugin.json');
+  if (/\bplugin\.json\b/i.test(clean) && !/\bplugin\.json\b/i.test(first)) extras.push('plugin.json');
   if (/\[REDACTED\]/i.test(clean) && !/\[REDACTED\]/i.test(first)) extras.push('[REDACTED]');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
@@ -235,12 +238,27 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'mcp apps'
     || key === 'using mcp in chat'
     || key === 'real world examples'
-    || key === 'static oauth for remote servers';
+    || key === 'static oauth for remote servers'
+    || key === 'cursor plugin canvases'
+    || key === 'the marketplace'
+    || key === 'how does scim work'
+    || key === 'marketplace access'
+    || key === 'plugin installation modes'
+    || key === 'add a team marketplace'
+    || key === 'keep plugins up to date'
+    || key === 'where developers find team marketplaces'
+    || key === 'installing plugins'
+    || key === 'managing installed plugins'
+    || key === 'mcp servers'
+    || key === 'mcp apps deeplinks'
+    || key === 'using the workspaceopen hook'
+    || key === 'test plugins locally'
+    || key === 'team and enterprise marketplaces';
 }
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -472,6 +490,9 @@ export function applyHint(item) {
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
   }
+  if (isPluginsDocUrl(item?.link)) {
+    return 'Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins and ~/.cursor/plugins/local are not EOS governance and are not this Cloud Agent environment. Do not delete a team marketplace without reviewing Cloud Agent MCP impact.';
+  }
   if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
   }
@@ -665,7 +686,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url)) return sourcePriority(url) + 0.5;
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url)) return sourcePriority(url) + 0.5;
   return sourcePriority(url);
 }
 
@@ -752,6 +773,11 @@ function isMcpDocUrl(url) {
   return value === 'https://cursor.com/docs/mcp' || value === 'https://www.cursor.com/docs/mcp';
 }
 
+function isPluginsDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/plugins' || value === 'https://www.cursor.com/docs/plugins';
+}
+
 function isLowPriorityBriefing(row) {
   const hint = String(row?.apply_in_eos || '');
   return hint.includes('customer/press stories') || hint.includes('feedback thread') || hint.includes('Campus community');
@@ -813,7 +839,7 @@ function currentClusterKey(learning) {
   ) {
     return 'cluster:cursor-router';
   }
-  if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || isMcpDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules' || title === 'model context protocol (mcp)') {
+  if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || isMcpDocUrl(learning?.source_url) || isPluginsDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules' || title === 'model context protocol (mcp)' || title === 'plugins') {
     return 'cluster:skills-custom-modes';
   }
   return normalizeTitleKey(learning?.title);

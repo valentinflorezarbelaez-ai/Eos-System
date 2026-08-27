@@ -213,6 +213,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_MCP",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-PLUGINS",
+      "url": "https://cursor.com/docs/plugins",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_PLUGINS",
+      "fetchable": true
     }
   ]
 }

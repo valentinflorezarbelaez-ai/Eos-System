@@ -37,3 +37,4 @@
 36. [x] Ingest Hooks living docs; cluster onto harness changelog; commit `.cursor/hooks.json` at repo root (not user-level; not Tab/sessionStart/prompt-based)
 37. [x] Ingest Cloud Agent Secrets & Network living docs; cluster onto Builds changelog; prefer Runtime Secrets/OIDC; honor network allowlists
 38. [x] Ingest MCP living docs; cluster onto Skills without dropping Usage and limits; commit `.cursor/mcp.json`; team dashboard MCP is not EOS governance
+39. [x] Ingest Plugins living docs; cluster onto Skills without dropping Usage and limits; team marketplace plugins and `~/.cursor/plugins/local` are not EOS governance

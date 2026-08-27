@@ -254,6 +254,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/plugins' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -459,6 +463,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Hooks', link: 'https://cursor.com/docs/hooks' },
     { title: 'Secrets & Network', link: 'https://cursor.com/docs/cloud-agent/security-network' },
     { title: 'Model Context Protocol (MCP)', link: 'https://cursor.com/docs/mcp' },
+    { title: 'Plugins', link: 'https://cursor.com/docs/plugins' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -652,6 +657,21 @@ test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance'
   assert.match(hint, /User-level/i);
   assert.match(hint, /not EOS governance/i);
   assert.match(hint, /API keys/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
+test('applyHint for Plugins keeps repo playbooks and rejects marketplace governance', () => {
+  const hint = applyHint({
+    title: 'Plugins',
+    link: 'https://cursor.com/docs/plugins',
+    summary: 'Browse, install, and manage plugins from the Cursor Marketplace.'
+  });
+  assert.match(hint, /\.cursor\/mcp\.json/);
+  assert.match(hint, /~\/\.cursor\/plugins\/local/);
+  assert.match(hint, /not EOS governance/i);
+  assert.match(hint, /Cloud Agent MCP/i);
   assert.equal(/enable/i.test(hint), false);
   assert.equal(hint.includes('Custom Mode'), false);
   assert.equal(hint.includes('timers'), false);
@@ -941,6 +961,17 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(mcp[0].summary, /MCP/i);
   assert.match(applyHint(mcp[0]), /\.cursor\/mcp\.json/);
   assert.equal(/enable/i.test(applyHint(mcp[0])), false);
+
+  const plugins = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-plugins.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/plugins'
+  );
+  assert.equal(plugins[0].id, 'https://cursor.com/docs/plugins');
+  assert.equal(plugins[0].title, 'Plugins');
+  assert.match(plugins[0].summary, /plugin/i);
+  assert.match(applyHint(plugins[0]), /~\/\.cursor\/plugins\/local/);
+  assert.equal(/enable/i.test(applyHint(plugins[0])), false);
 });
 
 test('parseOfficialSource html-page maps Cursor Router and usage limits', () => {
@@ -1137,6 +1168,21 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(mcpMd.summary.includes('API_KEY'), false);
   assert.equal(/Using MCP in chat —/.test(mcpMd.summary), false);
   assert.equal(/One-click installation —/.test(mcpMd.summary), false);
+
+  const pluginsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-plugins.md'), 'utf8')
+  );
+  assert.equal(pluginsMd.title, 'Plugins');
+  assert.match(pluginsMd.summary, /plugin\.json/);
+  assert.match(pluginsMd.summary, /\.cursor-plugin\/plugin\.json/);
+  assert.match(pluginsMd.summary, /Cloud Agents/i);
+  assert.match(pluginsMd.summary, /Default team marketplace/i);
+  assert.equal(pluginsMd.summary.includes('Sitemap'), false);
+  assert.equal(pluginsMd.summary.includes('Hex Canvas'), false);
+  assert.equal(pluginsMd.summary.includes('cursor.com/marketplace'), false);
+  assert.equal(/Installing plugins —/.test(pluginsMd.summary), false);
+  assert.equal(/Test plugins locally —/.test(pluginsMd.summary), false);
+  assert.equal(/How does SCIM work —/.test(pluginsMd.summary), false);
 });
 
 test('parseOfficialMarkdown does not inject Cloud Agents extra from later body text', () => {
@@ -1626,6 +1672,12 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
       apply_in_eos: 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.'
     },
     {
+      title: 'Plugins',
+      source_url: 'https://cursor.com/docs/plugins',
+      published_at: null,
+      apply_in_eos: 'Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins and ~/.cursor/plugins/local are not EOS governance and are not this Cloud Agent environment. Do not delete a team marketplace without reviewing Cloud Agent MCP impact.'
+    },
+    {
       title: 'Agent Skills',
       source_url: 'https://cursor.com/docs/skills',
       published_at: null,
@@ -1648,6 +1700,7 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/prompting'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/mcp'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/plugins'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/overview'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -1808,6 +1861,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/hooks'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/security-network'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
+  assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);
