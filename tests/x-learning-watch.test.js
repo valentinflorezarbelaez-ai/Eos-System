@@ -203,7 +203,15 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/origin/codebase-settings' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/origin/git'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/api/origin'),
     false
   );
   assert.equal(
@@ -955,6 +963,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Browse & Search', link: 'https://cursor.com/docs/origin/browse' },
     { title: 'Origin repository settings', link: 'https://cursor.com/docs/origin/settings' },
     { title: 'Settings', link: 'https://cursor.com/docs/origin/settings' },
+    { title: 'Codebase settings', link: 'https://cursor.com/docs/origin/codebase-settings' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1143,6 +1152,26 @@ test('applyHint for Origin settings keeps GitHub as source of truth', () => {
   assert.match(hint, /GitHub remains source of truth/i);
   assert.match(hint, /Do not Detach/i);
   assert.match(hint, /Origin Apps/i);
+  assert.match(hint, /Cloud Agent VM already uses its GitHub checkout/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
+test('applyHint for Origin codebase settings keeps GitHub as source of truth', () => {
+  const hint = applyHint({
+    title: 'Codebase settings',
+    link: 'https://cursor.com/docs/origin/codebase-settings',
+    summary: 'Manage team-level Origin codebase settings: permissions and internal apps for the Origin API.'
+  });
+  assert.match(hint, /optional team-level Origin hosting/i);
+  assert.match(hint, /GitHub remains source of truth/i);
+  assert.match(hint, /claim a codebase name/i);
+  assert.match(hint, /Origin Apps/i);
+  assert.match(hint, /Origin API tokens/i);
   assert.match(hint, /Cloud Agent VM already uses its GitHub checkout/i);
   assert.match(hint, /environment\.json/);
   assert.match(hint, /included quota/i);
@@ -1874,6 +1903,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(originSettings[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(originSettings[0]).includes('Vercel'), false);
 
+  const originCodebaseSettings = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-origin-codebase-settings.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/origin/codebase-settings'
+  );
+  assert.equal(originCodebaseSettings[0].id, 'https://cursor.com/docs/origin/codebase-settings');
+  assert.equal(originCodebaseSettings[0].title, 'Codebase settings');
+  assert.match(originCodebaseSettings[0].summary, /Manage team-level Origin codebase/);
+  assert.match(applyHint(originCodebaseSettings[0]), /optional team-level Origin hosting/i);
+  assert.match(applyHint(originCodebaseSettings[0]), /claim a codebase name/i);
+  assert.equal(/enable/i.test(applyHint(originCodebaseSettings[0])), false);
+  assert.equal(applyHint(originCodebaseSettings[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(originCodebaseSettings[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -2366,6 +2409,15 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(originSettingsMd.summary, /Rules and Protections/);
   assert.equal(originSettingsMd.summary.includes('Sitemap'), false);
   assert.equal(originSettingsMd.summary.includes('origin.cursor.com'), false);
+
+  const originCodebaseSettingsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-origin-codebase-settings.md'), 'utf8')
+  );
+  assert.equal(originCodebaseSettingsMd.title, 'Codebase settings');
+  assert.match(originCodebaseSettingsMd.summary, /Permissions/);
+  assert.match(originCodebaseSettingsMd.summary, /Apps/);
+  assert.equal(originCodebaseSettingsMd.summary.includes('Sitemap'), false);
+  assert.equal(originCodebaseSettingsMd.summary.includes('origin.cursor.com'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -3091,6 +3143,12 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
       apply_in_eos: 'Origin repository settings are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not Detach from GitHub or manage Origin Apps for this watch. This Cloud Agent VM already uses its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Codebase settings',
+      source_url: 'https://cursor.com/docs/origin/codebase-settings',
+      published_at: null,
+      apply_in_eos: 'Origin codebase settings are optional team-level Origin hosting. GitHub remains source of truth for this synced repo. Do not claim a codebase name, turn Origin on or off, or manage Origin Apps for this watch. Do not put Origin API tokens in git. This Cloud Agent VM already uses its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -3110,6 +3168,7 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/pull-requests'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/browse'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/settings'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/codebase-settings'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -3718,7 +3777,9 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/origin/pull-requests'), false);
   assert.equal(current.includes('cursor.com/docs/origin/browse'), false);
   assert.equal(current.includes('cursor.com/docs/origin/settings'), false);
+  assert.equal(current.includes('cursor.com/docs/origin/codebase-settings'), false);
   assert.equal(current.includes('cursor.com/docs/origin/git'), false);
+  assert.equal(current.includes('cursor.com/docs/api/origin'), false);
 });
 
 test('cited X posts never claim an X fetch', () => {
