@@ -263,6 +263,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/bugbot' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -526,6 +530,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Security overview', link: 'https://cursor.com/docs/cloud-agent/security' },
     { title: 'Dashboard settings', link: 'https://cursor.com/docs/cloud-agent/settings' },
     { title: 'Private Connectivity', link: 'https://cursor.com/docs/cloud-agent/private-connectivity' },
+    { title: 'Bugbot', link: 'https://cursor.com/docs/bugbot' },
     { title: 'Model Context Protocol (MCP)', link: 'https://cursor.com/docs/mcp' },
     { title: 'Plugins', link: 'https://cursor.com/docs/plugins' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
@@ -762,6 +767,24 @@ test('applyHint for Private Connectivity keeps this watch on public cloud', () =
   assert.equal(hint.includes('Custom Mode'), false);
   assert.equal(hint.includes('timers'), false);
   assert.equal(hint.includes('10.2.8.0'), false);
+});
+
+test('applyHint for Bugbot keeps TDD evidence and GitHub as source of truth', () => {
+  const hint = applyHint({
+    title: 'Bugbot',
+    link: 'https://cursor.com/docs/bugbot',
+    summary: 'Bugbot reviews pull requests and identifies bugs. Use /review-bugbot before you push.'
+  });
+  assert.match(hint, /optional PR review/i);
+  assert.match(hint, /TDD evidence remains required/i);
+  assert.match(hint, /\/review-bugbot/);
+  assert.match(hint, /not a substitute for tests/i);
+  assert.match(hint, /GitHub/i);
+  assert.match(hint, /integration setup/i);
+  assert.match(hint, /API keys/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
 });
 
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
@@ -1105,6 +1128,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(privateConnectivity[0]), /tunnel tokens/i);
   assert.equal(/enable/i.test(applyHint(privateConnectivity[0])), false);
 
+  const bugbot = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-bugbot.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/bugbot'
+  );
+  assert.equal(bugbot[0].id, 'https://cursor.com/docs/bugbot');
+  assert.equal(bugbot[0].title, 'Bugbot');
+  assert.match(bugbot[0].summary, /pull requests/i);
+  assert.match(applyHint(bugbot[0]), /\/review-bugbot/);
+  assert.match(applyHint(bugbot[0]), /TDD evidence remains required/i);
+  assert.equal(/enable/i.test(applyHint(bugbot[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1354,6 +1389,24 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Prerequisites —/.test(privateConnectivityMd.summary), false);
   assert.equal(/Complete the source control connection —/.test(privateConnectivityMd.summary), false);
   assert.equal(/Check the private webhook path —/.test(privateConnectivityMd.summary), false);
+
+  const bugbotMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-bugbot.md'), 'utf8')
+  );
+  assert.equal(bugbotMd.title, 'Bugbot');
+  assert.match(bugbotMd.summary, /How it works/);
+  assert.match(bugbotMd.summary, /\/review-bugbot/);
+  assert.match(bugbotMd.summary, /\.cursor\/BUGBOT\.md/);
+  assert.match(bugbotMd.summary, /Autofix/);
+  assert.equal(bugbotMd.summary.includes('github.md'), false);
+  assert.equal(bugbotMd.summary.includes('YOUR_API_KEY'), false);
+  assert.equal(bugbotMd.summary.includes('Sitemap'), false);
+  assert.equal(/Setup —/.test(bugbotMd.summary), false);
+  assert.equal(/CI check statuses —/.test(bugbotMd.summary), false);
+  assert.equal(/API —/.test(bugbotMd.summary), false);
+  assert.equal(/Admin Configuration API —/.test(bugbotMd.summary), false);
+  assert.equal(/Pricing —/.test(bugbotMd.summary), false);
+  assert.equal(/Troubleshooting —/.test(bugbotMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -1981,6 +2034,18 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'This Cloud Agent run is public cloud. Private Connectivity is Enterprise-only (AWS PrivateLink or Cloudflare Tunnel) for private Git/registries. It is not required for this watch. Keep GitHub as source of truth. Do not put tunnel tokens in git.'
     },
     {
+      title: 'Bugbot is now over 3x faster, 22% cheaper, and finds 10% more bugs',
+      source_url: 'https://cursor.com/changelog/bugbot-updates-june-2026',
+      published_at: 'Wed, 10 Jun 2026 00:00:00 GMT',
+      apply_in_eos: 'Bugbot is optional PR review. EOS TDD evidence remains required.'
+    },
+    {
+      title: 'Bugbot',
+      source_url: 'https://cursor.com/docs/bugbot',
+      published_at: null,
+      apply_in_eos: 'Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -1999,6 +2064,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/settings'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/private-connectivity'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/bugbot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -2085,6 +2151,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(/cursor\.com\/docs\/cloud-agent\/security(?!-network)/.test(current), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/settings'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/private-connectivity'), false);
+  assert.equal(current.includes('cursor.com/docs/bugbot'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);

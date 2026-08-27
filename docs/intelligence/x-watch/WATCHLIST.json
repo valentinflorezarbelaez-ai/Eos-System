@@ -229,6 +229,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-BUGBOT",
+      "url": "https://cursor.com/docs/bugbot",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_BUGBOT",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-MCP",
       "url": "https://cursor.com/docs/mcp",
       "kind": "html-page",

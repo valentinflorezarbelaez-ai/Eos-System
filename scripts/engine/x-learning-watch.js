@@ -198,6 +198,8 @@ function headingBodySummary(body) {
   if (/\bnever widened\b/i.test(clean) && !/\bnever widened\b/i.test(first)) extras.push('never widened');
   if (/\bAWS PrivateLink\b/i.test(clean) && !/\bAWS PrivateLink\b/i.test(first)) extras.push('AWS PrivateLink');
   if (/\bCloudflare Tunnel\b/i.test(clean) && !/\bCloudflare Tunnel\b/i.test(first)) extras.push('Cloudflare Tunnel');
+  if (/\/review-bugbot/i.test(clean) && !/\/review-bugbot/i.test(first)) extras.push('/review-bugbot');
+  if (/\.cursor\/BUGBOT\.md/i.test(clean) && !/\.cursor\/BUGBOT\.md/i.test(first)) extras.push('.cursor/BUGBOT.md');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -275,12 +277,18 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'google private service connect'
     || key === 'what to send cursor'
     || key === 'further reading'
-    || key === 'prerequisites';
+    || key === 'prerequisites'
+    || key === 'setup'
+    || key === 'ci check statuses'
+    || key === 'analytics'
+    || key === 'api'
+    || key === 'admin configuration api'
+    || key === 'pricing';
 }
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -517,6 +525,9 @@ export function applyHint(item) {
   }
   if (isCloudAgentPrivateConnectivityUrl(item?.link)) {
     return 'This Cloud Agent run is public cloud. Private Connectivity is Enterprise-only (AWS PrivateLink or Cloudflare Tunnel) for private Git/registries. It is not required for this watch. Keep GitHub as source of truth. Do not put tunnel tokens in git.';
+  }
+  if (isBugbotDocUrl(item?.link)) {
+    return 'Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.';
   }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
@@ -796,6 +807,12 @@ function isCloudAgentPrivateConnectivityUrl(url) {
     || value === 'https://www.cursor.com/docs/cloud-agent/private-connectivity';
 }
 
+function isBugbotDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/bugbot'
+    || value === 'https://www.cursor.com/docs/bugbot';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -893,6 +910,13 @@ function currentClusterKey(learning) {
   }
   if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || isMcpDocUrl(learning?.source_url) || isPluginsDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules' || title === 'model context protocol (mcp)' || title === 'plugins') {
     return 'cluster:skills-custom-modes';
+  }
+  if (
+    isBugbotDocUrl(learning?.source_url)
+    || url.includes('changelog/bugbot-updates-june-2026')
+    || url.includes('help/ai-features/bugbot')
+  ) {
+    return 'cluster:bugbot';
   }
   return normalizeTitleKey(learning?.title);
 }
