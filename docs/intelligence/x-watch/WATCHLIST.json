@@ -479,6 +479,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_AVAILABLE_MODELS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-CURSOR-ROUTER",
+      "url": "https://cursor.com/help/models-and-usage/cursor-router",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_CURSOR_ROUTER",
+      "fetchable": true
     }
   ]
 }

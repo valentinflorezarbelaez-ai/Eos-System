@@ -255,6 +255,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/models-and-usage/cursor-router' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/models-and-usage/api-keys'),
     false
   );
@@ -264,6 +268,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/account-and-billing/billing'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/account-and-billing/teams-management'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/account-and-billing/overages'),
     false
   );
   assert.equal(
@@ -1441,6 +1453,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Members, Roles, and Seat Types', link: 'https://cursor.com/docs/account/teams/members' },
     { title: 'Pricing and plans', link: 'https://cursor.com/help/account-and-billing/pricing' },
     { title: 'Available models', link: 'https://cursor.com/help/models-and-usage/available-models' },
+    { title: 'Cursor Router', link: 'https://cursor.com/help/models-and-usage/cursor-router' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1914,6 +1927,29 @@ test('applyHint for Help Available models keeps included quota and rejects API k
   assert.equal(hint.includes('Vercel'), false);
   assert.equal(hint.includes('timers'), false);
   assert.equal(hint.includes('curl'), false);
+});
+
+test('applyHint for Help Cursor Router keeps Auto modes and rejects SDK install', () => {
+  const hint = applyHint({
+    title: 'Cursor Router',
+    link: 'https://cursor.com/help/models-and-usage/cursor-router',
+    summary: 'Team admins can enable-disable Cursor Router. TypeScript SDK and Python SDK expose auto-smart. See Custom Mode and Microsoft Teams.'
+  });
+  assert.match(hint, /vendor Auto routing/i);
+  assert.match(hint, /Cost, Balance, and Intelligence/i);
+  assert.match(hint, /EOS rules still bind/i);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.match(hint, /@cursor\/sdk/);
+  assert.match(hint, /Do not put API keys in git/i);
+  assert.match(hint, /environment\.json/);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('curl'), false);
+  assert.equal(hint.includes('Microsoft Teams'), false);
 });
 
 test('applyHint for Cloud Agent best practices prefers OIDC and repo conventions', () => {
@@ -2824,6 +2860,22 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpAvailableModels[0]).includes('Slack'), false);
   assert.equal(applyHint(helpAvailableModels[0]).includes('curl'), false);
 
+  const helpCursorRouter = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-models-and-usage-cursor-router.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/models-and-usage/cursor-router'
+  );
+  assert.equal(helpCursorRouter[0].id, 'https://cursor.com/help/models-and-usage/cursor-router');
+  assert.equal(helpCursorRouter[0].title, 'Cursor Router');
+  assert.match(helpCursorRouter[0].summary, /How Cursor Router picks models for Auto/);
+  assert.match(applyHint(helpCursorRouter[0]), /vendor Auto routing/i);
+  assert.match(applyHint(helpCursorRouter[0]), /Cost, Balance, and Intelligence/i);
+  assert.match(applyHint(helpCursorRouter[0]), /Do not put API keys in git/i);
+  assert.equal(/enable/i.test(applyHint(helpCursorRouter[0])), false);
+  assert.equal(applyHint(helpCursorRouter[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpCursorRouter[0]).includes('Slack'), false);
+  assert.equal(applyHint(helpCursorRouter[0]).includes('curl'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3510,6 +3562,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/How do I switch models —/.test(helpAvailableModelsMd.summary), false);
   assert.equal(/Related —/.test(helpAvailableModelsMd.summary), false);
   assert.equal(helpAvailableModelsMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpCursorRouterMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-models-and-usage-cursor-router.md'), 'utf8')
+  );
+  assert.equal(helpCursorRouterMd.title, 'Cursor Router');
+  assert.match(helpCursorRouterMd.summary, /What is Cursor Router/);
+  assert.match(helpCursorRouterMd.summary, /How does Cursor Router decide/);
+  assert.match(helpCursorRouterMd.summary, /Cost, Balance, and Intelligence/);
+  assert.match(helpCursorRouterMd.summary, /Can I use Cursor Router from the SDK/);
+  assert.equal(helpCursorRouterMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpCursorRouterMd.summary), false);
+  assert.equal(helpCursorRouterMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -4285,6 +4349,12 @@ test('selectCurrentLearnings clusters Cursor Router onto changelog', () => {
       apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
     },
     {
+      title: 'Cursor Router',
+      source_url: 'https://cursor.com/help/models-and-usage/cursor-router',
+      published_at: null,
+      apply_in_eos: 'Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules still bind model and governance choices. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put API keys in git. Keep environment.json + Builds.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -4294,6 +4364,7 @@ test('selectCurrentLearnings clusters Cursor Router onto changelog', () => {
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/router'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/blog/how-cursor-router-works'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cursor-router'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/cursor-router'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -4396,6 +4467,18 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep environment.json + Builds.'
     },
     {
+      title: 'Cursor Router',
+      source_url: 'https://cursor.com/changelog/router',
+      published_at: 'Wed, 22 Jul 2026 00:00:00 GMT',
+      apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
+    },
+    {
+      title: 'Cursor Router',
+      source_url: 'https://cursor.com/help/models-and-usage/cursor-router',
+      published_at: null,
+      apply_in_eos: 'Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules still bind model and governance choices. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put API keys in git. Keep environment.json + Builds.'
+    },
+    {
       title: 'Agents Window',
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
@@ -4465,6 +4548,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/members'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/account-and-billing/pricing'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/available-models'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/cursor-router'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/capabilities'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
@@ -4808,6 +4892,18 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep environment.json + Builds.'
     },
     {
+      title: 'Cursor Router',
+      source_url: 'https://cursor.com/changelog/router',
+      published_at: 'Wed, 22 Jul 2026 00:00:00 GMT',
+      apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
+    },
+    {
+      title: 'Cursor Router',
+      source_url: 'https://cursor.com/help/models-and-usage/cursor-router',
+      published_at: null,
+      apply_in_eos: 'Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules still bind model and governance choices. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put API keys in git. Keep environment.json + Builds.'
+    },
+    {
       title: 'Agents Window',
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
@@ -4834,6 +4930,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/members'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/account-and-billing/pricing'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/available-models'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/cursor-router'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
@@ -4969,6 +5066,18 @@ test('selectCurrentLearnings keeps undated official docs/help pages in CURRENT',
     published_at: null,
     apply_in_eos: 'Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep environment.json + Builds.'
   });
+  dated.push({
+    title: 'Cursor Router',
+    source_url: 'https://cursor.com/changelog/router',
+    published_at: '2026-07-22T00:00:00.000Z',
+    apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
+  });
+  dated.push({
+    title: 'Cursor Router',
+    source_url: 'https://cursor.com/help/models-and-usage/cursor-router',
+    published_at: null,
+    apply_in_eos: 'Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules still bind model and governance choices. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put API keys in git. Keep environment.json + Builds.'
+  });
   const selected = selectCurrentLearnings(dated, 10);
   assert.equal(selected[0].source_url, 'https://cursor.com/changelog/item-0');
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/models-and-pricing'), true);
@@ -4976,6 +5085,7 @@ test('selectCurrentLearnings keeps undated official docs/help pages in CURRENT',
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/account/teams/members'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/account-and-billing/pricing'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/available-models'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/cursor-router'), false);
   assert.equal(selected.length, 10);
 });
 
@@ -5032,7 +5142,10 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/account/teams/members'), false);
   assert.equal(current.includes('cursor.com/help/account-and-billing/pricing'), false);
   assert.equal(current.includes('cursor.com/help/models-and-usage/available-models'), false);
+  assert.equal(current.includes('cursor.com/help/models-and-usage/cursor-router'), false);
   assert.equal(current.includes('cursor.com/help/models-and-usage/api-keys'), false);
+  assert.equal(current.includes('cursor.com/help/account-and-billing/teams-management'), false);
+  assert.equal(current.includes('cursor.com/help/account-and-billing/overages'), false);
   assert.equal(current.includes('cursor.com/help/account-and-billing/billing'), false);
   assert.equal(current.includes('cursor.com/help/account-and-billing/cancel'), false);
   assert.equal(current.includes('cursor.com/help/account-and-billing/cursor-start'), false);
