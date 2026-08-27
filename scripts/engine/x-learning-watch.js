@@ -210,6 +210,7 @@ function appendHeadingChunk(chunks, heading, body) {
 export function parseOfficialMarkdown(md) {
   let raw = String(md || '').replace(/^\uFEFF/, '');
   raw = raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
+  raw = raw.replace(/```[\s\S]*?```/g, '\n');
   const title = stripTags((raw.match(/^#\s+(.+)$/m) || [])[1] || '').trim();
   const chunks = [];
   const parts = raw.split(/^##\s+/m);

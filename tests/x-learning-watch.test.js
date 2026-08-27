@@ -331,6 +331,15 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.ok(bestPractices);
   assert.match(bestPractices.summary, /OIDC/i);
   assert.match(bestPractices.apply_in_eos, /OIDC/i);
+  const rules = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/rules');
+  assert.ok(rules);
+  assert.match(rules.summary, /\.mdc/);
+  assert.match(rules.summary, /\/create-rule/);
+  assert.match(rules.apply_in_eos, /\.mdc/);
+  assert.match(rules.apply_in_eos, /\/create-rule/);
+  assert.match(rules.apply_in_eos, /Team dashboard rules are not EOS governance/i);
+  assert.equal(rules.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(rules.summary.includes('Code Style'), false);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
@@ -851,6 +860,7 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(rulesMd.summary.includes('Sitemap'), false);
   assert.equal(rulesMd.summary.includes('frontend components'), false);
   assert.equal(rulesMd.summary.includes('Why isn'), false);
+  assert.equal(rulesMd.summary.includes('Code Style'), false);
 });
 
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {

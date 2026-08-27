@@ -36,6 +36,14 @@ Team Rules take precedence: Team Rules then Project Rules then User Rules.
 
 `AGENTS.md` is a simple markdown file for defining agent instructions.
 
+```markdown
+# Project Instructions
+
+## Code Style
+
+- Use TypeScript for all new files
+```
+
 ## FAQ
 
 Why isn't my rule being applied?
