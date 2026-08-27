@@ -145,15 +145,19 @@ function keepInlineCodeToken(trimmed) {
     || trimmed === '[REDACTED]'
     || trimmed === '~/.cursor/mcp.json'
     || trimmed === '~/.cursor/plugins/local'
+    || trimmed === 'CURSOR_AGENT'
     || /^\*\.[A-Za-z0-9.-]+$/.test(trimmed);
 }
 
 function stripMarkdown(value) {
+  const kept = [];
   return String(value || '')
     .replace(/```[\s\S]*?```/g, ' ')
     .replace(/`([^`]+)`/g, (_, code) => {
       const trimmed = String(code || '').trim();
-      return keepInlineCodeToken(trimmed) ? ` ${trimmed} ` : ' ';
+      if (!keepInlineCodeToken(trimmed)) return ' ';
+      const idx = kept.push(trimmed) - 1;
+      return ` \u0000KEEP${idx} `;
     })
     .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
@@ -163,6 +167,7 @@ function stripMarkdown(value) {
     .replace(/\*\./g, '\u0000DOTSTAR.')
     .replace(/[*_#]+/g, ' ')
     .replace(/\u0000DOTSTAR\./g, '*.')
+    .replace(/\u0000KEEP(\d+)/g, (_, idx) => kept[Number(idx)])
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -211,11 +216,13 @@ function headingBodySummary(body) {
   if (/source:\s*iosApp/i.test(body) && !/source:\s*iosApp/i.test(first)) extras.push('source: iosApp');
   if (/\/in-cloud/i.test(clean) && !/\/in-cloud/i.test(first)) extras.push('/in-cloud');
   if (/\/babysit/i.test(clean) && !/\/babysit/i.test(first)) extras.push('/babysit');
+  if (/\bCURSOR_AGENT\b/.test(clean) && !/\bCURSOR_AGENT\b/.test(first)) extras.push('CURSOR_AGENT');
+  if (/\bsandbox\.json\b/i.test(clean) && !/\bsandbox\.json\b/i.test(first)) extras.push('sandbox.json');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
 
-function shouldSkipMarkdownHeading(heading) {
+function shouldSkipMarkdownHeading(heading, body) {
   const key = String(heading || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
   return key === 'sitemap'
     || key === 'related'
@@ -232,7 +239,7 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'quickstart'
     || key === 'partner integrations'
     || key === 'reference'
-    || key === 'troubleshooting'
+    || (key === 'troubleshooting' && !/\bCURSOR_AGENT\b/.test(String(body || '')))
     || key === 'environment variables'
     || key === 'team distribution'
     || key === 'hook types'
@@ -313,11 +320,11 @@ function shouldSkipMarkdownHeading(heading) {
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|\/agent-review|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit|select an element|select multiple elements|draw on the page|narrate by voice|console output|network traffic|tool approval|allow and block lists|browser context|authentication and isolation|^navigate$|^click$|^type$|^scroll$|^screenshot$/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|\/agent-review|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit|select an element|select multiple elements|draw on the page|narrate by voice|console output|network traffic|tool approval|allow and block lists|browser context|authentication and isolation|^navigate$|^click$|^type$|^scroll$|^screenshot$|cursor_agent|disable heavy prompts|sandbox\.json/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
-  if (shouldSkipMarkdownHeading(heading)) return;
+  if (shouldSkipMarkdownHeading(heading, body)) return;
   const sentence = headingBodySummary(body);
   if (heading && sentence) chunks.push(`${heading} — ${sentence}`);
   else if (heading) chunks.push(heading);
@@ -337,7 +344,7 @@ export function parseOfficialMarkdown(md) {
     const newline = part.indexOf('\n');
     const heading = stripMarkdown(newline === -1 ? part : part.slice(0, newline));
     const body = newline === -1 ? '' : part.slice(newline + 1);
-    if (shouldSkipMarkdownHeading(heading)) continue;
+    if (shouldSkipMarkdownHeading(heading, body)) continue;
     const h3parts = body.split(/^###\s+/m);
     appendHeadingChunk(chunks, heading, h3parts[0]);
     for (const h3part of h3parts.slice(1)) {
@@ -597,6 +604,9 @@ export function applyHint(item) {
   if (isBrowserToolDocUrl(item?.link)) {
     return 'Browser is optional desktop browser control. This watch already runs in the Cloud Agent VM and uses official feeds, not live sites. Do not rotate this Cloud Agent into Browser for daily ingest. Keep environment.json + Builds. Team MCP dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.';
   }
+  if (isTerminalToolDocUrl(item?.link)) {
+    return 'Terminal is optional desktop shell control with Run Mode and sandbox.json. This Cloud Agent VM already runs shell commands. Do not rotate this Cloud Agent into desktop Terminal for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+  }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
   }
@@ -796,7 +806,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -931,6 +941,12 @@ function isBrowserToolDocUrl(url) {
     || value === 'https://www.cursor.com/docs/agent/tools/browser';
 }
 
+function isTerminalToolDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/agent/tools/terminal'
+    || value === 'https://www.cursor.com/docs/agent/tools/terminal';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -1003,6 +1019,7 @@ function currentClusterKey(learning) {
     || isAgentsWindowDocUrl(learning?.source_url)
     || isDesignModeDocUrl(learning?.source_url)
     || isBrowserToolDocUrl(learning?.source_url)
+    || isTerminalToolDocUrl(learning?.source_url)
     || url.includes('changelog/cloud-in-agents-window')
     || title === 'automations'
     || title === 'subagents'

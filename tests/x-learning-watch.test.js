@@ -307,6 +307,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/tools/terminal' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -1181,6 +1185,24 @@ test('applyHint for Browser keeps this watch on official feeds', () => {
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Terminal keeps this Cloud Agent VM running shell commands', () => {
+  const hint = applyHint({
+    title: 'Terminal',
+    link: 'https://cursor.com/docs/agent/tools/terminal',
+    summary: 'Cursor runs shell commands with Run Mode and sandbox.json.'
+  });
+  assert.match(hint, /optional desktop shell control/i);
+  assert.match(hint, /Run Mode/);
+  assert.match(hint, /sandbox\.json/);
+  assert.match(hint, /Cloud Agent VM/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Terminal/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1654,6 +1676,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(browserTool[0]), /optional desktop browser control/i);
   assert.equal(/enable/i.test(applyHint(browserTool[0])), false);
 
+  const terminalTool = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-tools-terminal.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/agent/tools/terminal'
+  );
+  assert.equal(terminalTool[0].id, 'https://cursor.com/docs/agent/tools/terminal');
+  assert.equal(terminalTool[0].title, 'Terminal');
+  assert.match(terminalTool[0].summary, /sandbox/i);
+  assert.match(applyHint(terminalTool[0]), /Cloud Agent VM/);
+  assert.match(applyHint(terminalTool[0]), /optional desktop shell control/i);
+  assert.equal(/enable/i.test(applyHint(terminalTool[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -2054,6 +2088,16 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Recommended models —/.test(browserToolMd.summary), false);
   assert.equal(/Enterprise usage —/.test(browserToolMd.summary), false);
   assert.equal(/Related —/.test(browserToolMd.summary), false);
+
+  const terminalToolMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-tools-terminal.md'), 'utf8')
+  );
+  assert.equal(terminalToolMd.title, 'Terminal');
+  assert.match(terminalToolMd.summary, /Sandbox/);
+  assert.match(terminalToolMd.summary, /sandbox\.json/);
+  assert.match(terminalToolMd.summary, /CURSOR_AGENT/);
+  assert.equal(terminalToolMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(terminalToolMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2526,6 +2570,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       source_url: 'https://cursor.com/docs/agent/tools/browser',
       published_at: null,
       apply_in_eos: 'Browser is optional desktop browser control. This watch already runs in the Cloud Agent VM and uses official feeds, not live sites. Do not rotate this Cloud Agent into Browser for daily ingest. Keep environment.json + Builds. Team MCP dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'Terminal',
+      source_url: 'https://cursor.com/docs/agent/tools/terminal',
+      published_at: null,
+      apply_in_eos: 'Terminal is optional desktop shell control with Run Mode and sandbox.json. This Cloud Agent VM already runs shell commands. Do not rotate this Cloud Agent into desktop Terminal for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     }
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
@@ -2533,6 +2583,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/agents-window'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/design-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/browser'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/terminal'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
@@ -2956,6 +3007,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/debug-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/design-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/browser'), false);
+  assert.equal(current.includes('cursor.com/docs/agent/tools/terminal'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);

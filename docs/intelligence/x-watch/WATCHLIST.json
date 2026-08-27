@@ -306,6 +306,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-TOOLS-TERMINAL",
+      "url": "https://cursor.com/docs/agent/tools/terminal",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_TOOLS_TERMINAL",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-MCP",
       "url": "https://cursor.com/docs/mcp",
       "kind": "html-page",
