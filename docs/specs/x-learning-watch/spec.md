@@ -110,6 +110,8 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-80:** `apply_in_eos` for `docs/agent/tools/browser` states that Browser is optional desktop browser control, that this watch already runs in the Cloud Agent VM and uses official feeds not live sites, not to rotate this Cloud Agent into Browser for daily ingest, that `environment.json` + Builds stay the start path, that team MCP dashboard controls are not EOS governance, and to honor included quota without switching this watch to on-demand.
 - [x] **AC-81:** CURRENT.md clusters `docs/agent/tools/terminal` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
 - [x] **AC-82:** `apply_in_eos` for `docs/agent/tools/terminal` states that Terminal is optional desktop shell control with Run Mode and `sandbox.json`, that this Cloud Agent VM already runs shell commands, not to rotate this Cloud Agent into desktop Terminal for daily ingest, that `environment.json` + Builds stay the start path, and to honor included quota without switching this watch to on-demand.
+- [x] **AC-83:** CURRENT.md clusters `docs/agent/tools/search` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
+- [x] **AC-84:** `apply_in_eos` for `docs/agent/tools/search` states that Search is optional desktop Instant Grep and Explore subagent, that this Cloud Agent VM already searches the workspace, not to rotate this Cloud Agent into desktop Search for daily ingest, that `environment.json` + Builds stay the start path, not to put `.cursor/keys` in git, and to honor included quota without switching this watch to on-demand.
 
 ## 6. Verification & Evidence Plan
 ```bash

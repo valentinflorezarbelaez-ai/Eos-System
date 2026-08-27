@@ -937,6 +937,23 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/agent/tools/terminal"
+    },
+    {
+      "source_id": "SRC-0056",
+      "name": "Cursor Docs — Search",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Desktop Instant Grep and Explore subagent are optional Agent tooling. This Cloud Agent VM already searches the workspace and does not rotate into desktop Search for daily ingest. Do not put .cursor/keys in git.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/agent/tools/search"
     }
   ]
 }

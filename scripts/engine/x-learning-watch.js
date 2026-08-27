@@ -146,6 +146,7 @@ function keepInlineCodeToken(trimmed) {
     || trimmed === '~/.cursor/mcp.json'
     || trimmed === '~/.cursor/plugins/local'
     || trimmed === 'CURSOR_AGENT'
+    || trimmed === '.cursor/keys'
     || /^\*\.[A-Za-z0-9.-]+$/.test(trimmed);
 }
 
@@ -218,6 +219,7 @@ function headingBodySummary(body) {
   if (/\/babysit/i.test(clean) && !/\/babysit/i.test(first)) extras.push('/babysit');
   if (/\bCURSOR_AGENT\b/.test(clean) && !/\bCURSOR_AGENT\b/.test(first)) extras.push('CURSOR_AGENT');
   if (/\bsandbox\.json\b/i.test(clean) && !/\bsandbox\.json\b/i.test(first)) extras.push('sandbox.json');
+  if (/\.cursor\/keys\b/i.test(clean) && !/\.cursor\/keys\b/i.test(first)) extras.push('.cursor/keys');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -320,7 +322,7 @@ function shouldSkipMarkdownHeading(heading, body) {
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|\/agent-review|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit|select an element|select multiple elements|draw on the page|narrate by voice|console output|network traffic|tool approval|allow and block lists|browser context|authentication and isolation|^navigate$|^click$|^type$|^scroll$|^screenshot$|cursor_agent|disable heavy prompts|sandbox\.json/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|\/agent-review|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit|select an element|select multiple elements|draw on the page|narrate by voice|console output|network traffic|tool approval|allow and block lists|browser context|authentication and isolation|^navigate$|^click$|^type$|^scroll$|^screenshot$|cursor_agent|disable heavy prompts|sandbox\.json|instant grep|explore subagent|path encryption|multi-root/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -607,6 +609,9 @@ export function applyHint(item) {
   if (isTerminalToolDocUrl(item?.link)) {
     return 'Terminal is optional desktop shell control with Run Mode and sandbox.json. This Cloud Agent VM already runs shell commands. Do not rotate this Cloud Agent into desktop Terminal for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
+  if (isSearchToolDocUrl(item?.link)) {
+    return 'Search is optional desktop Instant Grep and Explore subagent. This Cloud Agent VM already searches the workspace. Do not rotate this Cloud Agent into desktop Search for daily ingest. Keep environment.json + Builds. Do not put .cursor/keys in git. Honor included quota; do not switch this watch to on-demand.';
+  }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
   }
@@ -806,7 +811,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -947,6 +952,12 @@ function isTerminalToolDocUrl(url) {
     || value === 'https://www.cursor.com/docs/agent/tools/terminal';
 }
 
+function isSearchToolDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/agent/tools/search'
+    || value === 'https://www.cursor.com/docs/agent/tools/search';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -1020,6 +1031,7 @@ function currentClusterKey(learning) {
     || isDesignModeDocUrl(learning?.source_url)
     || isBrowserToolDocUrl(learning?.source_url)
     || isTerminalToolDocUrl(learning?.source_url)
+    || isSearchToolDocUrl(learning?.source_url)
     || url.includes('changelog/cloud-in-agents-window')
     || title === 'automations'
     || title === 'subagents'

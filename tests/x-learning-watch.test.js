@@ -311,6 +311,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/tools/search' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -1219,6 +1223,24 @@ test('applyHint for Terminal keeps this Cloud Agent VM running shell commands', 
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Search keeps this Cloud Agent VM searching the workspace', () => {
+  const hint = applyHint({
+    title: 'Search',
+    link: 'https://cursor.com/docs/agent/tools/search',
+    summary: 'How Agent searches your codebase with Instant Grep and the Explore subagent.'
+  });
+  assert.match(hint, /optional desktop Instant Grep/i);
+  assert.match(hint, /Explore subagent/);
+  assert.match(hint, /Cloud Agent VM/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Search/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /\.cursor\/keys/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1704,6 +1726,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(terminalTool[0]), /optional desktop shell control/i);
   assert.equal(/enable/i.test(applyHint(terminalTool[0])), false);
 
+  const searchTool = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-tools-search.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/agent/tools/search'
+  );
+  assert.equal(searchTool[0].id, 'https://cursor.com/docs/agent/tools/search');
+  assert.equal(searchTool[0].title, 'Search');
+  assert.match(searchTool[0].summary, /Instant Grep/i);
+  assert.match(applyHint(searchTool[0]), /Cloud Agent VM/);
+  assert.match(applyHint(searchTool[0]), /optional desktop Instant Grep/i);
+  assert.equal(/enable/i.test(applyHint(searchTool[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -2114,6 +2148,16 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(terminalToolMd.summary, /CURSOR_AGENT/);
   assert.equal(terminalToolMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(terminalToolMd.summary), false);
+
+  const searchToolMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-tools-search.md'), 'utf8')
+  );
+  assert.equal(searchToolMd.title, 'Search');
+  assert.match(searchToolMd.summary, /Instant Grep/);
+  assert.match(searchToolMd.summary, /Explore subagent/);
+  assert.match(searchToolMd.summary, /Privacy and security/);
+  assert.equal(searchToolMd.summary.includes('Sitemap'), false);
+  assert.equal(/FAQ —/.test(searchToolMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2592,6 +2636,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       source_url: 'https://cursor.com/docs/agent/tools/terminal',
       published_at: null,
       apply_in_eos: 'Terminal is optional desktop shell control with Run Mode and sandbox.json. This Cloud Agent VM already runs shell commands. Do not rotate this Cloud Agent into desktop Terminal for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'Search',
+      source_url: 'https://cursor.com/docs/agent/tools/search',
+      published_at: null,
+      apply_in_eos: 'Search is optional desktop Instant Grep and Explore subagent. This Cloud Agent VM already searches the workspace. Do not rotate this Cloud Agent into desktop Search for daily ingest. Keep environment.json + Builds. Do not put .cursor/keys in git. Honor included quota; do not switch this watch to on-demand.'
     }
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
@@ -2600,6 +2650,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/design-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/browser'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/terminal'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/search'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
@@ -3024,6 +3075,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/design-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/browser'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/terminal'), false);
+  assert.equal(current.includes('cursor.com/docs/agent/tools/search'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
