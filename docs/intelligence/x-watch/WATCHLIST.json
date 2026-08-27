@@ -166,6 +166,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-CLI-SHELL-MODE",
+      "url": "https://cursor.com/docs/cli/shell-mode",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLI_SHELL_MODE",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-CURSOR-ROUTER",
       "url": "https://cursor.com/docs/cursor-router",
       "kind": "html-page",

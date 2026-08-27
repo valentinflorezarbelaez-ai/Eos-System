@@ -215,7 +215,15 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/shell-mode' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/installation'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/reference/permissions'),
     false
   );
   assert.equal(
@@ -966,6 +974,8 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(originApi, undefined);
   const cliInstall = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cli/installation');
   assert.equal(cliInstall, undefined);
+  const cliPermissions = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cli/reference/permissions');
+  assert.equal(cliPermissions, undefined);
   const cliAcp = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cli/acp');
   assert.equal(cliAcp, undefined);
   const mcp = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/mcp');
@@ -1050,6 +1060,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Codebase settings', link: 'https://cursor.com/docs/origin/codebase-settings' },
     { title: 'Cursor CLI', link: 'https://cursor.com/docs/cli/overview' },
     { title: 'Using Agent in CLI', link: 'https://cursor.com/docs/cli/using' },
+    { title: 'Shell Mode', link: 'https://cursor.com/docs/cli/shell-mode' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1300,6 +1311,25 @@ test('applyHint for Using Agent in CLI keeps this watch in the Cloud Agent VM', 
   assert.match(hint, /worktrees/i);
   assert.match(hint, /ACP/i);
   assert.match(hint, /Cloud Agent handoff/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('curl'), false);
+});
+
+test('applyHint for CLI Shell Mode keeps this Cloud Agent VM running shell commands', () => {
+  const hint = applyHint({
+    title: 'Shell Mode',
+    link: 'https://cursor.com/docs/cli/shell-mode',
+    summary: 'Use Cursor CLI in Shell Mode for continuous interaction with Agent. Leverage context persistence and command history for complex development tasks.'
+  });
+  assert.match(hint, /optional local Cursor CLI/i);
+  assert.match(hint, /already runs shell commands/i);
+  assert.match(hint, /Do not rotate this watch into Cursor CLI Shell Mode/i);
   assert.match(hint, /\/goal/);
   assert.match(hint, /environment\.json/);
   assert.match(hint, /included quota/i);
@@ -2074,6 +2104,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(cursorCliUsing[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(cursorCliUsing[0]).includes('curl'), false);
 
+  const cursorCliShellMode = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cli-shell-mode.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cli/shell-mode'
+  );
+  assert.equal(cursorCliShellMode[0].id, 'https://cursor.com/docs/cli/shell-mode');
+  assert.equal(cursorCliShellMode[0].title, 'Shell Mode');
+  assert.match(cursorCliShellMode[0].summary, /Use Cursor CLI in Shell Mode/);
+  assert.match(applyHint(cursorCliShellMode[0]), /optional local Cursor CLI/i);
+  assert.match(applyHint(cursorCliShellMode[0]), /already runs shell commands/i);
+  assert.equal(/enable/i.test(applyHint(cursorCliShellMode[0])), false);
+  assert.equal(applyHint(cursorCliShellMode[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(cursorCliShellMode[0]).includes('curl'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -2604,6 +2648,20 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(cursorCliUsingMd.summary, /Non-interactive mode/);
   assert.equal(cursorCliUsingMd.summary.includes('Sitemap'), false);
   assert.equal(cursorCliUsingMd.summary.includes('cursor.com/install'), false);
+
+  const cursorCliShellModeMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cli-shell-mode.md'), 'utf8')
+  );
+  assert.equal(cursorCliShellModeMd.title, 'Shell Mode');
+  assert.match(cursorCliShellModeMd.summary, /Command execution/);
+  assert.match(cursorCliShellModeMd.summary, /Output/);
+  assert.match(cursorCliShellModeMd.summary, /Limitations/);
+  assert.match(cursorCliShellModeMd.summary, /Permissions/);
+  assert.match(cursorCliShellModeMd.summary, /Usage guidelines/);
+  assert.equal(cursorCliShellModeMd.summary.includes('Sitemap'), false);
+  assert.equal(/Troubleshooting —/.test(cursorCliShellModeMd.summary), false);
+  assert.equal(/FAQ —/.test(cursorCliShellModeMd.summary), false);
+  assert.equal(cursorCliShellModeMd.summary.includes('cursor.com/install'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -3547,6 +3605,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Using Agent in CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not rotate this watch into print mode, worktrees, ACP, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Shell Mode',
+      source_url: 'https://cursor.com/docs/cli/shell-mode',
+      published_at: null,
+      apply_in_eos: 'Shell Mode is optional local Cursor CLI. This Cloud Agent VM already runs shell commands. Do not rotate this watch into Cursor CLI Shell Mode for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agent Skills',
       source_url: 'https://cursor.com/docs/skills',
       published_at: null,
@@ -3565,6 +3629,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/overview'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/using'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/shell-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -3950,7 +4015,9 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/debug-mode'), false);
   assert.equal(current.includes('cursor.com/docs/cli/overview'), false);
   assert.equal(current.includes('cursor.com/docs/cli/using'), false);
+  assert.equal(current.includes('cursor.com/docs/cli/shell-mode'), false);
   assert.equal(current.includes('cursor.com/docs/cli/installation'), false);
+  assert.equal(current.includes('cursor.com/docs/cli/reference/permissions'), false);
   assert.equal(current.includes('cursor.com/docs/agent/design-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/browser'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/terminal'), false);
