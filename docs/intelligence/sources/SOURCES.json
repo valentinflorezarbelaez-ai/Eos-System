@@ -988,6 +988,23 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/configuration/worktrees"
+    },
+    {
+      "source_id": "SRC-0059",
+      "name": "Cursor Docs — Agent Security",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Desktop Agent Security is optional first-party/MCP/network guardrails. Distinct from Cloud Agent security. This Cloud Agent VM already honors EOS TDD and .cursorignore and does not rotate into desktop Agent Security settings for daily ingest. Run Modes are best-effort, not a hard security boundary. docs/agent/security/run-modes is not ingested as its own unclustered feed.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/agent/security"
     }
   ]
 }

@@ -323,6 +323,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/security' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/security/run-modes'),
+    false
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -1338,6 +1346,26 @@ test('applyHint for Worktrees keeps this Cloud Agent VM on its own checkout', ()
   assert.equal(hint.includes('/best-of-n'), false);
 });
 
+test('applyHint for Agent Security keeps this watch on EOS TDD and .cursorignore', () => {
+  const hint = applyHint({
+    title: 'Agent Security',
+    link: 'https://cursor.com/docs/agent/security',
+    summary: 'Security considerations for using Cursor Agent'
+  });
+  assert.match(hint, /optional desktop guardrails/i);
+  assert.match(hint, /Cloud Agent VM/);
+  assert.match(hint, /TDD/);
+  assert.match(hint, /\.cursorignore/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Agent Security/i);
+  assert.match(hint, /Run Modes/);
+  assert.match(hint, /best-effort/);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1862,6 +1890,19 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(worktrees[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(worktrees[0]).includes('/best-of-n'), false);
 
+  const agentSecurity = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-security.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/agent/security'
+  );
+  assert.equal(agentSecurity[0].id, 'https://cursor.com/docs/agent/security');
+  assert.equal(agentSecurity[0].title, 'Agent Security');
+  assert.match(agentSecurity[0].summary, /Security considerations/i);
+  assert.match(applyHint(agentSecurity[0]), /Cloud Agent VM/);
+  assert.match(applyHint(agentSecurity[0]), /optional desktop guardrails/i);
+  assert.equal(/enable/i.test(applyHint(agentSecurity[0])), false);
+  assert.equal(applyHint(agentSecurity[0]).includes('Custom Mode'), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -2305,6 +2346,19 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(worktreesMd.summary.includes('Sitemap'), false);
   assert.equal(/Example setup configurations —/.test(worktreesMd.summary), false);
   assert.equal(worktreesMd.summary.includes('Custom Mode'), false);
+
+  const agentSecurityMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-security.md'), 'utf8')
+  );
+  assert.equal(agentSecurityMd.title, 'Agent Security');
+  assert.match(agentSecurityMd.summary, /First-party tool calls/);
+  assert.match(agentSecurityMd.summary, /Run Modes/);
+  assert.match(agentSecurityMd.summary, /\.cursorignore/);
+  assert.match(agentSecurityMd.summary, /Third-party tool calls/);
+  assert.match(agentSecurityMd.summary, /Network requests/);
+  assert.equal(agentSecurityMd.summary.includes('Sitemap'), false);
+  assert.equal(/Workspace trust —/.test(agentSecurityMd.summary), false);
+  assert.equal(/Responsible disclosure —/.test(agentSecurityMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2801,6 +2855,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       source_url: 'https://cursor.com/docs/configuration/worktrees',
       published_at: null,
       apply_in_eos: 'Worktrees are optional desktop isolated Git checkouts in the Agents Window. This Cloud Agent VM already has its own checkout. Do not rotate this Cloud Agent into desktop worktrees for daily ingest. Keep environment.json + Builds. Do not put secrets in .cursor/worktrees.json. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'Agent Security',
+      source_url: 'https://cursor.com/docs/agent/security',
+      published_at: null,
+      apply_in_eos: 'Agent Security is optional desktop guardrails for first-party tools, MCP, and network. This Cloud Agent VM already honors EOS TDD and .cursorignore. Do not rotate this Cloud Agent into desktop Agent Security settings for daily ingest. Keep environment.json + Builds. Run Modes are best-effort, not a hard security boundary. Honor included quota; do not switch this watch to on-demand.'
     }
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
@@ -2812,6 +2872,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/search'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/canvas'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/configuration/worktrees'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
@@ -3239,6 +3300,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/tools/search'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/canvas'), false);
   assert.equal(current.includes('cursor.com/docs/configuration/worktrees'), false);
+  assert.equal(current.includes('cursor.com/docs/agent/security'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
