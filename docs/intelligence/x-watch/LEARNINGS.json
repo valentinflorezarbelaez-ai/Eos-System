@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T01:15:42.841Z",
+  "updated_at": "2026-08-27T01:21:04.897Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -993,6 +993,16 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-identity",
+      "title": "OIDC tokens",
+      "source_url": "https://cursor.com/docs/cloud-agent/identity",
+      "published_at": null,
+      "summary": "Cloud Agents can mint short-lived OIDC JWTs from inside the VM and use them to assume cloud roles or call internal services without storing long-lived credentials in Secrets. How it works — The agent calls the local socket and asks for a token with an audience the verifier expects. JWKS Mint a token — The agent mints a token over the Unix socket at . When claims appear — Install scripts can mint on the same socket. Verify a token — Publish these URLs to your identity provider or resource server: Discovery follows OpenID Connect Discovery 1.0. JWT claims — Header: , , plus . Trust model — The token identifies the Cloud Agent run, not a specific process inside the VM. Rate limits and errors — Each agent VM can mint 30 tokens per minute , in bursts of up to 10. AWS IAM example — Use OIDC whe…",
+      "apply_in_eos": "Prefer short-lived OIDC JWTs minted in the Cloud Agent VM over long-lived secrets. Point agents at docs/cloud-agent/identity. Do not treat this socket as the Cloud Agents API. Verifiers must reject unexpected aud.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-setup",
       "title": "Cloud Environment Setup",
       "source_url": "https://cursor.com/docs/cloud-agent/setup",
@@ -1057,7 +1067,7 @@
       "title": "Mirror a GitHub repository",
       "source_url": "https://cursor.com/docs/origin/mirror-github",
       "published_at": null,
-      "summary": "Origin is currently released in early beta. Prerequisites — A Cursor account with Origin access on a Pro, Teams, or Enterprise plan The Cursor GitHub app connected to the org or account that owns the repo GitHub admin access on the repository you want to sync (required to enable Sync a repo — 1. What syncs — Pull requests on a mirrored repo work on Origin and sync back to GitHub. After you mirror — Browse and search at cursor.com/codebase Clone the Origin remote from the green Code button if you want a local checkout from Origin. Detach from GitHub — To stop syncing, open Settings → General and select Detach from GitHub under Danger Zone . Sync lag — If browse looks stale: Confirm the GitHub app still has access (GitHub integration) Confirm you are a GitHub admin on the source repo Re-run…",
+      "summary": "Origin is currently released in early beta. Prerequisites — A Cursor account with Origin access on a Pro, Teams, or Enterprise plan The Cursor GitHub app connected to the org or account that owns the repo GitHub admin access on the repository you want to sync (required to enable Sync a repo — Open cursor.com/codebase 2. What syncs — Pull requests on a mirrored repo work on Origin and sync back to GitHub. After you mirror — Browse and search at cursor.com/codebase Clone the Origin remote from the green Code button if you want a local checkout from Origin. Detach from GitHub — To stop syncing, open Settings → General and select Detach from GitHub under Danger Zone . Sync lag — If browse looks stale: Confirm the GitHub app still has access (GitHub integration) Confirm you are a GitHub admin…",
       "apply_in_eos": "Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false

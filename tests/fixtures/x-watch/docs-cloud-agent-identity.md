@@ -6,11 +6,12 @@ This API is local to the agent VM. It is unrelated to the Cloud Agents API, whic
 
 ## How it works
 
-This socket is unrelated to the Cloud Agents API. The agent calls the local socket and asks for a token with an audience the verifier expects. The verifier checks the signature against Cursor's published JWKS.
+1. The agent calls the local socket and asks for a token with an audience the verifier expects.
+2. The verifier checks the signature against Cursor's published JWKS.
 
 ## Mint a token
 
-The agent mints a token over the Unix socket at `CURSOR_AGENT_SOCKET`.
+This socket is unrelated to the Cloud Agents API. The agent mints a token over the Unix socket.
 
 ### When claims appear
 

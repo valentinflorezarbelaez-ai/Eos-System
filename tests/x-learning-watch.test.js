@@ -344,6 +344,13 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.match(rules.apply_in_eos, /Team dashboard rules are not EOS governance/i);
   assert.equal(rules.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(rules.summary.includes('Code Style'), false);
+  const identity = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/identity');
+  assert.ok(identity);
+  assert.match(identity.summary, /OIDC/i);
+  assert.match(identity.apply_in_eos, /OIDC/i);
+  assert.match(identity.apply_in_eos, /Cloud Agents API/i);
+  assert.match(identity.apply_in_eos, /unexpected aud/i);
+  assert.equal(/How it works — 1\./.test(identity.summary), false);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
@@ -901,6 +908,8 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(identityMd.summary, /JWKS/i);
   assert.match(identityMd.summary, /Cloud Agents API/i);
   assert.match(identityMd.summary, /When claims appear/i);
+  assert.match(identityMd.summary, /agent calls the local socket/i);
+  assert.equal(/How it works — 1\./.test(identityMd.summary), false);
   assert.equal(identityMd.summary.includes('Sitemap'), false);
   assert.equal(identityMd.summary.includes('Related pages'), false);
 });

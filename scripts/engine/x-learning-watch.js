@@ -164,8 +164,9 @@ function stripMarkdown(value) {
 function firstSentence(value) {
   const clean = stripMarkdown(value);
   if (!clean) return '';
-  const match = clean.match(/^.{1,220}?(?:[.!?](?:\s|$)|$)/);
-  return (match ? match[0] : clean.slice(0, 220)).trim();
+  const body = clean.replace(/^\d+\.\s+/, '');
+  const match = body.match(/^.{1,220}?(?:[.!?](?:\s|$)|$)/);
+  return (match ? match[0] : body.slice(0, 220)).trim();
 }
 
 function headingBodySummary(body) {
