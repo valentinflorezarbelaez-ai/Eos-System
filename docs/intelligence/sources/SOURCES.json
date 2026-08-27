@@ -1209,6 +1209,23 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/sdk/typescript"
+    },
+    {
+      "source_id": "SRC-0072",
+      "name": "Cursor Docs — Python SDK",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. The Python SDK is optional agent scripting. This watch uses official feeds, not cursor-sdk or api.cursor.com. Do not install cursor-sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. docs/sdk/bridge, docs/sdk/changelog, and the Cursor Cookbook GitHub repo are not feeds.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/sdk/python"
     }
   ]
 }

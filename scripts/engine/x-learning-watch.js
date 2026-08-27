@@ -553,6 +553,9 @@ export function applyHint(item) {
   if (isCursorSdkTypescriptUrl(item?.link)) {
     return 'The TypeScript SDK is optional agent scripting. This watch uses official feeds, not @cursor/sdk or api.cursor.com. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
+  if (isCursorSdkPythonUrl(item?.link)) {
+    return 'The Python SDK is optional agent scripting. This watch uses official feeds, not cursor-sdk or api.cursor.com. Do not install cursor-sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+  }
   if (isRulesDocUrl(item?.link)) {
     return 'Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.';
   }
@@ -869,7 +872,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -967,6 +970,12 @@ function isCursorSdkTypescriptUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/sdk/typescript'
     || value === 'https://www.cursor.com/docs/sdk/typescript';
+}
+
+function isCursorSdkPythonUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/sdk/python'
+    || value === 'https://www.cursor.com/docs/sdk/python';
 }
 
 function isCloudAgentBestPracticesUrl(url) {
@@ -1250,7 +1259,7 @@ function currentClusterKey(learning) {
   ) {
     return 'cluster:cursor-ios';
   }
-  if (isCloudAgentOverviewUrl(learning?.source_url) || isCloudAgentApiEndpointsUrl(learning?.source_url) || isCursorSdkTypescriptUrl(learning?.source_url)) {
+  if (isCloudAgentOverviewUrl(learning?.source_url) || isCloudAgentApiEndpointsUrl(learning?.source_url) || isCursorSdkTypescriptUrl(learning?.source_url) || isCursorSdkPythonUrl(learning?.source_url)) {
     return 'cluster:cloud-agent-overview';
   }
   return normalizeTitleKey(learning?.title);
