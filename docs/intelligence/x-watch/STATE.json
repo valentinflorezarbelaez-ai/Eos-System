@@ -101,6 +101,7 @@
     "https://cursor.com/docs/cloud-agent/capabilities",
     "https://cursor.com/docs/cloud-agent/identity",
     "https://cursor.com/docs/cloud-agent/metadata",
+    "https://cursor.com/docs/cloud-agent/security-network",
     "https://cursor.com/docs/cloud-agent/setup",
     "https://cursor.com/docs/cursor-router",
     "https://cursor.com/docs/hooks",
@@ -116,7 +117,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-27T01:30:42.299Z",
-  "last_item_count": 115,
-  "last_new_item_count": 0
+  "last_ingest_at": "2026-08-27T01:35:16.328Z",
+  "last_item_count": 116,
+  "last_new_item_count": 1
 }

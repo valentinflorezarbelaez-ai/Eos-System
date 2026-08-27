@@ -380,6 +380,17 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.match(hooks.apply_in_eos, /sessionStart/);
   assert.equal(hooks.summary.includes('hooks partners'), false);
   assert.equal(hooks.apply_in_eos.includes('Custom Mode'), false);
+  const securityNetwork = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/security-network');
+  assert.ok(securityNetwork);
+  assert.match(securityNetwork.summary, /OIDC/i);
+  assert.match(securityNetwork.summary, /\[REDACTED\]/);
+  assert.match(securityNetwork.apply_in_eos, /Runtime Secrets/);
+  assert.match(securityNetwork.apply_in_eos, /OIDC/);
+  assert.match(securityNetwork.apply_in_eos, /\[REDACTED\]/);
+  assert.match(securityNetwork.apply_in_eos, /allowlist/i);
+  assert.match(securityNetwork.apply_in_eos, /Privacy Mode \(Legacy\)/);
+  assert.equal(/enable/i.test(securityNetwork.apply_in_eos), false);
+  assert.equal(securityNetwork.apply_in_eos.includes('Custom Mode'), false);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
