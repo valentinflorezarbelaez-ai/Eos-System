@@ -253,6 +253,7 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'mcp apps deeplinks'
     || key === 'using the workspaceopen hook'
     || key === 'test plugins locally'
+    || key === 'migrate existing team mcps'
     || key === 'team and enterprise marketplaces';
 }
 

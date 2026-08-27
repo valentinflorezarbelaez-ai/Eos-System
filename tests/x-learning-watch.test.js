@@ -1183,6 +1183,7 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Installing plugins —/.test(pluginsMd.summary), false);
   assert.equal(/Test plugins locally —/.test(pluginsMd.summary), false);
   assert.equal(/How does SCIM work —/.test(pluginsMd.summary), false);
+  assert.equal(/Migrate existing Team MCPs —/.test(pluginsMd.summary), false);
 });
 
 test('parseOfficialMarkdown does not inject Cloud Agents extra from later body text', () => {
