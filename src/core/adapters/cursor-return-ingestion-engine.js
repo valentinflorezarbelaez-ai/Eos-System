@@ -6,6 +6,20 @@
 
 import { calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
 
+/**
+ * Surfaces no task contract may authorise mutation of, whatever the contract says.
+ * A task contract is authored per-mission and could otherwise silently omit the external
+ * target or the governance record, which is how a return package declaring a write to
+ * Fundacion/ passed ingestion as ACCEPT.
+ */
+export const CONSTITUTIONAL_PROTECTED_SURFACES = Object.freeze([
+  'Fundacion/**',
+  'docs/governance/**',
+  '.eos/ledger/**',
+  '.missions/**',
+  'CONSTITUTION.md'
+]);
+
 export class CursorReturnIngestionEngine {
   constructor(options = {}) {
     this.consumedNonces = new Set(options.consumedNonces || []);
@@ -50,7 +64,14 @@ export class CursorReturnIngestionEngine {
     }
 
     // 3. Protected Surfaces & Scope Boundary Verification
-    const protectedSurfaces = taskContract.protected_surfaces || ['docs/governance/**', 'src/core/**'];
+    // The contract's own surfaces are unioned with the constitutional floor: a contract can
+    // widen protection but never lower it below the floor.
+    const protectedSurfaces = [
+      ...new Set([
+        ...(taskContract.protected_surfaces || ['docs/governance/**', 'src/core/**']),
+        ...CONSTITUTIONAL_PROTECTED_SURFACES
+      ])
+    ];
     for (const file of returnPkg.affected_files || []) {
       for (const surface of protectedSurfaces) {
         const prefix = surface.replace('/**', '').replace('/*', '');

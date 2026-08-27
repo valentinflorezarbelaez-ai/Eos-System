@@ -270,6 +270,48 @@ export class MissionCLI {
         };
       }
 
+      // 10b. eos mission cancel <mission-id> [--reason <text>]
+      if (sub === 'cancel') {
+        const missionId = args[1];
+        if (!missionId) return { success: false, output: "Error: Missing '<mission-id>' argument." };
+
+        const reasonIdx = args.indexOf('--reason');
+        const reason = reasonIdx !== -1 ? args[reasonIdx + 1] : 'Operator cancelled mission';
+
+        const res = this.runtime.cancelMission(missionId, reason);
+        return {
+          success: true,
+          output: `🚫 Mission ${res.mission_id} is now CANCELLED (no verification claim is made).\n- Reason: ${res.reason}`,
+          data: res
+        };
+      }
+
+      // 10c. eos mission advance <mission-id> [--require-hitl] [--hitl-receipt <path>] [--reviewer <id>]
+      if (sub === 'advance') {
+        const missionId = args[1];
+        if (!missionId) return { success: false, output: "Error: Missing '<mission-id>' argument." };
+
+        const hitlIdx = args.indexOf('--hitl-receipt');
+        const reviewerIdx = args.indexOf('--reviewer');
+        let hitlReceipt = null;
+        if (hitlIdx !== -1) {
+          const receiptPath = args[hitlIdx + 1];
+          if (!receiptPath) return { success: false, output: 'Error: --hitl-receipt requires a file path.' };
+          hitlReceipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
+        }
+
+        const res = this.runtime.advanceMission(missionId, {
+          hitlReceipt,
+          requireExternalHitl: args.includes('--require-hitl'),
+          reviewerIdentity: reviewerIdx !== -1 ? args[reviewerIdx + 1] : undefined
+        });
+        return {
+          success: true,
+          output: `⏩ Mission ${res.mission_id} advanced: ${res.from} → ${res.to} (via ${res.event_type})`,
+          data: res
+        };
+      }
+
       // 11. eos mission submit <mission-id> --file <return-pkg.json>
       if (sub === 'submit' || sub === 'ingest') {
         const missionId = args[1];
@@ -367,8 +409,17 @@ COMMANDS:
   eos mission resume <mission-id>
       Transitions paused mission back to ACTIVE.
 
+  eos mission advance <mission-id> [--reviewer <id>] [--hitl-receipt <path>] [--require-hitl]
+      Performs the next canonical FSM transition. Each gate is evaluated against the facts on
+      disk (plan, task contracts, accepted returns, observed test results), so the gate denies
+      when the evidence is absent.
+
   eos mission close <mission-id>
-      Concludes mission and seals final ledger record.
+      Completes the mission. Only legal from OPERATE_AND_LEARN: COMPLETED asserts verified
+      work, so the gated path must be traversed first.
+
+  eos mission cancel <mission-id> [--reason <text>]
+      Abandons the mission (CANCELLED). Makes no claim that the work was verified.
 
 SAFETY INVARIANTS:
   - Default Authority: LEVEL_0 / READ_ONLY

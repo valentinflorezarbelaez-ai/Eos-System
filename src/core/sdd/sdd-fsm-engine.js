@@ -219,6 +219,19 @@ export class TransitionEnforcer {
       return this._applyControlTransition(snapshot, event, targetState, 'Mission resumed from checkpoint');
     }
     if (event.event_type === 'mission.complete') {
+      // COMPLETED is an evidence-bearing claim, so it is reachable only from the canonical
+      // post-verification state. Abandoning earlier must use mission.cancel (-> CANCELLED),
+      // which does not assert that the work was verified.
+      if (snapshot.state !== SDD_STATES.OPERATE_AND_LEARN) {
+        throw this.createError(
+          'PREMATURE_COMPLETION',
+          'snapshot.state',
+          SDD_STATES.OPERATE_AND_LEARN,
+          snapshot.state,
+          'Traverse VERIFY/REVIEW/HUMAN_RELEASE_GATE before completing, or use mission.cancel to abandon',
+          event.mission_id
+        );
+      }
       return this._applyControlTransition(snapshot, event, SDD_STATES.COMPLETED, 'Mission closed via commitTransition');
     }
 
@@ -267,6 +280,33 @@ export class TransitionEnforcer {
         if (found.sha256 && !/^[a-f0-9]{64}$/.test(found.sha256)) {
           throw this.createError('SCHEMA_VALIDATION_FAILED', `artifact.${found.id}.sha256`, 'Valid 64-character hex SHA-256', found.sha256, 'Provide valid content hash for artifact', event.mission_id);
         }
+      }
+    }
+
+    // 7b. Task Contract Declaration (delegation must carry an executable contract)
+    if (rule.requiresTaskContract) {
+      const tc = context.taskContract || event.task_contract || null;
+      if (!tc || !tc.task_id) {
+        throw this.createError('MISSING_TASK_CONTRACT', 'taskContract', 'Task contract with task_id', tc ? 'Contract without task_id' : 'No contract supplied', 'Attach the task contract being delegated before assigning work', event.mission_id);
+      }
+      if (!Array.isArray(tc.allowed_tools) || tc.allowed_tools.length === 0) {
+        throw this.createError('MISSING_TASK_CONTRACT', 'taskContract.allowed_tools', 'Explicit non-empty allowed_tools', String(tc.allowed_tools), 'Declare the tools the agent may use; empty means deny-all', event.mission_id);
+      }
+    }
+
+    // 7c. Produced Outputs (task completion must present the artifacts it claims)
+    if (rule.requiresOutputs) {
+      const outputs = context.outputs || event.outputs || [];
+      if (!Array.isArray(outputs) || outputs.length === 0) {
+        throw this.createError('MISSING_REQUIRED_OUTPUTS', 'outputs', 'At least 1 produced output', 'No outputs presented', 'Submit the produced artifacts before marking the task complete', event.mission_id);
+      }
+    }
+
+    // 7d. Remediation Record (rejecting a review must say what must change)
+    if (rule.requiresRemediation) {
+      const remediation = context.remediation || event.remediation || null;
+      if (!remediation || !(remediation.reason || remediation.findings)) {
+        throw this.createError('MISSING_REMEDIATION_RECORD', 'remediation', 'Remediation reason or findings', 'Not provided', 'State what must be remediated before sending the mission back to PLAN', event.mission_id);
       }
     }
 
@@ -361,6 +401,9 @@ export class TransitionEnforcer {
 
   _applyControlTransition(snapshot, event, toState, reason) {
     this.processedEvents.add(event.event_id);
+    if (event.idempotency_key) {
+      this.processedEvents.add(event.idempotency_key);
+    }
     const newSnapshot = {
       ...snapshot,
       previous_state: snapshot.state,

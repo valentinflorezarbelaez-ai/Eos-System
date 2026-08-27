@@ -11,12 +11,45 @@ import { MissionRuntime } from '../src/core/runtime/mission-runtime.js';
 import { AuthorityTruthSource } from '../src/core/authority/authority-truth-source.js';
 import { SDD_STATES, TransitionEnforcer } from '../src/core/sdd/sdd-fsm-engine.js';
 import { TutorMaestro } from '../src/core/tutor/tutor-maestro.js';
+import { walkToState } from './helpers/fsm-walk.js';
 
 function fixtureRoot() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-e2e-'));
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify({ name: 'eos-e2e-fixture', type: 'module' }));
   fs.mkdirSync(path.join(root, 'src'));
   return root;
+}
+
+/**
+ * Writes a Cursor return package reporting the given test outcome, so the VERIFY gate is fed
+ * observed results rather than an asserted status.
+ */
+function writeReturnPackage(root, missionId, taskId, { total = 3, failed = 0, nonce } = {}) {
+  const file = path.join(root, `return-${taskId}.json`);
+  fs.writeFileSync(
+    file,
+    JSON.stringify({
+      schema_version: '1.0.0',
+      mission_id: missionId,
+      task_id: taskId,
+      status: 'COMPLETED',
+      summary: 'Fixture work completed',
+      affected_files: [{ path: 'src/example.js', action: 'MODIFY' }],
+      diff: '--- a/src/example.js\n+++ b/src/example.js\n+// fixture change',
+      commands_executed: ['node --test'],
+      test_results: {
+        total_tests: total,
+        passed_tests: total - failed,
+        failed_tests: failed,
+        pass_rate: total === 0 ? 0 : (total - failed) / total
+      },
+      evidence: [],
+      unknowns: [],
+      risks: [],
+      ...(nonce ? { nonce } : {})
+    })
+  );
+  return file;
 }
 
 test('E2E-01: full local cycle create→plan→package→report→pause→resume→close', () => {
@@ -53,8 +86,27 @@ test('E2E-01: full local cycle create→plan→package→report→pause→resume
   rt.pauseMission(created.mission_id);
   assert.equal(rt.ats.getSnapshot(created.mission_id).state, SDD_STATES.PAUSED);
   rt.resumeMission(created.mission_id);
-  rt.closeMission(created.mission_id);
+
+  // Completion requires real work to come back and pass verification.
+  const taskId = planned.plan.tasks[0].task_id;
+  const submitted = rt.submitReturnPackage(
+    created.mission_id,
+    writeReturnPackage(root, created.mission_id, taskId, { nonce: 'E2E-01-NONCE' })
+  );
+  assert.equal(submitted.verdict, 'ACCEPT');
+
+  const advanced = [];
+  for (let i = 0; i < 8; i++) {
+    if (rt.ats.getSnapshot(created.mission_id).state === SDD_STATES.COMPLETED) break;
+    advanced.push(rt.advanceMission(created.mission_id));
+  }
   assert.equal(rt.ats.getSnapshot(created.mission_id).state, SDD_STATES.COMPLETED);
+  assert.ok(advanced.some((a) => a.event_type === 'verification.complete'));
+  assert.ok(advanced.some((a) => a.event_type === 'human.approve_release'));
+
+  const verification = rt.verifyMission(created.mission_id);
+  assert.equal(verification.valid, true);
+  assert.equal(verification.authority_snapshot.code, 'ATS_SNAPSHOT_VERIFIED');
 
   const post = tutor.explainAfter(
     { action_id: 'e2e.create_plan_close' },
@@ -81,41 +133,7 @@ test('E2E-02: HITL-required transition without receipt is blocked (reject path)'
   const ats = new AuthorityTruthSource({ missionsRoot: missions });
   ats.initMission({ missionId });
 
-  // Advance to HUMAN_DIRECTION_GATE via enforcer then persist snapshot for ATS
-  const enforcer = new TransitionEnforcer();
-  let snap = ats.getSnapshot(missionId);
-  let r = enforcer.evaluateTransition(
-    snap,
-    {
-      event_id: 'E2E-F1',
-      mission_id: missionId,
-      from_state: SDD_STATES.VISION_INTAKE,
-      to_state: SDD_STATES.MISSION_FORMULATION,
-      event_type: 'mission.formulate',
-      authority_level: 'LEVEL_0'
-    },
-    { artifacts: [{ kind: 'vision', sha256: 'a'.repeat(64) }] }
-  );
-  fs.writeFileSync(path.join(missions, missionId, 'authority-snapshot.json'), JSON.stringify(r.snapshot, null, 2));
-  snap = r.snapshot;
-  r = enforcer.evaluateTransition(
-    snap,
-    {
-      event_id: 'E2E-F2',
-      mission_id: missionId,
-      from_state: SDD_STATES.MISSION_FORMULATION,
-      to_state: SDD_STATES.HUMAN_DIRECTION_GATE,
-      event_type: 'mission.propose_direction',
-      authority_level: 'LEVEL_0'
-    },
-    {
-      artifacts: [
-        { kind: 'mission_package', sha256: 'b'.repeat(64) },
-        { kind: 'contract', sha256: 'c'.repeat(64) }
-      ]
-    }
-  );
-  fs.writeFileSync(path.join(missions, missionId, 'authority-snapshot.json'), JSON.stringify(r.snapshot, null, 2));
+  walkToState(ats, missionId, SDD_STATES.HUMAN_DIRECTION_GATE);
 
   assert.throws(
     () =>

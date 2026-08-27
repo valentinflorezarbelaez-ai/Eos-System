@@ -10,6 +10,7 @@ import os from 'node:os';
 import { AuthorityTruthSource } from '../src/core/authority/authority-truth-source.js';
 import { TransitionEnforcer, SDD_STATES } from '../src/core/sdd/sdd-fsm-engine.js';
 import { MissionRuntime } from '../src/core/runtime/mission-runtime.js';
+import { walkToState } from './helpers/fsm-walk.js';
 
 function makeTempMissionsRoot() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-ats-'));
@@ -96,11 +97,8 @@ test('ATS-04: insufficient authority rejected', () => {
   seedMissionPackage(missions, missionId);
   const ats = new AuthorityTruthSource({ missionsRoot: missions });
   ats.initMission({ missionId });
-  // Force snapshot to SUPERVISE then attempt task.complete which needs LEVEL_1
-  const snapPath = path.join(missions, missionId, 'authority-snapshot.json');
-  const snap = JSON.parse(fs.readFileSync(snapPath, 'utf8'));
-  snap.state = SDD_STATES.SUPERVISE;
-  fs.writeFileSync(snapPath, JSON.stringify(snap, null, 2));
+  // Reach SUPERVISE through real transitions, then attempt task.complete which needs LEVEL_1
+  walkToState(ats, missionId, SDD_STATES.SUPERVISE);
   assert.throws(
     () =>
       ats.commitTransition({
@@ -111,6 +109,7 @@ test('ATS-04: insufficient authority rejected', () => {
       }),
     /INSUFFICIENT_AUTHORITY/
   );
+  assert.equal(ats.getSnapshot(missionId).state, SDD_STATES.SUPERVISE);
 });
 
 test('ATS-05: HITL-required transition without receipt rejected', () => {
@@ -119,42 +118,7 @@ test('ATS-05: HITL-required transition without receipt rejected', () => {
   seedMissionPackage(missions, missionId);
   const ats = new AuthorityTruthSource({ missionsRoot: missions });
   ats.initMission({ missionId });
-  // Walk to HUMAN_DIRECTION_GATE using enforcer path via formulate + propose
-  const enforcer = new TransitionEnforcer();
-  let snapshot = ats.getSnapshot(missionId);
-  let r = enforcer.evaluateTransition(
-    snapshot,
-    {
-      event_id: 'E1',
-      mission_id: missionId,
-      from_state: SDD_STATES.VISION_INTAKE,
-      to_state: SDD_STATES.MISSION_FORMULATION,
-      event_type: 'mission.formulate',
-      authority_level: 'LEVEL_0'
-    },
-    { artifacts: [{ kind: 'vision', sha256: 'c'.repeat(64) }] }
-  );
-  // Persist manually for test setup only (simulating prior commits)
-  fs.writeFileSync(path.join(missions, missionId, 'authority-snapshot.json'), JSON.stringify(r.snapshot, null, 2));
-  snapshot = r.snapshot;
-  r = enforcer.evaluateTransition(
-    snapshot,
-    {
-      event_id: 'E2',
-      mission_id: missionId,
-      from_state: SDD_STATES.MISSION_FORMULATION,
-      to_state: SDD_STATES.HUMAN_DIRECTION_GATE,
-      event_type: 'mission.propose_direction',
-      authority_level: 'LEVEL_0'
-    },
-    {
-      artifacts: [
-        { kind: 'mission_package', sha256: 'd'.repeat(64) },
-        { kind: 'contract', sha256: 'e'.repeat(64) }
-      ]
-    }
-  );
-  fs.writeFileSync(path.join(missions, missionId, 'authority-snapshot.json'), JSON.stringify(r.snapshot, null, 2));
+  walkToState(ats, missionId, SDD_STATES.HUMAN_DIRECTION_GATE);
 
   assert.throws(
     () =>
@@ -187,10 +151,8 @@ test('ATS-06: duplicate event_id / idempotency rejected', () => {
       { kind: 'project_profile', sha256: 'b'.repeat(64) }
     ]
   });
-  // Reset snapshot to VISION to attempt replay of same key (enforcer remembers key)
-  const snap = ats.getSnapshot(missionId);
-  snap.state = SDD_STATES.VISION_INTAKE;
-  fs.writeFileSync(path.join(missions, missionId, 'authority-snapshot.json'), JSON.stringify(snap, null, 2));
+  // Replay protection is evaluated before the state check, so reusing the key is refused
+  // without any snapshot manipulation.
   assert.throws(
     () =>
       ats.commitTransition({
@@ -230,7 +192,7 @@ test('ATS-07: MissionRuntime planMission uses commitTransition (no direct phase 
   assert.ok(fs.existsSync(path.join(root, '.missions', created.mission_id, 'hitl', 'direction-approval.json')));
 });
 
-test('ATS-08: pause/resume/close go through commitTransition', () => {
+test('ATS-08: pause/resume go through commitTransition', () => {
   const { root } = makeTempMissionsRoot();
   fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify({ name: 'fixture', type: 'module' }));
   fs.mkdirSync(path.join(root, 'src'), { recursive: true });
@@ -243,7 +205,42 @@ test('ATS-08: pause/resume/close go through commitTransition', () => {
   rt.resumeMission(created.mission_id);
   snap = rt.ats.getSnapshot(created.mission_id);
   assert.equal(snap.state, SDD_STATES.PLAN);
-  rt.closeMission(created.mission_id);
-  snap = rt.ats.getSnapshot(created.mission_id);
-  assert.equal(snap.state, SDD_STATES.COMPLETED);
+});
+
+test('ATS-09: close is refused before the verification path and cancel is the honest exit', () => {
+  const { root } = makeTempMissionsRoot();
+  fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify({ name: 'fixture', type: 'module' }));
+  fs.mkdirSync(path.join(root, 'src'), { recursive: true });
+  const rt = new MissionRuntime({ baseDir: root });
+  const created = rt.createMission({ goal: 'Premature completion', projectPath: '.' });
+  rt.planMission(created.mission_id);
+
+  assert.throws(() => rt.closeMission(created.mission_id), /PREMATURE_COMPLETION/);
+  assert.equal(rt.ats.getSnapshot(created.mission_id).state, SDD_STATES.PLAN);
+
+  rt.cancelMission(created.mission_id, 'abandoned in test');
+  assert.equal(rt.ats.getSnapshot(created.mission_id).state, SDD_STATES.CANCELLED);
+});
+
+test('ATS-10: COMPLETED is reachable only after traversing every canonical gate', () => {
+  const { root, missions } = makeTempMissionsRoot();
+  const missionId = 'MIS-ATS-10';
+  seedMissionPackage(missions, missionId);
+  const ats = new AuthorityTruthSource({ missionsRoot: missions });
+  ats.initMission({ missionId });
+
+  const steps = walkToState(ats, missionId, SDD_STATES.COMPLETED);
+  assert.equal(ats.getSnapshot(missionId).state, SDD_STATES.COMPLETED);
+
+  const traversed = steps.map((s) => s.to_state);
+  for (const required of [
+    SDD_STATES.HUMAN_DIRECTION_GATE,
+    SDD_STATES.VERIFY,
+    SDD_STATES.REVIEW,
+    SDD_STATES.HUMAN_RELEASE_GATE,
+    SDD_STATES.OPERATE_AND_LEARN
+  ]) {
+    assert.ok(traversed.includes(required), `completion must pass through ${required}`);
+  }
+  assert.ok(root);
 });
