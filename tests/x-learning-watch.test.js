@@ -323,6 +323,10 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.ok(originMirror);
   assert.match(originMirror.apply_in_eos, /Do not Detach/i);
   assert.match(originMirror.apply_in_eos, /source of truth/i);
+  const bestPractices = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices');
+  assert.ok(bestPractices);
+  assert.match(bestPractices.summary, /OIDC/i);
+  assert.match(bestPractices.apply_in_eos, /OIDC/i);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);

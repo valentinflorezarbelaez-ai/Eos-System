@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T01:03:39.691Z",
+  "updated_at": "2026-08-27T01:07:35.264Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -963,6 +963,16 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-best-practices",
+      "title": "Cloud Agent Best Practices",
+      "source_url": "https://cursor.com/docs/cloud-agent/best-practices",
+      "published_at": null,
+      "summary": "Use these recommendations to get more reliable Cloud Agent runs. Set up the environment first — Use Cloud agent setup so that Cursor has its environment configured. Ensure the agent can access what it needs — Before running a Cloud Agent, verify these prerequisites: Secrets : Make sure the agent has access to required secrets (API keys, database credentials, etc.) through the Secrets tab in your dashboard. OIDC Use skills and agents.md to configure your agent — If the cloud agent is having difficulty testing its changes, we recommend using skills and agents.md to configure your agent. Use rules to enforce conventions — Cloud Agents can read and follow Rules at three levels: User rules : Set in Cursor Settings, these apply to your sessions across all repositories. Give the agent the tools…",
+      "apply_in_eos": "Honor Cloud Agent setup (environment.json + Builds). Prefer OIDC over long-lived secrets. Use skills, AGENTS.md, and .cursor/rules for repo conventions. Do not put secrets in git.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-builds",
       "title": "Cloud Agent Builds",
       "source_url": "https://cursor.com/docs/cloud-agent/builds",
@@ -987,7 +997,7 @@
       "title": "Cloud Environment Setup",
       "source_url": "https://cursor.com/docs/cloud-agent/setup",
       "published_at": null,
-      "summary": "Cloud agents run on isolated Ubuntu machines. What is a cloud agent environment? — The development environment for a cloud agent is similar to the setup on your laptop: cloned repos, installed dependencies, secrets, startup commands, and network access. Why does environment configuration matter? — Agents are only as capable as the environments they run in. Environment setup options — There are two main ways to configure the environment for your cloud agent: 1. Agent-driven setup (recommended) — Cursor can set up your dev environment in the cloud in less than 10 minutes. Install script — The install script was previously called the update script in the dashboard and docs. Install script idempotency — The install script must be idempotent. How Builds use the install script — Cursor starts f…",
+      "summary": "Cloud agents run on isolated Ubuntu machines. What is a cloud agent environment? — The development environment for a cloud agent is similar to the setup on your laptop: cloned repos, installed dependencies, secrets, startup commands, and network access. Why does environment configuration matter? — Agents are only as capable as the environments they run in. Environment setup options — There are two main ways to configure the environment for your cloud agent: 1. Agent-driven setup (recommended) — Cursor can set up your dev environment in the cloud in less than 10 minutes. Install script — The install script was previously called the update script in the dashboard and docs. OIDC Install script idempotency — The install script must be idempotent. How Builds use the install script — Cursor sta…",
       "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
