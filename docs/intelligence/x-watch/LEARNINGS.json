@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:00:07.104Z",
+  "updated_at": "2026-08-27T13:04:54.460Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -939,6 +939,16 @@
       "published_at": null,
       "summary": "The Agents Window is Cursor's agent-first interface. Features Available Only in the Agents Window — The following features are available in the Agents Window: Multi-workspace: work with agents across all your projects from one place. /in-cloud /babysit Choosing Between Agents Window and Editor — The Agents Window works well when you want to run and manage many agents in parallel.",
       "apply_in_eos": "This watch already runs in the Cloud Agent VM, not in the desktop Agents Window. Use /in-cloud or /babysit when a local session must hand work to its own VM. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-debug-mode",
+      "title": "Debug Mode",
+      "source_url": "https://cursor.com/docs/agent/debug-mode",
+      "published_at": null,
+      "summary": "Debug Mode helps you find root causes and fix tricky bugs that are hard to reproduce or understand. When to use Debug Mode — Debug Mode works best for: Bugs you can reproduce but can't figure out : When you know something is wrong but the cause isn't obvious from reading the code Race conditions and timing issues : Problems that depend on exec How it works — Explore and hypothesize : The agent explores relevant files, builds context, and generates multiple hypotheses about potential root causes. Tips for Debug Mode — Provide detailed context : The more you describe the bug and how to reproduce it, the better the agent's instrumentation will be.",
+      "apply_in_eos": "Debug Mode is optional desktop debugging with a local Cursor extension. This watch already uses EOS TDD in the Cloud Agent VM; do not rotate this Cloud Agent into Debug Mode for daily ingest. Keep the standing /goal. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
