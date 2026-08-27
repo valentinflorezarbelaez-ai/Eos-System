@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:12:05.045Z",
+  "updated_at": "2026-08-27T13:16:50.396Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -999,6 +999,16 @@
       "published_at": null,
       "summary": "Agent can control a web browser to test applications, audit accessibility, convert designs into code, and more. Native integration — Agent displays browser actions like screenshots and actions in the chat, as well as the browser window itself either in a separate window or an inline pane. Browser capabilities — Agent has access to the following browser tools: Navigate — Visit URLs and browse web pages. Click — Interact with buttons, links, and form elements. Type — Enter text into input fields and forms. Scroll — Navigate through long pages and content. Screenshot — Capture visual representations of web pages. Console Output — Read browser console messages, errors, and logs. Network Traffic — Monitor HTTP requests and responses made by the page. Session persistence — Browser state persist…",
       "apply_in_eos": "Browser is optional desktop browser control. This watch already runs in the Cloud Agent VM and uses official feeds, not live sites. Do not rotate this Cloud Agent into Browser for daily ingest. Keep environment.json + Builds. Team MCP dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-tools-terminal",
+      "title": "Terminal",
+      "source_url": "https://cursor.com/docs/agent/tools/terminal",
+      "published_at": null,
+      "summary": "Cursor runs shell commands directly in your terminal. Sandbox — The sandbox runs terminal commands in a restricted environment that blocks unauthorized file access and network activity. sandbox.json Disable heavy prompts for Cursor sessions — Use the CURSOR_AGENT environment variable in your shell config to detect when Cursor is running and skip initializing fancy prompts/themes.",
+      "apply_in_eos": "Terminal is optional desktop shell control with Run Mode and sandbox.json. This Cloud Agent VM already runs shell commands. Do not rotate this Cloud Agent into desktop Terminal for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
