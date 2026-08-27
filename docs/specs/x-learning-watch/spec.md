@@ -10,7 +10,7 @@ A local learning watch that records requested X accounts, fetches official Curso
 
 ## 2. Product & Functional Requirements
 - **FR-1:** Persist a watchlist that includes `cursor_ai` (`https://x.com/cursor_ai`) plus additional handles without requiring an X API.
-- **FR-2:** Fetch and parse RSS 2.0, Atom 1.0, the official Cursor blog HTML index, and named official docs/help HTML pages from configured feeds (changelog RSS, forum announcements RSS, `https://cursor.com/blog`, Grok 4.6 help, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Cloud Agent Builds, Cloud Agent setup, Cloud Agent best practices, Cloud Agent identity / OIDC, Origin, Origin CLI, Origin integrations, Origin GitHub mirror, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview `/goal`, Agent Skills, Agent prompting / Custom Modes, Rules). Do not ingest `latest.rss`. Do not scrape X. Docs/help pages use `kind: html-page` with a stable id equal to the page URL. For those pages, also fetch the official `cursor.com` `.md` companion when present and keep the longer summary, including official slash-commands that appear as inline code.
+- **FR-2:** Fetch and parse RSS 2.0, Atom 1.0, the official Cursor blog HTML index, and named official docs/help HTML pages from configured feeds (changelog RSS, forum announcements RSS, `https://cursor.com/blog`, Grok 4.6 help, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Cloud Agent Builds, Cloud Agent setup, Cloud Agent best practices, Cloud Agent identity / OIDC, Cloud Agent metadata, Origin, Origin CLI, Origin integrations, Origin GitHub mirror, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview `/goal`, Agent Skills, Agent prompting / Custom Modes, Rules). Do not ingest `latest.rss`. Do not scrape X. Docs/help pages use `kind: html-page` with a stable id equal to the page URL. For those pages, also fetch the official `cursor.com` `.md` companion when present and keep the longer summary, including official slash-commands that appear as inline code.
 - **FR-3:** Refuse to fetch `x.com` / `twitter.com` URLs; mark those sources `BLOCKED`.
 - **FR-4:** Compute a delta of unseen items by stable `id` (guid / atom id / link).
 - **FR-5:** Render a markdown briefing from new items, preserving source URL and published date.
@@ -70,6 +70,8 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-40:** `apply_in_eos` for `docs/rules` keeps `.mdc` / `AGENTS.md` / `/create-rule` and does not treat team-dashboard rules as EOS governance.
 - [x] **AC-41:** CURRENT.md clusters `docs/cloud-agent/identity` onto `changelog/08-13-26` and keeps Usage and limits as a living row.
 - [x] **AC-42:** `apply_in_eos` for `docs/cloud-agent/identity` prefers short-lived OIDC JWTs, does not treat the VM socket as the Cloud Agents API, and tells verifiers to reject unexpected `aud`.
+- [x] **AC-43:** CURRENT.md clusters `docs/cloud-agent/metadata` onto `changelog/08-13-26` and keeps Usage and limits as a living row.
+- [x] **AC-44:** `apply_in_eos` for `docs/cloud-agent/metadata` treats VM metadata as not a credential, prefers OIDC for identity proof, and does not confuse it with SDK/Cloud Agents API metadata tags.
 
 ## 6. Verification & Evidence Plan
 ```bash

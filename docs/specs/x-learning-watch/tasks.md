@@ -33,3 +33,4 @@
 32. [x] Ingest Cloud Agent best practices living docs; cluster onto Builds changelog; prefer OIDC and repo conventions
 33. [x] Ingest Rules living docs; cluster onto Skills without dropping Usage and limits; keep `.mdc` / `AGENTS.md` / `/create-rule`
 34. [x] Ingest Cloud Agent identity / OIDC living docs; cluster onto Builds changelog; prefer short-lived JWTs over long-lived secrets
+35. [x] Ingest Cloud Agent metadata living docs; cluster onto Builds changelog; treat metadata as not a credential

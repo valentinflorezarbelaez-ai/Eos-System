@@ -195,12 +195,13 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'get started'
     || key === 'was this article helpful'
     || key === 'faq'
-    || key === 'examples';
+    || key === 'examples'
+    || key === 'preview';
 }
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -418,6 +419,9 @@ export function applyHint(item) {
   }
   if (isCloudAgentIdentityUrl(item?.link)) {
     return 'Prefer short-lived OIDC JWTs minted in the Cloud Agent VM over long-lived secrets. Point agents at docs/cloud-agent/identity. Do not treat this socket as the Cloud Agents API. Verifiers must reject unexpected aud.';
+  }
+  if (isCloudAgentMetadataUrl(item?.link)) {
+    return 'Read Cloud Agent run metadata from the VM socket; it is not a credential. Use OIDC JWTs when something outside the VM must verify identity. Do not confuse this with SDK/Cloud Agents API metadata tags.';
   }
   if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
@@ -656,6 +660,12 @@ function isCloudAgentIdentityUrl(url) {
     || value === 'https://www.cursor.com/docs/cloud-agent/identity';
 }
 
+function isCloudAgentMetadataUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent/metadata'
+    || value === 'https://www.cursor.com/docs/cloud-agent/metadata';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -713,6 +723,7 @@ function currentClusterKey(learning) {
     || url.includes('cloud-agent/setup')
     || url.includes('cloud-agent/best-practices')
     || url.includes('cloud-agent/identity')
+    || url.includes('cloud-agent/metadata')
     || url.includes('cursor.com/blog/builds')
   ) {
     return 'cluster:cloud-agent-builds';

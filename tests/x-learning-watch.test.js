@@ -238,6 +238,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/identity' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/metadata' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -399,6 +403,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Cloud Environment Setup', link: 'https://cursor.com/docs/cloud-agent/setup' },
     { title: 'Cloud Agent Best Practices', link: 'https://cursor.com/docs/cloud-agent/best-practices' },
     { title: 'OIDC tokens', link: 'https://cursor.com/docs/cloud-agent/identity' },
+    { title: 'Agent metadata', link: 'https://cursor.com/docs/cloud-agent/metadata' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -533,6 +538,19 @@ test('applyHint for Cloud Agent identity prefers short-lived OIDC JWTs', () => {
   assert.match(hint, /docs\/cloud-agent\/identity/);
   assert.match(hint, /Cloud Agents API/i);
   assert.match(hint, /unexpected aud/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
+test('applyHint for Cloud Agent metadata treats values as not a credential', () => {
+  const hint = applyHint({
+    title: 'Agent metadata',
+    link: 'https://cursor.com/docs/cloud-agent/metadata',
+    summary: 'Read agent, owner, turn, and workspace metadata from a Cloud Agent VM over the local identity socket.'
+  });
+  assert.match(hint, /not a credential/i);
+  assert.match(hint, /OIDC/i);
+  assert.match(hint, /Cloud Agents API/i);
   assert.equal(/enable/i.test(hint), false);
   assert.equal(hint.includes('timers'), false);
 });
@@ -775,6 +793,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(identity[0]), /OIDC/i);
   assert.match(applyHint(identity[0]), /Cloud Agents API/i);
   assert.equal(/enable/i.test(applyHint(identity[0])), false);
+
+  const metadata = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-metadata.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/metadata'
+  );
+  assert.equal(metadata[0].id, 'https://cursor.com/docs/cloud-agent/metadata');
+  assert.equal(metadata[0].title, 'Agent metadata');
+  assert.match(metadata[0].summary, /identity socket/i);
+  assert.match(applyHint(metadata[0]), /not a credential/i);
+  assert.match(applyHint(metadata[0]), /OIDC/i);
+  assert.equal(/enable/i.test(applyHint(metadata[0])), false);
 });
 
 test('parseOfficialSource html-page maps Cursor Router and usage limits', () => {
@@ -912,6 +942,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/How it works — 1\./.test(identityMd.summary), false);
   assert.equal(identityMd.summary.includes('Sitemap'), false);
   assert.equal(identityMd.summary.includes('Related pages'), false);
+
+  const metadataMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-metadata.md'), 'utf8')
+  );
+  assert.equal(metadataMd.title, 'Agent metadata');
+  assert.match(metadataMd.summary, /Cloud Agents API/i);
+  assert.match(metadataMd.summary, /OIDC/i);
+  assert.match(metadataMd.summary, /When keys appear/i);
+  assert.match(metadataMd.summary, /credential/i);
+  assert.equal(metadataMd.summary.includes('Sitemap'), false);
+  assert.equal(metadataMd.summary.includes('Related pages'), false);
+  assert.equal(metadataMd.summary.includes('curl the socket'), false);
 });
 
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {
@@ -1443,6 +1485,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Prefer short-lived OIDC JWTs minted in the Cloud Agent VM over long-lived secrets. Point agents at docs/cloud-agent/identity. Do not treat this socket as the Cloud Agents API. Verifiers must reject unexpected aud.'
     },
     {
+      title: 'Agent metadata',
+      source_url: 'https://cursor.com/docs/cloud-agent/metadata',
+      published_at: null,
+      apply_in_eos: 'Read Cloud Agent run metadata from the VM socket; it is not a credential. Use OIDC JWTs when something outside the VM must verify identity. Do not confuse this with SDK/Cloud Agents API metadata tags.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -1455,6 +1503,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/identity'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/metadata'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -1535,6 +1584,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/best-practices'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/identity'), false);
+  assert.equal(current.includes('cursor.com/docs/cloud-agent/metadata'), false);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);
   assert.match(current, /Steer running agents/);
