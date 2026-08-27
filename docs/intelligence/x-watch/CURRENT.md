@@ -2,7 +2,7 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-27T00:21:40.378Z
+Updated: 2026-08-27T00:30:37.413Z
 Store size: 104
 
 ## Official product actions
@@ -10,7 +10,7 @@ Store size: 104
   https://cursor.com/changelog/08-19-26
 - **Origin Code Hosting** — Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.
   https://cursor.com/changelog/origin-code-hosting
-- **Cloud Agents Start 3x Faster with Builds** — Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.
+- **Cloud Agents Start 3x Faster with Builds** — Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.
   https://cursor.com/changelog/08-13-26
 - **Cursor Router** — Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.
   https://cursor.com/changelog/router

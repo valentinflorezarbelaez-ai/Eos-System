@@ -362,7 +362,7 @@ export function applyHint(item) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
   }
   if (title.includes('builds') || link.includes('changelog/08-13-26') || blob.includes('3x faster with builds')) {
-    return 'Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.';
+    return 'Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.';
   }
   if (title.includes('subagent') || link.includes('changelog/cloud-in-agents-window') || link.includes('/docs/subagents')) {
     return 'Run isolated subagents on their own VMs when work must not collide with the parent branch.';

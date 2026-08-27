@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T00:21:40.378Z",
+  "updated_at": "2026-08-27T00:30:37.413Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -88,7 +88,7 @@
       "source_url": "https://cursor.com/blog/builds",
       "published_at": "2026-08-13T12:00:00.000Z",
       "summary": "Builds are ready-to-use copies of your development environment that Cursor prepares in the background, so cloud agents start up to 3x faster at no additional cost.",
-      "apply_in_eos": "Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.",
+      "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -98,7 +98,7 @@
       "source_url": "https://cursor.com/changelog/08-13-26",
       "published_at": "Thu, 13 Aug 2026 00:00:00 GMT",
       "summary": "Agents do their best work when they start in a ready environment: repos cloned, dependencies installed, and your install script already run. This release introduces **builds**: ready-to-use copies of your development environment that Cursor prepares in the background. Agents boot into a ready environment instead of setting up from scratch each session. Builds are included with Cloud Agents at no…",
-      "apply_in_eos": "Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.",
+      "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -948,7 +948,7 @@
       "source_url": "https://cursor.com/docs/cloud-agent/builds",
       "published_at": null,
       "summary": "Builds prepare your Cloud Agent environment in the background. How Builds work — A Build is a bootable snapshot of a prepared Cloud Agent environment. When Builds occur — Cursor starts a Build for four reasons. What runs during a Build and an agent start — Use each environment command for a distinct phase: Make complete and idempotent. How Builds handle Git state — A Build records the commit checked out for each repository when it runs. How secrets work with Builds — Builds can access team and environment secrets. Manage Builds — Open an environment's Builds tab to: See every Build's type, status, and start time Open a Build to inspect its details and logs Select Trigger build to run a Build on demand Activate a draft Build or deactivate a Build Debug a Build — Open a failed Build to insp…",
-      "apply_in_eos": "Enable Cloud Agent Builds so ingest and other agents boot from a ready environment.",
+      "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

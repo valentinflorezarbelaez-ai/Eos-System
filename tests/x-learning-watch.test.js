@@ -368,6 +368,25 @@ test('applyHint for harness changelog includes wake subscriptions and auto-CI-fi
   assert.equal(hint.includes('desktop scraping'), false);
 });
 
+test('applyHint for Cloud Agent Builds treats Builds as the default start path', () => {
+  const docsHint = applyHint({
+    title: 'Cloud Agent Builds',
+    link: 'https://cursor.com/docs/cloud-agent/builds',
+    summary: 'By default, an agent uses the latest successful active Build for its environment.'
+  });
+  assert.match(docsHint, /default start path/i);
+  assert.match(docsHint, /install/i);
+  assert.equal(/enable/i.test(docsHint), false);
+
+  const changelogHint = applyHint({
+    title: 'Cloud Agents Start 3x Faster with Builds',
+    link: 'https://cursor.com/changelog/08-13-26',
+    summary: 'This release introduces builds. Click Enable Builds.'
+  });
+  assert.match(changelogHint, /default start path/i);
+  assert.equal(/enable/i.test(changelogHint), false);
+});
+
 test('applyHint is specific for every forum announcement fixture title', () => {
   const forumXml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/announcements.rss.xml'), 'utf8');
   for (const item of parseFeed(forumXml)) {
@@ -565,7 +584,8 @@ test('parseOfficialSource html-page maps Cloud Agents overview and Subagents', (
     link: 'https://cursor.com/docs/cloud-agent/builds',
     summary: 'Start Cloud Agents from pre-built, verified development environments.'
   });
-  assert.match(buildsHint, /Builds/i);
+  assert.match(buildsHint, /default start path/i);
+  assert.equal(/enable/i.test(buildsHint), false);
   assert.equal(buildsHint.includes('isolated VMs'), false);
 
   const subagents = parseOfficialSource(
@@ -1063,6 +1083,8 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /cursor.com\/docs\/cloud-agent(?!\/)/);
   assert.match(current, /cursor.com\/docs\/agent\/overview/);
   assert.match(current, /cursor.com\/docs\/skills/);
+  assert.match(current, /default start path/);
+  assert.equal(current.includes('Enable Cloud Agent Builds'), false);
 });
 
 test('cited X posts never claim an X fetch', () => {

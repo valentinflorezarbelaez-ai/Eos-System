@@ -17,3 +17,4 @@
 16. [x] Skip timestamp-only artifact writes on no-op ingest
 17. [x] Ingest Cloud Agent capabilities living docs; cluster onto harness changelog without collapsing Cloud Agents overview
 18. [x] Enrich docs/help `html-page` summaries from official cursor.com `.md` companions without scraping X
+19. [x] Correct Cloud Agent Builds `apply_in_eos` to default start path (no Enable Builds opt-in) from official living docs
