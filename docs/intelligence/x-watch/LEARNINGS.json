@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T14:14:34.350Z",
+  "updated_at": "2026-08-27T14:18:15.449Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1069,6 +1069,16 @@
       "published_at": null,
       "summary": "Cursor CLI lets you interact with AI agents directly from your terminal to write, review, and modify code. Interactive mode — Start a conversational session with the agent to describe your goals, review proposed changes, and approve commands: Modes — The CLI supports the same modes as the editor. Non-interactive mode — Use print mode for non-interactive scenarios like scripts, CI pipelines, or automation: Cloud Agent handoff — Push your conversation to a Cloud Agent to continue running while you're away. Sessions — Resume previous conversations to maintain context across multiple interactions: Sandbox controls — Configure command execution settings with /sandbox or the flag ( or ). Sudo password prompting — Run commands requiring elevated privileges without leaving the CLI.",
       "apply_in_eos": "Cursor CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI or rotate this watch into print mode, sandbox, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cli-using",
+      "title": "Using Agent in CLI",
+      "source_url": "https://cursor.com/docs/cli/using",
+      "published_at": null,
+      "summary": "Modes — The CLI supports the same modes as the editor. Prompting — Stating intent clearly is recommended for the best results. MCP — Agent supports MCP (Model Context Protocol) for extended functionality and integrations. ACP — Agent also supports ACP (Agent Client Protocol) for custom client integrations. Rules — The CLI agent supports the same rules system as the editor. AGENTS.md Working with Agent Custom Modes — Pick a skill from the menu and press Enter to attach it to one message. Cloud Agent handoff — Push your conversation to a Cloud Agent and let it keep running while you're away. CLI worktrees — Pass or to run the agent in a new Git worktree instead of editing your current checkout directly. History — Continue from an existing thread with to load prior context. Command approval…",
+      "apply_in_eos": "Using Agent in CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not rotate this watch into print mode, worktrees, ACP, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

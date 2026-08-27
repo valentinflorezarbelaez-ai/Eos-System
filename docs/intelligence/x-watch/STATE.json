@@ -107,6 +107,7 @@
     "https://cursor.com/docs/approval-agents",
     "https://cursor.com/docs/bugbot",
     "https://cursor.com/docs/cli/overview",
+    "https://cursor.com/docs/cli/using",
     "https://cursor.com/docs/cloud-agent",
     "https://cursor.com/docs/cloud-agent/api/endpoints",
     "https://cursor.com/docs/cloud-agent/automations",
@@ -145,7 +146,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-27T14:14:34.340Z",
-  "last_item_count": 144,
+  "last_ingest_at": "2026-08-27T14:18:15.439Z",
+  "last_item_count": 145,
   "last_new_item_count": 1
 }
