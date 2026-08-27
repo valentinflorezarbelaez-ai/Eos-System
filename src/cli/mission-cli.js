@@ -358,6 +358,9 @@ COMMANDS:
   eos mission report <mission-id> [--format json|markdown]
       Compiles and renders the Executive Mission Report with metric provenance.
 
+  eos mission submit <mission-id> --file <return-pkg.json>
+      Ingests and reconciles a Cursor Return Package against task contracts.
+
   eos mission verify <mission-id>
       Verifies cryptographic SHA-256 hash chaining and integrity manifest.
 
