@@ -28,7 +28,7 @@ CURRENT.md clusters related product titles onto one row, preferring changelog > 
 - Cursor Router (`changelog/router`, `docs/cursor-router`, router blog posts)
 - Cloud Agent harness also includes `docs/subagents` and `changelog/cloud-in-agents-window`
 - Cloud Agents overview (`docs/cloud-agent` exact URL) stays a living row and must not match `docs/cloud-agent/builds` or `docs/cloud-agent/capabilities`
-- Agent overview (`docs/agent/overview`) stays a living `/goal` row
+- Agent overview (`docs/agent/overview`) stays a living `/goal` row; `apply_in_eos` also covers steering follow-ups from that page
 - Agent Skills (`docs/skills`) stays a living Custom Mode row
 
 Clusters rank by the newest sibling date. Up to six unclustered living `cursor.com/docs/` or `cursor.com/help/` pages are reserved in CURRENT even when they have no `<time>` stamp. Changelog URLs that already made the date-ranked top N are not evicted to make room for those reserved pages.

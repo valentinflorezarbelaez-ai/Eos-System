@@ -329,7 +329,7 @@ export function applyHint(item) {
     return 'Honor Cloud Agent subscriptions (GitHub PR, Slack, timers) and auto-CI-fix on PRs this agent opens. Do not scrape X.';
   }
   if (isAgentOverviewUrl(item?.link)) {
-    return 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.';
+    return 'Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.';
   }
   if (isSkillsDocUrl(item?.link)) {
     return 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.';

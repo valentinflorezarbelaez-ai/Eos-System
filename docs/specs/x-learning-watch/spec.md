@@ -51,6 +51,7 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-21:** CURRENT.md clusters `docs/cloud-agent/capabilities` onto `changelog/08-19-26` and keeps `docs/cloud-agent` as a living overview row.
 - [x] **AC-22:** Given a docs/help `html-page` feed, ingest fetches the official `cursor.com` `.md` companion, keeps `id` equal to the HTML URL, and uses the markdown summary when it is longer than og:description. It does not fetch x.com.
 - [x] **AC-23:** `apply_in_eos` for Cloud Agent Builds (living docs and `changelog/08-13-26`) treats Builds as the default start path and does not tell operators to click Enable Builds.
+- [x] **AC-24:** `apply_in_eos` for `docs/agent/overview` keeps `/goal` and tells EOS to steer running agents with follow-ups that wait for the next tool call.
 
 ## 6. Verification & Evidence Plan
 ```bash

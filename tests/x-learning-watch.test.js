@@ -368,6 +368,18 @@ test('applyHint for harness changelog includes wake subscriptions and auto-CI-fi
   assert.equal(hint.includes('desktop scraping'), false);
 });
 
+test('applyHint for agent overview includes /goal and steering follow-ups', () => {
+  const hint = applyHint({
+    title: 'Overview',
+    link: 'https://cursor.com/docs/agent/overview',
+    summary: 'Use /goal for long-lived objectives. Steer a running agent at the next tool call.'
+  });
+  assert.match(hint, /\/goal/i);
+  assert.match(hint, /steer|follow-up/i);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Enable Cloud Agent Builds'), false);
+});
+
 test('applyHint for Cloud Agent Builds treats Builds as the default start path', () => {
   const docsHint = applyHint({
     title: 'Cloud Agent Builds',
@@ -652,6 +664,7 @@ test('parseOfficialSource html-page maps agent overview /goal and Agent Skills',
   assert.equal(overview[0].id, 'https://cursor.com/docs/agent/overview');
   assert.equal(overview[0].title, 'Overview');
   assert.match(applyHint(overview[0]), /\/goal/i);
+  assert.match(applyHint(overview[0]), /steer|follow-up/i);
   assert.equal(applyHint(overview[0]).includes('timers'), false);
 
   const skills = parseOfficialSource(
@@ -1085,6 +1098,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /cursor.com\/docs\/skills/);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);
+  assert.match(current, /Steer running agents/);
 });
 
 test('cited X posts never claim an X fetch', () => {

@@ -2,7 +2,7 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-27T00:30:37.413Z
+Updated: 2026-08-27T00:32:58.567Z
 Store size: 104
 
 ## Official product actions
@@ -16,7 +16,7 @@ Store size: 104
   https://cursor.com/changelog/router
 - **Grok 4.6** — Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.
   https://cursor.com/help/models-and-usage/grok-4-6
-- **Overview** — Keep long-lived EOS objectives in /goal instead of one-shot prompts.
+- **Overview** — Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.
   https://cursor.com/docs/agent/overview
 - **Cloud Agents** — Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.
   https://cursor.com/docs/cloud-agent

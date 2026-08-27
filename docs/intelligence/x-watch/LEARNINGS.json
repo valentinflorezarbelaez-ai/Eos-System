@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T00:30:37.413Z",
+  "updated_at": "2026-08-27T00:32:58.567Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -928,7 +928,7 @@
       "source_url": "https://cursor.com/docs/agent/overview",
       "published_at": null,
       "summary": "Agent is Cursor's assistant that can complete complex coding tasks independently, run terminal commands, and edit code. How Agent works — An agent is built on three components: 1. Tools — Tools are the building blocks of Agent. Checkpoints — Checkpoints save snapshots of your codebase during an Agent session. Queued messages — You have two ways to talk to an agent while it works. Goals with /goal — Agent reads each message as a new job.",
-      "apply_in_eos": "Keep long-lived EOS objectives in /goal instead of one-shot prompts.",
+      "apply_in_eos": "Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
