@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T12:01:02.738Z",
+  "updated_at": "2026-08-27T12:06:27.567Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1109,6 +1109,16 @@
       "published_at": null,
       "summary": "Origin is currently released in early beta. Prerequisites — A Cursor account with Origin access on a Pro, Teams, or Enterprise plan The Cursor GitHub app connected to the org or account that owns the repo GitHub admin access on the repository you want to sync (required to enable Sync a repo — Open cursor.com/codebase 2. What syncs — Pull requests on a mirrored repo work on Origin and sync back to GitHub. After you mirror — Browse and search at cursor.com/codebase Clone the Origin remote from the green Code button if you want a local checkout from Origin. Detach from GitHub — To stop syncing, open Settings → General and select Detach from GitHub under Danger Zone *. Sync lag — If browse looks stale: Confirm the GitHub app still has access (GitHub integration) Confirm you are a GitHub admin…",
       "apply_in_eos": "Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-plugins",
+      "title": "Plugins",
+      "source_url": "https://cursor.com/docs/plugins",
+      "published_at": null,
+      "summary": "Plugins package rules, skills, agents, commands, MCP servers, and hooks into distributable bundles. What plugins contain — A plugin can bundle any combination of these components: The Agent Plugins standard — Plugins bundle reusable components an agent can use. .cursor-plugin/plugin.json plugin.json Team marketplaces — Team marketplaces are available on Teams and Enterprise plans. Default team marketplace — The Default team marketplace connects shared plugins and MCP servers across Cursor. Creating plugins — A plugin is a directory with a manifest and its components.",
+      "apply_in_eos": "Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins and ~/.cursor/plugins/local are not EOS governance and are not this Cloud Agent environment. Do not delete a team marketplace without reviewing Cloud Agent MCP impact.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

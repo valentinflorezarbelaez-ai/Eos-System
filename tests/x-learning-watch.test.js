@@ -408,6 +408,17 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.match(mcp.apply_in_eos, /API keys/i);
   assert.equal(/enable/i.test(mcp.apply_in_eos), false);
   assert.equal(mcp.apply_in_eos.includes('Custom Mode'), false);
+  const plugins = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/plugins');
+  assert.ok(plugins);
+  assert.match(plugins.summary, /plugin\.json/);
+  assert.match(plugins.summary, /\.cursor-plugin\/plugin\.json/);
+  assert.match(plugins.apply_in_eos, /\.cursor\/mcp\.json/);
+  assert.match(plugins.apply_in_eos, /~\/\.cursor\/plugins\/local/);
+  assert.match(plugins.apply_in_eos, /not EOS governance/i);
+  assert.match(plugins.apply_in_eos, /Cloud Agent MCP/i);
+  assert.equal(/enable/i.test(plugins.apply_in_eos), false);
+  assert.equal(plugins.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(/Migrate existing Team MCPs —/.test(plugins.summary), false);
   const cloudAgents = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cloud-agent');
   assert.ok(cloudAgents);
   assert.equal(cloudAgents.summary.includes(' Cloud Agents How to access'), false);
