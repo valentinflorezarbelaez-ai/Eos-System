@@ -152,10 +152,11 @@
     "https://cursor.com/docs/subagents",
     "https://cursor.com/help/account-and-billing/pricing",
     "https://cursor.com/help/ai-features/automations",
+    "https://cursor.com/help/models-and-usage/available-models",
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-27T15:09:57.898Z",
-  "last_item_count": 154,
+  "last_ingest_at": "2026-08-27T15:14:40.159Z",
+  "last_item_count": 155,
   "last_new_item_count": 1
 }

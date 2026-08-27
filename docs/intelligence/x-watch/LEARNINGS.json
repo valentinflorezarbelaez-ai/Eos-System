@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T15:09:57.909Z",
+  "updated_at": "2026-08-27T15:14:40.169Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1519,6 +1519,16 @@
       "published_at": null,
       "summary": "Cursor Automations run Cloud Agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. What can Automations do? — Automations let you run Cloud Agents without manual input. How do I create an automation? — Create a new automation in the Agents Window, at cursor.com/automations/new, or from a template in the Cursor Marketplace. Can I create automations without connecting a repository? — Yes. Which triggers are available? — An automation can have more than one trigger. Which tools can automations use? — Comment on pull request : Posts review comments, inline code comments, or approvals on a target PR Request reviewers : Assigns reviewers on a target PR Send to Slack : Sends messages to a Slack channel Read Slack channel H…",
       "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-models-and-usage-available-model",
+      "title": "Available models",
+      "source_url": "https://cursor.com/help/models-and-usage/available-models",
+      "published_at": null,
+      "summary": "Cursor supports a range of AI models from multiple providers. Which models are available? — Cursor offers its own models (Grok 4.5 and Composer) in the Cursor Models pool alongside other frontier models from OpenAI, Anthropic, and Google. Which model should I use? — Auto selects models that balance intelligence, cost, and reliability. Which models does Cursor Router route across? — Cursor Router routes across these models: GPT-5.5 Claude Opus 5 Grok 4.5 Claude Fable 5 Required: Grok 4.5. Can I see which model Cursor Router used for my request? — By default, the routed model identity is hidden so you judge results on merit. How much does Auto cost? — All Auto modes bill at the list price of the model each request is routed to. How much does Grok 4.5 cost? — Grok 4.5 has two speeds, each wi…",
+      "apply_in_eos": "Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep environment.json + Builds.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
