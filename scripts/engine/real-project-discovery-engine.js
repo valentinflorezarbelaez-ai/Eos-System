@@ -21,7 +21,8 @@ export class RealProjectDiscoveryEngine {
   }
 
   getProjectId() {
-    const basename = path.basename(this.targetPath).toLowerCase();
+    const normalized = this.targetPath.replace(/\\/g, '/');
+    const basename = path.posix.basename(normalized).toLowerCase();
     return basename.replace(/[^a-z0-9_-]/g, '_') || 'unknown_target';
   }
 
