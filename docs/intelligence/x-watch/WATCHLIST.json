@@ -458,6 +458,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_TEAM_PRICING",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-TEAM-MEMBERS",
+      "url": "https://cursor.com/docs/account/teams/members",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_TEAM_MEMBERS",
+      "fetchable": true
     }
   ]
 }
