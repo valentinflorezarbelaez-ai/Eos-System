@@ -287,6 +287,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/agent-review' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -985,6 +989,24 @@ test('applyHint for Agents Window keeps this watch in the Cloud Agent VM', () =>
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Agent Review keeps TDD evidence and /agent-review', () => {
+  const hint = applyHint({
+    title: 'Agent Review',
+    link: 'https://cursor.com/docs/agent/agent-review',
+    summary: 'Agent Review runs a dedicated code review on your local changes. Use /agent-review on demand.'
+  });
+  assert.match(hint, /optional in-editor review/i);
+  assert.match(hint, /TDD/);
+  assert.match(hint, /\/agent-review/);
+  assert.match(hint, /not a substitute/i);
+  assert.match(hint, /BUGBOT\.md/);
+  assert.match(hint, /Cloud Agent VM/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1398,6 +1420,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(agentsWindow[0]), /Cloud Agent VM/);
   assert.equal(/enable/i.test(applyHint(agentsWindow[0])), false);
 
+  const agentReview = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-agent-review.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/agent/agent-review'
+  );
+  assert.equal(agentReview[0].id, 'https://cursor.com/docs/agent/agent-review');
+  assert.equal(agentReview[0].title, 'Agent Review');
+  assert.match(agentReview[0].summary, /local changes/i);
+  assert.match(applyHint(agentReview[0]), /\/agent-review/);
+  assert.match(applyHint(agentReview[0]), /TDD/);
+  assert.equal(/enable/i.test(applyHint(agentReview[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1736,6 +1770,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Open the Agents Window —/.test(agentsWindowMd.summary), false);
   assert.equal(/Switch Back to the IDE —/.test(agentsWindowMd.summary), false);
   assert.equal(/Enterprise access —/.test(agentsWindowMd.summary), false);
+
+  const agentReviewMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-agent-review.md'), 'utf8')
+  );
+  assert.equal(agentReviewMd.title, 'Agent Review');
+  assert.match(agentReviewMd.summary, /Running a review/);
+  assert.match(agentReviewMd.summary, /\/agent-review/);
+  assert.match(agentReviewMd.summary, /Review depth/);
+  assert.match(agentReviewMd.summary, /BUGBOT\.md/);
+  assert.equal(agentReviewMd.summary.includes('Sitemap'), false);
+  assert.equal(/Setup —/.test(agentReviewMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2389,6 +2434,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.'
     },
     {
+      title: 'Agent Review',
+      source_url: 'https://cursor.com/docs/agent/agent-review',
+      published_at: null,
+      apply_in_eos: 'Agent Review is optional in-editor review of local changes. EOS TDD evidence remains required. /agent-review is not a substitute for tests. Keep BUGBOT.md if this repo uses Bugbot rules. This watch already runs in the Cloud Agent VM, not the desktop Agents Window. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Cursor Security Review',
       source_url: 'https://cursor.com/changelog/04-30-26',
       published_at: 'Thu, 30 Apr 2026 00:00:00 GMT',
@@ -2460,7 +2511,53 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/settings'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/private-connectivity'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/bugbot'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/agent-review'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/security-agents'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
+});
+
+test('selectCurrentLearnings clusters Agent Review onto Bugbot changelog and keeps usage limits', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'Cloud Agents and Cursor Harness Improvements',
+      source_url: 'https://cursor.com/changelog/08-19-26',
+      published_at: 'Wed, 19 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.'
+    },
+    {
+      title: 'Bugbot is now over 3x faster, 22% cheaper, and finds 10% more bugs',
+      source_url: 'https://cursor.com/changelog/bugbot-updates-june-2026',
+      published_at: 'Wed, 10 Jun 2026 00:00:00 GMT',
+      apply_in_eos: 'Bugbot is optional PR review. EOS TDD evidence remains required.'
+    },
+    {
+      title: 'Bugbot',
+      source_url: 'https://cursor.com/docs/bugbot',
+      published_at: null,
+      apply_in_eos: 'Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests.'
+    },
+    {
+      title: 'Agent Review',
+      source_url: 'https://cursor.com/docs/agent/agent-review',
+      published_at: null,
+      apply_in_eos: 'Agent Review is optional in-editor review of local changes. EOS TDD evidence remains required. /agent-review is not a substitute for tests.'
+    },
+    {
+      title: 'Overview',
+      source_url: 'https://cursor.com/docs/agent/overview',
+      published_at: null,
+      apply_in_eos: 'Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.'
+    },
+    {
+      title: 'Usage and limits',
+      source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
+      published_at: null,
+      apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+    }
+  ], 6);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/bugbot-updates-june-2026'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/bugbot'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/agent-review'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -2553,6 +2650,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cloud-agent/mobile'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(current.includes('cursor.com/docs/agent/agents-window'), false);
+  assert.equal(current.includes('cursor.com/docs/agent/agent-review'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);

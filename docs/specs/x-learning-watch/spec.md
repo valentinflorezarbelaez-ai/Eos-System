@@ -98,6 +98,8 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-68:** `apply_in_eos` for `docs/cloud-agent/api/endpoints` states that this watch uses official feeds not the Cloud Agents API, not to treat `api.cursor.com` as this ingest path, not to put API keys in git, that GitHub remains source of truth, and to honor included quota without switching this watch to on-demand.
 - [x] **AC-69:** CURRENT.md clusters `docs/agent/agents-window` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
 - [x] **AC-70:** `apply_in_eos` for `docs/agent/agents-window` states that this watch already runs in the Cloud Agent VM not in the desktop Agents Window, that `/in-cloud` or `/babysit` hands local work to its own VM, that `environment.json` + Builds stay the start path, and to honor included quota without switching this watch to on-demand.
+- [x] **AC-71:** CURRENT.md clusters `docs/agent/agent-review` onto `changelog/bugbot-updates-june-2026` and keeps Usage and limits as a living row.
+- [x] **AC-72:** `apply_in_eos` for `docs/agent/agent-review` states that Agent Review is optional in-editor review of local changes, that EOS TDD evidence remains required, that `/agent-review` is not a substitute for tests, that `BUGBOT.md` is kept if this repo uses Bugbot rules, that this watch already runs in the Cloud Agent VM not the desktop Agents Window, and to honor included quota without switching this watch to on-demand.
 
 ## 6. Verification & Evidence Plan
 ```bash

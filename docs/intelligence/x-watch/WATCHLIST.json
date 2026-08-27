@@ -271,6 +271,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-AGENT-REVIEW",
+      "url": "https://cursor.com/docs/agent/agent-review",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_AGENT_REVIEW",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-MCP",
       "url": "https://cursor.com/docs/mcp",
       "kind": "html-page",
