@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T14:29:10.881Z",
+  "updated_at": "2026-08-27T14:32:58.992Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1069,6 +1069,16 @@
       "published_at": null,
       "summary": "Overview — Cursor CLI supports ACP (Agent Client Protocol) for advanced integrations. Start ACP server — Start Cursor CLI in ACP mode: Transport and message format — Transport: Protocol envelope: JSON-RPC 2.0 Framing: newline-delimited JSON (one message per line) Direction: - Client writes requests/notifications to - Cursor CLI writes responses/notifications to - Logs may be written Request flow — Typical ACP session flow: 1. Authentication — Cursor CLI advertises as the ACP auth method. Sessions, modes, and permissions Cursor extension methods — Cursor sends ACP extension methods for richer client UX. Minimal Node.js client — This example shows the minimum control flow for a custom ACP client: IDE integrations — ACP enables Cursor's AI agent to work with editors beyond the Cursor desktop…",
       "apply_in_eos": "ACP is optional local Cursor CLI protocol for custom clients. This Cloud Agent VM already runs ingest without an ACP client. Do not rotate this watch into agent acp, custom stdio clients, or IDE integrations for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cli-headless",
+      "title": "Using Headless CLI",
+      "source_url": "https://cursor.com/docs/cli/headless",
+      "published_at": null,
+      "summary": "Use Cursor CLI in scripts and automation workflows for code analysis, generation, and refactoring tasks. How it works — Use print mode ( ) for non-interactive scripting and automation. Example scripts — Use different output formats for different script needs. Working with images — To send images, media files, or other binary data to the agent, include file paths in your prompts.",
+      "apply_in_eos": "Headless CLI is optional local Cursor CLI for scripts. This Cloud Agent VM already runs ingest without print mode. Do not rotate this watch into print mode, --force, or install Cursor CLI for daily ingest. Do not put CURSOR_API_KEY in git. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
