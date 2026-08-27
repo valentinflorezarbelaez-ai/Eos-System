@@ -9,11 +9,13 @@ import { EosMcpServer, CANONICAL_TOOLS } from '../src/mcp-server.js';
 
 const SERVER_PATH = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src/mcp-server.js');
 
-/** Drives the real stdio loop with raw lines and returns the parsed JSON-RPC responses. */
+/** Drives the real stdio loop with raw lines and returns the responses plus the server cwd. */
 function runStdioSession(rawLines) {
+  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-mcp-stdio-'));
+
   return new Promise((resolve, reject) => {
     const child = spawn(process.execPath, [SERVER_PATH], {
-      cwd: fs.mkdtempSync(path.join(os.tmpdir(), 'eos-mcp-stdio-')),
+      cwd,
       env: { ...process.env, EOS_MODE: 'read-only', EOS_AUTONOMY_LEVEL: 'LEVEL_0' }
     });
 
@@ -27,7 +29,10 @@ function runStdioSession(rawLines) {
         reject(new Error(`MCP server exited with code ${code}: ${stderr}`));
         return;
       }
-      resolve(stdout.split('\n').filter((line) => line.trim()).map((line) => JSON.parse(line)));
+      resolve({
+        cwd,
+        responses: stdout.split('\n').filter((line) => line.trim()).map((line) => JSON.parse(line))
+      });
     });
 
     child.stdin.end(rawLines.join('\n') + '\n');
@@ -95,7 +100,7 @@ test('MCP-06: workspace.discover is wired (MEASURED)', async () => {
 });
 
 test('MCP-07: stdio loop answers JSON-RPC and classifies malformed input', async () => {
-  const responses = await runStdioSession([
+  const { cwd, responses } = await runStdioSession([
     JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'initialize' }),
     JSON.stringify({ jsonrpc: '2.0', id: 2, method: 'tools/list' }),
     JSON.stringify({
@@ -123,4 +128,7 @@ test('MCP-07: stdio loop answers JSON-RPC and classifies malformed input', async
   assert.equal(byId.get(4).error.code, -32602);
   assert.equal(byId.get(5).error.code, -32601);
   assert.equal(byId.get(null).error.code, -32700);
+
+  // Tools that touch neither the ledger nor the runtime must not provision storage
+  assert.deepEqual(fs.readdirSync(cwd), []);
 });

@@ -36,8 +36,19 @@ const CANONICAL_TOOLS = [
 
 class EosMcpServer {
   constructor(customLedger = null, options = {}) {
-    this.ledger = customLedger || new MissionLedger();
+    this._ledger = customLedger;
     this.bridge = options.bridge || new McpMissionBridge({ baseDir: options.baseDir || process.cwd() });
+  }
+
+  /**
+   * Built on first use: MissionLedger provisions .eos/ledger and EOS-MISSION-CONTROL,
+   * which must not happen for tool calls that never touch the ledger.
+   */
+  get ledger() {
+    if (!this._ledger) {
+      this._ledger = new MissionLedger();
+    }
+    return this._ledger;
   }
 
   evaluateToolGuard(toolDef, env = process.env) {
