@@ -122,6 +122,7 @@
     "https://cursor.com/docs/cloud-agent/setup",
     "https://cursor.com/docs/configuration/worktrees",
     "https://cursor.com/docs/cursor-router",
+    "https://cursor.com/docs/customize-cursor",
     "https://cursor.com/docs/hooks",
     "https://cursor.com/docs/mcp",
     "https://cursor.com/docs/models-and-pricing",
@@ -138,7 +139,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-27T13:35:24.296Z",
-  "last_item_count": 137,
-  "last_new_item_count": 1
+  "last_ingest_at": "2026-08-27T13:45:27.910Z",
+  "last_item_count": 138,
+  "last_new_item_count": 0
 }

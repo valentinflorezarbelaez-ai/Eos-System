@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:35:24.305Z",
+  "updated_at": "2026-08-27T13:45:27.919Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -964,7 +964,7 @@
     },
     {
       "learning_id": "LRN-CURSOR-cursor-com-docs-agent-overview",
-      "title": "Overview",
+      "title": "Cursor Agent",
       "source_url": "https://cursor.com/docs/agent/overview",
       "published_at": null,
       "summary": "Agent is Cursor's assistant that can complete complex coding tasks independently, run terminal commands, and edit code. How Agent works — An agent is built on three components: 1. Tools — Tools are the building blocks of Agent. Checkpoints — Checkpoints save snapshots of your codebase during an Agent session. Queued messages — You have two ways to talk to an agent while it works. Steer a running agent — You can send a follow-up to steer the agent while it's working, without interrupting it. Goals with /goal — Agent reads each message as a new job. /goal",
@@ -1094,7 +1094,7 @@
     },
     {
       "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-best-practices",
-      "title": "Cloud Agent Best Practices",
+      "title": "Best Practices",
       "source_url": "https://cursor.com/docs/cloud-agent/best-practices",
       "published_at": null,
       "summary": "Use these recommendations to get more reliable Cloud Agent runs. Set up the environment first — Use Cloud agent setup so that Cursor has its environment configured. Ensure the agent can access what it needs — Before running a Cloud Agent, verify these prerequisites: Secrets : Make sure the agent has access to required secrets (API keys, database credentials, etc.) through the Secrets tab in your dashboard. OIDC Use skills and agents.md to configure your agent — If the cloud agent is having difficulty testing its changes, we recommend using skills and agents.md to configure your agent. Use rules to enforce conventions — Cloud Agents can read and follow Rules at three levels: User rules : Set in Cursor Settings, these apply to your sessions across all repositories. Give the agent the tools…",
@@ -1184,7 +1184,7 @@
     },
     {
       "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-settings",
-      "title": "Dashboard settings",
+      "title": "Cloud Agents settings",
       "source_url": "https://cursor.com/docs/cloud-agent/settings",
       "published_at": null,
       "summary": "Workspace admins can configure Cloud Agents from the Cloud Agents dashboard. Environment management — The Environments view lists the saved environments available to your team. .cursor/environment.json Network access settings — Control which network resources Cloud Agents can reach. Team feature settings — Team admins can enable or disable these features for their team: Long running agents – controls whether team members can run agents for extended durations. Team follow-ups — Team members can send follow-up messages to cloud agents created by other users on the same team. Lateral movement and secret exposure — Enabling team follow-ups means a user can influence the execution of a cloud agent that runs with another user's secrets and credentials.",
@@ -1219,6 +1219,16 @@
       "published_at": null,
       "summary": "Cursor Router is the model routing system behind Auto *. How it works — When you select Auto and choose Balance or Intelligence in the model picker, Cursor Router runs a classifier on each agent request and routes it based on task type and complexity. Optimization modes — Open the model picker, select Auto , and pick a mode under Optimize For : Cost : Uses the previous Auto routing logic. Team settings — Admins configure Cursor Router from the team dashboard. Use Router through the SDK — The TypeScript SDK and Python SDK expose Cursor Router as model id with parameter ( , , or ).",
       "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-customize-cursor",
+      "title": "Customize Cursor",
+      "source_url": "https://cursor.com/docs/customize-cursor",
+      "published_at": null,
+      "summary": "Plugins, skills, and MCPs let you customize Cursor for your workflows. What you can do from Customize — From the Customize page, you can: Browse and install plugins, skills, and MCPs from the Cursor Marketplace with one click Install Team MCP servers shared through your team's Default marketplace See your team leaderboard Extension components — Cursor extensions are built from composable pieces.",
+      "apply_in_eos": "Customize Cursor is optional desktop sidebar for plugins, skills, MCP, rules, and hooks. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Keep environment.json + Builds. Team marketplace and dashboard Customize are not EOS governance. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -1264,7 +1274,7 @@
     },
     {
       "learning_id": "LRN-CURSOR-cursor-com-docs-origin-cli",
-      "title": "Install the Origin CLI",
+      "title": "Install the CLI",
       "source_url": "https://cursor.com/docs/origin/cli",
       "published_at": null,
       "summary": "Origin is currently released in early beta. macOS, Linux and Windows (WSL) — Install the Origin CLI with a single command: The installer puts the binary at . Verification — After installation, verify that the Origin CLI is working correctly: Sign in — Sign in to your Cursor account: Complete the browser flow with the Cursor account that has Origin access. Manage repositories — The CLI can create and delete Origin repositories, so you do not have to open the web UI: without a slash creates the repository in your account's namespace. Updates — To update the Origin CLI to the current release: Next steps — Commands Pull request commands Create a repository Clone, Push & Pull Mirror a GitHub repo Browse & Search Integrations ---",
@@ -1274,11 +1284,11 @@
     },
     {
       "learning_id": "LRN-CURSOR-cursor-com-docs-origin-integrations",
-      "title": "Origin integrations",
+      "title": "Integrations",
       "source_url": "https://cursor.com/docs/origin/integrations",
       "published_at": null,
       "summary": "Origin is currently released in early beta. Automations — Automations run cloud agents on a schedule or when source-control events fire. /automate Cloud agents — Cloud agents can work against Origin repositories: clone, branch, commit, push, and open pull requests.",
-      "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -1327,7 +1337,7 @@
       "title": "Agent Skills",
       "source_url": "https://cursor.com/docs/skills",
       "published_at": null,
-      "summary": "Agent Skills is an open standard for extending AI agents with specialized capabilities. What are skills? — A skill is a portable, version-controlled package that teaches agents how to perform domain-specific tasks. How skills work — When Cursor starts, it automatically discovers skills from skill directories and makes them available to Agent. Built-in Cursor skills — Cursor includes a small set of built in skills to improve your general workflows. Skill directories — Skills are automatically loaded from these locations: Cursor loads user-level skills from the machine where the agent runs. SKILL.md file format — Each skill is defined in a SKILL.md file with YAML frontmatter: Scoping a skill to specific files — Use the field to limit a skill to files that match one or more glob patterns. Di…",
+      "summary": "Agent Skills is an open standard for extending AI agents with specialized capabilities. What are skills? — A skill is a portable, version-controlled package that teaches agents how to perform domain-specific tasks. How skills work — When Cursor starts, it automatically discovers skills from skill directories and makes them available to Agent. Built-in Cursor skills — Cursor includes a small set of built in skills to improve your general workflows. Skill directories — Skills are automatically loaded from these locations: Cursor loads user-level skills from the machine where the agent runs. SKILL.md SKILL.md file format — Each skill is defined in a SKILL.md file with YAML frontmatter: Scoping a skill to specific files — Use the field to limit a skill to files that match one or more glob pat…",
       "apply_in_eos": "Pin an EOS skill as a Custom Mode when a session must stay on one playbook.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false

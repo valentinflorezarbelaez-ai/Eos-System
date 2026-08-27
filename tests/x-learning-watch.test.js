@@ -806,6 +806,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(plugins.apply_in_eos), false);
   assert.equal(plugins.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(/Migrate existing Team MCPs —/.test(plugins.summary), false);
+  const customizeCursor = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/customize-cursor');
+  assert.ok(customizeCursor);
+  assert.match(customizeCursor.summary, /What you can do from Customize/);
+  assert.match(customizeCursor.summary, /Extension components/);
+  assert.match(customizeCursor.summary, /plugins, skills, and MCPs/i);
+  assert.equal(customizeCursor.summary.includes('Sitemap'), false);
+  assert.equal(/Learn more —/.test(customizeCursor.summary), false);
+  assert.equal(/Marketplace leaderboard —/.test(customizeCursor.summary), false);
+  assert.equal(customizeCursor.summary.includes('Custom Mode'), false);
+  assert.match(customizeCursor.apply_in_eos, /optional desktop sidebar/i);
+  assert.match(customizeCursor.apply_in_eos, /\.cursor\/mcp\.json/);
+  assert.match(customizeCursor.apply_in_eos, /do not rotate this Cloud Agent into desktop Customize/i);
+  assert.match(customizeCursor.apply_in_eos, /not EOS governance/i);
+  assert.match(customizeCursor.apply_in_eos, /environment\.json/);
+  assert.match(customizeCursor.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(customizeCursor.apply_in_eos), false);
+  assert.equal(customizeCursor.apply_in_eos.includes('Custom Mode'), false);
   const cloudAgents = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cloud-agent');
   assert.ok(cloudAgents);
   assert.equal(cloudAgents.summary.includes(' Cloud Agents How to access'), false);
@@ -3033,6 +3050,12 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
     },
     {
       title: 'Customize Cursor',
+      source_url: 'https://cursor.com/changelog/customize',
+      published_at: 'Mon, 22 Jun 2026 00:00:00 GMT',
+      apply_in_eos: 'Manage skills/plugins on Customize. Pin EOS skills; do not copy marketplace defaults blindly.'
+    },
+    {
+      title: 'Customize Cursor',
       source_url: 'https://cursor.com/docs/customize-cursor',
       published_at: null,
       apply_in_eos: 'Customize Cursor is optional desktop sidebar for plugins, skills, MCP, rules, and hooks. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Keep environment.json + Builds. Team marketplace and dashboard Customize are not EOS governance. Honor included quota; do not switch this watch to on-demand.'
@@ -3382,6 +3405,8 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.equal(current.includes('cursor.com/docs/customize-cursor'), false);
+  assert.equal(current.includes('cursor.com/changelog/customize'), false);
+  assert.equal(current.includes('cursor.com/blog/git-at-any-scale'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);

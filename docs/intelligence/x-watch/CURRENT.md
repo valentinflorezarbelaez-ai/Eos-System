@@ -2,8 +2,8 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-27T13:35:24.305Z
-Store size: 137
+Updated: 2026-08-27T13:45:27.919Z
+Store size: 138
 
 ## Official product actions
 - **Cloud Agents and Cursor Harness Improvements** — Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS. Honor auto-CI-fix on PRs this agent opens.
@@ -16,7 +16,7 @@ Store size: 137
   https://cursor.com/changelog/router
 - **Grok 4.6** — Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.
   https://cursor.com/help/models-and-usage/grok-4-6
-- **Overview** — Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.
+- **Cursor Agent** — Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.
   https://cursor.com/docs/agent/overview
 - **Agent Skills** — Pin an EOS skill as a Custom Mode when a session must stay on one playbook.
   https://cursor.com/docs/skills
