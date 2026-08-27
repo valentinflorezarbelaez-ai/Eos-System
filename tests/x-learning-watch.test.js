@@ -219,11 +219,19 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/acp' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/installation'),
     false
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/reference/permissions'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/changelog'),
     false
   );
   assert.equal(
@@ -998,6 +1006,8 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(cliInstall, undefined);
   const cliPermissions = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cli/reference/permissions');
   assert.equal(cliPermissions, undefined);
+  const cliChangelog = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cli/changelog');
+  assert.equal(cliChangelog, undefined);
   const cliAcp = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cli/acp');
   assert.equal(cliAcp, undefined);
   const mcp = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/mcp');
@@ -1083,6 +1093,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Cursor CLI', link: 'https://cursor.com/docs/cli/overview' },
     { title: 'Using Agent in CLI', link: 'https://cursor.com/docs/cli/using' },
     { title: 'Shell Mode', link: 'https://cursor.com/docs/cli/shell-mode' },
+    { title: 'ACP', link: 'https://cursor.com/docs/cli/acp' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1352,6 +1363,26 @@ test('applyHint for CLI Shell Mode keeps this Cloud Agent VM running shell comma
   assert.match(hint, /optional local Cursor CLI/i);
   assert.match(hint, /already runs shell commands/i);
   assert.match(hint, /Do not rotate this watch into Cursor CLI Shell Mode/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('curl'), false);
+});
+
+test('applyHint for CLI ACP keeps this watch without a custom ACP client', () => {
+  const hint = applyHint({
+    title: 'ACP',
+    link: 'https://cursor.com/docs/cli/acp',
+    summary: 'Use Agent Client Protocol (ACP) with Cursor CLI to run `agent acp` as a protocol server for custom clients.'
+  });
+  assert.match(hint, /optional local Cursor CLI protocol/i);
+  assert.match(hint, /without an ACP client/i);
+  assert.match(hint, /Do not rotate this watch into agent acp/i);
+  assert.match(hint, /IDE integrations/i);
   assert.match(hint, /\/goal/);
   assert.match(hint, /environment\.json/);
   assert.match(hint, /included quota/i);
@@ -2140,6 +2171,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(cursorCliShellMode[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(cursorCliShellMode[0]).includes('curl'), false);
 
+  const cursorCliAcp = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cli-acp.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cli/acp'
+  );
+  assert.equal(cursorCliAcp[0].id, 'https://cursor.com/docs/cli/acp');
+  assert.equal(cursorCliAcp[0].title, 'ACP');
+  assert.match(cursorCliAcp[0].summary, /Use Agent Client Protocol/);
+  assert.match(applyHint(cursorCliAcp[0]), /optional local Cursor CLI protocol/i);
+  assert.match(applyHint(cursorCliAcp[0]), /without an ACP client/i);
+  assert.equal(/enable/i.test(applyHint(cursorCliAcp[0])), false);
+  assert.equal(applyHint(cursorCliAcp[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(cursorCliAcp[0]).includes('curl'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -2684,6 +2729,22 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Troubleshooting —/.test(cursorCliShellModeMd.summary), false);
   assert.equal(/FAQ —/.test(cursorCliShellModeMd.summary), false);
   assert.equal(cursorCliShellModeMd.summary.includes('cursor.com/install'), false);
+
+  const cursorCliAcpMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cli-acp.md'), 'utf8')
+  );
+  assert.equal(cursorCliAcpMd.title, 'ACP');
+  assert.match(cursorCliAcpMd.summary, /Overview/);
+  assert.match(cursorCliAcpMd.summary, /Start ACP server/);
+  assert.match(cursorCliAcpMd.summary, /Transport and message format/);
+  assert.match(cursorCliAcpMd.summary, /Request flow/);
+  assert.match(cursorCliAcpMd.summary, /Authentication/);
+  assert.match(cursorCliAcpMd.summary, /Cursor extension methods/);
+  assert.match(cursorCliAcpMd.summary, /Minimal Node.js client/);
+  assert.match(cursorCliAcpMd.summary, /IDE integrations/);
+  assert.equal(cursorCliAcpMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(cursorCliAcpMd.summary), false);
+  assert.equal(cursorCliAcpMd.summary.includes('cursor.com/install'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -3633,6 +3694,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Shell Mode is optional local Cursor CLI. This Cloud Agent VM already runs shell commands. Do not rotate this watch into Cursor CLI Shell Mode for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'ACP',
+      source_url: 'https://cursor.com/docs/cli/acp',
+      published_at: null,
+      apply_in_eos: 'ACP is optional local Cursor CLI protocol for custom clients. This Cloud Agent VM already runs ingest without an ACP client. Do not rotate this watch into agent acp, custom stdio clients, or IDE integrations for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agent Skills',
       source_url: 'https://cursor.com/docs/skills',
       published_at: null,
@@ -3652,6 +3719,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/overview'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/using'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/shell-mode'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/acp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -4038,8 +4106,10 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cli/overview'), false);
   assert.equal(current.includes('cursor.com/docs/cli/using'), false);
   assert.equal(current.includes('cursor.com/docs/cli/shell-mode'), false);
+  assert.equal(current.includes('cursor.com/docs/cli/acp'), false);
   assert.equal(current.includes('cursor.com/docs/cli/installation'), false);
   assert.equal(current.includes('cursor.com/docs/cli/reference/permissions'), false);
+  assert.equal(current.includes('cursor.com/docs/cli/changelog'), false);
   assert.equal(current.includes('cursor.com/docs/agent/design-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/browser'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/terminal'), false);
