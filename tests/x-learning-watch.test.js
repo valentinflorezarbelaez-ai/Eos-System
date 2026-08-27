@@ -303,6 +303,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/tools/browser' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -1138,6 +1142,25 @@ test('applyHint for Design Mode keeps this watch in the Cloud Agent VM', () => {
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Browser keeps this watch on official feeds', () => {
+  const hint = applyHint({
+    title: 'Browser',
+    link: 'https://cursor.com/docs/agent/tools/browser',
+    summary: 'Agent can control a web browser to test applications and audit accessibility.'
+  });
+  assert.match(hint, /optional desktop browser control/i);
+  assert.match(hint, /Cloud Agent VM/);
+  assert.match(hint, /official feeds/i);
+  assert.match(hint, /not live sites/i);
+  assert.match(hint, /do not rotate this Cloud Agent into Browser/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /not EOS governance/i);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1599,6 +1622,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(designMode[0]), /optional desktop visual prompting/i);
   assert.equal(/enable/i.test(applyHint(designMode[0])), false);
 
+  const browserTool = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-tools-browser.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/agent/tools/browser'
+  );
+  assert.equal(browserTool[0].id, 'https://cursor.com/docs/agent/tools/browser');
+  assert.equal(browserTool[0].title, 'Browser');
+  assert.match(browserTool[0].summary, /web browser/i);
+  assert.match(applyHint(browserTool[0]), /Cloud Agent VM/);
+  assert.match(applyHint(browserTool[0]), /optional desktop browser control/i);
+  assert.equal(/enable/i.test(applyHint(browserTool[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1984,6 +2019,21 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Open Design Mode —/.test(designModeMd.summary), false);
   assert.equal(/Keyboard shortcuts —/.test(designModeMd.summary), false);
   assert.equal(/Related —/.test(designModeMd.summary), false);
+
+  const browserToolMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-tools-browser.md'), 'utf8')
+  );
+  assert.equal(browserToolMd.title, 'Browser');
+  assert.match(browserToolMd.summary, /Native integration/);
+  assert.match(browserToolMd.summary, /Browser capabilities/);
+  assert.match(browserToolMd.summary, /Session persistence/);
+  assert.match(browserToolMd.summary, /Navigate/);
+  assert.match(browserToolMd.summary, /Console Output/);
+  assert.match(browserToolMd.summary, /Tool approval/);
+  assert.equal(browserToolMd.summary.includes('Sitemap'), false);
+  assert.equal(/Recommended models —/.test(browserToolMd.summary), false);
+  assert.equal(/Enterprise usage —/.test(browserToolMd.summary), false);
+  assert.equal(/Related —/.test(browserToolMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2450,12 +2500,19 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       source_url: 'https://cursor.com/docs/agent/design-mode',
       published_at: null,
       apply_in_eos: 'Design Mode is optional desktop visual prompting in the Agents Window. This watch already runs in the Cloud Agent VM, not the desktop Agents Window. Do not rotate this Cloud Agent into Design Mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'Browser',
+      source_url: 'https://cursor.com/docs/agent/tools/browser',
+      published_at: null,
+      apply_in_eos: 'Browser is optional desktop browser control. This watch already runs in the Cloud Agent VM and uses official feeds, not live sites. Do not rotate this Cloud Agent into Browser for daily ingest. Keep environment.json + Builds. Team MCP dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.'
     }
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/subagents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/agents-window'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/design-mode'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/browser'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
@@ -2878,6 +2935,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/plan-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/debug-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/design-mode'), false);
+  assert.equal(current.includes('cursor.com/docs/agent/tools/browser'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);

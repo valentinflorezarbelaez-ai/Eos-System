@@ -903,6 +903,23 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/agent/design-mode"
+    },
+    {
+      "source_id": "SRC-0054",
+      "name": "Cursor Docs — Browser",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Desktop Browser control is optional Agent tooling. This watch stays on official feeds in the Cloud Agent VM and does not rotate into Browser for daily ingest. Team MCP dashboard controls are not EOS governance.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/agent/tools/browser"
     }
   ]
 }

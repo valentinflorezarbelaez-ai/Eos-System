@@ -106,6 +106,8 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-76:** `apply_in_eos` for `docs/agent/debug-mode` states that Debug Mode is optional desktop debugging with a local Cursor extension, that this watch already uses EOS TDD in the Cloud Agent VM, not to rotate this Cloud Agent into Debug Mode for daily ingest, that the standing `/goal` stays, and to honor included quota without switching this watch to on-demand.
 - [x] **AC-77:** CURRENT.md clusters `docs/agent/design-mode` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
 - [x] **AC-78:** `apply_in_eos` for `docs/agent/design-mode` states that Design Mode is optional desktop visual prompting in the Agents Window, that this watch already runs in the Cloud Agent VM not the desktop Agents Window, not to rotate this Cloud Agent into Design Mode for daily ingest, that `environment.json` + Builds stay the start path, and to honor included quota without switching this watch to on-demand.
+- [x] **AC-79:** CURRENT.md clusters `docs/agent/tools/browser` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
+- [x] **AC-80:** `apply_in_eos` for `docs/agent/tools/browser` states that Browser is optional desktop browser control, that this watch already runs in the Cloud Agent VM and uses official feeds not live sites, not to rotate this Cloud Agent into Browser for daily ingest, that `environment.json` + Builds stay the start path, that team MCP dashboard controls are not EOS governance, and to honor included quota without switching this watch to on-demand.
 
 ## 6. Verification & Evidence Plan
 ```bash
