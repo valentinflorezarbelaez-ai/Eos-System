@@ -1,0 +1,45 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0039",
+  "claim": "EOS Control Plane is connected to GitHub Actions for CI and gated CD without production deploy, npm install, or Fundación mutation.",
+  "status": "VERIFIED",
+  "scope": "EOS Control Plane CI/CD (.github/workflows, docs/governance/CI_CD_CONTRACT.json)",
+  "source": "Local execution of contract assertion, strict verifier, syntax check, governance engines, and node:test suite",
+  "timestamp": "2026-08-27T00:10:00Z",
+  "actor": "EOS Autonomous Engineering System",
+  "action": "Added GitHub Actions CI and release-gate CD, then executed the same commands the workflows invoke.",
+  "command": "node scripts/ci/assert-gha-contract.js && node scripts/verify-eos.js --strict && npm test",
+  "expected": "Contract VERIFIED; verify-eos STRICT PASS; npm test 0 failures on Linux Node 22.",
+  "actual": "Contract VERIFIED. verify-eos STRICT: 480 checks, 0 failures. npm test: 732/732 PASS on Node v22.14.0.",
+  "result": "PASS",
+  "artifacts": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/cd-release-gate.yml",
+    "docs/governance/CI_CD_CONTRACT.json",
+    "scripts/ci/assert-gha-contract.js",
+    "tests/github-actions-cicd.test.js"
+  ],
+  "logs": [
+    "EOS GitHub Actions CI/CD contract VERIFIED",
+    "Checks Passed: 480 | Failures: 0 | STATUS: VERIFIED",
+    "tests 732 | pass 732 | fail 0"
+  ],
+  "environment": {
+    "os": "linux",
+    "node": "v22.14.0",
+    "runner_target": "ubuntu-latest GitHub Actions"
+  },
+  "confidence": "HIGH",
+  "risks": [
+    "GitHub token cannot enable branch protection or required status checks; humans must attach EOS CI jobs.",
+    "GitHub Actions enablement for the repository is not readable via this token (403)."
+  ],
+  "limitations": [
+    "Remote GitHub Actions run is NOT VERIFIED until the workflow executes on github.com.",
+    "EOS-Lab tsx tests remain out of default CI under L0 NODE_BUILTINS_ONLY.",
+    "PRODUCTION_READY remains NO; CD is a release gate, not a deployer."
+  ],
+  "related_spec": "docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md",
+  "related_project": "PRJ-EOS-MISSION-OS",
+  "related_change": "cursor/github-actions-cicd-0e35"
+}

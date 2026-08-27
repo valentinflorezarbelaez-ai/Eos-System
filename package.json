@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.js tests/**/*.test.js",
+    "ci": "node scripts/ci/assert-gha-contract.js && node scripts/verify-eos.js --strict",
+    "ci:contract": "node scripts/ci/assert-gha-contract.js",
     "mcp:start": "node src/mcp-server.js",
     "eos": "node scripts/cli/eos.js",
     "eos:mission": "node bin/eos.js",
