@@ -22,6 +22,7 @@
     "evaluate:release": "node scripts/engine/production-readiness-review.js --eval-release",
     "gameday:run": "node scripts/engine/adversarial-laboratory-engine.js --run-gameday",
     "audit:system": "node scripts/engine/system-wide-integrity-audit.js --audit-system",
+    "exam:clean-clone": "node scripts/exam-clean-clone.js",
     "verify:independent": "node scripts/engine/independent-verification-harness.js --verify-independent",
     "discover:real": "node scripts/engine/real-project-discovery-engine.js --discover-real",
     "audit:evidence": "node scripts/verify-eos.js --strict"
