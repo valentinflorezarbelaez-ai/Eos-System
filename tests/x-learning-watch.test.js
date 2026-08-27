@@ -271,6 +271,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/approval-agents' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -836,6 +840,25 @@ test('applyHint for Security Agents keeps EOS security-auditor as Control Plane 
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Approval Agents keeps TDD evidence and exact policy filenames', () => {
+  const hint = applyHint({
+    title: 'PR Routing & Approval',
+    link: 'https://cursor.com/docs/approval-agents',
+    summary: 'PR Routing & Approval routes pull requests to the right reviewers and can approve low-risk changes.'
+  });
+  assert.match(hint, /optional vendor automation/i);
+  assert.match(hint, /TDD/);
+  assert.match(hint, /human review/i);
+  assert.match(hint, /APPROVAL_POLICY\.md/);
+  assert.match(hint, /\.cursor\/approval-policies\/ROUTING\.md/);
+  assert.match(hint, /auto-approve/i);
+  assert.match(hint, /GitHub/i);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1201,6 +1224,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(securityAgents[0]), /security-auditor/);
   assert.equal(/enable/i.test(applyHint(securityAgents[0])), false);
 
+  const approvalAgents = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-approval-agents.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/approval-agents'
+  );
+  assert.equal(approvalAgents[0].id, 'https://cursor.com/docs/approval-agents');
+  assert.equal(approvalAgents[0].title, 'PR Routing & Approval');
+  assert.match(approvalAgents[0].summary, /pull requests/i);
+  assert.match(applyHint(approvalAgents[0]), /APPROVAL_POLICY\.md/);
+  assert.match(applyHint(approvalAgents[0]), /optional vendor automation/i);
+  assert.equal(/enable/i.test(applyHint(approvalAgents[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1483,6 +1518,23 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Billing —/.test(securityAgentsMd.summary), false);
   assert.equal(/Analytics —/.test(securityAgentsMd.summary), false);
   assert.equal(/Viewing Runs —/.test(securityAgentsMd.summary), false);
+
+  const approvalAgentsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-approval-agents.md'), 'utf8')
+  );
+  assert.equal(approvalAgentsMd.title, 'PR Routing & Approval');
+  assert.match(approvalAgentsMd.summary, /How it works/);
+  assert.match(approvalAgentsMd.summary, /code ownership/);
+  assert.match(approvalAgentsMd.summary, /Approval policy files/);
+  assert.match(approvalAgentsMd.summary, /APPROVAL_POLICY\.md/);
+  assert.match(approvalAgentsMd.summary, /Routing policies/);
+  assert.match(approvalAgentsMd.summary, /\.cursor\/approval-policies\/ROUTING\.md/);
+  assert.match(approvalAgentsMd.summary, /Policy precedence/);
+  assert.equal(approvalAgentsMd.summary.includes('Sitemap'), false);
+  assert.equal(/Setup —/.test(approvalAgentsMd.summary), false);
+  assert.equal(/Enable routing and approval —/.test(approvalAgentsMd.summary), false);
+  assert.equal(/Configure triggers —/.test(approvalAgentsMd.summary), false);
+  assert.equal(/Save and enable —/.test(approvalAgentsMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2134,6 +2186,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane check. /review-security is in-agent review, not a substitute for that check. Do not treat vendor finding counts as EOS evidence. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'PR Routing & Approval',
+      source_url: 'https://cursor.com/docs/approval-agents',
+      published_at: null,
+      apply_in_eos: 'PR Routing & Approval is optional vendor automation. It does not replace EOS TDD or human review. Keep exact APPROVAL_POLICY.md and .cursor/approval-policies/ROUTING.md if this repo uses them. Do not treat vendor auto-approve as EOS evidence. Keep GitHub as source of truth; do not ingest Slack or Teams setup. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -2143,6 +2201,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/automations'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/hooks'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/approval-agents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices'), false);
@@ -2242,6 +2301,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cloud-agent/private-connectivity'), false);
   assert.equal(current.includes('cursor.com/docs/bugbot'), false);
   assert.equal(current.includes('cursor.com/docs/security-agents'), false);
+  assert.equal(current.includes('cursor.com/docs/approval-agents'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);

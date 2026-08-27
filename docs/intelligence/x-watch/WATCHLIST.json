@@ -243,6 +243,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-APPROVAL-AGENTS",
+      "url": "https://cursor.com/docs/approval-agents",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_APPROVAL_AGENTS",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-MCP",
       "url": "https://cursor.com/docs/mcp",
       "kind": "html-page",

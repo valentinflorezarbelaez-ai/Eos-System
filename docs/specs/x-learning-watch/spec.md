@@ -90,6 +90,8 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-60:** `apply_in_eos` for `docs/bugbot` states that Bugbot is optional PR review, that EOS TDD evidence remains required, that `/review-bugbot` is in-agent review not a substitute for tests, that GitHub remains source of truth, not to ingest GitHub/GitLab/Bitbucket integration setup pages, and not to put Bugbot API keys in git.
 - [x] **AC-61:** CURRENT.md clusters `docs/security-agents` onto `changelog/04-30-26` and keeps Usage and limits as a living row.
 - [x] **AC-62:** `apply_in_eos` for `docs/security-agents` states that Cursor Security Review is a vendor PR reviewer, that EOS security-auditor remains the Control Plane check, that `/review-security` is in-agent review not a substitute, not to treat vendor finding counts as EOS evidence, and to honor included quota without switching this watch to on-demand.
+- [x] **AC-63:** CURRENT.md clusters `docs/approval-agents` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
+- [x] **AC-64:** `apply_in_eos` for `docs/approval-agents` states that PR Routing & Approval is optional vendor automation, that it does not replace EOS TDD or human review, that exact `APPROVAL_POLICY.md` and `.cursor/approval-policies/ROUTING.md` are the policy files, not to treat vendor auto-approve as EOS evidence, that GitHub remains source of truth, not to ingest Slack or Teams setup, and to honor included quota without switching this watch to on-demand.
 
 ## 6. Verification & Evidence Plan
 ```bash

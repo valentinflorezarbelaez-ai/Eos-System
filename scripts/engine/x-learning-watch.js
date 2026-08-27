@@ -203,6 +203,8 @@ function headingBodySummary(body) {
   if (/\.cursor\/BUGBOT\.md/i.test(clean) && !/\.cursor\/BUGBOT\.md/i.test(first)) extras.push('.cursor/BUGBOT.md');
   if (/\bSecurity Reviewer\b/i.test(clean) && !/\bSecurity Reviewer\b/i.test(first)) extras.push('Security Reviewer');
   if (/\bVulnerability Scanner\b/i.test(clean) && !/\bVulnerability Scanner\b/i.test(first)) extras.push('Vulnerability Scanner');
+  if (/APPROVAL_POLICY\.md/.test(body) && !/APPROVAL_POLICY\.md/.test(first)) extras.push('APPROVAL_POLICY.md');
+  if (/\.cursor\/approval-policies\/ROUTING\.md/.test(body) && !/\.cursor\/approval-policies\/ROUTING\.md/.test(first)) extras.push('.cursor/approval-policies/ROUTING.md');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -293,7 +295,7 @@ function shouldSkipMarkdownHeading(heading) {
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -304,7 +306,8 @@ function appendHeadingChunk(chunks, heading, body) {
 }
 
 export function parseOfficialMarkdown(md) {
-  let raw = String(md || '').replace(/^\uFEFF/, '');
+  const original = String(md || '');
+  let raw = original.replace(/^\uFEFF/, '');
   raw = raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
   raw = raw.replace(/```[\s\S]*?```/g, '\n');
   const title = stripTags((raw.match(/^#\s+(.+)$/m) || [])[1] || '').trim();
@@ -327,7 +330,16 @@ export function parseOfficialMarkdown(md) {
       appendHeadingChunk(chunks, h3heading, h3body);
     }
   }
-  return { title, summary: chunks.join(' ') };
+  let summary = chunks.join(' ');
+  const fenceTokens = [];
+  if (/APPROVAL_POLICY\.md/.test(original) && !/APPROVAL_POLICY\.md/.test(summary)) {
+    fenceTokens.push('APPROVAL_POLICY.md');
+  }
+  if (/\.cursor\/approval-policies\/ROUTING\.md/.test(original) && !/\.cursor\/approval-policies\/ROUTING\.md/.test(summary)) {
+    fenceTokens.push('.cursor/approval-policies/ROUTING.md');
+  }
+  if (fenceTokens.length) summary = `${summary} ${fenceTokens.join(' ')}`.trim();
+  return { title, summary };
 }
 
 export async function enrichOfficialHtmlPages(items, fetchImpl) {
@@ -536,6 +548,9 @@ export function applyHint(item) {
   }
   if (isSecurityAgentsDocUrl(item?.link)) {
     return 'Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane check. /review-security is in-agent review, not a substitute for that check. Do not treat vendor finding counts as EOS evidence. Honor included quota; do not switch this watch to on-demand.';
+  }
+  if (isApprovalAgentsDocUrl(item?.link)) {
+    return 'PR Routing & Approval is optional vendor automation. It does not replace EOS TDD or human review. Keep exact APPROVAL_POLICY.md and .cursor/approval-policies/ROUTING.md if this repo uses them. Do not treat vendor auto-approve as EOS evidence. Keep GitHub as source of truth; do not ingest Slack or Teams setup. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
@@ -827,6 +842,12 @@ function isSecurityAgentsDocUrl(url) {
     || value === 'https://www.cursor.com/docs/security-agents';
 }
 
+function isApprovalAgentsDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/approval-agents'
+    || value === 'https://www.cursor.com/docs/approval-agents';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -883,6 +904,7 @@ function currentClusterKey(learning) {
     || url.includes('help/ai-features/automations')
     || url.includes('/docs/subagents')
     || isHooksDocUrl(learning?.source_url)
+    || isApprovalAgentsDocUrl(learning?.source_url)
     || url.includes('changelog/cloud-in-agents-window')
     || title === 'automations'
     || title === 'subagents'
