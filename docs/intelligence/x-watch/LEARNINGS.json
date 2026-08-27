@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:26:11.063Z",
+  "updated_at": "2026-08-27T13:30:02.048Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1189,6 +1189,16 @@
       "published_at": null,
       "summary": "Cloud agents run on isolated Ubuntu machines. What is a cloud agent environment? — The development environment for a cloud agent is similar to the setup on your laptop: cloned repos, installed dependencies, secrets, startup commands, and network access. Why does environment configuration matter? — Agents are only as capable as the environments they run in. Environment setup options — There are two main ways to configure the environment for your cloud agent: 1. .cursor/environment.json Agent-driven setup (recommended) — Cursor can set up your dev environment in the cloud in less than 10 minutes. .cursor/environment.json Install script — The install script was previously called the update script in the dashboard and docs. OIDC Install script idempotency — The install script must be idempote…",
       "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-configuration-worktrees",
+      "title": "Worktrees",
+      "source_url": "https://cursor.com/docs/configuration/worktrees",
+      "published_at": null,
+      "summary": "The UI-native worktrees feature described on this page is only available in the Agents Window. Create a worktree in the Agents Window — When you start or move an agent into a worktree from the Agents Window, Cursor creates a separate checkout for that agent. How does worktree setup work? — You can customize worktree setup with .cursor/worktrees.json . Configuration options — The worktrees.json file supports three setup keys: : Commands or a script path for macOS and Linux. .cursor/worktrees.json How does Cursor discover existing worktrees? — Cursor 3.5 keeps a modified time checkpoint for the machine worktree root and for each workspace subdirectory. Worktrees cleanup — The cleanup behavior in this section reflects Cursor 3.5 and later. /worktree Worktree Skills in IDE — In the IDE, you c…",
+      "apply_in_eos": "Worktrees are optional desktop isolated Git checkouts in the Agents Window. This Cloud Agent VM already has its own checkout. Do not rotate this Cloud Agent into desktop worktrees for daily ingest. Keep environment.json + Builds. Do not put secrets in .cursor/worktrees.json. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
