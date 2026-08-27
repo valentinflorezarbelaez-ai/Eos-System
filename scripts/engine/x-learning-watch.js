@@ -335,7 +335,7 @@ function shouldSkipMarkdownHeading(heading, body) {
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|\/agent-review|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit|select an element|select multiple elements|draw on the page|narrate by voice|console output|network traffic|tool approval|allow and block lists|browser context|authentication and isolation|^navigate$|^click$|^type$|^scroll$|^screenshot$|cursor_agent|disable heavy prompts|sandbox\.json|instant grep|explore subagent|path encryption|multi-root|open canvas|sharing canvases|packaging in skills|worktrees\.json|setup-worktree|\/worktree|\/best-of-n|\/apply-worktree|\/delete-worktree|configuration options|auto-review|run modes|mcp allowlist|customize page|extension components|skill\.md|create in the ui|sync from github|create with a cursor agent|pull request list|open a pull request|pull request page|mirrored github|files changed|folders and files|branch history and commits|go to file/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|\/agent-review|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit|select an element|select multiple elements|draw on the page|narrate by voice|console output|network traffic|tool approval|allow and block lists|browser context|authentication and isolation|^navigate$|^click$|^type$|^scroll$|^screenshot$|cursor_agent|disable heavy prompts|sandbox\.json|instant grep|explore subagent|path encryption|multi-root|open canvas|sharing canvases|packaging in skills|worktrees\.json|setup-worktree|\/worktree|\/best-of-n|\/apply-worktree|\/delete-worktree|configuration options|auto-review|run modes|mcp allowlist|customize page|extension components|skill\.md|create in the ui|sync from github|create with a cursor agent|pull request list|open a pull request|pull request page|mirrored github|files changed|folders and files|branch history and commits|go to file|sync status|detach from github|rules and protections/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -576,6 +576,9 @@ export function applyHint(item) {
   }
   if (isOriginBrowseUrl(item?.link)) {
     return 'Origin browse and search are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not use Origin browse or Detach from GitHub for this watch. This Cloud Agent VM already searches its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+  }
+  if (isOriginSettingsUrl(item?.link)) {
+    return 'Origin repository settings are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not Detach from GitHub or manage Origin Apps for this watch. This Cloud Agent VM already uses its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCloudAgentBestPracticesUrl(item?.link)) {
     return 'Honor Cloud Agent setup (environment.json + Builds). Prefer OIDC over long-lived secrets. Use skills, AGENTS.md, and .cursor/rules for repo conventions. Do not put secrets in git.';
@@ -845,7 +848,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -895,6 +898,12 @@ function isOriginBrowseUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/origin/browse'
     || value === 'https://www.cursor.com/docs/origin/browse';
+}
+
+function isOriginSettingsUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/origin/settings'
+    || value === 'https://www.cursor.com/docs/origin/settings';
 }
 
 function isCloudAgentBestPracticesUrl(url) {
