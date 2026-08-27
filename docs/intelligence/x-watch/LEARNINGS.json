@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:59:26.175Z",
+  "updated_at": "2026-08-27T14:03:11.008Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1329,6 +1329,16 @@
       "published_at": null,
       "summary": "Origin is currently released in early beta. Pull request list — The Pull Requests tab lists pull requests for the repository. Open a pull request — Push a branch to Origin, then open a pull request against the base branch: From the repository Code tab, use the create-pull-request flow after your branch is on Origin. Pull request page — Open a pull request from the list to review it. Mirrored GitHub repositories — On a repository mirrored from GitHub, you can see and interact with GitHub pull requests as if they were Origin pull requests, and your changes sync back to GitHub.",
       "apply_in_eos": "Origin pull requests are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not open Origin PRs or Detach from GitHub for this watch. This Cloud Agent VM already opens GitHub PRs. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-settings",
+      "title": "Settings",
+      "source_url": "https://cursor.com/docs/origin/settings",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. General Sync status — For a repository mirrored from GitHub, Sync Status shows Origin as the mirror and GitHub as the source, with a link to the source repo. Detach from GitHub — Under Danger Zone , Detach from GitHub stops syncing with GitHub and makes the Origin copy a standalone Origin-hosted repository: Origin becomes the source of truth, and pushes to the Origin remote no longer flow to GitH Permissions — Use Permissions to review who can access this repository. Rules and Protections — Rules and Protections is where you configure branch rules and merge protections for the repository. Apps — Use Apps to connect third-party tools to this repository.",
+      "apply_in_eos": "Origin repository settings are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not Detach from GitHub or manage Origin Apps for this watch. This Cloud Agent VM already uses its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

@@ -133,6 +133,7 @@
     "https://cursor.com/docs/origin/integrations",
     "https://cursor.com/docs/origin/mirror-github",
     "https://cursor.com/docs/origin/pull-requests",
+    "https://cursor.com/docs/origin/settings",
     "https://cursor.com/docs/plugins",
     "https://cursor.com/docs/rules",
     "https://cursor.com/docs/security-agents",
@@ -142,7 +143,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-27T13:59:26.166Z",
-  "last_item_count": 141,
+  "last_ingest_at": "2026-08-27T14:03:10.999Z",
+  "last_item_count": 142,
   "last_new_item_count": 1
 }
