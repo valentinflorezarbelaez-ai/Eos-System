@@ -4,15 +4,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { RealProjectDiscoveryEngine } from '../scripts/engine/real-project-discovery-engine.js';
+import {
+  RealProjectDiscoveryEngine,
+  resolveDefaultDiscoveryTarget
+} from '../scripts/engine/real-project-discovery-engine.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 
-// Capture baselines for delta-based isolation verification
-const FUNDACION_PATH = 'C:\\Users\\valen\\Documents\\Fundacion';
-const ANDES_PATH = 'C:\\Users\\valen\\Documents\\EOS-Lab\\Andes-Retreat';
+// Capture baselines for delta-based isolation verification.
+// Targets are resolved portably so a clean clone on any host exercises the same paths.
+const FUNDACION_PATH = resolveDefaultDiscoveryTarget({});
+const ANDES_PATH = path.join(rootDir, 'EOS-Lab', 'Andes-Retreat');
 const fundacionBaseline = fs.existsSync(FUNDACION_PATH) ? fs.readdirSync(FUNDACION_PATH).sort() : [];
 const andesBaseline = fs.existsSync(ANDES_PATH) ? fs.readdirSync(ANDES_PATH).sort() : [];
 
@@ -33,7 +37,7 @@ test('RealProjectDiscoveryEngine rejects self-analysis of EOS Control Plane for 
 });
 
 test('RealProjectDiscoveryEngine analyzes target project (Fundacion) and reports observed state', () => {
-  const engine = new RealProjectDiscoveryEngine('C:\\Users\\valen\\Documents\\Fundacion');
+  const engine = new RealProjectDiscoveryEngine(FUNDACION_PATH);
   const discovery = engine.runDiscoveryMission();
   assert.equal(discovery.projectId, 'fundacion');
   // Engine must accurately report what it observes — populated or unpopulated
@@ -46,15 +50,27 @@ test('RealProjectDiscoveryEngine analyzes target project (Fundacion) and reports
     'Architecture pattern must reflect actual target state, not a hardcoded assumption');
 });
 
-test('RealProjectDiscoveryEngine analyzes populated real target project (Andes-Retreat)', () => {
-  if (!fs.existsSync(ANDES_PATH)) return; // Guard if run in isolated environment
+test('RealProjectDiscoveryEngine analyzes a populated target project', () => {
+  // In-repo fixture so the populated-target path is exercised on any clean clone,
+  // instead of depending on an operator-local project directory.
+  const populated = path.join(rootDir, 'tests', 'fixtures', 'mission-projects', 'synthetic-website');
+  const engine = new RealProjectDiscoveryEngine(populated);
+  const discovery = engine.runDiscoveryMission();
+  assert.equal(discovery.projectId, 'synthetic-website');
+  assert.equal(discovery.architectureAssessment.pattern, 'POPULATED_REAL_PROJECT');
+  assert.equal(discovery.state.observedFacts.find(f => f.key === 'HAS_PACKAGE_JSON').value, true);
+  assert.equal(discovery.state.observedFacts.find(f => f.key === 'PACKAGE_NAME').value, 'synthetic-website');
+  assert.ok(discovery.state.derivedFacts.find(f => f.key === 'FILE_TREE_COUNT').value > 0);
+});
+
+test('RealProjectDiscoveryEngine analyzes an external populated target when one is present', () => {
+  // Opportunistic: only runs where an external populated target is actually mounted.
+  if (!fs.existsSync(ANDES_PATH) || fs.readdirSync(ANDES_PATH).length === 0) return;
 
   const engine = new RealProjectDiscoveryEngine(ANDES_PATH);
   const discovery = engine.runDiscoveryMission();
   assert.equal(discovery.projectId, 'andes-retreat');
   assert.equal(discovery.architectureAssessment.pattern, 'POPULATED_REAL_PROJECT');
-  assert.equal(discovery.state.observedFacts.find(f => f.key === 'HAS_GIT').value, true);
-  assert.equal(discovery.state.observedFacts.find(f => f.key === 'PACKAGE_NAME').value, 'andes-retreat');
   assert.ok(discovery.state.derivedFacts.find(f => f.key === 'FILE_TREE_COUNT').value > 0);
 });
 

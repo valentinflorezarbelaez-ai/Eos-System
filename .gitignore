@@ -54,3 +54,10 @@ temp/
 # Ephemeral Runtime State
 docs/sessions/checkpoints/
 docs/evolution/evolution_KAIZEN-*.json
+
+# Mission OS local operational state (ledgers, HITL receipts, evidence)
+.missions/
+
+# Test scratch ledgers
+tests/fixtures/test-ledger/
+tests/fixtures/guard-test-ledger/

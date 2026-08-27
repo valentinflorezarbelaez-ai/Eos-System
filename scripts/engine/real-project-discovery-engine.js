@@ -6,8 +6,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '../..');
 
+/**
+ * Portable default discovery target. Resolves in this order so a clean clone on any
+ * host can run discovery without depending on one operator's home directory:
+ *   1. EOS_DISCOVERY_TARGET env var
+ *   2. the repo-local Fundacion/ target directory
+ */
+export function resolveDefaultDiscoveryTarget(env = process.env) {
+  if (env.EOS_DISCOVERY_TARGET) {
+    return env.EOS_DISCOVERY_TARGET;
+  }
+  return path.join(rootDir, 'Fundacion');
+}
+
 export class RealProjectDiscoveryEngine {
-  constructor(targetPath = 'C:\\Users\\valen\\Documents\\Fundacion') {
+  constructor(targetPath = resolveDefaultDiscoveryTarget()) {
     this.targetPath = path.resolve(targetPath);
     this.mode = 'EMPIRICAL_LEVEL_1_READ_ONLY';
     this.validateTargetSafety();
@@ -249,7 +262,8 @@ export class RealProjectDiscoveryEngine {
 // CLI ARGUMENT PARSER
 // ====================================================
 if (process.argv.includes('--discover-real')) {
-  let targetArg = 'C:\\Users\\valen\\Documents\\Fundacion';
+  let targetArg = resolveDefaultDiscoveryTarget();
+
   
   const targetIdx = process.argv.indexOf('--target');
   if (targetIdx !== -1 && process.argv[targetIdx + 1]) {
