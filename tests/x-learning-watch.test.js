@@ -175,6 +175,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/origin/cli' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cursor-router' && feed.kind === 'html-page'),
     true
   );
@@ -330,6 +334,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
     { title: 'Origin', link: 'https://cursor.com/docs/origin' },
+    { title: 'Install the Origin CLI', link: 'https://cursor.com/docs/origin/cli' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -584,6 +589,17 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(origin[0].title, 'Origin');
   assert.match(origin[0].summary, /git forge/i);
   assert.match(applyHint(origin[0]), /Origin|GitHub/i);
+
+  const originCli = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-origin-cli.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/origin/cli'
+  );
+  assert.equal(originCli[0].id, 'https://cursor.com/docs/origin/cli');
+  assert.equal(originCli[0].title, 'Install the Origin CLI');
+  assert.match(originCli[0].summary, /single command/i);
+  assert.match(applyHint(originCli[0]), /Origin|GitHub/i);
+  assert.equal(applyHint(originCli[0]).includes('timers'), false);
 
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
@@ -963,6 +979,12 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
       source_url: 'https://cursor.com/changelog/origin-code-hosting',
       published_at: 'Mon, 17 Aug 2026 00:00:00 GMT',
       apply_in_eos: 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.'
+    },
+    {
+      title: 'Install the Origin CLI',
+      source_url: 'https://cursor.com/docs/origin/cli',
+      published_at: null,
+      apply_in_eos: 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.'
     }
   ], 5);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
@@ -971,6 +993,7 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/origin-code-hosting'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/cli'), false);
 });
 
 test('selectCurrentLearnings clusters Cursor Router onto changelog', () => {
@@ -1251,6 +1274,9 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /Steer running agents/);
   assert.match(current, /2090136960295645431/);
   assert.match(current, /2090136964116721902/);
+  assert.match(current, /2089399059488350447/);
+  assert.match(current, /2089399061040308603/);
+  assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
 });
 
 test('cited X posts never claim an X fetch', () => {
@@ -1283,6 +1309,24 @@ test('cited X posts never claim an X fetch', () => {
       row.x_url === 'https://x.com/cursor_ai/status/2090136964116721902'
       && row.cited_by === 'https://www.unrollnow.com/status/2090136956101414982'
       && /Steer/i.test(row.about)
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2089399059488350447'
+      && row.cited_by === 'https://www.unrollnow.com/status/2089399057659596847'
+      && /Vercel/i.test(row.about)
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2089399061040308603'
+      && row.cited_by === 'https://www.unrollnow.com/status/2089399057659596847'
+      && /beta/i.test(row.about)
       && row.fetched_from_x === false
     )),
     true

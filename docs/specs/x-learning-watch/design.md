@@ -4,7 +4,7 @@
 `scripts/engine/x-learning-watch.js` — pure functions plus an `ingest()` orchestrator.
 
 ## Data
-- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Builds, Cloud Agent setup, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, and Agent prompting / Custom Modes)
+- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Builds, Cloud Agent setup, Origin, Origin CLI, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, and Agent prompting / Custom Modes)
 - `docs/intelligence/x-watch/STATE.json` — `seen_ids`, last ingest timestamp
 - `docs/intelligence/x-watch/briefings/YYYY-MM-DD.md` — human briefing
 
@@ -24,7 +24,7 @@ CURRENT.md clusters related product titles onto one row, preferring changelog > 
 - Grok 4.6 (`grok 4.6` / `grok-4-6`)
 - Cloud Agent harness (`changelog/08-19-26`, automations help, `docs/cloud-agent/automations`, `docs/cloud-agent/capabilities`)
 - Cloud Agent Builds (`changelog/08-13-26`, `docs/cloud-agent/builds`, `docs/cloud-agent/setup`, `blog/builds`)
-- Origin (`origin-code-hosting`, `docs/origin`)
+- Origin (`origin-code-hosting`, `docs/origin`, `docs/origin/cli`)
 - Cursor Router (`changelog/router`, `docs/cursor-router`, router blog posts)
 - Cloud Agent harness also includes `docs/subagents` and `changelog/cloud-in-agents-window`
 - Cloud Agents overview (`docs/cloud-agent` exact URL) stays a living row and must not match `docs/cloud-agent/builds` or `docs/cloud-agent/capabilities`

@@ -25,3 +25,5 @@
 24. [x] Ingest Cloud Agent setup living docs; cluster onto Builds changelog as the default start path
 25. [x] Keep official slash-commands (`/goal`, `/automate`) in living-doc markdown summaries
 26. [x] Record Custom Mode and Steering `@cursor_ai` status IDs cited by unrollnow without fetching X
+27. [x] Ingest Origin CLI living docs; cluster onto Origin changelog without dropping Usage and limits
+28. [x] Record Origin thread follow-up `@cursor_ai` status IDs cited by unrollnow without fetching X

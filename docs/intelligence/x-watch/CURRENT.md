@@ -42,6 +42,11 @@ Store size: 107
   https://x.com/cursor_ai/status/2090136966121599117
 - Origin, our code hosting platform, is now live — cited by https://www.unrollnow.com/status/2089399057659596847 (not fetched from X)
   https://x.com/cursor_ai/status/2089399057659596847
+- We've partnered with some of the top GitHub integrations. Vercel, Buildkite, and Depot are already available with more coming soon. — cited by https://www.unrollnow.com/status/2089399057659596847 (not fetched from X)
+  Origin GitHub integrations are optional vendor marketplace. GitHub remains source of truth for this synced repo.
+  https://x.com/cursor_ai/status/2089399059488350447
+- We're rolling out the beta starting today. — cited by https://www.unrollnow.com/status/2089399057659596847 (not fetched from X)
+  https://x.com/cursor_ai/status/2089399061040308603
 - Cloud agents now start 3x faster so you can hand them ambitious, long-running tasks — cited by https://www.unrollnow.com/status/2087941307624980753 (not fetched from X)
   https://x.com/cursor_ai/status/2087941307624980753
 - Cursor is now part of @SpaceX. Today, we have officially closed our acquisition. — cited by https://www.unrollnow.com/status/2088249881718919393 (not fetched from X)
