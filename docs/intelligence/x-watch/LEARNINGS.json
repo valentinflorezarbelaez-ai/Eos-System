@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T12:27:45.650Z",
+  "updated_at": "2026-08-27T12:31:31.791Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -967,7 +967,7 @@
       "title": "Automations",
       "source_url": "https://cursor.com/docs/cloud-agent/automations",
       "published_at": null,
-      "summary": "Cursor Automations run cloud agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. Getting started — Create a new automation in the Agents Window, at cursor.com/automations, with the /automate skill from a local agent session, or from a template in the Cursor Marketplace. Billing — Automations create cloud agents and are billed based on cloud agent usage. Triggers — Triggers decide when an automation runs. Scheduled triggers — Scheduled triggers run on a recurring schedule. Source control triggers — Source control triggers respond to pull request and push events from your connected Git provider: GitHub, GitLab, and Bitbucket Cloud. Slack triggers — Slack triggers respond to events from the Cursor Slack integration.…",
+      "summary": "Cursor Automations run cloud agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. Getting started — Create a new automation in the Agents Window, at cursor.com/automations, with the /automate skill from a local agent session, or from a template in the Cursor Marketplace. Triggers — Triggers decide when an automation runs. Scheduled triggers — Scheduled triggers run on a recurring schedule. Source control triggers — Source control triggers respond to pull request and push events from your connected Git provider: GitHub, GitLab, and Bitbucket Cloud. Slack triggers — Slack triggers respond to events from the Cursor Slack integration. Webhook triggers — Webhook triggers create a private HTTP endpoint for your automatio…",
       "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1169,6 +1169,16 @@
       "published_at": null,
       "summary": "Rules provide system-level instructions to Agent. How rules work — Large language models don't retain memory between completions. Project rules — Project rules live in .cursor/rules as .mdc files and are version-controlled. Creating a rule — There are two ways to create rules: /create-rule in chat : Type /create-rule in Agent and describe what you want. Best practices — Good rules are focused, actionable, and scoped. What to avoid in rules — Copying entire style guides : Use a linter instead. Rule file format — Each rule is a markdown file with frontmatter metadata and content. Team Rules — Team and Enterprise plans can create and enforce rules across their entire organization from the Cursor dashboard. Importing Rules — You can import rules from external sources to reuse existing configu…",
       "apply_in_eos": "Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-security-agents",
+      "title": "Security Agents",
+      "source_url": "https://cursor.com/docs/security-agents",
+      "published_at": null,
+      "summary": "Security Agents scan your code for security bugs, risky patterns, and vulnerabilities. How it works — Security Agents include two Cursor-managed agent types: Security Reviewer checks pull requests before they merge. Vulnerability Scanner Run in your agent — Use the /review-security or /review skills to run the Security Agent from your agent before you push the code.",
+      "apply_in_eos": "Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane check. /review-security is in-agent review, not a substitute for that check. Do not treat vendor finding counts as EOS evidence. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

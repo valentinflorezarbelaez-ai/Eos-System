@@ -117,13 +117,14 @@
     "https://cursor.com/docs/origin/mirror-github",
     "https://cursor.com/docs/plugins",
     "https://cursor.com/docs/rules",
+    "https://cursor.com/docs/security-agents",
     "https://cursor.com/docs/skills",
     "https://cursor.com/docs/subagents",
     "https://cursor.com/help/ai-features/automations",
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-27T12:27:45.641Z",
-  "last_item_count": 122,
+  "last_ingest_at": "2026-08-27T12:31:31.783Z",
+  "last_item_count": 123,
   "last_new_item_count": 1
 }
