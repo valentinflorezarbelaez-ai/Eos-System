@@ -421,6 +421,17 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.match(securityOverview.apply_in_eos, /SOC 2/);
   assert.equal(/enable/i.test(securityOverview.apply_in_eos), false);
   assert.equal(securityOverview.apply_in_eos.includes('Custom Mode'), false);
+  const settings = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/settings');
+  assert.ok(settings);
+  assert.match(settings.summary, /\.cursor\/environment\.json/);
+  assert.match(settings.summary, /Team follow-ups/i);
+  assert.match(settings.summary, /secret exposure/i);
+  assert.match(settings.apply_in_eos, /not EOS governance/i);
+  assert.match(settings.apply_in_eos, /environment\.json/);
+  assert.match(settings.apply_in_eos, /team follow-ups/i);
+  assert.match(settings.apply_in_eos, /secrets/i);
+  assert.equal(/enable/i.test(settings.apply_in_eos), false);
+  assert.equal(settings.apply_in_eos.includes('Custom Mode'), false);
   const mcp = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/mcp');
   assert.ok(mcp);
   assert.match(mcp.summary, /\.cursor\/mcp\.json/);

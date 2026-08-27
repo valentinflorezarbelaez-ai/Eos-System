@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T12:11:41.789Z",
+  "updated_at": "2026-08-27T12:15:04.991Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -977,7 +977,7 @@
       "title": "Cloud Agent Builds",
       "source_url": "https://cursor.com/docs/cloud-agent/builds",
       "published_at": null,
-      "summary": "Builds prepare your Cloud Agent environment in the background. How Builds work — A Build is a bootable snapshot of a prepared Cloud Agent environment. When Builds occur — Cursor starts a Build for four reasons. What runs during a Build and an agent start — Use each environment command for a distinct phase: Make complete and idempotent. How Builds handle Git state — A Build records the commit checked out for each repository when it runs. How secrets work with Builds — Builds can access team and environment secrets. Manage Builds — Open an environment's Builds tab to: See every Build's type, status, and start time Open a Build to inspect its details and logs Select Trigger build to run a Build on demand Activate a draft Build or deactivate a Build Debug a Build — Open a failed Build to insp…",
+      "summary": "Builds prepare your Cloud Agent environment in the background. How Builds work — A Build is a bootable snapshot of a prepared Cloud Agent environment. When Builds occur — Cursor starts a Build for four reasons. What runs during a Build and an agent start — Use each environment command for a distinct phase: Make complete and idempotent. .cursor/environment.json How Builds handle Git state — A Build records the commit checked out for each repository when it runs. How secrets work with Builds — Builds can access team and environment secrets. Manage Builds — Open an environment's Builds tab to: See every Build's type, status, and start time Open a Build to inspect its details and logs Select Trigger build to run a Build on demand Activate a draft Build or deactivate a Build Debug a Build — Op…",
       "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1033,11 +1033,21 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-settings",
+      "title": "Dashboard settings",
+      "source_url": "https://cursor.com/docs/cloud-agent/settings",
+      "published_at": null,
+      "summary": "Workspace admins can configure Cloud Agents from the Cloud Agents dashboard. Environment management — The Environments view lists the saved environments available to your team. .cursor/environment.json Network access settings — Control which network resources Cloud Agents can reach. Team feature settings — Team admins can enable or disable these features for their team: Long running agents – controls whether team members can run agents for extended durations. Team follow-ups — Team members can send follow-up messages to cloud agents created by other users on the same team. Lateral movement and secret exposure — Enabling team follow-ups means a user can influence the execution of a cloud agent that runs with another user's secrets and credentials.",
+      "apply_in_eos": "Treat Cloud Agents dashboard settings as team-admin config, not EOS governance. Keep environment.json + Builds as the start path and honor network allowlists. Do not turn on team follow-ups: a teammate can drive an agent that holds another user's secrets.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-setup",
       "title": "Cloud Environment Setup",
       "source_url": "https://cursor.com/docs/cloud-agent/setup",
       "published_at": null,
-      "summary": "Cloud agents run on isolated Ubuntu machines. What is a cloud agent environment? — The development environment for a cloud agent is similar to the setup on your laptop: cloned repos, installed dependencies, secrets, startup commands, and network access. Why does environment configuration matter? — Agents are only as capable as the environments they run in. Environment setup options — There are two main ways to configure the environment for your cloud agent: 1. Agent-driven setup (recommended) — Cursor can set up your dev environment in the cloud in less than 10 minutes. Install script — The install script was previously called the update script in the dashboard and docs. OIDC Install script idempotency — The install script must be idempotent. How Builds use the install script — Cursor sta…",
+      "summary": "Cloud agents run on isolated Ubuntu machines. What is a cloud agent environment? — The development environment for a cloud agent is similar to the setup on your laptop: cloned repos, installed dependencies, secrets, startup commands, and network access. Why does environment configuration matter? — Agents are only as capable as the environments they run in. Environment setup options — There are two main ways to configure the environment for your cloud agent: 1. .cursor/environment.json Agent-driven setup (recommended) — Cursor can set up your dev environment in the cloud in less than 10 minutes. .cursor/environment.json Install script — The install script was previously called the update script in the dashboard and docs. OIDC Install script idempotency — The install script must be idempote…",
       "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
