@@ -10,7 +10,7 @@
   "action": "Added GitHub Actions CI and release-gate CD, then executed the same commands the workflows invoke.",
   "command": "node scripts/ci/assert-gha-contract.js && node scripts/verify-eos.js --strict && npm test",
   "expected": "Contract VERIFIED; verify-eos STRICT PASS; npm test 0 failures on Linux Node 22.",
-  "actual": "Contract VERIFIED. verify-eos STRICT: 480 checks, 0 failures. npm test: 732/732 PASS on Node v22.14.0.",
+  "actual": "Contract VERIFIED. verify-eos STRICT: 480 checks, 0 failures. npm test: 732/732 PASS on Node v22.14.0. GitHub Actions EOS CI run 33025971658 on ubuntu-latest: success (verify, test, syntax, governance-gates).",
   "result": "PASS",
   "artifacts": [
     ".github/workflows/ci.yml",
@@ -22,7 +22,8 @@
   "logs": [
     "EOS GitHub Actions CI/CD contract VERIFIED",
     "Checks Passed: 480 | Failures: 0 | STATUS: VERIFIED",
-    "tests 732 | pass 732 | fail 0"
+    "tests 732 | pass 732 | fail 0",
+    "GitHub Actions https://github.com/valentinflorezarbelaez-ai/Eos-/actions/runs/33025971658 conclusion=success"
   ],
   "environment": {
     "os": "linux",
@@ -35,9 +36,9 @@
     "GitHub Actions enablement for the repository is not readable via this token (403)."
   ],
   "limitations": [
-    "Remote GitHub Actions run is NOT VERIFIED until the workflow executes on github.com.",
     "EOS-Lab tsx tests remain out of default CI under L0 NODE_BUILTINS_ONLY.",
-    "PRODUCTION_READY remains NO; CD is a release gate, not a deployer."
+    "PRODUCTION_READY remains NO; CD is a release gate, not a deployer.",
+    "Required status checks on main are still a human GitHub admin action."
   ],
   "related_spec": "docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md",
   "related_project": "PRJ-EOS-MISSION-OS",
