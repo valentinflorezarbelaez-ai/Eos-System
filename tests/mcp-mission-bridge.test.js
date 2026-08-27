@@ -75,6 +75,24 @@ test('BRIDGE-02: mission resolve/start/status/plan/report via MCP read-write LEV
   const fdir = await server.handleToolCall('eos.fdir.status', {}, env);
   assert.equal(fdir.status, 'SUCCESS');
   assert.equal(fdir.fdir.fdirSafeModeTripped, false);
+
+  const recorded = await server.handleToolCall(
+    'eos.evidence.record',
+    { missionId: started.mission.mission_id, category: 'UNIT_TEST', payload: { note: 'wired via bridge' } },
+    env
+  );
+  assert.equal(recorded.status, 'SUCCESS');
+  assert.equal(recorded.evidence.mission_id, started.mission.mission_id);
+  assert.ok(fs.existsSync(recorded.path));
+
+  const fetched = await server.handleToolCall(
+    'eos.evidence.get',
+    { missionId: started.mission.mission_id, id: recorded.evidence.id },
+    env
+  );
+  assert.equal(fetched.status, 'SUCCESS');
+  assert.equal(fetched.evidence.found, true);
+  assert.equal(fetched.evidence.content.id, recorded.evidence.id);
 });
 
 test('BRIDGE-03: mission.start denied in read-only', async () => {
@@ -86,4 +104,21 @@ test('BRIDGE-03: mission.start denied in read-only', async () => {
   );
   assert.equal(res.status, 'DENIED');
   assert.equal(res.reason, 'READ_ONLY_MODE_BLOCKS_LEDGER_WRITE');
+});
+
+test('BRIDGE-04: constructing the server/bridge does not eagerly create .missions', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-mcp-no-side-effect-'));
+  const bridge = new McpMissionBridge({ baseDir: root });
+  const server = new EosMcpServer(null, { bridge, baseDir: root });
+
+  assert.equal(fs.existsSync(path.join(root, '.missions')), false);
+
+  const status = await server.handleToolCall(
+    'eos.mission.status',
+    {},
+    { EOS_MODE: 'read-only', EOS_AUTONOMY_LEVEL: 'LEVEL_0' }
+  );
+  assert.equal(status.status, 'SUCCESS');
+  assert.equal(status.mission_status.count, 0);
+  assert.equal(fs.existsSync(path.join(root, '.missions')), false, '.missions must not be created by read-only status checks');
 });

@@ -51,6 +51,9 @@ logs/
 tmp/
 temp/
 
+# EOS Mission OS local runtime state (created by MissionRuntime under baseDir)
+.missions/
+
 # Ephemeral Runtime State
 docs/sessions/checkpoints/
 docs/evolution/evolution_KAIZEN-*.json

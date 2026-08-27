@@ -231,6 +231,30 @@ export class McpMissionBridge {
     };
   }
 
+  recordEvidence(args = {}) {
+    const missionId = args.missionId || args.mission_id;
+    if (!missionId) {
+      const err = new Error('MISSING_MISSION_ID');
+      err.code = 'MISSING_MISSION_ID';
+      throw err;
+    }
+    const evidenceDir = path.join(this.runtime.getMissionDir(missionId), 'evidence');
+    const id = args.id || `EVD-${Date.now()}`;
+    const receipt = {
+      id,
+      mission_id: missionId,
+      status: args.status || 'RECORDED',
+      category: args.category || 'MANUAL',
+      recorded_at: new Date().toISOString(),
+      payload: args.payload || {},
+      epistemic_class: 'RECORDED_NOT_VERIFIED'
+    };
+    fs.mkdirSync(evidenceDir, { recursive: true });
+    const file = path.join(evidenceDir, `${id}.json`);
+    fs.writeFileSync(file, JSON.stringify(receipt, null, 2), 'utf8');
+    return { evidence: receipt, path: file };
+  }
+
   getEvidence(args = {}) {
     const id = args.id || args.evidenceId || args.evidence_id;
     const missionId = args.missionId || args.mission_id;
