@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { EosCursorHarnessCli } from '../scripts/cli/eos.js';
+
+const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 test('CLI Harness: eos status returns accurate Mission Control state', () => {
   const cli = new EosCursorHarnessCli();
@@ -11,7 +16,13 @@ test('CLI Harness: eos status returns accurate Mission Control state', () => {
   assert.equal(status.targetFundacion, 'FROZEN (Delta = 0)');
   assert.equal(status.gap002Status, 'UNKNOWN');
   assert.equal(status.gate13Status, 'CANARY_RESTRICTED');
-  assert.equal(status.activeMission, 'CANARY-REAL-001');
+
+  // The active mission is live governance state: assert the projection, not a fixed id
+  const mission = JSON.parse(
+    fs.readFileSync(path.join(rootDir, 'EOS-MISSION-CONTROL/CURRENT_MISSION.json'), 'utf8')
+  );
+  assert.equal(status.activeMission, mission.mission_id);
+  assert.equal(status.missionStage, mission.current_stage);
 });
 
 test('CLI Harness: eos harness dispatches specialized role under anti-majority contract', () => {
