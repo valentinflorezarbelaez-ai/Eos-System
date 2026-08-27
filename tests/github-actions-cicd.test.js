@@ -42,6 +42,8 @@ test('GHA-004: CD workflow is a release gate and cannot deploy production', () =
   assert.equal(yaml.includes('actions/deploy-pages'), false);
   assert.equal(yaml.includes('npm publish'), false);
   assert.match(yaml, /actions\/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02/);
+  assert.match(yaml, /scripts\/ci\/extract-json-payload\.js/);
+  assert.equal(yaml.includes('tee "${RUNNER_TEMP}/release-eval.json"'), false);
 });
 
 test('GHA-005: verify-eos required paths include GitHub Actions CI/CD artifacts', () => {
@@ -54,6 +56,7 @@ test('GHA-005: verify-eos required paths include GitHub Actions CI/CD artifacts'
     'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
     'docs/architecture/adrs/ADR-0009-github-actions-cicd.md',
     'scripts/ci/assert-gha-contract.js',
+    'scripts/ci/extract-json-payload.js',
     'tests/github-actions-cicd.test.js'
   ];
   for (const rel of required) {
@@ -69,4 +72,12 @@ test('GHA-006: package.json exposes an L0 ci script used by GitHub Actions', () 
   assert.equal(pkg.scripts.ci.includes('npm install'), false);
   assert.equal(Object.hasOwn(pkg, 'dependencies'), false);
   assert.equal(Object.hasOwn(pkg, 'devDependencies'), false);
+});
+
+test('GHA-007: extract-json-payload strips CLI banners into valid JSON', async () => {
+  const { extractJsonPayload } = await import('../scripts/ci/extract-json-payload.js');
+  const bannered = 'EOS PRODUCTION READINESS & RELEASE GOVERNANCE RESULTS:\n[{"provingId":"PROVING-001"}]\n';
+  const payload = extractJsonPayload(bannered);
+  assert.deepEqual(JSON.parse(payload), [{ provingId: 'PROVING-001' }]);
+  assert.throws(() => extractJsonPayload('no payload here'), /No JSON payload/);
 });

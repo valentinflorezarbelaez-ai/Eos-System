@@ -49,6 +49,7 @@ const REQUIRED_PATHS = [
   '.github/workflows/ci.yml',
   '.github/workflows/cd-release-gate.yml',
   'scripts/ci/assert-gha-contract.js',
+  'scripts/ci/extract-json-payload.js',
   'tests/github-actions-cicd.test.js',
   'docs/architecture/TOOL_AGNOSTIC_ARCHITECTURE.md',
   'docs/architecture/CAPABILITY_INTELLIGENCE_ENGINE.md',

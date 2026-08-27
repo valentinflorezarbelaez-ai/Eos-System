@@ -228,6 +228,13 @@ export class RealProjectDiscoveryEngine {
   }
 
   saveArtifacts(discovery) {
+    if (!fs.existsSync(this.targetPath)) {
+      throw new Error(
+        `DENY: Refusing to persist discovery artifacts for unobserved target ${this.declaredTargetPath} ` +
+        `(projectId=${discovery.projectId}). This protects docs/intelligence/real_projects/${discovery.projectId}/ from not-found overwrites.`
+      );
+    }
+
     const projectId = discovery.projectId;
     const outputDir = path.join(rootDir, 'docs/intelligence/real_projects', projectId);
     if (!fs.existsSync(outputDir)) {

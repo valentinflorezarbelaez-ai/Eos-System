@@ -45,11 +45,11 @@ jobs:
         if: always()
         run: git checkout -- EOS-MISSION-CONTROL/ACTIVE_TOOLS.json
       - name: Evaluate release engines
-        run: npm run evaluate:release | tee "${RUNNER_TEMP}/release-eval.json"
+        run: npm run evaluate:release | node scripts/ci/extract-json-payload.js "${RUNNER_TEMP}/release-eval.json"
       - name: Independent verification harness
-        run: npm run verify:independent | tee "${RUNNER_TEMP}/independent-verify.json"
+        run: npm run verify:independent | node scripts/ci/extract-json-payload.js "${RUNNER_TEMP}/independent-verify.json"
       - name: System-wide integrity audit
-        run: npm run audit:system | tee "${RUNNER_TEMP}/system-audit.json"
+        run: npm run audit:system | node scripts/ci/extract-json-payload.js "${RUNNER_TEMP}/system-audit.json"
       - name: Record non-deploy verdict
         run: |
           cat > "${RUNNER_TEMP}/cd-verdict.json" <<'EOF'
