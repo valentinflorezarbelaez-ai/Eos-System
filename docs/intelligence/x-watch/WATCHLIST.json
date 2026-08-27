@@ -215,6 +215,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-SETTINGS",
+      "url": "https://cursor.com/docs/cloud-agent/settings",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_SETTINGS",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-MCP",
       "url": "https://cursor.com/docs/mcp",
       "kind": "html-page",

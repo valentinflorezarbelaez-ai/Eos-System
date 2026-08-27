@@ -194,6 +194,7 @@ function headingBodySummary(body) {
   if (/\bplugin\.json\b/i.test(clean) && !/\bplugin\.json\b/i.test(first)) extras.push('plugin.json');
   if (/\[REDACTED\]/i.test(clean) && !/\[REDACTED\]/i.test(first)) extras.push('[REDACTED]');
   if (/\.cursorignore\b/i.test(clean) && !/\.cursorignore\b/i.test(first)) extras.push('.cursorignore');
+  if (/\.cursor\/environment\.json/i.test(clean) && !/\.cursor\/environment\.json/i.test(first)) extras.push('.cursor/environment.json');
   if (/\bnever widened\b/i.test(clean) && !/\bnever widened\b/i.test(first)) extras.push('never widened');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
@@ -262,12 +263,14 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'what data is stored where and for how long'
     || key === 'risk considerations'
     || key === 'auditability'
-    || key === 'data deletion';
+    || key === 'data deletion'
+    || key === 'default settings'
+    || key === 'security settings';
 }
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -498,6 +501,9 @@ export function applyHint(item) {
   }
   if (isCloudAgentSecurityOverviewUrl(item?.link)) {
     return 'Treat this page as the Cloud Agent security model, not the config reference. Honor isolated VMs, access that is never widened past the triggering user, Runtime Secrets/OIDC, network allowlists, .cursorignore, and draft-PR handoff. Privacy Mode (Legacy) is not supported. Do not treat SOC 2 or Trust Center claims as EOS evidence.';
+  }
+  if (isCloudAgentSettingsUrl(item?.link)) {
+    return 'Treat Cloud Agents dashboard settings as team-admin config, not EOS governance. Keep environment.json + Builds as the start path and honor network allowlists. Do not turn on team follow-ups: a teammate can drive an agent that holds another user\'s secrets.';
   }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
@@ -765,6 +771,12 @@ function isCloudAgentSecurityOverviewUrl(url) {
     || value === 'https://www.cursor.com/docs/cloud-agent/security';
 }
 
+function isCloudAgentSettingsUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent/settings'
+    || value === 'https://www.cursor.com/docs/cloud-agent/settings';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -836,6 +848,7 @@ function currentClusterKey(learning) {
     || url.includes('cloud-agent/metadata')
     || url.includes('cloud-agent/security-network')
     || isCloudAgentSecurityOverviewUrl(learning?.source_url)
+    || isCloudAgentSettingsUrl(learning?.source_url)
     || url.includes('cursor.com/blog/builds')
   ) {
     return 'cluster:cloud-agent-builds';
