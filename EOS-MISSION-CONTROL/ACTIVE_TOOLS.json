@@ -46,30 +46,24 @@
   "governed_mcps": [
     {
       "name": "Engram",
-      "status": "CONNECTED",
+      "status": "CONNECTED_AND_GOVERNED",
       "purpose": "PERSISTENT_MEMORY",
-      "risk": "LOW"
+      "risk": "LOW",
+      "command": "C:\\Users\\valen\\go\\bin\\engram.exe mcp --tools=agent"
     },
     {
       "name": "Playwright",
       "status": "CONNECTED_AND_GOVERNED",
       "purpose": "Automated end-to-end browser QA, DOM inspection, visual regressions, and accessibility audits.",
       "risk": "LOW",
-      "command": "npx -y @executeautomation/playwright-mcp-server"
+      "command": "npx -y @playwright/mcp@latest"
     },
     {
       "name": "Context7",
       "status": "CONNECTED_AND_GOVERNED",
       "purpose": "Deep AST codebase indexing, semantic symbol search, and architectural dependency mapping.",
       "risk": "LOW",
-      "command": "npx -y @context7/mcp-server"
-    },
-    {
-      "name": "Trello",
-      "status": "CONNECTED_AND_GOVERNED",
-      "purpose": "Kanban board task management, card movements, and workflow stage tracking.",
-      "risk": "LOW",
-      "command": "npx -y @modelcontextprotocol/server-trello"
+      "command": "npx -y --package=@upstash/context7-mcp@2.2.5 -- context7-mcp"
     },
     {
       "name": "Slack",
@@ -79,25 +73,11 @@
       "command": "npx -y @modelcontextprotocol/server-slack"
     },
     {
-      "name": "Jira",
-      "status": "CONNECTED_AND_GOVERNED",
-      "purpose": "Enterprise issue tracking, sprint tasks synchronization, and acceptance criteria linking.",
-      "risk": "MEDIUM",
-      "command": "npx -y @atlassian/jira-mcp-server"
-    },
-    {
       "name": "Figma",
       "status": "CONNECTED_AND_GOVERNED",
       "purpose": "Design system tokens extraction, component inspect, and pixel-perfect design-to-code alignment.",
       "risk": "LOW",
-      "command": "npx -y @figma/mcp-server"
-    },
-    {
-      "name": "Stitch",
-      "status": "CONNECTED_AND_GOVERNED",
-      "purpose": "Data schema stitching, multi-source API integration, and contract synthesis.",
-      "risk": "LOW",
-      "command": "npx -y @stitch/mcp-data-server"
+      "command": "npx -y figma-developer-mcp --stdio"
     }
   ]
 }

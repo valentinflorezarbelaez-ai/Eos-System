@@ -1,45 +1,53 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { McpProvisioningEngine } from '../scripts/engine/mcp-provisioning-engine.js';
 
-test('MCP Provisioning: Catalog loads all industrial servers from .cursor/mcp.json', () => {
+const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const activeToolsFile = path.join(rootDir, 'EOS-MISSION-CONTROL/ACTIVE_TOOLS.json');
+
+// Provisioning mutates the governed roster on disk; restore it so the suite stays idempotent
+function preserveActiveTools(t) {
+  const original = fs.readFileSync(activeToolsFile);
+  t.after(() => fs.writeFileSync(activeToolsFile, original));
+}
+
+test('MCP Provisioning: Catalog exposes every governed server declared in .cursor/mcp.json', () => {
   const engine = new McpProvisioningEngine();
   const catalog = engine.getCatalog().mcpServers || {};
 
-  assert.ok(catalog.playwright, 'Playwright must be in catalog');
-  assert.ok(catalog.context7, 'Context7 must be in catalog');
-  assert.ok(catalog.trello, 'Trello must be in catalog');
-  assert.ok(catalog.slack, 'Slack must be in catalog');
-  assert.ok(catalog.jira, 'Jira must be in catalog');
-  assert.ok(catalog.figma, 'Figma must be in catalog');
-  assert.ok(catalog.stitch, 'Stitch must be in catalog');
-  assert.ok(catalog.engram, 'Engram must be in catalog');
+  assert.ok(catalog['eos-local'], 'Local governed EOS MCP server must be declared in the catalog');
+  for (const [name, spec] of Object.entries(catalog)) {
+    assert.ok(spec.command, `${name} must declare an executable command`);
+    assert.ok(Array.isArray(spec.args), `${name} must declare an args array`);
+  }
 });
 
-test('MCP Provisioning: Dynamically provisions requested MCPs into Mission Control safely', () => {
+test('MCP Provisioning: Dynamically provisions catalog servers into Mission Control safely', (t) => {
+  preserveActiveTools(t);
+
   const engine = new McpProvisioningEngine();
-  const requested = ['playwright', 'context7', 'trello', 'slack', 'jira', 'figma', 'stitch', 'engram'];
+  const requested = Object.keys(engine.getCatalog().mcpServers || {});
 
   const result = engine.provisionMcps(requested);
 
-  assert.equal(result.provisionedCount, 8);
+  assert.equal(result.provisionedCount, requested.length);
   assert.equal(result.rejectedCount, 0);
   assert.equal(result.status, 'PROVISIONING_PIPELINE_EXECUTED_SAFELY');
 
-  // Verify Active Tools state
   const verification = engine.verifyActiveMcps();
-  assert.ok(verification.activeCount >= 8);
+  assert.ok(verification.activeCount >= requested.length);
   const names = verification.mcps.map(m => m.name.toLowerCase());
-  assert.ok(names.includes('playwright'));
-  assert.ok(names.includes('context7'));
-  assert.ok(names.includes('figma'));
-  assert.ok(names.includes('jira'));
-  assert.ok(names.includes('slack'));
-  assert.ok(names.includes('trello'));
-  assert.ok(names.includes('stitch'));
+  for (const name of requested) {
+    assert.ok(names.includes(name), `${name} must be registered in the active MCP roster`);
+  }
 });
 
-test('MCP Provisioning: Rejects unknown unverified servers under Default-Deny', () => {
+test('MCP Provisioning: Rejects unknown unverified servers under Default-Deny', (t) => {
+  preserveActiveTools(t);
+
   const engine = new McpProvisioningEngine();
   const result = engine.provisionMcps(['malicious_unknown_server']);
 
