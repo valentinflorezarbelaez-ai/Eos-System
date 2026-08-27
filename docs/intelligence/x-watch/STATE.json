@@ -102,13 +102,14 @@
     "https://cursor.com/docs/cursor-router",
     "https://cursor.com/docs/models-and-pricing",
     "https://cursor.com/docs/origin",
+    "https://cursor.com/docs/origin/cli",
     "https://cursor.com/docs/skills",
     "https://cursor.com/docs/subagents",
     "https://cursor.com/help/ai-features/automations",
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-27T00:51:00.144Z",
-  "last_item_count": 107,
-  "last_new_item_count": 0
+  "last_ingest_at": "2026-08-27T00:53:41.845Z",
+  "last_item_count": 108,
+  "last_new_item_count": 1
 }

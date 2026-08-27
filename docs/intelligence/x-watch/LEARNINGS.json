@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T00:51:00.152Z",
+  "updated_at": "2026-08-27T00:53:41.855Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1018,6 +1018,16 @@
       "source_url": "https://cursor.com/docs/origin",
       "published_at": null,
       "summary": "Origin is currently released in early beta. What you can do — In early beta you can: Create Origin repositories, including from Cursor agents Clone, push, and pull with standard git Mirror a GitHub repository into Origin Open, review, and merge pull requests Browse and search code Who can access — Origin code storage is available on Pro, Teams, and Enterprise plans. Privacy — Origin follows the Privacy Mode of the namespace owner: the team or the individual who owns the repo. Enable Origin — Before your team can use Origin, someone has to claim a codebase name. Repo list — After Origin is enabled, cursor.com/codebase shows your team's repositories. Next steps — Install the Origin CLI Create a repository Mirror a GitHub repo Pull requests Browse & Search Repository settings Codebase settin…",
+      "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-cli",
+      "title": "Install the Origin CLI",
+      "source_url": "https://cursor.com/docs/origin/cli",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. macOS, Linux and Windows (WSL) — Install the Origin CLI with a single command: The installer puts the binary at . Verification — After installation, verify that the Origin CLI is working correctly: Sign in — Sign in to your Cursor account: Complete the browser flow with the Cursor account that has Origin access. Manage repositories — The CLI can create and delete Origin repositories, so you do not have to open the web UI: without a slash creates the repository in your account's namespace. Updates — To update the Origin CLI to the current release: Next steps — Commands Pull request commands Create a repository Clone, Push & Pull Mirror a GitHub repo Browse & Search Integrations ---",
       "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
