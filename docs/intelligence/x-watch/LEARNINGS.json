@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T15:01:50.796Z",
+  "updated_at": "2026-08-27T15:09:57.909Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1499,6 +1499,16 @@
       "published_at": null,
       "summary": "Subagents are specialized AI assistants that Cursor's agent can delegate tasks to. How subagents work — When Agent encounters a complex task, it can launch a subagent automatically. Built-in subagents — Cursor includes three built-in subagents that handle context-heavy operations automatically. When to use subagents — If you find yourself creating a subagent for a simple, single-purpose task like \"generate a changelog\" or \"format imports,\" consider using a skill instead. Quick start — Agent automatically uses subagents when appropriate. Custom subagents — Define custom subagents to encode specialized knowledge, enforce team standards, or automate repetitive workflows. Using subagents Cloud subagents — From a local agent session, you can hand off work to a cloud subagent that runs on its o…",
       "apply_in_eos": "Run isolated subagents on their own VMs when work must not collide with the parent branch.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-account-and-billing-pricing",
+      "title": "Pricing and plans",
+      "source_url": "https://cursor.com/help/account-and-billing/pricing",
+      "published_at": null,
+      "summary": "Compare plans and manage subscription changes from your billing dashboard. What plans are available? — See Models & Pricing for usage pools and Cursor Start for the India plan. What is Auto? — Auto balances intelligence, cost, and reliability through Cursor Router. Is Cursor Router available on my plan? — Cursor Router will launch for Teams and Enterprise plans. Why is the old Auto mode now called Cost mode? — The old Auto mode was split into 3 new modes: Cost , Balance and Intelligence *. What's included in the free Hobby plan? — The Hobby plan gives you access to Cursor's core features with limited usage.",
+      "apply_in_eos": "Help Pricing and plans lists vendor individual and Teams plan names. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor plan prices as EOS budget evidence. Do not change this Cloud Agent billing from the dashboard. Keep environment.json + Builds.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
