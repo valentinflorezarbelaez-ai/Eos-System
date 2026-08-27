@@ -6,12 +6,14 @@
 
 import { MissionRuntime } from '../core/runtime/mission-runtime.js';
 import { TutorMaestro } from '../core/tutor/tutor-maestro.js';
+import { DoctorEngine } from '../core/diagnostics/doctor-engine.js';
 import fs from 'node:fs';
 
 export class MissionCLI {
   constructor(options = {}) {
     this.runtime = new MissionRuntime(options);
     this.tutor = options.tutor || new TutorMaestro();
+    this.doctor = options.doctor || new DoctorEngine({ baseDir: options.baseDir });
   }
 
   /**
@@ -36,6 +38,10 @@ export class MissionCLI {
 
     if (command === 'verify' || command === 'v') {
       return this.handleVerifyCommand(argv.slice(1));
+    }
+
+    if (command === 'doctor') {
+      return this.handleDoctorCommand(argv.slice(1));
     }
 
     return {
@@ -372,6 +378,15 @@ export class MissionCLI {
     };
   }
 
+  handleDoctorCommand(args = []) {
+    const result = this.doctor.run();
+    return {
+      success: result.verdict === 'PASS',
+      output: args.includes('--json') ? JSON.stringify(result, null, 2) : this.doctor.render(result),
+      data: result
+    };
+  }
+
   getHelp() {
     return `
 ================================================================================
@@ -380,8 +395,14 @@ EOS CONTROL PLANE CLI (v3.1.0) — Autonomous Engineering Governance
 
 USAGE:
   eos mission <command> [options]
+  eos doctor [--json]
 
 COMMANDS:
+  eos doctor [--json]
+      Clean-clone preflight: Node runtime, dependency policy, canonical entrypoints, schema
+      catalog, operator-path leakage, git tracking of canonical files, and protected surfaces.
+      Exits non-zero when the checkout would not work on another machine.
+
   eos mission create --goal "<text>" [--project <path>]
       Initializes a new mission, discovers project profile, and creates .missions/<id>/
 

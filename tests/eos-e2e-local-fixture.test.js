@@ -162,3 +162,43 @@ test('E2E-03: checkpoint restore recovers prior state (rollback drill)', () => {
   assert.equal(restored.state, SDD_STATES.PLAN);
   assert.equal(restored.mission_id, 'MIS-E2E-RB');
 });
+
+test('E2E-04: the executive report reflects observed returns, not constants', () => {
+  const root = fixtureRoot();
+  const rt = new MissionRuntime({ baseDir: root });
+  const created = rt.createMission({ goal: 'honest reporting', projectPath: '.' });
+  const planned = rt.planMission(created.mission_id);
+  const taskId = planned.plan.tasks[0].task_id;
+
+  // Before any work comes back, nothing is proven.
+  const before = rt.reportMission(created.mission_id, 'json');
+  assert.equal(before.executive_summary.epistemic_verdict, 'NOT_PROVEN');
+  assert.ok(before.task_execution_summary.every((t) => t.status === 'PLANNED'));
+
+  // A return with failing tests must not upgrade the verdict.
+  rt.submitReturnPackage(
+    created.mission_id,
+    writeReturnPackage(root, created.mission_id, taskId, { total: 10, failed: 4 })
+  );
+  const failing = rt.reportMission(created.mission_id, 'json');
+  assert.equal(failing.executive_summary.epistemic_verdict, 'NOT_PROVEN');
+  assert.ok(failing.task_execution_summary.every((t) => t.status === 'PLANNED'));
+
+  // A clean return plus the full gated path yields a scoped technical verdict.
+  rt.submitReturnPackage(
+    created.mission_id,
+    writeReturnPackage(root, created.mission_id, taskId, { total: 5, failed: 0 })
+  );
+  for (let i = 0; i < 8 && rt.ats.getSnapshot(created.mission_id).state !== SDD_STATES.COMPLETED; i++) {
+    rt.advanceMission(created.mission_id);
+  }
+
+  const after = rt.reportMission(created.mission_id, 'json');
+  assert.equal(after.executive_summary.epistemic_verdict, 'TECHNICALLY_VERIFIED_WITHIN_LOCAL_SCOPE');
+  assert.equal(after.task_execution_summary.find((t) => t.task_id === taskId).status, 'VERIFIED');
+  assert.equal(
+    after.task_execution_summary.filter((t) => t.status === 'PLANNED').length,
+    planned.plan.tasks.length - 1,
+    'tasks with no submitted return must stay PLANNED'
+  );
+});

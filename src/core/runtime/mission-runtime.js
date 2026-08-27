@@ -539,10 +539,31 @@ export class MissionRuntime {
     const events = ledger.getEvents(missionId);
     const chainCheck = ledger.verifyChainIntegrity(missionId);
 
+    // Reflect what actually came back: a task whose return was reconciled ACCEPT with a clean
+    // test run is reported VERIFIED, everything else keeps its planned status. The verdict
+    // stays scoped to technical verification and never claims a business outcome.
+    const returns = this._readAcceptedReturns(missionDir, { acceptedOnly: false });
+    const evidence = this._deriveVerificationEvidence(missionDir);
+    const verifiedTaskIds = new Set(evidence.filter((e) => e.status === 'VERIFIED').map((e) => e.task_id));
+    const tasks = (plan.tasks || []).map((t) =>
+      verifiedTaskIds.has(t.task_id) ? { ...t, status: 'VERIFIED' } : t
+    );
+
+    const phase = this.ats.getSnapshot(missionId).state;
+    const snapshotIntegrity = this.ats.verifySnapshotIntegrity(missionId);
+    const technicallyVerified =
+      phase === SDD_STATES.COMPLETED &&
+      chainCheck.valid &&
+      snapshotIntegrity.valid &&
+      evidence.length > 0 &&
+      evidence.every((e) => e.status === 'VERIFIED');
+
     const { jsonReport, markdownReport } = this.reporter.generateReport({
       mission_id: missionId,
       goal: direction.goal,
-      epistemic_verdict: 'NOT_PROVEN',
+      epistemic_verdict: technicallyVerified
+        ? 'TECHNICALLY_VERIFIED_WITHIN_LOCAL_SCOPE'
+        : 'NOT_PROVEN',
       provenance: {
         token_count: 'NOT_RUN',
         cost_usd: 'NOT_RUN',
@@ -550,12 +571,15 @@ export class MissionRuntime {
         reversibility: 'NOT_RUN',
         provider_reliability: 'NOT_RUN'
       },
-      tasks: plan.tasks,
+      tasks,
       evidence: {
-        total_receipts: plan.tasks.length,
-        verified_receipts: plan.tasks.filter(t => t.status === 'VERIFIED').length,
+        total_receipts: tasks.length,
+        verified_receipts: tasks.filter((t) => t.status === 'VERIFIED').length,
         hash_chain_integrity: chainCheck.valid ? 'VALID' : 'CORRUPTED',
-        ledger_chain_count: events.length
+        authority_snapshot_integrity: snapshotIntegrity.code,
+        ledger_chain_count: events.length,
+        returns_ingested: returns.length,
+        observed_test_results: evidence.map((e) => ({ task_id: e.task_id, status: e.status, ...e.observed }))
       },
       economics: {
         total_tokens: null,
