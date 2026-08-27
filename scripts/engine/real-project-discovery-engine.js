@@ -21,7 +21,10 @@ export class RealProjectDiscoveryEngine {
   }
 
   getProjectId() {
-    const basename = path.basename(this.targetPath).toLowerCase();
+    // Targets are declared with Windows-style paths, so the last segment must be
+    // extracted independently of the host separator to keep the id stable across OSes.
+    const segments = this.targetPath.split(/[\\/]+/).filter(Boolean);
+    const basename = (segments[segments.length - 1] || '').toLowerCase();
     return basename.replace(/[^a-z0-9_-]/g, '_') || 'unknown_target';
   }
 
