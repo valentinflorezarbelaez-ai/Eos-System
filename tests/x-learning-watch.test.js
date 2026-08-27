@@ -223,6 +223,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/headless' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/installation'),
     false
   );
@@ -232,6 +236,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/changelog'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/github-actions'),
     false
   );
   assert.equal(
@@ -1033,6 +1041,10 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(cliPermissions, undefined);
   const cliChangelog = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cli/changelog');
   assert.equal(cliChangelog, undefined);
+  const cliHeadless = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cli/headless');
+  assert.equal(cliHeadless, undefined);
+  const cliGithubActions = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cli/github-actions');
+  assert.equal(cliGithubActions, undefined);
   const mcp = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/mcp');
   assert.ok(mcp);
   assert.match(mcp.summary, /\.cursor\/mcp\.json/);
@@ -1117,6 +1129,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Using Agent in CLI', link: 'https://cursor.com/docs/cli/using' },
     { title: 'Shell Mode', link: 'https://cursor.com/docs/cli/shell-mode' },
     { title: 'ACP', link: 'https://cursor.com/docs/cli/acp' },
+    { title: 'Using Headless CLI', link: 'https://cursor.com/docs/cli/headless' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1406,6 +1419,27 @@ test('applyHint for CLI ACP keeps this watch without a custom ACP client', () =>
   assert.match(hint, /without an ACP client/i);
   assert.match(hint, /Do not rotate this watch into agent acp/i);
   assert.match(hint, /IDE integrations/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('curl'), false);
+});
+
+test('applyHint for Headless CLI keeps this watch without print mode', () => {
+  const hint = applyHint({
+    title: 'Using Headless CLI',
+    link: 'https://cursor.com/docs/cli/headless',
+    summary: 'Run Cursor CLI in headless mode for automation and CI/CD pipelines. Configure non-interactive usage with API keys and scripting support.'
+  });
+  assert.match(hint, /optional local Cursor CLI for scripts/i);
+  assert.match(hint, /without print mode/i);
+  assert.match(hint, /Do not rotate this watch into print mode/i);
+  assert.match(hint, /--force/);
+  assert.match(hint, /Do not put CURSOR_API_KEY in git/);
   assert.match(hint, /\/goal/);
   assert.match(hint, /environment\.json/);
   assert.match(hint, /included quota/i);
@@ -2208,6 +2242,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(cursorCliAcp[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(cursorCliAcp[0]).includes('curl'), false);
 
+  const cursorCliHeadless = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cli-headless.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cli/headless'
+  );
+  assert.equal(cursorCliHeadless[0].id, 'https://cursor.com/docs/cli/headless');
+  assert.equal(cursorCliHeadless[0].title, 'Using Headless CLI');
+  assert.match(cursorCliHeadless[0].summary, /Run Cursor CLI in headless mode/);
+  assert.match(applyHint(cursorCliHeadless[0]), /optional local Cursor CLI for scripts/i);
+  assert.match(applyHint(cursorCliHeadless[0]), /without print mode/i);
+  assert.equal(/enable/i.test(applyHint(cursorCliHeadless[0])), false);
+  assert.equal(applyHint(cursorCliHeadless[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(cursorCliHeadless[0]).includes('curl'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -2768,6 +2816,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(cursorCliAcpMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(cursorCliAcpMd.summary), false);
   assert.equal(cursorCliAcpMd.summary.includes('cursor.com/install'), false);
+
+  const cursorCliHeadlessMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cli-headless.md'), 'utf8')
+  );
+  assert.equal(cursorCliHeadlessMd.title, 'Using Headless CLI');
+  assert.match(cursorCliHeadlessMd.summary, /How it works/);
+  assert.match(cursorCliHeadlessMd.summary, /Example scripts/);
+  assert.match(cursorCliHeadlessMd.summary, /Working with images/);
+  assert.equal(/Setup —/.test(cursorCliHeadlessMd.summary), false);
+  assert.equal(cursorCliHeadlessMd.summary.includes('Sitemap'), false);
+  assert.equal(cursorCliHeadlessMd.summary.includes('cursor.com/install'), false);
+  assert.equal(cursorCliHeadlessMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -3723,6 +3783,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'ACP is optional local Cursor CLI protocol for custom clients. This Cloud Agent VM already runs ingest without an ACP client. Do not rotate this watch into agent acp, custom stdio clients, or IDE integrations for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Using Headless CLI',
+      source_url: 'https://cursor.com/docs/cli/headless',
+      published_at: null,
+      apply_in_eos: 'Headless CLI is optional local Cursor CLI for scripts. This Cloud Agent VM already runs ingest without print mode. Do not rotate this watch into print mode, --force, or install Cursor CLI for daily ingest. Do not put CURSOR_API_KEY in git. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agent Skills',
       source_url: 'https://cursor.com/docs/skills',
       published_at: null,
@@ -3743,6 +3809,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/using'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/shell-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/acp'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/headless'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -4130,9 +4197,11 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cli/using'), false);
   assert.equal(current.includes('cursor.com/docs/cli/shell-mode'), false);
   assert.equal(current.includes('cursor.com/docs/cli/acp'), false);
+  assert.equal(current.includes('cursor.com/docs/cli/headless'), false);
   assert.equal(current.includes('cursor.com/docs/cli/installation'), false);
   assert.equal(current.includes('cursor.com/docs/cli/reference/permissions'), false);
   assert.equal(current.includes('cursor.com/docs/cli/changelog'), false);
+  assert.equal(current.includes('cursor.com/docs/cli/github-actions'), false);
   assert.equal(current.includes('cursor.com/docs/agent/design-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/browser'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/terminal'), false);

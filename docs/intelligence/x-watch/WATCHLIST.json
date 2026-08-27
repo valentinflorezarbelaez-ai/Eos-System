@@ -180,6 +180,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-CLI-HEADLESS",
+      "url": "https://cursor.com/docs/cli/headless",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLI_HEADLESS",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-CURSOR-ROUTER",
       "url": "https://cursor.com/docs/cursor-router",
       "kind": "html-page",
