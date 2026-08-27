@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -17,6 +18,7 @@ import {
   parseOfficialSource,
   renderBriefing,
   selectCurrentLearnings,
+  writeIngestArtifacts,
   validateCitedXPosts,
   validateWatchlist
 } from '../scripts/engine/x-learning-watch.js';
@@ -981,4 +983,97 @@ test('cited X posts never claim an X fetch', () => {
     }).valid,
     false
   );
+});
+
+test('writeIngestArtifacts skips timestamp-only no-op ingests', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'x-watch-noop-'));
+  try {
+    const item = {
+      id: 'https://cursor.com/changelog/origin-code-hosting',
+      title: 'Origin Code Hosting',
+      link: 'https://cursor.com/changelog/origin-code-hosting',
+      publishedAt: 'Mon, 17 Aug 2026 00:00:00 GMT',
+      summary: 'Cursor can now host your code.'
+    };
+    const first = writeIngestArtifacts(root, {
+      items: [item],
+      newItems: [item],
+      nextState: {
+        seen_ids: [item.id],
+        last_ingest_at: '2026-08-26T00:00:00.000Z',
+        last_item_count: 1,
+        last_new_item_count: 1
+      },
+      briefingMarkdown: '# briefing\n'
+    }, new Date('2026-08-26T00:00:00.000Z'));
+    assert.equal(first.artifactsWritten, true);
+    const statePath = path.join(root, 'docs/intelligence/x-watch/STATE.json');
+    const learningsPath = path.join(root, 'docs/intelligence/x-watch/LEARNINGS.json');
+    const currentPath = path.join(root, 'docs/intelligence/x-watch/CURRENT.md');
+    const stateBefore = fs.readFileSync(statePath, 'utf8');
+    const learningsBefore = fs.readFileSync(learningsPath, 'utf8');
+    const currentBefore = fs.readFileSync(currentPath, 'utf8');
+    const second = writeIngestArtifacts(root, {
+      items: [item],
+      newItems: [],
+      nextState: {
+        seen_ids: [item.id],
+        last_ingest_at: '2026-08-27T00:00:00.000Z',
+        last_item_count: 1,
+        last_new_item_count: 0
+      },
+      briefingMarkdown: '# briefing\n'
+    }, new Date('2026-08-27T00:00:00.000Z'));
+    assert.equal(second.artifactsWritten, false);
+    assert.equal(second.learningsAdded, 0);
+    assert.equal(fs.readFileSync(statePath, 'utf8'), stateBefore);
+    assert.equal(fs.readFileSync(learningsPath, 'utf8'), learningsBefore);
+    assert.equal(fs.readFileSync(currentPath, 'utf8'), currentBefore);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('writeIngestArtifacts writes when a living page summary gets richer', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'x-watch-richer-'));
+  try {
+    const shortItem = {
+      id: 'https://cursor.com/docs/skills',
+      title: 'Agent Skills',
+      link: 'https://cursor.com/docs/skills',
+      publishedAt: '',
+      summary: 'Skills'
+    };
+    writeIngestArtifacts(root, {
+      items: [shortItem],
+      newItems: [shortItem],
+      nextState: {
+        seen_ids: [shortItem.id],
+        last_ingest_at: '2026-08-26T00:00:00.000Z',
+        last_item_count: 1,
+        last_new_item_count: 1
+      },
+      briefingMarkdown: '# briefing\n'
+    }, new Date('2026-08-26T00:00:00.000Z'));
+    const richer = {
+      ...shortItem,
+      summary: 'Extend AI agents with specialized capabilities using Agent Skills, an open standard for packaging reusable knowledge and scripts.'
+    };
+    const second = writeIngestArtifacts(root, {
+      items: [richer],
+      newItems: [],
+      nextState: {
+        seen_ids: [shortItem.id],
+        last_ingest_at: '2026-08-27T00:00:00.000Z',
+        last_item_count: 1,
+        last_new_item_count: 0
+      },
+      briefingMarkdown: '# briefing\n'
+    }, new Date('2026-08-27T00:00:00.000Z'));
+    assert.equal(second.artifactsWritten, true);
+    const store = JSON.parse(fs.readFileSync(path.join(root, 'docs/intelligence/x-watch/LEARNINGS.json'), 'utf8'));
+    assert.match(store.learnings[0].summary, /open standard/i);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
 });

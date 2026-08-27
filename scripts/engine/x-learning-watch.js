@@ -771,6 +771,30 @@ export function loadLearnings(rootDir) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
 }
 
+function learningContentFingerprint(store) {
+  return JSON.stringify((store?.learnings || []).map((row) => ({
+    source_url: row.source_url,
+    title: row.title,
+    summary: row.summary,
+    apply_in_eos: row.apply_in_eos
+  })));
+}
+
+function currentContentFingerprint(markdown) {
+  return String(markdown || '').replace(/^Updated: .*$/m, 'Updated: STABLE');
+}
+
+function isNoopIngestWrite(existingStore, mergedStore, existingCurrent, nextCurrent, existingState, nextState, newItemCount, added) {
+  if (newItemCount > 0 || added > 0) return false;
+  if (learningContentFingerprint(existingStore) !== learningContentFingerprint(mergedStore)) return false;
+  if (currentContentFingerprint(existingCurrent) !== currentContentFingerprint(nextCurrent)) return false;
+  const prevSeen = [...(existingState?.seen_ids || [])].map(String).sort();
+  const nextSeen = [...(nextState?.seen_ids || [])].map(String).sort();
+  if (JSON.stringify(prevSeen) !== JSON.stringify(nextSeen)) return false;
+  if (Number(existingState?.last_item_count || 0) !== Number(nextState?.last_item_count || 0)) return false;
+  return true;
+}
+
 export function writeWatchlist(rootDir, watchlist) {
   const file = path.join(rootDir, 'docs/intelligence/x-watch/WATCHLIST.json');
   fs.writeFileSync(file, `${JSON.stringify(watchlist, null, 2)}\n`);
@@ -779,11 +803,15 @@ export function writeWatchlist(rootDir, watchlist) {
 export function writeIngestArtifacts(rootDir, result, now = new Date()) {
   const dir = path.join(rootDir, 'docs/intelligence/x-watch');
   fs.mkdirSync(path.join(dir, 'briefings'), { recursive: true });
-  fs.writeFileSync(path.join(dir, 'STATE.json'), `${JSON.stringify(result.nextState, null, 2)}\n`);
   const existing = loadLearnings(rootDir);
+  const existingState = fs.existsSync(path.join(dir, 'STATE.json'))
+    ? JSON.parse(fs.readFileSync(path.join(dir, 'STATE.json'), 'utf8'))
+    : { seen_ids: [] };
+  const existingCurrent = fs.existsSync(path.join(dir, 'CURRENT.md'))
+    ? fs.readFileSync(path.join(dir, 'CURRENT.md'), 'utf8')
+    : '';
   const incoming = extractActionableLearnings(result.items || []);
   const merged = mergeLearnings(existing, incoming);
-  fs.writeFileSync(path.join(dir, 'LEARNINGS.json'), `${JSON.stringify(merged.store, null, 2)}\n`);
   result.learningsAdded = merged.added;
   result.learningsStore = merged.store;
   const latest = selectCurrentLearnings(merged.store.learnings, 10);
@@ -813,11 +841,19 @@ export function writeIngestArtifacts(rootDir, result, now = new Date()) {
     ...citationLines,
     ''
   ].join('\n');
+  const newItemCount = (result.newItems || []).length;
+  if (isNoopIngestWrite(existing, merged.store, existingCurrent, `${currentMd}\n`, existingState, result.nextState, newItemCount, merged.added)) {
+    result.artifactsWritten = false;
+    return result;
+  }
+  fs.writeFileSync(path.join(dir, 'STATE.json'), `${JSON.stringify(result.nextState, null, 2)}\n`);
+  fs.writeFileSync(path.join(dir, 'LEARNINGS.json'), `${JSON.stringify(merged.store, null, 2)}\n`);
   fs.writeFileSync(path.join(dir, 'CURRENT.md'), `${currentMd}\n`);
-  if (result.newItems.length > 0) {
+  if (newItemCount > 0) {
     const date = now.toISOString().slice(0, 10);
     fs.writeFileSync(path.join(dir, 'briefings', `${date}.md`), result.briefingMarkdown);
   }
+  result.artifactsWritten = true;
   return result;
 }
 
@@ -840,7 +876,8 @@ async function main() {
     newItems: result.newItems.length,
     learningsAdded: result.learningsAdded,
     blocked: result.blocked,
-    briefingWritten: result.newItems.length > 0
+    briefingWritten: result.newItems.length > 0,
+    artifactsWritten: result.artifactsWritten !== false
   }, null, 2) + '\n');
 }
 

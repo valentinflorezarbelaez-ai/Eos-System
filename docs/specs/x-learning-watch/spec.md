@@ -47,6 +47,7 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-17:** CURRENT.md clusters Cursor Router blog/docs onto the changelog URL and keeps Usage and limits as a living docs row.
 - [x] **AC-18:** CURRENT.md clusters Subagents onto `changelog/08-19-26`, keeps `docs/cloud-agent` as a living overview row, and does not collapse Cloud Agent Builds into that overview.
 - [x] **AC-19:** CURRENT.md keeps `docs/agent/overview` (`/goal`) and `docs/skills` (Custom Modes) as living rows instead of collapsing them into the harness changelog.
+- [x] **AC-20:** A no-op ingest (`newItems = 0` and unchanged LEARNINGS/CURRENT product text) does not rewrite STATE, LEARNINGS, or CURRENT timestamps.
 
 ## 6. Verification & Evidence Plan
 ```bash

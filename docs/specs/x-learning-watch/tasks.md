@@ -14,3 +14,4 @@
 13. [x] Ingest Cursor Router docs and Usage and limits help; cluster Router onto changelog
 14. [x] Ingest Cloud Agents overview and Subagents living docs; cluster Subagents onto harness changelog without collapsing Builds
 15. [x] Ingest Agent overview (`/goal`) and Agent Skills living docs; keep them off the harness changelog row
+16. [x] Skip timestamp-only artifact writes on no-op ingest

@@ -40,4 +40,4 @@ Prefer `guid`, then Atom `id`, then `link`. IDs are stored as strings in a set.
 Markdown with date, blocked X accounts, new official items (title, date, URL, summary). If `newItems.length === 0`, briefing states no new official items.
 
 ## Recurrence
-Cloud Agent `subscribe_timer` (daily 12:00 UTC) re-runs ingest of changelog, forum announcements, blog index, and named docs/help pages, and only commits when `newItems.length > 0` or LEARNINGS/CURRENT product text actually changed.
+Cloud Agent `subscribe_timer` (daily 12:00 UTC) re-runs ingest of changelog, forum announcements, blog index, and named docs/help pages. `writeIngestArtifacts` skips rewriting STATE/LEARNINGS/CURRENT when `newItems.length === 0` and product URLs, summaries, and `apply_in_eos` are unchanged. Commit only when `newItems.length > 0` or LEARNINGS/CURRENT product text actually changed.
