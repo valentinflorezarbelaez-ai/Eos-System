@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:30:02.048Z",
+  "updated_at": "2026-08-27T13:35:24.305Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -993,6 +993,16 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-security",
+      "title": "Agent Security",
+      "source_url": "https://cursor.com/docs/agent/security",
+      "published_at": null,
+      "summary": "AI can behave unexpectedly due to prompt injection, hallucinations, and other issues. First-party tool calls — Cursor includes tools that help agents write code: reading files, editing files, running terminal commands, searching the web, and more. .cursorignore Run Modes Auto-review Third-party tool calls — You can connect external tools using MCP. Network requests — Attackers could use network requests to steal data.",
+      "apply_in_eos": "Agent Security is optional desktop guardrails for first-party tools, MCP, and network. This Cloud Agent VM already honors EOS TDD and .cursorignore. Do not rotate this Cloud Agent into desktop Agent Security settings for daily ingest. Keep environment.json + Builds. Run Modes are best-effort, not a hard security boundary. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-agent-tools-browser",
       "title": "Browser",
       "source_url": "https://cursor.com/docs/agent/tools/browser",
@@ -1027,7 +1037,7 @@
       "title": "Terminal",
       "source_url": "https://cursor.com/docs/agent/tools/terminal",
       "published_at": null,
-      "summary": "Cursor runs shell commands directly in your terminal. Sandbox — The sandbox runs terminal commands in a restricted environment that blocks unauthorized file access and network activity. sandbox.json Disable heavy prompts for Cursor sessions — Use the CURSOR_AGENT environment variable in your shell config to detect when Cursor is running and skip initializing fancy prompts/themes.",
+      "summary": "Cursor runs shell commands directly in your terminal. Sandbox — The sandbox runs terminal commands in a restricted environment that blocks unauthorized file access and network activity. sandbox.json Run Modes Disable heavy prompts for Cursor sessions — Use the CURSOR_AGENT environment variable in your shell config to detect when Cursor is running and skip initializing fancy prompts/themes.",
       "apply_in_eos": "Terminal is optional desktop shell control with Run Mode and sandbox.json. This Cloud Agent VM already runs shell commands. Do not rotate this Cloud Agent into desktop Terminal for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1227,7 +1237,7 @@
       "title": "Model Context Protocol (MCP)",
       "source_url": "https://cursor.com/docs/mcp",
       "published_at": null,
-      "summary": "What is MCP? — Model Context Protocol (MCP) enables Cursor to connect to external tools and data sources. Installing MCP servers Using mcp.json — Configure custom MCP servers with a JSON file: Project Configuration — Create .cursor/mcp.json in your project for project-specific tools. Global Configuration — Create ~/.cursor/mcp.json in your home directory for tools available everywhere. Config interpolation — Use variables in mcp.json values. .cursor/mcp.json Enterprise admin controls — MCP distribution and MCP policy are configured separately. Team MCP distribution — Configure shared Team MCP servers under Dashboard > Integrations & MCP *. Security considerations — When installing MCP servers, consider these security practices: Verify the source : Only install MCP servers from trusted dev…",
+      "summary": "What is MCP? — Model Context Protocol (MCP) enables Cursor to connect to external tools and data sources. Installing MCP servers Using mcp.json — Configure custom MCP servers with a JSON file: Project Configuration — Create .cursor/mcp.json in your project for project-specific tools. Global Configuration — Create ~/.cursor/mcp.json in your home directory for tools available everywhere. Config interpolation — Use variables in mcp.json values. .cursor/mcp.json Enterprise admin controls — MCP distribution and MCP policy are configured separately. Team MCP distribution — Configure shared Team MCP servers under Dashboard > Integrations & MCP *. MCP Allowlist — Enterprise admins can control which MCP servers users may run from the Cursor dashboard. Security considerations — When installing MCP…",
       "apply_in_eos": "Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
