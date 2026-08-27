@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "report_id": "RPT-66DFD2C6",
+  "mission_id": "MIS-1787790404528-DAA676",
+  "generated_at": "2026-08-27T00:26:44.761Z",
+  "executive_summary": {
+    "goal": "Exam3 real governed mission: document hello() and seal evidence",
+    "overall_status": "SUCCESS",
+    "duration_ms": 0,
+    "epistemic_verdict": "NOT_PROVEN"
+  },
+  "metric_provenance": {
+    "token_count": "NOT_RUN",
+    "cost_usd": "NOT_RUN",
+    "latency": "NOT_RUN",
+    "reversibility": "NOT_RUN",
+    "provider_reliability": "NOT_RUN"
+  },
+  "task_execution_summary": [
+    {
+      "task_id": "TASK-1787790404528-DAA676-01",
+      "name": "Technical Architecture & Stack Verification",
+      "status": "PLANNED",
+      "attempts": 1,
+      "duration_ms": 0
+    },
+    {
+      "task_id": "TASK-1787790404528-DAA676-02",
+      "name": "Core Module Implementation / Verification",
+      "status": "PLANNED",
+      "attempts": 1,
+      "duration_ms": 0
+    },
+    {
+      "task_id": "TASK-1787790404528-DAA676-03",
+      "name": "Evidence Audit & Ledger Chain Verification",
+      "status": "PLANNED",
+      "attempts": 1,
+      "duration_ms": 0
+    }
+  ],
+  "evidence_verification_summary": {
+    "total_receipts": 3,
+    "verified_receipts": 0,
+    "hash_chain_integrity": "VALID",
+    "ledger_chain_count": 11
+  },
+  "token_and_cost_summary": {
+    "total_tokens": null,
+    "estimated_cost_usd": null,
+    "budget_cap_usd": 0.1,
+    "efficiency_ratio_evidence_per_kt": null,
+    "epistemic_class": "NOT_RUN"
+  },
+  "deviations_and_retries": [],
+  "hitl_action_items": [],
+  "governance_invariants": {
+    "external_write_barrier_delta": 0,
+    "network_egress_status": "BLOCKED_OFFLINE",
+    "credentials_active_count": 0
+  }
+}
