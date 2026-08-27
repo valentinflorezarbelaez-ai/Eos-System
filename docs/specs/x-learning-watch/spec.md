@@ -92,6 +92,8 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-62:** `apply_in_eos` for `docs/security-agents` states that Cursor Security Review is a vendor PR reviewer, that EOS security-auditor remains the Control Plane check, that `/review-security` is in-agent review not a substitute, not to treat vendor finding counts as EOS evidence, and to honor included quota without switching this watch to on-demand.
 - [x] **AC-63:** CURRENT.md clusters `docs/approval-agents` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
 - [x] **AC-64:** `apply_in_eos` for `docs/approval-agents` states that PR Routing & Approval is optional vendor automation, that it does not replace EOS TDD or human review, that exact `APPROVAL_POLICY.md` and `.cursor/approval-policies/ROUTING.md` are the policy files, not to treat vendor auto-approve as EOS evidence, that GitHub remains source of truth, not to ingest Slack or Teams setup, and to honor included quota without switching this watch to on-demand.
+- [x] **AC-65:** CURRENT.md clusters `docs/cloud-agent/mobile` onto `changelog/ios-mobile-app` and keeps Usage and limits as a living row.
+- [x] **AC-66:** `apply_in_eos` for `docs/cloud-agent/mobile` states that this watch runs in the Cloud Agent VM not on iPhone/iPad, that Cursor for iOS is an optional beta client, that `environment.json` + Builds stay on the web, that `/remote-control` hands a local session to the cloud while tool calls stay on the computer, that Privacy Mode (Legacy) is not supported, not to ingest GitHub or GitLab setup pages, and to honor included quota without switching this watch to on-demand.
 
 ## 6. Verification & Evidence Plan
 ```bash

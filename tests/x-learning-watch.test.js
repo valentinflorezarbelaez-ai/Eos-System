@@ -275,6 +275,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/mobile' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -875,6 +879,25 @@ test('applyHint for Approval Agents keeps TDD evidence and exact policy filename
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Cursor for iOS keeps this watch in the Cloud Agent VM', () => {
+  const hint = applyHint({
+    title: 'Cursor for iOS',
+    link: 'https://cursor.com/docs/cloud-agent/mobile',
+    summary: 'Cursor for iOS is a native mobile app. Use /remote-control to hand off a session.'
+  });
+  assert.match(hint, /Cloud Agent VM/);
+  assert.match(hint, /iPhone|iPad/);
+  assert.match(hint, /optional beta client/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /\/remote-control/);
+  assert.match(hint, /Privacy Mode \(Legacy\)/);
+  assert.match(hint, /GitHub|GitLab/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1252,6 +1275,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(approvalAgents[0]), /optional vendor automation/i);
   assert.equal(/enable/i.test(applyHint(approvalAgents[0])), false);
 
+  const mobile = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-mobile.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/mobile'
+  );
+  assert.equal(mobile[0].id, 'https://cursor.com/docs/cloud-agent/mobile');
+  assert.equal(mobile[0].title, 'Cursor for iOS');
+  assert.match(mobile[0].summary, /mobile app/i);
+  assert.match(applyHint(mobile[0]), /\/remote-control/);
+  assert.match(applyHint(mobile[0]), /Cloud Agent VM/);
+  assert.equal(/enable/i.test(applyHint(mobile[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1551,6 +1586,21 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Enable routing and approval —/.test(approvalAgentsMd.summary), false);
   assert.equal(/Configure triggers —/.test(approvalAgentsMd.summary), false);
   assert.equal(/Save and enable —/.test(approvalAgentsMd.summary), false);
+
+  const mobileMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-mobile.md'), 'utf8')
+  );
+  assert.equal(mobileMd.title, 'Cursor for iOS');
+  assert.match(mobileMd.summary, /What you can do|What lives on the web|Remote Control/);
+  assert.match(mobileMd.summary, /\/remote-control/);
+  assert.match(mobileMd.summary, /Privacy Mode \(Legacy\)/);
+  assert.equal(mobileMd.summary.includes('Sitemap'), false);
+  assert.equal(/Getting started —/.test(mobileMd.summary), false);
+  assert.equal(/Related pages —/.test(mobileMd.summary), false);
+  assert.equal(/Before you start —/.test(mobileMd.summary), false);
+  assert.equal(/Team controls —/.test(mobileMd.summary), false);
+  assert.equal(mobileMd.summary.includes('github.md'), false);
+  assert.equal(mobileMd.summary.includes('gitlab.md'), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2208,6 +2258,18 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'PR Routing & Approval is optional vendor automation. It does not replace EOS TDD or human review. Keep exact APPROVAL_POLICY.md and .cursor/approval-policies/ROUTING.md if this repo uses them. Do not treat vendor auto-approve as EOS evidence. Keep GitHub as source of truth; do not ingest Slack or Teams setup. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Cursor Mobile App for iOS',
+      source_url: 'https://cursor.com/changelog/ios-mobile-app',
+      published_at: 'Mon, 29 Jun 2026 00:00:00 GMT',
+      apply_in_eos: 'iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.'
+    },
+    {
+      title: 'Cursor for iOS',
+      source_url: 'https://cursor.com/docs/cloud-agent/mobile',
+      published_at: null,
+      apply_in_eos: 'This watch runs in the Cloud Agent VM, not on iPhone or iPad. Cursor for iOS is an optional beta client. Keep environment.json + Builds on the web. /remote-control hands a local session to the cloud; tool calls stay on the computer. Privacy Mode (Legacy) is not supported. Do not ingest GitHub or GitLab setup pages. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -2218,6 +2280,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/automations'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/hooks'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/approval-agents'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/mobile'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices'), false);
@@ -2318,6 +2381,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/bugbot'), false);
   assert.equal(current.includes('cursor.com/docs/security-agents'), false);
   assert.equal(current.includes('cursor.com/docs/approval-agents'), false);
+  assert.equal(current.includes('cursor.com/docs/cloud-agent/mobile'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);

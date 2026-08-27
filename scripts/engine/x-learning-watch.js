@@ -205,6 +205,9 @@ function headingBodySummary(body) {
   if (/\bVulnerability Scanner\b/i.test(clean) && !/\bVulnerability Scanner\b/i.test(first)) extras.push('Vulnerability Scanner');
   if (/APPROVAL_POLICY\.md/.test(body) && !/APPROVAL_POLICY\.md/.test(first)) extras.push('APPROVAL_POLICY.md');
   if (/\.cursor\/approval-policies\/ROUTING\.md/.test(body) && !/\.cursor\/approval-policies\/ROUTING\.md/.test(first)) extras.push('.cursor/approval-policies/ROUTING.md');
+  if (/\/remote-control/i.test(clean) && !/\/remote-control/i.test(first)) extras.push('/remote-control');
+  if (/Privacy Mode \(Legacy\)/i.test(clean) && !/Privacy Mode \(Legacy\)/i.test(first)) extras.push('Privacy Mode (Legacy)');
+  if (/source:\s*iosApp/i.test(body) && !/source:\s*iosApp/i.test(first)) extras.push('source: iosApp');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -216,6 +219,9 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'related pages'
     || key === 'command palette'
     || key === 'get started'
+    || key === 'getting started'
+    || key === 'before you start'
+    || key === 'team controls'
     || key === 'was this article helpful'
     || key === 'faq'
     || key === 'examples'
@@ -295,7 +301,7 @@ function shouldSkipMarkdownHeading(heading) {
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -551,6 +557,9 @@ export function applyHint(item) {
   }
   if (isApprovalAgentsDocUrl(item?.link)) {
     return 'PR Routing & Approval is optional vendor automation. It does not replace EOS TDD or human review. Keep exact APPROVAL_POLICY.md and .cursor/approval-policies/ROUTING.md if this repo uses them. Do not treat vendor auto-approve as EOS evidence. Keep GitHub as source of truth; do not ingest Slack or Teams setup. Honor included quota; do not switch this watch to on-demand.';
+  }
+  if (isCloudAgentMobileUrl(item?.link)) {
+    return 'This watch runs in the Cloud Agent VM, not on iPhone or iPad. Cursor for iOS is an optional beta client. Keep environment.json + Builds on the web. /remote-control hands a local session to the cloud; tool calls stay on the computer. Privacy Mode (Legacy) is not supported. Do not ingest GitHub or GitLab setup pages. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
@@ -848,6 +857,12 @@ function isApprovalAgentsDocUrl(url) {
     || value === 'https://www.cursor.com/docs/approval-agents';
 }
 
+function isCloudAgentMobileUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent/mobile'
+    || value === 'https://www.cursor.com/docs/cloud-agent/mobile';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -959,6 +974,14 @@ function currentClusterKey(learning) {
     || url.includes('changelog/04-30-26')
   ) {
     return 'cluster:security-agents';
+  }
+  if (
+    isCloudAgentMobileUrl(learning?.source_url)
+    || url.includes('changelog/ios-mobile-app')
+    || url.includes('changelog/ipad')
+    || url.includes('forum.cursor.com/t/cursor-mobile-app-for-ios')
+  ) {
+    return 'cluster:cursor-ios';
   }
   return normalizeTitleKey(learning?.title);
 }
