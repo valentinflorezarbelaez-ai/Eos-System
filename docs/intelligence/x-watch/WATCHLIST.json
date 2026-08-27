@@ -152,6 +152,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-CLI-OVERVIEW",
+      "url": "https://cursor.com/docs/cli/overview",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLI_OVERVIEW",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-CURSOR-ROUTER",
       "url": "https://cursor.com/docs/cursor-router",
       "kind": "html-page",
