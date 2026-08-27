@@ -211,6 +211,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/using' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cli/installation'),
     false
   );
@@ -1018,6 +1022,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Settings', link: 'https://cursor.com/docs/origin/settings' },
     { title: 'Codebase settings', link: 'https://cursor.com/docs/origin/codebase-settings' },
     { title: 'Cursor CLI', link: 'https://cursor.com/docs/cli/overview' },
+    { title: 'Using Agent in CLI', link: 'https://cursor.com/docs/cli/using' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1245,6 +1250,28 @@ test('applyHint for Cursor CLI keeps this watch in the Cloud Agent VM', () => {
   assert.match(hint, /without the local agent CLI/i);
   assert.match(hint, /Do not install Cursor CLI/i);
   assert.match(hint, /print mode/i);
+  assert.match(hint, /Cloud Agent handoff/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('curl'), false);
+});
+
+test('applyHint for Using Agent in CLI keeps this watch in the Cloud Agent VM', () => {
+  const hint = applyHint({
+    title: 'Using Agent in CLI',
+    link: 'https://cursor.com/docs/cli/using',
+    summary: 'Use Agent from the command line with prompting strategies, MCP support, and rule integration. Navigate conversations, review changes, and manage command approval.'
+  });
+  assert.match(hint, /optional local terminal agent/i);
+  assert.match(hint, /without the local agent CLI/i);
+  assert.match(hint, /print mode/i);
+  assert.match(hint, /worktrees/i);
+  assert.match(hint, /ACP/i);
   assert.match(hint, /Cloud Agent handoff/i);
   assert.match(hint, /\/goal/);
   assert.match(hint, /environment\.json/);
@@ -2006,6 +2033,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(cursorCli[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(cursorCli[0]).includes('curl'), false);
 
+  const cursorCliUsing = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cli-using.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cli/using'
+  );
+  assert.equal(cursorCliUsing[0].id, 'https://cursor.com/docs/cli/using');
+  assert.equal(cursorCliUsing[0].title, 'Using Agent in CLI');
+  assert.match(cursorCliUsing[0].summary, /Use Agent from the command line/);
+  assert.match(applyHint(cursorCliUsing[0]), /optional local terminal agent/i);
+  assert.match(applyHint(cursorCliUsing[0]), /worktrees/i);
+  assert.equal(/enable/i.test(applyHint(cursorCliUsing[0])), false);
+  assert.equal(applyHint(cursorCliUsing[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(cursorCliUsing[0]).includes('curl'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -2521,6 +2562,21 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(cursorCliMd.summary.includes('Sitemap'), false);
   assert.equal(cursorCliMd.summary.includes('cursor.com/install'), false);
   assert.equal(/Getting started —/.test(cursorCliMd.summary), false);
+
+  const cursorCliUsingMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cli-using.md'), 'utf8')
+  );
+  assert.equal(cursorCliUsingMd.title, 'Using Agent in CLI');
+  assert.match(cursorCliUsingMd.summary, /Modes/);
+  assert.match(cursorCliUsingMd.summary, /Prompting/);
+  assert.match(cursorCliUsingMd.summary, /MCP/);
+  assert.match(cursorCliUsingMd.summary, /ACP/);
+  assert.match(cursorCliUsingMd.summary, /Rules/);
+  assert.match(cursorCliUsingMd.summary, /Cloud Agent handoff/);
+  assert.match(cursorCliUsingMd.summary, /CLI worktrees/);
+  assert.match(cursorCliUsingMd.summary, /Non-interactive mode/);
+  assert.equal(cursorCliUsingMd.summary.includes('Sitemap'), false);
+  assert.equal(cursorCliUsingMd.summary.includes('cursor.com/install'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -3458,6 +3514,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Cursor CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI or rotate this watch into print mode, sandbox, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Using Agent in CLI',
+      source_url: 'https://cursor.com/docs/cli/using',
+      published_at: null,
+      apply_in_eos: 'Using Agent in CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not rotate this watch into print mode, worktrees, ACP, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agent Skills',
       source_url: 'https://cursor.com/docs/skills',
       published_at: null,
@@ -3475,6 +3537,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/plan-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/overview'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/using'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -3859,6 +3922,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/plan-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/debug-mode'), false);
   assert.equal(current.includes('cursor.com/docs/cli/overview'), false);
+  assert.equal(current.includes('cursor.com/docs/cli/using'), false);
   assert.equal(current.includes('cursor.com/docs/cli/installation'), false);
   assert.equal(current.includes('cursor.com/docs/agent/design-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/tools/browser'), false);
