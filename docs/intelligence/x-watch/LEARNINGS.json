@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T12:56:47.892Z",
+  "updated_at": "2026-08-27T13:00:07.104Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -949,6 +949,16 @@
       "published_at": null,
       "summary": "Agent is Cursor's assistant that can complete complex coding tasks independently, run terminal commands, and edit code. How Agent works — An agent is built on three components: 1. Tools — Tools are the building blocks of Agent. Checkpoints — Checkpoints save snapshots of your codebase during an Agent session. Queued messages — You have two ways to talk to an agent while it works. Steer a running agent — You can send a follow-up to steer the agent while it's working, without interrupting it. Goals with /goal — Agent reads each message as a new job. /goal",
       "apply_in_eos": "Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-plan-mode",
+      "title": "Plan Mode",
+      "source_url": "https://cursor.com/docs/agent/plan-mode",
+      "published_at": null,
+      "summary": "Plan Mode creates detailed implementation plans before writing any code. How it works — Agent asks clarifying questions to understand your requirements 2. When to use Plan Mode — Plan Mode works best for: Complex features with multiple valid approaches Tasks that touch many files or systems Unclear requirements where you need to explore before understanding scope Architectural decisions where you Starting over from a plan — Sometimes Agent builds something that doesn't match what you wanted.",
+      "apply_in_eos": "Plan Mode is optional desktop planning before code. Keep this watch on the standing /goal; do not rotate this Cloud Agent into Plan Mode for daily ingest. EOS TDD remains required. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
