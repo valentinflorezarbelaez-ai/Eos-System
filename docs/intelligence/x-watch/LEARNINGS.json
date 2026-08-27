@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T14:40:57.725Z",
+  "updated_at": "2026-08-27T14:46:08.041Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1419,6 +1419,16 @@
       "published_at": null,
       "summary": "Rules provide system-level instructions to Agent. How rules work — Large language models don't retain memory between completions. Project rules — Project rules live in .cursor/rules as .mdc files and are version-controlled. Creating a rule — There are two ways to create rules: /create-rule in chat : Type /create-rule in Agent and describe what you want. Best practices — Good rules are focused, actionable, and scoped. What to avoid in rules — Copying entire style guides : Use a linter instead. Rule file format — Each rule is a markdown file with frontmatter metadata and content. Team Rules — Team and Enterprise plans can create and enforce rules across their entire organization from the Cursor dashboard. Importing Rules — You can import rules from external sources to reuse existing configu…",
       "apply_in_eos": "Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-sdk-python",
+      "title": "Cursor Python SDK",
+      "source_url": "https://cursor.com/docs/sdk/python",
+      "published_at": null,
+      "summary": "The package lets you call Cursor's agent from your own Python code. Overview — The SDK wraps local and cloud runtimes behind one interface. Authentication — Set or pass before creating an agent. Usage and billing — SDK runs follow the same pricing, request pools, and Privacy Mode rules as runs from the IDE and Cloud Agents. Core concepts Installation — Requires Python 3.10 or later. Quick start — Stream events shows how to extract assistant text, handle tool calls, and read run state. Async usage — The async client mirrors the sync surface and is recommended for servers, bots, and concurrent agent orchestration. Creating agents — validates options and returns a handle immediately. Agent — The handle returned by , , , and . CursorClient — Use when you want explicit lifecycle control, a cus…",
+      "apply_in_eos": "The Python SDK is optional agent scripting. This watch uses official feeds, not cursor-sdk or api.cursor.com. Do not install cursor-sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
