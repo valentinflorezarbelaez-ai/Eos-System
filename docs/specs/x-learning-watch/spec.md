@@ -10,7 +10,7 @@ A local learning watch that records requested X accounts, fetches official Curso
 
 ## 2. Product & Functional Requirements
 - **FR-1:** Persist a watchlist that includes `cursor_ai` (`https://x.com/cursor_ai`) plus additional handles without requiring an X API.
-- **FR-2:** Fetch and parse RSS 2.0, Atom 1.0, the official Cursor blog HTML index, and named official docs/help HTML pages from configured feeds (changelog RSS, forum announcements RSS, `https://cursor.com/blog`, Grok 4.6 help, Models & Pricing, Cloud Agent automations, Cloud Agent Builds, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Subagents, Agent overview `/goal`, Agent Skills). Do not ingest `latest.rss`. Do not scrape X. Docs/help pages use `kind: html-page` with a stable id equal to the page URL.
+- **FR-2:** Fetch and parse RSS 2.0, Atom 1.0, the official Cursor blog HTML index, and named official docs/help HTML pages from configured feeds (changelog RSS, forum announcements RSS, `https://cursor.com/blog`, Grok 4.6 help, Models & Pricing, Cloud Agent automations, Cloud Agent Builds, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview `/goal`, Agent Skills). Do not ingest `latest.rss`. Do not scrape X. Docs/help pages use `kind: html-page` with a stable id equal to the page URL.
 - **FR-3:** Refuse to fetch `x.com` / `twitter.com` URLs; mark those sources `BLOCKED`.
 - **FR-4:** Compute a delta of unseen items by stable `id` (guid / atom id / link).
 - **FR-5:** Render a markdown briefing from new items, preserving source URL and published date.
@@ -48,6 +48,7 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-18:** CURRENT.md clusters Subagents onto `changelog/08-19-26`, keeps `docs/cloud-agent` as a living overview row, and does not collapse Cloud Agent Builds into that overview.
 - [x] **AC-19:** CURRENT.md keeps `docs/agent/overview` (`/goal`) and `docs/skills` (Custom Modes) as living rows instead of collapsing them into the harness changelog.
 - [x] **AC-20:** A no-op ingest (`newItems = 0` and unchanged LEARNINGS/CURRENT product text) does not rewrite STATE, LEARNINGS, or CURRENT timestamps.
+- [x] **AC-21:** CURRENT.md clusters `docs/cloud-agent/capabilities` onto `changelog/08-19-26` and keeps `docs/cloud-agent` as a living overview row.
 
 ## 6. Verification & Evidence Plan
 ```bash

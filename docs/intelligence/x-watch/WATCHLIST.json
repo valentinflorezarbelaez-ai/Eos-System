@@ -96,6 +96,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-CAPABILITIES",
+      "url": "https://cursor.com/docs/cloud-agent/capabilities",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_CAPABILITIES",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-SUBAGENTS",
       "url": "https://cursor.com/docs/subagents",
       "kind": "html-page",

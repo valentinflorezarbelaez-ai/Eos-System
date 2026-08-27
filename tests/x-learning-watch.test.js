@@ -185,6 +185,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/capabilities' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/subagents' && feed.kind === 'html-page'),
     true
   );
@@ -312,6 +316,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
     { title: 'Cloud Agents', link: 'https://cursor.com/docs/cloud-agent' },
+    { title: 'Capabilities', link: 'https://cursor.com/docs/cloud-agent/capabilities' },
     { title: 'Subagents', link: 'https://cursor.com/docs/subagents' },
     { title: 'Overview', link: 'https://cursor.com/docs/agent/overview' },
     { title: 'Agent Skills', link: 'https://cursor.com/docs/skills' },
@@ -555,6 +560,28 @@ test('parseOfficialSource html-page maps Cloud Agents overview and Subagents', (
   );
   assert.equal(subagents[0].title, 'Subagents');
   assert.match(applyHint(subagents[0]), /isolated subagents/i);
+});
+
+test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {
+  const capabilities = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-capabilities.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/capabilities'
+  );
+  assert.equal(capabilities[0].id, 'https://cursor.com/docs/cloud-agent/capabilities');
+  assert.equal(capabilities[0].title, 'Capabilities');
+  assert.match(capabilities[0].summary, /subscriptions/i);
+  assert.match(applyHint(capabilities[0]), /subscriptions|auto-CI-fix/i);
+  assert.equal(applyHint(capabilities[0]).includes('isolated VMs'), false);
+  assert.equal(applyHint(capabilities[0]).includes('desktop scraping'), false);
+
+  const overviewHint = applyHint({
+    title: 'Cloud Agents',
+    link: 'https://cursor.com/docs/cloud-agent',
+    summary: 'Run Agent in the cloud for continuous coding assistance.'
+  });
+  assert.match(overviewHint, /isolated VMs/i);
+  assert.equal(overviewHint.includes('auto-CI-fix'), false);
 });
 
 test('parseOfficialSource html-page maps agent overview /goal and Agent Skills', () => {
@@ -824,6 +851,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.'
     },
     {
+      title: 'Capabilities',
+      source_url: 'https://cursor.com/docs/cloud-agent/capabilities',
+      published_at: null,
+      apply_in_eos: 'Honor Cloud Agent subscriptions (GitHub PR, Slack, timers) and auto-CI-fix on PRs this agent opens. Do not scrape X.'
+    },
+    {
       title: 'Cloud Agent Builds',
       source_url: 'https://cursor.com/docs/cloud-agent/builds',
       published_at: null,
@@ -847,6 +880,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/capabilities'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 

@@ -232,6 +232,9 @@ export function applyHint(item) {
   if (isCloudAgentOverviewUrl(item?.link)) {
     return 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.';
   }
+  if (isCloudAgentCapabilitiesUrl(item?.link)) {
+    return 'Honor Cloud Agent subscriptions (GitHub PR, Slack, timers) and auto-CI-fix on PRs this agent opens. Do not scrape X.';
+  }
   if (isAgentOverviewUrl(item?.link)) {
     return 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.';
   }
@@ -464,6 +467,12 @@ function isCloudAgentOverviewUrl(url) {
   return value === 'https://cursor.com/docs/cloud-agent' || value === 'https://www.cursor.com/docs/cloud-agent';
 }
 
+function isCloudAgentCapabilitiesUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent/capabilities'
+    || value === 'https://www.cursor.com/docs/cloud-agent/capabilities';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -495,6 +504,7 @@ function currentClusterKey(learning) {
   if (
     url.includes('changelog/08-19-26')
     || url.includes('cloud-agent/automations')
+    || url.includes('cloud-agent/capabilities')
     || url.includes('help/ai-features/automations')
     || url.includes('/docs/subagents')
     || url.includes('changelog/cloud-in-agents-window')

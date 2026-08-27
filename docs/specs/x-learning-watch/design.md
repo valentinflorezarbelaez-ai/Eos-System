@@ -4,7 +4,7 @@
 `scripts/engine/x-learning-watch.js` — pure functions plus an `ingest()` orchestrator.
 
 ## Data
-- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations, Builds, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Subagents, Agent overview, and Agent Skills)
+- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations, Builds, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, and Agent Skills)
 - `docs/intelligence/x-watch/STATE.json` — `seen_ids`, last ingest timestamp
 - `docs/intelligence/x-watch/briefings/YYYY-MM-DD.md` — human briefing
 
@@ -22,12 +22,12 @@ Living docs/help pages have no RSS. `html-page` items use `id = feed.url` so the
 
 CURRENT.md clusters related product titles onto one row, preferring changelog > docs/help > blog > forum:
 - Grok 4.6 (`grok 4.6` / `grok-4-6`)
-- Cloud Agent harness (`changelog/08-19-26`, automations docs/help)
+- Cloud Agent harness (`changelog/08-19-26`, automations docs/help, `docs/cloud-agent/capabilities`)
 - Cloud Agent Builds (`changelog/08-13-26`, `docs/cloud-agent/builds`, `blog/builds`)
 - Origin (`origin-code-hosting`, `docs/origin`)
 - Cursor Router (`changelog/router`, `docs/cursor-router`, router blog posts)
 - Cloud Agent harness also includes `docs/subagents` and `changelog/cloud-in-agents-window`
-- Cloud Agents overview (`docs/cloud-agent` exact URL) stays a living row and must not match `docs/cloud-agent/builds`
+- Cloud Agents overview (`docs/cloud-agent` exact URL) stays a living row and must not match `docs/cloud-agent/builds` or `docs/cloud-agent/capabilities`
 - Agent overview (`docs/agent/overview`) stays a living `/goal` row
 - Agent Skills (`docs/skills`) stays a living Custom Mode row
 
