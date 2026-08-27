@@ -102,6 +102,8 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-72:** `apply_in_eos` for `docs/agent/agent-review` states that Agent Review is optional in-editor review of local changes, that EOS TDD evidence remains required, that `/agent-review` is not a substitute for tests, that `BUGBOT.md` is kept if this repo uses Bugbot rules, that this watch already runs in the Cloud Agent VM not the desktop Agents Window, and to honor included quota without switching this watch to on-demand.
 - [x] **AC-73:** CURRENT.md clusters `docs/agent/plan-mode` onto `docs/agent/overview` and keeps Usage and limits as a living row.
 - [x] **AC-74:** `apply_in_eos` for `docs/agent/plan-mode` states that Plan Mode is optional desktop planning before code, that this watch stays on the standing `/goal`, not to rotate this Cloud Agent into Plan Mode for daily ingest, that EOS TDD remains required, and to honor included quota without switching this watch to on-demand.
+- [x] **AC-75:** CURRENT.md clusters `docs/agent/debug-mode` onto `docs/agent/overview` and keeps Usage and limits as a living row.
+- [x] **AC-76:** `apply_in_eos` for `docs/agent/debug-mode` states that Debug Mode is optional desktop debugging with a local Cursor extension, that this watch already uses EOS TDD in the Cloud Agent VM, not to rotate this Cloud Agent into Debug Mode for daily ingest, that the standing `/goal` stays, and to honor included quota without switching this watch to on-demand.
 
 ## 6. Verification & Evidence Plan
 ```bash

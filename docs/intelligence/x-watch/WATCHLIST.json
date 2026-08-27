@@ -285,6 +285,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-DEBUG-MODE",
+      "url": "https://cursor.com/docs/agent/debug-mode",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_DEBUG_MODE",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-MCP",
       "url": "https://cursor.com/docs/mcp",
       "kind": "html-page",

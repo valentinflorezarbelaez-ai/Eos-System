@@ -295,6 +295,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/debug-mode' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -1059,6 +1063,24 @@ test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Debug Mode keeps EOS TDD in the Cloud Agent VM', () => {
+  const hint = applyHint({
+    title: 'Debug Mode',
+    link: 'https://cursor.com/docs/agent/debug-mode',
+    summary: 'Debug Mode helps you find root causes using runtime logs.'
+  });
+  assert.match(hint, /optional desktop debugging/i);
+  assert.match(hint, /local Cursor extension/i);
+  assert.match(hint, /Cloud Agent VM/);
+  assert.match(hint, /TDD/);
+  assert.match(hint, /do not rotate this Cloud Agent into Debug Mode/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1496,6 +1518,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(planMode[0]), /optional desktop planning/i);
   assert.equal(/enable/i.test(applyHint(planMode[0])), false);
 
+  const debugMode = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-debug-mode.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/agent/debug-mode'
+  );
+  assert.equal(debugMode[0].id, 'https://cursor.com/docs/agent/debug-mode');
+  assert.equal(debugMode[0].title, 'Debug Mode');
+  assert.match(debugMode[0].summary, /root causes/i);
+  assert.match(applyHint(debugMode[0]), /Cloud Agent VM/);
+  assert.match(applyHint(debugMode[0]), /TDD/);
+  assert.equal(/enable/i.test(applyHint(debugMode[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1856,6 +1890,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(planModeMd.summary.includes('Sitemap'), false);
   assert.equal(/Switching modes —/.test(planModeMd.summary), false);
   assert.equal(/Related —/.test(planModeMd.summary), false);
+
+  const debugModeMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-debug-mode.md'), 'utf8')
+  );
+  assert.equal(debugModeMd.title, 'Debug Mode');
+  assert.match(debugModeMd.summary, /When to use Debug Mode/);
+  assert.match(debugModeMd.summary, /How it works/);
+  assert.match(debugModeMd.summary, /Tips for Debug Mode/);
+  assert.equal(debugModeMd.summary.includes('Sitemap'), false);
+  assert.equal(/Switching modes —/.test(debugModeMd.summary), false);
+  assert.equal(/Related —/.test(debugModeMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2350,6 +2395,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Plan Mode is optional desktop planning before code. Keep this watch on the standing /goal; do not rotate this Cloud Agent into Plan Mode for daily ingest. EOS TDD remains required. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Debug Mode',
+      source_url: 'https://cursor.com/docs/agent/debug-mode',
+      published_at: null,
+      apply_in_eos: 'Debug Mode is optional desktop debugging with a local Cursor extension. This watch already uses EOS TDD in the Cloud Agent VM; do not rotate this Cloud Agent into Debug Mode for daily ingest. Keep the standing /goal. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agent Skills',
       source_url: 'https://cursor.com/docs/skills',
       published_at: null,
@@ -2365,6 +2416,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/overview'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/plan-mode'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -2734,6 +2786,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/agents-window'), false);
   assert.equal(current.includes('cursor.com/docs/agent/agent-review'), false);
   assert.equal(current.includes('cursor.com/docs/agent/plan-mode'), false);
+  assert.equal(current.includes('cursor.com/docs/agent/debug-mode'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
