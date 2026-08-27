@@ -95,6 +95,7 @@
     "https://cursor.com/docs/agent/agent-review",
     "https://cursor.com/docs/agent/agents-window",
     "https://cursor.com/docs/agent/debug-mode",
+    "https://cursor.com/docs/agent/design-mode",
     "https://cursor.com/docs/agent/overview",
     "https://cursor.com/docs/agent/plan-mode",
     "https://cursor.com/docs/agent/prompting",
@@ -131,7 +132,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-27T13:04:54.450Z",
-  "last_item_count": 130,
+  "last_ingest_at": "2026-08-27T13:08:39.072Z",
+  "last_item_count": 131,
   "last_new_item_count": 1
 }

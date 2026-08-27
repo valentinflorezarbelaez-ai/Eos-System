@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:04:54.460Z",
+  "updated_at": "2026-08-27T13:08:39.081Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -949,6 +949,16 @@
       "published_at": null,
       "summary": "Debug Mode helps you find root causes and fix tricky bugs that are hard to reproduce or understand. When to use Debug Mode — Debug Mode works best for: Bugs you can reproduce but can't figure out : When you know something is wrong but the cause isn't obvious from reading the code Race conditions and timing issues : Problems that depend on exec How it works — Explore and hypothesize : The agent explores relevant files, builds context, and generates multiple hypotheses about potential root causes. Tips for Debug Mode — Provide detailed context : The more you describe the bug and how to reproduce it, the better the agent's instrumentation will be.",
       "apply_in_eos": "Debug Mode is optional desktop debugging with a local Cursor extension. This watch already uses EOS TDD in the Cloud Agent VM; do not rotate this Cloud Agent into Debug Mode for daily ingest. Keep the standing /goal. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-design-mode",
+      "title": "Design Mode",
+      "source_url": "https://cursor.com/docs/agent/design-mode",
+      "published_at": null,
+      "summary": "Design Mode lets you direct agents with visual prompts. Ways to direct the agent — Design Mode gives you several ways to convey intent. Select an element — Click any element in the running product to target it. Select multiple elements — Multi-select helps when the change depends on a relationship between elements. Draw on the page — Drawing tells the agent which area of the page your instruction applies to. Narrate by voice — You can narrate instructions with your voice instead of typing. What the agent sees — Picking an element adds two complementary signals to context: Element identity : the xpath, the component, attributes, computed styles, and props from the fiber tree. Work in flow — When you refine an interface, one edit usually leads to the next.",
+      "apply_in_eos": "Design Mode is optional desktop visual prompting in the Agents Window. This watch already runs in the Cloud Agent VM, not the desktop Agents Window. Do not rotate this Cloud Agent into Design Mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
