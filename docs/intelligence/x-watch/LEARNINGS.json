@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:45:27.919Z",
+  "updated_at": "2026-08-27T13:49:45.102Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1279,6 +1279,16 @@
       "published_at": null,
       "summary": "Origin is currently released in early beta. macOS, Linux and Windows (WSL) — Install the Origin CLI with a single command: The installer puts the binary at . Verification — After installation, verify that the Origin CLI is working correctly: Sign in — Sign in to your Cursor account: Complete the browser flow with the Cursor account that has Origin access. Manage repositories — The CLI can create and delete Origin repositories, so you do not have to open the web UI: without a slash creates the repository in your account's namespace. Updates — To update the Origin CLI to the current release: Next steps — Commands Pull request commands Create a repository Clone, Push & Pull Mirror a GitHub repo Browse & Search Integrations ---",
       "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-create-repository",
+      "title": "Create an Origin repository",
+      "source_url": "https://cursor.com/docs/origin/create-repository",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Create in the UI — From cursor.com/codebase: 1. Sync from GitHub — To copy an existing GitHub repository into Origin, select Sync from GitHub on the codebase home instead of New *. Create with a Cursor agent — Cursor agents can create Origin repositories as part of a task. Name, visibility, and sharing — Enter a Repo Name in the New repo dialog Choose visibility: Internal (visible to anyone with access to your team's codebase) or Private (visible only to members granted access directly or through codebase permissions) Te",
+      "apply_in_eos": "Creating an Origin repository is optional paid git hosting. GitHub remains source of truth for this synced repo. Do not create an Origin repo or Detach from GitHub for this watch. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
