@@ -208,6 +208,8 @@ function headingBodySummary(body) {
   if (/\/remote-control/i.test(clean) && !/\/remote-control/i.test(first)) extras.push('/remote-control');
   if (/Privacy Mode \(Legacy\)/i.test(clean) && !/Privacy Mode \(Legacy\)/i.test(first)) extras.push('Privacy Mode (Legacy)');
   if (/source:\s*iosApp/i.test(body) && !/source:\s*iosApp/i.test(first)) extras.push('source: iosApp');
+  if (/\/in-cloud/i.test(clean) && !/\/in-cloud/i.test(first)) extras.push('/in-cloud');
+  if (/\/babysit/i.test(clean) && !/\/babysit/i.test(first)) extras.push('/babysit');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -297,12 +299,15 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'pricing'
     || key === 'billing'
     || key === 'viewing runs'
-    || key === 'endpoints';
+    || key === 'endpoints'
+    || key === 'open the agents window'
+    || key === 'switch back to the ide'
+    || key === 'enterprise access';
 }
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -564,6 +569,9 @@ export function applyHint(item) {
   }
   if (isCloudAgentApiEndpointsUrl(item?.link)) {
     return 'This watch uses official feeds, not the Cloud Agents API. Do not treat api.cursor.com as this ingest path. Do not put API keys in git. Keep GitHub as source of truth. Honor included quota; do not switch this watch to on-demand.';
+  }
+  if (isAgentsWindowDocUrl(item?.link)) {
+    return 'This watch already runs in the Cloud Agent VM, not in the desktop Agents Window. Use /in-cloud or /babysit when a local session must hand work to its own VM. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
@@ -875,6 +883,12 @@ function isCloudAgentApiEndpointsUrl(url) {
     || value === 'https://www.cursor.com/docs/cloud-agent/api/endpoints';
 }
 
+function isAgentsWindowDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/agent/agents-window'
+    || value === 'https://www.cursor.com/docs/agent/agents-window';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -932,6 +946,7 @@ function currentClusterKey(learning) {
     || url.includes('/docs/subagents')
     || isHooksDocUrl(learning?.source_url)
     || isApprovalAgentsDocUrl(learning?.source_url)
+    || isAgentsWindowDocUrl(learning?.source_url)
     || url.includes('changelog/cloud-in-agents-window')
     || title === 'automations'
     || title === 'subagents'

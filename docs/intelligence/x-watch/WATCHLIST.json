@@ -264,6 +264,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-AGENTS-WINDOW",
+      "url": "https://cursor.com/docs/agent/agents-window",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_AGENTS_WINDOW",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-MCP",
       "url": "https://cursor.com/docs/mcp",
       "kind": "html-page",
