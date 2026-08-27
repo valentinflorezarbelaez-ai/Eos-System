@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:55:36.396Z",
+  "updated_at": "2026-08-27T13:59:26.175Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1269,6 +1269,16 @@
       "published_at": null,
       "summary": "Origin is currently released in early beta. What you can do — In early beta you can: Create Origin repositories, including from Cursor agents Clone, push, and pull with standard git Mirror a GitHub repository into Origin Open, review, and merge pull requests Browse and search code Who can access — Origin code storage is available on Pro, Teams, and Enterprise plans. Privacy — Origin follows the Privacy Mode of the namespace owner: the team or the individual who owns the repo. Enable Origin — Before your team can use Origin, someone has to claim a codebase name. Repo list — After Origin is enabled, cursor.com/codebase shows your team's repositories. Next steps — Install the Origin CLI Create a repository Mirror a GitHub repo Pull requests Browse & Search Repository settings Codebase settin…",
       "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-browse",
+      "title": "Browse & Search",
+      "source_url": "https://cursor.com/docs/origin/browse",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Folders and files — On Code , browse directories and open files in the tree. Search — Use Go to file (shortcut ) or the search field in the repository header to find files and code matches. Branch history and commits — From Code , open commit history for the current branch.",
+      "apply_in_eos": "Origin browse and search are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not use Origin browse or Detach from GitHub for this watch. This Cloud Agent VM already searches its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
