@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T12:21:33.757Z",
+  "updated_at": "2026-08-27T12:27:45.650Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -943,6 +943,16 @@
       "x_timeline_verified": false
     },
     {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-bugbot",
+      "title": "Bugbot",
+      "source_url": "https://cursor.com/docs/bugbot",
+      "published_at": null,
+      "summary": "Bugbot reviews pull requests and identifies bugs, security issues, and code quality problems. How it works — Bugbot analyzes PR diffs and leaves comments with explanations and fix suggestions. Incremental reviews — By default, Bugbot reviews only the changes since the previous Bugbot review. Effort Levels — Effort levels control how much time Bugbot spends reasoning during a review. Rules — Guide reviews with team rules, repository rules, and project .cursor/BUGBOT.md files. Run in your agent — Use the /review-bugbot or /review skills to run Bugbot from your agent before you push the code. Autofix — Bugbot Autofix automatically spawns a Cloud Agent to fix bugs found during PR reviews. MCP support — Bugbot is integrated with your MCP servers so your AI tools can interact with Bugbot direct…",
+      "apply_in_eos": "Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
       "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent",
       "title": "Cloud Agents",
       "source_url": "https://cursor.com/docs/cloud-agent",
@@ -1067,7 +1077,7 @@
       "title": "Cursor Router",
       "source_url": "https://cursor.com/docs/cursor-router",
       "published_at": null,
-      "summary": "Cursor Router is the model routing system behind Auto *. How it works — When you select Auto and choose Balance or Intelligence in the model picker, Cursor Router runs a classifier on each agent request and routes it based on task type and complexity. Optimization modes — Open the model picker, select Auto , and pick a mode under Optimize For : Cost : Uses the previous Auto routing logic. Pricing — All Auto modes bill at the list price of the model each request is routed to. Team settings — Admins configure Cursor Router from the team dashboard. Use Router through the SDK — The TypeScript SDK and Python SDK expose Cursor Router as model id with parameter ( , , or ).",
+      "summary": "Cursor Router is the model routing system behind Auto *. How it works — When you select Auto and choose Balance or Intelligence in the model picker, Cursor Router runs a classifier on each agent request and routes it based on task type and complexity. Optimization modes — Open the model picker, select Auto , and pick a mode under Optimize For : Cost : Uses the previous Auto routing logic. Team settings — Admins configure Cursor Router from the team dashboard. Use Router through the SDK — The TypeScript SDK and Python SDK expose Cursor Router as model id with parameter ( , , or ).",
       "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
