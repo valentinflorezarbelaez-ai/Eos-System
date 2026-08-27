@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T12:37:58.755Z",
+  "updated_at": "2026-08-27T12:42:21.800Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -977,7 +977,7 @@
       "title": "Automations",
       "source_url": "https://cursor.com/docs/cloud-agent/automations",
       "published_at": null,
-      "summary": "Cursor Automations run cloud agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. Getting started — Create a new automation in the Agents Window, at cursor.com/automations, with the /automate skill from a local agent session, or from a template in the Cursor Marketplace. Triggers — Triggers decide when an automation runs. Scheduled triggers — Scheduled triggers run on a recurring schedule. Source control triggers — Source control triggers respond to pull request and push events from your connected Git provider: GitHub, GitLab, and Bitbucket Cloud. Slack triggers — Slack triggers respond to events from the Cursor Slack integration. Webhook triggers — Webhook triggers create a private HTTP endpoint for your automatio…",
+      "summary": "Cursor Automations run cloud agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. Triggers — Triggers decide when an automation runs. Scheduled triggers — Scheduled triggers run on a recurring schedule. Source control triggers — Source control triggers respond to pull request and push events from your connected Git provider: GitHub, GitLab, and Bitbucket Cloud. Slack triggers — Slack triggers respond to events from the Cursor Slack integration. Webhook triggers — Webhook triggers create a private HTTP endpoint for your automation. Linear triggers — Linear triggers respond to events from the Cursor Linear integration. Sentry triggers — Sentry triggers run when error and issue events occur in your Sentry project. Pag…",
       "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1029,6 +1029,16 @@
       "published_at": null,
       "summary": "Preview Agent metadata is in preview and subject to change, including breaking changes. Read a value — The agent reads keys over the Unix socket at . When keys appear — Install scripts can read the same socket. Keys — Missing keys are omitted from listings and return if requested directly. Who can read metadata — Any process that can reach the socket can read every key: the agent, code it runs, and hooks. OIDC Rate limits and errors — Each agent VM can make 120 metadata requests per minute, in bursts of up to 20. OIDC",
       "apply_in_eos": "Read Cloud Agent run metadata from the VM socket; it is not a credential. Use OIDC JWTs when something outside the VM must verify identity. Do not confuse this with SDK/Cloud Agents API metadata tags.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-mobile",
+      "title": "Cursor for iOS",
+      "source_url": "https://cursor.com/docs/cloud-agent/mobile",
+      "published_at": null,
+      "summary": "Beta Cursor for iOS is in beta. What you can do — You get the full cloud agent workflow from your pocket, not a stripped-down chat box. Use the iPad layout — The iPad app uses the larger screen to keep more of an agent's work visible: Keep chats in the sidebar while you follow several agents. What lives on the web — The app focuses on directing and reviewing agents. Move between devices — Agents follow you across surfaces: Desktop or web to mobile. source: iosApp Remote Control — Remote Control lets you take an agent you're running on your computer and keep directing it from your phone. Run /remote-control — In the agent's input on your computer, run /remote-control , then send your next message. How your code stays on your machine — Remote Control automatically manages a worker on your c…",
+      "apply_in_eos": "This watch runs in the Cloud Agent VM, not on iPhone or iPad. Cursor for iOS is an optional beta client. Keep environment.json + Builds on the web. /remote-control hands a local session to the cloud; tool calls stay on the computer. Privacy Mode (Legacy) is not supported. Do not ingest GitHub or GitLab setup pages. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
