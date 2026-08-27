@@ -4,7 +4,7 @@
 `scripts/engine/x-learning-watch.js` — pure functions plus an `ingest()` orchestrator.
 
 ## Data
-- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Builds, Cloud Agent setup, Cloud Agent best practices, Cloud Agent identity / OIDC, Cloud Agent metadata, Origin, Origin CLI, Origin integrations, Origin GitHub mirror, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, Agent prompting / Custom Modes, Rules, Hooks, and Cloud Agent Secrets & Network)
+- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Builds, Cloud Agent setup, Cloud Agent best practices, Cloud Agent identity / OIDC, Cloud Agent metadata, Origin, Origin CLI, Origin integrations, Origin GitHub mirror, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, Agent prompting / Custom Modes, Rules, Hooks, Cloud Agent Secrets & Network, and MCP)
 - `docs/intelligence/x-watch/STATE.json` — `seen_ids`, last ingest timestamp
 - `docs/intelligence/x-watch/briefings/YYYY-MM-DD.md` — human briefing
 
@@ -29,13 +29,14 @@ CURRENT.md clusters related product titles onto one row, preferring changelog > 
 - Cloud Agent harness also includes `docs/subagents` and `changelog/cloud-in-agents-window`
 - Cloud Agents overview (`docs/cloud-agent` exact URL) stays a living row and must not match `docs/cloud-agent/builds` or `docs/cloud-agent/capabilities`
 - Agent overview (`docs/agent/overview`) stays a living `/goal` row; `apply_in_eos` also covers steering follow-ups from that page
-- Agent Skills (`docs/skills`) stays a living Custom Mode row; `docs/agent/prompting` and `docs/rules` cluster onto that row so Usage and limits is not evicted. `apply_in_eos` for Rules keeps `.mdc` / `AGENTS.md` / `/create-rule` and does not treat team-dashboard rules as EOS governance.
+- Agent Skills (`docs/skills`) stays a living Custom Mode row; `docs/agent/prompting`, `docs/rules`, and `docs/mcp` cluster onto that row so Usage and limits is not evicted. `apply_in_eos` for Rules keeps `.mdc` / `AGENTS.md` / `/create-rule` and does not treat team-dashboard rules as EOS governance. `apply_in_eos` for MCP commits `.cursor/mcp.json` and does not treat team-dashboard MCP as EOS governance.
 - Origin GitHub mirror (`docs/origin/mirror-github`) clusters onto the Origin changelog; `apply_in_eos` keeps GitHub as source of truth and does not tell operators to Detach
 - Cloud Agent best practices (`docs/cloud-agent/best-practices`) clusters onto the Builds changelog; `apply_in_eos` prefers OIDC over long-lived secrets and uses skills/`AGENTS.md`/`.cursor/rules`
 - Cloud Agent identity (`docs/cloud-agent/identity`) clusters onto the Builds changelog; `apply_in_eos` prefers short-lived OIDC JWTs, does not treat the VM socket as the Cloud Agents API, and tells verifiers to reject unexpected `aud`
 - Cloud Agent metadata (`docs/cloud-agent/metadata`) clusters onto the Builds changelog; `apply_in_eos` treats VM metadata as not a credential and prefers OIDC for identity proof
 - Hooks (`docs/hooks`) clusters onto the harness changelog; `apply_in_eos` commits command-based hooks as `.cursor/hooks.json` at the repo root (user-level `~/.cursor/hooks.json` and Tab/sessionStart/prompt-based hooks are not available in Cloud Agents)
 - Cloud Agent Secrets & Network (`docs/cloud-agent/security-network`) clusters onto the Builds changelog; `apply_in_eos` prefers Runtime Secrets or OIDC over long-lived keys in git, treats `[REDACTED]` as expected, and honors network allowlists without `*.s3` wildcards
+- MCP (`docs/mcp`) clusters onto Skills; `apply_in_eos` commits project servers as `.cursor/mcp.json` (user-level `~/.cursor/mcp.json` is local IDE config; team dashboard MCP is not EOS governance)
 
 Clusters rank by the newest sibling date. Up to six unclustered living `cursor.com/docs/` or `cursor.com/help/` pages are reserved in CURRENT even when they have no `<time>` stamp. Changelog URLs that already made the date-ranked top N are not evicted to make room for those reserved pages.
 

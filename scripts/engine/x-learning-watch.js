@@ -143,6 +143,7 @@ function keepInlineCodeToken(trimmed) {
     || /^[A-Za-z][\w-]*\.[A-Za-z0-9]+$/.test(trimmed)
     || /^\.[\w-]+(?:\/[\w.-]+)+$/.test(trimmed)
     || trimmed === '[REDACTED]'
+    || trimmed === '~/.cursor/mcp.json'
     || /^\*\.[A-Za-z0-9.-]+$/.test(trimmed);
 }
 
@@ -187,7 +188,9 @@ function headingBodySummary(body) {
   if (/\bOIDC\b/i.test(clean) && !/\bOIDC\b/i.test(first)) extras.push('OIDC');
   if (/\bJWKS\b/i.test(clean) && !/\bJWKS\b/i.test(first)) extras.push('JWKS');
   if (/\.cursor\/hooks\.json/i.test(clean) && !/\.cursor\/hooks\.json/i.test(first)) extras.push('.cursor/hooks.json');
+  if (/\.cursor\/mcp\.json/i.test(clean) && !/\.cursor\/mcp\.json/i.test(first)) extras.push('.cursor/mcp.json');
   if (/\[REDACTED\]/i.test(clean) && !/\[REDACTED\]/i.test(first)) extras.push('[REDACTED]');
+  if (/\bCloud Agents\b/i.test(clean) && !/\bCloud Agents\b/i.test(first)) extras.push('Cloud Agents');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -226,12 +229,19 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'api endpoint'
     || key === 'using the ip ranges'
     || key === 'git egress proxy and ip allow list'
-    || key === 'cursor review ips';
+    || key === 'cursor review ips'
+    || key === 'one click installation'
+    || key === 'using the extension api'
+    || key === 'extension api reference'
+    || key === 'mcp apps'
+    || key === 'using mcp in chat'
+    || key === 'real world examples'
+    || key === 'static oauth for remote servers';
 }
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -460,6 +470,9 @@ export function applyHint(item) {
   if (isCloudAgentSecurityNetworkUrl(item?.link)) {
     return 'Prefer Runtime Secrets or short-lived OIDC over long-lived keys in git. Treat [REDACTED] in transcripts as expected, not a missing secret. Honor Cloud Agent network allowlists; do not open *.s3 wildcards. Privacy Mode (Legacy) is not supported for Cloud Agents.';
   }
+  if (isMcpDocUrl(item?.link)) {
+    return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
+  }
   if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
   }
@@ -653,7 +666,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url)) return sourcePriority(url) + 0.5;
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url)) return sourcePriority(url) + 0.5;
   return sourcePriority(url);
 }
 
@@ -735,6 +748,11 @@ function isRulesDocUrl(url) {
   return value === 'https://cursor.com/docs/rules' || value === 'https://www.cursor.com/docs/rules';
 }
 
+function isMcpDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/mcp' || value === 'https://www.cursor.com/docs/mcp';
+}
+
 function isLowPriorityBriefing(row) {
   const hint = String(row?.apply_in_eos || '');
   return hint.includes('customer/press stories') || hint.includes('feedback thread') || hint.includes('Campus community');
@@ -796,7 +814,7 @@ function currentClusterKey(learning) {
   ) {
     return 'cluster:cursor-router';
   }
-  if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules') {
+  if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || isMcpDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules' || title === 'model context protocol (mcp)') {
     return 'cluster:skills-custom-modes';
   }
   return normalizeTitleKey(learning?.title);
