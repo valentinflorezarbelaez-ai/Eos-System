@@ -1127,6 +1127,22 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/One-click installation —/.test(mcpMd.summary), false);
 });
 
+test('parseOfficialMarkdown does not inject Cloud Agents extra from later body text', () => {
+  const parsed = parseOfficialMarkdown([
+    '# Setup',
+    '',
+    'Agents run in isolated VMs.',
+    '',
+    '## What is a cloud agent environment?',
+    '',
+    'The development environment for a cloud agent is similar to the setup on your laptop.',
+    '',
+    'Cloud Agents also support MCP.',
+  ].join('\n'));
+  assert.match(parsed.summary, /laptop/);
+  assert.equal(parsed.summary.includes(' Cloud Agents'), false);
+});
+
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {
   const capabilities = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-capabilities.html'), 'utf8'),

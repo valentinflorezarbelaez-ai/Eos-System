@@ -190,7 +190,6 @@ function headingBodySummary(body) {
   if (/\.cursor\/hooks\.json/i.test(clean) && !/\.cursor\/hooks\.json/i.test(first)) extras.push('.cursor/hooks.json');
   if (/\.cursor\/mcp\.json/i.test(clean) && !/\.cursor\/mcp\.json/i.test(first)) extras.push('.cursor/mcp.json');
   if (/\[REDACTED\]/i.test(clean) && !/\[REDACTED\]/i.test(first)) extras.push('[REDACTED]');
-  if (/\bCloud Agents\b/i.test(clean) && !/\bCloud Agents\b/i.test(first)) extras.push('Cloud Agents');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
