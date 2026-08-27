@@ -235,7 +235,11 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
-    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/sdk/bridge'),
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/sdk/bridge' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://github.com/cursor/sdk-bridge'),
     false
   );
   assert.equal(
@@ -1232,6 +1236,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Using Headless CLI', link: 'https://cursor.com/docs/cli/headless' },
     { title: 'Cursor TypeScript SDK', link: 'https://cursor.com/docs/sdk/typescript' },
     { title: 'Cursor Python SDK', link: 'https://cursor.com/docs/sdk/python' },
+    { title: 'Cursor SDK Bridge', link: 'https://cursor.com/docs/sdk/bridge' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -1587,6 +1592,30 @@ test('applyHint for Python SDK keeps this watch on official feeds', () => {
   assert.match(hint, /api\.cursor\.com/);
   assert.match(hint, /Do not install cursor-sdk/i);
   assert.match(hint, /SDK scripts/i);
+  assert.match(hint, /Do not put CURSOR_API_KEY in git/);
+  assert.match(hint, /GitHub/);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('curl'), false);
+});
+
+test('applyHint for SDK Bridge keeps this watch on official feeds', () => {
+  const hint = applyHint({
+    title: 'Cursor SDK Bridge',
+    link: 'https://cursor.com/docs/sdk/bridge',
+    summary: 'Build Cursor agent SDKs in Go, Rust, Java, and other languages on the open sdk.v1 bridge protocol.'
+  });
+  assert.match(hint, /optional local protocol/i);
+  assert.match(hint, /without a first-party SDK/i);
+  assert.match(hint, /official feeds/i);
+  assert.match(hint, /cursor-sdk-bridge/);
+  assert.match(hint, /api\.cursor\.com/);
+  assert.match(hint, /Do not install the SDK Bridge/i);
+  assert.match(hint, /adapter scripts/i);
   assert.match(hint, /Do not put CURSOR_API_KEY in git/);
   assert.match(hint, /GitHub/);
   assert.match(hint, /environment\.json/);
@@ -2432,6 +2461,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(cursorSdkPython[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(cursorSdkPython[0]).includes('curl'), false);
 
+  const cursorSdkBridge = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-sdk-bridge.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/sdk/bridge'
+  );
+  assert.equal(cursorSdkBridge[0].id, 'https://cursor.com/docs/sdk/bridge');
+  assert.equal(cursorSdkBridge[0].title, 'Cursor SDK Bridge');
+  assert.match(cursorSdkBridge[0].summary, /sdk\.v1 bridge protocol/);
+  assert.match(applyHint(cursorSdkBridge[0]), /optional local protocol/i);
+  assert.match(applyHint(cursorSdkBridge[0]), /cursor-sdk-bridge/);
+  assert.equal(/enable/i.test(applyHint(cursorSdkBridge[0])), false);
+  assert.equal(applyHint(cursorSdkBridge[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(cursorSdkBridge[0]).includes('curl'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3040,6 +3083,23 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Troubleshooting —/.test(cursorSdkPythonMd.summary), false);
   assert.equal(cursorSdkPythonMd.summary.toLowerCase().includes('pip install'), false);
   assert.equal(cursorSdkPythonMd.summary.toLowerCase().includes('curl'), false);
+
+  const cursorSdkBridgeMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-sdk-bridge.md'), 'utf8')
+  );
+  assert.equal(cursorSdkBridgeMd.title, 'Cursor SDK Bridge');
+  assert.match(cursorSdkBridgeMd.summary, /When to use it/);
+  assert.match(cursorSdkBridgeMd.summary, /How it works/);
+  assert.match(cursorSdkBridgeMd.summary, /Adapter shape/);
+  assert.match(cursorSdkBridgeMd.summary, /Protocol/);
+  assert.match(cursorSdkBridgeMd.summary, /Authentication/);
+  assert.match(cursorSdkBridgeMd.summary, /Versioning/);
+  assert.match(cursorSdkBridgeMd.summary, /Support/);
+  assert.equal(cursorSdkBridgeMd.summary.includes('Sitemap'), false);
+  assert.equal(/Get started —/.test(cursorSdkBridgeMd.summary), false);
+  assert.equal(/Related —/.test(cursorSdkBridgeMd.summary), false);
+  assert.equal(cursorSdkBridgeMd.summary.toLowerCase().includes('pip install'), false);
+  assert.equal(cursorSdkBridgeMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -3890,6 +3950,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'The Python SDK is optional agent scripting. This watch uses official feeds, not cursor-sdk or api.cursor.com. Do not install cursor-sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Cursor SDK Bridge',
+      source_url: 'https://cursor.com/docs/sdk/bridge',
+      published_at: null,
+      apply_in_eos: 'The SDK Bridge is optional local protocol for languages without a first-party SDK. This watch uses official feeds, not cursor-sdk-bridge or api.cursor.com. Do not install the SDK Bridge or rotate this watch into adapter scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agents Window',
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
@@ -3954,6 +4020,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/python'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/bridge'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/capabilities'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -4260,6 +4327,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'The Python SDK is optional agent scripting. This watch uses official feeds, not cursor-sdk or api.cursor.com. Do not install cursor-sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Cursor SDK Bridge',
+      source_url: 'https://cursor.com/docs/sdk/bridge',
+      published_at: null,
+      apply_in_eos: 'The SDK Bridge is optional local protocol for languages without a first-party SDK. This watch uses official feeds, not cursor-sdk-bridge or api.cursor.com. Do not install the SDK Bridge or rotate this watch into adapter scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agents Window',
       source_url: 'https://cursor.com/docs/agent/agents-window',
       published_at: null,
@@ -4281,6 +4354,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/python'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/bridge'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices'), false);
