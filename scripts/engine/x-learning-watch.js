@@ -224,6 +224,8 @@ function headingBodySummary(body) {
   if (/\.cursor\/worktrees\.json/i.test(clean) && !/\.cursor\/worktrees\.json/i.test(first)) extras.push('.cursor/worktrees.json');
   if (/\bRun Modes\b/i.test(clean) && !/\bRun Modes\b/i.test(first)) extras.push('Run Modes');
   if (/\bAuto-review\b/i.test(clean) && !/\bAuto-review\b/i.test(first)) extras.push('Auto-review');
+  if (/\bSKILL\.md\b/.test(clean) && !/\bSKILL\.md\b/.test(first)) extras.push('SKILL.md');
+  if (/\bAGENTS\.md\b/.test(clean) && !/\bAGENTS\.md\b/.test(first)) extras.push('AGENTS.md');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -245,6 +247,8 @@ function shouldSkipMarkdownHeading(heading, body) {
     || key === 'debugging'
     || key === 'workspace trust'
     || key === 'responsible disclosure'
+    || key === 'learn more'
+    || key === 'marketplace leaderboard'
     || key === 'preview'
     || key === 'quickstart'
     || key === 'partner integrations'
@@ -330,7 +334,7 @@ function shouldSkipMarkdownHeading(heading, body) {
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|\/agent-review|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit|select an element|select multiple elements|draw on the page|narrate by voice|console output|network traffic|tool approval|allow and block lists|browser context|authentication and isolation|^navigate$|^click$|^type$|^scroll$|^screenshot$|cursor_agent|disable heavy prompts|sandbox\.json|instant grep|explore subagent|path encryption|multi-root|open canvas|sharing canvases|packaging in skills|worktrees\.json|setup-worktree|\/worktree|\/best-of-n|\/apply-worktree|\/delete-worktree|configuration options|auto-review|run modes|mcp allowlist/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid|when claims appear|when keys appear|supported hooks|hooks not available|configuration sources|execution type limits|access modes|artifact uploads|mcp\.json|project configuration|global configuration|config interpolation|team mcp|default team marketplace|plugin\.json|team follow-ups|lateral movement|\/review-bugbot|\/review-security|\/agent-review|approval policy|routing polic|risk-based approval|reviewer assignment|policy precedence|ai reviewer|risk scoring|\/remote-control|how your code stays|\/in-cloud|\/babysit|select an element|select multiple elements|draw on the page|narrate by voice|console output|network traffic|tool approval|allow and block lists|browser context|authentication and isolation|^navigate$|^click$|^type$|^scroll$|^screenshot$|cursor_agent|disable heavy prompts|sandbox\.json|instant grep|explore subagent|path encryption|multi-root|open canvas|sharing canvases|packaging in skills|worktrees\.json|setup-worktree|\/worktree|\/best-of-n|\/apply-worktree|\/delete-worktree|configuration options|auto-review|run modes|mcp allowlist|customize page|extension components|skill\.md/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -396,7 +400,7 @@ export async function enrichOfficialHtmlPages(items, fetchImpl) {
     const parsed = parseOfficialMarkdown(response.text);
     const current = String(item.summary || '');
     const summary = parsed.summary && parsed.summary.length > current.length ? parsed.summary : item.summary;
-    out.push({ ...item, summary });
+    out.push({ ...item, title: parsed.title || item.title, summary });
   }
   return out;
 }
@@ -635,6 +639,9 @@ export function applyHint(item) {
   if (isPluginsDocUrl(item?.link)) {
     return 'Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins and ~/.cursor/plugins/local are not EOS governance and are not this Cloud Agent environment. Do not delete a team marketplace without reviewing Cloud Agent MCP impact.';
   }
+  if (isCustomizeCursorDocUrl(item?.link)) {
+    return 'Customize Cursor is optional desktop sidebar for plugins, skills, MCP, rules, and hooks. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Keep environment.json + Builds. Team marketplace and dashboard Customize are not EOS governance. Honor included quota; do not switch this watch to on-demand.';
+  }
   if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
   }
@@ -828,7 +835,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -1036,6 +1043,12 @@ function isPluginsDocUrl(url) {
   return value === 'https://cursor.com/docs/plugins' || value === 'https://www.cursor.com/docs/plugins';
 }
 
+function isCustomizeCursorDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/customize-cursor'
+    || value === 'https://www.cursor.com/docs/customize-cursor';
+}
+
 function isLowPriorityBriefing(row) {
   const hint = String(row?.apply_in_eos || '');
   return hint.includes('customer/press stories') || hint.includes('feedback thread') || hint.includes('Campus community');
@@ -1109,7 +1122,7 @@ function currentClusterKey(learning) {
   ) {
     return 'cluster:cursor-router';
   }
-  if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || isMcpDocUrl(learning?.source_url) || isPluginsDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules' || title === 'model context protocol (mcp)' || title === 'plugins') {
+  if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || isMcpDocUrl(learning?.source_url) || isPluginsDocUrl(learning?.source_url) || isCustomizeCursorDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules' || title === 'model context protocol (mcp)' || title === 'plugins' || title === 'customize cursor') {
     return 'cluster:skills-custom-modes';
   }
   if (isAgentOverviewUrl(learning?.source_url) || isPlanModeDocUrl(learning?.source_url) || isDebugModeDocUrl(learning?.source_url)) {

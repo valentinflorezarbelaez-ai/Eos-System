@@ -338,6 +338,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/plugins' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/customize-cursor' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -863,6 +867,8 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Security Agents', link: 'https://cursor.com/docs/security-agents' },
     { title: 'Model Context Protocol (MCP)', link: 'https://cursor.com/docs/mcp' },
     { title: 'Plugins', link: 'https://cursor.com/docs/plugins' },
+    { title: 'Customize Cursor', link: 'https://cursor.com/docs/customize-cursor' },
+    { title: 'Overview', link: 'https://cursor.com/docs/customize-cursor' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -1418,6 +1424,24 @@ test('applyHint for Plugins keeps repo playbooks and rejects marketplace governa
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Customize Cursor keeps repo playbooks and rejects dashboard Customize', () => {
+  const hint = applyHint({
+    title: 'Overview',
+    link: 'https://cursor.com/docs/customize-cursor',
+    summary: 'Use the Customize page to add plugins, skills, MCPs, rules, commands, hooks, and subagents.'
+  });
+  assert.match(hint, /optional desktop sidebar/i);
+  assert.match(hint, /\.cursor\/mcp\.json/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Customize/i);
+  assert.match(hint, /not EOS governance/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('/goal'), false);
+});
+
 test('applyHint is specific for every forum announcement fixture title', () => {
   const forumXml = fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/announcements.rss.xml'), 'utf8');
   for (const item of parseFeed(forumXml)) {
@@ -1946,6 +1970,19 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(plugins[0].summary, /plugin/i);
   assert.match(applyHint(plugins[0]), /~\/\.cursor\/plugins\/local/);
   assert.equal(/enable/i.test(applyHint(plugins[0])), false);
+
+  const customizeCursor = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-customize-cursor.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/customize-cursor'
+  );
+  assert.equal(customizeCursor[0].id, 'https://cursor.com/docs/customize-cursor');
+  assert.equal(customizeCursor[0].title, 'Overview');
+  assert.match(customizeCursor[0].summary, /Customize page/i);
+  assert.match(applyHint(customizeCursor[0]), /optional desktop sidebar/i);
+  assert.equal(/enable/i.test(applyHint(customizeCursor[0])), false);
+  assert.equal(applyHint(customizeCursor[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(customizeCursor[0]).includes('/goal'), false);
 });
 
 test('parseOfficialSource html-page maps Cursor Router and usage limits', () => {
@@ -2381,6 +2418,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(agentSecurityMd.summary.includes('Sitemap'), false);
   assert.equal(/Workspace trust —/.test(agentSecurityMd.summary), false);
   assert.equal(/Responsible disclosure —/.test(agentSecurityMd.summary), false);
+
+  const customizeCursorMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-customize-cursor.md'), 'utf8')
+  );
+  assert.equal(customizeCursorMd.title, 'Customize Cursor');
+  assert.match(customizeCursorMd.summary, /What you can do from Customize/);
+  assert.match(customizeCursorMd.summary, /Extension components/);
+  assert.match(customizeCursorMd.summary, /plugins, skills, and MCPs/i);
+  assert.equal(customizeCursorMd.summary.includes('Sitemap'), false);
+  assert.equal(/Learn more —/.test(customizeCursorMd.summary), false);
+  assert.equal(/Marketplace leaderboard —/.test(customizeCursorMd.summary), false);
+  assert.equal(customizeCursorMd.summary.includes('Custom Mode'), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2983,6 +3032,12 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
       apply_in_eos: 'Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins and ~/.cursor/plugins/local are not EOS governance and are not this Cloud Agent environment. Do not delete a team marketplace without reviewing Cloud Agent MCP impact.'
     },
     {
+      title: 'Customize Cursor',
+      source_url: 'https://cursor.com/docs/customize-cursor',
+      published_at: null,
+      apply_in_eos: 'Customize Cursor is optional desktop sidebar for plugins, skills, MCP, rules, and hooks. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Keep environment.json + Builds. Team marketplace and dashboard Customize are not EOS governance. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agent Skills',
       source_url: 'https://cursor.com/docs/skills',
       published_at: null,
@@ -3006,6 +3061,7 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/mcp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/plugins'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/customize-cursor'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/overview'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -3325,6 +3381,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/security'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
+  assert.equal(current.includes('cursor.com/docs/customize-cursor'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);

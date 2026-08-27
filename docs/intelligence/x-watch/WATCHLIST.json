@@ -353,6 +353,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_PLUGINS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CUSTOMIZE-CURSOR",
+      "url": "https://cursor.com/docs/customize-cursor",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CUSTOMIZE_CURSOR",
+      "fetchable": true
     }
   ]
 }

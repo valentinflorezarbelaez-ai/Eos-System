@@ -1005,6 +1005,23 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/agent/security"
+    },
+    {
+      "source_id": "SRC-0060",
+      "name": "Cursor Docs — Customize Cursor",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Desktop Customize is an optional sidebar for plugins, skills, MCP, rules, and hooks. Keep EOS playbooks as repo skills/rules/hooks/.cursor/mcp.json. Team marketplace and dashboard Customize are not EOS governance. This Cloud Agent VM does not rotate into desktop Customize for daily ingest.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/customize-cursor"
     }
   ]
 }
