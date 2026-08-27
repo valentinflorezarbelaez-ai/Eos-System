@@ -307,6 +307,10 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   const overview = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/overview');
   assert.ok(overview);
   assert.match(overview.summary, /Steer a running agent/i);
+  const originIntegrations = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/origin/integrations');
+  assert.ok(originIntegrations);
+  assert.match(originIntegrations.summary, /\/automate/);
+  assert.match(originIntegrations.apply_in_eos, /Origin|GitHub/i);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
