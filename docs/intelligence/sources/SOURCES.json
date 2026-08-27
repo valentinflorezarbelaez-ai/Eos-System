@@ -1,7 +1,7 @@
 {
   "$schema": "./schema.json",
   "version": "1.0.0",
-  "updated_at": "2026-08-27T01:10:00Z",
+  "updated_at": "2026-08-27T01:15:00Z",
   "sources": [
     {
       "source_id": "SRC-0001",
@@ -529,6 +529,23 @@
       "relevance_to_eos": "HIGH",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/origin/integrations"
+    },
+    {
+      "source_id": "SRC-0032",
+      "name": "Cursor Docs — Origin GitHub mirror",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Mirroring copies GitHub into Origin; Detach would make Origin the source of truth. This repo stays on GitHub.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/origin/mirror-github"
     }
   ]
 }

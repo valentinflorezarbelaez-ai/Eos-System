@@ -183,6 +183,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/origin/mirror-github' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cursor-router' && feed.kind === 'html-page'),
     true
   );
@@ -344,6 +348,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Origin', link: 'https://cursor.com/docs/origin' },
     { title: 'Install the Origin CLI', link: 'https://cursor.com/docs/origin/cli' },
     { title: 'Origin integrations', link: 'https://cursor.com/docs/origin/integrations' },
+    { title: 'Mirror a GitHub repository', link: 'https://cursor.com/docs/origin/mirror-github' },
     { title: 'Towards self-driving codebases', link: 'https://cursor.com/blog/self-driving-codebases' },
     { title: 'Cursor Router', link: 'https://cursor.com/docs/cursor-router' },
     { title: 'Usage and limits', link: 'https://cursor.com/help/models-and-usage/usage-limits' },
@@ -439,6 +444,18 @@ test('applyHint for Cloud Agent Builds treats Builds as the default start path',
   assert.match(setupHint, /install/i);
   assert.equal(/enable/i.test(setupHint), false);
   assert.equal(setupHint.includes('timers'), false);
+});
+
+test('applyHint for Origin mirror keeps GitHub as source of truth', () => {
+  const hint = applyHint({
+    title: 'Mirror a GitHub repository',
+    link: 'https://cursor.com/docs/origin/mirror-github',
+    summary: 'Detach from GitHub converts Origin into the source of truth. Bugbot reviews PRs without mirroring.'
+  });
+  assert.match(hint, /Do not Detach/i);
+  assert.match(hint, /GitHub as the source of truth/i);
+  assert.match(hint, /Bugbot/i);
+  assert.equal(hint.includes('timers'), false);
 });
 
 test('applyHint is specific for every forum announcement fixture title', () => {
@@ -622,6 +639,19 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(originIntegrations[0]).includes('timers'), false);
   assert.equal(applyHint(originIntegrations[0]).includes('Vercel'), false);
 
+  const originMirror = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-origin-mirror-github.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/origin/mirror-github'
+  );
+  assert.equal(originMirror[0].id, 'https://cursor.com/docs/origin/mirror-github');
+  assert.equal(originMirror[0].title, 'Mirror a GitHub repository');
+  assert.match(originMirror[0].summary, /Sync a GitHub repository/i);
+  assert.match(applyHint(originMirror[0]), /Do not Detach/i);
+  assert.match(applyHint(originMirror[0]), /source of truth/i);
+  assert.equal(applyHint(originMirror[0]).includes('timers'), false);
+  assert.equal(/enable/i.test(applyHint(originMirror[0])), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -734,6 +764,15 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(originIntegrationsMd.summary.includes('Sitemap'), false);
   assert.equal(originIntegrationsMd.summary.includes('Overview of all docs pages'), false);
   assert.equal(originIntegrationsMd.summary.includes('Create a repository'), false);
+
+  const originMirrorMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-origin-mirror-github.md'), 'utf8')
+  );
+  assert.equal(originMirrorMd.title, 'Mirror a GitHub repository');
+  assert.match(originMirrorMd.summary, /source of truth/i);
+  assert.match(originMirrorMd.summary, /Bugbot/i);
+  assert.equal(originMirrorMd.summary.includes('Sitemap'), false);
+  assert.equal(originMirrorMd.summary.includes('Overview of all docs pages'), false);
 });
 
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {
@@ -1024,6 +1063,12 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
       apply_in_eos: 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.'
     },
     {
+      title: 'Mirror a GitHub repository',
+      source_url: 'https://cursor.com/docs/origin/mirror-github',
+      published_at: null,
+      apply_in_eos: 'Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -1038,6 +1083,7 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/cli'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/integrations'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/mirror-github'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -1325,6 +1371,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2087941310217064850/);
   assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
   assert.equal(current.includes('cursor.com/docs/origin/integrations'), false);
+  assert.equal(current.includes('cursor.com/docs/origin/mirror-github'), false);
 });
 
 test('cited X posts never claim an X fetch', () => {

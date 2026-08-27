@@ -393,6 +393,9 @@ export function applyHint(item) {
   if (blob.includes('/goal') || (link.includes('changelog/08-19-26') && blob.includes('goal'))) {
     return 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.';
   }
+  if (isOriginMirrorUrl(item?.link)) {
+    return 'Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.';
+  }
   if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
   }
@@ -610,6 +613,12 @@ function isCloudAgentSetupUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/cloud-agent/setup'
     || value === 'https://www.cursor.com/docs/cloud-agent/setup';
+}
+
+function isOriginMirrorUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/origin/mirror-github'
+    || value === 'https://www.cursor.com/docs/origin/mirror-github';
 }
 
 function isAgentOverviewUrl(url) {

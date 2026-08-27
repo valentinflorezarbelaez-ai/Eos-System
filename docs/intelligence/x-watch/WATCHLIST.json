@@ -103,6 +103,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-MIRROR-GITHUB",
+      "url": "https://cursor.com/docs/origin/mirror-github",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_MIRROR_GITHUB",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-CURSOR-ROUTER",
       "url": "https://cursor.com/docs/cursor-router",
       "kind": "html-page",
