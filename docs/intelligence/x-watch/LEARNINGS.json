@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T14:09:42.449Z",
+  "updated_at": "2026-08-27T14:14:34.350Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1059,6 +1059,16 @@
       "published_at": null,
       "summary": "Bugbot reviews pull requests and identifies bugs, security issues, and code quality problems. How it works — Bugbot analyzes PR diffs and leaves comments with explanations and fix suggestions. Incremental reviews — By default, Bugbot reviews only the changes since the previous Bugbot review. Effort Levels — Effort levels control how much time Bugbot spends reasoning during a review. Rules — Guide reviews with team rules, repository rules, and project .cursor/BUGBOT.md files. Run in your agent — Use the /review-bugbot or /review skills to run Bugbot from your agent before you push the code. Autofix — Bugbot Autofix automatically spawns a Cloud Agent to fix bugs found during PR reviews. MCP support — Bugbot is integrated with your MCP servers so your AI tools can interact with Bugbot direct…",
       "apply_in_eos": "Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cli-overview",
+      "title": "Cursor CLI",
+      "source_url": "https://cursor.com/docs/cli/overview",
+      "published_at": null,
+      "summary": "Cursor CLI lets you interact with AI agents directly from your terminal to write, review, and modify code. Interactive mode — Start a conversational session with the agent to describe your goals, review proposed changes, and approve commands: Modes — The CLI supports the same modes as the editor. Non-interactive mode — Use print mode for non-interactive scenarios like scripts, CI pipelines, or automation: Cloud Agent handoff — Push your conversation to a Cloud Agent to continue running while you're away. Sessions — Resume previous conversations to maintain context across multiple interactions: Sandbox controls — Configure command execution settings with /sandbox or the flag ( or ). Sudo password prompting — Run commands requiring elevated privileges without leaving the CLI.",
+      "apply_in_eos": "Cursor CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI or rotate this watch into print mode, sandbox, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
