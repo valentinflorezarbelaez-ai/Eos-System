@@ -355,6 +355,11 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.match(identity.apply_in_eos, /Cloud Agents API/i);
   assert.match(identity.apply_in_eos, /unexpected aud/i);
   assert.equal(/How it works — 1\./.test(identity.summary), false);
+  const metadata = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/metadata');
+  assert.ok(metadata);
+  assert.match(metadata.apply_in_eos, /not a credential/i);
+  assert.match(metadata.apply_in_eos, /OIDC/i);
+  assert.match(metadata.apply_in_eos, /Cloud Agents API/i);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
