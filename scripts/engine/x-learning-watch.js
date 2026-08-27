@@ -303,7 +303,8 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'endpoints'
     || key === 'open the agents window'
     || key === 'switch back to the ide'
-    || key === 'enterprise access';
+    || key === 'enterprise access'
+    || key === 'switching modes';
 }
 
 function isProductSubheading(heading) {
@@ -501,6 +502,9 @@ export function applyHint(item) {
   }
   if (isAgentOverviewUrl(item?.link)) {
     return 'Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.';
+  }
+  if (isPlanModeDocUrl(item?.link)) {
+    return 'Plan Mode is optional desktop planning before code. Keep this watch on the standing /goal; do not rotate this Cloud Agent into Plan Mode for daily ingest. EOS TDD remains required. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isRulesDocUrl(item?.link)) {
     return 'Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.';
@@ -779,7 +783,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -907,6 +911,12 @@ function isAgentOverviewUrl(url) {
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
 }
 
+function isPlanModeDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/agent/plan-mode'
+    || value === 'https://www.cursor.com/docs/agent/plan-mode';
+}
+
 function isSkillsDocUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/skills' || value === 'https://www.cursor.com/docs/skills';
@@ -1001,6 +1011,9 @@ function currentClusterKey(learning) {
   }
   if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || isMcpDocUrl(learning?.source_url) || isPluginsDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules' || title === 'model context protocol (mcp)' || title === 'plugins') {
     return 'cluster:skills-custom-modes';
+  }
+  if (isAgentOverviewUrl(learning?.source_url) || isPlanModeDocUrl(learning?.source_url)) {
+    return 'cluster:agent-overview';
   }
   if (
     isBugbotDocUrl(learning?.source_url)

@@ -278,6 +278,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-PLAN-MODE",
+      "url": "https://cursor.com/docs/agent/plan-mode",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_PLAN_MODE",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-MCP",
       "url": "https://cursor.com/docs/mcp",
       "kind": "html-page",

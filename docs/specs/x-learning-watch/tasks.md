@@ -48,3 +48,4 @@
 47. [x] Ingest Cloud Agents API endpoints living docs; cluster onto Cloud Agents overview without dropping Usage and limits; this watch uses official feeds not `api.cursor.com`; no API keys in git
 48. [x] Ingest Agents Window living docs; cluster onto harness changelog (`08-19-26`) without dropping Usage and limits; this watch already runs in the Cloud Agent VM; `/in-cloud` and `/babysit` hand local work to its own VM
 49. [x] Ingest Agent Review living docs; cluster onto `changelog/bugbot-updates-june-2026` without dropping Usage and limits; optional in-editor review; `/agent-review` is not TDD evidence; keep `BUGBOT.md` if this repo uses Bugbot rules; this watch already runs in the Cloud Agent VM
+50. [x] Ingest Plan Mode living docs; cluster onto Agent overview (`docs/agent/overview`) without dropping Usage and limits; optional desktop planning before code; keep this watch on the standing `/goal`; do not rotate this Cloud Agent into Plan Mode for daily ingest

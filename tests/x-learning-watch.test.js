@@ -291,6 +291,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/plan-mode' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -1024,6 +1028,22 @@ test('applyHint for Agent Review keeps TDD evidence and /agent-review', () => {
   assert.equal(hint.includes('timers'), false);
 });
 
+test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
+  const hint = applyHint({
+    title: 'Plan Mode',
+    link: 'https://cursor.com/docs/agent/plan-mode',
+    summary: 'Plan Mode creates detailed implementation plans before writing any code.'
+  });
+  assert.match(hint, /optional desktop planning/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into Plan Mode/i);
+  assert.match(hint, /TDD/);
+  assert.match(hint, /included quota/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
   const hint = applyHint({
     title: 'Model Context Protocol (MCP)',
@@ -1449,6 +1469,18 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(agentReview[0]), /TDD/);
   assert.equal(/enable/i.test(applyHint(agentReview[0])), false);
 
+  const planMode = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-plan-mode.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/agent/plan-mode'
+  );
+  assert.equal(planMode[0].id, 'https://cursor.com/docs/agent/plan-mode');
+  assert.equal(planMode[0].title, 'Plan Mode');
+  assert.match(planMode[0].summary, /implementation plans/i);
+  assert.match(applyHint(planMode[0]), /\/goal/);
+  assert.match(applyHint(planMode[0]), /optional desktop planning/i);
+  assert.equal(/enable/i.test(applyHint(planMode[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1798,6 +1830,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(agentReviewMd.summary, /BUGBOT\.md/);
   assert.equal(agentReviewMd.summary.includes('Sitemap'), false);
   assert.equal(/Setup —/.test(agentReviewMd.summary), false);
+
+  const planModeMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-plan-mode.md'), 'utf8')
+  );
+  assert.equal(planModeMd.title, 'Plan Mode');
+  assert.match(planModeMd.summary, /How it works/);
+  assert.match(planModeMd.summary, /When to use Plan Mode/);
+  assert.match(planModeMd.summary, /Starting over from a plan/);
+  assert.equal(planModeMd.summary.includes('Sitemap'), false);
+  assert.equal(/Switching modes —/.test(planModeMd.summary), false);
+  assert.equal(/Related —/.test(planModeMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -2286,6 +2329,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.'
     },
     {
+      title: 'Plan Mode',
+      source_url: 'https://cursor.com/docs/agent/plan-mode',
+      published_at: null,
+      apply_in_eos: 'Plan Mode is optional desktop planning before code. Keep this watch on the standing /goal; do not rotate this Cloud Agent into Plan Mode for daily ingest. EOS TDD remains required. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agent Skills',
       source_url: 'https://cursor.com/docs/skills',
       published_at: null,
@@ -2300,6 +2349,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/overview'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/plan-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -2668,6 +2718,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(current.includes('cursor.com/docs/agent/agents-window'), false);
   assert.equal(current.includes('cursor.com/docs/agent/agent-review'), false);
+  assert.equal(current.includes('cursor.com/docs/agent/plan-mode'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
