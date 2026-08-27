@@ -251,6 +251,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/security' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -473,6 +477,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Agent metadata', link: 'https://cursor.com/docs/cloud-agent/metadata' },
     { title: 'Hooks', link: 'https://cursor.com/docs/hooks' },
     { title: 'Secrets & Network', link: 'https://cursor.com/docs/cloud-agent/security-network' },
+    { title: 'Security overview', link: 'https://cursor.com/docs/cloud-agent/security' },
     { title: 'Model Context Protocol (MCP)', link: 'https://cursor.com/docs/mcp' },
     { title: 'Plugins', link: 'https://cursor.com/docs/plugins' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
@@ -653,6 +658,25 @@ test('applyHint for Secrets & Network prefers Runtime Secrets and allowlists', (
   assert.match(hint, /allowlist/i);
   assert.match(hint, /\*\.s3/);
   assert.match(hint, /Privacy Mode \(Legacy\)/);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+});
+
+test('applyHint for Cloud Agent security overview is the model not the config reference', () => {
+  const hint = applyHint({
+    title: 'Security overview',
+    link: 'https://cursor.com/docs/cloud-agent/security',
+    summary: 'How Cloud Agents are architected and secured.'
+  });
+  assert.match(hint, /security model/i);
+  assert.match(hint, /never widened/i);
+  assert.match(hint, /Runtime Secrets/);
+  assert.match(hint, /OIDC/);
+  assert.match(hint, /\.cursorignore/);
+  assert.match(hint, /draft-PR/i);
+  assert.match(hint, /Privacy Mode \(Legacy\)/);
+  assert.match(hint, /SOC 2/);
   assert.equal(/enable/i.test(hint), false);
   assert.equal(hint.includes('timers'), false);
   assert.equal(hint.includes('Custom Mode'), false);
@@ -962,6 +986,17 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(securityNetwork[0]), /OIDC/);
   assert.equal(/enable/i.test(applyHint(securityNetwork[0])), false);
 
+  const securityOverview = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-security.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/security'
+  );
+  assert.equal(securityOverview[0].id, 'https://cursor.com/docs/cloud-agent/security');
+  assert.equal(securityOverview[0].title, 'Security overview');
+  assert.match(securityOverview[0].summary, /architected and secured/i);
+  assert.match(applyHint(securityOverview[0]), /security model/i);
+  assert.equal(/enable/i.test(applyHint(securityOverview[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1165,6 +1200,22 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(securityNetworkMd.summary.includes('ips.json'), false);
   assert.equal(/What you should know —/.test(securityNetworkMd.summary), false);
   assert.equal(/Egress IP ranges —/.test(securityNetworkMd.summary), false);
+
+  const securityOverviewMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-security.md'), 'utf8')
+  );
+  assert.equal(securityOverviewMd.title, 'Security overview');
+  assert.match(securityOverviewMd.summary, /never widened/i);
+  assert.match(securityOverviewMd.summary, /Privacy Mode/i);
+  assert.match(securityOverviewMd.summary, /\.cursorignore/);
+  assert.match(securityOverviewMd.summary, /Runtime Secrets/i);
+  assert.equal(securityOverviewMd.summary.includes('Sitemap'), false);
+  assert.equal(securityOverviewMd.summary.includes('SOC 2'), false);
+  assert.equal(securityOverviewMd.summary.includes('Trust Center'), false);
+  assert.equal(/How Cloud Agents work —/.test(securityOverviewMd.summary), false);
+  assert.equal(/Encryption —/.test(securityOverviewMd.summary), false);
+  assert.equal(/Data deletion —/.test(securityOverviewMd.summary), false);
+  assert.equal(/Related pages —/.test(securityOverviewMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -1774,6 +1825,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Prefer Runtime Secrets or short-lived OIDC over long-lived keys in git. Treat [REDACTED] in transcripts as expected, not a missing secret. Honor Cloud Agent network allowlists; do not open *.s3 wildcards. Privacy Mode (Legacy) is not supported for Cloud Agents.'
     },
     {
+      title: 'Security overview',
+      source_url: 'https://cursor.com/docs/cloud-agent/security',
+      published_at: null,
+      apply_in_eos: 'Treat this page as the Cloud Agent security model, not the config reference. Honor isolated VMs, access that is never widened past the triggering user, Runtime Secrets/OIDC, network allowlists, .cursorignore, and draft-PR handoff. Privacy Mode (Legacy) is not supported. Do not treat SOC 2 or Trust Center claims as EOS evidence.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -1789,6 +1846,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/identity'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/metadata'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/security-network'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -1872,6 +1930,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cloud-agent/metadata'), false);
   assert.equal(current.includes('cursor.com/docs/hooks'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/security-network'), false);
+  assert.equal(/cursor\.com\/docs\/cloud-agent\/security(?!-network)/.test(current), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);

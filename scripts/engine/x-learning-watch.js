@@ -193,6 +193,8 @@ function headingBodySummary(body) {
   if (/\.cursor-plugin\/plugin\.json/i.test(clean) && !/\.cursor-plugin\/plugin\.json/i.test(first)) extras.push('.cursor-plugin/plugin.json');
   if (/\bplugin\.json\b/i.test(clean) && !/\bplugin\.json\b/i.test(first)) extras.push('plugin.json');
   if (/\[REDACTED\]/i.test(clean) && !/\[REDACTED\]/i.test(first)) extras.push('[REDACTED]');
+  if (/\.cursorignore\b/i.test(clean) && !/\.cursorignore\b/i.test(first)) extras.push('.cursorignore');
+  if (/\bnever widened\b/i.test(clean) && !/\bnever widened\b/i.test(first)) extras.push('never widened');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -254,7 +256,13 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'using the workspaceopen hook'
     || key === 'test plugins locally'
     || key === 'migrate existing team mcps'
-    || key === 'team and enterprise marketplaces';
+    || key === 'team and enterprise marketplaces'
+    || key === 'how cloud agents work'
+    || key === 'encryption'
+    || key === 'what data is stored where and for how long'
+    || key === 'risk considerations'
+    || key === 'auditability'
+    || key === 'data deletion';
 }
 
 function isProductSubheading(heading) {
@@ -487,6 +495,9 @@ export function applyHint(item) {
   }
   if (isCloudAgentSecurityNetworkUrl(item?.link)) {
     return 'Prefer Runtime Secrets or short-lived OIDC over long-lived keys in git. Treat [REDACTED] in transcripts as expected, not a missing secret. Honor Cloud Agent network allowlists; do not open *.s3 wildcards. Privacy Mode (Legacy) is not supported for Cloud Agents.';
+  }
+  if (isCloudAgentSecurityOverviewUrl(item?.link)) {
+    return 'Treat this page as the Cloud Agent security model, not the config reference. Honor isolated VMs, access that is never widened past the triggering user, Runtime Secrets/OIDC, network allowlists, .cursorignore, and draft-PR handoff. Privacy Mode (Legacy) is not supported. Do not treat SOC 2 or Trust Center claims as EOS evidence.';
   }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
@@ -748,6 +759,12 @@ function isCloudAgentSecurityNetworkUrl(url) {
     || value === 'https://www.cursor.com/docs/cloud-agent/security-network';
 }
 
+function isCloudAgentSecurityOverviewUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent/security'
+    || value === 'https://www.cursor.com/docs/cloud-agent/security';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -818,6 +835,7 @@ function currentClusterKey(learning) {
     || url.includes('cloud-agent/identity')
     || url.includes('cloud-agent/metadata')
     || url.includes('cloud-agent/security-network')
+    || isCloudAgentSecurityOverviewUrl(learning?.source_url)
     || url.includes('cursor.com/blog/builds')
   ) {
     return 'cluster:cloud-agent-builds';
