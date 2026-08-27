@@ -320,7 +320,7 @@ export function applyHint(item) {
   const titleOrLink = `${title} ${link}`;
 
   if (title.includes('harness') || link.includes('changelog/08-19-26')) {
-    return 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.';
+    return 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS. Honor auto-CI-fix on PRs this agent opens.';
   }
   if (isCloudAgentOverviewUrl(item?.link)) {
     return 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.';

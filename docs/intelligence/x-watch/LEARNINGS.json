@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T00:18:27.837Z",
+  "updated_at": "2026-08-27T00:21:40.378Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -18,7 +18,7 @@
       "source_url": "https://cursor.com/changelog/08-19-26",
       "published_at": "Wed, 19 Aug 2026 00:00:00 GMT",
       "summary": "We're continuing to improve cloud agents and the Cursor harness so always-on agents can operate as a system, building and shipping software on their own without the need for intervention at each loop. With this release, cloud agents can automatically pick up work in response to events, hold a goal until it's met, and stay on course through long-running sessions. Subscriptions Cursor can now monit…",
-      "apply_in_eos": "Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.",
+      "apply_in_eos": "Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS. Honor auto-CI-fix on PRs this agent opens.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

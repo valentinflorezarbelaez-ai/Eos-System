@@ -283,6 +283,7 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   const harness = store.learnings.find((row) => row.source_url === 'https://cursor.com/changelog/08-19-26');
   assert.ok(harness);
   assert.match(harness.apply_in_eos, /timer|Slack|PR/i);
+  assert.match(harness.apply_in_eos, /auto-CI-fix/i);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
@@ -353,6 +354,18 @@ test('applyHint does not treat forum subscription wording as changelog harness n
     summary: 'Composer 2.5 feedback thread for subscribers.'
   });
   assert.match(composerThoughts, /feedback thread/i);
+});
+
+test('applyHint for harness changelog includes wake subscriptions and auto-CI-fix', () => {
+  const hint = applyHint({
+    title: 'Cloud Agents and Cursor Harness Improvements',
+    link: 'https://cursor.com/changelog/08-19-26',
+    summary: 'Subscriptions let cloud agents wait for GitHub, Slack, or timers.'
+  });
+  assert.match(hint, /timer|Slack|PR/i);
+  assert.match(hint, /auto-CI-fix/i);
+  assert.match(hint, /not X/i);
+  assert.equal(hint.includes('desktop scraping'), false);
 });
 
 test('applyHint is specific for every forum announcement fixture title', () => {
