@@ -53,6 +53,7 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-23:** `apply_in_eos` for Cloud Agent Builds (living docs and `changelog/08-13-26`) treats Builds as the default start path and does not tell operators to click Enable Builds.
 - [x] **AC-24:** `apply_in_eos` for `docs/agent/overview` keeps `/goal` and tells EOS to steer running agents with follow-ups that wait for the next tool call.
 - [x] **AC-25:** CURRENT.md clusters `docs/agent/prompting` (Custom Modes) onto `docs/skills` and keeps Usage and limits as a living row.
+- [x] **AC-26:** `parseOfficialMarkdown` includes product `###` subheadings (for example Steer a running agent, Custom Modes, Which Build) and still skips docs chrome and generic tool H3s.
 
 ## 6. Verification & Evidence Plan
 ```bash

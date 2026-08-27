@@ -167,6 +167,18 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'was this article helpful';
 }
 
+function isProductSubheading(heading) {
+  const key = String(heading || '').toLowerCase();
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill/.test(key);
+}
+
+function appendHeadingChunk(chunks, heading, body) {
+  if (shouldSkipMarkdownHeading(heading)) return;
+  const sentence = firstSentence(body);
+  if (heading && sentence) chunks.push(`${heading} — ${sentence}`);
+  else if (heading) chunks.push(heading);
+}
+
 export function parseOfficialMarkdown(md) {
   let raw = String(md || '').replace(/^\uFEFF/, '');
   raw = raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
@@ -178,11 +190,16 @@ export function parseOfficialMarkdown(md) {
   for (const part of parts.slice(1)) {
     const newline = part.indexOf('\n');
     const heading = stripMarkdown(newline === -1 ? part : part.slice(0, newline));
-    if (shouldSkipMarkdownHeading(heading)) continue;
     const body = newline === -1 ? '' : part.slice(newline + 1);
-    const sentence = firstSentence(body);
-    if (heading && sentence) chunks.push(`${heading} — ${sentence}`);
-    else if (heading) chunks.push(heading);
+    const h3parts = body.split(/^###\s+/m);
+    appendHeadingChunk(chunks, heading, h3parts[0]);
+    for (const h3part of h3parts.slice(1)) {
+      const h3break = h3part.indexOf('\n');
+      const h3heading = stripMarkdown(h3break === -1 ? h3part : h3part.slice(0, h3break));
+      if (!isProductSubheading(h3heading)) continue;
+      const h3body = h3break === -1 ? '' : h3part.slice(h3break + 1);
+      appendHeadingChunk(chunks, h3heading, h3body);
+    }
   }
   return { title, summary: chunks.join(' ') };
 }

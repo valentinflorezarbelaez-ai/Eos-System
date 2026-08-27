@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T00:36:01.587Z",
+  "updated_at": "2026-08-27T00:40:59.382Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -927,7 +927,7 @@
       "title": "Overview",
       "source_url": "https://cursor.com/docs/agent/overview",
       "published_at": null,
-      "summary": "Agent is Cursor's assistant that can complete complex coding tasks independently, run terminal commands, and edit code. How Agent works — An agent is built on three components: 1. Tools — Tools are the building blocks of Agent. Checkpoints — Checkpoints save snapshots of your codebase during an Agent session. Queued messages — You have two ways to talk to an agent while it works. Goals with /goal — Agent reads each message as a new job.",
+      "summary": "Agent is Cursor's assistant that can complete complex coding tasks independently, run terminal commands, and edit code. How Agent works — An agent is built on three components: 1. Tools — Tools are the building blocks of Agent. Checkpoints — Checkpoints save snapshots of your codebase during an Agent session. Queued messages — You have two ways to talk to an agent while it works. Steer a running agent — You can send a follow-up to steer the agent while it's working, without interrupting it. Goals with /goal — Agent reads each message as a new job.",
       "apply_in_eos": "Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -947,7 +947,7 @@
       "title": "Cloud Agents",
       "source_url": "https://cursor.com/docs/cloud-agent",
       "published_at": null,
-      "summary": "Cloud agents use the same agent fundamentals but run in isolated VMs in the cloud with full development environments instead of on your local machine. Why use Cloud Agents? — You can run as many agents as you want in parallel, and they do not require your local machine to be connected to the internet. How to access — Before anyone can start a cloud agent from a repository, a Cursor account admin needs to connect source control for the account. How it works — Repository provider connection Cloud agents clone your repo from GitHub, GitLab, Azure DevOps Services, or Bitbucket Cloud and work on a separate branch, then push changes to your repo for handoff. Models — Cloud Agents use a curated selection of models. MCP support — Cloud agents can use MCP (Model Context Protocol) servers configure…",
+      "summary": "Cloud agents use the same agent fundamentals but run in isolated VMs in the cloud with full development environments instead of on your local machine. Why use Cloud Agents? — You can run as many agents as you want in parallel, and they do not require your local machine to be connected to the internet. How to access — Before anyone can start a cloud agent from a repository, a Cursor account admin needs to connect source control for the account. How it works Models — Cloud Agents use a curated selection of models. MCP support — Cloud agents can use MCP (Model Context Protocol) servers configured for your team. Hooks support — Cloud agents run command-based hooks from in your repository. Artifacts and remote desktop control — Cloud agents produce merge-ready PRs with artifacts to demo their…",
       "apply_in_eos": "Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -967,7 +967,7 @@
       "title": "Capabilities",
       "source_url": "https://cursor.com/docs/cloud-agent/capabilities",
       "published_at": null,
-      "summary": "Computer use — Each cloud agent runs in its own isolated VM with a full desktop environment. Demos and Artifacts — Agents create artifacts such as screenshots, videos, and log references to demonstrate their work. Remote desktop control — You can take control of the agent's remote desktop to interact with the software the agent is building. MCP tools — Cloud agents can use MCP (Model Context Protocol) servers configured for your team. Subscriptions — Agent tasks rarely end with the last commit. Fixing CI Failures — Cloud Agents automatically try to fix CI failures in PRs they create. OIDC identity tokens — Cursor-managed Cloud Agent VMs can mint short-lived OIDC JWTs from a local socket. Agent metadata — The same socket also serves agent metadata.",
+      "summary": "Computer use — Each cloud agent runs in its own isolated VM with a full desktop environment. Demos and Artifacts — Agents create artifacts such as screenshots, videos, and log references to demonstrate their work. Remote desktop control — You can take control of the agent's remote desktop to interact with the software the agent is building. MCP tools — Cloud agents can use MCP (Model Context Protocol) servers configured for your team. Subscriptions — Agent tasks rarely end with the last commit. How subscriptions work — Subscriptions belong to a single agent conversation. Fixing CI Failures — Cloud Agents automatically try to fix CI failures in PRs they create. OIDC identity tokens — Cursor-managed Cloud Agent VMs can mint short-lived OIDC JWTs from a local socket. Agent metadata — The sam…",
       "apply_in_eos": "Honor Cloud Agent subscriptions (GitHub PR, Slack, timers) and auto-CI-fix on PRs this agent opens. Do not scrape X.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1017,7 +1017,7 @@
       "title": "Subagents",
       "source_url": "https://cursor.com/docs/subagents",
       "published_at": null,
-      "summary": "Subagents are specialized AI assistants that Cursor's agent can delegate tasks to. How subagents work — When Agent encounters a complex task, it can launch a subagent automatically. Built-in subagents — Cursor includes three built-in subagents that handle context-heavy operations automatically. When to use subagents — If you find yourself creating a subagent for a simple, single-purpose task like \"generate a changelog\" or \"format imports,\" consider using a skill instead. Quick start — Agent automatically uses subagents when appropriate. Custom subagents — Define custom subagents to encode specialized knowledge, enforce team standards, or automate repetitive workflows. Using subagents — Automatic delegation Agent proactively delegates tasks based on: The task complexity and scope Custom su…",
+      "summary": "Subagents are specialized AI assistants that Cursor's agent can delegate tasks to. How subagents work — When Agent encounters a complex task, it can launch a subagent automatically. Built-in subagents — Cursor includes three built-in subagents that handle context-heavy operations automatically. When to use subagents — If you find yourself creating a subagent for a simple, single-purpose task like \"generate a changelog\" or \"format imports,\" consider using a skill instead. Quick start — Agent automatically uses subagents when appropriate. Custom subagents — Define custom subagents to encode specialized knowledge, enforce team standards, or automate repetitive workflows. Using subagents Cloud subagents — From a local agent session, you can hand off work to a cloud subagent that runs on its o…",
       "apply_in_eos": "Run isolated subagents on their own VMs when work must not collide with the parent branch.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false

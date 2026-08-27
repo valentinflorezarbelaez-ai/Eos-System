@@ -288,6 +288,9 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.ok(harness);
   assert.match(harness.apply_in_eos, /timer|Slack|PR/i);
   assert.match(harness.apply_in_eos, /auto-CI-fix/i);
+  const overview = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/overview');
+  assert.ok(overview);
+  assert.match(overview.summary, /Steer a running agent/i);
   const grokBot = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053');
   if (grokBot) {
     assert.match(grokBot.apply_in_eos, /Grok Bot/i);
@@ -634,8 +637,10 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(parsed.summary, /Subscriptions/i);
   assert.match(parsed.summary, /GitHub, Slack, Linear, or timer/i);
   assert.match(parsed.summary, /Fixing CI Failures/i);
+  assert.match(parsed.summary, /Steer a running agent/i);
   assert.equal(parsed.summary.includes('Sitemap'), false);
   assert.equal(parsed.summary.includes('Overview of all docs pages'), false);
+  assert.equal(parsed.summary.includes('Search files and folders'), false);
 });
 
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {

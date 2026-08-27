@@ -20,3 +20,4 @@
 19. [x] Correct Cloud Agent Builds `apply_in_eos` to default start path (no Enable Builds opt-in) from official living docs
 20. [x] Surface steering follow-ups on the Agent overview (`/goal`) CURRENT row from official living docs
 21. [x] Ingest Agent prompting / Custom Modes living docs; cluster onto Skills without dropping Usage and limits
+22. [x] Include official product H3s (steering, Custom Modes, Builds FAQ) in living-doc markdown summaries
