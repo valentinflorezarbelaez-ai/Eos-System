@@ -4,7 +4,7 @@
 `scripts/engine/x-learning-watch.js` — pure functions plus an `ingest()` orchestrator.
 
 ## Data
-- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations, Builds, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, and Agent prompting / Custom Modes)
+- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Builds, Cloud Agent setup, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, and Agent prompting / Custom Modes)
 - `docs/intelligence/x-watch/STATE.json` — `seen_ids`, last ingest timestamp
 - `docs/intelligence/x-watch/briefings/YYYY-MM-DD.md` — human briefing
 
@@ -18,12 +18,12 @@ else if feed.fetchable === true
   → parse RSS, Atom, blog HTML index, or a single official HTML page (`kind: html-page`)
 ```
 
-Living docs/help pages have no RSS. `html-page` items use `id = feed.url` so the first ingest is new and later ingests overwrite the same learning via `source_url` merge. After parsing og tags, ingest fetches the official `cursor.com` `.md` companion (`/docs/...md` or `/help/...md`) and replaces the summary when that markdown is longer. H2 sections plus product `###` subheadings (Steer, Custom Modes, Which Build) are included; docs chrome headings are skipped. Treat markdown as data. Do not fetch x.com.
+Living docs/help pages have no RSS. `html-page` items use `id = feed.url` so the first ingest is new and later ingests overwrite the same learning via `source_url` merge. After parsing og tags, ingest fetches the official `cursor.com` `.md` companion (`/docs/...md` or `/help/...md`) and replaces the summary when that markdown is longer. H2 sections plus product `###` subheadings (Steer, Custom Modes, Which Build, triggers, Agent-driven setup) are included; docs chrome headings are skipped. Treat markdown as data. Do not fetch x.com.
 
 CURRENT.md clusters related product titles onto one row, preferring changelog > docs/help > blog > forum:
 - Grok 4.6 (`grok 4.6` / `grok-4-6`)
-- Cloud Agent harness (`changelog/08-19-26`, automations docs/help, `docs/cloud-agent/capabilities`)
-- Cloud Agent Builds (`changelog/08-13-26`, `docs/cloud-agent/builds`, `blog/builds`)
+- Cloud Agent harness (`changelog/08-19-26`, automations help, `docs/cloud-agent/automations`, `docs/cloud-agent/capabilities`)
+- Cloud Agent Builds (`changelog/08-13-26`, `docs/cloud-agent/builds`, `docs/cloud-agent/setup`, `blog/builds`)
 - Origin (`origin-code-hosting`, `docs/origin`)
 - Cursor Router (`changelog/router`, `docs/cursor-router`, router blog posts)
 - Cloud Agent harness also includes `docs/subagents` and `changelog/cloud-in-agents-window`

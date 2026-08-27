@@ -61,10 +61,24 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-AUTOMATIONS-DOCS",
+      "url": "https://cursor.com/docs/cloud-agent/automations",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_AUTOMATIONS_GUIDE",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-BUILDS",
       "url": "https://cursor.com/docs/cloud-agent/builds",
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_CLOUD_AGENT_BUILDS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-SETUP",
+      "url": "https://cursor.com/docs/cloud-agent/setup",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_SETUP",
       "fetchable": true
     },
     {

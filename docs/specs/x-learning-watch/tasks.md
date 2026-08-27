@@ -21,3 +21,5 @@
 20. [x] Surface steering follow-ups on the Agent overview (`/goal`) CURRENT row from official living docs
 21. [x] Ingest Agent prompting / Custom Modes living docs; cluster onto Skills without dropping Usage and limits
 22. [x] Include official product H3s (steering, Custom Modes, Builds FAQ) in living-doc markdown summaries
+23. [x] Ingest Cloud Agent automations product docs (`docs/cloud-agent/automations`); cluster onto harness changelog without dropping Usage and limits
+24. [x] Ingest Cloud Agent setup living docs; cluster onto Builds changelog as the default start path

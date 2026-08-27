@@ -169,7 +169,7 @@ function shouldSkipMarkdownHeading(heading) {
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -378,7 +378,7 @@ export function applyHint(item) {
   if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
   }
-  if (title.includes('builds') || link.includes('changelog/08-13-26') || blob.includes('3x faster with builds')) {
+  if (title.includes('builds') || link.includes('changelog/08-13-26') || blob.includes('3x faster with builds') || isCloudAgentSetupUrl(item?.link)) {
     return 'Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.';
   }
   if (title.includes('subagent') || link.includes('changelog/cloud-in-agents-window') || link.includes('/docs/subagents')) {
@@ -588,6 +588,12 @@ function isCloudAgentCapabilitiesUrl(url) {
     || value === 'https://www.cursor.com/docs/cloud-agent/capabilities';
 }
 
+function isCloudAgentSetupUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent/setup'
+    || value === 'https://www.cursor.com/docs/cloud-agent/setup';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -637,6 +643,7 @@ function currentClusterKey(learning) {
   if (
     url.includes('changelog/08-13-26')
     || url.includes('cloud-agent/builds')
+    || url.includes('cloud-agent/setup')
     || url.includes('cursor.com/blog/builds')
   ) {
     return 'cluster:cloud-agent-builds';

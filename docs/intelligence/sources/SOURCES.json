@@ -1,7 +1,7 @@
 {
   "$schema": "./schema.json",
   "version": "1.0.0",
-  "updated_at": "2026-08-27T00:10:00Z",
+  "updated_at": "2026-08-27T00:50:00Z",
   "sources": [
     {
       "source_id": "SRC-0001",
@@ -461,6 +461,40 @@
       "relevance_to_eos": "HIGH",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/agent/prompting"
+    },
+    {
+      "source_id": "SRC-0028",
+      "name": "Cursor Docs — Cloud Agent automations",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Automations are GitHub/Slack/Linear triggers, not an X timeline.",
+      "relevance_to_eos": "HIGH",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/cloud-agent/automations"
+    },
+    {
+      "source_id": "SRC-0029",
+      "name": "Cursor Docs — Cloud Agent setup",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Setup/install guidance is not an X timeline.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/cloud-agent/setup"
     }
   ]
 }

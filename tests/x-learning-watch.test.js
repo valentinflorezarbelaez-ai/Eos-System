@@ -206,6 +206,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/prompting' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/automations' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/setup' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -331,6 +339,8 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Overview', link: 'https://cursor.com/docs/agent/overview' },
     { title: 'Agent Skills', link: 'https://cursor.com/docs/skills' },
     { title: 'Prompting agents', link: 'https://cursor.com/docs/agent/prompting' },
+    { title: 'Automations', link: 'https://cursor.com/docs/cloud-agent/automations' },
+    { title: 'Cloud Environment Setup', link: 'https://cursor.com/docs/cloud-agent/setup' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -405,6 +415,16 @@ test('applyHint for Cloud Agent Builds treats Builds as the default start path',
   });
   assert.match(changelogHint, /default start path/i);
   assert.equal(/enable/i.test(changelogHint), false);
+
+  const setupHint = applyHint({
+    title: 'Cloud Environment Setup',
+    link: 'https://cursor.com/docs/cloud-agent/setup',
+    summary: 'Set up Cloud Agents with environment config, startup commands, and secrets.'
+  });
+  assert.match(setupHint, /default start path/i);
+  assert.match(setupHint, /install/i);
+  assert.equal(/enable/i.test(setupHint), false);
+  assert.equal(setupHint.includes('timers'), false);
 });
 
 test('applyHint is specific for every forum announcement fixture title', () => {
@@ -564,6 +584,28 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(origin[0].title, 'Origin');
   assert.match(origin[0].summary, /git forge/i);
   assert.match(applyHint(origin[0]), /Origin|GitHub/i);
+
+  const automationsDocs = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/automations'
+  );
+  assert.equal(automationsDocs[0].id, 'https://cursor.com/docs/cloud-agent/automations');
+  assert.equal(automationsDocs[0].title, 'Automations');
+  assert.match(automationsDocs[0].summary, /schedule or in response to events/i);
+  assert.match(applyHint(automationsDocs[0]), /GitHub\/Slack|not X/i);
+  assert.equal(applyHint(automationsDocs[0]).includes('timers'), false);
+
+  const setup = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-setup.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/setup'
+  );
+  assert.equal(setup[0].id, 'https://cursor.com/docs/cloud-agent/setup');
+  assert.equal(setup[0].title, 'Cloud Environment Setup');
+  assert.match(setup[0].summary, /environment config/i);
+  assert.match(applyHint(setup[0]), /default start path/i);
+  assert.equal(applyHint(setup[0]).includes('isolated VMs'), false);
 });
 
 test('parseOfficialSource html-page maps Cursor Router and usage limits', () => {
@@ -638,6 +680,8 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(parsed.summary, /GitHub, Slack, Linear, or timer/i);
   assert.match(parsed.summary, /Fixing CI Failures/i);
   assert.match(parsed.summary, /Steer a running agent/i);
+  assert.match(parsed.summary, /Slack triggers/i);
+  assert.match(parsed.summary, /Agent-driven setup/i);
   assert.equal(parsed.summary.includes('Sitemap'), false);
   assert.equal(parsed.summary.includes('Overview of all docs pages'), false);
   assert.equal(parsed.summary.includes('Search files and folders'), false);
@@ -1086,6 +1130,46 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
+test('selectCurrentLearnings clusters automations docs onto harness and setup onto Builds', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'Cloud Agents and Cursor Harness Improvements',
+      source_url: 'https://cursor.com/changelog/08-19-26',
+      published_at: 'Wed, 19 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.'
+    },
+    {
+      title: 'Automations',
+      source_url: 'https://cursor.com/docs/cloud-agent/automations',
+      published_at: null,
+      apply_in_eos: 'Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.'
+    },
+    {
+      title: 'Cloud Environment Setup',
+      source_url: 'https://cursor.com/docs/cloud-agent/setup',
+      published_at: null,
+      apply_in_eos: 'Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.'
+    },
+    {
+      title: 'Cloud Agents Start 3x Faster with Builds',
+      source_url: 'https://cursor.com/changelog/08-13-26',
+      published_at: 'Thu, 13 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.'
+    },
+    {
+      title: 'Usage and limits',
+      source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
+      published_at: null,
+      apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+    }
+  ], 6);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/automations'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
+});
+
 test('selectCurrentLearnings does not drop changelog rows for reserved docs', () => {
   const rows = [];
   for (let i = 0; i < 8; i += 1) {
@@ -1158,6 +1242,8 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /cursor.com\/docs\/agent\/overview/);
   assert.match(current, /cursor.com\/docs\/skills/);
   assert.equal(current.includes('cursor.com/docs/agent/prompting'), false);
+  assert.equal(current.includes('cursor.com/docs/cloud-agent/automations'), false);
+  assert.equal(current.includes('cursor.com/docs/cloud-agent/setup'), false);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);
   assert.match(current, /Steer running agents/);

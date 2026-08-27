@@ -24,6 +24,14 @@ You have two ways to talk to an agent while it works.
 
 You can send a follow-up to steer the agent while it's working, without interrupting it.
 
+### Slack triggers
+
+Automations can wake when a matching Slack message arrives.
+
+### Agent-driven setup
+
+Cursor inspects the repo and proposes environment.json.
+
 ### Search files and folders
 
 Search for files by name, read directory structures, and find exact keywords.
