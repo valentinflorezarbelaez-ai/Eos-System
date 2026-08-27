@@ -137,12 +137,19 @@ export function looksLikeOfficialMarkdown(text) {
   return /^#\s+\S/m.test(trimmed);
 }
 
+function keepInlineCodeToken(trimmed) {
+  return /^\/[A-Za-z][\w:-]*$/.test(trimmed)
+    || /^\.[A-Za-z0-9]+$/.test(trimmed)
+    || /^[A-Za-z][\w-]*\.[A-Za-z0-9]+$/.test(trimmed)
+    || /^\.[\w-]+(?:\/[\w.-]+)+$/.test(trimmed);
+}
+
 function stripMarkdown(value) {
   return String(value || '')
     .replace(/```[\s\S]*?```/g, ' ')
     .replace(/`([^`]+)`/g, (_, code) => {
       const trimmed = String(code || '').trim();
-      return /^\/[A-Za-z][\w:-]*$/.test(trimmed) ? ` ${trimmed} ` : ' ';
+      return keepInlineCodeToken(trimmed) ? ` ${trimmed} ` : ' ';
     })
     .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
@@ -166,7 +173,7 @@ function headingBodySummary(body) {
   if (!first) return '';
   const clean = stripMarkdown(body);
   const extras = [];
-  for (const cmd of ['/goal', '/automate']) {
+  for (const cmd of ['/goal', '/automate', '/create-rule']) {
     const token = new RegExp(`(?:^|[^\\w/])${cmd}(?=$|[^\\w-])`, 'i');
     if (token.test(clean) && !first.toLowerCase().includes(cmd)) {
       extras.push(cmd);
@@ -183,12 +190,14 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'related'
     || key === 'command palette'
     || key === 'get started'
-    || key === 'was this article helpful';
+    || key === 'was this article helpful'
+    || key === 'faq'
+    || key === 'examples';
 }
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules|project rules|creating a rule|what to avoid/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -366,6 +375,9 @@ export function applyHint(item) {
   }
   if (isAgentOverviewUrl(item?.link)) {
     return 'Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.';
+  }
+  if (isRulesDocUrl(item?.link)) {
+    return 'Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.';
   }
   if (isSkillsDocUrl(item?.link) || isPromptingDocUrl(item?.link)) {
     return 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.';
@@ -593,7 +605,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url)) return sourcePriority(url) + 0.5;
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url)) return sourcePriority(url) + 0.5;
   return sourcePriority(url);
 }
 
@@ -645,6 +657,11 @@ function isPromptingDocUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/prompting'
     || value === 'https://www.cursor.com/docs/agent/prompting';
+}
+
+function isRulesDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/rules' || value === 'https://www.cursor.com/docs/rules';
 }
 
 function isLowPriorityBriefing(row) {
@@ -704,7 +721,7 @@ function currentClusterKey(learning) {
   ) {
     return 'cluster:cursor-router';
   }
-  if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents') {
+  if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules') {
     return 'cluster:skills-custom-modes';
   }
   return normalizeTitleKey(learning?.title);

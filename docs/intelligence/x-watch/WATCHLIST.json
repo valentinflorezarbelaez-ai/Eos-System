@@ -171,6 +171,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_DOCS_AGENT_PROMPTING",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-RULES",
+      "url": "https://cursor.com/docs/rules",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_RULES",
+      "fetchable": true
     }
   ]
 }

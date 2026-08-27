@@ -219,6 +219,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/rules' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/automations' && feed.kind === 'html-page'),
     true
   );
@@ -370,6 +374,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Overview', link: 'https://cursor.com/docs/agent/overview' },
     { title: 'Agent Skills', link: 'https://cursor.com/docs/skills' },
     { title: 'Prompting agents', link: 'https://cursor.com/docs/agent/prompting' },
+    { title: 'Rules', link: 'https://cursor.com/docs/rules' },
     { title: 'Automations', link: 'https://cursor.com/docs/cloud-agent/automations' },
     { title: 'Cloud Environment Setup', link: 'https://cursor.com/docs/cloud-agent/setup' },
     { title: 'Cloud Agent Best Practices', link: 'https://cursor.com/docs/cloud-agent/best-practices' },
@@ -482,6 +487,19 @@ test('applyHint for Cloud Agent best practices prefers OIDC and repo conventions
   assert.match(hint, /environment\.json/i);
   assert.equal(/enable/i.test(hint), false);
   assert.equal(hint.includes('timers'), false);
+});
+
+test('applyHint for Rules keeps .mdc, AGENTS.md, and /create-rule', () => {
+  const hint = applyHint({
+    title: 'Rules',
+    link: 'https://cursor.com/docs/rules',
+    summary: 'Project rules live in .cursor/rules as .mdc files. Type /create-rule in Agent.'
+  });
+  assert.match(hint, /\.mdc/i);
+  assert.match(hint, /AGENTS\.md/i);
+  assert.match(hint, /\/create-rule/i);
+  assert.match(hint, /Team dashboard rules are not EOS governance/i);
+  assert.equal(hint.includes('Custom Mode'), false);
 });
 
 test('applyHint is specific for every forum announcement fixture title', () => {
@@ -820,6 +838,19 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(bestPracticesMd.summary, /Repo rules/i);
   assert.equal(bestPracticesMd.summary.includes('Sitemap'), false);
   assert.equal(bestPracticesMd.summary.includes('Overview of all docs pages'), false);
+
+  const rulesMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-rules.md'), 'utf8')
+  );
+  assert.equal(rulesMd.title, 'Rules');
+  assert.match(rulesMd.summary, /\.mdc/);
+  assert.match(rulesMd.summary, /\.cursor\/rules/);
+  assert.match(rulesMd.summary, /Creating a rule/i);
+  assert.match(rulesMd.summary, /\/create-rule/);
+  assert.match(rulesMd.summary, /AGENTS\.md/i);
+  assert.equal(rulesMd.summary.includes('Sitemap'), false);
+  assert.equal(rulesMd.summary.includes('frontend components'), false);
+  assert.equal(rulesMd.summary.includes('Why isn'), false);
 });
 
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {
@@ -876,6 +907,18 @@ test('parseOfficialSource html-page maps agent overview /goal and Agent Skills',
   assert.match(applyHint(prompting[0]), /Custom Mode/i);
   assert.equal(applyHint(prompting[0]).includes('timers'), false);
   assert.equal(applyHint(prompting[0]).includes('context usage'), false);
+
+  const rules = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-rules.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/rules'
+  );
+  assert.equal(rules[0].id, 'https://cursor.com/docs/rules');
+  assert.equal(rules[0].title, 'Rules');
+  assert.match(rules[0].summary, /AGENTS\.md/i);
+  assert.match(applyHint(rules[0]), /\.mdc/);
+  assert.match(applyHint(rules[0]), /\/create-rule/);
+  assert.equal(applyHint(rules[0]).includes('Custom Mode'), false);
 });
 
 test('ingest fetches official docs/help html-page feeds once and not x.com', async () => {
@@ -1269,6 +1312,12 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
       apply_in_eos: 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.'
     },
     {
+      title: 'Rules',
+      source_url: 'https://cursor.com/docs/rules',
+      published_at: null,
+      apply_in_eos: 'Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.'
+    },
+    {
       title: 'Agent Skills',
       source_url: 'https://cursor.com/docs/skills',
       published_at: null,
@@ -1289,6 +1338,7 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/prompting'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/overview'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -1412,6 +1462,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /cursor.com\/docs\/agent\/overview/);
   assert.match(current, /cursor.com\/docs\/skills/);
   assert.equal(current.includes('cursor.com/docs/agent/prompting'), false);
+  assert.equal(current.includes('cursor.com/docs/rules'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/automations'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/setup'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/best-practices'), false);
