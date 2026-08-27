@@ -46,7 +46,7 @@ export class EosCursorHarnessCli {
       gate13Status: 'CANARY_RESTRICTED',
       activeMission: mission.mission_id || 'NONE',
       missionStage: mission.current_stage || 'IDLE',
-      systemHealth: state.test_health || '608 / 608 PASS',
+      systemHealth: state.test_health || 'UNKNOWN',
       timestamp: new Date().toISOString()
     };
   }
@@ -70,13 +70,13 @@ export class EosCursorHarnessCli {
   }
 
   // 3. eos audit: Generates audit signature
-  generateAuditSnapshot(missionId = 'CANARY-REAL-001') {
+  generateAuditSnapshot(missionId) {
     const status = this.getStatus();
     const hash = crypto.createHash('sha256').update(JSON.stringify(status)).digest('hex');
 
     return {
       auditId: `AUDIT-CLI-${Date.now()}`,
-      missionId,
+      missionId: missionId || status.activeMission,
       stateSnapshot: status,
       cryptographicSignature: hash,
       verdict: 'OPERATIONAL_AUDIT_VERIFIED'
@@ -114,7 +114,7 @@ export class EosCursorHarnessCli {
       case 'harness':
         return this.dispatchMultiModelHarness(argv[1] || 'Default Cursor Task', argv[2] || 'IMPLEMENTER');
       case 'audit':
-        return this.generateAuditSnapshot(argv[1] || 'CANARY-REAL-001');
+        return this.generateAuditSnapshot(argv[1]);
       case 'mcp':
         return this.handleMcpCommand(argv.slice(1));
       case 'improve':
