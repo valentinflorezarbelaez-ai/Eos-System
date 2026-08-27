@@ -716,6 +716,23 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/cloud-agent/settings"
+    },
+    {
+      "source_id": "SRC-0043",
+      "name": "Cursor Docs — Cloud Agent Private Connectivity",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Enterprise-only AWS PrivateLink/Cloudflare Tunnel for private Git; not required for this public-cloud watch.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/cloud-agent/private-connectivity"
     }
   ]
 }

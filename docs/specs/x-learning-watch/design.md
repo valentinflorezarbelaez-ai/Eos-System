@@ -4,7 +4,7 @@
 `scripts/engine/x-learning-watch.js` — pure functions plus an `ingest()` orchestrator.
 
 ## Data
-- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Builds, Cloud Agent setup, Cloud Agent best practices, Cloud Agent identity / OIDC, Cloud Agent metadata, Origin, Origin CLI, Origin integrations, Origin GitHub mirror, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, Agent prompting / Custom Modes, Rules, Hooks, Cloud Agent Secrets & Network, Cloud Agent security overview, Cloud Agent settings, MCP, and Plugins)
+- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Builds, Cloud Agent setup, Cloud Agent best practices, Cloud Agent identity / OIDC, Cloud Agent metadata, Origin, Origin CLI, Origin integrations, Origin GitHub mirror, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, Agent prompting / Custom Modes, Rules, Hooks, Cloud Agent Secrets & Network, Cloud Agent security overview, Cloud Agent settings, Cloud Agent Private Connectivity, MCP, and Plugins)
 - `docs/intelligence/x-watch/STATE.json` — `seen_ids`, last ingest timestamp
 - `docs/intelligence/x-watch/briefings/YYYY-MM-DD.md` — human briefing
 
@@ -23,7 +23,7 @@ Living docs/help pages have no RSS. `html-page` items use `id = feed.url` so the
 CURRENT.md clusters related product titles onto one row, preferring changelog > docs/help > blog > forum:
 - Grok 4.6 (`grok 4.6` / `grok-4-6`)
 - Cloud Agent harness (`changelog/08-19-26`, automations help, `docs/cloud-agent/automations`, `docs/cloud-agent/capabilities`, `docs/hooks`)
-- Cloud Agent Builds (`changelog/08-13-26`, `docs/cloud-agent/builds`, `docs/cloud-agent/setup`, `docs/cloud-agent/best-practices`, `docs/cloud-agent/identity`, `docs/cloud-agent/metadata`, `docs/cloud-agent/security-network`, `docs/cloud-agent/security`, `docs/cloud-agent/settings`, `blog/builds`)
+- Cloud Agent Builds (`changelog/08-13-26`, `docs/cloud-agent/builds`, `docs/cloud-agent/setup`, `docs/cloud-agent/best-practices`, `docs/cloud-agent/identity`, `docs/cloud-agent/metadata`, `docs/cloud-agent/security-network`, `docs/cloud-agent/security`, `docs/cloud-agent/settings`, `docs/cloud-agent/private-connectivity`, `blog/builds`)
 - Origin (`origin-code-hosting`, `docs/origin`, `docs/origin/cli`, `docs/origin/integrations`, `docs/origin/mirror-github`)
 - Cursor Router (`changelog/router`, `docs/cursor-router`, router blog posts)
 - Cloud Agent harness also includes `docs/subagents` and `changelog/cloud-in-agents-window`
@@ -38,6 +38,7 @@ CURRENT.md clusters related product titles onto one row, preferring changelog > 
 - Cloud Agent Secrets & Network (`docs/cloud-agent/security-network`) clusters onto the Builds changelog; `apply_in_eos` prefers Runtime Secrets or OIDC over long-lived keys in git, treats `[REDACTED]` as expected, and honors network allowlists without `*.s3` wildcards
 - Cloud Agent security overview (`docs/cloud-agent/security`) clusters onto the Builds changelog; `apply_in_eos` treats the page as the security model (not the config reference), honors never-widened access, `.cursorignore`, and draft-PR handoff, and does not treat SOC 2/Trust Center claims as EOS evidence
 - Cloud Agent settings (`docs/cloud-agent/settings`) clusters onto the Builds changelog; `apply_in_eos` treats dashboard settings as team-admin config (not EOS governance), keeps `environment.json` + Builds as the start path, and does not tell operators to turn on team follow-ups
+- Cloud Agent Private Connectivity (`docs/cloud-agent/private-connectivity`) clusters onto the Builds changelog; `apply_in_eos` treats it as Enterprise-only and not required for this public-cloud watch; GitHub remains source of truth; tunnel tokens stay out of git
 - MCP (`docs/mcp`) clusters onto Skills; `apply_in_eos` commits project servers as `.cursor/mcp.json` (user-level `~/.cursor/mcp.json` is local IDE config; team dashboard MCP is not EOS governance)
 - Plugins (`docs/plugins`) clusters onto Skills; `apply_in_eos` keeps EOS playbooks as repo skills/rules/hooks/`.cursor/mcp.json` (team marketplace plugins and `~/.cursor/plugins/local` are not EOS governance)
 

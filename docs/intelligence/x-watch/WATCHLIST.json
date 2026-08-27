@@ -222,6 +222,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-PRIVATE-CONNECTIVITY",
+      "url": "https://cursor.com/docs/cloud-agent/private-connectivity",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_PRIVATE_CONNECTIVITY",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-MCP",
       "url": "https://cursor.com/docs/mcp",
       "kind": "html-page",

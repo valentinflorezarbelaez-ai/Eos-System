@@ -40,3 +40,4 @@
 39. [x] Ingest Plugins living docs; cluster onto Skills without dropping Usage and limits; team marketplace plugins and `~/.cursor/plugins/local` are not EOS governance
 40. [x] Ingest Cloud Agent security overview living docs; cluster onto Builds changelog; treat as security model not config reference; never-widened access; Privacy Mode (Legacy) is not supported; SOC 2/Trust Center are not EOS evidence
 41. [x] Ingest Cloud Agent settings living docs; cluster onto Builds changelog; dashboard settings are not EOS governance; do not turn on team follow-ups (secret exposure)
+42. [x] Ingest Cloud Agent Private Connectivity living docs; cluster onto Builds changelog; Enterprise-only; not required for this public-cloud watch; no tunnel tokens in git

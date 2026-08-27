@@ -196,6 +196,8 @@ function headingBodySummary(body) {
   if (/\.cursorignore\b/i.test(clean) && !/\.cursorignore\b/i.test(first)) extras.push('.cursorignore');
   if (/\.cursor\/environment\.json/i.test(clean) && !/\.cursor\/environment\.json/i.test(first)) extras.push('.cursor/environment.json');
   if (/\bnever widened\b/i.test(clean) && !/\bnever widened\b/i.test(first)) extras.push('never widened');
+  if (/\bAWS PrivateLink\b/i.test(clean) && !/\bAWS PrivateLink\b/i.test(first)) extras.push('AWS PrivateLink');
+  if (/\bCloudflare Tunnel\b/i.test(clean) && !/\bCloudflare Tunnel\b/i.test(first)) extras.push('Cloudflare Tunnel');
   if (extras.length === 0) return first;
   return `${first} ${extras.join(' ')}`.trim();
 }
@@ -265,7 +267,15 @@ function shouldSkipMarkdownHeading(heading) {
     || key === 'auditability'
     || key === 'data deletion'
     || key === 'default settings'
-    || key === 'security settings';
+    || key === 'security settings'
+    || key === 'aws privatelink'
+    || key === 'cloudflare tunnel'
+    || key === 'complete the source control connection'
+    || key === 'check the private webhook path'
+    || key === 'google private service connect'
+    || key === 'what to send cursor'
+    || key === 'further reading'
+    || key === 'prerequisites';
 }
 
 function isProductSubheading(heading) {
@@ -504,6 +514,9 @@ export function applyHint(item) {
   }
   if (isCloudAgentSettingsUrl(item?.link)) {
     return 'Treat Cloud Agents dashboard settings as team-admin config, not EOS governance. Keep environment.json + Builds as the start path and honor network allowlists. Do not turn on team follow-ups: a teammate can drive an agent that holds another user\'s secrets.';
+  }
+  if (isCloudAgentPrivateConnectivityUrl(item?.link)) {
+    return 'This Cloud Agent run is public cloud. Private Connectivity is Enterprise-only (AWS PrivateLink or Cloudflare Tunnel) for private Git/registries. It is not required for this watch. Keep GitHub as source of truth. Do not put tunnel tokens in git.';
   }
   if (isMcpDocUrl(item?.link)) {
     return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
@@ -777,6 +790,12 @@ function isCloudAgentSettingsUrl(url) {
     || value === 'https://www.cursor.com/docs/cloud-agent/settings';
 }
 
+function isCloudAgentPrivateConnectivityUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent/private-connectivity'
+    || value === 'https://www.cursor.com/docs/cloud-agent/private-connectivity';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -849,6 +868,7 @@ function currentClusterKey(learning) {
     || url.includes('cloud-agent/security-network')
     || isCloudAgentSecurityOverviewUrl(learning?.source_url)
     || isCloudAgentSettingsUrl(learning?.source_url)
+    || isCloudAgentPrivateConnectivityUrl(learning?.source_url)
     || url.includes('cursor.com/blog/builds')
   ) {
     return 'cluster:cloud-agent-builds';

@@ -259,6 +259,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/private-connectivity' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/mcp' && feed.kind === 'html-page'),
     true
   );
@@ -508,6 +512,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Secrets & Network', link: 'https://cursor.com/docs/cloud-agent/security-network' },
     { title: 'Security overview', link: 'https://cursor.com/docs/cloud-agent/security' },
     { title: 'Dashboard settings', link: 'https://cursor.com/docs/cloud-agent/settings' },
+    { title: 'Private Connectivity', link: 'https://cursor.com/docs/cloud-agent/private-connectivity' },
     { title: 'Model Context Protocol (MCP)', link: 'https://cursor.com/docs/mcp' },
     { title: 'Plugins', link: 'https://cursor.com/docs/plugins' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
@@ -727,6 +732,23 @@ test('applyHint for Cloud Agent settings rejects team follow-ups as EOS governan
   assert.equal(/enable/i.test(hint), false);
   assert.equal(hint.includes('timers'), false);
   assert.equal(hint.includes('Custom Mode'), false);
+});
+
+test('applyHint for Private Connectivity keeps this watch on public cloud', () => {
+  const hint = applyHint({
+    title: 'Private Connectivity',
+    link: 'https://cursor.com/docs/cloud-agent/private-connectivity',
+    summary: 'Connect Cursor to private Git providers with AWS PrivateLink or Cloudflare Tunnel.'
+  });
+  assert.match(hint, /public cloud/i);
+  assert.match(hint, /Enterprise-only/i);
+  assert.match(hint, /not required/i);
+  assert.match(hint, /GitHub/i);
+  assert.match(hint, /tunnel tokens/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('10.2.8.0'), false);
 });
 
 test('applyHint for MCP keeps .cursor/mcp.json and rejects dashboard governance', () => {
@@ -1055,6 +1077,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(applyHint(settings[0]), /team follow-ups/i);
   assert.equal(/enable/i.test(applyHint(settings[0])), false);
 
+  const privateConnectivity = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-private-connectivity.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/private-connectivity'
+  );
+  assert.equal(privateConnectivity[0].id, 'https://cursor.com/docs/cloud-agent/private-connectivity');
+  assert.equal(privateConnectivity[0].title, 'Private Connectivity');
+  assert.match(privateConnectivity[0].summary, /AWS PrivateLink/);
+  assert.match(privateConnectivity[0].summary, /Cloudflare Tunnel/);
+  assert.doesNotMatch(privateConnectivity[0].summary, /This Cloud Agent run is public cloud/i);
+  assert.match(applyHint(privateConnectivity[0]), /public cloud/i);
+  assert.match(applyHint(privateConnectivity[0]), /Enterprise-only/i);
+  assert.match(applyHint(privateConnectivity[0]), /tunnel tokens/i);
+  assert.equal(/enable/i.test(applyHint(privateConnectivity[0])), false);
+
   const mcp = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.html'), 'utf8'),
     'html-page',
@@ -1286,6 +1323,24 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(settingsMd.summary.includes('Sitemap'), false);
   assert.equal(/Default settings —/.test(settingsMd.summary), false);
   assert.equal(/Security settings —/.test(settingsMd.summary), false);
+
+  const privateConnectivityMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-private-connectivity.md'), 'utf8')
+  );
+  assert.equal(privateConnectivityMd.title, 'Private Connectivity');
+  assert.match(privateConnectivityMd.summary, /AWS PrivateLink/);
+  assert.match(privateConnectivityMd.summary, /Cloudflare Tunnel/);
+  assert.match(privateConnectivityMd.summary, /How to choose/);
+  assert.match(privateConnectivityMd.summary, /Supported options/);
+  assert.equal(privateConnectivityMd.summary.includes('10.2.8.0'), false);
+  assert.equal(privateConnectivityMd.summary.includes('api2.cursor.sh'), false);
+  assert.equal(privateConnectivityMd.summary.includes('github-integration-setup'), false);
+  assert.equal(privateConnectivityMd.summary.includes('Sitemap'), false);
+  assert.equal(/AWS PrivateLink —/.test(privateConnectivityMd.summary), false);
+  assert.equal(/Cloudflare Tunnel —/.test(privateConnectivityMd.summary), false);
+  assert.equal(/Prerequisites —/.test(privateConnectivityMd.summary), false);
+  assert.equal(/Complete the source control connection —/.test(privateConnectivityMd.summary), false);
+  assert.equal(/Check the private webhook path —/.test(privateConnectivityMd.summary), false);
 
   const mcpMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-mcp.md'), 'utf8')
@@ -1907,6 +1962,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Treat Cloud Agents dashboard settings as team-admin config, not EOS governance. Keep environment.json + Builds as the start path and honor network allowlists. Do not turn on team follow-ups: a teammate can drive an agent that holds another user\'s secrets.'
     },
     {
+      title: 'Private Connectivity',
+      source_url: 'https://cursor.com/docs/cloud-agent/private-connectivity',
+      published_at: null,
+      apply_in_eos: 'This Cloud Agent run is public cloud. Private Connectivity is Enterprise-only (AWS PrivateLink or Cloudflare Tunnel) for private Git/registries. It is not required for this watch. Keep GitHub as source of truth. Do not put tunnel tokens in git.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -1924,6 +1985,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/security-network'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/settings'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/private-connectivity'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -2009,6 +2071,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/cloud-agent/security-network'), false);
   assert.equal(/cursor\.com\/docs\/cloud-agent\/security(?!-network)/.test(current), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/settings'), false);
+  assert.equal(current.includes('cursor.com/docs/cloud-agent/private-connectivity'), false);
   assert.equal(current.includes('cursor.com/docs/mcp'), false);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.match(current, /cursor.com\/changelog\/08-19-26/);
