@@ -486,6 +486,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_CURSOR_ROUTER",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-GROK-4-5",
+      "url": "https://cursor.com/help/models-and-usage/grok-4-5",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_GROK_4_5",
+      "fetchable": true
     }
   ]
 }

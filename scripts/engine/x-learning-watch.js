@@ -584,6 +584,9 @@ export function applyHint(item) {
   if (isHelpCursorRouterUrl(item?.link)) {
     return 'Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules still bind model and governance choices. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put API keys in git. Keep environment.json + Builds.';
   }
+  if (isHelpGrok45Url(item?.link)) {
+    return 'Help Grok 4.5 is a prior vendor Cursor Model. Honor Auto vs Composer pool and included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk. Do not put API keys in git. Keep environment.json + Builds.';
+  }
   if (isRulesDocUrl(item?.link)) {
     return 'Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.';
   }
@@ -900,7 +903,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -1046,6 +1049,12 @@ function isHelpCursorRouterUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/help/models-and-usage/cursor-router'
     || value === 'https://www.cursor.com/help/models-and-usage/cursor-router';
+}
+
+function isHelpGrok45Url(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/help/models-and-usage/grok-4-5'
+    || value === 'https://www.cursor.com/help/models-and-usage/grok-4-5';
 }
 
 function isCloudAgentBestPracticesUrl(url) {
@@ -1243,7 +1252,7 @@ function normalizeTitleKey(title) {
 function currentClusterKey(learning) {
   const url = String(learning?.source_url || '').toLowerCase();
   const title = String(learning?.title || '').toLowerCase();
-  if (title.includes('grok 4.6') || url.includes('grok-4-6')) {
+  if (title.includes('grok 4.6') || url.includes('grok-4-6') || isHelpGrok45Url(learning?.source_url)) {
     return 'cluster:grok-4-6';
   }
   if (

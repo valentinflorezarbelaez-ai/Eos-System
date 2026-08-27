@@ -159,6 +159,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/models-and-usage/grok-4-5' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -1451,6 +1455,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Cursor is now a part of SpaceX', link: 'https://cursor.com/blog/joining-spacex' },
     { title: 'Introducing Grok 4.6', link: 'https://cursor.com/blog/grok-4-6' },
     { title: 'Grok 4.6', link: 'https://cursor.com/help/models-and-usage/grok-4-6' },
+    { title: 'Grok 4.5', link: 'https://cursor.com/help/models-and-usage/grok-4-5' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -1973,6 +1978,30 @@ test('applyHint for Help Cursor Router keeps Auto modes and rejects SDK install'
   assert.equal(hint.includes('timers'), false);
   assert.equal(hint.includes('curl'), false);
   assert.equal(hint.includes('Microsoft Teams'), false);
+});
+
+test('applyHint for Help Grok 4.5 keeps included-credit treatment and rejects quality claims', () => {
+  const hint = applyHint({
+    title: 'Grok 4.5',
+    link: 'https://cursor.com/help/models-and-usage/grok-4-5',
+    summary: 'You cannot change the effort level or enable Fast mode on Cursor Start. Enterprise teams need to enable Grok 4.5. TypeScript SDK and Custom Mode.'
+  });
+  assert.match(hint, /prior vendor Cursor Model/i);
+  assert.match(hint, /Auto vs Composer pool/i);
+  assert.match(hint, /included-credit treatment/i);
+  assert.match(hint, /vendor quality claims/i);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.match(hint, /@cursor\/sdk/);
+  assert.match(hint, /Do not put API keys in git/i);
+  assert.match(hint, /environment\.json/);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('curl'), false);
+  assert.equal(hint.includes('Cursor Start'), false);
 });
 
 test('applyHint for Cloud Agent best practices prefers OIDC and repo conventions', () => {
@@ -2899,6 +2928,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpCursorRouter[0]).includes('Slack'), false);
   assert.equal(applyHint(helpCursorRouter[0]).includes('curl'), false);
 
+  const helpGrok45 = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-models-and-usage-grok-4-5.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/models-and-usage/grok-4-5'
+  );
+  assert.equal(helpGrok45[0].id, 'https://cursor.com/help/models-and-usage/grok-4-5');
+  assert.equal(helpGrok45[0].title, 'Grok 4.5');
+  assert.match(helpGrok45[0].summary, /What Grok 4.5 is/);
+  assert.match(applyHint(helpGrok45[0]), /prior vendor Cursor Model/i);
+  assert.match(applyHint(helpGrok45[0]), /Do not treat vendor quality claims/i);
+  assert.equal(/enable/i.test(applyHint(helpGrok45[0])), false);
+  assert.equal(applyHint(helpGrok45[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpGrok45[0]).includes('Slack'), false);
+  assert.equal(applyHint(helpGrok45[0]).includes('curl'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3308,6 +3352,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/models-and-usage/grok-4-6'),
     'https://cursor.com/help/models-and-usage/grok-4-6.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/models-and-usage/grok-4-5'),
+    'https://cursor.com/help/models-and-usage/grok-4-5.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -3597,6 +3645,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpCursorRouterMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpCursorRouterMd.summary), false);
   assert.equal(helpCursorRouterMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpGrok45Md = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-models-and-usage-grok-4-5.md'), 'utf8')
+  );
+  assert.equal(helpGrok45Md.title, 'Grok 4.5');
+  assert.match(helpGrok45Md.summary, /What is Grok 4.5/);
+  assert.match(helpGrok45Md.summary, /effort levels/);
+  assert.match(helpGrok45Md.summary, /When should I choose Grok 4.5 over Composer/);
+  assert.match(helpGrok45Md.summary, /Which plans include Grok 4.5/);
+  assert.equal(helpGrok45Md.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpGrok45Md.summary), false);
+  assert.equal(helpGrok45Md.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -4214,6 +4274,12 @@ test('selectCurrentLearnings clusters Grok 4.6 onto official docs/help', () => {
       apply_in_eos: 'Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.'
     },
     {
+      title: 'Grok 4.5',
+      source_url: 'https://cursor.com/help/models-and-usage/grok-4-5',
+      published_at: null,
+      apply_in_eos: 'Help Grok 4.5 is a prior vendor Cursor Model. Honor Auto vs Composer pool and included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk. Do not put API keys in git. Keep environment.json + Builds.'
+    },
+    {
       title: 'Introducing Grok Bot',
       source_url: 'https://forum.cursor.com/t/introducing-grok-bot/168053',
       published_at: '2026-08-12T16:00:00.000Z',
@@ -4235,6 +4301,7 @@ test('selectCurrentLearnings clusters Grok 4.6 onto official docs/help', () => {
   assert.equal(selected[0].source_url, 'https://cursor.com/changelog/08-19-26');
   assert.equal(selected.filter((row) => /grok 4\.6/i.test(row.title)).length, 1);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/grok-4-6'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/grok-4-5'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/blog/grok-4-6'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://forum.cursor.com/t/grok-4-6-is-now-live/168189'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://forum.cursor.com/t/introducing-grok-bot/168053'), true);
@@ -5121,6 +5188,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(first.includes('IMDEX'), false);
   assert.equal(first.includes('customer/press'), false);
   assert.match(current, /cursor.com\/help\/models-and-usage\/grok-4-6/);
+  assert.equal(current.includes('cursor.com/help/models-and-usage/grok-4-5'), false);
   assert.match(current, /cursor.com\/docs\/models-and-pricing/);
   assert.match(current, /cursor.com\/changelog\/router/);
   assert.match(current, /cursor.com\/help\/models-and-usage\/usage-limits/);
@@ -5166,6 +5234,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/account-and-billing/pricing'), false);
   assert.equal(current.includes('cursor.com/help/models-and-usage/available-models'), false);
   assert.equal(current.includes('cursor.com/help/models-and-usage/cursor-router'), false);
+  assert.equal(current.includes('cursor.com/help/models-and-usage/grok-4-5'), false);
   assert.equal(current.includes('cursor.com/help/models-and-usage/api-keys'), false);
   assert.equal(current.includes('cursor.com/help/account-and-billing/teams-management'), false);
   assert.equal(current.includes('cursor.com/help/account-and-billing/overages'), false);
