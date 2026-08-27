@@ -19,3 +19,4 @@
 18. [x] Enrich docs/help `html-page` summaries from official cursor.com `.md` companions without scraping X
 19. [x] Correct Cloud Agent Builds `apply_in_eos` to default start path (no Enable Builds opt-in) from official living docs
 20. [x] Surface steering follow-ups on the Agent overview (`/goal`) CURRENT row from official living docs
+21. [x] Ingest Agent prompting / Custom Modes living docs; cluster onto Skills without dropping Usage and limits

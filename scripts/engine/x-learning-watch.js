@@ -331,7 +331,7 @@ export function applyHint(item) {
   if (isAgentOverviewUrl(item?.link)) {
     return 'Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.';
   }
-  if (isSkillsDocUrl(item?.link)) {
+  if (isSkillsDocUrl(item?.link) || isPromptingDocUrl(item?.link)) {
     return 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.';
   }
   if (title.includes('share your thoughts')) {
@@ -550,6 +550,11 @@ function sourcePriority(url) {
   return 4;
 }
 
+function clusterRowPriority(url) {
+  if (isPromptingDocUrl(url)) return sourcePriority(url) + 0.5;
+  return sourcePriority(url);
+}
+
 function isLivingOfficialDoc(url) {
   const value = String(url || '');
   return value.includes('cursor.com/docs/') || value.includes('cursor.com/help/');
@@ -574,6 +579,12 @@ function isAgentOverviewUrl(url) {
 function isSkillsDocUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/skills' || value === 'https://www.cursor.com/docs/skills';
+}
+
+function isPromptingDocUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/agent/prompting'
+    || value === 'https://www.cursor.com/docs/agent/prompting';
 }
 
 function isLowPriorityBriefing(row) {
@@ -631,6 +642,9 @@ function currentClusterKey(learning) {
   ) {
     return 'cluster:cursor-router';
   }
+  if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents') {
+    return 'cluster:skills-custom-modes';
+  }
   return normalizeTitleKey(learning?.title);
 }
 
@@ -645,7 +659,7 @@ export function selectCurrentLearnings(learnings, limit = 10) {
       continue;
     }
     const clusterPublished = Math.max(previous.clusterPublished, publishedMs(row.published_at));
-    const bySource = sourcePriority(row.source_url) - sourcePriority(previous.row.source_url);
+    const bySource = clusterRowPriority(row.source_url) - clusterRowPriority(previous.row.source_url);
     if (bySource < 0 || (bySource === 0 && publishedMs(row.published_at) > publishedMs(previous.row.published_at))) {
       byKey.set(key, { row, clusterPublished });
     } else {

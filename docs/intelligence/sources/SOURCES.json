@@ -444,6 +444,23 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/cloud-agent/capabilities"
+    },
+    {
+      "source_id": "SRC-0027",
+      "name": "Cursor Docs — Prompting agents / Custom Modes",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Custom Modes are vendor catalog, not an X timeline.",
+      "relevance_to_eos": "HIGH",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/agent/prompting"
     }
   ]
 }

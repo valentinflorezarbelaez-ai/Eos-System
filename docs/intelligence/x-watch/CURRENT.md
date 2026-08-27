@@ -2,8 +2,8 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-27T00:32:58.567Z
-Store size: 104
+Updated: 2026-08-27T00:36:01.587Z
+Store size: 105
 
 ## Official product actions
 - **Cloud Agents and Cursor Harness Improvements** — Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS. Honor auto-CI-fix on PRs this agent opens.
@@ -18,12 +18,12 @@ Store size: 104
   https://cursor.com/help/models-and-usage/grok-4-6
 - **Overview** — Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.
   https://cursor.com/docs/agent/overview
+- **Agent Skills** — Pin an EOS skill as a Custom Mode when a session must stay on one playbook.
+  https://cursor.com/docs/skills
 - **Cloud Agents** — Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.
   https://cursor.com/docs/cloud-agent
 - **Models & Pricing** — Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.
   https://cursor.com/docs/models-and-pricing
-- **Agent Skills** — Pin an EOS skill as a Custom Mode when a session must stay on one playbook.
-  https://cursor.com/docs/skills
 - **Usage and limits** — Honor included quota. Stop this daily watch rather than switching to paid on-demand.
   https://cursor.com/help/models-and-usage/usage-limits
 

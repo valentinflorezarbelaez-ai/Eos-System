@@ -4,7 +4,7 @@
 `scripts/engine/x-learning-watch.js` — pure functions plus an `ingest()` orchestrator.
 
 ## Data
-- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations, Builds, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, and Agent Skills)
+- `docs/intelligence/x-watch/WATCHLIST.json` — accounts + official feeds (`FEED-CURSOR-CHANGELOG`, `FEED-CURSOR-FORUM-ANNOUNCEMENTS`, `FEED-CURSOR-BLOG-INDEX`, plus named docs/help `html-page` feeds for Grok 4.6, Models & Pricing, Cloud Agent automations, Builds, Origin, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview, Agent Skills, and Agent prompting / Custom Modes)
 - `docs/intelligence/x-watch/STATE.json` — `seen_ids`, last ingest timestamp
 - `docs/intelligence/x-watch/briefings/YYYY-MM-DD.md` — human briefing
 
@@ -29,7 +29,7 @@ CURRENT.md clusters related product titles onto one row, preferring changelog > 
 - Cloud Agent harness also includes `docs/subagents` and `changelog/cloud-in-agents-window`
 - Cloud Agents overview (`docs/cloud-agent` exact URL) stays a living row and must not match `docs/cloud-agent/builds` or `docs/cloud-agent/capabilities`
 - Agent overview (`docs/agent/overview`) stays a living `/goal` row; `apply_in_eos` also covers steering follow-ups from that page
-- Agent Skills (`docs/skills`) stays a living Custom Mode row
+- Agent Skills (`docs/skills`) stays a living Custom Mode row; `docs/agent/prompting` clusters onto that row so Usage and limits is not evicted
 
 Clusters rank by the newest sibling date. Up to six unclustered living `cursor.com/docs/` or `cursor.com/help/` pages are reserved in CURRENT even when they have no `<time>` stamp. Changelog URLs that already made the date-ranked top N are not evicted to make room for those reserved pages.
 

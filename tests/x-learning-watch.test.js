@@ -202,6 +202,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/skills' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/agent/prompting' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -323,6 +327,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Subagents', link: 'https://cursor.com/docs/subagents' },
     { title: 'Overview', link: 'https://cursor.com/docs/agent/overview' },
     { title: 'Agent Skills', link: 'https://cursor.com/docs/skills' },
+    { title: 'Prompting agents', link: 'https://cursor.com/docs/agent/prompting' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -675,6 +680,18 @@ test('parseOfficialSource html-page maps agent overview /goal and Agent Skills',
   assert.equal(skills[0].title, 'Agent Skills');
   assert.match(applyHint(skills[0]), /Custom Mode/i);
   assert.equal(applyHint(skills[0]).includes('timers'), false);
+
+  const prompting = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-agent-prompting.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/agent/prompting'
+  );
+  assert.equal(prompting[0].id, 'https://cursor.com/docs/agent/prompting');
+  assert.equal(prompting[0].title, 'Prompting agents');
+  assert.match(prompting[0].summary, /Custom Mode/i);
+  assert.match(applyHint(prompting[0]), /Custom Mode/i);
+  assert.equal(applyHint(prompting[0]).includes('timers'), false);
+  assert.equal(applyHint(prompting[0]).includes('context usage'), false);
 });
 
 test('ingest fetches official docs/help html-page feeds once and not x.com', async () => {
@@ -1025,6 +1042,45 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
+test('selectCurrentLearnings clusters prompting Custom Modes onto skills and keeps usage limits', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'Cloud Agents and Cursor Harness Improvements',
+      source_url: 'https://cursor.com/changelog/08-19-26',
+      published_at: 'Wed, 19 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.'
+    },
+    {
+      title: 'Prompting agents',
+      source_url: 'https://cursor.com/docs/agent/prompting',
+      published_at: null,
+      apply_in_eos: 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.'
+    },
+    {
+      title: 'Agent Skills',
+      source_url: 'https://cursor.com/docs/skills',
+      published_at: null,
+      apply_in_eos: 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.'
+    },
+    {
+      title: 'Overview',
+      source_url: 'https://cursor.com/docs/agent/overview',
+      published_at: null,
+      apply_in_eos: 'Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.'
+    },
+    {
+      title: 'Usage and limits',
+      source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
+      published_at: null,
+      apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+    }
+  ], 6);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/prompting'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/overview'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
+});
+
 test('selectCurrentLearnings does not drop changelog rows for reserved docs', () => {
   const rows = [];
   for (let i = 0; i < 8; i += 1) {
@@ -1096,6 +1152,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /cursor.com\/docs\/cloud-agent(?!\/)/);
   assert.match(current, /cursor.com\/docs\/agent\/overview/);
   assert.match(current, /cursor.com\/docs\/skills/);
+  assert.equal(current.includes('cursor.com/docs/agent/prompting'), false);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);
   assert.match(current, /Steer running agents/);
