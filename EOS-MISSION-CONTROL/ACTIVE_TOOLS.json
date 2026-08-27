@@ -49,7 +49,7 @@
       "status": "CONNECTED_AND_GOVERNED",
       "purpose": "PERSISTENT_MEMORY",
       "risk": "LOW",
-      "command": "C:\\Users\\valen\\go\\bin\\engram.exe mcp --tools=agent"
+      "command": "engram mcp --tools=agent"
     },
     {
       "name": "Playwright",

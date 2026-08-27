@@ -11,7 +11,7 @@
       }
     },
     "engram": {
-      "command": "C:\\Users\\valen\\go\\bin\\engram.exe",
+      "command": "engram",
       "args": ["mcp", "--tools=agent"]
     },
     "context7": {
