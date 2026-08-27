@@ -472,6 +472,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_PRICING_AND_PLANS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-AVAILABLE-MODELS",
+      "url": "https://cursor.com/help/models-and-usage/available-models",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_AVAILABLE_MODELS",
+      "fetchable": true
     }
   ]
 }

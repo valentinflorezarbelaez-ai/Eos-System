@@ -339,7 +339,8 @@ function shouldSkipMarkdownHeading(heading, body) {
     || key === 'how do i downgrade my plan'
     || key === 'where do i manage my subscription'
     || key === 'what if i move from an individual plan to a teams plan'
-    || key === 'can i switch between monthly and yearly billing';
+    || key === 'can i switch between monthly and yearly billing'
+    || key === 'how do i switch models';
 }
 
 function isProductSubheading(heading) {
@@ -576,6 +577,9 @@ export function applyHint(item) {
   }
   if (isHelpPricingUrl(item?.link)) {
     return 'Help Pricing and plans lists vendor individual and Teams plan names. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor plan prices as EOS budget evidence. Do not change this Cloud Agent billing from the dashboard. Keep environment.json + Builds.';
+  }
+  if (isHelpAvailableModelsUrl(item?.link)) {
+    return 'Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep environment.json + Builds.';
   }
   if (isRulesDocUrl(item?.link)) {
     return 'Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.';
@@ -893,7 +897,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -1027,6 +1031,12 @@ function isHelpPricingUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/help/account-and-billing/pricing'
     || value === 'https://www.cursor.com/help/account-and-billing/pricing';
+}
+
+function isHelpAvailableModelsUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/help/models-and-usage/available-models'
+    || value === 'https://www.cursor.com/help/models-and-usage/available-models';
 }
 
 function isCloudAgentBestPracticesUrl(url) {
@@ -1313,7 +1323,7 @@ function currentClusterKey(learning) {
   if (isCloudAgentOverviewUrl(learning?.source_url) || isCloudAgentApiEndpointsUrl(learning?.source_url) || isCursorSdkTypescriptUrl(learning?.source_url) || isCursorSdkPythonUrl(learning?.source_url) || isCursorSdkBridgeUrl(learning?.source_url)) {
     return 'cluster:cloud-agent-overview';
   }
-  if (isModelsAndPricingUrl(learning?.source_url) || isTeamPricingUrl(learning?.source_url) || isTeamMembersUrl(learning?.source_url) || isHelpPricingUrl(learning?.source_url)) {
+  if (isModelsAndPricingUrl(learning?.source_url) || isTeamPricingUrl(learning?.source_url) || isTeamMembersUrl(learning?.source_url) || isHelpPricingUrl(learning?.source_url) || isHelpAvailableModelsUrl(learning?.source_url)) {
     return 'cluster:models-and-pricing';
   }
   return normalizeTitleKey(learning?.title);
