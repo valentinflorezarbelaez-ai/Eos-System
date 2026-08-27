@@ -226,6 +226,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/setup' && feed.kind === 'html-page'),
     true
   );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/cloud-agent/best-practices' && feed.kind === 'html-page'),
+    true
+  );
 });
 
 test('ingest fetches official RSS and updates seen ids', async () => {
@@ -364,6 +368,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Prompting agents', link: 'https://cursor.com/docs/agent/prompting' },
     { title: 'Automations', link: 'https://cursor.com/docs/cloud-agent/automations' },
     { title: 'Cloud Environment Setup', link: 'https://cursor.com/docs/cloud-agent/setup' },
+    { title: 'Cloud Agent Best Practices', link: 'https://cursor.com/docs/cloud-agent/best-practices' },
     { title: 'Cursor earns AIUC-1 certification for agent security and reliability', link: 'https://cursor.com/blog/aiuc-1' }
   ];
   for (const sample of samples) {
@@ -459,6 +464,19 @@ test('applyHint for Origin mirror keeps GitHub as source of truth', () => {
   assert.match(hint, /Do not Detach/i);
   assert.match(hint, /GitHub as the source of truth/i);
   assert.match(hint, /Bugbot/i);
+  assert.equal(hint.includes('timers'), false);
+});
+
+test('applyHint for Cloud Agent best practices prefers OIDC and repo conventions', () => {
+  const hint = applyHint({
+    title: 'Cloud Agent Best Practices',
+    link: 'https://cursor.com/docs/cloud-agent/best-practices',
+    summary: 'Prefer OIDC tokens over long-lived access keys. Use skills and agents.md.'
+  });
+  assert.match(hint, /OIDC/i);
+  assert.match(hint, /AGENTS\.md/i);
+  assert.match(hint, /environment\.json/i);
+  assert.equal(/enable/i.test(hint), false);
   assert.equal(hint.includes('timers'), false);
 });
 
@@ -677,6 +695,17 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.match(setup[0].summary, /environment config/i);
   assert.match(applyHint(setup[0]), /default start path/i);
   assert.equal(applyHint(setup[0]).includes('isolated VMs'), false);
+
+  const bestPractices = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/cloud-agent/best-practices'
+  );
+  assert.equal(bestPractices[0].id, 'https://cursor.com/docs/cloud-agent/best-practices');
+  assert.equal(bestPractices[0].title, 'Cloud Agent Best Practices');
+  assert.match(bestPractices[0].summary, /running Cloud Agents/i);
+  assert.match(applyHint(bestPractices[0]), /OIDC/i);
+  assert.equal(/enable/i.test(applyHint(bestPractices[0])), false);
 });
 
 test('parseOfficialSource html-page maps Cursor Router and usage limits', () => {
@@ -777,6 +806,16 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.match(originMirrorMd.summary, /Bugbot/i);
   assert.equal(originMirrorMd.summary.includes('Sitemap'), false);
   assert.equal(originMirrorMd.summary.includes('Overview of all docs pages'), false);
+
+  const bestPracticesMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
+  );
+  assert.equal(bestPracticesMd.title, 'Best Practices');
+  assert.match(bestPracticesMd.summary, /OIDC/i);
+  assert.match(bestPracticesMd.summary, /agents\.md/i);
+  assert.match(bestPracticesMd.summary, /Repo rules/i);
+  assert.equal(bestPracticesMd.summary.includes('Sitemap'), false);
+  assert.equal(bestPracticesMd.summary.includes('Overview of all docs pages'), false);
 });
 
 test('parseOfficialSource html-page maps Cloud Agent capabilities without collapsing overview', () => {
@@ -1277,6 +1316,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.'
     },
     {
+      title: 'Cloud Agent Best Practices',
+      source_url: 'https://cursor.com/docs/cloud-agent/best-practices',
+      published_at: null,
+      apply_in_eos: 'Honor Cloud Agent setup (environment.json + Builds). Prefer OIDC over long-lived secrets. Use skills, AGENTS.md, and .cursor/rules for repo conventions. Do not put secrets in git.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -1287,6 +1332,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/automations'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/setup'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -1364,6 +1410,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/prompting'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/automations'), false);
   assert.equal(current.includes('cursor.com/docs/cloud-agent/setup'), false);
+  assert.equal(current.includes('cursor.com/docs/cloud-agent/best-practices'), false);
   assert.match(current, /default start path/);
   assert.equal(current.includes('Enable Cloud Agent Builds'), false);
   assert.match(current, /Steer running agents/);

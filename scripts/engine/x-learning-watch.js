@@ -165,15 +165,16 @@ function headingBodySummary(body) {
   const first = firstSentence(body);
   if (!first) return '';
   const clean = stripMarkdown(body);
-  const commands = [];
+  const extras = [];
   for (const cmd of ['/goal', '/automate']) {
     const token = new RegExp(`(?:^|[^\\w/])${cmd}(?=$|[^\\w-])`, 'i');
     if (token.test(clean) && !first.toLowerCase().includes(cmd)) {
-      commands.push(cmd);
+      extras.push(cmd);
     }
   }
-  if (commands.length === 0) return first;
-  return `${first} ${commands.join(' ')}`.trim();
+  if (/\bOIDC\b/i.test(clean) && !/\bOIDC\b/i.test(first)) extras.push('OIDC');
+  if (extras.length === 0) return first;
+  return `${first} ${extras.join(' ')}`.trim();
 }
 
 function shouldSkipMarkdownHeading(heading) {
@@ -187,7 +188,7 @@ function shouldSkipMarkdownHeading(heading) {
 
 function isProductSubheading(heading) {
   const key = String(heading || '').toLowerCase();
-  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script/.test(key);
+  return /\bsteer\b|custom mode|\/goal|\bsubscription|ci fail|which build|using a skill|\btriggers?\b|agent-driven setup|install script|\bsecrets?\b|oidc|agents\.md|repo rules/.test(key);
 }
 
 function appendHeadingChunk(chunks, heading, body) {
@@ -395,6 +396,9 @@ export function applyHint(item) {
   }
   if (isOriginMirrorUrl(item?.link)) {
     return 'Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.';
+  }
+  if (isCloudAgentBestPracticesUrl(item?.link)) {
+    return 'Honor Cloud Agent setup (environment.json + Builds). Prefer OIDC over long-lived secrets. Use skills, AGENTS.md, and .cursor/rules for repo conventions. Do not put secrets in git.';
   }
   if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
@@ -621,6 +625,12 @@ function isOriginMirrorUrl(url) {
     || value === 'https://www.cursor.com/docs/origin/mirror-github';
 }
 
+function isCloudAgentBestPracticesUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/docs/cloud-agent/best-practices'
+    || value === 'https://www.cursor.com/docs/cloud-agent/best-practices';
+}
+
 function isAgentOverviewUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/agent/overview' || value === 'https://www.cursor.com/docs/agent/overview';
@@ -671,6 +681,7 @@ function currentClusterKey(learning) {
     url.includes('changelog/08-13-26')
     || url.includes('cloud-agent/builds')
     || url.includes('cloud-agent/setup')
+    || url.includes('cloud-agent/best-practices')
     || url.includes('cursor.com/blog/builds')
   ) {
     return 'cluster:cloud-agent-builds';

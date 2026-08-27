@@ -82,6 +82,13 @@
       "fetchable": true
     },
     {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-BEST-PRACTICES",
+      "url": "https://cursor.com/docs/cloud-agent/best-practices",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_BEST_PRACTICES",
+      "fetchable": true
+    },
+    {
       "feed_id": "FEED-CURSOR-DOCS-ORIGIN",
       "url": "https://cursor.com/docs/origin",
       "kind": "html-page",

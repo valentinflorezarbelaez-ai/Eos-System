@@ -30,3 +30,4 @@
 29. [x] Ingest Origin integrations living docs; cluster onto Origin changelog without dropping Usage and limits
 30. [x] Record Builds thread follow-up `@cursor_ai` status IDs cited by unrollnow without fetching X
 31. [x] Ingest Origin GitHub mirror living docs; keep GitHub as source of truth and do not Detach
+32. [x] Ingest Cloud Agent best practices living docs; cluster onto Builds changelog; prefer OIDC and repo conventions

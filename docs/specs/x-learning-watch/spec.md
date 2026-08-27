@@ -10,7 +10,7 @@ A local learning watch that records requested X accounts, fetches official Curso
 
 ## 2. Product & Functional Requirements
 - **FR-1:** Persist a watchlist that includes `cursor_ai` (`https://x.com/cursor_ai`) plus additional handles without requiring an X API.
-- **FR-2:** Fetch and parse RSS 2.0, Atom 1.0, the official Cursor blog HTML index, and named official docs/help HTML pages from configured feeds (changelog RSS, forum announcements RSS, `https://cursor.com/blog`, Grok 4.6 help, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Cloud Agent Builds, Cloud Agent setup, Origin, Origin CLI, Origin integrations, Origin GitHub mirror, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview `/goal`, Agent Skills, Agent prompting / Custom Modes). Do not ingest `latest.rss`. Do not scrape X. Docs/help pages use `kind: html-page` with a stable id equal to the page URL. For those pages, also fetch the official `cursor.com` `.md` companion when present and keep the longer summary, including official slash-commands that appear as inline code.
+- **FR-2:** Fetch and parse RSS 2.0, Atom 1.0, the official Cursor blog HTML index, and named official docs/help HTML pages from configured feeds (changelog RSS, forum announcements RSS, `https://cursor.com/blog`, Grok 4.6 help, Models & Pricing, Cloud Agent automations help and `docs/cloud-agent/automations`, Cloud Agent Builds, Cloud Agent setup, Cloud Agent best practices, Origin, Origin CLI, Origin integrations, Origin GitHub mirror, Cursor Router, Usage and limits, Cloud Agents overview, Cloud Agent capabilities, Subagents, Agent overview `/goal`, Agent Skills, Agent prompting / Custom Modes). Do not ingest `latest.rss`. Do not scrape X. Docs/help pages use `kind: html-page` with a stable id equal to the page URL. For those pages, also fetch the official `cursor.com` `.md` companion when present and keep the longer summary, including official slash-commands that appear as inline code.
 - **FR-3:** Refuse to fetch `x.com` / `twitter.com` URLs; mark those sources `BLOCKED`.
 - **FR-4:** Compute a delta of unseen items by stable `id` (guid / atom id / link).
 - **FR-5:** Render a markdown briefing from new items, preserving source URL and published date.
@@ -56,7 +56,7 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-26:** `parseOfficialMarkdown` includes product `###` subheadings (for example Steer a running agent, Custom Modes, Which Build, Slack triggers, Agent-driven setup) and still skips docs chrome and generic tool H3s.
 - [x] **AC-27:** CURRENT.md clusters `docs/cloud-agent/automations` onto `changelog/08-19-26` and keeps Usage and limits as a living row.
 - [x] **AC-28:** CURRENT.md clusters `docs/cloud-agent/setup` onto `changelog/08-13-26`. `apply_in_eos` for that setup page treats Builds as the default start path and does not tell operators to click Enable Builds.
-- [x] **AC-29:** `parseOfficialMarkdown` keeps official slash-commands (`/goal`, `/automate`) that appear as inline code in living-doc summaries, including when they are not in the first sentence of an H2.
+- [x] **AC-29:** `parseOfficialMarkdown` keeps official slash-commands (`/goal`, `/automate`) that appear as inline code in living-doc summaries, including when they are not in the first sentence of an H2. It also keeps `OIDC` when that token appears later in a heading body.
 - [x] **AC-30:** `CITED_X_POSTS.json` records the Custom Mode and Steering `@cursor_ai` status IDs cited by unrollnow for the 2026-08-19 harness thread, with `fetched_from_x = false`.
 - [x] **AC-31:** CURRENT.md clusters `docs/origin/cli` onto `changelog/origin-code-hosting`.
 - [x] **AC-32:** `CITED_X_POSTS.json` records the Origin thread follow-up `@cursor_ai` status IDs cited by unrollnow (GitHub integrations and beta rollout), with `fetched_from_x = false`.
@@ -64,6 +64,8 @@ Module: `scripts/engine/x-learning-watch.js`.
 - [x] **AC-34:** `CITED_X_POSTS.json` records the Builds thread follow-up `@cursor_ai` status IDs cited by unrollnow (failed new build never goes live; Faire/Headway/Descript marketing with `eos_note`), with `fetched_from_x = false`.
 - [x] **AC-35:** CURRENT.md clusters `docs/origin/mirror-github` onto `changelog/origin-code-hosting` and keeps Usage and limits as a living row.
 - [x] **AC-36:** `apply_in_eos` for `docs/origin/mirror-github` keeps GitHub as the source of truth and does not tell operators to Detach from GitHub. Bugbot/Cursor Review do not require an Origin mirror.
+- [x] **AC-37:** CURRENT.md clusters `docs/cloud-agent/best-practices` onto `changelog/08-13-26` and keeps Usage and limits as a living row.
+- [x] **AC-38:** `apply_in_eos` for `docs/cloud-agent/best-practices` prefers OIDC over long-lived secrets, uses skills/`AGENTS.md`/`.cursor/rules`, and does not tell operators to click Enable Builds.
 
 ## 6. Verification & Evidence Plan
 ```bash
