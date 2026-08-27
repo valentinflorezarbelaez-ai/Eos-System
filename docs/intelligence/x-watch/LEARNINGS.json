@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T14:57:28.258Z",
+  "updated_at": "2026-08-27T15:01:50.796Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -919,6 +919,16 @@
       "published_at": "2026-02-05T12:00:00.000Z",
       "summary": "We're making a part of our multi-agent research harness available to try today in preview.",
       "apply_in_eos": "Vendor multi-agent research preview. Do not treat research harness writeups as EOS production evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-account-teams-members",
+      "title": "Members, Roles, and Seat Types",
+      "source_url": "https://cursor.com/docs/account/teams/members",
+      "published_at": null,
+      "summary": "Cursor Teams use roles for permissions and seat types for usage limits. Roles — Members are the default role with access to Cursor's Pro features. Seat Types — Teams offers two paid seat types, plus a free admin-only seat type: Standard seats are for light coding agent users. Usage Controls — Access usage settings to: Enable on-demand usage Set admin-only modifications Set monthly spending limits Monitor team-wide usage",
+      "apply_in_eos": "Members, roles, and seat types are vendor Teams admin config. Honor included quota. Do not switch this watch to on-demand. This Cloud Agent is not a Teams admin dashboard. Do not ingest Teams setup or SSO pages. Keep environment.json + Builds.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
