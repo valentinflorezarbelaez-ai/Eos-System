@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T13:49:45.102Z",
+  "updated_at": "2026-08-27T13:55:36.396Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
@@ -1309,6 +1309,16 @@
       "published_at": null,
       "summary": "Origin is currently released in early beta. Sync a repo — Open cursor.com/codebase 2. What syncs — Pull requests on a mirrored repo work on Origin and sync back to GitHub. After you mirror — Browse and search at cursor.com/codebase Clone the Origin remote from the green Code button if you want a local checkout from Origin. Detach from GitHub — To stop syncing, open Settings → General and select Detach from GitHub under Danger Zone *. Sync lag — If browse looks stale: Confirm the GitHub app still has access (GitHub integration) Confirm you are a GitHub admin on the source repo Re-run Sync from GitHub from cursor.com/codebase, or check Settings → General for sync When not to mirror — If you only want automated review comments on GitHub PRs, Cursor Review and Bugbot do that without moving st…",
       "apply_in_eos": "Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-pull-requests",
+      "title": "Pull requests",
+      "source_url": "https://cursor.com/docs/origin/pull-requests",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Pull request list — The Pull Requests tab lists pull requests for the repository. Open a pull request — Push a branch to Origin, then open a pull request against the base branch: From the repository Code tab, use the create-pull-request flow after your branch is on Origin. Pull request page — Open a pull request from the list to review it. Mirrored GitHub repositories — On a repository mirrored from GitHub, you can see and interact with GitHub pull requests as if they were Origin pull requests, and your changes sync back to GitHub.",
+      "apply_in_eos": "Origin pull requests are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not open Origin PRs or Detach from GitHub for this watch. This Cloud Agent VM already opens GitHub PRs. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
