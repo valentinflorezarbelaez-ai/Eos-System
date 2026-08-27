@@ -8,7 +8,8 @@ const rootDir = path.resolve(__dirname, '../..');
 
 export class RealProjectDiscoveryEngine {
   constructor(targetPath = 'C:\\Users\\valen\\Documents\\Fundacion') {
-    this.targetPath = path.resolve(targetPath);
+    const normalized = targetPath.replace(/\\/g, '/');
+    this.targetPath = path.isAbsolute(normalized) ? path.resolve(normalized) : normalized;
     this.mode = 'EMPIRICAL_LEVEL_1_READ_ONLY';
     this.validateTargetSafety();
   }
@@ -21,7 +22,9 @@ export class RealProjectDiscoveryEngine {
   }
 
   getProjectId() {
-    const basename = path.basename(this.targetPath).toLowerCase();
+    const normalized = this.targetPath.replace(/\\/g, '/');
+    const parts = normalized.split('/').filter(Boolean);
+    const basename = (parts.length > 0 ? parts[parts.length - 1] : '').toLowerCase();
     return basename.replace(/[^a-z0-9_-]/g, '_') || 'unknown_target';
   }
 

@@ -11,7 +11,7 @@ test('CLI Harness: eos status returns accurate Mission Control state', () => {
   assert.equal(status.targetFundacion, 'FROZEN (Delta = 0)');
   assert.equal(status.gap002Status, 'UNKNOWN');
   assert.equal(status.gate13Status, 'CANARY_RESTRICTED');
-  assert.equal(status.activeMission, 'CANARY-REAL-001');
+  assert.equal(status.activeMission, 'EOS-MISSION-OS-LOCAL-COMPLETE');
 });
 
 test('CLI Harness: eos harness dispatches specialized role under anti-majority contract', () => {

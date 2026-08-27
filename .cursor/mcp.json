@@ -12,22 +12,26 @@
     },
     "engram": {
       "command": "C:\\Users\\valen\\go\\bin\\engram.exe",
-      "args": ["mcp", "--tools=agent"]
+      "args": ["mcp", "--tools=agent"],
+      "description": "Persistent memory and causal learning graph across sessions and context compactions."
     },
     "context7": {
       "command": "npx",
-      "args": ["-y", "--package=@upstash/context7-mcp@2.2.5", "--", "context7-mcp"]
+      "args": ["-y", "--package=@upstash/context7-mcp@2.2.5", "--", "context7-mcp"],
+      "description": "Deep AST codebase indexing, semantic symbol search, and architectural dependency mapping."
     },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"]
+      "args": ["-y", "@playwright/mcp@latest"],
+      "description": "Automated end-to-end browser QA, DOM inspection, visual regressions, and accessibility audits."
     },
     "figma": {
       "command": "npx",
       "args": ["-y", "figma-developer-mcp", "--stdio"],
       "env": {
         "FIGMA_API_KEY": "${FIGMA_API_KEY}"
-      }
+      },
+      "description": "Design system tokens extraction, component inspect, and pixel-perfect design-to-code alignment."
     },
     "slack": {
       "command": "npx",
@@ -35,7 +39,31 @@
       "env": {
         "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
         "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
-      }
+      },
+      "description": "Operational notifications, deployment broadcasts, incident escalation, and human-in-the-loop alerts."
+    },
+    "jira": {
+      "command": "npx",
+      "args": ["-y", "@atlassian/jira-mcp-server"],
+      "env": {
+        "JIRA_HOST": "${JIRA_HOST}",
+        "JIRA_API_TOKEN": "${JIRA_API_TOKEN}"
+      },
+      "description": "Enterprise issue tracking, sprint tasks synchronization, and acceptance criteria linking."
+    },
+    "trello": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-trello"],
+      "env": {
+        "TRELLO_API_KEY": "${TRELLO_API_KEY}",
+        "TRELLO_TOKEN": "${TRELLO_TOKEN}"
+      },
+      "description": "Kanban board task management, card movements, and workflow stage tracking."
+    },
+    "stitch": {
+      "command": "npx",
+      "args": ["-y", "@stitch/mcp-data-server"],
+      "description": "Data schema stitching, multi-source API integration, and contract synthesis."
     }
   }
 }
