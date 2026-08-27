@@ -1056,6 +1056,23 @@
       "relevance_to_eos": "CRITICAL",
       "verification_status": "VERIFIED",
       "url_or_reference": "https://cursor.com/docs/origin/pull-requests"
+    },
+    {
+      "source_id": "SRC-0063",
+      "name": "Cursor Docs — Origin browse",
+      "organization": "Anysphere / Cursor",
+      "category": "AI_AGENT_ENGINEERING",
+      "domain": "Cursor Product Updates",
+      "source_type": "PRIMARY_DOCS",
+      "authority": "AUTHORITATIVE",
+      "evidence_type": "DOCUMENTATION",
+      "recency": "2026",
+      "maturity": "EMERGING",
+      "independence": "VENDOR_PROPRIETARY",
+      "known_bias": "Vendor docs; living document with no RSS. Origin browse and search are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not use Origin browse or Detach from GitHub for this watch. This Cloud Agent VM already searches its GitHub checkout. docs/origin/git is clone/push/pull how-to chrome and is not a feed.",
+      "relevance_to_eos": "CRITICAL",
+      "verification_status": "VERIFIED",
+      "url_or_reference": "https://cursor.com/docs/origin/browse"
     }
   ]
 }
