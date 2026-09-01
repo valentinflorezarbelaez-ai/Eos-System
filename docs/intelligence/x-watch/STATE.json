@@ -154,6 +154,7 @@
     "https://cursor.com/docs/subagents",
     "https://cursor.com/help/account-and-billing/pricing",
     "https://cursor.com/help/ai-features/agent",
+    "https://cursor.com/help/ai-features/ai-pair-programming",
     "https://cursor.com/help/ai-features/ask-mode",
     "https://cursor.com/help/ai-features/automations",
     "https://cursor.com/help/ai-features/background-agents",
@@ -179,7 +180,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-09-01T13:41:32.744Z",
-  "last_item_count": 177,
-  "last_new_item_count": 22
+  "last_ingest_at": "2026-09-01T13:47:38.308Z",
+  "last_item_count": 178,
+  "last_new_item_count": 23
 }
