@@ -267,6 +267,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/security-and-privacy/regions' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -500,6 +504,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/account-and-billing/cursor-start'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/account/regions'),
     false
   );
   assert.equal(
@@ -1929,6 +1937,25 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpSecurityAndPrivacyPrivacy.apply_in_eos), false);
   assert.equal(helpSecurityAndPrivacyPrivacy.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpSecurityAndPrivacyPrivacy.apply_in_eos.includes('Vercel'), false);
+  const helpSecurityAndPrivacyRegions = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/regions');
+  assert.ok(helpSecurityAndPrivacyRegions);
+  assert.equal(helpSecurityAndPrivacyRegions.title, 'Regions and model availability');
+  assert.match(helpSecurityAndPrivacyRegions.summary, /What can I do if a model is unavailable in my region/);
+  assert.match(helpSecurityAndPrivacyRegions.summary, /Which regions does each provider support/);
+  assert.match(helpSecurityAndPrivacyRegions.summary, /Can I use Grok 4.5 in the EU/);
+  assert.match(helpSecurityAndPrivacyRegions.summary, /Is Cursor Start available outside India/);
+  assert.match(helpSecurityAndPrivacyRegions.summary, /Does Cursor offer data residency controls/);
+  assert.equal(helpSecurityAndPrivacyRegions.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpSecurityAndPrivacyRegions.summary), false);
+  assert.equal(helpSecurityAndPrivacyRegions.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpSecurityAndPrivacyRegions.apply_in_eos, /vendor region\/model-availability data-handling/i);
+  assert.match(helpSecurityAndPrivacyRegions.apply_in_eos, /\/goal/);
+  assert.match(helpSecurityAndPrivacyRegions.apply_in_eos, /do not rotate this Cloud Agent into desktop region, API-key, or Cursor Start settings/i);
+  assert.match(helpSecurityAndPrivacyRegions.apply_in_eos, /environment\.json/);
+  assert.match(helpSecurityAndPrivacyRegions.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpSecurityAndPrivacyRegions.apply_in_eos), false);
+  assert.equal(helpSecurityAndPrivacyRegions.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpSecurityAndPrivacyRegions.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2183,6 +2210,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Your first project', link: 'https://cursor.com/help/getting-started/first-project' },
     { title: 'How do I build an AI coding agent?', link: 'https://cursor.com/help/getting-started/build-ai-coding-agent' },
     { title: 'Privacy and data', link: 'https://cursor.com/help/security-and-privacy/privacy' },
+    { title: 'Regions and model availability', link: 'https://cursor.com/help/security-and-privacy/regions' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3549,6 +3577,26 @@ test('applyHint for Help Privacy keeps this Cloud Agent off desktop Privacy Mode
   assert.equal(hint.includes('Plan Mode'), false);
 });
 
+test('applyHint for Help Regions keeps this Cloud Agent off desktop region, API-key, and Cursor Start settings', () => {
+  const hint = applyHint({
+    title: 'Regions and model availability',
+    link: 'https://cursor.com/help/security-and-privacy/regions',
+    summary: 'Optional Help Regions remains enabled by default. Custom Mode and Vercel. Use Slack. Cursor Start is enabled outside India.'
+  });
+  assert.match(hint, /vendor region\/model-availability data-handling/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop region, API-key, or Cursor Start settings/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4600,6 +4648,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpSecurityAndPrivacyPrivacy[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpSecurityAndPrivacyPrivacy[0]).includes('Plan Mode'), false);
 
+  const helpSecurityAndPrivacyRegions = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-security-and-privacy-regions.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/security-and-privacy/regions'
+  );
+  assert.equal(helpSecurityAndPrivacyRegions[0].id, 'https://cursor.com/help/security-and-privacy/regions');
+  assert.equal(helpSecurityAndPrivacyRegions[0].title, 'Regions and model availability');
+  assert.match(helpSecurityAndPrivacyRegions[0].summary, /Why some models may not be available in your region/);
+  assert.match(applyHint(helpSecurityAndPrivacyRegions[0]), /vendor region\/model-availability data-handling/i);
+  assert.match(applyHint(helpSecurityAndPrivacyRegions[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpSecurityAndPrivacyRegions[0])), false);
+  assert.equal(applyHint(helpSecurityAndPrivacyRegions[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpSecurityAndPrivacyRegions[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpSecurityAndPrivacyRegions[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5116,6 +5179,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/security-and-privacy/privacy'),
     'https://cursor.com/help/security-and-privacy/privacy.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/security-and-privacy/regions'),
+    'https://cursor.com/help/security-and-privacy/regions.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -5706,6 +5773,19 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpSecurityAndPrivacyPrivacyMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpSecurityAndPrivacyPrivacyMd.summary), false);
   assert.equal(helpSecurityAndPrivacyPrivacyMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpSecurityAndPrivacyRegionsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-security-and-privacy-regions.md'), 'utf8')
+  );
+  assert.equal(helpSecurityAndPrivacyRegionsMd.title, 'Regions and model availability');
+  assert.match(helpSecurityAndPrivacyRegionsMd.summary, /What can I do if a model is unavailable in my region/);
+  assert.match(helpSecurityAndPrivacyRegionsMd.summary, /Which regions does each provider support/);
+  assert.match(helpSecurityAndPrivacyRegionsMd.summary, /Can I use Grok 4.5 in the EU/);
+  assert.match(helpSecurityAndPrivacyRegionsMd.summary, /Is Cursor Start available outside India/);
+  assert.match(helpSecurityAndPrivacyRegionsMd.summary, /Does Cursor offer data residency controls/);
+  assert.equal(helpSecurityAndPrivacyRegionsMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpSecurityAndPrivacyRegionsMd.summary), false);
+  assert.equal(helpSecurityAndPrivacyRegionsMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -6736,6 +6816,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'Help Privacy is vendor Privacy Mode data-handling. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Privacy Mode settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Regions and model availability',
+      source_url: 'https://cursor.com/help/security-and-privacy/regions',
+      published_at: null,
+      apply_in_eos: 'Help Regions is vendor region/model-availability data-handling. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop region, API-key, or Cursor Start settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'What is multi-agent coding?',
       source_url: 'https://cursor.com/help/ai-features/multi-agent',
       published_at: null,
@@ -6754,6 +6840,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/ignore-files'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/privacy'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/regions'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
@@ -6982,6 +7069,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Privacy is vendor Privacy Mode data-handling. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Privacy Mode settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Regions and model availability',
+      source_url: 'https://cursor.com/help/security-and-privacy/regions',
+      published_at: null,
+      apply_in_eos: 'Help Regions is vendor region/model-availability data-handling. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop region, API-key, or Cursor Start settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -7028,6 +7121,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/getting-started/first-project'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/getting-started/build-ai-coding-agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/privacy'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/regions'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -7605,6 +7699,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/getting-started/first-project'), false);
   assert.equal(current.includes('cursor.com/help/getting-started/build-ai-coding-agent'), false);
   assert.equal(current.includes('cursor.com/help/security-and-privacy/privacy'), false);
+  assert.equal(current.includes('cursor.com/help/security-and-privacy/regions'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);

@@ -675,6 +675,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_SECURITY_AND_PRIVACY_PRIVACY",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-SECURITY-AND-PRIVACY-REGIONS",
+      "url": "https://cursor.com/help/security-and-privacy/regions",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_SECURITY_AND_PRIVACY_REGIONS",
+      "fetchable": true
     }
   ]
 }
