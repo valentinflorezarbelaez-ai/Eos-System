@@ -167,6 +167,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/ask-mode' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -280,10 +284,6 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/debug-mode'),
-    false
-  );
-  assert.equal(
-    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/ask-mode'),
     false
   );
   assert.equal(
@@ -1301,6 +1301,21 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpAgentMode.apply_in_eos), false);
   assert.equal(helpAgentMode.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpAgentMode.apply_in_eos.includes('Vercel'), false);
+  const helpAskMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/ai-features/ask-mode');
+  assert.ok(helpAskMode);
+  assert.equal(helpAskMode.title, 'Ask mode');
+  assert.match(helpAskMode.summary, /How do I use Ask mode/);
+  assert.match(helpAskMode.summary, /When should I use Ask mode/);
+  assert.equal(helpAskMode.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpAskMode.summary), false);
+  assert.match(helpAskMode.apply_in_eos, /vendor desktop read-only Agent/i);
+  assert.match(helpAskMode.apply_in_eos, /\/goal/);
+  assert.match(helpAskMode.apply_in_eos, /do not rotate this Cloud Agent into desktop Ask mode/i);
+  assert.match(helpAskMode.apply_in_eos, /environment\.json/);
+  assert.match(helpAskMode.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpAskMode.apply_in_eos), false);
+  assert.equal(helpAskMode.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpAskMode.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1530,6 +1545,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Grok 4.6', link: 'https://cursor.com/help/models-and-usage/grok-4-6' },
     { title: 'Grok 4.5', link: 'https://cursor.com/help/models-and-usage/grok-4-5' },
     { title: 'Agent mode', link: 'https://cursor.com/help/ai-features/agent' },
+    { title: 'Ask mode', link: 'https://cursor.com/help/ai-features/ask-mode' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2382,6 +2398,25 @@ test('applyHint for Help Agent mode keeps this watch on the standing /goal', () 
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Ask mode keeps this watch on the standing /goal', () => {
+  const hint = applyHint({
+    title: 'Ask mode',
+    link: 'https://cursor.com/help/ai-features/ask-mode',
+    summary: 'Explore code and ask questions without making changes. Custom Mode and Vercel.'
+  });
+  assert.match(hint, /vendor desktop read-only Agent/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Ask mode/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3071,6 +3106,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpAgentMode[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpAgentMode[0]).includes('Vercel'), false);
 
+  const helpAskMode = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-ask-mode.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/ai-features/ask-mode'
+  );
+  assert.equal(helpAskMode[0].id, 'https://cursor.com/help/ai-features/ask-mode');
+  assert.equal(helpAskMode[0].title, 'Ask mode');
+  assert.match(helpAskMode[0].summary, /Explore code and ask questions without making changes/);
+  assert.match(applyHint(helpAskMode[0]), /vendor desktop read-only Agent/i);
+  assert.match(applyHint(helpAskMode[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpAskMode[0])), false);
+  assert.equal(applyHint(helpAskMode[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpAskMode[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3488,6 +3537,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/agent'),
     'https://cursor.com/help/ai-features/agent.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/ask-mode'),
+    'https://cursor.com/help/ai-features/ask-mode.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -3801,6 +3854,16 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpAgentModeMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpAgentModeMd.summary), false);
   assert.equal(helpAgentModeMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpAskModeMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-ask-mode.md'), 'utf8')
+  );
+  assert.equal(helpAskModeMd.title, 'Ask mode');
+  assert.match(helpAskModeMd.summary, /How do I use Ask mode/);
+  assert.match(helpAskModeMd.summary, /When should I use Ask mode/);
+  assert.equal(helpAskModeMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpAskModeMd.summary), false);
+  assert.equal(helpAskModeMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -4861,6 +4924,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Agent mode is vendor desktop Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Ask mode',
+      source_url: 'https://cursor.com/help/ai-features/ask-mode',
+      published_at: null,
+      apply_in_eos: 'Help Ask mode is vendor desktop read-only Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Ask mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Cursor CLI',
       source_url: 'https://cursor.com/docs/cli/overview',
       published_at: null,
@@ -4908,6 +4977,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/plan-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/agent'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/ask-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/overview'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/using'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/shell-mode'), false);
@@ -5410,6 +5480,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/agent/plan-mode'), false);
   assert.equal(current.includes('cursor.com/docs/agent/debug-mode'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/agent'), false);
+  assert.equal(current.includes('cursor.com/help/ai-features/ask-mode'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
