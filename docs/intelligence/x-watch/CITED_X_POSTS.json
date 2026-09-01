@@ -444,6 +444,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2067683814516858962",
+      "handle": "cursor_ai",
+      "about": "introduced \"/automate\", which it describes as a way for agents to set up automations from a plain-language task description",
+      "cited_by": "https://augmenter.dev/articles/cursor-debuts-automate-to-build-agent-workflows-from-plain-language-1782002407267/",
+      "official_source": "https://cursor.com/changelog/06-18-26",
+      "published_date": "2026-06-18",
+      "eos_note": "Do not rotate this Cloud Agent into /automate or desktop Automations for daily ingest. GitHub events already cover this watch. Do not add extra Automations surfaces as feeds. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2067366343817805899",
       "handle": "cursor_ai",
       "about": "It's now easier to move local agents to the cloud so they can keep working with your laptop closed",

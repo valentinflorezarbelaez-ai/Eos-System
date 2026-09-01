@@ -9204,6 +9204,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2046324136377721128/);
   assert.match(current, /2045236540784492845/);
   assert.match(current, /2044486585492947010/);
+  assert.match(current, /2067683814516858962/);
   assert.match(current, /2041969870234120231/);
   assert.match(current, /2029222015736197205/);
   assert.match(current, /2028953584407085546/);
@@ -9916,6 +9917,21 @@ test('cited X posts never claim an X fetch', () => {
       && /enable/i.test(row.eos_note || '') === false
       && /slack/i.test(row.eos_note || '') === false
       && row.official_source === 'https://cursor.com/changelog/04-15-26'
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/06-18-26'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2067683814516858962'
+      && row.cited_by === 'https://augmenter.dev/articles/cursor-debuts-automate-to-build-agent-workflows-from-plain-language-1782002407267/'
+      && /\/automate/i.test(row.about)
+      && /desktop Automations/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && /slack/i.test(row.eos_note || '') === false
+      && /timer/i.test(row.eos_note || '') === false
+      && row.official_source === 'https://cursor.com/changelog/06-18-26'
       && row.fetched_from_x === false
     )),
     true

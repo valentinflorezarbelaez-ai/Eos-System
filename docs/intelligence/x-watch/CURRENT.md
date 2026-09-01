@@ -140,6 +140,9 @@ Store size: 199
 - You can also now use team marketplaces with GitLab, Bitbucket, and Azure DevOps in addition to local repos — cited by https://pulseaugur.com/cluster/107158-cursor-ai-ide-enhances-team-collaboration-with-new-integrations-and-plugin (not fetched from X)
   Team marketplace SCM imports are vendor distribution. Do not add extra GitLab, Bitbucket, or Azure DevOps feeds. GitHub remains source of truth for this synced repo. Do not rotate this Cloud Agent into desktop Customize for daily ingest.
   https://x.com/cursor_ai/status/2069512597628440908
+- introduced "/automate", which it describes as a way for agents to set up automations from a plain-language task description — cited by https://augmenter.dev/articles/cursor-debuts-automate-to-build-agent-workflows-from-plain-language-1782002407267/ (not fetched from X)
+  Do not rotate this Cloud Agent into /automate or desktop Automations for daily ingest. GitHub events already cover this watch. Do not add extra Automations surfaces as feeds. Honor included quota.
+  https://x.com/cursor_ai/status/2067683814516858962
 - It's now easier to move local agents to the cloud so they can keep working with your laptop closed — cited by https://www.unrollnow.com/status/2067366343817805899 (not fetched from X)
   This watch already runs in the Cloud Agent VM. /in-cloud starts an isolated cloud subagent; do not rotate this Cloud Agent into the desktop Agents Window for daily ingest. Isolated VMs are optional parallelism, not an EOS Control Plane change.
   https://x.com/cursor_ai/status/2067366343817805899
