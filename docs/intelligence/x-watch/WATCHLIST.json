@@ -717,6 +717,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_TROUBLESHOOTING_TAB_ISSUES",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-TROUBLESHOOTING-INSTALL-ISSUES",
+      "url": "https://cursor.com/help/troubleshooting/install-issues",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_TROUBLESHOOTING_INSTALL_ISSUES",
+      "fetchable": true
     }
   ]
 }

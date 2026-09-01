@@ -291,6 +291,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/install-issues' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -504,6 +508,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/install-issues'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/reporting-bugs'),
     false
   );
   assert.equal(
@@ -2100,6 +2108,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpTroubleshootingTabIssues.apply_in_eos), false);
   assert.equal(helpTroubleshootingTabIssues.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpTroubleshootingTabIssues.apply_in_eos.includes('Vercel'), false);
+  const helpTroubleshootingInstallIssues = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/troubleshooting/install-issues');
+  assert.ok(helpTroubleshootingInstallIssues);
+  assert.equal(helpTroubleshootingInstallIssues.title, 'Installation and startup');
+  assert.match(helpTroubleshootingInstallIssues.summary, /What if I see a blank screen on startup/);
+  assert.match(helpTroubleshootingInstallIssues.summary, /How do I update Cursor/);
+  assert.match(helpTroubleshootingInstallIssues.summary, /What are update channels/);
+  assert.equal(helpTroubleshootingInstallIssues.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingInstallIssues.summary), false);
+  assert.equal(helpTroubleshootingInstallIssues.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpTroubleshootingInstallIssues.apply_in_eos, /vendor desktop install\/startup diagnostics/i);
+  assert.match(helpTroubleshootingInstallIssues.apply_in_eos, /\/goal/);
+  assert.match(helpTroubleshootingInstallIssues.apply_in_eos, /do not rotate this Cloud Agent into desktop install troubleshooting/i);
+  assert.match(helpTroubleshootingInstallIssues.apply_in_eos, /environment\.json/);
+  assert.match(helpTroubleshootingInstallIssues.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpTroubleshootingInstallIssues.apply_in_eos), false);
+  assert.equal(helpTroubleshootingInstallIssues.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpTroubleshootingInstallIssues.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2360,6 +2385,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Marketplace security', link: 'https://cursor.com/help/security-and-privacy/marketplace-security' },
     { title: 'Agent troubleshooting', link: 'https://cursor.com/help/troubleshooting/agent-issues' },
     { title: 'Tab completions', link: 'https://cursor.com/help/troubleshooting/tab-issues' },
+    { title: 'Installation and startup', link: 'https://cursor.com/help/troubleshooting/install-issues' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3847,6 +3873,26 @@ test('applyHint for Help Tab troubleshooting keeps this Cloud Agent off desktop 
   assert.equal(hint.includes('Plan Mode'), false);
 });
 
+test('applyHint for Help install troubleshooting keeps this Cloud Agent off desktop install troubleshooting', () => {
+  const hint = applyHint({
+    title: 'Installation and startup',
+    link: 'https://cursor.com/help/troubleshooting/install-issues',
+    summary: 'Optional Help install troubleshooting is enabled by default. Custom Mode and Vercel. Use Slack. Reinstall from cursor.com/download.'
+  });
+  assert.match(hint, /vendor desktop install\/startup diagnostics/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop install troubleshooting/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4989,6 +5035,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpTroubleshootingTabIssues[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpTroubleshootingTabIssues[0]).includes('Plan Mode'), false);
 
+  const helpTroubleshootingInstallIssues = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-install-issues.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/troubleshooting/install-issues'
+  );
+  assert.equal(helpTroubleshootingInstallIssues[0].id, 'https://cursor.com/help/troubleshooting/install-issues');
+  assert.equal(helpTroubleshootingInstallIssues[0].title, 'Installation and startup');
+  assert.match(helpTroubleshootingInstallIssues[0].summary, /Troubleshoot startup, updates, blank screens, and macOS warnings/);
+  assert.match(applyHint(helpTroubleshootingInstallIssues[0]), /vendor desktop install\/startup diagnostics/i);
+  assert.match(applyHint(helpTroubleshootingInstallIssues[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpTroubleshootingInstallIssues[0])), false);
+  assert.equal(applyHint(helpTroubleshootingInstallIssues[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpTroubleshootingInstallIssues[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpTroubleshootingInstallIssues[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5529,6 +5590,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/tab-issues'),
     'https://cursor.com/help/troubleshooting/tab-issues.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/install-issues'),
+    'https://cursor.com/help/troubleshooting/install-issues.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6200,6 +6265,19 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpTroubleshootingTabIssuesMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpTroubleshootingTabIssuesMd.summary), false);
   assert.equal(helpTroubleshootingTabIssuesMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpTroubleshootingInstallIssuesMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-install-issues.md'), 'utf8')
+  );
+  assert.equal(helpTroubleshootingInstallIssuesMd.title, 'Installation and startup');
+  assert.match(helpTroubleshootingInstallIssuesMd.summary, /What if I see a blank screen on startup/);
+  assert.match(helpTroubleshootingInstallIssuesMd.summary, /How do I update Cursor/);
+  assert.match(helpTroubleshootingInstallIssuesMd.summary, /What are update channels/);
+  assert.match(helpTroubleshootingInstallIssuesMd.summary, /What does the macOS "Cursor is damaged" warning mean/);
+  assert.match(helpTroubleshootingInstallIssuesMd.summary, /How do I free up disk space used by Cursor/);
+  assert.equal(helpTroubleshootingInstallIssuesMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingInstallIssuesMd.summary), false);
+  assert.equal(helpTroubleshootingInstallIssuesMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -7540,6 +7618,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Tab troubleshooting is vendor desktop Tab diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Tab troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Installation and startup',
+      source_url: 'https://cursor.com/help/troubleshooting/install-issues',
+      published_at: null,
+      apply_in_eos: 'Help install troubleshooting is vendor desktop install/startup diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop install troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -7592,6 +7676,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/marketplace-security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/agent-issues'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/tab-issues'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/install-issues'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -8175,6 +8260,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/security-and-privacy/marketplace-security'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/agent-issues'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/tab-issues'), false);
+  assert.equal(current.includes('cursor.com/help/troubleshooting/install-issues'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
