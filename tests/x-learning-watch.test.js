@@ -5725,6 +5725,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
+  assert.equal(current.includes('cursor.com/help/ai-features/max-mode'), false);
   assert.equal(current.includes('cursor.com/docs/cli/overview'), false);
   assert.equal(current.includes('cursor.com/docs/cli/using'), false);
   assert.equal(current.includes('cursor.com/docs/cli/shell-mode'), false);

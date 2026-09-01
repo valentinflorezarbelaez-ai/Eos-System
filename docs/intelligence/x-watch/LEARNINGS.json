@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:24:35.790Z",
+  "updated_at": "2026-09-01T12:27:43.770Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1549,6 +1549,16 @@
       "published_at": null,
       "summary": "Cursor Automations run Cloud Agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. What can Automations do? — Automations let you run Cloud Agents without manual input. How do I create an automation? — Create a new automation in the Agents Window, at cursor.com/automations/new, or from a template in the Cursor Marketplace. Can I create automations without connecting a repository? — Yes. Which triggers are available? — An automation can have more than one trigger. Which tools can automations use? — Comment on pull request : Posts review comments, inline code comments, or approvals on a target PR Request reviewers : Assigns reviewers on a target PR Send to Slack : Sends messages to a Slack channel Read Slack channel H…",
       "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-inline-edit",
+      "title": "Inline edit",
+      "source_url": "https://cursor.com/help/ai-features/inline-edit",
+      "published_at": null,
+      "summary": "Inline edit lets you make quick, targeted code changes without opening the chat panel. How do I use inline edit? — Select the code you want to change 2. How do I ask a quick question with inline edit? — Select the code you want to ask about 2. Can I switch from inline edit to Agent? — For multi-file edits or more complex changes, select code and press Cmd + L on Mac (Ctrl + L on Windows/Linux).",
+      "apply_in_eos": "Help Inline edit is vendor desktop Cmd+K. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Inline edit for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
