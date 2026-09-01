@@ -514,6 +514,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_PLAN_MODE",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-TAB",
+      "url": "https://cursor.com/help/ai-features/tab",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_TAB",
+      "fetchable": true
     }
   ]
 }

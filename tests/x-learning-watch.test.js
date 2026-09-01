@@ -175,6 +175,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/tab' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -1338,6 +1342,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpPlanMode.apply_in_eos), false);
   assert.equal(helpPlanMode.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpPlanMode.apply_in_eos.includes('Vercel'), false);
+  const helpTab = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/ai-features/tab');
+  assert.ok(helpTab);
+  assert.equal(helpTab.title, 'Tab completion');
+  assert.match(helpTab.summary, /How do I accept or reject suggestions/);
+  assert.match(helpTab.summary, /Can Tab edit multiple lines at once/);
+  assert.match(helpTab.summary, /What is jump-in-file/);
+  assert.match(helpTab.summary, /Can Tab suggest edits in other files/);
+  assert.equal(helpTab.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTab.summary), false);
+  assert.match(helpTab.apply_in_eos, /vendor desktop autocomplete/i);
+  assert.match(helpTab.apply_in_eos, /\/goal/);
+  assert.match(helpTab.apply_in_eos, /do not rotate this Cloud Agent into desktop Tab/i);
+  assert.match(helpTab.apply_in_eos, /environment\.json/);
+  assert.match(helpTab.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpTab.apply_in_eos), false);
+  assert.equal(helpTab.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpTab.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1569,6 +1590,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Agent mode', link: 'https://cursor.com/help/ai-features/agent' },
     { title: 'Ask mode', link: 'https://cursor.com/help/ai-features/ask-mode' },
     { title: 'Plan mode', link: 'https://cursor.com/help/ai-features/plan-mode' },
+    { title: 'Tab completion', link: 'https://cursor.com/help/ai-features/tab' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2460,6 +2482,25 @@ test('applyHint for Help Plan mode keeps this watch on the standing /goal', () =
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Tab keeps this watch on the standing /goal', () => {
+  const hint = applyHint({
+    title: 'Tab completion',
+    link: 'https://cursor.com/help/ai-features/tab',
+    summary: 'Accept, reject, and configure AI-powered code suggestions. Custom Mode and Vercel.'
+  });
+  assert.match(hint, /vendor desktop autocomplete/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Tab/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3177,6 +3218,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpPlanMode[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpPlanMode[0]).includes('Vercel'), false);
 
+  const helpTab = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-tab.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/ai-features/tab'
+  );
+  assert.equal(helpTab[0].id, 'https://cursor.com/help/ai-features/tab');
+  assert.equal(helpTab[0].title, 'Tab completion');
+  assert.match(helpTab[0].summary, /Accept, reject, and configure AI-powered code suggestions/);
+  assert.match(applyHint(helpTab[0]), /vendor desktop autocomplete/i);
+  assert.match(applyHint(helpTab[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpTab[0])), false);
+  assert.equal(applyHint(helpTab[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpTab[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3602,6 +3657,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/plan-mode'),
     'https://cursor.com/help/ai-features/plan-mode.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/tab'),
+    'https://cursor.com/help/ai-features/tab.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -3937,6 +3996,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpPlanModeMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpPlanModeMd.summary), false);
   assert.equal(helpPlanModeMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpTabMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-tab.md'), 'utf8')
+  );
+  assert.equal(helpTabMd.title, 'Tab completion');
+  assert.match(helpTabMd.summary, /How do I accept or reject suggestions/);
+  assert.match(helpTabMd.summary, /Can Tab edit multiple lines at once/);
+  assert.match(helpTabMd.summary, /What is jump-in-file/);
+  assert.match(helpTabMd.summary, /Can Tab suggest edits in other files/);
+  assert.equal(helpTabMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTabMd.summary), false);
+  assert.equal(helpTabMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -5009,6 +5080,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Plan mode is vendor desktop planning before code. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Plan mode for daily ingest. EOS TDD remains required. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Tab completion',
+      source_url: 'https://cursor.com/help/ai-features/tab',
+      published_at: null,
+      apply_in_eos: 'Help Tab is vendor desktop autocomplete. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Tab for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Cursor CLI',
       source_url: 'https://cursor.com/docs/cli/overview',
       published_at: null,
@@ -5058,6 +5135,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/ask-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/plan-mode'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/tab'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/overview'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/using'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/shell-mode'), false);
@@ -5562,6 +5640,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/agent'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/ask-mode'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/plan-mode'), false);
+  assert.equal(current.includes('cursor.com/help/ai-features/tab'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
