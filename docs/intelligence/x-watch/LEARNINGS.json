@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T14:11:25.984Z",
+  "updated_at": "2026-09-01T14:17:38.233Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1829,6 +1829,16 @@
       "published_at": null,
       "summary": "Most Cursor plans include two monthly usage pools: Cursor Models : Cursor Grok 4.6, Cursor Grok 4.5, and Composer 2.5 Other Models : Third-party models, charged at model provider prices Pro, Pro Plus, and Ultra include b How do I check my usage? — Go to the Spending tab in your dashboard. What happens when I hit my usage limit? — You'll see a notification in the editor. When does my usage reset? — Usage resets monthly with your billing cycle. How do I get more usage? — Use Cursor Models : Cursor Grok 4.6, Cursor Grok 4.5, and Composer 2.5 draw from the Cursor Models pool, tracked separately and included with your plan Enable on-demand usage : Pay for additional requests at the same API How does Cursor Router interact with my plan's usage pools and limits? — Cursor Router requests are bill…",
       "apply_in_eos": "Honor included quota. Stop this daily watch rather than switching to paid on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-security-and-privacy-privacy",
+      "title": "Privacy and data",
+      "source_url": "https://cursor.com/help/security-and-privacy/privacy",
+      "published_at": null,
+      "summary": "Cursor is designed to keep your code private. What is Privacy Mode? — Privacy Mode ensures your code is never used for training by Cursor or other AI model providers. How do I enable Privacy Mode? — Open Cursor Settings: - Mac : Press Cmd + Shift + J - Windows/Linux : Press Ctrl + Shift + J 2. What data is sent to AI providers? — When you use AI features, Cursor sends prompts and code context to model providers like OpenAI, Anthropic, and Google. Where is my code processed? — When you use AI features, Cursor sends prompts and code context to model providers like OpenAI, Anthropic, and Google. Is my code used for training? — With Privacy Mode enabled, your code is never used for training. Does Privacy Mode apply to Grok 4.5? — Yes. Does Cursor's DPA cover Grok Bot? — Cursor's Data Processi…",
+      "apply_in_eos": "Help Privacy is vendor Privacy Mode data-handling. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Privacy Mode settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     }
