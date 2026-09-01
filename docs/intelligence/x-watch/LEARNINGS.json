@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T14:58:32.678Z",
+  "updated_at": "2026-09-01T15:06:03.713Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1889,6 +1889,16 @@
       "published_at": null,
       "summary": "Fixes for common Agent issues with file access, rules, terminal commands, and more. How can I improve Agent accuracy? — Be specific in your prompts: include expected behavior and constraints Use Plan mode first for tasks that touch many files Start a new chat when you finish a feature or switch tasks Add rules in for patterns you want Age What if Agent doesn't pick up my files? — Check your .cursorignore file in the project root. How do I undo Agent changes? — Hover over a previous message and click Restore Checkpoint in the bottom right to roll back all changes Agent made after that point. What if Agent sets CI=1 in terminal commands? — Cursor sets as an environment variable when running terminal commands through Agent. What if I see \"Agent Execution Timed Out\"? — This error means Cursor…",
       "apply_in_eos": "Help Agent troubleshooting is vendor desktop Agent diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-troubleshooting-tab-issues",
+      "title": "How do I troubleshoot Tab completions?",
+      "source_url": "https://cursor.com/help/troubleshooting/tab-issues",
+      "published_at": null,
+      "summary": "Troubleshooting steps for when Tab completions stop appearing or behave unexpectedly. Why aren't Tab suggestions appearing? — Plan limits : Free (Hobby) users have a monthly Tab allowance. How can I improve Tab suggestion quality? — Tab builds context from your recent edits and the code around your cursor. What if Tab feels slow? — Check your internet connection speed Disable extensions you're not using VPNs and proxies can add latency How do I toggle Tab off for certain file types? — Click the Tab status indicator in the bottom-right corner of Cursor.",
+      "apply_in_eos": "Help Tab troubleshooting is vendor desktop Tab diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Tab troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     }
