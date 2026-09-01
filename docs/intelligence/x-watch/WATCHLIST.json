@@ -724,6 +724,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_TROUBLESHOOTING_INSTALL_ISSUES",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-TROUBLESHOOTING-NETWORK",
+      "url": "https://cursor.com/help/troubleshooting/network",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_TROUBLESHOOTING_NETWORK",
+      "fetchable": true
     }
   ]
 }

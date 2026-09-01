@@ -295,6 +295,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/network' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -516,6 +520,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/network'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/performance'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/enterprise/network-configuration'),
     false
   );
   assert.equal(
@@ -2125,6 +2137,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpTroubleshootingInstallIssues.apply_in_eos), false);
   assert.equal(helpTroubleshootingInstallIssues.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpTroubleshootingInstallIssues.apply_in_eos.includes('Vercel'), false);
+  const helpTroubleshootingNetwork = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/troubleshooting/network');
+  assert.ok(helpTroubleshootingNetwork);
+  assert.equal(helpTroubleshootingNetwork.title, 'Network, proxy, and remote connections');
+  assert.match(helpTroubleshootingNetwork.summary, /How do I run network diagnostics/);
+  assert.match(helpTroubleshootingNetwork.summary, /What if AI features stop working behind a proxy/);
+  assert.match(helpTroubleshootingNetwork.summary, /Which domains does Cursor need access to/);
+  assert.equal(helpTroubleshootingNetwork.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingNetwork.summary), false);
+  assert.equal(helpTroubleshootingNetwork.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpTroubleshootingNetwork.apply_in_eos, /vendor desktop network\/proxy diagnostics/i);
+  assert.match(helpTroubleshootingNetwork.apply_in_eos, /\/goal/);
+  assert.match(helpTroubleshootingNetwork.apply_in_eos, /do not rotate this Cloud Agent into desktop network troubleshooting/i);
+  assert.match(helpTroubleshootingNetwork.apply_in_eos, /environment\.json/);
+  assert.match(helpTroubleshootingNetwork.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpTroubleshootingNetwork.apply_in_eos), false);
+  assert.equal(helpTroubleshootingNetwork.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpTroubleshootingNetwork.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2386,6 +2415,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Agent troubleshooting', link: 'https://cursor.com/help/troubleshooting/agent-issues' },
     { title: 'Tab completions', link: 'https://cursor.com/help/troubleshooting/tab-issues' },
     { title: 'Installation and startup', link: 'https://cursor.com/help/troubleshooting/install-issues' },
+    { title: 'Network, proxy, and remote connections', link: 'https://cursor.com/help/troubleshooting/network' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3893,6 +3923,27 @@ test('applyHint for Help install troubleshooting keeps this Cloud Agent off desk
   assert.equal(hint.includes('Plan Mode'), false);
 });
 
+test('applyHint for Help network troubleshooting keeps this Cloud Agent off desktop network troubleshooting', () => {
+  const hint = applyHint({
+    title: 'Network, proxy, and remote connections',
+    link: 'https://cursor.com/help/troubleshooting/network',
+    summary: 'Optional Help network troubleshooting is enabled by default. Custom Mode and Vercel. Use Slack. marketplace.cursorapi.com and HTTP Compatibility Mode.'
+  });
+  assert.match(hint, /vendor desktop network\/proxy diagnostics/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop network troubleshooting/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+  assert.equal(hint.includes('marketplace'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -5050,6 +5101,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpTroubleshootingInstallIssues[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpTroubleshootingInstallIssues[0]).includes('Plan Mode'), false);
 
+  const helpTroubleshootingNetwork = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-network.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/troubleshooting/network'
+  );
+  assert.equal(helpTroubleshootingNetwork[0].id, 'https://cursor.com/help/troubleshooting/network');
+  assert.equal(helpTroubleshootingNetwork[0].title, 'Network, proxy, and remote connections');
+  assert.match(helpTroubleshootingNetwork[0].summary, /Fix connection issues with proxies, VPNs, SSH, and remote development/);
+  assert.match(applyHint(helpTroubleshootingNetwork[0]), /vendor desktop network\/proxy diagnostics/i);
+  assert.match(applyHint(helpTroubleshootingNetwork[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpTroubleshootingNetwork[0])), false);
+  assert.equal(applyHint(helpTroubleshootingNetwork[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpTroubleshootingNetwork[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpTroubleshootingNetwork[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5594,6 +5660,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/install-issues'),
     'https://cursor.com/help/troubleshooting/install-issues.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/network'),
+    'https://cursor.com/help/troubleshooting/network.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6278,6 +6348,20 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpTroubleshootingInstallIssuesMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpTroubleshootingInstallIssuesMd.summary), false);
   assert.equal(helpTroubleshootingInstallIssuesMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpTroubleshootingNetworkMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-network.md'), 'utf8')
+  );
+  assert.equal(helpTroubleshootingNetworkMd.title, 'Network, proxy, and remote connections');
+  assert.match(helpTroubleshootingNetworkMd.summary, /How do I run network diagnostics/);
+  assert.match(helpTroubleshootingNetworkMd.summary, /What if AI features stop working behind a proxy/);
+  assert.match(helpTroubleshootingNetworkMd.summary, /Which domains does Cursor need access to/);
+  assert.match(helpTroubleshootingNetworkMd.summary, /What if AI features don't work over SSH or remote connections/);
+  assert.match(helpTroubleshootingNetworkMd.summary, /What if a VPN causes DNS resolution failures/);
+  assert.match(helpTroubleshootingNetworkMd.summary, /What does the "suspicious activity" message mean/);
+  assert.equal(helpTroubleshootingNetworkMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingNetworkMd.summary), false);
+  assert.equal(helpTroubleshootingNetworkMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -7624,6 +7708,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help install troubleshooting is vendor desktop install/startup diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop install troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Network, proxy, and remote connections',
+      source_url: 'https://cursor.com/help/troubleshooting/network',
+      published_at: null,
+      apply_in_eos: 'Help network troubleshooting is vendor desktop network/proxy diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop network troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -7677,6 +7767,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/agent-issues'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/tab-issues'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/install-issues'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/network'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -8261,6 +8352,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/troubleshooting/agent-issues'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/tab-issues'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/install-issues'), false);
+  assert.equal(current.includes('cursor.com/help/troubleshooting/network'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
