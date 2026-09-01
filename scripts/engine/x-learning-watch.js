@@ -558,6 +558,9 @@ export function applyHint(item) {
   if (isHelpCloudAgentsUrl(item?.link)) {
     return 'Help Cloud Agents is vendor isolated-VM Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Move to Cloud for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
+  if (isHelpBackgroundAgentsUrl(item?.link)) {
+    return 'Help Background Agents is vendor isolated-VM Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop background agents for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+  }
   if (isPlanModeDocUrl(item?.link)) {
     return 'Plan Mode is optional desktop planning before code. Keep this watch on the standing /goal; do not rotate this Cloud Agent into Plan Mode for daily ingest. EOS TDD remains required. Honor included quota; do not switch this watch to on-demand.';
   }
@@ -925,7 +928,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isHelpAgentModeUrl(url) || isHelpAskModeUrl(url) || isHelpPlanModeUrl(url) || isHelpTabUrl(url) || isHelpInlineEditUrl(url) || isHelpCloudAgentsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isHelpAgentModeUrl(url) || isHelpAskModeUrl(url) || isHelpPlanModeUrl(url) || isHelpTabUrl(url) || isHelpInlineEditUrl(url) || isHelpCloudAgentsUrl(url) || isHelpBackgroundAgentsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -1118,6 +1121,12 @@ function isHelpCloudAgentsUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/help/ai-features/cloud-agents'
     || value === 'https://www.cursor.com/help/ai-features/cloud-agents';
+}
+
+function isHelpBackgroundAgentsUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/help/ai-features/background-agents'
+    || value === 'https://www.cursor.com/help/ai-features/background-agents';
 }
 
 function isCloudAgentBestPracticesUrl(url) {
@@ -1403,7 +1412,7 @@ function currentClusterKey(learning) {
   ) {
     return 'cluster:cursor-ios';
   }
-  if (isCloudAgentOverviewUrl(learning?.source_url) || isHelpCloudAgentsUrl(learning?.source_url) || isCloudAgentApiEndpointsUrl(learning?.source_url) || isCursorSdkTypescriptUrl(learning?.source_url) || isCursorSdkPythonUrl(learning?.source_url) || isCursorSdkBridgeUrl(learning?.source_url)) {
+  if (isCloudAgentOverviewUrl(learning?.source_url) || isHelpCloudAgentsUrl(learning?.source_url) || isHelpBackgroundAgentsUrl(learning?.source_url) || isCloudAgentApiEndpointsUrl(learning?.source_url) || isCursorSdkTypescriptUrl(learning?.source_url) || isCursorSdkPythonUrl(learning?.source_url) || isCursorSdkBridgeUrl(learning?.source_url)) {
     return 'cluster:cloud-agent-overview';
   }
   if (isModelsAndPricingUrl(learning?.source_url) || isTeamPricingUrl(learning?.source_url) || isTeamMembersUrl(learning?.source_url) || isHelpPricingUrl(learning?.source_url) || isHelpAvailableModelsUrl(learning?.source_url)) {

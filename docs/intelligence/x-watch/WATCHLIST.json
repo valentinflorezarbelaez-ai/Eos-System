@@ -535,6 +535,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_CLOUD_AGENTS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-BACKGROUND-AGENTS",
+      "url": "https://cursor.com/help/ai-features/background-agents",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_BACKGROUND_AGENTS",
+      "fetchable": true
     }
   ]
 }
