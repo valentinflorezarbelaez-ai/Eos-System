@@ -6,6 +6,44 @@
 
 import { calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
 
+/** Fail-closed defaults when a task contract omits protected_surfaces. */
+export const DEFAULT_PROTECTED_SURFACES = [
+  'docs/governance/**',
+  'src/core/**',
+  'Fundacion/',
+  'Fundacion'
+];
+
+/** Surfaces every planned mission contract must carry (R-BOUNDARY-01). */
+export const MISSION_PROTECTED_SURFACES = ['docs/governance/**', 'Fundacion/', 'Fundacion'];
+
+/**
+ * True when a return-package path touches a protected surface.
+ * Matches POSIX and Windows separators and nested Fundacion/ prefixes.
+ */
+export function touchesProtectedSurface(filePath, surfaces = DEFAULT_PROTECTED_SURFACES) {
+  const normalized = String(filePath || '').replace(/\\/g, '/');
+  if (!normalized) return false;
+  const parts = normalized.split('/').filter(Boolean);
+
+  for (const surface of surfaces) {
+    const prefix = String(surface)
+      .replace(/\\/g, '/')
+      .replace(/\/\*\*$/, '')
+      .replace(/\/\*$/, '')
+      .replace(/\/$/, '');
+    if (!prefix) continue;
+    if (normalized === prefix || normalized.startsWith(prefix + '/')) return true;
+    const prefixParts = prefix.split('/').filter(Boolean);
+    if (prefixParts.length === 1 && parts.includes(prefixParts[0])) return true;
+    if (prefixParts.length > 1) {
+      const needle = prefixParts.join('/');
+      if (normalized.includes(`/${needle}/`) || normalized.endsWith(`/${needle}`)) return true;
+    }
+  }
+  return false;
+}
+
 export class CursorReturnIngestionEngine {
   constructor(options = {}) {
     this.consumedNonces = new Set(options.consumedNonces || []);
@@ -39,29 +77,41 @@ export class CursorReturnIngestionEngine {
       deviations.push(`TASK_ID_MISMATCH: Return package task_id '${returnPkg.task_id}' != contract '${taskContract.task_id}'`);
     }
 
-    // 2. Anti-Replay Nonce Verification
-    if (returnPkg.nonce) {
-      if (this.consumedNonces.has(returnPkg.nonce)) {
-        deviations.push(`REPLAY_ATTEMPT_DETECTED: Nonce '${returnPkg.nonce}' has already been processed.`);
-        isSecurityViolation = true;
-      } else {
-        this.consumedNonces.add(returnPkg.nonce);
-      }
+    // 2. Anti-Replay Nonce Verification (nonce is required; omission is fail-closed)
+    const nonce = typeof returnPkg.nonce === 'string' ? returnPkg.nonce.trim() : '';
+    if (!nonce) {
+      deviations.push('REPLAY_NONCE_REQUIRED: Return package must include a non-empty nonce.');
+      isSecurityViolation = true;
+    } else if (this.consumedNonces.has(nonce)) {
+      deviations.push(`REPLAY_ATTEMPT_DETECTED: Nonce '${nonce}' has already been processed.`);
+      isSecurityViolation = true;
+    } else {
+      this.consumedNonces.add(nonce);
     }
 
     // 3. Protected Surfaces & Scope Boundary Verification
-    const protectedSurfaces = taskContract.protected_surfaces || ['docs/governance/**', 'src/core/**'];
+    const protectedSurfaces = taskContract.protected_surfaces?.length
+      ? taskContract.protected_surfaces
+      : DEFAULT_PROTECTED_SURFACES;
     for (const file of returnPkg.affected_files || []) {
-      for (const surface of protectedSurfaces) {
-        const prefix = surface.replace('/**', '').replace('/*', '');
-        if (file.path.startsWith(prefix) && file.action !== 'READ_ONLY') {
-          deviations.push(`PROTECTED_SURFACE_MUTATION_ATTEMPT: Attempted ${file.action} on protected path '${file.path}'`);
-          isSecurityViolation = true;
-        }
+      if (file.action === 'READ_ONLY') continue;
+      if (touchesProtectedSurface(file.path, protectedSurfaces)) {
+        deviations.push(`PROTECTED_SURFACE_MUTATION_ATTEMPT: Attempted ${file.action} on protected path '${file.path}'`);
+        isSecurityViolation = true;
       }
     }
 
-    // 4. Secret Leakage Detection
+    // 4. Unauthorized tool usage
+    const allowedTools = taskContract.allowed_tools || [];
+    const usedTools = returnPkg.tools_used || [];
+    for (const tool of usedTools) {
+      if (!allowedTools.includes(tool)) {
+        deviations.push(`UNAUTHORIZED_TOOL: Tool '${tool}' is not in task contract allowed_tools.`);
+        isSecurityViolation = true;
+      }
+    }
+
+    // 5. Secret Leakage Detection
     const payloadToScan = [
       returnPkg.diff || '',
       returnPkg.summary || '',
@@ -77,7 +127,7 @@ export class CursorReturnIngestionEngine {
       }
     }
 
-    // 5. Epistemic Test Verification
+    // 6. Epistemic Test Verification
     const testResults = returnPkg.test_results || { total_tests: 0, passed_tests: 0, failed_tests: 0, pass_rate: 0 };
     if (returnPkg.status === 'COMPLETED') {
       if (testResults.failed_tests > 0 || testResults.pass_rate < 1.0) {
@@ -88,7 +138,7 @@ export class CursorReturnIngestionEngine {
       }
     }
 
-    // 6. Verdict Determination
+    // 7. Verdict Determination
     let verdict = 'ACCEPT';
     if (isSecurityViolation) {
       verdict = 'REJECT';
@@ -123,7 +173,7 @@ export class CursorReturnIngestionEngine {
     const required = [
       'schema_version', 'mission_id', 'task_id', 'status', 'summary',
       'affected_files', 'diff', 'commands_executed', 'test_results',
-      'evidence', 'unknowns', 'risks'
+      'evidence', 'unknowns', 'risks', 'nonce'
     ];
     for (const field of required) {
       if (pkg[field] === undefined) {

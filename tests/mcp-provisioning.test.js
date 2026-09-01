@@ -17,7 +17,9 @@ function preserveActiveTools(t) {
 test('MCP Provisioning: Catalog exposes every governed server declared in .cursor/mcp.json', () => {
   const engine = new McpProvisioningEngine();
   const catalog = engine.getCatalog().mcpServers || {};
+  const catalogNames = Object.keys(catalog);
 
+  assert.ok(catalogNames.length > 0, 'Official MCP catalog must not be empty');
   assert.ok(catalog['eos-local'], 'Local governed EOS MCP server must be declared in the catalog');
   for (const [name, spec] of Object.entries(catalog)) {
     assert.ok(spec.command, `${name} must declare an executable command`);

@@ -10,6 +10,7 @@ export const DEFAULT_TARGET_PATH = 'C:\\Users\\valen\\Documents\\Fundacion';
 
 export class RealProjectDiscoveryEngine {
   constructor(targetPath = DEFAULT_TARGET_PATH) {
+    this.declaredTargetPath = targetPath;
     this.targetPath = path.resolve(targetPath);
     this.mode = 'EMPIRICAL_LEVEL_1_READ_ONLY';
     this.validateTargetSafety();
@@ -22,11 +23,10 @@ export class RealProjectDiscoveryEngine {
     }
   }
 
-  getProjectId() {
-    // Targets are declared with Windows-style paths, so the last segment must be
-    // extracted independently of the host separator to keep the id stable across OSes.
-    const segments = this.targetPath.split(/[\\/]+/).filter(Boolean);
-    const basename = (segments[segments.length - 1] || '').toLowerCase();
+    getProjectId() {
+    const source = this.declaredTargetPath || this.targetPath;
+    const posixish = String(source).replace(/\\/g, '/');
+    const basename = (posixish.split('/').filter(Boolean).pop() || '').toLowerCase();
     return basename.replace(/[^a-z0-9_-]/g, '_') || 'unknown_target';
   }
 
@@ -229,8 +229,18 @@ export class RealProjectDiscoveryEngine {
   }
 
   saveArtifacts(discovery) {
-    const outputDir = path.join(rootDir, 'docs/intelligence/real_projects', discovery.projectId);
-    fs.mkdirSync(outputDir, { recursive: true });
+    if (!fs.existsSync(this.targetPath)) {
+      throw new Error(
+        `DENY: Refusing to persist discovery artifacts for unobserved target ${this.declaredTargetPath} ` +
+        `(projectId=${discovery.projectId}). This protects docs/intelligence/real_projects/${discovery.projectId}/ from not-found overwrites.`
+      );
+    }
+
+    const projectId = discovery.projectId;
+    const outputDir = path.join(rootDir, 'docs/intelligence/real_projects', projectId);
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
 
     const artifacts = {
       'REAL_PROJECT_STATE.json': discovery.state,

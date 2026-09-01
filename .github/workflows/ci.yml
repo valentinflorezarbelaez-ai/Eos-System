@@ -1,0 +1,110 @@
+name: EOS CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eos-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CI: true
+  EOS_CI: github-actions
+
+jobs:
+  verify:
+    name: Workspace verify (strict)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Assert GitHub Actions contract
+        run: node scripts/ci/assert-gha-contract.js
+      - name: Strict workspace verification
+        run: node scripts/verify-eos.js --strict
+      - name: Fundacion freeze (delta 0)
+        run: |
+          git diff --exit-code -- Fundacion
+          extra="$(git ls-files --others --exclude-standard -- Fundacion || true)"
+          test -z "$extra"
+
+  test:
+    name: Node test suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Run control-plane tests (L0 builtins only)
+        run: npm test
+      - name: Discard ephemeral test writes
+        if: always()
+        run: git checkout -- EOS-MISSION-CONTROL/ACTIVE_TOOLS.json
+      - name: Fundacion freeze (delta 0)
+        run: |
+          git diff --exit-code -- Fundacion
+          extra="$(git ls-files --others --exclude-standard -- Fundacion || true)"
+          test -z "$extra"
+
+  syntax:
+    name: JavaScript syntax
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Syntax-check JavaScript
+        run: |
+          find bin src scripts tests -name '*.js' -type f -print0 \
+            | xargs -0 -n1 node --check
+      - name: Fundacion freeze (delta 0)
+        run: |
+          git diff --exit-code -- Fundacion
+          extra="$(git ls-files --others --exclude-standard -- Fundacion || true)"
+          test -z "$extra"
+
+  governance-gates:
+    name: Local governance engines
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Evaluate release gates
+        run: npm run evaluate:release
+      - name: Independent verification harness
+        run: npm run verify:independent
+      - name: System-wide integrity audit
+        run: npm run audit:system
+      - name: Fundacion freeze (delta 0)
+        run: |
+          git diff --exit-code -- Fundacion
+          extra="$(git ls-files --others --exclude-standard -- Fundacion || true)"
+          test -z "$extra"
