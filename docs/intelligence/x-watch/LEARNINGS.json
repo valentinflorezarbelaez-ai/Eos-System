@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T13:25:03.147Z",
+  "updated_at": "2026-09-01T13:30:56.361Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1629,6 +1629,16 @@
       "published_at": null,
       "summary": "Share read-only copies of your AI conversations with teammates or the public via a link. How do I share a conversation? — Open the chat you want to share 2. Who can view shared transcripts? — Team links : Only signed-in members of your team, accessible from the dashboard under Shared Transcripts Public links : Anyone with the link, no sign-in required Can I fork a shared transcript? — Yes. What gets shared? — The full conversation history is shared, including code snippets, tool calls, and their results. How do I manage shared transcripts? — Go to cursor.com/dashboard and open the Shared Transcripts tab. Which plans support shared transcripts? — Shared transcripts are available on Teams and Enterprise plans only.",
       "apply_in_eos": "Help Shared transcripts is vendor conversation sharing. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into shared transcripts for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-side-chats",
+      "title": "Side chats",
+      "source_url": "https://cursor.com/help/ai-features/side-chats",
+      "published_at": null,
+      "summary": "Side chats are durable child conversations attached to a parent agent. What is a side chat and how does it differ from the main agent conversation? — A side chat is a full agent conversation that runs next to your main chat. How do I open a side chat? — You can open a side chat in these ways: 1. How do I bring side chat context back into the main conversation? — @-mention the side chat in the main thread. Does the parent conversation appear inside the side chat? — The parent history is available to the model as hidden reference context. Can I send follow-up messages in a side chat after the first reply? — Yes. How do I close or archive a side chat? — Click the X (close) button on a side chat to archive it. Is a side chat the same thing as forking a conversation? — No. Can I create a side…",
+      "apply_in_eos": "Help Side chats is vendor local-only side conversations. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into /side or desktop side chats for daily ingest. This Cloud Agent VM has no side chats. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

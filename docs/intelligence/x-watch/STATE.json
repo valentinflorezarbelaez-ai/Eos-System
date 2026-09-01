@@ -163,6 +163,7 @@
     "https://cursor.com/help/ai-features/multi-agent",
     "https://cursor.com/help/ai-features/plan-mode",
     "https://cursor.com/help/ai-features/shared-transcripts",
+    "https://cursor.com/help/ai-features/side-chats",
     "https://cursor.com/help/ai-features/tab",
     "https://cursor.com/help/customization/context",
     "https://cursor.com/help/customization/ignore-files",
@@ -176,7 +177,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-09-01T13:25:03.136Z",
-  "last_item_count": 174,
-  "last_new_item_count": 19
+  "last_ingest_at": "2026-09-01T13:30:56.349Z",
+  "last_item_count": 175,
+  "last_new_item_count": 20
 }
