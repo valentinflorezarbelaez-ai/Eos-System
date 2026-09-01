@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:33:56.976Z",
+  "updated_at": "2026-09-01T12:39:05.580Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1549,6 +1549,16 @@
       "published_at": null,
       "summary": "Cursor Automations run Cloud Agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. What can Automations do? — Automations let you run Cloud Agents without manual input. How do I create an automation? — Create a new automation in the Agents Window, at cursor.com/automations/new, or from a template in the Cursor Marketplace. Can I create automations without connecting a repository? — Yes. Which triggers are available? — An automation can have more than one trigger. Which tools can automations use? — Comment on pull request : Posts review comments, inline code comments, or approvals on a target PR Request reviewers : Assigns reviewers on a target PR Send to Slack : Sends messages to a Slack channel Read Slack channel H…",
       "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-background-agents",
+      "title": "What are background agents?",
+      "source_url": "https://cursor.com/help/ai-features/background-agents",
+      "published_at": null,
+      "summary": "Background agents are coding agents that typically run for a very long time. How do background agents work? — Each Cloud Agent runs on its own dedicated virtual machine with a full development environment: your repository, dependencies, secrets, and network access. How do background agents show their work? — Background agents produce artifacts to demo their changes. How do I start a background agent? — In Cursor, select Cloud by the agent input On the web or mobile, go to cursor.com/agents In Slack, GitHub, or Linear, mention @Cursor You can also run them on a schedule or from events with Automations.",
+      "apply_in_eos": "Help Background Agents is vendor isolated-VM Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop background agents for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

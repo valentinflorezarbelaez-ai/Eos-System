@@ -155,6 +155,7 @@
     "https://cursor.com/help/ai-features/agent",
     "https://cursor.com/help/ai-features/ask-mode",
     "https://cursor.com/help/ai-features/automations",
+    "https://cursor.com/help/ai-features/background-agents",
     "https://cursor.com/help/ai-features/cloud-agents",
     "https://cursor.com/help/ai-features/inline-edit",
     "https://cursor.com/help/ai-features/plan-mode",
@@ -165,7 +166,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-09-01T12:33:56.965Z",
-  "last_item_count": 163,
-  "last_new_item_count": 8
+  "last_ingest_at": "2026-09-01T12:39:05.569Z",
+  "last_item_count": 164,
+  "last_new_item_count": 9
 }
