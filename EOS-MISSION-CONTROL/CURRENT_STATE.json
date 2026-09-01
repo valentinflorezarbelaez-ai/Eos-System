@@ -7,7 +7,7 @@
   "gap_002": "UNKNOWN",
   "gate_13": "CANARY_RESTRICTED",
   "general_production": "CLOSED",
-  "test_health": "663 / 663 PASS",
+  "test_health": "726 / 726 PASS",
   "strict_checks": "471 / 471 PASS",
   "last_telemetry_hash": "41e9b2578fa1b982ce14687d3a04e5f723b56c423a1f8c47b59e2a87c10b0f4d",
   "updated_at": "2026-08-15T12:44:00-05:00"

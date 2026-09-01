@@ -46,7 +46,7 @@ export class EosCursorHarnessCli {
       gate13Status: 'CANARY_RESTRICTED',
       activeMission: mission.mission_id || 'NONE',
       missionStage: mission.current_stage || 'IDLE',
-      systemHealth: state.test_health || '608 / 608 PASS',
+      systemHealth: state.test_health || '726 / 726 PASS',
       timestamp: new Date().toISOString()
     };
   }
