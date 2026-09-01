@@ -170,18 +170,57 @@ Store size: 199
 - Introducing the Cursor Developer Habits Report. We're sharing some of our findings on how software development is changing. — cited by https://www.unrollnow.com/status/2060025063899058458 (not fetched from X)
   Vendor research metrics are not EOS evidence. Do not add cursor.com/insights as a feed.
   https://x.com/cursor_ai/status/2060025063899058458
+- The cost per accepted line of code varies by roughly 7x across model families. — cited by https://ethanbholland.com/2026/05/29/agents-and-copilots-ai-news-week-ending-05-29-2026/ (not fetched from X)
+  Vendor research metrics are not EOS evidence. Do not add cursor.com/insights as a feed.
+  https://x.com/cursor_ai/status/2060025070425395562
+- As agents use more context, input tokens have become the majority of price-equivalent token costs. — cited by https://ethanbholland.com/2026/05/29/agents-and-copilots-ai-news-week-ending-05-29-2026/ (not fetched from X)
+  Vendor research metrics are not EOS evidence. Do not add cursor.com/insights as a feed.
+  https://x.com/cursor_ai/status/2060025076947521984
+- With the Cursor SDK, you can build your own agents with Composer 2.5. It's now available in Python and TypeScript. — cited by https://ethanbholland.com/2026/05/29/agents-and-copilots-ai-news-week-ending-05-29-2026/ (not fetched from X)
+  Cursor SDK is optional vendor scripting. The long-weekend 90% off was a promo, not standing pricing. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed.
+  https://x.com/cursor_ai/status/2057913121558413770
+- You can now create and manage automations in the same workspace as your agents. Automations are now available in the Agents Window. — cited by https://ethanbholland.com/2026/05/22/agents-and-copilots-ai-news-week-ending-05-22-2026/ (not fetched from X)
+  Automations trigger on GitHub events, not X. This daily changelog timer already covers ingest. The 7-day 50% promo is not standing pricing. Do not rotate this Cloud Agent into the desktop Agents Window for daily ingest.
+  https://x.com/cursor_ai/status/2057167359593603471
+- Cursor is now available in Jira. — cited by https://ethanbholland.com/2026/05/22/agents-and-copilots-ai-news-week-ending-05-22-2026/ (not fetched from X)
+  Jira is optional vendor issue intake. Do not rotate this Cloud Agent into Jira for daily ingest. Do not add docs/integrations/jira as a feed. Honor included quota.
+  https://x.com/cursor_ai/status/2056803731367456993
 - Introducing Composer 2.5, our most powerful model yet — cited by https://aicatchup.com/news/cursor-composer-2-5-launch (not fetched from X)
   Composer is a vendor model family. Do not treat marketing metrics as EOS evidence. The first-week 2x included usage was a launch promo, not standing pricing.
   https://x.com/cursor_ai/status/2056415413077233983
+- Together with SpaceXAI, we're training a significantly larger model from scratch, using 10x more total compute. — cited by https://ethanbholland.com/2026/05/22/agents-and-copilots-ai-news-week-ending-05-22-2026/ (not fetched from X)
+  Vendor training-compute narrative is not EOS evidence. EOS still evidence-gates quality claims. Honor included quota.
+  https://x.com/cursor_ai/status/2056415419536461836
+- Starting today, you can run cloud agents inside fully configured development environments. — cited by https://ethanbholland.com/2026/05/15/agents-and-copilots-ai-news-week-ending-05-15-2026/ (not fetched from X)
+  This watch already runs in the Cloud Agent VM. Keep environment.json + Builds. Do not treat snapshot marketing as EOS evidence.
+  https://x.com/cursor_ai/status/2054651526715502998
+- A new PR review experience is now available in Cursor 3. Take PRs from creation to merge, all in one place. — cited by https://ethanbholland.com/2026/05/08/agents-and-copilots-ai-news-week-ending-05-08-2026/ (not fetched from X)
+  PR Review in Cursor 3 is vendor editor chrome. This watch already runs in the Cloud Agent VM. GitHub remains source of truth for this synced repo.
+  https://x.com/cursor_ai/status/2052489387305488609
+- You can now see a breakdown of your agent's context usage in Cursor 3.3. — cited by https://ethanbholland.com/2026/05/08/agents-and-copilots-ai-news-week-ending-05-08-2026/ (not fetched from X)
+  Context usage stats are vendor editor chrome. This Cloud Agent VM already searches the workspace. Do not rotate this Cloud Agent into desktop context stats for daily ingest.
+  https://x.com/cursor_ai/status/2052059748544249918
 - Cursor is now available in Microsoft Teams — cited by https://www.unrollnow.com/status/2053939390410612988 (not fetched from X)
   Microsoft Teams is optional vendor chat intake. Do not rotate this Cloud Agent into Teams for daily ingest. Do not add docs/integrations/microsoft-teams as a feed. Honor included quota.
   https://x.com/cursor_ai/status/2053939390410612988
 - We're introducing the Cursor SDK so you can build agents with the same runtime, harness, and models that power Cursor — cited by https://www.unrollnow.com/status/2049499866217185492 (not fetched from X)
   Cursor SDK is optional vendor scripting. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed. Customer names are vendor marketing, not EOS evidence.
   https://x.com/cursor_ai/status/2049499866217185492
+- We've open-sourced a few starter projects for you to build on: a coding agent CLI, a prototyping tool, and an agent-powered kanban board. — cited by https://ethanbholland.com/2026/05/01/agents-and-copilots-ai-news-week-ending-05-01-2026/ (not fetched from X)
+  Cursor SDK starter projects are optional vendor samples. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed.
+  https://x.com/cursor_ai/status/2049499874043830389
+- Customers like Rippling, Notion, C3 AI, and Faire are using the Cursor SDK to build custom background agents, take bugs from ticket to merge-ready PR, and maintain self-healing codebases. — cited by https://ethanbholland.com/2026/05/01/agents-and-copilots-ai-news-week-ending-05-01-2026/ (not fetched from X)
+  Customer names are vendor marketing, not EOS evidence. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed.
+  https://x.com/cursor_ai/status/2049499876388454903
 - Cursor Security Review is now available for Teams and Enterprise plans — cited by https://www.unrollnow.com/status/2049926283061035254 (not fetched from X)
   Cursor Security Review is a vendor PR reviewer. EOS security-auditor remains the Control Plane check. /review-security is not a substitute. Do not treat vendor finding counts as EOS evidence. Honor included quota.
   https://x.com/cursor_ai/status/2049926283061035254
+- Introducing /multitask in the new Cursor 3 interface. Cursor can now run async subagents to parallelize your requests instead of adding them to the queue. — cited by https://ethanbholland.com/2026/05/01/agents-and-copilots-ai-news-week-ending-05-01-2026/ (not fetched from X)
+  /multitask is vendor desktop Agents Window parallelism. This Cloud Agent VM already runs one isolated agent. Do not rotate this Cloud Agent into desktop Agents Window or /multitask for daily ingest.
+  https://x.com/cursor_ai/status/2047764651363180839
+- Cursor cloud agents can now run on your infrastructure. — cited by https://ethanbholland.com/2026/03/27/agents-and-copilots-ai-news-week-ending-03-27-2026/ (not fetched from X)
+  Self-hosted Cloud Agents are optional private workers. This watch already runs in the public Cloud Agent VM. Do not add docs/cloud-agent/self-hosted as a feed. Keep environment.json + Builds.
+  https://x.com/cursor_ai/status/2036873885665419773
 - We're introducing Cursor 3 — cited by https://www.unrollnow.com/status/2039768512894505086 (not fetched from X)
   Cursor 3 Agents Window is vendor editor chrome. This watch already runs in the Cloud Agent VM. Editor chrome is not an EOS Control Plane change. Honor included quota.
   https://x.com/cursor_ai/status/2039768512894505086
@@ -191,4 +230,3 @@ Store size: 199
 - We're introducing Cursor Automations to build always-on agents — cited by https://www.unrollnow.com/status/2029604182286856663 (not fetched from X)
   Automations trigger on GitHub events, not X. This daily changelog timer already covers ingest.
   https://x.com/cursor_ai/status/2029604182286856663
-

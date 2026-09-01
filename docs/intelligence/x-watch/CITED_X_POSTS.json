@@ -292,7 +292,7 @@
     {
       "x_url": "https://x.com/cursor_ai/status/2081978255004053560",
       "handle": "cursor_ai",
-      "about": "Today we're launching Cursor Start, a new ₹649/month plan for developers in India",
+      "about": "Today we're launching Cursor Start, a new \u20b9649/month plan for developers in India",
       "cited_by": "https://www.unrollnow.com/status/2081978255004053560",
       "official_source": "https://cursor.com/changelog/cursor-start",
       "published_date": "2026-07-28",
@@ -554,6 +554,61 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2060025070425395562",
+      "handle": "cursor_ai",
+      "about": "The cost per accepted line of code varies by roughly 7x across model families.",
+      "cited_by": "https://ethanbholland.com/2026/05/29/agents-and-copilots-ai-news-week-ending-05-29-2026/",
+      "official_source": "https://cursor.com/insights",
+      "published_date": "2026-05-28",
+      "eos_note": "Vendor research metrics are not EOS evidence. Do not add cursor.com/insights as a feed.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2060025076947521984",
+      "handle": "cursor_ai",
+      "about": "As agents use more context, input tokens have become the majority of price-equivalent token costs.",
+      "cited_by": "https://ethanbholland.com/2026/05/29/agents-and-copilots-ai-news-week-ending-05-29-2026/",
+      "official_source": "https://cursor.com/insights",
+      "published_date": "2026-05-28",
+      "eos_note": "Vendor research metrics are not EOS evidence. Do not add cursor.com/insights as a feed.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2057913121558413770",
+      "handle": "cursor_ai",
+      "about": "With the Cursor SDK, you can build your own agents with Composer 2.5. It's now available in Python and TypeScript.",
+      "cited_by": "https://ethanbholland.com/2026/05/29/agents-and-copilots-ai-news-week-ending-05-29-2026/",
+      "official_source": "https://cursor.com/changelog/sdk-release",
+      "published_date": "2026-05-25",
+      "eos_note": "Cursor SDK is optional vendor scripting. The long-weekend 90% off was a promo, not standing pricing. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2057167359593603471",
+      "handle": "cursor_ai",
+      "about": "You can now create and manage automations in the same workspace as your agents. Automations are now available in the Agents Window.",
+      "cited_by": "https://ethanbholland.com/2026/05/22/agents-and-copilots-ai-news-week-ending-05-22-2026/",
+      "official_source": "https://cursor.com/changelog/05-20-26",
+      "published_date": "2026-05-20",
+      "eos_note": "Automations trigger on GitHub events, not X. This daily changelog timer already covers ingest. The 7-day 50% promo is not standing pricing. Do not rotate this Cloud Agent into the desktop Agents Window for daily ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2056803731367456993",
+      "handle": "cursor_ai",
+      "about": "Cursor is now available in Jira.",
+      "cited_by": "https://ethanbholland.com/2026/05/22/agents-and-copilots-ai-news-week-ending-05-22-2026/",
+      "official_source": "https://cursor.com/changelog/05-19-26",
+      "published_date": "2026-05-19",
+      "eos_note": "Jira is optional vendor issue intake. Do not rotate this Cloud Agent into Jira for daily ingest. Do not add docs/integrations/jira as a feed. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2056415413077233983",
       "handle": "cursor_ai",
       "about": "Introducing Composer 2.5, our most powerful model yet",
@@ -561,6 +616,50 @@
       "official_source": "https://cursor.com/changelog/composer-2-5",
       "published_date": "2026-05-18",
       "eos_note": "Composer is a vendor model family. Do not treat marketing metrics as EOS evidence. The first-week 2x included usage was a launch promo, not standing pricing.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2056415419536461836",
+      "handle": "cursor_ai",
+      "about": "Together with SpaceXAI, we're training a significantly larger model from scratch, using 10x more total compute.",
+      "cited_by": "https://ethanbholland.com/2026/05/22/agents-and-copilots-ai-news-week-ending-05-22-2026/",
+      "official_source": "https://cursor.com/changelog/composer-2-5",
+      "published_date": "2026-05-18",
+      "eos_note": "Vendor training-compute narrative is not EOS evidence. EOS still evidence-gates quality claims. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2054651526715502998",
+      "handle": "cursor_ai",
+      "about": "Starting today, you can run cloud agents inside fully configured development environments.",
+      "cited_by": "https://ethanbholland.com/2026/05/15/agents-and-copilots-ai-news-week-ending-05-15-2026/",
+      "official_source": "https://cursor.com/changelog/05-13-26",
+      "published_date": "2026-05-13",
+      "eos_note": "This watch already runs in the Cloud Agent VM. Keep environment.json + Builds. Do not treat snapshot marketing as EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2052489387305488609",
+      "handle": "cursor_ai",
+      "about": "A new PR review experience is now available in Cursor 3. Take PRs from creation to merge, all in one place.",
+      "cited_by": "https://ethanbholland.com/2026/05/08/agents-and-copilots-ai-news-week-ending-05-08-2026/",
+      "official_source": "https://cursor.com/changelog/05-07-26",
+      "published_date": "2026-05-07",
+      "eos_note": "PR Review in Cursor 3 is vendor editor chrome. This watch already runs in the Cloud Agent VM. GitHub remains source of truth for this synced repo.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2052059748544249918",
+      "handle": "cursor_ai",
+      "about": "You can now see a breakdown of your agent's context usage in Cursor 3.3.",
+      "cited_by": "https://ethanbholland.com/2026/05/08/agents-and-copilots-ai-news-week-ending-05-08-2026/",
+      "official_source": "https://cursor.com/changelog/05-06-26",
+      "published_date": "2026-05-06",
+      "eos_note": "Context usage stats are vendor editor chrome. This Cloud Agent VM already searches the workspace. Do not rotate this Cloud Agent into desktop context stats for daily ingest.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },
@@ -587,6 +686,28 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2049499874043830389",
+      "handle": "cursor_ai",
+      "about": "We've open-sourced a few starter projects for you to build on: a coding agent CLI, a prototyping tool, and an agent-powered kanban board.",
+      "cited_by": "https://ethanbholland.com/2026/05/01/agents-and-copilots-ai-news-week-ending-05-01-2026/",
+      "official_source": "https://cursor.com/changelog/sdk-release",
+      "published_date": "2026-04-29",
+      "eos_note": "Cursor SDK starter projects are optional vendor samples. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2049499876388454903",
+      "handle": "cursor_ai",
+      "about": "Customers like Rippling, Notion, C3 AI, and Faire are using the Cursor SDK to build custom background agents, take bugs from ticket to merge-ready PR, and maintain self-healing codebases.",
+      "cited_by": "https://ethanbholland.com/2026/05/01/agents-and-copilots-ai-news-week-ending-05-01-2026/",
+      "official_source": "https://cursor.com/changelog/sdk-release",
+      "published_date": "2026-04-29",
+      "eos_note": "Customer names are vendor marketing, not EOS evidence. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2049926283061035254",
       "handle": "cursor_ai",
       "about": "Cursor Security Review is now available for Teams and Enterprise plans",
@@ -594,6 +715,28 @@
       "official_source": "https://cursor.com/changelog/04-30-26",
       "published_date": "2026-04-30",
       "eos_note": "Cursor Security Review is a vendor PR reviewer. EOS security-auditor remains the Control Plane check. /review-security is not a substitute. Do not treat vendor finding counts as EOS evidence. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2047764651363180839",
+      "handle": "cursor_ai",
+      "about": "Introducing /multitask in the new Cursor 3 interface. Cursor can now run async subagents to parallelize your requests instead of adding them to the queue.",
+      "cited_by": "https://ethanbholland.com/2026/05/01/agents-and-copilots-ai-news-week-ending-05-01-2026/",
+      "official_source": "https://cursor.com/changelog/04-24-26",
+      "published_date": "2026-04-24",
+      "eos_note": "/multitask is vendor desktop Agents Window parallelism. This Cloud Agent VM already runs one isolated agent. Do not rotate this Cloud Agent into desktop Agents Window or /multitask for daily ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2036873885665419773",
+      "handle": "cursor_ai",
+      "about": "Cursor cloud agents can now run on your infrastructure.",
+      "cited_by": "https://ethanbholland.com/2026/03/27/agents-and-copilots-ai-news-week-ending-03-27-2026/",
+      "official_source": "https://cursor.com/changelog/03-25-26",
+      "published_date": "2026-03-25",
+      "eos_note": "Self-hosted Cloud Agents are optional private workers. This watch already runs in the public Cloud Agent VM. Do not add docs/cloud-agent/self-hosted as a feed. Keep environment.json + Builds.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },
