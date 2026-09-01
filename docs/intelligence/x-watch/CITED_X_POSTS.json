@@ -246,6 +246,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2074915744999969059",
+      "handle": "cursor_ai",
+      "about": "We've partnered with SpaceXAI to train Grok 4.5. It's our most powerful model yet and the first we've built for more than software engineering.",
+      "cited_by": "https://www.unrollnow.com/status/2074915744999969059",
+      "official_source": "https://forum.cursor.com/t/grok-4-5-is-now-available/165158",
+      "published_date": "2026-07-08",
+      "eos_note": "Grok 4.5 availability is vendor catalog news. EOS still evidence-gates quality claims. The first-week double usage was a launch promo, not standing pricing. Honor included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2071641103191998810",
       "handle": "cursor_ai",
       "about": "Introducing Cursor for iOS. Build from anywhere by launching always-on cloud agents",

@@ -9359,6 +9359,18 @@ test('cited X posts never claim an X fetch', () => {
     )),
     true
   );
+  assert.equal(official.includes('https://forum.cursor.com/t/grok-4-5-is-now-available/165158'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2074915744999969059'
+      && row.cited_by === 'https://www.unrollnow.com/status/2074915744999969059'
+      && /Grok 4\.5/i.test(row.about)
+      && /launch promo/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(
     doc.citations.some((row) => (
       row.x_url === 'https://x.com/cursor_ai/status/2069872515548340407'

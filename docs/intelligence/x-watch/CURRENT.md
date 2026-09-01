@@ -86,6 +86,9 @@ Store size: 199
 - GPT-5.6 Sol, Terra, and Luna are now available in Cursor — cited by https://www.unrollnow.com/status/2075265504105611674 (not fetched from X)
   GPT availability is vendor catalog news. EOS model policy stays in workspace rules. Do not treat CursorBench scores as EOS evidence.
   https://x.com/cursor_ai/status/2075265504105611674
+- We've partnered with SpaceXAI to train Grok 4.5. It's our most powerful model yet and the first we've built for more than software engineering. — cited by https://www.unrollnow.com/status/2074915744999969059 (not fetched from X)
+  Grok 4.5 availability is vendor catalog news. EOS still evidence-gates quality claims. The first-week double usage was a launch promo, not standing pricing. Honor included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.
+  https://x.com/cursor_ai/status/2074915744999969059
 - Introducing Cursor for iOS. Build from anywhere by launching always-on cloud agents — cited by https://aicatchup.com/news/cursor-ios-public-beta (not fetched from X)
   Composer 2.5 75% off through July 5, 2026 was a launch promo, not standing pricing. This watch still runs in the Cloud Agent VM, not on the phone.
   https://x.com/cursor_ai/status/2071641103191998810
