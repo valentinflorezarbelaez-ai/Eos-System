@@ -8,6 +8,7 @@ const rootDir = path.resolve(__dirname, '../..');
 
 export class RealProjectDiscoveryEngine {
   constructor(targetPath = 'C:\\Users\\valen\\Documents\\Fundacion') {
+    this.declaredTargetPath = targetPath;
     this.targetPath = path.resolve(targetPath);
     this.mode = 'EMPIRICAL_LEVEL_1_READ_ONLY';
     this.validateTargetSafety();
@@ -21,7 +22,9 @@ export class RealProjectDiscoveryEngine {
   }
 
   getProjectId() {
-    const basename = path.basename(this.targetPath).toLowerCase();
+    const source = this.declaredTargetPath || this.targetPath;
+    const posixish = String(source).replace(/\\/g, '/');
+    const basename = (posixish.split('/').filter(Boolean).pop() || '').toLowerCase();
     return basename.replace(/[^a-z0-9_-]/g, '_') || 'unknown_target';
   }
 
@@ -225,6 +228,13 @@ export class RealProjectDiscoveryEngine {
   }
 
   saveArtifacts(discovery) {
+    if (!fs.existsSync(this.targetPath)) {
+      throw new Error(
+        `DENY: Refusing to persist discovery artifacts for unobserved target ${this.declaredTargetPath} ` +
+        `(projectId=${discovery.projectId}). This protects docs/intelligence/real_projects/${discovery.projectId}/ from not-found overwrites.`
+      );
+    }
+
     const projectId = discovery.projectId;
     const outputDir = path.join(rootDir, 'docs/intelligence/real_projects', projectId);
     if (!fs.existsSync(outputDir)) {
