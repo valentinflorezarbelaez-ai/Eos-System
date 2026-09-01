@@ -584,6 +584,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_MCP",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-CONTEXT",
+      "url": "https://cursor.com/help/customization/context",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_CONTEXT",
+      "fetchable": true
     }
   ]
 }

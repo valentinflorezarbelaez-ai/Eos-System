@@ -215,6 +215,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/context' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -1571,6 +1575,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpMcp.apply_in_eos), false);
   assert.equal(helpMcp.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpMcp.apply_in_eos.includes('Vercel'), false);
+  const helpContext = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/customization/context');
+  assert.ok(helpContext);
+  assert.equal(helpContext.title, '@ mentions and context');
+  assert.match(helpContext.summary, /What can I reference with @/);
+  assert.match(helpContext.summary, /When should I use @ mentions/);
+  assert.match(helpContext.summary, /Can I attach multiple items/);
+  assert.equal(helpContext.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpContext.summary), false);
+  assert.match(helpContext.apply_in_eos, /vendor Agent @ mentions/i);
+  assert.match(helpContext.apply_in_eos, /\/goal/);
+  assert.match(helpContext.apply_in_eos, /do not rotate this Cloud Agent into desktop @ mentions/i);
+  assert.match(helpContext.apply_in_eos, /Cloud Agent VM already searches/i);
+  assert.match(helpContext.apply_in_eos, /environment\.json/);
+  assert.match(helpContext.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpContext.apply_in_eos), false);
+  assert.equal(helpContext.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpContext.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1812,6 +1833,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Rules', link: 'https://cursor.com/help/customization/rules' },
     { title: 'Skills', link: 'https://cursor.com/help/customization/skills' },
     { title: 'MCP integrations', link: 'https://cursor.com/help/customization/mcp' },
+    { title: '@ mentions and context', link: 'https://cursor.com/help/customization/context' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2906,6 +2928,26 @@ test('applyHint for Help MCP keeps .cursor/mcp.json and rejects API keys', () =>
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Context keeps this watch searching the Cloud Agent VM', () => {
+  const hint = applyHint({
+    title: '@ mentions and context',
+    link: 'https://cursor.com/help/customization/context',
+    summary: 'Optional @ mentions are enabled by default. Custom Mode and Vercel.'
+  });
+  assert.match(hint, /vendor Agent @ mentions/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop @ mentions/i);
+  assert.match(hint, /Cloud Agent VM already searches/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3764,6 +3806,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpMcp[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpMcp[0]).includes('API_KEY'), false);
 
+  const helpContext = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-context.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/customization/context'
+  );
+  assert.equal(helpContext[0].id, 'https://cursor.com/help/customization/context');
+  assert.equal(helpContext[0].title, '@ mentions and context');
+  assert.match(helpContext[0].summary, /Reference files, folders, and more in conversations/);
+  assert.match(applyHint(helpContext[0]), /vendor Agent @ mentions/i);
+  assert.match(applyHint(helpContext[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpContext[0])), false);
+  assert.equal(applyHint(helpContext[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpContext[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4229,6 +4285,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/customization/mcp'),
     'https://cursor.com/help/customization/mcp.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/customization/context'),
+    'https://cursor.com/help/customization/context.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -4675,6 +4735,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpMcpMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpMcpMd.summary), false);
   assert.equal(helpMcpMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpContextMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-context.md'), 'utf8')
+  );
+  assert.equal(helpContextMd.title, '@ mentions and context');
+  assert.match(helpContextMd.summary, /What can I reference with @/);
+  assert.match(helpContextMd.summary, /When should I use @ mentions/);
+  assert.match(helpContextMd.summary, /Can I attach multiple items/);
+  assert.equal(helpContextMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpContextMd.summary), false);
+  assert.equal(helpContextMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -5851,6 +5922,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help MCP is vendor Agent integrations. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team MCP for daily ingest. Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config. Team dashboard MCP is not EOS governance. Do not put API keys in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: '@ mentions and context',
+      source_url: 'https://cursor.com/help/customization/context',
+      published_at: null,
+      apply_in_eos: 'Help Context is vendor Agent @ mentions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop @ mentions for daily ingest. This Cloud Agent VM already searches the workspace. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -5879,6 +5956,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/skills'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/mcp'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/context'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -5919,6 +5997,12 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
       source_url: 'https://cursor.com/help/customization/mcp',
       published_at: null,
       apply_in_eos: 'Help MCP is vendor Agent integrations. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team MCP for daily ingest. Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config. Team dashboard MCP is not EOS governance. Do not put API keys in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: '@ mentions and context',
+      source_url: 'https://cursor.com/help/customization/context',
+      published_at: null,
+      apply_in_eos: 'Help Context is vendor Agent @ mentions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop @ mentions for daily ingest. This Cloud Agent VM already searches the workspace. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
       title: 'Model Context Protocol (MCP)',
@@ -5969,6 +6053,7 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/skills'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/mcp'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/context'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/mcp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/plugins'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/customize-cursor'), false);
@@ -6429,6 +6514,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/customization/rules'), false);
   assert.equal(current.includes('cursor.com/help/customization/skills'), false);
   assert.equal(current.includes('cursor.com/help/customization/mcp'), false);
+  assert.equal(current.includes('cursor.com/help/customization/context'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
