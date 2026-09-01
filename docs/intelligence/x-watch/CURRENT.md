@@ -83,9 +83,18 @@ Store size: 199
 - Introducing side chats, a new way to ask questions and explore ideas without interrupting your main conversation — cited by https://aicatchup.com/news/cursor-side-chats-durable-agent-threads (not fetched from X)
   Side chats are local-only and not available for Cloud Agents. This watch already runs in the Cloud Agent VM. Keep the Cursor/X learning goal on the main thread. Do not rotate this Cloud Agent into /side.
   https://x.com/cursor_ai/status/2075686268113916023
+- GPT-5.6 Sol, Terra, and Luna are now available in Cursor — cited by https://www.unrollnow.com/status/2075265504105611674 (not fetched from X)
+  GPT availability is vendor catalog news. EOS model policy stays in workspace rules. Do not treat CursorBench scores as EOS evidence.
+  https://x.com/cursor_ai/status/2075265504105611674
 - Introducing Cursor for iOS. Build from anywhere by launching always-on cloud agents — cited by https://aicatchup.com/news/cursor-ios-public-beta (not fetched from X)
   Composer 2.5 75% off through July 5, 2026 was a launch promo, not standing pricing. This watch still runs in the Cloud Agent VM, not on the phone.
   https://x.com/cursor_ai/status/2071641103191998810
+- You can now delegate tasks to Cursor directly from Notion — cited by https://www.unrollnow.com/status/2069872515548340407 (not fetched from X)
+  Notion SDK embedding is optional vendor integration. Do not install @cursor/sdk or rotate this watch into Notion task delegation. Do not add docs/integrations/notion as a feed.
+  https://x.com/cursor_ai/status/2069872515548340407
+- We're increasing usage limits for every Teams user — cited by https://www.unrollnow.com/status/2061550723503194426 (not fetched from X)
+  Honor included quota. Do not switch this watch to Premium or on-demand. Do not treat vendor seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard.
+  https://x.com/cursor_ai/status/2061550723503194426
 - Introducing Composer 2.5, our most powerful model yet — cited by https://aicatchup.com/news/cursor-composer-2-5-launch (not fetched from X)
   Composer is a vendor model family. Do not treat marketing metrics as EOS evidence. The first-week 2x included usage was a launch promo, not standing pricing.
   https://x.com/cursor_ai/status/2056415413077233983

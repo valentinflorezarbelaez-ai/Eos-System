@@ -9351,6 +9351,36 @@ test('cited X posts never claim an X fetch', () => {
   );
   assert.equal(
     doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2075265504105611674'
+      && row.cited_by === 'https://www.unrollnow.com/status/2075265504105611674'
+      && /GPT-5\.6/i.test(row.about)
+      && /CursorBench/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2069872515548340407'
+      && row.cited_by === 'https://www.unrollnow.com/status/2069872515548340407'
+      && /Notion/i.test(row.about)
+      && /@cursor\/sdk/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2061550723503194426'
+      && row.cited_by === 'https://www.unrollnow.com/status/2061550723503194426'
+      && /usage limits/i.test(row.about)
+      && /included quota/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
       row.x_url === 'https://x.com/cursor_ai/status/2056415413077233983'
       && row.cited_by === 'https://aicatchup.com/news/cursor-composer-2-5-launch'
       && /Composer 2\.5/i.test(row.about)

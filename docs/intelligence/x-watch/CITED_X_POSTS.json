@@ -235,6 +235,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2075265504105611674",
+      "handle": "cursor_ai",
+      "about": "GPT-5.6 Sol, Terra, and Luna are now available in Cursor",
+      "cited_by": "https://www.unrollnow.com/status/2075265504105611674",
+      "official_source": "https://forum.cursor.com/t/gpt-5-6-now-available-in-cursor/165312",
+      "published_date": "2026-07-09",
+      "eos_note": "GPT availability is vendor catalog news. EOS model policy stays in workspace rules. Do not treat CursorBench scores as EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2071641103191998810",
       "handle": "cursor_ai",
       "about": "Introducing Cursor for iOS. Build from anywhere by launching always-on cloud agents",
@@ -242,6 +253,28 @@
       "official_source": "https://cursor.com/changelog/ios-mobile-app",
       "published_date": "2026-06-29",
       "eos_note": "Composer 2.5 75% off through July 5, 2026 was a launch promo, not standing pricing. This watch still runs in the Cloud Agent VM, not on the phone.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2069872515548340407",
+      "handle": "cursor_ai",
+      "about": "You can now delegate tasks to Cursor directly from Notion",
+      "cited_by": "https://www.unrollnow.com/status/2069872515548340407",
+      "official_source": "https://cursor.com/blog/notion",
+      "published_date": "2026-06-24",
+      "eos_note": "Notion SDK embedding is optional vendor integration. Do not install @cursor/sdk or rotate this watch into Notion task delegation. Do not add docs/integrations/notion as a feed.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2061550723503194426",
+      "handle": "cursor_ai",
+      "about": "We're increasing usage limits for every Teams user",
+      "cited_by": "https://www.unrollnow.com/status/2061550723503194426",
+      "official_source": "https://cursor.com/blog/teams-pricing-june-2026",
+      "published_date": "2026-06-01",
+      "eos_note": "Honor included quota. Do not switch this watch to Premium or on-demand. Do not treat vendor seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },
