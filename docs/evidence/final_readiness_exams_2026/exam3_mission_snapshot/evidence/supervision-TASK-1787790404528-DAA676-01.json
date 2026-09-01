@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "evaluation_id": "EVAL-1787790404691-1787790404528-DAA676-01",
+  "mission_id": "MIS-1787790404528-DAA676",
+  "task_id": "TASK-1787790404528-DAA676-01",
+  "author_role_id": "ROLE-SYSTEM-ARCHITECT",
+  "reviewer_role_id": "ROLE-QA-ENGINEER",
+  "retry_count": 0,
+  "max_retries": 2,
+  "dimensions": {
+    "contract_fidelity": 100,
+    "technical_correctness": 100,
+    "evidence_quality": 40,
+    "security_compliance": 100,
+    "cost_efficiency": 95,
+    "reproducibility": 100,
+    "handoff_quality": 95,
+    "communication_clarity": 95
+  },
+  "overall_score": 90.3,
+  "verdict": "ACCEPTED",
+  "correction_directive": null,
+  "evidence_receipts": [
+    "892c27d3485f0b889366151156db3bd0b611852c65b8e7fc21f5ba63dd480e59"
+  ]
+}

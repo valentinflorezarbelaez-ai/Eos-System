@@ -1,0 +1,64 @@
+{
+  "campaign": "final_readiness_exams_2026",
+  "sealed_at": "2026-08-27T00:27:31.359888Z",
+  "git_head": "cursor/final-readiness-exams-421e",
+  "declaration": "NOT_YET_OPERATIONALLY_COMPLETE_WITHIN_VERIFIED_SCOPE",
+  "exams": {
+    "exam1": "PASS_WITH_CONDITIONS",
+    "exam2": "BYPASS_GAPS_MEASURED_7_of_8",
+    "exam3": "PASS_WITHIN_CLI_SCOPE"
+  },
+  "p0_gap": "BYP-07 close without verification currently ALLOWED via mission.complete control transition",
+  "files": [
+    {
+      "path": "EOS_FINAL_READINESS_EXAMS_VERDICT.md",
+      "bytes": 6559,
+      "sha256": "e11dc62563a3fad6ba9bcfc6755804b86c0f942a70b67cec9284a67a3ff7d1a7"
+    },
+    {
+      "path": "EVIDENCE_MANIFEST.json",
+      "bytes": 2113,
+      "sha256": "c1e4e991a3b7e2b5c307d649f69040b6ba232ca7205b52e89b90b8b6477e36f4"
+    },
+    {
+      "path": "EXAM1_CLEAN_CLONE.txt",
+      "bytes": 7848,
+      "sha256": "735f02e84b51157418535a98cfff0ab3b41caecb33eac71ec95692c60378de5b"
+    },
+    {
+      "path": "EXAM2_BYPASS_BATTERY.json",
+      "bytes": 3093,
+      "sha256": "6076f9b69feda24de62aa019f2c16fee81a366aa9c4c3065daa3517395a239bd"
+    },
+    {
+      "path": "EXAM3_MISSION_REPORT.json",
+      "bytes": 1725,
+      "sha256": "a69ba3d26b35d644e6136383dab9ddbf32cff73ccb425ee4c41bdef1b62dd4b5"
+    },
+    {
+      "path": "EXAM3_REAL_MISSION_E2E.txt",
+      "bytes": 8976,
+      "sha256": "b002b8daad78c7f8962f589d4e579c3a50ec8286b146c2d78740d7e2c1bdc8bc"
+    },
+    {
+      "path": "exam3_mission_snapshot/authority-snapshot.json",
+      "bytes": 433,
+      "sha256": "f04449e08b1e51a157903c214e2f9d6d4471ddecda472eadf8867de479126edd"
+    },
+    {
+      "path": "exam3_mission_snapshot/evidence/return-TASK-1787790404528-DAA676-01-assessment.json",
+      "bytes": 276,
+      "sha256": "f4d7752a9a6a2aaaa304995e866bf32797700abaa6c41ad96bba5807fc2c60d0"
+    },
+    {
+      "path": "exam3_mission_snapshot/evidence/supervision-TASK-1787790404528-DAA676-01.json",
+      "bytes": 756,
+      "sha256": "ceb60348ecf0a7f01a9fdb2a58d06c21dad2dc367ebc4657fe7d34b161152898"
+    },
+    {
+      "path": "exam3_mission_snapshot/returns/return-TASK-1787790404528-DAA676-01.json",
+      "bytes": 859,
+      "sha256": "3017c49f5ab67fb337bf51547a0bba1afb886b51c56283868aa3ccedbad60617"
+    }
+  ]
+}

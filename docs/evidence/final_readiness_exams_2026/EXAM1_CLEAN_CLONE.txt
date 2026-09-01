@@ -1,0 +1,225 @@
+=== EXAM 1: CLEAN CLONE REPRODUCIBILITY ===
+timestamp=2026-08-27T00:25:35Z
+source_commit=24b69689c447f94afebd4893f5f0f83f45e0a823
+branch=cursor/final-readiness-exams-421e
+
+--- git clone --no-hardlinks from worktree ---
+Cloning into '/tmp/eos-clean-clone'...
+done.
+Your branch is up to date with 'origin/cursor/final-readiness-exams-421e'.
+clone_head=24b69689c447f94afebd4893f5f0f83f45e0a823
+clone_tracked_files=1048
+untracked_in_clone=0
+
+--- INSTALL (L0) ---
+NO package-lock.json
+NO node_modules
+node=v22.14.0
+
+--- START ---
+
+================================================================================
+EOS CONTROL PLANE CLI (v3.1.0) — Autonomous Engineering Governance
+================================================================================
+
+USAGE:
+  eos mission <command> [options]
+
+COMMANDS:
+  eos mission create --goal "<text>" [--project <path>]
+      Initializes a new mission, discovers project profile, and creates .missions/<id>/
+
+  eos mission inspect <mission-id>
+      Displays current mission phase, direction, and ledger state.
+
+  eos mission plan <mission-id>
+      Generates atomic task contracts, roles, budgets, and plan.json.
+
+  eos mission package <mission-id> [--target cursor]
+      Compiles the compact Cursor Mission Package (CURSOR_PROMPT.md and JSON).
+
+  eos mission status <mission-id>
+      Quick query of mission status and active phase.
+
+  eos mission report <mission-id> [--format json|markdown]
+syntax_bin=OK
+syntax_mcp=OK
+syntax_runtime=OK
+
+--- RUN MISSION ---
+📚 TUTOR (antes) — mission.create
+OBJECTIVE: Initialize a governed local mission from a human goal
+CONCEPT: MissionRuntime.createMission + AuthorityTruthSource.initMission
+CWD: /tmp/eos-clean-clone
+SCOPE: .missions/<id>, mission-package.json, authority-snapshot.json
+RATIONALE: Creates isolated mission storage under .missions without touching main/Fundacion
+RISKS: Creates .missions directory; Discovery may read project files
+EXPECTED_EVIDENCE: mission_id; phase VISION_INTAKE; authority-snapshot.json
+ROLLBACK: Delete .missions/<mission_id> if unused
+HITL: NOT_REQUIRED
+
+✅ Mission Created Successfully:
+- Mission ID: MIS-1787790335267-427FA8
+- Target Project: PRJ-EOS-CLEAN-CLONE
+- Storage Directory: /tmp/eos-clean-clone/.missions/MIS-1787790335267-427FA8
+- Status: active
+
+📚 TUTOR (después) — mission.create
+OBSERVED: Created MIS-1787790335267-427FA8 status=active
+EXIT_CODE: 0
+CLASSIFICATION: MEASURED
+INTERPRETATION: Mission OS storage initialized; phase owned by ATS
+NEXT: Run eos mission plan MIS-1787790335267-427FA8
+
+Next step: Run 'eos mission plan MIS-1787790335267-427FA8' to generate tasks.
+mission_id=MIS-1787790335267-427FA8
+RATIONALE: R-ATS-01: All persisted mission phase mutations MUST go through AuthorityTruthSource.commitTransition. | R-HITL-01: Transitions requiring HITL must present a valid receipt; missing receipt denies and leaves state unchanged.
+RISKS: Issues LOCAL_BOUNDED fixture receipt unless --hitl-receipt/--require-hitl
+EXPECTED_EVIDENCE: phase PLAN; fsm_path recorded; tasks PLANNED
+ROLLBACK: mission pause; restore checkpoint; or delete disposable fixture
+HITL: LOCAL_BOUNDED_FIXTURE_ALLOWED
+
+📝 Mission Planned Successfully [MIS-1787790335267-427FA8]:
+- Phase: PLAN
+- Generated Tasks: 3
+- FSM: mission.formulate → mission.propose_direction → human.approve_direction → discovery.complete → definition.complete
+- Governance Gates: HITL_DIRECTION_APPROVAL, EVIDENCE_VERIFICATION_GATE
+
+📚 TUTOR (después) — mission.plan
+OBSERVED: phase=PLAN tasks=3 steps=mission.formulate→mission.propose_direction→human.approve_direction→discovery.complete→definition.complete
+EXIT_CODE: 0
+CLASSIFICATION: MEASURED
+INTERPRETATION: Canonical FSM path used; deprecated runtime.plan_mission bridge not invoked
+NEXT: eos mission package MIS-1787790335267-427FA8
+
+Next step: Run 'eos mission package MIS-1787790335267-427FA8 --target cursor' to generate operator handoff.
+📦 Cursor Mission Package Generated [MIS-1787790335267-427FA8]:
+- Target: cursor
+- Manifest SHA-256: 6b8a7df8786f5328604874f7d3f4e2c810bc334388393cdffa3e36f37951be27
+- Operator Prompt: /tmp/eos-clean-clone/.missions/MIS-1787790335267-427FA8/cursor/CURSOR_PROMPT.md
+{
+  "schema_version": "1.0.0",
+  "report_id": "RPT-DF8B0EB7",
+  "mission_id": "MIS-1787790335267-427FA8",
+  "generated_at": "2026-08-27T00:25:35.408Z",
+  "executive_summary": {
+    "goal": "Clean-clone readiness exam",
+    "overall_status": "SUCCESS",
+    "duration_ms": 0,
+    "epistemic_verdict": "NOT_PROVEN"
+  },
+  "metric_provenance": {
+    "token_count": "NOT_RUN",
+    "cost_usd": "NOT_RUN",
+    "latency": "NOT_RUN",
+    "reversibility": "NOT_RUN",
+    "provider_reliability": "NOT_RUN"
+  },
+  "task_execution_summary": [
+    {
+      "task_id": "TASK-1787790335267-427FA8-01",
+      "name": "Technical Architecture & Stack Verification",
+      "status": "PLANNED",
+      "attempts": 1,
+      "duration_ms": 0
+    },
+    {
+      "task_id": "TASK-1787790335267-427FA8-02",
+      "name": "Core Module Implementation / Verification",
+      "status": "PLANNED",
+      "attempts": 1,
+      "duration_ms": 0
+    },
+    {
+      "task_id": "TASK-1787790335267-427FA8-03",
+      "name": "Evidence Audit & Ledger Chain Verification",
+      "status": "PLANNED",
+      "attempts": 1,
+      "duration_ms": 0
+    }
+  ],
+  "evidence_verification_summary": {
+    "total_receipts": 3,
+    "verified_receipts": 0,
+    "hash_chain_integrity": "VALID",
+    "ledger_chain_count": 9
+  },
+  "token_and_cost_summary": {
+    "total_tokens": null,
+    "estimated_cost_usd": null,
+🔒 Cryptographic Verification PASSED [MIS-1787790335267-427FA8]:
+- Ledger Chain: VALID (9 events)
+- Manifest Files: 100% MATCH
+📊 Mission Status [MIS-1787790335267-427FA8]: active (Phase: PLAN)
+SCOPE: (none)
+RATIONALE: R-ATS-01: All persisted mission phase mutations MUST go through AuthorityTruthSource.commitTransition. | R-FDIR-01: When FDIR kill switch is tripped, mission close and real integrations are blocked.
+RISKS: Blocked if FDIR safe mode tripped
+EXPECTED_EVIDENCE: phase COMPLETED
+ROLLBACK: Cannot un-complete; create new mission if needed
+HITL: NOT_REQUIRED_FOR_CONTROL_COMPLETE
+
+🏁 Mission MIS-1787790335267-427FA8 is now CLOSED/COMPLETED.
+
+📚 TUTOR (después) — mission.close
+OBSERVED: mission MIS-1787790335267-427FA8 closed
+EXIT_CODE: 0
+CLASSIFICATION: MEASURED
+INTERPRETATION: Control transition committed through ATS
+NEXT: Inspect ledger/report; do not claim production readiness
+
+--- VERIFY STRICT ---
+[VERIFIED]  .agents/skills/quality-auditor/SKILL.md (frontmatter)
+[VERIFIED]  .agents/skills/sdd/SKILL.md (frontmatter)
+[VERIFIED]  .agents/skills/security-auditor/SKILL.md (frontmatter)
+[VERIFIED]  .agents/skills/seo-auditor/SKILL.md (frontmatter)
+
+----------------------------------------------------
+Checks Passed: 471 | Failures: 0
+----------------------------------------------------
+STATUS: VERIFIED — All checks passed cleanly.
+
+
+--- FOCUSED GOVERNANCE TESTS ---
+  ...
+# Subtest: NEG-02: invalid current state rejects transition
+ok 18 - NEG-02: invalid current state rejects transition
+  ---
+  duration_ms: 2.76323
+  ...
+# Subtest: NEG-03: FDIR tripped blocks closeMission
+ok 19 - NEG-03: FDIR tripped blocks closeMission
+  ---
+  duration_ms: 16.922546
+  ...
+# Subtest: NEG-04: ATS init twice rejected
+ok 20 - NEG-04: ATS init twice rejected
+  ---
+  duration_ms: 1.18356
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 159.537789
+
+--- FULL SUITE TAIL ---
+# ================================================================
+# Subtest: tests/verifier-authorization-aware.test.js
+ok 121 - tests/verifier-authorization-aware.test.js
+  ---
+  duration_ms: 25.857964
+  ...
+1..725
+# tests 725
+# suites 0
+# pass 721
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1650.115917
+EXAM1_COMPLETE
