@@ -1,7 +1,17 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T15:47:56.620Z",
+  "updated_at": "2026-09-01T18:26:52.017Z",
   "learnings": [
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-claude-fable-5-1-out-now-1702",
+      "title": "Claude Fable 5.1 - Out Now!",
+      "source_url": "https://forum.cursor.com/t/claude-fable-5-1-out-now/170246",
+      "published_at": "Tue, 01 Sep 2026 18:24:53 +0000",
+      "summary": "Announcement · Pricing · Docs Claude Fable 5.1 is now available in Cursor! It’s the most capable model we’ve run on CursorBench 3.2, scoring 73.4% at max effort. We found it especially skilled at verifying its own work, allowing it to take on difficult coding tasks from start to finish. Fable 5.1 has the same privacy considerations as other Fable models because of how Anthropic handles data reten…",
+      "apply_in_eos": "Claude/Opus availability is vendor catalog news. Do not treat a forum post as a production-quality certificate.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
       "title": "Start from scratch, without a repo",
@@ -1827,7 +1837,7 @@
       "title": "Available models",
       "source_url": "https://cursor.com/help/models-and-usage/available-models",
       "published_at": null,
-      "summary": "Cursor supports a range of AI models from multiple providers. Which models are available? — Cursor offers its own models (Grok 4.5 and Composer) in the Cursor Models pool alongside other frontier models from OpenAI, Anthropic, and Google. Which model should I use? — Auto selects models that balance intelligence, cost, and reliability. Which models does Cursor Router route across? — Cursor Router routes across these models: GPT-5.5 Claude Opus 5 Grok 4.5 Claude Fable 5 Required: Grok 4.5. Can I see which model Cursor Router used for my request? — By default, the routed model identity is hidden so you judge results on merit. How much does Auto cost? — All Auto modes bill at the list price of the model each request is routed to. How much does Grok 4.5 cost? — Grok 4.5 has two speeds, each wi…",
+      "summary": "Cursor supports a range of AI models from multiple providers. Which models are available? — Cursor offers its own models (Grok 4.5 and Composer) in the Cursor Models pool alongside other frontier models from OpenAI, Anthropic, and Google. Which model should I use? — Auto selects models that balance intelligence, cost, and reliability. Which models does Cursor Router route across? — Cursor Router routes across these models: GPT-5.5 Claude Opus 5 Grok 4.5 Claude Fable 5.1 Required: Grok 4.5. Can I see which model Cursor Router used for my request? — By default, the routed model identity is hidden so you judge results on merit. How much does Auto cost? — All Auto modes bill at the list price of the model each request is routed to. How much does Grok 4.5 cost? — Grok 4.5 has two speeds, each…",
       "apply_in_eos": "Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep environment.json + Builds.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false

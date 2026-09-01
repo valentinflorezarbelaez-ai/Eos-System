@@ -976,6 +976,10 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   for (let i = 1; i < times.length; i += 1) {
     assert.ok(times[i - 1] >= times[i], 'LEARNINGS.json must stay newest-first');
   }
+  const fable51 = store.learnings.find((row) => row.source_url === 'https://forum.cursor.com/t/claude-fable-5-1-out-now/170246');
+  assert.ok(fable51);
+  assert.match(fable51.apply_in_eos, /vendor catalog news/i);
+  assert.equal(/enable/i.test(fable51.apply_in_eos), false);
   const harness = store.learnings.find((row) => row.source_url === 'https://cursor.com/changelog/08-19-26');
   assert.ok(harness);
   assert.match(harness.apply_in_eos, /timer|Slack|PR/i);

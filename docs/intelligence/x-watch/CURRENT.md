@@ -2,8 +2,8 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-09-01T15:47:56.620Z
-Store size: 199
+Updated: 2026-09-01T18:26:52.017Z
+Store size: 200
 
 ## Official product actions
 - **Start from scratch, without a repo** — Start from scratch creates an Origin repo without GitHub. GitHub remains source of truth for this synced repo. Do not Start from scratch or create an Origin repo for this watch. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.
@@ -269,3 +269,4 @@ Store size: 199
 - Over the last three months, we've rolled out agent sandboxing on macOS, Linux, and Windows. — cited by https://ethanbholland.com/2026/02/20/agents-and-copilots-ai-news-week-ending-02-20-2026/ (not fetched from X)
   Sandbox access controls are vendor desktop agent isolation. This Cloud Agent VM already runs isolated. Keep repo skills, rules, and hooks. Do not add a dashboard marketplace as a feed.
   https://x.com/cursor_ai/status/2024544628687687879
+

@@ -25,6 +25,7 @@
     "forum.cursor.com-topic-168189",
     "forum.cursor.com-topic-168190",
     "forum.cursor.com-topic-168670",
+    "forum.cursor.com-topic-170246",
     "https://cursor.com/blog/agent-swarm-model-economics",
     "https://cursor.com/blog/aiuc-1",
     "https://cursor.com/blog/builds",
@@ -200,7 +201,7 @@
     "https://cursor.com/help/troubleshooting/reporting-bugs",
     "https://cursor.com/help/troubleshooting/tab-issues"
   ],
-  "last_ingest_at": "2026-09-01T15:47:56.605Z",
+  "last_ingest_at": "2026-09-01T18:26:52.005Z",
   "last_item_count": 198,
-  "last_new_item_count": 43
+  "last_new_item_count": 44
 }
