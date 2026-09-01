@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T15:06:03.713Z",
+  "updated_at": "2026-09-01T15:10:15.389Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1889,6 +1889,16 @@
       "published_at": null,
       "summary": "Fixes for common Agent issues with file access, rules, terminal commands, and more. How can I improve Agent accuracy? — Be specific in your prompts: include expected behavior and constraints Use Plan mode first for tasks that touch many files Start a new chat when you finish a feature or switch tasks Add rules in for patterns you want Age What if Agent doesn't pick up my files? — Check your .cursorignore file in the project root. How do I undo Agent changes? — Hover over a previous message and click Restore Checkpoint in the bottom right to roll back all changes Agent made after that point. What if Agent sets CI=1 in terminal commands? — Cursor sets as an environment variable when running terminal commands through Agent. What if I see \"Agent Execution Timed Out\"? — This error means Cursor…",
       "apply_in_eos": "Help Agent troubleshooting is vendor desktop Agent diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-troubleshooting-install-issues",
+      "title": "Installation and startup",
+      "source_url": "https://cursor.com/help/troubleshooting/install-issues",
+      "published_at": null,
+      "summary": "Common problems when installing, launching, or updating Cursor. What if I see a blank screen on startup? — Quit and restart Cursor On Mac, drag Cursor to Trash and reinstall from cursor.com/download On Windows, run Cursor as administrator Open the command palette and run Clear Editor History to reset cached state How do I update Cursor? — From inside Cursor: press Cmd/Ctrl+Shift+P , type \"Cursor: Attempt Update\" , and restart when prompted. What are update channels? — Stable (default): recommended for most users Early Access : pre-release builds with the latest features, may be less stable Switch channels in Cursor Settings *. What does the macOS \"Cursor is damaged\" warning mean? — This is a macOS issue, not a corrupted download. How do I free up disk space used by Cursor? — Cursor stores…",
+      "apply_in_eos": "Help install troubleshooting is vendor desktop install/startup diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop install troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
