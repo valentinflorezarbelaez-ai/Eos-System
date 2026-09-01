@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T13:17:20.473Z",
+  "updated_at": "2026-09-01T13:21:26.371Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1659,6 +1659,16 @@
       "published_at": null,
       "summary": "MCP (Model Context Protocol) connects Cursor to external tools and data sources. What is an MCP server? — An MCP server exposes tools and data sources to Cursor through the Model Context Protocol. Does Cursor support MCP Apps? — Yes. How do I install an MCP server (one-click)? — Open Customize in the sidebar 2. How do I install an MCP server manually? — Create a file called mcp.json in one of these locations: Project-specific (shared with your team): .cursor/mcp.json in your project folder. How do I use MCP tools in chat? — Agent picks up MCP tools automatically and uses them when relevant. Auto-review How do I troubleshoot MCP servers? — View logs : Open the Output panel (Cmd + Shift + U on Mac, Ctrl + Shift + U on Windows/Linux) and select MCP Logs Toggle servers : Open Customize > MCPs…",
       "apply_in_eos": "Help MCP is vendor Agent integrations. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team MCP for daily ingest. Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config. Team dashboard MCP is not EOS governance. Do not put API keys in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-customization-plugins",
+      "title": "Plugins",
+      "source_url": "https://cursor.com/help/customization/plugins",
+      "published_at": null,
+      "summary": "Plugins give your agent reusable tools and capabilities. What are plugins? — A plugin packages one or more components: Skills and MCP servers , supported by Agent Plugins and Cursor Plugins Rules , commands , and hooks , available in Cursor Plugins Plugins work across Cursor desktop, web, and CLI. How do I install a plugin? — Browse the Cursor Marketplace or search by keyword in the marketplace panel inside Cursor. Are plugins reviewed for security? — Yes.",
+      "apply_in_eos": "Help Plugins is vendor Agent reusable tools. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team marketplace plugins for daily ingest. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins are not EOS governance. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
