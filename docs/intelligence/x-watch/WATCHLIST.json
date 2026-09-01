@@ -563,6 +563,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_BUGBOT",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-RULES",
+      "url": "https://cursor.com/help/customization/rules",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_RULES",
+      "fetchable": true
     }
   ]
 }

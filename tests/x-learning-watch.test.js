@@ -203,6 +203,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/rules' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -320,6 +324,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/max-mode'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/keyboard-shortcuts'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/themes'),
     false
   );
   assert.equal(
@@ -1489,6 +1501,26 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpBugbot.apply_in_eos), false);
   assert.equal(helpBugbot.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpBugbot.apply_in_eos.includes('Vercel'), false);
+  const helpRules = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/customization/rules');
+  assert.ok(helpRules);
+  assert.equal(helpRules.title, 'Rules');
+  assert.match(helpRules.summary, /What is a rule/);
+  assert.match(helpRules.summary, /How do I create a project rule/);
+  assert.match(helpRules.summary, /How do I set up user rules/);
+  assert.equal(helpRules.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpRules.summary), false);
+  assert.match(helpRules.apply_in_eos, /vendor Agent instructions/i);
+  assert.match(helpRules.apply_in_eos, /\/goal/);
+  assert.match(helpRules.apply_in_eos, /do not rotate this Cloud Agent into dashboard team rules/i);
+  assert.match(helpRules.apply_in_eos, /\.mdc/);
+  assert.match(helpRules.apply_in_eos, /AGENTS\.md/);
+  assert.match(helpRules.apply_in_eos, /\/create-rule/);
+  assert.match(helpRules.apply_in_eos, /Team dashboard rules are not EOS governance/i);
+  assert.match(helpRules.apply_in_eos, /environment\.json/);
+  assert.match(helpRules.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpRules.apply_in_eos), false);
+  assert.equal(helpRules.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpRules.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1727,6 +1759,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Cursor for iOS', link: 'https://cursor.com/help/ai-features/mobile-app' },
     { title: 'Shared transcripts', link: 'https://cursor.com/help/ai-features/shared-transcripts' },
     { title: 'Bugbot', link: 'https://cursor.com/help/ai-features/bugbot' },
+    { title: 'Rules', link: 'https://cursor.com/help/customization/rules' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2753,6 +2786,29 @@ test('applyHint for Help Bugbot keeps this watch on the standing /goal', () => {
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Rules keeps .mdc and team dashboard off EOS governance', () => {
+  const hint = applyHint({
+    title: 'Rules',
+    link: 'https://cursor.com/help/customization/rules',
+    summary: 'Optional rules are enabled by default. Custom Mode and Vercel.'
+  });
+  assert.match(hint, /vendor Agent instructions/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into dashboard team rules/i);
+  assert.match(hint, /\.mdc/);
+  assert.match(hint, /AGENTS\.md/);
+  assert.match(hint, /\/create-rule/);
+  assert.match(hint, /Team dashboard rules are not EOS governance/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3568,6 +3624,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpBugbot[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpBugbot[0]).includes('Vercel'), false);
 
+  const helpRules = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-rules.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/customization/rules'
+  );
+  assert.equal(helpRules[0].id, 'https://cursor.com/help/customization/rules');
+  assert.equal(helpRules[0].title, 'Rules');
+  assert.match(helpRules[0].summary, /Give Agent persistent instructions for coding style, patterns, and workflows/);
+  assert.match(applyHint(helpRules[0]), /vendor Agent instructions/i);
+  assert.match(applyHint(helpRules[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpRules[0])), false);
+  assert.equal(applyHint(helpRules[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpRules[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4021,6 +4091,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/bugbot'),
     'https://cursor.com/help/ai-features/bugbot.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/customization/rules'),
+    'https://cursor.com/help/customization/rules.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -4434,6 +4508,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpBugbotMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpBugbotMd.summary), false);
   assert.equal(helpBugbotMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpRulesMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-rules.md'), 'utf8')
+  );
+  assert.equal(helpRulesMd.title, 'Rules');
+  assert.match(helpRulesMd.summary, /What is a rule/);
+  assert.match(helpRulesMd.summary, /How do I create a project rule/);
+  assert.match(helpRulesMd.summary, /How do I set up user rules/);
+  assert.equal(helpRulesMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpRulesMd.summary), false);
+  assert.equal(helpRulesMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -5592,6 +5677,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.'
     },
     {
+      title: 'Rules',
+      source_url: 'https://cursor.com/help/customization/rules',
+      published_at: null,
+      apply_in_eos: 'Help Rules is vendor Agent instructions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team rules for daily ingest. Keep .mdc, AGENTS.md, and /create-rule. Team dashboard rules are not EOS governance. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -5617,6 +5708,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/acp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/headless'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -5639,6 +5731,12 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
       source_url: 'https://cursor.com/docs/rules',
       published_at: null,
       apply_in_eos: 'Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.'
+    },
+    {
+      title: 'Rules',
+      source_url: 'https://cursor.com/help/customization/rules',
+      published_at: null,
+      apply_in_eos: 'Help Rules is vendor Agent instructions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team rules for daily ingest. Keep .mdc, AGENTS.md, and /create-rule. Team dashboard rules are not EOS governance. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
       title: 'Model Context Protocol (MCP)',
@@ -5686,6 +5784,7 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/prompting'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/rules'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/mcp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/plugins'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/customize-cursor'), false);
@@ -6143,6 +6242,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/mobile-app'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/shared-transcripts'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/bugbot'), false);
+  assert.equal(current.includes('cursor.com/help/customization/rules'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
