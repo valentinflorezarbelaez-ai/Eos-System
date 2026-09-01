@@ -1392,7 +1392,7 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(helpCloudAgents.title, 'Cloud Agents');
   assert.match(helpCloudAgents.summary, /What can Cloud Agents do/);
   assert.match(helpCloudAgents.summary, /How does "Move to Cloud" handle my file state/);
-  assert.match(helpCloudAgents.summary, /How do I start a Cloud Agent task/);
+  assert.match(helpCloudAgents.summary, /How do I set up Cloud Agents/);
   assert.equal(helpCloudAgents.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpCloudAgents.summary), false);
   assert.match(helpCloudAgents.apply_in_eos, /vendor isolated-VM Agent/i);

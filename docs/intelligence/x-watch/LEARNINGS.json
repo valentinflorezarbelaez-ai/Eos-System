@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:27:43.770Z",
+  "updated_at": "2026-09-01T12:33:56.976Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1549,6 +1549,16 @@
       "published_at": null,
       "summary": "Cursor Automations run Cloud Agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. What can Automations do? — Automations let you run Cloud Agents without manual input. How do I create an automation? — Create a new automation in the Agents Window, at cursor.com/automations/new, or from a template in the Cursor Marketplace. Can I create automations without connecting a repository? — Yes. Which triggers are available? — An automation can have more than one trigger. Which tools can automations use? — Comment on pull request : Posts review comments, inline code comments, or approvals on a target PR Request reviewers : Assigns reviewers on a target PR Send to Slack : Sends messages to a Slack channel Read Slack channel H…",
       "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-cloud-agents",
+      "title": "Cloud Agents",
+      "source_url": "https://cursor.com/help/ai-features/cloud-agents",
+      "published_at": null,
+      "summary": "Cloud Agents run in isolated cloud environments instead of on your local machine. What can Cloud Agents do? — Cloud Agents handle coding tasks without you needing to be in the loop. How does \"Move to Cloud\" handle my file state? — \"Move to Cloud\" does not snapshot your local uncommitted changes. Can Cloud Agents test my app in a browser? — Yes. How do Cloud Agents show their work? — Agents attach screenshots, videos, and log references to the PR so you can validate changes without checking out the branch. Can Cloud Agents use MCP tools? — Yes. Do Cloud Agents run hooks? — Yes. .cursor/hooks.json Can Cloud Agents fix CI failures? — Yes. What do I need to use Cloud Agents? — Cloud Agents are available on all paid Cursor plans. How do I set up Cloud Agents? — Create a new environment in your…",
+      "apply_in_eos": "Help Cloud Agents is vendor isolated-VM Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Move to Cloud for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
