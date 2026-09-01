@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T15:33:56.354Z",
+  "updated_at": "2026-09-01T15:38:42.097Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1779,6 +1779,16 @@
       "published_at": null,
       "summary": "Get Cursor running on your machine in under five minutes. What do I need before installing? — A Cursor account. How do I install Cursor? — Go to cursor.com/download 2.",
       "apply_in_eos": "Help install is vendor desktop first-run. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop install or first-run for daily ingest. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-integrations-cli",
+      "title": "CLI",
+      "source_url": "https://cursor.com/help/integrations/cli",
+      "published_at": null,
+      "summary": "Ship code with AI agents right from your terminal. How do I install the CLI? — On Windows PowerShell: What can the CLI do? — The CLI brings Cursor's AI capabilities to your terminal. Can I use the CLI for automation? — Yes. Does the CLI work with other editors? — Yes. How do I authenticate the CLI? — Run or set the environment variable. What if the CLI reports \"invalid API key\" on a network error? — If DNS resolution fails or the CLI can't reach Cursor's servers, the error message may say \"invalid API key\" instead of a network error. How do I update the CLI? — Run: To switch release channels (e.g., from to ), run:",
+      "apply_in_eos": "Help CLI is vendor local terminal agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into Cursor CLI for daily ingest. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
