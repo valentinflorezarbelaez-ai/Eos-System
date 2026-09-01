@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:12:14.471Z",
+  "updated_at": "2026-09-01T12:17:26.618Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1529,6 +1529,16 @@
       "published_at": null,
       "summary": "Agent is Cursor's AI assistant. What can Agent mode do? — Agent can build features from scratch, refactor existing code, fix bugs, write tests, and run shell commands. How do I start using Agent? — Open the Agent panel: - Mac : Press Cmd + I - Windows/Linux : Press Ctrl + I 2. How do I interrupt Agent? — Click the Stop button to stop Agent mid-task. How do I review Agent changes? — Agent's edits are applied as it works. How do I undo Agent changes? — Hover over a previous message and click Restore Checkpoint in the bottom right to roll back all changes Agent made after that point. Can Agent delegate tasks to subagents? — Yes. Can Agent generate images? — Yes. Can I queue follow-up messages while Agent is working? — Yes. Can Agent search my past conversations for context? — Yes. Which mode…",
       "apply_in_eos": "Help Agent mode is vendor desktop Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-ask-mode",
+      "title": "Ask mode",
+      "source_url": "https://cursor.com/help/ai-features/ask-mode",
+      "published_at": null,
+      "summary": "Ask mode is a read-only mode for understanding your codebase. How do I use Ask mode? — Open the Agent panel (Cmd + I on Mac, Ctrl + I on Windows/Linux) 2. When should I use Ask mode? — Use Ask mode when you want to understand code without changing it: \"How does the authentication flow work?\" \"What does this function do?\" \"Where is the database connection configured?\" \"Explain the relationship between t",
+      "apply_in_eos": "Help Ask mode is vendor desktop read-only Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Ask mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
