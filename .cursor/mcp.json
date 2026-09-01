@@ -15,15 +15,15 @@
       "args": ["mcp", "--tools=agent"],
       "description": "Persistent memory and causal learning graph across sessions and context compactions."
     },
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "--package=@upstash/context7-mcp@2.2.5", "--", "context7-mcp"],
-      "description": "Deep AST codebase indexing, semantic symbol search, and architectural dependency mapping."
-    },
     "playwright": {
       "command": "npx",
       "args": ["-y", "@playwright/mcp@latest"],
       "description": "Automated end-to-end browser QA, DOM inspection, visual regressions, and accessibility audits."
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "--package=@upstash/context7-mcp@2.2.5", "--", "context7-mcp"],
+      "description": "Deep AST codebase indexing, semantic symbol search, and architectural dependency mapping."
     },
     "figma": {
       "command": "npx",
@@ -32,15 +32,6 @@
         "FIGMA_API_KEY": "${FIGMA_API_KEY}"
       },
       "description": "Design system tokens extraction, component inspect, and pixel-perfect design-to-code alignment."
-    },
-    "slack": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-slack"],
-      "env": {
-        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
-        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
-      },
-      "description": "Operational notifications, deployment broadcasts, incident escalation, and human-in-the-loop alerts."
     },
     "jira": {
       "command": "npx",
@@ -59,6 +50,15 @@
         "TRELLO_TOKEN": "${TRELLO_TOKEN}"
       },
       "description": "Kanban board task management, card movements, and workflow stage tracking."
+    },
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+      },
+      "description": "Operational notifications, deployment broadcasts, incident escalation, and human-in-the-loop alerts."
     },
     "stitch": {
       "command": "npx",

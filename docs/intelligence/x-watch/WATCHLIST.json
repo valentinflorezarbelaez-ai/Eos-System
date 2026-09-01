@@ -1,0 +1,498 @@
+{
+  "$schema": "./schema.json",
+  "watch_id": "X-WATCH-001",
+  "requested_platform": "X",
+  "requested_url": "https://x.com/cursor_ai",
+  "platform_connection": {
+    "status": "BLOCKED",
+    "reason": "NO_X_MCP_AND_NO_OFFICIAL_PUBLIC_TIMELINE_API",
+    "native_cloud_agent_subscriptions": ["github_pr", "github_ci", "slack", "timer"]
+  },
+  "accounts": [
+    {
+      "handle": "cursor_ai",
+      "url": "https://x.com/cursor_ai",
+      "priority": "PRIMARY",
+      "timeline_access": "BLOCKED",
+      "notes": "Requested seed account. Timeline is not fetchable from this agent."
+    }
+  ],
+  "feeds": [
+    {
+      "feed_id": "FEED-CURSOR-CHANGELOG",
+      "url": "https://cursor.com/changelog/rss.xml",
+      "kind": "rss",
+      "role": "PRIMARY_PRODUCT_UPDATES",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-FORUM-ANNOUNCEMENTS",
+      "url": "https://forum.cursor.com/c/announcements/11.rss",
+      "kind": "rss",
+      "role": "OFFICIAL_FORUM_ANNOUNCEMENTS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-BLOG-INDEX",
+      "url": "https://cursor.com/blog",
+      "kind": "html",
+      "role": "OFFICIAL_BLOG_INDEX",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-GROK-46",
+      "url": "https://cursor.com/help/models-and-usage/grok-4-6",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_GROK_46",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-MODELS-PRICING",
+      "url": "https://cursor.com/docs/models-and-pricing",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_MODELS_PRICING",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-AUTOMATIONS",
+      "url": "https://cursor.com/help/ai-features/automations",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_AUTOMATIONS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-AUTOMATIONS-DOCS",
+      "url": "https://cursor.com/docs/cloud-agent/automations",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_AUTOMATIONS_GUIDE",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-BUILDS",
+      "url": "https://cursor.com/docs/cloud-agent/builds",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_BUILDS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-SETUP",
+      "url": "https://cursor.com/docs/cloud-agent/setup",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_SETUP",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-BEST-PRACTICES",
+      "url": "https://cursor.com/docs/cloud-agent/best-practices",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_BEST_PRACTICES",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN",
+      "url": "https://cursor.com/docs/origin",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-CLI",
+      "url": "https://cursor.com/docs/origin/cli",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_CLI",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-INTEGRATIONS",
+      "url": "https://cursor.com/docs/origin/integrations",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_INTEGRATIONS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-MIRROR-GITHUB",
+      "url": "https://cursor.com/docs/origin/mirror-github",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_MIRROR_GITHUB",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-CREATE-REPOSITORY",
+      "url": "https://cursor.com/docs/origin/create-repository",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_CREATE_REPOSITORY",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-PULL-REQUESTS",
+      "url": "https://cursor.com/docs/origin/pull-requests",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_PULL_REQUESTS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-BROWSE",
+      "url": "https://cursor.com/docs/origin/browse",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_BROWSE",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-SETTINGS",
+      "url": "https://cursor.com/docs/origin/settings",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_SETTINGS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-ORIGIN-CODEBASE-SETTINGS",
+      "url": "https://cursor.com/docs/origin/codebase-settings",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_ORIGIN_CODEBASE_SETTINGS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLI-OVERVIEW",
+      "url": "https://cursor.com/docs/cli/overview",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLI_OVERVIEW",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLI-USING",
+      "url": "https://cursor.com/docs/cli/using",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLI_USING",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLI-SHELL-MODE",
+      "url": "https://cursor.com/docs/cli/shell-mode",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLI_SHELL_MODE",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLI-ACP",
+      "url": "https://cursor.com/docs/cli/acp",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLI_ACP",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLI-HEADLESS",
+      "url": "https://cursor.com/docs/cli/headless",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLI_HEADLESS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-SDK-TYPESCRIPT",
+      "url": "https://cursor.com/docs/sdk/typescript",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_SDK_TYPESCRIPT",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-SDK-PYTHON",
+      "url": "https://cursor.com/docs/sdk/python",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_SDK_PYTHON",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-SDK-BRIDGE",
+      "url": "https://cursor.com/docs/sdk/bridge",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_SDK_BRIDGE",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CURSOR-ROUTER",
+      "url": "https://cursor.com/docs/cursor-router",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CURSOR_ROUTER",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-USAGE-LIMITS",
+      "url": "https://cursor.com/help/models-and-usage/usage-limits",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_USAGE_LIMITS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT",
+      "url": "https://cursor.com/docs/cloud-agent",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-CAPABILITIES",
+      "url": "https://cursor.com/docs/cloud-agent/capabilities",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_CAPABILITIES",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-SUBAGENTS",
+      "url": "https://cursor.com/docs/subagents",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_SUBAGENTS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-OVERVIEW",
+      "url": "https://cursor.com/docs/agent/overview",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_OVERVIEW",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-SKILLS",
+      "url": "https://cursor.com/docs/skills",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_SKILLS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-PROMPTING",
+      "url": "https://cursor.com/docs/agent/prompting",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_PROMPTING",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-RULES",
+      "url": "https://cursor.com/docs/rules",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_RULES",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-IDENTITY",
+      "url": "https://cursor.com/docs/cloud-agent/identity",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_IDENTITY",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-METADATA",
+      "url": "https://cursor.com/docs/cloud-agent/metadata",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_METADATA",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-HOOKS",
+      "url": "https://cursor.com/docs/hooks",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_HOOKS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-SECURITY-NETWORK",
+      "url": "https://cursor.com/docs/cloud-agent/security-network",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_SECURITY_NETWORK",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-SECURITY",
+      "url": "https://cursor.com/docs/cloud-agent/security",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_SECURITY",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-SETTINGS",
+      "url": "https://cursor.com/docs/cloud-agent/settings",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_SETTINGS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-PRIVATE-CONNECTIVITY",
+      "url": "https://cursor.com/docs/cloud-agent/private-connectivity",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_PRIVATE_CONNECTIVITY",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-BUGBOT",
+      "url": "https://cursor.com/docs/bugbot",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_BUGBOT",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-SECURITY-AGENTS",
+      "url": "https://cursor.com/docs/security-agents",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_SECURITY_AGENTS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-APPROVAL-AGENTS",
+      "url": "https://cursor.com/docs/approval-agents",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_APPROVAL_AGENTS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-MOBILE",
+      "url": "https://cursor.com/docs/cloud-agent/mobile",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_MOBILE",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CLOUD-AGENT-API-ENDPOINTS",
+      "url": "https://cursor.com/docs/cloud-agent/api/endpoints",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CLOUD_AGENT_API_ENDPOINTS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-AGENTS-WINDOW",
+      "url": "https://cursor.com/docs/agent/agents-window",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_AGENTS_WINDOW",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-AGENT-REVIEW",
+      "url": "https://cursor.com/docs/agent/agent-review",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_AGENT_REVIEW",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-PLAN-MODE",
+      "url": "https://cursor.com/docs/agent/plan-mode",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_PLAN_MODE",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-DEBUG-MODE",
+      "url": "https://cursor.com/docs/agent/debug-mode",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_DEBUG_MODE",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-DESIGN-MODE",
+      "url": "https://cursor.com/docs/agent/design-mode",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_DESIGN_MODE",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-TOOLS-BROWSER",
+      "url": "https://cursor.com/docs/agent/tools/browser",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_TOOLS_BROWSER",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-TOOLS-TERMINAL",
+      "url": "https://cursor.com/docs/agent/tools/terminal",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_TOOLS_TERMINAL",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-TOOLS-SEARCH",
+      "url": "https://cursor.com/docs/agent/tools/search",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_TOOLS_SEARCH",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-TOOLS-CANVAS",
+      "url": "https://cursor.com/docs/agent/tools/canvas",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_TOOLS_CANVAS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CONFIGURATION-WORKTREES",
+      "url": "https://cursor.com/docs/configuration/worktrees",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CONFIGURATION_WORKTREES",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-AGENT-SECURITY",
+      "url": "https://cursor.com/docs/agent/security",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_AGENT_SECURITY",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-MCP",
+      "url": "https://cursor.com/docs/mcp",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_MCP",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-PLUGINS",
+      "url": "https://cursor.com/docs/plugins",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_PLUGINS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-CUSTOMIZE-CURSOR",
+      "url": "https://cursor.com/docs/customize-cursor",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_CUSTOMIZE_CURSOR",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-TEAM-PRICING",
+      "url": "https://cursor.com/docs/account/teams/pricing",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_TEAM_PRICING",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-DOCS-TEAM-MEMBERS",
+      "url": "https://cursor.com/docs/account/teams/members",
+      "kind": "html-page",
+      "role": "OFFICIAL_DOCS_TEAM_MEMBERS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-PRICING",
+      "url": "https://cursor.com/help/account-and-billing/pricing",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_PRICING_AND_PLANS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-AVAILABLE-MODELS",
+      "url": "https://cursor.com/help/models-and-usage/available-models",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_AVAILABLE_MODELS",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-CURSOR-ROUTER",
+      "url": "https://cursor.com/help/models-and-usage/cursor-router",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_CURSOR_ROUTER",
+      "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-GROK-4-5",
+      "url": "https://cursor.com/help/models-and-usage/grok-4-5",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_GROK_4_5",
+      "fetchable": true
+    }
+  ]
+}

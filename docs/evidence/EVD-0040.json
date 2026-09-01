@@ -1,0 +1,48 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0040",
+  "claim": "Final readiness exam on the canonical Mission OS path: clean-clone reproducibility PASS; seven bypass DENY vectors PASS on executable runtime/CLI/MCP; real CLI chain create→plan→package→submit→verify→close PASS; doctor PASS; verify-eos --strict 471/471 PASS. Full workspace test run on this Linux host is 734/738 PASS with 4 pre-existing host-specific failures unrelated to this exam.",
+  "status": "VERIFIED",
+  "scope": "EOS Mission OS local governed path (CLI, MissionRuntime, ATS, HITL, Cursor return ingestion, MCP guards). Not production, not long-run, not absolute bypass impossibility.",
+  "source": "SPEC-FINAL-READINESS-EXAM",
+  "timestamp": "2026-08-27T00:35:00Z",
+  "actor": "EOS Cloud Agent (final readiness exam)",
+  "action": "Wired declared barriers (Fundacion protected surface, durable nonce store, close-time verification) and executed the three remaining exams on committed HEAD cursor/final-readiness-exam-01a0.",
+  "command": "node --test tests/final-readiness-bypass.test.js tests/final-readiness-cli-e2e.test.js; node scripts/exam-clean-clone.js; node bin/eos.js doctor; node scripts/verify-eos.js --strict; node --test tests/*.test.js tests/**/*.test.js",
+  "expected": "Clean clone without npm install; bypass attempts DENY; CLI mission chain succeeds; doctor PASS; no Fundacion writes.",
+  "actual": "Clean clone PASS (no node_modules, doctor PASS, 32/32 canonical tests in clone). Bypass 8/8 DENY including durable replay. Real CLI mission MIS-1787790913694-18025D ACCEPT then replay REJECT, verify PASS, close COMPLETED. Strict verifier 471/471. Full suite 734 pass / 4 fail (pre-existing: CURRENT_MISSION id, Trello MCP catalog, Windows Fundacion path).",
+  "result": "PASS_WITHIN_VERIFIED_SCOPE",
+  "artifacts": [
+    "tests/final-readiness-bypass.test.js",
+    "tests/final-readiness-cli-e2e.test.js",
+    "scripts/exam-clean-clone.js",
+    "docs/evidence/EVD-FINAL-READINESS-CLEAN-CLONE.json",
+    "docs/specs/eos_core/SPEC-FINAL-READINESS-EXAM.md"
+  ],
+  "logs": [
+    "CLEAN_CLONE verdict PASS head 8bdbee041d09989907d09a8c80208a0bda82d0be",
+    "BYPASS+CLI+regression 43/43 PASS",
+    "doctor VERDICT PASS HOMEDIR_LEAK NO",
+    "verify-eos --strict Checks Passed 471 Failures 0",
+    "full suite tests 738 pass 734 fail 4 (pre-existing host-specific)",
+    "real mission MIS-1787790913694-18025D COMPLETED; replay REPLAY_ATTEMPT_DETECTED"
+  ],
+  "environment": {
+    "os": "Linux 6.12.94+",
+    "node": "v22.14.0"
+  },
+  "confidence": "HIGH",
+  "risks": [
+    "Default planMission still auto-issues LOCAL_BOUNDED HITL receipts unless --require-hitl",
+    "Absolute bypass impossibility is not claimed",
+    "Long-run production behavior is NOT VERIFIED"
+  ],
+  "limitations": [
+    "Exam ran on Linux cloud host; Windows-path Fundacion discovery tests fail here independently of this change",
+    "Full suite is 738 tests in this checkout, not the 896 claimed on the operator Windows tree",
+    "Real Cursor IDE GUI session was not executed; CLI/MCP executable path was"
+  ],
+  "related_spec": "docs/specs/eos_core/SPEC-FINAL-READINESS-EXAM.md",
+  "related_project": "PRJ-EOS-MISSION-OS",
+  "related_change": "cursor/final-readiness-exam-01a0"
+}

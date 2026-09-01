@@ -38,6 +38,10 @@ export class MissionCLI {
       return this.handleVerifyCommand(argv.slice(1));
     }
 
+    if (command === 'doctor' || command === 'd') {
+      return this.handleDoctorCommand();
+    }
+
     return {
       success: false,
       output: `Unknown command: '${command}'. Run 'eos --help' for usage.`
@@ -46,7 +50,7 @@ export class MissionCLI {
 
   handleMissionCommand(args = []) {
     if (args.length === 0) {
-      return { success: false, output: "Missing subcommand. Usage: 'eos mission <create|inspect|plan|package|status|report|verify|pause|resume|close>'" };
+      return { success: false, output: "Missing subcommand. Usage: 'eos mission <create|inspect|plan|package|status|report|verify|submit|pause|resume|close>'" };
     }
 
     const sub = args[0];
@@ -330,6 +334,54 @@ export class MissionCLI {
     };
   }
 
+  handleDoctorCommand() {
+    const checks = [];
+    const fail = (id, detail) => {
+      checks.push({ id, ok: false, detail });
+    };
+    const pass = (id, detail) => {
+      checks.push({ id, ok: true, detail });
+    };
+
+    try {
+      const help = this.getHelp();
+      pass('CLI_HELP', 'Mission CLI help renders');
+      const home = process.env.HOME || process.env.USERPROFILE || '';
+      if (home && help.includes(home)) {
+        fail('HOMEDIR_LEAK', `Help text contains homedir ${home}`);
+      } else {
+        pass('HOMEDIR_LEAK', 'NO');
+      }
+    } catch (e) {
+      fail('CLI_HELP', e.message);
+    }
+
+    try {
+      this.runtime.schemas.loadSchema('direction.local.schema.json');
+      this.runtime.schemas.loadSchema('mission-package.local.schema.json');
+      this.runtime.schemas.loadSchema('hitl-receipt.local.schema.json');
+      pass('LOCAL_SCHEMAS', 'direction, mission-package, hitl-receipt load');
+    } catch (e) {
+      fail('LOCAL_SCHEMAS', e.message);
+    }
+
+    try {
+      const cited = this.runtime.rules.cite(['R-ATS-01', 'R-HITL-01', 'R-BOUNDARY-01']);
+      if (cited.length < 3) fail('RULES_INDEX', `expected 3 citations, got ${cited.length}`);
+      else pass('RULES_INDEX', cited.map((c) => c.split(':')[0]).join(', '));
+    } catch (e) {
+      fail('RULES_INDEX', e.message);
+    }
+
+    const allOk = checks.every((c) => c.ok);
+    const lines = checks.map((c) => `${c.ok ? 'PASS' : 'FAIL'}  ${c.id}: ${c.detail}`);
+    return {
+      success: allOk,
+      output: `EOS doctor\n${lines.join('\n')}\nVERDICT: ${allOk ? 'PASS' : 'FAIL'}\nHOMEDIR_LEAK: ${checks.find((c) => c.id === 'HOMEDIR_LEAK')?.ok ? 'NO' : 'YES'}`,
+      data: { checks, verdict: allOk ? 'PASS' : 'FAIL' }
+    };
+  }
+
   getHelp() {
     return `
 ================================================================================
@@ -358,8 +410,14 @@ COMMANDS:
   eos mission report <mission-id> [--format json|markdown]
       Compiles and renders the Executive Mission Report with metric provenance.
 
+  eos mission submit <mission-id> --file <return-pkg.json>
+      Ingests and reconciles a Cursor Return Package against task contracts.
+
   eos mission verify <mission-id>
       Verifies cryptographic SHA-256 hash chaining and integrity manifest.
+
+  eos mission submit <mission-id> --file <return-pkg.json>
+      Ingests a Cursor Return Package (anti-replay, protected surfaces, secrets, tools).
 
   eos mission pause <mission-id>
       Transitions mission to PAUSED and logs state snapshot in ledger.
@@ -368,7 +426,10 @@ COMMANDS:
       Transitions paused mission back to ACTIVE.
 
   eos mission close <mission-id>
-      Concludes mission and seals final ledger record.
+      Concludes mission only if ATS phase matches package and verifyMission is valid.
+
+  eos doctor
+      Operator health check: CLI help, schema load, rules index, homedir leak.
 
 SAFETY INVARIANTS:
   - Default Authority: LEVEL_0 / READ_ONLY

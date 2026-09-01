@@ -1,0 +1,4 @@
+{
+  "name": "EOS Control Plane",
+  "install": "node --version && npm --version && node --check bin/eos.js && node --check src/mcp-server.js && node --check scripts/verify-eos.js"
+}

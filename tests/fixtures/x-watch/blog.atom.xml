@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Cursor Blog | RSS Feed</title>
+  <entry>
+    <title type="html"><![CDATA[Builds]]></title>
+    <id>https://cursor.com/blog/builds</id>
+    <link href="https://cursor.com/blog/builds"/>
+    <updated>2026-08-13T00:00:00.000Z</updated>
+    <summary type="html"><![CDATA[Ready-to-use environment copies for Cloud Agents.]]></summary>
+  </entry>
+</feed>

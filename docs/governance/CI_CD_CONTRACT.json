@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EOSGitHubActionsCICDContract",
+  "version": "1.0.0",
+  "provider": "github-actions",
+  "dependency_policy": "L0_NODE_BUILTINS_ONLY",
+  "production_deploy": "FORBIDDEN",
+  "fundacion_mutation": "FORBIDDEN",
+  "node_version": "22",
+  "runner": "ubuntu-latest",
+  "permissions": {
+    "contents": "read"
+  },
+  "forbidden_workflow_patterns": [
+    "npm install",
+    "npm ci",
+    "npx ",
+    "pull_request_target",
+    "environment: production",
+    "npm publish",
+    "docker push",
+    "peaceiris/actions-gh-pages",
+    "actions/deploy-pages",
+    "aws-actions/",
+    "azure/",
+    "google-github-actions/",
+    "heroku",
+    "appleboy/ssh-action",
+    "git push --force"
+  ],
+  "pinned_actions": {
+    "actions/checkout": {
+      "ref": "v4",
+      "sha": "11d5960a326750d5838078e36cf38b85af677262"
+    },
+    "actions/setup-node": {
+      "ref": "v4",
+      "sha": "49933ea5288caeca8642d1e84afbd3f7d6820020"
+    },
+    "actions/upload-artifact": {
+      "ref": "v4",
+      "sha": "ea165f8d65b6e75b540449e92b4886f43607fa02"
+    }
+  },
+  "workflows": {
+    "ci": {
+      "name": "EOS CI",
+      "path": ".github/workflows/ci.yml",
+      "jobs": ["verify", "test", "syntax", "governance-gates"],
+      "on": ["push", "pull_request", "workflow_dispatch"]
+    },
+    "cd_release_gate": {
+      "name": "EOS CD Release Gate",
+      "path": ".github/workflows/cd-release-gate.yml",
+      "jobs": ["release-gate"],
+      "on": ["workflow_dispatch", "push"],
+      "production_deploy": false,
+      "requires_env": {
+        "EOS_PRODUCTION_DEPLOY": "false",
+        "EOS_CD_MODE": "RELEASE_GATE_ONLY"
+      }
+    }
+  }
+}
