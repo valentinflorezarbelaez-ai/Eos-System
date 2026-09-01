@@ -163,6 +163,7 @@
     "https://cursor.com/help/ai-features/plan-mode",
     "https://cursor.com/help/ai-features/shared-transcripts",
     "https://cursor.com/help/ai-features/tab",
+    "https://cursor.com/help/customization/mcp",
     "https://cursor.com/help/customization/rules",
     "https://cursor.com/help/customization/skills",
     "https://cursor.com/help/models-and-usage/available-models",
@@ -171,7 +172,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-09-01T13:03:19.767Z",
-  "last_item_count": 169,
-  "last_new_item_count": 14
+  "last_ingest_at": "2026-09-01T13:07:54.842Z",
+  "last_item_count": 170,
+  "last_new_item_count": 15
 }
