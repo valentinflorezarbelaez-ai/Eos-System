@@ -9174,6 +9174,8 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2039768512894505086/);
   assert.match(current, /2053939390410612988/);
   assert.match(current, /2049926283061035254/);
+  assert.match(current, /2080700479940759919/);
+  assert.match(current, /2067366343817805899/);
   assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
   assert.equal(current.includes('cursor.com/docs/origin/integrations'), false);
   assert.equal(current.includes('cursor.com/docs/origin/mirror-github'), false);
@@ -9397,6 +9399,32 @@ test('cited X posts never claim an X fetch', () => {
       && row.cited_by === 'https://www.unrollnow.com/status/2069872515548340407'
       && /Notion/i.test(row.about)
       && /@cursor\/sdk/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://forum.cursor.com/t/claude-opus-5-now-available/166583'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2080700479940759919'
+      && row.cited_by === 'https://www.unrollnow.com/status/2080700479940759919'
+      && /Opus 5/i.test(row.about)
+      && /CursorBench/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/cloud-in-agents-window'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2067366343817805899'
+      && row.cited_by === 'https://www.unrollnow.com/status/2067366343817805899'
+      && /local agents to the cloud/i.test(row.about)
+      && /Cloud Agent VM/i.test(row.eos_note || '')
+      && /\/in-cloud/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && /slack/i.test(row.eos_note || '') === false
       && row.fetched_from_x === false
     )),
     true

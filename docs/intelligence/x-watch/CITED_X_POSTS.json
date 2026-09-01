@@ -235,6 +235,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2080700479940759919",
+      "handle": "cursor_ai",
+      "about": "Claude Opus 5 is now available in Cursor",
+      "cited_by": "https://www.unrollnow.com/status/2080700479940759919",
+      "official_source": "https://forum.cursor.com/t/claude-opus-5-now-available/166583",
+      "published_date": "2026-07-24",
+      "eos_note": "Opus 5 availability is vendor catalog news. EOS model policy stays in workspace rules. Do not treat CursorBench scores as EOS evidence. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2079993729532989500",
       "handle": "cursor_ai",
       "about": "Introducing Cursor Router, our intelligent model router that selects the right model for the task at hand",
@@ -308,6 +319,17 @@
       "official_source": "https://cursor.com/changelog/customize",
       "published_date": "2026-06-22",
       "eos_note": "Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Team marketplace is not EOS governance.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2067366343817805899",
+      "handle": "cursor_ai",
+      "about": "It's now easier to move local agents to the cloud so they can keep working with your laptop closed",
+      "cited_by": "https://www.unrollnow.com/status/2067366343817805899",
+      "official_source": "https://cursor.com/changelog/cloud-in-agents-window",
+      "published_date": "2026-06-17",
+      "eos_note": "This watch already runs in the Cloud Agent VM. /in-cloud starts an isolated cloud subagent; do not rotate this Cloud Agent into the desktop Agents Window for daily ingest. Isolated VMs are optional parallelism, not an EOS Control Plane change.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },

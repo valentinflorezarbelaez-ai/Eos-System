@@ -83,6 +83,9 @@ Store size: 199
 - Today we're launching Cursor Start, a new ₹649/month plan for developers in India — cited by https://www.unrollnow.com/status/2081978255004053560 (not fetched from X)
   Cursor Start is India regional pricing. Do not switch this watch to Start. Honor included quota. Do not add help/account-and-billing/cursor-start as a feed.
   https://x.com/cursor_ai/status/2081978255004053560
+- Claude Opus 5 is now available in Cursor — cited by https://www.unrollnow.com/status/2080700479940759919 (not fetched from X)
+  Opus 5 availability is vendor catalog news. EOS model policy stays in workspace rules. Do not treat CursorBench scores as EOS evidence. Honor included quota.
+  https://x.com/cursor_ai/status/2080700479940759919
 - Introducing Cursor Router, our intelligent model router that selects the right model for the task at hand — cited by https://www.unrollnow.com/status/2079993729532989500 (not fetched from X)
   Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices. Official docs restrict Router to Teams and Enterprise. Vendor cost-percentage claims are not EOS evidence.
   https://x.com/cursor_ai/status/2079993729532989500
@@ -104,6 +107,9 @@ Store size: 199
 - Cursor now shows you a leaderboard of the most popular plugins, skills, and MCPs across your team — cited by https://www.unrollnow.com/status/2069512593887092811 (not fetched from X)
   Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Team marketplace is not EOS governance.
   https://x.com/cursor_ai/status/2069512593887092811
+- It's now easier to move local agents to the cloud so they can keep working with your laptop closed — cited by https://www.unrollnow.com/status/2067366343817805899 (not fetched from X)
+  This watch already runs in the Cloud Agent VM. /in-cloud starts an isolated cloud subagent; do not rotate this Cloud Agent into the desktop Agents Window for daily ingest. Isolated VMs are optional parallelism, not an EOS Control Plane change.
+  https://x.com/cursor_ai/status/2067366343817805899
 - Auto-review is now the default for all new users — cited by https://www.unrollnow.com/status/2065137803084857845 (not fetched from X)
   Auto-review is a vendor run mode that reduces approval prompts. FUNDACION HITL gates still apply. Do not treat classifier marketing as EOS evidence. Do not rotate this Cloud Agent into Auto-review as governance.
   https://x.com/cursor_ai/status/2065137803084857845
