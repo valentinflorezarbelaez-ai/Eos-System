@@ -20,6 +20,7 @@ test('CLI Harness: eos status returns accurate Mission Control state', () => {
   assert.equal(status.gap002Status, 'UNKNOWN');
   assert.equal(status.gate13Status, 'CANARY_RESTRICTED');
   assert.equal(status.activeMission, mission.mission_id);
+  assert.equal(status.missionStage, mission.current_stage);
 });
 
 test('CLI Harness: eos harness dispatches specialized role under anti-majority contract', () => {
@@ -34,10 +35,13 @@ test('CLI Harness: eos harness dispatches specialized role under anti-majority c
 
 test('CLI Harness: eos audit produces deterministic SHA-256 cryptographic snapshot', () => {
   const cli = new EosCursorHarnessCli();
-  const audit = cli.generateAuditSnapshot('CANARY-REAL-001');
+  const audit = cli.generateAuditSnapshot('AUDIT-SCOPE-PROBE');
 
+  assert.equal(audit.missionId, 'AUDIT-SCOPE-PROBE');
   assert.equal(audit.verdict, 'OPERATIONAL_AUDIT_VERIFIED');
   assert.equal(audit.cryptographicSignature.length, 64);
+  // Without an explicit id the audit must be attributed to the active mission
+  assert.equal(cli.generateAuditSnapshot().missionId, cli.getStatus().activeMission);
 });
 
 test('CLI Harness: eos activate / hola emits full activation contract and prompt', () => {

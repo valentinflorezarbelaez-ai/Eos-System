@@ -9,8 +9,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { CursorCommandCenterEngine } from '../engine/cursor-command-center-engine.js';
-import { AutonomyGraduationEngine } from '../engine/autonomy-graduation-engine.js';
 import { McpProvisioningEngine } from '../engine/mcp-provisioning-engine.js';
 import { AutonomousContinuousLearningLoop } from '../engine/autonomous-continuous-learning-loop.js';
 import { PolyglotLanguageHarness } from '../engine/polyglot-language-harness.js';
@@ -24,12 +22,10 @@ const rootDir = path.resolve(__dirname, '../..');
 
 export class EosCursorHarnessCli {
   constructor() {
-    this.commandCenterEngine = new CursorCommandCenterEngine();
-    this.graduationEngine = new AutonomyGraduationEngine();
     this.missionControlDir = path.join(rootDir, 'EOS-MISSION-CONTROL');
   }
 
-  // 1. eos status
+  // eos status
   getStatus() {
     const currentMissionFile = path.join(this.missionControlDir, 'CURRENT_MISSION.json');
     const currentStateFile = path.join(this.missionControlDir, 'CURRENT_STATE.json');
@@ -46,13 +42,13 @@ export class EosCursorHarnessCli {
       gate13Status: 'CANARY_RESTRICTED',
       activeMission: mission.mission_id || 'NONE',
       missionStage: mission.current_stage || 'IDLE',
-      systemHealth: state.test_health || '726 / 726 PASS',
+      systemHealth: state.test_health || 'UNKNOWN',
       timestamp: new Date().toISOString()
     };
   }
 
-  // 2. eos harness: Multi-model task routing & arbitration
-  dispatchMultiModelHarness(taskDescription = '', modelRole = 'PRIMARY') {
+  // eos harness: Multi-model task routing & arbitration
+  dispatchMultiModelHarness(taskDescription = '', modelRole = 'IMPLEMENTER') {
     const validRoles = ['RESEARCH', 'ARCHITECT', 'IMPLEMENTER', 'AUDITOR', 'REDTEAM'];
     const assignedRole = validRoles.includes(modelRole.toUpperCase()) ? modelRole.toUpperCase() : 'IMPLEMENTER';
 
@@ -69,21 +65,21 @@ export class EosCursorHarnessCli {
     return dispatchEnvelope;
   }
 
-  // 3. eos audit: Generates audit signature
-  generateAuditSnapshot(missionId = 'CANARY-REAL-001') {
+  // eos audit: Generates audit signature
+  generateAuditSnapshot(missionId) {
     const status = this.getStatus();
     const hash = crypto.createHash('sha256').update(JSON.stringify(status)).digest('hex');
 
     return {
       auditId: `AUDIT-CLI-${Date.now()}`,
-      missionId,
+      missionId: missionId || status.activeMission,
       stateSnapshot: status,
       cryptographicSignature: hash,
       verdict: 'OPERATIONAL_AUDIT_VERIFIED'
     };
   }
 
-  // 4. eos activate: Activation banner
+  // eos activate: Activation banner
   activate() {
     const status = this.getStatus();
     return {
@@ -100,7 +96,7 @@ export class EosCursorHarnessCli {
     };
   }
 
-  // 5. CLI Runner
+  // CLI Runner
   run(argv = process.argv.slice(2)) {
     const cmd = argv[0] || 'status';
 
@@ -112,9 +108,9 @@ export class EosCursorHarnessCli {
       case 'init':
         return this.activate();
       case 'harness':
-        return this.dispatchMultiModelHarness(argv[1] || 'Default Cursor Task', argv[2] || 'IMPLEMENTER');
+        return this.dispatchMultiModelHarness(argv[1] || 'Default Cursor Task', argv[2]);
       case 'audit':
-        return this.generateAuditSnapshot(argv[1] || 'CANARY-REAL-001');
+        return this.generateAuditSnapshot(argv[1]);
       case 'mcp':
         return this.handleMcpCommand(argv.slice(1));
       case 'improve':
@@ -152,7 +148,7 @@ export class EosCursorHarnessCli {
     }
   }
 
-  // 8. eos provider: Inspect or test resilient provider dispatching
+  // eos provider: Inspect or test resilient provider dispatching
   async handleProviderCommand(args = []) {
     const engine = new RealProviderAdapterEngine();
     const subCmd = args[0] || 'status';
@@ -171,54 +167,53 @@ export class EosCursorHarnessCli {
     });
   }
 
-  // 9. eos a11y: Audit HTML file for WCAG AA compliance
+  // eos a11y: Audit HTML file for WCAG AA compliance
   handleA11yCommand(filePath) {
-    if (!filePath || !fs.existsSync(filePath)) {
-      return { error: `File not found: ${filePath}` };
-    }
-    const html = fs.readFileSync(filePath, 'utf8');
-    const engine = new AccessibilityValidatorEngine();
-    return engine.auditHtml(html);
+    return this.auditHtmlFile(filePath, new AccessibilityValidatorEngine());
   }
 
-  // 10. eos seo: Audit HTML file for SEO, OpenGraph and JSON-LD
+  // eos seo: Audit HTML file for SEO, OpenGraph and JSON-LD
   handleSeoCommand(filePath) {
+    return this.auditHtmlFile(filePath, new SeoValidatorEngine());
+  }
+
+  auditHtmlFile(filePath, engine) {
     if (!filePath || !fs.existsSync(filePath)) {
       return { error: `File not found: ${filePath}` };
     }
-    const html = fs.readFileSync(filePath, 'utf8');
-    const engine = new SeoValidatorEngine();
-    return engine.auditHtml(html);
+    return engine.auditHtml(fs.readFileSync(filePath, 'utf8'));
   }
 
-  // 7. eos polyglot: Inspect multi-language toolchain contracts
-  handlePolyglotCommand(lang = 'RUST') {
+  // eos polyglot: Inspect multi-language toolchain contracts
+  handlePolyglotCommand(lang) {
     const harness = new PolyglotLanguageHarness();
     return harness.getContract(lang || 'RUST');
   }
 
-  // 6. eos improve: Trigger Kaizen continuous learning cycle
+  // eos improve: Trigger Kaizen continuous learning cycle
   handleImproveCommand() {
     const loop = new AutonomousContinuousLearningLoop();
     return loop.runKaizenCycle();
   }
 
-  // 6. eos mcp: Handle MCP server operations
+  // eos mcp: Handle MCP server operations
   handleMcpCommand(args = []) {
-    const subCmd = args[0] || 'list';
     const mcpEngine = new McpProvisioningEngine();
 
-    if (subCmd === 'provision') {
+    if (args[0] === 'provision') {
       const servers = args.slice(1).flatMap(s => s.split(',')).map(s => s.trim()).filter(Boolean);
-      return mcpEngine.provisionMcps(servers.length > 0 ? servers : ['playwright', 'context7', 'trello', 'slack', 'jira', 'figma', 'stitch', 'engram']);
+      const requested = servers.length > 0
+        ? servers
+        : Object.keys(mcpEngine.getCatalog().mcpServers || {});
+      return mcpEngine.provisionMcps(requested);
     } else {
       return mcpEngine.verifyActiveMcps();
     }
   }
 }
 
-// Execute if run directly
-if (process.argv[1] && process.argv[1].endsWith('eos.js')) {
+// Execute only when this file is the process entrypoint (bin/eos.js shares the basename)
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
   const cli = new EosCursorHarnessCli();
   Promise.resolve(cli.run()).then(output => {
     console.log(JSON.stringify(output, null, 2));

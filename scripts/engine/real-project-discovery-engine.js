@@ -6,8 +6,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '../..');
 
+export const DEFAULT_TARGET_PATH = 'C:\\Users\\valen\\Documents\\Fundacion';
+
 export class RealProjectDiscoveryEngine {
-  constructor(targetPath = 'C:\\Users\\valen\\Documents\\Fundacion') {
+  constructor(targetPath = DEFAULT_TARGET_PATH) {
     this.declaredTargetPath = targetPath;
     this.targetPath = path.resolve(targetPath);
     this.mode = 'EMPIRICAL_LEVEL_1_READ_ONLY';
@@ -21,7 +23,7 @@ export class RealProjectDiscoveryEngine {
     }
   }
 
-  getProjectId() {
+    getProjectId() {
     const source = this.declaredTargetPath || this.targetPath;
     const posixish = String(source).replace(/\\/g, '/');
     const basename = (posixish.split('/').filter(Boolean).pop() || '').toLowerCase();
@@ -82,8 +84,7 @@ export class RealProjectDiscoveryEngine {
         type: pkg.type,
         scripts: Object.keys(pkg.scripts || {}),
         dependencies: Object.keys(pkg.dependencies || {}),
-        devDependencies: Object.keys(pkg.devDependencies || {}),
-        rawPkg: pkg
+        devDependencies: Object.keys(pkg.devDependencies || {})
       };
     } catch (err) {
       return { exists: true, parseError: err.message };
@@ -241,15 +242,21 @@ export class RealProjectDiscoveryEngine {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    fs.writeFileSync(path.join(outputDir, 'REAL_PROJECT_STATE.json'), JSON.stringify(discovery.state, null, 2));
-    fs.writeFileSync(path.join(outputDir, 'REAL_PROJECT_DISCOVERY.json'), JSON.stringify(discovery, null, 2));
-    fs.writeFileSync(path.join(outputDir, 'REAL_PROJECT_ARCHITECTURE_ASSESSMENT.json'), JSON.stringify(discovery.architectureAssessment, null, 2));
-    fs.writeFileSync(path.join(outputDir, 'REAL_PROJECT_RISK_ASSESSMENT.json'), JSON.stringify(discovery.riskAssessment, null, 2));
-    fs.writeFileSync(path.join(outputDir, 'REAL_PROJECT_EVIDENCE.json'), JSON.stringify(discovery.evidence, null, 2));
-    fs.writeFileSync(path.join(outputDir, 'REAL_PROJECT_UNCERTAINTIES.json'), JSON.stringify(discovery.uncertainties, null, 2));
-    fs.writeFileSync(path.join(outputDir, 'REAL_PROJECT_CONTRADICTIONS.json'), JSON.stringify(discovery.contradictions, null, 2));
-    fs.writeFileSync(path.join(outputDir, 'REAL_PROJECT_RECOMMENDATIONS.json'), JSON.stringify(discovery.recommendations, null, 2));
-    fs.writeFileSync(path.join(outputDir, 'REAL_PROJECT_AUDIT_TRAIL.json'), JSON.stringify(discovery.auditTrail, null, 2));
+    const artifacts = {
+      'REAL_PROJECT_STATE.json': discovery.state,
+      'REAL_PROJECT_DISCOVERY.json': discovery,
+      'REAL_PROJECT_ARCHITECTURE_ASSESSMENT.json': discovery.architectureAssessment,
+      'REAL_PROJECT_RISK_ASSESSMENT.json': discovery.riskAssessment,
+      'REAL_PROJECT_EVIDENCE.json': discovery.evidence,
+      'REAL_PROJECT_UNCERTAINTIES.json': discovery.uncertainties,
+      'REAL_PROJECT_CONTRADICTIONS.json': discovery.contradictions,
+      'REAL_PROJECT_RECOMMENDATIONS.json': discovery.recommendations,
+      'REAL_PROJECT_AUDIT_TRAIL.json': discovery.auditTrail
+    };
+
+    for (const [fileName, payload] of Object.entries(artifacts)) {
+      fs.writeFileSync(path.join(outputDir, fileName), JSON.stringify(payload, null, 2));
+    }
 
     return outputDir;
   }
@@ -259,7 +266,7 @@ export class RealProjectDiscoveryEngine {
 // CLI ARGUMENT PARSER
 // ====================================================
 if (process.argv.includes('--discover-real')) {
-  let targetArg = 'C:\\Users\\valen\\Documents\\Fundacion';
+  let targetArg = DEFAULT_TARGET_PATH;
   
   const targetIdx = process.argv.indexOf('--target');
   if (targetIdx !== -1 && process.argv[targetIdx + 1]) {
