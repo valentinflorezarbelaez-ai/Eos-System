@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:39:05.580Z",
+  "updated_at": "2026-09-01T12:43:05.364Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1579,6 +1579,16 @@
       "published_at": null,
       "summary": "Inline edit lets you make quick, targeted code changes without opening the chat panel. How do I use inline edit? — Select the code you want to change 2. How do I ask a quick question with inline edit? — Select the code you want to ask about 2. Can I switch from inline edit to Agent? — For multi-file edits or more complex changes, select code and press Cmd + L on Mac (Ctrl + L on Windows/Linux).",
       "apply_in_eos": "Help Inline edit is vendor desktop Cmd+K. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Inline edit for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-mobile-app",
+      "title": "Cursor for iOS",
+      "source_url": "https://cursor.com/help/ai-features/mobile-app",
+      "published_at": null,
+      "summary": "Cursor for iOS is the Cursor mobile app for controlling agents running in the cloud and on your own computer. Is there an Android app? — Not yet. Which devices and versions are supported? — iPhones running iOS 26.0 or later and iPads running iPadOS 26.0 or later. What is different on iPad? — The iPad layout keeps chats in a sidebar, lets you open a review next to a chat, and gives file diffs more space. Which countries and languages does the app support? — The app is available in all App Store regions except mainland China. Who can use the app? — The app directs agents running in the cloud and on your own computer (using Remote Control), both of which need a paid plan to start a run. Why don't I see any repositories? — The repository picker pulls from the source control you've connected o…",
+      "apply_in_eos": "Help Cursor for iOS is vendor mobile Cloud Agent client. Keep this watch in the Cloud Agent VM. Do not rotate this Cloud Agent into the iOS app for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
