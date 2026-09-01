@@ -697,6 +697,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2053892054082802171",
+      "handle": "cursor_ai",
+      "about": "Effort levels are now available to all users on usage-based Bugbot and can be configured from your Bugbot dashboard.",
+      "cited_by": "https://launcharchive.ai/launches/bugbot-effort-levels-now-available--x_2053892054082802171",
+      "official_source": "https://cursor.com/changelog/05-11-26",
+      "published_date": "2026-05-11",
+      "eos_note": "Bugbot effort levels are optional vendor PR review. EOS TDD evidence remains required. Do not rotate this Cloud Agent into Bugbot Autofix for daily ingest. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2049499866217185492",
       "handle": "cursor_ai",
       "about": "We're introducing the Cursor SDK so you can build agents with the same runtime, harness, and models that power Cursor",

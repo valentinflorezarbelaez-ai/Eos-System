@@ -9205,6 +9205,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2045236540784492845/);
   assert.match(current, /2044486585492947010/);
   assert.match(current, /2067683814516858962/);
+  assert.match(current, /2053892054082802171/);
   assert.match(current, /2041969870234120231/);
   assert.match(current, /2029222015736197205/);
   assert.match(current, /2028953584407085546/);
@@ -9701,6 +9702,21 @@ test('cited X posts never claim an X fetch', () => {
       && /optional vendor chat intake/i.test(row.eos_note || '')
       && /enable/i.test(row.eos_note || '') === false
       && /slack/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/05-11-26'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2053892054082802171'
+      && row.cited_by === 'https://launcharchive.ai/launches/bugbot-effort-levels-now-available--x_2053892054082802171'
+      && /Effort levels/i.test(row.about)
+      && /optional vendor PR review/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && /slack/i.test(row.eos_note || '') === false
+      && /timer/i.test(row.eos_note || '') === false
+      && row.official_source === 'https://cursor.com/changelog/05-11-26'
       && row.fetched_from_x === false
     )),
     true

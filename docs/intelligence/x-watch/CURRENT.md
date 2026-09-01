@@ -209,6 +209,9 @@ Store size: 199
 - Cursor is now available in Microsoft Teams — cited by https://www.unrollnow.com/status/2053939390410612988 (not fetched from X)
   Microsoft Teams is optional vendor chat intake. Do not rotate this Cloud Agent into Teams for daily ingest. Do not add docs/integrations/microsoft-teams as a feed. Honor included quota.
   https://x.com/cursor_ai/status/2053939390410612988
+- Effort levels are now available to all users on usage-based Bugbot and can be configured from your Bugbot dashboard. — cited by https://launcharchive.ai/launches/bugbot-effort-levels-now-available--x_2053892054082802171 (not fetched from X)
+  Bugbot effort levels are optional vendor PR review. EOS TDD evidence remains required. Do not rotate this Cloud Agent into Bugbot Autofix for daily ingest. Honor included quota.
+  https://x.com/cursor_ai/status/2053892054082802171
 - We're introducing the Cursor SDK so you can build agents with the same runtime, harness, and models that power Cursor — cited by https://www.unrollnow.com/status/2049499866217185492 (not fetched from X)
   Cursor SDK is optional vendor scripting. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed. Customer names are vendor marketing, not EOS evidence.
   https://x.com/cursor_ai/status/2049499866217185492
