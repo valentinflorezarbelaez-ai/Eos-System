@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T15:21:29.769Z",
+  "updated_at": "2026-09-01T15:25:25.073Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1929,6 +1929,16 @@
       "published_at": null,
       "summary": "If Cursor is running slowly or using too many resources, try these fixes. How do I reduce high CPU or memory usage? — High usage typically stems from extensions or settings issues. .cursorignore How do I reduce editor input delay? — Disable extensions one at a time to identify the cause.",
       "apply_in_eos": "Help performance troubleshooting is vendor desktop CPU/memory/input-delay diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop performance troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-troubleshooting-reporting-bugs",
+      "title": "Reporting a bug",
+      "source_url": "https://cursor.com/help/troubleshooting/reporting-bugs",
+      "published_at": null,
+      "summary": "Help us fix issues faster by including the right information in your bug report. What should I include in a bug report? — Cursor version : Click Cursor > About Cursor in the menu bar Operating system : Mac, Windows, or Linux, plus the version Steps to reproduce : What you did before the issue happened Expected behavior : What you expected t Where do I report Cursor bugs? — Post on forum.cursor.com for community help and visibility. What is a request ID? — A request ID is a unique identifier generated for each request you make to Cursor. How do I find my request ID? — Open the relevant conversation in the Chat sidebar 2. How does Privacy Mode affect debugging? — Your privacy settings affect what the support team can see when investigating your issue. How should I report an issue involving…",
+      "apply_in_eos": "Help bug-report troubleshooting is vendor desktop bug-report diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop bug reporting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
