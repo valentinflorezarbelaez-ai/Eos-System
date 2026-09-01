@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T14:17:38.233Z",
+  "updated_at": "2026-09-01T14:25:35.921Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1839,6 +1839,16 @@
       "published_at": null,
       "summary": "Cursor is designed to keep your code private. What is Privacy Mode? — Privacy Mode ensures your code is never used for training by Cursor or other AI model providers. How do I enable Privacy Mode? — Open Cursor Settings: - Mac : Press Cmd + Shift + J - Windows/Linux : Press Ctrl + Shift + J 2. What data is sent to AI providers? — When you use AI features, Cursor sends prompts and code context to model providers like OpenAI, Anthropic, and Google. Where is my code processed? — When you use AI features, Cursor sends prompts and code context to model providers like OpenAI, Anthropic, and Google. Is my code used for training? — With Privacy Mode enabled, your code is never used for training. Does Privacy Mode apply to Grok 4.5? — Yes. Does Cursor's DPA cover Grok Bot? — Cursor's Data Processi…",
       "apply_in_eos": "Help Privacy is vendor Privacy Mode data-handling. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Privacy Mode settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-security-and-privacy-regions",
+      "title": "Regions and model availability",
+      "source_url": "https://cursor.com/help/security-and-privacy/regions",
+      "published_at": null,
+      "summary": "Some AI model providers have location-based restrictions, which means certain models may not be available in your region. What can I do if a model is unavailable in my region? — Use Auto : Auto selects an available model for each request 2. Which regions does each provider support? — Anthropic (Claude) OpenAI (GPT) Google (Gemini) Can I use Grok 4.5 in the EU? — Yes. Is Cursor Start available outside India? — No. Does Cursor offer data residency controls? — Enterprise customers can enroll in US-only data residency so inference, processing, and storage for supported features stay in the US.",
+      "apply_in_eos": "Help Regions is vendor region/model-availability data-handling. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop region, API-key, or Cursor Start settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     }
