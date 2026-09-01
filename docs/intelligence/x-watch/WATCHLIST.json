@@ -773,6 +773,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_INTEGRATIONS_CLI",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-INTEGRATIONS-THIRD-PARTY",
+      "url": "https://cursor.com/help/integrations/third-party",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_INTEGRATIONS_THIRD_PARTY",
+      "fetchable": true
     }
   ]
 }

@@ -323,6 +323,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/third-party' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -555,6 +559,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/third-party'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/network'),
     true
   );
@@ -715,7 +723,19 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     false
   );
   assert.equal(
-    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/third-party'),
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/integrations/linear'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/integrations/notion'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/integrations/slack'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/dashboard/integrations'),
     false
   );
   assert.equal(
@@ -2325,6 +2345,25 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(helpIntegrationsCli.apply_in_eos.includes('Vercel'), false);
   assert.equal(helpIntegrationsCli.apply_in_eos.includes('curl'), false);
   assert.equal(helpIntegrationsCli.apply_in_eos.includes('CURSOR_API_KEY'), false);
+  const helpIntegrationsThirdParty = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/integrations/third-party');
+  assert.ok(helpIntegrationsThirdParty);
+  assert.equal(helpIntegrationsThirdParty.title, 'Linear, Slack, Notion, and other tools');
+  assert.match(helpIntegrationsThirdParty.summary, /How do I connect Linear/);
+  assert.match(helpIntegrationsThirdParty.summary, /How do I connect Slack/);
+  assert.match(helpIntegrationsThirdParty.summary, /How do I connect Notion/);
+  assert.equal(helpIntegrationsThirdParty.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpIntegrationsThirdParty.summary), false);
+  assert.equal(helpIntegrationsThirdParty.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpIntegrationsThirdParty.apply_in_eos, /vendor Cloud Agent third-party tool connections/i);
+  assert.match(helpIntegrationsThirdParty.apply_in_eos, /\/goal/);
+  assert.match(helpIntegrationsThirdParty.apply_in_eos, /do not rotate this Cloud Agent into connecting extra vendor tools/i);
+  assert.match(helpIntegrationsThirdParty.apply_in_eos, /environment\.json/);
+  assert.match(helpIntegrationsThirdParty.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpIntegrationsThirdParty.apply_in_eos), false);
+  assert.equal(helpIntegrationsThirdParty.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpIntegrationsThirdParty.apply_in_eos.includes('Vercel'), false);
+  assert.equal(helpIntegrationsThirdParty.apply_in_eos.includes('Slack'), false);
+  assert.equal(helpIntegrationsThirdParty.apply_in_eos.includes('timers'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2593,6 +2632,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Git', link: 'https://cursor.com/help/integrations/git' },
     { title: 'GitHub, GitLab, Azure DevOps, and Bitbucket', link: 'https://cursor.com/help/integrations/github-gitlab' },
     { title: 'CLI', link: 'https://cursor.com/help/integrations/cli' },
+    { title: 'Linear, Slack, Notion, and other tools', link: 'https://cursor.com/help/integrations/third-party' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -4320,6 +4360,50 @@ test('applyHint for Help CLI keeps this Cloud Agent off Cursor CLI', () => {
   assert.equal(/vendor local terminal agent/i.test(githubActionsCli), false);
 });
 
+test('applyHint for Help third-party keeps this Cloud Agent off extra vendor tools', () => {
+  const hint = applyHint({
+    title: 'Linear, Slack, Notion, and other tools',
+    link: 'https://cursor.com/help/integrations/third-party',
+    summary: 'Optional Help third-party is enabled by default. Custom Mode and Vercel. Use Slack. enable usage-based pricing.'
+  });
+  assert.match(hint, /vendor Cloud Agent third-party tool connections/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into connecting extra vendor tools/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+  const slackChangelog = applyHint({
+    title: 'Linear, Slack, Notion, and other tools',
+    link: 'https://cursor.com/changelog/slack-improvements',
+    summary: 'Optional Help third-party is enabled by default. Slack MCP.'
+  });
+  assert.equal(/vendor Cloud Agent third-party tool connections/i.test(slackChangelog), false);
+  const docsSlack = applyHint({
+    title: 'Linear, Slack, Notion, and other tools',
+    link: 'https://cursor.com/docs/integrations/slack',
+    summary: 'Optional Help third-party is enabled by default. Slack reference.'
+  });
+  assert.equal(/vendor Cloud Agent third-party tool connections/i.test(docsSlack), false);
+  const docsLinear = applyHint({
+    title: 'Linear, Slack, Notion, and other tools',
+    link: 'https://cursor.com/docs/integrations/linear',
+    summary: 'Optional Help third-party is enabled by default. Linear reference.'
+  });
+  assert.equal(/vendor Cloud Agent third-party tool connections/i.test(docsLinear), false);
+  const helpMcp = applyHint({
+    title: 'Linear, Slack, Notion, and other tools',
+    link: 'https://cursor.com/help/customization/mcp',
+    summary: 'Optional Help third-party is enabled by default. MCP integrations.'
+  });
+  assert.equal(/vendor Cloud Agent third-party tool connections/i.test(helpMcp), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -5587,6 +5671,23 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpIntegrationsCli[0]).includes('curl'), false);
   assert.equal(applyHint(helpIntegrationsCli[0]).includes('CURSOR_API_KEY'), false);
 
+  const helpIntegrationsThirdParty = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-integrations-third-party.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/integrations/third-party'
+  );
+  assert.equal(helpIntegrationsThirdParty[0].id, 'https://cursor.com/help/integrations/third-party');
+  assert.equal(helpIntegrationsThirdParty[0].title, 'Linear, Slack, Notion, and other tools');
+  assert.match(helpIntegrationsThirdParty[0].summary, /Connect Cursor to Linear, Slack, Notion, and other tools through Cloud Agent integrations and MCP/);
+  assert.match(applyHint(helpIntegrationsThirdParty[0]), /vendor Cloud Agent third-party tool connections/i);
+  assert.match(applyHint(helpIntegrationsThirdParty[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpIntegrationsThirdParty[0])), false);
+  assert.equal(applyHint(helpIntegrationsThirdParty[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpIntegrationsThirdParty[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpIntegrationsThirdParty[0]).includes('Plan Mode'), false);
+  assert.equal(applyHint(helpIntegrationsThirdParty[0]).includes('Slack'), false);
+  assert.equal(applyHint(helpIntegrationsThirdParty[0]).includes('timers'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -6159,6 +6260,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/integrations/cli'),
     'https://cursor.com/help/integrations/cli.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/integrations/third-party'),
+    'https://cursor.com/help/integrations/third-party.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6932,6 +7037,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpIntegrationsCliMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpIntegrationsCliMd.summary), false);
   assert.equal(helpIntegrationsCliMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpIntegrationsThirdPartyMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-integrations-third-party.md'), 'utf8')
+  );
+  assert.equal(helpIntegrationsThirdPartyMd.title, 'Linear, Slack, Notion, and other tools');
+  assert.match(helpIntegrationsThirdPartyMd.summary, /How do I connect Linear/);
+  assert.match(helpIntegrationsThirdPartyMd.summary, /How do I connect Slack/);
+  assert.match(helpIntegrationsThirdPartyMd.summary, /How do I connect Notion/);
+  assert.match(helpIntegrationsThirdPartyMd.summary, /How do I connect other tools/);
+  assert.equal(helpIntegrationsThirdPartyMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpIntegrationsThirdPartyMd.summary), false);
+  assert.equal(helpIntegrationsThirdPartyMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -7818,6 +7935,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'Help GitHub, GitLab, Azure DevOps, and Bitbucket is vendor Cloud Agent and Bugbot repo-connection setup. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra SCMs for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Linear, Slack, Notion, and other tools',
+      source_url: 'https://cursor.com/help/integrations/third-party',
+      published_at: null,
+      apply_in_eos: 'Help third-party integrations is vendor Cloud Agent third-party tool connections. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra vendor tools for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Capabilities',
       source_url: 'https://cursor.com/docs/cloud-agent/capabilities',
       published_at: null,
@@ -8022,6 +8145,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/background-agents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/github-gitlab'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/third-party'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/python'), false);
@@ -8327,6 +8451,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help CLI is vendor local terminal agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into Cursor CLI for daily ingest. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Linear, Slack, Notion, and other tools',
+      source_url: 'https://cursor.com/help/integrations/third-party',
+      published_at: null,
+      apply_in_eos: 'Help third-party integrations is vendor Cloud Agent third-party tool connections. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra vendor tools for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -8387,6 +8517,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/git'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/github-gitlab'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/cli'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/third-party'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -8978,6 +9109,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/integrations/git'), false);
   assert.equal(current.includes('cursor.com/help/integrations/github-gitlab'), false);
   assert.equal(current.includes('cursor.com/help/integrations/cli'), false);
+  assert.equal(current.includes('cursor.com/help/integrations/third-party'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
