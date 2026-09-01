@@ -9184,8 +9184,29 @@ test('cited X posts never claim an X fetch', () => {
   assert.equal(result.valid, true);
   assert.equal(doc.citations.every((row) => row.fetched_from_x === false), true);
   const official = doc.citations.map((row) => row.official_source);
+  assert.equal(official.includes('https://cursor.com/changelog/start-from-scratch'), true);
   assert.equal(official.includes('https://cursor.com/changelog/origin-code-hosting'), true);
   assert.equal(official.includes('https://cursor.com/changelog/08-13-26'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2093077548649570777'
+      && row.cited_by === 'https://aicatchup.com/news/cursor-start-from-scratch-origin-vercel'
+      && /start from scratch/i.test(row.about)
+      && row.official_source === 'https://cursor.com/changelog/start-from-scratch'
+      && /GitHub remains source of truth/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2093077549786300747'
+      && row.cited_by === 'https://aicatchup.com/news/cursor-start-from-scratch-origin-vercel'
+      && /private or internal repository/i.test(row.about)
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(
     doc.citations.some((row) => row.x_url === 'https://x.com/cursor_ai/status/2088249881718919393' && row.official_source === 'https://cursor.com/blog/joining-spacex'),
     true

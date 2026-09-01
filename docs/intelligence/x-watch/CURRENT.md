@@ -28,6 +28,11 @@ Store size: 199
   https://cursor.com/help/models-and-usage/usage-limits
 
 ## @cursor_ai posts cited by third parties (not fetched)
+- Cloud Agents can now start from scratch — cited by https://aicatchup.com/news/cursor-start-from-scratch-origin-vercel (not fetched from X)
+  Start from scratch creates an Origin repo without GitHub. GitHub remains source of truth for this synced repo. Do not Start from scratch or create an Origin repo for this watch.
+  https://x.com/cursor_ai/status/2093077548649570777
+- the flow can use a private or internal repository — cited by https://aicatchup.com/news/cursor-start-from-scratch-origin-vercel (not fetched from X)
+  https://x.com/cursor_ai/status/2093077549786300747
 - We're continuing to improve cloud agents — cited by https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents (not fetched from X)
   https://x.com/cursor_ai/status/2090136956101414982
 - Cursor can now monitor your PRs — cited by https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents (not fetched from X)

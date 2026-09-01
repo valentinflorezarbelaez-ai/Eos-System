@@ -4,6 +4,27 @@
   "note": "These @cursor_ai status URLs were recorded from third-party articles. This agent did not fetch x.com.",
   "citations": [
     {
+      "x_url": "https://x.com/cursor_ai/status/2093077548649570777",
+      "handle": "cursor_ai",
+      "about": "Cloud Agents can now start from scratch",
+      "cited_by": "https://aicatchup.com/news/cursor-start-from-scratch-origin-vercel",
+      "official_source": "https://cursor.com/changelog/start-from-scratch",
+      "published_date": "2026-08-27",
+      "eos_note": "Start from scratch creates an Origin repo without GitHub. GitHub remains source of truth for this synced repo. Do not Start from scratch or create an Origin repo for this watch.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2093077549786300747",
+      "handle": "cursor_ai",
+      "about": "the flow can use a private or internal repository",
+      "cited_by": "https://aicatchup.com/news/cursor-start-from-scratch-origin-vercel",
+      "official_source": "https://cursor.com/changelog/start-from-scratch",
+      "published_date": "2026-08-27",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2090136956101414982",
       "handle": "cursor_ai",
       "about": "We're continuing to improve cloud agents",
