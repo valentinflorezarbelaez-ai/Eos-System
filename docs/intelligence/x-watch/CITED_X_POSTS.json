@@ -510,6 +510,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2062611883249783083",
+      "handle": "cursor_ai",
+      "about": "With canvases, Cursor can create apps like dashboards, reports, and internal tools. Now you can publish a canvas and share it with your team via URL.",
+      "cited_by": "https://ethanbholland.com/2026/06/05/agents-and-copilots-ai-news-week-ending-06-05-2026/",
+      "official_source": "https://cursor.com/changelog/canvas-improvements",
+      "published_date": "2026-06-04",
+      "eos_note": "Shared canvases are shareable artifacts, not a substitute for git evidence. Design Mode annotates UI in the Cursor browser. EOS still verifies web changes in a real browser. Do not rotate this Cloud Agent into canvas Design Mode for daily ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2061550723503194426",
       "handle": "cursor_ai",
       "about": "We're increasing usage limits for every Teams user",
@@ -730,6 +741,39 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2046324136377721128",
+      "handle": "cursor_ai",
+      "about": "Use /debug to find root causes and fix tricky bugs that are hard to reproduce or understand.",
+      "cited_by": "https://ethanbholland.com/2026/04/24/agents-and-copilots-ai-news-week-ending-04-24-2026/",
+      "official_source": "https://cursor.com/changelog/04-14-26",
+      "published_date": "2026-04-20",
+      "eos_note": "CLI /debug is vendor Cursor CLI. Do not install Cursor CLI or @cursor/sdk. Do not add docs/cli/installation as a feed. Keep changelog ingest on the main Cloud Agent thread.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2045236540784492845",
+      "handle": "cursor_ai",
+      "about": "Through the end of this weekend, we are doubling Composer 2 usage limits inside of Cursor's new agents window.",
+      "cited_by": "https://ethanbholland.com/2026/04/24/agents-and-copilots-ai-news-week-ending-04-24-2026/",
+      "official_source": "https://cursor.com/changelog/composer-2",
+      "published_date": "2026-04-17",
+      "eos_note": "Weekend usage doubling is a launch promo, not standing pricing. Composer is a vendor model family. Do not treat vendor rates as EOS evidence. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2041969870234120231",
+      "handle": "cursor_ai",
+      "about": "Cursor's code review agent can now learn from activity on PRs to self-improve in real time.",
+      "cited_by": "https://ethanbholland.com/2026/04/10/agents-and-copilots-ai-news-week-ending-04-10-2026/",
+      "official_source": "https://cursor.com/changelog/04-08-26",
+      "published_date": "2026-04-08",
+      "eos_note": "Bugbot learned rules are optional vendor PR review. EOS TDD evidence remains required. Do not rotate this Cloud Agent into Bugbot Autofix for daily ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2036873885665419773",
       "handle": "cursor_ai",
       "about": "Cursor cloud agents can now run on your infrastructure.",
@@ -770,6 +814,28 @@
       "official_source": "https://cursor.com/changelog/03-05-26",
       "published_date": "2026-03-05",
       "eos_note": "Automations trigger on GitHub events, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2029222015736197205",
+      "handle": "cursor_ai",
+      "about": "Cursor is now available in JetBrains IDEs through the Agent Client Protocol.",
+      "cited_by": "https://ethanbholland.com/2026/03/06/agents-and-copilots-ai-news-week-ending-03-06-2026/",
+      "official_source": "https://cursor.com/changelog/03-04-26",
+      "published_date": "2026-03-04",
+      "eos_note": "JetBrains ACP is out of scope for this Cloud Agent workspace. Do not add help/getting-started/migrate-jetbrains as a feed. Keep environment.json + Builds.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2028953584407085546",
+      "handle": "cursor_ai",
+      "about": "Cursor now supports MCP Apps. Agents can render interactive UIs in your conversations.",
+      "cited_by": "https://ethanbholland.com/2026/03/06/agents-and-copilots-ai-news-week-ending-03-06-2026/",
+      "official_source": "https://cursor.com/changelog/2-6",
+      "published_date": "2026-03-03",
+      "eos_note": "MCP Apps are vendor chat UIs. Keep repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace is vendor distribution. Do not add a dashboard marketplace as a feed.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     }

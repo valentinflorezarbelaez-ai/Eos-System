@@ -158,6 +158,9 @@ Store size: 199
 - With Design Mode, you can now point, draw, or talk to update your UI — cited by https://www.unrollnow.com/status/2062950344687272144 (not fetched from X)
   Design Mode annotates UI in the Cursor browser. EOS still verifies web changes in a real browser. This watch stays in the Cloud Agent VM. Do not rotate this Cloud Agent into Design Mode for daily ingest.
   https://x.com/cursor_ai/status/2062950344687272144
+- With canvases, Cursor can create apps like dashboards, reports, and internal tools. Now you can publish a canvas and share it with your team via URL. — cited by https://ethanbholland.com/2026/06/05/agents-and-copilots-ai-news-week-ending-06-05-2026/ (not fetched from X)
+  Shared canvases are shareable artifacts, not a substitute for git evidence. Design Mode annotates UI in the Cursor browser. EOS still verifies web changes in a real browser. Do not rotate this Cloud Agent into canvas Design Mode for daily ingest.
+  https://x.com/cursor_ai/status/2062611883249783083
 - We're increasing usage limits for every Teams user — cited by https://www.unrollnow.com/status/2061550723503194426 (not fetched from X)
   Honor included quota. Do not switch this watch to Premium or on-demand. Do not treat vendor seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard.
   https://x.com/cursor_ai/status/2061550723503194426
@@ -218,6 +221,15 @@ Store size: 199
 - Introducing /multitask in the new Cursor 3 interface. Cursor can now run async subagents to parallelize your requests instead of adding them to the queue. — cited by https://ethanbholland.com/2026/05/01/agents-and-copilots-ai-news-week-ending-05-01-2026/ (not fetched from X)
   /multitask is vendor desktop Agents Window parallelism. This Cloud Agent VM already runs one isolated agent. Do not rotate this Cloud Agent into desktop Agents Window or /multitask for daily ingest.
   https://x.com/cursor_ai/status/2047764651363180839
+- Use /debug to find root causes and fix tricky bugs that are hard to reproduce or understand. — cited by https://ethanbholland.com/2026/04/24/agents-and-copilots-ai-news-week-ending-04-24-2026/ (not fetched from X)
+  CLI /debug is vendor Cursor CLI. Do not install Cursor CLI or @cursor/sdk. Do not add docs/cli/installation as a feed. Keep changelog ingest on the main Cloud Agent thread.
+  https://x.com/cursor_ai/status/2046324136377721128
+- Through the end of this weekend, we are doubling Composer 2 usage limits inside of Cursor's new agents window. — cited by https://ethanbholland.com/2026/04/24/agents-and-copilots-ai-news-week-ending-04-24-2026/ (not fetched from X)
+  Weekend usage doubling is a launch promo, not standing pricing. Composer is a vendor model family. Do not treat vendor rates as EOS evidence. Honor included quota.
+  https://x.com/cursor_ai/status/2045236540784492845
+- Cursor's code review agent can now learn from activity on PRs to self-improve in real time. — cited by https://ethanbholland.com/2026/04/10/agents-and-copilots-ai-news-week-ending-04-10-2026/ (not fetched from X)
+  Bugbot learned rules are optional vendor PR review. EOS TDD evidence remains required. Do not rotate this Cloud Agent into Bugbot Autofix for daily ingest.
+  https://x.com/cursor_ai/status/2041969870234120231
 - Cursor cloud agents can now run on your infrastructure. — cited by https://ethanbholland.com/2026/03/27/agents-and-copilots-ai-news-week-ending-03-27-2026/ (not fetched from X)
   Self-hosted Cloud Agents are optional private workers. This watch already runs in the public Cloud Agent VM. Do not add docs/cloud-agent/self-hosted as a feed. Keep environment.json + Builds.
   https://x.com/cursor_ai/status/2036873885665419773
@@ -230,3 +242,9 @@ Store size: 199
 - We're introducing Cursor Automations to build always-on agents — cited by https://www.unrollnow.com/status/2029604182286856663 (not fetched from X)
   Automations trigger on GitHub events, not X. This daily changelog timer already covers ingest.
   https://x.com/cursor_ai/status/2029604182286856663
+- Cursor is now available in JetBrains IDEs through the Agent Client Protocol. — cited by https://ethanbholland.com/2026/03/06/agents-and-copilots-ai-news-week-ending-03-06-2026/ (not fetched from X)
+  JetBrains ACP is out of scope for this Cloud Agent workspace. Do not add help/getting-started/migrate-jetbrains as a feed. Keep environment.json + Builds.
+  https://x.com/cursor_ai/status/2029222015736197205
+- Cursor now supports MCP Apps. Agents can render interactive UIs in your conversations. — cited by https://ethanbholland.com/2026/03/06/agents-and-copilots-ai-news-week-ending-03-06-2026/ (not fetched from X)
+  MCP Apps are vendor chat UIs. Keep repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace is vendor distribution. Do not add a dashboard marketplace as a feed.
+  https://x.com/cursor_ai/status/2028953584407085546
