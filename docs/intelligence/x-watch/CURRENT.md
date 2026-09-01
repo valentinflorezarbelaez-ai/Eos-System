@@ -107,6 +107,9 @@ Store size: 199
 - Claude Fable 5 is now available in Cursor — cited by https://www.unrollnow.com/status/2064394824313376787 (not fetched from X)
   Fable 5 availability is vendor catalog news. EOS model policy stays in workspace rules. Do not treat CursorBench scores as EOS evidence. Honor included quota.
   https://x.com/cursor_ai/status/2064394824313376787
+- With Design Mode, you can now point, draw, or talk to update your UI — cited by https://www.unrollnow.com/status/2062950344687272144 (not fetched from X)
+  Design Mode annotates UI in the Cursor browser. EOS still verifies web changes in a real browser. This watch stays in the Cloud Agent VM. Do not rotate this Cloud Agent into Design Mode for daily ingest.
+  https://x.com/cursor_ai/status/2062950344687272144
 - We're increasing usage limits for every Teams user — cited by https://www.unrollnow.com/status/2061550723503194426 (not fetched from X)
   Honor included quota. Do not switch this watch to Premium or on-demand. Do not treat vendor seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard.
   https://x.com/cursor_ai/status/2061550723503194426
@@ -125,6 +128,9 @@ Store size: 199
 - Cursor Security Review is now available for Teams and Enterprise plans — cited by https://www.unrollnow.com/status/2049926283061035254 (not fetched from X)
   Cursor Security Review is a vendor PR reviewer. EOS security-auditor remains the Control Plane check. /review-security is not a substitute. Do not treat vendor finding counts as EOS evidence. Honor included quota.
   https://x.com/cursor_ai/status/2049926283061035254
+- We're introducing Cursor 3 — cited by https://www.unrollnow.com/status/2039768512894505086 (not fetched from X)
+  Cursor 3 Agents Window is vendor editor chrome. This watch already runs in the Cloud Agent VM. Editor chrome is not an EOS Control Plane change. Honor included quota.
+  https://x.com/cursor_ai/status/2039768512894505086
 - Composer 2 is now available in Cursor — cited by https://www.unrollnow.com/status/2034668943676244133 (not fetched from X)
   Composer is a vendor model family. Do not treat vendor rates or CursorBench scores as EOS evidence. Honor included quota.
   https://x.com/cursor_ai/status/2034668943676244133

@@ -323,6 +323,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2062950344687272144",
+      "handle": "cursor_ai",
+      "about": "With Design Mode, you can now point, draw, or talk to update your UI",
+      "cited_by": "https://www.unrollnow.com/status/2062950344687272144",
+      "official_source": "https://cursor.com/changelog/design-mode-improvements",
+      "published_date": "2026-06-05",
+      "eos_note": "Design Mode annotates UI in the Cursor browser. EOS still verifies web changes in a real browser. This watch stays in the Cloud Agent VM. Do not rotate this Cloud Agent into Design Mode for daily ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2061550723503194426",
       "handle": "cursor_ai",
       "about": "We're increasing usage limits for every Teams user",
@@ -385,6 +396,17 @@
       "official_source": "https://cursor.com/changelog/04-30-26",
       "published_date": "2026-04-30",
       "eos_note": "Cursor Security Review is a vendor PR reviewer. EOS security-auditor remains the Control Plane check. /review-security is not a substitute. Do not treat vendor finding counts as EOS evidence. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2039768512894505086",
+      "handle": "cursor_ai",
+      "about": "We're introducing Cursor 3",
+      "cited_by": "https://www.unrollnow.com/status/2039768512894505086",
+      "official_source": "https://cursor.com/changelog/3-0",
+      "published_date": "2026-04-02",
+      "eos_note": "Cursor 3 Agents Window is vendor editor chrome. This watch already runs in the Cloud Agent VM. Editor chrome is not an EOS Control Plane change. Honor included quota.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },

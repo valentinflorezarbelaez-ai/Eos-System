@@ -9169,6 +9169,8 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2087991786279251993/);
   assert.match(current, /2065137803084857845/);
   assert.match(current, /2064394824313376787/);
+  assert.match(current, /2062950344687272144/);
+  assert.match(current, /2039768512894505086/);
   assert.match(current, /2053939390410612988/);
   assert.match(current, /2049926283061035254/);
   assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
@@ -9422,6 +9424,18 @@ test('cited X posts never claim an X fetch', () => {
     )),
     true
   );
+  assert.equal(official.includes('https://cursor.com/changelog/design-mode-improvements'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2062950344687272144'
+      && row.cited_by === 'https://www.unrollnow.com/status/2062950344687272144'
+      && /Design Mode/i.test(row.about)
+      && /Cloud Agent VM/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(
     doc.citations.some((row) => (
       row.x_url === 'https://x.com/cursor_ai/status/2061550723503194426'
@@ -9500,6 +9514,18 @@ test('cited X posts never claim an X fetch', () => {
       && /security-auditor/i.test(row.eos_note || '')
       && /enable/i.test(row.eos_note || '') === false
       && /slack/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/3-0'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2039768512894505086'
+      && row.cited_by === 'https://www.unrollnow.com/status/2039768512894505086'
+      && /Cursor 3/i.test(row.about)
+      && /editor chrome/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
       && row.fetched_from_x === false
     )),
     true
