@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T13:47:38.319Z",
+  "updated_at": "2026-09-01T13:51:07.060Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1309,6 +1309,16 @@
       "published_at": null,
       "summary": "Plugins, skills, and MCPs let you customize Cursor for your workflows. What you can do from Customize — From the Customize page, you can: Browse and install plugins, skills, and MCPs from the Cursor Marketplace with one click Install Team MCP servers shared through your team's Default marketplace See your team leaderboard Extension components — Cursor extensions are built from composable pieces.",
       "apply_in_eos": "Customize Cursor is optional desktop sidebar for plugins, skills, MCP, rules, and hooks. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Keep environment.json + Builds. Team marketplace and dashboard Customize are not EOS governance. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-get-started-quickstart",
+      "title": "Quickstart",
+      "source_url": "https://cursor.com/docs/get-started/quickstart",
+      "published_at": null,
+      "summary": "Go from install to your first useful change in Cursor. Sign in, ask Cursor to explain your codebase, make a small edit, and review the result.",
+      "apply_in_eos": "Quickstart is vendor desktop first-run. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop first-run or quickstart for daily ingest. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

@@ -131,6 +131,7 @@
     "https://cursor.com/docs/configuration/worktrees",
     "https://cursor.com/docs/cursor-router",
     "https://cursor.com/docs/customize-cursor",
+    "https://cursor.com/docs/get-started/quickstart",
     "https://cursor.com/docs/grok-bot",
     "https://cursor.com/docs/hooks",
     "https://cursor.com/docs/mcp",
@@ -180,7 +181,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-09-01T13:47:38.308Z",
-  "last_item_count": 178,
-  "last_new_item_count": 23
+  "last_ingest_at": "2026-09-01T13:51:07.049Z",
+  "last_item_count": 179,
+  "last_new_item_count": 24
 }

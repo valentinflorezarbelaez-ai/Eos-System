@@ -1794,9 +1794,10 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.ok(getStartedQuickstart);
   assert.equal(getStartedQuickstart.title, 'Quickstart');
   assert.match(getStartedQuickstart.summary, /first useful change/);
-  assert.match(getStartedQuickstart.summary, /Next steps/);
+  assert.match(getStartedQuickstart.summary, /explain your codebase/);
   assert.equal(getStartedQuickstart.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(getStartedQuickstart.summary), false);
+  assert.equal(/Next steps/.test(getStartedQuickstart.summary), false);
   assert.equal(getStartedQuickstart.summary.toLowerCase().includes('curl'), false);
   assert.match(getStartedQuickstart.apply_in_eos, /vendor desktop first-run/i);
   assert.match(getStartedQuickstart.apply_in_eos, /\/goal/);
