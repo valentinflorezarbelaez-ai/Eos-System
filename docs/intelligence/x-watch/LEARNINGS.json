@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T13:57:48.138Z",
+  "updated_at": "2026-09-01T14:04:09.468Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1749,6 +1749,16 @@
       "published_at": null,
       "summary": "Skills are reusable sets of instructions that teach Agent how to handle specific tasks. What are Skills? — Skills are markdown files that teach Agent specialized workflows. How do I create a skill? — Type /create-skill in chat and describe the skill you want. SKILL.md Are user-level skills available on Cloud Agents and remote workers? — Cursor loads and on the local machine. How do I scope a skill to specific files? — Add a field to the skill's frontmatter. How do I use a skill? — Type followed by the skill name in chat to run it (e.g., /write-tests ), or type and select it to attach as context. When should I use skills instead of rules? — Use a rule when a short instruction is enough. How do I convert a rule into a skill? — Type /create-skill in chat and tell Agent to turn your rule into…",
       "apply_in_eos": "Help Skills is vendor Agent workflows. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team skills for daily ingest. Keep SKILL.md under .cursor/skills. Prefer /create-skill. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-getting-started-first-project",
+      "title": "Your first project",
+      "source_url": "https://cursor.com/help/getting-started/first-project",
+      "published_at": null,
+      "summary": "Open a project and start using Cursor's AI features to explore and build. How do I open a project in Cursor? — Open Cursor 2. How do I start using Agent? — Agent is Cursor's AI assistant. How do I review Agent changes? — Agent's edits are applied as it works. How do I give Agent more context? — Agent searches your codebase automatically.",
+      "apply_in_eos": "Help first project is vendor desktop first-run. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop first-project or first-run for daily ingest. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

@@ -175,6 +175,7 @@
     "https://cursor.com/help/customization/plugins",
     "https://cursor.com/help/customization/rules",
     "https://cursor.com/help/customization/skills",
+    "https://cursor.com/help/getting-started/first-project",
     "https://cursor.com/help/getting-started/install",
     "https://cursor.com/help/models-and-usage/available-models",
     "https://cursor.com/help/models-and-usage/cursor-router",
@@ -182,7 +183,7 @@
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-09-01T13:57:48.125Z",
-  "last_item_count": 180,
-  "last_new_item_count": 25
+  "last_ingest_at": "2026-09-01T14:04:09.456Z",
+  "last_item_count": 181,
+  "last_new_item_count": 26
 }
