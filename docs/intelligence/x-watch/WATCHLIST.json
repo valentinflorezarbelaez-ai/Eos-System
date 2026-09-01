@@ -640,6 +640,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_AI_PAIR_PROGRAMMING",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-GET-STARTED-QUICKSTART",
+      "url": "https://cursor.com/docs/get-started/quickstart",
+      "kind": "html-page",
+      "role": "OFFICIAL_GET_STARTED_QUICKSTART",
+      "fetchable": true
     }
   ]
 }
