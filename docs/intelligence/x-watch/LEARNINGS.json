@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T13:34:49.931Z",
+  "updated_at": "2026-09-01T13:41:32.755Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1309,6 +1309,16 @@
       "published_at": null,
       "summary": "Plugins, skills, and MCPs let you customize Cursor for your workflows. What you can do from Customize — From the Customize page, you can: Browse and install plugins, skills, and MCPs from the Cursor Marketplace with one click Install Team MCP servers shared through your team's Default marketplace See your team leaderboard Extension components — Cursor extensions are built from composable pieces.",
       "apply_in_eos": "Customize Cursor is optional desktop sidebar for plugins, skills, MCP, rules, and hooks. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Keep environment.json + Builds. Team marketplace and dashboard Customize are not EOS governance. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-grok-bot",
+      "title": "Grok Bot",
+      "source_url": "https://cursor.com/docs/grok-bot",
+      "published_at": null,
+      "summary": "Grok Bot gives you Bots you can keep around: AI teammates with names, jobs, and context that compounds over time. What makes Grok Bot different — Each Bot has a computer. Your Bots share one computer — All of your Bots use the same cloud computer, sharing its files, browser sessions, and app logins, which makes handoffs work without repeating setup. A good first handoff — Start with a real task that spans a few tools and has a clear finish line: Pull this week's pipeline review list from our CRM. Next steps",
+      "apply_in_eos": "Grok Bot is vendor persistent-cloud Bots. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into the Grok Bot desktop or iOS app for daily ingest. This Cloud Agent VM has no Grok Bot Linux app. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
