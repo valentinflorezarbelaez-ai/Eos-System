@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:17:26.618Z",
+  "updated_at": "2026-09-01T12:21:16.436Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1549,6 +1549,16 @@
       "published_at": null,
       "summary": "Cursor Automations run Cloud Agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. What can Automations do? — Automations let you run Cloud Agents without manual input. How do I create an automation? — Create a new automation in the Agents Window, at cursor.com/automations/new, or from a template in the Cursor Marketplace. Can I create automations without connecting a repository? — Yes. Which triggers are available? — An automation can have more than one trigger. Which tools can automations use? — Comment on pull request : Posts review comments, inline code comments, or approvals on a target PR Request reviewers : Assigns reviewers on a target PR Send to Slack : Sends messages to a Slack channel Read Slack channel H…",
       "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-plan-mode",
+      "title": "Plan mode",
+      "source_url": "https://cursor.com/help/ai-features/plan-mode",
+      "published_at": null,
+      "summary": "Plan mode lets you generate and review a detailed plan before Agent writes any code. How do I use Plan mode? — Open the Agent panel: - Mac : Press Cmd + I - Windows/Linux : Press Ctrl + I 2. How do I save plans? — Plans are saved by default in your home directory. When should I use Plan mode? — Plan mode works best for: Complex features with multiple valid approaches Tasks touching many files or systems Unclear requirements where you want to explore first Architectural decisions where you want to review the app How do I start over in Plan mode? — If Agent builds something that doesn't match what you wanted, you can roll back to any earlier point in the conversation: 1.",
+      "apply_in_eos": "Help Plan mode is vendor desktop planning before code. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Plan mode for daily ingest. EOS TDD remains required. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
