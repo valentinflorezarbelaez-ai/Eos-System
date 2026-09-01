@@ -315,6 +315,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/github-gitlab' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -539,6 +543,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/github-gitlab'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/network'),
     true
   );
@@ -679,7 +687,19 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     false
   );
   assert.equal(
-    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/github-gitlab'),
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/integrations/github'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/integrations/gitlab'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/integrations/azure-devops'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/integrations/bitbucket'),
     false
   );
   assert.equal(
@@ -2258,6 +2278,24 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpIntegrationsGit.apply_in_eos), false);
   assert.equal(helpIntegrationsGit.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpIntegrationsGit.apply_in_eos.includes('Vercel'), false);
+  const helpIntegrationsGithubGitlab = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/integrations/github-gitlab');
+  assert.ok(helpIntegrationsGithubGitlab);
+  assert.equal(helpIntegrationsGithubGitlab.title, 'GitHub, GitLab, Azure DevOps, and Bitbucket');
+  assert.match(helpIntegrationsGithubGitlab.summary, /How do I connect GitHub/);
+  assert.match(helpIntegrationsGithubGitlab.summary, /How do I connect GitLab/);
+  assert.match(helpIntegrationsGithubGitlab.summary, /How do I connect Azure DevOps/);
+  assert.equal(helpIntegrationsGithubGitlab.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpIntegrationsGithubGitlab.summary), false);
+  assert.equal(helpIntegrationsGithubGitlab.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpIntegrationsGithubGitlab.apply_in_eos, /vendor Cloud Agent and Bugbot repo-connection setup/i);
+  assert.match(helpIntegrationsGithubGitlab.apply_in_eos, /\/goal/);
+  assert.match(helpIntegrationsGithubGitlab.apply_in_eos, /do not rotate this Cloud Agent into connecting extra SCMs/i);
+  assert.match(helpIntegrationsGithubGitlab.apply_in_eos, /GitHub remains source of truth/i);
+  assert.match(helpIntegrationsGithubGitlab.apply_in_eos, /environment\.json/);
+  assert.match(helpIntegrationsGithubGitlab.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpIntegrationsGithubGitlab.apply_in_eos), false);
+  assert.equal(helpIntegrationsGithubGitlab.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpIntegrationsGithubGitlab.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2524,6 +2562,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Performance', link: 'https://cursor.com/help/troubleshooting/performance' },
     { title: 'Reporting a bug', link: 'https://cursor.com/help/troubleshooting/reporting-bugs' },
     { title: 'Git', link: 'https://cursor.com/help/integrations/git' },
+    { title: 'GitHub, GitLab, Azure DevOps, and Bitbucket', link: 'https://cursor.com/help/integrations/github-gitlab' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -4158,6 +4197,51 @@ test('applyHint for Help Git keeps this Cloud Agent off desktop git UI', () => {
   assert.equal(/vendor desktop git\/Source Control features/i.test(cursorBlame), false);
 });
 
+test('applyHint for Help GitHub/GitLab keeps this Cloud Agent off extra SCM connections', () => {
+  const hint = applyHint({
+    title: 'GitHub, GitLab, Azure DevOps, and Bitbucket',
+    link: 'https://cursor.com/help/integrations/github-gitlab',
+    summary: 'Optional Help GitHub GitLab is enabled by default. Custom Mode and Vercel. Use Slack. Connect GitHub.'
+  });
+  assert.match(hint, /vendor Cloud Agent and Bugbot repo-connection setup/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into connecting extra SCMs/i);
+  assert.match(hint, /GitHub remains source of truth/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+  const helpGit = applyHint({
+    title: 'GitHub, GitLab, Azure DevOps, and Bitbucket',
+    link: 'https://cursor.com/help/integrations/git',
+    summary: 'Optional Help GitHub GitLab is enabled by default. Desktop git.'
+  });
+  assert.equal(/vendor Cloud Agent and Bugbot repo-connection setup/i.test(helpGit), false);
+  const docsGithub = applyHint({
+    title: 'GitHub, GitLab, Azure DevOps, and Bitbucket',
+    link: 'https://cursor.com/docs/integrations/github',
+    summary: 'Optional Help GitHub GitLab is enabled by default. GitHub integration.'
+  });
+  assert.equal(/vendor Cloud Agent and Bugbot repo-connection setup/i.test(docsGithub), false);
+  const docsGitlab = applyHint({
+    title: 'GitHub, GitLab, Azure DevOps, and Bitbucket',
+    link: 'https://cursor.com/docs/integrations/gitlab',
+    summary: 'Optional Help GitHub GitLab is enabled by default. GitLab integration.'
+  });
+  assert.equal(/vendor Cloud Agent and Bugbot repo-connection setup/i.test(docsGitlab), false);
+  const githubActions = applyHint({
+    title: 'GitHub, GitLab, Azure DevOps, and Bitbucket',
+    link: 'https://cursor.com/docs/cli/github-actions',
+    summary: 'Optional Help GitHub GitLab is enabled by default. GitHub Actions.'
+  });
+  assert.equal(/vendor Cloud Agent and Bugbot repo-connection setup/i.test(githubActions), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -5391,6 +5475,22 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpIntegrationsGit[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpIntegrationsGit[0]).includes('Plan Mode'), false);
 
+  const helpIntegrationsGithubGitlab = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-integrations-github-gitlab.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/integrations/github-gitlab'
+  );
+  assert.equal(helpIntegrationsGithubGitlab[0].id, 'https://cursor.com/help/integrations/github-gitlab');
+  assert.equal(helpIntegrationsGithubGitlab[0].title, 'GitHub, GitLab, Azure DevOps, and Bitbucket');
+  assert.match(helpIntegrationsGithubGitlab[0].summary, /Connect your repos and create pull requests from Cursor/);
+  assert.match(applyHint(helpIntegrationsGithubGitlab[0]), /vendor Cloud Agent and Bugbot repo-connection setup/i);
+  assert.match(applyHint(helpIntegrationsGithubGitlab[0]), /\/goal/);
+  assert.match(applyHint(helpIntegrationsGithubGitlab[0]), /GitHub remains source of truth/i);
+  assert.equal(/enable/i.test(applyHint(helpIntegrationsGithubGitlab[0])), false);
+  assert.equal(applyHint(helpIntegrationsGithubGitlab[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpIntegrationsGithubGitlab[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpIntegrationsGithubGitlab[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5955,6 +6055,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/integrations/git'),
     'https://cursor.com/help/integrations/git.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/integrations/github-gitlab'),
+    'https://cursor.com/help/integrations/github-gitlab.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6702,6 +6806,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpIntegrationsGitMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpIntegrationsGitMd.summary), false);
   assert.equal(helpIntegrationsGitMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpIntegrationsGithubGitlabMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-integrations-github-gitlab.md'), 'utf8')
+  );
+  assert.equal(helpIntegrationsGithubGitlabMd.title, 'GitHub, GitLab, Azure DevOps, and Bitbucket');
+  assert.match(helpIntegrationsGithubGitlabMd.summary, /How do I connect GitHub/);
+  assert.match(helpIntegrationsGithubGitlabMd.summary, /How do I connect GitLab/);
+  assert.match(helpIntegrationsGithubGitlabMd.summary, /How do I connect Azure DevOps/);
+  assert.match(helpIntegrationsGithubGitlabMd.summary, /How do I connect Bitbucket/);
+  assert.equal(helpIntegrationsGithubGitlabMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpIntegrationsGithubGitlabMd.summary), false);
+  assert.equal(helpIntegrationsGithubGitlabMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -7582,6 +7698,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'Grok Bot is vendor persistent-cloud Bots. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into the Grok Bot desktop or iOS app for daily ingest. This Cloud Agent VM has no Grok Bot Linux app. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'GitHub, GitLab, Azure DevOps, and Bitbucket',
+      source_url: 'https://cursor.com/help/integrations/github-gitlab',
+      published_at: null,
+      apply_in_eos: 'Help GitHub, GitLab, Azure DevOps, and Bitbucket is vendor Cloud Agent and Bugbot repo-connection setup. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra SCMs for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Capabilities',
       source_url: 'https://cursor.com/docs/cloud-agent/capabilities',
       published_at: null,
@@ -7785,6 +7907,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/cloud-agents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/background-agents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/github-gitlab'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/python'), false);
@@ -8078,6 +8201,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Git is vendor desktop git/Source Control features. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop git UI for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'GitHub, GitLab, Azure DevOps, and Bitbucket',
+      source_url: 'https://cursor.com/help/integrations/github-gitlab',
+      published_at: null,
+      apply_in_eos: 'Help GitHub, GitLab, Azure DevOps, and Bitbucket is vendor Cloud Agent and Bugbot repo-connection setup. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra SCMs for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -8136,6 +8265,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/performance'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/reporting-bugs'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/git'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/github-gitlab'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -8725,6 +8855,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/troubleshooting/performance'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/reporting-bugs'), false);
   assert.equal(current.includes('cursor.com/help/integrations/git'), false);
+  assert.equal(current.includes('cursor.com/help/integrations/github-gitlab'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);

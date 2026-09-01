@@ -759,6 +759,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_INTEGRATIONS_GIT",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-INTEGRATIONS-GITHUB-GITLAB",
+      "url": "https://cursor.com/help/integrations/github-gitlab",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_INTEGRATIONS_GITHUB_GITLAB",
+      "fetchable": true
     }
   ]
 }
