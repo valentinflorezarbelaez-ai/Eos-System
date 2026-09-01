@@ -283,6 +283,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/agent-issues' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -484,6 +488,18 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/marketplace'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/tab-issues'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/network'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/enterprise/endpoint-security'),
     false
   );
   assert.equal(
@@ -2038,6 +2054,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos), false);
   assert.equal(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos.includes('Vercel'), false);
+  const helpTroubleshootingAgentIssues = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/troubleshooting/agent-issues');
+  assert.ok(helpTroubleshootingAgentIssues);
+  assert.equal(helpTroubleshootingAgentIssues.title, 'Agent troubleshooting');
+  assert.match(helpTroubleshootingAgentIssues.summary, /How can I improve Agent accuracy/);
+  assert.match(helpTroubleshootingAgentIssues.summary, /What if Agent doesn't pick up my files/);
+  assert.match(helpTroubleshootingAgentIssues.summary, /How do I undo Agent changes/);
+  assert.equal(helpTroubleshootingAgentIssues.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingAgentIssues.summary), false);
+  assert.equal(helpTroubleshootingAgentIssues.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpTroubleshootingAgentIssues.apply_in_eos, /vendor desktop Agent diagnostics/i);
+  assert.match(helpTroubleshootingAgentIssues.apply_in_eos, /\/goal/);
+  assert.match(helpTroubleshootingAgentIssues.apply_in_eos, /do not rotate this Cloud Agent into desktop Agent troubleshooting/i);
+  assert.match(helpTroubleshootingAgentIssues.apply_in_eos, /environment\.json/);
+  assert.match(helpTroubleshootingAgentIssues.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpTroubleshootingAgentIssues.apply_in_eos), false);
+  assert.equal(helpTroubleshootingAgentIssues.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpTroubleshootingAgentIssues.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2296,6 +2329,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'SSO and authentication', link: 'https://cursor.com/help/security-and-privacy/sso' },
     { title: 'Compromised account', link: 'https://cursor.com/help/security-and-privacy/account-compromised' },
     { title: 'Marketplace security', link: 'https://cursor.com/help/security-and-privacy/marketplace-security' },
+    { title: 'Agent troubleshooting', link: 'https://cursor.com/help/troubleshooting/agent-issues' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3743,6 +3777,26 @@ test('applyHint for Help Marketplace security keeps this Cloud Agent off marketp
   assert.equal(hint.includes('Team MCP marketplace is vendor distribution'), false);
 });
 
+test('applyHint for Help Agent troubleshooting keeps this Cloud Agent off desktop Agent troubleshooting', () => {
+  const hint = applyHint({
+    title: 'Agent troubleshooting',
+    link: 'https://cursor.com/help/troubleshooting/agent-issues',
+    summary: 'Optional Help Agent troubleshooting is enabled by default. Custom Mode and Vercel. Use Slack. Agent diagnostics are enabled.'
+  });
+  assert.match(hint, /vendor desktop Agent diagnostics/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Agent troubleshooting/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4855,6 +4909,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpSecurityAndPrivacyMarketplaceSecurity[0]).includes('Plan Mode'), false);
   assert.equal(applyHint(helpSecurityAndPrivacyMarketplaceSecurity[0]).includes('Team MCP marketplace is vendor distribution'), false);
 
+  const helpTroubleshootingAgentIssues = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-agent-issues.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/troubleshooting/agent-issues'
+  );
+  assert.equal(helpTroubleshootingAgentIssues[0].id, 'https://cursor.com/help/troubleshooting/agent-issues');
+  assert.equal(helpTroubleshootingAgentIssues[0].title, 'Agent troubleshooting');
+  assert.match(helpTroubleshootingAgentIssues[0].summary, /Fix common Agent issues with file access, rules, and terminal commands/);
+  assert.match(applyHint(helpTroubleshootingAgentIssues[0]), /vendor desktop Agent diagnostics/i);
+  assert.match(applyHint(helpTroubleshootingAgentIssues[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpTroubleshootingAgentIssues[0])), false);
+  assert.equal(applyHint(helpTroubleshootingAgentIssues[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpTroubleshootingAgentIssues[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpTroubleshootingAgentIssues[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5387,6 +5456,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/security-and-privacy/marketplace-security'),
     'https://cursor.com/help/security-and-privacy/marketplace-security.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/agent-issues'),
+    'https://cursor.com/help/troubleshooting/agent-issues.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6032,6 +6105,20 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpSecurityAndPrivacyMarketplaceSecurityMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpSecurityAndPrivacyMarketplaceSecurityMd.summary), false);
   assert.equal(helpSecurityAndPrivacyMarketplaceSecurityMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpTroubleshootingAgentIssuesMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-agent-issues.md'), 'utf8')
+  );
+  assert.equal(helpTroubleshootingAgentIssuesMd.title, 'Agent troubleshooting');
+  assert.match(helpTroubleshootingAgentIssuesMd.summary, /How can I improve Agent accuracy/);
+  assert.match(helpTroubleshootingAgentIssuesMd.summary, /What if Agent doesn't pick up my files/);
+  assert.match(helpTroubleshootingAgentIssuesMd.summary, /How do I undo Agent changes/);
+  assert.match(helpTroubleshootingAgentIssuesMd.summary, /What if Agent sets CI=1 in terminal commands/);
+  assert.match(helpTroubleshootingAgentIssuesMd.summary, /What if I see "Agent Execution Timed Out"/);
+  assert.match(helpTroubleshootingAgentIssuesMd.summary, /How do I report a bad Agent response/);
+  assert.equal(helpTroubleshootingAgentIssuesMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingAgentIssuesMd.summary), false);
+  assert.equal(helpTroubleshootingAgentIssuesMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -7360,6 +7447,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Marketplace security is vendor marketplace plugin review. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into marketplace plugin install for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Agent troubleshooting',
+      source_url: 'https://cursor.com/help/troubleshooting/agent-issues',
+      published_at: null,
+      apply_in_eos: 'Help Agent troubleshooting is vendor desktop Agent diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -7410,6 +7503,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/sso'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/account-compromised'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/marketplace-security'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/agent-issues'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -7991,6 +8085,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/security-and-privacy/sso'), false);
   assert.equal(current.includes('cursor.com/help/security-and-privacy/account-compromised'), false);
   assert.equal(current.includes('cursor.com/help/security-and-privacy/marketplace-security'), false);
+  assert.equal(current.includes('cursor.com/help/troubleshooting/agent-issues'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);

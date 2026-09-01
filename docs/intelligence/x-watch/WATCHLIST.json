@@ -703,6 +703,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_SECURITY_AND_PRIVACY_MARKETPLACE_SECURITY",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-TROUBLESHOOTING-AGENT-ISSUES",
+      "url": "https://cursor.com/help/troubleshooting/agent-issues",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_TROUBLESHOOTING_AGENT_ISSUES",
+      "fetchable": true
     }
   ]
 }
