@@ -9166,6 +9166,9 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2089399061040308603/);
   assert.match(current, /2087941309013397970/);
   assert.match(current, /2087941310217064850/);
+  assert.match(current, /2087991786279251993/);
+  assert.match(current, /2053939390410612988/);
+  assert.match(current, /2049926283061035254/);
   assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
   assert.equal(current.includes('cursor.com/docs/origin/integrations'), false);
   assert.equal(current.includes('cursor.com/docs/origin/mirror-github'), false);
@@ -9425,6 +9428,19 @@ test('cited X posts never claim an X fetch', () => {
     )),
     true
   );
+  assert.equal(official.includes('https://cursor.com/changelog/microsoft-teams'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2053939390410612988'
+      && row.cited_by === 'https://www.unrollnow.com/status/2053939390410612988'
+      && /Microsoft Teams/i.test(row.about)
+      && /optional vendor chat intake/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && /slack/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(official.includes('https://cursor.com/changelog/sdk-release'), true);
   assert.equal(
     doc.citations.some((row) => (
@@ -9433,6 +9449,31 @@ test('cited X posts never claim an X fetch', () => {
       && /Cursor SDK/i.test(row.about)
       && /@cursor\/sdk/i.test(row.eos_note || '')
       && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/blog/firetiger'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2087991786279251993'
+      && row.cited_by === 'https://www.unrollnow.com/status/2087991786279251993'
+      && /Firetiger/i.test(row.about)
+      && /not a shipping feature/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/04-30-26'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2049926283061035254'
+      && row.cited_by === 'https://www.unrollnow.com/status/2049926283061035254'
+      && /Security Review/i.test(row.about)
+      && /security-auditor/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && /slack/i.test(row.eos_note || '') === false
       && row.fetched_from_x === false
     )),
     true

@@ -59,6 +59,9 @@ Store size: 199
 - Customers like Faire, Headway, and Descript are seeing agent start times drop from minutes to seconds with builds — cited by https://www.unrollnow.com/status/2087941307624980753 (not fetched from X)
   Customer names are vendor marketing, not EOS evidence.
   https://x.com/cursor_ai/status/2087941310217064850
+- We're excited to welcome the Firetiger team to Cursor — cited by https://www.unrollnow.com/status/2087991786279251993 (not fetched from X)
+  Firetiger is team and direction news, not a shipping feature for this watch. Do not treat production-agent marketing as EOS evidence. Do not add extra Firetiger feeds.
+  https://x.com/cursor_ai/status/2087991786279251993
 - Cursor is now part of @SpaceX. Today, we have officially closed our acquisition. — cited by https://www.unrollnow.com/status/2088249881718919393 (not fetched from X)
   Cited X announcement mirrored by official blog https://cursor.com/blog/joining-spacex. Do not treat SpaceX/Grok marketing as EOS production evidence.
   https://x.com/cursor_ai/status/2088249881718919393
@@ -107,9 +110,15 @@ Store size: 199
 - Introducing Composer 2.5, our most powerful model yet — cited by https://aicatchup.com/news/cursor-composer-2-5-launch (not fetched from X)
   Composer is a vendor model family. Do not treat marketing metrics as EOS evidence. The first-week 2x included usage was a launch promo, not standing pricing.
   https://x.com/cursor_ai/status/2056415413077233983
+- Cursor is now available in Microsoft Teams — cited by https://www.unrollnow.com/status/2053939390410612988 (not fetched from X)
+  Microsoft Teams is optional vendor chat intake. Do not rotate this Cloud Agent into Teams for daily ingest. Do not add docs/integrations/microsoft-teams as a feed. Honor included quota.
+  https://x.com/cursor_ai/status/2053939390410612988
 - We're introducing the Cursor SDK so you can build agents with the same runtime, harness, and models that power Cursor — cited by https://www.unrollnow.com/status/2049499866217185492 (not fetched from X)
   Cursor SDK is optional vendor scripting. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed. Customer names are vendor marketing, not EOS evidence.
   https://x.com/cursor_ai/status/2049499866217185492
+- Cursor Security Review is now available for Teams and Enterprise plans — cited by https://www.unrollnow.com/status/2049926283061035254 (not fetched from X)
+  Cursor Security Review is a vendor PR reviewer. EOS security-auditor remains the Control Plane check. /review-security is not a substitute. Do not treat vendor finding counts as EOS evidence. Honor included quota.
+  https://x.com/cursor_ai/status/2049926283061035254
 - Composer 2 is now available in Cursor — cited by https://www.unrollnow.com/status/2034668943676244133 (not fetched from X)
   Composer is a vendor model family. Do not treat vendor rates or CursorBench scores as EOS evidence. Honor included quota.
   https://x.com/cursor_ai/status/2034668943676244133

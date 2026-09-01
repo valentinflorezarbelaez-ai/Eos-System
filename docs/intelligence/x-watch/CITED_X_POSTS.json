@@ -147,6 +147,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2087991786279251993",
+      "handle": "cursor_ai",
+      "about": "We're excited to welcome the Firetiger team to Cursor",
+      "cited_by": "https://www.unrollnow.com/status/2087991786279251993",
+      "official_source": "https://cursor.com/blog/firetiger",
+      "published_date": "2026-08-13",
+      "eos_note": "Firetiger is team and direction news, not a shipping feature for this watch. Do not treat production-agent marketing as EOS evidence. Do not add extra Firetiger feeds.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2088249881718919393",
       "handle": "cursor_ai",
       "about": "Cursor is now part of @SpaceX. Today, we have officially closed our acquisition.",
@@ -323,6 +334,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2053939390410612988",
+      "handle": "cursor_ai",
+      "about": "Cursor is now available in Microsoft Teams",
+      "cited_by": "https://www.unrollnow.com/status/2053939390410612988",
+      "official_source": "https://cursor.com/changelog/microsoft-teams",
+      "published_date": "2026-05-11",
+      "eos_note": "Microsoft Teams is optional vendor chat intake. Do not rotate this Cloud Agent into Teams for daily ingest. Do not add docs/integrations/microsoft-teams as a feed. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2049499866217185492",
       "handle": "cursor_ai",
       "about": "We're introducing the Cursor SDK so you can build agents with the same runtime, harness, and models that power Cursor",
@@ -330,6 +352,17 @@
       "official_source": "https://cursor.com/changelog/sdk-release",
       "published_date": "2026-04-29",
       "eos_note": "Cursor SDK is optional vendor scripting. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed. Customer names are vendor marketing, not EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2049926283061035254",
+      "handle": "cursor_ai",
+      "about": "Cursor Security Review is now available for Teams and Enterprise plans",
+      "cited_by": "https://www.unrollnow.com/status/2049926283061035254",
+      "official_source": "https://cursor.com/changelog/04-30-26",
+      "published_date": "2026-04-30",
+      "eos_note": "Cursor Security Review is a vendor PR reviewer. EOS security-auditor remains the Control Plane check. /review-security is not a substitute. Do not treat vendor finding counts as EOS evidence. Honor included quota.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },
