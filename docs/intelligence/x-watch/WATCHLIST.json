@@ -577,6 +577,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_SKILLS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-MCP",
+      "url": "https://cursor.com/help/customization/mcp",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_MCP",
+      "fetchable": true
     }
   ]
 }

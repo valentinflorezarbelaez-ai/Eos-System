@@ -211,6 +211,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/mcp' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -1548,6 +1552,25 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpSkills.apply_in_eos), false);
   assert.equal(helpSkills.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpSkills.apply_in_eos.includes('Vercel'), false);
+  const helpMcp = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/customization/mcp');
+  assert.ok(helpMcp);
+  assert.equal(helpMcp.title, 'MCP integrations');
+  assert.match(helpMcp.summary, /What is an MCP server/);
+  assert.match(helpMcp.summary, /How do I install an MCP server manually/);
+  assert.match(helpMcp.summary, /Do MCP servers work with Cloud Agents/);
+  assert.equal(helpMcp.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpMcp.summary), false);
+  assert.match(helpMcp.apply_in_eos, /vendor Agent integrations/i);
+  assert.match(helpMcp.apply_in_eos, /\/goal/);
+  assert.match(helpMcp.apply_in_eos, /do not rotate this Cloud Agent into dashboard team MCP/i);
+  assert.match(helpMcp.apply_in_eos, /\.cursor\/mcp\.json/);
+  assert.match(helpMcp.apply_in_eos, /API keys/i);
+  assert.match(helpMcp.apply_in_eos, /not EOS governance/i);
+  assert.match(helpMcp.apply_in_eos, /environment\.json/);
+  assert.match(helpMcp.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpMcp.apply_in_eos), false);
+  assert.equal(helpMcp.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpMcp.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1788,6 +1811,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Bugbot', link: 'https://cursor.com/help/ai-features/bugbot' },
     { title: 'Rules', link: 'https://cursor.com/help/customization/rules' },
     { title: 'Skills', link: 'https://cursor.com/help/customization/skills' },
+    { title: 'MCP integrations', link: 'https://cursor.com/help/customization/mcp' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2859,6 +2883,29 @@ test('applyHint for Help Skills keeps repo skills off Custom Mode', () => {
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help MCP keeps .cursor/mcp.json and rejects API keys', () => {
+  const hint = applyHint({
+    title: 'MCP integrations',
+    link: 'https://cursor.com/help/customization/mcp',
+    summary: 'Optional MCP is enabled by default. Custom Mode and Vercel. API_KEY=secret.'
+  });
+  assert.match(hint, /vendor Agent integrations/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into dashboard team MCP/i);
+  assert.match(hint, /\.cursor\/mcp\.json/);
+  assert.match(hint, /not EOS governance/i);
+  assert.match(hint, /API keys/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('API_KEY'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3702,6 +3749,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpSkills[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpSkills[0]).includes('Vercel'), false);
 
+  const helpMcp = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-mcp.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/customization/mcp'
+  );
+  assert.equal(helpMcp[0].id, 'https://cursor.com/help/customization/mcp');
+  assert.equal(helpMcp[0].title, 'MCP integrations');
+  assert.match(helpMcp[0].summary, /Connect Cursor to external tools and data sources with Model Context Protocol/);
+  assert.match(applyHint(helpMcp[0]), /vendor Agent integrations/i);
+  assert.match(applyHint(helpMcp[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpMcp[0])), false);
+  assert.equal(applyHint(helpMcp[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpMcp[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpMcp[0]).includes('API_KEY'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4163,6 +4225,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/customization/skills'),
     'https://cursor.com/help/customization/skills.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/customization/mcp'),
+    'https://cursor.com/help/customization/mcp.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -4598,6 +4664,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpSkillsMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpSkillsMd.summary), false);
   assert.equal(helpSkillsMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpMcpMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-mcp.md'), 'utf8')
+  );
+  assert.equal(helpMcpMd.title, 'MCP integrations');
+  assert.match(helpMcpMd.summary, /What is an MCP server/);
+  assert.match(helpMcpMd.summary, /How do I install an MCP server manually/);
+  assert.match(helpMcpMd.summary, /Do MCP servers work with Cloud Agents/);
+  assert.equal(helpMcpMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpMcpMd.summary), false);
+  assert.equal(helpMcpMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -5768,6 +5845,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Skills is vendor Agent workflows. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team skills for daily ingest. Keep SKILL.md under .cursor/skills. Prefer /create-skill. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'MCP integrations',
+      source_url: 'https://cursor.com/help/customization/mcp',
+      published_at: null,
+      apply_in_eos: 'Help MCP is vendor Agent integrations. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team MCP for daily ingest. Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config. Team dashboard MCP is not EOS governance. Do not put API keys in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -5795,6 +5878,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/skills'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/mcp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -5829,6 +5913,12 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
       source_url: 'https://cursor.com/help/customization/skills',
       published_at: null,
       apply_in_eos: 'Help Skills is vendor Agent workflows. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team skills for daily ingest. Keep SKILL.md under .cursor/skills. Prefer /create-skill. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'MCP integrations',
+      source_url: 'https://cursor.com/help/customization/mcp',
+      published_at: null,
+      apply_in_eos: 'Help MCP is vendor Agent integrations. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team MCP for daily ingest. Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config. Team dashboard MCP is not EOS governance. Do not put API keys in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
       title: 'Model Context Protocol (MCP)',
@@ -5878,6 +5968,7 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/skills'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/mcp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/mcp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/plugins'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/customize-cursor'), false);
@@ -6337,6 +6428,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/bugbot'), false);
   assert.equal(current.includes('cursor.com/help/customization/rules'), false);
   assert.equal(current.includes('cursor.com/help/customization/skills'), false);
+  assert.equal(current.includes('cursor.com/help/customization/mcp'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
