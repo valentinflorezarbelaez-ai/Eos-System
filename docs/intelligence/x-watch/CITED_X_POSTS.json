@@ -301,6 +301,28 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2065137803084857845",
+      "handle": "cursor_ai",
+      "about": "Auto-review is now the default for all new users",
+      "cited_by": "https://www.unrollnow.com/status/2065137803084857845",
+      "official_source": "https://cursor.com/changelog/auto-review",
+      "published_date": "2026-06-11",
+      "eos_note": "Auto-review is a vendor run mode that reduces approval prompts. FUNDACION HITL gates still apply. Do not treat classifier marketing as EOS evidence. Do not rotate this Cloud Agent into Auto-review as governance.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2064394824313376787",
+      "handle": "cursor_ai",
+      "about": "Claude Fable 5 is now available in Cursor",
+      "cited_by": "https://www.unrollnow.com/status/2064394824313376787",
+      "official_source": "https://forum.cursor.com/t/claude-fable-5-out-now/162816",
+      "published_date": "2026-06-09",
+      "eos_note": "Fable 5 availability is vendor catalog news. EOS model policy stays in workspace rules. Do not treat CursorBench scores as EOS evidence. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2061550723503194426",
       "handle": "cursor_ai",
       "about": "We're increasing usage limits for every Teams user",

@@ -101,6 +101,12 @@ Store size: 199
 - Cursor now shows you a leaderboard of the most popular plugins, skills, and MCPs across your team — cited by https://www.unrollnow.com/status/2069512593887092811 (not fetched from X)
   Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Team marketplace is not EOS governance.
   https://x.com/cursor_ai/status/2069512593887092811
+- Auto-review is now the default for all new users — cited by https://www.unrollnow.com/status/2065137803084857845 (not fetched from X)
+  Auto-review is a vendor run mode that reduces approval prompts. FUNDACION HITL gates still apply. Do not treat classifier marketing as EOS evidence. Do not rotate this Cloud Agent into Auto-review as governance.
+  https://x.com/cursor_ai/status/2065137803084857845
+- Claude Fable 5 is now available in Cursor — cited by https://www.unrollnow.com/status/2064394824313376787 (not fetched from X)
+  Fable 5 availability is vendor catalog news. EOS model policy stays in workspace rules. Do not treat CursorBench scores as EOS evidence. Honor included quota.
+  https://x.com/cursor_ai/status/2064394824313376787
 - We're increasing usage limits for every Teams user — cited by https://www.unrollnow.com/status/2061550723503194426 (not fetched from X)
   Honor included quota. Do not switch this watch to Premium or on-demand. Do not treat vendor seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard.
   https://x.com/cursor_ai/status/2061550723503194426

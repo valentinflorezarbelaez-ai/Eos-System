@@ -9167,6 +9167,8 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2087941309013397970/);
   assert.match(current, /2087941310217064850/);
   assert.match(current, /2087991786279251993/);
+  assert.match(current, /2065137803084857845/);
+  assert.match(current, /2064394824313376787/);
   assert.match(current, /2053939390410612988/);
   assert.match(current, /2049926283061035254/);
   assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
@@ -9391,6 +9393,30 @@ test('cited X posts never claim an X fetch', () => {
       && row.cited_by === 'https://www.unrollnow.com/status/2069512593887092811'
       && /leaderboard/i.test(row.about)
       && /desktop Customize/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/auto-review'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2065137803084857845'
+      && row.cited_by === 'https://www.unrollnow.com/status/2065137803084857845'
+      && /Auto-review/i.test(row.about)
+      && /HITL/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://forum.cursor.com/t/claude-fable-5-out-now/162816'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2064394824313376787'
+      && row.cited_by === 'https://www.unrollnow.com/status/2064394824313376787'
+      && /Fable 5/i.test(row.about)
+      && /CursorBench/i.test(row.eos_note || '')
       && /enable/i.test(row.eos_note || '') === false
       && row.fetched_from_x === false
     )),
