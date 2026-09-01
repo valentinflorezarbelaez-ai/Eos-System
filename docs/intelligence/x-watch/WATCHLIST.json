@@ -654,6 +654,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_GETTING_STARTED_INSTALL",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-GETTING-STARTED-FIRST-PROJECT",
+      "url": "https://cursor.com/help/getting-started/first-project",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_GETTING_STARTED_FIRST_PROJECT",
+      "fetchable": true
     }
   ]
 }

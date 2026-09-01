@@ -255,6 +255,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/getting-started/first-project' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -431,7 +435,7 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     false
   );
   assert.equal(
-    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/getting-started/first-project'),
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/getting-started/build-ai-coding-agent'),
     false
   );
   assert.equal(
@@ -1845,6 +1849,25 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpGettingStartedInstall.apply_in_eos), false);
   assert.equal(helpGettingStartedInstall.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpGettingStartedInstall.apply_in_eos.includes('Vercel'), false);
+  const helpGettingStartedFirstProject = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/getting-started/first-project');
+  assert.ok(helpGettingStartedFirstProject);
+  assert.equal(helpGettingStartedFirstProject.title, 'Your first project');
+  assert.match(helpGettingStartedFirstProject.summary, /How do I open a project in Cursor/);
+  assert.match(helpGettingStartedFirstProject.summary, /How do I start using Agent/);
+  assert.match(helpGettingStartedFirstProject.summary, /How do I review Agent changes/);
+  assert.match(helpGettingStartedFirstProject.summary, /How do I give Agent more context/);
+  assert.equal(helpGettingStartedFirstProject.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpGettingStartedFirstProject.summary), false);
+  assert.equal(helpGettingStartedFirstProject.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpGettingStartedFirstProject.apply_in_eos, /vendor desktop first-run/i);
+  assert.match(helpGettingStartedFirstProject.apply_in_eos, /\/goal/);
+  assert.match(helpGettingStartedFirstProject.apply_in_eos, /do not rotate this Cloud Agent into desktop first-project or first-run/i);
+  assert.match(helpGettingStartedFirstProject.apply_in_eos, /already has its GitHub checkout/i);
+  assert.match(helpGettingStartedFirstProject.apply_in_eos, /environment\.json/);
+  assert.match(helpGettingStartedFirstProject.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpGettingStartedFirstProject.apply_in_eos), false);
+  assert.equal(helpGettingStartedFirstProject.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpGettingStartedFirstProject.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2096,6 +2119,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'How does AI pair programming work in Cursor?', link: 'https://cursor.com/help/ai-features/ai-pair-programming' },
     { title: 'Quickstart', link: 'https://cursor.com/docs/get-started/quickstart' },
     { title: 'Download and install Cursor', link: 'https://cursor.com/help/getting-started/install' },
+    { title: 'Your first project', link: 'https://cursor.com/help/getting-started/first-project' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3400,6 +3424,27 @@ test('applyHint for Help install keeps this Cloud Agent off desktop install', ()
   assert.equal(hint.includes('Plan Mode'), false);
 });
 
+test('applyHint for Help first project keeps this Cloud Agent off desktop first-project', () => {
+  const hint = applyHint({
+    title: 'Your first project',
+    link: 'https://cursor.com/help/getting-started/first-project',
+    summary: 'Optional Help first project is enabled by default. Custom Mode and Vercel. Use Slack.'
+  });
+  assert.match(hint, /vendor desktop first-run/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop first-project or first-run/i);
+  assert.match(hint, /already has its GitHub checkout/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4404,6 +4449,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpGettingStartedInstall[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpGettingStartedInstall[0]).includes('Plan Mode'), false);
 
+  const helpGettingStartedFirstProject = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-getting-started-first-project.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/getting-started/first-project'
+  );
+  assert.equal(helpGettingStartedFirstProject[0].id, 'https://cursor.com/help/getting-started/first-project');
+  assert.equal(helpGettingStartedFirstProject[0].title, 'Your first project');
+  assert.match(helpGettingStartedFirstProject[0].summary, /Open a folder, run your first Agent task, and review changes/);
+  assert.match(applyHint(helpGettingStartedFirstProject[0]), /vendor desktop first-run/i);
+  assert.match(applyHint(helpGettingStartedFirstProject[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpGettingStartedFirstProject[0])), false);
+  assert.equal(applyHint(helpGettingStartedFirstProject[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpGettingStartedFirstProject[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpGettingStartedFirstProject[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4908,6 +4968,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/getting-started/install'),
     'https://cursor.com/help/getting-started/install.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/getting-started/first-project'),
+    'https://cursor.com/help/getting-started/first-project.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -5461,6 +5525,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpGettingStartedInstallMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpGettingStartedInstallMd.summary), false);
   assert.equal(helpGettingStartedInstallMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpGettingStartedFirstProjectMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-getting-started-first-project.md'), 'utf8')
+  );
+  assert.equal(helpGettingStartedFirstProjectMd.title, 'Your first project');
+  assert.match(helpGettingStartedFirstProjectMd.summary, /How do I open a project in Cursor/);
+  assert.match(helpGettingStartedFirstProjectMd.summary, /How do I start using Agent/);
+  assert.match(helpGettingStartedFirstProjectMd.summary, /How do I review Agent changes/);
+  assert.match(helpGettingStartedFirstProjectMd.summary, /How do I give Agent more context/);
+  assert.equal(helpGettingStartedFirstProjectMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpGettingStartedFirstProjectMd.summary), false);
+  assert.equal(helpGettingStartedFirstProjectMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -6712,6 +6788,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help install is vendor desktop first-run. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop install or first-run for daily ingest. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Your first project',
+      source_url: 'https://cursor.com/help/getting-started/first-project',
+      published_at: null,
+      apply_in_eos: 'Help first project is vendor desktop first-run. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop first-project or first-run for daily ingest. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -6755,6 +6837,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/ai-pair-programming'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/get-started/quickstart'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/getting-started/install'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/getting-started/first-project'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -7329,6 +7412,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/ai-pair-programming'), false);
   assert.equal(current.includes('cursor.com/docs/get-started/quickstart'), false);
   assert.equal(current.includes('cursor.com/help/getting-started/install'), false);
+  assert.equal(current.includes('cursor.com/help/getting-started/first-project'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
