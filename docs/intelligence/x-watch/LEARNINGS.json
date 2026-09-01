@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:47:14.909Z",
+  "updated_at": "2026-09-01T12:54:43.978Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1559,6 +1559,16 @@
       "published_at": null,
       "summary": "Background agents are coding agents that typically run for a very long time. How do background agents work? — Each Cloud Agent runs on its own dedicated virtual machine with a full development environment: your repository, dependencies, secrets, and network access. How do background agents show their work? — Background agents produce artifacts to demo their changes. How do I start a background agent? — In Cursor, select Cloud by the agent input On the web or mobile, go to cursor.com/agents In Slack, GitHub, or Linear, mention @Cursor You can also run them on a schedule or from events with Automations.",
       "apply_in_eos": "Help Background Agents is vendor isolated-VM Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop background agents for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-bugbot",
+      "title": "Bugbot",
+      "source_url": "https://cursor.com/help/ai-features/bugbot",
+      "published_at": null,
+      "summary": "Bugbot reviews your pull requests and catches bugs, security issues, and code quality problems. Can Cursor review my PRs? — Yes, Bugbot is Cursor's automated PR review product. What is Bugbot? — Bugbot analyzes PR diffs and leaves comments with explanations and fix suggestions. How do I set up Bugbot? — Go to cursor.com/dashboard 2. How do I trigger a review? — Bugbot runs automatically when a PR is created or updated. How do I customize what Bugbot checks? — Create .cursor/BUGBOT.md files in your repository to give Bugbot project-specific review guidelines. How do I check which rules Bugbot used? — Comment or on the pull request. What does Bugbot include? — Bugbot includes reviews on all PRs across your repositories, access to Bugbot rules, and the ability to set the effort level Bugbot…",
+      "apply_in_eos": "Help Bugbot is vendor PR review. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into Bugbot dashboard setup for daily ingest. EOS TDD evidence remains required. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
