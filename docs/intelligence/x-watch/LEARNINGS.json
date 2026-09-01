@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:58:21.825Z",
+  "updated_at": "2026-09-01T13:03:19.779Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1639,6 +1639,16 @@
       "published_at": null,
       "summary": "Rules give Agent persistent instructions for your project. What is a rule? — A rule is a persistent set of instructions Agent follows while working in your project. How do I create a project rule? — Project rules live in your codebase and are version-controlled. How do I set up user rules? — User rules are global preferences that apply across all your projects. How do I use AGENTS.md? — Create an AGENTS.md file in your project root. What are good practices for writing rules? — Keep rules under 500 lines. How do I organize rule files? — Keep all rules in a flat directory. Where are rules stored? — Project rules are stored in inside your project folder. How do team rules work? — Team and Enterprise plans can create and enforce rules across the entire organization from the Cursor dashboard.…",
       "apply_in_eos": "Help Rules is vendor Agent instructions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team rules for daily ingest. Keep .mdc, AGENTS.md, and /create-rule. Team dashboard rules are not EOS governance. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-customization-skills",
+      "title": "Skills",
+      "source_url": "https://cursor.com/help/customization/skills",
+      "published_at": null,
+      "summary": "Skills are reusable sets of instructions that teach Agent how to handle specific tasks. What are Skills? — Skills are markdown files that teach Agent specialized workflows. How do I create a skill? — Type /create-skill in chat and describe the skill you want. SKILL.md Are user-level skills available on Cloud Agents and remote workers? — Cursor loads and on the local machine. How do I scope a skill to specific files? — Add a field to the skill's frontmatter. How do I use a skill? — Type followed by the skill name in chat to run it (e.g., /write-tests ), or type and select it to attach as context. When should I use skills instead of rules? — Use a rule when a short instruction is enough. How do I convert a rule into a skill? — Type /create-skill in chat and tell Agent to turn your rule into…",
+      "apply_in_eos": "Help Skills is vendor Agent workflows. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team skills for daily ingest. Keep SKILL.md under .cursor/skills. Prefer /create-skill. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

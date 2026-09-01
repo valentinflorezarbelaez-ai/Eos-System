@@ -164,13 +164,14 @@
     "https://cursor.com/help/ai-features/shared-transcripts",
     "https://cursor.com/help/ai-features/tab",
     "https://cursor.com/help/customization/rules",
+    "https://cursor.com/help/customization/skills",
     "https://cursor.com/help/models-and-usage/available-models",
     "https://cursor.com/help/models-and-usage/cursor-router",
     "https://cursor.com/help/models-and-usage/grok-4-5",
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-09-01T12:58:21.813Z",
-  "last_item_count": 168,
-  "last_new_item_count": 13
+  "last_ingest_at": "2026-09-01T13:03:19.767Z",
+  "last_item_count": 169,
+  "last_new_item_count": 14
 }
