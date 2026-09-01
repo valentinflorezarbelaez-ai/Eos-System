@@ -633,6 +633,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_GROK_BOT",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-AI-PAIR-PROGRAMMING",
+      "url": "https://cursor.com/help/ai-features/ai-pair-programming",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_AI_PAIR_PROGRAMMING",
+      "fetchable": true
     }
   ]
 }

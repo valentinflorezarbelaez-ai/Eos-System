@@ -243,6 +243,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/ai-pair-programming' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -412,6 +416,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/grok-bot/plans'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/learn/working-with-agents'),
     false
   );
   assert.equal(
@@ -1755,6 +1763,21 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(grokBotDocs.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(grokBotDocs.apply_in_eos.includes('Vercel'), false);
   assert.equal(grokBotDocs.apply_in_eos.includes('changelog + forum'), false);
+  const helpAiPairProgramming = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/ai-features/ai-pair-programming');
+  assert.ok(helpAiPairProgramming);
+  assert.equal(helpAiPairProgramming.title, 'How does AI pair programming work in Cursor?');
+  assert.match(helpAiPairProgramming.summary, /What is an AI coding assistant/);
+  assert.match(helpAiPairProgramming.summary, /How do I pair program with Cursor/);
+  assert.equal(helpAiPairProgramming.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpAiPairProgramming.summary), false);
+  assert.match(helpAiPairProgramming.apply_in_eos, /vendor desktop Agent coworking/i);
+  assert.match(helpAiPairProgramming.apply_in_eos, /\/goal/);
+  assert.match(helpAiPairProgramming.apply_in_eos, /do not rotate this Cloud Agent into desktop pair-programming chat/i);
+  assert.match(helpAiPairProgramming.apply_in_eos, /environment\.json/);
+  assert.match(helpAiPairProgramming.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpAiPairProgramming.apply_in_eos), false);
+  assert.equal(helpAiPairProgramming.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpAiPairProgramming.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2003,6 +2026,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Side chats', link: 'https://cursor.com/help/ai-features/side-chats' },
     { title: 'Conversation search', link: 'https://cursor.com/help/ai-features/conversation-search' },
     { title: 'Grok Bot', link: 'https://cursor.com/docs/grok-bot' },
+    { title: 'How does AI pair programming work in Cursor?', link: 'https://cursor.com/help/ai-features/ai-pair-programming' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3245,6 +3269,26 @@ test('applyHint for Grok Bot docs keeps this Cloud Agent off the Grok Bot app', 
   assert.equal(hint.includes('changelog + forum'), false);
 });
 
+test('applyHint for Help AI pair programming keeps this Cloud Agent off desktop pair-programming chat', () => {
+  const hint = applyHint({
+    title: 'How does AI pair programming work in Cursor?',
+    link: 'https://cursor.com/help/ai-features/ai-pair-programming',
+    summary: 'Optional AI pair programming is enabled by default. Custom Mode and Vercel. Use Slack.'
+  });
+  assert.match(hint, /vendor desktop Agent coworking/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop pair-programming chat/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Cursor Learn'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4204,6 +4248,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(grokBotDocs[0]).includes('Vercel'), false);
   assert.equal(applyHint(grokBotDocs[0]).includes('changelog + forum'), false);
 
+  const helpAiPairProgramming = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-ai-pair-programming.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/ai-features/ai-pair-programming'
+  );
+  assert.equal(helpAiPairProgramming[0].id, 'https://cursor.com/help/ai-features/ai-pair-programming');
+  assert.equal(helpAiPairProgramming[0].title, 'How does AI pair programming work in Cursor?');
+  assert.match(helpAiPairProgramming[0].summary, /AI pair programming puts you and a coding agent on the same task/);
+  assert.match(applyHint(helpAiPairProgramming[0]), /vendor desktop Agent coworking/i);
+  assert.match(applyHint(helpAiPairProgramming[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpAiPairProgramming[0])), false);
+  assert.equal(applyHint(helpAiPairProgramming[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpAiPairProgramming[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpAiPairProgramming[0]).includes('Cursor Learn'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4696,6 +4755,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/docs/grok-bot'),
     'https://cursor.com/docs/grok-bot.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/ai-pair-programming'),
+    'https://cursor.com/help/ai-features/ai-pair-programming.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -5219,6 +5282,16 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(grokBotMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(grokBotMd.summary), false);
   assert.equal(grokBotMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpAiPairProgrammingMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-ai-pair-programming.md'), 'utf8')
+  );
+  assert.equal(helpAiPairProgrammingMd.title, 'How does AI pair programming work in Cursor?');
+  assert.match(helpAiPairProgrammingMd.summary, /What is an AI coding assistant/);
+  assert.match(helpAiPairProgrammingMd.summary, /How do I pair program with Cursor/);
+  assert.equal(helpAiPairProgrammingMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpAiPairProgrammingMd.summary), false);
+  assert.equal(helpAiPairProgrammingMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -6452,6 +6525,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Conversation search is vendor desktop transcript search. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop conversation search for daily ingest. This Cloud Agent VM already searches the workspace. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'How does AI pair programming work in Cursor?',
+      source_url: 'https://cursor.com/help/ai-features/ai-pair-programming',
+      published_at: null,
+      apply_in_eos: 'Help AI pair programming is vendor desktop Agent coworking. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop pair-programming chat for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -6492,6 +6571,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/side-chats'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/conversation-search'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/ai-pair-programming'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -7063,6 +7143,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/side-chats'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/conversation-search'), false);
+  assert.equal(current.includes('cursor.com/help/ai-features/ai-pair-programming'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
