@@ -6,12 +6,14 @@
 
 import { MissionRuntime } from '../core/runtime/mission-runtime.js';
 import { TutorMaestro } from '../core/tutor/tutor-maestro.js';
+import { DoctorEngine } from '../core/diagnostics/doctor-engine.js';
 import fs from 'node:fs';
 
 export class MissionCLI {
   constructor(options = {}) {
     this.runtime = new MissionRuntime(options);
     this.tutor = options.tutor || new TutorMaestro();
+    this.doctor = options.doctor || new DoctorEngine({ baseDir: options.baseDir });
   }
 
   /**
@@ -36,6 +38,10 @@ export class MissionCLI {
 
     if (command === 'verify' || command === 'v') {
       return this.handleVerifyCommand(argv.slice(1));
+    }
+
+    if (command === 'doctor') {
+      return this.handleDoctorCommand(argv.slice(1));
     }
 
     return {
@@ -270,6 +276,48 @@ export class MissionCLI {
         };
       }
 
+      // 10b. eos mission cancel <mission-id> [--reason <text>]
+      if (sub === 'cancel') {
+        const missionId = args[1];
+        if (!missionId) return { success: false, output: "Error: Missing '<mission-id>' argument." };
+
+        const reasonIdx = args.indexOf('--reason');
+        const reason = reasonIdx !== -1 ? args[reasonIdx + 1] : 'Operator cancelled mission';
+
+        const res = this.runtime.cancelMission(missionId, reason);
+        return {
+          success: true,
+          output: `🚫 Mission ${res.mission_id} is now CANCELLED (no verification claim is made).\n- Reason: ${res.reason}`,
+          data: res
+        };
+      }
+
+      // 10c. eos mission advance <mission-id> [--require-hitl] [--hitl-receipt <path>] [--reviewer <id>]
+      if (sub === 'advance') {
+        const missionId = args[1];
+        if (!missionId) return { success: false, output: "Error: Missing '<mission-id>' argument." };
+
+        const hitlIdx = args.indexOf('--hitl-receipt');
+        const reviewerIdx = args.indexOf('--reviewer');
+        let hitlReceipt = null;
+        if (hitlIdx !== -1) {
+          const receiptPath = args[hitlIdx + 1];
+          if (!receiptPath) return { success: false, output: 'Error: --hitl-receipt requires a file path.' };
+          hitlReceipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
+        }
+
+        const res = this.runtime.advanceMission(missionId, {
+          hitlReceipt,
+          requireExternalHitl: args.includes('--require-hitl'),
+          reviewerIdentity: reviewerIdx !== -1 ? args[reviewerIdx + 1] : undefined
+        });
+        return {
+          success: true,
+          output: `⏩ Mission ${res.mission_id} advanced: ${res.from} → ${res.to} (via ${res.event_type})`,
+          data: res
+        };
+      }
+
       // 11. eos mission submit <mission-id> --file <return-pkg.json>
       if (sub === 'submit' || sub === 'ingest') {
         const missionId = args[1];
@@ -330,6 +378,15 @@ export class MissionCLI {
     };
   }
 
+  handleDoctorCommand(args = []) {
+    const result = this.doctor.run();
+    return {
+      success: result.verdict === 'PASS',
+      output: args.includes('--json') ? JSON.stringify(result, null, 2) : this.doctor.render(result),
+      data: result
+    };
+  }
+
   getHelp() {
     return `
 ================================================================================
@@ -338,8 +395,14 @@ EOS CONTROL PLANE CLI (v3.1.0) — Autonomous Engineering Governance
 
 USAGE:
   eos mission <command> [options]
+  eos doctor [--json]
 
 COMMANDS:
+  eos doctor [--json]
+      Clean-clone preflight: Node runtime, dependency policy, canonical entrypoints, schema
+      catalog, operator-path leakage, git tracking of canonical files, and protected surfaces.
+      Exits non-zero when the checkout would not work on another machine.
+
   eos mission create --goal "<text>" [--project <path>]
       Initializes a new mission, discovers project profile, and creates .missions/<id>/
 
@@ -367,8 +430,17 @@ COMMANDS:
   eos mission resume <mission-id>
       Transitions paused mission back to ACTIVE.
 
+  eos mission advance <mission-id> [--reviewer <id>] [--hitl-receipt <path>] [--require-hitl]
+      Performs the next canonical FSM transition. Each gate is evaluated against the facts on
+      disk (plan, task contracts, accepted returns, observed test results), so the gate denies
+      when the evidence is absent.
+
   eos mission close <mission-id>
-      Concludes mission and seals final ledger record.
+      Completes the mission. Only legal from OPERATE_AND_LEARN: COMPLETED asserts verified
+      work, so the gated path must be traversed first.
+
+  eos mission cancel <mission-id> [--reason <text>]
+      Abandons the mission (CANCELLED). Makes no claim that the work was verified.
 
 SAFETY INVARIANTS:
   - Default Authority: LEVEL_0 / READ_ONLY

@@ -12,9 +12,15 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '../..');
 
 export class McpProvisioningEngine {
-  constructor() {
-    this.cursorMcpFile = path.join(rootDir, '.cursor/mcp.json');
-    this.activeToolsFile = path.join(rootDir, 'EOS-MISSION-CONTROL/ACTIVE_TOOLS.json');
+  /**
+   * @param {object} [options]
+   * @param {string} [options.cursorMcpFile] catalog source (defaults to the committed .cursor/mcp.json)
+   * @param {string} [options.activeToolsFile] roster target; overridable so callers can provision
+   *   into a scratch roster instead of mutating tracked Mission Control state
+   */
+  constructor(options = {}) {
+    this.cursorMcpFile = options.cursorMcpFile || path.join(rootDir, '.cursor/mcp.json');
+    this.activeToolsFile = options.activeToolsFile || path.join(rootDir, 'EOS-MISSION-CONTROL/ACTIVE_TOOLS.json');
   }
 
   // 1. Load available catalog from .cursor/mcp.json
@@ -38,6 +44,7 @@ export class McpProvisioningEngine {
     if (fs.existsSync(this.activeToolsFile)) {
       activeData = JSON.parse(fs.readFileSync(this.activeToolsFile, 'utf8'));
     }
+    activeData.governed_mcps = activeData.governed_mcps || [];
 
     const currentMcpNames = new Set(activeData.governed_mcps.map(m => m.name.toLowerCase()));
 
@@ -67,6 +74,7 @@ export class McpProvisioningEngine {
     }
 
     // Save updated active tools
+    fs.mkdirSync(path.dirname(this.activeToolsFile), { recursive: true });
     fs.writeFileSync(this.activeToolsFile, JSON.stringify(activeData, null, 2));
 
     return {

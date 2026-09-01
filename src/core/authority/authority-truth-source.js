@@ -15,6 +15,7 @@ import {
 } from '../sdd/sdd-fsm-engine.js';
 import { HashChainedLedger, calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
 import { HitlGatekeeper } from '../sdd/hitl-gatekeeper.js';
+import { updateManifestFile } from '../contracts/integrity-manifest.js';
 
 const SNAPSHOT_FILE = 'authority-snapshot.json';
 const PACKAGE_FILE = 'mission-package.json';
@@ -64,6 +65,79 @@ export class AuthorityTruthSource {
       throw err;
     }
     return JSON.parse(fs.readFileSync(p, 'utf8'));
+  }
+
+  _ledger(missionId) {
+    return new HashChainedLedger({ baseDir: path.join(this.getMissionDir(missionId), 'ledger') });
+  }
+
+  /**
+   * Checks the on-disk snapshot against the hash anchored in the append-only ledger by the
+   * last ATS write. Detects direct edits of authority-snapshot.json, which would otherwise
+   * let a caller relocate the mission state machine without any recorded transition.
+   *
+   * Scope limit: this proves the snapshot matches the last recorded ATS write. It does not
+   * defend against an actor able to execute ledger appends, which would require external
+   * notarisation.
+   *
+   * @returns {{valid: boolean, code: string, expected: string|null, actual: string|null}}
+   */
+  verifySnapshotIntegrity(missionId) {
+    const p = this._snapshotPath(missionId);
+    if (!fs.existsSync(p)) {
+      return { valid: false, code: 'ATS_SNAPSHOT_MISSING', expected: null, actual: null };
+    }
+    const actual = calculateSha256(fs.readFileSync(p, 'utf8'));
+
+    const events = this._ledger(missionId).getEvents(missionId);
+    let expected = null;
+    for (let i = events.length - 1; i >= 0; i--) {
+      const anchored = events[i]?.payload?.snapshot_file_sha256;
+      if (anchored) {
+        expected = anchored;
+        break;
+      }
+    }
+    if (!expected) {
+      return { valid: false, code: 'ATS_ANCHOR_MISSING', expected: null, actual };
+    }
+    return {
+      valid: expected === actual,
+      code: expected === actual ? 'ATS_SNAPSHOT_VERIFIED' : 'ATS_SNAPSHOT_TAMPERED',
+      expected,
+      actual
+    };
+  }
+
+  _assertSnapshotIntegrity(missionId) {
+    const integrity = this.verifySnapshotIntegrity(missionId);
+    if (!integrity.valid) {
+      const err = new Error(
+        `ATS_SNAPSHOT_TAMPERED [${integrity.code}]: authority-snapshot.json for ${missionId} does not match the hash anchored in the mission ledger`
+      );
+      err.code = 'ATS_SNAPSHOT_TAMPERED';
+      err.diagnostic = integrity;
+      throw err;
+    }
+    return integrity;
+  }
+
+  /**
+   * Rejects a transition whose idempotency key was already committed in this mission's ledger.
+   * The in-memory enforcer set does not survive process boundaries, and every CLI invocation
+   * is a new process, so durable replay protection has to read the ledger.
+   */
+  _assertNoLedgerReplay(missionId, idempotencyKey) {
+    if (!idempotencyKey) return;
+    const events = this._ledger(missionId).getEvents(missionId);
+    const clash = events.find((e) => e?.payload?.idempotency_key === idempotencyKey);
+    if (clash) {
+      const err = new Error(
+        `REPLAY_DETECTED [LEDGER_IDEMPOTENCY_CLASH]: idempotency_key '${idempotencyKey}' was already committed for ${missionId} (event ${clash.event_id})`
+      );
+      err.code = 'REPLAY_DETECTED';
+      throw err;
+    }
   }
 
   /**
@@ -129,6 +203,9 @@ export class AuthorityTruthSource {
       err.code = 'ATS_INVALID_REQUEST';
       throw err;
     }
+
+    this._assertSnapshotIntegrity(missionId);
+    this._assertNoLedgerReplay(missionId, idempotency_key);
 
     const snapshot = this.getSnapshot(missionId);
     const eventId = `EVT-${Date.now()}-${crypto.randomBytes(4).toString('hex')}`;
@@ -199,7 +276,8 @@ export class AuthorityTruthSource {
         from_state: snapshot.state,
         to_state: result.snapshot.state,
         receipt_id: result.receipt?.receipt_id,
-        snapshot_hash: result.receipt?.snapshot_hash
+        snapshot_hash: result.receipt?.snapshot_hash,
+        idempotency_key: event.idempotency_key
       },
       transitionReceipt: result.receipt
     });
@@ -223,6 +301,7 @@ export class AuthorityTruthSource {
     const prevPackage = fs.existsSync(packagePath) ? fs.readFileSync(packagePath) : null;
 
     const snapshotStr = JSON.stringify(snapshot, null, 2);
+    const snapshotFileSha256 = calculateSha256(snapshotStr);
 
     try {
       fs.writeFileSync(snapshotPath, snapshotStr, 'utf8');
@@ -236,15 +315,20 @@ export class AuthorityTruthSource {
       pkg.authority_truth = {
         sequence: snapshot.sequence,
         last_event_id: snapshot.last_event_id || null,
-        snapshot_sha256: calculateSha256(snapshotStr)
+        snapshot_sha256: snapshotFileSha256
       };
       const pkgStr = JSON.stringify(pkg, null, 2);
       fs.writeFileSync(packagePath, pkgStr, 'utf8');
+      if (fs.existsSync(path.join(this.getMissionDir(missionId), 'integrity-manifest.json'))) {
+        updateManifestFile(this.getMissionDir(missionId), PACKAGE_FILE, pkgStr);
+      }
 
-      const ledger = new HashChainedLedger({
-        baseDir: path.join(this.getMissionDir(missionId), 'ledger')
+      // Anchor the exact snapshot bytes in the append-only ledger so a later direct edit of
+      // authority-snapshot.json is detectable rather than silently authoritative.
+      this._ledger(missionId).appendEvent(missionId, meta.ledgerEvent || 'ATS_PERSIST', {
+        ...(meta.ledgerPayload || {}),
+        snapshot_file_sha256: snapshotFileSha256
       });
-      ledger.appendEvent(missionId, meta.ledgerEvent || 'ATS_PERSIST', meta.ledgerPayload || {});
     } catch (persistErr) {
       // Rollback snapshot if package/ledger failed
       try {

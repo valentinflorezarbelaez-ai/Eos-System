@@ -11,7 +11,10 @@ import crypto from 'node:crypto';
 import { UniversalTechnicalDiscoveryEngine } from '../discovery/universal-technical-discovery-engine.js';
 import { GovernedTechnicalSelectionEngine } from '../discovery/governed-technical-selection-engine.js';
 import { CursorMissionPackageGenerator } from '../adapters/cursor-mission-package.js';
-import { CursorReturnIngestionEngine } from '../adapters/cursor-return-ingestion-engine.js';
+import {
+  CursorReturnIngestionEngine,
+  CONSTITUTIONAL_PROTECTED_SURFACES
+} from '../adapters/cursor-return-ingestion-engine.js';
 import { RoleSkillRegistryEngine } from '../roles/role-skill-registry-engine.js';
 import { MultiAgentSupervisionEngine } from '../supervision/multi-agent-supervision-engine.js';
 import { HashChainedLedger, calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
@@ -21,6 +24,7 @@ import { HitlGatekeeper } from '../sdd/hitl-gatekeeper.js';
 import { IntegrationGatekeeper } from '../governance/integration-gatekeeper.js';
 import { SchemaValidator } from '../contracts/schema-validator.js';
 import { CanonicalRulesIndex } from '../rules/canonical-rules-index.js';
+import { updateManifestFile } from '../contracts/integrity-manifest.js';
 import { SDD_STATES } from '../sdd/sdd-fsm-engine.js';
 
 export class MissionRuntime {
@@ -51,14 +55,7 @@ export class MissionRuntime {
   }
 
   _updateManifestFile(missionDir, relPath, contentStr) {
-    const manifestFile = path.join(missionDir, 'integrity-manifest.json');
-    const manifest = fs.existsSync(manifestFile)
-      ? JSON.parse(fs.readFileSync(manifestFile, 'utf8'))
-      : { mission_id: path.basename(missionDir), files: {} };
-
-    manifest.files[relPath] = calculateSha256(contentStr);
-    manifest.updated_at = new Date().toISOString();
-    fs.writeFileSync(manifestFile, JSON.stringify(manifest, null, 2), 'utf8');
+    updateManifestFile(missionDir, relPath, contentStr);
   }
 
   /**
@@ -289,7 +286,7 @@ export class MissionRuntime {
         allowed_tools: ['read_file', 'grep_search', 'list_dir'],
         allowed_read_roots: [direction.project_path],
         allowed_write_roots: [direction.project_path],
-        protected_surfaces: ['docs/governance/**'],
+        protected_surfaces: [...CONSTITUTIONAL_PROTECTED_SURFACES],
         authority_level: direction.authority_level,
         budget: { max_tokens: 15000, max_cost_usd: 0.03, max_duration_seconds: 600 },
         stop_conditions: ['FATAL_ERROR', 'BUDGET_EXCEEDED'],
@@ -542,10 +539,31 @@ export class MissionRuntime {
     const events = ledger.getEvents(missionId);
     const chainCheck = ledger.verifyChainIntegrity(missionId);
 
+    // Reflect what actually came back: a task whose return was reconciled ACCEPT with a clean
+    // test run is reported VERIFIED, everything else keeps its planned status. The verdict
+    // stays scoped to technical verification and never claims a business outcome.
+    const returns = this._readAcceptedReturns(missionDir, { acceptedOnly: false });
+    const evidence = this._deriveVerificationEvidence(missionDir);
+    const verifiedTaskIds = new Set(evidence.filter((e) => e.status === 'VERIFIED').map((e) => e.task_id));
+    const tasks = (plan.tasks || []).map((t) =>
+      verifiedTaskIds.has(t.task_id) ? { ...t, status: 'VERIFIED' } : t
+    );
+
+    const phase = this.ats.getSnapshot(missionId).state;
+    const snapshotIntegrity = this.ats.verifySnapshotIntegrity(missionId);
+    const technicallyVerified =
+      phase === SDD_STATES.COMPLETED &&
+      chainCheck.valid &&
+      snapshotIntegrity.valid &&
+      evidence.length > 0 &&
+      evidence.every((e) => e.status === 'VERIFIED');
+
     const { jsonReport, markdownReport } = this.reporter.generateReport({
       mission_id: missionId,
       goal: direction.goal,
-      epistemic_verdict: 'NOT_PROVEN',
+      epistemic_verdict: technicallyVerified
+        ? 'TECHNICALLY_VERIFIED_WITHIN_LOCAL_SCOPE'
+        : 'NOT_PROVEN',
       provenance: {
         token_count: 'NOT_RUN',
         cost_usd: 'NOT_RUN',
@@ -553,12 +571,15 @@ export class MissionRuntime {
         reversibility: 'NOT_RUN',
         provider_reliability: 'NOT_RUN'
       },
-      tasks: plan.tasks,
+      tasks,
       evidence: {
-        total_receipts: plan.tasks.length,
-        verified_receipts: plan.tasks.filter(t => t.status === 'VERIFIED').length,
+        total_receipts: tasks.length,
+        verified_receipts: tasks.filter((t) => t.status === 'VERIFIED').length,
         hash_chain_integrity: chainCheck.valid ? 'VALID' : 'CORRUPTED',
-        ledger_chain_count: events.length
+        authority_snapshot_integrity: snapshotIntegrity.code,
+        ledger_chain_count: events.length,
+        returns_ingested: returns.length,
+        observed_test_results: evidence.map((e) => ({ task_id: e.task_id, status: e.status, ...e.observed }))
       },
       economics: {
         total_tokens: null,
@@ -598,6 +619,10 @@ export class MissionRuntime {
     const ledger = new HashChainedLedger({ baseDir: path.join(missionDir, 'ledger') });
     const chainCheck = ledger.verifyChainIntegrity(missionId);
 
+    // The authority snapshot is the mission's state of record but is not listed in the
+    // integrity manifest, so it is checked against the hash anchored in the ledger.
+    const snapshotIntegrity = this.ats.verifySnapshotIntegrity(missionId);
+
     const manifestFile = path.join(missionDir, 'integrity-manifest.json');
     const manifest = fs.existsSync(manifestFile) ? JSON.parse(fs.readFileSync(manifestFile, 'utf8')) : { files: {} };
 
@@ -618,11 +643,19 @@ export class MissionRuntime {
       }
     }
 
+    if (!snapshotIntegrity.valid) {
+      discrepancies.push(
+        `AUTHORITY_SNAPSHOT_${snapshotIntegrity.code}: authority-snapshot.json does not match the hash anchored in the ledger ` +
+          `(anchored: ${String(snapshotIntegrity.expected).substring(0, 8)}..., actual: ${String(snapshotIntegrity.actual).substring(0, 8)}...)`
+      );
+    }
+
     return {
       mission_id: missionId,
-      valid: chainCheck.valid && manifestValid,
+      valid: chainCheck.valid && manifestValid && snapshotIntegrity.valid,
       ledger_chain: chainCheck,
       manifest_valid: manifestValid,
+      authority_snapshot: snapshotIntegrity,
       discrepancies
     };
   }
@@ -702,6 +735,293 @@ export class MissionRuntime {
   }
 
   /**
+   * Abandons a mission without asserting that its work was verified.
+   * This is the honest counterpart to closeMission: CANCELLED makes no evidence claim,
+   * whereas COMPLETED does and therefore requires the full gated path.
+   * @param {string} missionId
+   * @param {string} reason
+   */
+  cancelMission(missionId, reason = 'Operator cancelled mission') {
+    const missionDir = this.getMissionDir(missionId);
+    if (!fs.existsSync(missionDir)) throw new Error(`MISSION_NOT_FOUND: Mission '${missionId}' does not exist.`);
+
+    this.ats.commitTransition({
+      missionId,
+      event_type: 'mission.cancel',
+      authority_level: 'LEVEL_0',
+      actor: { identity: 'operator', role: 'HUMAN_DIRECTOR', identity_type: 'human_owner' }
+    });
+
+    const ledger = new HashChainedLedger({ baseDir: path.join(missionDir, 'ledger') });
+    ledger.appendEvent(missionId, 'MISSION_CANCELLED', { reason });
+
+    return { mission_id: missionId, status: 'cancelled', reason };
+  }
+
+  /**
+   * Performs the next canonical transition for a mission, deriving each gate's required
+   * artifacts, outputs and evidence from what is actually on disk. Gates deny when the
+   * underlying facts are absent, so COMPLETED is unreachable without a verified return.
+   *
+   * @param {string} missionId
+   * @param {object} [options]
+   * @param {object} [options.hitlReceipt] receipt for HUMAN_RELEASE_GATE
+   * @param {boolean} [options.requireExternalHitl] refuse the local fixture receipt
+   * @param {string} [options.reviewerIdentity] independent reviewer identity
+   * @returns {{mission_id: string, from: string, to: string, event_type: string}}
+   */
+  advanceMission(missionId, options = {}) {
+    const missionDir = this.getMissionDir(missionId);
+    if (!fs.existsSync(missionDir)) {
+      throw new Error(`MISSION_NOT_FOUND: Mission '${missionId}' does not exist.`);
+    }
+
+    const state = this.ats.getSnapshot(missionId).state;
+    const step = this._buildAdvanceStep(missionId, missionDir, state, options);
+
+    const res = this.ats.commitTransition({
+      missionId,
+      event_type: step.event_type,
+      to_state: step.to_state,
+      authority_level: step.authority_level || 'LEVEL_0',
+      actor: step.actor,
+      artifacts: step.artifacts || [],
+      evidence_refs: step.evidence_refs || [],
+      hitlReceipt: step.hitlReceipt || null,
+      context: step.context || {}
+    });
+
+    const ledger = new HashChainedLedger({ baseDir: path.join(missionDir, 'ledger') });
+    ledger.appendEvent(missionId, 'MISSION_ADVANCED', {
+      event_type: step.event_type,
+      from_state: state,
+      to_state: res.snapshot.state,
+      gate_inputs: step.gate_inputs || {}
+    });
+
+    return {
+      mission_id: missionId,
+      from: state,
+      to: res.snapshot.state,
+      event_type: step.event_type,
+      receipt_id: res.receipt?.receipt_id
+    };
+  }
+
+  /**
+   * Resolves the single legal next step and the real facts each gate demands.
+   * @private
+   */
+  _buildAdvanceStep(missionId, missionDir, state, options) {
+    const IMPLEMENTER = 'AGENT-LOCAL-01';
+
+    switch (state) {
+      case SDD_STATES.PLAN: {
+        const plan = this._readMissionJson(missionDir, 'plan.json');
+        if (!plan) {
+          throw this._advanceError('ADVANCE_BLOCKED_NO_PLAN', 'plan.json is missing; run mission plan first');
+        }
+        const taskContracts = this._readTaskContracts(missionDir);
+        if (taskContracts.length === 0) {
+          throw this._advanceError('ADVANCE_BLOCKED_NO_TASKS', 'no task contracts found under tasks/');
+        }
+        return {
+          event_type: 'plan.approve',
+          to_state: SDD_STATES.DELEGATE,
+          artifacts: [
+            this._writeMissionArtifact(missionDir, 'implementation_plan', plan),
+            this._writeMissionArtifact(missionDir, 'task_graph', {
+              mission_id: missionId,
+              nodes: taskContracts.map((t) => ({ task_id: t.task_id, role: t.assigned_role, status: t.status }))
+            })
+          ],
+          gate_inputs: { tasks: taskContracts.length }
+        };
+      }
+
+      case SDD_STATES.DELEGATE: {
+        const taskContracts = this._readTaskContracts(missionDir);
+        const contract = taskContracts[0];
+        if (!contract) {
+          throw this._advanceError('ADVANCE_BLOCKED_NO_TASK_CONTRACT', 'no task contract available to delegate');
+        }
+        return {
+          event_type: 'task.assign',
+          to_state: SDD_STATES.SUPERVISE,
+          context: { taskContract: contract, implementer: { identity: IMPLEMENTER } },
+          gate_inputs: { delegated_task: contract.task_id }
+        };
+      }
+
+      case SDD_STATES.SUPERVISE: {
+        const accepted = this._readAcceptedReturns(missionDir);
+        if (accepted.length === 0) {
+          throw this._advanceError(
+            'ADVANCE_BLOCKED_NO_ACCEPTED_RETURN',
+            'no accepted Cursor return package; submit work with mission submit before completing the task'
+          );
+        }
+        return {
+          event_type: 'task.complete',
+          to_state: SDD_STATES.VERIFY,
+          authority_level: 'LEVEL_1',
+          context: {
+            implementer: { identity: IMPLEMENTER },
+            outputs: accepted.flatMap((r) =>
+              (r.returnPkg.affected_files || []).map((f) => ({
+                task_id: r.taskId,
+                path: f.path,
+                action: f.action
+              }))
+            )
+          },
+          gate_inputs: { accepted_returns: accepted.map((r) => r.taskId) }
+        };
+      }
+
+      case SDD_STATES.VERIFY: {
+        const evidence = this._deriveVerificationEvidence(missionDir);
+        return {
+          event_type: 'verification.complete',
+          to_state: SDD_STATES.REVIEW,
+          evidence_refs: evidence,
+          context: { implementer: { identity: IMPLEMENTER } },
+          gate_inputs: { evidence: evidence.map((e) => ({ id: e.id, status: e.status })) }
+        };
+      }
+
+      case SDD_STATES.REVIEW: {
+        const reviewer = options.reviewerIdentity || 'REVIEWER-INDEPENDENT-01';
+        return {
+          event_type: 'review.accept',
+          to_state: SDD_STATES.HUMAN_RELEASE_GATE,
+          actor: { identity: reviewer, role: 'INDEPENDENT_REVIEWER', identity_type: 'eos_reviewer' },
+          context: { implementer: { identity: IMPLEMENTER }, reviewer: { identity: reviewer } },
+          gate_inputs: { reviewer, implementer: IMPLEMENTER }
+        };
+      }
+
+      case SDD_STATES.HUMAN_RELEASE_GATE: {
+        let receipt = options.hitlReceipt || null;
+        if (!receipt) {
+          const receiptPath = path.join(missionDir, 'hitl', 'release-approval.json');
+          if (fs.existsSync(receiptPath)) {
+            receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
+          }
+        }
+        if (!receipt) {
+          if (options.requireExternalHitl === true || this.allowLocalDirectorReceipt === false) {
+            throw this._advanceError(
+              'HITL_RECEIPT_REQUIRED',
+              'provide hitlReceipt or .missions/<id>/hitl/release-approval.json before leaving HUMAN_RELEASE_GATE'
+            );
+          }
+          receipt = this.hitl.issueLocalBoundedReceipt({
+            missionId,
+            gateId: 'HUMAN_RELEASE_GATE',
+            reason: 'Auto-issued LOCAL_BOUNDED fixture receipt for release gate (MEASURED_LOCAL_FIXTURE)'
+          });
+          fs.mkdirSync(path.join(missionDir, 'hitl'), { recursive: true });
+          const receiptStr = JSON.stringify(receipt, null, 2);
+          fs.writeFileSync(path.join(missionDir, 'hitl', 'release-approval.json'), receiptStr, 'utf8');
+          this._updateManifestFile(missionDir, 'hitl/release-approval.json', receiptStr);
+          this.schemas.assertValid(receipt, 'hitl-receipt.local.schema.json', 'hitl-receipt');
+        }
+        return {
+          event_type: 'human.approve_release',
+          to_state: SDD_STATES.OPERATE_AND_LEARN,
+          hitlReceipt: receipt,
+          gate_inputs: { receipt_id: receipt.receipt_id, epistemic_class: receipt.epistemic_class || 'EXTERNAL' }
+        };
+      }
+
+      case SDD_STATES.OPERATE_AND_LEARN:
+        return {
+          event_type: 'mission.close',
+          to_state: SDD_STATES.COMPLETED,
+          actor: { identity: 'operator', role: 'HUMAN_DIRECTOR', identity_type: 'human_owner' },
+          gate_inputs: {}
+        };
+
+      default:
+        throw this._advanceError(
+          'ADVANCE_NOT_APPLICABLE',
+          `no canonical advance defined from state ${state}`
+        );
+    }
+  }
+
+  /**
+   * Builds evidence references from the ingested return packages. Status is derived from the
+   * observed reconciliation verdict and test results, never asserted, so an unverified return
+   * produces evidence the VERIFY gate will refuse.
+   * @private
+   */
+  _deriveVerificationEvidence(missionDir) {
+    const returns = this._readAcceptedReturns(missionDir, { acceptedOnly: false });
+    return returns.map(({ taskId, returnPkg, assessment }) => {
+      const tr = returnPkg.test_results || {};
+      const testsClean = tr.total_tests > 0 && tr.failed_tests === 0 && tr.pass_rate === 1;
+      const reconciled = assessment?.verdict === 'ACCEPT';
+      return {
+        id: `EVD-RETURN-${taskId}`,
+        task_id: taskId,
+        status: testsClean && reconciled ? 'VERIFIED' : 'NOT_VERIFIED',
+        category: 'UNIT_TEST',
+        observed: {
+          reconciliation_verdict: assessment?.verdict || 'UNKNOWN',
+          total_tests: tr.total_tests ?? null,
+          failed_tests: tr.failed_tests ?? null,
+          pass_rate: tr.pass_rate ?? null
+        },
+        sha256: calculateSha256(JSON.stringify({ taskId, tr, verdict: assessment?.verdict }))
+      };
+    });
+  }
+
+  /** @private */
+  _readAcceptedReturns(missionDir, { acceptedOnly = true } = {}) {
+    const returnsDir = path.join(missionDir, 'cursor', 'returns');
+    if (!fs.existsSync(returnsDir)) return [];
+    return fs
+      .readdirSync(returnsDir)
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => {
+        const taskId = f.replace(/\.json$/, '');
+        const returnPkg = JSON.parse(fs.readFileSync(path.join(returnsDir, f), 'utf8'));
+        const assessmentFile = path.join(missionDir, 'evidence', `return-${taskId}-assessment.json`);
+        const assessment = fs.existsSync(assessmentFile)
+          ? JSON.parse(fs.readFileSync(assessmentFile, 'utf8'))
+          : null;
+        return { taskId, returnPkg, assessment };
+      })
+      .filter((r) => (acceptedOnly ? r.assessment?.verdict === 'ACCEPT' : true));
+  }
+
+  /** @private */
+  _readTaskContracts(missionDir) {
+    const tasksDir = path.join(missionDir, 'tasks');
+    if (!fs.existsSync(tasksDir)) return [];
+    return fs
+      .readdirSync(tasksDir)
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => JSON.parse(fs.readFileSync(path.join(tasksDir, f), 'utf8')));
+  }
+
+  /** @private */
+  _readMissionJson(missionDir, relPath) {
+    const full = path.join(missionDir, relPath);
+    return fs.existsSync(full) ? JSON.parse(fs.readFileSync(full, 'utf8')) : null;
+  }
+
+  /** @private */
+  _advanceError(code, message) {
+    const err = new Error(`${code}: ${message}`);
+    err.code = code;
+    return err;
+  }
+
+  /**
    * Ingests and reconciles a Cursor Return Package against its corresponding task contract
    * @param {string} missionId
    * @param {string} returnPkgPath Relative or absolute path to the return package JSON
@@ -727,14 +1047,58 @@ export class MissionRuntime {
 
     const taskContract = JSON.parse(fs.readFileSync(taskContractFile, 'utf8'));
 
+    // Seed the engine from the mission's durable nonce registry. The engine's in-memory set
+    // does not survive a process boundary, and every CLI submission is a new process, so
+    // without this a replayed return package is accepted a second time.
+    const nonceRegistryFile = path.join(missionDir, 'nonce-registry.json');
+    const knownNonces = fs.existsSync(nonceRegistryFile)
+      ? JSON.parse(fs.readFileSync(nonceRegistryFile, 'utf8')).nonces || []
+      : [];
+    this.ingestionEngine.consumedNonces = new Set(knownNonces);
+
     // Ingest & evaluate via engine
     const evaluation = this.ingestionEngine.ingestAndEvaluate(returnPkg, taskContract);
 
-    // Save assessment to evidence folder
+    if (returnPkg.nonce && !knownNonces.includes(returnPkg.nonce)) {
+      fs.writeFileSync(
+        nonceRegistryFile,
+        JSON.stringify(
+          { mission_id: missionId, updated_at: new Date().toISOString(), nonces: [...knownNonces, returnPkg.nonce] },
+          null,
+          2
+        ),
+        'utf8'
+      );
+    }
+
+    // An accepted assessment is never overwritten by a later non-accepted submission.
+    // Otherwise replaying a package would destroy the evidence of the legitimate submission
+    // that preceded it and strand the mission, turning a replay into an evidence attack.
+    const returnsDir = path.join(missionDir, 'cursor', 'returns');
     const assessmentFile = path.join(missionDir, 'evidence', `return-${taskId}-assessment.json`);
+    const priorAssessment = fs.existsSync(assessmentFile)
+      ? JSON.parse(fs.readFileSync(assessmentFile, 'utf8'))
+      : null;
+    const supersedesAccepted = priorAssessment?.verdict === 'ACCEPT' && evaluation.verdict !== 'ACCEPT';
+
+    fs.mkdirSync(returnsDir, { recursive: true });
+    const retainedStr = JSON.stringify(returnPkg, null, 2);
     const assessmentStr = JSON.stringify(evaluation, null, 2);
-    fs.writeFileSync(assessmentFile, assessmentStr, 'utf8');
-    this._updateManifestFile(missionDir, `evidence/return-${taskId}-assessment.json`, assessmentStr);
+
+    if (supersedesAccepted) {
+      const attemptsDir = path.join(missionDir, 'evidence', 'rejected-attempts');
+      fs.mkdirSync(attemptsDir, { recursive: true });
+      const stamp = `${taskId}-${Date.now()}`;
+      fs.writeFileSync(path.join(attemptsDir, `${stamp}-return.json`), retainedStr, 'utf8');
+      fs.writeFileSync(path.join(attemptsDir, `${stamp}-assessment.json`), assessmentStr, 'utf8');
+      this._updateManifestFile(missionDir, `evidence/rejected-attempts/${stamp}-return.json`, retainedStr);
+      this._updateManifestFile(missionDir, `evidence/rejected-attempts/${stamp}-assessment.json`, assessmentStr);
+    } else {
+      fs.writeFileSync(path.join(returnsDir, `${taskId}.json`), retainedStr, 'utf8');
+      this._updateManifestFile(missionDir, `cursor/returns/${taskId}.json`, retainedStr);
+      fs.writeFileSync(assessmentFile, assessmentStr, 'utf8');
+      this._updateManifestFile(missionDir, `evidence/return-${taskId}-assessment.json`, assessmentStr);
+    }
 
     // Load selection record if available
     const selectionFile = path.join(missionDir, 'selections', `SEL-${taskId}.json`);
@@ -753,7 +1117,9 @@ export class MissionRuntime {
       task_id: taskId,
       verdict: evaluation.verdict,
       reconciliation_hash: evaluation.reconciliation_hash,
-      deviations_count: evaluation.deviations.length
+      deviations_count: evaluation.deviations.length,
+      nonce: returnPkg.nonce || null,
+      quarantined_as_rejected_attempt: supersedesAccepted
     });
     ledger.appendEvent(missionId, 'TASK_SUPERVISED', {
       task_id: taskId,
