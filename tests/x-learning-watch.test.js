@@ -235,6 +235,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/conversation-search' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -1697,6 +1701,22 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpSideChats.apply_in_eos), false);
   assert.equal(helpSideChats.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpSideChats.apply_in_eos.includes('Vercel'), false);
+  const helpConversationSearch = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/ai-features/conversation-search');
+  assert.ok(helpConversationSearch);
+  assert.equal(helpConversationSearch.title, 'Conversation search');
+  assert.match(helpConversationSearch.summary, /How do I search my past agent conversations/);
+  assert.match(helpConversationSearch.summary, /How do I search within an existing conversation/);
+  assert.equal(helpConversationSearch.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpConversationSearch.summary), false);
+  assert.match(helpConversationSearch.apply_in_eos, /vendor desktop transcript search/i);
+  assert.match(helpConversationSearch.apply_in_eos, /\/goal/);
+  assert.match(helpConversationSearch.apply_in_eos, /do not rotate this Cloud Agent into desktop conversation search/i);
+  assert.match(helpConversationSearch.apply_in_eos, /already searches the workspace/i);
+  assert.match(helpConversationSearch.apply_in_eos, /environment\.json/);
+  assert.match(helpConversationSearch.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpConversationSearch.apply_in_eos), false);
+  assert.equal(helpConversationSearch.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpConversationSearch.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1943,6 +1963,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Plugins', link: 'https://cursor.com/help/customization/plugins' },
     { title: 'What is multi-agent coding?', link: 'https://cursor.com/help/ai-features/multi-agent' },
     { title: 'Side chats', link: 'https://cursor.com/help/ai-features/side-chats' },
+    { title: 'Conversation search', link: 'https://cursor.com/help/ai-features/conversation-search' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3143,6 +3164,27 @@ test('applyHint for Help Side chats keeps this Cloud Agent off desktop /side', (
   assert.equal(hint.includes('Park tangents'), false);
 });
 
+test('applyHint for Help Conversation search keeps this watch searching the Cloud Agent VM', () => {
+  const hint = applyHint({
+    title: 'Conversation search',
+    link: 'https://cursor.com/help/ai-features/conversation-search',
+    summary: 'Optional conversation search is enabled by default. Custom Mode and Vercel. Use Slack.'
+  });
+  assert.match(hint, /vendor desktop transcript search/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop conversation search/i);
+  assert.match(hint, /already searches the workspace/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Instant Grep'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4072,6 +4114,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpSideChats[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpSideChats[0]).includes('Park tangents'), false);
 
+  const helpConversationSearch = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-conversation-search.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/ai-features/conversation-search'
+  );
+  assert.equal(helpConversationSearch[0].id, 'https://cursor.com/help/ai-features/conversation-search');
+  assert.equal(helpConversationSearch[0].title, 'Conversation search');
+  assert.match(helpConversationSearch[0].summary, /Search past agent transcripts and find matches inside an open conversation/);
+  assert.match(applyHint(helpConversationSearch[0]), /vendor desktop transcript search/i);
+  assert.match(applyHint(helpConversationSearch[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpConversationSearch[0])), false);
+  assert.equal(applyHint(helpConversationSearch[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpConversationSearch[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpConversationSearch[0]).includes('Instant Grep'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4556,6 +4613,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/side-chats'),
     'https://cursor.com/help/ai-features/side-chats.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/conversation-search'),
+    'https://cursor.com/help/ai-features/conversation-search.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -5058,6 +5119,16 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpSideChatsMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpSideChatsMd.summary), false);
   assert.equal(helpSideChatsMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpConversationSearchMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-conversation-search.md'), 'utf8')
+  );
+  assert.equal(helpConversationSearchMd.title, 'Conversation search');
+  assert.match(helpConversationSearchMd.summary, /How do I search my past agent conversations/);
+  assert.match(helpConversationSearchMd.summary, /How do I search within an existing conversation/);
+  assert.equal(helpConversationSearchMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpConversationSearchMd.summary), false);
+  assert.equal(helpConversationSearchMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -6278,6 +6349,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Side chats is vendor local-only side conversations. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into /side or desktop side chats for daily ingest. This Cloud Agent VM has no side chats. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Conversation search',
+      source_url: 'https://cursor.com/help/ai-features/conversation-search',
+      published_at: null,
+      apply_in_eos: 'Help Conversation search is vendor desktop transcript search. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop conversation search for daily ingest. This Cloud Agent VM already searches the workspace. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -6311,6 +6388,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/plugins'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/side-chats'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/conversation-search'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -6880,6 +6958,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/customization/plugins'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/side-chats'), false);
+  assert.equal(current.includes('cursor.com/help/ai-features/conversation-search'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);

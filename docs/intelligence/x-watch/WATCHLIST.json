@@ -619,6 +619,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_SIDE_CHATS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-CONVERSATION-SEARCH",
+      "url": "https://cursor.com/help/ai-features/conversation-search",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_CONVERSATION_SEARCH",
+      "fetchable": true
     }
   ]
 }
