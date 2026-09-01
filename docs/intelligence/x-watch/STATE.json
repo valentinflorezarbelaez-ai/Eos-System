@@ -183,11 +183,12 @@
     "https://cursor.com/help/models-and-usage/grok-4-5",
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits",
+    "https://cursor.com/help/security-and-privacy/account-compromised",
     "https://cursor.com/help/security-and-privacy/privacy",
     "https://cursor.com/help/security-and-privacy/regions",
     "https://cursor.com/help/security-and-privacy/sso"
   ],
-  "last_ingest_at": "2026-09-01T14:30:56.903Z",
-  "last_item_count": 185,
-  "last_new_item_count": 30
+  "last_ingest_at": "2026-09-01T14:35:30.495Z",
+  "last_item_count": 186,
+  "last_new_item_count": 31
 }

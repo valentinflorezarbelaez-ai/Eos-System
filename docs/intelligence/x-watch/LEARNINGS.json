@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T14:30:56.915Z",
+  "updated_at": "2026-09-01T14:35:30.508Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1829,6 +1829,16 @@
       "published_at": null,
       "summary": "Most Cursor plans include two monthly usage pools: Cursor Models : Cursor Grok 4.6, Cursor Grok 4.5, and Composer 2.5 Other Models : Third-party models, charged at model provider prices Pro, Pro Plus, and Ultra include b How do I check my usage? — Go to the Spending tab in your dashboard. What happens when I hit my usage limit? — You'll see a notification in the editor. When does my usage reset? — Usage resets monthly with your billing cycle. How do I get more usage? — Use Cursor Models : Cursor Grok 4.6, Cursor Grok 4.5, and Composer 2.5 draw from the Cursor Models pool, tracked separately and included with your plan Enable on-demand usage : Pay for additional requests at the same API How does Cursor Router interact with my plan's usage pools and limits? — Cursor Router requests are bill…",
       "apply_in_eos": "Honor included quota. Stop this daily watch rather than switching to paid on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-security-and-privacy-account-com",
+      "title": "Compromised account",
+      "source_url": "https://cursor.com/help/security-and-privacy/account-compromised",
+      "published_at": null,
+      "summary": "If you suspect someone has gained unauthorized access to your Cursor account, act quickly to secure it. What are signs of unauthorized account access? — Watch for these warning signs: Unexpected usage or charges on your billing page Login notifications you don't recognize Settings or preferences you didn't change Team invitations you didn't send (for team admins) How do I secure my Cursor account? — Start by securing your login method: 1. What if I use SSO to log in? — If your organization uses single sign-on (SSO), contact your IT administrator. Should I contact Cursor support? — Contact support at security@cursor.com if you: See charges for purchases you didn't make Cannot regain access to your account Notice team members added without your knowledge (for admins) Believe your API keys w…",
+      "apply_in_eos": "Help Compromised account is vendor compromised-account incident response. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard session revoke, billing, or API-key settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
