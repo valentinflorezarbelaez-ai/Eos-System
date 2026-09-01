@@ -158,6 +158,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2085390483740676365",
+      "handle": "cursor_ai",
+      "about": "Cursor Router keeps improving from millions of in-product user interactions each week",
+      "cited_by": "https://www.unrollnow.com/status/2085390483740676365",
+      "official_source": "https://cursor.com/blog/how-cursor-router-works",
+      "published_date": "2026-08-06",
+      "eos_note": "Vendor routing and cost claims are not EOS evidence. EOS rules still bind model and governance choices.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2084376701539405904",
       "handle": "cursor_ai",
       "about": "Cursor can now read, write, and act across your Google Workspace",
@@ -176,6 +187,50 @@
       "official_source": "https://cursor.com/blog/cloud-agent-environment",
       "published_date": "2026-08-03",
       "eos_note": "Vendor efficiency claim cited by a third party. Do not treat token-percentage marketing as EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2082532273421955513",
+      "handle": "cursor_ai",
+      "about": "Cursor is now on iPad. All the power of Cursor on iPhone, with more room to work with agents",
+      "cited_by": "https://www.unrollnow.com/status/2082532273421955513",
+      "official_source": "https://cursor.com/changelog/ipad",
+      "published_date": "2026-07-29",
+      "eos_note": "iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2081978255004053560",
+      "handle": "cursor_ai",
+      "about": "Today we're launching Cursor Start, a new ₹649/month plan for developers in India",
+      "cited_by": "https://www.unrollnow.com/status/2081978255004053560",
+      "official_source": "https://cursor.com/changelog/cursor-start",
+      "published_date": "2026-07-28",
+      "eos_note": "Cursor Start is India regional pricing. Do not switch this watch to Start. Honor included quota. Do not add help/account-and-billing/cursor-start as a feed.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2079993729532989500",
+      "handle": "cursor_ai",
+      "about": "Introducing Cursor Router, our intelligent model router that selects the right model for the task at hand",
+      "cited_by": "https://www.unrollnow.com/status/2079993729532989500",
+      "official_source": "https://cursor.com/changelog/router",
+      "published_date": "2026-07-22",
+      "eos_note": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices. Official docs restrict Router to Teams and Enterprise. Vendor cost-percentage claims are not EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2071641103191998810",
+      "handle": "cursor_ai",
+      "about": "Introducing Cursor for iOS. Build from anywhere by launching always-on cloud agents",
+      "cited_by": "https://aicatchup.com/news/cursor-ios-public-beta",
+      "official_source": "https://cursor.com/changelog/ios-mobile-app",
+      "published_date": "2026-06-29",
+      "eos_note": "Composer 2.5 75% off through July 5, 2026 was a launch promo, not standing pricing. This watch still runs in the Cloud Agent VM, not on the phone.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     }

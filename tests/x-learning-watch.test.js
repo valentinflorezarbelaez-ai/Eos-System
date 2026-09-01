@@ -9281,6 +9281,61 @@ test('cited X posts never claim an X fetch', () => {
     )),
     true
   );
+  assert.equal(official.includes('https://cursor.com/changelog/ipad'), true);
+  assert.equal(official.includes('https://cursor.com/changelog/cursor-start'), true);
+  assert.equal(official.includes('https://cursor.com/changelog/router'), true);
+  assert.equal(official.includes('https://cursor.com/changelog/ios-mobile-app'), true);
+  assert.equal(official.includes('https://cursor.com/blog/how-cursor-router-works'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2085390483740676365'
+      && row.cited_by === 'https://www.unrollnow.com/status/2085390483740676365'
+      && /Router keeps improving/i.test(row.about)
+      && /not EOS evidence/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2082532273421955513'
+      && row.cited_by === 'https://www.unrollnow.com/status/2082532273421955513'
+      && /iPad/i.test(row.about)
+      && /Cloud Agent VM/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2081978255004053560'
+      && row.cited_by === 'https://www.unrollnow.com/status/2081978255004053560'
+      && /Cursor Start/i.test(row.about)
+      && /India regional pricing/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2079993729532989500'
+      && row.cited_by === 'https://www.unrollnow.com/status/2079993729532989500'
+      && /Cursor Router/i.test(row.about)
+      && /Teams and Enterprise/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2071641103191998810'
+      && row.cited_by === 'https://aicatchup.com/news/cursor-ios-public-beta'
+      && /Cursor for iOS/i.test(row.about)
+      && /launch promo/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(
     validateCitedXPosts({
       citations: [{

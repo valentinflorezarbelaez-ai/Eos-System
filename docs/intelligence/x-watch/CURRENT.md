@@ -62,10 +62,25 @@ Store size: 199
 - Cursor is now part of @SpaceX. Today, we have officially closed our acquisition. — cited by https://www.unrollnow.com/status/2088249881718919393 (not fetched from X)
   Cited X announcement mirrored by official blog https://cursor.com/blog/joining-spacex. Do not treat SpaceX/Grok marketing as EOS production evidence.
   https://x.com/cursor_ai/status/2088249881718919393
+- Cursor Router keeps improving from millions of in-product user interactions each week — cited by https://www.unrollnow.com/status/2085390483740676365 (not fetched from X)
+  Vendor routing and cost claims are not EOS evidence. EOS rules still bind model and governance choices.
+  https://x.com/cursor_ai/status/2085390483740676365
 - Cursor can now read, write, and act across your Google Workspace — cited by https://aicatchup.com/news/cursor-google-workspace-plugins (not fetched from X)
   Google Workspace plugins are optional vendor marketplace/Customize install. Do not rotate this Cloud Agent into marketplace plugin install for daily ingest. Official changelog names Drive, Gmail, and Calendar; do not treat Docs/Sheets as part of this announcement.
   https://x.com/cursor_ai/status/2084376701539405904
 - Cloud agents are now 20-30% more token efficient, and 80% more efficient on runs with computer use — cited by https://aicatchup.com/news/cursor-cloud-agents-token-efficiency-computer-use (not fetched from X)
   Vendor efficiency claim cited by a third party. Do not treat token-percentage marketing as EOS evidence.
   https://x.com/cursor_ai/status/2084317547608911986
+- Cursor is now on iPad. All the power of Cursor on iPhone, with more room to work with agents — cited by https://www.unrollnow.com/status/2082532273421955513 (not fetched from X)
+  iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.
+  https://x.com/cursor_ai/status/2082532273421955513
+- Today we're launching Cursor Start, a new ₹649/month plan for developers in India — cited by https://www.unrollnow.com/status/2081978255004053560 (not fetched from X)
+  Cursor Start is India regional pricing. Do not switch this watch to Start. Honor included quota. Do not add help/account-and-billing/cursor-start as a feed.
+  https://x.com/cursor_ai/status/2081978255004053560
+- Introducing Cursor Router, our intelligent model router that selects the right model for the task at hand — cited by https://www.unrollnow.com/status/2079993729532989500 (not fetched from X)
+  Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices. Official docs restrict Router to Teams and Enterprise. Vendor cost-percentage claims are not EOS evidence.
+  https://x.com/cursor_ai/status/2079993729532989500
+- Introducing Cursor for iOS. Build from anywhere by launching always-on cloud agents — cited by https://aicatchup.com/news/cursor-ios-public-beta (not fetched from X)
+  Composer 2.5 75% off through July 5, 2026 was a launch promo, not standing pricing. This watch still runs in the Cloud Agent VM, not on the phone.
+  https://x.com/cursor_ai/status/2071641103191998810
 
