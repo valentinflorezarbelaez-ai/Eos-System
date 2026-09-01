@@ -528,6 +528,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_INLINE_EDIT",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-CLOUD-AGENTS",
+      "url": "https://cursor.com/help/ai-features/cloud-agents",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_CLOUD_AGENTS",
+      "fetchable": true
     }
   ]
 }

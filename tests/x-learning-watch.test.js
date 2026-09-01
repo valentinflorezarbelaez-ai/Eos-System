@@ -183,6 +183,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/cloud-agents' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -1383,6 +1387,22 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpInlineEdit.apply_in_eos), false);
   assert.equal(helpInlineEdit.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpInlineEdit.apply_in_eos.includes('Vercel'), false);
+  const helpCloudAgents = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/ai-features/cloud-agents');
+  assert.ok(helpCloudAgents);
+  assert.equal(helpCloudAgents.title, 'Cloud Agents');
+  assert.match(helpCloudAgents.summary, /What can Cloud Agents do/);
+  assert.match(helpCloudAgents.summary, /How does "Move to Cloud" handle my file state/);
+  assert.match(helpCloudAgents.summary, /How do I start a Cloud Agent task/);
+  assert.equal(helpCloudAgents.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpCloudAgents.summary), false);
+  assert.match(helpCloudAgents.apply_in_eos, /vendor isolated-VM Agent/i);
+  assert.match(helpCloudAgents.apply_in_eos, /\/goal/);
+  assert.match(helpCloudAgents.apply_in_eos, /do not rotate this Cloud Agent into desktop Move to Cloud/i);
+  assert.match(helpCloudAgents.apply_in_eos, /environment\.json/);
+  assert.match(helpCloudAgents.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpCloudAgents.apply_in_eos), false);
+  assert.equal(helpCloudAgents.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpCloudAgents.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1616,6 +1636,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Plan mode', link: 'https://cursor.com/help/ai-features/plan-mode' },
     { title: 'Tab completion', link: 'https://cursor.com/help/ai-features/tab' },
     { title: 'Inline edit', link: 'https://cursor.com/help/ai-features/inline-edit' },
+    { title: 'Cloud Agents', link: 'https://cursor.com/help/ai-features/cloud-agents' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2545,6 +2566,25 @@ test('applyHint for Help Inline edit keeps this watch on the standing /goal', ()
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Cloud Agents keeps this watch on the standing /goal', () => {
+  const hint = applyHint({
+    title: 'Cloud Agents',
+    link: 'https://cursor.com/help/ai-features/cloud-agents',
+    summary: 'Run AI coding tasks in the cloud while you keep working. Custom Mode and Vercel.'
+  });
+  assert.match(hint, /vendor isolated-VM Agent/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Move to Cloud/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3290,6 +3330,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpInlineEdit[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpInlineEdit[0]).includes('Vercel'), false);
 
+  const helpCloudAgents = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-cloud-agents.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/ai-features/cloud-agents'
+  );
+  assert.equal(helpCloudAgents[0].id, 'https://cursor.com/help/ai-features/cloud-agents');
+  assert.equal(helpCloudAgents[0].title, 'Cloud Agents');
+  assert.match(helpCloudAgents[0].summary, /Run AI coding tasks in the cloud while you keep working/);
+  assert.match(applyHint(helpCloudAgents[0]), /vendor isolated-VM Agent/i);
+  assert.match(applyHint(helpCloudAgents[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpCloudAgents[0])), false);
+  assert.equal(applyHint(helpCloudAgents[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpCloudAgents[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3723,6 +3777,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/inline-edit'),
     'https://cursor.com/help/ai-features/inline-edit.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/cloud-agents'),
+    'https://cursor.com/help/ai-features/cloud-agents.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -4081,6 +4139,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpInlineEditMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpInlineEditMd.summary), false);
   assert.equal(helpInlineEditMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpCloudAgentsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-cloud-agents.md'), 'utf8')
+  );
+  assert.equal(helpCloudAgentsMd.title, 'Cloud Agents');
+  assert.match(helpCloudAgentsMd.summary, /What can Cloud Agents do/);
+  assert.match(helpCloudAgentsMd.summary, /How does "Move to Cloud" handle my file state/);
+  assert.match(helpCloudAgentsMd.summary, /How do I start a Cloud Agent task/);
+  assert.equal(helpCloudAgentsMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpCloudAgentsMd.summary), false);
+  assert.equal(helpCloudAgentsMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -4943,6 +5012,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.'
     },
     {
+      title: 'Cloud Agents',
+      source_url: 'https://cursor.com/help/ai-features/cloud-agents',
+      published_at: null,
+      apply_in_eos: 'Help Cloud Agents is vendor isolated-VM Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Move to Cloud for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Capabilities',
       source_url: 'https://cursor.com/docs/cloud-agent/capabilities',
       published_at: null,
@@ -5094,6 +5169,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/cloud-agents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/python'), false);
@@ -5165,6 +5241,18 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Inline edit is vendor desktop Cmd+K. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Inline edit for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Cloud Agents',
+      source_url: 'https://cursor.com/docs/cloud-agent',
+      published_at: null,
+      apply_in_eos: 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.'
+    },
+    {
+      title: 'Cloud Agents',
+      source_url: 'https://cursor.com/help/ai-features/cloud-agents',
+      published_at: null,
+      apply_in_eos: 'Help Cloud Agents is vendor isolated-VM Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Move to Cloud for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Cursor CLI',
       source_url: 'https://cursor.com/docs/cli/overview',
       published_at: null,
@@ -5216,6 +5304,8 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/plan-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/tab'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/inline-edit'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/cloud-agents'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/overview'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/using'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/shell-mode'), false);
@@ -5722,6 +5812,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/plan-mode'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/tab'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/inline-edit'), false);
+  assert.equal(current.includes('cursor.com/help/ai-features/cloud-agents'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
