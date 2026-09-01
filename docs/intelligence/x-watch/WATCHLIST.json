@@ -598,6 +598,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_IGNORE_FILES",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-PLUGINS",
+      "url": "https://cursor.com/help/customization/plugins",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_PLUGINS",
+      "fetchable": true
     }
   ]
 }

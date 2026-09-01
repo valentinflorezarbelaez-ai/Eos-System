@@ -223,6 +223,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/plugins' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -1618,6 +1622,24 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpIgnoreFiles.apply_in_eos), false);
   assert.equal(helpIgnoreFiles.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpIgnoreFiles.apply_in_eos.includes('Vercel'), false);
+  const helpPlugins = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/customization/plugins');
+  assert.ok(helpPlugins);
+  assert.equal(helpPlugins.title, 'Plugins');
+  assert.match(helpPlugins.summary, /What are plugins/);
+  assert.match(helpPlugins.summary, /How do I install a plugin/);
+  assert.match(helpPlugins.summary, /Are plugins reviewed for security/);
+  assert.equal(helpPlugins.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpPlugins.summary), false);
+  assert.match(helpPlugins.apply_in_eos, /vendor Agent reusable tools/i);
+  assert.match(helpPlugins.apply_in_eos, /\/goal/);
+  assert.match(helpPlugins.apply_in_eos, /do not rotate this Cloud Agent into dashboard team marketplace/i);
+  assert.match(helpPlugins.apply_in_eos, /\.cursor\/mcp\.json/);
+  assert.match(helpPlugins.apply_in_eos, /not EOS governance/i);
+  assert.match(helpPlugins.apply_in_eos, /environment\.json/);
+  assert.match(helpPlugins.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpPlugins.apply_in_eos), false);
+  assert.equal(helpPlugins.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpPlugins.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1861,6 +1883,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'MCP integrations', link: 'https://cursor.com/help/customization/mcp' },
     { title: '@ mentions and context', link: 'https://cursor.com/help/customization/context' },
     { title: 'Ignore files', link: 'https://cursor.com/help/customization/ignore-files' },
+    { title: 'Plugins', link: 'https://cursor.com/help/customization/plugins' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2996,6 +3019,27 @@ test('applyHint for Help Ignore files keeps .cursorignore and secrets out of git
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Plugins keeps repo playbooks off team marketplace', () => {
+  const hint = applyHint({
+    title: 'Plugins',
+    link: 'https://cursor.com/help/customization/plugins',
+    summary: 'Optional plugins are enabled by default. Custom Mode and Vercel.'
+  });
+  assert.match(hint, /vendor Agent reusable tools/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into dashboard team marketplace/i);
+  assert.match(hint, /\.cursor\/mcp\.json/);
+  assert.match(hint, /not EOS governance/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3882,6 +3926,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpIgnoreFiles[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpIgnoreFiles[0]).includes('Vercel'), false);
 
+  const helpPlugins = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-plugins.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/customization/plugins'
+  );
+  assert.equal(helpPlugins[0].id, 'https://cursor.com/help/customization/plugins');
+  assert.equal(helpPlugins[0].title, 'Plugins');
+  assert.match(helpPlugins[0].summary, /Install and manage plugins from the Cursor Marketplace/);
+  assert.match(applyHint(helpPlugins[0]), /vendor Agent reusable tools/i);
+  assert.match(applyHint(helpPlugins[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpPlugins[0])), false);
+  assert.equal(applyHint(helpPlugins[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpPlugins[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4355,6 +4413,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/customization/ignore-files'),
     'https://cursor.com/help/customization/ignore-files.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/customization/plugins'),
+    'https://cursor.com/help/customization/plugins.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -4823,6 +4885,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpIgnoreFilesMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpIgnoreFilesMd.summary), false);
   assert.equal(helpIgnoreFilesMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpPluginsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-plugins.md'), 'utf8')
+  );
+  assert.equal(helpPluginsMd.title, 'Plugins');
+  assert.match(helpPluginsMd.summary, /What are plugins/);
+  assert.match(helpPluginsMd.summary, /How do I install a plugin/);
+  assert.match(helpPluginsMd.summary, /Are plugins reviewed for security/);
+  assert.equal(helpPluginsMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpPluginsMd.summary), false);
+  assert.equal(helpPluginsMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -6018,6 +6091,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Ignore files is vendor Agent context exclusions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop ignore-file setup for daily ingest. Keep .cursorignore. Do not put secrets in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Plugins',
+      source_url: 'https://cursor.com/help/customization/plugins',
+      published_at: null,
+      apply_in_eos: 'Help Plugins is vendor Agent reusable tools. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team marketplace plugins for daily ingest. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins are not EOS governance. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -6048,6 +6127,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/mcp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/context'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/ignore-files'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/plugins'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -6108,6 +6188,12 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
       apply_in_eos: 'Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins and ~/.cursor/plugins/local are not EOS governance and are not this Cloud Agent environment. Do not delete a team marketplace without reviewing Cloud Agent MCP impact.'
     },
     {
+      title: 'Plugins',
+      source_url: 'https://cursor.com/help/customization/plugins',
+      published_at: null,
+      apply_in_eos: 'Help Plugins is vendor Agent reusable tools. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team marketplace plugins for daily ingest. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins are not EOS governance. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Customize Cursor',
       source_url: 'https://cursor.com/changelog/customize',
       published_at: 'Mon, 22 Jun 2026 00:00:00 GMT',
@@ -6147,6 +6233,7 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/context'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/mcp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/plugins'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/plugins'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/customize-cursor'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/overview'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
@@ -6607,6 +6694,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/customization/mcp'), false);
   assert.equal(current.includes('cursor.com/help/customization/context'), false);
   assert.equal(current.includes('cursor.com/help/customization/ignore-files'), false);
+  assert.equal(current.includes('cursor.com/help/customization/plugins'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
