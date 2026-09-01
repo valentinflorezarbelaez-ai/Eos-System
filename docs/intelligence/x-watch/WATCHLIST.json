@@ -542,6 +542,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_BACKGROUND_AGENTS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-MOBILE-APP",
+      "url": "https://cursor.com/help/ai-features/mobile-app",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_MOBILE_APP",
+      "fetchable": true
     }
   ]
 }

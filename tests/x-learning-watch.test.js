@@ -191,6 +191,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/mobile-app' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -1423,6 +1427,22 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpBackgroundAgents.apply_in_eos), false);
   assert.equal(helpBackgroundAgents.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpBackgroundAgents.apply_in_eos.includes('Vercel'), false);
+  const helpMobileApp = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/ai-features/mobile-app');
+  assert.ok(helpMobileApp);
+  assert.equal(helpMobileApp.title, 'Cursor for iOS');
+  assert.match(helpMobileApp.summary, /Is there an Android app/);
+  assert.match(helpMobileApp.summary, /Which devices and versions are supported/);
+  assert.match(helpMobileApp.summary, /What is different on iPad/);
+  assert.equal(helpMobileApp.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpMobileApp.summary), false);
+  assert.match(helpMobileApp.apply_in_eos, /vendor mobile Cloud Agent client/i);
+  assert.match(helpMobileApp.apply_in_eos, /Cloud Agent VM/);
+  assert.match(helpMobileApp.apply_in_eos, /do not rotate this Cloud Agent into the iOS app/i);
+  assert.match(helpMobileApp.apply_in_eos, /environment\.json/);
+  assert.match(helpMobileApp.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpMobileApp.apply_in_eos), false);
+  assert.equal(helpMobileApp.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpMobileApp.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1658,6 +1678,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Inline edit', link: 'https://cursor.com/help/ai-features/inline-edit' },
     { title: 'Cloud Agents', link: 'https://cursor.com/help/ai-features/cloud-agents' },
     { title: 'What are background agents?', link: 'https://cursor.com/help/ai-features/background-agents' },
+    { title: 'Cursor for iOS', link: 'https://cursor.com/help/ai-features/mobile-app' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2625,6 +2646,25 @@ test('applyHint for Help Background Agents keeps this watch on the standing /goa
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Cursor for iOS keeps this watch in the Cloud Agent VM', () => {
+  const hint = applyHint({
+    title: 'Cursor for iOS',
+    link: 'https://cursor.com/help/ai-features/mobile-app',
+    summary: 'Direct, supervise, and review agents from your iPhone or iPad. Custom Mode and Vercel.'
+  });
+  assert.match(hint, /vendor mobile Cloud Agent client/i);
+  assert.match(hint, /Cloud Agent VM/);
+  assert.match(hint, /do not rotate this Cloud Agent into the iOS app/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3398,6 +3438,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpBackgroundAgents[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpBackgroundAgents[0]).includes('Vercel'), false);
 
+  const helpMobileApp = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-mobile-app.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/ai-features/mobile-app'
+  );
+  assert.equal(helpMobileApp[0].id, 'https://cursor.com/help/ai-features/mobile-app');
+  assert.equal(helpMobileApp[0].title, 'Cursor for iOS');
+  assert.match(helpMobileApp[0].summary, /Direct, supervise, and review agents running in the cloud and on your computer from your iPhone or iPad/);
+  assert.match(applyHint(helpMobileApp[0]), /vendor mobile Cloud Agent client/i);
+  assert.match(applyHint(helpMobileApp[0]), /Cloud Agent VM/);
+  assert.equal(/enable/i.test(applyHint(helpMobileApp[0])), false);
+  assert.equal(applyHint(helpMobileApp[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpMobileApp[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3839,6 +3893,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/background-agents'),
     'https://cursor.com/help/ai-features/background-agents.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/mobile-app'),
+    'https://cursor.com/help/ai-features/mobile-app.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -4219,6 +4277,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpBackgroundAgentsMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpBackgroundAgentsMd.summary), false);
   assert.equal(helpBackgroundAgentsMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpMobileAppMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-mobile-app.md'), 'utf8')
+  );
+  assert.equal(helpMobileAppMd.title, 'Cursor for iOS');
+  assert.match(helpMobileAppMd.summary, /Is there an Android app/);
+  assert.match(helpMobileAppMd.summary, /Which devices and versions are supported/);
+  assert.match(helpMobileAppMd.summary, /What is different on iPad/);
+  assert.equal(helpMobileAppMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpMobileAppMd.summary), false);
+  assert.equal(helpMobileAppMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -5594,6 +5663,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'This watch runs in the Cloud Agent VM, not on iPhone or iPad. Cursor for iOS is an optional beta client. Keep environment.json + Builds on the web. /remote-control hands a local session to the cloud; tool calls stay on the computer. Privacy Mode (Legacy) is not supported. Do not ingest GitHub or GitLab setup pages. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Cursor for iOS',
+      source_url: 'https://cursor.com/help/ai-features/mobile-app',
+      published_at: null,
+      apply_in_eos: 'Help Cursor for iOS is vendor mobile Cloud Agent client. Keep this watch in the Cloud Agent VM. Do not rotate this Cloud Agent into the iOS app for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Cloud Agents',
       source_url: 'https://cursor.com/docs/cloud-agent',
       published_at: null,
@@ -5684,6 +5759,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/approval-agents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/agents-window'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/mobile'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/mobile-app'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/python'), false);
@@ -5897,6 +5973,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/inline-edit'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/cloud-agents'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/background-agents'), false);
+  assert.equal(current.includes('cursor.com/help/ai-features/mobile-app'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
