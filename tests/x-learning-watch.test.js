@@ -263,6 +263,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/security-and-privacy/privacy' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -440,6 +444,22 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/blog/typescript-sdk'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/dashboard'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://trust.cursor.com/subprocessors'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/security-and-privacy/compliance'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/enterprise/privacy-and-data-governance'),
     false
   );
   assert.equal(
@@ -1892,6 +1912,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpGettingStartedBuildAiCodingAgent.apply_in_eos), false);
   assert.equal(helpGettingStartedBuildAiCodingAgent.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpGettingStartedBuildAiCodingAgent.apply_in_eos.includes('Vercel'), false);
+  const helpSecurityAndPrivacyPrivacy = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/privacy');
+  assert.ok(helpSecurityAndPrivacyPrivacy);
+  assert.equal(helpSecurityAndPrivacyPrivacy.title, 'Privacy and data');
+  assert.match(helpSecurityAndPrivacyPrivacy.summary, /What is Privacy Mode/);
+  assert.match(helpSecurityAndPrivacyPrivacy.summary, /How do I enable Privacy Mode/);
+  assert.match(helpSecurityAndPrivacyPrivacy.summary, /What data is sent to AI providers/);
+  assert.equal(helpSecurityAndPrivacyPrivacy.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpSecurityAndPrivacyPrivacy.summary), false);
+  assert.equal(helpSecurityAndPrivacyPrivacy.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpSecurityAndPrivacyPrivacy.apply_in_eos, /vendor Privacy Mode data-handling/i);
+  assert.match(helpSecurityAndPrivacyPrivacy.apply_in_eos, /\/goal/);
+  assert.match(helpSecurityAndPrivacyPrivacy.apply_in_eos, /do not rotate this Cloud Agent into desktop Privacy Mode settings/i);
+  assert.match(helpSecurityAndPrivacyPrivacy.apply_in_eos, /environment\.json/);
+  assert.match(helpSecurityAndPrivacyPrivacy.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpSecurityAndPrivacyPrivacy.apply_in_eos), false);
+  assert.equal(helpSecurityAndPrivacyPrivacy.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpSecurityAndPrivacyPrivacy.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2145,6 +2182,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Download and install Cursor', link: 'https://cursor.com/help/getting-started/install' },
     { title: 'Your first project', link: 'https://cursor.com/help/getting-started/first-project' },
     { title: 'How do I build an AI coding agent?', link: 'https://cursor.com/help/getting-started/build-ai-coding-agent' },
+    { title: 'Privacy and data', link: 'https://cursor.com/help/security-and-privacy/privacy' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3491,6 +3529,26 @@ test('applyHint for Help build AI coding agent keeps this watch on /goal and doe
   assert.equal(hint.includes('Plan Mode'), false);
 });
 
+test('applyHint for Help Privacy keeps this Cloud Agent off desktop Privacy Mode settings', () => {
+  const hint = applyHint({
+    title: 'Privacy and data',
+    link: 'https://cursor.com/help/security-and-privacy/privacy',
+    summary: 'Optional Help Privacy is enabled by default. Custom Mode and Vercel. Use Slack.'
+  });
+  assert.match(hint, /vendor Privacy Mode data-handling/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Privacy Mode settings/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4527,6 +4585,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpGettingStartedBuildAiCodingAgent[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpGettingStartedBuildAiCodingAgent[0]).includes('Plan Mode'), false);
 
+  const helpSecurityAndPrivacyPrivacy = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-security-and-privacy-privacy.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/security-and-privacy/privacy'
+  );
+  assert.equal(helpSecurityAndPrivacyPrivacy[0].id, 'https://cursor.com/help/security-and-privacy/privacy');
+  assert.equal(helpSecurityAndPrivacyPrivacy[0].title, 'Privacy and data');
+  assert.match(helpSecurityAndPrivacyPrivacy[0].summary, /How Cursor handles your code, Privacy Mode, and data retention/);
+  assert.match(applyHint(helpSecurityAndPrivacyPrivacy[0]), /vendor Privacy Mode data-handling/i);
+  assert.match(applyHint(helpSecurityAndPrivacyPrivacy[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpSecurityAndPrivacyPrivacy[0])), false);
+  assert.equal(applyHint(helpSecurityAndPrivacyPrivacy[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpSecurityAndPrivacyPrivacy[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpSecurityAndPrivacyPrivacy[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5039,6 +5112,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/getting-started/build-ai-coding-agent'),
     'https://cursor.com/help/getting-started/build-ai-coding-agent.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/security-and-privacy/privacy'),
+    'https://cursor.com/help/security-and-privacy/privacy.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -5617,6 +5694,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(/Related —/.test(helpGettingStartedBuildAiCodingAgentMd.summary), false);
   assert.equal(helpGettingStartedBuildAiCodingAgentMd.summary.toLowerCase().includes('curl'), false);
   assert.equal(helpGettingStartedBuildAiCodingAgentMd.summary.includes('CURSOR_API_KEY'), false);
+
+  const helpSecurityAndPrivacyPrivacyMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-security-and-privacy-privacy.md'), 'utf8')
+  );
+  assert.equal(helpSecurityAndPrivacyPrivacyMd.title, 'Privacy and data');
+  assert.match(helpSecurityAndPrivacyPrivacyMd.summary, /What is Privacy Mode/);
+  assert.match(helpSecurityAndPrivacyPrivacyMd.summary, /How do I enable Privacy Mode/);
+  assert.match(helpSecurityAndPrivacyPrivacyMd.summary, /What data is sent to AI providers/);
+  assert.match(helpSecurityAndPrivacyPrivacyMd.summary, /Where is my code processed/);
+  assert.equal(helpSecurityAndPrivacyPrivacyMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpSecurityAndPrivacyPrivacyMd.summary), false);
+  assert.equal(helpSecurityAndPrivacyPrivacyMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -6641,6 +6730,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'Help Ignore files is vendor Agent context exclusions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop ignore-file setup for daily ingest. Keep .cursorignore. Do not put secrets in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Privacy and data',
+      source_url: 'https://cursor.com/help/security-and-privacy/privacy',
+      published_at: null,
+      apply_in_eos: 'Help Privacy is vendor Privacy Mode data-handling. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Privacy Mode settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'What is multi-agent coding?',
       source_url: 'https://cursor.com/help/ai-features/multi-agent',
       published_at: null,
@@ -6658,6 +6753,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/configuration/worktrees'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/ignore-files'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/privacy'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
@@ -6880,6 +6976,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help build AI coding agent is vendor custom-agent SDK how-to. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into building a custom coding agent or installing @cursor/sdk for daily ingest. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Privacy and data',
+      source_url: 'https://cursor.com/help/security-and-privacy/privacy',
+      published_at: null,
+      apply_in_eos: 'Help Privacy is vendor Privacy Mode data-handling. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Privacy Mode settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -6925,6 +7027,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/getting-started/install'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/getting-started/first-project'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/getting-started/build-ai-coding-agent'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/privacy'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -7501,6 +7604,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/getting-started/install'), false);
   assert.equal(current.includes('cursor.com/help/getting-started/first-project'), false);
   assert.equal(current.includes('cursor.com/help/getting-started/build-ai-coding-agent'), false);
+  assert.equal(current.includes('cursor.com/help/security-and-privacy/privacy'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
