@@ -605,6 +605,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_PLUGINS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-MULTI-AGENT",
+      "url": "https://cursor.com/help/ai-features/multi-agent",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_MULTI_AGENT",
+      "fetchable": true
     }
   ]
 }

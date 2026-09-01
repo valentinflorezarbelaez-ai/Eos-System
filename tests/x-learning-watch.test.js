@@ -227,6 +227,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/multi-agent' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -356,6 +360,18 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/extensions'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/coding-agents'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/agentic-coding'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/vibe-coding'),
     false
   );
   assert.equal(
@@ -1640,6 +1656,25 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpPlugins.apply_in_eos), false);
   assert.equal(helpPlugins.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpPlugins.apply_in_eos.includes('Vercel'), false);
+  const helpMultiAgent = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/ai-features/multi-agent');
+  assert.ok(helpMultiAgent);
+  assert.equal(helpMultiAgent.title, 'What is multi-agent coding?');
+  assert.match(helpMultiAgent.summary, /How do I run multiple agents in Cursor/);
+  assert.match(helpMultiAgent.summary, /What are subagents/);
+  assert.match(helpMultiAgent.summary, /How do I multitask with agents/);
+  assert.equal(helpMultiAgent.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpMultiAgent.summary), false);
+  assert.match(helpMultiAgent.apply_in_eos, /vendor desktop Agents Window parallelism/i);
+  assert.match(helpMultiAgent.apply_in_eos, /\/goal/);
+  assert.match(helpMultiAgent.apply_in_eos, /do not rotate this Cloud Agent into desktop Agents Window/i);
+  assert.match(helpMultiAgent.apply_in_eos, /\/multitask/);
+  assert.match(helpMultiAgent.apply_in_eos, /Build in Parallel/);
+  assert.match(helpMultiAgent.apply_in_eos, /already runs one isolated agent/i);
+  assert.match(helpMultiAgent.apply_in_eos, /environment\.json/);
+  assert.match(helpMultiAgent.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpMultiAgent.apply_in_eos), false);
+  assert.equal(helpMultiAgent.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpMultiAgent.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1884,6 +1919,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: '@ mentions and context', link: 'https://cursor.com/help/customization/context' },
     { title: 'Ignore files', link: 'https://cursor.com/help/customization/ignore-files' },
     { title: 'Plugins', link: 'https://cursor.com/help/customization/plugins' },
+    { title: 'What is multi-agent coding?', link: 'https://cursor.com/help/ai-features/multi-agent' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3040,6 +3076,28 @@ test('applyHint for Help Plugins keeps repo playbooks off team marketplace', () 
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help multi-agent keeps this Cloud Agent as one isolated VM', () => {
+  const hint = applyHint({
+    title: 'What is multi-agent coding?',
+    link: 'https://cursor.com/help/ai-features/multi-agent',
+    summary: 'Optional multi-agent is enabled by default. Custom Mode and Vercel. Use Slack.'
+  });
+  assert.match(hint, /vendor desktop Agents Window parallelism/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Agents Window/i);
+  assert.match(hint, /\/multitask/);
+  assert.match(hint, /Build in Parallel/);
+  assert.match(hint, /already runs one isolated agent/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3940,6 +3998,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpPlugins[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpPlugins[0]).includes('Vercel'), false);
 
+  const helpMultiAgent = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-multi-agent.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/ai-features/multi-agent'
+  );
+  assert.equal(helpMultiAgent[0].id, 'https://cursor.com/help/ai-features/multi-agent');
+  assert.equal(helpMultiAgent[0].title, 'What is multi-agent coding?');
+  assert.match(helpMultiAgent[0].summary, /Multi-agent coding runs several AI agents in parallel/);
+  assert.match(applyHint(helpMultiAgent[0]), /vendor desktop Agents Window parallelism/i);
+  assert.match(applyHint(helpMultiAgent[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpMultiAgent[0])), false);
+  assert.equal(applyHint(helpMultiAgent[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpMultiAgent[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4416,6 +4488,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/customization/plugins'),
     'https://cursor.com/help/customization/plugins.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/multi-agent'),
+    'https://cursor.com/help/ai-features/multi-agent.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -4896,6 +4972,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpPluginsMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpPluginsMd.summary), false);
   assert.equal(helpPluginsMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpMultiAgentMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-multi-agent.md'), 'utf8')
+  );
+  assert.equal(helpMultiAgentMd.title, 'What is multi-agent coding?');
+  assert.match(helpMultiAgentMd.summary, /How do I run multiple agents in Cursor/);
+  assert.match(helpMultiAgentMd.summary, /What are subagents/);
+  assert.match(helpMultiAgentMd.summary, /How do I multitask with agents/);
+  assert.equal(helpMultiAgentMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpMultiAgentMd.summary), false);
+  assert.equal(helpMultiAgentMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -5912,6 +5999,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       source_url: 'https://cursor.com/help/customization/ignore-files',
       published_at: null,
       apply_in_eos: 'Help Ignore files is vendor Agent context exclusions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop ignore-file setup for daily ingest. Keep .cursorignore. Do not put secrets in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'What is multi-agent coding?',
+      source_url: 'https://cursor.com/help/ai-features/multi-agent',
+      published_at: null,
+      apply_in_eos: 'Help multi-agent is vendor desktop Agents Window parallelism. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agents Window, /multitask, or Build in Parallel for daily ingest. This Cloud Agent VM already runs one isolated agent. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     }
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
@@ -5925,6 +6018,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/configuration/worktrees'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/ignore-files'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
@@ -6097,6 +6191,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Plugins is vendor Agent reusable tools. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team marketplace plugins for daily ingest. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins are not EOS governance. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'What is multi-agent coding?',
+      source_url: 'https://cursor.com/help/ai-features/multi-agent',
+      published_at: null,
+      apply_in_eos: 'Help multi-agent is vendor desktop Agents Window parallelism. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agents Window, /multitask, or Build in Parallel for daily ingest. This Cloud Agent VM already runs one isolated agent. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -6128,6 +6228,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/context'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/ignore-files'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/plugins'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -6695,6 +6796,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/customization/context'), false);
   assert.equal(current.includes('cursor.com/help/customization/ignore-files'), false);
   assert.equal(current.includes('cursor.com/help/customization/plugins'), false);
+  assert.equal(current.includes('cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
