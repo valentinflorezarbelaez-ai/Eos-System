@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.js tests/**/*.test.js",
+    "ci": "node scripts/ci/assert-gha-contract.js && node scripts/verify-eos.js --strict",
+    "ci:contract": "node scripts/ci/assert-gha-contract.js",
     "mcp:start": "node src/mcp-server.js",
     "eos": "node scripts/cli/eos.js",
     "eos:mission": "node bin/eos.js",
@@ -22,9 +24,11 @@
     "evaluate:release": "node scripts/engine/production-readiness-review.js --eval-release",
     "gameday:run": "node scripts/engine/adversarial-laboratory-engine.js --run-gameday",
     "audit:system": "node scripts/engine/system-wide-integrity-audit.js --audit-system",
+    "exam:clean-clone": "node scripts/exam-clean-clone.js",
     "verify:independent": "node scripts/engine/independent-verification-harness.js --verify-independent",
     "discover:real": "node scripts/engine/real-project-discovery-engine.js --discover-real",
-    "audit:evidence": "node scripts/verify-eos.js --strict"
+    "audit:evidence": "node scripts/verify-eos.js --strict",
+    "watch:x": "node scripts/engine/x-learning-watch.js --ingest"
   },
   "keywords": [
     "eos",

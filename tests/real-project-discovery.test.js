@@ -58,6 +58,19 @@ test('RealProjectDiscoveryEngine analyzes populated real target project (Andes-R
   assert.ok(discovery.state.derivedFacts.find(f => f.key === 'FILE_TREE_COUNT').value > 0);
 });
 
+test('Negative Protection Test: saveArtifacts refuses to clobber intelligence when the target is unobserved', () => {
+  const engine = new RealProjectDiscoveryEngine('C:\\Users\\valen\\Documents\\Fundacion');
+  if (fs.existsSync(engine.targetPath)) {
+    return;
+  }
+
+  const discovery = engine.runDiscoveryMission();
+  const statePath = path.join(rootDir, 'docs/intelligence/real_projects/fundacion/REAL_PROJECT_STATE.json');
+  const before = fs.readFileSync(statePath, 'utf8');
+  assert.throws(() => engine.saveArtifacts(discovery), /DENY: Refusing to persist discovery artifacts/);
+  assert.equal(fs.readFileSync(statePath, 'utf8'), before);
+});
+
 test('Negative Protection Test: Target directories remain immutable during discovery (Δ=0)', () => {
   if (fs.existsSync(FUNDACION_PATH)) {
     const currentItems = fs.readdirSync(FUNDACION_PATH).sort();

@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EOSXLearningWatchlist",
+  "type": "object",
+  "required": ["watch_id", "requested_platform", "accounts", "feeds"],
+  "properties": {
+    "watch_id": { "type": "string" },
+    "requested_platform": { "type": "string" },
+    "requested_url": { "type": "string" },
+    "platform_connection": { "type": "object" },
+    "accounts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["handle", "url", "timeline_access"],
+        "properties": {
+          "handle": { "type": "string" },
+          "url": { "type": "string" },
+          "priority": { "type": "string" },
+          "timeline_access": { "type": "string", "enum": ["BLOCKED", "CONNECTED"] },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "feeds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["feed_id", "url", "kind", "fetchable"],
+        "properties": {
+          "feed_id": { "type": "string" },
+          "url": { "type": "string" },
+          "kind": { "type": "string", "enum": ["rss", "atom", "html", "html-page"] },
+          "role": { "type": "string" },
+          "fetchable": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

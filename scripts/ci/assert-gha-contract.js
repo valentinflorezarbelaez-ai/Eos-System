@@ -1,0 +1,181 @@
+#!/usr/bin/env node
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export function loadCicdContract(rootDir) {
+  const contractPath = path.join(rootDir, 'docs/governance/CI_CD_CONTRACT.json');
+  return JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+}
+
+export function readWorkflow(rootDir, relativePath) {
+  const fullPath = path.join(rootDir, relativePath);
+  if (!fs.existsSync(fullPath)) {
+    throw new Error(`Missing workflow file: ${relativePath}`);
+  }
+  return fs.readFileSync(fullPath, 'utf8');
+}
+
+function listJobIds(yaml) {
+  const jobsIndex = yaml.search(/^jobs:\s*$/m);
+  if (jobsIndex === -1) {
+    throw new Error('Workflow is missing a top-level jobs: mapping');
+  }
+  const jobsBlock = yaml.slice(jobsIndex);
+  const ids = [];
+  for (const match of jobsBlock.matchAll(/^  ([A-Za-z0-9_-]+):\s*$/gm)) {
+    ids.push(match[1]);
+  }
+  if (ids.length === 0) {
+    throw new Error('Workflow declares jobs: but no job ids');
+  }
+  return ids;
+}
+
+function assertContains(yaml, needle, label) {
+  if (!yaml.includes(needle)) {
+    throw new Error(`${label} must contain ${JSON.stringify(needle)}`);
+  }
+}
+
+function assertPinnedAction(yaml, name, sha) {
+  const pattern = new RegExp(`uses:\\s*${name}@${sha}\\b`);
+  if (!pattern.test(yaml)) {
+    throw new Error(`Action ${name} must be pinned to SHA ${sha}`);
+  }
+}
+
+export function assertGithubActionsContract(rootDir) {
+  const contract = loadCicdContract(rootDir);
+  const failures = [];
+
+  if (contract.provider !== 'github-actions') {
+    failures.push('provider must be github-actions');
+  }
+  if (contract.production_deploy !== 'FORBIDDEN') {
+    failures.push('production_deploy must be FORBIDDEN');
+  }
+  if (contract.fundacion_mutation !== 'FORBIDDEN') {
+    failures.push('fundacion_mutation must be FORBIDDEN');
+  }
+  if (contract.dependency_policy !== 'L0_NODE_BUILTINS_ONLY') {
+    failures.push('dependency_policy must remain L0_NODE_BUILTINS_ONLY');
+  }
+
+  for (const [key, workflow] of Object.entries(contract.workflows)) {
+    let yaml;
+    try {
+      yaml = readWorkflow(rootDir, workflow.path);
+    } catch (err) {
+      failures.push(err.message);
+      continue;
+    }
+
+    if (!yaml.includes(`name: ${workflow.name}`)) {
+      failures.push(`${workflow.path} must set name: ${workflow.name}`);
+    }
+
+    if (!yaml.includes('permissions:')) {
+      failures.push(`${workflow.path} must declare permissions:`);
+    }
+    if (!/permissions:\s*\n[ \t]+contents:\s*read\b/.test(yaml)) {
+      failures.push(`${workflow.path} must set contents: read`);
+    }
+    if (/permissions:[\s\S]*contents:\s*write/.test(yaml)) {
+      failures.push(`${workflow.path} must not grant contents: write`);
+    }
+
+    for (const event of workflow.on) {
+      if (!yaml.includes(event)) {
+        failures.push(`${workflow.path} must trigger on ${event}`);
+      }
+    }
+
+    let jobIds = [];
+    try {
+      jobIds = listJobIds(yaml);
+    } catch (err) {
+      failures.push(`${workflow.path}: ${err.message}`);
+    }
+    for (const job of workflow.jobs) {
+      if (!jobIds.includes(job)) {
+        failures.push(`${workflow.path} missing job ${job}`);
+      }
+    }
+
+    for (const pattern of contract.forbidden_workflow_patterns) {
+      if (yaml.includes(pattern)) {
+        failures.push(`${workflow.path} contains forbidden pattern ${JSON.stringify(pattern)}`);
+      }
+    }
+
+    try {
+      assertPinnedAction(yaml, 'actions/checkout', contract.pinned_actions['actions/checkout'].sha);
+      assertPinnedAction(yaml, 'actions/setup-node', contract.pinned_actions['actions/setup-node'].sha);
+    } catch (err) {
+      failures.push(`${workflow.path}: ${err.message}`);
+    }
+
+    if (!yaml.includes(`node-version: '${contract.node_version}'`) && !yaml.includes(`node-version: "${contract.node_version}"`)) {
+      failures.push(`${workflow.path} must use Node ${contract.node_version}`);
+    }
+
+    if (!yaml.includes('Fundacion')) {
+      failures.push(`${workflow.path} must assert Fundacion freeze`);
+    }
+
+    if (key === 'ci') {
+      try {
+        assertContains(yaml, 'scripts/verify-eos.js --strict', 'CI verify');
+        assertContains(yaml, 'npm test', 'CI tests');
+        assertContains(yaml, 'evaluate:release', 'CI release engine');
+        assertContains(yaml, 'verify:independent', 'CI independent harness');
+        assertContains(yaml, 'audit:system', 'CI system audit');
+      } catch (err) {
+        failures.push(err.message);
+      }
+    }
+
+    if (key === 'cd_release_gate') {
+      if (workflow.production_deploy !== false) {
+        failures.push('cd_release_gate.production_deploy must be false');
+      }
+      for (const [envName, envValue] of Object.entries(workflow.requires_env || {})) {
+        if (!yaml.includes(`${envName}: '${envValue}'`) && !yaml.includes(`${envName}: "${envValue}"`)) {
+          failures.push(`${workflow.path} must set ${envName}=${envValue}`);
+        }
+      }
+      try {
+        assertPinnedAction(yaml, 'actions/upload-artifact', contract.pinned_actions['actions/upload-artifact'].sha);
+      } catch (err) {
+        failures.push(`${workflow.path}: ${err.message}`);
+      }
+      if (!yaml.includes('PRODUCTION_READY')) {
+        failures.push(`${workflow.path} must state PRODUCTION_READY is not implied`);
+      }
+    }
+  }
+
+  return {
+    ok: failures.length === 0,
+    failures,
+    contract
+  };
+}
+
+const isDirectRun = process.argv[1] && path.resolve(process.argv[1]) === __filename;
+if (isDirectRun) {
+  const rootDir = path.resolve(__dirname, '../..');
+  const result = assertGithubActionsContract(rootDir);
+  if (!result.ok) {
+    console.error('EOS GitHub Actions CI/CD contract FAILED:');
+    for (const failure of result.failures) {
+      console.error(` - ${failure}`);
+    }
+    process.exit(1);
+  }
+  console.log('EOS GitHub Actions CI/CD contract VERIFIED');
+}

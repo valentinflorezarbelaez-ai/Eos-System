@@ -1,0 +1,218 @@
+=== EXAM 3: REAL MISSION E2E (CLI + RETURN INGESTION) ===
+timestamp=2026-08-27T00:26:44Z
+eos_commit=24b69689c447f94afebd4893f5f0f83f45e0a823
+worktree=/tmp/eos-exam3-real-mission
+
+--- create ---
+📚 TUTOR (antes) — mission.create
+OBJECTIVE: Initialize a governed local mission from a human goal
+CONCEPT: MissionRuntime.createMission + AuthorityTruthSource.initMission
+CWD: /tmp/eos-exam3-real-mission
+SCOPE: .missions/<id>, mission-package.json, authority-snapshot.json
+RATIONALE: Creates isolated mission storage under .missions without touching main/Fundacion
+RISKS: Creates .missions directory; Discovery may read project files
+EXPECTED_EVIDENCE: mission_id; phase VISION_INTAKE; authority-snapshot.json
+ROLLBACK: Delete .missions/<mission_id> if unused
+HITL: NOT_REQUIRED
+
+✅ Mission Created Successfully:
+- Mission ID: MIS-1787790404528-DAA676
+- Target Project: PRJ-EOS-EXAM3-REAL-MISSION
+- Storage Directory: /tmp/eos-exam3-real-mission/.missions/MIS-1787790404528-DAA676
+- Status: active
+
+📚 TUTOR (después) — mission.create
+OBSERVED: Created MIS-1787790404528-DAA676 status=active
+EXIT_CODE: 0
+CLASSIFICATION: MEASURED
+INTERPRETATION: Mission OS storage initialized; phase owned by ATS
+NEXT: Run eos mission plan MIS-1787790404528-DAA676
+
+Next step: Run 'eos mission plan MIS-1787790404528-DAA676' to generate tasks.
+MISSION_ID=MIS-1787790404528-DAA676
+--- plan ---
+📚 TUTOR (antes) — mission.plan
+OBJECTIVE: Advance mission through gated FSM to PLAN
+CONCEPT: Canonical transitions + HITL at HUMAN_DIRECTION_GATE
+CWD: /tmp/eos-exam3-real-mission
+SCOPE: .missions/<id>/artifacts, plan.json, authority-snapshot.json
+RATIONALE: R-ATS-01: All persisted mission phase mutations MUST go through AuthorityTruthSource.commitTransition. | R-HITL-01: Transitions requiring HITL must present a valid receipt; missing receipt denies and leaves state unchanged.
+RISKS: Issues LOCAL_BOUNDED fixture receipt unless --hitl-receipt/--require-hitl
+EXPECTED_EVIDENCE: phase PLAN; fsm_path recorded; tasks PLANNED
+ROLLBACK: mission pause; restore checkpoint; or delete disposable fixture
+HITL: LOCAL_BOUNDED_FIXTURE_ALLOWED
+
+📝 Mission Planned Successfully [MIS-1787790404528-DAA676]:
+- Phase: PLAN
+- Generated Tasks: 3
+- FSM: mission.formulate → mission.propose_direction → human.approve_direction → discovery.complete → definition.complete
+- Governance Gates: HITL_DIRECTION_APPROVAL, EVIDENCE_VERIFICATION_GATE
+
+📚 TUTOR (después) — mission.plan
+OBSERVED: phase=PLAN tasks=3 steps=mission.formulate→mission.propose_direction→human.approve_direction→discovery.complete→definition.complete
+EXIT_CODE: 0
+CLASSIFICATION: MEASURED
+INTERPRETATION: Canonical FSM path used; deprecated runtime.plan_mission bridge not invoked
+NEXT: eos mission package MIS-1787790404528-DAA676
+
+Next step: Run 'eos mission package MIS-1787790404528-DAA676 --target cursor' to generate operator handoff.
+--- package ---
+📦 Cursor Mission Package Generated [MIS-1787790404528-DAA676]:
+- Target: cursor
+- Manifest SHA-256: 6676368c319c2659b442299b33e115c8eca4fb01971b694439d626fd20c1336c
+- Operator Prompt: /tmp/eos-exam3-real-mission/.missions/MIS-1787790404528-DAA676/cursor/CURSOR_PROMPT.md
+total 16
+drwxr-xr-x  2 ubuntu ubuntu 4096 Aug 27 00:26 .
+drwxr-xr-x 10 ubuntu ubuntu 4096 Aug 27 00:26 ..
+-rw-r--r--  1 ubuntu ubuntu 3163 Aug 27 00:26 CURSOR_PROMPT.md
+-rw-r--r--  1 ubuntu ubuntu 2940 Aug 27 00:26 mission-package.json
+TASK_ID=TASK-1787790404528-DAA676-01
+{
+  "schema_version": "1.0.0",
+  "task_id": "TASK-1787790404528-DAA676-01",
+  "mission_id": "MIS-1787790404528-DAA676",
+  "parent_task_id": null,
+  "assigned_role": "ROLE-SYSTEM-ARCHITECT",
+  "agent_id": "AGENT-LOCAL-01",
+  "objective": "Analyze repository architecture for PRJ-EOS-EXAM3-REAL-MISSION and verify compatibility",
+  "inputs": [],
+  "required_outputs": [
+    {
+      "type": "ARTIFACT",
+      "description": "Architecture verification receipt"
+    }
+  ],
+  "acceptance_criteria": [
+    "Test pass rate = 100%",
+    "Zero security violations"
+  ],
+  "allowed_tools": [
+    "read_file",
+    "grep_search",
+    "list_dir"
+  ],
+  "allowed_read_roots": [
+    "/tmp/eos-exam3-real-mission"
+  ],
+  "allowed_write_roots": [
+    "/tmp/eos-exam3-real-mission"
+  ],
+  "protected_surfaces": [
+    "docs/governance/**"
+  ],
+  "authority_level": "LEVEL_0",
+  "budget": {
+    "max_tokens": 15000,
+    "max_cost_usd": 0.03,
+    "max_duration_seconds": 600
+  },
+  "stop_conditions": [
+--- cursor-work (operator return package authored) ---
+return_pkg=.missions/MIS-1787790404528-DAA676/returns/return-TASK-1787790404528-DAA676-01.json
+--- submit-return ---
+✅ Cursor Return Ingested [MIS-1787790404528-DAA676 / TASK-1787790404528-DAA676-01]:
+- Ingestion Verdict: ACCEPT
+- Reconciliation Hash: 0ce90e3b069d25cb6e7c6270ec4161629c585b46786f1b96aa3f60320414abef
+- Deviations: None (Clean)
+- Risks: None
+- Auto-Apply Status: BLOCKED (Requires manual approval)
+--- verify-ledger ---
+🔒 Cryptographic Verification PASSED [MIS-1787790404528-DAA676]:
+- Ledger Chain: VALID (11 events)
+- Manifest Files: 100% MATCH
+--- report ---
+{
+  "schema_version": "1.0.0",
+  "report_id": "RPT-66DFD2C6",
+  "mission_id": "MIS-1787790404528-DAA676",
+  "generated_at": "2026-08-27T00:26:44.761Z",
+  "executive_summary": {
+    "goal": "Exam3 real governed mission: document hello() and seal evidence",
+    "overall_status": "SUCCESS",
+    "duration_ms": 0,
+    "epistemic_verdict": "NOT_PROVEN"
+  },
+  "metric_provenance": {
+    "token_count": "NOT_RUN",
+    "cost_usd": "NOT_RUN",
+    "latency": "NOT_RUN",
+    "reversibility": "NOT_RUN",
+    "provider_reliability": "NOT_RUN"
+  },
+  "task_execution_summary": [
+    {
+      "task_id": "TASK-1787790404528-DAA676-01",
+      "name": "Technical Architecture & Stack Verification",
+      "status": "PLANNED",
+      "attempts": 1,
+      "duration_ms": 0
+    },
+    {
+      "task_id": "TASK-1787790404528-DAA676-02",
+      "name": "Core Module Implementation / Verification",
+      "status": "PLANNED",
+      "attempts": 1,
+      "duration_ms": 0
+    },
+    {
+      "task_id": "TASK-1787790404528-DAA676-03",
+      "name": "Evidence Audit & Ledger Chain Verification",
+      "status": "PLANNED",
+      "attempts": 1,
+      "duration_ms": 0
+    }
+  ],
+  "evidence_verification_summary": {
+    "total_receipts": 3,
+    "verified_receipts": 0,
+    "hash_chain_integrity": "VALID",
+    "ledger_chain_count": 11
+  },
+  "token_and_cost_summary": {
+    "total_tokens": null,
+    "estimated_cost_usd": null,
+    "budget_cap_usd": 0.1,
+    "efficiency_ratio_evidence_per_kt": null,
+    "epistemic_class": "NOT_RUN"
+  },
+  "deviations_and_retries": [],
+  "hitl_action_items": [],
+  "governance_invariants": {
+    "external_write_barrier_delta": 0,
+    "network_egress_status": "BLOCKED_OFFLINE",
+    "credentials_active_count": 0
+--- inspect ---
+📋 Mission Inspection [MIS-1787790404528-DAA676]:
+- Status: active | Phase: PLAN
+- Goal: Exam3 real governed mission: document hello() and seal evidence
+- Target Project: PRJ-EOS-EXAM3-REAL-MISSION
+- Total Ledger Events: 11
+--- artifacts present ---
+.missions/MIS-1787790404528-DAA676/artifacts/acceptance_criteria.json
+.missions/MIS-1787790404528-DAA676/artifacts/contract.json
+.missions/MIS-1787790404528-DAA676/artifacts/mission_package.json
+.missions/MIS-1787790404528-DAA676/artifacts/repository_inventory.json
+.missions/MIS-1787790404528-DAA676/artifacts/technical_spec.json
+.missions/MIS-1787790404528-DAA676/artifacts/vision.json
+.missions/MIS-1787790404528-DAA676/authority-snapshot.json
+.missions/MIS-1787790404528-DAA676/cursor/CURSOR_PROMPT.md
+.missions/MIS-1787790404528-DAA676/cursor/mission-package.json
+.missions/MIS-1787790404528-DAA676/direction.json
+.missions/MIS-1787790404528-DAA676/evidence/return-TASK-1787790404528-DAA676-01-assessment.json
+.missions/MIS-1787790404528-DAA676/evidence/supervision-TASK-1787790404528-DAA676-01.json
+.missions/MIS-1787790404528-DAA676/hitl/direction-approval.json
+.missions/MIS-1787790404528-DAA676/integrity-manifest.json
+.missions/MIS-1787790404528-DAA676/ledger/run_log_MIS-1787790404528-DAA676.jsonl
+.missions/MIS-1787790404528-DAA676/mission-package.json
+.missions/MIS-1787790404528-DAA676/plan.json
+.missions/MIS-1787790404528-DAA676/project-profile.json
+.missions/MIS-1787790404528-DAA676/reports/executive-report.json
+.missions/MIS-1787790404528-DAA676/reports/EXECUTIVE_REPORT.md
+.missions/MIS-1787790404528-DAA676/returns/return-TASK-1787790404528-DAA676-01.json
+.missions/MIS-1787790404528-DAA676/selections/SEL-TASK-1787790404528-DAA676-01.json
+.missions/MIS-1787790404528-DAA676/selections/SEL-TASK-1787790404528-DAA676-02.json
+.missions/MIS-1787790404528-DAA676/selections/SEL-TASK-1787790404528-DAA676-03.json
+.missions/MIS-1787790404528-DAA676/tasks/TASK-1787790404528-DAA676-01.json
+.missions/MIS-1787790404528-DAA676/tasks/TASK-1787790404528-DAA676-02.json
+.missions/MIS-1787790404528-DAA676/tasks/TASK-1787790404528-DAA676-03.json
+EXAM3_COMPLETE mission=MIS-1787790404528-DAA676

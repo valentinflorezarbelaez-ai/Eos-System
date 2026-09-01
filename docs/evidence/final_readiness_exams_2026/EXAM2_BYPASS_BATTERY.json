@@ -1,0 +1,86 @@
+{
+  "exam": "EXAM2_BYPASS_BATTERY",
+  "timestamp": "2026-08-27T00:26:32.766Z",
+  "fixture_root": "/tmp/eos-exam2-ui7GAB",
+  "totals": {
+    "vectors": 8,
+    "pass": 7,
+    "fail": 1
+  },
+  "overall": "BYPASS_GAPS_MEASURED",
+  "epistemic_class": "MEASURED",
+  "results": [
+    {
+      "id": "BYP-01-MANUAL-PHASE",
+      "attempt": "Write pkg.phase=COMPLETED on disk then illegal jump",
+      "expected": "DENY",
+      "observed": "snapshot.state=VISION_INTAKE; illegal_transition_denied=true",
+      "denied": true,
+      "verdict": "PASS",
+      "epistemic": "MEASURED"
+    },
+    {
+      "id": "BYP-02-SKIP-HITL",
+      "attempt": "Approve direction without HITL receipt",
+      "expected": "DENY",
+      "observed": "HITL_DENIED [HITL_INVALID_STRUCTURE]: Provide valid receipt object",
+      "denied": true,
+      "verdict": "PASS",
+      "epistemic": "MEASURED"
+    },
+    {
+      "id": "BYP-03-UNAUTHORIZED-TOOL",
+      "attempt": "MCP LEDGER_WRITE under read-only LEVEL_0",
+      "expected": "DENY",
+      "observed": "write_allowed=false; reason=READ_ONLY_MODE_BLOCKS_LEDGER_WRITE; unknown_probe={\"allowed\":false,\"reason\":\"READ_ONLY_MODE_BLOCKS_LEDGER_WRITE\"}",
+      "denied": true,
+      "verdict": "PASS",
+      "epistemic": "MEASURED"
+    },
+    {
+      "id": "BYP-04-FUNDACION",
+      "attempt": "workspace.barrier_check write into Fundacion/",
+      "expected": "DENY",
+      "observed": "{\"path\":\"/tmp/eos-exam2-ui7GAB/Fundacion/README.md\",\"allowed\":false,\"protected_roots\":[\"/tmp/eos-exam2-ui7GAB/Fundacion\",\"/tmp/eos-exam2-ui7GAB/docs/governance\"],\"reason\":\"PROTECTED_SURFACE\",\"epistemic_class\":\"MEASURED\"}",
+      "denied": true,
+      "verdict": "PASS",
+      "epistemic": "MEASURED"
+    },
+    {
+      "id": "BYP-05-SECRET-INJECT",
+      "attempt": "Return package with sk- secret pattern",
+      "expected": "DENY",
+      "observed": "verdict=REJECT; deviations=SECRET_LEAKAGE_DETECTED: Return package contains detected secret or token pattern.",
+      "denied": true,
+      "verdict": "PASS",
+      "epistemic": "MEASURED"
+    },
+    {
+      "id": "BYP-06-REPLAY-NONCE",
+      "attempt": "Submit same return nonce twice",
+      "expected": "DENY",
+      "observed": "first=ACCEPT; second=REJECT; deviations=REPLAY_ATTEMPT_DETECTED: Nonce 'nonce-replay-fixed' has already been processed.",
+      "denied": true,
+      "verdict": "PASS",
+      "epistemic": "MEASURED"
+    },
+    {
+      "id": "BYP-07-CLOSE-WITHOUT-VERIFY",
+      "attempt": "closeMission after plan only (no VERIFY evidence)",
+      "expected": "DENY",
+      "observed": "UNEXPECTED_ALLOW status=completed phase=COMPLETED",
+      "denied": false,
+      "verdict": "FAIL",
+      "epistemic": "MEASURED"
+    },
+    {
+      "id": "BYP-08-PROTECTED-SURFACE",
+      "attempt": "Return package mutates src/core/**",
+      "expected": "DENY",
+      "observed": "verdict=REJECT; deviations=PROTECTED_SURFACE_MUTATION_ATTEMPT: Attempted MODIFY on protected path 'src/core/runtime/mission-runtime.js'",
+      "denied": true,
+      "verdict": "PASS",
+      "epistemic": "MEASURED"
+    }
+  ]
+}

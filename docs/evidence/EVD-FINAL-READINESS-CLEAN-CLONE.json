@@ -1,0 +1,47 @@
+{
+  "exam": "CLEAN_CLONE_REPRODUCIBILITY",
+  "source_root": "/workspace",
+  "branch": "cursor/final-readiness-exam-01a0",
+  "head": "8bdbee041d09989907d09a8c80208a0bda82d0be",
+  "dest": "/tmp/eos-clean-clone-jRDE5C/eos",
+  "steps": [
+    {
+      "step": "CLONE",
+      "ok": true,
+      "dest": "/tmp/eos-clean-clone-jRDE5C/eos"
+    },
+    {
+      "step": "HEAD_MATCH",
+      "ok": true,
+      "head": "8bdbee041d09989907d09a8c80208a0bda82d0be"
+    },
+    {
+      "step": "CLEAN_TREE",
+      "ok": true,
+      "dirt": "(empty)"
+    },
+    {
+      "step": "INSTALL",
+      "ok": true,
+      "note": "L0_NODE_BUILTINS_ONLY — npm install not required for Mission OS core",
+      "node_modules_present": false
+    },
+    {
+      "step": "START_HELP",
+      "ok": true,
+      "snippet": "\n================================================================================\nEOS CONTROL PLANE CLI (v3.1.0) — Auton"
+    },
+    {
+      "step": "CONFIG_DOCTOR",
+      "ok": true,
+      "output": "EOS doctor\nPASS  CLI_HELP: Mission CLI help renders\nPASS  HOMEDIR_LEAK: NO\nPASS  LOCAL_SCHEMAS: direction, mission-package, hitl-receipt load\nPASS  RULES_INDEX: R-ATS-01, R-HITL-01, R-BOUNDARY-01\nVERDICT: PASS\nHOMEDIR_LEAK: NO"
+    },
+    {
+      "step": "RUN_CANONICAL_TESTS",
+      "ok": true,
+      "status": 0,
+      "tail": "# Subtest: GUARD-07: Provider tools stay NOT_CONFIGURED; discover is wired\nok 31 - GUARD-07: Provider tools stay NOT_CONFIGURED; discover is wired\n  ---\n  duration_ms: 12.292996\n  ...\n# Subtest: GUARD-08: All 20 canonical tools have sideEffects and requiredAuthority metadata defined\nok 32 - GUARD-08: All 20 canonical tools have sideEffects and requiredAuthority metadata defined\n  ---\n  duration_ms: 0.202988\n  ...\n1..32\n# tests 32\n# suites 0\n# pass 32\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 833.051493\n"
+    }
+  ],
+  "verdict": "PASS"
+}
