@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T14:04:09.468Z",
+  "updated_at": "2026-09-01T14:11:25.984Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1749,6 +1749,16 @@
       "published_at": null,
       "summary": "Skills are reusable sets of instructions that teach Agent how to handle specific tasks. What are Skills? — Skills are markdown files that teach Agent specialized workflows. How do I create a skill? — Type /create-skill in chat and describe the skill you want. SKILL.md Are user-level skills available on Cloud Agents and remote workers? — Cursor loads and on the local machine. How do I scope a skill to specific files? — Add a field to the skill's frontmatter. How do I use a skill? — Type followed by the skill name in chat to run it (e.g., /write-tests ), or type and select it to attach as context. When should I use skills instead of rules? — Use a rule when a short instruction is enough. How do I convert a rule into a skill? — Type /create-skill in chat and tell Agent to turn your rule into…",
       "apply_in_eos": "Help Skills is vendor Agent workflows. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team skills for daily ingest. Keep SKILL.md under .cursor/skills. Prefer /create-skill. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-getting-started-build-ai-coding-",
+      "title": "How do I build an AI coding agent?",
+      "source_url": "https://cursor.com/help/getting-started/build-ai-coding-agent",
+      "published_at": null,
+      "summary": "You can build a coding agent from three parts: a model, a set of tools, and a harness that runs them in a loop. What is a coding agent made of? — Every coding agent needs a harness, which combines the model the user selects, the tools the agent can access, and the instructions the user provides to achieve a goal. Can I build an agent without coding? — Yes. How do I build a coding agent with the Cursor SDK? — The Cursor SDK lets you launch agents with the same harness, runtime, and models that power Cursor. What can I build with the Cursor SDK? — You can run agents on your machine or on Cursor's cloud against a dedicated VM, with any frontier model.",
+      "apply_in_eos": "Help build AI coding agent is vendor custom-agent SDK how-to. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into building a custom coding agent or installing @cursor/sdk for daily ingest. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
