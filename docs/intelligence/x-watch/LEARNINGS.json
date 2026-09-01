@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T13:21:26.371Z",
+  "updated_at": "2026-09-01T13:25:03.147Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1599,6 +1599,16 @@
       "published_at": null,
       "summary": "Cursor for iOS is the Cursor mobile app for controlling agents running in the cloud and on your own computer. Is there an Android app? — Not yet. Which devices and versions are supported? — iPhones running iOS 26.0 or later and iPads running iPadOS 26.0 or later. What is different on iPad? — The iPad layout keeps chats in a sidebar, lets you open a review next to a chat, and gives file diffs more space. Which countries and languages does the app support? — The app is available in all App Store regions except mainland China. Who can use the app? — The app directs agents running in the cloud and on your own computer (using Remote Control), both of which need a paid plan to start a run. Why don't I see any repositories? — The repository picker pulls from the source control you've connected o…",
       "apply_in_eos": "Help Cursor for iOS is vendor mobile Cloud Agent client. Keep this watch in the Cloud Agent VM. Do not rotate this Cloud Agent into the iOS app for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-multi-agent",
+      "title": "What is multi-agent coding?",
+      "source_url": "https://cursor.com/help/ai-features/multi-agent",
+      "published_at": null,
+      "summary": "Multi-agent coding is running more than one AI agent at the same time, each working on a different task or a different slice of the same task. How do I run multiple agents in Cursor? — Use the Agents Window, Cursor's agent-first workspace for running and managing many agents across repositories and environments. What are subagents? — Subagents are agents that a main agent spawns to handle part of a task. How do I multitask with agents? — Type /multitask to have Cursor run async subagents in parallel instead of queuing your requests. How do I manage many agents at once? — When a task runs for a long time, hand it to the cloud so you can close your laptop and switch context.",
+      "apply_in_eos": "Help multi-agent is vendor desktop Agents Window parallelism. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agents Window, /multitask, or Build in Parallel for daily ingest. This Cloud Agent VM already runs one isolated agent. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
