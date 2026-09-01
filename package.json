@@ -24,7 +24,8 @@
     "audit:system": "node scripts/engine/system-wide-integrity-audit.js --audit-system",
     "verify:independent": "node scripts/engine/independent-verification-harness.js --verify-independent",
     "discover:real": "node scripts/engine/real-project-discovery-engine.js --discover-real",
-    "audit:evidence": "node scripts/verify-eos.js --strict"
+    "audit:evidence": "node scripts/verify-eos.js --strict",
+    "watch:x": "node scripts/engine/x-learning-watch.js --ingest"
   },
   "keywords": [
     "eos",
