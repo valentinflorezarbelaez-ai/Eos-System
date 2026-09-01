@@ -7,6 +7,12 @@ import { MissionLedger } from '../scripts/engine/mission-ledger.js';
 const TEST_DIR = path.resolve('tests/fixtures/test-ledger');
 const LEGACY_DIR = path.resolve('tests/fixtures/test-ledger/legacy');
 
+test.after(() => {
+  if (fs.existsSync(TEST_DIR)) {
+    fs.rmSync(TEST_DIR, { recursive: true, force: true });
+  }
+});
+
 test('ML-01: Initializes mission with feature list and progress file', () => {
   const ledger = new MissionLedger({ baseDir: TEST_DIR, legacyDir: LEGACY_DIR });
   const missionId = `TEST-MIS-${Date.now()}`;
