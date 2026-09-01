@@ -647,6 +647,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_GET_STARTED_QUICKSTART",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-GETTING-STARTED-INSTALL",
+      "url": "https://cursor.com/help/getting-started/install",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_GETTING_STARTED_INSTALL",
+      "fetchable": true
     }
   ]
 }
