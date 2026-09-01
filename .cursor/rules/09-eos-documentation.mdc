@@ -1,0 +1,46 @@
+---
+description: "EOS documentation: English artifacts, point to canonical docs, no constitution dumps, evidence paths"
+alwaysApply: false
+globs: docs/**, **/*.md, **/*.mdc
+---
+
+# EOS Documentation
+
+Apply when editing markdown, specs, ADRs, evidence notes, or Cursor rules.
+
+## Canonical sources (cite, do not copy wholesale)
+
+- `CONSTITUTION.md` / `docs/core/CONSTITUTION.md`
+- `.agents/AGENTS.md`
+- `docs/rules/CANONICAL_RULES_INDEX.json`
+- `docs/specs/` and `docs/architecture/adrs/`
+- `docs/evidence/`
+- https://cursor.com/docs/rules — Project Rules must be `.mdc` with frontmatter
+
+## Language and hierarchy
+
+1. Constitution & governance
+2. ADRs
+3. Specifications
+4. Implementation
+5. Evidence
+
+System artifacts: professional English. Do not paste the full constitution into a rule, PR, or skill. Link or cite article / rule ID (`R-EVIDENCE-01`, POL-001, …).
+
+## Writing rules for agents
+
+- Keep `.mdc` files under 500 lines. Frontmatter: `description` (string), `alwaysApply` (boolean), `globs` (comma-separated) only when `alwaysApply` is false and the rule is path-scoped.
+- `alwaysApply: true` → omit `globs` (official docs: globs are ignored).
+- Plain `.md` under `.cursor/rules/` is not a Project Rule.
+- AI documentation is guidance, not enforcement.
+
+## Specs and evidence
+
+- OpenSpec filenames: `proposal.md`, `spec.md`, `design.md`, `tasks.md`.
+- Record verification in `docs/evidence/` when the mission requires a sealed claim. Mark unverified text `NOT VERIFIED`.
+- Estimate ≠ quote. Pricing needs a legal disclaimer.
+- Do not claim `PRODUCTION_READY` in docs without executable evidence and PO sign-off.
+
+## Preserve existing overlays
+
+Leave `.cursorrules`, `eos-orchestrator.mdc`, and `engram.mdc` in place unless they are empty stubs of a numbered EOS rule file.

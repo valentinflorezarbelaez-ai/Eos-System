@@ -1,0 +1,45 @@
+---
+description: "EOS git and release: no force-push, no autonomous merge, no secrets, evidence before ready"
+alwaysApply: true
+---
+
+# EOS Git and Release
+
+## Canonical sources
+
+- `.github/workflows/ci.yml` and `cd-release-gate.yml`
+- `docs/releases/RELEASE_CAPABILITY_MATRIX.md`
+- `docs/releases/EOS_FREEZE_GATE_STATUS.md`
+- `DEPENDENCY_POLICY_L0.md`
+
+## Git hygiene
+
+- Work on a feature branch. Do not switch away from the assigned branch unless the human asks.
+- One logical change per commit. Descriptive messages (e.g. `chore(cursor): …`).
+- Never force-push. Never rewrite shared history. Never amend unless the human explicitly asks.
+- Never commit secrets, `.env`, keys, tokens, or credential files.
+- Do not delete files outside this workspace.
+
+## Protected surfaces
+
+- Do not merge pull requests (no `gh pr merge`, no merge commits to `main`) unless the human explicitly instructs it.
+- Do not push to `main` directly.
+- `Fundacion/` stays `Δ = 0` — no tracked or untracked writes.
+- Do not tag production releases without PO sign-off.
+
+## Release claims
+
+- CI green on a subset is `PARTIALLY VERIFIED` at most.
+- `PRODUCTION_READY` requires evidence across all required production dimensions and explicit PO authorization. Default: **NO**.
+- Merge-to-main and live network/credentials are separate gates (`R-BOUNDARY-01`).
+- Local fixture success is not production identity or production deploy proof.
+
+## PRs
+
+- Open a draft PR when asked to ship a change; mark ready only when tests for the change have been run.
+- PR body: what changed, what was not touched (CORE / Fundacion), how it was verified.
+- Do not enable auto-merge.
+
+## Dependencies
+
+L0 policy: Node built-ins only unless a recorded exception exists. Installing packages is medium/high risk — do not expand the supply chain on a rules or docs change.

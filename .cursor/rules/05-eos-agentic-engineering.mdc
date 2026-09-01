@@ -1,0 +1,49 @@
+---
+description: "EOS agentic engineering: roles, skills, MCP, Cursor rules format, memory, anti-majority"
+alwaysApply: false
+globs: src/**,agents/**,skills/**,.cursor/**,.cursor/mcp.json
+---
+
+# EOS Agentic Engineering
+
+Apply when changing agents, skills, Cursor rules, MCP, or orchestration code.
+
+## Canonical sources
+
+- https://cursor.com/docs/rules — official Project Rules format (verified)
+- `.agents/AGENTS.md` and `.agents/skills/`
+- `.cursor/rules/` — this directory
+- `src/mcp-server.js` and `src/core/mcp/mcp-mission-bridge.js`
+
+## Cursor Project Rules (official)
+
+- Project rules **must** be `.mdc` with YAML frontmatter (`description`, `alwaysApply`, optional `globs`).
+- A plain `.md` in `.cursor/rules/` is ignored. Optional READMEs are not rules.
+- `alwaysApply: true` ignores globs; omit globs on always-apply files.
+- Keep each rule under 500 lines. Split rather than grow a giant file.
+- Reference canonical docs; do not dump `CONSTITUTION.md` into a rule.
+- AI rules are not a security control.
+
+Existing overlays (`.cursorrules`, `eos-orchestrator.mdc`, `engram.mdc`) stay unless they are empty stubs of these numbered files. Prefer add, not replace.
+
+## Roles and anti-majority
+
+Specialized roles: `RESEARCH`, `ARCHITECT`, `IMPLEMENTER`, `AUDITOR`, `REDTEAM` (plus tester/certifier when used).
+
+Consensus is not authority. The executive decision uses tests, traces, and constitutional rules — not a majority vote.
+
+## Skills and MCP
+
+- Follow the skill's `SKILL.md` before inventing a workflow.
+- MCP tools: discover schema first; never send secrets in prompts or git.
+- Mission bridge barriers stay in code (`McpMissionBridge.barrierCheck`). Do not add a "trust the agent" bypass.
+
+## Memory
+
+If Engram (`mem_save`, `mem_search`, `mem_context`) is available: save after significant work; recover with `mem_context` after a reset. Memory is not evidence.
+
+## Do not
+
+- Put secrets in `.cursor/mcp.json`, rules, or skills.
+- Treat Team Dashboard rules as EOS governance.
+- Auto-apply `/create-rule` dumps of entire style guides.

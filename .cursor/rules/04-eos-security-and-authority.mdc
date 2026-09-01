@@ -1,0 +1,56 @@
+---
+description: "EOS security and authority: HITL, frozen surfaces, secrets, write barriers — rules are not enforcement"
+alwaysApply: true
+---
+
+# EOS Security and Authority
+
+AI rules are **not** a security control. Enforcement is code, HITL receipts, protected branches, and human approval. This file only tells the agent what not to attempt.
+
+## Canonical sources
+
+- `docs/policies/POLICY_ENGINE.json` — POL-001..004
+- `docs/policies/AUTONOMY_RISK_MODEL.json` — L0–L6 and action risk
+- `.agents/CURSOR_COMMAND_CENTER_CONTRACT.md`
+- `.agents/AGENTS.md` §5 — external write barrier
+- `docs/rules/CANONICAL_RULES_INDEX.json` — `R-HITL-01`, `R-BOUNDARY-01`, `R-FDIR-01`
+
+## Authority
+
+- Human Product Owner owns `CONSTITUTION.md`, `.agents/AGENTS.md`, `POLICY_ENGINE.json`, authorization levels, and epistemic definitions.
+- Agents may propose; they may not silently escalate autonomy.
+- Continuous improvement must not raise privileges (pipeline step 21).
+
+## Write barriers
+
+External / target project writes require verified evidence of all of:
+
+1. `REGISTERED` in `docs/projects/registry.json`
+2. `INTAKE_COMPLETE`
+3. `SPECIFICATION_APPROVED`
+4. `AUDIT_COMPLETE`
+5. `OWNER_APPROVAL`
+6. `IMPLEMENTATION_AUTHORIZED` at Level 2+ in `IMPLEMENTATION_AUTHORIZATION.md`
+
+Without that record: `WRITE = DENIED`. Experiments need `EXTERNAL_PROJECT_WRITE_EXCEPTION` in `docs/evidence/` with scope, expiry, rollback, and PO sign-off.
+
+Always denied without separate human control:
+
+- `Fundacion/` / `PRJ-FUNDACION` (`Δ = 0`)
+- Core kernel mutation
+- Production deploy, financial actions, irreversible destruction
+- Inventing or hardcoding `GAP-002` custody
+
+## Secrets and supply chain
+
+- Never commit secrets, keys, `.env`, PEMs, or tokens.
+- Never print secrets into rules, docs, PRs, or evidence.
+- Do not add dependencies unless authorized; prefer Node built-ins (L0).
+- Sanitize untrusted input at boundaries. No eval of untrusted data.
+
+## HITL and local fixtures
+
+- Gated transitions require a valid HITL receipt.
+- `LOCAL_BOUNDED` / `MEASURED_LOCAL_FIXTURE` receipts are local governance aids, not production identity proof (`R-LOCAL-01`).
+
+These rules guide the agent; enforcement is code/HITL/protected surfaces, not this file.

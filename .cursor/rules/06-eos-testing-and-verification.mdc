@@ -1,0 +1,52 @@
+---
+description: "EOS testing and verification: TDD, node --test, strict verify, no fake green"
+alwaysApply: false
+globs: tests/**,src/**,scripts/**
+---
+
+# EOS Testing and Verification
+
+Apply when changing tests, runtime, or verification scripts.
+
+## Canonical sources
+
+- `package.json` scripts: `test`, `test:all`, `verify`, `verify:strict`, `ci`
+- `scripts/verify-eos.js` — workspace verifier
+- `.github/workflows/ci.yml` — CI jobs (verify, test, syntax, governance-gates)
+- `.agents/skills/sdd/SKILL.md` — validation phase
+
+## How to run
+
+```bash
+npm test                 # node --test on tests/
+npm run test:lab         # EOS-Lab TypeScript tests
+npm run verify:strict    # strict workspace verification
+npm run ci               # GHA contract + strict verify
+```
+
+CI also runs Fundacion freeze: `git diff --exit-code -- Fundacion` and no extra untracked files there.
+
+## TDD
+
+1. Write a failing test that names the behavior (`RED`).
+2. Implement the minimum change (`GREEN`).
+3. Refactor with tests still passing.
+4. Re-run the nearest suite and, for Control Plane changes, `npm test` or the affected file.
+
+Do not skip the red step for new behavior. Do not edit tests solely to match a broken implementation.
+
+## What counts as evidence
+
+- Command output from `node --test`, `node --check`, or `verify-eos.js`
+- Recorded files under `docs/evidence/` when the mission requires sealing
+- CI logs on the PR
+
+"I read the code and it looks correct" is `NOT VERIFIED`.
+
+## Guardrails
+
+- Prefer Node built-in test runner. Do not add a new test framework without approval.
+- Keep tests deterministic. No live network, no real credentials, no Fundacion writes.
+- Discard ephemeral test writes (e.g. `EOS-MISSION-CONTROL/ACTIVE_TOOLS.json`) if tests dirty them.
+- Negative tests for gates (HITL deny, freeze, FDIR) are first-class — do not delete them to go green.
+- If `verify:strict` fails, treat the change as incomplete.
