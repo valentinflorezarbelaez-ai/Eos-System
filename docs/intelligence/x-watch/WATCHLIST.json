@@ -507,6 +507,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_ASK_MODE",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-PLAN-MODE",
+      "url": "https://cursor.com/help/ai-features/plan-mode",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_PLAN_MODE",
+      "fetchable": true
     }
   ]
 }
