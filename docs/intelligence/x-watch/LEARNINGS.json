@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T15:38:42.097Z",
+  "updated_at": "2026-09-01T15:47:56.620Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1809,6 +1809,16 @@
       "published_at": null,
       "summary": "Connect GitHub, GitLab, Azure DevOps, or Bitbucket Cloud to use Cloud Agents. How do I connect GitHub? — Follow the setup steps in the GitHub integration docs. How do I connect GitLab? — Follow the setup steps in the GitLab integration docs. How do I connect Azure DevOps? — Follow the setup steps in the Azure DevOps integration docs. How do I connect Bitbucket? — Follow the setup steps in the Bitbucket integration docs.",
       "apply_in_eos": "Help GitHub, GitLab, Azure DevOps, and Bitbucket is vendor Cloud Agent and Bugbot repo-connection setup. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra SCMs for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-integrations-third-party",
+      "title": "Linear, Slack, Notion, and other tools",
+      "source_url": "https://cursor.com/help/integrations/third-party",
+      "published_at": null,
+      "summary": "Connect Cursor to project management, communication, and other external tools through Cloud Agent integrations and MCP. How do I connect Linear? — Linear is a Cloud Agent integration. How do I connect Slack? — Slack is also a Cloud Agent integration. How do I connect Notion? — Notion is a Cloud Agent integration in beta. How do I connect other tools? — Most third-party integrations work through MCP.",
+      "apply_in_eos": "Help third-party integrations is vendor Cloud Agent third-party tool connections. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra vendor tools for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

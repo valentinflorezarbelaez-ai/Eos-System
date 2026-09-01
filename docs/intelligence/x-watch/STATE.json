@@ -181,6 +181,7 @@
     "https://cursor.com/help/integrations/cli",
     "https://cursor.com/help/integrations/git",
     "https://cursor.com/help/integrations/github-gitlab",
+    "https://cursor.com/help/integrations/third-party",
     "https://cursor.com/help/models-and-usage/available-models",
     "https://cursor.com/help/models-and-usage/cursor-router",
     "https://cursor.com/help/models-and-usage/grok-4-5",
@@ -199,7 +200,7 @@
     "https://cursor.com/help/troubleshooting/reporting-bugs",
     "https://cursor.com/help/troubleshooting/tab-issues"
   ],
-  "last_ingest_at": "2026-09-01T15:38:42.085Z",
-  "last_item_count": 197,
-  "last_new_item_count": 42
+  "last_ingest_at": "2026-09-01T15:47:56.605Z",
+  "last_item_count": 198,
+  "last_new_item_count": 43
 }
