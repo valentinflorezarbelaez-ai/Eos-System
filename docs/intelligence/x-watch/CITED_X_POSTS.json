@@ -1,0 +1,151 @@
+{
+  "watch_id": "X-WATCH-001",
+  "epistemic_status": "CITED_NOT_FETCHED",
+  "note": "These @cursor_ai status URLs were recorded from third-party articles. This agent did not fetch x.com.",
+  "citations": [
+    {
+      "x_url": "https://x.com/cursor_ai/status/2090136956101414982",
+      "handle": "cursor_ai",
+      "about": "We're continuing to improve cloud agents",
+      "cited_by": "https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents",
+      "official_source": "https://cursor.com/changelog/08-19-26",
+      "published_date": "2026-08-19",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2090136958156546150",
+      "handle": "cursor_ai",
+      "about": "Cursor can now monitor your PRs",
+      "cited_by": "https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents",
+      "official_source": "https://cursor.com/changelog/08-19-26",
+      "published_date": "2026-08-19",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2090136960295645431",
+      "handle": "cursor_ai",
+      "about": "Use any skill as a Custom Mode",
+      "cited_by": "https://www.unrollnow.com/status/2090136956101414982",
+      "official_source": "https://cursor.com/changelog/08-19-26",
+      "published_date": "2026-08-19",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2090136962376081531",
+      "handle": "cursor_ai",
+      "about": "Subagents can now run on their own virtual machines",
+      "cited_by": "https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents",
+      "official_source": "https://cursor.com/changelog/08-19-26",
+      "published_date": "2026-08-19",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2090136964116721902",
+      "handle": "cursor_ai",
+      "about": "Steering now waits for the next tool call",
+      "cited_by": "https://www.unrollnow.com/status/2090136956101414982",
+      "official_source": "https://cursor.com/changelog/08-19-26",
+      "published_date": "2026-08-19",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2090136966121599117",
+      "handle": "cursor_ai",
+      "about": "Use /goal",
+      "cited_by": "https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents",
+      "official_source": "https://cursor.com/changelog/08-19-26",
+      "published_date": "2026-08-19",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2089399057659596847",
+      "handle": "cursor_ai",
+      "about": "Origin, our code hosting platform, is now live",
+      "cited_by": "https://www.unrollnow.com/status/2089399057659596847",
+      "official_source": "https://cursor.com/changelog/origin-code-hosting",
+      "published_date": "2026-08-17",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2089399059488350447",
+      "handle": "cursor_ai",
+      "about": "We've partnered with some of the top GitHub integrations. Vercel, Buildkite, and Depot are already available with more coming soon.",
+      "cited_by": "https://www.unrollnow.com/status/2089399057659596847",
+      "official_source": "https://cursor.com/changelog/origin-code-hosting",
+      "published_date": "2026-08-17",
+      "eos_note": "Origin GitHub integrations are optional vendor marketplace. GitHub remains source of truth for this synced repo.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2089399061040308603",
+      "handle": "cursor_ai",
+      "about": "We're rolling out the beta starting today.",
+      "cited_by": "https://www.unrollnow.com/status/2089399057659596847",
+      "official_source": "https://cursor.com/changelog/origin-code-hosting",
+      "published_date": "2026-08-17",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2087941307624980753",
+      "handle": "cursor_ai",
+      "about": "Cloud agents now start 3x faster so you can hand them ambitious, long-running tasks",
+      "cited_by": "https://www.unrollnow.com/status/2087941307624980753",
+      "official_source": "https://cursor.com/changelog/08-13-26",
+      "published_date": "2026-08-13",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2087941309013397970",
+      "handle": "cursor_ai",
+      "about": "Builds also make agents more resilient. A failed new build never goes live. Agents keep using the last successful build.",
+      "cited_by": "https://www.unrollnow.com/status/2087941307624980753",
+      "official_source": "https://cursor.com/changelog/08-13-26",
+      "published_date": "2026-08-13",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2087941310217064850",
+      "handle": "cursor_ai",
+      "about": "Customers like Faire, Headway, and Descript are seeing agent start times drop from minutes to seconds with builds",
+      "cited_by": "https://www.unrollnow.com/status/2087941307624980753",
+      "official_source": "https://cursor.com/changelog/08-13-26",
+      "published_date": "2026-08-13",
+      "eos_note": "Customer names are vendor marketing, not EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2088249881718919393",
+      "handle": "cursor_ai",
+      "about": "Cursor is now part of @SpaceX. Today, we have officially closed our acquisition.",
+      "cited_by": "https://www.unrollnow.com/status/2088249881718919393",
+      "official_source": "https://cursor.com/blog/joining-spacex",
+      "published_date": "2026-08-19",
+      "eos_note": "Cited X announcement mirrored by official blog https://cursor.com/blog/joining-spacex. Do not treat SpaceX/Grok marketing as EOS production evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2084317547608911986",
+      "handle": "cursor_ai",
+      "about": "Cloud agents are now 20-30% more token efficient, and 80% more efficient on runs with computer use",
+      "cited_by": "https://aicatchup.com/news/cursor-cloud-agents-token-efficiency-computer-use",
+      "official_source": "https://cursor.com/blog/cloud-agent-environment",
+      "published_date": "2026-08-03",
+      "eos_note": "Vendor efficiency claim cited by a third party. Do not treat token-percentage marketing as EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    }
+  ]
+}

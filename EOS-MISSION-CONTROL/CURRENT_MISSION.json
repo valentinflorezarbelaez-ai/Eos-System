@@ -1,30 +1,35 @@
 {
-  "mission_id": "EOS-MISSION-OS-LOCAL-COMPLETE",
+  "mission_id": "EOS-FINAL-READINESS-EXAMS-2026",
   "project_id": "PRJ-EOS-MISSION-OS",
   "command_center": "CURSOR_MISSION_CONTROL",
-  "title": "EOS Mission OS — COMPLETE_FOR_LOCAL_GOVERNED_USE freeze",
-  "status": "FROZEN_LOCAL_COMPLETE",
-  "current_stage": "MERGED_TO_MAIN_NO_PUSH",
-  "active_branch": "main",
-  "rc_tag": "rc/eos-mission-os-local-complete-2026-08-21",
-  "rc_tip": "2b53b055fe52dafc5970d6cc21930f16c66ec78d",
-  "main_merge": "78b28d61c0c92136b8bb078bf36b1ba0930549cf",
-  "integrate_branch": "integrate/eos-mission-os-rc",
-  "updated_at": "2026-08-21T21:04:26.161Z",
+  "title": "Final readiness exams — clean clone, bypass battery, real CLI mission",
+  "status": "EXAMS_MEASURED_NOT_OPERATIONALLY_COMPLETE",
+  "current_stage": "POST_EXAM_VERDICT_SEALED",
+  "active_branch": "cursor/final-readiness-exams-421e",
+  "updated_at": "2026-08-27T00:27:11.265Z",
   "dictamen": {
-    "COMPLETE_FOR_LOCAL_GOVERNED_USE": "YES",
+    "COMPLETE_FOR_LOCAL_GOVERNED_USE": "PRIOR_CLAIM_NOT_REIMPORTED",
+    "OPERATIONALLY_COMPLETE_WITHIN_VERIFIED_SCOPE": "NO",
     "PRODUCTION_READY": "NO",
-    "PUSH": "NOT_DONE",
-    "FUNDACION": "FROZEN_DELTA_0"
+    "FUNDACION": "FROZEN_DELTA_0",
+    "ARCHITECTURE_FREEZE": "YES_NO_NEW_LAYERS"
+  },
+  "exams": {
+    "exam1_clean_clone": "PASS_WITH_CONDITIONS",
+    "exam2_bypass_battery": "BYPASS_GAPS_MEASURED_7_of_8",
+    "exam3_real_cli_mission": "PASS_WITHIN_CLI_SCOPE"
   },
   "evidence": {
-    "tests": "20/20 PASS",
-    "quarantine": "EOS_P01_MERGE_QUARANTINE_2026-08-21T-rc-into-main"
+    "dir": "docs/evidence/final_readiness_exams_2026",
+    "tests_full": "721/725",
+    "strict_verifier": "471/471",
+    "doctor": "MISSING",
+    "p0_gap": "BYP-07 close without verification ALLOWED"
   },
   "progress_summary": {
-    "total": 1,
-    "verified": 1,
+    "total": 3,
+    "verified": 2,
     "pending": 0,
-    "blocked": 0
+    "blocked": 1
   }
 }

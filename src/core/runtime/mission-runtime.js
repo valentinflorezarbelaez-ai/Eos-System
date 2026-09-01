@@ -11,7 +11,10 @@ import crypto from 'node:crypto';
 import { UniversalTechnicalDiscoveryEngine } from '../discovery/universal-technical-discovery-engine.js';
 import { GovernedTechnicalSelectionEngine } from '../discovery/governed-technical-selection-engine.js';
 import { CursorMissionPackageGenerator } from '../adapters/cursor-mission-package.js';
-import { CursorReturnIngestionEngine } from '../adapters/cursor-return-ingestion-engine.js';
+import {
+  CursorReturnIngestionEngine,
+  MISSION_PROTECTED_SURFACES
+} from '../adapters/cursor-return-ingestion-engine.js';
 import { RoleSkillRegistryEngine } from '../roles/role-skill-registry-engine.js';
 import { MultiAgentSupervisionEngine } from '../supervision/multi-agent-supervision-engine.js';
 import { HashChainedLedger, calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
@@ -59,6 +62,39 @@ export class MissionRuntime {
     manifest.files[relPath] = calculateSha256(contentStr);
     manifest.updated_at = new Date().toISOString();
     fs.writeFileSync(manifestFile, JSON.stringify(manifest, null, 2), 'utf8');
+  }
+
+  /** Keep integrity-manifest in lockstep after ATS rewrites mission-package.json. */
+  _syncPackageManifest(missionDir) {
+    const pkgFile = path.join(missionDir, 'mission-package.json');
+    if (!fs.existsSync(pkgFile)) return;
+    this._updateManifestFile(missionDir, 'mission-package.json', fs.readFileSync(pkgFile, 'utf8'));
+  }
+
+  _nonceStorePath(missionDir) {
+    return path.join(missionDir, 'evidence', 'consumed-nonces.json');
+  }
+
+  _loadConsumedNonces(missionDir) {
+    const p = this._nonceStorePath(missionDir);
+    if (!fs.existsSync(p)) return [];
+    try {
+      const parsed = JSON.parse(fs.readFileSync(p, 'utf8'));
+      return Array.isArray(parsed.nonces) ? parsed.nonces : [];
+    } catch {
+      return [];
+    }
+  }
+
+  _saveConsumedNonces(missionDir) {
+    const payload = JSON.stringify(
+      { nonces: Array.from(this.ingestionEngine.consumedNonces), updated_at: new Date().toISOString() },
+      null,
+      2
+    );
+    fs.mkdirSync(path.join(missionDir, 'evidence'), { recursive: true });
+    fs.writeFileSync(this._nonceStorePath(missionDir), payload, 'utf8');
+    this._updateManifestFile(missionDir, 'evidence/consumed-nonces.json', payload);
   }
 
   /**
@@ -142,8 +178,8 @@ export class MissionRuntime {
         project_id: profile.project_id,
         root_path: projectPath,
         included_paths: ['src/**', 'tests/**'],
-        excluded_paths: ['docs/governance/**'],
-        protected_surfaces: ['docs/governance/**']
+        excluded_paths: ['docs/governance/**', 'Fundacion/**'],
+        protected_surfaces: [...MISSION_PROTECTED_SURFACES]
       },
       artifacts: { required: ['evidence_receipts'], produced: [] },
       orchestration: { assigned_roles: [], tasks: [] },
@@ -204,10 +240,21 @@ export class MissionRuntime {
     const ledger = new HashChainedLedger({ baseDir: path.join(missionDir, 'ledger') });
     const events = ledger.getEvents(missionId);
 
+    let authorityPhase = null;
+    try {
+      authorityPhase = this.ats.getSnapshot(missionId).state;
+    } catch {
+      authorityPhase = null;
+    }
+    const phase = authorityPhase || pkg.phase;
+
     return {
       mission_id: missionId,
       status: pkg.status,
-      phase: pkg.phase,
+      phase,
+      package_phase: pkg.phase,
+      authority_phase: authorityPhase,
+      phase_tamper_detected: Boolean(authorityPhase && pkg.phase && pkg.phase !== authorityPhase),
       direction,
       profile,
       events_count: events.length,
@@ -289,7 +336,7 @@ export class MissionRuntime {
         allowed_tools: ['read_file', 'grep_search', 'list_dir'],
         allowed_read_roots: [direction.project_path],
         allowed_write_roots: [direction.project_path],
-        protected_surfaces: ['docs/governance/**'],
+        protected_surfaces: [...MISSION_PROTECTED_SURFACES],
         authority_level: direction.authority_level,
         budget: { max_tokens: 15000, max_cost_usd: 0.03, max_duration_seconds: 600 },
         stop_conditions: ['FATAL_ERROR', 'BUDGET_EXCEEDED'],
@@ -495,7 +542,7 @@ export class MissionRuntime {
       },
       tasks: plan.tasks,
       allowed_tools: ['read_file', 'grep_search', 'list_dir'],
-      protected_surfaces: ['docs/governance/**', '.eos/ledger/**']
+      protected_surfaces: [...MISSION_PROTECTED_SURFACES, '.eos/ledger/**']
     });
 
     // Write to cursor subdirectory
@@ -642,6 +689,7 @@ export class MissionRuntime {
       authority_level: 'LEVEL_0',
       actor: { identity: 'operator', role: 'HUMAN_DIRECTOR', identity_type: 'human_owner' }
     });
+    this._syncPackageManifest(missionDir);
 
     const ledger = new HashChainedLedger({ baseDir: path.join(missionDir, 'ledger') });
     ledger.appendEvent(missionId, 'MISSION_PAUSED', { reason });
@@ -663,6 +711,7 @@ export class MissionRuntime {
       authority_level: 'LEVEL_0',
       actor: { identity: 'operator', role: 'HUMAN_DIRECTOR', identity_type: 'human_owner' }
     });
+    this._syncPackageManifest(missionDir);
 
     const ledger = new HashChainedLedger({ baseDir: path.join(missionDir, 'ledger') });
     ledger.appendEvent(missionId, 'MISSION_RESUMED', {});
@@ -687,6 +736,26 @@ export class MissionRuntime {
       );
     }
 
+    const snap = this.ats.getSnapshot(missionId);
+    const pkg = JSON.parse(fs.readFileSync(path.join(missionDir, 'mission-package.json'), 'utf8'));
+    if (pkg.phase && pkg.phase !== snap.state) {
+      const err = new Error(
+        `CLOSE_DENIED_PHASE_TAMPER: mission-package.json phase '${pkg.phase}' != AuthorityTruthSource state '${snap.state}'`
+      );
+      err.code = 'CLOSE_DENIED_PHASE_TAMPER';
+      throw err;
+    }
+
+    const verification = this.verifyMission(missionId);
+    if (!verification.valid) {
+      const err = new Error(
+        `CLOSE_DENIED_VERIFICATION_FAILED: ledger/manifest invalid (${(verification.discrepancies || []).join('; ') || 'chain invalid'})`
+      );
+      err.code = 'CLOSE_DENIED_VERIFICATION_FAILED';
+      err.verification = verification;
+      throw err;
+    }
+
     this.ats.commitTransition({
       missionId,
       event_type: 'mission.complete',
@@ -694,6 +763,7 @@ export class MissionRuntime {
       authority_level: 'LEVEL_0',
       actor: { identity: 'operator', role: 'HUMAN_DIRECTOR', identity_type: 'human_owner' }
     });
+    this._syncPackageManifest(missionDir);
 
     const ledger = new HashChainedLedger({ baseDir: path.join(missionDir, 'ledger') });
     ledger.appendEvent(missionId, 'MISSION_CLOSED', { reason, integration_gate: 'CHECKED_NOT_LIVE' });
@@ -727,8 +797,13 @@ export class MissionRuntime {
 
     const taskContract = JSON.parse(fs.readFileSync(taskContractFile, 'utf8'));
 
+    for (const nonce of this._loadConsumedNonces(missionDir)) {
+      this.ingestionEngine.consumedNonces.add(nonce);
+    }
+
     // Ingest & evaluate via engine
     const evaluation = this.ingestionEngine.ingestAndEvaluate(returnPkg, taskContract);
+    this._saveConsumedNonces(missionDir);
 
     // Save assessment to evidence folder
     const assessmentFile = path.join(missionDir, 'evidence', `return-${taskId}-assessment.json`);

@@ -37,7 +37,7 @@
       "title": "Fundacion and main frozen",
       "source": "Director governance",
       "statement": "PRJ-FUNDACION Δ=0; merge to main and network/credentials require explicit separate gates.",
-      "enforcement": ["Operator policy", "release branch isolation"]
+      "enforcement": ["Operator policy", "McpMissionBridge.barrierCheck", "CursorReturnIngestionEngine", "MissionRuntime.taskContract"]
     },
     {
       "rule_id": "R-LOCAL-01",

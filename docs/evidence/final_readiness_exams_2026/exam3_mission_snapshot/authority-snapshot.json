@@ -1,0 +1,16 @@
+{
+  "mission_id": "MIS-1787790404528-DAA676",
+  "state": "PLAN",
+  "previous_state": "DEFINE",
+  "sequence": 5,
+  "authority_level": "LEVEL_0",
+  "budget_limits": {
+    "max_input_tokens": 50000,
+    "max_output_tokens": 10000,
+    "max_duration_seconds": 3600
+  },
+  "active_implementer": null,
+  "created_at": "2026-08-27T00:26:44.532Z",
+  "updated_at": "2026-08-27T00:26:44.589Z",
+  "last_event_id": "EVT-1787790404589-c250ea70"
+}

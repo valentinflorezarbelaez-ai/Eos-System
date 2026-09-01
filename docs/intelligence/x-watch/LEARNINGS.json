@@ -1,0 +1,1566 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-08-27T15:23:00.627Z",
+  "learnings": [
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
+      "title": "IMDEX uses Cursor to build integrated subsurface data and analytics platform in months, not years",
+      "source_url": "https://cursor.com/blog/imdex",
+      "published_at": "2026-08-25T12:00:00.000Z",
+      "summary": "Global mining technology leader, IMDEX, is using Cursor to consolidate fragmented geological data systems and re-platform legacy applications at 10x the pace of its pre-AI development model.",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-08-19-26",
+      "title": "Cloud Agents and Cursor Harness Improvements",
+      "source_url": "https://cursor.com/changelog/08-19-26",
+      "published_at": "Wed, 19 Aug 2026 00:00:00 GMT",
+      "summary": "We're continuing to improve cloud agents and the Cursor harness so always-on agents can operate as a system, building and shipping software on their own without the need for intervention at each loop. With this release, cloud agents can automatically pick up work in response to events, hold a goal until it's met, and stay on course through long-running sessions. Subscriptions Cursor can now monit…",
+      "apply_in_eos": "Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS. Honor auto-CI-fix on PRs this agent opens.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-git-at-any-scale",
+      "title": "Git at any scale",
+      "source_url": "https://cursor.com/blog/git-at-any-scale",
+      "published_at": "2026-08-18T12:00:00.000Z",
+      "summary": "git at any scale",
+      "apply_in_eos": "Vendor git-scale narrative. GitHub remains source of truth for this repo unless Origin is explicitly adopted.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-origin-code-hosting-168670",
+      "title": "Origin Code Hosting",
+      "source_url": "https://forum.cursor.com/t/origin-code-hosting/168670",
+      "published_at": "Mon, 17 Aug 2026 17:42:08 +0000",
+      "summary": "Changelog · Docs · Get started Cursor can now host your code. Today we’re launching Origin in early beta. Origin is a git forge built for agent scale. Create a repo, push with git, and your code lives next to the agents and pull requests that work on it. We’re starting with the essentials: repos, browsing, PRs, and GitHub sync, with more agent-native features coming soon. What’s new: Repos Cursor…",
+      "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-origin-code-hosting",
+      "title": "Origin Code Hosting",
+      "source_url": "https://cursor.com/changelog/origin-code-hosting",
+      "published_at": "Mon, 17 Aug 2026 00:00:00 GMT",
+      "summary": "Cursor can now host your code. Origin begins rolling out today in early beta on all paid plans. We're starting with the essentials, designed for agent scale: repos, pull requests, code browsing, and GitHub sync. Agent-native features ship soon. Origin Repos The new **Codebase** tab is home for Origin repos. Click **+New** to create a new repo and name it. Once you do, a page shows you how to inst…",
+      "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-joining-spacex",
+      "title": "Cursor is now a part of SpaceX",
+      "source_url": "https://cursor.com/blog/joining-spacex",
+      "published_at": "2026-08-14T12:00:00.000Z",
+      "summary": "Cursor has officially been acquired by SpaceX.",
+      "apply_in_eos": "Org/acquisition news. Do not change EOS governance from vendor ownership claims; keep FUNDACION frozen.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-firetiger",
+      "title": "Firetiger joins Cursor",
+      "source_url": "https://cursor.com/blog/firetiger",
+      "published_at": "2026-08-13T19:00:00.000Z",
+      "summary": "Firetiger builds agents that work on software once it reaches production. They're joining Cursor to close the loop from writing code to running it.",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-aiuc-1",
+      "title": "Cursor earns AIUC-1 certification for agent security and reliability",
+      "source_url": "https://cursor.com/blog/aiuc-1",
+      "published_at": "2026-08-13T12:00:00.000Z",
+      "summary": "Cursor is now AIUC-1 certified after an independent audit of our controls and adversarial testing of our agents.",
+      "apply_in_eos": "Vendor security certification marketing. EOS security-auditor on our diffs remains the Control Plane check.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-builds",
+      "title": "Cloud agents start 3x faster with builds",
+      "source_url": "https://cursor.com/blog/builds",
+      "published_at": "2026-08-13T12:00:00.000Z",
+      "summary": "Builds are ready-to-use copies of your development environment that Cursor prepares in the background, so cloud agents start up to 3x faster at no additional cost.",
+      "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-08-13-26",
+      "title": "Cloud Agents Start 3x Faster with Builds",
+      "source_url": "https://cursor.com/changelog/08-13-26",
+      "published_at": "Thu, 13 Aug 2026 00:00:00 GMT",
+      "summary": "Agents do their best work when they start in a ready environment: repos cloned, dependencies installed, and your install script already run. This release introduces **builds**: ready-to-use copies of your development environment that Cursor prepares in the background. Agents boot into a ready environment instead of setting up from scratch each session. Builds are included with Cloud Agents at no…",
+      "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-share-your-thoughts-on-grok-4",
+      "title": "Share your Thoughts on Grok 4.6",
+      "source_url": "https://forum.cursor.com/t/share-your-thoughts-on-grok-4-6/168190",
+      "published_at": "Wed, 12 Aug 2026 17:37:31 +0000",
+      "summary": "Main announcement · Blog Now that Grok 4.6 is available, we’d love to hear how it’s working for you. Some things we’re especially curious about: How does it handle long-running, multistep work? Grok 4.6 is built to stay with complex tasks across many steps, including more self-testing and verification before moving on. Does that match your experience? How is it on visual and interactive projects?…",
+      "apply_in_eos": "Vendor feedback thread. Do not treat forum sentiment as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-grok-4-6-is-now-live-168189",
+      "title": "Grok 4.6 is now Live!",
+      "source_url": "https://forum.cursor.com/t/grok-4-6-is-now-live/168189",
+      "published_at": "Wed, 12 Aug 2026 17:29:02 +0000",
+      "summary": "Blog · Pricing Today, we are releasing Grok 4.6 together with SpaceXAI . It builds on Grok 4.5 with a particular focus on long-running agents and more ambitious interactive and visual work. It’s available today in Cursor! It stays with complex tasks across many steps, whether researching a topic, analyzing information, working across a codebase, or turning an idea into a polished application or w…",
+      "apply_in_eos": "Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-grok-4-6",
+      "title": "Introducing Grok 4.6",
+      "source_url": "https://cursor.com/blog/grok-4-6",
+      "published_at": "2026-08-12T00:00:00.000Z",
+      "summary": "Built for long-running agents and more ambitious interactive and visual work.",
+      "apply_in_eos": "Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-introducing-grok-bot-168053",
+      "title": "Introducing Grok Bot",
+      "source_url": "https://forum.cursor.com/t/introducing-grok-bot/168053",
+      "published_at": "Tue, 11 Aug 2026 19:34:40 +0000",
+      "summary": "Introducing Grok Bot Blog · Docs · Get started Today we’re launching Grok Bot in early beta: AI teammates you can give real work to. Bots sign in to the tools you already use and work in them just like you do, on a persistent cloud computer with a browser, filesystem, and terminal. They finish jobs end to end and only come back when something needs your approval. You work with a Bot like you woul…",
+      "apply_in_eos": "Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-how-cursor-router-works",
+      "title": "How Cursor Router chooses the right model for the task",
+      "source_url": "https://cursor.com/blog/how-cursor-router-works",
+      "published_at": "2026-08-06T12:00:00.000Z",
+      "summary": "Auto Intelligence now delivers above Fable-level satisfaction at 68% lower cost. Here's how Compass and the task router choose models from real developer traffic.",
+      "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-mixture-of-kittens",
+      "title": "Mixture-of-Kittens: our open-source MoE megakernel for NVL72s",
+      "source_url": "https://cursor.com/blog/mixture-of-kittens",
+      "published_at": "2026-08-04T12:00:00.000Z",
+      "summary": "We're open-sourcing Mixture-of-Kittens, a deterministic MoE training megakernel for NVL72s that fuses communication and computation into a single kernel.",
+      "apply_in_eos": "Vendor research post. Do not treat model-training writeups as EOS production evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-google-workspace-plugins",
+      "title": "Google Workspace Plugins",
+      "source_url": "https://cursor.com/changelog/google-workspace-plugins",
+      "published_at": "Mon, 03 Aug 2026 00:00:00 GMT",
+      "summary": "Cursor can now read, write, and act across your Google Workspace. New plugins give coding agents direct access to Gmail, Google Drive, and Calendar, so you can pull context, draft and update files, and manage your inbox and calendar without leaving Cursor. Install plugins to connect: ** Google Drive :** search files and folders, open and download content, create and organize files ** Gmail :** se…",
+      "apply_in_eos": "Gmail/Drive plugins are optional Workspace context. Authenticate them only if EOS needs mail/docs; they do not replace this changelog watch.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-cloud-agent-environment",
+      "title": "How we set up our cloud agent environment",
+      "source_url": "https://cursor.com/blog/cloud-agent-environment",
+      "published_at": "2026-07-30T12:00:00.000Z",
+      "summary": "Getting our monorepo working for cloud agents taught us that the development environment is a product in its own right, only one whose users are agents.",
+      "apply_in_eos": "Put install work in environment.json install and keep start for live services. Builds consume that split.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-ipad",
+      "title": "Cursor, now on iPad",
+      "source_url": "https://cursor.com/changelog/ipad",
+      "published_at": "Wed, 29 Jul 2026 00:00:00 GMT",
+      "summary": "Cursor for iPad is now available on all paid plans. New to both iPhone and iPad: an inbox to stay organized, and a review experience that covers the full PR. Create, review, and merge from anywhere. Built for the bigger screen The iPad layout is rebuilt around the extra space. Sidebar chats stay pinned so you can watch several agents run at once. Split screen keeps a review open next to a chat, a…",
+      "apply_in_eos": "iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-cursor-start-india",
+      "title": "Introducing Cursor Start",
+      "source_url": "https://cursor.com/blog/cursor-start-india",
+      "published_at": "2026-07-28T12:00:00.000Z",
+      "summary": "Cursor Start is a new plan for developers in India",
+      "apply_in_eos": "Cursor Start is India regional pricing. No EOS governance change.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-vercel",
+      "title": "How Vercel used Cursor to build Queues",
+      "source_url": "https://cursor.com/blog/vercel",
+      "published_at": "2026-07-28T12:00:00.000Z",
+      "summary": "Vercel Queues was built entirely with Cursor. Power users saw a 54% increase in PR throughput, an 89% decrease in PR cycle time, and 104 hours saved per developer annually.",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-start",
+      "title": "Cursor Start",
+      "source_url": "https://cursor.com/changelog/cursor-start",
+      "published_at": "Tue, 28 Jul 2026 12:00:00 GMT",
+      "summary": "We're introducing Cursor Start , a new ₹649 monthly plan for developers in India, making daily agentic development accessible and payment easy with local pricing and UPI. Existing Free users in India can upgrade their plan from the dashboard . New users in India can visit cursor.com/signup and select the Start plan during onboarding. Start bills monthly with auto-renewal and is available from Jul…",
+      "apply_in_eos": "Cursor Start is India regional pricing. No EOS governance change.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-cursor-start-a-new-plan-for-d",
+      "title": "Cursor Start: a new plan for developers in India",
+      "source_url": "https://forum.cursor.com/t/cursor-start-a-new-plan-for-developers-in-india/166792",
+      "published_at": "Tue, 28 Jul 2026 04:30:42 +0000",
+      "summary": "Blog · Pricing · Changelog Today we’re launching Cursor Start , a new subscription plan available in India, offering generous access to Grok 4.5 and Composer for ₹649 per month, tax-inclusive, payable via UPI. Over 3M developers in India build with Cursor today (roughly 1 in 11 Cursor users worldwide) and that number has tripled in the past year. India is also our number one market for power user…",
+      "apply_in_eos": "Cursor Start is India regional pricing. No EOS governance change.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-claude-opus-5-now-available-1",
+      "title": "Claude Opus 5 now available!",
+      "source_url": "https://forum.cursor.com/t/claude-opus-5-now-available/166583",
+      "published_at": "Fri, 24 Jul 2026 17:12:13 +0000",
+      "summary": "Claude Opus 5, now available in Cursor Announcement · Pricing · CursorBench Claude Opus 5 is now available in Cursor! It matches Claude Fable 5 on CursorBench, scoring 66.7% versus Fable 5’s 66.5% at default effort, at half the price . See how the models compare here: Cursor Cursor · CursorBench Compare CursorBench 3.2 results across the models Cursor evaluates. Unlike Fable 5, Claude Opus 5 is c…",
+      "apply_in_eos": "Claude/Opus availability is vendor catalog news. Do not treat a forum post as a production-quality certificate.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-introducing-cursor-router-166",
+      "title": "Introducing Cursor Router",
+      "source_url": "https://forum.cursor.com/t/introducing-cursor-router/166386",
+      "published_at": "Wed, 22 Jul 2026 17:44:43 +0000",
+      "summary": "Blog · Changelog Today, we’re launching Cursor Router , our intelligent model router. Not every request needs frontier-level intelligence. Cursor Router classifies each request by task type and complexity, then sends it to the most effective model for the job. Frontier models handle the work that demands them, and price-efficient models handle the rest. In online A/B tests across millions of requ…",
+      "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-router",
+      "title": "Introducing Cursor Router",
+      "source_url": "https://cursor.com/blog/router",
+      "published_at": "2026-07-22T00:00:00.000Z",
+      "summary": "Cursor Router is now generally available for Teams and Enterprises",
+      "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-router",
+      "title": "Cursor Router",
+      "source_url": "https://cursor.com/changelog/router",
+      "published_at": "Wed, 22 Jul 2026 00:00:00 GMT",
+      "summary": "Auto mode is now powered by Cursor Router. Cursor Router is our intelligent model router. It analyzes each request and sends it to the right model for the job. Frontier models handle work that demands them. Price-efficient models handle the rest. Optimization modes Select Auto, then choose how the router optimizes: **Intelligence:** Frontier quality, matching the most expensive and powerful model…",
+      "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-agent-swarm-model-economics",
+      "title": "Agent swarms and the new model economics",
+      "source_url": "https://cursor.com/blog/agent-swarm-model-economics",
+      "published_at": "2026-07-20T12:00:00.000Z",
+      "summary": "We compared old and new agent swarms building SQLite from scratch and found that better coordination delivers similar quality at a fraction of the cost.",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-slack-improvements",
+      "title": "Improvements to Cursor in Slack",
+      "source_url": "https://cursor.com/changelog/slack-improvements",
+      "published_at": "Fri, 17 Jul 2026 00:00:00 GMT",
+      "summary": "Cursor in Slack now shares a plan before it starts, runs in multi-repo environments, and can work across channels and threads. Interaction improvements Cursor now responds with a plan before it begins, so you can jump in and redirect early. As it works, it updates its status so you can follow each step. We also refined how Cursor's responses look in Slack. In-message buttons are gone, replaced by…",
+      "apply_in_eos": "Slack is a native Cloud Agent subscription. Reconnect Slack MCP to watch threads; X is still not a trigger.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-addressing-the-recent-mindgar",
+      "title": "Addressing the recent Mindgard report",
+      "source_url": "https://forum.cursor.com/t/addressing-the-recent-mindgard-report/165817",
+      "published_at": "Wed, 15 Jul 2026 17:59:53 +0000",
+      "summary": "You may have seen Mindgard’s report describing a vulnerability in Cursor involving a malicious git.exe binary placed in a repository’s root. After reviewing this report we determined that it was out of scope for our bug bounty program. We operate under a shared responsibility model for workspace and agent-context inputs. Customers decide which repositories, prompts, external content, MCP servers,…",
+      "apply_in_eos": "Vendor security-response post. Run EOS security-auditor on our diffs; do not treat the forum thread as VERIFIED.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-side-chat",
+      "title": "Side Chats and Conversation Search",
+      "source_url": "https://cursor.com/changelog/side-chat",
+      "published_at": "Fri, 10 Jul 2026 00:00:00 GMT",
+      "summary": "This release makes it easier to stay in flow with side chats that run alongside your main chat, the ability to search agent transcripts, and simplified project and repo pickers. Side chats Open a side chat to ask questions, explore ideas, and investigate tangents without interrupting your main agent conversation. Use `/side`, `/btw`, or the plus button at the top of the chat panel to create a new…",
+      "apply_in_eos": "Park tangents in /side chats. Keep the Cursor/X learning goal on the main thread.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-share-your-thoughts-on-gpt-5-",
+      "title": "Share your Thoughts on GPT 5.6!",
+      "source_url": "https://forum.cursor.com/t/share-your-thoughts-on-gpt-5-6/165313",
+      "published_at": "Thu, 09 Jul 2026 17:22:52 +0000",
+      "summary": "Share your thoughts on GPT-5.6! Main announcement · OpenAI announcement · CursorBench Now that GPT-5.6 is available in Cursor, we’d love to hear how it’s working for you. Which model and effort level are you using? How does it handle long-running coding, tool use, and design work? How does it compare with GPT-5.5 and other models? Drop your thoughts below. If you’re reporting an issue, please inc…",
+      "apply_in_eos": "Vendor feedback thread. Do not treat forum sentiment as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-gpt-5-6-now-available-in-curs",
+      "title": "GPT-5.6 now available in Cursor",
+      "source_url": "https://forum.cursor.com/t/gpt-5-6-now-available-in-cursor/165312",
+      "published_at": "Thu, 09 Jul 2026 17:14:01 +0000",
+      "summary": "GPT-5.6 is now available in Cursor Discussion thread · OpenAI release blog · CursorBench Today we’re bringing the GPT-5.6 family to Cursor, including Sol , Terra , and Luna . GPT-5.6 is built for complex coding, long-running agent tasks, and professional work. It delivers stronger results with fewer tokens, faster completion times, and improved tool use. Choose the right model for your work: GPT-…",
+      "apply_in_eos": "GPT availability is vendor catalog news. EOS model policy stays in workspace rules.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-grok-4-5-is-now-available-165",
+      "title": "Grok 4.5 is now available!",
+      "source_url": "https://forum.cursor.com/t/grok-4-5-is-now-available/165158",
+      "published_at": "Wed, 08 Jul 2026 17:55:52 +0000",
+      "summary": "Blog · Pricing Today we are releasing Grok 4.5 together with SpaceXAI , our most intelligent model and the first we’ve built for more than software engineering. It’s available today in Cursor! Grok 4.5 is built for difficult, long-running tasks that require creative use of tools to solve problems, whether that’s software engineering, data science, finance, legal work, or anything else you do on a…",
+      "apply_in_eos": "Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-share-your-thoughts-on-grok-4",
+      "title": "Share your Thoughts on Grok 4.5!",
+      "source_url": "https://forum.cursor.com/t/share-your-thoughts-on-grok-4-5/165160",
+      "published_at": "Wed, 08 Jul 2026 17:55:52 +0000",
+      "summary": "Main announcement · Blog Now that Grok 4.5 is available, we’d love to hear how it’s working for you. Some things we’re especially curious about: What are you using it for beyond coding? This is the first model we’ve built for more than software engineering. If you’ve pointed it at data science, research, finance, legal work, or anything else you do on a computer, we want to hear how it went. How…",
+      "apply_in_eos": "Vendor feedback thread. Do not treat forum sentiment as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-claude-sonnet-5-now-available",
+      "title": "Claude Sonnet 5 Now Available",
+      "source_url": "https://forum.cursor.com/t/claude-sonnet-5-now-available/164463",
+      "published_at": "Tue, 30 Jun 2026 18:25:43 +0000",
+      "summary": "Claude Sonnet 5, now available in Cursor Claude Sonnet 5 is now available in Cursor. It’s a meaningful step up from Sonnet 4.6. On CursorBench, our benchmark of ambiguous, multi-file tasks drawn from real Cursor sessions, Sonnet 5 scores 57% versus 49% for Sonnet 4.6. Sonnet 5 supports multiple effort levels, so you can dial the model up for harder, multi-step work or keep it lighter for quick ed…",
+      "apply_in_eos": "Claude/Opus availability is vendor catalog news. Do not treat a forum post as a production-quality certificate.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-team-marketplace-updates",
+      "title": "MCPs and Organizations in Team Marketplaces",
+      "source_url": "https://cursor.com/changelog/team-marketplace-updates",
+      "published_at": "Tue, 30 Jun 2026 00:00:00 GMT",
+      "summary": "We've expanded team marketplaces to support Team MCPs and organization groups. Team MCPs in team marketplaces Admins can now configure Team MCP servers once and distribute them across cloud agents, the agents window, IDE, and CLI. When an admin sets up Team MCP servers for cloud agents, they can make those same servers available in a team marketplace from **Dashboard -> Integrations & MCP**. This…",
+      "apply_in_eos": "Team MCP marketplace is vendor distribution. EOS MCP catalog stays evidence-gated.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-cursor-mobile-app-for-ios-163",
+      "title": "Cursor Mobile App for iOS",
+      "source_url": "https://forum.cursor.com/t/cursor-mobile-app-for-ios/163417",
+      "published_at": "Mon, 29 Jun 2026 17:08:14 +0000",
+      "summary": "Build from anywhere with Cursor for iOS! Blog · Changelog Today, we’re launching Cursor for iOS in public beta! Launch always-on agents from your phone, follow their progress with Live Activities, review demos and diffs, and merge PRs on the go. Your laptop can be asleep, out of reach, or busy with something else, and your work keeps moving. What’s new: Launch agents from anywhere: Open the app,…",
+      "apply_in_eos": "iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-ios-mobile-app",
+      "title": "Cursor Mobile App for iOS",
+      "source_url": "https://cursor.com/changelog/ios-mobile-app",
+      "published_at": "Mon, 29 Jun 2026 00:00:00 GMT",
+      "summary": "Cursor for iOS is now available in public beta on all paid plans. Launch and manage always-on agents from anywhere. Cloud agents on mobile Open the Cursor mobile app, choose a repo, and launch an agent the same way you would on the desktop app. Pick any frontier model, describe ideas out loud with voice input, and use slash commands to guide Cursor in the right direction. Cloud agents run in isol…",
+      "apply_in_eos": "iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-new-campus-community-launches",
+      "title": "New Campus Community Launches",
+      "source_url": "https://forum.cursor.com/t/new-campus-community-launches/164026",
+      "published_at": "Thu, 25 Jun 2026 17:00:41 +0000",
+      "summary": "Hi everyone, my name is Fiona and I’m the new Campus Community Lead here at Cursor! This academic year, I’m excited to share that Cursor is doubling down our investment in students. If you are a student, faculty member, professor or researcher building with Cursor - we want to support you. Cursor was founded by students with a dream of reimagining the way software gets built. We want to support t…",
+      "apply_in_eos": "Campus community is vendor outreach. No EOS Control Plane change.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-coinbase",
+      "title": "Coinbase reduces time from idea to production by 90% with Cursor",
+      "source_url": "https://cursor.com/blog/coinbase",
+      "published_at": "2026-06-23T12:00:00.000Z",
+      "summary": "Over 2,400 developers at Coinbase use Cursor as a part of an agent-first engineering model. 75% of all PRs are created by agents, with the average engineer merging 55% more PRs since the beginning of the year.",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-customize",
+      "title": "Customize Cursor",
+      "source_url": "https://cursor.com/changelog/customize",
+      "published_at": "Mon, 22 Jun 2026 00:00:00 GMT",
+      "summary": "Plugins, skills, and MCPs let you customize Cursor for your workflows. The new Customize page brings them into one place. You can now add and manage plugins, skills, MCPs, subagents, rules, commands, and hooks at the user, team, or workspace level, and even bring your own custom MCPs. Marketplace leaderboard Cursor now shows you a leaderboard of the most popular plugins, skills, and MCPs across y…",
+      "apply_in_eos": "Manage skills/plugins on Customize. Pin EOS skills; do not copy marketplace defaults blindly.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-06-18-26",
+      "title": "Improvements to Cursor Automations",
+      "source_url": "https://cursor.com/changelog/06-18-26",
+      "published_at": "Thu, 18 Jun 2026 00:00:00 GMT",
+      "summary": "Cursor Automations save you time by automating repetitive tasks with always-on agents. This release introduces the **/automate** skill, new triggers for GitHub and Slack, and support for computer use. /automate skill Use **/automate** to create an automation directly in your local agent session. Describe the task you want to automate in plain language and Cursor will configure the triggers, instr…",
+      "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cloud-in-agents-window",
+      "title": "Cloud Environment Setup and Cloud Subagents in Agents Window",
+      "source_url": "https://cursor.com/changelog/cloud-in-agents-window",
+      "published_at": "Wed, 17 Jun 2026 00:00:00 GMT",
+      "summary": "This release introduces updates to cloud agents in the Agents Window of the Cursor desktop app. Cloud environment setup Cursor can now help you set up your dev environment in the cloud in less than 10 minutes. You can watch the agent's progress in a shared terminal session as it handles setup tasks like installing dependencies. Your environment is captured in a reusable snapshot, so future cloud…",
+      "apply_in_eos": "Run isolated subagents on their own VMs when work must not collide with the parent branch.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-wayfair",
+      "title": "How Wayfair cut ML model costs by 90% (twice!) with Cursor",
+      "source_url": "https://cursor.com/blog/wayfair",
+      "published_at": "2026-06-15T12:00:00.000Z",
+      "summary": "With Cursor handling experiment execution, Wayfair compressed months of ML research into days. Five researchers tested over 110 model variants and cut tag-validation model costs by 94%.",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-bugbot-is-now-3x-faster-16298",
+      "title": "Bugbot is now 3x faster",
+      "source_url": "https://forum.cursor.com/t/bugbot-is-now-3x-faster/162980",
+      "published_at": "Thu, 11 Jun 2026 01:44:54 +0000",
+      "summary": "Bugbot is now over 3x faster, 22% cheaper, and finds more bugs Blog · Changelog Today, we’re shipping our biggest set of improvements to Bugbot yet. Bugbot is now over 3x faster, ~22% cheaper, and finds ~10% more bugs per review . The average review now finishes in about 90 seconds (down from ~5 minutes), and 90% of runs finish in under three minutes. That means you catch issues sooner and merge…",
+      "apply_in_eos": "Bugbot is optional PR review. EOS TDD evidence remains required.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-bugbot-updates-june-2026",
+      "title": "Bugbot is now over 3x faster, 22% cheaper, and finds 10% more bugs",
+      "source_url": "https://cursor.com/changelog/bugbot-updates-june-2026",
+      "published_at": "Wed, 10 Jun 2026 00:00:00 GMT",
+      "summary": "The average review time for Bugbot is now ~90 seconds, down from ~5 minutes. Bugbot also finds 10% more bugs per review on average — 0.62, up from 0.56 — and costs ~22% less per run. Bugbot is now over 3x faster, 22% cheaper, and finds 10% more bugs per review. These performance gains are made possible by progress we've made training Composer 2.5, which now powers Bugbot. Bugbot respects model bl…",
+      "apply_in_eos": "Bugbot is optional PR review. EOS TDD evidence remains required.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-claude-fable-5-out-now-162816",
+      "title": "Claude Fable 5 - Out Now!",
+      "source_url": "https://forum.cursor.com/t/claude-fable-5-out-now/162816",
+      "published_at": "Tue, 09 Jun 2026 17:32:49 +0000",
+      "summary": "Announcement · Pricing · Docs Claude Fable 5 is now available in Cursor! It sets a new state of the art on CursorBench at 72.9%, 8 points above the previous best. Claude Fable 5 requires you to accept Anthropic’s data retention terms in your dashboard before you can use it. Your code is never used for training. Learn more in our docs . 63 posts - 29 participants Read full topic",
+      "apply_in_eos": "Claude/Opus availability is vendor catalog news. Do not treat a forum post as a production-quality certificate.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-design-mode-improvements",
+      "title": "Design Mode Improvements",
+      "source_url": "https://cursor.com/changelog/design-mode-improvements",
+      "published_at": "Fri, 05 Jun 2026 00:00:00 GMT",
+      "summary": "With Design Mode in the Cursor browser, you can click, draw, or describe changes by voice to help agents update your UI. Multi-select elements Click on two or more elements together in the browser. Cursor sees the selected elements, their code, the surrounding layout, and the visual relationships on the page. Ask the agent to make one match the other, remove repeated content, or adjust a group of…",
+      "apply_in_eos": "Design Mode annotates UI in the Cursor browser. EOS still verifies web changes in a real browser.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-canvas-improvements",
+      "title": "Canvas Design Mode and Context Usage Report",
+      "source_url": "https://cursor.com/changelog/canvas-improvements",
+      "published_at": "Thu, 04 Jun 2026 00:00:00 GMT",
+      "summary": "With canvases , agents can create interactive artifacts like dashboards, reports, and internal tools that you can share with your team . This release introduces Design Mode for faster canvas editing, new ways to understand context usage, and other quality-of-life improvements. Design Mode in canvases Design Mode is now available in canvases. Select and annotate UI elements directly in a canvas to…",
+      "apply_in_eos": "Design Mode annotates UI in the Cursor browser. EOS still verifies web changes in a real browser.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-sdk-updates-jun-2026",
+      "title": "Custom stores, custom tools, and auto-review for the Cursor SDK",
+      "source_url": "https://cursor.com/changelog/sdk-updates-jun-2026",
+      "published_at": "Thu, 04 Jun 2026 00:00:00 GMT",
+      "summary": "We've shipped a batch of new functionality across the TypeScript and Python SDKs. You can now choose how agent and run metadata is persisted, expose your own functions to the agent as tools, route local tool calls through auto-review, and nest subagents to any depth. This release also brings a set of reliability, performance, and platform fixes that make local and cloud SDK agents easier to run i…",
+      "apply_in_eos": "Cursor SDK is a vendor runtime. Do not replace the EOS Control Plane with it.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-enterprise-organizations",
+      "title": "Organizations for Cursor Enterprise",
+      "source_url": "https://cursor.com/changelog/enterprise-organizations",
+      "published_at": "Wed, 03 Jun 2026 00:00:00 GMT",
+      "summary": "Enterprise customers can now manage multiple Cursor teams from one place, with different security, governance, budget, and feature controls for each. These capabilities are now generally available to all Enterprise customers. Cursor Enterprise organization architecture with organizations, teams, and groups Organizations An organization is the top-level container for your company's identity, admin…",
+      "apply_in_eos": "Enterprise org features are out of scope unless EOS is run as an Enterprise org.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-auto-review-run-mode-161922",
+      "title": "Auto-review Run Mode",
+      "source_url": "https://forum.cursor.com/t/auto-review-run-mode/161922",
+      "published_at": "Fri, 29 May 2026 17:04:25 +0000",
+      "summary": "Changelog You can now let your agent run longer with fewer interruptions! Auto-review is a new run mode that lets Cursor work for longer with fewer approval prompts, while keeping execution safe. It applies to Shell, MCP, and Fetch tool calls. Every call goes through three checks in order: Allowlist: if the call matches your terminal or MCP allowlist, it runs immediately. Sandbox: if the call can…",
+      "apply_in_eos": "Auto-review reduces approval prompts. FUNDACION HITL gates still apply.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-auto-review",
+      "title": "Auto-review Run Mode",
+      "source_url": "https://cursor.com/changelog/auto-review",
+      "published_at": "Fri, 29 May 2026 00:00:00 GMT",
+      "summary": "Auto-review is a new run mode that allows Cursor to work for longer with fewer approval prompts and safer execution. Auto-review applies to Shell, MCP, and Fetch tool calls. Allowlisted calls run immediately, and calls that can be sandboxed run in the sandbox. All other agent actions go to a classifier subagent that decides whether to allow the call, try a different approach, or ask for your appr…",
+      "apply_in_eos": "Auto-review reduces approval prompts. FUNDACION HITL gates still apply.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-claude-opus-4-8-out-now-16182",
+      "title": "Claude Opus 4.8 - Out Now!",
+      "source_url": "https://forum.cursor.com/t/claude-opus-4-8-out-now/161824",
+      "published_at": "Thu, 28 May 2026 17:09:46 +0000",
+      "summary": "Announcement · Pricing Claude Opus 4.8 is now available in Cursor! Opus 4.8 is now available in Cursor. On CursorBench, it’s able to work much more efficiently than Opus 4.7. We’ve also found it to be more persistent on harder tasks. Have you tried it yet? 16 posts - 13 participants Read full topic",
+      "apply_in_eos": "Claude/Opus availability is vendor catalog news. Do not treat a forum post as a production-quality certificate.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-introducing-the-cursor-python",
+      "title": "Introducing the Cursor Python SDK",
+      "source_url": "https://forum.cursor.com/t/introducing-the-cursor-python-sdk/161367",
+      "published_at": "Sat, 23 May 2026 01:24:00 +0000",
+      "summary": "Introducing the Cursor Python SDK Docs We’re excited to introduce the Cursor Python SDK , now in public beta! With the Cursor SDK, you can build your own agents powered by Composer 2.5 — the same agent that runs in the Cursor IDE, CLI, and web app, now scriptable from your own code. The SDK is available in both Python and TypeScript, so you can wire Cursor agents into scripts, CI pipelines, backe…",
+      "apply_in_eos": "Cursor SDK is a vendor runtime. Do not replace the EOS Control Plane with it.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-improvements-to-cursor-automa",
+      "title": "Improvements to Cursor Automations",
+      "source_url": "https://forum.cursor.com/t/improvements-to-cursor-automations/161149",
+      "published_at": "Wed, 20 May 2026 18:06:58 +0000",
+      "summary": "Full Changelog New updates to Automations in Cursor 3.5! Automations are now in the Agents Window, and you can configure them with multiple attached repos or no repos at all. For the next 7 days, all agent runs for newly created automations are 50% off. Automations in the Agents Window: Cursor Automations are now available in the Agents Window , in addition to cursor.com/automations . Create and…",
+      "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-05-20-26",
+      "title": "Improvements to Cursor Automations",
+      "source_url": "https://cursor.com/changelog/05-20-26",
+      "published_at": "Wed, 20 May 2026 00:00:00 GMT",
+      "summary": "This release brings Cursor Automations to the Agents Window and introduces the ability to configure automations with multiple attached repos or no repos at all. For the next 7 days, all agent runs for newly created automations are 50% off. Automations in the Agents Window Cursor Automations are now available in the Agents Window , in addition to cursor.com/automations. Create and manage your auto…",
+      "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-shared-canvases",
+      "title": "Shared Canvases and /loop Skill",
+      "source_url": "https://cursor.com/changelog/shared-canvases",
+      "published_at": "Wed, 20 May 2026 00:00:00 GMT",
+      "summary": "Shared canvases You can now share canvases from Cursor with your team. Canvases are interactive artifacts created by agents, like reports, dashboards, and custom interfaces. Instead of sharing a full chat thread, you can share a link to a live snapshot of a canvas for teammates to open in the browser. View your team's shared canvases in the Cursor Dashboard with read-only access. Shared canvases…",
+      "apply_in_eos": "/loop is a recurring check-in. This watch already uses a daily timer.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-10x-usage-on-composer-2-5-tod",
+      "title": "10x Usage on Composer 2.5 Today Only",
+      "source_url": "https://forum.cursor.com/t/10x-usage-on-composer-2-5-today-only/161039",
+      "published_at": "Tue, 19 May 2026 17:37:10 +0000",
+      "summary": "Today only, Cursor is giving you 10x usage on Composer 2.5. How it works: your Composer 2.5 usage will be consumed at 1/10 the normal rate today. So go wild, get creative, spin up some long-running agents, and build something cool! If you missed the launch, here’s the announcement: Composer 2.5 is now live! And Michael’s post: https://x.com/mntruell/status/2056780569380626686 Give it a shot today…",
+      "apply_in_eos": "Composer is a vendor model family. Do not treat marketing metrics as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-05-19-26",
+      "title": "Cursor in Jira",
+      "source_url": "https://cursor.com/changelog/05-19-26",
+      "published_at": "Tue, 19 May 2026 00:00:00 GMT",
+      "summary": "Cursor is now available in Jira. Assign work items to Cursor, or mention `@Cursor` in a comment to kick off a cloud agent . Cursor uses the work item title, description, comments, and your team's repository settings to scope the task. You can ask Cursor to fix bugs, add features, update tests, or investigate something described in the ticket. When the agent finishes, Jira shows completion updates…",
+      "apply_in_eos": "Jira plugin exists; this run has no Jira connector. Do not invent Jira writes.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-share-your-thoughts-on-compos",
+      "title": "Share your Thoughts on Composer 2.5!",
+      "source_url": "https://forum.cursor.com/t/share-your-thoughts-on-composer-2-5/160935",
+      "published_at": "Mon, 18 May 2026 17:30:49 +0000",
+      "summary": "Main announcement · Blog Now that Composer 2.5 is available, we’d love to hear how it’s working for you. Some things we’re especially curious about: What types of tasks are you using it for? How does it compare to Composer 2 in your day-to-day workflows — any specific improvements in long-running tasks, instruction-following, or communication style? Anything that feels noticeably better or is not…",
+      "apply_in_eos": "Vendor feedback thread. Do not treat forum sentiment as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-composer-2-5-is-now-live-1609",
+      "title": "Composer 2.5 is now live!",
+      "source_url": "https://forum.cursor.com/t/composer-2-5-is-now-live/160934",
+      "published_at": "Mon, 18 May 2026 17:25:30 +0000",
+      "summary": "Blog · Pricing We’re thrilled to introduce Composer 2.5 , our smartest, most capable coding model yet, and it’s available today in Cursor! Composer 2.5 is a substantial leap over Composer 2 in both raw intelligence and how it actually feels to work with. It’s noticeably better at sustained work on long-running tasks, follows complex instructions more reliably, and is genuinely more pleasant to co…",
+      "apply_in_eos": "Composer is a vendor model family. Do not treat marketing metrics as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-composer-2-5",
+      "title": "Composer 2.5",
+      "source_url": "https://cursor.com/changelog/composer-2-5",
+      "published_at": "Mon, 18 May 2026 00:00:00 GMT",
+      "summary": "Composer 2.5 is now available in Cursor. It's a substantial improvement in intelligence and behavior over Composer 2 . It is better at sustained work on long-running tasks, follows complex instructions more reliably, and is more pleasant to collaborate with. Composer 2.5 benchmark results **Standard:** \\$0.50/M input, \\$2.50/M output tokens **Fast** (default): \\$3.00/M input, \\$15.00/M output tok…",
+      "apply_in_eos": "Composer is a vendor model family. Do not treat marketing metrics as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-05-13-26",
+      "title": "Development environments for cloud agents",
+      "source_url": "https://cursor.com/changelog/05-13-26",
+      "published_at": "Wed, 13 May 2026 00:00:00 GMT",
+      "summary": "To take engineering tasks from start to finish, agents need a development environment similar to the setup on your laptop: cloned repositories, installed dependencies, credentials for internal toolchains, and access to build systems. This release introduces new tools for teams to configure development environments for their agents. Cursor also can use these tools to set up and maintain environmen…",
+      "apply_in_eos": "Put install work in environment.json install and keep start for live services. Builds consume that split.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-3-4",
+      "title": "Full-screen Tabs and Compact Chats",
+      "source_url": "https://cursor.com/changelog/3-4",
+      "published_at": "Wed, 13 May 2026 00:00:00 GMT",
+      "summary": "This release introduces quality-of-life improvements to the Agents Window . Full-screen tabs Full screen maximizes the right panel so you can focus on a single tab. Files, changes, canvases, PRs, browsers, and terminals can expand to fill the entire working area. This replaces the agent chat with a floating prompt bar. Enter and exit full screen by clicking on the expand/contract button in the pa…",
+      "apply_in_eos": "Editor chrome only. No EOS Control Plane change.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-microsoft-teams",
+      "title": "Cursor in Microsoft Teams",
+      "source_url": "https://cursor.com/changelog/microsoft-teams",
+      "published_at": "Mon, 11 May 2026 23:59:00 GMT",
+      "summary": "Cursor is now available in Microsoft Teams. Mention @Cursor in any Teams channel to delegate a task to a cloud agent or pull information from Cursor into Teams. Cursor automatically picks the right repository and model based on your prompt and recent agent activity. It reads the entire thread for context before implementing a solution and creating a PR for your team to review. Get started by inst…",
+      "apply_in_eos": "Teams plugin is optional. Slack remains the native subscription if MCP auth works.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-05-11-26",
+      "title": "Bugbot Effort Levels",
+      "source_url": "https://cursor.com/changelog/05-11-26",
+      "published_at": "Mon, 11 May 2026 00:00:00 GMT",
+      "summary": "Teams admins and Individual plan users can now customize the effort level Bugbot uses for its PR reviews, with three different configurations: **Default:** Bugbot continues to use the same effort level as it does today. Optimized for efficiency and speed. **High:** Bugbot spends more time reasoning. Reviews are more expensive and take longer, but Bugbot may find more bugs. **Custom:** Describe in…",
+      "apply_in_eos": "Bugbot is optional PR review. EOS TDD evidence remains required.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-pr-review-build-plan-in-paral",
+      "title": "PR Review, Build Plan in Parallel, and Split PRs",
+      "source_url": "https://forum.cursor.com/t/pr-review-build-plan-in-parallel-and-split-prs/160035",
+      "published_at": "Thu, 07 May 2026 20:58:57 +0000",
+      "summary": "Full changelog New updates to Cursor! PR review is now in the Agents Window, plans can build in parallel, and you can pin skills as quick-action pills. PR review : Take PRs from creation to merge without leaving Cursor. Review threads, comments, commit history, file tree, reviewer status, and quick actions are all in one place. Build in parallel : Cursor can now build in parallel from plans, mult…",
+      "apply_in_eos": "Parallel plans/PRs are optional. EOS still prefers one purpose per branch and evidence-gated commits.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-05-07-26",
+      "title": "PR Review, Build Plan in Parallel, and Split PRs",
+      "source_url": "https://cursor.com/changelog/05-07-26",
+      "published_at": "Thu, 07 May 2026 00:00:00 GMT",
+      "summary": "This release introduces a new PR review experience, faster execution on plans through parallel agents, and new quick-action pills for common workflows. PR review A new PR review experience is now available in Cursor 3. Take PRs from creation to merge all in one place. The Reviews tab now shows inline review threads and top-level PR comments. The Commits tab gives you a focused view of commit hist…",
+      "apply_in_eos": "Parallel plans/PRs are optional. EOS still prefers one purpose per branch and evidence-gated commits.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-05-06-26",
+      "title": "Context Usage Breakdown",
+      "source_url": "https://cursor.com/changelog/05-06-26",
+      "published_at": "Wed, 06 May 2026 00:00:00 GMT",
+      "summary": "You can now see a breakdown of your agent's context usage . Use these stats to diagnose context issues and improve your setup across rules, skills, MCPs, and subagents.",
+      "apply_in_eos": "Inspect context usage before stuffing the prompt. This watch should stay on changelog + citations, not full-thread dumps.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-05-04-26",
+      "title": "Model controls, spend management, and usage analytics",
+      "source_url": "https://cursor.com/changelog/05-04-26",
+      "published_at": "Mon, 04 May 2026 00:00:00 GMT",
+      "summary": "This release introduces updates for Enterprise admins: a new system for model controls, updated spend management, and more detail for usage analytics. Model access controls Admins can now set more granular allow or blocklists at the model and provider level. You can block entire providers or specific model configurations for speed and context window size. Enterprises also have the option to block…",
+      "apply_in_eos": "Honor included quota. Stop this daily watch rather than switching to paid on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-05-01-26",
+      "title": "Team Marketplace Updates",
+      "source_url": "https://cursor.com/changelog/05-01-26",
+      "published_at": "Fri, 01 May 2026 00:00:00 GMT",
+      "summary": "Admins can now create a team marketplace without connecting a repository first. Add, remove, and configure install behavior for first-party plugins directly in team marketplace settings. Plugins bundle capabilities like MCP servers, skills, subagents, rules, and hooks that extend agents with custom functionality. Each plugin can be distributed in one of three ways: Default Off: users can discover…",
+      "apply_in_eos": "Team MCP marketplace is vendor distribution. EOS MCP catalog stays evidence-gated.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-04-30-26",
+      "title": "Cursor Security Review",
+      "source_url": "https://cursor.com/changelog/04-30-26",
+      "published_at": "Thu, 30 Apr 2026 00:00:00 GMT",
+      "summary": "Cursor Security Review is now in beta on Teams and Enterprise plans. You can run two types of always-on security agents: Security Reviewer and Vulnerability Scanner. Security Reviewer Security Reviewer checks every PR for security vulnerabilities, auth regressions, privacy and data-handling risks, agent tool auto-approvals, and prompt injection attacks. It will leave inline comments at the exact…",
+      "apply_in_eos": "Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane check.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-sdk-release",
+      "title": "Build programmatic agents with the Cursor SDK",
+      "source_url": "https://cursor.com/changelog/sdk-release",
+      "published_at": "Wed, 29 Apr 2026 00:00:00 GMT",
+      "summary": "We're introducing the Cursor SDK so you can build agents with the same runtime, harness, and models that power Cursor. The agents that run in the Cursor desktop app, CLI, and web app are now accessible with a few lines of TypeScript. Run it on your machine or on Cursor's cloud against a dedicated VM, with any frontier model. Run `npm install @cursor/sdk` to get started. You can also use Cursor's…",
+      "apply_in_eos": "Cursor SDK is a vendor runtime. Do not replace the EOS Control Plane with it.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-04-24-26",
+      "title": "Multitask, Worktrees, and Multi-root Workspaces",
+      "source_url": "https://cursor.com/changelog/04-24-26",
+      "published_at": "Fri, 24 Apr 2026 00:00:00 GMT",
+      "summary": "This release introduces a new way to multitask with async subagents, an improved worktrees experience, and multi-root workspaces for making cross-repo changes. Multitask in Agents Window With `/multitask`, Cursor will run async subagents to parallelize your requests instead of adding them to the queue. It will also break down larger tasks into smaller chunks for a fleet of async subagents to tack…",
+      "apply_in_eos": "Use isolated worktrees/branches for parallel agents so this watch branch does not collide.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-04-15-26",
+      "title": "Canvases",
+      "source_url": "https://cursor.com/changelog/04-15-26",
+      "published_at": "Wed, 15 Apr 2026 00:00:00 GMT",
+      "summary": "Cursor can now respond by creating interactive canvases . These visualizations can include dashboards and custom interfaces built using first-party components like tables, boxes, diagrams, and charts, as well as existing Cursor components like diffs and to-do lists. In the Agents Window , canvases are durable artifacts that live in the side panel alongside the terminal, browser, and source contro…",
+      "apply_in_eos": "Canvases are shareable artifacts, not a substitute for git evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-04-14-26",
+      "title": "CLI Debug Mode and /btw Support",
+      "source_url": "https://cursor.com/changelog/04-14-26",
+      "published_at": "Tue, 14 Apr 2026 00:00:00 GMT",
+      "summary": "We've shipped quality-of-life improvements to the Cursor CLI to make working with agents in the terminal more delightful. Debug Mode in CLI Use `/debug` to find root causes and fix tricky bugs that are hard to reproduce or understand. In Debug Mode , Cursor generates hypotheses, adds log statements, and uses runtime information to pinpoint the issue before making a targeted fix. /btw support in C…",
+      "apply_in_eos": "/btw is a side-channel. Keep changelog ingest on the main Cloud Agent thread.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-3-1",
+      "title": "Tiled Layout and Upgraded Voice Input in the Agents Window",
+      "source_url": "https://cursor.com/changelog/3-1",
+      "published_at": "Mon, 13 Apr 2026 00:00:00 GMT",
+      "summary": "This release introduces improvements to our Agents Window interface as part of Cursor 3. Tiled layout Split your current view into panes to run and manage several agents in parallel. The tiled layout makes it easier to multi-task and compare outputs across agents without jumping between tabs. Expand panes to focus on a conversation, drag agents into tiles, and use keybindings for quick navigation…",
+      "apply_in_eos": "Editor chrome only. No EOS Control Plane change.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-04-08-26",
+      "title": "Bugbot Learned Rules and MCP Support",
+      "source_url": "https://cursor.com/changelog/04-08-26",
+      "published_at": "Wed, 08 Apr 2026 00:00:00 GMT",
+      "summary": "This release introduces updates to Bugbot including the ability to self-improve in real time, MCP support, improvements to Bugbot Autofix, and the highest resolution rate to date. Bugbot Learned Rules Bugbot can now learn from feedback on pull requests and turn those signals into learned rules that improve future reviews. It looks at reactions and replies to Bugbot comments and comments from huma…",
+      "apply_in_eos": "Bugbot is optional PR review. EOS TDD evidence remains required.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-3-0",
+      "title": "New Cursor Interface",
+      "source_url": "https://cursor.com/changelog/3-0",
+      "published_at": "Thu, 02 Apr 2026 00:00:00 GMT",
+      "summary": "Cursor 3 is now available. Agents Window The new Cursor interface allows you to run many agents in parallel across repos and environments: locally, in worktrees, in the cloud, and on remote SSH. It's simpler, more powerful, and centered around agents, while keeping the depth of a development environment. To try the Agents Window , upgrade Cursor and type `Cmd+Shift+P -> Agents Window`. You can sw…",
+      "apply_in_eos": "Editor chrome only. No EOS Control Plane change.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-03-25-26",
+      "title": "Self-hosted Cloud Agents",
+      "source_url": "https://cursor.com/changelog/03-25-26",
+      "published_at": "Wed, 25 Mar 2026 00:00:00 GMT",
+      "summary": "Cursor now supports self-hosted cloud agents that keep your code and tool execution entirely in your own network. Your codebase, build outputs, and secrets all stay on internal machines running in your infrastructure, while the agent handles tool calls locally. Use Cursor's agent experience with workers that run inisde your own infrastructure Self-hosted cloud agents offer the same capabilities a…",
+      "apply_in_eos": "Self-hosted Cloud Agents are optional private workers. This run is public cloud.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-composer-2",
+      "title": "Composer 2",
+      "source_url": "https://cursor.com/changelog/composer-2",
+      "published_at": "Thu, 19 Mar 2026 00:00:00 GMT",
+      "summary": "Composer 2 is now available in Cursor: frontier-level coding performance with strong results on challenging coding tasks. Composer 2 efficiency and quality on CursorBench **Standard:** \\$0.50/M input, \\$2.50/M output tokens **Fast** (default): \\$1.50/M input, \\$7.50/M output tokens Read more in our announcement .",
+      "apply_in_eos": "Composer is a vendor model family. Do not treat marketing metrics as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-03-11-26",
+      "title": "New Plugins on the Cursor Marketplace",
+      "source_url": "https://cursor.com/changelog/03-11-26",
+      "published_at": "Wed, 11 Mar 2026 00:00:00 GMT",
+      "summary": "We've added more than 30 new plugins from partners such as Atlassian, Datadog, GitLab, Glean, Hugging Face, monday.com, and PlanetScale. Cursor can now read from, write to, and take actions across more of your stack. Most plugins contain MCPs that cloud agents can use when kicked off manually or triggered automatically through automations . Try out the new plugins at cursor.com/marketplace , or r…",
+      "apply_in_eos": "Team MCP marketplace is vendor distribution. EOS MCP catalog stays evidence-gated.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-03-05-26",
+      "title": "Automations",
+      "source_url": "https://cursor.com/changelog/03-05-26",
+      "published_at": "Thu, 05 Mar 2026 00:00:00 GMT",
+      "summary": "Cursor now supports automations for building always-on agents that run based on triggers and instructions you define. Automations run on schedules or are triggered by events from Slack, Linear, GitHub, PagerDuty, and webhooks. When invoked, the agent spins up a cloud sandbox and follows your instructions using the MCPs and models you've configured. Agents also have access to a memory tool that le…",
+      "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-03-04-26",
+      "title": "Cursor in JetBrains IDEs",
+      "source_url": "https://cursor.com/changelog/03-04-26",
+      "published_at": "Wed, 04 Mar 2026 00:00:00 GMT",
+      "summary": "Cursor is now available in IntelliJ IDEA, PyCharm, WebStorm, and other JetBrains IDEs through the Agent Client Protocol (ACP). With Cursor ACP, developers who rely on JetBrains for Java and multilanguage support can use any frontier model from OpenAI, Anthropic, Google, and Cursor for agent-driven development. Install the Cursor ACP directly in your JetBrains IDE from the ACP Registry, and authen…",
+      "apply_in_eos": "JetBrains plugin is out of scope for this Cloud Agent workspace.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-2-6",
+      "title": "MCP Apps and Team Marketplaces for Plugins",
+      "source_url": "https://cursor.com/changelog/2-6",
+      "published_at": "Tue, 03 Mar 2026 00:00:00 GMT",
+      "summary": "This release introduces interactive UIs in agent chats, a way for teams to share private plugins, and improvements to core capabilities like Debug mode. MCP Apps MCP Apps support interactive user interfaces like charts from Amplitude , diagrams from Figma , and whiteboards from tldraw directly inside Cursor. Team marketplaces for plugins On Teams and Enterprise plans, Admins can now create team m…",
+      "apply_in_eos": "Team MCP marketplace is vendor distribution. EOS MCP catalog stays evidence-gated.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-02-26-26",
+      "title": "Bugbot Autofix",
+      "source_url": "https://cursor.com/changelog/02-26-26",
+      "published_at": "Thu, 26 Feb 2026 00:00:00 GMT",
+      "summary": "Bugbot can automatically fix issues it finds in pull requests. Autofix runs cloud agents on their own machines to test changes and propose fixes directly on your PR. Today, over 35% of Bugbot Autofix changes are merged into the base PR. Bugbot will post a comment on the original PR with a preview of the autofix changes, which you can merge using the provided @cursor command. If you'd like, you ca…",
+      "apply_in_eos": "Bugbot is optional PR review. EOS TDD evidence remains required.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-02-24-26",
+      "title": "Cloud Agents with Computer Use",
+      "source_url": "https://cursor.com/changelog/02-24-26",
+      "published_at": "Tue, 24 Feb 2026 00:00:00 GMT",
+      "summary": "Cloud agents can now use the software they create to test changes and demo their work. After onboarding onto your codebase, each agent runs in its own isolated VM with a full development environment. Cloud agents produce merge-ready PRs with artifacts (videos, screenshots, and logs) that make it possible to quickly review their changes. Cloud agents are available anywhere you use Cursor, includin…",
+      "apply_in_eos": "Computer-use agents are optional GUI control. This watch stays on official RSS, not desktop scraping.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cli-feb-18-2026",
+      "title": "CLI Improvements and Mermaid ASCII Diagrams",
+      "source_url": "https://cursor.com/changelog/cli-feb-18-2026",
+      "published_at": "Wed, 18 Feb 2026 00:00:00 GMT",
+      "summary": "This release introduces the ability to hand off plans from the CLI to the cloud, in-line rendering of ASCII diagrams, and many quality-of-life improvements. Plan mode improvements in CLI When a plan is generated, the CLI now shows a persistent decision menu. You can choose to build in the cloud or build locally to execute the plan. Typing `/plan` takes you back to your current plan and its action…",
+      "apply_in_eos": "Mermaid in CLI is optional documentation. LEARNINGS.json remains the evidence store for this watch.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-2-5",
+      "title": "Plugins, Sandbox Access Controls, and Async Subagents",
+      "source_url": "https://cursor.com/changelog/2-5",
+      "published_at": "Tue, 17 Feb 2026 00:00:00 GMT",
+      "summary": "This release introduces plugins for extending Cursor, improvements to core agent capabilities like subagents, and fine-grained network controls for sandboxed commands. Plugins on the Cursor Marketplace Plugins package skills, subagents, MCP servers, hooks, and rules, into a single install. The Cursor Marketplace lets you discover and install plugins to extend Cursor with pre-built capabilities. O…",
+      "apply_in_eos": "Run isolated subagents on their own VMs when work must not collide with the parent branch.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-self-driving-codebases",
+      "title": "Towards self-driving codebases",
+      "source_url": "https://cursor.com/blog/self-driving-codebases",
+      "published_at": "2026-02-05T12:00:00.000Z",
+      "summary": "We're making a part of our multi-agent research harness available to try today in preview.",
+      "apply_in_eos": "Vendor multi-agent research preview. Do not treat research harness writeups as EOS production evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-account-teams-members",
+      "title": "Members, Roles, and Seat Types",
+      "source_url": "https://cursor.com/docs/account/teams/members",
+      "published_at": null,
+      "summary": "Cursor Teams use roles for permissions and seat types for usage limits. Roles — Members are the default role with access to Cursor's Pro features. Seat Types — Teams offers two paid seat types, plus a free admin-only seat type: Standard seats are for light coding agent users. Usage Controls — Access usage settings to: Enable on-demand usage Set admin-only modifications Set monthly spending limits Monitor team-wide usage",
+      "apply_in_eos": "Members, roles, and seat types are vendor Teams admin config. Honor included quota. Do not switch this watch to on-demand. This Cloud Agent is not a Teams admin dashboard. Do not ingest Teams setup or SSO pages. Keep environment.json + Builds.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-account-teams-pricing",
+      "title": "Team Pricing",
+      "source_url": "https://cursor.com/docs/account/teams/pricing",
+      "published_at": null,
+      "summary": "There are two business plans: Teams and Enterprise (Custom). How pricing works — Teams pricing is based on paid seats and usage. Active seats — Cursor bills per active paid seat, not pre-allocated seats. Spending controls — Teams can configure monthly team-wide spending limits. Model Pricing — All prices are per million tokens.",
+      "apply_in_eos": "Team Pricing is vendor Teams and Enterprise billing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor team seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard. Keep environment.json + Builds.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-agent-review",
+      "title": "Agent Review",
+      "source_url": "https://cursor.com/docs/agent/agent-review",
+      "published_at": null,
+      "summary": "Agent Review runs a dedicated code review on your local changes from inside Cursor. Running a review — There are three ways to start a review: Automatic : When enabled in settings, Agent Review runs after every commit is made. /agent-review Review depth — Agent Review supports two depth levels. BUGBOT.md",
+      "apply_in_eos": "Agent Review is optional in-editor review of local changes. EOS TDD evidence remains required. /agent-review is not a substitute for tests. Keep BUGBOT.md if this repo uses Bugbot rules. This watch already runs in the Cloud Agent VM, not the desktop Agents Window. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-agents-window",
+      "title": "Agents Window",
+      "source_url": "https://cursor.com/docs/agent/agents-window",
+      "published_at": null,
+      "summary": "The Agents Window is Cursor's agent-first interface. Features Available Only in the Agents Window — The following features are available in the Agents Window: Multi-workspace: work with agents across all your projects from one place. /in-cloud /babysit Choosing Between Agents Window and Editor — The Agents Window works well when you want to run and manage many agents in parallel.",
+      "apply_in_eos": "This watch already runs in the Cloud Agent VM, not in the desktop Agents Window. Use /in-cloud or /babysit when a local session must hand work to its own VM. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-debug-mode",
+      "title": "Debug Mode",
+      "source_url": "https://cursor.com/docs/agent/debug-mode",
+      "published_at": null,
+      "summary": "Debug Mode helps you find root causes and fix tricky bugs that are hard to reproduce or understand. When to use Debug Mode — Debug Mode works best for: Bugs you can reproduce but can't figure out : When you know something is wrong but the cause isn't obvious from reading the code Race conditions and timing issues : Problems that depend on exec How it works — Explore and hypothesize : The agent explores relevant files, builds context, and generates multiple hypotheses about potential root causes. Tips for Debug Mode — Provide detailed context : The more you describe the bug and how to reproduce it, the better the agent's instrumentation will be.",
+      "apply_in_eos": "Debug Mode is optional desktop debugging with a local Cursor extension. This watch already uses EOS TDD in the Cloud Agent VM; do not rotate this Cloud Agent into Debug Mode for daily ingest. Keep the standing /goal. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-design-mode",
+      "title": "Design Mode",
+      "source_url": "https://cursor.com/docs/agent/design-mode",
+      "published_at": null,
+      "summary": "Design Mode lets you direct agents with visual prompts. Ways to direct the agent — Design Mode gives you several ways to convey intent. Select an element — Click any element in the running product to target it. Select multiple elements — Multi-select helps when the change depends on a relationship between elements. Draw on the page — Drawing tells the agent which area of the page your instruction applies to. Narrate by voice — You can narrate instructions with your voice instead of typing. What the agent sees — Picking an element adds two complementary signals to context: Element identity : the xpath, the component, attributes, computed styles, and props from the fiber tree. Work in flow — When you refine an interface, one edit usually leads to the next.",
+      "apply_in_eos": "Design Mode is optional desktop visual prompting in the Agents Window. This watch already runs in the Cloud Agent VM, not the desktop Agents Window. Do not rotate this Cloud Agent into Design Mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-overview",
+      "title": "Cursor Agent",
+      "source_url": "https://cursor.com/docs/agent/overview",
+      "published_at": null,
+      "summary": "Agent is Cursor's assistant that can complete complex coding tasks independently, run terminal commands, and edit code. How Agent works — An agent is built on three components: 1. Tools — Tools are the building blocks of Agent. Checkpoints — Checkpoints save snapshots of your codebase during an Agent session. Queued messages — You have two ways to talk to an agent while it works. Steer a running agent — You can send a follow-up to steer the agent while it's working, without interrupting it. Goals with /goal — Agent reads each message as a new job. /goal",
+      "apply_in_eos": "Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-plan-mode",
+      "title": "Plan Mode",
+      "source_url": "https://cursor.com/docs/agent/plan-mode",
+      "published_at": null,
+      "summary": "Plan Mode creates detailed implementation plans before writing any code. How it works — Agent asks clarifying questions to understand your requirements 2. When to use Plan Mode — Plan Mode works best for: Complex features with multiple valid approaches Tasks that touch many files or systems Unclear requirements where you need to explore before understanding scope Architectural decisions where you Starting over from a plan — Sometimes Agent builds something that doesn't match what you wanted.",
+      "apply_in_eos": "Plan Mode is optional desktop planning before code. Keep this watch on the standing /goal; do not rotate this Cloud Agent into Plan Mode for daily ingest. EOS TDD remains required. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-prompting",
+      "title": "Prompting agents",
+      "source_url": "https://cursor.com/docs/agent/prompting",
+      "published_at": null,
+      "summary": "Direct Agent with text prompts in the chat input. @ mentions — Type in the chat input to attach specific context to your prompt. Custom Modes — Type in the chat input to invoke a skill. Image input — Attach images to your prompt to provide visual context for UI work, debugging, and design implementation. Voice input — Click the microphone icon in the chat input to dictate your prompt instead of typing. Context usage — Every chat shares a fixed context window with the model. Changing models — Use the model picker dropdown at the top of the chat input to switch models, or press Cmd / to cycle through models.",
+      "apply_in_eos": "Pin an EOS skill as a Custom Mode when a session must stay on one playbook.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-security",
+      "title": "Agent Security",
+      "source_url": "https://cursor.com/docs/agent/security",
+      "published_at": null,
+      "summary": "AI can behave unexpectedly due to prompt injection, hallucinations, and other issues. First-party tool calls — Cursor includes tools that help agents write code: reading files, editing files, running terminal commands, searching the web, and more. .cursorignore Run Modes Auto-review Third-party tool calls — You can connect external tools using MCP. Network requests — Attackers could use network requests to steal data.",
+      "apply_in_eos": "Agent Security is optional desktop guardrails for first-party tools, MCP, and network. This Cloud Agent VM already honors EOS TDD and .cursorignore. Do not rotate this Cloud Agent into desktop Agent Security settings for daily ingest. Keep environment.json + Builds. Run Modes are best-effort, not a hard security boundary. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-tools-browser",
+      "title": "Browser",
+      "source_url": "https://cursor.com/docs/agent/tools/browser",
+      "published_at": null,
+      "summary": "Agent can control a web browser to test applications, audit accessibility, convert designs into code, and more. Native integration — Agent displays browser actions like screenshots and actions in the chat, as well as the browser window itself either in a separate window or an inline pane. Browser capabilities — Agent has access to the following browser tools: Navigate — Visit URLs and browse web pages. Click — Interact with buttons, links, and form elements. Type — Enter text into input fields and forms. Scroll — Navigate through long pages and content. Screenshot — Capture visual representations of web pages. Console Output — Read browser console messages, errors, and logs. Network Traffic — Monitor HTTP requests and responses made by the page. Session persistence — Browser state persist…",
+      "apply_in_eos": "Browser is optional desktop browser control. This watch already runs in the Cloud Agent VM and uses official feeds, not live sites. Do not rotate this Cloud Agent into Browser for daily ingest. Keep environment.json + Builds. Team MCP dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-tools-canvas",
+      "title": "Canvases",
+      "source_url": "https://cursor.com/docs/agent/tools/canvas",
+      "published_at": null,
+      "summary": "Canvases let Cursor create interactive artifacts that render next to the chat. How it works — Cursor decides that your task benefits from a visual or interactive view, or you ask for one directly. Opening a canvas — From Cursor : when Cursor creates a canvas, a card appears at the end of the response. Open Canvas Sharing canvases — Shared canvases turn an interactive artifact into something your whole team can open, not just you. Iterating on a canvas — Canvases are designed to be easy to refine. Packaging in skills — Common canvas workflows can be packaged as skills so Cursor produces a consistent layout every time you ask.",
+      "apply_in_eos": "Canvases are optional desktop interactive artifacts in the Agents Window. This watch already runs in the Cloud Agent VM. Do not rotate this Cloud Agent into desktop Canvases for daily ingest. Keep environment.json + Builds. Shared canvases and team dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-tools-search",
+      "title": "Search",
+      "source_url": "https://cursor.com/docs/agent/tools/search",
+      "published_at": null,
+      "summary": "Instant Grep — The fastest way to find code is an exact match: a function name, variable, error string, or regex pattern. Privacy and security — File paths are encrypted before being sent to Cursor's servers. Explore subagent — Agent can spawn an Explore subagent that runs in its own context window with a faster model.",
+      "apply_in_eos": "Search is optional desktop Instant Grep and Explore subagent. This Cloud Agent VM already searches the workspace. Do not rotate this Cloud Agent into desktop Search for daily ingest. Keep environment.json + Builds. Do not put .cursor/keys in git. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-agent-tools-terminal",
+      "title": "Terminal",
+      "source_url": "https://cursor.com/docs/agent/tools/terminal",
+      "published_at": null,
+      "summary": "Cursor runs shell commands directly in your terminal. Sandbox — The sandbox runs terminal commands in a restricted environment that blocks unauthorized file access and network activity. sandbox.json Run Modes Disable heavy prompts for Cursor sessions — Use the CURSOR_AGENT environment variable in your shell config to detect when Cursor is running and skip initializing fancy prompts/themes.",
+      "apply_in_eos": "Terminal is optional desktop shell control with Run Mode and sandbox.json. This Cloud Agent VM already runs shell commands. Do not rotate this Cloud Agent into desktop Terminal for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-approval-agents",
+      "title": "PR Routing & Approval",
+      "source_url": "https://cursor.com/docs/approval-agents",
+      "published_at": null,
+      "summary": "PR Routing & Approval routes pull requests to the right reviewers and can approve low-risk changes. How it works — PR Routing & Approval runs on your pull requests. Core capabilities Reviewer assignment — PR Routing & Approval can assign reviewers to pull requests based on code ownership and commit history. Risk-based approval — PR Routing & Approval can approve low-risk pull requests when your approval criteria are met. Core features AI reviewer awareness — PR Routing & Approval can use findings from other Cursor review systems: Bugbot Review Context uses Bugbot findings in the approval decision. Risk scoring — PR Routing & Approval can classify a PR by risk and enforce a maximum approval threshold. Approval policy files — PR Routing & Approval can discover repository policy files and ap…",
+      "apply_in_eos": "PR Routing & Approval is optional vendor automation. It does not replace EOS TDD or human review. Keep exact APPROVAL_POLICY.md and .cursor/approval-policies/ROUTING.md if this repo uses them. Do not treat vendor auto-approve as EOS evidence. Keep GitHub as source of truth; do not ingest Slack or Teams setup. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-bugbot",
+      "title": "Bugbot",
+      "source_url": "https://cursor.com/docs/bugbot",
+      "published_at": null,
+      "summary": "Bugbot reviews pull requests and identifies bugs, security issues, and code quality problems. How it works — Bugbot analyzes PR diffs and leaves comments with explanations and fix suggestions. Incremental reviews — By default, Bugbot reviews only the changes since the previous Bugbot review. Effort Levels — Effort levels control how much time Bugbot spends reasoning during a review. Rules — Guide reviews with team rules, repository rules, and project .cursor/BUGBOT.md files. Run in your agent — Use the /review-bugbot or /review skills to run Bugbot from your agent before you push the code. Autofix — Bugbot Autofix automatically spawns a Cloud Agent to fix bugs found during PR reviews. MCP support — Bugbot is integrated with your MCP servers so your AI tools can interact with Bugbot direct…",
+      "apply_in_eos": "Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cli-acp",
+      "title": "ACP",
+      "source_url": "https://cursor.com/docs/cli/acp",
+      "published_at": null,
+      "summary": "Overview — Cursor CLI supports ACP (Agent Client Protocol) for advanced integrations. Start ACP server — Start Cursor CLI in ACP mode: Transport and message format — Transport: Protocol envelope: JSON-RPC 2.0 Framing: newline-delimited JSON (one message per line) Direction: - Client writes requests/notifications to - Cursor CLI writes responses/notifications to - Logs may be written Request flow — Typical ACP session flow: 1. Authentication — Cursor CLI advertises as the ACP auth method. Sessions, modes, and permissions Cursor extension methods — Cursor sends ACP extension methods for richer client UX. Minimal Node.js client — This example shows the minimum control flow for a custom ACP client: IDE integrations — ACP enables Cursor's AI agent to work with editors beyond the Cursor desktop…",
+      "apply_in_eos": "ACP is optional local Cursor CLI protocol for custom clients. This Cloud Agent VM already runs ingest without an ACP client. Do not rotate this watch into agent acp, custom stdio clients, or IDE integrations for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cli-headless",
+      "title": "Using Headless CLI",
+      "source_url": "https://cursor.com/docs/cli/headless",
+      "published_at": null,
+      "summary": "Use Cursor CLI in scripts and automation workflows for code analysis, generation, and refactoring tasks. How it works — Use print mode ( ) for non-interactive scripting and automation. Example scripts — Use different output formats for different script needs. Working with images — To send images, media files, or other binary data to the agent, include file paths in your prompts.",
+      "apply_in_eos": "Headless CLI is optional local Cursor CLI for scripts. This Cloud Agent VM already runs ingest without print mode. Do not rotate this watch into print mode, --force, or install Cursor CLI for daily ingest. Do not put CURSOR_API_KEY in git. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cli-overview",
+      "title": "Cursor CLI",
+      "source_url": "https://cursor.com/docs/cli/overview",
+      "published_at": null,
+      "summary": "Cursor CLI lets you interact with AI agents directly from your terminal to write, review, and modify code. Interactive mode — Start a conversational session with the agent to describe your goals, review proposed changes, and approve commands: Modes — The CLI supports the same modes as the editor. Non-interactive mode — Use print mode for non-interactive scenarios like scripts, CI pipelines, or automation: Cloud Agent handoff — Push your conversation to a Cloud Agent to continue running while you're away. Sessions — Resume previous conversations to maintain context across multiple interactions: Sandbox controls — Configure command execution settings with /sandbox or the flag ( or ). Sudo password prompting — Run commands requiring elevated privileges without leaving the CLI.",
+      "apply_in_eos": "Cursor CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI or rotate this watch into print mode, sandbox, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cli-shell-mode",
+      "title": "Shell Mode",
+      "source_url": "https://cursor.com/docs/cli/shell-mode",
+      "published_at": null,
+      "summary": "Shell Mode runs shell commands directly from the CLI without leaving your conversation. Command execution — Commands run in your login shell ( ) with the CLI's working directory and environment. Output — Large outputs are truncated automatically and long-running processes timeout to maintain performance. Limitations — Commands timeout after 30 seconds Long-running processes, servers, and interactive prompts are not supported Use short, non-interactive commands for best results Permissions — Commands are checked against your permissions and team settings before execution. Usage guidelines — Shell Mode works well for status checks, quick builds, file operations, and environment inspection.",
+      "apply_in_eos": "Shell Mode is optional local Cursor CLI. This Cloud Agent VM already runs shell commands. Do not rotate this watch into Cursor CLI Shell Mode for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cli-using",
+      "title": "Using Agent in CLI",
+      "source_url": "https://cursor.com/docs/cli/using",
+      "published_at": null,
+      "summary": "Modes — The CLI supports the same modes as the editor. Prompting — Stating intent clearly is recommended for the best results. MCP — Agent supports MCP (Model Context Protocol) for extended functionality and integrations. ACP — Agent also supports ACP (Agent Client Protocol) for custom client integrations. Rules — The CLI agent supports the same rules system as the editor. AGENTS.md Working with Agent Custom Modes — Pick a skill from the menu and press Enter to attach it to one message. Cloud Agent handoff — Push your conversation to a Cloud Agent and let it keep running while you're away. CLI worktrees — Pass or to run the agent in a new Git worktree instead of editing your current checkout directly. History — Continue from an existing thread with to load prior context. Command approval…",
+      "apply_in_eos": "Using Agent in CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not rotate this watch into print mode, worktrees, ACP, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent",
+      "title": "Cloud Agents",
+      "source_url": "https://cursor.com/docs/cloud-agent",
+      "published_at": null,
+      "summary": "Cloud agents use the same agent fundamentals but run in isolated VMs in the cloud with full development environments instead of on your local machine. Why use Cloud Agents? — You can run as many agents as you want in parallel, and they do not require your local machine to be connected to the internet. How to access — Before anyone can start a cloud agent from a repository, a Cursor account admin needs to connect source control for the account. How it works Models — Cloud Agents use a curated selection of models. MCP support — Cloud agents can use MCP (Model Context Protocol) servers configured for your team. Hooks support — Cloud agents run command-based hooks from .cursor/hooks.json in your repository. Artifacts and remote desktop control — Cloud agents produce merge-ready PRs with artif…",
+      "apply_in_eos": "Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-api-endpoints",
+      "title": "Cloud Agents API",
+      "source_url": "https://cursor.com/docs/cloud-agent/api/endpoints",
+      "published_at": null,
+      "summary": "Public beta The Cloud Agents API v1 is in public beta. Artifacts — Artifacts are agent-scoped because the workspace persists across runs. Agent Lifecycle Worker Tokens Workers and Pools — Monitor worker utilization and build autoscaling for your pools. Metadata Endpoints",
+      "apply_in_eos": "This watch uses official feeds, not the Cloud Agents API. Do not treat api.cursor.com as this ingest path. Do not put API keys in git. Keep GitHub as source of truth. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-automations",
+      "title": "Automations",
+      "source_url": "https://cursor.com/docs/cloud-agent/automations",
+      "published_at": null,
+      "summary": "Cursor Automations run cloud agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. Triggers — Triggers decide when an automation runs. Scheduled triggers — Scheduled triggers run on a recurring schedule. Source control triggers — Source control triggers respond to pull request and push events from your connected Git provider: GitHub, GitLab, and Bitbucket Cloud. Slack triggers — Slack triggers respond to events from the Cursor Slack integration. Webhook triggers — Webhook triggers create a private HTTP endpoint for your automation. Linear triggers — Linear triggers respond to events from the Cursor Linear integration. Sentry triggers — Sentry triggers run when error and issue events occur in your Sentry project. Pag…",
+      "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-best-practices",
+      "title": "Best Practices",
+      "source_url": "https://cursor.com/docs/cloud-agent/best-practices",
+      "published_at": null,
+      "summary": "Use these recommendations to get more reliable Cloud Agent runs. Set up the environment first — Use Cloud agent setup so that Cursor has its environment configured. Ensure the agent can access what it needs — Before running a Cloud Agent, verify these prerequisites: Secrets : Make sure the agent has access to required secrets (API keys, database credentials, etc.) through the Secrets tab in your dashboard. OIDC Use skills and agents.md to configure your agent — If the cloud agent is having difficulty testing its changes, we recommend using skills and agents.md to configure your agent. Use rules to enforce conventions — Cloud Agents can read and follow Rules at three levels: User rules : Set in Cursor Settings, these apply to your sessions across all repositories. Give the agent the tools…",
+      "apply_in_eos": "Honor Cloud Agent setup (environment.json + Builds). Prefer OIDC over long-lived secrets. Use skills, AGENTS.md, and .cursor/rules for repo conventions. Do not put secrets in git.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-builds",
+      "title": "Cloud Agent Builds",
+      "source_url": "https://cursor.com/docs/cloud-agent/builds",
+      "published_at": null,
+      "summary": "Builds prepare your Cloud Agent environment in the background. How Builds work — A Build is a bootable snapshot of a prepared Cloud Agent environment. When Builds occur — Cursor starts a Build for four reasons. What runs during a Build and an agent start — Use each environment command for a distinct phase: Make complete and idempotent. .cursor/environment.json How Builds handle Git state — A Build records the commit checked out for each repository when it runs. How secrets work with Builds — Builds can access team and environment secrets. Manage Builds — Open an environment's Builds tab to: See every Build's type, status, and start time Open a Build to inspect its details and logs Select Trigger build to run a Build on demand Activate a draft Build or deactivate a Build Debug a Build — Op…",
+      "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-capabilities",
+      "title": "Capabilities",
+      "source_url": "https://cursor.com/docs/cloud-agent/capabilities",
+      "published_at": null,
+      "summary": "Computer use — Each cloud agent runs in its own isolated VM with a full desktop environment. Demos and Artifacts — Agents create artifacts such as screenshots, videos, and log references to demonstrate their work. Remote desktop control — You can take control of the agent's remote desktop to interact with the software the agent is building. MCP tools — Cloud agents can use MCP (Model Context Protocol) servers configured for your team. Subscriptions — Agent tasks rarely end with the last commit. How subscriptions work — Subscriptions belong to a single agent conversation. Fixing CI Failures — Cloud Agents automatically try to fix CI failures in PRs they create. OIDC identity tokens — Cursor-managed Cloud Agent VMs can mint short-lived OIDC JWTs from a local socket. Agent metadata — The sam…",
+      "apply_in_eos": "Honor Cloud Agent subscriptions (GitHub PR, Slack, timers) and auto-CI-fix on PRs this agent opens. Do not scrape X.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-identity",
+      "title": "OIDC tokens",
+      "source_url": "https://cursor.com/docs/cloud-agent/identity",
+      "published_at": null,
+      "summary": "Cloud Agents can mint short-lived OIDC JWTs from inside the VM and use them to assume cloud roles or call internal services without storing long-lived credentials in Secrets. How it works — The agent calls the local socket and asks for a token with an audience the verifier expects. JWKS Mint a token — The agent mints a token over the Unix socket at . When claims appear — Install scripts can mint on the same socket. Verify a token — Publish these URLs to your identity provider or resource server: Discovery follows OpenID Connect Discovery 1.0. JWT claims — Header: , , plus . Trust model — The token identifies the Cloud Agent run, not a specific process inside the VM. Rate limits and errors — Each agent VM can mint 30 tokens per minute , in bursts of up to 10. AWS IAM example — Use OIDC whe…",
+      "apply_in_eos": "Prefer short-lived OIDC JWTs minted in the Cloud Agent VM over long-lived secrets. Point agents at docs/cloud-agent/identity. Do not treat this socket as the Cloud Agents API. Verifiers must reject unexpected aud.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-metadata",
+      "title": "Agent metadata",
+      "source_url": "https://cursor.com/docs/cloud-agent/metadata",
+      "published_at": null,
+      "summary": "Preview Agent metadata is in preview and subject to change, including breaking changes. Read a value — The agent reads keys over the Unix socket at . When keys appear — Install scripts can read the same socket. Keys — Missing keys are omitted from listings and return if requested directly. Who can read metadata — Any process that can reach the socket can read every key: the agent, code it runs, and hooks. OIDC Rate limits and errors — Each agent VM can make 120 metadata requests per minute, in bursts of up to 20. OIDC",
+      "apply_in_eos": "Read Cloud Agent run metadata from the VM socket; it is not a credential. Use OIDC JWTs when something outside the VM must verify identity. Do not confuse this with SDK/Cloud Agents API metadata tags.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-mobile",
+      "title": "Cursor for iOS",
+      "source_url": "https://cursor.com/docs/cloud-agent/mobile",
+      "published_at": null,
+      "summary": "Beta Cursor for iOS is in beta. What you can do — You get the full cloud agent workflow from your pocket, not a stripped-down chat box. Use the iPad layout — The iPad app uses the larger screen to keep more of an agent's work visible: Keep chats in the sidebar while you follow several agents. What lives on the web — The app focuses on directing and reviewing agents. Move between devices — Agents follow you across surfaces: Desktop or web to mobile. source: iosApp Remote Control — Remote Control lets you take an agent you're running on your computer and keep directing it from your phone. Run /remote-control — In the agent's input on your computer, run /remote-control , then send your next message. How your code stays on your machine — Remote Control automatically manages a worker on your c…",
+      "apply_in_eos": "This watch runs in the Cloud Agent VM, not on iPhone or iPad. Cursor for iOS is an optional beta client. Keep environment.json + Builds on the web. /remote-control hands a local session to the cloud; tool calls stay on the computer. Privacy Mode (Legacy) is not supported. Do not ingest GitHub or GitLab setup pages. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-private-connectivity",
+      "title": "Private Connectivity",
+      "source_url": "https://cursor.com/docs/cloud-agent/private-connectivity",
+      "published_at": null,
+      "summary": "Cursor supports private network connectivity for Enterprise teams that need Cursor to work with systems that are not reachable from the public internet. Supported options How to choose — Use AWS PrivateLink when your private Git provider or package registry is in AWS or can sit behind an AWS Network Load Balancer. Cloudflare Tunnel",
+      "apply_in_eos": "This Cloud Agent run is public cloud. Private Connectivity is Enterprise-only (AWS PrivateLink or Cloudflare Tunnel) for private Git/registries. It is not required for this watch. Keep GitHub as source of truth. Do not put tunnel tokens in git.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-security",
+      "title": "Security overview",
+      "source_url": "https://cursor.com/docs/cloud-agent/security",
+      "published_at": null,
+      "summary": "This page explains how Cloud Agents are built and secured. Access and authorization — Cloud Agents reach your code through the Cursor GitHub or GitLab App, not through any single person's credentials. never widened Isolation and infrastructure — Each agent runs in its own VM boundary, not a shared process sandbox. Privacy and model data — Cloud Agents run in Privacy Mode. Autonomy and prompt injection — Cloud Agents auto-run terminal commands so they can iterate on tests without stopping for approval on every step. .cursorignore",
+      "apply_in_eos": "Treat this page as the Cloud Agent security model, not the config reference. Honor isolated VMs, access that is never widened past the triggering user, Runtime Secrets/OIDC, network allowlists, .cursorignore, and draft-PR handoff. Privacy Mode (Legacy) is not supported. Do not treat SOC 2 or Trust Center claims as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-security-network",
+      "title": "Secrets & Network",
+      "source_url": "https://cursor.com/docs/cloud-agent/security-network",
+      "published_at": null,
+      "summary": "Cloud Agents are available in Privacy Mode. Secret protection — Secrets provided to Cloud Agents are encrypted at rest and in transit. Runtime secrets — Previously, Runtime Secrets were called Redacted Secrets. [REDACTED] Build secrets — Secrets set with type are only available to the Docker build process (if you have configured one) and are not exposed to the running agent's environment. OIDC identity tokens — For cloud roles and internal APIs, prefer short-lived OIDC tokens over long-lived keys in Secrets. Signed commits — Cloud Agents sign every commit with a HSM-backed Ed25519 key. Network access — Control which network resources your Cloud Agents can reach. Access modes — Three modes control outbound network access for Cloud Agents: Even in Allowlist only mode, a small set of domains…",
+      "apply_in_eos": "Prefer Runtime Secrets or short-lived OIDC over long-lived keys in git. Treat [REDACTED] in transcripts as expected, not a missing secret. Honor Cloud Agent network allowlists; do not open *.s3 wildcards. Privacy Mode (Legacy) is not supported for Cloud Agents.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-settings",
+      "title": "Cloud Agents settings",
+      "source_url": "https://cursor.com/docs/cloud-agent/settings",
+      "published_at": null,
+      "summary": "Workspace admins can configure Cloud Agents from the Cloud Agents dashboard. Environment management — The Environments view lists the saved environments available to your team. .cursor/environment.json Network access settings — Control which network resources Cloud Agents can reach. Team feature settings — Team admins can enable or disable these features for their team: Long running agents – controls whether team members can run agents for extended durations. Team follow-ups — Team members can send follow-up messages to cloud agents created by other users on the same team. Lateral movement and secret exposure — Enabling team follow-ups means a user can influence the execution of a cloud agent that runs with another user's secrets and credentials.",
+      "apply_in_eos": "Treat Cloud Agents dashboard settings as team-admin config, not EOS governance. Keep environment.json + Builds as the start path and honor network allowlists. Do not turn on team follow-ups: a teammate can drive an agent that holds another user's secrets.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cloud-agent-setup",
+      "title": "Cloud Environment Setup",
+      "source_url": "https://cursor.com/docs/cloud-agent/setup",
+      "published_at": null,
+      "summary": "Cloud agents run on isolated Ubuntu machines. What is a cloud agent environment? — The development environment for a cloud agent is similar to the setup on your laptop: cloned repos, installed dependencies, secrets, startup commands, and network access. Why does environment configuration matter? — Agents are only as capable as the environments they run in. Environment setup options — There are two main ways to configure the environment for your cloud agent: 1. .cursor/environment.json Agent-driven setup (recommended) — Cursor can set up your dev environment in the cloud in less than 10 minutes. .cursor/environment.json Install script — The install script was previously called the update script in the dashboard and docs. OIDC Install script idempotency — The install script must be idempote…",
+      "apply_in_eos": "Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-configuration-worktrees",
+      "title": "Worktrees",
+      "source_url": "https://cursor.com/docs/configuration/worktrees",
+      "published_at": null,
+      "summary": "The UI-native worktrees feature described on this page is only available in the Agents Window. Create a worktree in the Agents Window — When you start or move an agent into a worktree from the Agents Window, Cursor creates a separate checkout for that agent. How does worktree setup work? — You can customize worktree setup with .cursor/worktrees.json . Configuration options — The worktrees.json file supports three setup keys: : Commands or a script path for macOS and Linux. .cursor/worktrees.json How does Cursor discover existing worktrees? — Cursor 3.5 keeps a modified time checkpoint for the machine worktree root and for each workspace subdirectory. Worktrees cleanup — The cleanup behavior in this section reflects Cursor 3.5 and later. /worktree Worktree Skills in IDE — In the IDE, you c…",
+      "apply_in_eos": "Worktrees are optional desktop isolated Git checkouts in the Agents Window. This Cloud Agent VM already has its own checkout. Do not rotate this Cloud Agent into desktop worktrees for daily ingest. Keep environment.json + Builds. Do not put secrets in .cursor/worktrees.json. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-cursor-router",
+      "title": "Cursor Router",
+      "source_url": "https://cursor.com/docs/cursor-router",
+      "published_at": null,
+      "summary": "Cursor Router is the model routing system behind Auto *. How it works — When you select Auto and choose Balance or Intelligence in the model picker, Cursor Router runs a classifier on each agent request and routes it based on task type and complexity. Optimization modes — Open the model picker, select Auto , and pick a mode under Optimize For : Cost : Uses the previous Auto routing logic. Team settings — Admins configure Cursor Router from the team dashboard. Use Router through the SDK — The TypeScript SDK and Python SDK expose Cursor Router as model id with parameter ( , , or ).",
+      "apply_in_eos": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-customize-cursor",
+      "title": "Customize Cursor",
+      "source_url": "https://cursor.com/docs/customize-cursor",
+      "published_at": null,
+      "summary": "Plugins, skills, and MCPs let you customize Cursor for your workflows. What you can do from Customize — From the Customize page, you can: Browse and install plugins, skills, and MCPs from the Cursor Marketplace with one click Install Team MCP servers shared through your team's Default marketplace See your team leaderboard Extension components — Cursor extensions are built from composable pieces.",
+      "apply_in_eos": "Customize Cursor is optional desktop sidebar for plugins, skills, MCP, rules, and hooks. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Keep environment.json + Builds. Team marketplace and dashboard Customize are not EOS governance. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-hooks",
+      "title": "Hooks",
+      "source_url": "https://cursor.com/docs/hooks",
+      "published_at": null,
+      "summary": "Hooks let you observe, control, and extend the agent loop using custom scripts. Cloud agent support — Cloud agents run command-based hooks from your repository. .cursor/hooks.json Supported hooks — The following hooks run in cloud agents: Hooks not available in cloud agents — Some hooks don't apply to cloud agents due to differences in the execution environment: Configuration sources — Cloud agents load hooks from these sources: Project hooks ( .cursor/hooks.json in your repo): Loaded and run during cloud agent work. Execution type limits — Cloud agents run command-based hooks only.",
+      "apply_in_eos": "Commit command-based hooks as .cursor/hooks.json at the repo root so Cloud Agents pick them up. User-level ~/.cursor/hooks.json is not available in Cloud Agents. Do not rely on Tab, sessionStart, or prompt-based hooks in this environment.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-mcp",
+      "title": "Model Context Protocol (MCP)",
+      "source_url": "https://cursor.com/docs/mcp",
+      "published_at": null,
+      "summary": "What is MCP? — Model Context Protocol (MCP) enables Cursor to connect to external tools and data sources. Installing MCP servers Using mcp.json — Configure custom MCP servers with a JSON file: Project Configuration — Create .cursor/mcp.json in your project for project-specific tools. Global Configuration — Create ~/.cursor/mcp.json in your home directory for tools available everywhere. Config interpolation — Use variables in mcp.json values. .cursor/mcp.json Enterprise admin controls — MCP distribution and MCP policy are configured separately. Team MCP distribution — Configure shared Team MCP servers under Dashboard > Integrations & MCP *. MCP Allowlist — Enterprise admins can control which MCP servers users may run from the Cursor dashboard. Security considerations — When installing MCP…",
+      "apply_in_eos": "Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-models-and-pricing",
+      "title": "Models & Pricing",
+      "source_url": "https://cursor.com/docs/models-and-pricing",
+      "published_at": null,
+      "summary": "Cursor supports frontier models from OpenAI, Anthropic, Google, SpaceXAI, and more. Usage pools — There are two separate usage pools, each resetting with your monthly billing cycle: Cursor Models : Significantly more included usage for Cursor Grok 4.6, Grok 4.5, and Composer 2.5. Cursor Models — The Cursor Models pool includes Cursor Grok 4.6, Grok 4.5, and Composer 2.5. Other Models — When you select a specific third-party model, usage is drawn from the Other Models pool at that model's API rate. Plans — Pro, Pro Plus, and Ultra include unlimited tab completions, extended agent usage limits on all models, access to Bugbot, and access to Cloud Agents. Cursor Token Rate — On Teams and Enterprise plans, third-party model requests include a Cursor Token Rate of $0.25 per million tokens. Auto…",
+      "apply_in_eos": "Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin",
+      "title": "Origin",
+      "source_url": "https://cursor.com/docs/origin",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. What you can do — In early beta you can: Create Origin repositories, including from Cursor agents Clone, push, and pull with standard git Mirror a GitHub repository into Origin Open, review, and merge pull requests Browse and search code Who can access — Origin code storage is available on Pro, Teams, and Enterprise plans. Privacy — Origin follows the Privacy Mode of the namespace owner: the team or the individual who owns the repo. Enable Origin — Before your team can use Origin, someone has to claim a codebase name. Repo list — After Origin is enabled, cursor.com/codebase shows your team's repositories. Next steps — Install the Origin CLI Create a repository Mirror a GitHub repo Pull requests Browse & Search Repository settings Codebase settin…",
+      "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-browse",
+      "title": "Browse & Search",
+      "source_url": "https://cursor.com/docs/origin/browse",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Folders and files — On Code , browse directories and open files in the tree. Search — Use Go to file (shortcut ) or the search field in the repository header to find files and code matches. Branch history and commits — From Code , open commit history for the current branch.",
+      "apply_in_eos": "Origin browse and search are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not use Origin browse or Detach from GitHub for this watch. This Cloud Agent VM already searches its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-cli",
+      "title": "Install the CLI",
+      "source_url": "https://cursor.com/docs/origin/cli",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. macOS, Linux and Windows (WSL) — Install the Origin CLI with a single command: The installer puts the binary at . Verification — After installation, verify that the Origin CLI is working correctly: Sign in — Sign in to your Cursor account: Complete the browser flow with the Cursor account that has Origin access. Manage repositories — The CLI can create and delete Origin repositories, so you do not have to open the web UI: without a slash creates the repository in your account's namespace. Updates — To update the Origin CLI to the current release: Next steps — Commands Pull request commands Create a repository Clone, Push & Pull Mirror a GitHub repo Browse & Search Integrations ---",
+      "apply_in_eos": "Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-codebase-settings",
+      "title": "Codebase settings",
+      "source_url": "https://cursor.com/docs/origin/codebase-settings",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Permissions — Team-level permissions control who can use Origin for your codebase: who can access repos under your claimed codebase name, and how Origin relates to your Cursor team membership. Apps — Apps under codebase settings (also at cursor.com/codebase/settings/apps) is where you install and manage apps for your codebase: Third-party apps such as Vercel, Depot, and Buildkite: install them here, then see which ap",
+      "apply_in_eos": "Origin codebase settings are optional team-level Origin hosting. GitHub remains source of truth for this synced repo. Do not claim a codebase name, turn Origin on or off, or manage Origin Apps for this watch. Do not put Origin API tokens in git. This Cloud Agent VM already uses its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-create-repository",
+      "title": "Create an Origin repository",
+      "source_url": "https://cursor.com/docs/origin/create-repository",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Create in the UI — From cursor.com/codebase: 1. Sync from GitHub — To copy an existing GitHub repository into Origin, select Sync from GitHub on the codebase home instead of New *. Create with a Cursor agent — Cursor agents can create Origin repositories as part of a task. Name, visibility, and sharing — Enter a Repo Name in the New repo dialog Choose visibility: Internal (visible to anyone with access to your team's codebase) or Private (visible only to members granted access directly or through codebase permissions) Te",
+      "apply_in_eos": "Creating an Origin repository is optional paid git hosting. GitHub remains source of truth for this synced repo. Do not create an Origin repo or Detach from GitHub for this watch. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-integrations",
+      "title": "Integrations",
+      "source_url": "https://cursor.com/docs/origin/integrations",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Automations — Automations run cloud agents on a schedule or when source-control events fire. /automate Cloud agents — Cloud agents can work against Origin repositories: clone, branch, commit, push, and open pull requests.",
+      "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-mirror-github",
+      "title": "Mirror a GitHub repository",
+      "source_url": "https://cursor.com/docs/origin/mirror-github",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Sync a repo — Open cursor.com/codebase 2. What syncs — Pull requests on a mirrored repo work on Origin and sync back to GitHub. After you mirror — Browse and search at cursor.com/codebase Clone the Origin remote from the green Code button if you want a local checkout from Origin. Detach from GitHub — To stop syncing, open Settings → General and select Detach from GitHub under Danger Zone *. Sync lag — If browse looks stale: Confirm the GitHub app still has access (GitHub integration) Confirm you are a GitHub admin on the source repo Re-run Sync from GitHub from cursor.com/codebase, or check Settings → General for sync When not to mirror — If you only want automated review comments on GitHub PRs, Cursor Review and Bugbot do that without moving st…",
+      "apply_in_eos": "Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-pull-requests",
+      "title": "Pull requests",
+      "source_url": "https://cursor.com/docs/origin/pull-requests",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. Pull request list — The Pull Requests tab lists pull requests for the repository. Open a pull request — Push a branch to Origin, then open a pull request against the base branch: From the repository Code tab, use the create-pull-request flow after your branch is on Origin. Pull request page — Open a pull request from the list to review it. Mirrored GitHub repositories — On a repository mirrored from GitHub, you can see and interact with GitHub pull requests as if they were Origin pull requests, and your changes sync back to GitHub.",
+      "apply_in_eos": "Origin pull requests are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not open Origin PRs or Detach from GitHub for this watch. This Cloud Agent VM already opens GitHub PRs. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-origin-settings",
+      "title": "Settings",
+      "source_url": "https://cursor.com/docs/origin/settings",
+      "published_at": null,
+      "summary": "Origin is currently released in early beta. General Sync status — For a repository mirrored from GitHub, Sync Status shows Origin as the mirror and GitHub as the source, with a link to the source repo. Detach from GitHub — Under Danger Zone , Detach from GitHub stops syncing with GitHub and makes the Origin copy a standalone Origin-hosted repository: Origin becomes the source of truth, and pushes to the Origin remote no longer flow to GitH Permissions — Use Permissions to review who can access this repository. Rules and Protections — Rules and Protections is where you configure branch rules and merge protections for the repository. Apps — Use Apps to connect third-party tools to this repository.",
+      "apply_in_eos": "Origin repository settings are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not Detach from GitHub or manage Origin Apps for this watch. This Cloud Agent VM already uses its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-plugins",
+      "title": "Plugins",
+      "source_url": "https://cursor.com/docs/plugins",
+      "published_at": null,
+      "summary": "Plugins package rules, skills, agents, commands, MCP servers, and hooks into distributable bundles. What plugins contain — A plugin can bundle any combination of these components: The Agent Plugins standard — Plugins bundle reusable components an agent can use. .cursor-plugin/plugin.json plugin.json Team marketplaces — Team marketplaces are available on Teams and Enterprise plans. Default team marketplace — The Default team marketplace connects shared plugins and MCP servers across Cursor. Creating plugins — A plugin is a directory with a manifest and its components.",
+      "apply_in_eos": "Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins and ~/.cursor/plugins/local are not EOS governance and are not this Cloud Agent environment. Do not delete a team marketplace without reviewing Cloud Agent MCP impact.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-rules",
+      "title": "Rules",
+      "source_url": "https://cursor.com/docs/rules",
+      "published_at": null,
+      "summary": "Rules provide system-level instructions to Agent. How rules work — Large language models don't retain memory between completions. Project rules — Project rules live in .cursor/rules as .mdc files and are version-controlled. Creating a rule — There are two ways to create rules: /create-rule in chat : Type /create-rule in Agent and describe what you want. Best practices — Good rules are focused, actionable, and scoped. What to avoid in rules — Copying entire style guides : Use a linter instead. Rule file format — Each rule is a markdown file with frontmatter metadata and content. Team Rules — Team and Enterprise plans can create and enforce rules across their entire organization from the Cursor dashboard. Importing Rules — You can import rules from external sources to reuse existing configu…",
+      "apply_in_eos": "Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-sdk-bridge",
+      "title": "Cursor SDK Bridge",
+      "source_url": "https://cursor.com/docs/sdk/bridge",
+      "published_at": null,
+      "summary": "The SDK Bridge is a small local server that embeds the TypeScript SDK and exposes the same agent surface over a stable Connect/protobuf protocol. When to use it — The bridge is for SDK authors and platform teams. How it works — Your adapter spawns , or attaches to one your platform already runs. Adapter shape — An adapter is a library another developer can install without knowing the bridge exists. Protocol — The wire contract is protobuf package sdk.v1 : Leave untouched when you vendor it. Authentication — Two separate secrets: 1. Versioning — sdk.v1 changes additively. Support — Supported: the published sdk.v1 protos, standalone binaries, and the first-party TypeScript and Python SDKs.",
+      "apply_in_eos": "The SDK Bridge is optional local protocol for languages without a first-party SDK. This watch uses official feeds, not cursor-sdk-bridge or api.cursor.com. Do not install the SDK Bridge or rotate this watch into adapter scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-sdk-python",
+      "title": "Cursor Python SDK",
+      "source_url": "https://cursor.com/docs/sdk/python",
+      "published_at": null,
+      "summary": "The package lets you call Cursor's agent from your own Python code. Overview — The SDK wraps local and cloud runtimes behind one interface. Authentication — Set or pass before creating an agent. Usage and billing — SDK runs follow the same pricing, request pools, and Privacy Mode rules as runs from the IDE and Cloud Agents. Core concepts Installation — Requires Python 3.10 or later. Quick start — Stream events shows how to extract assistant text, handle tool calls, and read run state. Async usage — The async client mirrors the sync surface and is recommended for servers, bots, and concurrent agent orchestration. Creating agents — validates options and returns a handle immediately. Agent — The handle returned by , , , and . CursorClient — Use when you want explicit lifecycle control, a cus…",
+      "apply_in_eos": "The Python SDK is optional agent scripting. This watch uses official feeds, not cursor-sdk or api.cursor.com. Do not install cursor-sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-sdk-typescript",
+      "title": "Cursor TypeScript SDK",
+      "source_url": "https://cursor.com/docs/sdk/typescript",
+      "published_at": null,
+      "summary": "The package lets you call Cursor's agent from your own code. Overview — The SDK wraps local and cloud runtimes behind one interface. Authentication — Set (or pass ) before creating an agent. Usage and billing — SDK runs follow the same pricing, request pools, and Privacy Mode rules as runs from the IDE and Cloud Agents. Core concepts Installation — The package name starts with . Quick start — The fastest way in: a local agent against your current working tree, streaming events as they come in. Creating agents — validates options and returns a handle immediately. Sending messages — Each returns a . Stream events — Events from . Interaction updates — is the raw delta type passed to the callback on . Conversation types — The structured per-turn view of a run, returned by and used in the call…",
+      "apply_in_eos": "The TypeScript SDK is optional agent scripting. This watch uses official feeds, not @cursor/sdk or api.cursor.com. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-security-agents",
+      "title": "Security Agents",
+      "source_url": "https://cursor.com/docs/security-agents",
+      "published_at": null,
+      "summary": "Security Agents scan your code for security bugs, risky patterns, and vulnerabilities. How it works — Security Agents include two Cursor-managed agent types: Security Reviewer checks pull requests before they merge. Vulnerability Scanner Run in your agent — Use the /review-security or /review skills to run the Security Agent from your agent before you push the code.",
+      "apply_in_eos": "Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane check. /review-security is in-agent review, not a substitute for that check. Do not treat vendor finding counts as EOS evidence. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-skills",
+      "title": "Agent Skills",
+      "source_url": "https://cursor.com/docs/skills",
+      "published_at": null,
+      "summary": "Agent Skills is an open standard for extending AI agents with specialized capabilities. What are skills? — A skill is a portable, version-controlled package that teaches agents how to perform domain-specific tasks. How skills work — When Cursor starts, it automatically discovers skills from skill directories and makes them available to Agent. Built-in Cursor skills — Cursor includes a small set of built in skills to improve your general workflows. Skill directories — Skills are automatically loaded from these locations: Cursor loads user-level skills from the machine where the agent runs. SKILL.md SKILL.md file format — Each skill is defined in a SKILL.md file with YAML frontmatter: Scoping a skill to specific files — Use the field to limit a skill to files that match one or more glob pat…",
+      "apply_in_eos": "Pin an EOS skill as a Custom Mode when a session must stay on one playbook.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-docs-subagents",
+      "title": "Subagents",
+      "source_url": "https://cursor.com/docs/subagents",
+      "published_at": null,
+      "summary": "Subagents are specialized AI assistants that Cursor's agent can delegate tasks to. How subagents work — When Agent encounters a complex task, it can launch a subagent automatically. Built-in subagents — Cursor includes three built-in subagents that handle context-heavy operations automatically. When to use subagents — If you find yourself creating a subagent for a simple, single-purpose task like \"generate a changelog\" or \"format imports,\" consider using a skill instead. Quick start — Agent automatically uses subagents when appropriate. Custom subagents — Define custom subagents to encode specialized knowledge, enforce team standards, or automate repetitive workflows. Using subagents Cloud subagents — From a local agent session, you can hand off work to a cloud subagent that runs on its o…",
+      "apply_in_eos": "Run isolated subagents on their own VMs when work must not collide with the parent branch.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-account-and-billing-pricing",
+      "title": "Pricing and plans",
+      "source_url": "https://cursor.com/help/account-and-billing/pricing",
+      "published_at": null,
+      "summary": "Compare plans and manage subscription changes from your billing dashboard. What plans are available? — See Models & Pricing for usage pools and Cursor Start for the India plan. What is Auto? — Auto balances intelligence, cost, and reliability through Cursor Router. Is Cursor Router available on my plan? — Cursor Router will launch for Teams and Enterprise plans. Why is the old Auto mode now called Cost mode? — The old Auto mode was split into 3 new modes: Cost , Balance and Intelligence *. What's included in the free Hobby plan? — The Hobby plan gives you access to Cursor's core features with limited usage.",
+      "apply_in_eos": "Help Pricing and plans lists vendor individual and Teams plan names. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor plan prices as EOS budget evidence. Do not change this Cloud Agent billing from the dashboard. Keep environment.json + Builds.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-automations",
+      "title": "Automations",
+      "source_url": "https://cursor.com/help/ai-features/automations",
+      "published_at": null,
+      "summary": "Cursor Automations run Cloud Agents in the background, either on a schedule or in response to events from GitHub, GitLab, Slack, webhooks, Linear, and more. What can Automations do? — Automations let you run Cloud Agents without manual input. How do I create an automation? — Create a new automation in the Agents Window, at cursor.com/automations/new, or from a template in the Cursor Marketplace. Can I create automations without connecting a repository? — Yes. Which triggers are available? — An automation can have more than one trigger. Which tools can automations use? — Comment on pull request : Posts review comments, inline code comments, or approvals on a target PR Request reviewers : Assigns reviewers on a target PR Send to Slack : Sends messages to a Slack channel Read Slack channel H…",
+      "apply_in_eos": "Automations trigger on GitHub/Slack, not X. This daily changelog timer already covers ingest.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-models-and-usage-available-model",
+      "title": "Available models",
+      "source_url": "https://cursor.com/help/models-and-usage/available-models",
+      "published_at": null,
+      "summary": "Cursor supports a range of AI models from multiple providers. Which models are available? — Cursor offers its own models (Grok 4.5 and Composer) in the Cursor Models pool alongside other frontier models from OpenAI, Anthropic, and Google. Which model should I use? — Auto selects models that balance intelligence, cost, and reliability. Which models does Cursor Router route across? — Cursor Router routes across these models: GPT-5.5 Claude Opus 5 Grok 4.5 Claude Fable 5 Required: Grok 4.5. Can I see which model Cursor Router used for my request? — By default, the routed model identity is hidden so you judge results on merit. How much does Auto cost? — All Auto modes bill at the list price of the model each request is routed to. How much does Grok 4.5 cost? — Grok 4.5 has two speeds, each wi…",
+      "apply_in_eos": "Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep environment.json + Builds.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-models-and-usage-cursor-router",
+      "title": "Cursor Router",
+      "source_url": "https://cursor.com/help/models-and-usage/cursor-router",
+      "published_at": null,
+      "summary": "Cursor Router is the intelligent routing behind Auto. What is Cursor Router and how is it different from the previous Auto mode? — Cursor Router is the relaunched Auto mode. How does Cursor Router decide which model to use for my request? — An ML classifier runs on each agent request and routes by task type and complexity. What are the Cost, Balance, and Intelligence optimization modes and how do I switch between them? — Open the model picker, select Auto , then choose an optimization mode: Cost : Optimizes token spend. Can I use Cursor Router from the SDK? — Yes.",
+      "apply_in_eos": "Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules still bind model and governance choices. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put API keys in git. Keep environment.json + Builds.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-models-and-usage-grok-4-6",
+      "title": "Grok 4.6",
+      "source_url": "https://cursor.com/help/models-and-usage/grok-4-6",
+      "published_at": null,
+      "summary": "Grok 4.6 is a first-party Cursor model, built together with SpaceXAI for coding and other knowledge work. What is Grok 4.6? — Grok 4.6 is designed for difficult, long-running tasks that require creative tool use, whether in software engineering, data science, finance, legal work, or anything else you do on a computer. What are Grok 4.6 effort levels? — Grok 4.6 supports four effort levels: low , medium , high , and xhigh , so you can match compute to how hard the task is. When should I choose Grok 4.6 over Composer? — Choose Grok 4.6 for harder, longer-running work: multi-step agents, ambitious interactive or visual first passes, large codebases, and tasks that stalled or felt short on Grok 4.5. Which plans include Grok 4.6? — Grok 4.6 uses the same first-party / Composer credit treatment…",
+      "apply_in_eos": "Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-models-and-usage-usage-limits",
+      "title": "Usage and limits",
+      "source_url": "https://cursor.com/help/models-and-usage/usage-limits",
+      "published_at": null,
+      "summary": "Most Cursor plans include two monthly usage pools: Cursor Models : Cursor Grok 4.6, Cursor Grok 4.5, and Composer 2.5 Other Models : Third-party models, charged at model provider prices Pro, Pro Plus, and Ultra include b How do I check my usage? — Go to the Spending tab in your dashboard. What happens when I hit my usage limit? — You'll see a notification in the editor. When does my usage reset? — Usage resets monthly with your billing cycle. How do I get more usage? — Use Cursor Models : Cursor Grok 4.6, Cursor Grok 4.5, and Composer 2.5 draw from the Cursor Models pool, tracked separately and included with your plan Enable on-demand usage : Pay for additional requests at the same API How does Cursor Router interact with my plan's usage pools and limits? — Cursor Router requests are bill…",
+      "apply_in_eos": "Honor included quota. Stop this daily watch rather than switching to paid on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    }
+  ]
+}

@@ -12,6 +12,7 @@ import { MissionRuntime } from '../runtime/mission-runtime.js';
 import { IntegrationGatekeeper } from '../governance/integration-gatekeeper.js';
 import { SchemaValidator } from '../contracts/schema-validator.js';
 import { CanonicalRulesIndex } from '../rules/canonical-rules-index.js';
+import { calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
 
 export function normalizeToolName(name = '') {
   if (!name || typeof name !== 'string') return '';
@@ -36,9 +37,11 @@ export class McpMissionBridge {
         baseDir: this.baseDir,
         allowLocalDirectorReceipt: true
       });
-    this.integrationGate = options.integrationGate || this.runtime.integrationGate || new IntegrationGatekeeper();
-    this.schemas = options.schemas || new SchemaValidator();
-    this.rules = options.rules || new CanonicalRulesIndex();
+    // Prefer injected deps, else reuse MissionRuntime instances (avoid duplicate validators).
+    this.integrationGate =
+      options.integrationGate || this.runtime.integrationGate || new IntegrationGatekeeper();
+    this.schemas = options.schemas || this.runtime.schemas || new SchemaValidator();
+    this.rules = options.rules || this.runtime.rules || new CanonicalRulesIndex();
   }
 
   resolveIntent(args = {}) {
@@ -97,16 +100,19 @@ export class McpMissionBridge {
         const pkgPath = path.join(root, d.name, 'mission-package.json');
         let phase = null;
         let status = null;
+        let corrupt = false;
         if (fs.existsSync(pkgPath)) {
           try {
             const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
-            phase = pkg.phase;
-            status = pkg.status;
+            phase = pkg.phase ?? null;
+            status = pkg.status ?? null;
           } catch {
-            /* ignore corrupt */
+            corrupt = true;
           }
         }
-        return { mission_id: d.name, phase, status };
+        return corrupt
+          ? { mission_id: d.name, phase, status, corrupt: true }
+          : { mission_id: d.name, phase, status };
       });
     return { missions, count: missions.length, baseDir: this.baseDir };
   }
@@ -250,5 +256,44 @@ export class McpMissionBridge {
       content: JSON.parse(fs.readFileSync(file, 'utf8')),
       epistemic_class: 'MEASURED'
     };
+  }
+
+  /**
+   * Persist an evidence receipt under .missions/<id>/evidence with SHA-256 of the body.
+   * @param {object} [args]
+   * @returns {{ evidence: object, path: string }}
+   */
+  recordEvidence(args = {}) {
+    const missionId = args.missionId || args.mission_id;
+    if (!missionId) {
+      const err = new Error('MISSING_MISSION_ID');
+      err.code = 'MISSING_MISSION_ID';
+      throw err;
+    }
+    const missionDir = this.runtime.getMissionDir(missionId);
+    if (!fs.existsSync(missionDir)) {
+      const err = new Error(`MISSION_NOT_FOUND: ${missionId}`);
+      err.code = 'MISSION_NOT_FOUND';
+      throw err;
+    }
+    const evidenceDir = path.join(missionDir, 'evidence');
+    const id = args.id || `EVD-${Date.now()}`;
+    const receiptBody = {
+      id,
+      mission_id: missionId,
+      status: args.status || 'RECORDED',
+      category: args.category || 'MANUAL',
+      recorded_at: new Date().toISOString(),
+      payload: args.payload || {},
+      epistemic_class: 'RECORDED_NOT_VERIFIED'
+    };
+    const receipt = {
+      ...receiptBody,
+      sha256: calculateSha256(JSON.stringify(receiptBody))
+    };
+    fs.mkdirSync(evidenceDir, { recursive: true });
+    const file = path.join(evidenceDir, `${id}.json`);
+    fs.writeFileSync(file, JSON.stringify(receipt, null, 2), 'utf8');
+    return { evidence: receipt, path: file };
   }
 }
