@@ -259,6 +259,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/getting-started/build-ai-coding-agent' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -435,7 +439,7 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     false
   );
   assert.equal(
-    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/getting-started/build-ai-coding-agent'),
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/blog/typescript-sdk'),
     false
   );
   assert.equal(
@@ -1868,6 +1872,26 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpGettingStartedFirstProject.apply_in_eos), false);
   assert.equal(helpGettingStartedFirstProject.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpGettingStartedFirstProject.apply_in_eos.includes('Vercel'), false);
+  const helpGettingStartedBuildAiCodingAgent = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/getting-started/build-ai-coding-agent');
+  assert.ok(helpGettingStartedBuildAiCodingAgent);
+  assert.equal(helpGettingStartedBuildAiCodingAgent.title, 'How do I build an AI coding agent?');
+  assert.match(helpGettingStartedBuildAiCodingAgent.summary, /What is a coding agent made of/);
+  assert.match(helpGettingStartedBuildAiCodingAgent.summary, /Can I build an agent without coding/);
+  assert.match(helpGettingStartedBuildAiCodingAgent.summary, /How do I build a coding agent with the Cursor SDK/);
+  assert.match(helpGettingStartedBuildAiCodingAgent.summary, /What can I build with the Cursor SDK/);
+  assert.equal(helpGettingStartedBuildAiCodingAgent.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpGettingStartedBuildAiCodingAgent.summary), false);
+  assert.equal(helpGettingStartedBuildAiCodingAgent.summary.toLowerCase().includes('curl'), false);
+  assert.equal(helpGettingStartedBuildAiCodingAgent.summary.includes('CURSOR_API_KEY'), false);
+  assert.match(helpGettingStartedBuildAiCodingAgent.apply_in_eos, /vendor custom-agent SDK how-to/i);
+  assert.match(helpGettingStartedBuildAiCodingAgent.apply_in_eos, /\/goal/);
+  assert.match(helpGettingStartedBuildAiCodingAgent.apply_in_eos, /do not rotate this Cloud Agent into building a custom coding agent or installing @cursor\/sdk/i);
+  assert.match(helpGettingStartedBuildAiCodingAgent.apply_in_eos, /already has its GitHub checkout/i);
+  assert.match(helpGettingStartedBuildAiCodingAgent.apply_in_eos, /environment\.json/);
+  assert.match(helpGettingStartedBuildAiCodingAgent.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpGettingStartedBuildAiCodingAgent.apply_in_eos), false);
+  assert.equal(helpGettingStartedBuildAiCodingAgent.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpGettingStartedBuildAiCodingAgent.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2120,6 +2144,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Quickstart', link: 'https://cursor.com/docs/get-started/quickstart' },
     { title: 'Download and install Cursor', link: 'https://cursor.com/help/getting-started/install' },
     { title: 'Your first project', link: 'https://cursor.com/help/getting-started/first-project' },
+    { title: 'How do I build an AI coding agent?', link: 'https://cursor.com/help/getting-started/build-ai-coding-agent' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3445,6 +3470,27 @@ test('applyHint for Help first project keeps this Cloud Agent off desktop first-
   assert.equal(hint.includes('Plan Mode'), false);
 });
 
+test('applyHint for Help build AI coding agent keeps this watch on /goal and does not install @cursor/sdk', () => {
+  const hint = applyHint({
+    title: 'How do I build an AI coding agent?',
+    link: 'https://cursor.com/help/getting-started/build-ai-coding-agent',
+    summary: 'Optional Help build AI coding agent is enabled by default. Custom Mode and Vercel. Use Slack.'
+  });
+  assert.match(hint, /vendor custom-agent SDK how-to/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into building a custom coding agent or installing @cursor\/sdk/i);
+  assert.match(hint, /already has its GitHub checkout/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4464,6 +4510,23 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpGettingStartedFirstProject[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpGettingStartedFirstProject[0]).includes('Plan Mode'), false);
 
+  const helpGettingStartedBuildAiCodingAgent = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-getting-started-build-ai-coding-agent.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/getting-started/build-ai-coding-agent'
+  );
+  assert.equal(helpGettingStartedBuildAiCodingAgent[0].id, 'https://cursor.com/help/getting-started/build-ai-coding-agent');
+  assert.equal(helpGettingStartedBuildAiCodingAgent[0].title, 'How do I build an AI coding agent?');
+  assert.match(helpGettingStartedBuildAiCodingAgent[0].summary, /Cursor SDK to run custom agents on Cursor's runtime/);
+  assert.match(helpGettingStartedBuildAiCodingAgent[0].summary, /Here's how to start/);
+  assert.match(applyHint(helpGettingStartedBuildAiCodingAgent[0]), /vendor custom-agent SDK how-to/i);
+  assert.match(applyHint(helpGettingStartedBuildAiCodingAgent[0]), /\/goal/);
+  assert.match(applyHint(helpGettingStartedBuildAiCodingAgent[0]), /@cursor\/sdk/);
+  assert.equal(/enable/i.test(applyHint(helpGettingStartedBuildAiCodingAgent[0])), false);
+  assert.equal(applyHint(helpGettingStartedBuildAiCodingAgent[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpGettingStartedBuildAiCodingAgent[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpGettingStartedBuildAiCodingAgent[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4972,6 +5035,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/getting-started/first-project'),
     'https://cursor.com/help/getting-started/first-project.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/getting-started/build-ai-coding-agent'),
+    'https://cursor.com/help/getting-started/build-ai-coding-agent.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -5537,6 +5604,19 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpGettingStartedFirstProjectMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpGettingStartedFirstProjectMd.summary), false);
   assert.equal(helpGettingStartedFirstProjectMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpGettingStartedBuildAiCodingAgentMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-getting-started-build-ai-coding-agent.md'), 'utf8')
+  );
+  assert.equal(helpGettingStartedBuildAiCodingAgentMd.title, 'How do I build an AI coding agent?');
+  assert.match(helpGettingStartedBuildAiCodingAgentMd.summary, /What is a coding agent made of/);
+  assert.match(helpGettingStartedBuildAiCodingAgentMd.summary, /Can I build an agent without coding/);
+  assert.match(helpGettingStartedBuildAiCodingAgentMd.summary, /How do I build a coding agent with the Cursor SDK/);
+  assert.match(helpGettingStartedBuildAiCodingAgentMd.summary, /What can I build with the Cursor SDK/);
+  assert.equal(helpGettingStartedBuildAiCodingAgentMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpGettingStartedBuildAiCodingAgentMd.summary), false);
+  assert.equal(helpGettingStartedBuildAiCodingAgentMd.summary.toLowerCase().includes('curl'), false);
+  assert.equal(helpGettingStartedBuildAiCodingAgentMd.summary.includes('CURSOR_API_KEY'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -6794,6 +6874,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help first project is vendor desktop first-run. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop first-project or first-run for daily ingest. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'How do I build an AI coding agent?',
+      source_url: 'https://cursor.com/help/getting-started/build-ai-coding-agent',
+      published_at: null,
+      apply_in_eos: 'Help build AI coding agent is vendor custom-agent SDK how-to. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into building a custom coding agent or installing @cursor/sdk for daily ingest. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -6838,6 +6924,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/get-started/quickstart'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/getting-started/install'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/getting-started/first-project'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/getting-started/build-ai-coding-agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -7413,6 +7500,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/docs/get-started/quickstart'), false);
   assert.equal(current.includes('cursor.com/help/getting-started/install'), false);
   assert.equal(current.includes('cursor.com/help/getting-started/first-project'), false);
+  assert.equal(current.includes('cursor.com/help/getting-started/build-ai-coding-agent'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
