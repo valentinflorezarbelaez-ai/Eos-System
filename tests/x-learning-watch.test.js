@@ -1557,7 +1557,7 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(helpMcp.title, 'MCP integrations');
   assert.match(helpMcp.summary, /What is an MCP server/);
   assert.match(helpMcp.summary, /How do I install an MCP server manually/);
-  assert.match(helpMcp.summary, /Do MCP servers work with Cloud Agents/);
+  assert.match(helpMcp.summary, /How do I use MCP tools in chat/);
   assert.equal(helpMcp.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpMcp.summary), false);
   assert.match(helpMcp.apply_in_eos, /vendor Agent integrations/i);
