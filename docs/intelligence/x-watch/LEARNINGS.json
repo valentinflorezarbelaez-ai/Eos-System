@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:21:16.436Z",
+  "updated_at": "2026-09-01T12:24:35.790Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1559,6 +1559,16 @@
       "published_at": null,
       "summary": "Plan mode lets you generate and review a detailed plan before Agent writes any code. How do I use Plan mode? — Open the Agent panel: - Mac : Press Cmd + I - Windows/Linux : Press Ctrl + I 2. How do I save plans? — Plans are saved by default in your home directory. When should I use Plan mode? — Plan mode works best for: Complex features with multiple valid approaches Tasks touching many files or systems Unclear requirements where you want to explore first Architectural decisions where you want to review the app How do I start over in Plan mode? — If Agent builds something that doesn't match what you wanted, you can roll back to any earlier point in the conversation: 1.",
       "apply_in_eos": "Help Plan mode is vendor desktop planning before code. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Plan mode for daily ingest. EOS TDD remains required. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-tab",
+      "title": "Tab completion",
+      "source_url": "https://cursor.com/help/ai-features/tab",
+      "published_at": null,
+      "summary": "Tab is Cursor's AI-powered autocomplete. How do I accept or reject suggestions? — Accept the full suggestion : Press Tab Reject : Press Escape or keep typing Accept word-by-word : - Mac : Press Cmd + Arrow Right - Windows/Linux : Press Ctrl + Arrow Right Suggestions appear as grayed-out text ahead of Can Tab edit multiple lines at once? — Yes. What is jump-in-file? — After you accept a Tab suggestion, press Tab again. Can Tab suggest edits in other files? — Yes. How do I turn Tab on or off? — Click the Tab status indicator in the bottom-right corner of Cursor. Can I change the Tab keyboard shortcut? — Yes.",
+      "apply_in_eos": "Help Tab is vendor desktop autocomplete. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Tab for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

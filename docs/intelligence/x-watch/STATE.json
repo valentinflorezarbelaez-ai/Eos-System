@@ -156,13 +156,14 @@
     "https://cursor.com/help/ai-features/ask-mode",
     "https://cursor.com/help/ai-features/automations",
     "https://cursor.com/help/ai-features/plan-mode",
+    "https://cursor.com/help/ai-features/tab",
     "https://cursor.com/help/models-and-usage/available-models",
     "https://cursor.com/help/models-and-usage/cursor-router",
     "https://cursor.com/help/models-and-usage/grok-4-5",
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-09-01T12:21:16.425Z",
-  "last_item_count": 160,
-  "last_new_item_count": 5
+  "last_ingest_at": "2026-09-01T12:24:35.779Z",
+  "last_item_count": 161,
+  "last_new_item_count": 6
 }
