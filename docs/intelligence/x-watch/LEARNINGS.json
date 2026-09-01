@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T13:07:54.853Z",
+  "updated_at": "2026-09-01T13:11:37.530Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1629,6 +1629,16 @@
       "published_at": null,
       "summary": "Tab is Cursor's AI-powered autocomplete. How do I accept or reject suggestions? — Accept the full suggestion : Press Tab Reject : Press Escape or keep typing Accept word-by-word : - Mac : Press Cmd + Arrow Right - Windows/Linux : Press Ctrl + Arrow Right Suggestions appear as grayed-out text ahead of Can Tab edit multiple lines at once? — Yes. What is jump-in-file? — After you accept a Tab suggestion, press Tab again. Can Tab suggest edits in other files? — Yes. How do I turn Tab on or off? — Click the Tab status indicator in the bottom-right corner of Cursor. Can I change the Tab keyboard shortcut? — Yes.",
       "apply_in_eos": "Help Tab is vendor desktop autocomplete. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Tab for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-customization-context",
+      "title": "@ mentions and context",
+      "source_url": "https://cursor.com/help/customization/context",
+      "published_at": null,
+      "summary": "Type in the chat input to attach specific context to your conversation. What can I reference with @? — Files & Folders : or to include files or folders (type after selecting a folder to navigate deeper) Terminals : to include terminal output as context Chats : to reference context from a previous conversation Git diffs : When should I use @ mentions? — Use them when you know which files are relevant. Can I attach multiple items? — Yes.",
+      "apply_in_eos": "Help Context is vendor Agent @ mentions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop @ mentions for daily ingest. This Cloud Agent VM already searches the workspace. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
