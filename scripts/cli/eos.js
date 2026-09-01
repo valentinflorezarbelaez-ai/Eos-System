@@ -46,7 +46,7 @@ export class EosCursorHarnessCli {
       gate13Status: 'CANARY_RESTRICTED',
       activeMission: mission.mission_id || 'NONE',
       missionStage: mission.current_stage || 'IDLE',
-      systemHealth: state.test_health || '608 / 608 PASS',
+      systemHealth: state.test_health || 'UNKNOWN',
       timestamp: new Date().toISOString()
     };
   }
@@ -210,7 +210,9 @@ export class EosCursorHarnessCli {
 
     if (subCmd === 'provision') {
       const servers = args.slice(1).flatMap(s => s.split(',')).map(s => s.trim()).filter(Boolean);
-      return mcpEngine.provisionMcps(servers.length > 0 ? servers : ['playwright', 'context7', 'trello', 'slack', 'jira', 'figma', 'stitch', 'engram']);
+      return mcpEngine.provisionMcps(
+        servers.length > 0 ? servers : Object.keys(mcpEngine.getCatalog().mcpServers || {})
+      );
     } else {
       return mcpEngine.verifyActiveMcps();
     }

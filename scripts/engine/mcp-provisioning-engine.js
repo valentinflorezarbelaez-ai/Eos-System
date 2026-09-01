@@ -12,9 +12,14 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '../..');
 
 export class McpProvisioningEngine {
-  constructor() {
-    this.cursorMcpFile = path.join(rootDir, '.cursor/mcp.json');
-    this.activeToolsFile = path.join(rootDir, 'EOS-MISSION-CONTROL/ACTIVE_TOOLS.json');
+  /**
+   * @param {object} [options]
+   * @param {string} [options.cursorMcpFile] MCP catalog to read (defaults to the workspace config)
+   * @param {string} [options.activeToolsFile] governed roster to update
+   */
+  constructor(options = {}) {
+    this.cursorMcpFile = options.cursorMcpFile || path.join(rootDir, '.cursor/mcp.json');
+    this.activeToolsFile = options.activeToolsFile || path.join(rootDir, 'EOS-MISSION-CONTROL/ACTIVE_TOOLS.json');
   }
 
   // 1. Load available catalog from .cursor/mcp.json
@@ -34,12 +39,13 @@ export class McpProvisioningEngine {
     const rejected = [];
 
     // Load current active tools
-    let activeData = { governed_tools: [], governed_mcps: [] };
-    if (fs.existsSync(this.activeToolsFile)) {
-      activeData = JSON.parse(fs.readFileSync(this.activeToolsFile, 'utf8'));
-    }
+    const activeData = fs.existsSync(this.activeToolsFile)
+      ? JSON.parse(fs.readFileSync(this.activeToolsFile, 'utf8'))
+      : { governed_tools: [], governed_mcps: [] };
+    activeData.governed_mcps = activeData.governed_mcps || [];
 
     const currentMcpNames = new Set(activeData.governed_mcps.map(m => m.name.toLowerCase()));
+    let rosterChanged = false;
 
     for (const name of normalized) {
       if (catalog[name]) {
@@ -49,12 +55,13 @@ export class McpProvisioningEngine {
           status: 'CONNECTED_AND_GOVERNED',
           purpose: spec.description || 'DYNAMIC_TOOL_PROVISIONING',
           risk: name === 'slack' || name === 'jira' ? 'MEDIUM' : 'LOW',
-          command: `${spec.command} ${spec.args.join(' ')}`
+          command: [spec.command, ...(spec.args || [])].join(' ')
         };
 
         if (!currentMcpNames.has(name)) {
           activeData.governed_mcps.push(mcpEntry);
           currentMcpNames.add(name);
+          rosterChanged = true;
         }
 
         provisioned.push(mcpEntry);
@@ -66,8 +73,10 @@ export class McpProvisioningEngine {
       }
     }
 
-    // Save updated active tools
-    fs.writeFileSync(this.activeToolsFile, JSON.stringify(activeData, null, 2));
+    if (rosterChanged) {
+      fs.mkdirSync(path.dirname(this.activeToolsFile), { recursive: true });
+      fs.writeFileSync(this.activeToolsFile, JSON.stringify(activeData, null, 2));
+    }
 
     return {
       provisionedCount: provisioned.length,

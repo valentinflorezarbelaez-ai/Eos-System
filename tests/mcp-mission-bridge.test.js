@@ -21,7 +21,13 @@ test('BRIDGE-02: mission resolve/start/status/plan/report via MCP read-write LEV
   fs.mkdirSync(path.join(root, 'src'));
 
   const bridge = new McpMissionBridge({ baseDir: root });
-  const server = new EosMcpServer(null, { bridge, baseDir: root });
+  assert.equal(
+    fs.existsSync(path.join(root, '.missions')),
+    false,
+    'Constructing the bridge must not provision mission storage'
+  );
+
+  const server = new EosMcpServer(null, { bridge });
   const env = {
     EOS_MODE: 'read-write',
     EOS_AUTONOMY_LEVEL: 'LEVEL_1',
@@ -52,8 +58,8 @@ test('BRIDGE-02: mission resolve/start/status/plan/report via MCP read-write LEV
   assert.equal(status.status, 'SUCCESS');
   assert.equal(status.mission_status.mission_id, started.mission.mission_id);
 
-  // plan via bridge (not a canonical MCP tool name — exercise runtime path)
-  const planned = bridge.planMission({ missionId: started.mission.mission_id });
+  // plan is not exposed as an MCP tool — exercise the runtime path behind the bridge
+  const planned = bridge.runtime.planMission(started.mission.mission_id);
   assert.equal(planned.phase, 'PLAN');
 
   const report = await server.handleToolCall(
@@ -86,4 +92,59 @@ test('BRIDGE-03: mission.start denied in read-only', async () => {
   );
   assert.equal(res.status, 'DENIED');
   assert.equal(res.reason, 'READ_ONLY_MODE_BLOCKS_LEDGER_WRITE');
+});
+
+test('BRIDGE-04: evidence round-trip stays inside the mission directory', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-mcp-evidence-'));
+  fs.writeFileSync(path.join(root, 'package.json'), '{"name":"mcp-evidence","type":"module"}');
+
+  const server = new EosMcpServer(null, { bridge: new McpMissionBridge({ baseDir: root }) });
+  const env = {
+    EOS_MODE: 'read-write',
+    EOS_AUTONOMY_LEVEL: 'LEVEL_1',
+    EOS_ALLOW_EXTERNAL_SIDE_EFFECTS: 'false'
+  };
+
+  const started = await server.handleToolCall('eos.mission.start', { goal: 'Evidence wiring', projectPath: root }, env);
+  const missionId = started.mission.mission_id;
+
+  const recorded = await server.handleToolCall(
+    'eos.evidence.record',
+    { missionId, id: 'EVD-01', payload: { note: 'unit' } },
+    env
+  );
+  assert.equal(recorded.status, 'SUCCESS', recorded.reason || '');
+  assert.equal(recorded.evidence.epistemic_class, 'RECORDED_NOT_VERIFIED');
+
+  const fetched = await server.handleToolCall('eos.evidence.get', { missionId, id: 'EVD-01' }, env);
+  assert.equal(fetched.evidence.found, true);
+  assert.deepEqual(fetched.evidence.content.payload, { note: 'unit' });
+
+  const traversal = await server.handleToolCall(
+    'eos.evidence.record',
+    { missionId, id: '../../../escaped' },
+    env
+  );
+  assert.equal(traversal.status, 'ERROR');
+  assert.equal(traversal.code, 'INVALID_EVIDENCE_ID');
+
+  const badMission = await server.handleToolCall('eos.mission.status', { missionId: '../..' }, env);
+  assert.equal(badMission.status, 'ERROR');
+  assert.equal(badMission.code, 'INVALID_MISSION_ID');
+  assert.equal(fs.existsSync(path.join(root, 'escaped.json')), false);
+});
+
+test('BRIDGE-05: barrier check resolves relative paths against the bridge baseDir', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-mcp-barrier-'));
+  const server = new EosMcpServer(null, { bridge: new McpMissionBridge({ baseDir: root }) });
+  const env = { EOS_MODE: 'read-only', EOS_AUTONOMY_LEVEL: 'LEVEL_0' };
+
+  const blocked = await server.handleToolCall('eos.workspace.barrier_check', { path: 'Fundacion/site' }, env);
+  assert.equal(blocked.barrier.allowed, false);
+  assert.equal(blocked.barrier.reason, 'PROTECTED_SURFACE');
+  assert.equal(blocked.barrier.path, path.join(root, 'Fundacion', 'site'));
+
+  const missing = await server.handleToolCall('eos.workspace.barrier_check', {}, env);
+  assert.equal(missing.status, 'ERROR');
+  assert.equal(missing.code, 'MISSING_PATH');
 });
