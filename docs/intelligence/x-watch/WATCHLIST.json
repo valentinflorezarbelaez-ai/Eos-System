@@ -549,6 +549,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_MOBILE_APP",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-SHARED-TRANSCRIPTS",
+      "url": "https://cursor.com/help/ai-features/shared-transcripts",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_SHARED_TRANSCRIPTS",
+      "fetchable": true
     }
   ]
 }
