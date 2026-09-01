@@ -612,6 +612,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_MULTI_AGENT",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-SIDE-CHATS",
+      "url": "https://cursor.com/help/ai-features/side-chats",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_SIDE_CHATS",
+      "fetchable": true
     }
   ]
 }
