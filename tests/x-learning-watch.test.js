@@ -239,6 +239,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/grok-bot' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -392,6 +396,22 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/models-and-usage/token-rate'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/grok-bot/get-started'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/grok-bot/work'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/grok-bot/teams'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/grok-bot/plans'),
     false
   );
   assert.equal(
@@ -1717,6 +1737,24 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpConversationSearch.apply_in_eos), false);
   assert.equal(helpConversationSearch.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpConversationSearch.apply_in_eos.includes('Vercel'), false);
+  const grokBotDocs = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/grok-bot');
+  assert.ok(grokBotDocs);
+  assert.equal(grokBotDocs.title, 'Grok Bot');
+  assert.match(grokBotDocs.summary, /What makes Grok Bot different/);
+  assert.match(grokBotDocs.summary, /Your Bots share one computer/);
+  assert.match(grokBotDocs.summary, /A good first handoff/);
+  assert.equal(grokBotDocs.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(grokBotDocs.summary), false);
+  assert.match(grokBotDocs.apply_in_eos, /vendor persistent-cloud Bots/i);
+  assert.match(grokBotDocs.apply_in_eos, /\/goal/);
+  assert.match(grokBotDocs.apply_in_eos, /do not rotate this Cloud Agent into the Grok Bot desktop or iOS app/i);
+  assert.match(grokBotDocs.apply_in_eos, /no Grok Bot Linux app/i);
+  assert.match(grokBotDocs.apply_in_eos, /environment\.json/);
+  assert.match(grokBotDocs.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(grokBotDocs.apply_in_eos), false);
+  assert.equal(grokBotDocs.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(grokBotDocs.apply_in_eos.includes('Vercel'), false);
+  assert.equal(grokBotDocs.apply_in_eos.includes('changelog + forum'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1964,6 +2002,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'What is multi-agent coding?', link: 'https://cursor.com/help/ai-features/multi-agent' },
     { title: 'Side chats', link: 'https://cursor.com/help/ai-features/side-chats' },
     { title: 'Conversation search', link: 'https://cursor.com/help/ai-features/conversation-search' },
+    { title: 'Grok Bot', link: 'https://cursor.com/docs/grok-bot' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3185,6 +3224,27 @@ test('applyHint for Help Conversation search keeps this watch searching the Clou
   assert.equal(hint.includes('Instant Grep'), false);
 });
 
+test('applyHint for Grok Bot docs keeps this Cloud Agent off the Grok Bot app', () => {
+  const hint = applyHint({
+    title: 'Grok Bot',
+    link: 'https://cursor.com/docs/grok-bot',
+    summary: 'Optional Grok Bot is enabled by default. Custom Mode and Vercel. Use Slack.'
+  });
+  assert.match(hint, /vendor persistent-cloud Bots/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into the Grok Bot desktop or iOS app/i);
+  assert.match(hint, /no Grok Bot Linux app/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('changelog + forum'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4129,6 +4189,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpConversationSearch[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpConversationSearch[0]).includes('Instant Grep'), false);
 
+  const grokBotDocs = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-grok-bot.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/docs/grok-bot'
+  );
+  assert.equal(grokBotDocs[0].id, 'https://cursor.com/docs/grok-bot');
+  assert.equal(grokBotDocs[0].title, 'Grok Bot');
+  assert.match(grokBotDocs[0].summary, /Persistent AI Bots that finish real work on a cloud computer/);
+  assert.match(applyHint(grokBotDocs[0]), /vendor persistent-cloud Bots/i);
+  assert.match(applyHint(grokBotDocs[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(grokBotDocs[0])), false);
+  assert.equal(applyHint(grokBotDocs[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(grokBotDocs[0]).includes('Vercel'), false);
+  assert.equal(applyHint(grokBotDocs[0]).includes('changelog + forum'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4617,6 +4692,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/conversation-search'),
     'https://cursor.com/help/ai-features/conversation-search.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/docs/grok-bot'),
+    'https://cursor.com/docs/grok-bot.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -5129,6 +5208,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpConversationSearchMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpConversationSearchMd.summary), false);
   assert.equal(helpConversationSearchMd.summary.toLowerCase().includes('curl'), false);
+
+  const grokBotMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-grok-bot.md'), 'utf8')
+  );
+  assert.equal(grokBotMd.title, 'Grok Bot');
+  assert.match(grokBotMd.summary, /What makes Grok Bot different/);
+  assert.match(grokBotMd.summary, /Your Bots share one computer/);
+  assert.match(grokBotMd.summary, /A good first handoff/);
+  assert.equal(grokBotMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(grokBotMd.summary), false);
+  assert.equal(grokBotMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -6003,6 +6093,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'Help Background Agents is vendor isolated-VM Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop background agents for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Grok Bot',
+      source_url: 'https://cursor.com/docs/grok-bot',
+      published_at: null,
+      apply_in_eos: 'Grok Bot is vendor persistent-cloud Bots. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into the Grok Bot desktop or iOS app for daily ingest. This Cloud Agent VM has no Grok Bot Linux app. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Capabilities',
       source_url: 'https://cursor.com/docs/cloud-agent/capabilities',
       published_at: null,
@@ -6170,6 +6266,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/cloud-agents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/background-agents'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/api/endpoints'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/typescript'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/sdk/python'), false);
@@ -6355,6 +6452,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Conversation search is vendor desktop transcript search. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop conversation search for daily ingest. This Cloud Agent VM already searches the workspace. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Grok Bot',
+      source_url: 'https://cursor.com/docs/grok-bot',
+      published_at: null,
+      apply_in_eos: 'Grok Bot is vendor persistent-cloud Bots. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into the Grok Bot desktop or iOS app for daily ingest. This Cloud Agent VM has no Grok Bot Linux app. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -6389,6 +6492,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/side-chats'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/conversation-search'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -6959,6 +7063,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/side-chats'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/conversation-search'), false);
+  assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);

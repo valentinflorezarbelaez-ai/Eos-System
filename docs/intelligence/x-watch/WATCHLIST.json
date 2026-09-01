@@ -626,6 +626,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_CONVERSATION_SEARCH",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-GROK-BOT",
+      "url": "https://cursor.com/docs/grok-bot",
+      "kind": "html-page",
+      "role": "OFFICIAL_GROK_BOT",
+      "fetchable": true
     }
   ]
 }
