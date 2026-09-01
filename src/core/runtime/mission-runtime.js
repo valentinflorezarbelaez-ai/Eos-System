@@ -43,10 +43,6 @@ export class MissionRuntime {
     this.schemas = options.schemas || new SchemaValidator();
     this.rules = options.rules || new CanonicalRulesIndex();
     this.allowLocalDirectorReceipt = options.allowLocalDirectorReceipt !== false;
-
-    if (!fs.existsSync(this.missionsRoot)) {
-      fs.mkdirSync(this.missionsRoot, { recursive: true });
-    }
   }
 
   getMissionDir(missionId) {
