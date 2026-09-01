@@ -68,6 +68,9 @@ Store size: 199
 - Cursor is now part of @SpaceX. Today, we have officially closed our acquisition. — cited by https://www.unrollnow.com/status/2088249881718919393 (not fetched from X)
   Cited X announcement mirrored by official blog https://cursor.com/blog/joining-spacex. Do not treat SpaceX/Grok marketing as EOS production evidence.
   https://x.com/cursor_ai/status/2088249881718919393
+- Cursor now supports Agent Plugins, an open standard for bundling skills and MCP servers for use across agents — cited by https://pulseaugur.com/cluster/186602-cursor-ai-introduces-agent-plugins-for-enhanced-agent-capabilities (not fetched from X)
+  Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Agent Plugins is vendor packaging, not EOS governance. Do not rotate this Cloud Agent into dashboard team marketplace plugins for daily ingest.
+  https://x.com/cursor_ai/status/2085464617694777762
 - Cursor Router keeps improving from millions of in-product user interactions each week — cited by https://www.unrollnow.com/status/2085390483740676365 (not fetched from X)
   Vendor routing and cost claims are not EOS evidence. EOS rules still bind model and governance choices.
   https://x.com/cursor_ai/status/2085390483740676365
@@ -80,6 +83,9 @@ Store size: 199
 - In December, 1 in 10 of our merged PRs came from cloud agents. Today, it's 56% — cited by https://www.unrollnow.com/status/2082841397632086241 (not fetched from X)
   Vendor internal PR-share metrics are not EOS evidence. Keep environment.json + Builds. Do not treat cloud-agent share percentages as EOS production evidence.
   https://x.com/cursor_ai/status/2082841397632086241
+- Read more about how we set up our cloud agent environment — cited by https://pulseaugur.com/cluster/172940-cursor-ai-ide-sees-56-of-prs-generated-by-cloud-agents (not fetched from X)
+  Official engineering write-up. Keep environment.json + Builds. Vendor environment narrative is not EOS evidence.
+  https://x.com/cursor_ai/status/2082841399838327289
 - Cursor is now on iPad. All the power of Cursor on iPhone, with more room to work with agents — cited by https://www.unrollnow.com/status/2082532273421955513 (not fetched from X)
   iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.
   https://x.com/cursor_ai/status/2082532273421955513
@@ -128,6 +134,12 @@ Store size: 199
 - It's now easier to move local agents to the cloud so they can keep working with your laptop closed — cited by https://www.unrollnow.com/status/2067366343817805899 (not fetched from X)
   This watch already runs in the Cloud Agent VM. /in-cloud starts an isolated cloud subagent; do not rotate this Cloud Agent into the desktop Agents Window for daily ingest. Isolated VMs are optional parallelism, not an EOS Control Plane change.
   https://x.com/cursor_ai/status/2067366343817805899
+- Cursor can now help you set up your dev environment in the cloud in under 10 minutes — cited by https://pulseaugur.com/cluster/97403-cursor-ai-ide-launches-cloud-agents-for-faster-dev-environment-setup (not fetched from X)
+  This watch already runs in the Cloud Agent VM. Keep environment.json + Builds. Do not treat snapshot marketing as EOS evidence.
+  https://x.com/cursor_ai/status/2067366345940087064
+- Use /in-cloud to start a subagent in its own cloud VM — cited by https://pulseaugur.com/cluster/97403-cursor-ai-ide-launches-cloud-agents-for-faster-dev-environment-setup (not fetched from X)
+  This watch already runs in the Cloud Agent VM. Isolated VMs are optional parallelism, not an EOS Control Plane change. Do not rotate this Cloud Agent into the desktop Agents Window for daily ingest.
+  https://x.com/cursor_ai/status/2067366347890467266
 - Auto-review is now the default for all new users — cited by https://www.unrollnow.com/status/2065137803084857845 (not fetched from X)
   Auto-review is a vendor run mode that reduces approval prompts. FUNDACION HITL gates still apply. Do not treat classifier marketing as EOS evidence. Do not rotate this Cloud Agent into Auto-review as governance.
   https://x.com/cursor_ai/status/2065137803084857845

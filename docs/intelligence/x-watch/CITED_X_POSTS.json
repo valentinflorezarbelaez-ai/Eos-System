@@ -180,6 +180,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2085464617694777762",
+      "handle": "cursor_ai",
+      "about": "Cursor now supports Agent Plugins, an open standard for bundling skills and MCP servers for use across agents",
+      "cited_by": "https://pulseaugur.com/cluster/186602-cursor-ai-introduces-agent-plugins-for-enhanced-agent-capabilities",
+      "official_source": "https://cursor.com/docs/plugins",
+      "published_date": "2026-08-06",
+      "eos_note": "Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Agent Plugins is vendor packaging, not EOS governance. Do not rotate this Cloud Agent into dashboard team marketplace plugins for daily ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2085390483740676365",
       "handle": "cursor_ai",
       "about": "Cursor Router keeps improving from millions of in-product user interactions each week",
@@ -220,6 +231,17 @@
       "official_source": "https://cursor.com/blog/cloud-agent-environment",
       "published_date": "2026-07-30",
       "eos_note": "Vendor internal PR-share metrics are not EOS evidence. Keep environment.json + Builds. Do not treat cloud-agent share percentages as EOS production evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2082841399838327289",
+      "handle": "cursor_ai",
+      "about": "Read more about how we set up our cloud agent environment",
+      "cited_by": "https://pulseaugur.com/cluster/172940-cursor-ai-ide-sees-56-of-prs-generated-by-cloud-agents",
+      "official_source": "https://cursor.com/blog/cloud-agent-environment",
+      "published_date": "2026-07-30",
+      "eos_note": "Official engineering write-up. Keep environment.json + Builds. Vendor environment narrative is not EOS evidence.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },
@@ -396,6 +418,28 @@
       "official_source": "https://cursor.com/changelog/cloud-in-agents-window",
       "published_date": "2026-06-17",
       "eos_note": "This watch already runs in the Cloud Agent VM. /in-cloud starts an isolated cloud subagent; do not rotate this Cloud Agent into the desktop Agents Window for daily ingest. Isolated VMs are optional parallelism, not an EOS Control Plane change.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2067366345940087064",
+      "handle": "cursor_ai",
+      "about": "Cursor can now help you set up your dev environment in the cloud in under 10 minutes",
+      "cited_by": "https://pulseaugur.com/cluster/97403-cursor-ai-ide-launches-cloud-agents-for-faster-dev-environment-setup",
+      "official_source": "https://cursor.com/changelog/cloud-in-agents-window",
+      "published_date": "2026-06-17",
+      "eos_note": "This watch already runs in the Cloud Agent VM. Keep environment.json + Builds. Do not treat snapshot marketing as EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2067366347890467266",
+      "handle": "cursor_ai",
+      "about": "Use /in-cloud to start a subagent in its own cloud VM",
+      "cited_by": "https://pulseaugur.com/cluster/97403-cursor-ai-ide-launches-cloud-agents-for-faster-dev-environment-setup",
+      "official_source": "https://cursor.com/changelog/cloud-in-agents-window",
+      "published_date": "2026-06-17",
+      "eos_note": "This watch already runs in the Cloud Agent VM. Isolated VMs are optional parallelism, not an EOS Control Plane change. Do not rotate this Cloud Agent into the desktop Agents Window for daily ingest.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },

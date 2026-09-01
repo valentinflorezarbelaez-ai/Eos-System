@@ -9184,6 +9184,11 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2069512597628440908/);
   assert.match(current, /2060406013098897765/);
   assert.match(current, /2060406014478831842/);
+  assert.match(current, /2085464617694777762/);
+  assert.match(current, /2082841399838327289/);
+  assert.match(current, /2067366345940087064/);
+  assert.match(current, /2067366347890467266/);
+  assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
   assert.equal(current.includes('cursor.com/docs/origin/integrations'), false);
   assert.equal(current.includes('cursor.com/docs/origin/mirror-github'), false);
@@ -9423,6 +9428,29 @@ test('cited X posts never claim an X fetch', () => {
     )),
     true
   );
+  assert.equal(official.includes('https://cursor.com/docs/plugins'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2085464617694777762'
+      && row.cited_by === 'https://pulseaugur.com/cluster/186602-cursor-ai-introduces-agent-plugins-for-enhanced-agent-capabilities'
+      && /Agent Plugins/i.test(row.about)
+      && /vendor packaging/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2082841399838327289'
+      && row.cited_by === 'https://pulseaugur.com/cluster/172940-cursor-ai-ide-sees-56-of-prs-generated-by-cloud-agents'
+      && /cloud agent environment/i.test(row.about)
+      && /environment\.json/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(official.includes('https://cursor.com/changelog/cloud-in-agents-window'), true);
   assert.equal(
     doc.citations.some((row) => (
@@ -9433,6 +9461,28 @@ test('cited X posts never claim an X fetch', () => {
       && /\/in-cloud/i.test(row.eos_note || '')
       && /enable/i.test(row.eos_note || '') === false
       && /slack/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2067366345940087064'
+      && row.cited_by === 'https://pulseaugur.com/cluster/97403-cursor-ai-ide-launches-cloud-agents-for-faster-dev-environment-setup'
+      && /under 10 minutes/i.test(row.about)
+      && /Cloud Agent VM/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2067366347890467266'
+      && row.cited_by === 'https://pulseaugur.com/cluster/97403-cursor-ai-ide-launches-cloud-agents-for-faster-dev-environment-setup'
+      && /\/in-cloud/i.test(row.about)
+      && /optional parallelism/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
       && row.fetched_from_x === false
     )),
     true
