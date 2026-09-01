@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T13:30:56.361Z",
+  "updated_at": "2026-09-01T13:34:49.931Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1579,6 +1579,16 @@
       "published_at": null,
       "summary": "Cloud Agents run in isolated cloud environments instead of on your local machine. What can Cloud Agents do? — Cloud Agents handle coding tasks without you needing to be in the loop. How does \"Move to Cloud\" handle my file state? — \"Move to Cloud\" does not snapshot your local uncommitted changes. Can Cloud Agents test my app in a browser? — Yes. How do Cloud Agents show their work? — Agents attach screenshots, videos, and log references to the PR so you can validate changes without checking out the branch. Can Cloud Agents use MCP tools? — Yes. Do Cloud Agents run hooks? — Yes. .cursor/hooks.json Can Cloud Agents fix CI failures? — Yes. What do I need to use Cloud Agents? — Cloud Agents are available on all paid Cursor plans. How do I set up Cloud Agents? — Create a new environment in your…",
       "apply_in_eos": "Help Cloud Agents is vendor isolated-VM Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Move to Cloud for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-conversation-search",
+      "title": "Conversation search",
+      "source_url": "https://cursor.com/help/ai-features/conversation-search",
+      "published_at": null,
+      "summary": "Find past agent conversations and jump to matches inside long transcripts. How do I search my past agent conversations? — Open the Agents Window 2. How do I search within an existing conversation? — Open the conversation you want to search 2.",
+      "apply_in_eos": "Help Conversation search is vendor desktop transcript search. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop conversation search for daily ingest. This Cloud Agent VM already searches the workspace. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
