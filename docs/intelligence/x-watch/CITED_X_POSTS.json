@@ -763,6 +763,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2044486585492947010",
+      "handle": "cursor_ai",
+      "about": "Cursor is pushing its chat output beyond text",
+      "cited_by": "https://augmenter.dev/articles/cursor-adds-interactive-canvases-for-dashboards-inside-the-editor-1776342627246/",
+      "official_source": "https://cursor.com/changelog/04-15-26",
+      "published_date": "2026-04-15",
+      "eos_note": "Canvases are vendor editor artifacts, not a substitute for git evidence. This watch stays on official RSS, not X. Do not rotate this Cloud Agent into desktop canvases for daily ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2043798784367546707",
       "handle": "cursor_ai",
       "about": "We've shipped several quality-of-life improvements to Cursor 3. Just like in your terminal, you can now split agents for multi-tasking in Cursor.",

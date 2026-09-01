@@ -9203,6 +9203,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2062611883249783083/);
   assert.match(current, /2046324136377721128/);
   assert.match(current, /2045236540784492845/);
+  assert.match(current, /2044486585492947010/);
   assert.match(current, /2041969870234120231/);
   assert.match(current, /2029222015736197205/);
   assert.match(current, /2028953584407085546/);
@@ -9901,6 +9902,20 @@ test('cited X posts never claim an X fetch', () => {
       && /not a substitute for git evidence/i.test(row.eos_note || '')
       && /enable/i.test(row.eos_note || '') === false
       && row.official_source === 'https://cursor.com/changelog/canvas-improvements'
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/04-15-26'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2044486585492947010'
+      && row.cited_by === 'https://augmenter.dev/articles/cursor-adds-interactive-canvases-for-dashboards-inside-the-editor-1776342627246/'
+      && /chat output beyond text/i.test(row.about)
+      && /not a substitute for git evidence/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && /slack/i.test(row.eos_note || '') === false
+      && row.official_source === 'https://cursor.com/changelog/04-15-26'
       && row.fetched_from_x === false
     )),
     true

@@ -227,6 +227,9 @@ Store size: 199
 - Through the end of this weekend, we are doubling Composer 2 usage limits inside of Cursor's new agents window. — cited by https://ethanbholland.com/2026/04/24/agents-and-copilots-ai-news-week-ending-04-24-2026/ (not fetched from X)
   Weekend usage doubling is a launch promo, not standing pricing. Composer is a vendor model family. Do not treat vendor rates as EOS evidence. Honor included quota.
   https://x.com/cursor_ai/status/2045236540784492845
+- Cursor is pushing its chat output beyond text — cited by https://augmenter.dev/articles/cursor-adds-interactive-canvases-for-dashboards-inside-the-editor-1776342627246/ (not fetched from X)
+  Canvases are vendor editor artifacts, not a substitute for git evidence. This watch stays on official RSS, not X. Do not rotate this Cloud Agent into desktop canvases for daily ingest.
+  https://x.com/cursor_ai/status/2044486585492947010
 - We've shipped several quality-of-life improvements to Cursor 3. Just like in your terminal, you can now split agents for multi-tasking in Cursor. — cited by https://ethanbholland.com/2026/04/17/agents-and-copilots-ai-news-week-ending-04-17-2026/ (not fetched from X)
   Tiled layout is vendor editor chrome. This watch already runs in the Cloud Agent VM. Editor chrome is not an EOS Control Plane change. Honor included quota.
   https://x.com/cursor_ai/status/2043798784367546707
