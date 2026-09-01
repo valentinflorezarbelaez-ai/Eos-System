@@ -731,6 +731,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_TROUBLESHOOTING_NETWORK",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-TROUBLESHOOTING-EXTENSIONS",
+      "url": "https://cursor.com/help/troubleshooting/extensions",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_TROUBLESHOOTING_EXTENSIONS",
+      "fetchable": true
     }
   ]
 }

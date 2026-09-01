@@ -299,6 +299,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/extensions' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -508,7 +512,7 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/extensions'),
-    false
+    true
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/install-issues'),
@@ -2154,6 +2158,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpTroubleshootingNetwork.apply_in_eos), false);
   assert.equal(helpTroubleshootingNetwork.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpTroubleshootingNetwork.apply_in_eos.includes('Vercel'), false);
+  const helpTroubleshootingExtensions = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/troubleshooting/extensions');
+  assert.ok(helpTroubleshootingExtensions);
+  assert.equal(helpTroubleshootingExtensions.title, 'Extension conflicts');
+  assert.match(helpTroubleshootingExtensions.summary, /How do I identify a conflicting extension/);
+  assert.match(helpTroubleshootingExtensions.summary, /Which extensions commonly conflict/);
+  assert.match(helpTroubleshootingExtensions.summary, /How do I disable an extension/);
+  assert.equal(helpTroubleshootingExtensions.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingExtensions.summary), false);
+  assert.equal(helpTroubleshootingExtensions.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpTroubleshootingExtensions.apply_in_eos, /vendor desktop extension-conflict diagnostics/i);
+  assert.match(helpTroubleshootingExtensions.apply_in_eos, /\/goal/);
+  assert.match(helpTroubleshootingExtensions.apply_in_eos, /do not rotate this Cloud Agent into desktop extension troubleshooting/i);
+  assert.match(helpTroubleshootingExtensions.apply_in_eos, /environment\.json/);
+  assert.match(helpTroubleshootingExtensions.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpTroubleshootingExtensions.apply_in_eos), false);
+  assert.equal(helpTroubleshootingExtensions.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpTroubleshootingExtensions.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2416,6 +2437,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Tab completions', link: 'https://cursor.com/help/troubleshooting/tab-issues' },
     { title: 'Installation and startup', link: 'https://cursor.com/help/troubleshooting/install-issues' },
     { title: 'Network, proxy, and remote connections', link: 'https://cursor.com/help/troubleshooting/network' },
+    { title: 'Extension conflicts', link: 'https://cursor.com/help/troubleshooting/extensions' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3944,6 +3966,26 @@ test('applyHint for Help network troubleshooting keeps this Cloud Agent off desk
   assert.equal(hint.includes('marketplace'), false);
 });
 
+test('applyHint for Help extension troubleshooting keeps this Cloud Agent off desktop extension troubleshooting', () => {
+  const hint = applyHint({
+    title: 'Extension conflicts',
+    link: 'https://cursor.com/help/troubleshooting/extensions',
+    summary: 'Optional Help extension troubleshooting is enabled by default. Re-enable extensions. Custom Mode and Vercel. Use Slack.'
+  });
+  assert.match(hint, /vendor desktop extension-conflict diagnostics/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop extension troubleshooting/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -5116,6 +5158,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpTroubleshootingNetwork[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpTroubleshootingNetwork[0]).includes('Plan Mode'), false);
 
+  const helpTroubleshootingExtensions = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-extensions.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/troubleshooting/extensions'
+  );
+  assert.equal(helpTroubleshootingExtensions[0].id, 'https://cursor.com/help/troubleshooting/extensions');
+  assert.equal(helpTroubleshootingExtensions[0].title, 'Extension conflicts');
+  assert.match(helpTroubleshootingExtensions[0].summary, /Identify and resolve extensions that interfere with Cursor/);
+  assert.match(applyHint(helpTroubleshootingExtensions[0]), /vendor desktop extension-conflict diagnostics/i);
+  assert.match(applyHint(helpTroubleshootingExtensions[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpTroubleshootingExtensions[0])), false);
+  assert.equal(applyHint(helpTroubleshootingExtensions[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpTroubleshootingExtensions[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpTroubleshootingExtensions[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5664,6 +5721,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/network'),
     'https://cursor.com/help/troubleshooting/network.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/extensions'),
+    'https://cursor.com/help/troubleshooting/extensions.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6362,6 +6423,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpTroubleshootingNetworkMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpTroubleshootingNetworkMd.summary), false);
   assert.equal(helpTroubleshootingNetworkMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpTroubleshootingExtensionsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-extensions.md'), 'utf8')
+  );
+  assert.equal(helpTroubleshootingExtensionsMd.title, 'Extension conflicts');
+  assert.match(helpTroubleshootingExtensionsMd.summary, /How do I identify a conflicting extension/);
+  assert.match(helpTroubleshootingExtensionsMd.summary, /Which extensions commonly conflict/);
+  assert.match(helpTroubleshootingExtensionsMd.summary, /How do I disable an extension/);
+  assert.equal(helpTroubleshootingExtensionsMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingExtensionsMd.summary), false);
+  assert.equal(helpTroubleshootingExtensionsMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -7714,6 +7786,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help network troubleshooting is vendor desktop network/proxy diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop network troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Extension conflicts',
+      source_url: 'https://cursor.com/help/troubleshooting/extensions',
+      published_at: null,
+      apply_in_eos: 'Help extension troubleshooting is vendor desktop extension-conflict diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop extension troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -7768,6 +7846,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/tab-issues'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/install-issues'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/network'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/extensions'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -8353,6 +8432,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/troubleshooting/tab-issues'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/install-issues'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/network'), false);
+  assert.equal(current.includes('cursor.com/help/troubleshooting/extensions'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
