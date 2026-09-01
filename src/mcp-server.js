@@ -6,8 +6,6 @@
  */
 
 import readline from 'node:readline';
-import fs from 'node:fs';
-import path from 'node:path';
 import { ContextCompiler } from '../scripts/engine/context-compiler.js';
 import { MissionLedger } from '../scripts/engine/mission-ledger.js';
 import { AuthorityAdapter } from '../scripts/engine/authority-adapter.js';
@@ -203,30 +201,7 @@ class EosMcpServer {
         }));
 
       case 'eos.evidence.record':
-        return this._guarded(toolDef, env, () => {
-          const missionId = args.missionId || args.mission_id;
-          if (!missionId) {
-            const err = new Error('MISSING_MISSION_ID');
-            err.code = 'MISSING_MISSION_ID';
-            throw err;
-          }
-          const missionDir = this.bridge.runtime.getMissionDir(missionId);
-          const evidenceDir = path.join(missionDir, 'evidence');
-          const id = args.id || `EVD-${Date.now()}`;
-          const receipt = {
-            id,
-            mission_id: missionId,
-            status: args.status || 'RECORDED',
-            category: args.category || 'MANUAL',
-            recorded_at: new Date().toISOString(),
-            payload: args.payload || {},
-            epistemic_class: 'RECORDED_NOT_VERIFIED'
-          };
-          fs.mkdirSync(evidenceDir, { recursive: true });
-          const file = path.join(evidenceDir, `${id}.json`);
-          fs.writeFileSync(file, JSON.stringify(receipt, null, 2), 'utf8');
-          return { evidence: receipt, path: file };
-        });
+        return this._guarded(toolDef, env, () => this.bridge.recordEvidence(args));
 
       case 'eos.verifier.run':
         return this._guarded(toolDef, env, () => ({
