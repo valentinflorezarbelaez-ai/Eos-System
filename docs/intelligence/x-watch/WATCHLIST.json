@@ -745,6 +745,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_TROUBLESHOOTING_PERFORMANCE",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-TROUBLESHOOTING-REPORTING-BUGS",
+      "url": "https://cursor.com/help/troubleshooting/reporting-bugs",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_TROUBLESHOOTING_REPORTING_BUGS",
+      "fetchable": true
     }
   ]
 }

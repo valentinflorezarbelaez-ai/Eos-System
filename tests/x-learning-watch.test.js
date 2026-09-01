@@ -307,6 +307,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/reporting-bugs' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -524,7 +528,7 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/reporting-bugs'),
-    false
+    true
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/network'),
@@ -2195,6 +2199,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpTroubleshootingPerformance.apply_in_eos), false);
   assert.equal(helpTroubleshootingPerformance.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpTroubleshootingPerformance.apply_in_eos.includes('Vercel'), false);
+  const helpTroubleshootingReportingBugs = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/troubleshooting/reporting-bugs');
+  assert.ok(helpTroubleshootingReportingBugs);
+  assert.equal(helpTroubleshootingReportingBugs.title, 'Reporting a bug');
+  assert.match(helpTroubleshootingReportingBugs.summary, /What should I include in a bug report/);
+  assert.match(helpTroubleshootingReportingBugs.summary, /Where do I report Cursor bugs/);
+  assert.match(helpTroubleshootingReportingBugs.summary, /What is a request ID/);
+  assert.equal(helpTroubleshootingReportingBugs.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingReportingBugs.summary), false);
+  assert.equal(helpTroubleshootingReportingBugs.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpTroubleshootingReportingBugs.apply_in_eos, /vendor desktop bug-report diagnostics/i);
+  assert.match(helpTroubleshootingReportingBugs.apply_in_eos, /\/goal/);
+  assert.match(helpTroubleshootingReportingBugs.apply_in_eos, /do not rotate this Cloud Agent into desktop bug reporting/i);
+  assert.match(helpTroubleshootingReportingBugs.apply_in_eos, /environment\.json/);
+  assert.match(helpTroubleshootingReportingBugs.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpTroubleshootingReportingBugs.apply_in_eos), false);
+  assert.equal(helpTroubleshootingReportingBugs.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpTroubleshootingReportingBugs.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2459,6 +2480,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Network, proxy, and remote connections', link: 'https://cursor.com/help/troubleshooting/network' },
     { title: 'Extension conflicts', link: 'https://cursor.com/help/troubleshooting/extensions' },
     { title: 'Performance', link: 'https://cursor.com/help/troubleshooting/performance' },
+    { title: 'Reporting a bug', link: 'https://cursor.com/help/troubleshooting/reporting-bugs' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -4025,13 +4047,39 @@ test('applyHint for Help performance troubleshooting keeps this Cloud Agent off 
   assert.equal(hint.includes('timers'), false);
   assert.equal(hint.includes('Slack'), false);
   assert.equal(hint.includes('Plan Mode'), false);
-  const reportingBugs = applyHint({
+  const customizationExtensions = applyHint({
     title: 'Performance',
-    link: 'https://cursor.com/help/troubleshooting/reporting-bugs',
+    link: 'https://cursor.com/help/customization/extensions',
     summary: 'Optional Help performance troubleshooting is enabled by default. Re-enable extensions.'
   });
-  assert.equal(/vendor desktop CPU\/memory\/input-delay diagnostics/i.test(reportingBugs), false);
-  assert.match(reportingBugs, /Review this official Cursor item/);
+  assert.equal(/vendor desktop CPU\/memory\/input-delay diagnostics/i.test(customizationExtensions), false);
+  assert.match(customizationExtensions, /Review this official Cursor item/);
+});
+
+test('applyHint for Help bug-report troubleshooting keeps this Cloud Agent off desktop bug reporting', () => {
+  const hint = applyHint({
+    title: 'Reporting a bug',
+    link: 'https://cursor.com/help/troubleshooting/reporting-bugs',
+    summary: 'Optional Help bug-report troubleshooting is enabled by default. Privacy Mode enabled. Temporarily enable Share Data. Custom Mode and Vercel. Use Slack.'
+  });
+  assert.match(hint, /vendor desktop bug-report diagnostics/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop bug reporting/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+  const forumBug = applyHint({
+    title: 'Reporting a bug',
+    link: 'https://forum.cursor.com/t/reporting-a-bug/1',
+    summary: 'Optional Help bug-report troubleshooting is enabled by default. Privacy Mode enabled.'
+  });
+  assert.equal(/vendor desktop bug-report diagnostics/i.test(forumBug), false);
 });
 
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
@@ -5236,6 +5284,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpTroubleshootingPerformance[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpTroubleshootingPerformance[0]).includes('Plan Mode'), false);
 
+  const helpTroubleshootingReportingBugs = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-reporting-bugs.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/troubleshooting/reporting-bugs'
+  );
+  assert.equal(helpTroubleshootingReportingBugs[0].id, 'https://cursor.com/help/troubleshooting/reporting-bugs');
+  assert.equal(helpTroubleshootingReportingBugs[0].title, 'Reporting a bug');
+  assert.match(helpTroubleshootingReportingBugs[0].summary, /How to file a bug report with the right information, including Request IDs/);
+  assert.match(applyHint(helpTroubleshootingReportingBugs[0]), /vendor desktop bug-report diagnostics/i);
+  assert.match(applyHint(helpTroubleshootingReportingBugs[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpTroubleshootingReportingBugs[0])), false);
+  assert.equal(applyHint(helpTroubleshootingReportingBugs[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpTroubleshootingReportingBugs[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpTroubleshootingReportingBugs[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5792,6 +5855,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/performance'),
     'https://cursor.com/help/troubleshooting/performance.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/reporting-bugs'),
+    'https://cursor.com/help/troubleshooting/reporting-bugs.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6511,6 +6578,20 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpTroubleshootingPerformanceMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpTroubleshootingPerformanceMd.summary), false);
   assert.equal(helpTroubleshootingPerformanceMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpTroubleshootingReportingBugsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-reporting-bugs.md'), 'utf8')
+  );
+  assert.equal(helpTroubleshootingReportingBugsMd.title, 'Reporting a bug');
+  assert.match(helpTroubleshootingReportingBugsMd.summary, /What should I include in a bug report/);
+  assert.match(helpTroubleshootingReportingBugsMd.summary, /Where do I report Cursor bugs/);
+  assert.match(helpTroubleshootingReportingBugsMd.summary, /What is a request ID/);
+  assert.match(helpTroubleshootingReportingBugsMd.summary, /How do I find my request ID/);
+  assert.match(helpTroubleshootingReportingBugsMd.summary, /How does Privacy Mode affect debugging/);
+  assert.match(helpTroubleshootingReportingBugsMd.summary, /How should I report an issue involving unexpected agent behavior/);
+  assert.equal(helpTroubleshootingReportingBugsMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingReportingBugsMd.summary), false);
+  assert.equal(helpTroubleshootingReportingBugsMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -7875,6 +7956,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help performance troubleshooting is vendor desktop CPU/memory/input-delay diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop performance troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Reporting a bug',
+      source_url: 'https://cursor.com/help/troubleshooting/reporting-bugs',
+      published_at: null,
+      apply_in_eos: 'Help bug-report troubleshooting is vendor desktop bug-report diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop bug reporting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -7931,6 +8018,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/network'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/extensions'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/performance'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/reporting-bugs'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -8518,6 +8606,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/troubleshooting/network'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/extensions'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/performance'), false);
+  assert.equal(current.includes('cursor.com/help/troubleshooting/reporting-bugs'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
