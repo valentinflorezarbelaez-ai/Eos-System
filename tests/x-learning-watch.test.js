@@ -303,6 +303,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/performance' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -528,7 +532,7 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/performance'),
-    false
+    true
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/enterprise/network-configuration'),
@@ -2175,6 +2179,22 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpTroubleshootingExtensions.apply_in_eos), false);
   assert.equal(helpTroubleshootingExtensions.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpTroubleshootingExtensions.apply_in_eos.includes('Vercel'), false);
+  const helpTroubleshootingPerformance = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/troubleshooting/performance');
+  assert.ok(helpTroubleshootingPerformance);
+  assert.equal(helpTroubleshootingPerformance.title, 'Performance');
+  assert.match(helpTroubleshootingPerformance.summary, /How do I reduce high CPU or memory usage/);
+  assert.match(helpTroubleshootingPerformance.summary, /How do I reduce editor input delay/);
+  assert.equal(helpTroubleshootingPerformance.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingPerformance.summary), false);
+  assert.equal(helpTroubleshootingPerformance.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpTroubleshootingPerformance.apply_in_eos, /vendor desktop CPU\/memory\/input-delay diagnostics/i);
+  assert.match(helpTroubleshootingPerformance.apply_in_eos, /\/goal/);
+  assert.match(helpTroubleshootingPerformance.apply_in_eos, /do not rotate this Cloud Agent into desktop performance troubleshooting/i);
+  assert.match(helpTroubleshootingPerformance.apply_in_eos, /environment\.json/);
+  assert.match(helpTroubleshootingPerformance.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpTroubleshootingPerformance.apply_in_eos), false);
+  assert.equal(helpTroubleshootingPerformance.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpTroubleshootingPerformance.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2438,6 +2458,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Installation and startup', link: 'https://cursor.com/help/troubleshooting/install-issues' },
     { title: 'Network, proxy, and remote connections', link: 'https://cursor.com/help/troubleshooting/network' },
     { title: 'Extension conflicts', link: 'https://cursor.com/help/troubleshooting/extensions' },
+    { title: 'Performance', link: 'https://cursor.com/help/troubleshooting/performance' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3986,6 +4007,33 @@ test('applyHint for Help extension troubleshooting keeps this Cloud Agent off de
   assert.equal(hint.includes('Plan Mode'), false);
 });
 
+test('applyHint for Help performance troubleshooting keeps this Cloud Agent off desktop performance troubleshooting', () => {
+  const hint = applyHint({
+    title: 'Performance',
+    link: 'https://cursor.com/help/troubleshooting/performance',
+    summary: 'Optional Help performance troubleshooting is enabled by default. Re-enable extensions. Custom Mode and Vercel. Use Slack.'
+  });
+  assert.match(hint, /vendor desktop CPU\/memory\/input-delay diagnostics/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop performance troubleshooting/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+  const reportingBugs = applyHint({
+    title: 'Performance',
+    link: 'https://cursor.com/help/troubleshooting/reporting-bugs',
+    summary: 'Optional Help performance troubleshooting is enabled by default. Re-enable extensions.'
+  });
+  assert.equal(/vendor desktop CPU\/memory\/input-delay diagnostics/i.test(reportingBugs), false);
+  assert.match(reportingBugs, /Review this official Cursor item/);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -5173,6 +5221,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpTroubleshootingExtensions[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpTroubleshootingExtensions[0]).includes('Plan Mode'), false);
 
+  const helpTroubleshootingPerformance = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-performance.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/troubleshooting/performance'
+  );
+  assert.equal(helpTroubleshootingPerformance[0].id, 'https://cursor.com/help/troubleshooting/performance');
+  assert.equal(helpTroubleshootingPerformance[0].title, 'Performance');
+  assert.match(helpTroubleshootingPerformance[0].summary, /Reduce CPU usage and memory usage in large repos/);
+  assert.match(applyHint(helpTroubleshootingPerformance[0]), /vendor desktop CPU\/memory\/input-delay diagnostics/i);
+  assert.match(applyHint(helpTroubleshootingPerformance[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpTroubleshootingPerformance[0])), false);
+  assert.equal(applyHint(helpTroubleshootingPerformance[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpTroubleshootingPerformance[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpTroubleshootingPerformance[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5725,6 +5788,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/extensions'),
     'https://cursor.com/help/troubleshooting/extensions.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/performance'),
+    'https://cursor.com/help/troubleshooting/performance.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6434,6 +6501,16 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpTroubleshootingExtensionsMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpTroubleshootingExtensionsMd.summary), false);
   assert.equal(helpTroubleshootingExtensionsMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpTroubleshootingPerformanceMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-performance.md'), 'utf8')
+  );
+  assert.equal(helpTroubleshootingPerformanceMd.title, 'Performance');
+  assert.match(helpTroubleshootingPerformanceMd.summary, /How do I reduce high CPU or memory usage/);
+  assert.match(helpTroubleshootingPerformanceMd.summary, /How do I reduce editor input delay/);
+  assert.equal(helpTroubleshootingPerformanceMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingPerformanceMd.summary), false);
+  assert.equal(helpTroubleshootingPerformanceMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -7792,6 +7869,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help extension troubleshooting is vendor desktop extension-conflict diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop extension troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Performance',
+      source_url: 'https://cursor.com/help/troubleshooting/performance',
+      published_at: null,
+      apply_in_eos: 'Help performance troubleshooting is vendor desktop CPU/memory/input-delay diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop performance troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -7847,6 +7930,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/install-issues'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/network'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/extensions'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/performance'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -8433,6 +8517,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/troubleshooting/install-issues'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/network'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/extensions'), false);
+  assert.equal(current.includes('cursor.com/help/troubleshooting/performance'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);

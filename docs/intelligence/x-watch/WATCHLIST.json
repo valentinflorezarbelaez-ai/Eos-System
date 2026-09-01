@@ -738,6 +738,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_TROUBLESHOOTING_EXTENSIONS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-TROUBLESHOOTING-PERFORMANCE",
+      "url": "https://cursor.com/help/troubleshooting/performance",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_TROUBLESHOOTING_PERFORMANCE",
+      "fetchable": true
     }
   ]
 }
