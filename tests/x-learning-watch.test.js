@@ -311,6 +311,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/git' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -531,6 +535,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/git'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/network'),
     true
   );
@@ -664,6 +672,22 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/origin/git'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/integrations/cursor-blame'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/github-gitlab'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/cli'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/third-party'),
     false
   );
   assert.equal(
@@ -2216,6 +2240,24 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpTroubleshootingReportingBugs.apply_in_eos), false);
   assert.equal(helpTroubleshootingReportingBugs.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpTroubleshootingReportingBugs.apply_in_eos.includes('Vercel'), false);
+  const helpIntegrationsGit = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/integrations/git');
+  assert.ok(helpIntegrationsGit);
+  assert.equal(helpIntegrationsGit.title, 'Git');
+  assert.match(helpIntegrationsGit.summary, /Can Agent write commit messages for me/);
+  assert.match(helpIntegrationsGit.summary, /How does AI merge conflict resolution work/);
+  assert.match(helpIntegrationsGit.summary, /How does Agent attribution work/);
+  assert.equal(helpIntegrationsGit.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpIntegrationsGit.summary), false);
+  assert.equal(helpIntegrationsGit.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpIntegrationsGit.apply_in_eos, /vendor desktop git\/Source Control features/i);
+  assert.match(helpIntegrationsGit.apply_in_eos, /\/goal/);
+  assert.match(helpIntegrationsGit.apply_in_eos, /do not rotate this Cloud Agent into desktop git UI/i);
+  assert.match(helpIntegrationsGit.apply_in_eos, /GitHub remains source of truth/i);
+  assert.match(helpIntegrationsGit.apply_in_eos, /environment\.json/);
+  assert.match(helpIntegrationsGit.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpIntegrationsGit.apply_in_eos), false);
+  assert.equal(helpIntegrationsGit.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpIntegrationsGit.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2481,6 +2523,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Extension conflicts', link: 'https://cursor.com/help/troubleshooting/extensions' },
     { title: 'Performance', link: 'https://cursor.com/help/troubleshooting/performance' },
     { title: 'Reporting a bug', link: 'https://cursor.com/help/troubleshooting/reporting-bugs' },
+    { title: 'Git', link: 'https://cursor.com/help/integrations/git' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -4082,6 +4125,39 @@ test('applyHint for Help bug-report troubleshooting keeps this Cloud Agent off d
   assert.equal(/vendor desktop bug-report diagnostics/i.test(forumBug), false);
 });
 
+test('applyHint for Help Git keeps this Cloud Agent off desktop git UI', () => {
+  const hint = applyHint({
+    title: 'Git',
+    link: 'https://cursor.com/help/integrations/git',
+    summary: 'Optional Help Git is enabled by default. Custom Mode and Vercel. Use Slack. Cursor Blame.'
+  });
+  assert.match(hint, /vendor desktop git\/Source Control features/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop git UI/i);
+  assert.match(hint, /GitHub remains source of truth/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+  const originGit = applyHint({
+    title: 'Git',
+    link: 'https://cursor.com/docs/origin/git',
+    summary: 'Optional Help Git is enabled by default. Origin git hosting.'
+  });
+  assert.equal(/vendor desktop git\/Source Control features/i.test(originGit), false);
+  const cursorBlame = applyHint({
+    title: 'Git',
+    link: 'https://cursor.com/docs/integrations/cursor-blame',
+    summary: 'Optional Help Git is enabled by default. Cursor Blame.'
+  });
+  assert.equal(/vendor desktop git\/Source Control features/i.test(cursorBlame), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -5299,6 +5375,22 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpTroubleshootingReportingBugs[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpTroubleshootingReportingBugs[0]).includes('Plan Mode'), false);
 
+  const helpIntegrationsGit = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-integrations-git.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/integrations/git'
+  );
+  assert.equal(helpIntegrationsGit[0].id, 'https://cursor.com/help/integrations/git');
+  assert.equal(helpIntegrationsGit[0].title, 'Git');
+  assert.match(helpIntegrationsGit[0].summary, /AI commit messages, merge conflict resolution, agent attribution, and Cursor Blame/);
+  assert.match(applyHint(helpIntegrationsGit[0]), /vendor desktop git\/Source Control features/i);
+  assert.match(applyHint(helpIntegrationsGit[0]), /\/goal/);
+  assert.match(applyHint(helpIntegrationsGit[0]), /GitHub remains source of truth/i);
+  assert.equal(/enable/i.test(applyHint(helpIntegrationsGit[0])), false);
+  assert.equal(applyHint(helpIntegrationsGit[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpIntegrationsGit[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpIntegrationsGit[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5859,6 +5951,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/reporting-bugs'),
     'https://cursor.com/help/troubleshooting/reporting-bugs.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/integrations/git'),
+    'https://cursor.com/help/integrations/git.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6592,6 +6688,20 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpTroubleshootingReportingBugsMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpTroubleshootingReportingBugsMd.summary), false);
   assert.equal(helpTroubleshootingReportingBugsMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpIntegrationsGitMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-integrations-git.md'), 'utf8')
+  );
+  assert.equal(helpIntegrationsGitMd.title, 'Git');
+  assert.match(helpIntegrationsGitMd.summary, /Can Agent write commit messages for me/);
+  assert.match(helpIntegrationsGitMd.summary, /How does AI merge conflict resolution work/);
+  assert.match(helpIntegrationsGitMd.summary, /How does Agent attribution work/);
+  assert.match(helpIntegrationsGitMd.summary, /Can enterprise admins control commit attribution/);
+  assert.match(helpIntegrationsGitMd.summary, /What is Cursor Blame/);
+  assert.match(helpIntegrationsGitMd.summary, /Does Agent work across multiple workspaces/);
+  assert.equal(helpIntegrationsGitMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpIntegrationsGitMd.summary), false);
+  assert.equal(helpIntegrationsGitMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -7962,6 +8072,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help bug-report troubleshooting is vendor desktop bug-report diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop bug reporting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Git',
+      source_url: 'https://cursor.com/help/integrations/git',
+      published_at: null,
+      apply_in_eos: 'Help Git is vendor desktop git/Source Control features. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop git UI for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -8019,6 +8135,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/extensions'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/performance'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/reporting-bugs'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/git'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -8607,6 +8724,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/troubleshooting/extensions'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/performance'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/reporting-bugs'), false);
+  assert.equal(current.includes('cursor.com/help/integrations/git'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);

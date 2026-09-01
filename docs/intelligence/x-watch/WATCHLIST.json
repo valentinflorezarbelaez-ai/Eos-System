@@ -752,6 +752,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_TROUBLESHOOTING_REPORTING_BUGS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-INTEGRATIONS-GIT",
+      "url": "https://cursor.com/help/integrations/git",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_INTEGRATIONS_GIT",
+      "fetchable": true
     }
   ]
 }
