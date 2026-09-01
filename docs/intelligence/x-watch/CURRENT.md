@@ -62,6 +62,9 @@ Store size: 199
 - Cursor is now part of @SpaceX. Today, we have officially closed our acquisition. — cited by https://www.unrollnow.com/status/2088249881718919393 (not fetched from X)
   Cited X announcement mirrored by official blog https://cursor.com/blog/joining-spacex. Do not treat SpaceX/Grok marketing as EOS production evidence.
   https://x.com/cursor_ai/status/2088249881718919393
+- Cursor can now read, write, and act across your Google Workspace — cited by https://aicatchup.com/news/cursor-google-workspace-plugins (not fetched from X)
+  Google Workspace plugins are optional vendor marketplace/Customize install. Do not rotate this Cloud Agent into marketplace plugin install for daily ingest. Official changelog names Drive, Gmail, and Calendar; do not treat Docs/Sheets as part of this announcement.
+  https://x.com/cursor_ai/status/2084376701539405904
 - Cloud agents are now 20-30% more token efficient, and 80% more efficient on runs with computer use — cited by https://aicatchup.com/news/cursor-cloud-agents-token-efficiency-computer-use (not fetched from X)
   Vendor efficiency claim cited by a third party. Do not treat token-percentage marketing as EOS evidence.
   https://x.com/cursor_ai/status/2084317547608911986

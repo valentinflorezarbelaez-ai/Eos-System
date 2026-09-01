@@ -9270,6 +9270,17 @@ test('cited X posts never claim an X fetch', () => {
     )),
     true
   );
+  assert.equal(official.includes('https://cursor.com/changelog/google-workspace-plugins'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2084376701539405904'
+      && row.cited_by === 'https://aicatchup.com/news/cursor-google-workspace-plugins'
+      && /Google Workspace/i.test(row.about)
+      && /Drive, Gmail, and Calendar/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(
     validateCitedXPosts({
       citations: [{

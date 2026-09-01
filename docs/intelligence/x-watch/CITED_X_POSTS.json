@@ -158,6 +158,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2084376701539405904",
+      "handle": "cursor_ai",
+      "about": "Cursor can now read, write, and act across your Google Workspace",
+      "cited_by": "https://aicatchup.com/news/cursor-google-workspace-plugins",
+      "official_source": "https://cursor.com/changelog/google-workspace-plugins",
+      "published_date": "2026-08-03",
+      "eos_note": "Google Workspace plugins are optional vendor marketplace/Customize install. Do not rotate this Cloud Agent into marketplace plugin install for daily ingest. Official changelog names Drive, Gmail, and Calendar; do not treat Docs/Sheets as part of this announcement.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2084317547608911986",
       "handle": "cursor_ai",
       "about": "Cloud agents are now 20-30% more token efficient, and 80% more efficient on runs with computer use",
