@@ -570,6 +570,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_RULES",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-SKILLS",
+      "url": "https://cursor.com/help/customization/skills",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_SKILLS",
+      "fetchable": true
     }
   ]
 }

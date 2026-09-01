@@ -207,6 +207,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/skills' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -332,6 +336,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/themes'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/extensions'),
     false
   );
   assert.equal(
@@ -1521,6 +1529,25 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpRules.apply_in_eos), false);
   assert.equal(helpRules.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpRules.apply_in_eos.includes('Vercel'), false);
+  const helpSkills = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/customization/skills');
+  assert.ok(helpSkills);
+  assert.equal(helpSkills.title, 'Skills');
+  assert.match(helpSkills.summary, /What are Skills/);
+  assert.match(helpSkills.summary, /How do I create a skill/);
+  assert.match(helpSkills.summary, /Are user-level skills available/);
+  assert.equal(helpSkills.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpSkills.summary), false);
+  assert.match(helpSkills.apply_in_eos, /vendor Agent workflows/i);
+  assert.match(helpSkills.apply_in_eos, /\/goal/);
+  assert.match(helpSkills.apply_in_eos, /do not rotate this Cloud Agent into dashboard team skills/i);
+  assert.match(helpSkills.apply_in_eos, /SKILL\.md/);
+  assert.match(helpSkills.apply_in_eos, /\.cursor\/skills/);
+  assert.match(helpSkills.apply_in_eos, /\/create-skill/);
+  assert.match(helpSkills.apply_in_eos, /environment\.json/);
+  assert.match(helpSkills.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpSkills.apply_in_eos), false);
+  assert.equal(helpSkills.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpSkills.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1760,6 +1787,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Shared transcripts', link: 'https://cursor.com/help/ai-features/shared-transcripts' },
     { title: 'Bugbot', link: 'https://cursor.com/help/ai-features/bugbot' },
     { title: 'Rules', link: 'https://cursor.com/help/customization/rules' },
+    { title: 'Skills', link: 'https://cursor.com/help/customization/skills' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2809,6 +2837,28 @@ test('applyHint for Help Rules keeps .mdc and team dashboard off EOS governance'
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Skills keeps repo skills off Custom Mode', () => {
+  const hint = applyHint({
+    title: 'Skills',
+    link: 'https://cursor.com/help/customization/skills',
+    summary: 'Pin an EOS skill as a Custom Mode. Optional skills are enabled by default. Vercel.'
+  });
+  assert.match(hint, /vendor Agent workflows/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into dashboard team skills/i);
+  assert.match(hint, /SKILL\.md/);
+  assert.match(hint, /\.cursor\/skills/);
+  assert.match(hint, /\/create-skill/);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3638,6 +3688,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpRules[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpRules[0]).includes('Vercel'), false);
 
+  const helpSkills = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-skills.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/customization/skills'
+  );
+  assert.equal(helpSkills[0].id, 'https://cursor.com/help/customization/skills');
+  assert.equal(helpSkills[0].title, 'Skills');
+  assert.match(helpSkills[0].summary, /Reusable workflows Agent can follow for specific tasks/);
+  assert.match(applyHint(helpSkills[0]), /vendor Agent workflows/i);
+  assert.match(applyHint(helpSkills[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpSkills[0])), false);
+  assert.equal(applyHint(helpSkills[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpSkills[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4095,6 +4159,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/customization/rules'),
     'https://cursor.com/help/customization/rules.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/customization/skills'),
+    'https://cursor.com/help/customization/skills.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -4519,6 +4587,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpRulesMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpRulesMd.summary), false);
   assert.equal(helpRulesMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpSkillsMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-skills.md'), 'utf8')
+  );
+  assert.equal(helpSkillsMd.title, 'Skills');
+  assert.match(helpSkillsMd.summary, /What are Skills/);
+  assert.match(helpSkillsMd.summary, /How do I create a skill/);
+  assert.match(helpSkillsMd.summary, /Are user-level skills available/);
+  assert.equal(helpSkillsMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpSkillsMd.summary), false);
+  assert.equal(helpSkillsMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -5683,6 +5762,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Rules is vendor Agent instructions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team rules for daily ingest. Keep .mdc, AGENTS.md, and /create-rule. Team dashboard rules are not EOS governance. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Skills',
+      source_url: 'https://cursor.com/help/customization/skills',
+      published_at: null,
+      apply_in_eos: 'Help Skills is vendor Agent workflows. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team skills for daily ingest. Keep SKILL.md under .cursor/skills. Prefer /create-skill. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -5709,6 +5794,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/headless'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/skills'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/rules'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/skills'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -5737,6 +5823,12 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
       source_url: 'https://cursor.com/help/customization/rules',
       published_at: null,
       apply_in_eos: 'Help Rules is vendor Agent instructions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team rules for daily ingest. Keep .mdc, AGENTS.md, and /create-rule. Team dashboard rules are not EOS governance. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'Skills',
+      source_url: 'https://cursor.com/help/customization/skills',
+      published_at: null,
+      apply_in_eos: 'Help Skills is vendor Agent workflows. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard team skills for daily ingest. Keep SKILL.md under .cursor/skills. Prefer /create-skill. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
       title: 'Model Context Protocol (MCP)',
@@ -5785,6 +5877,7 @@ test('selectCurrentLearnings clusters prompting Custom Modes onto skills and kee
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/prompting'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/rules'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/rules'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/skills'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/mcp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/plugins'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/customize-cursor'), false);
@@ -6243,6 +6336,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/shared-transcripts'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/bugbot'), false);
   assert.equal(current.includes('cursor.com/help/customization/rules'), false);
+  assert.equal(current.includes('cursor.com/help/customization/skills'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
