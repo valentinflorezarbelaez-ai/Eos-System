@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T15:13:54.561Z",
+  "updated_at": "2026-09-01T15:17:05.765Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1889,6 +1889,16 @@
       "published_at": null,
       "summary": "Fixes for common Agent issues with file access, rules, terminal commands, and more. How can I improve Agent accuracy? — Be specific in your prompts: include expected behavior and constraints Use Plan mode first for tasks that touch many files Start a new chat when you finish a feature or switch tasks Add rules in for patterns you want Age What if Agent doesn't pick up my files? — Check your .cursorignore file in the project root. How do I undo Agent changes? — Hover over a previous message and click Restore Checkpoint in the bottom right to roll back all changes Agent made after that point. What if Agent sets CI=1 in terminal commands? — Cursor sets as an environment variable when running terminal commands through Agent. What if I see \"Agent Execution Timed Out\"? — This error means Cursor…",
       "apply_in_eos": "Help Agent troubleshooting is vendor desktop Agent diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-troubleshooting-extensions",
+      "title": "Extension conflicts",
+      "source_url": "https://cursor.com/help/troubleshooting/extensions",
+      "published_at": null,
+      "summary": "Some extensions can interfere with Cursor's AI features. How do I identify a conflicting extension? — Disable all extensions: open the command palette and search for \"Disable All Installed Extensions\" 2. Which extensions commonly conflict? — Extensions that provide their own AI completions or intercept keyboard shortcuts can conflict with Tab completion or inline edit. How do I disable an extension? — Open the Extensions panel (Cmd + Shift + X on Mac, Ctrl + Shift + X on Windows/Linux), find the extension, and click Disable *.",
+      "apply_in_eos": "Help extension troubleshooting is vendor desktop extension-conflict diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop extension troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
