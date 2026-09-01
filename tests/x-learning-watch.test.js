@@ -287,6 +287,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/tab-issues' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -492,6 +496,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/tab-issues'),
+    true
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/extensions'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/install-issues'),
     false
   );
   assert.equal(
@@ -2071,6 +2083,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpTroubleshootingAgentIssues.apply_in_eos), false);
   assert.equal(helpTroubleshootingAgentIssues.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpTroubleshootingAgentIssues.apply_in_eos.includes('Vercel'), false);
+  const helpTroubleshootingTabIssues = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/troubleshooting/tab-issues');
+  assert.ok(helpTroubleshootingTabIssues);
+  assert.equal(helpTroubleshootingTabIssues.title, 'How do I troubleshoot Tab completions?');
+  assert.match(helpTroubleshootingTabIssues.summary, /Why aren't Tab suggestions appearing/);
+  assert.match(helpTroubleshootingTabIssues.summary, /How can I improve Tab suggestion quality/);
+  assert.match(helpTroubleshootingTabIssues.summary, /What if Tab feels slow/);
+  assert.equal(helpTroubleshootingTabIssues.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingTabIssues.summary), false);
+  assert.equal(helpTroubleshootingTabIssues.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpTroubleshootingTabIssues.apply_in_eos, /vendor desktop Tab diagnostics/i);
+  assert.match(helpTroubleshootingTabIssues.apply_in_eos, /\/goal/);
+  assert.match(helpTroubleshootingTabIssues.apply_in_eos, /do not rotate this Cloud Agent into desktop Tab troubleshooting/i);
+  assert.match(helpTroubleshootingTabIssues.apply_in_eos, /environment\.json/);
+  assert.match(helpTroubleshootingTabIssues.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpTroubleshootingTabIssues.apply_in_eos), false);
+  assert.equal(helpTroubleshootingTabIssues.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpTroubleshootingTabIssues.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2330,6 +2359,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Compromised account', link: 'https://cursor.com/help/security-and-privacy/account-compromised' },
     { title: 'Marketplace security', link: 'https://cursor.com/help/security-and-privacy/marketplace-security' },
     { title: 'Agent troubleshooting', link: 'https://cursor.com/help/troubleshooting/agent-issues' },
+    { title: 'Tab completions', link: 'https://cursor.com/help/troubleshooting/tab-issues' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3797,6 +3827,26 @@ test('applyHint for Help Agent troubleshooting keeps this Cloud Agent off deskto
   assert.equal(hint.includes('Plan Mode'), false);
 });
 
+test('applyHint for Help Tab troubleshooting keeps this Cloud Agent off desktop Tab troubleshooting', () => {
+  const hint = applyHint({
+    title: 'Tab completions',
+    link: 'https://cursor.com/help/troubleshooting/tab-issues',
+    summary: 'Optional Help Tab troubleshooting is enabled by default. Custom Mode and Vercel. Use Slack. HTTP Compatibility Mode is enabled.'
+  });
+  assert.match(hint, /vendor desktop Tab diagnostics/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Tab troubleshooting/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4924,6 +4974,21 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpTroubleshootingAgentIssues[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpTroubleshootingAgentIssues[0]).includes('Plan Mode'), false);
 
+  const helpTroubleshootingTabIssues = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-tab-issues.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/troubleshooting/tab-issues'
+  );
+  assert.equal(helpTroubleshootingTabIssues[0].id, 'https://cursor.com/help/troubleshooting/tab-issues');
+  assert.equal(helpTroubleshootingTabIssues[0].title, 'Tab completions');
+  assert.match(helpTroubleshootingTabIssues[0].summary, /Troubleshoot missing or unexpected Tab completions/);
+  assert.match(applyHint(helpTroubleshootingTabIssues[0]), /vendor desktop Tab diagnostics/i);
+  assert.match(applyHint(helpTroubleshootingTabIssues[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpTroubleshootingTabIssues[0])), false);
+  assert.equal(applyHint(helpTroubleshootingTabIssues[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpTroubleshootingTabIssues[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpTroubleshootingTabIssues[0]).includes('Plan Mode'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5460,6 +5525,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/agent-issues'),
     'https://cursor.com/help/troubleshooting/agent-issues.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/troubleshooting/tab-issues'),
+    'https://cursor.com/help/troubleshooting/tab-issues.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6119,6 +6188,18 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpTroubleshootingAgentIssuesMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpTroubleshootingAgentIssuesMd.summary), false);
   assert.equal(helpTroubleshootingAgentIssuesMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpTroubleshootingTabIssuesMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-troubleshooting-tab-issues.md'), 'utf8')
+  );
+  assert.equal(helpTroubleshootingTabIssuesMd.title, 'How do I troubleshoot Tab completions?');
+  assert.match(helpTroubleshootingTabIssuesMd.summary, /Why aren't Tab suggestions appearing/);
+  assert.match(helpTroubleshootingTabIssuesMd.summary, /How can I improve Tab suggestion quality/);
+  assert.match(helpTroubleshootingTabIssuesMd.summary, /What if Tab feels slow/);
+  assert.match(helpTroubleshootingTabIssuesMd.summary, /How do I toggle Tab off for certain file types/);
+  assert.equal(helpTroubleshootingTabIssuesMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpTroubleshootingTabIssuesMd.summary), false);
+  assert.equal(helpTroubleshootingTabIssuesMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -7453,6 +7534,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Agent troubleshooting is vendor desktop Agent diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'How do I troubleshoot Tab completions?',
+      source_url: 'https://cursor.com/help/troubleshooting/tab-issues',
+      published_at: null,
+      apply_in_eos: 'Help Tab troubleshooting is vendor desktop Tab diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Tab troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -7504,6 +7591,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/account-compromised'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/marketplace-security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/agent-issues'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/tab-issues'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -8086,6 +8174,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/security-and-privacy/account-compromised'), false);
   assert.equal(current.includes('cursor.com/help/security-and-privacy/marketplace-security'), false);
   assert.equal(current.includes('cursor.com/help/troubleshooting/agent-issues'), false);
+  assert.equal(current.includes('cursor.com/help/troubleshooting/tab-issues'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);

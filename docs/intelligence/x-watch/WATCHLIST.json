@@ -710,6 +710,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_TROUBLESHOOTING_AGENT_ISSUES",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-TROUBLESHOOTING-TAB-ISSUES",
+      "url": "https://cursor.com/help/troubleshooting/tab-issues",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_TROUBLESHOOTING_TAB_ISSUES",
+      "fetchable": true
     }
   ]
 }
