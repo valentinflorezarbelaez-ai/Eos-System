@@ -77,6 +77,9 @@ Store size: 199
 - Cloud agents are now 20-30% more token efficient, and 80% more efficient on runs with computer use — cited by https://aicatchup.com/news/cursor-cloud-agents-token-efficiency-computer-use (not fetched from X)
   Vendor efficiency claim cited by a third party. Do not treat token-percentage marketing as EOS evidence.
   https://x.com/cursor_ai/status/2084317547608911986
+- In December, 1 in 10 of our merged PRs came from cloud agents. Today, it's 56% — cited by https://www.unrollnow.com/status/2082841397632086241 (not fetched from X)
+  Vendor internal PR-share metrics are not EOS evidence. Keep environment.json + Builds. Do not treat cloud-agent share percentages as EOS production evidence.
+  https://x.com/cursor_ai/status/2082841397632086241
 - Cursor is now on iPad. All the power of Cursor on iPhone, with more room to work with agents — cited by https://www.unrollnow.com/status/2082532273421955513 (not fetched from X)
   iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.
   https://x.com/cursor_ai/status/2082532273421955513
@@ -89,6 +92,15 @@ Store size: 199
 - Introducing Cursor Router, our intelligent model router that selects the right model for the task at hand — cited by https://www.unrollnow.com/status/2079993729532989500 (not fetched from X)
   Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices. Official docs restrict Router to Teams and Enterprise. Vendor cost-percentage claims are not EOS evidence.
   https://x.com/cursor_ai/status/2079993729532989500
+- Select Auto mode and whether you'd like to optimize for Intelligence, Balance, or Cost — cited by https://pulseaugur.com/cluster/157845-cursor-launches-ai-model-router-to-optimize-cost-and-performance (not fetched from X)
+  Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices. Vendor cost-percentage claims are not EOS evidence.
+  https://x.com/cursor_ai/status/2079993731063955665
+- In early access, customers observed no drop-off in quality with a lower cost per commit vs. routing all requests to Opus 4.8 — cited by https://pulseaugur.com/cluster/157845-cursor-launches-ai-model-router-to-optimize-cost-and-performance (not fetched from X)
+  Vendor routing and cost claims are not EOS evidence. EOS rules still bind model and governance choices.
+  https://x.com/cursor_ai/status/2079993733064646774
+- Cursor Router is available today across all surfaces on Teams and Enterprise plans — cited by https://pulseaugur.com/cluster/157845-cursor-launches-ai-model-router-to-optimize-cost-and-performance (not fetched from X)
+  Official docs restrict Router to Teams and Enterprise. EOS rules still bind model and governance choices. Vendor availability claims are not EOS evidence.
+  https://x.com/cursor_ai/status/2079993735082016851
 - Introducing side chats, a new way to ask questions and explore ideas without interrupting your main conversation — cited by https://aicatchup.com/news/cursor-side-chats-durable-agent-threads (not fetched from X)
   Side chats are local-only and not available for Cloud Agents. This watch already runs in the Cloud Agent VM. Keep the Cursor/X learning goal on the main thread. Do not rotate this Cloud Agent into /side.
   https://x.com/cursor_ai/status/2075686268113916023
@@ -107,6 +119,12 @@ Store size: 199
 - Cursor now shows you a leaderboard of the most popular plugins, skills, and MCPs across your team — cited by https://www.unrollnow.com/status/2069512593887092811 (not fetched from X)
   Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Team marketplace is not EOS governance.
   https://x.com/cursor_ai/status/2069512593887092811
+- Plugins can now include prebuilt canvases — cited by https://pulseaugur.com/cluster/107158-cursor-ai-ide-enhances-team-collaboration-with-new-integrations-and-plugin (not fetched from X)
+  Plugin canvases are vendor marketplace templates, not a substitute for git evidence. Do not rotate this Cloud Agent into desktop Customize for daily ingest.
+  https://x.com/cursor_ai/status/2069512595766173857
+- You can also now use team marketplaces with GitLab, Bitbucket, and Azure DevOps in addition to local repos — cited by https://pulseaugur.com/cluster/107158-cursor-ai-ide-enhances-team-collaboration-with-new-integrations-and-plugin (not fetched from X)
+  Team marketplace SCM imports are vendor distribution. Do not add extra GitLab, Bitbucket, or Azure DevOps feeds. GitHub remains source of truth for this synced repo. Do not rotate this Cloud Agent into desktop Customize for daily ingest.
+  https://x.com/cursor_ai/status/2069512597628440908
 - It's now easier to move local agents to the cloud so they can keep working with your laptop closed — cited by https://www.unrollnow.com/status/2067366343817805899 (not fetched from X)
   This watch already runs in the Cloud Agent VM. /in-cloud starts an isolated cloud subagent; do not rotate this Cloud Agent into the desktop Agents Window for daily ingest. Isolated VMs are optional parallelism, not an EOS Control Plane change.
   https://x.com/cursor_ai/status/2067366343817805899
@@ -122,6 +140,12 @@ Store size: 199
 - We're increasing usage limits for every Teams user — cited by https://www.unrollnow.com/status/2061550723503194426 (not fetched from X)
   Honor included quota. Do not switch this watch to Premium or on-demand. Do not treat vendor seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard.
   https://x.com/cursor_ai/status/2061550723503194426
+- Agent actions that aren't on your allowlist or can't be sandboxed go to a classifier subagent — cited by https://pulseaugur.com/cluster/60028-cursor-ai-ide-adds-auto-review-mode-for-safer-agent-actions (not fetched from X)
+  Classifier subagent is vendor Auto-review plumbing. FUNDACION HITL gates still apply. Do not treat allowlist marketing as EOS evidence.
+  https://x.com/cursor_ai/status/2060406014478831842
+- Auto-review mode is now available in Cursor — cited by https://pulseaugur.com/cluster/60028-cursor-ai-ide-adds-auto-review-mode-for-safer-agent-actions (not fetched from X)
+  Auto-review is a vendor run mode that reduces approval prompts. FUNDACION HITL gates still apply. Do not treat classifier marketing as EOS evidence. Do not rotate this Cloud Agent into Auto-review as governance.
+  https://x.com/cursor_ai/status/2060406013098897765
 - Introducing the Cursor Developer Habits Report. We're sharing some of our findings on how software development is changing. — cited by https://www.unrollnow.com/status/2060025063899058458 (not fetched from X)
   Vendor research metrics are not EOS evidence. Do not add cursor.com/insights as a feed.
   https://x.com/cursor_ai/status/2060025063899058458

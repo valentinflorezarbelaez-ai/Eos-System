@@ -213,6 +213,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2082841397632086241",
+      "handle": "cursor_ai",
+      "about": "In December, 1 in 10 of our merged PRs came from cloud agents. Today, it's 56%",
+      "cited_by": "https://www.unrollnow.com/status/2082841397632086241",
+      "official_source": "https://cursor.com/blog/cloud-agent-environment",
+      "published_date": "2026-07-30",
+      "eos_note": "Vendor internal PR-share metrics are not EOS evidence. Keep environment.json + Builds. Do not treat cloud-agent share percentages as EOS production evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2082532273421955513",
       "handle": "cursor_ai",
       "about": "Cursor is now on iPad. All the power of Cursor on iPhone, with more room to work with agents",
@@ -253,6 +264,39 @@
       "official_source": "https://cursor.com/changelog/router",
       "published_date": "2026-07-22",
       "eos_note": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices. Official docs restrict Router to Teams and Enterprise. Vendor cost-percentage claims are not EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2079993731063955665",
+      "handle": "cursor_ai",
+      "about": "Select Auto mode and whether you'd like to optimize for Intelligence, Balance, or Cost",
+      "cited_by": "https://pulseaugur.com/cluster/157845-cursor-launches-ai-model-router-to-optimize-cost-and-performance",
+      "official_source": "https://cursor.com/changelog/router",
+      "published_date": "2026-07-22",
+      "eos_note": "Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices. Vendor cost-percentage claims are not EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2079993733064646774",
+      "handle": "cursor_ai",
+      "about": "In early access, customers observed no drop-off in quality with a lower cost per commit vs. routing all requests to Opus 4.8",
+      "cited_by": "https://pulseaugur.com/cluster/157845-cursor-launches-ai-model-router-to-optimize-cost-and-performance",
+      "official_source": "https://cursor.com/changelog/router",
+      "published_date": "2026-07-22",
+      "eos_note": "Vendor routing and cost claims are not EOS evidence. EOS rules still bind model and governance choices.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2079993735082016851",
+      "handle": "cursor_ai",
+      "about": "Cursor Router is available today across all surfaces on Teams and Enterprise plans",
+      "cited_by": "https://pulseaugur.com/cluster/157845-cursor-launches-ai-model-router-to-optimize-cost-and-performance",
+      "official_source": "https://cursor.com/changelog/router",
+      "published_date": "2026-07-22",
+      "eos_note": "Official docs restrict Router to Teams and Enterprise. EOS rules still bind model and governance choices. Vendor availability claims are not EOS evidence.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },
@@ -323,6 +367,28 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2069512595766173857",
+      "handle": "cursor_ai",
+      "about": "Plugins can now include prebuilt canvases",
+      "cited_by": "https://pulseaugur.com/cluster/107158-cursor-ai-ide-enhances-team-collaboration-with-new-integrations-and-plugin",
+      "official_source": "https://cursor.com/changelog/customize",
+      "published_date": "2026-06-22",
+      "eos_note": "Plugin canvases are vendor marketplace templates, not a substitute for git evidence. Do not rotate this Cloud Agent into desktop Customize for daily ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2069512597628440908",
+      "handle": "cursor_ai",
+      "about": "You can also now use team marketplaces with GitLab, Bitbucket, and Azure DevOps in addition to local repos",
+      "cited_by": "https://pulseaugur.com/cluster/107158-cursor-ai-ide-enhances-team-collaboration-with-new-integrations-and-plugin",
+      "official_source": "https://cursor.com/changelog/customize",
+      "published_date": "2026-06-22",
+      "eos_note": "Team marketplace SCM imports are vendor distribution. Do not add extra GitLab, Bitbucket, or Azure DevOps feeds. GitHub remains source of truth for this synced repo. Do not rotate this Cloud Agent into desktop Customize for daily ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2067366343817805899",
       "handle": "cursor_ai",
       "about": "It's now easier to move local agents to the cloud so they can keep working with your laptop closed",
@@ -374,6 +440,28 @@
       "official_source": "https://cursor.com/blog/teams-pricing-june-2026",
       "published_date": "2026-06-01",
       "eos_note": "Honor included quota. Do not switch this watch to Premium or on-demand. Do not treat vendor seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2060406014478831842",
+      "handle": "cursor_ai",
+      "about": "Agent actions that aren't on your allowlist or can't be sandboxed go to a classifier subagent",
+      "cited_by": "https://pulseaugur.com/cluster/60028-cursor-ai-ide-adds-auto-review-mode-for-safer-agent-actions",
+      "official_source": "https://cursor.com/changelog/auto-review",
+      "published_date": "2026-05-29",
+      "eos_note": "Classifier subagent is vendor Auto-review plumbing. FUNDACION HITL gates still apply. Do not treat allowlist marketing as EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2060406013098897765",
+      "handle": "cursor_ai",
+      "about": "Auto-review mode is now available in Cursor",
+      "cited_by": "https://pulseaugur.com/cluster/60028-cursor-ai-ide-adds-auto-review-mode-for-safer-agent-actions",
+      "official_source": "https://cursor.com/changelog/auto-review",
+      "published_date": "2026-05-29",
+      "eos_note": "Auto-review is a vendor run mode that reduces approval prompts. FUNDACION HITL gates still apply. Do not treat classifier marketing as EOS evidence. Do not rotate this Cloud Agent into Auto-review as governance.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },

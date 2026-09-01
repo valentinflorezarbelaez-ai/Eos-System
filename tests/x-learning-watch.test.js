@@ -9176,6 +9176,14 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2049926283061035254/);
   assert.match(current, /2080700479940759919/);
   assert.match(current, /2067366343817805899/);
+  assert.match(current, /2082841397632086241/);
+  assert.match(current, /2079993731063955665/);
+  assert.match(current, /2079993733064646774/);
+  assert.match(current, /2079993735082016851/);
+  assert.match(current, /2069512595766173857/);
+  assert.match(current, /2069512597628440908/);
+  assert.match(current, /2060406013098897765/);
+  assert.match(current, /2060406014478831842/);
   assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
   assert.equal(current.includes('cursor.com/docs/origin/integrations'), false);
   assert.equal(current.includes('cursor.com/docs/origin/mirror-github'), false);
@@ -9441,6 +9449,28 @@ test('cited X posts never claim an X fetch', () => {
     )),
     true
   );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2069512595766173857'
+      && row.cited_by === 'https://pulseaugur.com/cluster/107158-cursor-ai-ide-enhances-team-collaboration-with-new-integrations-and-plugin'
+      && /prebuilt canvases/i.test(row.about)
+      && /not a substitute for git evidence/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2069512597628440908'
+      && row.cited_by === 'https://pulseaugur.com/cluster/107158-cursor-ai-ide-enhances-team-collaboration-with-new-integrations-and-plugin'
+      && /GitLab/i.test(row.about)
+      && /GitHub remains source of truth/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(official.includes('https://cursor.com/changelog/auto-review'), true);
   assert.equal(
     doc.citations.some((row) => (
@@ -9448,6 +9478,49 @@ test('cited X posts never claim an X fetch', () => {
       && row.cited_by === 'https://www.unrollnow.com/status/2065137803084857845'
       && /Auto-review/i.test(row.about)
       && /HITL/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2060406013098897765'
+      && row.cited_by === 'https://pulseaugur.com/cluster/60028-cursor-ai-ide-adds-auto-review-mode-for-safer-agent-actions'
+      && /Auto-review mode is now available/i.test(row.about)
+      && /HITL/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2060406014478831842'
+      && row.cited_by === 'https://pulseaugur.com/cluster/60028-cursor-ai-ide-adds-auto-review-mode-for-safer-agent-actions'
+      && /classifier subagent/i.test(row.about)
+      && /HITL/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2082841397632086241'
+      && row.cited_by === 'https://www.unrollnow.com/status/2082841397632086241'
+      && /56%/i.test(row.about)
+      && /not EOS evidence/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2079993735082016851'
+      && row.cited_by === 'https://pulseaugur.com/cluster/157845-cursor-launches-ai-model-router-to-optimize-cost-and-performance'
+      && /Teams and Enterprise/i.test(row.about)
       && /enable/i.test(row.eos_note || '') === false
       && row.fetched_from_x === false
     )),
