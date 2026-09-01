@@ -187,9 +187,10 @@
     "https://cursor.com/help/security-and-privacy/marketplace-security",
     "https://cursor.com/help/security-and-privacy/privacy",
     "https://cursor.com/help/security-and-privacy/regions",
-    "https://cursor.com/help/security-and-privacy/sso"
+    "https://cursor.com/help/security-and-privacy/sso",
+    "https://cursor.com/help/troubleshooting/agent-issues"
   ],
-  "last_ingest_at": "2026-09-01T14:41:38.021Z",
-  "last_item_count": 187,
-  "last_new_item_count": 32
+  "last_ingest_at": "2026-09-01T14:58:32.666Z",
+  "last_item_count": 188,
+  "last_new_item_count": 33
 }

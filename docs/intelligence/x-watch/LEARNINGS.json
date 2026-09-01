@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T14:41:38.034Z",
+  "updated_at": "2026-09-01T14:58:32.678Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1879,6 +1879,16 @@
       "published_at": null,
       "summary": "SSO with SAML 2.0 is available at no additional cost on Teams and Enterprise plans. What do I need before setting up SSO? — A Cursor Teams or Enterprise plan Admin access to your identity provider (e.g., Okta, Azure AD, Google Workspace) Admin access to your Cursor organization How do I set up SSO? — Follow the step-by-step guide in the SSO setup reference. Does Cursor support SCIM provisioning? — Yes, on Enterprise plans with SSO enabled. How do I view my SSO configuration and domains? — Team admins can review the connection status and its domain in Single Sign-On (SSO) settings. Why do team members see \"Not assigned to this application\"? — This means the team member hasn't been assigned to the Cursor application in your identity provider's admin console.",
       "apply_in_eos": "Help SSO is vendor team SAML authentication. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop or team SSO settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-troubleshooting-agent-issues",
+      "title": "Agent troubleshooting",
+      "source_url": "https://cursor.com/help/troubleshooting/agent-issues",
+      "published_at": null,
+      "summary": "Fixes for common Agent issues with file access, rules, terminal commands, and more. How can I improve Agent accuracy? — Be specific in your prompts: include expected behavior and constraints Use Plan mode first for tasks that touch many files Start a new chat when you finish a feature or switch tasks Add rules in for patterns you want Age What if Agent doesn't pick up my files? — Check your .cursorignore file in the project root. How do I undo Agent changes? — Hover over a previous message and click Restore Checkpoint in the bottom right to roll back all changes Agent made after that point. What if Agent sets CI=1 in terminal commands? — Cursor sets as an environment variable when running terminal commands through Agent. What if I see \"Agent Execution Timed Out\"? — This error means Cursor…",
+      "apply_in_eos": "Help Agent troubleshooting is vendor desktop Agent diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     }
