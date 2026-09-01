@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T15:10:15.389Z",
+  "updated_at": "2026-09-01T15:13:54.561Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1899,6 +1899,16 @@
       "published_at": null,
       "summary": "Common problems when installing, launching, or updating Cursor. What if I see a blank screen on startup? — Quit and restart Cursor On Mac, drag Cursor to Trash and reinstall from cursor.com/download On Windows, run Cursor as administrator Open the command palette and run Clear Editor History to reset cached state How do I update Cursor? — From inside Cursor: press Cmd/Ctrl+Shift+P , type \"Cursor: Attempt Update\" , and restart when prompted. What are update channels? — Stable (default): recommended for most users Early Access : pre-release builds with the latest features, may be less stable Switch channels in Cursor Settings *. What does the macOS \"Cursor is damaged\" warning mean? — This is a macOS issue, not a corrupted download. How do I free up disk space used by Cursor? — Cursor stores…",
       "apply_in_eos": "Help install troubleshooting is vendor desktop install/startup diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop install troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-troubleshooting-network",
+      "title": "Network, proxy, and remote connections",
+      "source_url": "https://cursor.com/help/troubleshooting/network",
+      "published_at": null,
+      "summary": "Fixes for connection issues when using Cursor behind a firewall, proxy, VPN, or over SSH. How do I run network diagnostics? — Go to Cursor Settings > Network and click Run Diagnostics *. What if AI features stop working behind a proxy? — Cursor uses HTTP/2 for streaming responses. Which domains does Cursor need access to? — If your firewall blocks outbound connections, allowlist these domains: *.cursor.sh (includes and ) *.cursor-cdn.com *.cursorapi.com (includes ) See the network configuration docs for the full list and connectivity tests. What if AI features don't work over SSH or remote connections? — When using Cursor's Remote SSH extension, AI features run on your local machine and communicate with the remote server for file access. What if a VPN causes DNS resolution failures? — Cur…",
+      "apply_in_eos": "Help network troubleshooting is vendor desktop network/proxy diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop network troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

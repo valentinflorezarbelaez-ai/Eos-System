@@ -190,9 +190,10 @@
     "https://cursor.com/help/security-and-privacy/sso",
     "https://cursor.com/help/troubleshooting/agent-issues",
     "https://cursor.com/help/troubleshooting/install-issues",
+    "https://cursor.com/help/troubleshooting/network",
     "https://cursor.com/help/troubleshooting/tab-issues"
   ],
-  "last_ingest_at": "2026-09-01T15:10:15.376Z",
-  "last_item_count": 190,
-  "last_new_item_count": 35
+  "last_ingest_at": "2026-09-01T15:13:54.549Z",
+  "last_item_count": 191,
+  "last_new_item_count": 36
 }
