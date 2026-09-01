@@ -202,6 +202,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2085390485502239171",
+      "handle": "cursor_ai",
+      "about": "No model dominates every kind of task.",
+      "cited_by": "https://pulseaugur.com/cluster/186219-cursor-router-optimizes-ai-model-selection-for-cost-and-latency",
+      "official_source": "https://cursor.com/blog/how-cursor-router-works",
+      "published_date": "2026-08-06",
+      "eos_note": "Vendor model-strength claims are not EOS evidence. EOS rules still bind model and governance choices.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2084376701539405904",
       "handle": "cursor_ai",
       "about": "Cursor can now read, write, and act across your Google Workspace",
@@ -253,6 +264,28 @@
       "official_source": "https://cursor.com/changelog/ipad",
       "published_date": "2026-07-29",
       "eos_note": "iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2082532274646745521",
+      "handle": "cursor_ai",
+      "about": "New to both iPhone and iPad: an inbox to stay organized, and a review experience that covers the full PR, including comments, checks and approvals.",
+      "cited_by": "https://pulseaugur.com/cluster/171123-cursor-ai-ide-launches-on-ipad-and-iphone",
+      "official_source": "https://cursor.com/changelog/ipad",
+      "published_date": "2026-07-29",
+      "eos_note": "iPad/iOS inbox and PR review are mobile Cloud Agent surfaces. This watch still runs in the Cloud Agent VM, not on the tablet.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2082532275896692905",
+      "handle": "cursor_ai",
+      "about": "Create, review, and merge from anywhere.",
+      "cited_by": "https://pulseaugur.com/cluster/171123-cursor-ai-ide-launches-on-ipad-and-iphone",
+      "official_source": "https://cursor.com/changelog/ipad",
+      "published_date": "2026-07-29",
+      "eos_note": "Mobile create/review/merge is a vendor iPad/iOS surface. This watch still runs in the Cloud Agent VM, not on the tablet.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },

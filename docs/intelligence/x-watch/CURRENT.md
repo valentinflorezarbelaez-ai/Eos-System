@@ -74,6 +74,9 @@ Store size: 199
 - Cursor Router keeps improving from millions of in-product user interactions each week — cited by https://www.unrollnow.com/status/2085390483740676365 (not fetched from X)
   Vendor routing and cost claims are not EOS evidence. EOS rules still bind model and governance choices.
   https://x.com/cursor_ai/status/2085390483740676365
+- No model dominates every kind of task. — cited by https://pulseaugur.com/cluster/186219-cursor-router-optimizes-ai-model-selection-for-cost-and-latency (not fetched from X)
+  Vendor model-strength claims are not EOS evidence. EOS rules still bind model and governance choices.
+  https://x.com/cursor_ai/status/2085390485502239171
 - Cursor can now read, write, and act across your Google Workspace — cited by https://aicatchup.com/news/cursor-google-workspace-plugins (not fetched from X)
   Google Workspace plugins are optional vendor marketplace/Customize install. Do not rotate this Cloud Agent into marketplace plugin install for daily ingest. Official changelog names Drive, Gmail, and Calendar; do not treat Docs/Sheets as part of this announcement.
   https://x.com/cursor_ai/status/2084376701539405904
@@ -89,6 +92,12 @@ Store size: 199
 - Cursor is now on iPad. All the power of Cursor on iPhone, with more room to work with agents — cited by https://www.unrollnow.com/status/2082532273421955513 (not fetched from X)
   iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.
   https://x.com/cursor_ai/status/2082532273421955513
+- New to both iPhone and iPad: an inbox to stay organized, and a review experience that covers the full PR, including comments, checks and approvals. — cited by https://pulseaugur.com/cluster/171123-cursor-ai-ide-launches-on-ipad-and-iphone (not fetched from X)
+  iPad/iOS inbox and PR review are mobile Cloud Agent surfaces. This watch still runs in the Cloud Agent VM, not on the tablet.
+  https://x.com/cursor_ai/status/2082532274646745521
+- Create, review, and merge from anywhere. — cited by https://pulseaugur.com/cluster/171123-cursor-ai-ide-launches-on-ipad-and-iphone (not fetched from X)
+  Mobile create/review/merge is a vendor iPad/iOS surface. This watch still runs in the Cloud Agent VM, not on the tablet.
+  https://x.com/cursor_ai/status/2082532275896692905
 - Today we're launching Cursor Start, a new ₹649/month plan for developers in India — cited by https://www.unrollnow.com/status/2081978255004053560 (not fetched from X)
   Cursor Start is India regional pricing. Do not switch this watch to Start. Honor included quota. Do not add help/account-and-billing/cursor-start as a feed.
   https://x.com/cursor_ai/status/2081978255004053560

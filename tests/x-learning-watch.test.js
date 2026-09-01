@@ -9188,6 +9188,9 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2082841399838327289/);
   assert.match(current, /2067366345940087064/);
   assert.match(current, /2067366347890467266/);
+  assert.match(current, /2085390485502239171/);
+  assert.match(current, /2082532274646745521/);
+  assert.match(current, /2082532275896692905/);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
   assert.equal(current.includes('cursor.com/docs/origin/integrations'), false);
@@ -9337,6 +9340,42 @@ test('cited X posts never claim an X fetch', () => {
       && row.cited_by === 'https://www.unrollnow.com/status/2082532273421955513'
       && /iPad/i.test(row.about)
       && /Cloud Agent VM/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2085390485502239171'
+      && row.cited_by === 'https://pulseaugur.com/cluster/186219-cursor-router-optimizes-ai-model-selection-for-cost-and-latency'
+      && /No model dominates/i.test(row.about)
+      && /model-strength claims are not EOS evidence/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.official_source === 'https://cursor.com/blog/how-cursor-router-works'
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2082532274646745521'
+      && row.cited_by === 'https://pulseaugur.com/cluster/171123-cursor-ai-ide-launches-on-ipad-and-iphone'
+      && /inbox to stay organized/i.test(row.about)
+      && /Cloud Agent VM/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.official_source === 'https://cursor.com/changelog/ipad'
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2082532275896692905'
+      && row.cited_by === 'https://pulseaugur.com/cluster/171123-cursor-ai-ide-launches-on-ipad-and-iphone'
+      && /Create, review, and merge from anywhere/i.test(row.about)
+      && /Cloud Agent VM/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.official_source === 'https://cursor.com/changelog/ipad'
       && row.fetched_from_x === false
     )),
     true
