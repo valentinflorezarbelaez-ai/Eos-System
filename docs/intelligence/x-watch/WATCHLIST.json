@@ -766,6 +766,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_INTEGRATIONS_GITHUB_GITLAB",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-INTEGRATIONS-CLI",
+      "url": "https://cursor.com/help/integrations/cli",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_INTEGRATIONS_CLI",
+      "fetchable": true
     }
   ]
 }

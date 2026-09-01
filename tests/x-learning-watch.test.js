@@ -319,6 +319,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/cli' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -547,6 +551,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/cli'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/troubleshooting/network'),
     true
   );
@@ -703,7 +711,7 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     false
   );
   assert.equal(
-    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/integrations/cli'),
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/cli'),
     false
   );
   assert.equal(
@@ -2296,6 +2304,27 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpIntegrationsGithubGitlab.apply_in_eos), false);
   assert.equal(helpIntegrationsGithubGitlab.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpIntegrationsGithubGitlab.apply_in_eos.includes('Vercel'), false);
+  const helpIntegrationsCli = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/integrations/cli');
+  assert.ok(helpIntegrationsCli);
+  assert.equal(helpIntegrationsCli.title, 'CLI');
+  assert.match(helpIntegrationsCli.summary, /How do I install the CLI/);
+  assert.match(helpIntegrationsCli.summary, /What can the CLI do/);
+  assert.match(helpIntegrationsCli.summary, /Can I use the CLI for automation/);
+  assert.equal(helpIntegrationsCli.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpIntegrationsCli.summary), false);
+  assert.equal(helpIntegrationsCli.summary.toLowerCase().includes('curl'), false);
+  assert.equal(helpIntegrationsCli.summary.includes('CURSOR_API_KEY'), false);
+  assert.match(helpIntegrationsCli.apply_in_eos, /vendor local terminal agent/i);
+  assert.match(helpIntegrationsCli.apply_in_eos, /\/goal/);
+  assert.match(helpIntegrationsCli.apply_in_eos, /do not rotate this Cloud Agent into Cursor CLI/i);
+  assert.match(helpIntegrationsCli.apply_in_eos, /Do not install Cursor CLI/i);
+  assert.match(helpIntegrationsCli.apply_in_eos, /environment\.json/);
+  assert.match(helpIntegrationsCli.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpIntegrationsCli.apply_in_eos), false);
+  assert.equal(helpIntegrationsCli.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpIntegrationsCli.apply_in_eos.includes('Vercel'), false);
+  assert.equal(helpIntegrationsCli.apply_in_eos.includes('curl'), false);
+  assert.equal(helpIntegrationsCli.apply_in_eos.includes('CURSOR_API_KEY'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2563,6 +2592,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Reporting a bug', link: 'https://cursor.com/help/troubleshooting/reporting-bugs' },
     { title: 'Git', link: 'https://cursor.com/help/integrations/git' },
     { title: 'GitHub, GitLab, Azure DevOps, and Bitbucket', link: 'https://cursor.com/help/integrations/github-gitlab' },
+    { title: 'CLI', link: 'https://cursor.com/help/integrations/cli' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -4242,6 +4272,54 @@ test('applyHint for Help GitHub/GitLab keeps this Cloud Agent off extra SCM conn
   assert.equal(/vendor Cloud Agent and Bugbot repo-connection setup/i.test(githubActions), false);
 });
 
+test('applyHint for Help CLI keeps this Cloud Agent off Cursor CLI', () => {
+  const hint = applyHint({
+    title: 'CLI',
+    link: 'https://cursor.com/help/integrations/cli',
+    summary: 'Optional Help CLI is enabled by default. Custom Mode and Vercel. Use Slack. curl https://cursor.com/install. Set CURSOR_API_KEY.'
+  });
+  assert.match(hint, /vendor local terminal agent/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into Cursor CLI/i);
+  assert.match(hint, /Do not install Cursor CLI/i);
+  assert.match(hint, /without the local agent CLI/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+  assert.equal(hint.includes('curl'), false);
+  assert.equal(hint.includes('CURSOR_API_KEY'), false);
+  const docsCliOverview = applyHint({
+    title: 'CLI',
+    link: 'https://cursor.com/docs/cli/overview',
+    summary: 'Optional Help CLI is enabled by default. Cursor CLI overview.'
+  });
+  assert.equal(/vendor local terminal agent/i.test(docsCliOverview), false);
+  const docsCliInstall = applyHint({
+    title: 'CLI',
+    link: 'https://cursor.com/docs/cli/installation',
+    summary: 'Optional Help CLI is enabled by default. curl install.'
+  });
+  assert.equal(/vendor local terminal agent/i.test(docsCliInstall), false);
+  const cursorCliSite = applyHint({
+    title: 'CLI',
+    link: 'https://cursor.com/cli',
+    summary: 'Optional Help CLI is enabled by default. cursor.com/cli.'
+  });
+  assert.equal(/vendor local terminal agent/i.test(cursorCliSite), false);
+  const githubActionsCli = applyHint({
+    title: 'CLI',
+    link: 'https://cursor.com/docs/cli/github-actions',
+    summary: 'Optional Help CLI is enabled by default. GitHub Actions.'
+  });
+  assert.equal(/vendor local terminal agent/i.test(githubActionsCli), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -5491,6 +5569,24 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpIntegrationsGithubGitlab[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpIntegrationsGithubGitlab[0]).includes('Plan Mode'), false);
 
+  const helpIntegrationsCli = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-integrations-cli.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/integrations/cli'
+  );
+  assert.equal(helpIntegrationsCli[0].id, 'https://cursor.com/help/integrations/cli');
+  assert.equal(helpIntegrationsCli[0].title, 'CLI');
+  assert.match(helpIntegrationsCli[0].summary, /Use the Cursor CLI to open files, run commands, and automate workflows/);
+  assert.match(applyHint(helpIntegrationsCli[0]), /vendor local terminal agent/i);
+  assert.match(applyHint(helpIntegrationsCli[0]), /\/goal/);
+  assert.match(applyHint(helpIntegrationsCli[0]), /Do not install Cursor CLI/i);
+  assert.equal(/enable/i.test(applyHint(helpIntegrationsCli[0])), false);
+  assert.equal(applyHint(helpIntegrationsCli[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpIntegrationsCli[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpIntegrationsCli[0]).includes('Plan Mode'), false);
+  assert.equal(applyHint(helpIntegrationsCli[0]).includes('curl'), false);
+  assert.equal(applyHint(helpIntegrationsCli[0]).includes('CURSOR_API_KEY'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -6059,6 +6155,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/integrations/github-gitlab'),
     'https://cursor.com/help/integrations/github-gitlab.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/integrations/cli'),
+    'https://cursor.com/help/integrations/cli.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -6818,6 +6918,20 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpIntegrationsGithubGitlabMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpIntegrationsGithubGitlabMd.summary), false);
   assert.equal(helpIntegrationsGithubGitlabMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpIntegrationsCliMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-integrations-cli.md'), 'utf8')
+  );
+  assert.equal(helpIntegrationsCliMd.title, 'CLI');
+  assert.match(helpIntegrationsCliMd.summary, /How do I install the CLI/);
+  assert.match(helpIntegrationsCliMd.summary, /What can the CLI do/);
+  assert.match(helpIntegrationsCliMd.summary, /Can I use the CLI for automation/);
+  assert.match(helpIntegrationsCliMd.summary, /Does the CLI work with other editors/);
+  assert.match(helpIntegrationsCliMd.summary, /How do I authenticate the CLI/);
+  assert.match(helpIntegrationsCliMd.summary, /How do I update the CLI/);
+  assert.equal(helpIntegrationsCliMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpIntegrationsCliMd.summary), false);
+  assert.equal(helpIntegrationsCliMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -8207,6 +8321,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help GitHub, GitLab, Azure DevOps, and Bitbucket is vendor Cloud Agent and Bugbot repo-connection setup. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra SCMs for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'CLI',
+      source_url: 'https://cursor.com/help/integrations/cli',
+      published_at: null,
+      apply_in_eos: 'Help CLI is vendor local terminal agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into Cursor CLI for daily ingest. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -8266,6 +8386,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/troubleshooting/reporting-bugs'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/git'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/github-gitlab'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/integrations/cli'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -8856,6 +8977,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/troubleshooting/reporting-bugs'), false);
   assert.equal(current.includes('cursor.com/help/integrations/git'), false);
   assert.equal(current.includes('cursor.com/help/integrations/github-gitlab'), false);
+  assert.equal(current.includes('cursor.com/help/integrations/cli'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);

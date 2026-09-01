@@ -411,7 +411,10 @@ export async function enrichOfficialHtmlPages(items, fetchImpl) {
     }
     const parsed = parseOfficialMarkdown(response.text);
     const current = String(item.summary || '');
-    const summary = parsed.summary && parsed.summary.length > current.length ? parsed.summary : item.summary;
+    let summary = parsed.summary && parsed.summary.length > current.length ? parsed.summary : item.summary;
+    if (isHelpIntegrationsCliUrl(item.link)) {
+      summary = redactHelpCliSecrets(summary);
+    }
     out.push({ ...item, title: parsed.title || item.title, summary });
   }
   return out;
@@ -653,6 +656,9 @@ export function applyHint(item) {
   }
   if (isHelpIntegrationsGithubGitlabUrl(item?.link)) {
     return 'Help GitHub, GitLab, Azure DevOps, and Bitbucket is vendor Cloud Agent and Bugbot repo-connection setup. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra SCMs for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+  }
+  if (isHelpIntegrationsCliUrl(item?.link)) {
+    return 'Help CLI is vendor local terminal agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into Cursor CLI for daily ingest. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isGrokBotDocUrl(item?.link)) {
     return 'Grok Bot is vendor persistent-cloud Bots. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into the Grok Bot desktop or iOS app for daily ingest. This Cloud Agent VM has no Grok Bot Linux app. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
@@ -970,16 +976,23 @@ export function applyHint(item) {
 }
 
 export function extractActionableLearnings(items) {
-  return (items || []).filter((item) => item && (item.link || item.id)).map((item) => ({
-    learning_id: learningIdFromUrl(item.link || item.id),
-    title: item.title || 'Untitled official item',
-    source_url: item.link || item.id,
-    published_at: item.publishedAt || null,
-    summary: truncate(item.summary, isLivingOfficialDoc(item.link || item.id) ? 800 : 400),
-    apply_in_eos: applyHint(item),
-    epistemic_status: 'OBSERVED',
-    x_timeline_verified: false
-  }));
+  return (items || []).filter((item) => item && (item.link || item.id)).map((item) => {
+    const sourceUrl = item.link || item.id;
+    let summary = item.summary;
+    if (isHelpIntegrationsCliUrl(sourceUrl)) {
+      summary = redactHelpCliSecrets(summary);
+    }
+    return {
+      learning_id: learningIdFromUrl(sourceUrl),
+      title: item.title || 'Untitled official item',
+      source_url: sourceUrl,
+      published_at: item.publishedAt || null,
+      summary: truncate(summary, isLivingOfficialDoc(sourceUrl) ? 800 : 400),
+      apply_in_eos: applyHint(item),
+      epistemic_status: 'OBSERVED',
+      x_timeline_verified: false
+    };
+  });
 }
 
 export function mergeLearnings(store, incoming) {
@@ -1024,7 +1037,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isHelpAgentModeUrl(url) || isHelpAskModeUrl(url) || isHelpPlanModeUrl(url) || isHelpTabUrl(url) || isHelpInlineEditUrl(url) || isHelpCloudAgentsUrl(url) || isHelpBackgroundAgentsUrl(url) || isHelpMobileAppUrl(url) || isHelpSharedTranscriptsUrl(url) || isHelpBugbotUrl(url) || isHelpRulesUrl(url) || isHelpSkillsUrl(url) || isHelpMcpUrl(url) || isHelpContextUrl(url) || isHelpIgnoreFilesUrl(url) || isHelpPluginsUrl(url) || isHelpMultiAgentUrl(url) || isHelpSideChatsUrl(url) || isHelpConversationSearchUrl(url) || isHelpAiPairProgrammingUrl(url) || isGetStartedQuickstartUrl(url) || isHelpGettingStartedInstallUrl(url) || isHelpGettingStartedFirstProjectUrl(url) || isHelpGettingStartedBuildAiCodingAgentUrl(url) || isHelpSecurityAndPrivacyPrivacyUrl(url) || isHelpSecurityAndPrivacyRegionsUrl(url) || isHelpSecurityAndPrivacySsoUrl(url) || isHelpSecurityAndPrivacyAccountCompromisedUrl(url) || isHelpSecurityAndPrivacyMarketplaceSecurityUrl(url) || isHelpTroubleshootingAgentIssuesUrl(url) || isHelpTroubleshootingTabIssuesUrl(url) || isHelpTroubleshootingInstallIssuesUrl(url) || isHelpTroubleshootingNetworkUrl(url) || isHelpTroubleshootingExtensionsUrl(url) || isHelpTroubleshootingPerformanceUrl(url) || isHelpTroubleshootingReportingBugsUrl(url) || isHelpIntegrationsGitUrl(url) || isHelpIntegrationsGithubGitlabUrl(url) || isGrokBotDocUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isHelpAgentModeUrl(url) || isHelpAskModeUrl(url) || isHelpPlanModeUrl(url) || isHelpTabUrl(url) || isHelpInlineEditUrl(url) || isHelpCloudAgentsUrl(url) || isHelpBackgroundAgentsUrl(url) || isHelpMobileAppUrl(url) || isHelpSharedTranscriptsUrl(url) || isHelpBugbotUrl(url) || isHelpRulesUrl(url) || isHelpSkillsUrl(url) || isHelpMcpUrl(url) || isHelpContextUrl(url) || isHelpIgnoreFilesUrl(url) || isHelpPluginsUrl(url) || isHelpMultiAgentUrl(url) || isHelpSideChatsUrl(url) || isHelpConversationSearchUrl(url) || isHelpAiPairProgrammingUrl(url) || isGetStartedQuickstartUrl(url) || isHelpGettingStartedInstallUrl(url) || isHelpGettingStartedFirstProjectUrl(url) || isHelpGettingStartedBuildAiCodingAgentUrl(url) || isHelpSecurityAndPrivacyPrivacyUrl(url) || isHelpSecurityAndPrivacyRegionsUrl(url) || isHelpSecurityAndPrivacySsoUrl(url) || isHelpSecurityAndPrivacyAccountCompromisedUrl(url) || isHelpSecurityAndPrivacyMarketplaceSecurityUrl(url) || isHelpTroubleshootingAgentIssuesUrl(url) || isHelpTroubleshootingTabIssuesUrl(url) || isHelpTroubleshootingInstallIssuesUrl(url) || isHelpTroubleshootingNetworkUrl(url) || isHelpTroubleshootingExtensionsUrl(url) || isHelpTroubleshootingPerformanceUrl(url) || isHelpTroubleshootingReportingBugsUrl(url) || isHelpIntegrationsGitUrl(url) || isHelpIntegrationsGithubGitlabUrl(url) || isHelpIntegrationsCliUrl(url) || isGrokBotDocUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -1411,6 +1424,18 @@ function isHelpIntegrationsGithubGitlabUrl(url) {
     || value === 'https://www.cursor.com/help/integrations/github-gitlab';
 }
 
+function isHelpIntegrationsCliUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/help/integrations/cli'
+    || value === 'https://www.cursor.com/help/integrations/cli';
+}
+
+function redactHelpCliSecrets(value) {
+  return String(value || '')
+    .replace(/`CURSOR_API_KEY`/g, 'an API key env var')
+    .replace(/\bCURSOR_API_KEY\b/g, 'an API key env var');
+}
+
 function isGrokBotDocUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/grok-bot'
@@ -1682,7 +1707,7 @@ function currentClusterKey(learning) {
   if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || isHelpRulesUrl(learning?.source_url) || isHelpSkillsUrl(learning?.source_url) || isHelpMcpUrl(learning?.source_url) || isHelpPluginsUrl(learning?.source_url) || isMcpDocUrl(learning?.source_url) || isPluginsDocUrl(learning?.source_url) || isCustomizeCursorDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules' || title === 'model context protocol (mcp)' || title === 'mcp integrations' || title === 'plugins') {
     return 'cluster:skills-custom-modes';
   }
-  if (isAgentOverviewUrl(learning?.source_url) || isHelpAgentModeUrl(learning?.source_url) || isHelpAskModeUrl(learning?.source_url) || isHelpPlanModeUrl(learning?.source_url) || isHelpTabUrl(learning?.source_url) || isHelpInlineEditUrl(learning?.source_url) || isHelpSharedTranscriptsUrl(learning?.source_url) || isHelpContextUrl(learning?.source_url) || isHelpSideChatsUrl(learning?.source_url) || isHelpConversationSearchUrl(learning?.source_url) || isHelpAiPairProgrammingUrl(learning?.source_url) || isGetStartedQuickstartUrl(learning?.source_url) || isHelpGettingStartedInstallUrl(learning?.source_url) || isHelpGettingStartedFirstProjectUrl(learning?.source_url) || isHelpGettingStartedBuildAiCodingAgentUrl(learning?.source_url) || isHelpTroubleshootingAgentIssuesUrl(learning?.source_url) || isHelpTroubleshootingTabIssuesUrl(learning?.source_url) || isHelpTroubleshootingInstallIssuesUrl(learning?.source_url) || isHelpTroubleshootingNetworkUrl(learning?.source_url) || isHelpTroubleshootingExtensionsUrl(learning?.source_url) || isHelpTroubleshootingPerformanceUrl(learning?.source_url) || isHelpTroubleshootingReportingBugsUrl(learning?.source_url) || isHelpIntegrationsGitUrl(learning?.source_url) || isPlanModeDocUrl(learning?.source_url) || isDebugModeDocUrl(learning?.source_url) || isCursorCliOverviewUrl(learning?.source_url) || isCursorCliUsingUrl(learning?.source_url) || isCursorCliShellModeUrl(learning?.source_url) || isCursorCliAcpUrl(learning?.source_url) || isCursorCliHeadlessUrl(learning?.source_url)) {
+  if (isAgentOverviewUrl(learning?.source_url) || isHelpAgentModeUrl(learning?.source_url) || isHelpAskModeUrl(learning?.source_url) || isHelpPlanModeUrl(learning?.source_url) || isHelpTabUrl(learning?.source_url) || isHelpInlineEditUrl(learning?.source_url) || isHelpSharedTranscriptsUrl(learning?.source_url) || isHelpContextUrl(learning?.source_url) || isHelpSideChatsUrl(learning?.source_url) || isHelpConversationSearchUrl(learning?.source_url) || isHelpAiPairProgrammingUrl(learning?.source_url) || isGetStartedQuickstartUrl(learning?.source_url) || isHelpGettingStartedInstallUrl(learning?.source_url) || isHelpGettingStartedFirstProjectUrl(learning?.source_url) || isHelpGettingStartedBuildAiCodingAgentUrl(learning?.source_url) || isHelpTroubleshootingAgentIssuesUrl(learning?.source_url) || isHelpTroubleshootingTabIssuesUrl(learning?.source_url) || isHelpTroubleshootingInstallIssuesUrl(learning?.source_url) || isHelpTroubleshootingNetworkUrl(learning?.source_url) || isHelpTroubleshootingExtensionsUrl(learning?.source_url) || isHelpTroubleshootingPerformanceUrl(learning?.source_url) || isHelpTroubleshootingReportingBugsUrl(learning?.source_url) || isHelpIntegrationsGitUrl(learning?.source_url) || isHelpIntegrationsCliUrl(learning?.source_url) || isPlanModeDocUrl(learning?.source_url) || isDebugModeDocUrl(learning?.source_url) || isCursorCliOverviewUrl(learning?.source_url) || isCursorCliUsingUrl(learning?.source_url) || isCursorCliShellModeUrl(learning?.source_url) || isCursorCliAcpUrl(learning?.source_url) || isCursorCliHeadlessUrl(learning?.source_url)) {
     return 'cluster:agent-overview';
   }
   if (
