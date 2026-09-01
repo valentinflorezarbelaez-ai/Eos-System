@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T13:11:37.530Z",
+  "updated_at": "2026-09-01T13:17:20.473Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1639,6 +1639,16 @@
       "published_at": null,
       "summary": "Type in the chat input to attach specific context to your conversation. What can I reference with @? — Files & Folders : or to include files or folders (type after selecting a folder to navigate deeper) Terminals : to include terminal output as context Chats : to reference context from a previous conversation Git diffs : When should I use @ mentions? — Use them when you know which files are relevant. Can I attach multiple items? — Yes.",
       "apply_in_eos": "Help Context is vendor Agent @ mentions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop @ mentions for daily ingest. This Cloud Agent VM already searches the workspace. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-customization-ignore-files",
+      "title": "Ignore files",
+      "source_url": "https://cursor.com/help/customization/ignore-files",
+      "published_at": null,
+      "summary": "Control which files Cursor includes in AI context by using ignore files. How do I exclude files from Cursor? — Create a .cursorignore file in your project root. Does Cursor respect .gitignore? — Yes. .cursorignore Why should I ignore files? — Large generated files are rarely useful as context Secrets and credentials are safer excluded from AI context Binary files and assets add noise without value Third-party code (like ) is rarely useful as context",
+      "apply_in_eos": "Help Ignore files is vendor Agent context exclusions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop ignore-file setup for daily ingest. Keep .cursorignore. Do not put secrets in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
