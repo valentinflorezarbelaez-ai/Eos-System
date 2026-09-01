@@ -696,6 +696,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_SECURITY_AND_PRIVACY_ACCOUNT_COMPROMISED",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-SECURITY-AND-PRIVACY-MARKETPLACE-SECURITY",
+      "url": "https://cursor.com/help/security-and-privacy/marketplace-security",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_SECURITY_AND_PRIVACY_MARKETPLACE_SECURITY",
+      "fetchable": true
     }
   ]
 }

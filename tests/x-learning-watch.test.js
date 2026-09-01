@@ -279,6 +279,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/security-and-privacy/marketplace-security' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -472,6 +476,14 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/security-and-privacy/compliance'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/reference/plugins'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/marketplace'),
     false
   );
   assert.equal(
@@ -2009,6 +2021,23 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpSecurityAndPrivacyAccountCompromised.apply_in_eos), false);
   assert.equal(helpSecurityAndPrivacyAccountCompromised.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpSecurityAndPrivacyAccountCompromised.apply_in_eos.includes('Vercel'), false);
+  const helpSecurityAndPrivacyMarketplaceSecurity = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/marketplace-security');
+  assert.ok(helpSecurityAndPrivacyMarketplaceSecurity);
+  assert.equal(helpSecurityAndPrivacyMarketplaceSecurity.title, 'Marketplace security');
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurity.summary, /What risk does installing a plugin carry/);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurity.summary, /Are plugins open source/);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurity.summary, /Are plugin updates reviewed/);
+  assert.equal(helpSecurityAndPrivacyMarketplaceSecurity.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpSecurityAndPrivacyMarketplaceSecurity.summary), false);
+  assert.equal(helpSecurityAndPrivacyMarketplaceSecurity.summary.toLowerCase().includes('curl'), false);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos, /vendor marketplace plugin review/i);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos, /\/goal/);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos, /do not rotate this Cloud Agent into marketplace plugin install/i);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos, /environment\.json/);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos), false);
+  assert.equal(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpSecurityAndPrivacyMarketplaceSecurity.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -2266,6 +2295,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Regions and model availability', link: 'https://cursor.com/help/security-and-privacy/regions' },
     { title: 'SSO and authentication', link: 'https://cursor.com/help/security-and-privacy/sso' },
     { title: 'Compromised account', link: 'https://cursor.com/help/security-and-privacy/account-compromised' },
+    { title: 'Marketplace security', link: 'https://cursor.com/help/security-and-privacy/marketplace-security' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -3692,6 +3722,27 @@ test('applyHint for Help Compromised account keeps this Cloud Agent off dashboar
   assert.equal(hint.includes('Plan Mode'), false);
 });
 
+test('applyHint for Help Marketplace security keeps this Cloud Agent off marketplace plugin install', () => {
+  const hint = applyHint({
+    title: 'Marketplace security',
+    link: 'https://cursor.com/help/security-and-privacy/marketplace-security',
+    summary: 'Optional Help Marketplace security is enabled by default. Custom Mode and Vercel. Use Slack. Team marketplace plugins are enabled.'
+  });
+  assert.match(hint, /vendor marketplace plugin review/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into marketplace plugin install/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+  assert.equal(hint.includes('Plan Mode'), false);
+  assert.equal(hint.includes('Team MCP marketplace is vendor distribution'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -4788,6 +4839,22 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpSecurityAndPrivacyAccountCompromised[0]).includes('Vercel'), false);
   assert.equal(applyHint(helpSecurityAndPrivacyAccountCompromised[0]).includes('Plan Mode'), false);
 
+  const helpSecurityAndPrivacyMarketplaceSecurity = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-security-and-privacy-marketplace-security.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/security-and-privacy/marketplace-security'
+  );
+  assert.equal(helpSecurityAndPrivacyMarketplaceSecurity[0].id, 'https://cursor.com/help/security-and-privacy/marketplace-security');
+  assert.equal(helpSecurityAndPrivacyMarketplaceSecurity[0].title, 'Marketplace security');
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurity[0].summary, /How plugins are vetted, reviewed, and maintained in the Cursor Marketplace/);
+  assert.match(applyHint(helpSecurityAndPrivacyMarketplaceSecurity[0]), /vendor marketplace plugin review/i);
+  assert.match(applyHint(helpSecurityAndPrivacyMarketplaceSecurity[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpSecurityAndPrivacyMarketplaceSecurity[0])), false);
+  assert.equal(applyHint(helpSecurityAndPrivacyMarketplaceSecurity[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpSecurityAndPrivacyMarketplaceSecurity[0]).includes('Vercel'), false);
+  assert.equal(applyHint(helpSecurityAndPrivacyMarketplaceSecurity[0]).includes('Plan Mode'), false);
+  assert.equal(applyHint(helpSecurityAndPrivacyMarketplaceSecurity[0]).includes('Team MCP marketplace is vendor distribution'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -5316,6 +5383,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
   assert.equal(
     cursorOfficialMarkdownUrl('https://cursor.com/help/security-and-privacy/account-compromised'),
     'https://cursor.com/help/security-and-privacy/account-compromised.md'
+  );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/security-and-privacy/marketplace-security'),
+    'https://cursor.com/help/security-and-privacy/marketplace-security.md'
   );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
@@ -5946,6 +6017,21 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpSecurityAndPrivacyAccountCompromisedMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpSecurityAndPrivacyAccountCompromisedMd.summary), false);
   assert.equal(helpSecurityAndPrivacyAccountCompromisedMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpSecurityAndPrivacyMarketplaceSecurityMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-security-and-privacy-marketplace-security.md'), 'utf8')
+  );
+  assert.equal(helpSecurityAndPrivacyMarketplaceSecurityMd.title, 'Marketplace security');
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurityMd.summary, /What risk does installing a plugin carry/);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurityMd.summary, /Are plugins open source/);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurityMd.summary, /Are plugin updates reviewed/);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurityMd.summary, /What happens if a security issue is found in a plugin/);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurityMd.summary, /Are plugin authors required to maintain their plugins/);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurityMd.summary, /How do I report a plugin issue/);
+  assert.match(helpSecurityAndPrivacyMarketplaceSecurityMd.summary, /How do you decide which plugins to list/);
+  assert.equal(helpSecurityAndPrivacyMarketplaceSecurityMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpSecurityAndPrivacyMarketplaceSecurityMd.summary), false);
+  assert.equal(helpSecurityAndPrivacyMarketplaceSecurityMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -6994,6 +7080,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       apply_in_eos: 'Help Compromised account is vendor compromised-account incident response. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard session revoke, billing, or API-key settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Marketplace security',
+      source_url: 'https://cursor.com/help/security-and-privacy/marketplace-security',
+      published_at: null,
+      apply_in_eos: 'Help Marketplace security is vendor marketplace plugin review. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into marketplace plugin install for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'What is multi-agent coding?',
       source_url: 'https://cursor.com/help/ai-features/multi-agent',
       published_at: null,
@@ -7015,6 +7107,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/regions'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/sso'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/account-compromised'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/marketplace-security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/multi-agent'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
@@ -7261,6 +7354,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Compromised account is vendor compromised-account incident response. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard session revoke, billing, or API-key settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Marketplace security',
+      source_url: 'https://cursor.com/help/security-and-privacy/marketplace-security',
+      published_at: null,
+      apply_in_eos: 'Help Marketplace security is vendor marketplace plugin review. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into marketplace plugin install for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Grok Bot',
       source_url: 'https://cursor.com/docs/grok-bot',
       published_at: null,
@@ -7310,6 +7409,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/regions'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/sso'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/account-compromised'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/security-and-privacy/marketplace-security'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/grok-bot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -7890,6 +7990,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/security-and-privacy/regions'), false);
   assert.equal(current.includes('cursor.com/help/security-and-privacy/sso'), false);
   assert.equal(current.includes('cursor.com/help/security-and-privacy/account-compromised'), false);
+  assert.equal(current.includes('cursor.com/help/security-and-privacy/marketplace-security'), false);
   assert.equal(current.includes('cursor.com/docs/grok-bot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);

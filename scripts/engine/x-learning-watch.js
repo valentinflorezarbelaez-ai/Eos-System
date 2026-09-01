@@ -624,6 +624,9 @@ export function applyHint(item) {
   if (isHelpSecurityAndPrivacyAccountCompromisedUrl(item?.link)) {
     return 'Help Compromised account is vendor compromised-account incident response. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into dashboard session revoke, billing, or API-key settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
+  if (isHelpSecurityAndPrivacyMarketplaceSecurityUrl(item?.link)) {
+    return 'Help Marketplace security is vendor marketplace plugin review. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into marketplace plugin install for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+  }
   if (isGrokBotDocUrl(item?.link)) {
     return 'Grok Bot is vendor persistent-cloud Bots. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into the Grok Bot desktop or iOS app for daily ingest. This Cloud Agent VM has no Grok Bot Linux app. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
@@ -994,7 +997,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isHelpAgentModeUrl(url) || isHelpAskModeUrl(url) || isHelpPlanModeUrl(url) || isHelpTabUrl(url) || isHelpInlineEditUrl(url) || isHelpCloudAgentsUrl(url) || isHelpBackgroundAgentsUrl(url) || isHelpMobileAppUrl(url) || isHelpSharedTranscriptsUrl(url) || isHelpBugbotUrl(url) || isHelpRulesUrl(url) || isHelpSkillsUrl(url) || isHelpMcpUrl(url) || isHelpContextUrl(url) || isHelpIgnoreFilesUrl(url) || isHelpPluginsUrl(url) || isHelpMultiAgentUrl(url) || isHelpSideChatsUrl(url) || isHelpConversationSearchUrl(url) || isHelpAiPairProgrammingUrl(url) || isGetStartedQuickstartUrl(url) || isHelpGettingStartedInstallUrl(url) || isHelpGettingStartedFirstProjectUrl(url) || isHelpGettingStartedBuildAiCodingAgentUrl(url) || isHelpSecurityAndPrivacyPrivacyUrl(url) || isHelpSecurityAndPrivacyRegionsUrl(url) || isHelpSecurityAndPrivacySsoUrl(url) || isHelpSecurityAndPrivacyAccountCompromisedUrl(url) || isGrokBotDocUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isHelpAgentModeUrl(url) || isHelpAskModeUrl(url) || isHelpPlanModeUrl(url) || isHelpTabUrl(url) || isHelpInlineEditUrl(url) || isHelpCloudAgentsUrl(url) || isHelpBackgroundAgentsUrl(url) || isHelpMobileAppUrl(url) || isHelpSharedTranscriptsUrl(url) || isHelpBugbotUrl(url) || isHelpRulesUrl(url) || isHelpSkillsUrl(url) || isHelpMcpUrl(url) || isHelpContextUrl(url) || isHelpIgnoreFilesUrl(url) || isHelpPluginsUrl(url) || isHelpMultiAgentUrl(url) || isHelpSideChatsUrl(url) || isHelpConversationSearchUrl(url) || isHelpAiPairProgrammingUrl(url) || isGetStartedQuickstartUrl(url) || isHelpGettingStartedInstallUrl(url) || isHelpGettingStartedFirstProjectUrl(url) || isHelpGettingStartedBuildAiCodingAgentUrl(url) || isHelpSecurityAndPrivacyPrivacyUrl(url) || isHelpSecurityAndPrivacyRegionsUrl(url) || isHelpSecurityAndPrivacySsoUrl(url) || isHelpSecurityAndPrivacyAccountCompromisedUrl(url) || isHelpSecurityAndPrivacyMarketplaceSecurityUrl(url) || isGrokBotDocUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -1321,6 +1324,12 @@ function isHelpSecurityAndPrivacyAccountCompromisedUrl(url) {
     || value === 'https://www.cursor.com/help/security-and-privacy/account-compromised';
 }
 
+function isHelpSecurityAndPrivacyMarketplaceSecurityUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/help/security-and-privacy/marketplace-security'
+    || value === 'https://www.cursor.com/help/security-and-privacy/marketplace-security';
+}
+
 function isGrokBotDocUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/docs/grok-bot'
@@ -1547,6 +1556,7 @@ function currentClusterKey(learning) {
     || isHelpSecurityAndPrivacyRegionsUrl(learning?.source_url)
     || isHelpSecurityAndPrivacySsoUrl(learning?.source_url)
     || isHelpSecurityAndPrivacyAccountCompromisedUrl(learning?.source_url)
+    || isHelpSecurityAndPrivacyMarketplaceSecurityUrl(learning?.source_url)
     || url.includes('changelog/cloud-in-agents-window')
     || title === 'automations'
     || title === 'subagents'
