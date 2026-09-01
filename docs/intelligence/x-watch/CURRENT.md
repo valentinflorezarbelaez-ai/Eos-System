@@ -45,6 +45,9 @@ Store size: 199
   https://x.com/cursor_ai/status/2090136964116721902
 - Use /goal — cited by https://aicatchup.com/news/cursor-cloud-agents-event-triggers-goals-subagents (not fetched from X)
   https://x.com/cursor_ai/status/2090136966121599117
+- We're making Git hosting more reliable, performant, and scalable — cited by https://www.unrollnow.com/status/2089758713183613266 (not fetched from X)
+  Vendor git-scale narrative. GitHub remains source of truth for this synced repo. Do not Start from scratch or create an Origin repo for this watch. Do not treat Continuity or throughput marketing as EOS evidence.
+  https://x.com/cursor_ai/status/2089758713183613266
 - Origin, our code hosting platform, is now live — cited by https://www.unrollnow.com/status/2089399057659596847 (not fetched from X)
   https://x.com/cursor_ai/status/2089399057659596847
 - We've partnered with some of the top GitHub integrations. Vercel, Buildkite, and Depot are already available with more coming soon. — cited by https://www.unrollnow.com/status/2089399057659596847 (not fetched from X)

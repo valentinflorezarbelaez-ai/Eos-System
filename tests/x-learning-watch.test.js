@@ -9162,6 +9162,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /Steer running agents/);
   assert.match(current, /2090136960295645431/);
   assert.match(current, /2090136964116721902/);
+  assert.match(current, /2089758713183613266/);
   assert.match(current, /2089399059488350447/);
   assert.match(current, /2089399061040308603/);
   assert.match(current, /2087941309013397970/);
@@ -9236,6 +9237,18 @@ test('cited X posts never claim an X fetch', () => {
       row.x_url === 'https://x.com/cursor_ai/status/2090136964116721902'
       && row.cited_by === 'https://www.unrollnow.com/status/2090136956101414982'
       && /Steer/i.test(row.about)
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/blog/git-at-any-scale'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2089758713183613266'
+      && row.cited_by === 'https://www.unrollnow.com/status/2089758713183613266'
+      && /Git hosting/i.test(row.about)
+      && /GitHub remains source of truth/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
       && row.fetched_from_x === false
     )),
     true

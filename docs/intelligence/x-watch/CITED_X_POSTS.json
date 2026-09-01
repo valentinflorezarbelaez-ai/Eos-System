@@ -85,6 +85,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2089758713183613266",
+      "handle": "cursor_ai",
+      "about": "We're making Git hosting more reliable, performant, and scalable",
+      "cited_by": "https://www.unrollnow.com/status/2089758713183613266",
+      "official_source": "https://cursor.com/blog/git-at-any-scale",
+      "published_date": "2026-08-18",
+      "eos_note": "Vendor git-scale narrative. GitHub remains source of truth for this synced repo. Do not Start from scratch or create an Origin repo for this watch. Do not treat Continuity or throughput marketing as EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2089399057659596847",
       "handle": "cursor_ai",
       "about": "Origin, our code hosting platform, is now live",
