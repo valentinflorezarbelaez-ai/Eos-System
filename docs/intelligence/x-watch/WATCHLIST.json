@@ -682,6 +682,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_SECURITY_AND_PRIVACY_REGIONS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-SECURITY-AND-PRIVACY-SSO",
+      "url": "https://cursor.com/help/security-and-privacy/sso",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_SECURITY_AND_PRIVACY_SSO",
+      "fetchable": true
     }
   ]
 }
