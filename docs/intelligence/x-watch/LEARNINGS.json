@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T15:28:35.370Z",
+  "updated_at": "2026-09-01T15:33:56.354Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1789,6 +1789,16 @@
       "published_at": null,
       "summary": "Cursor adds AI-powered git features on top of the standard Source Control panel. Can Agent write commit messages for me? — Yes. How does AI merge conflict resolution work? — When you hit a merge conflict, click Resolve in Chat in the conflict UI. How does Agent attribution work? — When Agent creates commits or pull requests, Cursor can add a trailer automatically. Can enterprise admins control commit attribution? — Yes. What is Cursor Blame? — Cursor Blame tracks which code was written by AI and which was written by humans. Does Agent work across multiple workspaces? — Yes.",
       "apply_in_eos": "Help Git is vendor desktop git/Source Control features. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop git UI for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-integrations-github-gitlab",
+      "title": "GitHub, GitLab, Azure DevOps, and Bitbucket",
+      "source_url": "https://cursor.com/help/integrations/github-gitlab",
+      "published_at": null,
+      "summary": "Connect GitHub, GitLab, Azure DevOps, or Bitbucket Cloud to use Cloud Agents. How do I connect GitHub? — Follow the setup steps in the GitHub integration docs. How do I connect GitLab? — Follow the setup steps in the GitLab integration docs. How do I connect Azure DevOps? — Follow the setup steps in the Azure DevOps integration docs. How do I connect Bitbucket? — Follow the setup steps in the Bitbucket integration docs.",
+      "apply_in_eos": "Help GitHub, GitLab, Azure DevOps, and Bitbucket is vendor Cloud Agent and Bugbot repo-connection setup. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra SCMs for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
