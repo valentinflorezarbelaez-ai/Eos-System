@@ -1,0 +1,41 @@
+---
+description: "EOS product and UX: quality dimensions, a11y, performance, SEO, browser QA"
+alwaysApply: false
+globs: src/components/**,src/pages/**,src/styles/**
+---
+
+# EOS Product and UX
+
+Apply when editing UI surfaces (components, pages, styles). Control Plane today is mostly CLI/kernel; these rules apply if/when those paths exist or when building canary/web targets.
+
+## Canonical sources
+
+- `docs/workflows/WEBSITE_QUALITY_MODEL.md` — 10 quality dimensions
+- `.agents/skills/accessibility-auditor/SKILL.md`
+- `.agents/skills/performance-auditor/SKILL.md`
+- `.agents/skills/seo-auditor/SKILL.md`
+- `.agents/skills/browser-qa/SKILL.md`
+- `docs/architecture/adrs/ADR-0008-value-driven-ui-architecture-and-friction-reduction.md`
+
+## Product first
+
+- Name the job-to-be-done, audience, and conversion (or operator) goal before visual polish.
+- Prefer `NO_BUILD` when the page does not reduce a real friction.
+- Application over template: intentional type, spacing, and palette — not stock theme dumps.
+
+## UX / UI
+
+- Clear hierarchy, keyboard-usable flows, visible loading / error / empty states.
+- Responsive checks at 375px, 768px, 1440px when layout changes.
+- Verify behavior in the browser, not a single screenshot. Exercise the changed flow end to end.
+- Shared state must stay consistent across routes that read it.
+
+## Accessibility, performance, SEO
+
+- Semantic HTML, focus indicators, contrast ≥ 4.5:1, ARIA only when needed (WCAG 2.1 AA).
+- Core Web Vitals targets: LCP < 2.5s, INP < 200ms, CLS < 0.1 (measure; do not claim).
+- Titles, meta description, canonical, OG tags, and no empty heading outline when the surface is public.
+
+## Verification
+
+A render screenshot is not verification. Click, type, submit, navigate. Hunt regressions on sibling routes. If browser tools are unavailable, say what was not verified and use tests/curl as substitute.

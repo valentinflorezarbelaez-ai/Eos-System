@@ -1,0 +1,52 @@
+---
+description: "EOS engineering doctrine: TDD, OpenSpec, incremental work, anti-majority, no premature code"
+alwaysApply: true
+---
+
+# EOS Engineering Doctrine
+
+Engineering in this workspace is specification-first, test-driven, and incremental.
+
+## Canonical sources
+
+- `docs/core/WORLD_CLASS_ENGINEERING_PIPELINE.md` — 21-step lifecycle
+- `.agents/skills/sdd/SKILL.md` — Spec Driven Development
+- `docs/specs/` — specifications (`proposal.md` → `spec.md` → `design.md` → `tasks.md`)
+- `docs/architecture/adrs/` — Architecture Decision Records
+- `docs/orchestration/ENGINEERING_LIFECYCLE.json` — lifecycle states
+
+## 21-step pipeline (summary)
+
+Intake → reconnaissance → context → requirements → research → architecture → design → implementation → testing → security → quality → accessibility → performance → SEO → browser QA → evidence → documentation → deployment → post-deploy verification → learning → continuous improvement.
+
+Do not skip intake/value. If there is no user job-to-be-done, prefer `NO_BUILD`.
+
+## Spec before code
+
+For non-trivial features, refactoring, or new subsystems:
+
+1. OpenSpec exists and is approved: `proposal.md` → `spec.md` → `design.md` → `tasks.md`.
+2. Record ADRs for non-obvious architectural trade-offs.
+3. Then implement the smallest slice that satisfies one task.
+
+Do not write production code before the OpenSpec for that change is in place, unless the human asked for a trivial, local, already-specified fix.
+
+## TDD cycle
+
+`RED` (failing test) → `GREEN` (minimal implementation) → `REFACTOR` → `VERIFY`.
+
+- One purpose, one test, one commit when practical.
+- Do not weaken or delete tests to obtain green.
+- Prefer `node --test` (`npm test`) for Control Plane tests; `npm run test:lab` for `EOS-Lab/`.
+
+## Quality bar
+
+- Preserve before modify: inspect callers, tests, and contracts first.
+- Proportionality: simplest design that meets the spec. No ornamental layers.
+- Estimate is not a quote. Pricing figures need an explicit legal disclaimer.
+- Anti-majority: subagent consensus is not authority. Evidence, tests, and constitution win.
+
+## Language
+
+- Code, comments, commits, specs, ADRs, evidence: professional English.
+- UI copy follows the product locale and the user's language.

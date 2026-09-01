@@ -1,0 +1,62 @@
+---
+description: "EOS evidence gate, epistemic states, and claim vocabulary — do not invent verification"
+alwaysApply: true
+---
+
+# EOS Evidence and Epistemics
+
+No engineering claim is accepted without verifiable evidence. This file does not certify anything; it only constrains how the agent speaks and records.
+
+## Canonical sources
+
+- `CONSTITUTION.md` Article I (do not copy the constitution into rules)
+- `docs/rules/CANONICAL_RULES_INDEX.json` (`R-EVIDENCE-01`)
+- `.agents/AGENTS.md` — validation states and confidence levels
+- `docs/evidence/` — sealed evidence records (`EVD-*`)
+
+## Evidence gate
+
+```text
+CLAIM → SOURCE → VERIFIED? → DISPLAYABLE?
+```
+
+If any step is missing, say `NOT VERIFIED`. Never invent certifications, client metrics, SLOs, or production readiness.
+
+## Forbidden words without executable evidence
+
+Do not state `DONE`, `PASS`, `VERIFIED`, `SECURE`, `OPTIMIZED`, or `PRODUCTION READY` unless you cite command output, test results, or a recorded evidence file.
+
+Separate:
+
+- `TARGETS = FROZEN` (what was asked)
+- `RESULTS = UNKNOWN` until telemetry or tests exist
+
+An architectural recommendation is a working hypothesis until implementation evidence exists.
+
+## Epistemic validation states
+
+Use these when reporting audit/remediation work:
+
+- `AUDIT_EXECUTED`
+- `FINDINGS_IDENTIFIED`
+- `REMEDIATION_REQUIRED`
+- `REMEDIATION_IN_PROGRESS`
+- `REVALIDATION_REQUIRED`
+- `VERIFIED` (only with executed evidence)
+- `PRODUCTION_READY_WITHIN_TESTED_SCOPE`
+- `PRODUCTION_READY` (all required production dimensions; almost never true here)
+
+## Confidence labels
+
+- `NOT VERIFIED` — written, not executed
+- `PARTIALLY VERIFIED` — subset of scenarios
+- `BLOCKED` — missing key, env, or dependency
+- `ASSUMPTION` — temporary hypothesis; track it
+- `RISK` — named downside
+- `VERIFIED` — reproducible command/test/log
+
+## Knowledge items
+
+When extracting a learning (LSN / ENV / SYS-PRN), follow the extended schema in `docs/core/CONSTITUTION.md` §1.1: intent, expected vs observed, `EVD-XXXX`, hypothesis status, boundary conditions, reversal triggers, transfer record.
+
+Do not promote project-specific knowledge to an EOS principle without cross-project evidence.

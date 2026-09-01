@@ -1,0 +1,45 @@
+---
+description: "EOS architecture: Control Plane layers, frozen CORE, ESM, preserve-before-modify"
+alwaysApply: false
+globs: src/**,bin/**,scripts/**,tests/**
+---
+
+# EOS Architecture
+
+Apply when editing Control Plane runtime, CLI, scripts, or their tests.
+
+## Canonical sources
+
+- `docs/architecture/adrs/` — ADRs (do not duplicate them here)
+- `docs/core/CONSTITUTION.md` Articles II–IV — artifact hierarchy and write barriers
+- `src/core/authority/authority-truth-source.js` — sole mission phase writer (`R-ATS-01`)
+- `docs/rules/CANONICAL_RULES_INDEX.json`
+
+## Workspace shape
+
+- `bin/` and `src/cli/` — mission CLI entry
+- `src/core/` — Control Plane kernel (treat as **FROZEN** unless the human explicitly authorized that file)
+- `src/mcp-server.js` — MCP surface
+- `scripts/` — verify, exam, engine, CI helpers
+- `tests/` — Node test suite (`node --test`)
+- `EOS-Lab/` — canary / lab work (preferred for medium-risk experiments)
+- `Fundacion/` and `PRJ-FUNDACION` — **do not write** (`Δ = 0`)
+
+This repository is ESM (`"type": "module"`). Prefer Node built-ins. Do not add runtime dependencies without an explicit high-risk approval (`DEPENDENCY_POLICY_L0.md`).
+
+## Design rules
+
+- Preserve before modify: read existing modules, tests, and schemas first.
+- Proportionality: no new layers, engines, or planes unless an ADR and spec require them. Architecture freeze: no speculative subsystems.
+- One module, one job. Keep public surfaces small and typed by convention (JSDoc + tests).
+- Mission phase mutations go through `AuthorityTruthSource.commitTransition`, not ad-hoc JSON writes (`R-ATS-01`).
+- Local schemas live under `docs/schemas/local/`. Validate at the boundary (`R-SCHEMA-01`).
+- HITL-gated transitions need a valid receipt; missing receipt denies and leaves state unchanged (`R-HITL-01`).
+- FDIR / kill-switch trips block mission close and real integrations (`R-FDIR-01`).
+
+## Do not
+
+- Edit `src/core/` product kernel or `Fundacion/` unless the human named that exact change and authorization exists.
+- Bypass `IntegrationGatekeeper`, `HitlGatekeeper`, or `McpMissionBridge` barriers.
+- Hardcode legal/banking custody (`GAP-002 = UNKNOWN`).
+- Copy constitution text into code comments; cite rule IDs instead.
