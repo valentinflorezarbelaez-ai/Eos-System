@@ -9381,6 +9381,18 @@ test('cited X posts never claim an X fetch', () => {
     )),
     true
   );
+  assert.equal(official.includes('https://cursor.com/changelog/customize'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2069512593887092811'
+      && row.cited_by === 'https://www.unrollnow.com/status/2069512593887092811'
+      && /leaderboard/i.test(row.about)
+      && /desktop Customize/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(
     doc.citations.some((row) => (
       row.x_url === 'https://x.com/cursor_ai/status/2061550723503194426'

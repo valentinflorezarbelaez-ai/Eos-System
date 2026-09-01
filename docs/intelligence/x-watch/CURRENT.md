@@ -95,6 +95,9 @@ Store size: 199
 - You can now delegate tasks to Cursor directly from Notion — cited by https://www.unrollnow.com/status/2069872515548340407 (not fetched from X)
   Notion SDK embedding is optional vendor integration. Do not install @cursor/sdk or rotate this watch into Notion task delegation. Do not add docs/integrations/notion as a feed.
   https://x.com/cursor_ai/status/2069872515548340407
+- Cursor now shows you a leaderboard of the most popular plugins, skills, and MCPs across your team — cited by https://www.unrollnow.com/status/2069512593887092811 (not fetched from X)
+  Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Team marketplace is not EOS governance.
+  https://x.com/cursor_ai/status/2069512593887092811
 - We're increasing usage limits for every Teams user — cited by https://www.unrollnow.com/status/2061550723503194426 (not fetched from X)
   Honor included quota. Do not switch this watch to Premium or on-demand. Do not treat vendor seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard.
   https://x.com/cursor_ai/status/2061550723503194426
