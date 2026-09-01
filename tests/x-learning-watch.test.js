@@ -9206,6 +9206,10 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /2041969870234120231/);
   assert.match(current, /2029222015736197205/);
   assert.match(current, /2028953584407085546/);
+  assert.match(current, /2043798784367546707/);
+  assert.match(current, /2027079876948484200/);
+  assert.match(current, /2026369873321013568/);
+  assert.match(current, /2024544628687687879/);
   assert.equal(current.includes('cursor.com/docs/plugins'), false);
   assert.equal(current.includes('cursor.com/docs/origin/cli'), false);
   assert.equal(current.includes('cursor.com/docs/origin/integrations'), false);
@@ -9962,6 +9966,59 @@ test('cited X posts never claim an X fetch', () => {
       && /\.cursor\/mcp\.json/i.test(row.eos_note || '')
       && /enable/i.test(row.eos_note || '') === false
       && row.official_source === 'https://cursor.com/changelog/2-6'
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/3-1'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2043798784367546707'
+      && row.cited_by === 'https://ethanbholland.com/2026/04/17/agents-and-copilots-ai-news-week-ending-04-17-2026/'
+      && /split agents/i.test(row.about)
+      && /editor chrome/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.official_source === 'https://cursor.com/changelog/3-1'
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/02-26-26'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2027079876948484200'
+      && row.cited_by === 'https://ethanbholland.com/2026/02/27/agents-and-copilots-ai-news-week-ending-02-27-2026/'
+      && /Bugbot Autofix/i.test(row.about)
+      && /TDD evidence remains required/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && /slack/i.test(row.eos_note || '') === false
+      && row.official_source === 'https://cursor.com/changelog/02-26-26'
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/02-24-26'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2026369873321013568'
+      && row.cited_by === 'https://ethanbholland.com/2026/02/27/agents-and-copilots-ai-news-week-ending-02-27-2026/'
+      && /demos, not diffs/i.test(row.about)
+      && /Computer-use/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.official_source === 'https://cursor.com/changelog/02-24-26'
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/2-5'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2024544628687687879'
+      && row.cited_by === 'https://ethanbholland.com/2026/02/20/agents-and-copilots-ai-news-week-ending-02-20-2026/'
+      && /sandboxing/i.test(row.about)
+      && /Cloud Agent VM already runs isolated/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.official_source === 'https://cursor.com/changelog/2-5'
       && row.fetched_from_x === false
     )),
     true

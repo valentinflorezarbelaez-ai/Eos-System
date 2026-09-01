@@ -227,6 +227,9 @@ Store size: 199
 - Through the end of this weekend, we are doubling Composer 2 usage limits inside of Cursor's new agents window. — cited by https://ethanbholland.com/2026/04/24/agents-and-copilots-ai-news-week-ending-04-24-2026/ (not fetched from X)
   Weekend usage doubling is a launch promo, not standing pricing. Composer is a vendor model family. Do not treat vendor rates as EOS evidence. Honor included quota.
   https://x.com/cursor_ai/status/2045236540784492845
+- We've shipped several quality-of-life improvements to Cursor 3. Just like in your terminal, you can now split agents for multi-tasking in Cursor. — cited by https://ethanbholland.com/2026/04/17/agents-and-copilots-ai-news-week-ending-04-17-2026/ (not fetched from X)
+  Tiled layout is vendor editor chrome. This watch already runs in the Cloud Agent VM. Editor chrome is not an EOS Control Plane change. Honor included quota.
+  https://x.com/cursor_ai/status/2043798784367546707
 - Cursor's code review agent can now learn from activity on PRs to self-improve in real time. — cited by https://ethanbholland.com/2026/04/10/agents-and-copilots-ai-news-week-ending-04-10-2026/ (not fetched from X)
   Bugbot learned rules are optional vendor PR review. EOS TDD evidence remains required. Do not rotate this Cloud Agent into Bugbot Autofix for daily ingest.
   https://x.com/cursor_ai/status/2041969870234120231
@@ -248,3 +251,12 @@ Store size: 199
 - Cursor now supports MCP Apps. Agents can render interactive UIs in your conversations. — cited by https://ethanbholland.com/2026/03/06/agents-and-copilots-ai-news-week-ending-03-06-2026/ (not fetched from X)
   MCP Apps are vendor chat UIs. Keep repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace is vendor distribution. Do not add a dashboard marketplace as a feed.
   https://x.com/cursor_ai/status/2028953584407085546
+- Cursor can now automatically fix issues it finds in PRs with Bugbot Autofix. — cited by https://ethanbholland.com/2026/02/27/agents-and-copilots-ai-news-week-ending-02-27-2026/ (not fetched from X)
+  Bugbot Autofix is optional vendor PR review. EOS TDD evidence remains required. Do not rotate this Cloud Agent into Bugbot Autofix for daily ingest.
+  https://x.com/cursor_ai/status/2027079876948484200
+- Cursor now shows you demos, not diffs. Agents can use the software they build and send you videos of their work. — cited by https://ethanbholland.com/2026/02/27/agents-and-copilots-ai-news-week-ending-02-27-2026/ (not fetched from X)
+  Computer-use agents are optional GUI control. This watch stays on official RSS, not desktop scraping. Keep this watch in the Cloud Agent VM.
+  https://x.com/cursor_ai/status/2026369873321013568
+- Over the last three months, we've rolled out agent sandboxing on macOS, Linux, and Windows. — cited by https://ethanbholland.com/2026/02/20/agents-and-copilots-ai-news-week-ending-02-20-2026/ (not fetched from X)
+  Sandbox access controls are vendor desktop agent isolation. This Cloud Agent VM already runs isolated. Keep repo skills, rules, and hooks. Do not add a dashboard marketplace as a feed.
+  https://x.com/cursor_ai/status/2024544628687687879

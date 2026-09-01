@@ -763,6 +763,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2043798784367546707",
+      "handle": "cursor_ai",
+      "about": "We've shipped several quality-of-life improvements to Cursor 3. Just like in your terminal, you can now split agents for multi-tasking in Cursor.",
+      "cited_by": "https://ethanbholland.com/2026/04/17/agents-and-copilots-ai-news-week-ending-04-17-2026/",
+      "official_source": "https://cursor.com/changelog/3-1",
+      "published_date": "2026-04-13",
+      "eos_note": "Tiled layout is vendor editor chrome. This watch already runs in the Cloud Agent VM. Editor chrome is not an EOS Control Plane change. Honor included quota.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2041969870234120231",
       "handle": "cursor_ai",
       "about": "Cursor's code review agent can now learn from activity on PRs to self-improve in real time.",
@@ -836,6 +847,39 @@
       "official_source": "https://cursor.com/changelog/2-6",
       "published_date": "2026-03-03",
       "eos_note": "MCP Apps are vendor chat UIs. Keep repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace is vendor distribution. Do not add a dashboard marketplace as a feed.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2027079876948484200",
+      "handle": "cursor_ai",
+      "about": "Cursor can now automatically fix issues it finds in PRs with Bugbot Autofix.",
+      "cited_by": "https://ethanbholland.com/2026/02/27/agents-and-copilots-ai-news-week-ending-02-27-2026/",
+      "official_source": "https://cursor.com/changelog/02-26-26",
+      "published_date": "2026-02-26",
+      "eos_note": "Bugbot Autofix is optional vendor PR review. EOS TDD evidence remains required. Do not rotate this Cloud Agent into Bugbot Autofix for daily ingest.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2026369873321013568",
+      "handle": "cursor_ai",
+      "about": "Cursor now shows you demos, not diffs. Agents can use the software they build and send you videos of their work.",
+      "cited_by": "https://ethanbholland.com/2026/02/27/agents-and-copilots-ai-news-week-ending-02-27-2026/",
+      "official_source": "https://cursor.com/changelog/02-24-26",
+      "published_date": "2026-02-24",
+      "eos_note": "Computer-use agents are optional GUI control. This watch stays on official RSS, not desktop scraping. Keep this watch in the Cloud Agent VM.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2024544628687687879",
+      "handle": "cursor_ai",
+      "about": "Over the last three months, we've rolled out agent sandboxing on macOS, Linux, and Windows.",
+      "cited_by": "https://ethanbholland.com/2026/02/20/agents-and-copilots-ai-news-week-ending-02-20-2026/",
+      "official_source": "https://cursor.com/changelog/2-5",
+      "published_date": "2026-02-19",
+      "eos_note": "Sandbox access controls are vendor desktop agent isolation. This Cloud Agent VM already runs isolated. Keep repo skills, rules, and hooks. Do not add a dashboard marketplace as a feed.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     }
