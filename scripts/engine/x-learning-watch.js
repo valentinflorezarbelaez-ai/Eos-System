@@ -540,6 +540,9 @@ export function applyHint(item) {
   if (isAgentOverviewUrl(item?.link)) {
     return 'Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.';
   }
+  if (isHelpAgentModeUrl(item?.link)) {
+    return 'Help Agent mode is vendor desktop Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+  }
   if (isPlanModeDocUrl(item?.link)) {
     return 'Plan Mode is optional desktop planning before code. Keep this watch on the standing /goal; do not rotate this Cloud Agent into Plan Mode for daily ingest. EOS TDD remains required. Honor included quota; do not switch this watch to on-demand.';
   }
@@ -907,7 +910,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isHelpAgentModeUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -1064,6 +1067,12 @@ function isHelpGrok45Url(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/help/models-and-usage/grok-4-5'
     || value === 'https://www.cursor.com/help/models-and-usage/grok-4-5';
+}
+
+function isHelpAgentModeUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/help/ai-features/agent'
+    || value === 'https://www.cursor.com/help/ai-features/agent';
 }
 
 function isCloudAgentBestPracticesUrl(url) {
@@ -1324,7 +1333,7 @@ function currentClusterKey(learning) {
   if (isSkillsDocUrl(learning?.source_url) || isPromptingDocUrl(learning?.source_url) || isRulesDocUrl(learning?.source_url) || isMcpDocUrl(learning?.source_url) || isPluginsDocUrl(learning?.source_url) || isCustomizeCursorDocUrl(learning?.source_url) || title === 'agent skills' || title === 'prompting agents' || title === 'rules' || title === 'model context protocol (mcp)' || title === 'plugins') {
     return 'cluster:skills-custom-modes';
   }
-  if (isAgentOverviewUrl(learning?.source_url) || isPlanModeDocUrl(learning?.source_url) || isDebugModeDocUrl(learning?.source_url) || isCursorCliOverviewUrl(learning?.source_url) || isCursorCliUsingUrl(learning?.source_url) || isCursorCliShellModeUrl(learning?.source_url) || isCursorCliAcpUrl(learning?.source_url) || isCursorCliHeadlessUrl(learning?.source_url)) {
+  if (isAgentOverviewUrl(learning?.source_url) || isHelpAgentModeUrl(learning?.source_url) || isPlanModeDocUrl(learning?.source_url) || isDebugModeDocUrl(learning?.source_url) || isCursorCliOverviewUrl(learning?.source_url) || isCursorCliUsingUrl(learning?.source_url) || isCursorCliShellModeUrl(learning?.source_url) || isCursorCliAcpUrl(learning?.source_url) || isCursorCliHeadlessUrl(learning?.source_url)) {
     return 'cluster:agent-overview';
   }
   if (

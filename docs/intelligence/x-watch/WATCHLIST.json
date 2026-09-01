@@ -493,6 +493,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_GROK_4_5",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-AGENT-MODE",
+      "url": "https://cursor.com/help/ai-features/agent",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_AGENT_MODE",
+      "fetchable": true
     }
   ]
 }

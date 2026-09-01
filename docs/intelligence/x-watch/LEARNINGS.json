@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:07:47.547Z",
+  "updated_at": "2026-09-01T12:12:14.471Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1519,6 +1519,16 @@
       "published_at": null,
       "summary": "Compare plans and manage subscription changes from your billing dashboard. What plans are available? — See Models & Pricing for usage pools and Cursor Start for the India plan. What is Auto? — Auto balances intelligence, cost, and reliability through Cursor Router. Is Cursor Router available on my plan? — Cursor Router will launch for Teams and Enterprise plans. Why is the old Auto mode now called Cost mode? — The old Auto mode was split into 3 new modes: Cost , Balance and Intelligence *. What's included in the free Hobby plan? — The Hobby plan gives you access to Cursor's core features with limited usage.",
       "apply_in_eos": "Help Pricing and plans lists vendor individual and Teams plan names. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor plan prices as EOS budget evidence. Do not change this Cloud Agent billing from the dashboard. Keep environment.json + Builds.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-agent",
+      "title": "Agent mode",
+      "source_url": "https://cursor.com/help/ai-features/agent",
+      "published_at": null,
+      "summary": "Agent is Cursor's AI assistant. What can Agent mode do? — Agent can build features from scratch, refactor existing code, fix bugs, write tests, and run shell commands. How do I start using Agent? — Open the Agent panel: - Mac : Press Cmd + I - Windows/Linux : Press Ctrl + I 2. How do I interrupt Agent? — Click the Stop button to stop Agent mid-task. How do I review Agent changes? — Agent's edits are applied as it works. How do I undo Agent changes? — Hover over a previous message and click Restore Checkpoint in the bottom right to roll back all changes Agent made after that point. Can Agent delegate tasks to subagents? — Yes. Can Agent generate images? — Yes. Can I queue follow-up messages while Agent is working? — Yes. Can Agent search my past conversations for context? — Yes. Which mode…",
+      "apply_in_eos": "Help Agent mode is vendor desktop Agent. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
