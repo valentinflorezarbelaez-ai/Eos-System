@@ -2588,6 +2588,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'New Campus Community Launches', link: 'https://forum.cursor.com/t/new-campus-community-launches/164026' },
     { title: 'Addressing the recent Mindgard report', link: 'https://forum.cursor.com/t/addressing-the-recent-mindgard-report/165817' },
     { title: 'Claude Opus 5 now available!', link: 'https://forum.cursor.com/t/claude-opus-5-now-available/166583' },
+    { title: 'Claude Fable 5.1 - Out Now!', link: 'https://forum.cursor.com/t/claude-fable-5-1-out-now/170246' },
     { title: 'Cursor is now a part of SpaceX', link: 'https://cursor.com/blog/joining-spacex' },
     { title: 'Introducing Grok 4.6', link: 'https://cursor.com/blog/grok-4-6' },
     { title: 'Grok 4.6', link: 'https://cursor.com/help/models-and-usage/grok-4-6' },
@@ -2692,6 +2693,18 @@ test('applyHint is specific for current official product titles', () => {
     const hint = applyHint({ ...sample, summary: sample.title });
     assert.equal(hint.startsWith('Review this official'), false, sample.title);
   }
+});
+
+test('applyHint for Claude Fable 5.1 is vendor catalog news', () => {
+  const hint = applyHint({
+    title: 'Claude Fable 5.1 - Out Now!',
+    link: 'https://forum.cursor.com/t/claude-fable-5-1-out-now/170246',
+    summary: 'Claude Fable 5.1 is now available in Cursor! It is the most capable model we have run on CursorBench 3.2.'
+  });
+  assert.match(hint, /vendor catalog news/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(/Custom Mode/i.test(hint), false);
+  assert.equal(/Slack/i.test(hint), false);
 });
 
 test('applyHint does not treat forum subscription wording as changelog harness news', () => {
