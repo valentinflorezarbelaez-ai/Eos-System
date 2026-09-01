@@ -290,6 +290,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2060025063899058458",
+      "handle": "cursor_ai",
+      "about": "Introducing the Cursor Developer Habits Report. We're sharing some of our findings on how software development is changing.",
+      "cited_by": "https://www.unrollnow.com/status/2060025063899058458",
+      "official_source": "https://cursor.com/insights",
+      "published_date": "2026-05-28",
+      "eos_note": "Vendor research metrics are not EOS evidence. Do not add cursor.com/insights as a feed.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2056415413077233983",
       "handle": "cursor_ai",
       "about": "Introducing Composer 2.5, our most powerful model yet",
@@ -297,6 +308,28 @@
       "official_source": "https://cursor.com/changelog/composer-2-5",
       "published_date": "2026-05-18",
       "eos_note": "Composer is a vendor model family. Do not treat marketing metrics as EOS evidence. The first-week 2x included usage was a launch promo, not standing pricing.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2049499866217185492",
+      "handle": "cursor_ai",
+      "about": "We're introducing the Cursor SDK so you can build agents with the same runtime, harness, and models that power Cursor",
+      "cited_by": "https://www.unrollnow.com/status/2049499866217185492",
+      "official_source": "https://cursor.com/changelog/sdk-release",
+      "published_date": "2026-04-29",
+      "eos_note": "Cursor SDK is optional vendor scripting. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed. Customer names are vendor marketing, not EOS evidence.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2034668943676244133",
+      "handle": "cursor_ai",
+      "about": "Composer 2 is now available in Cursor",
+      "cited_by": "https://www.unrollnow.com/status/2034668943676244133",
+      "official_source": "https://cursor.com/changelog/composer-2",
+      "published_date": "2026-03-19",
+      "eos_note": "Composer is a vendor model family. Do not treat vendor rates or CursorBench scores as EOS evidence. Honor included quota.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     },

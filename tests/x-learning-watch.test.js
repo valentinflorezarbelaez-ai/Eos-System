@@ -9391,12 +9391,48 @@ test('cited X posts never claim an X fetch', () => {
     )),
     true
   );
+  assert.equal(official.includes('https://cursor.com/insights'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2060025063899058458'
+      && row.cited_by === 'https://www.unrollnow.com/status/2060025063899058458'
+      && /Developer Habits Report/i.test(row.about)
+      && /not EOS evidence/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(
     doc.citations.some((row) => (
       row.x_url === 'https://x.com/cursor_ai/status/2056415413077233983'
       && row.cited_by === 'https://aicatchup.com/news/cursor-composer-2-5-launch'
       && /Composer 2\.5/i.test(row.about)
       && /launch promo/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/sdk-release'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2049499866217185492'
+      && row.cited_by === 'https://www.unrollnow.com/status/2049499866217185492'
+      && /Cursor SDK/i.test(row.about)
+      && /@cursor\/sdk/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(official.includes('https://cursor.com/changelog/composer-2'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2034668943676244133'
+      && row.cited_by === 'https://www.unrollnow.com/status/2034668943676244133'
+      && /Composer 2 is now available/i.test(row.about)
+      && /vendor rates/i.test(row.eos_note || '')
+      && /enable/i.test(row.eos_note || '') === false
       && row.fetched_from_x === false
     )),
     true

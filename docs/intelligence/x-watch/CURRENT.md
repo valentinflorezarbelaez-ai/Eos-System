@@ -98,9 +98,18 @@ Store size: 199
 - We're increasing usage limits for every Teams user — cited by https://www.unrollnow.com/status/2061550723503194426 (not fetched from X)
   Honor included quota. Do not switch this watch to Premium or on-demand. Do not treat vendor seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard.
   https://x.com/cursor_ai/status/2061550723503194426
+- Introducing the Cursor Developer Habits Report. We're sharing some of our findings on how software development is changing. — cited by https://www.unrollnow.com/status/2060025063899058458 (not fetched from X)
+  Vendor research metrics are not EOS evidence. Do not add cursor.com/insights as a feed.
+  https://x.com/cursor_ai/status/2060025063899058458
 - Introducing Composer 2.5, our most powerful model yet — cited by https://aicatchup.com/news/cursor-composer-2-5-launch (not fetched from X)
   Composer is a vendor model family. Do not treat marketing metrics as EOS evidence. The first-week 2x included usage was a launch promo, not standing pricing.
   https://x.com/cursor_ai/status/2056415413077233983
+- We're introducing the Cursor SDK so you can build agents with the same runtime, harness, and models that power Cursor — cited by https://www.unrollnow.com/status/2049499866217185492 (not fetched from X)
+  Cursor SDK is optional vendor scripting. Do not install @cursor/sdk or rotate this watch into SDK scripts. Do not put CURSOR_API_KEY in git. Do not add docs/sdk/changelog as a feed. Customer names are vendor marketing, not EOS evidence.
+  https://x.com/cursor_ai/status/2049499866217185492
+- Composer 2 is now available in Cursor — cited by https://www.unrollnow.com/status/2034668943676244133 (not fetched from X)
+  Composer is a vendor model family. Do not treat vendor rates or CursorBench scores as EOS evidence. Honor included quota.
+  https://x.com/cursor_ai/status/2034668943676244133
 - We're introducing Cursor Automations to build always-on agents — cited by https://www.unrollnow.com/status/2029604182286856663 (not fetched from X)
   Automations trigger on GitHub events, not X. This daily changelog timer already covers ingest.
   https://x.com/cursor_ai/status/2029604182286856663
