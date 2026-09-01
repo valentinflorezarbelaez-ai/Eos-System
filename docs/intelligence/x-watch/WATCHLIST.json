@@ -556,6 +556,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_SHARED_TRANSCRIPTS",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-BUGBOT",
+      "url": "https://cursor.com/help/ai-features/bugbot",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_BUGBOT",
+      "fetchable": true
     }
   ]
 }

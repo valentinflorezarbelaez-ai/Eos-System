@@ -567,6 +567,9 @@ export function applyHint(item) {
   if (isHelpSharedTranscriptsUrl(item?.link)) {
     return 'Help Shared transcripts is vendor conversation sharing. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into shared transcripts for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
+  if (isHelpBugbotUrl(item?.link)) {
+    return 'Help Bugbot is vendor PR review. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into Bugbot dashboard setup for daily ingest. EOS TDD evidence remains required. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+  }
   if (isPlanModeDocUrl(item?.link)) {
     return 'Plan Mode is optional desktop planning before code. Keep this watch on the standing /goal; do not rotate this Cloud Agent into Plan Mode for daily ingest. EOS TDD remains required. Honor included quota; do not switch this watch to on-demand.';
   }
@@ -934,7 +937,7 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isHelpAgentModeUrl(url) || isHelpAskModeUrl(url) || isHelpPlanModeUrl(url) || isHelpTabUrl(url) || isHelpInlineEditUrl(url) || isHelpCloudAgentsUrl(url) || isHelpBackgroundAgentsUrl(url) || isHelpMobileAppUrl(url) || isHelpSharedTranscriptsUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
+  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isHelpAgentModeUrl(url) || isHelpAskModeUrl(url) || isHelpPlanModeUrl(url) || isHelpTabUrl(url) || isHelpInlineEditUrl(url) || isHelpCloudAgentsUrl(url) || isHelpBackgroundAgentsUrl(url) || isHelpMobileAppUrl(url) || isHelpSharedTranscriptsUrl(url) || isHelpBugbotUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
@@ -1145,6 +1148,12 @@ function isHelpSharedTranscriptsUrl(url) {
   const value = String(url || '').split('?')[0].replace(/\/$/, '');
   return value === 'https://cursor.com/help/ai-features/shared-transcripts'
     || value === 'https://www.cursor.com/help/ai-features/shared-transcripts';
+}
+
+function isHelpBugbotUrl(url) {
+  const value = String(url || '').split('?')[0].replace(/\/$/, '');
+  return value === 'https://cursor.com/help/ai-features/bugbot'
+    || value === 'https://www.cursor.com/help/ai-features/bugbot';
 }
 
 function isCloudAgentBestPracticesUrl(url) {
@@ -1410,9 +1419,9 @@ function currentClusterKey(learning) {
   }
   if (
     isBugbotDocUrl(learning?.source_url)
+    || isHelpBugbotUrl(learning?.source_url)
     || isAgentReviewDocUrl(learning?.source_url)
     || url.includes('changelog/bugbot-updates-june-2026')
-    || url.includes('help/ai-features/bugbot')
   ) {
     return 'cluster:bugbot';
   }

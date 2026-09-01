@@ -199,6 +199,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/bugbot' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -316,6 +320,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/max-mode'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/account-and-billing/bugbot-usage-based-billing'),
     false
   );
   assert.equal(
@@ -1463,6 +1471,24 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpSharedTranscripts.apply_in_eos), false);
   assert.equal(helpSharedTranscripts.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpSharedTranscripts.apply_in_eos.includes('Vercel'), false);
+  const helpBugbot = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/ai-features/bugbot');
+  assert.ok(helpBugbot);
+  assert.equal(helpBugbot.title, 'Bugbot');
+  assert.match(helpBugbot.summary, /Can Cursor review my PRs/);
+  assert.match(helpBugbot.summary, /What is Bugbot/);
+  assert.match(helpBugbot.summary, /How do I set up Bugbot/);
+  assert.equal(helpBugbot.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpBugbot.summary), false);
+  assert.match(helpBugbot.apply_in_eos, /vendor PR review/i);
+  assert.match(helpBugbot.apply_in_eos, /\/goal/);
+  assert.match(helpBugbot.apply_in_eos, /do not rotate this Cloud Agent into Bugbot dashboard setup/i);
+  assert.match(helpBugbot.apply_in_eos, /TDD/);
+  assert.match(helpBugbot.apply_in_eos, /GitHub/);
+  assert.match(helpBugbot.apply_in_eos, /environment\.json/);
+  assert.match(helpBugbot.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpBugbot.apply_in_eos), false);
+  assert.equal(helpBugbot.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpBugbot.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1700,6 +1726,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'What are background agents?', link: 'https://cursor.com/help/ai-features/background-agents' },
     { title: 'Cursor for iOS', link: 'https://cursor.com/help/ai-features/mobile-app' },
     { title: 'Shared transcripts', link: 'https://cursor.com/help/ai-features/shared-transcripts' },
+    { title: 'Bugbot', link: 'https://cursor.com/help/ai-features/bugbot' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2705,6 +2732,27 @@ test('applyHint for Help Shared transcripts keeps this watch on the standing /go
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Bugbot keeps this watch on the standing /goal', () => {
+  const hint = applyHint({
+    title: 'Bugbot',
+    link: 'https://cursor.com/help/ai-features/bugbot',
+    summary: 'You can enable usage-based billing. Open Bugbot in Automations to enable it on specific repositories. Custom Mode and Vercel.'
+  });
+  assert.match(hint, /vendor PR review/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into Bugbot dashboard setup/i);
+  assert.match(hint, /TDD/);
+  assert.match(hint, /GitHub/);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3506,6 +3554,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpSharedTranscripts[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpSharedTranscripts[0]).includes('Vercel'), false);
 
+  const helpBugbot = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-bugbot.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/ai-features/bugbot'
+  );
+  assert.equal(helpBugbot[0].id, 'https://cursor.com/help/ai-features/bugbot');
+  assert.equal(helpBugbot[0].title, 'Bugbot');
+  assert.match(helpBugbot[0].summary, /Automated PR reviews that catch bugs, security issues, and code quality problems/);
+  assert.match(applyHint(helpBugbot[0]), /vendor PR review/i);
+  assert.match(applyHint(helpBugbot[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpBugbot[0])), false);
+  assert.equal(applyHint(helpBugbot[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpBugbot[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3955,6 +4017,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/shared-transcripts'),
     'https://cursor.com/help/ai-features/shared-transcripts.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/bugbot'),
+    'https://cursor.com/help/ai-features/bugbot.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -4357,6 +4423,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpSharedTranscriptsMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpSharedTranscriptsMd.summary), false);
   assert.equal(helpSharedTranscriptsMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpBugbotMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-bugbot.md'), 'utf8')
+  );
+  assert.equal(helpBugbotMd.title, 'Bugbot');
+  assert.match(helpBugbotMd.summary, /Can Cursor review my PRs/);
+  assert.match(helpBugbotMd.summary, /What is Bugbot/);
+  assert.match(helpBugbotMd.summary, /How do I set up Bugbot/);
+  assert.equal(helpBugbotMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpBugbotMd.summary), false);
+  assert.equal(helpBugbotMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -5703,6 +5780,12 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
       apply_in_eos: 'Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.'
     },
     {
+      title: 'Bugbot',
+      source_url: 'https://cursor.com/help/ai-features/bugbot',
+      published_at: null,
+      apply_in_eos: 'Help Bugbot is vendor PR review. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into Bugbot dashboard setup for daily ingest. EOS TDD evidence remains required. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Agent Review',
       source_url: 'https://cursor.com/docs/agent/agent-review',
       published_at: null,
@@ -5857,6 +5940,7 @@ test('selectCurrentLearnings clusters automations docs onto harness and setup on
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/private-connectivity'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/bugbot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/agent-review'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/bugbot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/security-agents'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
@@ -5888,6 +5972,12 @@ test('selectCurrentLearnings clusters Agent Review onto Bugbot changelog and kee
       apply_in_eos: 'Agent Review is optional in-editor review of local changes. EOS TDD evidence remains required. /agent-review is not a substitute for tests.'
     },
     {
+      title: 'Bugbot',
+      source_url: 'https://cursor.com/help/ai-features/bugbot',
+      published_at: null,
+      apply_in_eos: 'Help Bugbot is vendor PR review. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into Bugbot dashboard setup for daily ingest. EOS TDD evidence remains required. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Overview',
       source_url: 'https://cursor.com/docs/agent/overview',
       published_at: null,
@@ -5903,6 +5993,7 @@ test('selectCurrentLearnings clusters Agent Review onto Bugbot changelog and kee
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/bugbot-updates-june-2026'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/bugbot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/agent-review'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/bugbot'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -6051,6 +6142,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/background-agents'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/mobile-app'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/shared-transcripts'), false);
+  assert.equal(current.includes('cursor.com/help/ai-features/bugbot'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
