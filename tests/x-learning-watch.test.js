@@ -179,6 +179,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/inline-edit' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -292,6 +296,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/debug-mode'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/ai-features/max-mode'),
     false
   );
   assert.equal(
@@ -1359,6 +1367,22 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpTab.apply_in_eos), false);
   assert.equal(helpTab.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpTab.apply_in_eos.includes('Vercel'), false);
+  const helpInlineEdit = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/ai-features/inline-edit');
+  assert.ok(helpInlineEdit);
+  assert.equal(helpInlineEdit.title, 'Inline edit');
+  assert.match(helpInlineEdit.summary, /How do I use inline edit/);
+  assert.match(helpInlineEdit.summary, /How do I ask a quick question with inline edit/);
+  assert.match(helpInlineEdit.summary, /Can I switch from inline edit to Agent/);
+  assert.equal(helpInlineEdit.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpInlineEdit.summary), false);
+  assert.match(helpInlineEdit.apply_in_eos, /vendor desktop Cmd\+K/i);
+  assert.match(helpInlineEdit.apply_in_eos, /\/goal/);
+  assert.match(helpInlineEdit.apply_in_eos, /do not rotate this Cloud Agent into desktop Inline edit/i);
+  assert.match(helpInlineEdit.apply_in_eos, /environment\.json/);
+  assert.match(helpInlineEdit.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpInlineEdit.apply_in_eos), false);
+  assert.equal(helpInlineEdit.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpInlineEdit.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1591,6 +1615,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Ask mode', link: 'https://cursor.com/help/ai-features/ask-mode' },
     { title: 'Plan mode', link: 'https://cursor.com/help/ai-features/plan-mode' },
     { title: 'Tab completion', link: 'https://cursor.com/help/ai-features/tab' },
+    { title: 'Inline edit', link: 'https://cursor.com/help/ai-features/inline-edit' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2501,6 +2526,25 @@ test('applyHint for Help Tab keeps this watch on the standing /goal', () => {
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Inline edit keeps this watch on the standing /goal', () => {
+  const hint = applyHint({
+    title: 'Inline edit',
+    link: 'https://cursor.com/help/ai-features/inline-edit',
+    summary: 'Make quick, targeted code changes without leaving the editor. Custom Mode and Vercel.'
+  });
+  assert.match(hint, /vendor desktop Cmd\+K/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop Inline edit/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3232,6 +3276,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpTab[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpTab[0]).includes('Vercel'), false);
 
+  const helpInlineEdit = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-inline-edit.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/ai-features/inline-edit'
+  );
+  assert.equal(helpInlineEdit[0].id, 'https://cursor.com/help/ai-features/inline-edit');
+  assert.equal(helpInlineEdit[0].title, 'Inline edit');
+  assert.match(helpInlineEdit[0].summary, /Make quick, targeted code changes without leaving the editor/);
+  assert.match(applyHint(helpInlineEdit[0]), /vendor desktop Cmd\+K/i);
+  assert.match(applyHint(helpInlineEdit[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpInlineEdit[0])), false);
+  assert.equal(applyHint(helpInlineEdit[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpInlineEdit[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -3661,6 +3719,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/tab'),
     'https://cursor.com/help/ai-features/tab.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/ai-features/inline-edit'),
+    'https://cursor.com/help/ai-features/inline-edit.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -4008,6 +4070,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpTabMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpTabMd.summary), false);
   assert.equal(helpTabMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpInlineEditMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-ai-features-inline-edit.md'), 'utf8')
+  );
+  assert.equal(helpInlineEditMd.title, 'Inline edit');
+  assert.match(helpInlineEditMd.summary, /How do I use inline edit/);
+  assert.match(helpInlineEditMd.summary, /How do I ask a quick question with inline edit/);
+  assert.match(helpInlineEditMd.summary, /Can I switch from inline edit to Agent/);
+  assert.equal(helpInlineEditMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpInlineEditMd.summary), false);
+  assert.equal(helpInlineEditMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -5086,6 +5159,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Tab is vendor desktop autocomplete. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Tab for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Inline edit',
+      source_url: 'https://cursor.com/help/ai-features/inline-edit',
+      published_at: null,
+      apply_in_eos: 'Help Inline edit is vendor desktop Cmd+K. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Inline edit for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Cursor CLI',
       source_url: 'https://cursor.com/docs/cli/overview',
       published_at: null,
@@ -5136,6 +5215,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/ask-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/plan-mode'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/tab'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/ai-features/inline-edit'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/overview'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/using'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cli/shell-mode'), false);
@@ -5641,6 +5721,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/ai-features/ask-mode'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/plan-mode'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/tab'), false);
+  assert.equal(current.includes('cursor.com/help/ai-features/inline-edit'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);

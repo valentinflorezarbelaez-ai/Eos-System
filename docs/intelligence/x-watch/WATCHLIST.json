@@ -521,6 +521,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_TAB",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-INLINE-EDIT",
+      "url": "https://cursor.com/help/ai-features/inline-edit",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_INLINE_EDIT",
+      "fetchable": true
     }
   ]
 }
