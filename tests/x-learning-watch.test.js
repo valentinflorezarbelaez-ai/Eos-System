@@ -1023,6 +1023,42 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(helpCursorRouter.apply_in_eos.includes('Vercel'), false);
   assert.equal(helpCursorRouter.apply_in_eos.includes('Slack'), false);
   assert.equal(helpCursorRouter.apply_in_eos.includes('curl'), false);
+  const helpGrok45 = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/models-and-usage/grok-4-5');
+  assert.ok(helpGrok45);
+  assert.equal(helpGrok45.title, 'Grok 4.5');
+  assert.match(helpGrok45.summary, /What is Grok 4.5/);
+  assert.match(helpGrok45.summary, /effort levels/);
+  assert.match(helpGrok45.summary, /When should I choose Grok 4.5 over Composer/);
+  assert.match(helpGrok45.summary, /Which plans include Grok 4.5/);
+  assert.equal(helpGrok45.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpGrok45.summary), false);
+  assert.match(helpGrok45.apply_in_eos, /prior vendor Cursor Model/i);
+  assert.match(helpGrok45.apply_in_eos, /Auto vs Composer pool/i);
+  assert.match(helpGrok45.apply_in_eos, /included-credit treatment/i);
+  assert.match(helpGrok45.apply_in_eos, /vendor quality claims/i);
+  assert.match(helpGrok45.apply_in_eos, /included quota/i);
+  assert.match(helpGrok45.apply_in_eos, /on-demand/i);
+  assert.match(helpGrok45.apply_in_eos, /@cursor\/sdk/);
+  assert.match(helpGrok45.apply_in_eos, /Do not put API keys in git/i);
+  assert.match(helpGrok45.apply_in_eos, /environment\.json/);
+  assert.equal(/enable/i.test(helpGrok45.apply_in_eos), false);
+  assert.equal(helpGrok45.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpGrok45.apply_in_eos.includes('Vercel'), false);
+  assert.equal(helpGrok45.apply_in_eos.includes('Slack'), false);
+  assert.equal(helpGrok45.apply_in_eos.includes('curl'), false);
+  const startFromScratch = store.learnings.find((row) => row.source_url === 'https://cursor.com/changelog/start-from-scratch');
+  assert.ok(startFromScratch);
+  assert.equal(startFromScratch.title, 'Start from scratch, without a repo');
+  assert.match(startFromScratch.summary, /Origin repo/i);
+  assert.match(startFromScratch.apply_in_eos, /Start from scratch creates an Origin repo without GitHub/i);
+  assert.match(startFromScratch.apply_in_eos, /GitHub remains source of truth/i);
+  assert.match(startFromScratch.apply_in_eos, /Do not Start from scratch or create an Origin repo/i);
+  assert.match(startFromScratch.apply_in_eos, /Cloud Agent VM already has its GitHub checkout/i);
+  assert.match(startFromScratch.apply_in_eos, /environment\.json/);
+  assert.match(startFromScratch.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(startFromScratch.apply_in_eos), false);
+  assert.equal(startFromScratch.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(startFromScratch.apply_in_eos.includes('Vercel'), false);
   const bestPractices = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/best-practices');
   assert.ok(bestPractices);
   assert.match(bestPractices.summary, /OIDC/i);
@@ -1183,7 +1219,7 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.ok(agentsWindow);
   assert.match(agentsWindow.summary, /Features Available Only in the Agents Window/);
   assert.match(agentsWindow.summary, /\/in-cloud/);
-  assert.match(agentsWindow.summary, /\/babysit/);
+  assert.match(agentsWindow.summary, /\/autopilot/);
   assert.equal(agentsWindow.summary.includes('Sitemap'), false);
   assert.equal(/Open the Agents Window —/.test(agentsWindow.summary), false);
   assert.equal(/Switch Back to the IDE —/.test(agentsWindow.summary), false);
@@ -1191,7 +1227,7 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.match(agentsWindow.apply_in_eos, /Cloud Agent VM/);
   assert.match(agentsWindow.apply_in_eos, /not in the desktop Agents Window/i);
   assert.match(agentsWindow.apply_in_eos, /\/in-cloud/);
-  assert.match(agentsWindow.apply_in_eos, /\/babysit/);
+  assert.match(agentsWindow.apply_in_eos, /\/autopilot/);
   assert.match(agentsWindow.apply_in_eos, /environment\.json/);
   assert.match(agentsWindow.apply_in_eos, /included quota/i);
   assert.equal(/enable/i.test(agentsWindow.apply_in_eos), false);
@@ -1459,6 +1495,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
+    { title: 'Start from scratch, without a repo', link: 'https://cursor.com/changelog/start-from-scratch' },
     { title: 'Origin', link: 'https://cursor.com/docs/origin' },
     { title: 'Install the Origin CLI', link: 'https://cursor.com/docs/origin/cli' },
     { title: 'Origin integrations', link: 'https://cursor.com/docs/origin/integrations' },
@@ -1604,6 +1641,26 @@ test('applyHint for Origin mirror keeps GitHub as source of truth', () => {
   assert.match(hint, /GitHub as the source of truth/i);
   assert.match(hint, /Bugbot/i);
   assert.equal(hint.includes('timers'), false);
+});
+
+test('applyHint for Start from scratch keeps GitHub as source of truth', () => {
+  const hint = applyHint({
+    title: 'Start from scratch, without a repo',
+    link: 'https://cursor.com/changelog/start-from-scratch',
+    summary: 'Cloud Agents no longer require a connected GitHub or other third-party SCM provider. Cursor creates an Origin repo. Connect a Vercel account and hit publish.'
+  });
+  assert.match(hint, /Start from scratch creates an Origin repo without GitHub/i);
+  assert.match(hint, /GitHub remains source of truth/i);
+  assert.match(hint, /Do not Start from scratch or create an Origin repo/i);
+  assert.match(hint, /Cloud Agent VM already has its GitHub checkout/i);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Cursor Start'), false);
 });
 
 test('applyHint for Origin create-repository keeps GitHub as source of truth', () => {
@@ -2237,12 +2294,12 @@ test('applyHint for Agents Window keeps this watch in the Cloud Agent VM', () =>
   const hint = applyHint({
     title: 'Agents Window',
     link: 'https://cursor.com/docs/agent/agents-window',
-    summary: 'The Agents Window is Cursor\'s agent-first interface. Use /in-cloud or /babysit for cloud subagents.'
+    summary: 'The Agents Window is Cursor\'s agent-first interface. Use /in-cloud or /autopilot for cloud subagents.'
   });
   assert.match(hint, /Cloud Agent VM/);
   assert.match(hint, /not in the desktop Agents Window/i);
   assert.match(hint, /\/in-cloud/);
-  assert.match(hint, /\/babysit/);
+  assert.match(hint, /\/autopilot/);
   assert.match(hint, /environment\.json/);
   assert.match(hint, /included quota/i);
   assert.equal(/enable/i.test(hint), false);
@@ -3869,7 +3926,7 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(agentsWindowMd.title, 'Agents Window');
   assert.match(agentsWindowMd.summary, /Features Available Only in the Agents Window/);
   assert.match(agentsWindowMd.summary, /\/in-cloud/);
-  assert.match(agentsWindowMd.summary, /\/babysit/);
+  assert.match(agentsWindowMd.summary, /\/autopilot/);
   assert.equal(agentsWindowMd.summary.includes('Sitemap'), false);
   assert.equal(/Open the Agents Window —/.test(agentsWindowMd.summary), false);
   assert.equal(/Switch Back to the IDE —/.test(agentsWindowMd.summary), false);
@@ -4415,6 +4472,46 @@ test('selectCurrentLearnings clusters automations, builds, and Origin onto chang
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/browse'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/settings'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin/codebase-settings'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
+});
+
+test('selectCurrentLearnings clusters Start from scratch onto Origin and keeps Router', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'Start from scratch, without a repo',
+      source_url: 'https://cursor.com/changelog/start-from-scratch',
+      published_at: 'Thu, 27 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Start from scratch creates an Origin repo without GitHub. GitHub remains source of truth for this synced repo. Do not Start from scratch or create an Origin repo for this watch. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'Origin Code Hosting',
+      source_url: 'https://cursor.com/changelog/origin-code-hosting',
+      published_at: 'Mon, 17 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.'
+    },
+    {
+      title: 'Origin',
+      source_url: 'https://cursor.com/docs/origin',
+      published_at: null,
+      apply_in_eos: 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.'
+    },
+    {
+      title: 'Cursor Router',
+      source_url: 'https://cursor.com/changelog/router',
+      published_at: 'Wed, 22 Jul 2026 00:00:00 GMT',
+      apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
+    },
+    {
+      title: 'Usage and limits',
+      source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
+      published_at: null,
+      apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+    }
+  ], 3);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/start-from-scratch'), true);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/origin-code-hosting'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/origin'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/router'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -5190,7 +5287,9 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /cursor.com\/help\/models-and-usage\/grok-4-6/);
   assert.equal(current.includes('cursor.com/help/models-and-usage/grok-4-5'), false);
   assert.match(current, /cursor.com\/docs\/models-and-pricing/);
+  assert.match(current, /cursor.com\/changelog\/start-from-scratch/);
   assert.match(current, /cursor.com\/changelog\/router/);
+  assert.equal(current.includes('cursor.com/changelog/origin-code-hosting'), false);
   assert.match(current, /cursor.com\/help\/models-and-usage\/usage-limits/);
   assert.match(current, /cursor.com\/docs\/cloud-agent(?!\/)/);
   assert.match(current, /cursor.com\/docs\/agent\/overview/);

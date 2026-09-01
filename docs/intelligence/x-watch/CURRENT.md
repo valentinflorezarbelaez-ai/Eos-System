@@ -2,14 +2,14 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-08-27T15:23:00.627Z
-Store size: 156
+Updated: 2026-09-01T12:07:47.547Z
+Store size: 158
 
 ## Official product actions
+- **Start from scratch, without a repo** — Start from scratch creates an Origin repo without GitHub. GitHub remains source of truth for this synced repo. Do not Start from scratch or create an Origin repo for this watch. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.
+  https://cursor.com/changelog/start-from-scratch
 - **Cloud Agents and Cursor Harness Improvements** — Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS. Honor auto-CI-fix on PRs this agent opens.
   https://cursor.com/changelog/08-19-26
-- **Origin Code Hosting** — Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.
-  https://cursor.com/changelog/origin-code-hosting
 - **Cloud Agents Start 3x Faster with Builds** — Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.
   https://cursor.com/changelog/08-13-26
 - **Cursor Router** — Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.

@@ -1,7 +1,17 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-08-27T15:23:00.627Z",
+  "updated_at": "2026-09-01T12:07:47.547Z",
   "learnings": [
+    {
+      "learning_id": "LRN-CURSOR-start-from-scratch",
+      "title": "Start from scratch, without a repo",
+      "source_url": "https://cursor.com/changelog/start-from-scratch",
+      "published_at": "Thu, 27 Aug 2026 00:00:00 GMT",
+      "summary": "Cloud Agents no longer require a connected GitHub or other third-party SCM provider to get started. Prompt from the get-go, then save your work to a Cursor Origin repo. Get started Select **Start from scratch** in the repo picker, then prompt the agent. In the background, Cursor creates an Origin repo for you. Start from scratch in the repo picker Turn it into a real repo, whenever you want Once…",
+      "apply_in_eos": "Start from scratch creates an Origin repo without GitHub. GitHub remains source of truth for this synced repo. Do not Start from scratch or create an Origin repo for this watch. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
     {
       "learning_id": "LRN-CURSOR-cursor-com-blog-imdex",
       "title": "IMDEX uses Cursor to build integrated subsurface data and analytics platform in months, not years",
@@ -957,8 +967,8 @@
       "title": "Agents Window",
       "source_url": "https://cursor.com/docs/agent/agents-window",
       "published_at": null,
-      "summary": "The Agents Window is Cursor's agent-first interface. Features Available Only in the Agents Window — The following features are available in the Agents Window: Multi-workspace: work with agents across all your projects from one place. /in-cloud /babysit Choosing Between Agents Window and Editor — The Agents Window works well when you want to run and manage many agents in parallel.",
-      "apply_in_eos": "This watch already runs in the Cloud Agent VM, not in the desktop Agents Window. Use /in-cloud or /babysit when a local session must hand work to its own VM. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "summary": "The Agents Window is Cursor's agent-first interface. Features Available Only in the Agents Window — The following features are available in the Agents Window: Multi-workspace: work with agents across all your projects from one place. /in-cloud /autopilot Choosing Between Agents Window and Editor — The Agents Window works well when you want to run and manage many agents in parallel.",
+      "apply_in_eos": "This watch already runs in the Cloud Agent VM, not in the desktop Agents Window. Use /in-cloud or /autopilot when a local session must hand work to its own VM. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
@@ -1397,7 +1407,7 @@
       "title": "Mirror a GitHub repository",
       "source_url": "https://cursor.com/docs/origin/mirror-github",
       "published_at": null,
-      "summary": "Origin is currently released in early beta. Sync a repo — Open cursor.com/codebase 2. What syncs — Pull requests on a mirrored repo work on Origin and sync back to GitHub. After you mirror — Browse and search at cursor.com/codebase Clone the Origin remote from the green Code button if you want a local checkout from Origin. Detach from GitHub — To stop syncing, open Settings → General and select Detach from GitHub under Danger Zone *. Sync lag — If browse looks stale: Confirm the GitHub app still has access (GitHub integration) Confirm you are a GitHub admin on the source repo Re-run Sync from GitHub from cursor.com/codebase, or check Settings → General for sync When not to mirror — If you only want automated review comments on GitHub PRs, Cursor Review and Bugbot do that without moving st…",
+      "summary": "Origin is currently released in early beta. Sync a repo — Open cursor.com/codebase 2. What syncs — Pull requests on a mirrored repo work on Origin and sync back to GitHub. After you mirror — Browse and search at cursor.com/codebase Clone the Origin remote from the green Code button if you want a local checkout from Origin. Detach from GitHub — To stop syncing, open Settings → General and select Detach from GitHub under Danger Zone *. Sync lag — If browse looks stale: Confirm the GitHub app still has access (GitHub integration) Confirm you are a GitHub admin on the source repo Re-run Sync from GitHub from cursor.com/codebase, or check Settings → General for sync When not to mirror — If you only want automated review comments on GitHub PRs, Bugbot does that without moving storage.",
       "apply_in_eos": "Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1539,6 +1549,16 @@
       "published_at": null,
       "summary": "Cursor Router is the intelligent routing behind Auto. What is Cursor Router and how is it different from the previous Auto mode? — Cursor Router is the relaunched Auto mode. How does Cursor Router decide which model to use for my request? — An ML classifier runs on each agent request and routes by task type and complexity. What are the Cost, Balance, and Intelligence optimization modes and how do I switch between them? — Open the model picker, select Auto , then choose an optimization mode: Cost : Optimizes token spend. Can I use Cursor Router from the SDK? — Yes.",
       "apply_in_eos": "Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules still bind model and governance choices. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put API keys in git. Keep environment.json + Builds.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-models-and-usage-grok-4-5",
+      "title": "Grok 4.5",
+      "source_url": "https://cursor.com/help/models-and-usage/grok-4-5",
+      "published_at": null,
+      "summary": "Grok 4.5 is Cursor's flagship model, built together with SpaceXAI for coding and other knowledge work. What is Grok 4.5? — Grok 4.5 is the smartest model Cursor has trained. What are Grok 4.5 effort levels? — Grok 4.5 is Cursor's first model with effort levels: high (the default), medium, and low. When should I choose Grok 4.5 over Composer? — Choose Grok 4.5 for the hardest tasks. Which plans include Grok 4.5? — Every paid plan includes access to Grok 4.5: Start (India), Pro, Pro+, Ultra, Teams, and Enterprise. Where can I use Grok 4.5? — Grok 4.5 is available everywhere you use Cursor: Desktop app Web and cloud agents CLI SDK Automations iOS app Which regions support Grok 4.5? — Grok 4.5 is available in every country where Cursor normally offers models. Is Composer being deprecated? — N…",
+      "apply_in_eos": "Help Grok 4.5 is a prior vendor Cursor Model. Honor Auto vs Composer pool and included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk. Do not put API keys in git. Keep environment.json + Builds.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },

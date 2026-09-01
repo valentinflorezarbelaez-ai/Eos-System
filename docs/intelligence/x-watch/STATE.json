@@ -91,6 +91,7 @@
     "https://cursor.com/changelog/shared-canvases",
     "https://cursor.com/changelog/side-chat",
     "https://cursor.com/changelog/slack-improvements",
+    "https://cursor.com/changelog/start-from-scratch",
     "https://cursor.com/changelog/team-marketplace-updates",
     "https://cursor.com/docs/account/teams/members",
     "https://cursor.com/docs/account/teams/pricing",
@@ -154,10 +155,11 @@
     "https://cursor.com/help/ai-features/automations",
     "https://cursor.com/help/models-and-usage/available-models",
     "https://cursor.com/help/models-and-usage/cursor-router",
+    "https://cursor.com/help/models-and-usage/grok-4-5",
     "https://cursor.com/help/models-and-usage/grok-4-6",
     "https://cursor.com/help/models-and-usage/usage-limits"
   ],
-  "last_ingest_at": "2026-08-27T15:23:00.616Z",
-  "last_item_count": 156,
-  "last_new_item_count": 1
+  "last_ingest_at": "2026-09-01T12:07:47.536Z",
+  "last_item_count": 157,
+  "last_new_item_count": 2
 }
