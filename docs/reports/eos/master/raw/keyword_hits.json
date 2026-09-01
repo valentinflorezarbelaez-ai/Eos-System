@@ -1,0 +1,1384 @@
+{
+  "collected_at": "2026-09-01T02:15:02.615Z",
+  "keywordHits": {
+    "726": {
+      "files": [
+        {
+          "path": "docs/evidence/EVD-L3-FUNDACION-PILOT-001.json",
+          "n": 2
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        }
+      ],
+      "count": 3
+    },
+    "MissionRuntime": {
+      "files": [
+        {
+          "path": "docs/manuals/EOS_MCP_LOCAL_CONNECT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "docs/rules/CANONICAL_RULES_INDEX.json",
+          "n": 3
+        },
+        {
+          "path": "src/cli/mission-cli.js",
+          "n": 3
+        },
+        {
+          "path": "src/core/authority/authority-truth-source.js",
+          "n": 1
+        },
+        {
+          "path": "src/core/mcp/mcp-mission-bridge.js",
+          "n": 4
+        },
+        {
+          "path": "src/core/runtime/mission-runtime.js",
+          "n": 2
+        },
+        {
+          "path": "src/core/sdd/sdd-fsm-engine.js",
+          "n": 1
+        },
+        {
+          "path": "src/mcp-server.js",
+          "n": 1
+        },
+        {
+          "path": "tests/authority-truth-source.test.js",
+          "n": 4
+        },
+        {
+          "path": "tests/eos-e2e-local-fixture.test.js",
+          "n": 3
+        },
+        {
+          "path": "tests/eos-local-contracts.test.js",
+          "n": 3
+        },
+        {
+          "path": "tests/eos-negative-governance.test.js",
+          "n": 2
+        },
+        {
+          "path": "tests/mcp-mission-bridge.test.js",
+          "n": 1
+        }
+      ],
+      "count": 30
+    },
+    "AuthorityTruthSource": {
+      "files": [
+        {
+          "path": "docs/manuals/EOS_OPERATOR_MANUAL_LOCAL.md",
+          "n": 1
+        },
+        {
+          "path": "docs/releases/RELEASE_CAPABILITY_MATRIX.md",
+          "n": 1
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "docs/rules/CANONICAL_RULES_INDEX.json",
+          "n": 3
+        },
+        {
+          "path": "src/cli/mission-cli.js",
+          "n": 1
+        },
+        {
+          "path": "src/core/authority/authority-truth-source.js",
+          "n": 4
+        },
+        {
+          "path": "src/core/runtime/mission-runtime.js",
+          "n": 4
+        },
+        {
+          "path": "tests/authority-truth-source.test.js",
+          "n": 8
+        },
+        {
+          "path": "tests/eos-e2e-local-fixture.test.js",
+          "n": 3
+        },
+        {
+          "path": "tests/eos-negative-governance.test.js",
+          "n": 4
+        }
+      ],
+      "count": 30
+    },
+    "HitlGatekeeper": {
+      "files": [
+        {
+          "path": "docs/releases/RELEASE_CAPABILITY_MATRIX.md",
+          "n": 1
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "docs/rules/CANONICAL_RULES_INDEX.json",
+          "n": 3
+        },
+        {
+          "path": "src/core/authority/authority-truth-source.js",
+          "n": 3
+        },
+        {
+          "path": "src/core/runtime/mission-runtime.js",
+          "n": 2
+        },
+        {
+          "path": "src/core/sdd/hitl-gatekeeper.js",
+          "n": 2
+        },
+        {
+          "path": "tests/eos-local-contracts.test.js",
+          "n": 2
+        }
+      ],
+      "count": 14
+    },
+    "IntegrationGatekeeper": {
+      "files": [
+        {
+          "path": "docs/manuals/EOS_MCP_LOCAL_CONNECT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/releases/RELEASE_CAPABILITY_MATRIX.md",
+          "n": 1
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "docs/rules/CANONICAL_RULES_INDEX.json",
+          "n": 1
+        },
+        {
+          "path": "src/core/governance/integration-gatekeeper.js",
+          "n": 2
+        },
+        {
+          "path": "src/core/mcp/mcp-mission-bridge.js",
+          "n": 3
+        },
+        {
+          "path": "src/core/runtime/mission-runtime.js",
+          "n": 3
+        },
+        {
+          "path": "tests/eos-negative-governance.test.js",
+          "n": 2
+        }
+      ],
+      "count": 14
+    },
+    "SDD_STATES": {
+      "files": [
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "src/core/authority/authority-truth-source.js",
+          "n": 7
+        },
+        {
+          "path": "src/core/runtime/mission-runtime.js",
+          "n": 6
+        },
+        {
+          "path": "src/core/sdd/sdd-fsm-engine.js",
+          "n": 39
+        },
+        {
+          "path": "tests/authority-truth-source.test.js",
+          "n": 23
+        },
+        {
+          "path": "tests/eos-e2e-local-fixture.test.js",
+          "n": 12
+        },
+        {
+          "path": "tests/eos-local-contracts.test.js",
+          "n": 3
+        },
+        {
+          "path": "tests/eos-negative-governance.test.js",
+          "n": 4
+        }
+      ],
+      "count": 95
+    },
+    "commitTransition": {
+      "files": [
+        {
+          "path": "docs/manuals/EOS_OPERATOR_MANUAL_LOCAL.md",
+          "n": 1
+        },
+        {
+          "path": "docs/releases/RELEASE_CAPABILITY_MATRIX.md",
+          "n": 1
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "docs/rules/CANONICAL_RULES_INDEX.json",
+          "n": 1
+        },
+        {
+          "path": "src/cli/mission-cli.js",
+          "n": 1
+        },
+        {
+          "path": "src/core/authority/authority-truth-source.js",
+          "n": 2
+        },
+        {
+          "path": "src/core/runtime/mission-runtime.js",
+          "n": 4
+        },
+        {
+          "path": "src/core/sdd/sdd-fsm-engine.js",
+          "n": 1
+        },
+        {
+          "path": "tests/authority-truth-source.test.js",
+          "n": 9
+        },
+        {
+          "path": "tests/eos-e2e-local-fixture.test.js",
+          "n": 2
+        },
+        {
+          "path": "tests/eos-negative-governance.test.js",
+          "n": 2
+        }
+      ],
+      "count": 25
+    },
+    "PRODUCTION_READY": {
+      "files": [
+        {
+          "path": ".agents/AGENTS.md",
+          "n": 2
+        },
+        {
+          "path": "CONSTITUTION.md",
+          "n": 1
+        },
+        {
+          "path": "EOS-MISSION-CONTROL/CURRENT_MISSION.json",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_33_AUTONOMOUS_REMEDIATION.md",
+          "n": 3
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_34_POST_REMEDIATION_REVALIDATION.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_35_EXP_035_001_SONRISA_NOVA.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_36_EXP_036_001_FLOWDESK.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_38_EXP_038_001_SELF_HOSTING.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_II_LUXE_REGISTRY_COMPLETION_AUDIT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_II_MULTIMODAL_CREATIVE_COMPLETION_AUDIT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_STEP_1_IMPLEMENTATION_AUDIT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/core/CANONICAL_DOMAIN_MODEL.md",
+          "n": 2
+        },
+        {
+          "path": "docs/core/CONSTITUTION.md",
+          "n": 2
+        },
+        {
+          "path": "docs/core/EOS_CORE_MATURATION_STRATEGY.md",
+          "n": 1
+        },
+        {
+          "path": "docs/evidence/EVD-0033.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evidence/EVD-0034.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evidence/EVD-0035.json",
+          "n": 1
+        },
+        {
+          "path": "docs/intake/eos_core/STEP_3_READ_GOVERNANCE_ENGINE_DIAGNOSIS.md",
+          "n": 1
+        },
+        {
+          "path": "docs/projects/registry.json",
+          "n": 2
+        },
+        {
+          "path": "docs/releases/EOS_FREEZE_GATE_STATUS.md",
+          "n": 1
+        },
+        {
+          "path": "docs/releases/RELEASE_CAPABILITY_MATRIX.md",
+          "n": 1
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "scripts/engine/autonomous-architect-advisor.js",
+          "n": 1
+        },
+        {
+          "path": "tests/autonomous-architect-advisor.test.js",
+          "n": 1
+        }
+      ],
+      "count": 35
+    },
+    "GAP-002": {
+      "files": [
+        {
+          "path": ".agents/CURSOR_COMMAND_CENTER_CONTRACT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/architecture/EOS_MASTER_ROADMAP_NEXT_90_PERCENT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/CANARY_MISSION_001_REPORT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/CANARY_TRIANGULATION_AND_BKM_PROMOTION.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_ADAPTIVE_ADVERSARY_AND_META_EVALUATION_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_AUTONOMOUS_ECOSYSTEM_MANAGER_AND_META_OPTIMIZATION_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_AUTONOMOUS_TOOL_DISCOVERY_PROGRAM_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_AUTONOMY_GRADUATION_AUDIT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_CLIENT_TRIANGULATION_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_COGNITIVE_EXECUTION_FABRIC_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_COGNITIVE_FABRIC_EVALUATION_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_COGNITIVE_FABRIC_GENERALIZATION_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_CONTINUOUS_CHANGE_OPERATIONS_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_CURSOR_COMMAND_CENTER_INTEGRATION_REPORT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_DETAILED_STATUS_REPORT_2026_08_14.md",
+          "n": 7
+        },
+        {
+          "path": "docs/audits/EOS_ELITE_PLATFORM_ENGINEERING_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_EXECUTIVE_ARBITRATION_AND_META_REASONING_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_EXECUTIVE_END_TO_END_001_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_EXECUTIVE_GENERALIZATION_001_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_EXPERIENCE_LEARNING_AND_EFFORT_BUDGET_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_EXTERNAL_PRODUCT_FACTORY_PILOT_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_FINAL_VERIFIER_V1_3_0_INDEPENDENT_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_FRONTIER_EVALUATION_AND_RED_TEAM_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_FRONTIER_REALISM_AND_UNSEEN_ATTACKS_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_GRAPH_INTELLIGENCE_PROGRAM_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_INDEPENDENT_OPERATIONAL_EVIDENCE_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_LEARNING_ROBUSTNESS_AND_CONTEXTUAL_PORTFOLIO_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_LEARNING_VALIDITY_AND_CAUSALITY_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_LONGITUDINAL_EVIDENCE_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_LONGITUDINAL_REAL_OPERATION_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_LONG_RUN_INDEPENDENT_OPERATION_AUDIT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_MASTER_GAP_REGISTER.json",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_MASTER_OPERATIONAL_AUDIT_2026_08_14.md",
+          "n": 3
+        },
+        {
+          "path": "docs/audits/EOS_MEMORY_INTEGRITY_AND_NEGATIVE_LEARNING_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_META_LEARNING_AND_CLOSED_LOOP_IMPROVEMENT_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_MISSION_CONTROL_AND_PRODUCTION_PILOT_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_OPERATIONALIZATION_PROGRAM_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_OPERATIONAL_RECONNAISSANCE_2026_08_14.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_4_FOUNDATION_INTAKE.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_5_PRODUCT_OWNER_DECISION.md",
+          "n": 2
+        }
+      ],
+      "count": 173
+    },
+    "PRJ-FUNDACION": {
+      "files": [
+        {
+          "path": ".agents/CURSOR_COMMAND_CENTER_CONTRACT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/architecture/EOS_MASTER_ROADMAP_NEXT_90_PERCENT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/CANARY_I001_INDEPENDENT_REVIEW.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/CANARY_M001_INDEPENDENT_REVIEW.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/CANARY_M002_REPORT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/CANARY_M003_REPORT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/CANARY_MISSION_001_REPORT.md",
+          "n": 3
+        },
+        {
+          "path": "docs/audits/CANARY_TRIANGULATION_AND_BKM_PROMOTION.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_AUTONOMOUS_TOOL_DISCOVERY_PROGRAM_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_AUTONOMY_GRADUATION_AUDIT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_CURRENT_STATE_AUDIT.md",
+          "n": 3
+        },
+        {
+          "path": "docs/audits/EOS_CURSOR_COMMAND_CENTER_INTEGRATION_REPORT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_DETAILED_STATUS_REPORT_2026_08_14.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_EXECUTIVE_ARBITRATION_AND_META_REASONING_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_EXPERIENCE_LEARNING_AND_EFFORT_BUDGET_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_FINAL_VERIFIER_V1_3_0_INDEPENDENT_AUDIT.md",
+          "n": 7
+        },
+        {
+          "path": "docs/audits/EOS_FORENSIC_AUDIT_REPORT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_ISOLATION_INVARIANT_REGRESSION_AND_GOVERNANCE_CLOSURE.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_LEVEL_3_MULTI_FIXTURE_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_LONG_RUN_INDEPENDENT_OPERATION_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_MASTER_GAP_REGISTER.json",
+          "n": 3
+        },
+        {
+          "path": "docs/audits/EOS_OPERATIONAL_RECONNAISSANCE_2026_08_14.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_13_TOOL_AGNOSTIC_ARCHITECTURE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_14_CAPABILITY_INTELLIGENCE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_15_AUTONOMOUS_EXECUTION_RUNTIME.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_16_AUTONOMOUS_MISSION_SIMULATION.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_17_ENGINEERING_FACTORY.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_19_AUTONOMOUS_SELF_EVALUATION.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_20_AUTONOMOUS_ENGINEERING_OPERATING_LOOP.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_21_AUTONOMOUS_RELEASE_GOVERNANCE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_22_ADVERSARIAL_RESILIENCE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_4_FOUNDATION_INTAKE.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_5_PRODUCT_OWNER_DECISION.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_6_TECHNICAL_AUDIT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_7_REMEDIATION.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_8_RELEASE_READINESS.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_9_STAGING_PREVIEW.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_II_LEVEL_2_INDEPENDENT_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_II_LEVEL_3_REAL_PILOT_AUDIT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_RESTRICTED_AUTONOMY_OPERATIONS_AUDIT.md",
+          "n": 1
+        }
+      ],
+      "count": 214
+    },
+    "bypass": {
+      "files": [
+        {
+          "path": "docs/audits/EOS_ISOLATION_INVARIANT_REGRESSION_AND_GOVERNANCE_CLOSURE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_15_AUTONOMOUS_EXECUTION_RUNTIME.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_19_AUTONOMOUS_SELF_EVALUATION.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_1_SELF_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_II_MULTIMODAL_CREATIVE_KNOWLEDGE_EXTRACTION_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_STEP_9_NEGATIVE_SECURITY_AUDIT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_SYSTEM_AUDIT_REPORT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/EOS_SYSTEM_SECURITY_AUDIT.json",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/INDEPENDENT_L3_ENTRY_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/evidence/EOS_STEP_9_SECURITY_MATRIX.json",
+          "n": 1
+        },
+        {
+          "path": "docs/governance/ADVERSARIAL_ATTACK_TAXONOMY.json",
+          "n": 2
+        },
+        {
+          "path": "docs/governance/LEVEL_3_ENTRY_CRITERIA.md",
+          "n": 2
+        },
+        {
+          "path": "docs/governance/META_GOVERNANCE_ENGINE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/intake/EOS_PHASE_II_PROJECT_SELECTION_AND_INTAKE_STANDARD.md",
+          "n": 1
+        },
+        {
+          "path": "docs/intake/eos_core/STEP_10_READ_EMPIRICAL_BASELINE_DIAGNOSIS.md",
+          "n": 1
+        },
+        {
+          "path": "docs/intake/eos_core/STEP_11_READ_SELF_HOSTING_LOOP_DIAGNOSIS.md",
+          "n": 1
+        },
+        {
+          "path": "docs/intake/eos_core/STEP_3_READ_GOVERNANCE_ENGINE_DIAGNOSIS.md",
+          "n": 2
+        },
+        {
+          "path": "docs/intake/eos_core/STEP_5_READ_SYNTHESIS_ENGINE_DIAGNOSIS.md",
+          "n": 2
+        },
+        {
+          "path": "docs/intake/eos_core/STEP_6_READ_DUAL_VALIDATION_ENGINE_DIAGNOSIS.md",
+          "n": 2
+        },
+        {
+          "path": "docs/intake/eos_core/STEP_7_READ_ORCHESTRATOR_DIAGNOSIS.md",
+          "n": 1
+        },
+        {
+          "path": "docs/intake/eos_core/STEP_8_READ_CONSTITUTION_ENGINE_DIAGNOSIS.md",
+          "n": 1
+        },
+        {
+          "path": "docs/intelligence/research/RSC-0005-capability-selection-engine.json",
+          "n": 2
+        },
+        {
+          "path": "docs/intelligence/research/RSC-0006-autonomous-execution-runtime.json",
+          "n": 1
+        },
+        {
+          "path": "docs/knowledge/BKM_LIFECYCLE_MODEL.json",
+          "n": 1
+        },
+        {
+          "path": "docs/knowledge/LSN-MC-002-provisional-budget-interlock.json",
+          "n": 1
+        },
+        {
+          "path": "docs/missions/CANARY_M002/HYPOTHESIS.md",
+          "n": 1
+        },
+        {
+          "path": "docs/missions/CANARY_M002/REPLICATION_PROTOCOL.md",
+          "n": 1
+        },
+        {
+          "path": "docs/missions/CANARY_M003/MISSION_EXPEDIENTE.json",
+          "n": 1
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "docs/specs/canary/SPEC-0001-canary-diagnostic-reporter.md",
+          "n": 1
+        },
+        {
+          "path": "docs/specs/eos_core/STEP_11_MODEL_AND_PROPOSAL.md",
+          "n": 2
+        },
+        {
+          "path": "scripts/engine/release-decision-engine.js",
+          "n": 1
+        },
+        {
+          "path": "scripts/engine/system-wide-integrity-audit.js",
+          "n": 2
+        },
+        {
+          "path": "tests/adapter-architecture.test.js",
+          "n": 1
+        },
+        {
+          "path": "tests/adversarial-tool-selection.test.js",
+          "n": 1
+        },
+        {
+          "path": "tests/capability-intelligence.test.js",
+          "n": 1
+        },
+        {
+          "path": "tests/execution-runtime.test.js",
+          "n": 2
+        },
+        {
+          "path": "tests/factory-proving.test.js",
+          "n": 2
+        },
+        {
+          "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-governance/package.json",
+          "n": 1
+        },
+        {
+          "path": "tests/mission-engine.test.js",
+          "n": 1
+        }
+      ],
+      "count": 61
+    },
+    "LEVEL_2": {
+      "files": [
+        {
+          "path": "EOS-MISSION-CONTROL/CURRENT_STATE.json",
+          "n": 1
+        },
+        {
+          "path": "EOS-MISSION-CONTROL/DECISIONS.json",
+          "n": 1
+        },
+        {
+          "path": "EOS-MISSION-CONTROL/EVIDENCE_STREAM.json",
+          "n": 1
+        },
+        {
+          "path": "EOS-MISSION-CONTROL/RISK.json",
+          "n": 1
+        },
+        {
+          "path": "docs/architecture/EOS_UNIVERSAL_CAPABILITY_PLANE_SPECIFICATION.md",
+          "n": 1
+        },
+        {
+          "path": "docs/architecture/adrs/ADR-0002-luxe-registry-architecture.md",
+          "n": 1
+        },
+        {
+          "path": "docs/architecture/adrs/ADR-0006-multimodal-creative-architecture.md",
+          "n": 1
+        },
+        {
+          "path": "docs/architecture/adrs/ADR-0007-research-intelligence-architecture.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_CURSOR_COMMAND_CENTER_INTEGRATION_REPORT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/PHASE_Q_AUTONOMY_GRADUATION_REPORT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/capabilities/REGISTRY.json",
+          "n": 3
+        },
+        {
+          "path": "docs/core/PHASE_H_EXECUTION_ENGINE_DESIGN.md",
+          "n": 1
+        },
+        {
+          "path": "docs/core/WORLD_CLASS_ENGINEERING_PIPELINE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/evidence/EVD-0028.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evidence/EVD-CANARY-REAL-001.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evidence/EVD-CURSOR-COMMAND-CENTER.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evidence/EVD-PHASE-Q-AUTONOMY-GRADUATION.json",
+          "n": 2
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786771676823-6b1fb092.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786771678250-50b5e2e2.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786771866298-ccd3ba1b.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786771867241-c7b59f2b.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772042635-e43c21d7.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772043624-446c7730.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772372246-81b8c317.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772373105-3c0bf75f.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772510152-f7b6292a.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772511194-8eb5a406.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772519194-312e688e.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772520272-73bf68f6.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772720216-f46c7c97.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772721144-3bdda9af.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772786099-6537cd65.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786772787058-1c8f49d1.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786773079104-8eb6d15c.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786773080045-ad8e9107.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786814168193-c82f753c.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786814169031-a86a8ead.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786814885559-662095fa.json",
+          "n": 1
+        },
+        {
+          "path": "docs/evolution/evolution_KAIZEN-1786814887056-28fc6029.json",
+          "n": 1
+        },
+        {
+          "path": "docs/governance/AUTONOMY_GRADUATION_PACKET.json",
+          "n": 1
+        }
+      ],
+      "count": 105
+    },
+    "mcp": {
+      "files": [
+        {
+          "path": ".cursor/mcp-status.json",
+          "n": 3
+        },
+        {
+          "path": ".cursor/mcp.json",
+          "n": 7
+        },
+        {
+          "path": "CLEAN_CLONE.md",
+          "n": 2
+        },
+        {
+          "path": "EOS-MISSION-CONTROL/ACTIVE_TOOLS.json",
+          "n": 6
+        },
+        {
+          "path": "RC_FILE_MANIFEST.json",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_REAL_CLIENT_PILOT_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/evidence/EVD-CURSOR-COMMAND-CENTER.json",
+          "n": 1
+        },
+        {
+          "path": "docs/manuals/EOS_MCP_LOCAL_CONNECT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/mcp/NORMALIZED_MCP_CATALOG.json",
+          "n": 2
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "package.json",
+          "n": 2
+        },
+        {
+          "path": "scripts/cli/eos.js",
+          "n": 8
+        },
+        {
+          "path": "scripts/engine/cognitive-fabric-evaluation-harness.js",
+          "n": 1
+        },
+        {
+          "path": "scripts/engine/elite-platform-engine.js",
+          "n": 1
+        },
+        {
+          "path": "scripts/engine/external-product-factory-pilot.js",
+          "n": 1
+        },
+        {
+          "path": "scripts/engine/longitudinal-real-operation.js",
+          "n": 2
+        },
+        {
+          "path": "scripts/engine/mcp-provisioning-engine.js",
+          "n": 14
+        },
+        {
+          "path": "scripts/engine/operationalization-program.js",
+          "n": 1
+        },
+        {
+          "path": "scripts/engine/production-readiness-review.js",
+          "n": 1
+        },
+        {
+          "path": "scripts/engine/real-client-pilot-engine.js",
+          "n": 1
+        },
+        {
+          "path": "scripts/engine/real-world-autonomy-pilot.js",
+          "n": 3
+        },
+        {
+          "path": "scripts/engine/real-world-validation-program.js",
+          "n": 1
+        },
+        {
+          "path": "scripts/engine/spec-driven-product-loop.js",
+          "n": 13
+        },
+        {
+          "path": "scripts/engine/sustained-operation-engine.js",
+          "n": 1
+        },
+        {
+          "path": "src/core/discovery/universal-technical-discovery-engine.js",
+          "n": 1
+        },
+        {
+          "path": "src/core/mcp/mcp-mission-bridge.js",
+          "n": 2
+        },
+        {
+          "path": "src/mcp-server.js",
+          "n": 5
+        },
+        {
+          "path": "tests/autonomous-ecosystem-manager-v1.test.js",
+          "n": 1
+        },
+        {
+          "path": "tests/autonomous-ecosystem-manager.test.js",
+          "n": 1
+        },
+        {
+          "path": "tests/closed-loop-meta-learning.test.js",
+          "n": 1
+        },
+        {
+          "path": "tests/external-product-factory-pilot.test.js",
+          "n": 1
+        },
+        {
+          "path": "tests/mcp-mission-bridge.test.js",
+          "n": 5
+        },
+        {
+          "path": "tests/mcp-provisioning.test.js",
+          "n": 4
+        },
+        {
+          "path": "tests/mcp-readonly-guard.test.js",
+          "n": 1
+        },
+        {
+          "path": "tests/mcp-stdio-smoke.test.js",
+          "n": 2
+        },
+        {
+          "path": "tests/playwright-mcp-benchmark.test.js",
+          "n": 1
+        },
+        {
+          "path": "tests/production-readiness-review.test.js",
+          "n": 1
+        },
+        {
+          "path": "tests/real-world-autonomy-pilot.test.js",
+          "n": 3
+        },
+        {
+          "path": "tests/real-world-validation-program.test.js",
+          "n": 5
+        },
+        {
+          "path": "tests/spec-driven-product-loop.test.js",
+          "n": 8
+        }
+      ],
+      "count": 119
+    },
+    "eos.mission": {
+      "files": [
+        {
+          "path": ".cursor/mcp-status.json",
+          "n": 4
+        },
+        {
+          "path": "docs/manuals/EOS_MCP_LOCAL_CONNECT.md",
+          "n": 7
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "src/core/mcp/mcp-mission-bridge.js",
+          "n": 4
+        },
+        {
+          "path": "src/mcp-server.js",
+          "n": 8
+        },
+        {
+          "path": "tests/mcp-mission-bridge.test.js",
+          "n": 5
+        },
+        {
+          "path": "tests/mcp-readonly-guard.test.js",
+          "n": 2
+        },
+        {
+          "path": "tests/mcp-stdio-smoke.test.js",
+          "n": 1
+        }
+      ],
+      "count": 32
+    },
+    "615/615": {
+      "files": [
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        }
+      ],
+      "count": 1
+    },
+    "287/287": {
+      "files": [
+        {
+          "path": "docs/architecture/EOS_MASTER_ROADMAP_NEXT_90_PERCENT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_DETAILED_STATUS_REPORT_2026_08_14.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_ISOLATION_INVARIANT_REGRESSION_AND_GOVERNANCE_CLOSURE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "docs/workflows/MASTER_EXECUTION_BRIEF.md",
+          "n": 3
+        }
+      ],
+      "count": 7
+    },
+    "472/472": {
+      "files": [
+        {
+          "path": "docs/architecture/EOS_MASTER_ROADMAP_NEXT_90_PERCENT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_DETAILED_STATUS_REPORT_2026_08_14.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_FINAL_VERIFIER_V1_3_0_INDEPENDENT_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_ISOLATION_INVARIANT_REGRESSION_AND_GOVERNANCE_CLOSURE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_PHASE_II_LEVEL_2_INDEPENDENT_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_VERIFIER_EVOLUTION_AUDIT_V2.md",
+          "n": 3
+        },
+        {
+          "path": "docs/audits/INDEPENDENT_L3_ENTRY_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/L3_ENTRY_AUDIT.md",
+          "n": 2
+        },
+        {
+          "path": "docs/audits/PRODUCTION_READINESS_EVIDENCE_PACKAGE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/governance/LEVEL_3_ENTRY_CRITERIA.md",
+          "n": 2
+        },
+        {
+          "path": "docs/intelligence/user/FUNDACION_VALUE_BASELINE.md",
+          "n": 1
+        },
+        {
+          "path": "docs/intelligence/user/VAL_EXPERIMENT_002_INSTITUTIONAL_TRUST.md",
+          "n": 1
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "docs/workflows/MASTER_EXECUTION_BRIEF.md",
+          "n": 3
+        },
+        {
+          "path": "tests/level3/audits/final-verifier-v1-3-audit.js",
+          "n": 2
+        }
+      ],
+      "count": 22
+    },
+    "308/308": {
+      "files": [
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        }
+      ],
+      "count": 1
+    },
+    "20/20": {
+      "files": [
+        {
+          "path": "EOS-MISSION-CONTROL/CURRENT_MISSION.json",
+          "n": 1
+        },
+        {
+          "path": "docs/audits/EOS_RESTRICTED_AUTONOMY_OPERATIONS_AUDIT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/releases/EOS_CONTINUOUS_EXECUTION_CHECKPOINT.md",
+          "n": 1
+        },
+        {
+          "path": "docs/releases/EOS_FREEZE_GATE_STATUS.md",
+          "n": 1
+        },
+        {
+          "path": "docs/releases/RELEASE_CAPABILITY_MATRIX.md",
+          "n": 1
+        },
+        {
+          "path": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+          "n": 1
+        },
+        {
+          "path": "scripts/engine/restricted-autonomy-operations.js",
+          "n": 1
+        }
+      ],
+      "count": 7
+    }
+  }
+}

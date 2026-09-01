@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="490" viewBox="0 0 780 490" role="img" aria-label="Product inventory by class (file count)">
+  <rect width="780" height="490" fill="#f7f5f0"/>
+  <text x="28" y="32" font-family="Georgia, serif" font-size="16" fill="#1c1b18">Product inventory by class (file count)</text>
+  <text x="28" y="64" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">docs</text>
+<rect x="28" y="70" width="520" height="14" fill="#3d4a3a"/>
+<text x="556" y="80" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">651</text>
+<text x="28" y="94" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">tests</text>
+<rect x="28" y="100" width="130" height="14" fill="#3d4a3a"/>
+<text x="166" y="110" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">163</text>
+<text x="28" y="124" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">scripts</text>
+<rect x="28" y="130" width="85" height="14" fill="#3d4a3a"/>
+<text x="121" y="140" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">107</text>
+<text x="28" y="154" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">eos-lab</text>
+<rect x="28" y="160" width="51" height="14" fill="#3d4a3a"/>
+<text x="87" y="170" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">64</text>
+<text x="28" y="184" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">src</text>
+<rect x="28" y="190" width="17" height="14" fill="#3d4a3a"/>
+<text x="53" y="200" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">22</text>
+<text x="28" y="214" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">agents-dot</text>
+<rect x="28" y="220" width="7" height="14" fill="#3d4a3a"/>
+<text x="43" y="230" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">10</text>
+<text x="28" y="244" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">mission-control</text>
+<rect x="28" y="250" width="7" height="14" fill="#3d4a3a"/>
+<text x="43" y="260" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">9</text>
+<text x="28" y="274" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">root-other</text>
+<rect x="28" y="280" width="6" height="14" fill="#3d4a3a"/>
+<text x="42" y="290" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">8</text>
+<text x="28" y="304" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">luxe-registry</text>
+<rect x="28" y="310" width="3" height="14" fill="#3d4a3a"/>
+<text x="39" y="320" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">4</text>
+<text x="28" y="334" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">multimodal</text>
+<rect x="28" y="340" width="3" height="14" fill="#3d4a3a"/>
+<text x="39" y="350" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">4</text>
+<text x="28" y="364" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">cursor</text>
+<rect x="28" y="370" width="2" height="14" fill="#3d4a3a"/>
+<text x="38" y="380" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="394" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">bin</text>
+<rect x="28" y="400" width="0" height="14" fill="#3d4a3a"/>
+<text x="36" y="410" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">1</text>
+  <line x1="24" y1="442" x2="756" y2="442" stroke="#c9c4b8"/>
+  <text x="28" y="462" font-family="ui-monospace, monospace" font-size="10" fill="#5c584e">MEASURED 2026-09-01T02:18:00Z · source raw/product_baseline_inventory.json · excludes .git node_modules .missions docs/reports · count ≠ quality</text>
+</svg>

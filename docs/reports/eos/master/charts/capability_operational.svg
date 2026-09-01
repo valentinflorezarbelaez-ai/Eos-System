@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="320" viewBox="0 0 780 320" role="img" aria-label="Capability matrix — operational field (not status of code)">
+  <rect width="780" height="320" fill="#f7f5f0"/>
+  <text x="28" y="32" font-family="Georgia, serif" font-size="16" fill="#1c1b18">Capability matrix — operational field (not status of code)</text>
+  <text x="28" y="64" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">NOT_RUN</text>
+<rect x="28" y="70" width="480" height="20" fill="#3a4458"/>
+<text x="516" y="86" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">8</text>
+<text x="28" y="104" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">UNKNOWN</text>
+<rect x="28" y="110" width="360" height="20" fill="#3a4458"/>
+<text x="396" y="126" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">6</text>
+<text x="28" y="144" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">NOT_OBSERVED</text>
+<rect x="28" y="150" width="120" height="20" fill="#3a4458"/>
+<text x="156" y="166" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">2</text>
+<text x="28" y="184" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">MEASURED</text>
+<rect x="28" y="190" width="60" height="20" fill="#3a4458"/>
+<text x="96" y="206" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">1</text>
+<text x="28" y="224" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">BLOCKED</text>
+<rect x="28" y="230" width="60" height="20" fill="#3a4458"/>
+<text x="96" y="246" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">1</text>
+  <line x1="24" y1="272" x2="756" y2="272" stroke="#c9c4b8"/>
+  <text x="28" y="292" font-family="ui-monospace, monospace" font-size="10" fill="#5c584e">Rule: code existence ≠ operational capability · EOS_MASTER_CAPABILITY_MATRIX.json · most items NOT_RUN / UNKNOWN</text>
+</svg>

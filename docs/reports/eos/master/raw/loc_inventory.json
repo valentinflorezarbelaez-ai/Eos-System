@@ -1,0 +1,247 @@
+{
+  "collected_at": "2026-09-01T02:16:34.556Z",
+  "method": "line split; comment heuristic // or leading *; fn_like is regex not cyclomatic",
+  "src": {
+    "files": 22,
+    "lines": 6323,
+    "code": 5606,
+    "fn_like": 40,
+    "bytes": 243380
+  },
+  "scripts": {
+    "files": 107,
+    "lines": 15978,
+    "code": 13995,
+    "fn_like": 179,
+    "bytes": 613812
+  },
+  "tests": {
+    "files": 138,
+    "lines": 12502,
+    "code": 10416,
+    "fn_like": 813,
+    "bytes": 523005
+  },
+  "src_files": [
+    {
+      "path": "src/cli/mission-cli.js",
+      "lines": 381,
+      "blank": 62,
+      "comment": 21,
+      "code": 319,
+      "fn_like": 1,
+      "bytes": 16530,
+      "sha256": "6b09182a04a568b29aa761bc1f46c0b752eb0b57c4730e9f45cb41b5745517f5"
+    },
+    {
+      "path": "src/core/adapters/cursor-mission-package.js",
+      "lines": 183,
+      "blank": 25,
+      "comment": 19,
+      "code": 158,
+      "fn_like": 1,
+      "bytes": 7714,
+      "sha256": "d576af98b1f0c9684e77c1f53ab973057fc2071bd1975bd46019c31dad92aaa4"
+    },
+    {
+      "path": "src/core/adapters/cursor-return-ingestion-engine.js",
+      "lines": 135,
+      "blank": 16,
+      "comment": 17,
+      "code": 119,
+      "fn_like": 1,
+      "bytes": 5118,
+      "sha256": "1b9674acc0243a55fc690187280b431ca04b42dbc4d62c0bfa9e66fe2f0bf3f5"
+    },
+    {
+      "path": "src/core/authority/authority-truth-source.js",
+      "lines": 269,
+      "blank": 30,
+      "comment": 32,
+      "code": 239,
+      "fn_like": 3,
+      "bytes": 8949,
+      "sha256": "5fa84ce43ed8ea5d022b22c68f61fcff76947b58e44326fffcd0cf3d9a64c2a7"
+    },
+    {
+      "path": "src/core/contracts/schema-validator.js",
+      "lines": 136,
+      "blank": 14,
+      "comment": 15,
+      "code": 122,
+      "fn_like": 1,
+      "bytes": 4427,
+      "sha256": "dcfc862601fa98129d9de7f0f2f7028d05a3df0cc45dc4e1c85dec407bcb3e9f"
+    },
+    {
+      "path": "src/core/discovery/governed-technical-selection-engine.js",
+      "lines": 276,
+      "blank": 42,
+      "comment": 38,
+      "code": 234,
+      "fn_like": 3,
+      "bytes": 11510,
+      "sha256": "14e273fc54922762b8c3618571a84d64fcaeb2f4f9ed8f50565ef3fbce060072"
+    },
+    {
+      "path": "src/core/discovery/operational-capability-receipt-engine.js",
+      "lines": 306,
+      "blank": 23,
+      "comment": 39,
+      "code": 283,
+      "fn_like": 1,
+      "bytes": 11874,
+      "sha256": "29175deae8ea5f821f6288ab8a1e79e23df9b61f53605bc440ce6a528ab58cc4"
+    },
+    {
+      "path": "src/core/discovery/universal-technical-discovery-engine.js",
+      "lines": 292,
+      "blank": 25,
+      "comment": 22,
+      "code": 267,
+      "fn_like": 1,
+      "bytes": 12080,
+      "sha256": "bb78274c12527baad867c480609a3afb1755fd315bbe6da603decaf8e96f5221"
+    },
+    {
+      "path": "src/core/economics/token-economics-audit-engine.js",
+      "lines": 198,
+      "blank": 25,
+      "comment": 32,
+      "code": 173,
+      "fn_like": 1,
+      "bytes": 7751,
+      "sha256": "23a258942c5772755094bd9ac2010c3736c572f7085a585e527a608a76d399a6"
+    },
+    {
+      "path": "src/core/governance/integration-gatekeeper.js",
+      "lines": 422,
+      "blank": 51,
+      "comment": 69,
+      "code": 371,
+      "fn_like": 1,
+      "bytes": 17413,
+      "sha256": "b44e3c6f29555b3897dca83418b30a42a0bb1548bc827ff023338f22950260c2"
+    },
+    {
+      "path": "src/core/mcp/mcp-mission-bridge.js",
+      "lines": 255,
+      "blank": 17,
+      "comment": 14,
+      "code": 238,
+      "fn_like": 3,
+      "bytes": 8723,
+      "sha256": "9f85d8d1c8f5837b4f97d41e306a40b9e85d61092e2249ec0a2a63c394472a19"
+    },
+    {
+      "path": "src/core/observability/executive-mission-reporter.js",
+      "lines": 192,
+      "blank": 34,
+      "comment": 18,
+      "code": 158,
+      "fn_like": 1,
+      "bytes": 7964,
+      "sha256": "7e0b5110e4c89e3cea96972711c6732fd4db2a75c5b07d91354b0ce3ea9de9c4"
+    },
+    {
+      "path": "src/core/roles/role-skill-registry-engine.js",
+      "lines": 222,
+      "blank": 21,
+      "comment": 18,
+      "code": 201,
+      "fn_like": 1,
+      "bytes": 9660,
+      "sha256": "9d876af312111cfae43601660b5a306428b47b28cbe709465599a49b65a5bc9f"
+    },
+    {
+      "path": "src/core/rules/canonical-rules-index.js",
+      "lines": 45,
+      "blank": 8,
+      "comment": 4,
+      "code": 37,
+      "fn_like": 1,
+      "bytes": 1151,
+      "sha256": "ea2f0a5996c7381aa14f532f0869f1aabd4ce93d7cefccf1afda311a9887d916"
+    },
+    {
+      "path": "src/core/runtime/mission-runtime.js",
+      "lines": 771,
+      "blank": 87,
+      "comment": 82,
+      "code": 684,
+      "fn_like": 2,
+      "bytes": 31280,
+      "sha256": "1087ded0ddf6b6d145447ec93835e46af382819381ad5ba58dfd2236f1994a95"
+    },
+    {
+      "path": "src/core/sandbox/worktree-mutation-engine.js",
+      "lines": 211,
+      "blank": 29,
+      "comment": 41,
+      "code": 182,
+      "fn_like": 3,
+      "bytes": 6784,
+      "sha256": "0364b22955dcf273a92e059d1fd2a757f8253ec3495ffb69202dc8fbf28ccb51"
+    },
+    {
+      "path": "src/core/sdd/epistemic-evidence-engine.js",
+      "lines": 530,
+      "blank": 57,
+      "comment": 38,
+      "code": 473,
+      "fn_like": 4,
+      "bytes": 15646,
+      "sha256": "091c3b9be1433816dd492da8ba6ea1256e8491d33ff9ddf2cf82439d65045c1f"
+    },
+    {
+      "path": "src/core/sdd/hitl-gatekeeper.js",
+      "lines": 415,
+      "blank": 50,
+      "comment": 29,
+      "code": 365,
+      "fn_like": 3,
+      "bytes": 16517,
+      "sha256": "63e4b25dcdc2f9080aeaa1b338842ba4e7d8f4e6c67cd48fb13c2747cdf7da0d"
+    },
+    {
+      "path": "src/core/sdd/sdd-fsm-engine.js",
+      "lines": 415,
+      "blank": 32,
+      "comment": 24,
+      "code": 383,
+      "fn_like": 1,
+      "bytes": 16571,
+      "sha256": "6e51df1e8b6092a4d733a348180229b72c002fe95d2de103358ebd9a1b696a4e"
+    },
+    {
+      "path": "src/core/supervision/multi-agent-supervision-engine.js",
+      "lines": 195,
+      "blank": 20,
+      "comment": 24,
+      "code": 175,
+      "fn_like": 1,
+      "bytes": 7866,
+      "sha256": "a44a7886edb155d98a4f623d1a9395b40e1dd7308f69f351af4ed6a4401ac158"
+    },
+    {
+      "path": "src/core/tutor/tutor-maestro.js",
+      "lines": 92,
+      "blank": 7,
+      "comment": 15,
+      "code": 85,
+      "fn_like": 2,
+      "bytes": 2890,
+      "sha256": "854213427f0cb86f07c0aec07146e8c843dc034d57e478312041e68bd30c4ce4"
+    },
+    {
+      "path": "src/mcp-server.js",
+      "lines": 382,
+      "blank": 42,
+      "comment": 6,
+      "code": 340,
+      "fn_like": 4,
+      "bytes": 14962,
+      "sha256": "13961ffce6ad1dfc2e9f255ab465462ad65718ffdc4cf7ccf359d51a06a9961c"
+    }
+  ]
+}

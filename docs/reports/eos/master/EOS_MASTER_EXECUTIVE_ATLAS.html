@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><title>EOS Master Executive Atlas</title><style>
+@page { size: A4; margin: 16mm; }
+:root { --ink:#1c1b18; --muted:#5c584e; --rule:#c9c4b8; --paper:#f7f5f0; --card:#fffdf8; }
+html { background: var(--paper); }
+body { font-family: Georgia, serif; color: var(--ink); background: var(--paper); margin: 0 auto; max-width: 880px; padding: 28px; line-height: 1.45; font-size: 13px; }
+h1 { font-size: 24px; border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+h2 { font-size: 17px; margin-top: 1.8em; border-top: 1px solid var(--rule); padding-top: 0.7em; page-break-before: always; }
+h3 { font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 11px; margin: 0.6em 0 1em; page-break-inside: avoid; }
+th, td { border: 1px solid var(--rule); padding: 3px 5px; text-align: left; vertical-align: top; }
+th { background: #ece8df; font-family: sans-serif; }
+code { font-family: ui-monospace, monospace; font-size: 10.5px; }
+img.chart { max-width: 100%; height: auto; border: 1px solid var(--rule); margin: 8px 0 14px; }
+footer { color: var(--muted); font-size: 11px; margin-top: 36px; }
+</style></head><body>
+<h1>EOS MASTER EXECUTIVE ATLAS</h1>
+<p><strong>Board version</strong> · Report <code>EOS-MSR-2026-09-01-001</code> · Audit <code>AUD-EOS-MASTER-20260901-021328Z</code> · Generated <code>2026-09-01T02:18:00Z</code>  </p>
+<p><strong>Repository:</strong> https://github.com/valentinflorezarbelaez-ai/Eos-  </p>
+<p><strong>VM path:</strong> <code>/workspace</code> · <strong>HEAD at start:</strong> <code>24b69689c447f94afebd4893f5f0f83f45e0a823</code>  </p>
+<p><strong>Verdict: D — NOT_READY</strong> · Production ready: <strong>NO</strong> · Local-complete on this HEAD: <strong>UNKNOWN</strong></p>
+<p>This atlas is the 20–30 page board cut of the master report. It does not add metrics. Every figure is in <code>EOS_MASTER_SYSTEM_DATA.json</code> / <code>EOS_MASTER_SYSTEM_METRICS.csv</code>.</p>
+<hr/>
+<h2>A. What this is</h2>
+<p>EOS is a GitHub-hosted Node.js “Engineering Operating System”: governance documents, a local Mission OS kernel (<code>src/core</code>), a larger legacy/lab factory (<code>scripts/engine</code>), tests, and mission-control JSON. It is <strong>not</strong> a running production SaaS in this environment.</p>
+<p>This audit was <strong>read-only</strong> except for writing these report files.</p>
+<hr/>
+<h2>B. Dashboard (no %)</h2>
+<table>
+<tr><th>Surface</th><th>State</th></tr>
+<tr><td>File/JSON verifier</td><td>VERIFIED (471/471)</td></tr>
+<tr><td>Mission OS source</td><td>STRONG (exists)</td></tr>
+<tr><td>Tests executed</td><td>NOT_READY (NOT_RUN)</td></tr>
+<tr><td>Health telemetry</td><td>CONTRADICTED</td></tr>
+<tr><td>Production</td><td>NOT_READY</td></tr>
+<tr><td>Fundación product</td><td>NOT_READY (empty)</td></tr>
+<tr><td>Third-party MCP live</td><td>UNKNOWN</td></tr>
+</table>
+<table>
+<tr><th>npm supply chain</th><th>STRONG (zero deps)</th></tr>
+</table>
+<p><img class="chart" alt="Dashboard histogram" src="charts/dashboard_state_histogram.svg"/></p>
+<hr/>
+<h2>C. The only verdict</h2>
+<p><strong>D — NOT_READY.</strong></p>
+<p>Not C: freeze suite and MissionRuntime were not reproduced on this HEAD.  </p>
+<p>Not E: kernel source exists; verifier passed; git intact.</p>
+<p><strong>Ultimate board question:</strong> treat EOS as an operational production autonomous system today? <strong>NO.</strong></p>
+<hr/>
+<h2>D. Numbers a director may quote (and no others)</h2>
+<table>
+<tr><th>Quote</th><th>Do not say</th></tr>
+<tr><td>verify:strict <strong>471/471 PASS</strong>, 32 ms, 2026-09-01T02:15:34Z</td><td>“472 tests” / “full suite green”</td></tr>
+<tr><td><strong>777</strong> static <code>test()</code>/<code>it()</code> calls in <strong>132</strong> files</td><td>“777 tests passed”</td></tr>
+<tr><td><strong>1046</strong> product files, <strong>651</strong> docs</td><td>“62% complete”</td></tr>
+<tr><td><strong>22</strong> src files, <strong>6323</strong> lines; scripts <strong>15978</strong> lines</td><td>“scripts are the product” without dual-plane caveat</td></tr>
+<tr><td><strong>75</strong> commits, <strong>1</strong> RC tag, HEAD <code>24b6968</code></td><td>“main is still 78b28d6”</td></tr>
+<tr><td><strong>0</strong> npm dependencies</td><td>“no code dependencies anywhere” (Lab imports hono/astro)</td></tr>
+</table>
+<table>
+<tr><th><strong>0</strong> hits for <code>726/726</code> and <code>615/615</code></th><th>those historical memory numbers</th></tr>
+</table>
+<p><img class="chart" alt="Test health contradictions" src="charts/test_health_contradictions.svg"/></p>
+<hr/>
+<h2>E. Architecture in one picture</h2>
+<p>Two planes:</p>
+<p>1. <strong>Mission OS</strong> — <code>bin/eos.js</code> → <code>MissionRuntime</code> → ATS / FSM / HITL / Integration gate / MCP bridge.</p>
+<p>2. <strong>Legacy factory</strong> — <code>scripts/cli/eos.js</code> + 100+ engines, including <strong>three duplicate kernel filenames</strong>.</p>
+<p>Documented modules <code>synthesisEngine.js</code> / <code>executionOrchestrator.js</code> / <code>scripts/engine/core</code> <strong>are not in the tree</strong>.</p>
+<p><img class="chart" alt="Inventory" src="charts/inventory_by_class.svg"/></p>
+<hr/>
+<h2>F. Control and authority</h2>
+<p>HITL human-only actions are explicit in source (direction/release gates, production release, credentials, constitution exceptions). That is <strong>OBSERVED text</strong>, not a runtime proof.</p>
+<p><code>.cursor/mcp.json</code> sets <code>EOS_MODE=read-write</code> LEVEL_1 — looser than the server’s default <code>read-only</code>.</p>
+<p>MissionRuntime <strong>mkdir <code>.missions</code> in the constructor</strong> — even help is not a pure read. Help was therefore NOT_RUN.</p>
+<hr/>
+<h2>G. Security and bypass (board-level)</h2>
+<ul>
+<li>Step-9 security matrix remediates <strong>files that do not exist</strong> → do not cite 16/16 attacks as current.</li>
+<li>MCP “CONNECTED” in mission-control is <strong>not observed</strong> here.</li>
+<li>Heuristic secret-like assignments in 10 test/engine files — review, do not panic, do not ignore.</li>
+<li>Bypass register is a surface list, not a red-team report.</li>
+</ul>
+<hr/>
+<h2>H. Projects and money</h2>
+<p>Six registry projects; Fundación empty; GAP-002 still UNKNOWN (do not infer NIT/banking).  </p>
+<p><code>BUDGET.json</code> $0.32 / 45200 tokens: <strong>REPORTED</strong>, not measured. Do not use in finance discussions.</p>
+<hr/>
+<h2>I. Risks (P0 first)</h2>
+<ul>
+<li><strong>R-P0-01 P0:</strong> Stale/contradictory system-health pass counts used as live telemetry</li>
+<li><strong>R-P0-02 P0:</strong> Security remediations cite modules that do not exist</li>
+<li><strong>R-P0-03 P0:</strong> npm test not executed; mutation risk in suite</li>
+<li><strong>R-P1-01 P1:</strong> Dual kernel copies (src/core vs scripts/engine)</li>
+<li><strong>R-P1-02 P1:</strong> MCP CONNECTED claims vs this environment</li>
+<li><strong>R-P1-03 P1:</strong> Freeze documents pin stale main SHA</li>
+<li><strong>R-P1-04 P1:</strong> PRJ-FUNDACION empty; GAP-002 still UNKNOWN</li>
+<li><strong>R-P1-05 P1:</strong> CLI constructor creates .missions as side effect</li>
+</ul>
+<p><img class="chart" alt="Risks" src="charts/risk_severity_counts.svg"/></p>
+<hr/>
+<h2>J. Do not build / do not say</h2>
+<ul>
+<li>Production deploy / public hosting — PRODUCTION_READY=NO; no network/prod capability verified</li>
+<li>Unattended LEVEL_3+ autonomy on real client targets — HITL/ATS not exercised this audit; Fundacion barrier exists</li>
+<li>Infer GAP-002 legal/banking data — Explicit constitutional unknown</li>
+<li>Treat verify:strict 471 as test coverage or runtime health — Path/JSON existence only</li>
+<li>npm install / add dependencies without L1/L2 policy — DEPENDENCY_POLICY_L0</li>
+<li>Merge or claim freeze paperwork still equals HEAD — 78b28d6 ≠ 24b6968</li>
+<li>Operate claimed CONNECTED third-party MCPs from this Linux VM as if live — Not observed; Windows engram path</li>
+<li>Cite 726/726 or 615/615 as current facts — Strings absent in tree; previous-memory only</li>
+</ul>
+<hr/>
+<h2>K. Graph 29 (ordinal visual only)</h2>
+<p><img class="chart" alt="Graph 29" src="charts/radar_graph_29_ordinal.svg"/></p>
+<p>Do not average the 0–5 ordinals. They exist so a board packet can *see* imbalance (testing/security/docs drift vs git/deps).</p>
+<hr/>
+<h2>L. Fifteen questions (answers only)</h2>
+<p>1. Is EOS production ready? — <strong>NO</strong></p>
+<p>2. Is EOS complete for local governed use? — <strong>PARTIAL</strong></p>
+<p>3. Does a real Mission OS kernel exist in src/? — <strong>YES</strong></p>
+<p>4. Did this audit run the product test suite? — <strong>NO</strong></p>
+<p>5. Did any automated gate pass here? — <strong>YES</strong></p>
+<p>6. Are published test-health numbers trustworthy? — <strong>NO</strong></p>
+<p>7. Is CORE frozen as a single inode? — <strong>UNKNOWN</strong></p>
+<p>8. Is PRJ-FUNDACION operational? — <strong>NO</strong></p>
+<p>9. Is GAP-002 resolved? — <strong>NO</strong></p>
+<p>10. Are third-party MCPs connected here? — <strong>UNKNOWN</strong></p>
+<p>11. Is there an npm lockfile / installed deps? — <strong>NO</strong></p>
+<p>12. Can we claim 726/726 or 615/615 tests? — <strong>NO</strong></p>
+<p>13. Is security Step-9 matrix applicable to current src/core? — <strong>NO</strong></p>
+<p>14. Should the board authorize production or client writes? — <strong>NO</strong></p>
+<p>15. What is the single best next measurement? — <strong>Isolated freeze-suite replay</strong></p>
+<hr/>
+<h2>M. What to do next (recommendations, not work done)</h2>
+<p>1. Stop publishing 663/608/472/20 as *current* without a new MEASURED run (REC01).</p>
+<p>2. Quarantine Step-9 matrix as historical (REC03).</p>
+<p>3. Update or supersede freeze docs for HEAD <code>24b69689</code> (REC04).</p>
+<p>4. Replay the 4-file freeze suite in a <strong>tmp</strong> workdir and seal the log (REC07).</p>
+<p>5. Declare <code>src/core</code> the only kernel; mark <code>scripts/engine</code> duplicates deprecated (REC08).</p>
+<p>6. Keep PRODUCTION_READY=NO (REC18).</p>
+<p>7. Keep GAP-002 UNKNOWN (REC12).</p>
+<hr/>
+<h2>N. Findings polarity</h2>
+<p><img class="chart" alt="Findings" src="charts/findings_polarity.svg"/></p>
+<p>Positive: verifier works; kernel source exists; zero npm deps; PRODUCTION_READY=NO is honest at system level.  </p>
+<p>Negative: contradictory health, missing security targets, stale freeze SHA, dual kernel, empty Fundación, MCP over-claim.</p>
+<hr/>
+<h2>O. Capability operational field</h2>
+<p><img class="chart" alt="Capabilities" src="charts/capability_operational.svg"/></p>
+<p>Most capabilities are <strong>NOT_RUN</strong> or <strong>UNKNOWN</strong>. Only the file/JSON gate is <code>MEASURED</code>.</p>
+<hr/>
+<h2>P. Lines of code (not quality)</h2>
+<p><img class="chart" alt="LOC" src="charts/loc_by_layer.svg"/></p>
+<hr/>
+<h2>Q. Git burst</h2>
+<p><img class="chart" alt="Git" src="charts/git_commits_by_date.svg"/></p>
+<p>75 commits in 11 days (10–21 Aug 2026). Fast document+code accretion. Drift risk is structural.</p>
+<hr/>
+<h2>R. verify:strict composition</h2>
+<p><img class="chart" alt="Verify" src="charts/verify_strict_breakdown.svg"/></p>
+<p>276 existence + 187 JSON + 8 frontmatter = 471. This is a <strong>workspace integrity linter</strong>, not a product test.</p>
+<hr/>
+<h2>S. How to read this packet in 10 minutes</h2>
+<p>1. Verdict D (§C).  </p>
+<p>2. Numbers table (§D) — refuse any other headline figure.  </p>
+<p>3. Contradictions (master report §46).  </p>
+<p>4. P0/P1 risks (§I).  </p>
+<p>5. Ultimate NO (§C / master §51).</p>
+<hr/>
+<h2>T. Authority of this atlas</h2>
+<p>Prepared by a Cloud Agent under read-only constraints. It <strong>cannot</strong> certify production. It <strong>can</strong> certify that, on this VM, at these timestamps, the listed commands produced the listed outputs.</p>
+<p>Full narrative: <code>EOS_MASTER_SYSTEM_REPORT.md</code> (53 sections).</p>
+<hr/>
+<p>*End of Executive Atlas.*</p>
+<hr/>
+<h2>U. Full metadata (board record)</h2>
+<table>
+<tr><th>Field</th><th>Value</th><th>Class</th></tr>
+<tr><td>Report ID</td><td><code>EOS-MSR-2026-09-01-001</code></td><td>—</td></tr>
+<tr><td>Audit ID</td><td><code>AUD-EOS-MASTER-20260901-021328Z</code></td><td>—</td></tr>
+<tr><td>Abs path</td><td><code>/workspace</code></td><td>MEASURED</td></tr>
+<tr><td>HEAD</td><td><code>24b69689c447f94afebd4893f5f0f83f45e0a823</code></td><td>MEASURED</td></tr>
+<tr><td>Node / npm / git</td><td>v22.14.0 / 10.9.7 / 2.43.0</td><td>MEASURED</td></tr>
+<tr><td>Package manager</td><td>npm scripts; no lockfile; 0 deps</td><td>OBSERVED</td></tr>
+</table>
+<table>
+<tr><th>Commits / tracked files / tags</th><th>75 / 1048 / 1</th><th>MEASURED</th></tr>
+</table>
+<p>This page exists so a director can file the audit without opening the 53-section report.</p>
+<h2>V. Contradiction register (complete)</h2>
+<p>If a slide still shows 726, 615, 663, 608, 472, or 20 as *today’s* health, it is wrong.</p>
+<table>
+<tr><th>ID</th><th>A</th><th>B</th><th>Label</th></tr>
+<tr><td>CX-01</td><td>CURRENT_STATE 663/663</td><td>suite NOT_RUN; static 777</td><td>CONTRADICTED</td></tr>
+<tr><td>CX-02</td><td>cli fallback 608/608</td><td>same</td><td>CONTRADICTED</td></tr>
+<tr><td>CX-03</td><td>historical verify 472/472</td><td>this run 471/471</td><td>CONTRADICTED</td></tr>
+<tr><td>CX-04</td><td>freeze main 78b28d6</td><td>HEAD 24b6968</td><td>CONTRADICTED</td></tr>
+<tr><td>CX-05</td><td>Step-9 remediations</td><td>target files absent</td><td>CONTRADICTED</td></tr>
+<tr><td>CX-06</td><td>RISK.json scripts/engine/core</td><td>directory absent</td><td>CONTRADICTED</td></tr>
+<tr><td>CX-07</td><td>MCP CONNECTED</td><td>not observed here</td><td>CONTRADICTED</td></tr>
+<tr><td>CX-08</td><td>memory 726/726</td><td>0 hits in tree</td><td>CONTRADICTED</td></tr>
+<tr><td>CX-09</td><td>memory 615/615</td><td>0 hits as live metric</td><td>CONTRADICTED</td></tr>
+<tr><td>CX-10</td><td>freeze 20/20 as current</td><td>HEAD moved; NOT_RUN</td><td>CONTRADICTED as current</td></tr>
+<tr><td>CX-11</td><td>CORE FROZEN slogan</td><td>src/core changed after freeze docs</td><td>CONTRADICTED if Δ=0</td></tr>
+</table>
+<table>
+<tr><th>CX-12</th><th>EVD-0033/34 PRODUCTION_READY</th><th>system dictamen NO</th><th>CONTRADICTED if global</th></tr>
+</table>
+<p>System-level <code>PRODUCTION_READY=NO</code> is <strong>consistent</strong> and accepted.</p>
+<h2>W. Graph 29 table (all dimensions)</h2>
+<table>
+<tr><th>#</th><th>Dimension</th><th>State</th><th>Note</th></tr>
+<tr><td>1</td><td>01 Architecture coherence</td><td><code>PARTIAL</code></td><td>Dual planes src/core vs scripts/engine; 3 duplicate kernel basenames</td></tr>
+<tr><td>2</td><td>02 Documented vs actual</td><td><code>CONTRADICTED</code></td><td>Security matrix cites missing synthesisEngine/executionOrchestrator; freeze HEAD stale</td></tr>
+<tr><td>3</td><td>03 Entrypoints</td><td><code>PARTIAL</code></td><td>bin/eos.js and scripts/cli/eos.js both exist; CLI --help not executed (mkdir side effect)</td></tr>
+<tr><td>4</td><td>04 MissionRuntime</td><td><code>OBSERVED</code></td><td>Class and methods exist; no .missions; constructor not invoked this audit</td></tr>
+<tr><td>5</td><td>05 FSM</td><td><code>OBSERVED</code></td><td>17 states, 16 transitions imported from src/core/sdd/sdd-fsm-engine.js</td></tr>
+<tr><td>6</td><td>06 Authority / HITL</td><td><code>OBSERVED</code></td><td>ATS + HitlGatekeeper modules exist; runtime not exercised</td></tr>
+<tr><td>7</td><td>07 Tools / MCP</td><td><code>PARTIAL</code></td><td>20 tools declared in src; MCP CONNECTED claims not observed on this VM</td></tr>
+<tr><td>8</td><td>08 Governance matrix</td><td><code>PARTIAL</code></td><td>Policies and RISK.json exist; frozen-core path scripts/engine/core missing</td></tr>
+<tr><td>9</td><td>09 Security matrix</td><td><code>CONTRADICTED</code></td><td>EOS_STEP_9_SECURITY_MATRIX.json remediates files that do not exist</td></tr>
+<tr><td>10</td><td>10 Bypass resistance</td><td><code>UNKNOWN</code></td><td>Guards exist in source; bypass suite not executed this audit</td></tr>
+<tr><td>11</td><td>11 Evidence system</td><td><code>PARTIAL</code></td><td>84 evidence JSON files exist; contents treated as REPORTED</td></tr>
+<tr><td>12</td><td>12 Testing inventory</td><td><code>MEASURED</code></td><td>132 test-like files; 777 static test()/it() calls; count ≠ coverage</td></tr>
+<tr><td>13</td><td>13 Testing execution</td><td><code>NOT_RUN</code></td><td>npm test / test:all / coverage not executed</td></tr>
+<tr><td>14</td><td>14 V&amp;V</td><td><code>PARTIAL</code></td><td>verify:strict MEASURED; dynamic V&amp;V NOT_RUN</td></tr>
+<tr><td>15</td><td>15 Reproducibility</td><td><code>PARTIAL</code></td><td>L0 builtins policy + no lockfile; clean-clone of core is plausible, not replayed</td></tr>
+<tr><td>16</td><td>16 Git health</td><td><code>STRONG</code></td><td>75 commits, 1 tag, clean start, remote origin present</td></tr>
+<tr><td>17</td><td>17 Code health</td><td><code>PARTIAL</code></td><td>src 22 files / 6323 lines; scripts 3.4x larger; lint/typecheck NOT_RUN</td></tr>
+<tr><td>18</td><td>18 Dependency health</td><td><code>STRONG</code></td><td>No npm dependencies in package.json; node_modules absent</td></tr>
+<tr><td>19</td><td>19 Agents</td><td><code>REPORTED</code></td><td>16 docs agents + 7 mission-control agents; no live process observed</td></tr>
+<tr><td>20</td><td>20 Knowledge plane</td><td><code>REPORTED</code></td><td>docs/knowledge and intelligence JSON exist; not executed</td></tr>
+<tr><td>21</td><td>21 Ops maturity</td><td><code>PARTIAL</code></td><td>Mission-control JSON present; telemetry hash not reproduced</td></tr>
+<tr><td>22</td><td>22 Performance</td><td><code>NOT_RUN</code></td><td>No runtime/perf measurements this audit</td></tr>
+<tr><td>23</td><td>23 Complexity</td><td><code>MEASURED</code></td><td>LOC and import-edge counts only; no cyclomatic tool run</td></tr>
+<tr><td>24</td><td>24 Fitness functions</td><td><code>REPORTED</code></td><td>verify-eos is a fitness-like gate for files/JSON, not product fitness</td></tr>
+<tr><td>25</td><td>25 Projects</td><td><code>PARTIAL</code></td><td>6 registry projects; Fundacion/ empty; Windows paths invalid here</td></tr>
+<tr><td>26</td><td>26 History</td><td><code>MEASURED</code></td><td>11-day burst 2026-08-10..21; 75 commits</td></tr>
+<tr><td>27</td><td>27 Risk management</td><td><code>PARTIAL</code></td><td>Registers exist; several are stale or self-certifying</td></tr>
+<tr><td>28</td><td>28 Production readiness</td><td><code>NOT_READY</code></td><td>PRODUCTION_READY=NO consistently reported; this audit agrees</td></tr>
+</table>
+<table>
+<tr><th>29</th><th>29 Epistemic honesty</th><th><code>PARTIAL</code></th><th>Constitution requires labels; live files still publish stale pass-counts</th></tr>
+</table>
+<h2>X. All P0–P3 risks</h2>
+<table>
+<tr><th>ID</th><th>Sev</th><th>Title</th><th>Class</th></tr>
+<tr><td>R-P0-01</td><td>P0</td><td>Stale/contradictory system-health pass counts used as live telemetry</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>R-P0-02</td><td>P0</td><td>Security remediations cite modules that do not exist</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>R-P0-03</td><td>P0</td><td>npm test not executed; mutation risk in suite</td><td><code>NOT_RUN</code></td></tr>
+<tr><td>R-P1-01</td><td>P1</td><td>Dual kernel copies (src/core vs scripts/engine)</td><td><code>OBSERVED</code></td></tr>
+<tr><td>R-P1-02</td><td>P1</td><td>MCP CONNECTED claims vs this environment</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>R-P1-03</td><td>P1</td><td>Freeze documents pin stale main SHA</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>R-P1-04</td><td>P1</td><td>PRJ-FUNDACION empty; GAP-002 still UNKNOWN</td><td><code>OBSERVED</code></td></tr>
+<tr><td>R-P1-05</td><td>P1</td><td>CLI constructor creates .missions as side effect</td><td><code>OBSERVED</code></td></tr>
+<tr><td>R-P2-01</td><td>P2</td><td>Registry paths are Windows absolute and invalid on this VM</td><td><code>OBSERVED</code></td></tr>
+<tr><td>R-P2-02</td><td>P2</td><td>Budget/usage telemetry not reproduced</td><td><code>REPORTED</code></td></tr>
+<tr><td>R-P2-03</td><td>P2</td><td>RISK.json freezes scripts/engine/core which does not exist</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>R-P2-04</td><td>P2</td><td>Historical PRODUCTION_READY verdicts inside EVD-0033/34/35</td><td><code>REPORTED</code></td></tr>
+<tr><td>R-P2-05</td><td>P2</td><td>Heuristic secret-like assignments in tests/engines</td><td><code>OBSERVED</code></td></tr>
+<tr><td>R-P3-01</td><td>P3</td><td>Docs dominate inventory (651/1046 files)</td><td><code>MEASURED</code></td></tr>
+<tr><td>R-P3-02</td><td>P3</td><td>No lockfile under L0 policy</td><td><code>OBSERVED</code></td></tr>
+</table>
+<table>
+<tr><th>R-P3-03</th><th>P3</th><th>sqlite artifacts in EOS-Lab</th><th><code>OBSERVED</code></th></tr>
+</table>
+<h2>Y. Findings and recommendations (full)</h2>
+<h3>Findings</h3>
+<table>
+<tr><th>ID</th><th>Pol</th><th>Title</th><th>Class</th></tr>
+<tr><td>F01</td><td>POS</td><td>verify:strict executed 471/471 PASS exit 0 in 32 ms</td><td><code>MEASURED</code></td></tr>
+<tr><td>F02</td><td>POS</td><td>Mission OS kernel modules exist under src/core (22 JS files, 6323 lines)</td><td><code>MEASURED</code></td></tr>
+<tr><td>F03</td><td>POS</td><td>package.json has zero npm dependencies; L0 builtins policy matches observation</td><td><code>OBSERVED</code></td></tr>
+<tr><td>F04</td><td>POS</td><td>PRODUCTION_READY=NO is consistent across CURRENT_MISSION and freeze docs</td><td><code>REPORTED</code></td></tr>
+<tr><td>F05</td><td>POS</td><td>GAP-002 remains labeled UNKNOWN in mission-control and unknown register</td><td><code>REPORTED</code></td></tr>
+<tr><td>F06</td><td>POS</td><td>Git history is short, linear, tagged RC; start working tree was clean</td><td><code>MEASURED</code></td></tr>
+<tr><td>F07</td><td>POS</td><td>MCP tool table in src is enumerable (20 tools) with deny-by-default comments</td><td><code>OBSERVED</code></td></tr>
+<tr><td>F08</td><td>POS</td><td>HITL human-only action set is explicit in source</td><td><code>OBSERVED</code></td></tr>
+<tr><td>F09</td><td>NEG</td><td>System health numbers contradict each other (20 / 471 / 472 / 608 / 663 / static 777)</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>F10</td><td>NEG</td><td>726/726 and 615/615 previous-memory claims are not in this tree</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>F11</td><td>NEG</td><td>Security matrix remediates nonexistent src/core modules</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>F12</td><td>NEG</td><td>Freeze status pins main=78b28d6; actual HEAD=24b6968</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>F13</td><td>NEG</td><td>ACTIVE_TOOLS.json reports MCP CONNECTED; not observed on this VM</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>F14</td><td>NEG</td><td>Dual FSM/HITL/evidence engines (src vs scripts)</td><td><code>OBSERVED</code></td></tr>
+<tr><td>F15</td><td>NEG</td><td>Fundacion/ is empty; registry points at Windows path</td><td><code>OBSERVED</code></td></tr>
+<tr><td>F16</td><td>NEG</td><td>RISK.json freezes scripts/engine/core which does not exist</td><td><code>CONTRADICTED</code></td></tr>
+<tr><td>F17</td><td>UNKNOWN</td><td>npm test / coverage / CLI runtime / MCP stdio smoke not run this audit</td><td><code>NOT_RUN</code></td></tr>
+<tr><td>F18</td><td>UNKNOWN</td><td>Whether 20/20 freeze tests still pass on 24b6968 is unknown</td><td><code>NOT_RUN</code></td></tr>
+<tr><td>F19</td><td>UNKNOWN</td><td>BUDGET.json usage figures have no measurement chain here</td><td><code>REPORTED</code></td></tr>
+</table>
+<table>
+<tr><th>F20</th><th>CONTRADICTED</th><th>Documented CORE freeze locations do not match a single existing kernel directory</th><th><code>CONTRADICTED</code></th></tr>
+</table>
+<h3>Recommendations</h3>
+<table>
+<tr><th>ID</th><th>Finding</th><th>Recommendation</th></tr>
+<tr><td>REC01</td><td>F09</td><td>Remove or timestamp-lock all live test-health strings; single measured source or NONE</td></tr>
+<tr><td>REC02</td><td>F10</td><td>Never restore 726/726 or 615/615 without a new MEASURED run</td></tr>
+<tr><td>REC03</td><td>F11</td><td>Quarantine EOS_STEP_9_SECURITY_MATRIX.json as HISTORICAL / NOT_APPLICABLE_TO_CURRENT_TREE</td></tr>
+<tr><td>REC04</td><td>F12</td><td>Rewrite freeze gate docs to current HEAD or mark SUPERSEDED</td></tr>
+<tr><td>REC05</td><td>F03</td><td>Keep L0 no-dep policy until a lockfile gate exists</td></tr>
+<tr><td>REC06</td><td>F17</td><td>Create a declared non-mutating test subset (tmp workdir only) and run it under evidence</td></tr>
+<tr><td>REC07</td><td>F18</td><td>Re-run the freeze 4-file suite in an isolated tmp dir; record exit and SHA</td></tr>
+<tr><td>REC08</td><td>F14</td><td>Declare one authoritative kernel path; mark the other DEPRECATED in code not just docs</td></tr>
+<tr><td>REC09</td><td>F13</td><td>Change ACTIVE_TOOLS MCP status from CONNECTED to CONFIGURED or UNKNOWN until a live handshake</td></tr>
+<tr><td>REC10</td><td>F15</td><td>Keep Fundacion empty until GAP-002 official source; do not infer legal data</td></tr>
+<tr><td>REC11</td><td>F16</td><td>Point CORE-freeze monitors at src/core (or the real path), not scripts/engine/core</td></tr>
+<tr><td>REC12</td><td>F05</td><td>Leave GAP-002 UNKNOWN; do not close from web inference</td></tr>
+<tr><td>REC13</td><td>F19</td><td>Treat BUDGET.json current_usage as demo/stale until a ledger backs it</td></tr>
+<tr><td>REC14</td><td>R-P1-05</td><td>Stop mkdir in MissionRuntime constructor; create on first write</td></tr>
+<tr><td>REC15</td><td>F20</td><td>Publish a one-page ACTUAL architecture that names src/core as Mission OS and scripts/engine as legacy/lab</td></tr>
+<tr><td>REC16</td><td>F01</td><td>Keep verify:strict but label it FILE_JSON_GATE not test health</td></tr>
+<tr><td>REC17</td><td>F07</td><td>Do not claim eos.provider.* operational; mcp-status already lists them not_configured</td></tr>
+<tr><td>REC18</td><td>F04</td><td>Retain PRODUCTION_READY=NO until measured runtime + security + tests exist</td></tr>
+<tr><td>REC19</td><td>R-P2-05</td><td>Human-review the 10 heuristic secret-hit files</td></tr>
+</table>
+<table>
+<tr><th>REC20</th><th>F06</th><th>Pin this audit SHA in any future health dashboard</th></tr>
+</table>
+<h2>Z. Capability matrix (full)</h2>
+<table>
+<tr><th>ID</th><th>Name</th><th>Status</th><th>Operational</th><th>Evidence</th></tr>
+<tr><td>CAP-CLI-MISSION</td><td>Mission CLI (bin/eos.js → MissionCLI)</td><td>OBSERVED</td><td>UNKNOWN</td><td>src/cli/mission-cli.js, bin/eos.js</td></tr>
+<tr><td>CAP-MISSION-RUNTIME</td><td>MissionRuntime lifecycle</td><td>OBSERVED</td><td>NOT_RUN</td><td>src/core/runtime/mission-runtime.js</td></tr>
+<tr><td>CAP-ATS</td><td>AuthorityTruthSource commitTransition</td><td>OBSERVED</td><td>NOT_RUN</td><td>src/core/authority/authority-truth-source.js</td></tr>
+<tr><td>CAP-FSM</td><td>SDD FSM TransitionEnforcer</td><td>OBSERVED</td><td>NOT_RUN</td><td>src/core/sdd/sdd-fsm-engine.js import succeeded</td></tr>
+<tr><td>CAP-HITL</td><td>HitlGatekeeper receipts</td><td>OBSERVED</td><td>NOT_RUN</td><td>src/core/sdd/hitl-gatekeeper.js</td></tr>
+<tr><td>CAP-IG</td><td>IntegrationGatekeeper / FDIR</td><td>OBSERVED</td><td>NOT_RUN</td><td>src/core/governance/integration-gatekeeper.js</td></tr>
+<tr><td>CAP-MCP-LOCAL</td><td>eos-local MCP server</td><td>OBSERVED</td><td>NOT_RUN</td><td>src/mcp-server.js + .cursor/mcp.json</td></tr>
+<tr><td>CAP-MCP-EXTERNAL</td><td>Engram/Playwright/Figma/Slack MCP</td><td>REPORTED</td><td>NOT_OBSERVED</td><td>ACTIVE_TOOLS.json CONNECTED vs this Linux VM</td></tr>
+<tr><td>CAP-VERIFY-STRICT</td><td>verify-eos --strict path/JSON gate</td><td>VERIFIED</td><td>MEASURED</td><td>471/471 exit 0 at 2026-09-01T02:15:34Z</td></tr>
+<tr><td>CAP-NPM-TEST</td><td>npm test suite</td><td>NOT_RUN</td><td>UNKNOWN</td><td>mutation risk</td></tr>
+<tr><td>CAP-LEGACY-FACTORY</td><td>scripts/engine autonomous factory</td><td>OBSERVED</td><td>NOT_RUN</td><td>107 script js files</td></tr>
+<tr><td>CAP-FUNDACION</td><td>PRJ-FUNDACION product site</td><td>NOT_READY</td><td>NOT_OBSERVED</td><td>Fundacion/ empty; Windows path absent</td></tr>
+<tr><td>CAP-LUXE</td><td>Luxe-Registry in-repo tree</td><td>OBSERVED</td><td>UNKNOWN</td><td>4 files; registry claims PRODUCTION_READY_WITHIN_TESTED_SCOPE</td></tr>
+<tr><td>CAP-MULTIMODAL</td><td>Multimodal-Creative-Suite in-repo tree</td><td>OBSERVED</td><td>UNKNOWN</td><td>4 files</td></tr>
+<tr><td>CAP-CANARY-LAB</td><td>EOS-Lab canaries</td><td>OBSERVED</td><td>NOT_RUN</td><td>64 files including .db</td></tr>
+<tr><td>CAP-COVERAGE</td><td>Test coverage measurement</td><td>NOT_RUN</td><td>UNKNOWN</td><td>no coverage/</td></tr>
+<tr><td>CAP-PERF</td><td>Runtime performance telemetry</td><td>NOT_RUN</td><td>UNKNOWN</td><td>BUDGET.json is REPORTED</td></tr>
+</table>
+<table>
+<tr><th>CAP-PROD-DEPLOY</th><th>Production deploy / network / credentials</th><th>NOT_READY</th><th>BLOCKED</th><th>RELEASE_CAPABILITY_MATRIX FUTURE/BLOCKED</th></tr>
+</table>
+<h2>AA. Unknowns the board must keep unknown</h2>
+<ul>
+<li>GAP-002 legal/banking facts until official PO source.</li>
+<li>npm test result on this HEAD.</li>
+<li>Freeze 20/20 on SHA 24b6968.</li>
+<li>Coverage.</li>
+<li>Live MCP connectivity.</li>
+<li>Runtime performance (except verify-eos 32 ms).</li>
+<li>Whether ATS is the sole writer at runtime.</li>
+<li>Why verify drifted 472 → 471.</li>
+</ul>
+<h2>AB. Command ledger (what was and was not run)</h2>
+<table>
+<tr><th>Command (abbrev)</th><th>Exit</th><th>ms</th><th>Class</th></tr>
+<tr><td>env + git metadata</td><td>0</td><td>676</td><td>MEASURED</td></tr>
+<tr><td>branch + mkdir report dirs</td><td>0</td><td>80</td><td>MEASURED (allowed mutation)</td></tr>
+<tr><td>inventory collector</td><td>0</td><td>138</td><td>MEASURED</td></tr>
+<tr><td>existence listing</td><td>0</td><td>72</td><td>MEASURED</td></tr>
+<tr><td>verify-eos --strict --json</td><td>0</td><td>32</td><td>MEASURED</td></tr>
+<tr><td>verify-eos --strict</td><td>0</td><td>29</td><td>MEASURED</td></tr>
+<tr><td>more collectors + kernel import</td><td>0</td><td>199</td><td>MEASURED</td></tr>
+<tr><td>product baseline walk</td><td>0</td><td>80</td><td>MEASURED</td></tr>
+</table>
+<table>
+<tr><th>npm test / CLI help / MCP start</th><th>—</th><th>—</th><th>NOT_RUN</th></tr>
+</table>
+<h2>AC. How the board should talk about EOS after this audit</h2>
+<p><strong>Allowed:</strong> “We have a local Mission OS codebase, a passing file/JSON gate (471/471), zero npm dependencies, and an honest PRODUCTION_READY=NO.”</p>
+<p><strong>Forbidden:</strong> “615/615 tests,” “726/726 tests,” “472/472 current,” “663/663 live,” “608/608,” “production ready,” “MCPs connected,” “CORE frozen meaning src cannot change,” “Fundación is an operating site,” “security 16/16 on current kernel.”</p>
+<p><strong>Next measurement that would change the verdict toward C (not A):</strong> isolated freeze-suite replay on 24b6968 with sealed logs, plus a non-mutating MissionRuntime inspect in tmp. That still would not make production ready.</p>
+<h2>AD. Inventory detail (for the packet appendix)</h2>
+<table>
+<tr><th>Class</th><th>Files</th><th>Bytes</th></tr>
+<tr><td><code>docs</code></td><td>651</td><td>1930920</td></tr>
+<tr><td><code>tests</code></td><td>163</td><td>527460</td></tr>
+<tr><td><code>scripts</code></td><td>107</td><td>613812</td></tr>
+<tr><td><code>eos-lab</code></td><td>64</td><td>625146</td></tr>
+<tr><td><code>src</code></td><td>22</td><td>243380</td></tr>
+<tr><td><code>agents-dot</code></td><td>10</td><td>13862</td></tr>
+<tr><td><code>mission-control</code></td><td>9</td><td>7661</td></tr>
+<tr><td><code>root-other</code></td><td>8</td><td>22705</td></tr>
+<tr><td><code>luxe-registry</code></td><td>4</td><td>18303</td></tr>
+<tr><td><code>multimodal</code></td><td>4</td><td>17015</td></tr>
+<tr><td><code>cursor</code></td><td>3</td><td>3203</td></tr>
+</table>
+<table>
+<tr><th><code>bin</code></th><th>1</th><th>557</th></tr>
+</table>
+<p>Total 1046 files / 4,024,024 bytes excluding this report directory. MEASURED.</p>
+<h2>AE. Entrypoints and why help was not run</h2>
+<p><code>bin/eos.js</code> constructs <code>MissionCLI</code>, which constructs <code>MissionRuntime</code>, which <code>mkdirSync(&#x27;.missions&#x27;)</code> if missing. The auditor treated <code>--help</code> as mutating and marked it NOT_RUN. Help text was read from source instead (OBSERVED).</p>
+<p>Legacy <code>npm run eos</code> is a different program (<code>scripts/cli/eos.js</code>) and embeds a fallback health string <code>608 / 608 PASS</code>.</p>
+<h2>AF. MCP tools declared (20)</h2>
+<table>
+<tr><th>Tool</th><th>Effects</th><th>Auth</th></tr>
+<tr><td><code>eos.mission.resolve</code></td><td>NONE</td><td>A0</td></tr>
+<tr><td><code>eos.mission.start</code></td><td>LEDGER_WRITE</td><td>A1</td></tr>
+<tr><td><code>eos.mission.status</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.mission.recover</code></td><td>LEDGER_WRITE</td><td>A1</td></tr>
+<tr><td><code>eos.context.compile</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.ledger.get_features</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.ledger.update_feature</code></td><td>LEDGER_WRITE</td><td>A1</td></tr>
+<tr><td><code>eos.authority.check</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.policy.validate</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.evidence.record</code></td><td>LEDGER_WRITE</td><td>A1</td></tr>
+<tr><td><code>eos.evidence.get</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.verifier.run</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.provider.route</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.provider.health</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.workspace.discover</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.workspace.barrier_check</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.fdir.status</code></td><td>READ_ONLY</td><td>A0</td></tr>
+<tr><td><code>eos.fdir.trip</code></td><td>NONE</td><td>A2</td></tr>
+<tr><td><code>eos.audit.run</code></td><td>READ_ONLY</td><td>A0</td></tr>
+</table>
+<table>
+<tr><th><code>eos.report.generate</code></th><th>READ_ONLY</th><th>A0</th></tr>
+</table>
+<p><code>eos.provider.route</code> and <code>eos.provider.health</code> are declared in source and marked not_configured in mcp-status.json.</p>
+<h2>AG. FSM states (17) and transitions (16)</h2>
+<p><code>VISION_INTAKE</code>, <code>MISSION_FORMULATION</code>, <code>HUMAN_DIRECTION_GATE</code>, <code>DISCOVER</code>, <code>DEFINE</code>, <code>PLAN</code>, <code>DELEGATE</code>, <code>SUPERVISE</code>, <code>VERIFY</code>, <code>REVIEW</code>, <code>HUMAN_RELEASE_GATE</code>, <code>OPERATE_AND_LEARN</code>, <code>PAUSED</code>, <code>BLOCKED</code>, <code>FAILED</code>, <code>CANCELLED</code>, <code>COMPLETED</code></p>
+<p>Canonical transition count: 16. Imported from <code>src/core/sdd/sdd-fsm-engine.js</code>. Duplicate file exists under <code>scripts/engine/</code>.</p>
+<h2>AH. Evidence store vs this audit</h2>
+<p>84 JSON files sit in <code>docs/evidence/</code>. They are a store, not this audit’s certification. This audit’s evidence is only <code>docs/reports/eos/master/raw/</code> plus the executed verify-eos logs.</p>
+<h2>AI. Print checklist</h2>
+<p>Print <code>EOS_MASTER_EXECUTIVE_ATLAS.html</code> (this document) for the board. Keep <code>EOS_MASTER_SYSTEM_REPORT.html</code> for the technical committee. Attach <code>EOS_MASTER_SYSTEM_METRICS.csv</code> as the numbers sheet. Do not circulate charts without their captions.</p>
+<hr/>
+<p>*End of expanded Executive Atlas. Same numbers as the master report. Verdict remains D.*</p>
+<footer>EOS Master Executive Atlas · print-ready · Verdict D NOT_READY</footer></body></html>

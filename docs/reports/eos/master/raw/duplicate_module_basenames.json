@@ -1,0 +1,21 @@
+{
+  "collected_at": "2026-09-01T02:16:34.556Z",
+  "count": 3,
+  "dups": [
+    {
+      "basename": "epistemic-evidence-engine.js",
+      "src": "src/core/sdd/epistemic-evidence-engine.js",
+      "scripts": "scripts/engine/epistemic-evidence-engine.js"
+    },
+    {
+      "basename": "hitl-gatekeeper.js",
+      "src": "src/core/sdd/hitl-gatekeeper.js",
+      "scripts": "scripts/engine/hitl-gatekeeper.js"
+    },
+    {
+      "basename": "sdd-fsm-engine.js",
+      "src": "src/core/sdd/sdd-fsm-engine.js",
+      "scripts": "scripts/engine/sdd-fsm-engine.js"
+    }
+  ]
+}

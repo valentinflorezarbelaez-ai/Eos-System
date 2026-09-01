@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="446" viewBox="0 0 780 446" role="img" aria-label="Executive dashboard — Graph 29 state histogram">
+  <rect width="780" height="446" fill="#f7f5f0"/>
+  <text x="28" y="32" font-family="Georgia, serif" font-size="16" fill="#1c1b18">Executive dashboard — Graph 29 state histogram</text>
+  <text x="28" y="64" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">PARTIAL</text>
+<rect x="28" y="70" width="480" height="18" fill="#4a4034"/>
+<text x="516" y="84" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">12</text>
+<text x="28" y="98" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">OBSERVED</text>
+<rect x="28" y="104" width="120" height="18" fill="#4a4034"/>
+<text x="156" y="118" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="132" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">MEASURED</text>
+<rect x="28" y="138" width="120" height="18" fill="#4a4034"/>
+<text x="156" y="152" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="166" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">REPORTED</text>
+<rect x="28" y="172" width="120" height="18" fill="#4a4034"/>
+<text x="156" y="186" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="200" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">CONTRADICTED</text>
+<rect x="28" y="206" width="80" height="18" fill="#4a4034"/>
+<text x="116" y="220" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">2</text>
+<text x="28" y="234" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">NOT_RUN</text>
+<rect x="28" y="240" width="80" height="18" fill="#4a4034"/>
+<text x="116" y="254" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">2</text>
+<text x="28" y="268" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">STRONG</text>
+<rect x="28" y="274" width="80" height="18" fill="#4a4034"/>
+<text x="116" y="288" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">2</text>
+<text x="28" y="302" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">UNKNOWN</text>
+<rect x="28" y="308" width="40" height="18" fill="#4a4034"/>
+<text x="76" y="322" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">1</text>
+<text x="28" y="336" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">NOT_READY</text>
+<rect x="28" y="342" width="40" height="18" fill="#4a4034"/>
+<text x="76" y="356" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">1</text>
+  <line x1="24" y1="398" x2="756" y2="398" stroke="#c9c4b8"/>
+  <text x="28" y="418" font-family="ui-monospace, monospace" font-size="10" fill="#5c584e">Counts of epistemic/state labels across 29 dimensions · NO fake completeness percentage</text>
+</svg>

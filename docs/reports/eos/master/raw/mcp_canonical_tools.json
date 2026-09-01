@@ -1,0 +1,146 @@
+{
+  "collected_at": "2026-09-01T02:16:34.556Z",
+  "count": 20,
+  "tools": [
+    {
+      "name": "eos.mission.resolve",
+      "description": "Resolve raw intent into structured mission DAG",
+      "category": "MISSION",
+      "sideEffects": "NONE",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.mission.start",
+      "description": "Initialize and start a mission",
+      "category": "MISSION",
+      "sideEffects": "LEDGER_WRITE",
+      "requiredAuthority": "A1"
+    },
+    {
+      "name": "eos.mission.status",
+      "description": "Get current mission status and telemetry",
+      "category": "MISSION",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.mission.recover",
+      "description": "Recover mission state from append-only ledger",
+      "category": "MISSION",
+      "sideEffects": "LEDGER_WRITE",
+      "requiredAuthority": "A1"
+    },
+    {
+      "name": "eos.context.compile",
+      "description": "Compile token-budgeted prompt context with receipts",
+      "category": "CONTEXT",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.ledger.get_features",
+      "description": "Get feature list and task DoD status",
+      "category": "LEDGER",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.ledger.update_feature",
+      "description": "Update feature status with evidence receipt",
+      "category": "LEDGER",
+      "sideEffects": "LEDGER_WRITE",
+      "requiredAuthority": "A1"
+    },
+    {
+      "name": "eos.authority.check",
+      "description": "Check monotonic authority permissions and gates",
+      "category": "GOVERNANCE",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.policy.validate",
+      "description": "Validate operation against machine-readable policy engine",
+      "category": "GOVERNANCE",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.evidence.record",
+      "description": "Record immutable evidence receipt with SHA-256 hash",
+      "category": "EVIDENCE",
+      "sideEffects": "LEDGER_WRITE",
+      "requiredAuthority": "A1"
+    },
+    {
+      "name": "eos.evidence.get",
+      "description": "Retrieve verified evidence receipt by ID",
+      "category": "EVIDENCE",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.verifier.run",
+      "description": "Run strict governance and schema verification",
+      "category": "QUALITY",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.provider.route",
+      "description": "Route prompt or task to optimal model/provider",
+      "category": "ROUTING",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.provider.health",
+      "description": "Get latency, health and error rate for providers",
+      "category": "ROUTING",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.workspace.discover",
+      "description": "Inspect workspace files, dependencies and git state",
+      "category": "WORKSPACE",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.workspace.barrier_check",
+      "description": "Enforce write barrier against unauthorized external paths",
+      "category": "WORKSPACE",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.fdir.status",
+      "description": "Get current FDIR health state and safe mode status",
+      "category": "RELIABILITY",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.fdir.trip",
+      "description": "Trip safe mode breaker to halt all mutating operations",
+      "category": "RELIABILITY",
+      "sideEffects": "NONE",
+      "requiredAuthority": "A2"
+    },
+    {
+      "name": "eos.audit.run",
+      "description": "Run complete 21-step compliance audit",
+      "category": "AUDIT",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    },
+    {
+      "name": "eos.report.generate",
+      "description": "Generate executive mission summary report",
+      "category": "AUDIT",
+      "sideEffects": "READ_ONLY",
+      "requiredAuthority": "A0"
+    }
+  ]
+}

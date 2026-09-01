@@ -1,0 +1,2364 @@
+{
+  "status": "PASS",
+  "strictMode": true,
+  "timestamp": "2026-09-01T02:15:34.168Z",
+  "checks": [
+    {
+      "path": ".git",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".gitignore",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".editorconfig",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".agents/AGENTS.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".agents/skills/sdd/SKILL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".agents/skills/evidence-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".agents/skills/security-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".agents/skills/quality-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".agents/skills/accessibility-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".agents/skills/performance-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".agents/skills/seo-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": ".agents/skills/browser-qa/SKILL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/core/CONSTITUTION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/core/GOVERNANCE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/workflows/EOS_CYCLE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/workflows/TRACEABILITY.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/workflows/INTAKE_PIPELINE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/workflows/SPECIFICATION_PIPELINE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/workflows/MULTI_AGENT_HANDOFF.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/workflows/WEBSITE_QUALITY_MODEL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/adrs/ADR-0001-eos-workspace-initialization.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/adrs/ADR-0002-autonomous-control-plane-architecture.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/TOOL_AGNOSTIC_ARCHITECTURE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/CAPABILITY_INTELLIGENCE_ENGINE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/capabilities/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/capabilities/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/tools/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/tools/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/tools/SELECTION_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/adapters/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/adapters/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/providers/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/providers/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/providers/SELECTION_POLICY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/agents/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/agents/SELECTION_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/agents/TEAM_COMPOSITION.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/TASK_DECOMPOSITION.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/TASK_GRAPH.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/ENGINEERING_FACTORY.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/EXECUTION_PLANNER.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/FALLBACK_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/FAILURE_HANDLING.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/policies/POLICY_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/policies/AUTONOMY_RISK_MODEL.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/policies/REVERSIBILITY_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/projects/STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/DRY_RUN_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/ROLLBACK_STRATEGY.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/knowledge/CONTINUOUS_LEARNING_LOOP.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/knowledge/RESEARCH_ENGINE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/knowledge/AGENT_PERFORMANCE_MEMORY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/sources/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/sources/SOURCES.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0001-gentleman-engram-study.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0002-multi-agent-orchestration-study.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0003-software-factory-study.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0004-tool-agnostic-adapter-architecture.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/AUTONOMOUS_EXECUTION_RUNTIME.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/EXECUTION_RUNTIME.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/EXECUTION_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/REPLAN_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/EXECUTION_HISTORY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/ENGINEERING_LIFECYCLE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/agents/AGENT_COUNCIL.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/missions/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/missions/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/AUTONOMOUS_ENGINEERING_MISSION_ENGINE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/META_GOVERNANCE_ENGINE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0005-capability-selection-engine.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0006-autonomous-execution-runtime.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0007-autonomous-engineering-mission-simulation.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0008-engineering-factory-strategy-optimization.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0009-autonomous-engineering-mission-proving.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0010-autonomous-self-evaluation-evolution.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0011-autonomous-engineering-operating-loop.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0012-production-readiness-release-governance.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0013-adversarial-engineering-chaos-resilience.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/RELEASE_GOVERNANCE_ENGINE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/PRODUCTION_READINESS_MODEL.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/RELEASE_CONTRACT.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/ADVERSARIAL_TRUTH_PRINCIPLE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/ADVERSARIAL_ATTACK_TAXONOMY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/BLAST_RADIUS_MODEL.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/RESILIENCE_MODEL.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/ENGINEERING_FACTORY.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/AUTONOMOUS_ENGINEERING_FACTORY_PROVING.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/AUTONOMOUS_SELF_EVOLUTION_ENGINE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/architecture/AUTONOMOUS_ENGINEERING_OPERATING_LOOP.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/ENGINEERING_ECONOMICS.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/STRATEGY_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/STRATEGY_SELECTION_POLICY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/EVOLUTION_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/OPERATING_LOOP_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/OPERATING_LOOP_CONTRACT.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/RELEASE_GATE_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/orchestration/GAME_DAY_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evolution/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evolution/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/decisions/STRATEGY_DECISIONS/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/AGENT_PERFORMANCE_MEMORY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/TOOL_PERFORMANCE_MEMORY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/patterns/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/patterns/PAT-0001-spec-driven-development.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/patterns/PAT-0002-evidence-first-verification.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/anti-patterns/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/anti-patterns/ANT-0001-premature-external-implementation.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/anti-patterns/ANT-0002-tool-first-blind-copying.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/comparisons/CMP-0001-industry-engineering-matrix.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/capabilities/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/capabilities/CAP-0001-persistent-engineering-memory.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/decisions/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/decisions/DEC-INT-0001-adopt-engram-memory-protocol.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/META_VERIFICATION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/KNOWLEDGE_GRAPH_MODEL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intelligence/CAPABILITY_VERIFICATION_MATRIX.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/adapters/mock-code-adapter.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/adapters/mock-research-adapter.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/adapters/mock-test-adapter.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/adapters/mock-browser-adapter.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/capability-intelligence-engine.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/autonomous-execution-runtime.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/autonomous-engineering-mission-engine.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/autonomous-engineering-factory.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/autonomous-self-evolution-engine.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/autonomous-engineering-operating-loop.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/release-decision-engine.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/production-readiness-review.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/adversarial-laboratory-engine.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/strategy-engine.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/strategy-simulator.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/strategy-selection-engine.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/simulate-strategies.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/projects/synthetic-app/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/projects/synthetic-app/SPEC.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/projects/synthetic-app/AUTHORIZATION.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-website/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-api/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-ecommerce/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-data/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-mobile/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-ai-agent/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-migration/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-security-remediation/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/production-projects/synthetic-production-website/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/production-projects/synthetic-production-api/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/production-projects/synthetic-production-ecommerce/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/production-projects/synthetic-production-ai-agent/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/production-projects/synthetic-production-migration/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-tool/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-provider/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-agent/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-evidence/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-governance/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/control-plane-hardening.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/intelligence.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/factory-governance.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/adapter-architecture.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/capability-intelligence.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/execution-runtime.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/mission-engine.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/strategy-engine.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/factory-proving.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/self-evolution.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/operating-loop.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/release-governance.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/adversarial-chaos.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/TEMPLATE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0001.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0002.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0003.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0004.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0005.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0006.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0007.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0008.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0009.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0010.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0011.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0012.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0013.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0014.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0015.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0016.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0017.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0018.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0019.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0020.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0021.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0022.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0023.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/EOS_INDEPENDENT_EMPIRICAL_VALIDATION_STANDARD.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/CLAIM_VALIDATION_MODEL.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/EVIDENCE_INDEPENDENCE_MODEL.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/FALSIFICATION_CONTRACT.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/CONTRADICTION_MODEL.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/VALIDATION_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/governance/COMPLEXITY_BUDGET.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "scripts/engine/independent-verification-harness.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/falsification-projects/synthetic-falsification-valid/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/fixtures/falsification-projects/synthetic-falsification-contradictory/package.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "tests/independent-validation.test.js",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/specs/TEMPLATE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/projects/REGISTRY_MODEL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/projects/TEMPLATE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/projects/schema.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/projects/registry.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/projects/registrations/fundacion.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/projects/registrations/fundacion/DECISION_RECORD.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/projects/registrations/fundacion/IMPLEMENTATION_AUTHORIZATION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intake/TEMPLATE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intake/fundacion/PROJECT_CONTEXT.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intake/fundacion/CONTENT_INVENTORY.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intake/fundacion/OBSERVATIONS.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intake/fundacion/UNKNOWN_AND_GAPS.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intake/fundacion/REQUIREMENTS_DISCOVERY.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/intake/fundacion/inventory.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/specs/fundacion/SPEC-0001-fundacion-core.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_6_TECHNICAL_AUDIT.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_7_REMEDIATION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_8_RELEASE_READINESS.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_9_STAGING_PREVIEW.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_CURRENT_STATE_AUDIT.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_10_CONTROL_PLANE_HARDENING.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_11_ENGINEERING_INTELLIGENCE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_12_AUTONOMOUS_ENGINEERING_FACTORY.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_13_TOOL_AGNOSTIC_ARCHITECTURE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_14_CAPABILITY_INTELLIGENCE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_15_AUTONOMOUS_EXECUTION_RUNTIME.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_16_AUTONOMOUS_MISSION_SIMULATION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_17_ENGINEERING_FACTORY.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_18_END_TO_END_MISSION_PROVING.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_19_AUTONOMOUS_SELF_EVALUATION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_20_AUTONOMOUS_ENGINEERING_OPERATING_LOOP.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_21_AUTONOMOUS_RELEASE_GOVERNANCE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_22_ADVERSARIAL_RESILIENCE.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0024.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0025.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0026.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0027.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0028.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0029.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0030.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/evidence/EVD-0031.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_24_INDEPENDENT_VALIDATION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_26_REAL_PROJECT_DISCOVERY.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_28_ECOSYSTEM_BENCHMARK.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_29_AGENTIC_INTEGRATION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_30_REAL_PROJECT_PROPOSAL.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_30_CONTROLLED_IMPLEMENTATION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_31_EXTERNAL_PRODUCT_VALIDATION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_PHASE_32_BROWSER_RUNTIME_VALIDATION.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_AUDIT_REPORT.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_FINDINGS.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_INVARIANTS.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_CONTRADICTIONS.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_REDUNDANCY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_COMPLEXITY.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_EVIDENCE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_READINESS.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_AUDIT_REPORT.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_AUDIT_FINDINGS.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_INVARIANTS.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_CONTRADICTIONS.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_GOVERNANCE_MATRIX.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_STATE_MACHINE_AUDIT.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_EVIDENCE_AUDIT.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_SECURITY_AUDIT.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_COMPLEXITY_AUDIT.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_READINESS_ASSESSMENT.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_AUDIT_EVIDENCE.json",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/core/FOUNDATIONAL_CONTEXT.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "docs/audits/EOS_FOUNDATIONAL_CONTEXT_AUDIT.md",
+      "status": "VERIFIED",
+      "type": "existence"
+    },
+    {
+      "path": "package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/capabilities/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/capabilities/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/tools/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/tools/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/tools/SELECTION_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/adapters/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/adapters/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/providers/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/providers/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/providers/SELECTION_POLICY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/agents/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/agents/SELECTION_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/agents/TEAM_COMPOSITION.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/TASK_DECOMPOSITION.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/TASK_GRAPH.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/EXECUTION_PLANNER.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/FALLBACK_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/EXECUTION_RUNTIME.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/EXECUTION_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/REPLAN_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/EXECUTION_HISTORY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/FAILURE_HANDLING.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/policies/POLICY_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/policies/AUTONOMY_RISK_MODEL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/policies/REVERSIBILITY_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/projects/STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/DRY_RUN_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/knowledge/AGENT_PERFORMANCE_MEMORY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/sources/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/sources/SOURCES.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0001-gentleman-engram-study.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0002-multi-agent-orchestration-study.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0003-software-factory-study.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0004-tool-agnostic-adapter-architecture.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0005-capability-selection-engine.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0006-autonomous-execution-runtime.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0007-autonomous-engineering-mission-simulation.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/patterns/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/patterns/PAT-0001-spec-driven-development.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/patterns/PAT-0002-evidence-first-verification.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/anti-patterns/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/anti-patterns/ANT-0001-premature-external-implementation.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/anti-patterns/ANT-0002-tool-first-blind-copying.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/comparisons/CMP-0001-industry-engineering-matrix.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/capabilities/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/capabilities/CAP-0001-persistent-engineering-memory.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/decisions/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/decisions/DEC-INT-0001-adopt-engram-memory-protocol.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/projects/synthetic-app/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/projects/synthetic-app/SPEC.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/projects/synthetic-app/AUTHORIZATION.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0001.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0002.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0003.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0004.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0005.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0006.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0007.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0008.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0009.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0010.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0011.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0012.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0013.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0014.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0015.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0016.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0017.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0018.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0019.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0020.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0021.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0022.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0023.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0024.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0025.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0026.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0027.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0028.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0029.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0030.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evidence/EVD-0031.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0014-gentleman-ecosystem-benchmark.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0015-agentic-engineering-gap-analysis.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/fundacion/REAL_PROJECT_STATE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/fundacion/REAL_PROJECT_DISCOVERY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/fundacion/REAL_PROJECT_ARCHITECTURE_ASSESSMENT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/fundacion/REAL_PROJECT_RISK_ASSESSMENT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/fundacion/REAL_PROJECT_EVIDENCE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/fundacion/REAL_PROJECT_UNCERTAINTIES.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/fundacion/REAL_PROJECT_CONTRADICTIONS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/fundacion/REAL_PROJECT_RECOMMENDATIONS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/fundacion/REAL_PROJECT_AUDIT_TRAIL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_STATE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_DISCOVERY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_ARCHITECTURE_ASSESSMENT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_RISK_ASSESSMENT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_EVIDENCE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_UNCERTAINTIES.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_CONTRADICTIONS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_RECOMMENDATIONS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_AUDIT_TRAIL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_REQUIREMENTS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_PROPOSAL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/SPECIFICATION.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/ARCHITECTURE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/DESIGN.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/TASK_DAG.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/real_projects/andes-retreat/VERIFICATION_PLAN.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_FINDINGS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_INVARIANTS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_CONTRADICTIONS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_REDUNDANCY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_COMPLEXITY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_EVIDENCE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_FORENSIC_READINESS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/CLAIM_VALIDATION_MODEL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/EVIDENCE_INDEPENDENCE_MODEL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/FALSIFICATION_CONTRACT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/CONTRADICTION_MODEL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/VALIDATION_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/COMPLEXITY_BUDGET.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/falsification-projects/synthetic-falsification-valid/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/falsification-projects/synthetic-falsification-contradictory/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_AUDIT_FINDINGS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_INVARIANTS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_CONTRADICTIONS.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_GOVERNANCE_MATRIX.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_STATE_MACHINE_AUDIT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_EVIDENCE_AUDIT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_SECURITY_AUDIT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_COMPLEXITY_AUDIT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_READINESS_ASSESSMENT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/audits/EOS_SYSTEM_AUDIT_EVIDENCE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0012-production-readiness-release-governance.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0013-adversarial-engineering-chaos-resilience.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/ADVERSARIAL_ATTACK_TAXONOMY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/BLAST_RADIUS_MODEL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/RESILIENCE_MODEL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/GAME_DAY_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-tool/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-provider/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-agent/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-evidence/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/adversarial-projects/synthetic-adversarial-governance/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/PRODUCTION_READINESS_MODEL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/governance/RELEASE_CONTRACT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/RELEASE_GATE_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/production-projects/synthetic-production-website/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/production-projects/synthetic-production-api/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/production-projects/synthetic-production-ecommerce/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/production-projects/synthetic-production-ai-agent/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/production-projects/synthetic-production-migration/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0009-autonomous-engineering-mission-proving.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0010-autonomous-self-evaluation-evolution.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0011-autonomous-engineering-operating-loop.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/EVOLUTION_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/OPERATING_LOOP_STATE_MACHINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/OPERATING_LOOP_CONTRACT.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evolution/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/evolution/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/STRATEGY_ENGINE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/STRATEGY_SELECTION_POLICY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/decisions/STRATEGY_DECISIONS/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/AGENT_PERFORMANCE_MEMORY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/TOOL_PERFORMANCE_MEMORY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intelligence/research/RSC-0008-engineering-factory-strategy-optimization.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-mobile/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-ai-agent/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-migration/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-security-remediation/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/agents/AGENT_COUNCIL.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/orchestration/ENGINEERING_LIFECYCLE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/missions/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/missions/REGISTRY.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-website/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-api/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-ecommerce/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "tests/fixtures/mission-projects/synthetic-data/package.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/projects/TEMPLATE.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/projects/schema.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/projects/registry.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/projects/registrations/fundacion.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": "docs/intake/fundacion/inventory.json",
+      "status": "VERIFIED",
+      "type": "json-validity"
+    },
+    {
+      "path": ".agents/skills/accessibility-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "frontmatter"
+    },
+    {
+      "path": ".agents/skills/browser-qa/SKILL.md",
+      "status": "VERIFIED",
+      "type": "frontmatter"
+    },
+    {
+      "path": ".agents/skills/evidence-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "frontmatter"
+    },
+    {
+      "path": ".agents/skills/performance-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "frontmatter"
+    },
+    {
+      "path": ".agents/skills/quality-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "frontmatter"
+    },
+    {
+      "path": ".agents/skills/sdd/SKILL.md",
+      "status": "VERIFIED",
+      "type": "frontmatter"
+    },
+    {
+      "path": ".agents/skills/security-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "frontmatter"
+    },
+    {
+      "path": ".agents/skills/seo-auditor/SKILL.md",
+      "status": "VERIFIED",
+      "type": "frontmatter"
+    }
+  ],
+  "failures": [],
+  "warnings": []
+}

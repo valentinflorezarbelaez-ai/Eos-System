@@ -1,0 +1,45 @@
+metric,value,unit,classification,source,timestamp_utc,method_or_note
+product_files_excluding_reports,1046,files,MEASURED,raw/product_baseline_inventory.json,2026-09-01T02:17:03.300Z,walk exclude docs/reports
+product_bytes,4024024,bytes,MEASURED,raw/product_baseline_inventory.json,2026-09-01T02:17:03.300Z,stat.size
+docs_files,651,files,MEASURED,raw/product_baseline_inventory.json,2026-09-01T02:17:03.300Z,class=docs
+src_files,22,files,MEASURED,raw/product_baseline_inventory.json,2026-09-01T02:17:03.300Z,class=src
+scripts_files,107,files,MEASURED,raw/product_baseline_inventory.json,2026-09-01T02:17:03.300Z,class=scripts
+tests_files,163,files,MEASURED,raw/product_baseline_inventory.json,2026-09-01T02:17:03.300Z,class=tests
+src_lines,6323,lines,MEASURED,raw/loc_inventory.json,2026-09-01T02:16:34.556Z,line split; comment heuristic // or leading *; fn_like is regex not cyclomatic
+scripts_lines,15978,lines,MEASURED,raw/loc_inventory.json,2026-09-01T02:16:34.556Z,line split; comment heuristic // or leading *; fn_like is regex not cyclomatic
+tests_lines,12502,lines,MEASURED,raw/loc_inventory.json,2026-09-01T02:16:34.556Z,line split; comment heuristic // or leading *; fn_like is regex not cyclomatic
+static_test_like_files,132,files,MEASURED,raw/test_static_inventory.json,2026-09-01T02:15:02.615Z,regex *.test.js/ts
+static_test_or_it_calls,777,calls,MEASURED,raw/test_static_inventory.json,2026-09-01T02:15:02.615Z,count ≠ coverage ≠ executed
+test_files_mentioning_writes,10,files,MEASURED,raw/test_static_inventory.json,2026-09-01T02:15:02.615Z,writeFile/unlink/rm
+verify_strict_checks,471,checks,MEASURED,raw/cmd_verify_strict.stdout.json,2026-09-01T02:15:34Z,existence+json+frontmatter
+verify_strict_exit_code,0,exit_code,MEASURED,raw/cmd_verify_strict.meta.txt,2026-09-01T02:15:34Z,node scripts/verify-eos.js --strict --json
+verify_strict_duration_ms,32,ms,MEASURED,raw/cmd_verify_strict.meta.txt,2026-09-01T02:15:34Z,
+git_commits_head_lineage,75,commits,MEASURED,raw/git_commands.json,2026-09-01T02:16:34Z,git rev-list --count HEAD
+git_tracked_files,1048,files,MEASURED,raw/git_commands.json,2026-09-01T02:16:34Z,git ls-files | wc -l
+git_tags,1,tags,MEASURED,raw/git_commands.json,2026-09-01T02:16:34Z,git tag -l
+import_edges,1135,edges,MEASURED,raw/import_graph.json,2026-09-01T02:15:02.615Z,regex imports
+js_ts_files_scanned,308,files,MEASURED,raw/import_graph.json,2026-09-01T02:15:02.615Z,
+duplicate_kernel_basenames,3,pairs,MEASURED,raw/duplicate_module_basenames.json,2026-09-01T02:16:34.556Z,
+sdd_states,17,states,OBSERVED,raw/kernel_exports.json,2026-09-01T02:16:34.556Z,ESM import
+canonical_transitions,16,transitions,OBSERVED,raw/kernel_exports.json,2026-09-01T02:16:34.556Z,ESM import
+mcp_tools_declared,20,tools,OBSERVED,raw/mcp_canonical_tools.json,2026-09-01T02:16:34.556Z,parse CANONICAL_TOOLS
+evidence_json_files,84,files,MEASURED,raw/evidence_files.json,2026-09-01T02:16:34.556Z,walk docs/evidence
+registry_projects,6,projects,OBSERVED,docs/projects/registry.json,2026-08-10T23:33:00Z,JSON field count
+docs_agents,16,agents,OBSERVED,docs/agents/REGISTRY.json,2026-08-10T23:38:00Z,
+mc_active_agents,7,agents,REPORTED,EOS-MISSION-CONTROL/ACTIVE_AGENTS.json,,not observed as processes
+docs_capabilities,24,capabilities,OBSERVED,docs/capabilities/REGISTRY.json,2026-08-11T00:00:00Z,declared ≠ operational
+docs_tools,4,tools,OBSERVED,docs/tools/REGISTRY.json,,all TOL-MOCK-*
+package_scripts,20,scripts,OBSERVED,package.json,,
+npm_dependencies,0,packages,OBSERVED,package.json,,field absent
+node_modules_present,0,bool,OBSERVED,ls node_modules,2026-09-01T02:15:20Z,absent
+lockfile_present,0,bool,OBSERVED,ls package-lock.json,2026-09-01T02:15:20Z,absent
+missions_dir_present,0,bool,OBSERVED,ls .missions,2026-09-01T02:15:20Z,absent
+fundacion_child_files,0,files,OBSERVED,ls Fundacion,2026-09-01T02:15:20Z,empty dir
+npm_test_pass_count,,,NOT_RUN,auditor,2026-09-01T02:18:00Z,mutation risk
+coverage_pct,,,NOT_RUN,auditor,2026-09-01T02:18:00Z,no coverage artifacts
+current_state_test_health,663 / 663 PASS,claim,REPORTED,EOS-MISSION-CONTROL/CURRENT_STATE.json,2026-08-15T12:44:00-05:00,not reproduced
+cli_fallback_test_health,608 / 608 PASS,claim,REPORTED,scripts/cli/eos.js,,hardcoded fallback
+freeze_tests,20/20 PASS,claim,REPORTED,docs/releases/EOS_FREEZE_GATE_STATUS.md,2026-08-21,older tip 78b28d6
+memory_726,726/726,claim,CONTRADICTED,previous memory; absent in tree,2026-09-01T02:18:00Z,claim_string_hits empty
+memory_615,615/615,claim,CONTRADICTED,previous memory / .cursorrules example; absent as measured,2026-09-01T02:18:00Z,claim_string_hits empty
+verdict_letter,D,enum,INFERRED,this report §43,2026-09-01T02:18:00Z,from measured+contradicted evidence

@@ -1,0 +1,30 @@
+{
+  "generated_at_utc": "2026-09-01T02:18:00Z",
+  "report_id": "EOS-MSR-2026-09-01-001",
+  "raw_traces": [
+    "raw/product_baseline_inventory.json",
+    "raw/inventory_summary.json",
+    "raw/inventory_files.csv",
+    "raw/test_static_inventory.json",
+    "raw/import_graph.json",
+    "raw/import_edges.json",
+    "raw/loc_inventory.json",
+    "raw/cmd_verify_strict.stdout.json",
+    "raw/cmd_verify_strict.human.txt",
+    "raw/cmd_verify_strict.meta.txt",
+    "raw/verify_strict_summary.json",
+    "raw/kernel_exports.json",
+    "raw/mcp_canonical_tools.json",
+    "raw/mission_runtime_methods.json",
+    "raw/duplicate_module_basenames.json",
+    "raw/claim_string_hits.json",
+    "raw/claimed_path_existence.json",
+    "raw/secrets_heuristic.json",
+    "raw/evidence_files.json",
+    "raw/git_commands.json",
+    "raw/keyword_hits.json"
+  ],
+  "docs_evidence_json_count": 84,
+  "docs_evidence_note": "Listed as store inventory; claims inside each EVD-* file remain REPORTED unless re-executed.",
+  "footnotes_rule": "Every number in the markdown cites a raw/ or command row."
+}

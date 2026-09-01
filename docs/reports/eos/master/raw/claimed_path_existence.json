@@ -1,0 +1,60 @@
+{
+  "collected_at": "2026-09-01T02:16:34.556Z",
+  "existence": [
+    {
+      "path": "src/core/synthesisEngine.js",
+      "exists": false,
+      "classification": "OBSERVED"
+    },
+    {
+      "path": "src/core/executionOrchestrator.js",
+      "exists": false,
+      "classification": "OBSERVED"
+    },
+    {
+      "path": "scripts/engine/core",
+      "exists": false,
+      "classification": "OBSERVED"
+    },
+    {
+      "path": "src/core/runtime/mission-runtime.js",
+      "exists": true,
+      "classification": "OBSERVED"
+    },
+    {
+      "path": "scripts/engine/sdd-fsm-engine.js",
+      "exists": true,
+      "classification": "OBSERVED"
+    },
+    {
+      "path": "src/core/sdd/sdd-fsm-engine.js",
+      "exists": true,
+      "classification": "OBSERVED"
+    },
+    {
+      "path": "package-lock.json",
+      "exists": false,
+      "classification": "OBSERVED"
+    },
+    {
+      "path": "node_modules",
+      "exists": false,
+      "classification": "OBSERVED"
+    },
+    {
+      "path": ".missions",
+      "exists": false,
+      "classification": "OBSERVED"
+    },
+    {
+      "path": "Fundacion",
+      "exists": true,
+      "classification": "OBSERVED"
+    },
+    {
+      "path": "C:\\Users\\valen\\Documents\\Fundacion",
+      "exists": false,
+      "classification": "OBSERVED"
+    }
+  ]
+}

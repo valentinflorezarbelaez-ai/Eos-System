@@ -1,0 +1,93 @@
+{
+  "collected_at": "2026-09-01T02:16:34.556Z",
+  "results": [
+    {
+      "command": "git rev-parse HEAD",
+      "started_utc": "2026-09-01T02:16:34.580Z",
+      "duration_ms": 3,
+      "exit_code": 0,
+      "stdout": "24b69689c447f94afebd4893f5f0f83f45e0a823\n",
+      "classification": "MEASURED"
+    },
+    {
+      "command": "git rev-parse --abbrev-ref HEAD",
+      "started_utc": "2026-09-01T02:16:34.583Z",
+      "duration_ms": 2,
+      "exit_code": 0,
+      "stdout": "cursor/eos-master-system-report-21fb\n",
+      "classification": "MEASURED"
+    },
+    {
+      "command": "git status --porcelain",
+      "started_utc": "2026-09-01T02:16:34.586Z",
+      "duration_ms": 6,
+      "exit_code": 0,
+      "stdout": "?? docs/reports/\n",
+      "classification": "MEASURED"
+    },
+    {
+      "command": "git status -sb",
+      "started_utc": "2026-09-01T02:16:34.592Z",
+      "duration_ms": 6,
+      "exit_code": 0,
+      "stdout": "## cursor/eos-master-system-report-21fb\n?? docs/reports/\n",
+      "classification": "MEASURED"
+    },
+    {
+      "command": "git rev-list --count HEAD",
+      "started_utc": "2026-09-01T02:16:34.598Z",
+      "duration_ms": 3,
+      "exit_code": 0,
+      "stdout": "75\n",
+      "classification": "MEASURED"
+    },
+    {
+      "command": "git log -1 --format=%H%n%an%n%ae%n%ad%n%s",
+      "started_utc": "2026-09-01T02:16:34.601Z",
+      "duration_ms": 2,
+      "exit_code": 0,
+      "stdout": "24b69689c447f94afebd4893f5f0f83f45e0a823\nValentin Florez\nvalentinflorezarbelaez@gmail.com\nFri Aug 21 16:11:11 2026 -0500\nfeat(mcp): wire MissionRuntime into eos-local for usable local governed ops\n",
+      "classification": "MEASURED"
+    },
+    {
+      "command": "git log --reverse --format=%H%x09%ad%x09%s --date=iso-strict | head -1",
+      "started_utc": "2026-09-01T02:16:34.603Z",
+      "duration_ms": 3,
+      "exit_code": 0,
+      "stdout": "8c52375dc96722018dfb3924bb114a92e6fb9bd1\t2026-08-10T17:12:58-05:00\tfeat(core): initialize EOS baseline workspace architecture, governance and verification tooling\n",
+      "classification": "MEASURED"
+    },
+    {
+      "command": "git shortlog -sn HEAD",
+      "started_utc": "2026-09-01T02:16:34.606Z",
+      "duration_ms": 3,
+      "exit_code": 0,
+      "stdout": "    75\tValentin Florez\n",
+      "classification": "MEASURED"
+    },
+    {
+      "command": "git tag -l",
+      "started_utc": "2026-09-01T02:16:34.609Z",
+      "duration_ms": 2,
+      "exit_code": 0,
+      "stdout": "rc/eos-mission-os-local-complete-2026-08-21\n",
+      "classification": "MEASURED"
+    },
+    {
+      "command": "git ls-files | wc -l",
+      "started_utc": "2026-09-01T02:16:34.611Z",
+      "duration_ms": 2,
+      "exit_code": 0,
+      "stdout": "1048\n",
+      "classification": "MEASURED"
+    },
+    {
+      "command": "git log --format=%ad --date=short | sort | uniq -c",
+      "started_utc": "2026-09-01T02:16:34.613Z",
+      "duration_ms": 3,
+      "exit_code": 0,
+      "stdout": "     32 2026-08-10\n     14 2026-08-11\n     15 2026-08-15\n      4 2026-08-19\n     10 2026-08-21\n",
+      "classification": "MEASURED"
+    }
+  ]
+}
