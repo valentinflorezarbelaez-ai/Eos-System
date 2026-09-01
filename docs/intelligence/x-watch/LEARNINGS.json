@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T12:43:05.364Z",
+  "updated_at": "2026-09-01T12:47:14.909Z",
   "learnings": [
     {
       "learning_id": "LRN-CURSOR-start-from-scratch",
@@ -1599,6 +1599,16 @@
       "published_at": null,
       "summary": "Plan mode lets you generate and review a detailed plan before Agent writes any code. How do I use Plan mode? — Open the Agent panel: - Mac : Press Cmd + I - Windows/Linux : Press Ctrl + I 2. How do I save plans? — Plans are saved by default in your home directory. When should I use Plan mode? — Plan mode works best for: Complex features with multiple valid approaches Tasks touching many files or systems Unclear requirements where you want to explore first Architectural decisions where you want to review the app How do I start over in Plan mode? — If Agent builds something that doesn't match what you wanted, you can roll back to any earlier point in the conversation: 1.",
       "apply_in_eos": "Help Plan mode is vendor desktop planning before code. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Plan mode for daily ingest. EOS TDD remains required. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-help-ai-features-shared-transcripts",
+      "title": "Shared transcripts",
+      "source_url": "https://cursor.com/help/ai-features/shared-transcripts",
+      "published_at": null,
+      "summary": "Share read-only copies of your AI conversations with teammates or the public via a link. How do I share a conversation? — Open the chat you want to share 2. Who can view shared transcripts? — Team links : Only signed-in members of your team, accessible from the dashboard under Shared Transcripts Public links : Anyone with the link, no sign-in required Can I fork a shared transcript? — Yes. What gets shared? — The full conversation history is shared, including code snippets, tool calls, and their results. How do I manage shared transcripts? — Go to cursor.com/dashboard and open the Shared Transcripts tab. Which plans support shared transcripts? — Shared transcripts are available on Teams and Enterprise plans only.",
+      "apply_in_eos": "Help Shared transcripts is vendor conversation sharing. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into shared transcripts for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
     },
