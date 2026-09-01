@@ -591,6 +591,13 @@
       "kind": "html-page",
       "role": "OFFICIAL_HELP_CONTEXT",
       "fetchable": true
+    },
+    {
+      "feed_id": "FEED-CURSOR-HELP-IGNORE-FILES",
+      "url": "https://cursor.com/help/customization/ignore-files",
+      "kind": "html-page",
+      "role": "OFFICIAL_HELP_IGNORE_FILES",
+      "fetchable": true
     }
   ]
 }

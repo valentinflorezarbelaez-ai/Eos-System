@@ -219,6 +219,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
     true
   );
   assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/ignore-files' && feed.kind === 'html-page'),
+    true
+  );
+  assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/models-and-pricing' && feed.kind === 'html-page'),
     true
   );
@@ -348,6 +352,10 @@ test('repo WATCHLIST.json seeds cursor_ai and official changelog', () => {
   );
   assert.equal(
     watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/help/customization/extensions'),
+    false
+  );
+  assert.equal(
+    watchlist.feeds.some((feed) => feed.url === 'https://cursor.com/docs/reference/ignore-file'),
     false
   );
   assert.equal(
@@ -1592,6 +1600,24 @@ test('repo LEARNINGS.json is OBSERVED-only and newest first', () => {
   assert.equal(/enable/i.test(helpContext.apply_in_eos), false);
   assert.equal(helpContext.apply_in_eos.includes('Custom Mode'), false);
   assert.equal(helpContext.apply_in_eos.includes('Vercel'), false);
+  const helpIgnoreFiles = store.learnings.find((row) => row.source_url === 'https://cursor.com/help/customization/ignore-files');
+  assert.ok(helpIgnoreFiles);
+  assert.equal(helpIgnoreFiles.title, 'Ignore files');
+  assert.match(helpIgnoreFiles.summary, /How do I exclude files from Cursor/);
+  assert.match(helpIgnoreFiles.summary, /Does Cursor respect \.gitignore/);
+  assert.match(helpIgnoreFiles.summary, /Why should I ignore files/);
+  assert.equal(helpIgnoreFiles.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpIgnoreFiles.summary), false);
+  assert.match(helpIgnoreFiles.apply_in_eos, /vendor Agent context exclusions/i);
+  assert.match(helpIgnoreFiles.apply_in_eos, /\/goal/);
+  assert.match(helpIgnoreFiles.apply_in_eos, /do not rotate this Cloud Agent into desktop ignore-file setup/i);
+  assert.match(helpIgnoreFiles.apply_in_eos, /\.cursorignore/);
+  assert.match(helpIgnoreFiles.apply_in_eos, /Do not put secrets in git/);
+  assert.match(helpIgnoreFiles.apply_in_eos, /environment\.json/);
+  assert.match(helpIgnoreFiles.apply_in_eos, /included quota/i);
+  assert.equal(/enable/i.test(helpIgnoreFiles.apply_in_eos), false);
+  assert.equal(helpIgnoreFiles.apply_in_eos.includes('Custom Mode'), false);
+  assert.equal(helpIgnoreFiles.apply_in_eos.includes('Vercel'), false);
   const debugMode = store.learnings.find((row) => row.source_url === 'https://cursor.com/docs/agent/debug-mode');
   assert.ok(debugMode);
   assert.match(debugMode.summary, /When to use Debug Mode/);
@@ -1834,6 +1860,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Skills', link: 'https://cursor.com/help/customization/skills' },
     { title: 'MCP integrations', link: 'https://cursor.com/help/customization/mcp' },
     { title: '@ mentions and context', link: 'https://cursor.com/help/customization/context' },
+    { title: 'Ignore files', link: 'https://cursor.com/help/customization/ignore-files' },
     { title: 'Models & Pricing', link: 'https://cursor.com/docs/models-and-pricing' },
     { title: 'Automations', link: 'https://cursor.com/help/ai-features/automations' },
     { title: 'Cloud Agent Builds', link: 'https://cursor.com/docs/cloud-agent/builds' },
@@ -2948,6 +2975,27 @@ test('applyHint for Help Context keeps this watch searching the Cloud Agent VM',
   assert.equal(hint.includes('Slack'), false);
 });
 
+test('applyHint for Help Ignore files keeps .cursorignore and secrets out of git', () => {
+  const hint = applyHint({
+    title: 'Ignore files',
+    link: 'https://cursor.com/help/customization/ignore-files',
+    summary: 'Optional ignore files are enabled by default. Custom Mode and Vercel.'
+  });
+  assert.match(hint, /vendor Agent context exclusions/i);
+  assert.match(hint, /\/goal/);
+  assert.match(hint, /do not rotate this Cloud Agent into desktop ignore-file setup/i);
+  assert.match(hint, /\.cursorignore/);
+  assert.match(hint, /Do not put secrets in git/);
+  assert.match(hint, /environment\.json/);
+  assert.match(hint, /included quota/i);
+  assert.match(hint, /on-demand/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(hint.includes('Custom Mode'), false);
+  assert.equal(hint.includes('Vercel'), false);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(hint.includes('Slack'), false);
+});
+
 test('applyHint for Plan Mode keeps this watch on the standing /goal', () => {
   const hint = applyHint({
     title: 'Plan Mode',
@@ -3820,6 +3868,20 @@ test('parseOfficialSource html-page maps Cloud Agent automations, builds, and Or
   assert.equal(applyHint(helpContext[0]).includes('Custom Mode'), false);
   assert.equal(applyHint(helpContext[0]).includes('Vercel'), false);
 
+  const helpIgnoreFiles = parseOfficialSource(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-ignore-files.html'), 'utf8'),
+    'html-page',
+    'https://cursor.com/help/customization/ignore-files'
+  );
+  assert.equal(helpIgnoreFiles[0].id, 'https://cursor.com/help/customization/ignore-files');
+  assert.equal(helpIgnoreFiles[0].title, 'Ignore files');
+  assert.match(helpIgnoreFiles[0].summary, /Exclude files and folders from AI context/);
+  assert.match(applyHint(helpIgnoreFiles[0]), /vendor Agent context exclusions/i);
+  assert.match(applyHint(helpIgnoreFiles[0]), /\/goal/);
+  assert.equal(/enable/i.test(applyHint(helpIgnoreFiles[0])), false);
+  assert.equal(applyHint(helpIgnoreFiles[0]).includes('Custom Mode'), false);
+  assert.equal(applyHint(helpIgnoreFiles[0]).includes('Vercel'), false);
+
   const automationsDocs = parseOfficialSource(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-automations.html'), 'utf8'),
     'html-page',
@@ -4289,6 +4351,10 @@ test('cursorOfficialMarkdownUrl maps docs/help pages and refuses X', () => {
     cursorOfficialMarkdownUrl('https://cursor.com/help/customization/context'),
     'https://cursor.com/help/customization/context.md'
   );
+  assert.equal(
+    cursorOfficialMarkdownUrl('https://cursor.com/help/customization/ignore-files'),
+    'https://cursor.com/help/customization/ignore-files.md'
+  );
   assert.equal(cursorOfficialMarkdownUrl('https://cursor.com/blog'), null);
   assert.equal(cursorOfficialMarkdownUrl('https://x.com/cursor_ai'), null);
 });
@@ -4746,6 +4812,17 @@ test('parseOfficialMarkdown summarizes H2 sections from official docs markdown',
   assert.equal(helpContextMd.summary.includes('Sitemap'), false);
   assert.equal(/Related —/.test(helpContextMd.summary), false);
   assert.equal(helpContextMd.summary.toLowerCase().includes('curl'), false);
+
+  const helpIgnoreFilesMd = parseOfficialMarkdown(
+    fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/help-customization-ignore-files.md'), 'utf8')
+  );
+  assert.equal(helpIgnoreFilesMd.title, 'Ignore files');
+  assert.match(helpIgnoreFilesMd.summary, /How do I exclude files from Cursor/);
+  assert.match(helpIgnoreFilesMd.summary, /Does Cursor respect \.gitignore/);
+  assert.match(helpIgnoreFilesMd.summary, /Why should I ignore files/);
+  assert.equal(helpIgnoreFilesMd.summary.includes('Sitemap'), false);
+  assert.equal(/Related —/.test(helpIgnoreFilesMd.summary), false);
+  assert.equal(helpIgnoreFilesMd.summary.toLowerCase().includes('curl'), false);
 
   const bestPracticesMd = parseOfficialMarkdown(
     fs.readFileSync(path.join(__dirname, 'fixtures/x-watch/docs-cloud-agent-best-practices.md'), 'utf8')
@@ -5756,6 +5833,12 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
       source_url: 'https://cursor.com/docs/agent/security',
       published_at: null,
       apply_in_eos: 'Agent Security is optional desktop guardrails for first-party tools, MCP, and network. This Cloud Agent VM already honors EOS TDD and .cursorignore. Do not rotate this Cloud Agent into desktop Agent Security settings for daily ingest. Keep environment.json + Builds. Run Modes are best-effort, not a hard security boundary. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
+      title: 'Ignore files',
+      source_url: 'https://cursor.com/help/customization/ignore-files',
+      published_at: null,
+      apply_in_eos: 'Help Ignore files is vendor Agent context exclusions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop ignore-file setup for daily ingest. Keep .cursorignore. Do not put secrets in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     }
   ], 6);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-19-26'), true);
@@ -5768,6 +5851,7 @@ test('selectCurrentLearnings clusters Subagents onto harness changelog and keeps
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/tools/canvas'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/configuration/worktrees'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/agent/security'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/ignore-files'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/changelog/08-13-26'), true);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent/builds'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/docs/cloud-agent'), true);
@@ -5928,6 +6012,12 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
       apply_in_eos: 'Help Context is vendor Agent @ mentions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop @ mentions for daily ingest. This Cloud Agent VM already searches the workspace. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
     },
     {
+      title: 'Ignore files',
+      source_url: 'https://cursor.com/help/customization/ignore-files',
+      published_at: null,
+      apply_in_eos: 'Help Ignore files is vendor Agent context exclusions. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop ignore-file setup for daily ingest. Keep .cursorignore. Do not put secrets in git. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.'
+    },
+    {
       title: 'Usage and limits',
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
@@ -5957,6 +6047,7 @@ test('selectCurrentLearnings keeps /goal overview and skills off the harness cha
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/skills'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/mcp'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/context'), false);
+  assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/customization/ignore-files'), false);
   assert.equal(selected.some((row) => row.source_url === 'https://cursor.com/help/models-and-usage/usage-limits'), true);
 });
 
@@ -6515,6 +6606,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/help/customization/skills'), false);
   assert.equal(current.includes('cursor.com/help/customization/mcp'), false);
   assert.equal(current.includes('cursor.com/help/customization/context'), false);
+  assert.equal(current.includes('cursor.com/help/customization/ignore-files'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/terminal'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/browser'), false);
   assert.equal(current.includes('cursor.com/help/ai-features/debug-mode'), false);
