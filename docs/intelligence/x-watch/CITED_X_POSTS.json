@@ -224,6 +224,17 @@
       "fetched_from_x": false
     },
     {
+      "x_url": "https://x.com/cursor_ai/status/2075686268113916023",
+      "handle": "cursor_ai",
+      "about": "Introducing side chats, a new way to ask questions and explore ideas without interrupting your main conversation",
+      "cited_by": "https://aicatchup.com/news/cursor-side-chats-durable-agent-threads",
+      "official_source": "https://cursor.com/changelog/side-chat",
+      "published_date": "2026-07-10",
+      "eos_note": "Side chats are local-only and not available for Cloud Agents. This watch already runs in the Cloud Agent VM. Keep the Cursor/X learning goal on the main thread. Do not rotate this Cloud Agent into /side.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
       "x_url": "https://x.com/cursor_ai/status/2071641103191998810",
       "handle": "cursor_ai",
       "about": "Introducing Cursor for iOS. Build from anywhere by launching always-on cloud agents",
@@ -231,6 +242,28 @@
       "official_source": "https://cursor.com/changelog/ios-mobile-app",
       "published_date": "2026-06-29",
       "eos_note": "Composer 2.5 75% off through July 5, 2026 was a launch promo, not standing pricing. This watch still runs in the Cloud Agent VM, not on the phone.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2056415413077233983",
+      "handle": "cursor_ai",
+      "about": "Introducing Composer 2.5, our most powerful model yet",
+      "cited_by": "https://aicatchup.com/news/cursor-composer-2-5-launch",
+      "official_source": "https://cursor.com/changelog/composer-2-5",
+      "published_date": "2026-05-18",
+      "eos_note": "Composer is a vendor model family. Do not treat marketing metrics as EOS evidence. The first-week 2x included usage was a launch promo, not standing pricing.",
+      "epistemic_status": "CITED_NOT_FETCHED",
+      "fetched_from_x": false
+    },
+    {
+      "x_url": "https://x.com/cursor_ai/status/2029604182286856663",
+      "handle": "cursor_ai",
+      "about": "We're introducing Cursor Automations to build always-on agents",
+      "cited_by": "https://www.unrollnow.com/status/2029604182286856663",
+      "official_source": "https://cursor.com/changelog/03-05-26",
+      "published_date": "2026-03-05",
+      "eos_note": "Automations trigger on GitHub events, not X. This daily changelog timer already covers ingest.",
       "epistemic_status": "CITED_NOT_FETCHED",
       "fetched_from_x": false
     }

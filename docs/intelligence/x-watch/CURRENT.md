@@ -80,7 +80,16 @@ Store size: 199
 - Introducing Cursor Router, our intelligent model router that selects the right model for the task at hand — cited by https://www.unrollnow.com/status/2079993729532989500 (not fetched from X)
   Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices. Official docs restrict Router to Teams and Enterprise. Vendor cost-percentage claims are not EOS evidence.
   https://x.com/cursor_ai/status/2079993729532989500
+- Introducing side chats, a new way to ask questions and explore ideas without interrupting your main conversation — cited by https://aicatchup.com/news/cursor-side-chats-durable-agent-threads (not fetched from X)
+  Side chats are local-only and not available for Cloud Agents. This watch already runs in the Cloud Agent VM. Keep the Cursor/X learning goal on the main thread. Do not rotate this Cloud Agent into /side.
+  https://x.com/cursor_ai/status/2075686268113916023
 - Introducing Cursor for iOS. Build from anywhere by launching always-on cloud agents — cited by https://aicatchup.com/news/cursor-ios-public-beta (not fetched from X)
   Composer 2.5 75% off through July 5, 2026 was a launch promo, not standing pricing. This watch still runs in the Cloud Agent VM, not on the phone.
   https://x.com/cursor_ai/status/2071641103191998810
+- Introducing Composer 2.5, our most powerful model yet — cited by https://aicatchup.com/news/cursor-composer-2-5-launch (not fetched from X)
+  Composer is a vendor model family. Do not treat marketing metrics as EOS evidence. The first-week 2x included usage was a launch promo, not standing pricing.
+  https://x.com/cursor_ai/status/2056415413077233983
+- We're introducing Cursor Automations to build always-on agents — cited by https://www.unrollnow.com/status/2029604182286856663 (not fetched from X)
+  Automations trigger on GitHub events, not X. This daily changelog timer already covers ingest.
+  https://x.com/cursor_ai/status/2029604182286856663
 

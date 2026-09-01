@@ -9336,6 +9336,39 @@ test('cited X posts never claim an X fetch', () => {
     )),
     true
   );
+  assert.equal(official.includes('https://cursor.com/changelog/side-chat'), true);
+  assert.equal(official.includes('https://cursor.com/changelog/composer-2-5'), true);
+  assert.equal(official.includes('https://cursor.com/changelog/03-05-26'), true);
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2075686268113916023'
+      && row.cited_by === 'https://aicatchup.com/news/cursor-side-chats-durable-agent-threads'
+      && /side chats/i.test(row.about)
+      && /local-only/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2056415413077233983'
+      && row.cited_by === 'https://aicatchup.com/news/cursor-composer-2-5-launch'
+      && /Composer 2\.5/i.test(row.about)
+      && /launch promo/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
+  assert.equal(
+    doc.citations.some((row) => (
+      row.x_url === 'https://x.com/cursor_ai/status/2029604182286856663'
+      && row.cited_by === 'https://www.unrollnow.com/status/2029604182286856663'
+      && /Automations/i.test(row.about)
+      && /not X/i.test(row.eos_note || '')
+      && row.fetched_from_x === false
+    )),
+    true
+  );
   assert.equal(
     validateCitedXPosts({
       citations: [{
