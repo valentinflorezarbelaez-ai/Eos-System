@@ -2783,6 +2783,12 @@ test('selectCurrentLearnings clusters self-hosted changelog and blog onto Builds
       apply_in_eos: 'Self-hosted Cloud Agents are optional private workers. This run is public cloud.'
     },
     {
+      title: 'Grok Bot is Now Live on Android',
+      source_url: 'https://forum.cursor.com/t/grok-bot-is-now-live-on-android/170384',
+      published_at: 'Wed, 02 Sep 2026 20:01:42 +0000',
+      apply_in_eos: 'Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.'
+    },
+    {
       title: 'Grok 4.6',
       source_url: 'https://cursor.com/help/models-and-usage/grok-4-6',
       published_at: null,
@@ -2828,6 +2834,7 @@ test('selectCurrentLearnings clusters self-hosted changelog and blog onto Builds
   assert.equal(urls.includes('https://cursor.com/docs/cloud-agent'), true);
   assert.equal(urls.includes('https://cursor.com/changelog/self-hosted-machines'), false);
   assert.equal(urls.includes('https://cursor.com/blog/self-hosted-machines'), false);
+  assert.equal(urls.includes('https://forum.cursor.com/t/grok-bot-is-now-live-on-android/170384'), false);
 });
 
 test('applyHint does not treat forum subscription wording as changelog harness news', () => {

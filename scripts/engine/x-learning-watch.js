@@ -1041,7 +1041,12 @@ function sourcePriority(url) {
 
 function clusterRowPriority(url) {
   const value = String(url || '').toLowerCase();
-  if (value.includes('changelog/self-hosted-machines') || value.includes('blog/self-hosted-machines')) {
+  if (
+    value.includes('changelog/self-hosted-machines')
+    || value.includes('blog/self-hosted-machines')
+    || value.includes('forum.cursor.com/t/grok-bot-is-now-live-on-android')
+    || value.includes('forum.cursor.com/t/introducing-grok-bot')
+  ) {
     return sourcePriority(url) + 0.5;
   }
   if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isHelpAgentModeUrl(url) || isHelpAskModeUrl(url) || isHelpPlanModeUrl(url) || isHelpTabUrl(url) || isHelpInlineEditUrl(url) || isHelpCloudAgentsUrl(url) || isHelpBackgroundAgentsUrl(url) || isHelpMobileAppUrl(url) || isHelpSharedTranscriptsUrl(url) || isHelpBugbotUrl(url) || isHelpRulesUrl(url) || isHelpSkillsUrl(url) || isHelpMcpUrl(url) || isHelpContextUrl(url) || isHelpIgnoreFilesUrl(url) || isHelpPluginsUrl(url) || isHelpMultiAgentUrl(url) || isHelpSideChatsUrl(url) || isHelpConversationSearchUrl(url) || isHelpAiPairProgrammingUrl(url) || isGetStartedQuickstartUrl(url) || isHelpGettingStartedInstallUrl(url) || isHelpGettingStartedFirstProjectUrl(url) || isHelpGettingStartedBuildAiCodingAgentUrl(url) || isHelpSecurityAndPrivacyPrivacyUrl(url) || isHelpSecurityAndPrivacyRegionsUrl(url) || isHelpSecurityAndPrivacySsoUrl(url) || isHelpSecurityAndPrivacyAccountCompromisedUrl(url) || isHelpSecurityAndPrivacyMarketplaceSecurityUrl(url) || isHelpTroubleshootingAgentIssuesUrl(url) || isHelpTroubleshootingTabIssuesUrl(url) || isHelpTroubleshootingInstallIssuesUrl(url) || isHelpTroubleshootingNetworkUrl(url) || isHelpTroubleshootingExtensionsUrl(url) || isHelpTroubleshootingPerformanceUrl(url) || isHelpTroubleshootingReportingBugsUrl(url) || isHelpIntegrationsGitUrl(url) || isHelpIntegrationsGithubGitlabUrl(url) || isHelpIntegrationsCliUrl(url) || isHelpIntegrationsThirdPartyUrl(url) || isGrokBotDocUrl(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
@@ -1748,7 +1753,7 @@ function currentClusterKey(learning) {
   ) {
     return 'cluster:cursor-ios';
   }
-  if (isCloudAgentOverviewUrl(learning?.source_url) || isHelpCloudAgentsUrl(learning?.source_url) || isHelpBackgroundAgentsUrl(learning?.source_url) || isCloudAgentApiEndpointsUrl(learning?.source_url) || isCursorSdkTypescriptUrl(learning?.source_url) || isCursorSdkPythonUrl(learning?.source_url) || isCursorSdkBridgeUrl(learning?.source_url) || isGrokBotDocUrl(learning?.source_url) || isHelpIntegrationsGithubGitlabUrl(learning?.source_url) || isHelpIntegrationsThirdPartyUrl(learning?.source_url)) {
+  if (isCloudAgentOverviewUrl(learning?.source_url) || isHelpCloudAgentsUrl(learning?.source_url) || isHelpBackgroundAgentsUrl(learning?.source_url) || isCloudAgentApiEndpointsUrl(learning?.source_url) || isCursorSdkTypescriptUrl(learning?.source_url) || isCursorSdkPythonUrl(learning?.source_url) || isCursorSdkBridgeUrl(learning?.source_url) || isGrokBotDocUrl(learning?.source_url) || isHelpIntegrationsGithubGitlabUrl(learning?.source_url) || isHelpIntegrationsThirdPartyUrl(learning?.source_url) || url.includes('forum.cursor.com/t/grok-bot-is-now-live-on-android') || url.includes('forum.cursor.com/t/introducing-grok-bot')) {
     return 'cluster:cloud-agent-overview';
   }
   if (isModelsAndPricingUrl(learning?.source_url) || isTeamPricingUrl(learning?.source_url) || isTeamMembersUrl(learning?.source_url) || isHelpPricingUrl(learning?.source_url) || isHelpAvailableModelsUrl(learning?.source_url)) {
