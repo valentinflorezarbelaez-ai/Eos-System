@@ -9187,6 +9187,10 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.match(current, /cursor.com\/docs\/models-and-pricing/);
   assert.match(current, /cursor.com\/changelog\/start-from-scratch/);
   assert.match(current, /cursor.com\/changelog\/router/);
+  assert.equal(current.includes('cursor.com/changelog/self-hosted-machines'), false);
+  assert.equal(current.includes('cursor.com/blog/self-hosted-machines'), false);
+  assert.equal(current.includes('forum.cursor.com/t/grok-bot-is-now-live-on-android'), false);
+  assert.equal(current.includes('cursor.com/blog/nokia'), false);
   assert.equal(current.includes('cursor.com/changelog/origin-code-hosting'), false);
   assert.match(current, /cursor.com\/help\/models-and-usage\/usage-limits/);
   assert.match(current, /cursor.com\/docs\/cloud-agent(?!\/)/);
