@@ -2593,6 +2593,10 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Addressing the recent Mindgard report', link: 'https://forum.cursor.com/t/addressing-the-recent-mindgard-report/165817' },
     { title: 'Claude Opus 5 now available!', link: 'https://forum.cursor.com/t/claude-opus-5-now-available/166583' },
     { title: 'Claude Fable 5.1 - Out Now!', link: 'https://forum.cursor.com/t/claude-fable-5-1-out-now/170246' },
+    { title: 'Self-hosted machines', link: 'https://cursor.com/changelog/self-hosted-machines' },
+    { title: 'Grok Bot is Now Live on Android', link: 'https://forum.cursor.com/t/grok-bot-is-now-live-on-android/170384' },
+    { title: 'Nokia analyzes 50M+ lines of code in two weeks with Cursor', link: 'https://cursor.com/blog/nokia' },
+    { title: 'Run cloud agents on machines you manage', link: 'https://cursor.com/blog/self-hosted-machines' },
     { title: 'Cursor is now a part of SpaceX', link: 'https://cursor.com/blog/joining-spacex' },
     { title: 'Introducing Grok 4.6', link: 'https://cursor.com/blog/grok-4-6' },
     { title: 'Grok 4.6', link: 'https://cursor.com/help/models-and-usage/grok-4-6' },
@@ -2709,6 +2713,121 @@ test('applyHint for Claude Fable 5.1 is vendor catalog news', () => {
   assert.equal(/enable/i.test(hint), false);
   assert.equal(/Custom Mode/i.test(hint), false);
   assert.equal(/Slack/i.test(hint), false);
+});
+
+test('applyHint for self-hosted changelog mentions optional private workers without enable', () => {
+  const hint = applyHint({
+    title: 'Self-hosted machines',
+    link: 'https://cursor.com/changelog/self-hosted-machines',
+  });
+  assert.match(hint, /optional private workers/i);
+  assert.match(hint, /public cloud/i);
+  assert.equal(/enable/i.test(hint), false);
+});
+
+test('applyHint for Grok Bot Android forum post stays on changelog plus forum without timers', () => {
+  const hint = applyHint({
+    title: 'Grok Bot is Now Live on Android',
+    link: 'https://forum.cursor.com/t/grok-bot-is-now-live-on-android/170384',
+  });
+  assert.match(hint, /Grok Bot/i);
+  assert.equal(hint.includes('timers'), false);
+  assert.equal(/enable/i.test(hint), false);
+});
+
+test('applyHint for Nokia customer blog is low-priority press story without enable', () => {
+  const hint = applyHint({
+    title: 'Nokia analyzes 50M+ lines of code in two weeks with Cursor',
+    link: 'https://cursor.com/blog/nokia',
+  });
+  assert.match(hint, /customer\/press/i);
+  assert.equal(/enable/i.test(hint), false);
+});
+
+test('selectCurrentLearnings clusters self-hosted changelog and blog onto Builds without evicting Router', () => {
+  const selected = selectCurrentLearnings([
+    {
+      title: 'Start from scratch, without a repo',
+      source_url: 'https://cursor.com/changelog/start-from-scratch',
+      published_at: 'Thu, 27 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Start from scratch creates an Origin repo without GitHub.'
+    },
+    {
+      title: 'Cloud Agents and Cursor Harness Improvements',
+      source_url: 'https://cursor.com/changelog/08-19-26',
+      published_at: 'Wed, 19 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS.'
+    },
+    {
+      title: 'Cloud Agents Start 3x Faster with Builds',
+      source_url: 'https://cursor.com/changelog/08-13-26',
+      published_at: 'Thu, 13 Aug 2026 00:00:00 GMT',
+      apply_in_eos: 'Treat Cloud Agent Builds as the default start path.'
+    },
+    {
+      title: 'Cursor Router',
+      source_url: 'https://cursor.com/changelog/router',
+      published_at: 'Wed, 22 Jul 2026 00:00:00 GMT',
+      apply_in_eos: 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.'
+    },
+    {
+      title: 'Self-hosted machines',
+      source_url: 'https://cursor.com/changelog/self-hosted-machines',
+      published_at: 'Wed, 02 Sep 2026 00:00:00 GMT',
+      apply_in_eos: 'Self-hosted Cloud Agents are optional private workers. This run is public cloud.'
+    },
+    {
+      title: 'Run cloud agents on machines you manage',
+      source_url: 'https://cursor.com/blog/self-hosted-machines',
+      published_at: 'Wed, 02 Sep 2026 00:00:00 GMT',
+      apply_in_eos: 'Self-hosted Cloud Agents are optional private workers. This run is public cloud.'
+    },
+    {
+      title: 'Grok 4.6',
+      source_url: 'https://cursor.com/help/models-and-usage/grok-4-6',
+      published_at: null,
+      apply_in_eos: 'Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help.'
+    },
+    {
+      title: 'Models & Pricing',
+      source_url: 'https://cursor.com/docs/models-and-pricing',
+      published_at: null,
+      apply_in_eos: 'Honor included Cursor Models vs Other Models pools.'
+    },
+    {
+      title: 'Cursor Agent',
+      source_url: 'https://cursor.com/docs/agent/overview',
+      published_at: null,
+      apply_in_eos: 'Keep long-lived EOS objectives in /goal.'
+    },
+    {
+      title: 'Agent Skills',
+      source_url: 'https://cursor.com/docs/skills',
+      published_at: null,
+      apply_in_eos: 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.'
+    },
+    {
+      title: 'Cloud Agents',
+      source_url: 'https://cursor.com/docs/cloud-agent',
+      published_at: null,
+      apply_in_eos: 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.'
+    },
+    {
+      title: 'Usage and limits',
+      source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
+      published_at: null,
+      apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+    }
+  ]);
+  const urls = selected.map((row) => row.source_url);
+  assert.equal(urls.includes('https://cursor.com/changelog/08-13-26'), true);
+  assert.equal(urls.includes('https://cursor.com/changelog/router'), true);
+  assert.equal(urls.includes('https://cursor.com/changelog/start-from-scratch'), true);
+  assert.equal(urls.includes('https://cursor.com/changelog/08-19-26'), true);
+  assert.equal(urls.includes('https://cursor.com/help/models-and-usage/usage-limits'), true);
+  assert.equal(urls.includes('https://cursor.com/docs/cloud-agent'), true);
+  assert.equal(urls.includes('https://cursor.com/changelog/self-hosted-machines'), false);
+  assert.equal(urls.includes('https://cursor.com/blog/self-hosted-machines'), false);
 });
 
 test('applyHint does not treat forum subscription wording as changelog harness news', () => {
