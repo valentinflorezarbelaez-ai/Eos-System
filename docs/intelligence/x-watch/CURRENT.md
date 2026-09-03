@@ -2,18 +2,20 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-09-01T18:26:52.017Z
-Store size: 200
+Updated: 2026-09-03T12:14:43.124Z
+Store size: 204
 
 ## Official product actions
+- **Cloud Agents Start 3x Faster with Builds** — Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.
+  https://cursor.com/changelog/08-13-26
 - **Start from scratch, without a repo** — Start from scratch creates an Origin repo without GitHub. GitHub remains source of truth for this synced repo. Do not Start from scratch or create an Origin repo for this watch. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.
   https://cursor.com/changelog/start-from-scratch
 - **Cloud Agents and Cursor Harness Improvements** — Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS. Honor auto-CI-fix on PRs this agent opens.
   https://cursor.com/changelog/08-19-26
-- **Cloud Agents Start 3x Faster with Builds** — Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.
-  https://cursor.com/changelog/08-13-26
 - **Cursor Router** — Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.
   https://cursor.com/changelog/router
+- **Cloud Agents** — Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.
+  https://cursor.com/docs/cloud-agent
 - **Grok 4.6** — Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.
   https://cursor.com/help/models-and-usage/grok-4-6
 - **Models & Pricing** — Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.
@@ -22,8 +24,6 @@ Store size: 200
   https://cursor.com/docs/agent/overview
 - **Agent Skills** — Pin an EOS skill as a Custom Mode when a session must stay on one playbook.
   https://cursor.com/docs/skills
-- **Cloud Agents** — Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.
-  https://cursor.com/docs/cloud-agent
 - **Usage and limits** — Honor included quota. Stop this daily watch rather than switching to paid on-demand.
   https://cursor.com/help/models-and-usage/usage-limits
 

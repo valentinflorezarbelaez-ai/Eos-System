@@ -1,7 +1,47 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-01T18:26:52.017Z",
+  "updated_at": "2026-09-03T12:14:43.124Z",
   "learnings": [
+    {
+      "learning_id": "LRN-CURSOR-forum-cursor-com-t-grok-bot-is-now-live-on-andro",
+      "title": "Grok Bot is Now Live on Android",
+      "source_url": "https://forum.cursor.com/t/grok-bot-is-now-live-on-android/170384",
+      "published_at": "Wed, 02 Sep 2026 20:01:42 +0000",
+      "summary": "Announcement · Google Play · Docs Grok Bot is now available on Android ! Since launch , you’ve been able to hand work to your Bots from desktop and iOS. Starting today, you can do the same from your Android phone. What you can do from Android: Message your Bots on the go: Give a Bot a task from your phone and pick the thread back up on desktop. Same Bots, same conversations, synced across your si…",
+      "apply_in_eos": "Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-nokia",
+      "title": "Nokia analyzes 50M+ lines of code in two weeks with Cursor",
+      "source_url": "https://cursor.com/blog/nokia",
+      "published_at": "2026-09-02T12:00:00.000Z",
+      "summary": "Nokia is redesigning its entire software development lifecycle with Cursor – from PRD and design work to code analysis, building customer internal tools, and accelerating diagnosis on customer-impacting defects from historical service requests. In one project, two engineers analyzed more than 50 million lines of code in two weeks – work that would have taken a dozen or more experts several months…",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-self-hosted-machines",
+      "title": "Run cloud agents on machines you manage",
+      "source_url": "https://cursor.com/blog/self-hosted-machines",
+      "published_at": "2026-09-02T12:00:00.000Z",
+      "summary": "Cursor cloud agents can now execute on pools of Self-Hosted Machines you manage.",
+      "apply_in_eos": "Self-hosted Cloud Agents are optional private workers. This run is public cloud.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
+    {
+      "learning_id": "LRN-CURSOR-self-hosted-machines",
+      "title": "Self-hosted machines",
+      "source_url": "https://cursor.com/changelog/self-hosted-machines",
+      "published_at": "Wed, 02 Sep 2026 00:00:00 GMT",
+      "summary": "Cursor supports **self-hosted machines**, which let you keep tool execution entirely in your own network. Your codebase, build outputs, and secrets all stay on internal machines running in your infrastructure, while the agent handles tool calls locally. Run on menu showing Remote Machines with self-hosted options lambda-test, cloud-demo, and jacks-desktop Dynamic pool scheduling **My Machines** c…",
+      "apply_in_eos": "Self-hosted Cloud Agents are optional private workers. This run is public cloud.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
     {
       "learning_id": "LRN-CURSOR-forum-cursor-com-t-claude-fable-5-1-out-now-1702",
       "title": "Claude Fable 5.1 - Out Now!",
@@ -1817,7 +1857,7 @@
       "title": "GitHub, GitLab, Azure DevOps, and Bitbucket",
       "source_url": "https://cursor.com/help/integrations/github-gitlab",
       "published_at": null,
-      "summary": "Connect GitHub, GitLab, Azure DevOps, or Bitbucket Cloud to use Cloud Agents. How do I connect GitHub? — Follow the setup steps in the GitHub integration docs. How do I connect GitLab? — Follow the setup steps in the GitLab integration docs. How do I connect Azure DevOps? — Follow the setup steps in the Azure DevOps integration docs. How do I connect Bitbucket? — Follow the setup steps in the Bitbucket integration docs.",
+      "summary": "Connect GitHub, GitLab, Azure DevOps, or Bitbucket Cloud to use Cloud Agents. How do I connect GitHub? — Follow the setup steps in the GitHub integration docs. How do I connect GitLab? — Follow the setup steps in the GitLab integration docs. How do I connect Azure DevOps? — Follow the setup steps in the Azure DevOps integration docs. How do I connect Bitbucket? — Follow the setup steps in the Bitbucket integration docs. How do I connect a private or self-hosted GitLab instance with Self-Hosted Machines? — Use an any-repo team pool on a worker that can reach your GitLab instance over your network.",
       "apply_in_eos": "Help GitHub, GitLab, Azure DevOps, and Bitbucket is vendor Cloud Agent and Bugbot repo-connection setup. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into connecting extra SCMs for daily ingest. GitHub remains source of truth for this synced repo. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1927,7 +1967,7 @@
       "title": "SSO and authentication",
       "source_url": "https://cursor.com/help/security-and-privacy/sso",
       "published_at": null,
-      "summary": "SSO with SAML 2.0 is available at no additional cost on Teams and Enterprise plans. What do I need before setting up SSO? — A Cursor Teams or Enterprise plan Admin access to your identity provider (e.g., Okta, Azure AD, Google Workspace) Admin access to your Cursor organization How do I set up SSO? — Follow the step-by-step guide in the SSO setup reference. Does Cursor support SCIM provisioning? — Yes, on Enterprise plans with SSO enabled. How do I view my SSO configuration and domains? — Team admins can review the connection status and its domain in Single Sign-On (SSO) settings. Why do team members see \"Not assigned to this application\"? — This means the team member hasn't been assigned to the Cursor application in your identity provider's admin console.",
+      "summary": "SSO with SAML 2.0 is available at no additional cost on Teams and Enterprise plans. What do I need before setting up SSO? — A Cursor Teams or Enterprise plan Admin access to your identity provider (e.g., Okta, Azure AD, Google Workspace) Admin access to your Cursor team (Teams) or organization (Enterprise) Where do I configure SSO? — Teams: Open Single Sign-On (SSO) settings in Team Settings. How do I set up SSO? — For team-level SSO, follow the SSO setup reference. Does Cursor support SCIM provisioning? — Yes, on Enterprise plans with SSO enabled. How do I view my SSO configuration and domains? — For team-level SSO, team admins can review the connection status and its domain in Single Sign-On (SSO) settings. Why do team members see \"Not assigned to this application\"? — This means the tea…",
       "apply_in_eos": "Help SSO is vendor team SAML authentication. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop or team SSO settings for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
@@ -1937,7 +1977,7 @@
       "title": "Agent troubleshooting",
       "source_url": "https://cursor.com/help/troubleshooting/agent-issues",
       "published_at": null,
-      "summary": "Fixes for common Agent issues with file access, rules, terminal commands, and more. How can I improve Agent accuracy? — Be specific in your prompts: include expected behavior and constraints Use Plan mode first for tasks that touch many files Start a new chat when you finish a feature or switch tasks Add rules in for patterns you want Age What if Agent doesn't pick up my files? — Check your .cursorignore file in the project root. How do I undo Agent changes? — Hover over a previous message and click Restore Checkpoint in the bottom right to roll back all changes Agent made after that point. What if Agent sets CI=1 in terminal commands? — Cursor sets as an environment variable when running terminal commands through Agent. What if I see \"Agent Execution Timed Out\"? — This error means Cursor…",
+      "summary": "Fixes for common Agent issues with file access, rules, terminal commands, and more. How can I improve Agent accuracy? — Be specific in your prompts: include expected behavior and constraints Use Plan mode first for tasks that touch many files Start a new chat when you finish a feature or switch tasks Add rules in for patterns you want Age What if Agent doesn't pick up my files? — Check your .cursorignore file in the project root. How do I undo Agent changes? — Hover over a previous message and click Restore Checkpoint in the bottom right to roll back all changes Agent made after that point. What if Agent sets CI=1 in terminal commands? — Cursor sets as an environment variable when running terminal commands through Agent. How do I troubleshoot a Self-Hosted Machines setup? — Run for a pref…",
       "apply_in_eos": "Help Agent troubleshooting is vendor desktop Agent diagnostics. Keep this watch on the standing /goal. Do not rotate this Cloud Agent into desktop Agent troubleshooting for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false
