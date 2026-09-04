@@ -12,11 +12,11 @@
     "eos-top": "./bin/eos-top.js"
   },
   "scripts": {
-    "test": "node --test tests/*.test.js tests/**/*.test.js",
+    "test": "node --test $(find tests -name '*.test.js')",
     "ci": "node scripts/ci/assert-gha-contract.js && node scripts/verify-eos.js --strict",
     "ci:contract": "node scripts/ci/assert-gha-contract.js",
     "test:core": "node --test tests/authority-truth-source.test.js tests/eos-negative-governance.test.js tests/eos-e2e-local-fixture.test.js tests/eos-local-contracts.test.js",
-    "test:unit": "node --test tests/*.test.js",
+    "test:unit": "node --test $(find tests -name '*.test.js')",
     "mcp:start": "node src/mcp-server.js",
     "eos": "node bin/eos.js",
     "eos:top": "node bin/eos-top.js",
@@ -29,7 +29,7 @@
     "eos:mission:help": "node bin/eos.js --help",
     "eos:legacy": "node scripts/cli/eos.js",
     "test:lab": "npx tsx --test EOS-Lab/**/*.test.ts",
-    "test:all": "node --test tests/*.test.js tests/**/*.test.js && npx tsx --test EOS-Lab/**/*.test.ts",
+    "test:all": "node --test $(find tests -name '*.test.js') && npx tsx --test EOS-Lab/**/*.test.ts",
     "verify": "node scripts/verify-eos.js",
     "verify:strict": "node scripts/verify-eos.js --strict",
     "verify:json": "node scripts/verify-eos.js --strict --json",
