@@ -542,13 +542,22 @@ export class MissionCLI {
       targetPath = nonFlagArgs[0];
     }
 
-    const root = resolveControlPlaneRoot({ cwd: process.cwd() });
-    const pre = this.tutor.explainBefore({
+    const workspaceRoot = this.runtime.baseDir;
+    const controlRoot = resolveControlPlaneRoot();
+    const emptyJson = {
+      filesAnalyzed: 0,
+      averageBloatIndex: 0,
+      overEngineeredFilesCount: 0,
+      results: []
+    };
+    const toJson = (payload) => JSON.stringify(payload, null, 2);
+
+    const pre = isJson ? '' : this.tutor.explainBefore({
       action_id: 'eos.simplify',
       objective: `Analyze code complexity and eliminate post-green bloat${projectId ? ` for project ${projectId}` : targetPath ? ` at ${targetPath}` : ''}`,
       concept: 'First-Principles Simplifier (Musk Rule 2 / Boris Cherny post-green pattern)',
       scope: [targetPath || projectId || 'workspace'],
-      cwd: root,
+      cwd: controlRoot,
       rationale: 'Prunes unnecessary wrappers, empty stubs, and bloat before commit',
       expected_evidence: ['bloatIndex < 4.0', 'simplification recommendations'],
       risks: ['Read-only analysis; no destructive changes'],
@@ -582,34 +591,48 @@ export class MissionCLI {
     };
 
     if (projectId) {
-      const regDir = path.join(root, 'docs', 'projects', 'registrations');
+      const registryCandidates = [
+        { regDir: path.join(workspaceRoot, 'docs', 'projects', 'registrations'), root: workspaceRoot },
+        { regDir: path.join(controlRoot, 'docs', 'projects', 'registrations'), root: controlRoot }
+      ];
       let foundPath = null;
-      if (fs.existsSync(regDir)) {
+      let foundRoot = workspaceRoot;
+      const seenRegDirs = new Set();
+      for (const { regDir, root: candidateRoot } of registryCandidates) {
+        if (seenRegDirs.has(regDir) || !fs.existsSync(regDir)) continue;
+        seenRegDirs.add(regDir);
         for (const file of fs.readdirSync(regDir)) {
-          if (file.endsWith('.json')) {
-            try {
-              const reg = JSON.parse(fs.readFileSync(path.join(regDir, file), 'utf8'));
-              const pIdUpper = projectId.toUpperCase();
-              if (
-                reg.project_id === pIdUpper ||
-                reg.projectId === pIdUpper ||
-                reg.id === pIdUpper ||
-                file.replace('.json', '').toUpperCase() === pIdUpper.replace('PRJ-', '')
-              ) {
-                foundPath = reg.path || reg.projectRoot || reg.local_path || reg.root;
-                break;
-              }
-            } catch {}
+          if (!file.endsWith('.json')) continue;
+          try {
+            const reg = JSON.parse(fs.readFileSync(path.join(regDir, file), 'utf8'));
+            const pIdUpper = projectId.toUpperCase();
+            if (
+              reg.project_id === pIdUpper ||
+              reg.projectId === pIdUpper ||
+              reg.id === pIdUpper ||
+              file.replace('.json', '').toUpperCase() === pIdUpper.replace('PRJ-', '')
+            ) {
+              foundPath = reg.path || reg.projectRoot || reg.local_path || reg.root;
+              foundRoot = candidateRoot;
+              break;
+            }
+          } catch {
+            // Skip malformed registration files
           }
         }
+        if (foundPath) break;
       }
       if (!foundPath) {
+        const message = `Error: Project '${projectId}' not found in registry (docs/projects/registrations/).`;
         return {
           success: false,
-          output: `Error: Project '${projectId}' not found in registry (docs/projects/registrations/).`
+          output: isJson ? toJson({ error: message }) : message
         };
       }
-      collectFiles(foundPath);
+      const resolvedProject = path.isAbsolute(foundPath)
+        ? foundPath
+        : path.resolve(foundRoot, foundPath);
+      collectFiles(resolvedProject);
     } else if (targetPath) {
       const resolved = path.isAbsolute(targetPath) ? targetPath : path.resolve(process.cwd(), targetPath);
       collectFiles(resolved);
@@ -623,6 +646,13 @@ export class MissionCLI {
     }
 
     if (filesToScan.length === 0) {
+      if (isJson) {
+        return {
+          success: isStrict ? false : true,
+          output: toJson(emptyJson),
+          data: { fileResults: [], avgBloat: '0.0', overEngineeredCount: 0 }
+        };
+      }
       return {
         success: true,
         output: `${pre}\n\nℹ️  No matching source files (.js, .ts, .tsx, .py) found to analyze.`
@@ -642,7 +672,7 @@ export class MissionCLI {
         if (analysis.isOverEngineered) overEngineeredCount++;
 
         fileResults.push({
-          file: path.relative(root, filePath),
+          file: path.relative(controlRoot, filePath),
           bloatIndex: analysis.bloatIndex,
           isOverEngineered: analysis.isOverEngineered,
           metrics: analysis.metrics,
@@ -655,6 +685,20 @@ export class MissionCLI {
     }
 
     const avgBloat = fileResults.length > 0 ? (totalBloat / fileResults.length).toFixed(1) : '0.0';
+
+    if (isJson) {
+      return {
+        success: isStrict ? overEngineeredCount === 0 : true,
+        output: toJson({
+          filesAnalyzed: fileResults.length,
+          averageBloatIndex: parseFloat(avgBloat),
+          overEngineeredFilesCount: overEngineeredCount,
+          results: fileResults
+        }),
+        data: { fileResults, avgBloat, overEngineeredCount }
+      };
+    }
+
     const post = this.tutor.explainAfter(
       { action_id: 'eos.simplify' },
       {
@@ -663,19 +707,6 @@ export class MissionCLI {
         next_decision: overEngineeredCount === 0 ? 'Code is clean and minimal (KISS). Proceed to commit.' : 'Execute simplification recommendations to prune unnecessary bloat.'
       }
     );
-
-    if (isJson) {
-      return {
-        success: isStrict ? overEngineeredCount === 0 : true,
-        output: JSON.stringify({
-          filesAnalyzed: fileResults.length,
-          averageBloatIndex: parseFloat(avgBloat),
-          overEngineeredFilesCount: overEngineeredCount,
-          results: fileResults
-        }, null, 2),
-        data: { fileResults, avgBloat, overEngineeredCount }
-      };
-    }
 
     const overEngineeredList = fileResults
       .filter(f => f.isOverEngineered)

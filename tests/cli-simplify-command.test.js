@@ -87,9 +87,60 @@ export class OverEngineeredFacade {
   });
 
   test('SIMPLIFY-CLI-05: Resolves registered project via --project flag', async () => {
-    const res = await cli.run(['simplify', '--project', 'PRJ-APP-FUERZA', '--json']);
+    const fixtureDir = path.join(testWorkspaceDir, 'fixture-project');
+    fs.mkdirSync(fixtureDir, { recursive: true });
+    fs.writeFileSync(path.join(fixtureDir, 'tiny.js'), 'export const ok = 1;\n', 'utf8');
+
+    const regDir = path.join(testWorkspaceDir, 'docs', 'projects', 'registrations');
+    fs.mkdirSync(regDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(regDir, 'simplify-fixture.json'),
+      JSON.stringify({
+        project_id: 'PRJ-SIMPLIFY-FIXTURE',
+        path: fixtureDir
+      }),
+      'utf8'
+    );
+
+    const res = await cli.run(['simplify', '--project', 'PRJ-SIMPLIFY-FIXTURE', '--json']);
     assert.equal(res.success, true);
     const parsed = JSON.parse(res.output);
     assert.ok(parsed.filesAnalyzed > 0);
+    assert.ok(typeof parsed.averageBloatIndex === 'number');
+    assert.ok(Array.isArray(parsed.results));
+    assert.equal(typeof parsed.overEngineeredFilesCount, 'number');
+    assert.ok(Array.isArray(res.data.fileResults));
+    assert.ok(res.data.fileResults.length > 0);
+  });
+
+  test('SIMPLIFY-CLI-06: --json project-not-found returns JSON error object', async () => {
+    const res = await cli.run(['simplify', '--project', 'PRJ-DOES-NOT-EXIST', '--json']);
+    assert.equal(res.success, false);
+    const parsed = JSON.parse(res.output);
+    assert.ok(typeof parsed.error === 'string');
+    assert.match(parsed.error, /PRJ-DOES-NOT-EXIST/);
+  });
+
+  test('SIMPLIFY-CLI-07: --json empty scan returns filesAnalyzed 0', async () => {
+    const emptyDir = path.join(testWorkspaceDir, 'empty-project');
+    fs.mkdirSync(emptyDir, { recursive: true });
+    const regDir = path.join(testWorkspaceDir, 'docs', 'projects', 'registrations');
+    fs.mkdirSync(regDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(regDir, 'empty-fixture.json'),
+      JSON.stringify({
+        project_id: 'PRJ-SIMPLIFY-EMPTY',
+        path: emptyDir
+      }),
+      'utf8'
+    );
+
+    const res = await cli.run(['simplify', '--project', 'PRJ-SIMPLIFY-EMPTY', '--json']);
+    assert.equal(res.success, true);
+    const parsed = JSON.parse(res.output);
+    assert.equal(parsed.filesAnalyzed, 0);
+    assert.equal(parsed.averageBloatIndex, 0);
+    assert.equal(parsed.overEngineeredFilesCount, 0);
+    assert.deepEqual(parsed.results, []);
   });
 });
