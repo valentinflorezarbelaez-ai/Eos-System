@@ -29,10 +29,15 @@ Historical EOS specs stay in `docs/specs/`. Do not relocate them.
 | Surface | What it is | What it is not |
 | --- | --- | --- |
 | `.cursor/commands/` (`/enrich-us`, `/propose`, `/ff`, `/apply`, `/verify`, `/adversarial-review`, `/archive`, `/commit`) | Operator vocabulary for the Specboot cycle | Not `npm run verify`, not Mission OS |
-| Official OpenSpec Cursor form (if you later run `openspec init`) | `/opsx-propose`, `/opsx-apply`, … | Optional; do not require it for EOS work |
+| Official OpenSpec / Adonis aliases (same ceremony) | `opsx:propose`, `opsx:apply`, `opsx:archive` (Cursor: `/opsx-propose`, …) | Optional CLI spelling; not a second pipeline |
+| Planning skills (reference only) | `openspec-ff-change`, `openspec-continue-change` | Do not vendor skill bodies |
 | Mission CLI | `node bin/eos.js` / `npm run eos:mission` | Unchanged. Do not wrap, replace, or import OpenSpec into it |
 
 `/verify` in this cycle means **spec verification** (BUILDER ≠ VERIFIER). Workspace health remains `npm run verify` / `verify:strict`.
+
+After `/apply` and **before** `/archive`, update OpenSpec artifacts first so they match the code. Do not archive a code-only tree.
+
+Spec syntax: prefer Given/When/Then. EARS is an EOS/local IEEE-inspired convention if it appears — not a LIDR Specboot import. Gentleman Scope Rule (shared if ≥2 features) is NON-core on L0 Mission OS unless a frontend satellite is in scope.
 
 ## CLI install (docs only — optional)
 

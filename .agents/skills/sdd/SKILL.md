@@ -12,7 +12,7 @@ Enforces specification-first engineering for non-trivial features, refactoring, 
 
 **LIDR cycle (substantial changes):** `/enrich-us` → `/ff` or `/propose` → `/apply` → `/verify` → `/adversarial-review` → `/archive` → `/commit`.
 
-`/verify` is independent of `/apply` (BUILDER ≠ VERIFIER). `/adversarial-review` is INFORMATIONAL (RDD) and does not authorize delivery.
+`/verify` is independent of `/apply` (BUILDER ≠ VERIFIER). `/adversarial-review` is INFORMATIONAL (RDD) and does not authorize delivery. After `/apply`, update OpenSpec artifacts first; do not `/archive` a code-only tree. Prefer Given/When/Then. EARS is not a LIDR import. Optional LIDR skills are listed in `ai-specs/skills/` — do not bulk-copy them.
 
 SSOT: `docs/base-standards.md`, `docs/backend-standards.md`. Agent/skill index: `ai-specs/`. New OpenSpec changes: `openspec/changes/`. Runbook: `docs/manuals/OPENSPEC_RUNTIME.md`. Slash docs: `.cursor/commands/`. Do not mutate `CONSTITUTION.md` without PO approval. Do not replace `node bin/eos.js` / `npm run eos:mission`.
 

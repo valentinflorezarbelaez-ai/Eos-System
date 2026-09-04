@@ -105,6 +105,50 @@ test('openspec:cli reports a docs-only install path when the CLI binary is absen
   assert.match(String(result.stderr), /not on PATH|not installed/i);
 });
 
+test('OpenSpec config prefers GWT and forbids treating EARS as a LIDR import', () => {
+  const config = read('openspec/config.yaml');
+  assert.match(config, /Given\/When\/Then/);
+  assert.match(config, /\bEARS\b/);
+  assert.match(config, /not a LIDR|not LIDR/i);
+});
+
+test('apply and archive docs require OpenSpec artifact update before archive', () => {
+  const apply = read('.cursor/commands/apply.md');
+  const archive = read('.cursor/commands/archive.md');
+  const runtime = read('docs/manuals/OPENSPEC_RUNTIME.md');
+  assert.match(apply, /opsx:apply|\/opsx-apply/);
+  assert.match(archive, /opsx:archive|\/opsx-archive/);
+  assert.match(apply, /OpenSpec artifacts/i);
+  assert.match(archive, /update OpenSpec artifacts first|artifacts first/i);
+  assert.match(runtime, /openspec-ff-change/);
+  assert.match(runtime, /openspec-continue-change/);
+  assert.match(runtime, /opsx:propose|\/opsx-propose/);
+});
+
+test('ai-specs lists optional LIDR skills without bulk-copying them', () => {
+  const skills = read('ai-specs/skills/README.md');
+  assert.match(skills, /optional imports/i);
+  assert.match(skills, /do not bulk-copy/i);
+  for (const skill of [
+    'enrich-us',
+    'adversarial-review',
+    'using-git-worktrees',
+    'writing-skills',
+    'code-auditing',
+    'openspec-sync-specs',
+    'sync-agent-symlinks'
+  ]) {
+    assert.match(skills, new RegExp(skill));
+    assert.equal(
+      fs.existsSync(path.join(rootDir, 'ai-specs/skills', skill, 'SKILL.md')),
+      false,
+      `must not bulk-copy ${skill}`
+    );
+  }
+  assert.match(skills, /Scope Rule/);
+  assert.match(skills, /NON-core/i);
+});
+
 test('verify-eos REQUIRED_PATHS include OpenSpec runtime artifacts', () => {
   const verifier = read('scripts/verify-eos.js');
   for (const rel of [
