@@ -127,6 +127,36 @@ const CANONICAL_TOOLS = [
   { name: 'eos.log.evidence', description: 'Create strict epistemic evidence records with deterministic SHA-256 hashing', category: 'EVIDENCE', sideEffects: 'LEDGER_WRITE', requiredAuthority: 'A1' }
 ];
 
+/** Tier A default advertise set — SSOT: docs/rationalization/EOS_TOOL_SURFACE_FINAL.md */
+const TIER_A_TOOL_NAMES = new Set([
+  'eos.kernel.boot',
+  'eos.authority.check',
+  'eos.context.compile',
+  'eos.workspace.barrier_check',
+  'eos.intent.expand',
+  'eos.orchestrator.init',
+  'eos.scaffolder.clean',
+  'eos.scaffolder.execute',
+  'eos.core.triamazikamno.validate',
+  'eos.verifier.run',
+  'eos.drift.detect',
+  'eos.evidence.record',
+  'eos.orchestrator.advance',
+  'eos.mission.status'
+]);
+
+function resolveMcpSurface(env = process.env) {
+  return String(env?.EOS_MCP_SURFACE ?? '').trim().toLowerCase();
+}
+
+function listTools(env = process.env) {
+  const surface = resolveMcpSurface(env);
+  if (surface === 'lab' || surface === 'full') {
+    return CANONICAL_TOOLS.slice();
+  }
+  return CANONICAL_TOOLS.filter((tool) => TIER_A_TOOL_NAMES.has(tool.name));
+}
+
 const TOOL_INPUT_SCHEMAS = {
   'eos.doctor': {
     type: 'object',
@@ -2557,7 +2587,7 @@ class EosMcpServer {
             jsonrpc: '2.0',
             id,
             result: {
-              tools: CANONICAL_TOOLS.map((t) => ({
+              tools: listTools().map((t) => ({
                 name: t.name,
                 description: t.description,
                 inputSchema: TOOL_INPUT_SCHEMAS[t.name] || {
@@ -2603,7 +2633,7 @@ class EosMcpServer {
   }
 }
 
-export { EosMcpServer, CANONICAL_TOOLS, normalizeToolName, resolveControlPlaneRoot };
+export { EosMcpServer, CANONICAL_TOOLS, listTools, normalizeToolName, resolveControlPlaneRoot };
 
 if (process.argv[1] && process.argv[1].endsWith('mcp-server.js')) {
   const server = new EosMcpServer();
