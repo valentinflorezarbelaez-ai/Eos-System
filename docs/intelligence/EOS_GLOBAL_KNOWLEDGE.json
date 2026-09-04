@@ -1,0 +1,66 @@
+{
+  "document_id": "EOS_GLOBAL_KNOWLEDGE",
+  "schema_version": "1.0.0",
+  "status": "ACTIVE",
+  "updated": "2026-08-26",
+  "purpose": "Pinned operational knowledge injected into every CURSOR_PROMPT. Not constitution. Company form still wins on stack.",
+  "constitution_delta": 0,
+  "entries": [
+    {
+      "id": "GK-GP-01",
+      "source": "RSC-0016",
+      "title": "Director / orchestrator / specialists",
+      "positive": true,
+      "text": "Human Director decides scope and HITL. EOS/Agent orchestrates. Subagents/skills specialize with clean context. Program WITH AI; do not surrender direction."
+    },
+    {
+      "id": "GK-GP-02",
+      "source": "RSC-0016",
+      "title": "SDD DAG before code",
+      "positive": true,
+      "text": "proposal → (specs ∥ design) → tasks → apply → verify → archive. Implementation is not the first meaningful act. Missing dependency → STOP."
+    },
+    {
+      "id": "GK-GP-03",
+      "source": "RSC-0016",
+      "title": "Phase gatekeeper",
+      "positive": true,
+      "text": "Each phase returns a fixed contract; claimed artifacts must exist before advancing. No 'mostly done' as done."
+    },
+    {
+      "id": "GK-GP-04",
+      "source": "RSC-0016",
+      "title": "Specs + TDD",
+      "positive": true,
+      "text": "Acceptance criteria / PROJECT_SPECS before implementation. Prefer RED then GREEN when the repo has a test harness."
+    },
+    {
+      "id": "GK-GP-05",
+      "source": "RSC-0016",
+      "title": "Trust = re-derivation",
+      "positive": true,
+      "text": "Code without persistent justification is legacy at machine speed. Trace lines to specs/artifacts. Never invent VERIFIED or PRODUCTION_READY."
+    },
+    {
+      "id": "GK-GP-06",
+      "source": "RSC-0016",
+      "title": "Agile is delivery, not ceremony",
+      "positive": true,
+      "text": "Dailies/sprints alone are not agility. Ship small slices, accept change, share knowledge."
+    },
+    {
+      "id": "GK-GP-07",
+      "source": "RSC-0016",
+      "title": "Architecture when applicable",
+      "positive": true,
+      "text": "Prefer clear module boundaries (ports/adapters inspire). Scope Rule / screaming features only when the project's front stack allows — never impose React/Tailwind/Claude runtime."
+    },
+    {
+      "id": "GK-EOS-01",
+      "source": "EOS-CORE",
+      "title": "Evidence over claims",
+      "positive": true,
+      "text": "Command or receipt before MEASURED/VERIFIED. Protected surfaces Δ=0. Lessons append-only; constitution immutable via learning."
+    }
+  ]
+}
