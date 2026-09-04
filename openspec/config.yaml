@@ -1,0 +1,57 @@
+schema: spec-driven
+
+context: |
+  EOS Control Plane (Mission OS). Conscious LIDR Specboot + Gentleman adoption.
+  Discipline: docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md
+  SSOT index: docs/base-standards.md
+  Backend / L0: docs/backend-standards.md
+  Agent/skill pack (pointers only): ai-specs/
+  Operator SDD vs DIRECT: docs/manuals/EOS_OPERATOR_MANUAL_LOCAL.md
+  OpenSpec runbook: docs/manuals/OPENSPEC_RUNTIME.md
+
+  Organic routing: smallest honest route. SDD when the human requests it or a
+  proposal is accepted, or the change is substantial. File/diff size alone
+  does not force SDD.
+
+  TDD when tests exist: RED → GREEN → TRIANGULATE → REFACTOR with command output.
+  RDD: independent review is INFORMATIONAL and does not authorize delivery.
+  Spec syntax: prefer Given/When/Then (BDD). EARS is EOS/local IEEE-inspired if used;
+  it is not a LIDR Specboot import (UNKNOWN / NOT FOUND in LIDR and Gentleman public docs).
+  Official aliases (same ceremony): opsx:propose, opsx:apply, opsx:archive.
+  Planning skills (reference only): openspec-ff-change, openspec-continue-change.
+  After /apply and before /archive: update OpenSpec artifacts first (not code-only).
+  Gentleman Scope Rule is NON-core for L0 Mission OS unless a frontend satellite is in scope.
+  L0: NODE_BUILTINS_ONLY. Do not add root package.json dependencies.
+  Do not mutate CONSTITUTION.md without PO approval.
+  Do not write Fundacion/ or src/core/ unless the human named that exact change.
+  Do not invent new orchestrator engines.
+  Language: code/docs/ADRs English; operator UI/comms may be Spanish.
+
+  Historical specs remain in docs/specs/. New OpenSpec changes live here.
+  Mission CLI (node bin/eos.js / npm run eos:mission) is unchanged.
+
+rules:
+  proposal:
+    - Include a NON-goals section.
+    - State DIRECT vs SDD routing (ADR-0010). Cite docs/base-standards.md.
+    - Do not propose Core kernel or Fundacion writes without recorded authorization.
+  specs:
+    - Use Given/When/Then scenarios (preferred; both LIDR and Gentleman document GWT).
+    - Do not treat EARS as a LIDR import.
+    - Reference existing EOS contracts before inventing surfaces.
+  design:
+    - No new engines or planes unless an ADR requires them.
+    - Keep OpenSpec tooling outside src/core (L0 purity).
+  tasks:
+    - One purpose per task. Attach a TDD evidence command when behavior changes.
+
+operations:
+  apply:
+    guidance:
+      - Strict TDD evidence for /apply. Builder must not self-certify (/verify is separate).
+      - After the task, update OpenSpec artifacts first so they match what was built.
+      - Do not replace or wrap the EOS Mission CLI.
+  archive:
+    guidance:
+      - Refuse archive until OpenSpec artifacts were updated after apply (not code-only).
+      - Archive is not a release. Merge/release remain human / HITL / write-barrier.
