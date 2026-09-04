@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/external-canary-contract.schema.json",
+  "title": "EOS Minimal External Integration Canary Contract",
+  "description": "Strict contract governing a single read-only or minimal probe external integration canary with hard budgets, pagination guards, credential masking, rate-limit awareness, and mandatory fallback.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "canary_id",
+    "provider",
+    "operation",
+    "endpoint",
+    "http_method",
+    "max_requests",
+    "page_size",
+    "follow_next_page_token",
+    "data_classification",
+    "synthetic_payload",
+    "budget_limit_usd",
+    "cost_basis_notes",
+    "timeout_ms",
+    "credential_env_var",
+    "key_restriction_type",
+    "hitl_approval_required",
+    "fallback_strategy",
+    "epistemic_status_initial"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "canary_id": {
+      "type": "string",
+      "pattern": "^CANARY-[A-Z0-9-]+$"
+    },
+    "provider": {
+      "type": "string",
+      "enum": ["GOOGLE_GEMINI", "OPENAI", "ANTHROPIC", "OLLAMA_LOCAL"]
+    },
+    "operation": {
+      "type": "string",
+      "enum": ["models.list", "models.get", "embeddings.create_ping"]
+    },
+    "endpoint": {
+      "type": "string",
+      "format": "uri"
+    },
+    "http_method": {
+      "type": "string",
+      "enum": ["GET", "POST"]
+    },
+    "max_requests": {
+      "type": "integer",
+      "const": 1
+    },
+    "page_size": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 50
+    },
+    "follow_next_page_token": {
+      "type": "boolean",
+      "const": false
+    },
+    "data_classification": {
+      "type": "string",
+      "enum": ["SYNTHETIC_NON_SENSITIVE", "PUBLIC_METADATA"]
+    },
+    "synthetic_payload": {
+      "type": "object"
+    },
+    "budget_limit_usd": {
+      "type": "number",
+      "minimum": 0.0001,
+      "maximum": 0.05
+    },
+    "cost_basis_notes": {
+      "type": "string",
+      "minLength": 10
+    },
+    "timeout_ms": {
+      "type": "integer",
+      "minimum": 500,
+      "maximum": 5000
+    },
+    "credential_env_var": {
+      "type": "string",
+      "pattern": "^EOS_[A-Z0-9_]+$"
+    },
+    "key_restriction_type": {
+      "type": "string",
+      "enum": ["API_RESTRICTED_KEY", "AUTHORIZATION_KEY", "OAUTH2_TOKEN"]
+    },
+    "hitl_approval_required": {
+      "type": "boolean",
+      "const": true
+    },
+    "fallback_strategy": {
+      "type": "string",
+      "enum": ["OFFLINE_MOCK_FALLBACK", "ABORT_MISSION"]
+    },
+    "epistemic_status_initial": {
+      "type": "string",
+      "const": "DESIGNED_NOT_RUN"
+    }
+  }
+}

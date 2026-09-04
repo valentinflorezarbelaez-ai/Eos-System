@@ -1,0 +1,1636 @@
+{
+  "metadata": {
+    "title": "EOS MCP Tool Dependency Graph",
+    "version": "1.0.0",
+    "total_nodes": 74
+  },
+  "nodes": [
+    {
+      "id": "eos.kernel.boot",
+      "index": 1,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/kernel.js",
+      "implementation": "this.kernel.boot()",
+      "dependencies": [
+        "EOSKernel",
+        "CONSTITUTION.md",
+        ".cursorrules"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.kernel.ledger",
+      "index": 2,
+      "category": "LEDGER",
+      "classification": "Canonical",
+      "ownerFile": "src/core/kernel.js",
+      "implementation": "this.kernel.registrarTransaccionLedger(missionId, metadata)",
+      "dependencies": [
+        "EOSKernel",
+        "crypto.createHash"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.kernel.evidence",
+      "index": 3,
+      "category": "EVIDENCE",
+      "classification": "Canonical",
+      "ownerFile": "src/core/kernel.js",
+      "implementation": "this.kernel.generarReciboEvidencia(evidenceId, category, payload)",
+      "dependencies": [
+        "EOSKernel",
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.mission.resolve",
+      "index": 4,
+      "category": "MISSION",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.resolveIntent(args)",
+      "dependencies": [
+        "McpMissionBridge",
+        "CanonicalRulesIndex"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.intent.expand",
+      "index": 5,
+      "category": "MISSION",
+      "classification": "Canonical",
+      "ownerFile": "src/core/intent-compiler.js",
+      "implementation": "this.intentCompiler.expandirIntencion(args)",
+      "dependencies": [
+        "EOSIntentCompiler"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.mission.start",
+      "index": 6,
+      "category": "MISSION",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.startMission(args) -> runtime.createMission()",
+      "dependencies": [
+        "MissionRuntime",
+        "IntegrationGatekeeper"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.mission.status",
+      "index": 7,
+      "category": "MISSION",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.missionStatus(args) -> runtime.inspectMission()",
+      "dependencies": [
+        "MissionRuntime",
+        "fs"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.mission.recover",
+      "index": 8,
+      "category": "MISSION",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.missionRecover(args)",
+      "dependencies": [
+        "MissionRuntime",
+        "CustomLedger"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.context.compile",
+      "index": 9,
+      "category": "WORKSPACE",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/context-compiler.js",
+      "implementation": "ContextCompiler.compileMissionContext() / EOSContextCompiler.compileSurgicalContext()",
+      "dependencies": [
+        "ContextCompiler",
+        "EOSContextCompiler"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.ledger.get_features",
+      "index": 10,
+      "category": "LEDGER",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.ledger.getFeatureList() / this.bridge.ledgerGetFeatures()",
+      "dependencies": [
+        "MissionRuntime",
+        "McpMissionBridge"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.ledger.update_feature",
+      "index": 11,
+      "category": "LEDGER",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.ledger.updateFeatureStatus() / this.bridge.ledgerUpdateFeature()",
+      "dependencies": [
+        "McpMissionBridge"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.authority.check",
+      "index": 12,
+      "category": "AUTHORITY",
+      "classification": "Canonical",
+      "ownerFile": "src/core/authority/authority-adapter.js",
+      "implementation": "AuthorityAdapter.checkAuthority(required, granted)",
+      "dependencies": [
+        "AuthorityAdapter"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.policy.validate",
+      "index": 13,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.policyValidate(args)",
+      "dependencies": [
+        "CanonicalRulesIndex",
+        "McpMissionBridge"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.evidence.record",
+      "index": 14,
+      "category": "EVIDENCE",
+      "classification": "Canonical",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Writes JSON file to .missions/<id>/evidence/<id>.json",
+      "dependencies": [
+        "fs",
+        "path"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.evidence.get",
+      "index": 15,
+      "category": "EVIDENCE",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.getEvidence(args)",
+      "dependencies": [
+        "fs",
+        "path",
+        "McpMissionBridge"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.verifier.run",
+      "index": 16,
+      "category": "SECURITY",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.verifierRun(args)",
+      "dependencies": [
+        "SchemaValidator",
+        "McpMissionBridge"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.provider.route",
+      "index": 17,
+      "category": "PROVIDERS",
+      "classification": "Canonical",
+      "ownerFile": "src/core/provider-router.js",
+      "implementation": "this.providerRouter.enrutarMision(taskCategory, forzarFallo)",
+      "dependencies": [
+        "EOSProviderRouter"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.provider.health",
+      "index": 18,
+      "category": "PROVIDERS",
+      "classification": "Legacy",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Returns NOT_CONFIGURED (local governed mode)",
+      "dependencies": [],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.workspace.discover",
+      "index": 19,
+      "category": "WORKSPACE",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.discoverWorkspace(args)",
+      "dependencies": [
+        "fs",
+        "child_process.execSync"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.workspace.barrier_check",
+      "index": 20,
+      "category": "WORKSPACE",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.barrierCheck(args)",
+      "dependencies": [
+        "path",
+        "McpMissionBridge"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.fdir.status",
+      "index": 21,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.fdirStatus() -> integrationGate.fdirSafeModeTripped",
+      "dependencies": [
+        "IntegrationGatekeeper",
+        "McpMissionBridge"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.fdir.trip",
+      "index": 22,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.fdirTrip(args) -> integrationGate.tripFdirKillSwitch()",
+      "dependencies": [
+        "IntegrationGatekeeper",
+        "McpMissionBridge"
+      ],
+      "risk": "HIGH",
+      "authority": "A2"
+    },
+    {
+      "id": "eos.fdir.recover",
+      "index": 23,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/fdir.js",
+      "implementation": "this.fdirSystem.ejecutarCicloRecuperacion(expectedBaselines)",
+      "dependencies": [
+        "EOSFDIR",
+        "EOSDriftDetector",
+        "fs"
+      ],
+      "risk": "HIGH",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.fdir.ontology.sanitize",
+      "index": 24,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/fdir-ontology.js",
+      "implementation": "this.fdirOntology.auditarYSanarGrafo()",
+      "dependencies": [
+        "EOSFDIROntology",
+        "EOSKnowledgeOntology"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.sentinel.toggle",
+      "index": 25,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/sentinel-daemon.js",
+      "implementation": "this.sentinel.iniciar(baselines) / this.sentinel.detener()",
+      "dependencies": [
+        "EOSSentinelDaemon",
+        "EOSDriftDetector"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.resolve.conflict",
+      "index": 26,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mediator.js",
+      "implementation": "this.mediator.resolverConflicto(args)",
+      "dependencies": [
+        "EOSHarmonicMediator"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.audit.run",
+      "index": 27,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Aggregates missionStatus, fdirStatus, and discoverWorkspace into audit dictamen",
+      "dependencies": [
+        "McpMissionBridge"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.report.generate",
+      "index": 28,
+      "category": "MISSION",
+      "classification": "Canonical",
+      "ownerFile": "src/core/mcp/mcp-mission-bridge.js",
+      "implementation": "this.bridge.reportMission(args)",
+      "dependencies": [
+        "MissionRuntime",
+        "McpMissionBridge"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.blueprint.run",
+      "index": 29,
+      "category": "ENGINEERING",
+      "classification": "Canonical",
+      "ownerFile": "src/core/blueprints/blueprint-engine.js",
+      "implementation": "this.bridge.runtime.blueprintEngine.executeBlueprint()",
+      "dependencies": [
+        "MissionRuntime",
+        "BlueprintEngine"
+      ],
+      "risk": "HIGH",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.scaffolder.generate",
+      "index": 30,
+      "category": "ENGINEERING",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/scaffolder.js",
+      "implementation": "this.bridge.runtime.scaffolder.generateHexagonalModule(args)",
+      "dependencies": [
+        "MissionRuntime",
+        "Scaffolder"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.scaffolder.clean",
+      "index": 31,
+      "category": "ENGINEERING",
+      "classification": "Canonical",
+      "ownerFile": "src/core/scaffolder-clean.js",
+      "implementation": "this.cleanScaffolder.generarEstructuraModulo(nombreComponente)",
+      "dependencies": [
+        "EOSScaffolderClean",
+        "EOSKernel",
+        "EOSProcessGovernor",
+        "EOSKnowledgeOntology"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.process.governor.validate",
+      "index": 32,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/process-governor.js",
+      "implementation": "this.processGovernor.ejecutarProcesoPerfecto(idOperacion, payloadFn)",
+      "dependencies": [
+        "EOSProcessGovernor"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.ontology.query",
+      "index": 33,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/knowledge-ontology.js",
+      "implementation": "this.knowledgeOntology.obtenerNodo(args.idNodo)",
+      "dependencies": [
+        "EOSKnowledgeOntology"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.ontology.link",
+      "index": 34,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/knowledge-ontology.js",
+      "implementation": "this.knowledgeOntology.crearEnlace() + this.kernel.registrarTransaccionLedger()",
+      "dependencies": [
+        "EOSKnowledgeOntology",
+        "EOSKernel"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.orchestrator.init",
+      "index": 35,
+      "category": "MISSION",
+      "classification": "Canonical",
+      "ownerFile": "src/core/orchestrator.js",
+      "implementation": "this.orchestrator.inicializarMision(idMision, descripcion)",
+      "dependencies": [
+        "EOSOrchestrator",
+        "EOSKernel",
+        "EOSKnowledgeOntology"
+      ],
+      "risk": "HIGH",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.orchestrator.advance",
+      "index": 36,
+      "category": "MISSION",
+      "classification": "Canonical",
+      "ownerFile": "src/core/orchestrator.js",
+      "implementation": "this.orchestrator.avanzarFase(idMision, hashEvidencia)",
+      "dependencies": [
+        "EOSOrchestrator",
+        "EOSKernel",
+        "EOSKnowledgeOntology"
+      ],
+      "risk": "HIGH",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.drift.check",
+      "index": 37,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/drift/drift-monitor.js",
+      "implementation": "this.bridge.runtime.driftMonitor.compareSchemas(baseline, candidate)",
+      "dependencies": [
+        "MissionRuntime",
+        "DriftMonitor"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.drift.detect",
+      "index": 38,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/drift.js",
+      "implementation": "this.driftDetector.detectarDesviaciones(lineasBaseEsperadas)",
+      "dependencies": [
+        "EOSDriftDetector",
+        "fs",
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.hud.dashboard",
+      "index": 39,
+      "category": "WORKSPACE",
+      "classification": "Canonical",
+      "ownerFile": "src/core/ui/hud.js",
+      "implementation": "this.bridge.runtime.hud.renderFullDashboard(args)",
+      "dependencies": [
+        "MissionRuntime",
+        "TerminalHUD"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.skill.route",
+      "index": 40,
+      "category": "WORKSPACE",
+      "classification": "Canonical",
+      "ownerFile": "src/core/routing/skill-router.js",
+      "implementation": "this.bridge.runtime.skillRouter.routeSkills(args)",
+      "dependencies": [
+        "MissionRuntime",
+        "ContextualSkillRouter"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.scaffolder.execute",
+      "index": 41,
+      "category": "ENGINEERING",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/tdd-executor.js",
+      "implementation": "executor.executeTDDLoop(args.srcPath, args.testPath, patchRoutine)",
+      "dependencies": [
+        "EOSTDDExecutor",
+        "EOSKernel",
+        "child_process"
+      ],
+      "risk": "HIGH",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.orchestrator.rollback",
+      "index": 42,
+      "category": "MISSION",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/mission-orchestrator.js",
+      "implementation": "this.missionOrchestrator.rollbackOctave(missionId, reason)",
+      "dependencies": [
+        "EOSMissionOrchestrator"
+      ],
+      "risk": "HIGH",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.core.triamazikamno.validate",
+      "index": 43,
+      "category": "ENGINEERING",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/triamazikamno-validator.js",
+      "implementation": "this.triamazikamnoValidator.validateTriadBalance(componentName)",
+      "dependencies": [
+        "EOSTriamazikamnoValidator",
+        "EOSKernel",
+        "fs"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.audit.tescohan.scan",
+      "index": 44,
+      "category": "SECURITY",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/tescohan-auditor.js",
+      "implementation": "this.tescohanAuditor.auditCodePureness(srcPath)",
+      "dependencies": [
+        "EOSTescohanAuditor",
+        "EOSKernel",
+        "fs"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.sentinel.self_remember",
+      "index": 45,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/sentinel-self-remember.js",
+      "implementation": "this.sentinelSelfRemember.auditActiveConsciousness()",
+      "dependencies": [
+        "EOSSentinelSelfRemember"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.net.logos.resonance_check",
+      "index": 46,
+      "category": "MISSION",
+      "classification": "Canonical",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "In-memory Set check: this.missionOrchestrator.activeMissions.has(missionId)",
+      "dependencies": [
+        "EOSMissionOrchestrator"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.audit.ahimsa.verify",
+      "index": 47,
+      "category": "SECURITY",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/ahimsa-filter.js",
+      "implementation": "this.missionOrchestrator.ahimsaFilter.assertInnocuousWrite()",
+      "dependencies": [
+        "AhimsaFilter",
+        "EOSMissionOrchestrator"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.ledger.octave.advance",
+      "index": 48,
+      "category": "LEDGER",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/heptaparaparshinokh-ledger.js",
+      "implementation": "this.heptaparaparshinokhLedger.advanceNote(octaveId, targetNote, shockProof)",
+      "dependencies": [
+        "EOSHeptaparaparshinokhLedger"
+      ],
+      "risk": "MEDIUM",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.justice.adjudicate",
+      "index": 49,
+      "category": "CORE_OPERATIONAL",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/distributed-justice-oracle.js",
+      "implementation": "DistributedJusticeOracle.adjudicate(nodeA, nodeB)",
+      "dependencies": [
+        "DistributedJusticeOracle",
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.pleroma.jubilee",
+      "index": 50,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Computes mock bytesPurged = 1024 * octaves.size and returns sha256-JUBILEE hash",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.ontological.firewall.inspect",
+      "index": 51,
+      "category": "SECURITY",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/ontological-firewall.js",
+      "implementation": "OntologicalFirewall.inspectIntent(commandTree, options)",
+      "dependencies": [
+        "OntologicalFirewall",
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.pleroma.kundalini.mirror",
+      "index": 52,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Validates cpuLimitPercentage <= 70 and OkidanokhValidator.validate, then returns sha256-KUNDALINI hash",
+      "dependencies": [
+        "OkidanokhValidator",
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.mercabah.crystallize",
+      "index": 53,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Checks carbon, oxygen, nitrogen, hydrogen presence in seedAtoms and returns sha256 hash",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.elemental.intercede",
+      "index": 54,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Checks hardwareLock.enforceThermalShield === true and returns sha256 akashic receipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.core.triamazikamno.synthesize",
+      "index": 55,
+      "category": "ENGINEERING",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/triamazikamno-synthesis.js",
+      "implementation": "TriamazikamnoSynthesisEngine.synthesize(proposal, adversarialStress, options)",
+      "dependencies": [
+        "TriamazikamnoSynthesisEngine"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.net.trogomesh.balance",
+      "index": 56,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/core/runtime/trogo-mesh.js",
+      "implementation": "TrogoMeshProtocol.balanceTraffic(args)",
+      "dependencies": [
+        "TrogoMeshProtocol"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.amens.audit",
+      "index": 57,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Validates that 7 frequencies are strictly monotonic and returns sha256 amensProof",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.jeu.watch",
+      "index": 58,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Checks blindAuditActive === true and sha256 snapshot hash, returns sha256 jeuReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.audit.tescohan.telescope",
+      "index": 59,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Checks opticalFilter.isolationBarrierPreserved === true and returns sha256 telescopeReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.system.mahapralaya",
+      "index": 60,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Validates quorumAuthToken startsWith sha256-quorum-24- and returns mahapralayaReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.anupadaka.shield",
+      "index": 61,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Validates triadic hash tokens and quantum lattice string prefix, returns shieldReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.audit.telemetry.stream",
+      "index": 62,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Validates witness proof prefix and returns hardcoded telemetry numbers (Phi=0.854211)",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.moses.transmute",
+      "index": 63,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Checks zeroGarbagePauses === true and returns diamondReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.zodiac.shield",
+      "index": 64,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Generates 12 mock zodiac sign shard hashes and returns zodiacReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.auxiliary.state",
+      "index": 65,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Generates 5 mock auxiliary mirror hashes and returns auxiliaryReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.trees.anchor",
+      "index": 66,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Maps 5 fixed tree names with SHA-256 hashes and returns treesReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.anupadaka.fuse",
+      "index": 67,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Checks triadicEnvelopes array length 3 & unitary rotation, returns fusionReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.compiler.l0.parse",
+      "index": 68,
+      "category": "ENGINEERING",
+      "classification": "Canonical",
+      "ownerFile": "src/core/runtime/l0-parser.js",
+      "implementation": "L0Parser.parse(sourceCode)",
+      "dependencies": [
+        "L0Parser",
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A0"
+    },
+    {
+      "id": "eos.pleroma.voices.modulate",
+      "index": 69,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Generates 7 mock voice layer hashes and returns modulationReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.melchizedek.govern",
+      "index": 70,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Checks fairnessCheck === true, proportionalityIndex >= 1.0, and humanOversightVerification === true, returns melchizedekReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.environment.sandbox.execute",
+      "index": 71,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Validates ephemeralContainerActive === true and isolationLevel 1-3, returns mock exit code 0 and stdout",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.security.adversarial.review",
+      "index": 72,
+      "category": "SECURITY",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Checks for \"TODO\", \"eval(\", \"buffer_overflow\" strings in diffPayload, returns reviewReceipt",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.sdlc.engineer.autonomous",
+      "index": 73,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Checks enableMctsSearch === true and returns mock \"Tests passed: 243/243\" evidence",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    },
+    {
+      "id": "eos.pleroma.akasha.engram",
+      "index": 74,
+      "category": "SIMULATION",
+      "classification": "Simulation",
+      "ownerFile": "src/mcp-server.js",
+      "implementation": "Checks fts5IndexingActive === true and returns mock tokenization metadata",
+      "dependencies": [
+        "crypto.createHash"
+      ],
+      "risk": "LOW",
+      "authority": "A1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "eos.kernel.boot",
+      "target": "EOSKernel",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.kernel.boot",
+      "target": "CONSTITUTION.md",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.kernel.boot",
+      "target": ".cursorrules",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.kernel.ledger",
+      "target": "EOSKernel",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.kernel.ledger",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.kernel.evidence",
+      "target": "EOSKernel",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.kernel.evidence",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.mission.resolve",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.mission.resolve",
+      "target": "CanonicalRulesIndex",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.intent.expand",
+      "target": "EOSIntentCompiler",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.mission.start",
+      "target": "MissionRuntime",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.mission.start",
+      "target": "IntegrationGatekeeper",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.mission.status",
+      "target": "MissionRuntime",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.mission.status",
+      "target": "fs",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.mission.recover",
+      "target": "MissionRuntime",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.mission.recover",
+      "target": "CustomLedger",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.context.compile",
+      "target": "ContextCompiler",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.context.compile",
+      "target": "EOSContextCompiler",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.ledger.get_features",
+      "target": "MissionRuntime",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.ledger.get_features",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.ledger.update_feature",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.authority.check",
+      "target": "AuthorityAdapter",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.policy.validate",
+      "target": "CanonicalRulesIndex",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.policy.validate",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.evidence.record",
+      "target": "fs",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.evidence.record",
+      "target": "path",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.evidence.get",
+      "target": "fs",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.evidence.get",
+      "target": "path",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.evidence.get",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.verifier.run",
+      "target": "SchemaValidator",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.verifier.run",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.provider.route",
+      "target": "EOSProviderRouter",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.workspace.discover",
+      "target": "fs",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.workspace.discover",
+      "target": "child_process.execSync",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.workspace.barrier_check",
+      "target": "path",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.workspace.barrier_check",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.fdir.status",
+      "target": "IntegrationGatekeeper",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.fdir.status",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.fdir.trip",
+      "target": "IntegrationGatekeeper",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.fdir.trip",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.fdir.recover",
+      "target": "EOSFDIR",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.fdir.recover",
+      "target": "EOSDriftDetector",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.fdir.recover",
+      "target": "fs",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.fdir.ontology.sanitize",
+      "target": "EOSFDIROntology",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.fdir.ontology.sanitize",
+      "target": "EOSKnowledgeOntology",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.sentinel.toggle",
+      "target": "EOSSentinelDaemon",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.sentinel.toggle",
+      "target": "EOSDriftDetector",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.resolve.conflict",
+      "target": "EOSHarmonicMediator",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.audit.run",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.report.generate",
+      "target": "MissionRuntime",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.report.generate",
+      "target": "McpMissionBridge",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.blueprint.run",
+      "target": "MissionRuntime",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.blueprint.run",
+      "target": "BlueprintEngine",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.scaffolder.generate",
+      "target": "MissionRuntime",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.scaffolder.generate",
+      "target": "Scaffolder",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.scaffolder.clean",
+      "target": "EOSScaffolderClean",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.scaffolder.clean",
+      "target": "EOSKernel",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.scaffolder.clean",
+      "target": "EOSProcessGovernor",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.scaffolder.clean",
+      "target": "EOSKnowledgeOntology",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.process.governor.validate",
+      "target": "EOSProcessGovernor",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.ontology.query",
+      "target": "EOSKnowledgeOntology",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.ontology.link",
+      "target": "EOSKnowledgeOntology",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.ontology.link",
+      "target": "EOSKernel",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.orchestrator.init",
+      "target": "EOSOrchestrator",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.orchestrator.init",
+      "target": "EOSKernel",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.orchestrator.init",
+      "target": "EOSKnowledgeOntology",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.orchestrator.advance",
+      "target": "EOSOrchestrator",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.orchestrator.advance",
+      "target": "EOSKernel",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.orchestrator.advance",
+      "target": "EOSKnowledgeOntology",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.drift.check",
+      "target": "MissionRuntime",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.drift.check",
+      "target": "DriftMonitor",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.drift.detect",
+      "target": "EOSDriftDetector",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.drift.detect",
+      "target": "fs",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.drift.detect",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.hud.dashboard",
+      "target": "MissionRuntime",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.hud.dashboard",
+      "target": "TerminalHUD",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.skill.route",
+      "target": "MissionRuntime",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.skill.route",
+      "target": "ContextualSkillRouter",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.scaffolder.execute",
+      "target": "EOSTDDExecutor",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.scaffolder.execute",
+      "target": "EOSKernel",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.scaffolder.execute",
+      "target": "child_process",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.orchestrator.rollback",
+      "target": "EOSMissionOrchestrator",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.core.triamazikamno.validate",
+      "target": "EOSTriamazikamnoValidator",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.core.triamazikamno.validate",
+      "target": "EOSKernel",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.core.triamazikamno.validate",
+      "target": "fs",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.audit.tescohan.scan",
+      "target": "EOSTescohanAuditor",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.audit.tescohan.scan",
+      "target": "EOSKernel",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.audit.tescohan.scan",
+      "target": "fs",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.sentinel.self_remember",
+      "target": "EOSSentinelSelfRemember",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.net.logos.resonance_check",
+      "target": "EOSMissionOrchestrator",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.audit.ahimsa.verify",
+      "target": "AhimsaFilter",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.audit.ahimsa.verify",
+      "target": "EOSMissionOrchestrator",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.ledger.octave.advance",
+      "target": "EOSHeptaparaparshinokhLedger",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.justice.adjudicate",
+      "target": "DistributedJusticeOracle",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.justice.adjudicate",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.jubilee",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.ontological.firewall.inspect",
+      "target": "OntologicalFirewall",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.ontological.firewall.inspect",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.kundalini.mirror",
+      "target": "OkidanokhValidator",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.kundalini.mirror",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.mercabah.crystallize",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.elemental.intercede",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.core.triamazikamno.synthesize",
+      "target": "TriamazikamnoSynthesisEngine",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.net.trogomesh.balance",
+      "target": "TrogoMeshProtocol",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.amens.audit",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.jeu.watch",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.audit.tescohan.telescope",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.system.mahapralaya",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.anupadaka.shield",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.audit.telemetry.stream",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.moses.transmute",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.zodiac.shield",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.auxiliary.state",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.trees.anchor",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.anupadaka.fuse",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.compiler.l0.parse",
+      "target": "L0Parser",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.compiler.l0.parse",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.voices.modulate",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.melchizedek.govern",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.environment.sandbox.execute",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.security.adversarial.review",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.sdlc.engineer.autonomous",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    },
+    {
+      "source": "eos.pleroma.akasha.engram",
+      "target": "crypto.createHash",
+      "type": "USES_MODULE"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "canon_id": "RESEARCH-FRONTIER-CANON-001",
+  "version": "1.0.0",
+  "frontier_axiom": "Leer un paper -> Implementar la idea -> Encontrar su límite o falla -> Medirla con rigor -> Compararla contra el estado del arte -> Crear un modelo o protocolo nuevo formalmente verificado.",
+  "tier_1_research_conferences": [
+    { "area": "Sistemas Operativos y Distribuidos", "venues": ["OSDI", "SOSP", "NSDI", "EuroSys", "FAST"] },
+    { "area": "Arquitectura y Hardware", "venues": ["ISCA", "ASPLOS", "MICRO", "HPCA"] },
+    { "area": "Lenguajes y Compiladores", "venues": ["PLDI", "POPL", "OOPSLA", "ICFP"] },
+    { "area": "Bases de Datos y Redes", "venues": ["VLDB", "SIGMOD", "SIGCOMM"] }
+  ],
+  "formal_verification_and_types": [
+    { "title": "Types and Programming Languages (TaPL)", "author": "Benjamin Pierce", "role": "Semántica formal, sistemas de tipos y Soundness" },
+    { "title": "Advanced Topics in Types and Programming Languages (ATaPL)", "author": "Benjamin Pierce", "role": "Sistemas de tipos avanzados y subtyping" },
+    { "title": "Software Foundations", "author": "Benjamin Pierce et al.", "role": "Verificación formal de programas con Coq/Rocq" },
+    { "title": "Certified Programming with Dependent Types", "author": "Adam Chlipala", "role": "Programación certificada con tipos dependientes" },
+    { "title": "Distributed Algorithms", "author": "Nancy Lynch", "role": "Modelado formal y pruebas de imposibilidad distribuida" }
+  ],
+  "formal_tools_and_provers": [
+    { "name": "Coq / Rocq", "type": "Interactive Theorem Prover", "use_case": "Pruebas de corrección matemática de algoritmos y compiladores (CompCert)" },
+    { "name": "Lean 4", "type": "Theorem Prover & Programming Language", "use_case": "Formalización de matemáticas puras y verificación de software" },
+    { "name": "TLA+ (Leslie Lamport)", "type": "Formal Specification Language", "use_case": "Model checking de invariantes de concurrencia y protocolos distribuidos" },
+    { "name": "Dafny", "type": "Verification-Aware Programming Language", "use_case": "Código con precondiciones, postcondiciones e invariantes verificadas por SMT" }
+  ],
+  "research_kernels_and_hardware": [
+    { "system": "seL4", "description": "El primer microkernel formalmente verificado matemáticamente libre de bugs y vulnerabilidades de memoria." },
+    { "system": "Barrelfish", "description": "Sistema operativo Multi-kernel diseñado para arquitecturas multi-core heterogéneas." },
+    { "system": "gem5", "description": "Simulador de arquitectura de computadores para evaluar caches, coherencia y especulación." }
+  ]
+}

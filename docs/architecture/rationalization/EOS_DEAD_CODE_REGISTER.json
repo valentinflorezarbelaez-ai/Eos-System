@@ -1,0 +1,20 @@
+[
+  {
+    "artifact": "scripts/engine/epistemic-evidence-engine.js",
+    "reason": "Zero direct import consumers and superseded by canonical implementation.",
+    "classification": "DUPLICATE",
+    "action": "ARCHIVE_OR_DELETE"
+  },
+  {
+    "artifact": "scripts/engine/hitl-gatekeeper.js",
+    "reason": "Zero direct import consumers and superseded by canonical implementation.",
+    "classification": "DUPLICATE",
+    "action": "ARCHIVE_OR_DELETE"
+  },
+  {
+    "artifact": "scripts/engine/sdd-fsm-engine.js",
+    "reason": "Zero direct import consumers and superseded by canonical implementation.",
+    "classification": "DUPLICATE",
+    "action": "ARCHIVE_OR_DELETE"
+  }
+]

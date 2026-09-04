@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EOS Strategy Decision Contract",
+  "description": "Schema for strategic engineering methodology selection and Pareto candidate evaluations",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "decision_id",
+    "mission_id",
+    "problem_type",
+    "selected_strategy",
+    "rationale",
+    "candidates_evaluated",
+    "issued_at",
+    "sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["1.0.0"]
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^STRAT-[A-Z0-9-]+$"
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "problem_type": {
+      "type": "string",
+      "minLength": 3
+    },
+    "selected_strategy": {
+      "type": "string",
+      "minLength": 3
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 5
+    },
+    "candidates_evaluated": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "issued_at": {
+      "type": "string"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org",
+  "title": "EOS_MISSION_BLUEPRINT",
+  "description": "Plantilla canónica obligatoria para la inicialización y despliegue de micro-proyectos sobre EOS.",
+  "type": "object",
+  "properties": {
+    "idMision": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9]{3,10}-[0-9]{3}$",
+      "description": "Identificador único de la emanación (Ej: MIS-TELEMETRY-001)."
+    },
+    "objetivoUniversal": {
+      "type": "string",
+      "description": "Propósito puro, ético y de ayuda real de la funcionalidad (Ahimsa)."
+    },
+    "matrizOntologica": {
+      "type": "object",
+      "properties": {
+        "tipoNodo": {
+          "type": "string",
+          "enum": ["GOVERNANCE", "ARCHITECTURE", "METRIC", "MISSION"]
+        },
+        "dependenciaCanonica": {
+          "type": "string",
+          "default": "CORE-KERNEL"
+        }
+      },
+      "required": ["tipoNodo", "dependenciaCanonica"]
+    },
+    "especificacionEARS": {
+      "type": "object",
+      "properties": {
+        "cuando": { "type": "string" },
+        "si": { "type": "string" },
+        "elSistemaDebe": { "type": "string" }
+      },
+      "required": ["cuando", "elSistemaDebe"]
+    },
+    "criteriosAceptacionBDD": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Escenarios en sintaxis Gherkin (Dado que / Cuando / Entonces)."
+      }
+    }
+  },
+  "required": ["idMision", "objetivoUniversal", "matrizOntologica", "especificacionEARS", "criteriosAceptacionBDD"],
+  "additionalProperties": false
+}

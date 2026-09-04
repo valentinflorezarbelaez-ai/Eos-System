@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/task-supervision-evaluation.schema.json",
+  "title": "EOS Task Supervision Evaluation",
+  "description": "Comprehensive 8-dimensional multi-agent supervision receipt evaluating task execution fidelity, independent review, correction directives, and escalation status.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evaluation_id",
+    "mission_id",
+    "task_id",
+    "author_role_id",
+    "reviewer_role_id",
+    "retry_count",
+    "max_retries",
+    "dimensions",
+    "overall_score",
+    "verdict",
+    "correction_directive",
+    "evidence_receipts"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "evaluation_id": {
+      "type": "string",
+      "pattern": "^EVAL-[A-Z0-9-]+$"
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^TASK-[A-Z0-9-]+$"
+    },
+    "author_role_id": {
+      "type": "string"
+    },
+    "reviewer_role_id": {
+      "type": "string"
+    },
+    "retry_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_retries": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_fidelity",
+        "technical_correctness",
+        "evidence_quality",
+        "security_compliance",
+        "cost_efficiency",
+        "reproducibility",
+        "handoff_quality",
+        "communication_clarity"
+      ],
+      "properties": {
+        "contract_fidelity": { "type": "number", "minimum": 0.0, "maximum": 100.0 },
+        "technical_correctness": { "type": "number", "minimum": 0.0, "maximum": 100.0 },
+        "evidence_quality": { "type": "number", "minimum": 0.0, "maximum": 100.0 },
+        "security_compliance": { "type": "number", "minimum": 0.0, "maximum": 100.0 },
+        "cost_efficiency": { "type": "number", "minimum": 0.0, "maximum": 100.0 },
+        "reproducibility": { "type": "number", "minimum": 0.0, "maximum": 100.0 },
+        "handoff_quality": { "type": "number", "minimum": 0.0, "maximum": 100.0 },
+        "communication_clarity": { "type": "number", "minimum": 0.0, "maximum": 100.0 }
+      }
+    },
+    "overall_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 100.0
+    },
+    "verdict": {
+      "enum": [
+        "ACCEPTED",
+        "REQUEST_CORRECTION",
+        "PAUSED",
+        "REJECTED",
+        "ESCALATE_HITL"
+      ]
+    },
+    "correction_directive": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["action_required", "defects_identified", "target_files"],
+      "properties": {
+        "action_required": { "type": "string" },
+        "defects_identified": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "target_files": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "evidence_receipts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      }
+    }
+  }
+}

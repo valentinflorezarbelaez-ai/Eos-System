@@ -1,0 +1,112 @@
+{
+  "document_id": "RSC-0016-gentleman-programming-book-digest",
+  "date": "2026-08-26",
+  "status": "DIGEST_OPERATIVO",
+  "source": {
+    "title": "Gentleman Programming — A guide to clean programming (compiled PDF)",
+    "author": "Alan Buscaglia — Gentleman Programming",
+    "local_path": "C:\\Users\\valen\\Downloads\\gentleman-programming-book.pdf",
+    "pages": 448,
+    "extracted_chars": 783485,
+    "pdf_created": "2026-07-19",
+    "ingest_mode": "THESIS_ONLY_NO_VERBATIM",
+    "note": "No se versiona el PDF en EOS. No se copia el libro. Solo tesis operativas mapeadas a EOS."
+  },
+  "decision": "ADAPT",
+  "maps_to_eos": [
+    "SDD_DAG",
+    "HITL_HUMAN_DIRECTOR",
+    "EVIDENCE_OVER_CLAIMS",
+    "TDD_RED_GREEN",
+    "ROLE_ORCHESTRATION",
+    "ARTIFACT_PERSISTENCE"
+  ],
+  "forbidden": [
+    "Mutar constitución EOS",
+    "Vendorizar Claude Code / Anthropic como runtime obligatorio",
+    "Imponer React/Tailwind/Scope Rule a repos de empresa que usen otro stack",
+    "Tratar dailies/ceremonias como prueba de agilidad"
+  ],
+  "theses": [
+    {
+      "id": "GP-AI-01",
+      "title": "Tony Stark / Jarvis / Subagents",
+      "summary": "Humano = arquitecto que decide. Orquestador = asistente. Subagentes = especialistas. Programar CON IA, no delegar el control.",
+      "eos_map": "Human Director + EOS/Cursor orchestrator + Task/subagents; HITL en create/plan/package/submit/close"
+    },
+    {
+      "id": "GP-SDD-01",
+      "title": "Spec-Driven Orchestration DAG",
+      "summary": "proposal→(specs∥design)→tasks→apply→verify→archive. Implementar no es el primer acto. Sin dependencia, STOP (no 'intentá igual'). Artefactos persistidos por topic key; referencias, no copiar contexto gigante entre fases.",
+      "eos_map": "gentle-ai SDD + OpenSpec + Engram topic_keys + verifier gates"
+    },
+    {
+      "id": "GP-SDD-02",
+      "title": "Gatekeeper entre fases",
+      "summary": "Cada fase devuelve contrato fijo (status, resumen, artefactos, riesgos, next). Validador comprueba que los artefactos existen antes de avanzar. Previene 'mostly done' → done.",
+      "eos_map": "eos_verifier_run + evidence receipts + ledger DoD"
+    },
+    {
+      "id": "GP-SPEC-01",
+      "title": "PROJECT_SPECS antes de code",
+      "summary": "User stories + acceptance criteria + reglas de negocio + estructura de datos viven en artefacto compartido antes de TDD/implementación.",
+      "eos_map": "OpenSpec proposal/specs; mission artifacts; no vibe feature"
+    },
+    {
+      "id": "GP-TDD-01",
+      "title": "TDD RED then GREEN",
+      "summary": "Tests primero (fallan), luego implementación mínima. Commits por fase. No mencionar la herramienta de IA en commits.",
+      "eos_map": "Ya en lessons LOOP-QUALITY; reforzar en CURSOR_PROMPT"
+    },
+    {
+      "id": "GP-SCOPE-01",
+      "title": "Scope Rule + Screaming Architecture",
+      "summary": "1 feature = local; 2+ = shared/global. La carpeta debe gritar qué hace el producto (features/), no solo components/hooks técnicos.",
+      "eos_map": "ADAPT solo cuando el stack front lo permita; empresa gana forma"
+    },
+    {
+      "id": "GP-HEX-01",
+      "title": "Hexagonal: puertos/adaptadores",
+      "summary": "Lógica de negocio aislada; drivers/driven vía adaptadores. Distinguir business / organizational / use-case logic.",
+      "eos_map": "INSPIRE para límites de módulos y adapters; no forzar hexágono en todo"
+    },
+    {
+      "id": "GP-AGILE-01",
+      "title": "Agilidad ≠ ceremonias",
+      "summary": "Dailies/sprints no bastan. Entregar slices, aceptar cambio, compartir conocimiento. Features enormes sin feedback = waterfall disfrazado.",
+      "eos_map": "Misiones pequeñas + evidencia + HITL; company ceremonies no sustituyen entrega"
+    },
+    {
+      "id": "GP-SOFT-01",
+      "title": "Junior heart + Senior knowledge",
+      "summary": "Evitar rigidéz senior y pasividad junior. Comunicación, mentoring, liderazgo como parte del oficio.",
+      "eos_map": "Human Director dirige; EOS aconseja sin invertir roles"
+    },
+    {
+      "id": "GP-TRUST-01",
+      "title": "Trust = re-derivación",
+      "summary": "Código sin justificación persistente es legacy a velocidad de máquina. Cada línea debe poder rastrearse a una spec. Verificar calidad, no solo escalar output.",
+      "eos_map": "Evidence over Claims; archive; no VERIFIED inventado"
+    }
+  ],
+  "chapters_indexed": [
+    "1 Clean Agile / XP / TDD",
+    "2 Communication",
+    "3 Hexagonal Architecture",
+    "4 GoLang",
+    "5 NVIM",
+    "6 Algorithms",
+    "7-8 Clean Architecture + Front",
+    "9 React",
+    "10 TypeScript",
+    "11 Front End Radar",
+    "12 Angular",
+    "13 Barrels",
+    "14 FrontEnd History",
+    "15 AI-Driven Development (Claude Code / Scope Rule / Subagents)",
+    "16 Frontend Developer Manual",
+    "17 Soft Skills and Leadership",
+    "18 Software Architecture",
+    "21+ Verifiable Trust / Spec-Driven Orchestration (late sections)"
+  ]
+}

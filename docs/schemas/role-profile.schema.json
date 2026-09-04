@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/role-profile.schema.json",
+  "title": "EOS Role Profile",
+  "description": "Canonical profile defining an agent role, its technical capabilities, tool access, authority limits, and performance metrics.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "role_id",
+    "name",
+    "description",
+    "capabilities",
+    "allowed_tools",
+    "prohibited_tools",
+    "max_authority_level",
+    "protected_surfaces",
+    "budget_tier",
+    "performance_metrics"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "role_id": {
+      "type": "string",
+      "pattern": "^ROLE-[A-Z0-9_-]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["domain", "technologies", "evidence_level"],
+        "properties": {
+          "domain": { "type": "string" },
+          "technologies": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "evidence_level": {
+            "enum": ["DECLARED", "DISCOVERED", "PROVEN"]
+          }
+        }
+      }
+    },
+    "allowed_tools": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "prohibited_tools": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "max_authority_level": {
+      "enum": ["LEVEL_0", "LEVEL_1", "LEVEL_2", "LEVEL_3"]
+    },
+    "protected_surfaces": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "budget_tier": {
+      "enum": ["LEAN", "STANDARD", "HIGH_STAKES"]
+    },
+    "performance_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tasks_completed", "correction_rate", "average_score"],
+      "properties": {
+        "tasks_completed": { "type": "integer", "minimum": 0 },
+        "correction_rate": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "average_score": { "type": "number", "minimum": 0.0, "maximum": 10.0 }
+      }
+    }
+  }
+}

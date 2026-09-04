@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/cursor-return-package.schema.json",
+  "title": "EOS Cursor Return Package",
+  "description": "Structured return package produced by Cursor when concluding a task for ingestion and verification by EOS.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "mission_id",
+    "task_id",
+    "status",
+    "summary",
+    "affected_files",
+    "diff",
+    "commands_executed",
+    "test_results",
+    "evidence",
+    "unknowns",
+    "risks"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^TASK-[A-Z0-9-]+$"
+    },
+    "nonce": {
+      "type": "string",
+      "minLength": 8
+    },
+    "status": {
+      "enum": [
+        "COMPLETED",
+        "BLOCKED",
+        "FAILED",
+        "NEEDS_REVIEW"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 2000
+    },
+    "affected_files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "action", "sha256_before", "sha256_after"],
+        "properties": {
+          "path": { "type": "string" },
+          "action": { "enum": ["CREATE", "MODIFY", "DELETE", "READ_ONLY"] },
+          "sha256_before": { "type": ["string", "null"] },
+          "sha256_after": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "diff": {
+      "type": "string"
+    },
+    "commands_executed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["command", "exit_code", "duration_ms"],
+        "properties": {
+          "command": { "type": "string" },
+          "exit_code": { "type": "integer" },
+          "duration_ms": { "type": "number" },
+          "stdout_summary": { "type": "string" },
+          "stderr_summary": { "type": "string" }
+        }
+      }
+    },
+    "test_results": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_tests", "passed_tests", "failed_tests", "pass_rate"],
+      "properties": {
+        "total_tests": { "type": "integer", "minimum": 0 },
+        "passed_tests": { "type": "integer", "minimum": 0 },
+        "failed_tests": { "type": "integer", "minimum": 0 },
+        "pass_rate": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "test_runner": { "type": "string" },
+        "log_excerpt": { "type": "string" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt_hashes"],
+      "properties": {
+        "receipt_hashes": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        },
+        "provenance": { "type": "string" }
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "risks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "requested_action": {
+      "enum": [
+        "ACCEPT",
+        "REQUEST_CORRECTION",
+        "PAUSE",
+        "REJECT",
+        "ESCALATE_HITL"
+      ]
+    }
+  }
+}

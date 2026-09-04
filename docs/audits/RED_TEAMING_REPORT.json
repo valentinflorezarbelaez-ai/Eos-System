@@ -1,0 +1,29 @@
+{
+  "reportId": "RED-TEAM-2026-08-29-001",
+  "timestamp": "2026-08-29T16:31:57.117Z",
+  "suite": "EOS MCP Red Teaming & Guardrail Sandwich Security Harness",
+  "compliance": "L0_NODE_BUILTINS_ONLY",
+  "perimeterDefense": {
+    "preToolGuardrail": "ACTIVE_ENFORCED",
+    "postToolGuardrail": "ACTIVE_ENFORCED"
+  },
+  "results": {
+    "totalAttackVectors": 16,
+    "blockedAttacks": 16,
+    "redactedSecretLeaks": 5,
+    "falsePositives": 0,
+    "mitigationPassRate": "100.00%",
+    "riskBreakdown": {
+      "CRITICAL": 6,
+      "HIGH": 10,
+      "MEDIUM": 0,
+      "LOW": 0
+    },
+    "status": "CERTIFIED_SECURE"
+  },
+  "verifiedModules": [
+    "src/mcp/guardrail-sandwich.js",
+    "tests/mcp/red-teaming.test.js"
+  ],
+  "sha256Signature": "35e6dfe2aea468dd8c7e4b228eae41c43b3b25de3c759b42ea51c87704a9d9ff"
+}

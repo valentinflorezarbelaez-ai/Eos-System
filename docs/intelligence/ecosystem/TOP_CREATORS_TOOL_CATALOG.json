@@ -1,0 +1,182 @@
+{
+  "catalog_id": "CAT-TOP-CREATORS-TOOLS-001",
+  "version": "1.0.0",
+  "updated_at": "2026-08-27T01:05:00.000Z",
+  "creators": [
+    {
+      "name": "Fazt (FaztTech)",
+      "site": "https://fazt.dev",
+      "github": "https://github.com/fazttech",
+      "specialties": ["Agentic AI", "Claude Code", "MCPs", "Skills", "Node.js", "Python", "Golang", "React", "Docker", "DevOps"],
+      "tools_and_repositories": [
+        {
+          "name": "claude-code-skills-mcp",
+          "category": "Agentic AI / Course & Tooling",
+          "description": "Comprehensive practical course on Claude Code, Agent Skills, MCP servers, and Plan Mode.",
+          "stack": ["Claude Code", "MCP", "Skills", "CLI"],
+          "architectural_rating": "S",
+          "usefulness_score": 9.9
+        },
+        {
+          "name": "opencode-terminal-ai",
+          "category": "Agentic AI / Terminal Workflow",
+          "description": "OpenCode 2026 AI coding assistant workflows directly from the terminal.",
+          "stack": ["OpenCode", "AI Agents", "Terminal"],
+          "architectural_rating": "A+",
+          "usefulness_score": 9.5
+        },
+        {
+          "name": "fazt.dev-platform",
+          "category": "Production Web App",
+          "description": "Educational platform with +280 courses and +900 tutorials built with Next.js, Turbopack, and TailwindCSS.",
+          "stack": ["Next.js", "TailwindCSS", "TypeScript", "Turbopack"],
+          "architectural_rating": "A+",
+          "usefulness_score": 9.6
+        }
+      ]
+    },
+    {
+      "name": "Miguel Ángel Durán (midudev)",
+      "github": "https://github.com/midudev",
+      "specialties": ["JavaScript", "TypeScript", "React", "Next.js", "Astro", "TailwindCSS", "AI Tools"],
+      "tools_and_repositories": [
+        {
+          "name": "codi.link",
+          "repo": "https://github.com/midudev/codi.link",
+          "category": "Developer Tool / Playground",
+          "description": "In-browser live sandbox and playground for HTML, CSS, and JavaScript with instant preview and zero build step.",
+          "stack": ["HTML5", "Vanilla JS", "CodeMirror / Monaco"],
+          "architectural_rating": "A",
+          "usefulness_score": 9.2
+        },
+        {
+          "name": "la-velada-web-oficial",
+          "repo": "https://github.com/midudev/la-velada-web-oficial",
+          "category": "Full-Stack Web App / Production Showcase",
+          "description": "High-traffic event web platform using Astro, Turso SQLite database, and edge deployment.",
+          "stack": ["Astro", "Turso (libSQL)", "TailwindCSS", "TypeScript"],
+          "architectural_rating": "A+",
+          "usefulness_score": 9.5
+        },
+        {
+          "name": "javascript-100-proyectos",
+          "repo": "https://github.com/midudev/javascript-100-proyectos",
+          "category": "Educational / Component Catalog",
+          "description": "Exhaustive collection of 100 practical JavaScript projects, UI widgets, and DOM algorithms.",
+          "stack": ["JavaScript", "DOM API", "CSS3"],
+          "architectural_rating": "B+",
+          "usefulness_score": 8.8
+        },
+        {
+          "name": "miduconf-website",
+          "repo": "https://github.com/midudev/miduconf-website",
+          "category": "Production Web App",
+          "description": "Tech conference platform featuring dynamic ticket generation, Supabase auth, and Next.js SSR.",
+          "stack": ["Next.js", "TailwindCSS", "Supabase", "Canvas API"],
+          "architectural_rating": "A",
+          "usefulness_score": 9.0
+        }
+      ]
+    },
+    {
+      "name": "Alan Buscaglia (Gentleman Programming)",
+      "github": "https://github.com/Gentleman-Programming",
+      "specialties": ["Clean Architecture", "Hexagonal Architecture", "TDD", "Domain-Driven Design", "Gentle AI", "React"],
+      "tools_and_repositories": [
+        {
+          "name": "gentle-ai",
+          "repo": "https://github.com/Gentleman-Programming/gentle-ai",
+          "category": "AI Orchestration / SDD Framework",
+          "description": "Spec-Driven Development orchestration framework enforcing architectural invariants and rigorous TDD.",
+          "stack": ["Node.js", "TypeScript", "Clean Architecture", "SDD"],
+          "architectural_rating": "S",
+          "usefulness_score": 10.0
+        },
+        {
+          "name": "hexagonal-architecture-nest",
+          "repo": "https://github.com/Gentleman-Programming",
+          "category": "Backend Architecture Blueprint",
+          "description": "Hexagonal Architecture boilerplate isolating Domain, Application (Use Cases), and Infrastructure (Adapters).",
+          "stack": ["NestJS", "TypeScript", "DDD", "Jest"],
+          "architectural_rating": "S",
+          "usefulness_score": 9.8
+        }
+      ]
+    },
+    {
+      "name": "Theo Browne (t3-oss)",
+      "github": "https://github.com/t3-oss",
+      "specialties": ["Full-Stack TypeScript", "Next.js", "tRPC", "Zod", "Type-Safety"],
+      "tools_and_repositories": [
+        {
+          "name": "create-t3-app",
+          "repo": "https://github.com/t3-oss/create-t3-app",
+          "category": "Full-Stack CLI & Scaffolder",
+          "description": "The golden standard CLI for type-safe full-stack Next.js applications.",
+          "stack": ["Next.js", "tRPC", "TailwindCSS", "Prisma/Drizzle", "NextAuth"],
+          "architectural_rating": "A+",
+          "usefulness_score": 9.6
+        },
+        {
+          "name": "t3-env",
+          "repo": "https://github.com/t3-oss/t3-env",
+          "category": "Configuration & Security Utility",
+          "description": "Runtime and build-time validated type-safe environment variables library using Zod.",
+          "stack": ["TypeScript", "Zod"],
+          "architectural_rating": "S",
+          "usefulness_score": 9.7
+        }
+      ]
+    },
+    {
+      "name": "Kent C. Dodds",
+      "github": "https://github.com/kentcdodds",
+      "specialties": ["Testing", "Remix", "React", "Frontend Architecture"],
+      "tools_and_repositories": [
+        {
+          "name": "epic-stack",
+          "repo": "https://github.com/epicweb-dev/epic-stack",
+          "category": "Production Full-Stack Architecture",
+          "description": "Opinionated, enterprise-ready full-stack web application starter with Remix, SQLite, Tailwind, Docker, and Playwright.",
+          "stack": ["Remix", "SQLite (LiteFS)", "TailwindCSS", "Playwright", "Docker"],
+          "architectural_rating": "S",
+          "usefulness_score": 9.9
+        },
+        {
+          "name": "testing-library",
+          "repo": "https://github.com/testing-library",
+          "category": "Testing Standard",
+          "description": "De-facto industry standard for user-centric UI component testing.",
+          "stack": ["JavaScript", "TypeScript", "DOM"],
+          "architectural_rating": "S",
+          "usefulness_score": 10.0
+        }
+      ]
+    },
+    {
+      "name": "ThePrimeagen",
+      "github": "https://github.com/ThePrimeagen",
+      "specialties": ["Developer Tooling", "Performance", "Rust", "Go", "Neovim", "Algorithms"],
+      "tools_and_repositories": [
+        {
+          "name": "harpoon",
+          "repo": "https://github.com/ThePrimeagen/harpoon",
+          "category": "Developer Productivity / Navigation",
+          "description": "Getting you where you want with the fewest keystrokes possible.",
+          "stack": ["Lua", "Neovim"],
+          "architectural_rating": "A+",
+          "usefulness_score": 9.3
+        },
+        {
+          "name": "refactoring.nvim",
+          "repo": "https://github.com/ThePrimeagen/refactoring.nvim",
+          "category": "AST Transformation Engine",
+          "description": "The Refactoring book implementations based on Tree-Sitter AST parsing.",
+          "stack": ["Lua", "Tree-Sitter"],
+          "architectural_rating": "S",
+          "usefulness_score": 9.5
+        }
+      ]
+    }
+  ]
+}

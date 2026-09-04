@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "title": "EOS MCP Experimental Tools Register",
+    "total_experimental_tools": 6,
+    "purpose": "Track early-stage or evolving tools undergoing validation"
+  },
+  "tools": [
+    {
+      "name": "eos.compiler.l0.parse",
+      "stage": "ALPHA",
+      "readiness": "FUNCTIONAL",
+      "ownerFile": "src/core/runtime/l0-parser.js",
+      "description": "L0 Golden Language ISO/IEC 14977 EBNF ontological parser and AST generator.",
+      "notes": "Real parser implementation with EBNF validation, but grammar is specialized for EOS internal AST specifications."
+    },
+    {
+      "name": "eos.core.triamazikamno.synthesize",
+      "stage": "ALPHA",
+      "readiness": "IN_MEMORY_ALGORITHM",
+      "ownerFile": "src/core/runtime/triamazikamno-synthesis.js",
+      "description": "Dialectical in-memory AST synthesis balancing thesis, antithesis, and conciliation forces.",
+      "notes": "Executes mathematical balance calculation over proposal objects in memory."
+    },
+    {
+      "name": "eos.justice.adjudicate",
+      "stage": "ALPHA",
+      "readiness": "IN_MEMORY_ALGORITHM",
+      "ownerFile": "src/core/runtime/distributed-justice-oracle.js",
+      "description": "Deterministic DAG fork adjudication and four-tier conflict resolution with zero-waste pruning.",
+      "notes": "Pure algorithmic comparator evaluating DAG node weight and SHA-256 lineage."
+    },
+    {
+      "name": "eos.blueprint.run",
+      "stage": "BETA",
+      "readiness": "FUNCTIONAL_WITH_SIM_GATES",
+      "ownerFile": "src/core/blueprints/blueprint-engine.js",
+      "description": "Run 9-phase Golden Spec-Driven Development Blueprint.",
+      "notes": "Can execute full DAG, but defaults allow_simulated_gates: true for automated passes."
+    },
+    {
+      "name": "eos.audit.parallel_dag.run",
+      "stage": "DORMANT_EXPERIMENTAL",
+      "readiness": "UNREACHABLE_IN_MCP",
+      "ownerFile": "src/core/runtime/parallel-auditor-dag.js",
+      "description": "Parallel auditor DAG runner present in switch case but absent from CANONICAL_TOOLS.",
+      "notes": "Blocked by handleToolCall UNKNOWN_TOOL check because it is not in CANONICAL_TOOLS array."
+    },
+    {
+      "name": "eos.governance.tier.classify",
+      "stage": "DORMANT_EXPERIMENTAL",
+      "readiness": "UNREACHABLE_IN_MCP",
+      "ownerFile": "src/core/runtime/governance-tier.js",
+      "description": "Governance tier classifier present in switch case but absent from CANONICAL_TOOLS.",
+      "notes": "Blocked by handleToolCall UNKNOWN_TOOL check because it is not in CANONICAL_TOOLS array."
+    }
+  ]
+}

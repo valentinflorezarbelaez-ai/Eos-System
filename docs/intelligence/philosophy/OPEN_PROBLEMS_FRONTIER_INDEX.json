@@ -1,0 +1,23 @@
+{
+  "catalog_id": "OPEN-PROBLEMS-FRONTIER-001",
+  "version": "1.0.0",
+  "frontier_supremum_rule": "La frontera absoluta no es saber la respuesta. Es saber formular una pregunta cuya respuesta, si se encuentra, cambie el mapa completo del conocimiento.",
+  "open_problem_frontiers": [
+    { "area": "IA para Descubrimiento Científico", "status": "Frontera irregular; resolver problemas difíciles pero fallar en formulación autónoma sin supervisión." },
+    { "area": "Verificación Formal de IA y Agentes", "status": "Desafío de verificar sistemas dinámicos y modelos emergentes sin costo computacional prohibitivo." },
+    { "area": "P versus NP", "status": "Problema del Milenio abierto; define los límites de eficiencia algorítmica y criptografía." },
+    { "area": "Computación Cuántica Tolerante a Fallos", "status": "Transición de procesadores ruidosos (NISQ) a corrección de errores cuántica escalable." },
+    { "area": "Criptografía Poscuántica (PQC)", "status": "Migración mundial a esquemas basados en retículos (Lattice-based) sin vulnerabilidades de canal lateral." },
+    { "area": "Límites Fundamentales Distribuidos", "status": "Infranqueabilidad de trade-offs de consistencia, latencia y disponibilidad (FLP, CAP, PACELC)." },
+    { "area": "Memoria Persistente y Agencia Continua", "status": "Construcción de identidades epistémicas estables y continuas a lo largo de años." },
+    { "area": "Programación Autónoma Verificable", "status": "Generación de arquitecturas correctas por construcción con demostración formal (Curry-Howard)." }
+  ],
+  "supreme_automated_research_loop": [
+    "1. Formular una pregunta profunda y precisa que nadie haya planteado.",
+    "2. Diseñar una conjetura o modelo teórico original.",
+    "3. Construir una demostración formal (Lean/Coq) o experimento reproducible (FrontierMath).",
+    "4. Detectar activamente sus propios errores y puntos ciegos (Falsationism de Popper).",
+    "5. Explicitar supuestos, invariantes y trade-offs infranqueables.",
+    "6. Evolucionar la teoría sin perder alineación ni control determinista."
+  ]
+}

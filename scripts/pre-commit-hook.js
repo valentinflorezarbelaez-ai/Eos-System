@@ -65,7 +65,7 @@ export function runPreCommitGuard(options = {}) {
 
   // 2. Secret scanning on staged diff
   try {
-    const diff = execSync('git diff --cached', { cwd, encoding: 'utf8' });
+    const diff = execSync('git diff --cached', { cwd, encoding: 'utf8', maxBuffer: 50 * 1024 * 1024 });
     const violations = scanDiffForSecrets(diff);
     if (violations.length > 0) {
       console.error('\n❌ [BLOCK] Law VI (Zero Plain Secrets) Violation Detected in Staged Changes:');
@@ -87,6 +87,7 @@ export function runPreCommitGuard(options = {}) {
   const verifyRes = spawnSync('node', ['scripts/verify-eos.js', '--strict'], {
     cwd,
     encoding: 'utf8',
+    maxBuffer: 50 * 1024 * 1024,
     stdio: ['pipe', 'pipe', 'pipe']
   });
 

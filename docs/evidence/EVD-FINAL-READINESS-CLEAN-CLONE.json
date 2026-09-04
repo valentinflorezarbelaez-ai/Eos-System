@@ -1,19 +1,19 @@
 {
   "exam": "CLEAN_CLONE_REPRODUCIBILITY",
-  "source_root": "/workspace",
-  "branch": "cursor/final-readiness-exam-01a0",
-  "head": "8bdbee041d09989907d09a8c80208a0bda82d0be",
-  "dest": "/tmp/eos-clean-clone-jRDE5C/eos",
+  "source_root": "C:\\Users\\valen\\Documents\\Eos system",
+  "branch": "main",
+  "head": "c1321d729d7d1a94457d87efe940128fbf79eb02",
+  "dest": "C:\\Users\\valen\\AppData\\Local\\Temp\\eos-clean-clone-DFkH9I\\eos",
   "steps": [
     {
       "step": "CLONE",
       "ok": true,
-      "dest": "/tmp/eos-clean-clone-jRDE5C/eos"
+      "dest": "C:\\Users\\valen\\AppData\\Local\\Temp\\eos-clean-clone-DFkH9I\\eos"
     },
     {
       "step": "HEAD_MATCH",
       "ok": true,
-      "head": "8bdbee041d09989907d09a8c80208a0bda82d0be"
+      "head": "c1321d729d7d1a94457d87efe940128fbf79eb02"
     },
     {
       "step": "CLEAN_TREE",
@@ -34,13 +34,13 @@
     {
       "step": "CONFIG_DOCTOR",
       "ok": true,
-      "output": "EOS doctor\nPASS  CLI_HELP: Mission CLI help renders\nPASS  HOMEDIR_LEAK: NO\nPASS  LOCAL_SCHEMAS: direction, mission-package, hitl-receipt load\nPASS  RULES_INDEX: R-ATS-01, R-HITL-01, R-BOUNDARY-01\nVERDICT: PASS\nHOMEDIR_LEAK: NO"
+      "output": "📚 TUTOR (antes) — eos.doctor\nOBJECTIVE: Verify the local control plane is pinned to this repo, not the user home folder\nCONCEPT: OperatorDoctor — read-only file and MCP pin checks\nCWD: C:\\Users\\valen\\AppData\\Local\\Temp\\eos-clean-clone-DFkH9I\\eos\nSCOPE: bin/eos.js, src/mcp-server.js, .cursor/mcp.json\nRATIONALE: A homedir leak makes MCP report 0 missions and look like simulation\nRISKS: None — read only\nEXPECTED_EVIDENCE: VERDICT PASS; HOMEDIR_LEAK NO\nROLLBACK: No mutation\nHITL: NOT_REQUIRED\n\n================================================================================\nEOS DOCTOR — local governed control-plane check\n================================================================================\nROOT: C:\\Users\\valen\\AppData\\Local\\Temp\\eos-clean-clone-DFkH9I\\eos\nHOMEDIR_LEAK: NO\nVERDICT: PASS\n\n[PASS] BIN_EOS — bin/eos.js\n[PASS] MCP_SERVER — src/mcp-server.js\n[PASS] VERIFIER — scripts/verify-eos.js\n[PASS] CURRENT_MISSION — EOS-MISSION-CONTROL/CURRENT_MISSION.json\n[PASS] NO_HOMEDIR_LEAK — root is not homedir\n[PASS] RUNTIME_ENGINE_SURFACE — 0 live engines\n[PASS] WORKSPACE_MCP_PIN — eos-local pinned\n[PASS] PURPOSE_LOCAL_LOOP — local governed loop wired; production OUT_OF_SCOPE; unsupervised FORBIDDEN\n================================================================================\n\n📚 TUTOR (después) — eos.doctor\nOBSERVED: Control plane healthy\nEXIT_CODE: null\nCLASSIFICATION: VERIFIED\nINTERPRETATION: \nNEXT: Create or inspect a mission"
     },
     {
       "step": "RUN_CANONICAL_TESTS",
       "ok": true,
       "status": 0,
-      "tail": "# Subtest: GUARD-07: Provider tools stay NOT_CONFIGURED; discover is wired\nok 31 - GUARD-07: Provider tools stay NOT_CONFIGURED; discover is wired\n  ---\n  duration_ms: 12.292996\n  ...\n# Subtest: GUARD-08: All 20 canonical tools have sideEffects and requiredAuthority metadata defined\nok 32 - GUARD-08: All 20 canonical tools have sideEffects and requiredAuthority metadata defined\n  ---\n  duration_ms: 0.202988\n  ...\n1..32\n# tests 32\n# suites 0\n# pass 32\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 833.051493\n"
+      "tail": "✔ BRIDGE-04: evidence.record writes SHA-256 and rejects missing mission (61.322ms)\n✔ BRIDGE-05: missionStatus marks corrupt package without swallowing (4.6974ms)\n✔ BRIDGE-06: constructing the server/bridge does not eagerly create .missions (4.1862ms)\n✔ GUARD-01: EOS_MODE=read-only blocks eos.ledger.update_feature (12.2878ms)\n✔ GUARD-02: EOS_AUTONOMY_LEVEL=LEVEL_0 blocks eos.mission.recover (2.8136ms)\n✔ GUARD-03: Invalid EOS_MODE or EOS_AUTONOMY_LEVEL returns DENIED with explicit reason (2.4442ms)\n✔ GUARD-04: Denied calls do NOT mutate ledger state or create any disk files (4.8017ms)\n✔ GUARD-05: Read-only tools execute cleanly in read-only and LEVEL_0 (5.2669ms)\n✔ GUARD-06: Permitted write tools succeed when mode is read-write and autonomy is LEVEL_1+ (21.2851ms)\n✔ GUARD-07: Provider tools stay NOT_CONFIGURED; discover is wired (297.8224ms)\n✔ GUARD-08: All 78 canonical tools have sideEffects and requiredAuthority metadata defined (0.3453ms)\nℹ tests 35\nℹ suites 0\nℹ pass 35\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 3561.2183\n"
     }
   ],
   "verdict": "PASS"

@@ -1,0 +1,50 @@
+[
+  {
+    "control": "Monotonic State Machine Progression",
+    "layer": "SDD FSM Kernel",
+    "component": "src/core/sdd/sdd-fsm-engine.js",
+    "failClosed": true,
+    "evidence": "tests/sdd-fsm-transition-enforcer.test.js (35 test cases)",
+    "status": "ACTIVE_AND_ENFORCED"
+  },
+  {
+    "control": "Cryptographic SHA-256 Ledger Hash Chaining",
+    "layer": "Evidence & Ledger",
+    "component": "src/core/sdd/epistemic-evidence-engine.js",
+    "failClosed": true,
+    "evidence": "tests/sdd-evidence-engine.test.js & tests/p3-ledger-crash-recovery.test.js",
+    "status": "ACTIVE_AND_ENFORCED"
+  },
+  {
+    "control": "HITL Gatekeeper Decision Classification",
+    "layer": "Human Governance",
+    "component": "src/core/sdd/hitl-gatekeeper.js",
+    "failClosed": true,
+    "evidence": "tests/sdd-hitl-gatekeeper.test.js (30 test cases)",
+    "status": "ACTIVE_AND_ENFORCED"
+  },
+  {
+    "control": "External Target Write Barrier (PRJ-FUNDACION)",
+    "layer": "Security & Sandbox",
+    "component": "src/core/governance/integration-gatekeeper.js",
+    "failClosed": true,
+    "evidence": "tests/p0-fundacion-contract-boundary.test.js & tests/p2-integration-gatekeeper.test.js",
+    "status": "ACTIVE_AND_ENFORCED"
+  },
+  {
+    "control": "Cursor Return Ingestion Anti-Replay & Secret Leak Checks",
+    "layer": "IDE Integration Adapter",
+    "component": "src/core/adapters/cursor-return-ingestion-engine.js",
+    "failClosed": true,
+    "evidence": "tests/p3-cursor-return-adapter.test.js",
+    "status": "ACTIVE_AND_ENFORCED"
+  },
+  {
+    "control": "MCP Stdio Tool Guard Evaluation",
+    "layer": "MCP Server",
+    "component": "src/mcp-server.js",
+    "failClosed": true,
+    "evidence": "tests/mcp-readonly-guard.test.js & tests/mcp-mission-bridge.test.js",
+    "status": "ACTIVE_AND_ENFORCED"
+  }
+]

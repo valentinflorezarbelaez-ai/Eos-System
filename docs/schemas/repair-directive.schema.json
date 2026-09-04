@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EOS Governed Repair Directive Contract",
+  "description": "Schema for structured automated TDD repair directives produced by GovernedLlmService",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "target_file",
+    "root_cause",
+    "replacement_code",
+    "epistemic_confidence",
+    "reasoning_summary"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["1.0.0"]
+    },
+    "target_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "root_cause": {
+      "type": "string",
+      "minLength": 5
+    },
+    "patch_type": {
+      "type": "string",
+      "enum": ["REPLACE_CONTENT", "DIFF_CHUNK", "REWRITE_FILE"],
+      "default": "REPLACE_CONTENT"
+    },
+    "replacement_code": {
+      "type": "string"
+    },
+    "epistemic_confidence": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"]
+    },
+    "reasoning_summary": {
+      "type": "string",
+      "minLength": 5
+    }
+  },
+  "additionalProperties": false
+}

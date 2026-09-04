@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/intent-specification.schema.json",
+  "title": "EOS Intent Specification Package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "intent_id",
+    "mission_id",
+    "raw_prompt",
+    "domain_context",
+    "high_level_goal",
+    "intent_summary",
+    "requirements_ears",
+    "bdd_scenarios",
+    "architecture_boundaries",
+    "atomic_task_dag",
+    "epistemic_analysis"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "intent_id": {
+      "type": "string",
+      "pattern": "^INTENT-[A-Z0-9_-]+$"
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9_-]+$"
+    },
+    "raw_prompt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "domain_context": {
+      "type": "string"
+    },
+    "high_level_goal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "intent_summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requirements_ears": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "pattern", "statement"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^REQ-[A-Z0-9_-]+$" },
+          "pattern": { "type": "string", "enum": ["Ubiquitous", "Event-Driven", "State-Driven", "Error-Handling", "Optional"] },
+          "statement": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "bdd_scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["scenario_id", "name", "given", "when", "then", "and"],
+        "properties": {
+          "scenario_id": { "type": "string", "pattern": "^SCN-[A-Z0-9_-]+$" },
+          "name": { "type": "string", "minLength": 1 },
+          "given": { "type": "string", "minLength": 1 },
+          "when": { "type": "string", "minLength": 1 },
+          "then": { "type": "string", "minLength": 1 },
+          "and": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "architecture_boundaries": {
+      "type": "object",
+      "required": ["affected_layers", "external_write_barrier_status", "ports_required", "adapters_required"],
+      "properties": {
+        "affected_layers": { "type": "array", "items": { "type": "string" } },
+        "external_write_barrier_status": { "type": "string", "enum": ["ENFORCED", "EXEMPT_WITH_LEVEL_2_AUTH"] },
+        "ports_required": { "type": "array", "items": { "type": "string" } },
+        "adapters_required": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "atomic_task_dag": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["task_id", "step_order", "assigned_role", "name", "objective", "acceptance_criteria"],
+        "properties": {
+          "task_id": { "type": "string", "pattern": "^TASK-[A-Z0-9_-]+$" },
+          "step_order": { "type": "integer", "minimum": 1 },
+          "assigned_role": { "type": "string", "enum": ["SYSTEM_ARCHITECT", "CORE_ENGINEER", "EVIDENCE_AUDITOR", "SECURITY_AUDITOR", "QA_ENGINEER"] },
+          "name": { "type": "string", "minLength": 1 },
+          "objective": { "type": "string", "minLength": 1 },
+          "acceptance_criteria": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "epistemic_analysis": {
+      "type": "object",
+      "required": ["assumptions", "unknowns", "risks", "requires_hitl_clarification"],
+      "properties": {
+        "assumptions": { "type": "array", "items": { "type": "string" } },
+        "unknowns": { "type": "array", "items": { "type": "string" } },
+        "risks": { "type": "array", "items": { "type": "string" } },
+        "requires_hitl_clarification": { "type": "boolean" }
+      }
+    }
+  }
+}

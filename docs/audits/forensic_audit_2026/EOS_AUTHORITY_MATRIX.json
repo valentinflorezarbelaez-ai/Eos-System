@@ -1,0 +1,58 @@
+[
+  {
+    "action": "Workspace Observation / File Read",
+    "requiredAuthority": "LEVEL_0 (A0)",
+    "enforcementPoint": "EosMcpServer.evaluateToolGuard & McpMissionBridge",
+    "actualRuntimeGuard": "AuthorityAdapter.checkAuthority('A0', grantedLevel)",
+    "bypassPossible": false,
+    "status": "ENFORCED"
+  },
+  {
+    "action": "Mission Creation / Local Ledger Init",
+    "requiredAuthority": "LEVEL_1 (A1)",
+    "enforcementPoint": "EosMcpServer.evaluateToolGuard (blocks under read-only or LEVEL_0)",
+    "actualRuntimeGuard": "AuthorityAdapter.checkAuthority('A1', grantedLevel)",
+    "bypassPossible": false,
+    "status": "ENFORCED"
+  },
+  {
+    "action": "FSM State Transition Commit",
+    "requiredAuthority": "LEVEL_1..3 (Depending on transition)",
+    "enforcementPoint": "AuthorityTruthSource.commitTransition",
+    "actualRuntimeGuard": "TransitionEnforcer.validateTransition & HitlGatekeeper.evaluateDecision",
+    "bypassPossible": false,
+    "status": "ENFORCED"
+  },
+  {
+    "action": "Human Direction Gate Approval",
+    "requiredAuthority": "HUMAN_APPROVAL_REQUIRED (Receipt)",
+    "enforcementPoint": "HitlGatekeeper.evaluateDecision",
+    "actualRuntimeGuard": "Requires valid hitlReceipt with sha256 and non-expired timestamp",
+    "bypassPossible": false,
+    "status": "ENFORCED"
+  },
+  {
+    "action": "Worktree Sandboxed Mutation",
+    "requiredAuthority": "LEVEL_2 (A2)",
+    "enforcementPoint": "WorktreeMutationEngine.initialize & IntegrationGatekeeper",
+    "actualRuntimeGuard": "AuthorityAdapter.isExternalWriteAuthorized(level)",
+    "bypassPossible": false,
+    "status": "ENFORCED"
+  },
+  {
+    "action": "Protected Target Write (e.g. Fundacion)",
+    "requiredAuthority": "LEVEL_3+ (A3) with Explicit PO Override",
+    "enforcementPoint": "IntegrationGatekeeper.validateBarrier",
+    "actualRuntimeGuard": "Hardcoded barrier check against protected roots",
+    "bypassPossible": false,
+    "status": "ENFORCED"
+  },
+  {
+    "action": "Production Deployment",
+    "requiredAuthority": "LEVEL_4 (A5)",
+    "enforcementPoint": "AuthorityAdapter.isProductionAuthorized & Release Decision Gate",
+    "actualRuntimeGuard": "Explicit boolean check: rank === 4",
+    "bypassPossible": false,
+    "status": "ENFORCED"
+  }
+]

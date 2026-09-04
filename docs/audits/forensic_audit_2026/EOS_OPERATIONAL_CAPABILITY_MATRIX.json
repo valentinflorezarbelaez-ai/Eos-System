@@ -1,0 +1,122 @@
+[
+  {
+    "capability": "Understand a Problem (Intent Resolution)",
+    "exists": true,
+    "connected": true,
+    "governed": true,
+    "tested": true,
+    "reproducible": true,
+    "operational": true,
+    "implementation": "src/core/mcp/mcp-mission-bridge.js (resolveIntent)",
+    "evidence": "tests/mcp-mission-bridge.test.js (BRIDGE-02)",
+    "notes": "Deterministic JSON intent parsing with R-ATS-01/R-HITL-01 rule citations"
+  },
+  {
+    "capability": "Research & Industry Benchmarking",
+    "exists": true,
+    "connected": true,
+    "governed": true,
+    "tested": true,
+    "reproducible": true,
+    "operational": true,
+    "implementation": ".agents/skills/deep-research/SKILL.md & docs/intelligence/research/",
+    "evidence": "docs/intelligence/research/RSC-0016-gentleman-programming-book-digest.json",
+    "notes": "Deep research skill combining Brave Search, Context7, and Engram memory"
+  },
+  {
+    "capability": "Challenge Assumptions & Adversarial Review",
+    "exists": true,
+    "connected": true,
+    "governed": true,
+    "tested": true,
+    "reproducible": true,
+    "operational": true,
+    "implementation": "src/core/governance/integration-gatekeeper.js & scripts/engine/adaptive-adversary-engine.js",
+    "evidence": "tests/p2-adversarial-integration-gates.test.js",
+    "notes": "Quarantine verification, anti-replay nonces, forbidden SSRF host filters"
+  },
+  {
+    "capability": "Architect & Design (SDD Spec Generation)",
+    "exists": true,
+    "connected": true,
+    "governed": true,
+    "tested": true,
+    "reproducible": true,
+    "operational": true,
+    "implementation": "src/core/adapters/cursor-mission-package.js & docs/specs/",
+    "evidence": "tests/p3-cursor-mission-package.test.js",
+    "notes": "Generates mission-package.json and CURSOR_MISSION_PROMPT.md with DoD and schemas"
+  },
+  {
+    "capability": "Build & Implement (Bounded Worktree Mutation)",
+    "exists": true,
+    "connected": true,
+    "governed": true,
+    "tested": true,
+    "reproducible": true,
+    "operational": true,
+    "implementation": "src/core/sandbox/worktree-mutation-engine.js & Cursor Return Ingestion",
+    "evidence": "tests/p3-bounded-worktree-canary.test.js & tests/p3-cursor-return-adapter.test.js",
+    "notes": "Worktree isolation protects main repository while agent implements changes"
+  },
+  {
+    "capability": "Test & Red Team Verification",
+    "exists": true,
+    "connected": true,
+    "governed": true,
+    "tested": true,
+    "reproducible": true,
+    "operational": true,
+    "implementation": "src/core/adapters/cursor-return-ingestion-engine.js & node test runner",
+    "evidence": "896/896 passing tests across 150 test files",
+    "notes": "Epistemic check rejects COMPLETED claims if test pass rate < 100%"
+  },
+  {
+    "capability": "Audit & Governance Enforcement",
+    "exists": true,
+    "connected": true,
+    "governed": true,
+    "tested": true,
+    "reproducible": true,
+    "operational": true,
+    "implementation": "src/core/authority/authority-truth-source.js & src/core/sdd/hitl-gatekeeper.js",
+    "evidence": "tests/sdd-hitl-gatekeeper.test.js & tests/authority-truth-source.test.js",
+    "notes": "Monotonic authority ranks L0..L4; all state changes require cryptographic commitTransition"
+  },
+  {
+    "capability": "Deploy (Release Readiness & Packaging)",
+    "exists": true,
+    "connected": true,
+    "governed": true,
+    "tested": true,
+    "reproducible": true,
+    "operational": "PARTIAL (LOCAL_GOVERNED_MVP)",
+    "implementation": "src/core/observability/executive-mission-reporter.js & scripts/verify-release-package.js",
+    "evidence": "tests/p2-executive-mission-reporter.test.js",
+    "notes": "Seals mission packages and generates executive reports; production cloud deployment is gated by L4 authority"
+  },
+  {
+    "capability": "Operate & Observe",
+    "exists": true,
+    "connected": true,
+    "governed": true,
+    "tested": true,
+    "reproducible": true,
+    "operational": true,
+    "implementation": "src/core/runtime/operator-doctor.js & src/core/runtime/operator-next.js",
+    "evidence": "tests/operator-doctor.test.js & tests/operator-next.test.js",
+    "notes": "Provides diagnostic health checks (homedir leaks, engine surface) and next step suggestions"
+  },
+  {
+    "capability": "Continuous Learning & Knowledge Feedback",
+    "exists": true,
+    "connected": true,
+    "governed": true,
+    "tested": true,
+    "reproducible": true,
+    "operational": true,
+    "implementation": "src/core/runtime/mission-learning.js & src/core/runtime/global-knowledge.js",
+    "evidence": "tests/mission-learning.test.js & docs/knowledge/CONTINUOUS_LEARNING_LOOP.md",
+    "notes": "Appends structured JSONL lessons and updates markdown knowledge base upon mission completion"
+  }
+]

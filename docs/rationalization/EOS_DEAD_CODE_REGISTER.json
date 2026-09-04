@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "title": "EOS Dead Code & Unreachable Handlers Register",
+    "total_items": 3
+  },
+  "items": [
+    {
+      "id": "DEAD-001",
+      "name": "eos.audit.parallel_dag.run",
+      "location": "src/mcp-server.js (line 1120)",
+      "reason": "Handler exists in switch case but tool is missing from CANONICAL_TOOLS array; handleToolCall returns UNKNOWN_TOOL."
+    },
+    {
+      "id": "DEAD-002",
+      "name": "eos.governance.tier.classify",
+      "location": "src/mcp-server.js (line 1127)",
+      "reason": "Handler exists in switch case but tool is missing from CANONICAL_TOOLS array; handleToolCall returns UNKNOWN_TOOL."
+    },
+    {
+      "id": "DEAD-003",
+      "name": "30 Underscore Switch Cases",
+      "location": "src/mcp-server.js (lines 1597-2369)",
+      "reason": "Redundant case statements duplicated alongside dot notation while normalizeToolName() already normalizes input."
+    }
+  ]
+}

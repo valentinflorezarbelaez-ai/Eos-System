@@ -1,0 +1,39 @@
+{
+  "canon_id": "ULTRA-ELITE-TECHNICAL-CANON-001",
+  "version": "1.0.0",
+  "ultra_elite_formula": "Un libro difícil + Un paper original + Una implementación desde cero + Una prueba de rendimiento + Un informe técnico con trade-offs reproducibles.",
+  "top_12_resources": [
+    { "rank": 1, "title": "The Art of Computer Programming", "author": "Donald Knuth", "focus": "Algoritmos y matemáticas combinatorias profundas" },
+    { "rank": 2, "title": "Structure and Interpretation of Computer Programs (SICP)", "author": "Abelson & Sussman", "focus": "Abstracción, composición y modelos mentales" },
+    { "rank": 3, "title": "Computer Systems: A Programmer's Perspective (CS:APP)", "author": "Bryant & O'Hallaron", "focus": "Máquina, jerarquía de memoria y rendimiento real" },
+    { "rank": 4, "title": "Operating Systems: Three Easy Pieces (OSTEP)", "author": "Arpaci-Dusseau", "focus": "Virtualización, concurrencia y persistencia" },
+    { "rank": 5, "title": "Crafting Interpreters", "author": "Robert Nystrom", "focus": "Implementación completa de un lenguaje (AST + Bytecode VM)" },
+    { "rank": 6, "title": "MIT 6.5840 Distributed Systems", "instructor": "Morris & Kaashoek", "focus": "Consenso, tolerancia a particiones y replicación" },
+    { "rank": 7, "title": "Designing Data-Intensive Applications (DDIA)", "author": "Martin Kleppmann", "focus": "Límites, garantías y trade-offs en datos distribuidos" },
+    { "rank": 8, "title": "Compilers: Principles, Techniques, and Tools (Dragon Book)", "author": "Aho et al.", "focus": "Parsing, optimización y generación de código" },
+    { "rank": 9, "title": "Programming Language Pragmatics", "author": "Michael Scott", "focus": "Tipos, semántica y diseño formal de lenguajes" },
+    { "rank": 10, "title": "Site Reliability Engineering (SRE)", "author": "Google", "focus": "SLOs, error budgets y operación en producción" },
+    { "rank": 11, "title": "The Staff Engineer's Path", "author": "Tanya Reilly", "focus": "Pensamiento estratégico y liderazgo transversal" },
+    { "rank": 12, "title": "Software Engineering at Google", "author": "Winters, Manshreck, Wright", "focus": "Mantenibilidad y pruebas a escala de décadas" }
+  ],
+  "seminal_papers_complete": [
+    { "title": "MapReduce", "authors": ["Dean", "Ghemawat"], "core_theme": "Procesamiento paralelo a gran escala" },
+    { "title": "The Google File System (GFS)", "authors": ["Ghemawat et al."], "core_theme": "Almacenamiento distribuido sobre hardware falible" },
+    { "title": "Bigtable", "authors": ["Chang et al."], "core_theme": "Base de datos estructurada dispersa sobre SSTables" },
+    { "title": "Dynamo", "authors": ["DeCandia et al."], "core_theme": "Alta disponibilidad, consistent hashing y eventual consistency" },
+    { "title": "Spanner", "authors": ["Corbett et al."], "core_theme": "Consistencia global externa con TrueTime (GPS + relojes atómicos)" },
+    { "title": "Raft", "authors": ["Ongaro", "Ousterhout"], "core_theme": "Consenso distribuido comprensible e implementable" },
+    { "title": "FLP Impossibility", "authors": ["Fischer", "Lynch", "Paterson"], "core_theme": "Límites del consenso asíncrono ante un solo fallo" },
+    { "title": "The Tail at Scale", "authors": ["Dean", "Barroso"], "core_theme": "Control y mitigación de latencia de cola (p99/p99.9) en microservicios" },
+    { "title": "Dapper", "authors": ["Sigelman et al."], "core_theme": "Infraestructura de trazabilidad distribuida (Trace/Span contexts)" },
+    { "title": "Borg, Omega, Kubernetes", "authors": ["Verma et al."], "core_theme": "Orquestación y gestión de clusters a escala planetaria" }
+  ],
+  "elite_university_courses": [
+    { "code": "MIT 6.5840", "name": "Distributed Systems", "focus": "Implementación práctica de Raft y consistencia" },
+    { "code": "Stanford CS 240", "name": "Advanced Topics in Operating Systems", "focus": "Análisis de papers de memoria, concurrencia y fault tolerance" },
+    { "code": "MIT 6.S081", "name": "Operating System Engineering", "focus": "Modificación directa de kernel xv6 en RISC-V" },
+    { "code": "Berkeley CS 162", "name": "Operating Systems & Systems Programming", "focus": "Programación práctica de sistemas" },
+    { "code": "Nand2Tetris", "name": "Building a Modern Computer from First Principles", "focus": "De puertas lógicas a compilador y juego" },
+    { "code": "Stanford CS 143", "name": "Compilers", "focus": "Construcción completa de compiladores" }
+  ]
+}

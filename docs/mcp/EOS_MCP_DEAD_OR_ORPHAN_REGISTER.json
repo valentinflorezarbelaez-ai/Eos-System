@@ -1,0 +1,192 @@
+{
+  "metadata": {
+    "title": "EOS MCP Dead, Orphan, and Simulation Tools Register",
+    "total_dead_or_simulation_tools": 23,
+    "summary": "22 tools operate as theatrical simulations returning mock SHA-256 hashes without performing physical work; 1 tool is hardcoded as NOT_CONFIGURED."
+  },
+  "simulation_tools": [
+    {
+      "name": "eos.pleroma.jubilee",
+      "index": 50,
+      "actual_implementation": "Computes mock bytesPurged = 1024 * octaves.size and returns sha256-JUBILEE hash",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.kundalini.mirror",
+      "index": 52,
+      "actual_implementation": "Validates cpuLimitPercentage <= 70 and OkidanokhValidator.validate, then returns sha256-KUNDALINI hash",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.mercabah.crystallize",
+      "index": 53,
+      "actual_implementation": "Checks carbon, oxygen, nitrogen, hydrogen presence in seedAtoms and returns sha256 hash",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.elemental.intercede",
+      "index": 54,
+      "actual_implementation": "Checks hardwareLock.enforceThermalShield === true and returns sha256 akashic receipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.net.trogomesh.balance",
+      "index": 56,
+      "actual_implementation": "TrogoMeshProtocol.balanceTraffic(args)",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.amens.audit",
+      "index": 57,
+      "actual_implementation": "Validates that 7 frequencies are strictly monotonic and returns sha256 amensProof",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.jeu.watch",
+      "index": 58,
+      "actual_implementation": "Checks blindAuditActive === true and sha256 snapshot hash, returns sha256 jeuReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.audit.tescohan.telescope",
+      "index": 59,
+      "actual_implementation": "Checks opticalFilter.isolationBarrierPreserved === true and returns sha256 telescopeReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.system.mahapralaya",
+      "index": 60,
+      "actual_implementation": "Validates quorumAuthToken startsWith sha256-quorum-24- and returns mahapralayaReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.anupadaka.shield",
+      "index": 61,
+      "actual_implementation": "Validates triadic hash tokens and quantum lattice string prefix, returns shieldReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.audit.telemetry.stream",
+      "index": 62,
+      "actual_implementation": "Validates witness proof prefix and returns hardcoded telemetry numbers (Phi=0.854211)",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.moses.transmute",
+      "index": 63,
+      "actual_implementation": "Checks zeroGarbagePauses === true and returns diamondReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.zodiac.shield",
+      "index": 64,
+      "actual_implementation": "Generates 12 mock zodiac sign shard hashes and returns zodiacReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.auxiliary.state",
+      "index": 65,
+      "actual_implementation": "Generates 5 mock auxiliary mirror hashes and returns auxiliaryReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.trees.anchor",
+      "index": 66,
+      "actual_implementation": "Maps 5 fixed tree names with SHA-256 hashes and returns treesReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.anupadaka.fuse",
+      "index": 67,
+      "actual_implementation": "Checks triadicEnvelopes array length 3 & unitary rotation, returns fusionReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.voices.modulate",
+      "index": 69,
+      "actual_implementation": "Generates 7 mock voice layer hashes and returns modulationReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.melchizedek.govern",
+      "index": 70,
+      "actual_implementation": "Checks fairnessCheck === true, proportionalityIndex >= 1.0, and humanOversightVerification === true, returns melchizedekReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.environment.sandbox.execute",
+      "index": 71,
+      "actual_implementation": "Validates ephemeralContainerActive === true and isolationLevel 1-3, returns mock exit code 0 and stdout",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.security.adversarial.review",
+      "index": 72,
+      "actual_implementation": "Checks for \"TODO\", \"eval(\", \"buffer_overflow\" strings in diffPayload, returns reviewReceipt",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.sdlc.engineer.autonomous",
+      "index": 73,
+      "actual_implementation": "Checks enableMctsSearch === true and returns mock \"Tests passed: 243/243\" evidence",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    },
+    {
+      "name": "eos.pleroma.akasha.engram",
+      "index": 74,
+      "actual_implementation": "Checks fts5IndexingActive === true and returns mock tokenization metadata",
+      "why_simulation": "Returns generated SHA-256 hash or mock JSON without executing external commands, network calls, SQLite FTS5, MicroVMs, CodeQL, or thermal throttling.",
+      "consumers_outside_own_test": 1,
+      "recommendation": "Segregate into isolated simulation testbed or prune from production MCP registry."
+    }
+  ],
+  "legacy_stubbed_tools": [
+    {
+      "name": "eos.provider.health",
+      "index": 18,
+      "reason": "Hardcoded NOT_CONFIGURED return envelope."
+    }
+  ]
+}

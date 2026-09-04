@@ -1,0 +1,26 @@
+[
+  {
+    "artifact": "scripts/cli/eos.js",
+    "replacement": "bin/eos.js (src/cli/mission-cli.js)",
+    "reason": "Split-brain CLI. Bypasses MissionRuntime and ATS; calls simulation engines directly.",
+    "migrationPlan": "Route package.json \"eos\" script to bin/eos.js, deprecate scripts/cli/eos.js."
+  },
+  {
+    "artifact": "scripts/engine/authority-adapter.js",
+    "replacement": "src/core/authority/authority-truth-source.js",
+    "reason": "Legacy bridge module that duplicates core ATS / Evidence capabilities.",
+    "migrationPlan": "Rewire src/mcp-server.js to use src/core/ directly, then isolate/archive."
+  },
+  {
+    "artifact": "scripts/engine/context-compiler.js",
+    "replacement": "src/core/runtime/global-knowledge.js",
+    "reason": "Legacy bridge module that duplicates core ATS / Evidence capabilities.",
+    "migrationPlan": "Rewire src/mcp-server.js to use src/core/ directly, then isolate/archive."
+  },
+  {
+    "artifact": "scripts/engine/mission-ledger.js",
+    "replacement": "src/core/sdd/epistemic-evidence-engine.js",
+    "reason": "Legacy bridge module that duplicates core ATS / Evidence capabilities.",
+    "migrationPlan": "Rewire src/mcp-server.js to use src/core/ directly, then isolate/archive."
+  }
+]

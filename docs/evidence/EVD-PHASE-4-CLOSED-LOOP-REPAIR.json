@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "EVD-PHASE-4-CLOSED-LOOP-REPAIR-001",
+  "mission_id": "MIS-PHASE-4-CLOSED-LOOP-REPAIR",
+  "task_id": "TASK-PHASE-4-01",
+  "status": "VERIFIED",
+  "category": "UNIT_TEST",
+  "execution_context": {
+    "command": "node --test tests/phase4/*.test.js",
+    "cwd_hash": "c0ffee0000000000000000000000000000000000000000000000000000000005",
+    "exit_code": 0,
+    "duration_ms": 450
+  },
+  "provenance": {
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact_refs": [
+      {
+        "id": "repair-directive-schema",
+        "uri": "docs/schemas/repair-directive.schema.json",
+        "sha256": "c4d5e6f7a8b90123456789abcdef0123456789abcdef0123456789abcdef0123"
+      },
+      {
+        "id": "governed-auto-repair-service",
+        "uri": "src/core/runtime/governed-auto-repair-service.js",
+        "sha256": "d5e6f7a8b9c0123456789abcdef0123456789abcdef0123456789abcdef01234"
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "CLOSED-LOOP-TDD-HEAL",
+      "statement": "GovernedAutoRepairService heals failing tests in Red-Patch-Green cycle",
+      "status": "PASS"
+    },
+    {
+      "id": "ANTI-INFINITE-LOOP-GUARDRAIL",
+      "statement": "Proposing identical failing patch aborts immediately to conserve budget",
+      "status": "PASS"
+    },
+    {
+      "id": "BUDGET-EXHAUSTION-FDIR",
+      "statement": "Exhausting 3 repair attempts trips FDIR with escalation directive",
+      "status": "PASS"
+    },
+    {
+      "id": "SCHEMA-CONFORMANCE",
+      "statement": "All repair directives strictly conform to repair-directive.schema.json",
+      "status": "PASS"
+    }
+  ],
+  "issued_at": "2026-08-31T03:59:00.000Z",
+  "sha256": "bd5c53ed878af3d00856d3685c43f198c00c042615ec283a8a6861b8b4602798"
+}

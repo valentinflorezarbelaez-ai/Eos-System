@@ -1,0 +1,62 @@
+{
+  "catalog_id": "BEDROCK-FOUNDATIONS-OF-COMPUTATION-001",
+  "version": "1.0.0",
+  "supremum_axiom": "El nivel más alto no consiste en saber usar todas las herramientas. Consiste en comprender los límites fundamentales de todas las herramientas: computabilidad, complejidad, entropía y demostrabilidad.",
+  "seven_absolute_foundations": [
+    {
+      "area": "Lógica Matemática",
+      "fundamental_question": "¿Qué significa que una afirmación sea demostrable?",
+      "canonical_works": ["Mathematical Logic (Ebbinghaus)", "Introduction to Metamathematics (Kleene)", "Gödel, Escher, Bach (Hofstadter)"]
+    },
+    {
+      "area": "Computabilidad",
+      "fundamental_question": "¿Qué puede calcular una máquina, incluso con tiempo infinito?",
+      "canonical_works": ["Introduction to the Theory of Computation (Sipser)", "Computability and Logic (Boolos, Burgess, Jeffrey)"]
+    },
+    {
+      "area": "Complejidad Computacional",
+      "fundamental_question": "¿Qué puede calcularse eficientemente con recursos acotados?",
+      "canonical_works": ["Computational Complexity: A Modern Approach (Arora & Barak)", "Computers and Intractability (Garey & Johnson)"]
+    },
+    {
+      "area": "Teoría de la Información",
+      "fundamental_question": "¿Qué son los datos, la entropía y los límites de transmisión?",
+      "canonical_works": ["Elements of Information Theory (Cover & Thomas)", "Information Theory, Inference, and Learning Algorithms (MacKay)"]
+    },
+    {
+      "area": "Lenguajes y Semántica Formal",
+      "fundamental_question": "¿Qué significa exactamente que un programa haga algo?",
+      "canonical_works": ["Types and Programming Languages (Pierce)", "Semantics with Applications (Nielson & Nielson)"]
+    },
+    {
+      "area": "Pruebas Formales y Asistentes de Prueba",
+      "fundamental_question": "¿Cómo demostrar matemáticamente que un programa es correcto?",
+      "canonical_works": ["Software Foundations (Coq/Rocq, Pierce et al.)", "Programs and Proofs (Yves Bertot)"]
+    },
+    {
+      "area": "Matemática Estructural y Teoría de Categorías",
+      "fundamental_question": "¿Qué estructuras universales conectan programas, datos y transformaciones?",
+      "canonical_works": ["Category Theory for Computing Science (Barr & Wells)", "Categories for the Working Mathematician (Mac Lane)"]
+    }
+  ],
+  "eight_level_epistemic_pyramid": [
+    { "level": 1, "domain": "Herramientas", "question": "¿Cómo uso esta tecnología o framework?" },
+    { "level": 2, "domain": "Ingeniería", "question": "¿Cómo construyo software mantenible, testeable y confiable?" },
+    { "level": 3, "domain": "Sistemas", "question": "¿Cómo funciona la máquina en el silicio o una plataforma a gran escala?" },
+    { "level": 4, "domain": "Algoritmos", "question": "¿Cómo resuelvo el problema eficientemente?" },
+    { "level": 5, "domain": "Lenguajes", "question": "¿Qué significa un programa y cómo se ejecuta formalmente?" },
+    { "level": 6, "domain": "Computabilidad", "question": "¿Qué problemas puede resolver cualquier máquina (Turing Decidability)?" },
+    { "level": 7, "domain": "Complejidad", "question": "¿Qué problemas pueden resolverse en tiempo polinomial (P vs NP)?" },
+    { "level": 8, "domain": "Lógica y Matemáticas", "question": "¿Qué significa verdad, prueba, estructura e información (Curry-Howard)?" }
+  ],
+  "civilization_foundational_manuscripts": [
+    { "title": "On Computable Numbers", "author": "Alan Turing (1936)", "impact": "Definió la Máquina Universal de Turing y el Halting Problem." },
+    { "title": "A Mathematical Theory of Communication", "author": "Claude Shannon (1948)", "impact": "Fundó la Teoría de la Información, definiendo el bit y la entropía $H(X)$." },
+    { "title": "An Unsolvable Problem of Elementary Number Theory", "author": "Alonzo Church (1936)", "impact": "Introdujo el Cálculo Lambda ($\\lambda$-calculus) y la tesis Church-Turing." },
+    { "title": "The Complexity of Theorem-Proving Procedures", "author": "Stephen Cook (1971)", "impact": "Estableció el concepto de NP-completitud (Teorema de Cook-Levin, SAT)." },
+    { "title": "Time, Clocks, and the Ordering of Events in a Distributed System", "author": "Leslie Lamport (1978)", "impact": "Introdujo los relojes lógicos y la relación de causalidad 'happens-before' ($\\to$)." },
+    { "title": "Impossibility of Distributed Consensus with One Faulty Process", "author": "Fischer, Lynch, Paterson (1985)", "impact": "El Teorema FLP: imposibilidad de consenso determinista asíncrono ante un fallo." },
+    { "title": "Recursive Functions of Symbolic Expressions", "author": "John McCarthy (1960)", "impact": "Creó Lisp, la computación simbólica y la recolección de basura (GC)." },
+    { "title": "The Next 700 Programming Languages", "author": "Peter Landin (1966)", "impact": "Fundó la teoría moderna de lenguajes de programación y la máquina SECD." }
+  ]
+}

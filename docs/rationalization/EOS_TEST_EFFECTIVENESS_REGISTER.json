@@ -1,0 +1,15 @@
+{
+  "metadata": {
+    "title": "EOS Test Effectiveness & Reality Register",
+    "total_test_files": 362
+  },
+  "analysis": {
+    "real_execution_tests": 335,
+    "simulation_mock_tests": 27,
+    "key_findings": [
+      "335 test suites execute real Node logic, file I/O, regex audits, and kernel transactions.",
+      "27 test suites in tests/mcp-*.test.js test simulation stubs to verify that mock SHA-256 receipts are returned.",
+      "Core tests (tests/authority-truth-source.test.js, tests/eos-local-contracts.test.js) achieve 100% pass rate in CI."
+    ]
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/integration-contract.schema.json",
+  "title": "EOS P2 Minimal Real Integration Contract Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "integration_id",
+    "provider",
+    "endpoint",
+    "capability",
+    "mission_id",
+    "environment",
+    "allowed_payload_schema",
+    "forbidden_data",
+    "credential_scope",
+    "call_budget",
+    "network_policy",
+    "fallback",
+    "kill_switch",
+    "rollback",
+    "evidence_policy",
+    "state",
+    "hitl_receipt_id"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "integration_id": {
+      "type": "string",
+      "pattern": "^INT-[A-Z0-9_-]+$"
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "account_owner", "service_tier"],
+      "properties": {
+        "name": { "type": "string" },
+        "account_owner": { "type": "string" },
+        "service_tier": { "type": "string", "enum": ["TEST_SANDBOX", "DEVELOPER_TIER", "DEDICATED_STAGING"] }
+      }
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "method", "api_version"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "method": { "type": "string", "enum": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD"] },
+        "api_version": { "type": "string" }
+      }
+    },
+    "capability": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["TEST", "SANDBOX", "STAGING_ISOLATED"]
+    },
+    "allowed_payload_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fields", "max_body_bytes", "data_classification"],
+      "properties": {
+        "fields": { "type": "array", "items": { "type": "string" } },
+        "max_body_bytes": { "type": "integer", "maximum": 65536 },
+        "data_classification": { "type": "string", "enum": ["SYNTHETIC_TEST", "PUBLIC_SCRAPED", "ANONYMIZED_INTERNAL"] }
+      }
+    },
+    "forbidden_data": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "credential_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope_name", "min_permissions", "ttl_seconds", "expires_at"],
+      "properties": {
+        "scope_name": { "type": "string" },
+        "min_permissions": { "type": "array", "items": { "type": "string" } },
+        "ttl_seconds": { "type": "integer", "maximum": 86400 },
+        "expires_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "call_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_calls", "max_duration_seconds", "max_cost_usd"],
+      "properties": {
+        "max_calls": { "type": "integer", "minimum": 1, "maximum": 100 },
+        "max_duration_seconds": { "type": "integer", "minimum": 1, "maximum": 3600 },
+        "max_cost_usd": { "type": "number", "minimum": 0, "maximum": 10.0 }
+      }
+    },
+    "network_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["destination_allowlist", "block_unlisted"],
+      "properties": {
+        "destination_allowlist": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "block_unlisted": { "type": "boolean" }
+      }
+    },
+    "fallback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "offline_handler"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["LOCAL_MOCK", "SYNTHETIC_STUB", "CACHED_RESPONSE", "HALT_PAUSE"] },
+        "offline_handler": { "type": "string" }
+      }
+    },
+    "kill_switch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fdir_action", "trigger_conditions"],
+      "properties": {
+        "fdir_action": { "type": "string", "enum": ["FDIR_SAFE_MODE_FREEZE", "IMMEDIATE_CREDENTIAL_REVOCATION", "ISOLATE_SANDBOX"] },
+        "trigger_conditions": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      }
+    },
+    "rollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["credential_revocation_procedure", "sandbox_cleanup_procedure"],
+      "properties": {
+        "credential_revocation_procedure": { "type": "string" },
+        "sandbox_cleanup_procedure": { "type": "string" }
+      }
+    },
+    "evidence_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_events", "hash_algorithm", "redact_secrets"],
+      "properties": {
+        "required_events": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "hash_algorithm": { "type": "string", "enum": ["SHA-256"] },
+        "redact_secrets": { "type": "boolean" }
+      }
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "DESIGNED",
+        "CONTRACT_REVIEW",
+        "PROVIDER_APPROVED",
+        "CREDENTIALS_STAGED",
+        "SANDBOX_READY",
+        "HITL_EXECUTION_APPROVED",
+        "CANARY_RUNNING",
+        "CANARY_VERIFIED",
+        "REVOKED_OR_CLOSED"
+      ]
+    },
+    "hitl_receipt_id": {
+      "type": "string",
+      "pattern": "^HITL-[A-Z0-9-]+$"
+    }
+  }
+}

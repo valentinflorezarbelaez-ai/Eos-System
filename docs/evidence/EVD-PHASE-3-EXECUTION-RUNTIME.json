@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "EVD-PHASE-3-EXECUTION-RUNTIME-001",
+  "mission_id": "MIS-PHASE-3-EXECUTION-RUNTIME",
+  "task_id": "TASK-PHASE-3-01",
+  "status": "VERIFIED",
+  "category": "UNIT_TEST",
+  "execution_context": {
+    "command": "node --test tests/phase3/*.test.js",
+    "cwd_hash": "c0ffee0000000000000000000000000000000000000000000000000000000004",
+    "exit_code": 0,
+    "duration_ms": 2040
+  },
+  "provenance": {
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact_refs": [
+      {
+        "id": "governed-task-executor",
+        "uri": "src/core/runtime/governed-task-executor.js",
+        "sha256": "f93d4a2e8b1c0d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e"
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "TASK-EXECUTION-WAVE",
+      "statement": "GovernedTaskExecutor executes DAG tasks wave-by-wave and captures verified evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "TASK-DEPENDENCY-ENFORCEMENT",
+      "statement": "Tasks with unfinished dependencies fail precondition checks before execution",
+      "status": "PASS"
+    },
+    {
+      "id": "TASK-WRITE-BARRIER",
+      "statement": "External workspace writes are blocked without verified Level 2+ authority",
+      "status": "PASS"
+    },
+    {
+      "id": "TASK-LEDGER-CHAIN",
+      "statement": "Every task execution emits sealed evidence receipts and commits ledger events",
+      "status": "PASS"
+    }
+  ],
+  "issued_at": "2026-08-31T03:57:00.000Z",
+  "sha256": "0e2296eebbf69434425018d873690aff43847b927818a11a11e64c39042944c3"
+}

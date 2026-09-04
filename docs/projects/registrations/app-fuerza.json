@@ -1,0 +1,58 @@
+{
+  "$schema": "../schema.json",
+  "project_id": "PRJ-APP-FUERZA",
+  "name": "ATP Strength (App Fuerza)",
+  "description": "Offline-First Neuromuscular Strength & ATP-PCr Resynthesis Platform featuring 1RM auto-regulation, dynamic 5-phase neuromuscular ramping, synthetic 528 Hz Web Audio API cues, pocket haptic telemetry, and FastAPI + PostgreSQL telemetry persistence.",
+  "path": "C:\\Users\\valen\\Documents\\APP fuerza",
+  "repository": "https://github.com/valentinflorezarbelaez-ai/ATP-STRENGTH",
+  "branch": "main",
+  "project_type": "WEB_APPLICATION",
+  "lifecycle_status": "AUDIT",
+  "technical_status": "AUDIT_EXECUTED",
+  "business_status": "REGISTERED_DEVELOPMENT",
+  "stack": [
+    "Next.js 16.3.4 (Turbopack)",
+    "React 19.2.8",
+    "Tailwind CSS v4",
+    "TypeScript 5",
+    "FastAPI 0.141",
+    "Python 3.12",
+    "PostgreSQL (Neon)",
+    "SQLAlchemy 2.0",
+    "Web Audio API",
+    "Web Vibration API",
+    "PWA Service Worker"
+  ],
+  "documentation": [
+    "docs/projects/registrations/app-fuerza.json",
+    "docs/intake/app-fuerza/PROJECT_CONTEXT.md",
+    "docs/audits/app-fuerza/AUDIT_REPORT.md",
+    "docs/specs/app-fuerza/001-core/spec.md"
+  ],
+  "constraints": [
+    "External Project Write Barrier Active (LEVEL 0 / READ ONLY until Level 2 Authorization)",
+    "Strict Offline-First capability (LocalStorage primary, async FastAPI sync)",
+    "Max initial boot time < 250ms on mobile devices",
+    "OLED True Black (#000000) visual standard for gym display power efficiency",
+    "Native Web Audio API synthesis without external MP3/media dependencies",
+    "Pocket haptic feedback (navigator.vibrate) for touchless rest completion alerts"
+  ],
+  "risks": [
+    "5 ESLint react-hooks/set-state-in-effect cascading re-render errors in page.tsx under React 19",
+    "58 Ruff lint findings in FastAPI backend (B008 Depends in default args, deprecated typing.List)",
+    "Neon PostgreSQL cloud connectivity dependency when running in fully disconnected environments"
+  ],
+  "assumptions": [
+    "Mobile browser supports Web Audio API and Web Vibration API",
+    "LocalStorage is available and unconstrained for offline telemetry storage"
+  ],
+  "owner": "ATP Strength Leadership / EOS Control Plane",
+  "intake_status": "COMPLETE",
+  "specification_status": "APPROVED",
+  "implementation_status": "COMPLETE",
+  "validation_status": "AUDIT_EXECUTED",
+  "release_status": "DEVELOPMENT",
+  "autonomy_level": "SUPERVISED",
+  "created_at": "2026-08-31T15:22:00Z",
+  "updated_at": "2026-09-03T22:35:00Z"
+}

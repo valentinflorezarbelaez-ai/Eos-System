@@ -1,0 +1,39 @@
+{
+  "catalog_id": "ONE-PERCENT-TECHNICAL-CANON-001",
+  "version": "1.0.0",
+  "golden_rule": "Leer no te coloca en el 1%. Lo que te coloca en el 1% es: Leer -> Implementar -> Medir -> Romper -> Explicar las decisiones -> Repetir el ciclo.",
+  "elite_core": [
+    { "title": "The Art of Computer Programming (TAOCP)", "author": "Donald Knuth", "area": "Algoritmos y Matemáticas" },
+    { "title": "Structure and Interpretation of Computer Programs (SICP)", "author": "Abelson & Sussman", "area": "Abstracción y Lenguajes" },
+    { "title": "Introduction to Algorithms (CLRS)", "author": "Cormen et al.", "area": "Algoritmos Formales" },
+    { "title": "Computer Systems: A Programmer's Perspective (CS:APP)", "author": "Bryant & O'Hallaron", "area": "Sistemas y Rendimiento" },
+    { "title": "Operating Systems: Three Easy Pieces (OSTEP)", "author": "Arpaci-Dusseau", "area": "Sistemas Operativos (Virtualización/Concurrencia/Persistencia)" },
+    { "title": "Compilers: Principles, Techniques, and Tools (Dragon Book)", "author": "Aho, Lam, Sethi, Ullman", "area": "Compiladores y Optimización" },
+    { "title": "Programming Language Pragmatics", "author": "Michael Scott", "area": "Semántica y Paradigmas de Lenguajes" },
+    { "title": "Crafting Interpreters", "author": "Robert Nystrom", "area": "Implementación de Intérpretes y VMs" }
+  ],
+  "world_class_distributed_systems": [
+    { "title": "MIT 6.5840 Distributed Systems", "instructor": "Robert Morris / Frans Kaashoek", "focus": "Laboratorios prácticos de Raft y consistencia" },
+    { "title": "Designing Data-Intensive Applications (DDIA)", "author": "Martin Kleppmann", "focus": "Modelos de almacenamiento, transacciones y replicación" },
+    { "title": "Database Internals", "author": "Alex Petrov", "focus": "Motores de almacenamiento, B-Trees, LSM-Trees, WAL y MVCC" },
+    { "title": "Distributed Systems", "author": "van Steen & Tanenbaum", "focus": "Fundamentos teóricos de distribución" },
+    { "title": "Designing Distributed Systems", "author": "Brendan Burns", "focus": "Patrones distribuidos y Kubernetes" }
+  ],
+  "seminal_papers_arsenal": [
+    { "paper": "MapReduce", "key_takeaway": "Procesamiento masivo paralelo simplificado." },
+    { "paper": "The Google File System (GFS)", "key_takeaway": "Almacenamiento distribuido tolerante a fallos frecuentes." },
+    { "paper": "Bigtable", "key_takeaway": "Base de datos columnar multidimensional sobre SSTables." },
+    { "paper": "Dynamo", "key_takeaway": "Eventual consistency, consistent hashing y vector clocks." },
+    { "paper": "Spanner", "key_takeaway": "Consistencia global estricta mediante TrueTime API (relojes atómicos + GPS)." },
+    { "paper": "Raft Consensus", "key_takeaway": "Consenso distribuido comprensible e implementable." },
+    { "paper": "The Log (Jay Kreps)", "key_takeaway": "La bitácora de eventos ordenada e inmutable como corazón de sistemas streaming (Kafka)." },
+    { "paper": "FLP Impossibility Result", "key_takeaway": "Demostración matemática de la imposibilidad de consenso determinista asíncrono ante un solo fallo." }
+  ],
+  "production_and_staff_leadership": [
+    { "title": "Google SRE Trilogy", "focus": "SLOs, Error Budgets, Incident Management y Seguridad" },
+    { "title": "Release It! (Michael Nygard)", "focus": "Circuit Breakers, Bulkheads, Steady-State y resiliencia" },
+    { "title": "Staff Engineer (Will Larson)", "focus": "Arquetipos de liderazgo técnico, influencia y estrategia" },
+    { "title": "The Staff Engineer's Path (Tanya Reilly)", "focus": "Pensamiento estratégico y ejecución transversal" },
+    { "title": "Software Engineering at Google", "focus": "Programación integrada a través del tiempo y escala" }
+  ]
+}

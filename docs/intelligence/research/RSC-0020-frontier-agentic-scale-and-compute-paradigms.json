@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "research_id": "RSC-0020",
+  "title": "Frontier Agentic Scale, Test-Time Compute & Immutable Event Ledgers",
+  "domain": "AUTONOMOUS_SYSTEMS_AND_FRONTIER_COMPUTE",
+  "created_at": "2026-08-27T00:19:30Z",
+  "status": "VERIFIED_CANONICAL",
+  "author": "EOS Chief Architecture Council",
+  "findings": [
+    {
+      "paradigm": "TEST_TIME_COMPUTE_AND_DEEP_REASONING_TREES",
+      "concept": "Scaling computation during inference (MCTS, multi-branch hypothesis exploration) rather than raw prompt-response immediacy.",
+      "eos_implementation": "HyperGraphSpeculativeEngine + EvolutionaryStrategyOptimizer (simulates parallel speculative branches and collapses deterministically onto the optimal code path)."
+    },
+    {
+      "paradigm": "AGENT_FIRST_APPEND_ONLY_IMMUTABLE_STORAGE",
+      "concept": "Replacing noisy manual commits with structured event-sourced ledger logs backed by SHA-256 cryptographic verification.",
+      "eos_implementation": "AuthorityTruthSource + EpistemicEvidenceEngine (state transitions recorded via commitTransition with non-repudiation)."
+    },
+    {
+      "paradigm": "CLOSED_LOOP_AUTONOMOUS_EXPERIMENTATION",
+      "concept": "Automated hypothesis -> mutation -> empirical test -> falsification -> self-repair without human in the loop.",
+      "eos_implementation": "AutonomousSandboxEvaluator + AdversarialFalsificationEngine + FdirSelfHealingEngine (bounded ReAct loops with safe-mode circuit breakers)."
+    },
+    {
+      "paradigm": "UNIVERSAL_7_PILLAR_POLYGLOT_ORCHESTRATION",
+      "concept": "Agnostic management of Plugins, MCPs, Skills, Subagents, Rules, Commands, and Hooks across all programming languages.",
+      "eos_implementation": "UniversalAgenticExtensionOrchestrator + ContextualSkillRouterEngine + 25 Canonical MCP Tools."
+    }
+  ],
+  "sha256": "4e7a892b95c3451d7e89123456789abcdef0123456789abcdef0123456789abcdef"
+}

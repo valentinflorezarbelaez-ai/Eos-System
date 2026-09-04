@@ -1,0 +1,38 @@
+{
+  "research_id": "RSC-0019",
+  "title": "Reverse-Engineering the Mechanical Secrets of 100% Autonomous Software Engineering Agents",
+  "target_environment": "Cursor IDE Native Operating Loop",
+  "timestamp": "2026-08-26T23:33:00Z",
+  "five_mechanical_secrets": [
+    {
+      "pillar": "1. ReAct + Test-Driven Reflexion Loops",
+      "mechanism": "Thought -> Action -> Observation -> Reflexion. Automated self-healing driven by terminal exit codes and stack trace parsing without human intervention.",
+      "pioneers": ["Devin (Cognition)", "SWE-agent (Princeton)", "OpenHands"]
+    },
+    {
+      "pillar": "2. AST-Aware Call Graph & Merkle Tree Indexing",
+      "mechanism": "Fast local symbol resolution, call graph traversal, and embedding Merkle trees to feed the model only high-relevance code snippets instead of bloated files.",
+      "pioneers": ["Cursor (Anysphere)", "Windsurf (Codeium)"]
+    },
+    {
+      "pillar": "3. Ephemeral Git Worktree Sandboxing",
+      "mechanism": "Zero-risk isolated execution in shadow worktrees (git worktree add). Total reversibility with atomic fast-forward merges upon 100% test pass.",
+      "pioneers": ["Factory.ai", "Anduril Lattice", "Devin"]
+    },
+    {
+      "pillar": "4. Zero-Trust Strict Schema Gating",
+      "mechanism": "Every tool call and agent transition is clamped to JSON Schema Draft 2020-12 strict mode. Disallowed inputs are rejected at the runtime boundary.",
+      "pioneers": ["Palantir Foundry", "OpenAI Strict Mode", "AWS GovCloud"]
+    },
+    {
+      "pillar": "5. Context Compaction & StateGraph Checkpointing",
+      "mechanism": "Cyclic state graphs with automatic context scrubbing. Terminal outputs are condensed into structured telemetry, preventing context window saturation.",
+      "pioneers": ["LangGraph", "Replit Agent", "CrewAI"]
+    }
+  ],
+  "cursor_native_integration_path": {
+    "rules": ".cursor/rules/*.mdc (Automated SDD phase rule injection)",
+    "mcp": "eos-local + engram + context7 + brave-search",
+    "execution": "Pure Node.js L0 Control Plane driving Cursor Composer agents"
+  }
+}

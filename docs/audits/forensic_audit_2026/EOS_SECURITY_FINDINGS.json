@@ -1,0 +1,20 @@
+[
+  {
+    "id": "SEC-001",
+    "severity": "LOW",
+    "title": "execSync invoked in McpMissionBridge for Git metadata",
+    "component": "src/core/mcp/mcp-mission-bridge.js (discoverWorkspace)",
+    "risk": "Hardcoded git rev-parse and git branch commands. No user input is interpolated; arguments are fixed literals.",
+    "exploitability": "NONE_UNDER_CURRENT_CODE",
+    "remediation": "Wrap child_process calls with try/catch and bounded timeouts."
+  },
+  {
+    "id": "SEC-002",
+    "severity": "INFORMATIONAL",
+    "title": "Protected surface path normalization against symlinks",
+    "component": "src/core/mcp/mcp-mission-bridge.js (barrierCheck)",
+    "risk": "Uses path.resolve(rawPath). On platforms supporting complex symlinks, path canonicalization via fs.realpathSync is recommended.",
+    "exploitability": "THEORETICAL",
+    "remediation": "Add fs.realpathSync check where paths exist on disk."
+  }
+]

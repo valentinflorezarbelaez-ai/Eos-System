@@ -1,0 +1,15 @@
+{
+  "evidenceId": "EVD-FUE-0010",
+  "timestamp": "2026-08-31T15:27:23.703Z",
+  "digest": "sha256-043560c430f151193bfb1bb2c1b9c575ddf6a08fe33ea4a4151ec99b143bddb2",
+  "data": {
+    "mision": "PRJ-PILOTO-FUERZA-TIMERS",
+    "proyecto": "App Fuerza",
+    "architecture": "Clean Architecture / Offline-First PWA",
+    "timersVerified": true,
+    "targetTimestampAccuracy": "100%_DETERMINISTIC",
+    "vibrationTriggerStatus": "NOMINAL",
+    "circuitBreaker": "NOMINAL",
+    "checksPassed": 482
+  }
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "category": "Historical Simulation Farm (84 engines in scripts/engine/)",
+    "status": "ISOLATED_WITH_FACADES",
+    "activeConsumers": "103 historical canary test suites in tests/",
+    "runtimeImpact": "ZERO (src/core is 100% self-contained)",
+    "retentionPolicy": "Retained to preserve historical test verifiability without polluting src/"
+  },
+  {
+    "category": "Legacy Monolithic CLI (scripts/cli/eos.js)",
+    "status": "DEPRECATED",
+    "activeConsumers": "package.json 'eos:legacy'",
+    "canonicalReplacement": "bin/eos.js (MissionCLI)",
+    "retentionPolicy": "Deprecation phase before eventual archive"
+  }
+]

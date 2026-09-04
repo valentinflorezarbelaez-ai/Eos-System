@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "EVD-PHASE-0-LLM-INTEGRATION-001",
+  "mission_id": "MIS-PHASE-0-INTELLIGENCE",
+  "task_id": "TASK-PHASE-0-01",
+  "status": "VERIFIED",
+  "category": "UNIT_TEST",
+  "execution_context": {
+    "command": "node --test tests/phase0/*.test.js",
+    "cwd_hash": "c0ffee0000000000000000000000000000000000000000000000000000000001",
+    "exit_code": 0,
+    "duration_ms": 210
+  },
+  "provenance": {
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact_refs": [
+      {
+        "id": "llm-port",
+        "uri": "src/core/ports/llm-port.js",
+        "sha256": "304ec22bf68fa64ef937517c2f6d0a790eaebc92c554e2ee21b8fbf790be992c"
+      },
+      {
+        "id": "gemini-adapter",
+        "uri": "src/core/adapters/llm/gemini-adapter.js",
+        "sha256": "76378e9064c9d5df4ff565d778d9faeb3971b3e839e9929851eb3c4fbb0411a7"
+      },
+      {
+        "id": "governed-llm-service",
+        "uri": "src/core/intelligence/governed-llm-service.js",
+        "sha256": "e5f5f41243db601d322ef419cb7ff0bb183c5098ffb4e85718a3854ee21e0653"
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "LLM-PORT-CONTRACT",
+      "statement": "LlmPort interface contract and hierarchy are strictly enforced across adapters",
+      "status": "PASS"
+    },
+    {
+      "id": "LLM-AUTH-GATE",
+      "statement": "LlmAuthorityGate rejects LEVEL_0 and unprivileged requests with LlmAuthError",
+      "status": "PASS"
+    },
+    {
+      "id": "LLM-BUDGET-TRACKING",
+      "statement": "LlmBudgetGovernor tracks real token usage and stops execution on budget breach",
+      "status": "PASS"
+    },
+    {
+      "id": "LLM-RECEIPT-ENGINE",
+      "statement": "LlmReceiptEngine produces verifiable cryptographic SHA-256 sealed receipts",
+      "status": "PASS"
+    },
+    {
+      "id": "LLM-STRUCTURED-VALIDATION",
+      "statement": "GovernedLlmService validates structured outputs against JSON Schema in fail-closed mode",
+      "status": "PASS"
+    },
+    {
+      "id": "LLM-NEGATIVE-GOVERNANCE",
+      "statement": "Model self-authorization claims are denied and cannot mutate EOS caller authority",
+      "status": "PASS"
+    }
+  ],
+  "issued_at": "2026-08-31T03:48:00.000Z",
+  "sha256": "cea4315fc904b98035b6ceb2ded5cb44d304cf52fcb277c180667fb4384627c9"
+}

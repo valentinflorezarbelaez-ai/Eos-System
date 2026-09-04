@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "title": "EOS Technical Debt Register",
+    "total_items": 6
+  },
+  "debt_items": [
+    {
+      "id": "DEBT-001",
+      "title": "Monolithic mcp-server.js File Size (119 KB / 2,491 lines)",
+      "impact": "Difficult maintenance, mixed concerns (routing, schemas, mock handlers, core dispatch).",
+      "recommendation": "Decompose into router, schema catalog, and modular handlers under src/mcp/handlers/.",
+      "risk": "LOW",
+      "reversibility": "HIGH"
+    },
+    {
+      "id": "DEBT-002",
+      "title": "Dual Mission Runtime Implementations",
+      "impact": "MissionRuntime vs EOSOrchestrator maintain parallel state representations.",
+      "recommendation": "Consolidate into EOSOrchestrator as the single state machine.",
+      "risk": "MEDIUM",
+      "reversibility": "HIGH"
+    },
+    {
+      "id": "DEBT-003",
+      "title": "In-Memory Simulation Tools in Production MCP Server",
+      "impact": "Agent prompt bloat and hallucinated security assurance.",
+      "recommendation": "Segregate 22 simulation tools to eos-lab MCP server.",
+      "risk": "LOW",
+      "reversibility": "HIGH"
+    },
+    {
+      "id": "DEBT-004",
+      "title": "Advisory Write Barrier vs Kernel-Level Enforcement",
+      "impact": "Agents can bypass barrier_check if writing via raw Node scripts outside MCP.",
+      "recommendation": "Wrap file modifications in guardrail-sandwich middleware.",
+      "risk": "MEDIUM",
+      "reversibility": "HIGH"
+    },
+    {
+      "id": "DEBT-005",
+      "title": "Dual Evidence Recording Interfaces",
+      "impact": "eos.kernel.evidence vs eos.evidence.record create confusion.",
+      "recommendation": "Deprecate eos.kernel.evidence in favor of physical file-sealing eos.evidence.record.",
+      "risk": "LOW",
+      "reversibility": "HIGH"
+    },
+    {
+      "id": "DEBT-006",
+      "title": "Hardcoded Provider Health Stub",
+      "impact": "Dead endpoint returning NOT_CONFIGURED.",
+      "recommendation": "Retire tool from canonical surface.",
+      "risk": "LOW",
+      "reversibility": "HIGH"
+    }
+  ]
+}

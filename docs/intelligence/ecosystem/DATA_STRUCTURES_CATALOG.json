@@ -1,0 +1,14 @@
+{
+  "catalog_id": "DATA-STRUCTURES-8-CANON",
+  "source": "BettaTech - 8 Data Structures Every Programmer Should Know",
+  "structures": [
+    { "name": "Array", "access": "O(1)", "search": "O(N)", "insertion": "O(N)", "deletion": "O(N)", "use_case": "Acceso aleatorio por índice y máxima localidad de cache L1-L3." },
+    { "name": "Linked List", "access": "O(N)", "search": "O(N)", "insertion": "O(1)", "deletion": "O(1)", "use_case": "Inserciones/eliminaciones frecuentes en extremos sin reasignación de memoria contigua." },
+    { "name": "Stack", "access": "O(N)", "search": "O(N)", "insertion": "O(1) push", "deletion": "O(1) pop", "use_case": "LIFO: Call stack, evaluación de expresiones de bytecode y algoritmos DFS." },
+    { "name": "Queue", "access": "O(N)", "search": "O(N)", "insertion": "O(1) enqueue", "deletion": "O(1) dequeue", "use_case": "FIFO: Buffering de tareas asíncronas, colas de mensajes y algoritmos BFS." },
+    { "name": "Hash Table", "access": "N/A", "search": "O(1) avg", "insertion": "O(1) avg", "deletion": "O(1) avg", "use_case": "Lookup ultrarrápido clave-valor con resolución de colisiones por hashing." },
+    { "name": "Trees (BST / Heap / Trie)", "access": "O(log N)", "search": "O(log N)", "insertion": "O(log N)", "deletion": "O(log N)", "use_case": "Jerarquías, DOM, colas de prioridad (Heaps) y autocompletado de texto (Tries)." },
+    { "name": "Graph (DAG)", "access": "O(V + E)", "search": "O(V + E)", "insertion": "O(1)", "deletion": "O(V + E)", "use_case": "Redes complejas, dependencias de compilación y ordenamiento topológico en pipelines." },
+    { "name": "Set", "access": "N/A", "search": "O(1)", "insertion": "O(1)", "deletion": "O(1)", "use_case": "Colección de elementos únicos y test de pertenencia en tiempo constante." }
+  ]
+}

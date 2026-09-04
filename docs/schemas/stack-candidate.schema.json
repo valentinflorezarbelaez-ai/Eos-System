@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/stack-candidate.schema.json",
+  "title": "EOS Universal Stack Candidate & Selection Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "stack_name",
+    "components",
+    "score_matrix",
+    "aggregate_score",
+    "tradeoff_rationale",
+    "evidence_level",
+    "human_approval_required"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "candidate_id": {
+      "type": "string",
+      "pattern": "^STACK-[A-Z0-9_-]+$"
+    },
+    "stack_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "components": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["language", "framework", "runtime", "database", "infrastructure"],
+      "properties": {
+        "language": { "type": "string" },
+        "framework": { "type": "string" },
+        "runtime": { "type": "string" },
+        "database": { "type": "string" },
+        "frontend": { "type": ["string", "null"] },
+        "backend": { "type": ["string", "null"] },
+        "infrastructure": { "type": "string" },
+        "ai_orchestration": { "type": ["string", "null"] }
+      }
+    },
+    "score_matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_compatibility",
+        "ecosystem_maturity",
+        "security_posture",
+        "cost_efficiency",
+        "performance_profile",
+        "talent_availability",
+        "operational_simplicity",
+        "reversibility"
+      ],
+      "properties": {
+        "project_compatibility": { "type": "number", "minimum": 0, "maximum": 10 },
+        "ecosystem_maturity": { "type": "number", "minimum": 0, "maximum": 10 },
+        "security_posture": { "type": "number", "minimum": 0, "maximum": 10 },
+        "cost_efficiency": { "type": "number", "minimum": 0, "maximum": 10 },
+        "performance_profile": { "type": "number", "minimum": 0, "maximum": 10 },
+        "talent_availability": { "type": "number", "minimum": 0, "maximum": 10 },
+        "operational_simplicity": { "type": "number", "minimum": 0, "maximum": 10 },
+        "reversibility": { "type": "number", "minimum": 0, "maximum": 10 }
+      }
+    },
+    "aggregate_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "tradeoff_rationale": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["why_recommended", "advantages", "disadvantages", "primary_risks", "fallback_option"],
+      "properties": {
+        "why_recommended": { "type": "string" },
+        "advantages": { "type": "array", "items": { "type": "string" } },
+        "disadvantages": { "type": "array", "items": { "type": "string" } },
+        "primary_risks": { "type": "array", "items": { "type": "string" } },
+        "fallback_option": { "type": "string" }
+      }
+    },
+    "evidence_level": {
+      "type": "string",
+      "enum": [
+        "DECLARED_SUPPORT",
+        "DISCOVERED_COMPATIBILITY",
+        "PROVEN_CAPABILITY"
+      ]
+    },
+    "human_approval_required": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "reason", "gate_id"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "reason": { "type": "string" },
+        "gate_id": { "type": "string" }
+      }
+    }
+  }
+}

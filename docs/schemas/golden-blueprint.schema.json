@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/golden-blueprint.schema.json",
+  "title": "EOS Golden Blueprint",
+  "description": "Canonical schema for EOS Spec-Driven & Agentic Engineering reference blueprints",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "blueprint_id",
+    "title",
+    "version",
+    "description",
+    "engineering_standard",
+    "lifecycle_phases",
+    "governance_invariants",
+    "required_engines"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "blueprint_id": {
+      "type": "string",
+      "pattern": "^BLP-[A-Z0-9-]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "engineering_standard": {
+      "type": "string"
+    },
+    "lifecycle_phases": {
+      "type": "array",
+      "minItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "phase_id",
+          "name",
+          "objective",
+          "required_inputs",
+          "required_outputs",
+          "epistemic_gate",
+          "governing_engines"
+        ],
+        "properties": {
+          "phase_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "objective": {
+            "type": "string"
+          },
+          "required_inputs": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "required_outputs": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "epistemic_gate": {
+            "type": "string",
+            "enum": ["HUMAN_APPROVAL_REQUIRED", "VERIFIED_EVIDENCE_REQUIRED", "AUTOMATED_CHECK_REQUIRED"]
+          },
+          "governing_engines": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "governance_invariants": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "required_engines": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

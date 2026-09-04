@@ -1,0 +1,25 @@
+{
+  "evidenceId": "EVD-FUE-0020",
+  "timestamp": "2026-08-31T15:35:36.258Z",
+  "digest": "sha256-0b9bc6c09d05e707fc4f8f49f2ac17be1f852077e012558c35615ce078fb5abd",
+  "data": {
+    "mision": "PRJ-PILOTO-FUERZA-E2E",
+    "proyecto": "App Fuerza",
+    "architecture": "Clean Architecture / Offline-First PWA",
+    "timersVerified": true,
+    "targetTimestampAccuracy": "100%_DETERMINISTIC",
+    "vibrationTriggerStatus": "NOMINAL",
+    "walStatus": {
+      "totalRecorded": 2,
+      "totalCommitted": 2,
+      "pendingRemaining": 0,
+      "integrityStatus": "VERIFIED_SHA256"
+    },
+    "circuitBreaker": "NOMINAL",
+    "checksPassed": 482,
+    "entries": [
+      "WAL-TX-DB82DC828AA4CCA8",
+      "WAL-TX-879C6BD1111DB530"
+    ]
+  }
+}

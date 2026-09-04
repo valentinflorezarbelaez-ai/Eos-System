@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0.0",
+  "mission_id": "MIS-FUERZA-001",
+  "contract_id": "CON-FUERZA-001",
+  "parent_mission_id": null,
+  "status": "active",
+  "phase": "PLAN",
+  "direction": {
+    "raw_prompt": "Eliminate 5 React 19 setState-in-effect cascading render errors and achieve 0 ESLint warnings on atp-strength-frontend",
+    "interpreted_goal": "Eliminate 5 React 19 setState-in-effect cascading render errors and achieve 0 ESLint warnings on atp-strength-frontend",
+    "business_context": "ATP Strength (App Fuerza) production hygiene refactor to ensure maximum performance and clean lifecycle compliance in React 19 / Next.js 16",
+    "success_criteria": [
+      "npm --prefix atp-strength-frontend run lint exits with code 0 (0 errors, 0 warnings)",
+      "npm --prefix atp-strength-frontend run build compiles with 0 errors via Turbopack",
+      "Preserve 100% backward compatibility of localStorage state hydration",
+      "Zero mutation to backend or database schemas"
+    ],
+    "constraints": [
+      "Write Barrier active: modify only atp-strength-frontend/src/app/page.tsx",
+      "Conventional commits on branch fix/react19-hook-hygiene",
+      "Zero new external dependencies"
+    ]
+  },
+  "authority": {
+    "level": "LEVEL_2",
+    "delegated_to": "CURSOR_AGENT_OPERATOR",
+    "valid_until": "2026-09-05T03:51:03.217Z",
+    "restrictions": [
+      "No external network egress without explicit P2/P3 gate receipt",
+      "External target mutation blocked (Δ = 0)",
+      "No secret leakage in logs or prompts"
+    ]
+  },
+  "budgets": {
+    "max_tokens": 40000,
+    "max_cost_usd": 0.15,
+    "max_duration_seconds": 3600,
+    "max_retries_per_task": 2
+  },
+  "scope": {
+    "project_id": "PRJ-APP-FUERZA",
+    "root_path": "C:/Users/valen/Documents/APP fuerza",
+    "included_paths": [
+      "atp-strength-frontend/src/app/page.tsx"
+    ],
+    "excluded_paths": [
+      "atp-strength-backend/**",
+      "render.yaml",
+      "package.json"
+    ],
+    "protected_surfaces": [
+      "atp-strength-backend/**",
+      "render.yaml",
+      "package.json"
+    ]
+  },
+  "artifacts": {
+    "required": [
+      "evidence_receipts",
+      "test_results",
+      "summary_report"
+    ],
+    "produced": []
+  },
+  "orchestration": {
+    "assigned_roles": [
+      {
+        "role": "SYSTEM_ARCHITECT",
+        "purpose": "Design and task decomposition"
+      },
+      {
+        "role": "CORE_ENGINEER",
+        "purpose": "Implementation and unit test verification"
+      },
+      {
+        "role": "EVIDENCE_AUDITOR",
+        "purpose": "Receipt verification and hash commitment"
+      }
+    ],
+    "tasks": [
+      {
+        "task_id": "T1",
+        "name": "Move Date.now() timestamp out of pure render",
+        "assigned_role": "CORE_ENGINEER",
+        "status": "proposed",
+        "dependencies": []
+      },
+      {
+        "task_id": "T2",
+        "name": "Refactor localStorage state hydration to lazy useState initializers",
+        "assigned_role": "CORE_ENGINEER",
+        "status": "proposed",
+        "dependencies": []
+      },
+      {
+        "task_id": "T3",
+        "name": "Encapsulate fetchMaxes and fetchHistory with active cancellation flags",
+        "assigned_role": "CORE_ENGINEER",
+        "status": "proposed",
+        "dependencies": []
+      },
+      {
+        "task_id": "T4",
+        "name": "Prune unused NEUROMUSCULAR_PHASES and verify 0 errors on npm run lint",
+        "assigned_role": "EVIDENCE_AUDITOR",
+        "status": "proposed",
+        "dependencies": []
+      }
+    ]
+  },
+  "evidence_policy": {
+    "required_categories": [
+      "UNIT_TEST",
+      "INTEGRATION_TEST",
+      "SECURITY_AUDIT"
+    ],
+    "hash_algorithm": "SHA-256",
+    "chain_to_ledger": true
+  }
+}

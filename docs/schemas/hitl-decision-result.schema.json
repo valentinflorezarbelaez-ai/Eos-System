@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/hitl-decision-result.schema.json",
+  "title": "EOS HITL Gatekeeper Decision Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "decision_id",
+    "mission_id",
+    "action_type",
+    "decision_class",
+    "status",
+    "validation_details",
+    "timestamp"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^DEC-[A-Z0-9-]+$"
+    },
+    "receipt_id": {
+      "type": ["string", "null"]
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "task_id": {
+      "type": ["string", "null"]
+    },
+    "action_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision_class": {
+      "enum": [
+        "delegated_routine",
+        "approval_required",
+        "human_only"
+      ]
+    },
+    "status": {
+      "enum": [
+        "AUTHORIZED",
+        "PAUSED_AWAITING_APPROVAL",
+        "DENIED",
+        "REVOKED"
+      ]
+    },
+    "validation_details": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["valid", "code", "field", "expected", "observed", "next_action"],
+      "properties": {
+        "valid": {
+          "type": "boolean"
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "next_action": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "sha256"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

@@ -1,0 +1,139 @@
+# EOS Canonical Patch: ContextCompiler Input Normalization & Contract Tests
+# Baseline Commit: 1b269932943c46849e463b293ace471a9745d3f1
+# Target Files: scripts/engine/context-compiler.js, tests/context-compiler-contract.test.js
+
+diff --git a/scripts/engine/context-compiler.js b/scripts/engine/context-compiler.js
+index a809982..ec6ce93 100644
+--- a/scripts/engine/context-compiler.js
++++ b/scripts/engine/context-compiler.js
+@@ -18,6 +18,43 @@ class ContextCompiler {
+   static normalizeContextInput(rawInput = {}) {
+     const input = rawInput || {};
+ 
++    // Extract mission info from nested or flat inputs
++    const rawMission = input.mission || {};
++    const missionId = rawMission.id || input.missionId || 'MIS-UNKNOWN';
++    const missionType = rawMission.type || input.missionType || 'GENERAL';
++    const missionGoal = rawMission.goal || input.missionGoal || input.goal || input.rawPrompt || '';
++    const normalizedMission = {
++      id: missionId,
++      type: missionType,
++      goal: missionGoal
++    };
++
++    // Extract project info from nested or flat inputs
++    const rawProject = input.project || {};
++    const projectId = rawProject.id || input.targetProject || input.projectId || 'PRJ-UNKNOWN';
++    const projectRoot = rawProject.rootPath || input.rootPath || '.';
++    const projectScope = Array.isArray(rawProject.activeScope) ? rawProject.activeScope : (Array.isArray(input.activeScope) ? input.activeScope : []);
++    const normalizedProject = {
++      id: projectId,
++      rootPath: projectRoot,
++      activeScope: projectScope
++    };
++
++    // Extract contract info from nested or flat inputs
++    const rawContract = input.contract || {};
++    const autonomyLevel = rawContract.autonomyLevel || input.autonomyLevel || 'LEVEL_0';
++    const maxBudgetTokens = typeof rawContract.maxBudgetTokens === 'number'
++      ? rawContract.maxBudgetTokens
++      : (typeof input.maxBudgetTokens === 'number' ? input.maxBudgetTokens : 4000);
++    const reserveCompletionTokens = typeof rawContract.reserveCompletionTokens === 'number'
++      ? rawContract.reserveCompletionTokens
++      : (typeof input.reserveCompletionTokens === 'number' ? input.reserveCompletionTokens : 500);
++    const normalizedContract = {
++      autonomyLevel,
++      maxBudgetTokens,
++      reserveCompletionTokens
++    };
++
+     // Normalize repository
+     const repository = input.repository || input.repoContext || {};
+     const normalizedRepo = {
+@@ -36,9 +73,9 @@ class ContextCompiler {
+     }
+ 
+     return {
+-      mission: input.mission || { id: 'MIS-UNKNOWN', type: 'GENERAL', goal: '' },
+-      project: input.project || { id: 'PRJ-UNKNOWN', rootPath: '.', activeScope: [] },
+-      contract: input.contract || { autonomyLevel: 'LEVEL_0', maxBudgetTokens: 4000, reserveCompletionTokens: 500 },
++      mission: normalizedMission,
++      project: normalizedProject,
++      contract: normalizedContract,
+       repository: normalizedRepo,
+       evidence: normalizedEvidence,
+       decisions: Array.isArray(input.decisions) ? input.decisions : [],
+
+
+# --- NEW FILE: tests/context-compiler-contract.test.js ---
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
+import { ContextCompiler } from '../scripts/engine/context-compiler.js';
+
+test('ContextCompiler Contract Suite', async (t) => {
+  await t.test('Flat input propagates missionId, targetProject, and maxBudgetTokens', () => {
+    const receipt = ContextCompiler.compileMissionContext({
+      missionId: 'MIS-PILOT-READONLY-001',
+      targetProject: 'PRJ-EOS-SYSTEM',
+      maxBudgetTokens: 2000,
+      rawPrompt: 'Verify flat prompt compilation'
+    });
+
+    assert.equal(receipt.missionId, 'MIS-PILOT-READONLY-001');
+    assert.equal(receipt.tokenBudget.maxBudgetTokens, 2000);
+    assert.ok(receipt.compiledPrompt.includes('=== MISSION CONTEXT: MIS-PILOT-READONLY-001 ==='));
+    assert.ok(receipt.compiledPrompt.includes('Project: PRJ-EOS-SYSTEM'));
+    assert.ok(receipt.compiledPrompt.includes('Goal: Verify flat prompt compilation'));
+    
+    // Receipt hash check
+    const expectedHash = crypto.createHash('sha256').update(receipt.compiledPrompt).digest('hex');
+    assert.equal(receipt.sha256, expectedHash);
+  });
+
+  await t.test('Nested input preserves backward compatibility', () => {
+    const receipt = ContextCompiler.compileMissionContext({
+      mission: { id: 'MIS-NESTED-002', type: 'DEVELOPMENT', goal: 'Build authentication' },
+      project: { id: 'PRJ-CORE', rootPath: '.', activeScope: ['src/core'] },
+      contract: { autonomyLevel: 'LEVEL_1', maxBudgetTokens: 3000, reserveCompletionTokens: 400 },
+      constraints: ['Strict zero mutation on external targets'],
+      instructions: ['Run tests before submit']
+    });
+
+    assert.equal(receipt.missionId, 'MIS-NESTED-002');
+    assert.equal(receipt.tokenBudget.maxBudgetTokens, 3000);
+    assert.ok(receipt.compiledPrompt.includes('=== MISSION CONTEXT: MIS-NESTED-002 ==='));
+    assert.ok(receipt.compiledPrompt.includes('Project: PRJ-CORE (Scope: src/core)'));
+    assert.ok(receipt.compiledPrompt.includes('Authority: A1 (MCL-1)'));
+    assert.ok(receipt.compiledPrompt.includes('[CONSTRAINT] Strict zero mutation'));
+  });
+
+  await t.test('Hybrid input prefers explicit nested object over flat fallback', () => {
+    const receipt = ContextCompiler.compileMissionContext({
+      mission: { id: 'MIS-NESTED-PRIORITY', goal: 'Nested Goal' },
+      missionId: 'MIS-FLAT-IGNORE',
+      targetProject: 'PRJ-FLAT-PROJECT',
+      maxBudgetTokens: 1500
+    });
+
+    assert.equal(receipt.missionId, 'MIS-NESTED-PRIORITY');
+    assert.equal(receipt.tokenBudget.maxBudgetTokens, 1500);
+    assert.ok(receipt.compiledPrompt.includes('=== MISSION CONTEXT: MIS-NESTED-PRIORITY ==='));
+    assert.ok(receipt.compiledPrompt.includes('Project: PRJ-FLAT-PROJECT'));
+  });
+
+  await t.test('Null or empty input falls back gracefully to safe defaults', () => {
+    const receipt = ContextCompiler.compileMissionContext(null);
+    assert.equal(receipt.missionId, 'MIS-UNKNOWN');
+    assert.equal(receipt.tokenBudget.maxBudgetTokens, 4000);
+    assert.ok(receipt.compiledPrompt.includes('=== MISSION CONTEXT: MIS-UNKNOWN ==='));
+    assert.ok(receipt.compiledPrompt.includes('Project: PRJ-UNKNOWN'));
+  });
+
+  await t.test('compileContext legacy shorthand helper works seamlessly', () => {
+    const receipt = ContextCompiler.compileContext('MIS-LEGACY-001', 'NODE-42', 2500);
+    assert.equal(receipt.missionId, 'MIS-LEGACY-001');
+    assert.equal(receipt.tokenBudget.maxBudgetTokens, 2500);
+    assert.ok(receipt.compiledPrompt.includes('Goal: Execute node NODE-42'));
+  });
+});

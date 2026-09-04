@@ -1,0 +1,64 @@
+{
+  "catalog_id": "CANONICAL-CS-LIBRARY-COGNITIONS-001",
+  "version": "1.0.0",
+  "domains": [
+    {
+      "domain": "FUNDAMENTOS Y ABSTRACCIÓN",
+      "canonical_books": [
+        { "title": "Structure and Interpretation of Computer Programs (SICP)", "authors": ["Harold Abelson", "Gerald Jay Sussman"], "core_axiom": "Programs must be written for people to read, and only incidentally for machines to execute. Computational processes as abstract entities manipulating abstract data." },
+        { "title": "The C Programming Language", "authors": ["Brian Kernighan", "Dennis Ritchie"], "core_axiom": "Direct control of hardware, explicit memory management, structured programming, and unambiguous semantics." },
+        { "title": "Think Python", "authors": ["Allen B. Downey"], "core_axiom": "Computational thinking and problem decomposition from first principles." }
+      ]
+    },
+    {
+      "domain": "ALGORITMOS Y ESTRUCTURAS DE DATOS",
+      "canonical_books": [
+        { "title": "Introduction to Algorithms (CLRS)", "authors": ["Thomas H. Cormen", "Charles E. Leiserson", "Ronald L. Rivest", "Clifford Stein"], "core_axiom": "Rigorous asymptotic analysis (Big-O, Omega, Theta), dynamic programming, greedy algorithms, and graph theory." },
+        { "title": "The Algorithm Design Manual", "authors": ["Steven S. Skiena"], "core_axiom": "War stories and practical algorithm design: modeling problems into known graph/combinatorial structures." },
+        { "title": "The Art of Computer Programming (TAOCP)", "authors": ["Donald E. Knuth"], "core_axiom": "Mathematical precision, exact step analysis, combinatorial algorithms, and fundamental algorithms." }
+      ]
+    },
+    {
+      "domain": "CALIDAD Y ARTESANÍA DEL CÓDIGO (CRAFTSMANSHIP)",
+      "canonical_books": [
+        { "title": "Clean Code", "authors": ["Robert C. Martin (Uncle Bob)"], "core_axiom": "Small atomic functions, single responsibility, meaningful naming, and leaving the code cleaner than you found it (Boy Scout Rule)." },
+        { "title": "Refactoring", "authors": ["Martin Fowler"], "core_axiom": "Transforming the internal structure of software to make it easier to understand and cheaper to modify without changing its observable behavior." },
+        { "title": "The Pragmatic Programmer", "authors": ["Andrew Hunt", "David Thomas"], "core_axiom": "DRY (Don't Repeat Yourself), Orthogonality, Tracer Bullets, Broken Windows Theory, and continuous learning." },
+        { "title": "Working Effectively with Legacy Code", "authors": ["Michael Feathers"], "core_axiom": "Legacy code is code without tests. Finding seams, breaking dependencies, and introducing characterization tests." },
+        { "title": "Code Complete", "authors": ["Steve McConnell"], "core_axiom": "Exhaustive software construction, defensive programming, and engineering discipline across the full construction lifecycle." }
+      ]
+    },
+    {
+      "domain": "ARQUITECTURA Y SISTEMAS DISTRIBUIDOS",
+      "canonical_books": [
+        { "title": "Domain-Driven Design (DDD)", "authors": ["Eric Evans"], "core_axiom": "Ubiquitous Language, Bounded Contexts, Aggregates, Entities, Value Objects, and Domain Events as the true core of complex software." },
+        { "title": "Design Patterns (GoF)", "authors": ["Erich Gamma", "Richard Helm", "Ralph Johnson", "John Vlissides"], "core_axiom": "Reusable object-oriented design patterns: Creational, Structural, and Behavioral abstractions." },
+        { "title": "Designing Data-Intensive Applications (DDIA)", "authors": ["Martin Kleppmann"], "core_axiom": "Reliability, Scalability, Maintainability. LSM-Trees vs B-Trees, Consensus (Raft/Paxos), Linearizability, Event Streams, and Partitioning." },
+        { "title": "Software Architecture: The Hard Parts", "authors": ["Neal Ford", "Mark Richards", "Pramod Sadalage", "Zhamak Dehghani"], "core_axiom": "Architecture is the stuff that's hard to change. Evaluating trade-offs in distributed transactions (Sagas), service granularity, and data isolation." },
+        { "title": "Patterns of Enterprise Application Architecture", "authors": ["Martin Fowler"], "core_axiom": "Domain Model, Data Mapper, Unit of Work, Repository, and Service Layer patterns." }
+      ]
+    },
+    {
+      "domain": "SISTEMAS OPERATIVOS, REDES Y BAJO NIVEL",
+      "canonical_books": [
+        { "title": "Computer Systems: A Programmer's Perspective (CS:APP)", "authors": ["Randal E. Bryant", "David R. O'Hallaron"], "core_axiom": "Understanding how the CPU, cache hierarchy (L1/L2/L3), memory virtualizer, and linker collaborate to execute code." },
+        { "title": "Operating Systems: Three Easy Pieces (OSTEP)", "authors": ["Remzi H. Arpaci-Dusseau", "Andrea C. Arpaci-Dusseau"], "core_axiom": "The three pillars: Virtualization (CPU/Memory), Concurrency (Threads/Locks/Semaphores), and Persistence (File Systems/Disks)." },
+        { "title": "Computer Networking: A Top-Down Approach", "authors": ["James Kurose", "Keith Ross"], "core_axiom": "Application layer down to physical: HTTP, DNS, TCP congestion control, sliding windows, IP routing, and packet mechanics." }
+      ]
+    },
+    {
+      "domain": "DESARROLLO WEB Y JAVASCRIPT PROFUNDO",
+      "canonical_books": [
+        { "title": "You Don't Know JS Yet (YDKJS)", "authors": ["Kyle Simpson"], "core_axiom": "Scope, Closures, this & Object Prototypes, Types & Grammar, Async & Performance, and the JavaScript Event Loop." },
+        { "title": "Eloquent JavaScript", "authors": ["Marijn Haverbeke"], "core_axiom": "From functional programming and data structures to asynchronous programming and browser DOM manipulation." }
+      ]
+    },
+    {
+      "domain": "BASES DE DATOS Y PERSISTENCIA",
+      "canonical_books": [
+        { "title": "Database System Concepts", "authors": ["Abraham Silberschatz", "Henry F. Korth", "S. Sudarshan"], "core_axiom": "Relational algebra, normalization (1NF-BCNF), ACID transaction management, indexing, and query optimization." },
+        { "title": "SQL Antipatterns", "authors": ["Bill Karwin"], "core_axiom": "Identifying and avoiding structural, query, and architectural pitfalls in relational database design." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/transition-error.schema.json",
+  "title": "EOS SDD Transition Error Diagnostic",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "error_id",
+    "code",
+    "field",
+    "expected",
+    "observed",
+    "next_action",
+    "mission_id",
+    "timestamp"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "error_id": {
+      "type": "string",
+      "pattern": "^ERR-[A-Z0-9-]+$"
+    },
+    "code": {
+      "enum": [
+        "INVALID_STATE_TRANSITION",
+        "INSUFFICIENT_AUTHORITY",
+        "EXPIRED_HITL_RECEIPT",
+        "MISSING_REQUIRED_ARTIFACT",
+        "PROTECTED_SURFACE_VIOLATION",
+        "UNDECLARED_TOOL_ACCESS",
+        "BUDGET_EXHAUSTED",
+        "REPLAY_DETECTED",
+        "INVALID_EVIDENCE_STATUS",
+        "SELF_APPROVAL_VIOLATION",
+        "GATE_SKIPPED",
+        "SCHEMA_VALIDATION_FAILED"
+      ]
+    },
+    "field": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expected": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed": {
+      "type": "string",
+      "minLength": 1
+    },
+    "next_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

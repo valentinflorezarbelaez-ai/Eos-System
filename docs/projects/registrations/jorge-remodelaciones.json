@@ -1,0 +1,47 @@
+{
+  "$schema": "../schema.json",
+  "project_id": "PRJ-JORGE-REMODELACIONES",
+  "name": "Jorge Remodelaciones & Acabados",
+  "description": "High-conversion residential remodeling and grey-work completion landing page with particle physics canvas, split-before/after comparison sliders, dynamic category gallery, and direct WhatsApp lead conversion hub.",
+  "path": "C:\\Users\\valen\\Documents\\jorge_landing page",
+  "repository": "https://github.com/valentinflorezarbelaez-ai/Jorge-remodelaciones",
+  "branch": "main",
+  "project_type": "WEBSITE",
+  "lifecycle_status": "RELEASE_READY",
+  "technical_status": "VERIFIED",
+  "business_status": "PRODUCTION_READY",
+  "stack": ["HTML5", "CSS3", "Vanilla JavaScript", "Vercel"],
+  "documentation": [
+    "docs/projects/registrations/jorge-remodelaciones.json",
+    "docs/intake/jorge-remodelaciones/PROJECT_CONTEXT.md",
+    "docs/intake/jorge-remodelaciones/CONTENT_INVENTORY.md",
+    "docs/audits/jorge-remodelaciones/AUDIT_REPORT.md",
+    "docs/specs/jorge-remodelaciones/001-mvp/spec.md"
+  ],
+  "constraints": [
+    "External Project Write Barrier Active (READ ONLY until Level 2 Authorization)",
+    "Pure vanilla zero heavy dependencies rule",
+    "WCAG 2.1 AA accessibility compliance",
+    "Core Web Vitals green zone (LCP < 2.5s, CLS < 0.1, INP < 200ms)",
+    "Clean/Hexagonal architectural boundaries"
+  ],
+  "risks": [
+    "Uncompressed raw images (~6.3 MB total) severely degrading mobile LCP and page load times",
+    "Missing robots.txt and sitemap.xml impairing Google indexing and local SEO",
+    "Zero custom keyboard focus indicators violating WCAG 2.1 Focus Visible criterion",
+    "Orphaned dead code in app.js (initParticles and initMetricCounters defined but never invoked on DOMContentLoaded)"
+  ],
+  "assumptions": [
+    "Target hosting remains Vercel Static Hosting",
+    "Primary conversion goal is direct WhatsApp inquiry to Alejandra Arbeláez (+57 310 801 1600)"
+  ],
+  "owner": "Jorge Remodelaciones Leadership / EOS Control Plane",
+  "intake_status": "COMPLETE",
+  "specification_status": "APPROVED",
+  "implementation_status": "COMPLETE",
+  "validation_status": "PASSED",
+  "release_status": "PRODUCTION",
+  "autonomy_level": "SUPERVISED",
+  "created_at": "2026-09-03T17:56:00Z",
+  "updated_at": "2026-09-03T18:17:00Z"
+}

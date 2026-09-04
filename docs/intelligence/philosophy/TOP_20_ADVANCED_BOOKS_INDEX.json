@@ -1,0 +1,33 @@
+{
+  "catalog_id": "LEGENDARY-CS-TOP-20-001",
+  "version": "1.0.0",
+  "legendary_career_path": [
+    { "phase": 1, "stage": "Madurez Profesional y Hábitos", "book": "The Pragmatic Programmer", "author": "Andrew Hunt & David Thomas" },
+    { "phase": 2, "stage": "Desmitificación del Hardware", "book": "Computer Systems: A Programmer's Perspective (CS:APP)", "author": "Randal E. Bryant & David R. O'Hallaron" },
+    { "phase": 3, "stage": "Rigor Algorítmico y Complejidad", "book": "Introduction to Algorithms (CLRS)", "author": "Thomas H. Cormen et al." },
+    { "phase": 4, "stage": "Arquitectura y Sistemas del Mundo Real", "books": ["Designing Data-Intensive Applications (DDIA)", "Refactoring", "Domain-Driven Design (DDD)"] },
+    { "phase": 5, "stage": "Maestría Formal, Compiladores y Computación Teórica", "books": ["The Art of Computer Programming (TAOCP)", "Structure and Interpretation of Computer Programs (SICP)", "Dragon Book (Compilers)"] }
+  ],
+  "top_20_masterpieces": [
+    { "rank": 1, "title": "Designing Data-Intensive Applications (DDIA)", "author": "Martin Kleppmann", "core_focus": "Sistemas Distribuidos, Consenso, Replicación, Transacciones y Modelos de Datos" },
+    { "rank": 2, "title": "Computer Systems: A Programmer's Perspective (CS:APP)", "author": "Randal E. Bryant & David R. O'Hallaron", "core_focus": "Interacción Hardware-Software, Caches, Memoria Virtual y Ensamblador" },
+    { "rank": 3, "title": "Introduction to Algorithms (CLRS)", "author": "Thomas H. Cormen et al.", "core_focus": "Algoritmos Formales, Estructuras de Datos y Análisis Asintótico" },
+    { "rank": 4, "title": "The Pragmatic Programmer", "author": "Andrew Hunt & David Thomas", "core_focus": "Mentalidad Profesional, Ortogonalidad y Responsabilidad Técnica" },
+    { "rank": 5, "title": "Refactoring", "author": "Martin Fowler", "core_focus": "Transformación Segura del Código Preservando Comportamiento" },
+    { "rank": 6, "title": "Working Effectively with Legacy Code", "author": "Michael Feathers", "core_focus": "Costuras (Seams), Ruptura de Dependencias y Tests de Caracterización" },
+    { "rank": 7, "title": "Design Patterns (GoF)", "author": "Erich Gamma et al.", "core_focus": "Patrones Creacionales, Estructurales y de Comportamiento" },
+    { "rank": 8, "title": "Structure and Interpretation of Computer Programs (SICP)", "author": "Harold Abelson & Gerald Jay Sussman", "core_focus": "Pensamiento Computacional, Abstracción e Intérpretes" },
+    { "rank": 9, "title": "Domain-Driven Design (DDD)", "author": "Eric Evans", "core_focus": "Lenguaje Ubicuo, Bounded Contexts, Agregados y Entidades" },
+    { "rank": 10, "title": "The Art of Computer Programming (TAOCP)", "author": "Donald E. Knuth", "core_focus": "Profundidad Matemática y Algorítmica Extrema" },
+    { "rank": 11, "title": "Clean Architecture", "author": "Robert C. Martin (Uncle Bob)", "core_focus": "Inversión de Dependencias y Aislamiento de Reglas de Negocio" },
+    { "rank": 12, "title": "Code Complete", "author": "Steve McConnell", "core_focus": "Ciclo Completo de Construcción y Programación Defensiva" },
+    { "rank": 13, "title": "Compilers: Principles, Techniques, and Tools (Dragon Book)", "author": "Alfred V. Aho et al.", "core_focus": "Análisis Léxico, Parsing AST, Optimización y Generación de Código" },
+    { "rank": 14, "title": "Operating Systems: Three Easy Pieces (OSTEP)", "author": "Remzi H. Arpaci-Dusseau et al.", "core_focus": "Virtualización, Concurrencia y Persistencia" },
+    { "rank": 15, "title": "The Mythical Man-Month", "author": "Frederick P. Brooks Jr.", "core_focus": "Ley de Brooks, Integridad Conceptual y Dinámica de Equipos" },
+    { "rank": 16, "title": "Peopleware", "author": "Tom DeMarco & Timothy Lister", "core_focus": "Productividad Humana, Estado de Flow y Cultura de Ingeniería" },
+    { "rank": 17, "title": "Effective Java", "author": "Joshua Bloch", "core_focus": "Diseño de APIs Robustas, Inmutabilidad y Concurrencia" },
+    { "rank": 18, "title": "Modern Operating Systems", "author": "Andrew S. Tanenbaum & Herbert Bos", "core_focus": "Kernels, Gestión de Memoria, IPC y Seguridad" },
+    { "rank": 19, "title": "Programming Language Pragmatics", "author": "Michael L. Scott", "core_focus": "Semántica de Lenguajes, Sistemas de Tipos y Modelos de Memoria" },
+    { "rank": 20, "title": "Gödel, Escher, Bach (GEB)", "author": "Douglas Hofstadter", "core_focus": "Sistemas Formales, Recursión, Bucles Extraños y Emergencia" }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "EVD-PHASE-6-PERSISTENT-KNOWLEDGE-001",
+  "mission_id": "MIS-PHASE-6-PERSISTENT-KNOWLEDGE",
+  "task_id": "TASK-PHASE-6-01",
+  "status": "VERIFIED",
+  "category": "INTEGRATION_TEST",
+  "execution_context": {
+    "command": "node --test tests/phase6/*.test.js",
+    "cwd_hash": "c0ffee0000000000000000000000000000000000000000000000000000000007",
+    "exit_code": 0,
+    "duration_ms": 750
+  },
+  "provenance": {
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact_refs": [
+      {
+        "id": "bkm-item-schema",
+        "uri": "docs/schemas/bkm-item.schema.json",
+        "sha256": "a1b2c3d4e5f60123456789abcdef0123456789abcdef0123456789abcdef0123"
+      },
+      {
+        "id": "epistemic-knowledge-service",
+        "uri": "src/core/memory/epistemic-knowledge-service.js",
+        "sha256": "b2c3d4e5f6a70123456789abcdef0123456789abcdef0123456789abcdef0123"
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "AUTOMATIC-BKM-DISTILLATION",
+      "statement": "EpistemicKnowledgeService automatically distills verified BKM on mission closure",
+      "status": "PASS"
+    },
+    {
+      "id": "CROSS-PROJECT-KNOWLEDGE-TRANSFER",
+      "statement": "Distilled BKMs are queryable and transferable to subsequent missions",
+      "status": "PASS"
+    },
+    {
+      "id": "SECRET-SCRUBBING-ENFORCEMENT",
+      "statement": "Sensitive tokens, keys, and home paths are sanitized before BKM persistence",
+      "status": "PASS"
+    },
+    {
+      "id": "BKM-SCHEMA-CONFORMANCE",
+      "statement": "All distilled BKMs strictly conform to bkm-item.schema.json",
+      "status": "PASS"
+    }
+  ],
+  "issued_at": "2026-08-31T04:08:00.000Z",
+  "sha256": "eb81d57ba259e069a939982a98cdcac66822e8089d160baa494c3bcdb3238d39"
+}

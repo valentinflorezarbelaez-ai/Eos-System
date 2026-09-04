@@ -1,0 +1,27 @@
+{
+  "catalog_id": "ADVANCED-STAFF-RESOURCES-001",
+  "version": "1.0.0",
+  "holy_trinity": [
+    { "title": "Computer Systems: A Programmer's Perspective (CS:APP)", "domain": "Bajo Nivel y Memoria", "impact": "Elimina la 'caja negra' del hardware y la memoria." },
+    { "title": "Designing Data-Intensive Applications (DDIA)", "domain": "Arquitectura de Datos y Distribuidos", "impact": "Enseña el razonamiento de trade-offs en replicación, particiones y consistencia." },
+    { "title": "MIT 6.5840 Distributed Systems", "domain": "Sistemas Distribuidos y Tolerancia a Fallos", "impact": "Implementación práctica de Raft, Paxos y tolerancia a particiones de red." }
+  ],
+  "supreme_8_stage_mastery_track": [
+    { "stage": 1, "resource": "CS:APP", "outcome": "Comprender memoria, procesos, rendimiento y ejecución en CPU." },
+    { "stage": 2, "resource": "SICP / Crafting Interpreters", "outcome": "Dominar abstracción, compiladores, AST y máquinas virtuales." },
+    { "stage": 3, "resource": "CLRS", "outcome": "Diseñar y analizar algoritmos con rigor asintótico y optimalidad." },
+    { "stage": 4, "resource": "MIT 6.5840 Labs", "outcome": "Implementar sistemas distribuidos tolerantes a fallos reales (Raft)." },
+    { "stage": 5, "resource": "DDIA (Martin Kleppmann)", "outcome": "Elegir arquitecturas de datos con criterio formal de trade-offs." },
+    { "stage": 6, "resource": "Google SRE Trilogy", "outcome": "Operar sistemas confiables en producción con SLOs y Error Budgets." },
+    { "stage": 7, "resource": "Software Engineering at Google", "outcome": "Mantener código y procesos a escala de miles de ingenieros a lo largo del tiempo." },
+    { "stage": 8, "resource": "Staff Engineer / Staff Engineer's Path", "outcome": "Liderazgo técnico, pensamiento estratégico e influencia transversal sin dejar el código." }
+  ],
+  "seminal_papers_index": [
+    { "paper": "MapReduce", "authors": ["Jeffrey Dean", "Sanjay Ghemawat"], "core_lesson": "Procesamiento masivo de datos mediante funciones puras Map y Reduce sobre hardware commodity." },
+    { "paper": "The Google File System (GFS)", "authors": ["Sanjay Ghemawat", "Howard Gobioff", "Shun-Tak Leung"], "core_lesson": "Almacenamiento distribuido tolerante a fallos frecuentes con bloques de 64MB y nodo maestro único." },
+    { "paper": "Bigtable", "authors": ["Fay Chang et al."], "core_lesson": "Almacenamiento estructurado disperso, distribuido y multidimensional sobre SSTables y MemTables." },
+    { "paper": "Dynamo", "authors": ["Giuseppe DeCandia et al. (Amazon)"], "core_lesson": "Alta disponibilidad sobre consistencia estricta (Eventual Consistency), Consistent Hashing y Vector Clocks." },
+    { "paper": "Spanner", "authors": ["James C. Corbett et al. (Google)"], "core_lesson": "Base de datos globalmente distribuida con consistencia externa mediante relojes atómicos y GPS (TrueTime API)." },
+    { "paper": "Raft Consensus", "authors": ["Diego Ongaro", "John Ousterhout"], "core_lesson": "Algoritmo de consenso comprensible y formalmente equivalente a Paxos (Leader Election, Log Replication, Safety)." }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0.0",
+  "blueprint_id": "BLP-GOLDEN-SDD-001",
+  "title": "EOS Golden Spec-Driven Development Blueprint",
+  "version": "1.0.0",
+  "description": "Master reference blueprint for the 9-phase autonomous, governed Spec-Driven & Agentic Engineering lifecycle",
+  "engineering_standard": "LIDR-AI4Devs / SpaceX Flight Tier Standard",
+  "lifecycle_phases": [
+    {
+      "phase_id": "PHASE_01_VISION_AND_INTAKE",
+      "name": "Vision & Business Goal Formulation",
+      "objective": "Capture high-level problem statement, business objectives, stakeholder constraints and epistemic risk tiers without premature implementation",
+      "required_inputs": ["PROBLEM_STATEMENT", "STAKEHOLDER_CONSTRAINTS"],
+      "required_outputs": ["DIRECTION_DOCUMENT", "EPISTEMIC_RISK_PROFILE"],
+      "epistemic_gate": "HUMAN_APPROVAL_REQUIRED",
+      "governing_engines": ["HitlGatekeeper", "AuthorityTruthSource"]
+    },
+    {
+      "phase_id": "PHASE_02_TECHNICAL_DISCOVERY",
+      "name": "10-Domain Technical Discovery & Stack Selection",
+      "objective": "Inspect target environment in 10 domains and evaluate multicriteria architectural trade-offs with reversibility index",
+      "required_inputs": ["PROJECT_ROOT_DIRECTORY"],
+      "required_outputs": ["PROJECT_PROFILE", "ARCHITECTURAL_DECISION_RECORD"],
+      "epistemic_gate": "VERIFIED_EVIDENCE_REQUIRED",
+      "governing_engines": ["UniversalTechnicalDiscoveryEngine", "GovernedTechnicalSelectionEngine"]
+    },
+    {
+      "phase_id": "PHASE_03_SPECIFICATION_AND_CONTRACTS",
+      "name": "Formal Specification & JSON Schema Contracts",
+      "objective": "Define domain entities, interface contracts, JSON Schemas Draft 2020-12 and endpoint boundaries before writing code",
+      "required_inputs": ["ARCHITECTURAL_DECISION_RECORD", "PROJECT_PROFILE"],
+      "required_outputs": ["JSON_SCHEMA_CONTRACTS", "INTEGRATION_GATE_SPEC"],
+      "epistemic_gate": "AUTOMATED_CHECK_REQUIRED",
+      "governing_engines": ["SchemaValidator", "IntegrationGatekeeper"]
+    },
+    {
+      "phase_id": "PHASE_04_ARCHITECTURE_AND_DESIGN",
+      "name": "First-Principles Architecture & Anti-Bloat Design",
+      "objective": "Synthesize minimal hexagonal/screaming architecture and apply first-principles de-complexity pruning",
+      "required_inputs": ["JSON_SCHEMA_CONTRACTS"],
+      "required_outputs": ["C4_DESIGN_DOCUMENT", "SIMPLIFICATION_PLAN"],
+      "epistemic_gate": "VERIFIED_EVIDENCE_REQUIRED",
+      "governing_engines": ["FirstPrinciplesSimplifierEngine", "ByzantineConsensusEngine"]
+    },
+    {
+      "phase_id": "PHASE_05_TASK_DAG_DECOMPOSITION",
+      "name": "Topological Task DAG Decomposition & Pareto Routing",
+      "objective": "Break down implementation into atomic task contracts, calculate Kahn topological waves, and route tasks to Pareto-optimal model tiers",
+      "required_inputs": ["C4_DESIGN_DOCUMENT", "JSON_SCHEMA_CONTRACTS"],
+      "required_outputs": ["TOPOLOGICAL_TASK_DAG", "ROUTING_ENVELOPE"],
+      "epistemic_gate": "AUTOMATED_CHECK_REQUIRED",
+      "governing_engines": ["MissionDagPipelineEngine", "CognitiveParetoRouter"]
+    },
+    {
+      "phase_id": "PHASE_06_HERMETIC_TDD_EXECUTION",
+      "name": "Hermetic TDD Sandbox Execution & FDIR Self-Healing",
+      "objective": "Execute tasks in isolated worktree sandboxes under strict Red-Green-Refactor with automated FDIR fault isolation",
+      "required_inputs": ["TOPOLOGICAL_TASK_DAG"],
+      "required_outputs": ["MUTATION_DIFF", "UNIT_TEST_EVIDENCE_RECEIPT"],
+      "epistemic_gate": "VERIFIED_EVIDENCE_REQUIRED",
+      "governing_engines": ["WorktreeMutationEngine", "FdirSelfHealingEngine"]
+    },
+    {
+      "phase_id": "PHASE_07_ADVERSARIAL_QA_AND_CHAOS",
+      "name": "Adversarial Red-Teaming & Deterministic Chaos Drills",
+      "objective": "Subject generated code to 6 adversarial attack vectors and seeded chaos fault injections to prove resilience",
+      "required_inputs": ["MUTATION_DIFF", "UNIT_TEST_EVIDENCE_RECEIPT"],
+      "required_outputs": ["FALSIFICATION_RECEIPT", "CHAOS_DRILL_REPORT"],
+      "epistemic_gate": "AUTOMATED_CHECK_REQUIRED",
+      "governing_engines": ["AdversarialFalsificationEngine", "DeterministicChaosEngine"]
+    },
+    {
+      "phase_id": "PHASE_08_EPISTEMIC_VERIFICATION_AND_LEDGER",
+      "name": "Epistemic Verification & Immutable Ledger Recording",
+      "objective": "Audit all evidence receipts, verify zero-secret leakage, and record cryptographic event into append-only SHA-256 ledger",
+      "required_inputs": ["FALSIFICATION_RECEIPT", "CHAOS_DRILL_REPORT"],
+      "required_outputs": ["EPISTEMIC_LEDGER_BLOCK", "EXECUTIVE_MISSION_REPORT"],
+      "epistemic_gate": "HUMAN_APPROVAL_REQUIRED",
+      "governing_engines": ["EpistemicEvidenceEngine", "AuthorityTruthSource", "ExecutiveMissionReporter"]
+    },
+    {
+      "phase_id": "PHASE_09_LEARNING_AND_BKM_DISTILLATION",
+      "name": "Continuous Learning & BKM Knowledge Distillation",
+      "objective": "Extract proven architectural patterns, scrub sensitive tokens, and distill immutable BKM records for cross-mission transfer",
+      "required_inputs": ["EXECUTIVE_MISSION_REPORT"],
+      "required_outputs": ["DISTILLED_BKM_RECORD"],
+      "epistemic_gate": "AUTOMATED_CHECK_REQUIRED",
+      "governing_engines": ["EpistemicBkmEngine"]
+    }
+  ],
+  "governance_invariants": [
+    "ZERO_DIRECT_PHASE_MUTATION (Authority must pass through commitTransition)",
+    "NODE_BUILTINS_ONLY (Zero production npm dependencies in core control plane)",
+    "HERMETIC_SANDBOX_ISOLATION (Zero unauthorized writes to base repository)",
+    "SHA256_HASH_CHAINED_IMMUTABILITY (Cryptographic tamper-evidence on all evidence)",
+    "FAIL_CLOSED_SECURITY_VETO (Security veto immediately halts execution)"
+  ],
+  "required_engines": [
+    "HitlGatekeeper",
+    "AuthorityTruthSource",
+    "UniversalTechnicalDiscoveryEngine",
+    "GovernedTechnicalSelectionEngine",
+    "SchemaValidator",
+    "IntegrationGatekeeper",
+    "FirstPrinciplesSimplifierEngine",
+    "ByzantineConsensusEngine",
+    "MissionDagPipelineEngine",
+    "CognitiveParetoRouter",
+    "WorktreeMutationEngine",
+    "FdirSelfHealingEngine",
+    "AdversarialFalsificationEngine",
+    "DeterministicChaosEngine",
+    "EpistemicEvidenceEngine",
+    "ExecutiveMissionReporter",
+    "EpistemicBkmEngine"
+  ]
+}

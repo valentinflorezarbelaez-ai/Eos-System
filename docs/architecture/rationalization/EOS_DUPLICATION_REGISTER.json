@@ -1,0 +1,20 @@
+[
+  {
+    "duplicateArtifact": "scripts/engine/epistemic-evidence-engine.js",
+    "canonicalArtifact": "src/core/sdd/epistemic-evidence-engine.js",
+    "diffAnalysis": "Legacy copy before src/core/sdd was established.",
+    "consolidationAction": "Archive or remove in favor of canonical src/core/sdd implementation."
+  },
+  {
+    "duplicateArtifact": "scripts/engine/hitl-gatekeeper.js",
+    "canonicalArtifact": "src/core/sdd/hitl-gatekeeper.js",
+    "diffAnalysis": "Legacy copy before src/core/sdd was established.",
+    "consolidationAction": "Archive or remove in favor of canonical src/core/sdd implementation."
+  },
+  {
+    "duplicateArtifact": "scripts/engine/sdd-fsm-engine.js",
+    "canonicalArtifact": "src/core/sdd/sdd-fsm-engine.js",
+    "diffAnalysis": "Legacy copy before src/core/sdd was established.",
+    "consolidationAction": "Archive or remove in favor of canonical src/core/sdd implementation."
+  }
+]

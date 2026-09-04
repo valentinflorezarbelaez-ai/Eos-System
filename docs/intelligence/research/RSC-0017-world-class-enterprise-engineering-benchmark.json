@@ -1,0 +1,52 @@
+{
+  "research_id": "RSC-0017",
+  "title": "World-Class Enterprise Engineering & AI Operating Systems Benchmark",
+  "timestamp": "2026-08-26T23:16:00Z",
+  "analyzed_platforms": [
+    {
+      "platform": "Anthropic Claude Platform",
+      "core_patterns": ["Constitutional AI Safety Rails", "Prompt Caching Optimization", "Strict Tool Calling", "Extended Thinking Invariants"],
+      "eos_mapping": "AuthorityTruthSource, HitlGatekeeper, TokenEconomicsAuditEngine"
+    },
+    {
+      "platform": "OpenAI Developer Platform",
+      "core_patterns": ["Strict Structured Outputs (JSON Schema Draft 2020-12)", "Deterministic Tool Invocations", "Batch API Ingestion"],
+      "eos_mapping": "SchemaValidator, GoldenBlueprintEngine, CursorReturnIngestionEngine"
+    },
+    {
+      "platform": "Cursor AI",
+      "core_patterns": ["Codebase Semantic Indexing", "Cursor Rules (.mdc)", "Shadow Workspaces / Worktrees", "Background Agent Subprocesses"],
+      "eos_mapping": "GentlemanSddBridge, WorktreeMutationEngine, MissionDagPipelineEngine"
+    },
+    {
+      "platform": "NVIDIA (NeMo Guardrails & NIM)",
+      "core_patterns": ["Input/Output Programmable Rails", "Hallucination Defense", "Hardware Telemetry & Acceleration"],
+      "eos_mapping": "AdversarialFalsificationEngine, FdirSelfHealingEngine"
+    },
+    {
+      "platform": "Prowler",
+      "core_patterns": ["Continuous Multi-Cloud Security Auditing", "CIS Benchmarks", "Automated Remediation Verification"],
+      "eos_mapping": "SecurityAuditor, EpistemicEvidenceEngine, ContractDriftMonitor"
+    },
+    {
+      "platform": "Microsoft Enterprise Cloud & Semantic Kernel",
+      "core_patterns": ["Enterprise Agent Planners", "Zero Data Loss Recovery", "Hexagonal Plugin Architecture"],
+      "eos_mapping": "ByzantineConsensusEngine, AutonomousScaffolderEngine, MissionRuntime"
+    },
+    {
+      "platform": "Globant AI OS (Glob.AI)",
+      "core_patterns": ["End-to-End Enterprise AI Product Lifecycle", "Governance SLA Tracking", "Multi-Agent Collaboration Mesh"],
+      "eos_mapping": "GoldenBlueprintEngine, TerminalHudEngine, CognitiveParetoRouter"
+    }
+  ],
+  "architectural_synthesis": {
+    "standard": "Deterministic, Zero-Trust, Spec-Driven AI Operating System",
+    "verified_invariants": [
+      "Strict schema adherence across all boundary IOs",
+      "Automated adversarial falsification prior to release",
+      "Cryptographic ledger recording with SHA-256 tamper evidence",
+      "NASA-grade FDIR recovery in isolated sandboxes",
+      "BKM persistent memory distillation"
+    ]
+  }
+}

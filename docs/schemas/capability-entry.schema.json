@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.system/schemas/capability-entry.schema.json",
+  "title": "EOS Capability Registry Entry",
+  "description": "Schema governing capability registration, provenance, classification, tool bindings, and authority gates across EOS, Gentleman Programming, and LIDR Academy integration models.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "capability_id",
+    "name",
+    "category",
+    "epistemic_status",
+    "authority_level_required",
+    "provenance",
+    "tool_binding",
+    "side_effects",
+    "token_budget_profile"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["1.0.0"]
+    },
+    "capability_id": {
+      "type": "string",
+      "pattern": "^CAP-[A-Z0-9]+-[A-Z0-9_-]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 128
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 1024
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "GOVERNANCE",
+        "CONTEXT_COMPILATION",
+        "LEDGER_OBSERVABILITY",
+        "EVIDENCE_VERIFICATION",
+        "ROUTING_AND_DISPATCH",
+        "CODE_MUTATION",
+        "TESTING_AND_QA",
+        "SECURITY_AND_FDIR",
+        "BENCHMARK_AND_LEARNING"
+      ]
+    },
+    "epistemic_status": {
+      "type": "string",
+      "enum": [
+        "CANONICAL_OPERATIONAL",
+        "WIRED_READ_ONLY",
+        "WIRED_BLOCKED_MUTATING",
+        "SIMULATION_ONLY",
+        "DESIGNED_NOT_RUN",
+        "DEPRECATED"
+      ]
+    },
+    "authority_level_required": {
+      "type": "string",
+      "enum": ["A0", "A1", "A2", "A3", "LEVEL_0", "LEVEL_1", "LEVEL_2", "LEVEL_3"]
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source_framework", "origin_contract_version", "author_or_maintainer"],
+      "properties": {
+        "source_framework": {
+          "type": "string",
+          "enum": ["EOS_CANONICAL", "GENTLEMAN_PROGRAMMING", "LIDR_ACADEMY", "HYBRID_FUSION"]
+        },
+        "origin_contract_version": {
+          "type": "string"
+        },
+        "author_or_maintainer": {
+          "type": "string"
+        },
+        "reference_specs": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "tool_binding": {
+      "type": "object",
+      "required": ["mcp_tool_name", "engine_module_path", "execution_mode"],
+      "properties": {
+        "mcp_tool_name": {
+          "type": "string"
+        },
+        "engine_module_path": {
+          "type": "string"
+        },
+        "execution_mode": {
+          "type": "string",
+          "enum": ["IN_PROCESS", "STDIO_MCP", "SUBPROCESS_SANDBOX", "BLOCKED_OFFLINE"]
+        },
+        "input_schema_ref": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "side_effects": {
+      "type": "string",
+      "enum": ["NONE", "READ_ONLY", "LEDGER_WRITE", "FILE_WRITE_ISOLATED", "EXTERNAL_NETWORK", "SAFE_MODE_TRIP"]
+    },
+    "token_budget_profile": {
+      "type": "object",
+      "required": ["estimated_input_tokens", "estimated_output_tokens", "max_cost_usd_cap"],
+      "properties": {
+        "estimated_input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "estimated_output_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_cost_usd_cap": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "verification_suite": {
+      "type": "object",
+      "properties": {
+        "test_file": { "type": "string" },
+        "required_assertion_count": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

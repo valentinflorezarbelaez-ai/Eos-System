@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/transition-event.schema.json",
+  "title": "EOS SDD Transition Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "mission_id",
+    "from_state",
+    "to_state",
+    "event_type",
+    "actor",
+    "authority_level",
+    "contract_ref",
+    "preconditions",
+    "evidence_refs",
+    "budget_snapshot",
+    "timestamp",
+    "idempotency_key",
+    "decision_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^EVT-[A-Z0-9-]+$"
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "task_id": {
+      "type": ["string", "null"]
+    },
+    "from_state": {
+      "enum": [
+        "VISION_INTAKE",
+        "MISSION_FORMULATION",
+        "HUMAN_DIRECTION_GATE",
+        "DISCOVER",
+        "DEFINE",
+        "PLAN",
+        "DELEGATE",
+        "SUPERVISE",
+        "VERIFY",
+        "REVIEW",
+        "HUMAN_RELEASE_GATE",
+        "OPERATE_AND_LEARN",
+        "PAUSED",
+        "BLOCKED",
+        "FAILED",
+        "CANCELLED",
+        "COMPLETED"
+      ]
+    },
+    "to_state": {
+      "enum": [
+        "VISION_INTAKE",
+        "MISSION_FORMULATION",
+        "HUMAN_DIRECTION_GATE",
+        "DISCOVER",
+        "DEFINE",
+        "PLAN",
+        "DELEGATE",
+        "SUPERVISE",
+        "VERIFY",
+        "REVIEW",
+        "HUMAN_RELEASE_GATE",
+        "OPERATE_AND_LEARN",
+        "PAUSED",
+        "BLOCKED",
+        "FAILED",
+        "CANCELLED",
+        "COMPLETED"
+      ]
+    },
+    "event_type": {
+      "type": "string",
+      "pattern": "^[a-z_]+\\.[a-z_]+$"
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "role", "identity_type"],
+      "properties": {
+        "identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity_type": {
+          "enum": ["human_owner", "eos_orchestrator", "specialized_agent", "automated_verifier"]
+        }
+      }
+    },
+    "authority_level": {
+      "enum": ["LEVEL_0", "LEVEL_1", "LEVEL_2", "LEVEL_3", "LEVEL_4"]
+    },
+    "contract_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sha256"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement", "status"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": ["PASS", "FAIL"]
+          }
+        }
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "uri", "sha256", "status"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uri": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "status": {
+            "enum": ["VERIFIED", "NOT_VERIFIED", "NOT_RUN", "UNKNOWN", "BLOCKED", "SIMULATION_ONLY"]
+          }
+        }
+      }
+    },
+    "receipt_ref": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["id", "sha256"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "budget_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tokens_consumed", "tool_calls_consumed", "duration_seconds"],
+      "properties": {
+        "tokens_consumed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool_calls_consumed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duration_seconds": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision_status": {
+      "enum": ["APPROVED", "REJECTED", "PENDING", "DEFERRED"]
+    },
+    "reason": {
+      "type": ["string", "null"]
+    }
+  }
+}

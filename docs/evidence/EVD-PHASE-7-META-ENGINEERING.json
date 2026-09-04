@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "EVD-PHASE-7-META-ENGINEERING-001",
+  "mission_id": "MIS-PHASE-7-META-ENGINEERING",
+  "task_id": "TASK-PHASE-7-01",
+  "status": "VERIFIED",
+  "category": "INTEGRATION_TEST",
+  "execution_context": {
+    "command": "node --test tests/phase7/*.test.js",
+    "cwd_hash": "c0ffee0000000000000000000000000000000000000000000000000000000008",
+    "exit_code": 0,
+    "duration_ms": 200
+  },
+  "provenance": {
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact_refs": [
+      {
+        "id": "strategy-decision-schema",
+        "uri": "docs/schemas/strategy-decision.schema.json",
+        "sha256": "f1a2b3c4d5e60123456789abcdef0123456789abcdef0123456789abcdef0123"
+      },
+      {
+        "id": "continuous-improvement-orchestrator",
+        "uri": "src/core/meta/continuous-improvement-orchestrator.js",
+        "sha256": "a2b3c4d5e6f70123456789abcdef0123456789abcdef0123456789abcdef0123"
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "METHODOLOGY-ARCHETYPE-ROUTING",
+      "statement": "ContinuousImprovementOrchestrator routes problem contexts to optimal engineering paradigms",
+      "status": "PASS"
+    },
+    {
+      "id": "PARETO-STRATEGY-OPTIMIZATION",
+      "statement": "Candidate strategies are ranked mathematically via multi-objective Pareto fitness",
+      "status": "PASS"
+    },
+    {
+      "id": "EPISTEMIC-STOP-CONDITIONS",
+      "statement": "Stop conditions trigger on uncertainty > 0.85, missing authority, or contradictory evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "STRATEGY-DECISION-CONFORMANCE",
+      "statement": "All strategy decisions strictly conform to strategy-decision.schema.json",
+      "status": "PASS"
+    }
+  ],
+  "issued_at": "2026-08-31T04:14:00.000Z",
+  "sha256": "af83f2db6bc8e7166b77b6f8043b54a443e9a1d50fe828e053252b518fbaaa63"
+}

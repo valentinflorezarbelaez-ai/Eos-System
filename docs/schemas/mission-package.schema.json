@@ -1,0 +1,391 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/mission-package.schema.json",
+  "title": "EOS Mission Package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "mission_id",
+    "contract_id",
+    "status",
+    "direction",
+    "authority",
+    "budgets",
+    "scope",
+    "artifacts",
+    "orchestration",
+    "evidence_policy"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "contract_id": {
+      "type": "string",
+      "pattern": "^CON-[A-Z0-9-]+$"
+    },
+    "parent_mission_id": {
+      "type": ["string", "null"]
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "approved",
+        "active",
+        "paused",
+        "blocked",
+        "completed",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "phase": {
+      "enum": [
+        "VISION_INTAKE",
+        "MISSION_FORMULATION",
+        "HUMAN_DIRECTION_GATE",
+        "DISCOVER",
+        "DEFINE",
+        "PLAN",
+        "DELEGATE",
+        "SUPERVISE",
+        "VERIFY",
+        "REVIEW",
+        "HUMAN_RELEASE_GATE",
+        "OPERATE_AND_LEARN"
+      ]
+    },
+    "direction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "vision_ref",
+        "objective",
+        "desired_outcomes",
+        "non_goals",
+        "decision_principles"
+      ],
+      "properties": {
+        "vision_ref": {
+          "$ref": "#/$defs/artifactRef"
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "desired_outcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/criterion"
+          },
+          "minItems": 1
+        },
+        "non_goals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "decision_principles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "business_outcome_boundary": {
+          "type": "string"
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "granted_by",
+        "expires_at",
+        "allowed_edit_roots",
+        "protected_surfaces"
+      ],
+      "properties": {
+        "level": {
+          "enum": ["LEVEL_0", "LEVEL_1", "LEVEL_2", "LEVEL_3", "LEVEL_4"]
+        },
+        "granted_by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approval_receipt_ref": {
+          "$ref": "#/$defs/artifactRef"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "allowed_edit_roots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "protected_surfaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "budgets": {
+      "$ref": "#/$defs/budget"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "included",
+        "excluded",
+        "unknowns",
+        "stop_conditions"
+      ],
+      "properties": {
+        "included": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "excluded": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unknowns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/unknown"
+          }
+        },
+        "stop_conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifactRef"
+      }
+    },
+    "orchestration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "orchestrator_role",
+        "task_refs",
+        "supervision_policy_ref",
+        "escalation_policy_ref"
+      ],
+      "properties": {
+        "orchestrator_role": {
+          "type": "string",
+          "const": "eos-orchestrator"
+        },
+        "task_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/idRef"
+          }
+        },
+        "role_registry_ref": {
+          "$ref": "#/$defs/artifactRef"
+        },
+        "supervision_policy_ref": {
+          "$ref": "#/$defs/artifactRef"
+        },
+        "escalation_policy_ref": {
+          "$ref": "#/$defs/artifactRef"
+        }
+      }
+    },
+    "evidence_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_statuses",
+        "technical_business_separation",
+        "independent_review_required"
+      ],
+      "properties": {
+        "required_statuses": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "VERIFIED",
+              "NOT_VERIFIED",
+              "NOT_RUN",
+              "UNKNOWN",
+              "BLOCKED",
+              "SIMULATION_ONLY"
+            ]
+          }
+        },
+        "technical_business_separation": {
+          "type": "boolean",
+          "const": true
+        },
+        "independent_review_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_input_tokens",
+        "max_output_tokens",
+        "max_tool_calls",
+        "max_retries",
+        "max_duration_seconds",
+        "max_parallel_tasks"
+      ],
+      "properties": {
+        "max_input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_output_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_tool_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "max_duration_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_parallel_tasks": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "uri",
+        "sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "valid_until": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        }
+      }
+    },
+    "idRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "statement",
+        "evidence_required"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "unknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "question",
+        "impact",
+        "resolution_policy"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "impact": {
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "resolution_policy": {
+          "enum": ["investigate", "ask_human", "defer", "block"]
+        }
+      }
+    }
+  }
+}

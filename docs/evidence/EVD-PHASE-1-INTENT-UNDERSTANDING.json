@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "EVD-PHASE-1-INTENT-UNDERSTANDING-001",
+  "mission_id": "MIS-PHASE-1-INTENT-UNDERSTANDING",
+  "task_id": "TASK-PHASE-1-01",
+  "status": "VERIFIED",
+  "category": "UNIT_TEST",
+  "execution_context": {
+    "command": "node --test tests/phase1/*.test.js",
+    "cwd_hash": "c0ffee0000000000000000000000000000000000000000000000000000000002",
+    "exit_code": 0,
+    "duration_ms": 95
+  },
+  "provenance": {
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact_refs": [
+      {
+        "id": "intent-compiler",
+        "uri": "src/core/intent-compiler.js",
+        "sha256": "5dbffbc7f59d57a2f588c22709bf004724c9657b9c9f7a933f7c4639942a17be"
+      },
+      {
+        "id": "intent-specification-schema",
+        "uri": "docs/schemas/intent-specification.schema.json",
+        "sha256": "3a0058b73fafe6efbbf70ef76eb5eb34a1b0feff6b34ebcf0fbe9d5045dbd488"
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "INTENT-COGNITIVE-SYNTHESIS",
+      "statement": "EOSIntentCompiler transforms raw prompt into verified EARS, BDD, boundaries, and atomic task DAG",
+      "status": "PASS"
+    },
+    {
+      "id": "INTENT-SCHEMA-FAIL-CLOSED",
+      "statement": "Invalid model output fails schema validation and rejects without corrupting mission state",
+      "status": "PASS"
+    },
+    {
+      "id": "INTENT-AUTHORITY-ENFORCEMENT",
+      "statement": "LEVEL_0 callers are strictly blocked from invoking cognitive intent compilation",
+      "status": "PASS"
+    },
+    {
+      "id": "INTENT-SYNC-FALLBACK",
+      "statement": "Deterministic synchronous fallback expandirIntencion() remains 100% backward-compatible",
+      "status": "PASS"
+    }
+  ],
+  "issued_at": "2026-08-31T03:51:00.000Z",
+  "sha256": "5418e2d384ac1210e12f0ed8ff4a6cab2ab9f612cd070dfa9f00569f70d52552"
+}

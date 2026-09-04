@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "title": "EOS MCP Tool Redundancy & Duplicate Capability Register",
+    "total_clusters": 8,
+    "impact": "High cognitive overload, dual truth sources, confusing agent routing"
+  },
+  "clusters": [
+    {
+      "cluster_id": "RED-01",
+      "capability": "Cryptographic Evidence Receipt Generation",
+      "tools": [
+        "eos.kernel.evidence",
+        "eos.evidence.record"
+      ],
+      "primary_canonical": "eos.evidence.record",
+      "analysis": "eos.evidence.record writes physical JSON receipts to .missions/<id>/evidence/, whereas eos.kernel.evidence generates in-memory receipts from EOSKernel without disk binding.",
+      "recommendation": "Unify into eos.evidence.record backed by EOSKernel."
+    },
+    {
+      "cluster_id": "RED-02",
+      "capability": "Mission State Initialization",
+      "tools": [
+        "eos.mission.start",
+        "eos.orchestrator.init"
+      ],
+      "primary_canonical": "eos.orchestrator.init",
+      "analysis": "eos.mission.start creates file-based packages via McpMissionBridge/MissionRuntime; eos.orchestrator.init initializes state machines in EOSOrchestrator and registers ontology nodes.",
+      "recommendation": "Merge into a single mission lifecycle init pipeline."
+    },
+    {
+      "cluster_id": "RED-03",
+      "capability": "Intent Expansion and DAG Resolution",
+      "tools": [
+        "eos.mission.resolve",
+        "eos.intent.expand"
+      ],
+      "primary_canonical": "eos.intent.expand",
+      "analysis": "eos.mission.resolve returns a static proposed pipeline string; eos.intent.expand performs formal EARS/BDD AST expansion.",
+      "recommendation": "Consolidate onto eos.intent.expand."
+    },
+    {
+      "cluster_id": "RED-04",
+      "capability": "Hexagonal Architecture Code & Spec Scaffolding",
+      "tools": [
+        "eos.scaffolder.generate",
+        "eos.scaffolder.clean"
+      ],
+      "primary_canonical": "eos.scaffolder.clean",
+      "analysis": "eos.scaffolder.generate generates raw template arrays; eos.scaffolder.clean generates physical spec/test/domain triads on disk and indexes them into knowledge ontology.",
+      "recommendation": "Deprecate eos.scaffolder.generate in favor of clean triad generation."
+    },
+    {
+      "cluster_id": "RED-05",
+      "capability": "Mission Status Inspection & Reporting",
+      "tools": [
+        "eos.mission.status",
+        "eos.report.generate",
+        "eos.hud.dashboard"
+      ],
+      "primary_canonical": "eos.mission.status",
+      "analysis": "Three separate tools inspect the same mission package to output raw JSON, formatted report markdown, or ANSI terminal UI.",
+      "recommendation": "Parameterize format on eos.mission.status (json, markdown, ansi)."
+    },
+    {
+      "cluster_id": "RED-06",
+      "capability": "System Health and Process Observation",
+      "tools": [
+        "eos.fdir.status",
+        "eos.sentinel.self_remember"
+      ],
+      "primary_canonical": "eos.fdir.status",
+      "analysis": "eos.fdir.status checks killswitch & drift; eos.sentinel.self_remember checks process heap memory.",
+      "recommendation": "Include heap metrics in fdir status report."
+    },
+    {
+      "cluster_id": "RED-07",
+      "capability": "Triadic Enclave Attestation & Sealing",
+      "tools": [
+        "eos.pleroma.anupadaka.shield",
+        "eos.pleroma.anupadaka.fuse"
+      ],
+      "primary_canonical": "None (Both are simulation)",
+      "analysis": "Both tools have identical descriptions in CANONICAL_TOOLS (\"Triadic force fusion token certification, inter-enclave secure channel attestation, and post-quantum state sealing\") and return mock sha256 tokens.",
+      "recommendation": "Remove both from canonical MCP catalog."
+    },
+    {
+      "cluster_id": "RED-08",
+      "capability": "Ledger State Transaction Logging",
+      "tools": [
+        "eos.kernel.ledger",
+        "eos.ledger.update_feature",
+        "eos.ontology.link",
+        "eos.ledger.octave.advance"
+      ],
+      "primary_canonical": "eos.kernel.ledger",
+      "analysis": "Multiple tools wrap ledger transaction calls with slightly different payload envelopes.",
+      "recommendation": "Use single canonical ledger write tool with typed transaction category."
+    }
+  ]
+}

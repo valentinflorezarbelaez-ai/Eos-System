@@ -1,0 +1,49 @@
+{
+  "intentId": "INT-BUILD-RELEASE-1.0.0",
+  "contractHash": "CLEAN_L0_ISOLATED_DISTRIBUTION",
+  "authorityReceipt": {
+    "timestamp": "2026-08-29T15:48:31.979Z",
+    "justification": {
+      "optionsConsidered": [
+        "RELEASE_CANARY_LOCAL_TARBALL",
+        "ABORT_DISTRIBUTION"
+      ],
+      "why": "Isolated Core Runtime compliance verified. Zero dependencies leaking. 100% hash stability.",
+      "confidence": 1,
+      "transparencyGraphHash": "sha256-82f5756333901456778f8036a46597f13b1388dc21b3acf8fc941a08f2fe9a0c"
+    },
+    "decision": "RELEASE_CANARY_LOCAL_TARBALL",
+    "graphNodes": [
+      {
+        "nodeId": "OPT-0",
+        "alternative": "ABORT_DISTRIBUTION",
+        "status": "DISCARDED",
+        "weightHash": "b3e16287"
+      },
+      {
+        "nodeId": "OPT-1",
+        "alternative": "RELEASE_CANARY_LOCAL_TARBALL",
+        "status": "SELECTED",
+        "weightHash": "9b094741"
+      }
+    ]
+  },
+  "evidenceChain": [
+    "CRYPTOGRAPHIC_RECEIPT",
+    "FORENSIC_AUDIT"
+  ],
+  "outcome": "DISTRIBUTION_SEALED_STABLE",
+  "missionChainHash": "sha256-dbd453f313247a5bab31743b347c745bc4ae527263cae8315e45116f32404cfa",
+  "distributionTelemetry": {
+    "package": "@eos/runtime-core",
+    "version": "1.0.0-canary.0",
+    "policyEnforced": "L0_NODE_BUILTINS_ONLY",
+    "checksums": {
+      "mission-ontology.js": "sha256-4aca91632706302b8ad3f8a1f1d4e74acca6c57d0b6d7fa9e55339695a0355b5",
+      "ledger-recovery.js": "sha256-e3a99513e1de1667f69b90c8a0d34ec8cfd75791152728f21f0c9bb0773dd975",
+      "sentinel-killswitch.js": "sha256-2681cbb58d98d3374d4bca8c4e0c523fbe29dc9e8c81ceb2ffa7f3b94123d21c",
+      "context-compiler.js": "sha256-7527e5d6fc67630ef0fdd97c8303c350614b49484474e38bf84aaa6abe899025",
+      "mission-runtime.js": "sha256-722b1a54700c3dc7d12165f1a17a9fd5f441eb9007c8c3b06678a9f6add90355"
+    }
+  }
+}

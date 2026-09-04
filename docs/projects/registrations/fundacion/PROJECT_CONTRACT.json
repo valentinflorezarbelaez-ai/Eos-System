@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../schemas/task-contract.schema.json",
+  "project_id": "PRJ-FUNDACION",
+  "name": "Fundación",
+  "classification": "EXTERNAL_PROJECT",
+  "control_plane_membership": "REGISTERED_NOT_EMBEDDED",
+  "authority": "LEVEL_0",
+  "access_mode": "READ_ONLY",
+  "level_3_authorization": "NOT_GRANTED",
+  "external_effects": "BLOCKED",
+  "contract_status": "DRAFT_PENDING_HUMAN_APPROVAL",
+  "path": "C:\\Users\\valen\\Documents\\Fundacion",
+  "repository": {
+    "type": "LOCAL_GIT",
+    "path": "C:\\Users\\valen\\Documents\\Fundacion",
+    "branch": "main",
+    "isolation_model": "INDEPENDENT_EXTERNAL_REPOSITORY"
+  },
+  "governance_boundaries": {
+    "control_plane_mixing": "STRICTLY_PROHIBITED",
+    "write_authority": "DEFAULT_DENY",
+    "mutation_policy": "ISOLATED_WORKTREE_ONLY_WITH_SIGNED_RECEIPT",
+    "protected_data": "NO_REAL_DONOR_OR_CUSTOMER_DATA",
+    "external_integrations": "STAGING_AND_PRODUCTION_BLOCKED"
+  },
+  "created_at": "2026-08-20T22:10:00Z",
+  "updated_at": "2026-08-20T22:10:00Z"
+}

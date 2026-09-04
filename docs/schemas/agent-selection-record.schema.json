@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/agent-selection-record.schema.json",
+  "title": "EOS Agent Selection Record",
+  "description": "Deterministic record justifying role selection for a task contract, including scoring breakdown, runner-up, independent reviewer assignment, and HITL escalation status.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "selection_id",
+    "task_id",
+    "mission_id",
+    "selected_role_id",
+    "runner_up_role_id",
+    "author_role_id",
+    "reviewer_role_id",
+    "scoring_breakdown",
+    "why_selected",
+    "why_rejected",
+    "hitl_escalation_required"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "selection_id": {
+      "type": "string",
+      "pattern": "^SEL-[A-Z0-9-]+$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^TASK-[A-Z0-9-]+$"
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "selected_role_id": {
+      "type": "string"
+    },
+    "runner_up_role_id": {
+      "type": ["string", "null"]
+    },
+    "author_role_id": {
+      "type": "string"
+    },
+    "reviewer_role_id": {
+      "type": "string"
+    },
+    "scoring_breakdown": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role_id", "total_score", "capability_fit", "security_fit", "cost_fit"],
+        "properties": {
+          "role_id": { "type": "string" },
+          "total_score": { "type": "number", "minimum": 0.0, "maximum": 100.0 },
+          "capability_fit": { "type": "number", "minimum": 0.0, "maximum": 100.0 },
+          "security_fit": { "type": "number", "minimum": 0.0, "maximum": 100.0 },
+          "cost_fit": { "type": "number", "minimum": 0.0, "maximum": 100.0 }
+        }
+      }
+    },
+    "why_selected": {
+      "type": "string",
+      "minLength": 5
+    },
+    "why_rejected": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role_id", "reason"],
+        "properties": {
+          "role_id": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "hitl_escalation_required": {
+      "type": "boolean"
+    }
+  }
+}

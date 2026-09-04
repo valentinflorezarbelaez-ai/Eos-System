@@ -1,0 +1,18 @@
+[
+  {
+    "id": "CONTR-01",
+    "document": "docs/architecture/AUTONOMOUS_SELF_EVOLUTION_ENGINE.md",
+    "claim": "EOS performs autonomous self-evolution and auto-promotion of code in production",
+    "reality": "scripts/engine/autonomous-self-evolution-engine.js is a synthetic simulation evaluated in lab tests. Canonical Mission OS core enforces strict HITL barriers on all self-modification.",
+    "classification": "DOCUMENTED_LAB_SIMULATION_VS_PRODUCTION_CLAIM",
+    "resolution": "Reclassified as experimental research lab simulation; production self-mutation is forbidden."
+  },
+  {
+    "id": "CONTR-02",
+    "document": "docs/architecture/CAPABILITY_INTELLIGENCE_ENGINE.md",
+    "claim": "Dynamic multi-cloud provider routing with live latency metrics",
+    "reality": "Provider routing tools (eos.provider.route, eos.provider.health) honestly return NOT_CONFIGURED for Local Governed MVP (no cloud credentials configured).",
+    "classification": "OUT_OF_SCOPE_HONEST_DISCLOSURE",
+    "resolution": "Documented in MCP tool matrix as out of scope for local governed MVP."
+  }
+]

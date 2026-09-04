@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/endpoint-contract.schema.json",
+  "title": "EOS Service Endpoint and API Contract Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "endpoint_id",
+    "service_name",
+    "protocol",
+    "path",
+    "method",
+    "auth_required",
+    "request",
+    "response",
+    "rate_limits",
+    "idempotency",
+    "side_effect_class"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "endpoint_id": {
+      "type": "string",
+      "pattern": "^EP-[A-Z0-9_-]+$"
+    },
+    "service_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol": {
+      "type": "string",
+      "enum": ["HTTP", "HTTPS", "GRPC", "WEBSOCKET", "STDIO_JSONRPC"]
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method": {
+      "type": "string",
+      "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "RPC_CALL"]
+    },
+    "auth_required": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "scopes"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["NONE", "BEARER_JWT", "API_KEY", "MTLS", "OAUTH2", "SESSION_COOKIE"]
+        },
+        "scopes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content_type", "headers_schema", "query_schema", "body_schema"],
+      "properties": {
+        "content_type": { "type": "string" },
+        "headers_schema": { "type": ["string", "object", "null"] },
+        "query_schema": { "type": ["string", "object", "null"] },
+        "body_schema": { "type": ["string", "object", "null"] }
+      }
+    },
+    "response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["success_status_code", "success_body_schema", "error_body_schema"],
+      "properties": {
+        "success_status_code": { "type": "integer" },
+        "success_body_schema": { "type": ["string", "object", "null"] },
+        "error_body_schema": { "type": ["string", "object", "null"] }
+      }
+    },
+    "rate_limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_requests_per_minute", "burst_limit"],
+      "properties": {
+        "max_requests_per_minute": { "type": "integer", "minimum": 1 },
+        "burst_limit": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "idempotency": {
+      "type": "boolean"
+    },
+    "side_effect_class": {
+      "type": "string",
+      "enum": ["READ_ONLY", "LOCAL_MUTATION", "EXTERNAL_EFFECT", "DESTRUCTIVE"]
+    }
+  }
+}

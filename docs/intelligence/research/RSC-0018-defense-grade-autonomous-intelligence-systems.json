@@ -1,0 +1,53 @@
+{
+  "research_id": "RSC-0018",
+  "title": "Defense-Grade Autonomous Intelligence Systems & Zero-Trust Governance Benchmark",
+  "timestamp": "2026-08-26T23:29:00Z",
+  "platforms_analyzed": [
+    {
+      "platform": "Palantir Foundry",
+      "core_pillar": "Semantic Data Ontology, Immutable Provenance Lineage & Attribute-Based Access Control (ABAC)",
+      "architectural_principles": [
+        "Strict data lineage tracking from raw ingestion to derived insights",
+        "Fine-grained ABAC security markings at the object and property level",
+        "Deterministic data transformations with branching and merge governance"
+      ],
+      "eos_mapping": "EpistemicEvidenceEngine, AuthorityTruthSource, SemanticOntologyEngine"
+    },
+    {
+      "platform": "Anduril Lattice OS",
+      "core_pillar": "Autonomous Command & Control (C2), Real-Time Threat Assessment & Fail-Safe Edge Architecture",
+      "architectural_principles": [
+        "Distributed multi-entity sensor fusion and telemetry convergence",
+        "Autonomous threat scoring and millisecond policy enforcement",
+        "Fail-safe hardware-isolated circuit breakers and kill-switch protocols"
+      ],
+      "eos_mapping": "FdirSelfHealingEngine, ByzantineConsensusEngine, DeterministicChaosEngine"
+    },
+    {
+      "platform": "NSA AISC & AWS GovCloud / Palo Alto Networks",
+      "core_pillar": "Zero Trust Architecture (ZTA), Ephemeral Privilege Envelopes & Secret-Less Authentication",
+      "architectural_principles": [
+        "Never trust, always verify (Continuous cryptographic posture evaluation)",
+        "Ephemeral, purpose-bound authorization tokens with strict TTL",
+        "Zero raw secrets in flight or memory; cryptographic envelope encryption"
+      ],
+      "eos_mapping": "CONSTITUTION.md, HitlGatekeeper, EpistemicBkmEngine (Anti-leak scrubber)"
+    },
+    {
+      "platform": "Devin AI, Factory.ai, Replit Agent, LangGraph, CrewAI, n8n",
+      "core_pillar": "Cyclic Graph State Machines, Agent Hierarchies & Deterministic Checkpoint Rollbacks",
+      "architectural_principles": [
+        "StateGraph loops with deterministic edge transitions and condition checkpoints",
+        "Hierarchical multi-agent supervision (Supervisor -> Specialist -> Verifier)",
+        "Hermetic sandboxes with automated regression self-healing"
+      ],
+      "eos_mapping": "MissionDagPipelineEngine, GoldenBlueprintEngine, AutonomousScaffolderEngine"
+    }
+  ],
+  "governance_standard": "DEFENSE_GRADE_ZERO_TRUST_LEVEL_5",
+  "core_triad": {
+    "WHY": "Garantizar la soberanía, confiabilidad matemática, seguridad infranqueable y no-repudio absoluto en sistemas de ingeniería autónomos.",
+    "WHAT_FOR": "Permitir que la inteligencia artificial ejecute ingeniería compleja con la precisión y resiliencia de misiones de defensa y aeroespaciales.",
+    "HOW": "Mediante una arquitectura de 5 capas: Zero-Trust ABAC, Ontología Semántica Inmutable, Redundancia BFT/TMR, FDIR Hermético y Checkpointing StateGraph con trazabilidad SHA-256."
+  }
+}

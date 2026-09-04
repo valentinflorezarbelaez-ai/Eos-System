@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "title": "EOS MCP Surface Comprehensive Risk Register",
+    "version": "1.0.0",
+    "total_risks_cataloged": 8
+  },
+  "risks": [
+    {
+      "id": "RSK-001",
+      "title": "Hallucinated Security Assurance via Simulation Stubs",
+      "risk_level": "CRITICAL",
+      "affected_tools": [
+        "eos.security.adversarial.review",
+        "eos.environment.sandbox.execute"
+      ],
+      "cause": "Tools return mock exit code 0 and pristine receipts without executing static analyzers or microVM containers.",
+      "impact": "Autonomous agents commit insecure code believing it was verified in a hardened sandbox.",
+      "mitigation": "Segregate simulation tools to lab environment and enforce real static analysis via quality-auditor."
+    },
+    {
+      "id": "RSK-002",
+      "title": "Cognitive Context Bloat & Planning Degradation",
+      "risk_level": "HIGH",
+      "affected_tools": [
+        "All 74 exposed tools"
+      ],
+      "cause": "74 tools consume ~25,000 characters (~6,500 tokens) in system prompts.",
+      "impact": "LLMs suffer from attention dispersion, erratic tool selection, and increased latency.",
+      "mitigation": "Prune agent-visible surface to 14 Canonical Tools, reducing token overhead by 73.8%."
+    },
+    {
+      "id": "RSK-003",
+      "title": "Dual State Machine Desynchronization",
+      "risk_level": "HIGH",
+      "affected_tools": [
+        "eos.mission.start",
+        "eos.orchestrator.init"
+      ],
+      "cause": "Two separate modules maintain mission lifecycle state (.missions/ filesystem vs EOSOrchestrator in-memory FSM).",
+      "impact": "Missions started in one system are invisible or untracked in the other.",
+      "mitigation": "Unify into a single canonical mission initialization pipeline."
+    },
+    {
+      "id": "RSK-004",
+      "title": "Evidence Hash Spoofing on Phase Transitions",
+      "risk_level": "MEDIUM",
+      "affected_tools": [
+        "eos.orchestrator.advance"
+      ],
+      "cause": "Tool validates SHA-256 string format (64 hex) but does not verify that the physical EVD-XXXX.json file on disk has passing assertions.",
+      "impact": "An agent could pass random hex hashes to bypass phase gates.",
+      "mitigation": "Wire phase gate validator to look up physical evidence files and check exit code 0."
+    },
+    {
+      "id": "RSK-005",
+      "title": "Global FDIR Killswitch Inadvertent Tripping",
+      "risk_level": "HIGH",
+      "affected_tools": [
+        "eos.fdir.trip"
+      ],
+      "cause": "Single tool call trips the entire control plane into safe-mode, halting all mutating operations.",
+      "impact": "Unnecessary operational outage.",
+      "mitigation": "Strictly gate with Authority Level A2 and explicit human justification."
+    },
+    {
+      "id": "RSK-006",
+      "title": "Advisory Write Barrier Evasion",
+      "risk_level": "MEDIUM",
+      "affected_tools": [
+        "eos.workspace.barrier_check"
+      ],
+      "cause": "Barrier check is a read-only query; agents writing outside MCP tools do not trigger physical OS blocks.",
+      "impact": "Unauthorized file creation in protected roots.",
+      "mitigation": "Wrap all file modifications in guardrail-sandwich middleware."
+    },
+    {
+      "id": "RSK-007",
+      "title": "Configuration Baseline Overwrite Risk",
+      "risk_level": "HIGH",
+      "affected_tools": [
+        "eos.fdir.recover"
+      ],
+      "cause": "Overwrites .cursorrules, CONSTITUTION.md, and core governance files with baseline hashes.",
+      "impact": "Could overwrite legitimate authorized configuration changes if baselines are stale.",
+      "mitigation": "Require explicit baseline map verification and pre-backup snapshot before overwrite."
+    },
+    {
+      "id": "RSK-008",
+      "title": "Infinite TDD Repair Loop Resource Consumption",
+      "risk_level": "MEDIUM",
+      "affected_tools": [
+        "eos.scaffolder.execute"
+      ],
+      "cause": "Spawns child processes in a loop when tests continuously fail.",
+      "impact": "High CPU usage and process starvation if tests hang.",
+      "mitigation": "Hard-cap maxIterations to 5 and enforce execution timeout per iteration."
+    }
+  ]
+}

@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/project-profile.schema.json",
+  "title": "EOS Universal Project Profile Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "discovered_at",
+    "product",
+    "code",
+    "runtime",
+    "data",
+    "backend",
+    "frontend",
+    "infrastructure",
+    "ai_models",
+    "integrations",
+    "governance",
+    "epistemic_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^PRJ-[A-Z0-9_-]+$"
+    },
+    "discovered_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["objectives", "target_users", "user_flows", "constraints", "success_criteria"],
+      "properties": {
+        "objectives": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "target_users": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "user_flows": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "success_criteria": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "code": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["languages", "frameworks", "package_manifests", "source_roots", "conventions"],
+      "properties": {
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "version", "file_extensions"],
+            "properties": {
+              "name": { "type": "string" },
+              "version": { "type": ["string", "null"] },
+              "file_extensions": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "frameworks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "version", "purpose"],
+            "properties": {
+              "name": { "type": "string" },
+              "version": { "type": ["string", "null"] },
+              "purpose": { "type": "string" }
+            }
+          }
+        },
+        "package_manifests": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "source_roots": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "conventions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operating_systems", "package_managers", "entrypoints", "background_processes"],
+      "properties": {
+        "operating_systems": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "package_managers": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "entrypoints": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "background_processes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["databases", "schemas", "migration_tools", "storage_providers", "data_sensitivity"],
+      "properties": {
+        "databases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "engine", "version"],
+            "properties": {
+              "type": { "type": "string" },
+              "engine": { "type": "string" },
+              "version": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "schemas": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "migration_tools": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "storage_providers": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "data_sensitivity": {
+          "type": "string",
+          "enum": ["PUBLIC", "INTERNAL", "CONFIDENTIAL", "RESTRICTED"]
+        }
+      }
+    },
+    "backend": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["api_styles", "endpoint_contracts", "auth_mechanisms", "rate_limits"],
+      "properties": {
+        "api_styles": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["REST", "GRAPHQL", "GRPC", "WEBSOCKET", "RPC", "INTERNAL_MODULE"] }
+        },
+        "endpoint_contracts": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "auth_mechanisms": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rate_limits": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "frontend": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["platforms", "routing_style", "state_management", "accessibility_standard", "performance_budgets"],
+      "properties": {
+        "platforms": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "routing_style": {
+          "type": "string"
+        },
+        "state_management": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "accessibility_standard": {
+          "type": "string",
+          "enum": ["WCAG_2_1_AA", "WCAG_2_2_AA", "SECTION_508", "NOT_SPECIFIED"]
+        },
+        "performance_budgets": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["max_bundle_size_kb", "max_lcp_seconds"],
+          "properties": {
+            "max_bundle_size_kb": { "type": "number" },
+            "max_lcp_seconds": { "type": "number" }
+          }
+        }
+      }
+    },
+    "infrastructure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hosting_providers", "cicd_systems", "secret_management", "observability", "rollback_strategies"],
+      "properties": {
+        "hosting_providers": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "cicd_systems": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "secret_management": {
+          "type": "string"
+        },
+        "observability": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rollback_strategies": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "ai_models": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_capabilities", "latency_budget_ms", "cost_profile", "privacy_tier"],
+      "properties": {
+        "required_capabilities": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "latency_budget_ms": {
+          "type": "number"
+        },
+        "cost_profile": {
+          "type": "string",
+          "enum": ["LEAN", "BALANCED", "MAXIMUM_REASONING"]
+        },
+        "privacy_tier": {
+          "type": "string",
+          "enum": ["PUBLIC_API", "ZERO_DATA_RETENTION", "LOCAL_AIRGAPPED"]
+        }
+      }
+    },
+    "integrations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mcp_servers", "external_sdks", "webhooks", "external_side_effects"],
+      "properties": {
+        "mcp_servers": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "external_sdks": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "webhooks": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "external_side_effects": {
+          "type": "string",
+          "enum": ["BLOCKED", "STAGING_ONLY", "AUTHORIZED_PRODUCTION"]
+        }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority_level", "max_budget_tokens", "max_cost_usd", "risk_tier", "hitl_gates_required"],
+      "properties": {
+        "authority_level": {
+          "type": "string",
+          "enum": ["LEVEL_0", "LEVEL_1", "LEVEL_2", "LEVEL_3", "LEVEL_4"]
+        },
+        "max_budget_tokens": {
+          "type": "integer",
+          "minimum": 1000
+        },
+        "max_cost_usd": {
+          "type": "number",
+          "minimum": 0
+        },
+        "risk_tier": {
+          "type": "string",
+          "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+        },
+        "hitl_gates_required": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "epistemic_status": {
+      "type": "string",
+      "enum": [
+        "DECLARED",
+        "DISCOVERED_UNVERIFIED",
+        "PARTIALLY_VERIFIED",
+        "PROVEN_VERIFIED"
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "title": "EOS Documentation Gap Register",
+    "total_items": 4
+  },
+  "gaps": [
+    {
+      "id": "DOC-GAP-001",
+      "topic": "Pleroma Namespace Reality vs Claims",
+      "issue": "Documents claimed quantum attestation and gVisor microVMs while code contained in-memory string hashing.",
+      "remediation": "Explicitly document simulation reality in EOS_MCP_AUDIT_RECONCILIATION.md."
+    },
+    {
+      "id": "DOC-GAP-002",
+      "topic": "Golden Path Tool Count Consistency",
+      "issue": "Previous docs mixed 12, 18, and 19 numbers without distinction between steps and tools.",
+      "remediation": "Unified into 14 Atomic Capabilities in EOS_CANONICAL_RUNTIME_PATH.md."
+    },
+    {
+      "id": "DOC-GAP-003",
+      "topic": "Authority Check Monotonic Arithmetic",
+      "issue": "Lack of explicit matrix showing rank evaluation between A0, A1, A2, A3, A4.",
+      "remediation": "Documented in EOS_GOVERNANCE_ENFORCEMENT_MATRIX.md."
+    },
+    {
+      "id": "DOC-GAP-004",
+      "topic": "Write Barrier Verification vs Enforcement",
+      "issue": "Documented barrier as hard enforcement when MCP tool is advisory check.",
+      "remediation": "Documented distinction in EOS_MCP_GOVERNANCE_PATH_MATRIX.md."
+    }
+  ]
+}

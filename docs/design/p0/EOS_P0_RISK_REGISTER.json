@@ -1,0 +1,27 @@
+{
+  "audit_id": "P0-RISK-REGISTER-2026",
+  "generated_at": "2026-08-27T21:00:00Z",
+  "risks": [
+    {
+      "id": "RISK-01",
+      "name": "State Machine Migration Regression",
+      "severity": "HIGH",
+      "probability": "LOW",
+      "mitigation": "Retain backward-compatible Octave lens method signatures on EOSMissionOrchestrator while delegating internal storage to AuthorityTruthSource."
+    },
+    {
+      "id": "RISK-02",
+      "name": "Test Suite Breakage during Engine Pruning",
+      "severity": "MEDIUM",
+      "probability": "MEDIUM",
+      "mitigation": "Use lazy getters (e.g. get tdd()) on MissionRuntime so existing test files accessing runtime.tdd or runtime.schemas do not encounter undefined errors."
+    },
+    {
+      "id": "RISK-03",
+      "name": "Accidental Tracking of Ephemeral Files",
+      "severity": "LOW",
+      "probability": "LOW",
+      "mitigation": "Strictly follow EOS_CANONICAL_GIT_BOUNDARY.json and keep .missions/, dist/, and *.log in .gitignore."
+    }
+  ]
+}

@@ -1,0 +1,4105 @@
+{
+  "timestamp": "2026-08-30T04:58:02.923Z",
+  "git_status": "READ_ONLY_INSPECTION",
+  "summary": {
+    "total_files": 3700,
+    "canonical_operational": 0,
+    "tests": 0,
+    "schemas": 0,
+    "evidence_audits": 0,
+    "exact_duplicate_clusters": 18,
+    "exact_duplicates": [
+      {
+        "sha256": "8c2030d3e9741ff64ddcfe548d9700c10a59fa7728f3d03e31dce7f557233faf",
+        "size": 10586,
+        "files": [
+          "CONSTITUTION.md",
+          "docs/core/CONSTITUTION.md"
+        ]
+      },
+      {
+        "sha256": "7527e5d6fc67630ef0fdd97c8303c350614b49484474e38bf84aaa6abe899025",
+        "size": 11861,
+        "files": [
+          "dist/runtime-core/src/context-compiler.js",
+          "src/core/runtime/context-compiler.js"
+        ]
+      },
+      {
+        "sha256": "e3a99513e1de1667f69b90c8a0d34ec8cfd75791152728f21f0c9bb0773dd975",
+        "size": 3354,
+        "files": [
+          "dist/runtime-core/src/ledger-recovery.js",
+          "src/core/runtime/ledger-recovery.js"
+        ]
+      },
+      {
+        "sha256": "4aca91632706302b8ad3f8a1f1d4e74acca6c57d0b6d7fa9e55339695a0355b5",
+        "size": 5621,
+        "files": [
+          "dist/runtime-core/src/mission-ontology.js",
+          "src/core/runtime/mission-ontology.js"
+        ]
+      },
+      {
+        "sha256": "2681cbb58d98d3374d4bca8c4e0c523fbe29dc9e8c81ceb2ffa7f3b94123d21c",
+        "size": 3028,
+        "files": [
+          "dist/runtime-core/src/sentinel-killswitch.js",
+          "src/core/runtime/sentinel-killswitch.js"
+        ]
+      },
+      {
+        "sha256": "5dba3f8bf3ec344ae9d299c1448c2573be009ac51ccfca9217fcce03fceb9e53",
+        "size": 1148,
+        "files": [
+          "docs/archive/purge-2026-08-21/audit-systems-2026-08-19/eos-complete-audit-001/RC_COVERAGE_AUDIT.json",
+          "docs/archive/purge-2026-08-21/worktree-salvage/eos-rc-c15/RC_COVERAGE_AUDIT.json"
+        ]
+      },
+      {
+        "sha256": "f0a52a9b5b24d963f50f4c9049cbb0164f8d1164741745c72f8f352853367fa8",
+        "size": 7793,
+        "files": [
+          "docs/archive/purge-2026-08-21/audit-systems-2026-08-19/eos_state_audit_2026/EOS_MCP_TOOL_CAPABILITY_MATRIX.md",
+          "docs/mcp/MCP_TOOL_CAPABILITY_MATRIX.md"
+        ]
+      },
+      {
+        "sha256": "4d5e84eb63069318e4e006c731ff66fab474a40dba69ca815ae20bd7fc20c04f",
+        "size": 2320,
+        "files": [
+          "docs/archive/purge-2026-08-21/audit-systems-2026-08-19/eos_state_audit_2026/EOS_P2_OFFLINE_GATE_REVIEW.md",
+          "docs/governance/EOS_P2_OFFLINE_GATE_REVIEW.md"
+        ]
+      },
+      {
+        "sha256": "11846d6165281b8ab2c9c041039735e900ce9a6d43efeb7e62cf5c06994ff11f",
+        "size": 94,
+        "files": [
+          "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_ARCHITECTURE_ASSESSMENT.json",
+          "docs/intelligence/real_projects/fundacion/REAL_PROJECT_ARCHITECTURE_ASSESSMENT.json"
+        ]
+      },
+      {
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "size": 2,
+        "files": [
+          "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_CONTRADICTIONS.json",
+          "docs/intelligence/real_projects/fundacion/REAL_PROJECT_CONTRADICTIONS.json"
+        ]
+      },
+      {
+        "sha256": "c7138fc5f557f3b3966ffa877c0dd3a3fe9b5606f10aa717136d6e9eebb1eedd",
+        "size": 141,
+        "files": [
+          "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_RECOMMENDATIONS.json",
+          "docs/intelligence/real_projects/fundacion/REAL_PROJECT_RECOMMENDATIONS.json"
+        ]
+      },
+      {
+        "sha256": "e308b7bd8bd219e4720ee05cb8e082a31023905cce1833175f98e21b20acc945",
+        "size": 195,
+        "files": [
+          "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_RISK_ASSESSMENT.json",
+          "docs/intelligence/real_projects/fundacion/REAL_PROJECT_RISK_ASSESSMENT.json"
+        ]
+      },
+      {
+        "sha256": "23ead0707c8bb0be3a1a3b6cb1f63b3fb4b1f0eaec7b653f61cfd7fc6f1bf359",
+        "size": 161,
+        "files": [
+          "docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_UNCERTAINTIES.json",
+          "docs/intelligence/real_projects/fundacion/REAL_PROJECT_UNCERTAINTIES.json"
+        ]
+      },
+      {
+        "sha256": "38ea3df3779cce222cd51ba2c9dc9ac053a859208d3097aa3165f70c71517736",
+        "size": 76,
+        "files": [
+          "EOS-Lab/Andes-Retreat/.astro/types.d.ts",
+          "EOS-Lab/Sonrisa-Nova/.astro/types.d.ts"
+        ]
+      },
+      {
+        "sha256": "258e71559ecd267cdca0f9751feb80e3249b79fd4b67e534247788cfdb4522c4",
+        "size": 874,
+        "files": [
+          "EOS-Lab/Andes-Retreat/AGENTS.md",
+          "EOS-Lab/Andes-Retreat/CLAUDE.md"
+        ]
+      },
+      {
+        "sha256": "09d2ac08d8cca9b6e1f90221f345a8c4dd0371c64a0dc52b6f96fc589b1e3d67",
+        "size": 655,
+        "files": [
+          "EOS-Lab/Andes-Retreat/dist/favicon.ico",
+          "EOS-Lab/Andes-Retreat/public/favicon.ico"
+        ]
+      },
+      {
+        "sha256": "2d7a310283d6f9cc753210d83224cd6db6348cb82a5536348884e5831d46203f",
+        "size": 749,
+        "files": [
+          "EOS-Lab/Andes-Retreat/dist/favicon.svg",
+          "EOS-Lab/Andes-Retreat/public/favicon.svg"
+        ]
+      },
+      {
+        "sha256": "6eec27650a023e5d1805c36b527913e976d473c2b4e5d659cbe1587643209e83",
+        "size": 25,
+        "files": [
+          "EOS-Lab/Sonrisa-Nova/.astro/content-assets.mjs",
+          "EOS-Lab/Sonrisa-Nova/.astro/content-modules.mjs"
+        ]
+      }
+    ]
+  },
+  "import_graph": {
+    ".gemini/self-hosting-workspace/src/core/adrEngine.js": [
+      "node:fs",
+      "node:path"
+    ],
+    ".gemini/self-hosting-workspace/src/core/benchmarkEngine.js": [
+      "node:fs",
+      "node:path"
+    ],
+    ".gemini/self-hosting-workspace/src/core/constitutionEngine.js": [
+      "node:fs",
+      "node:path"
+    ],
+    ".gemini/self-hosting-workspace/src/core/dualValidationEngine.js": [
+      "node:fs",
+      "node:path"
+    ],
+    ".gemini/self-hosting-workspace/src/core/empiricalBaseline.js": [
+      "node:fs",
+      "node:path",
+      "./benchmarkEngine.js",
+      "./knowledgePlane.js",
+      "./evidenceEngine.js",
+      "./governanceEngine.js",
+      "./adrEngine.js",
+      "./synthesisEngine.js",
+      "./dualValidationEngine.js",
+      "./executionOrchestrator.js",
+      "./constitutionEngine.js"
+    ],
+    ".gemini/self-hosting-workspace/src/core/evidenceEngine.js": [
+      "node:fs",
+      "node:path"
+    ],
+    ".gemini/self-hosting-workspace/src/core/executionOrchestrator.js": [
+      "node:fs",
+      "node:path"
+    ],
+    ".gemini/self-hosting-workspace/src/core/governanceEngine.js": [
+      "node:fs",
+      "node:path"
+    ],
+    ".gemini/self-hosting-workspace/src/core/knowledgePlane.js": [
+      "node:fs",
+      "node:path"
+    ],
+    ".gemini/self-hosting-workspace/src/core/selfHostingLoop.js": [
+      "node:fs",
+      "node:path"
+    ],
+    ".gemini/self-hosting-workspace/src/core/synthesisEngine.js": [
+      "node:fs",
+      "node:path"
+    ],
+    ".gemini/self-hosting-workspace/src/indexer/provenanceIndexer.js": [
+      "node:sqlite"
+    ],
+    ".gemini/self-hosting-workspace/tests/adrEngine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:fs",
+      "node:url",
+      "../src/core/adrEngine.js",
+      "../src/core/governanceEngine.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/benchmarkEngine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:fs",
+      "node:url",
+      "../src/core/benchmarkEngine.js",
+      "../src/core/empiricalBaseline.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/constitutionEngine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:fs",
+      "node:url",
+      "../src/core/constitutionEngine.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/dualValidationEngine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:url",
+      "../src/core/dualValidationEngine.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/evidenceEngine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:url",
+      "../src/core/evidenceEngine.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/executionOrchestrator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:url",
+      "../src/core/executionOrchestrator.js",
+      "../src/core/governanceEngine.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/governanceEngine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:url",
+      "../src/core/governanceEngine.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/integrationEngine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:fs",
+      "node:url",
+      "../src/core/knowledgePlane.js",
+      "../src/core/evidenceEngine.js",
+      "../src/core/governanceEngine.js",
+      "../src/core/adrEngine.js",
+      "../src/core/synthesisEngine.js",
+      "../src/core/dualValidationEngine.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/knowledgePlane.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/knowledgePlane.js",
+      "../src/indexer/provenanceIndexer.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/negativeSecuritySuite.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:fs",
+      "node:url",
+      "../src/core/knowledgePlane.js",
+      "../src/core/evidenceEngine.js",
+      "../src/core/governanceEngine.js",
+      "../src/core/adrEngine.js",
+      "../src/core/synthesisEngine.js",
+      "../src/core/dualValidationEngine.js",
+      "../src/core/executionOrchestrator.js",
+      "../src/core/constitutionEngine.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/selfHostingLoop.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:fs",
+      "node:url",
+      "../src/core/selfHostingLoop.js",
+      "../src/core/dualValidationEngine.js",
+      "../src/core/evidenceEngine.js",
+      "../src/core/governanceEngine.js"
+    ],
+    ".gemini/self-hosting-workspace/tests/synthesisEngine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:fs",
+      "node:url",
+      "../src/core/synthesisEngine.js"
+    ],
+    "bin/eos-hud.js": [],
+    "bin/eos-top.js": [
+      "node:readline"
+    ],
+    "bin/eos.js": [
+      "../src/cli/mission-cli.js"
+    ],
+    "dist/runtime-core/index.js": [
+      "./src/mission-runtime.js",
+      "./src/context-compiler.js",
+      "./src/mission-ontology.js",
+      "./src/ledger-recovery.js",
+      "./src/sentinel-killswitch.js"
+    ],
+    "dist/runtime-core/src/context-compiler.js": [
+      "node:fs",
+      "node:crypto"
+    ],
+    "dist/runtime-core/src/ledger-recovery.js": [
+      "node:fs",
+      "node:crypto",
+      "node:path",
+      "./mission-ontology.js"
+    ],
+    "dist/runtime-core/src/mission-ontology.js": [
+      "node:crypto"
+    ],
+    "dist/runtime-core/src/mission-runtime.js": [
+      "./context-compiler.js",
+      "./mission-ontology.js"
+    ],
+    "dist/runtime-core/src/sentinel-killswitch.js": [
+      "node:fs",
+      "node:crypto",
+      "./mission-ontology.js"
+    ],
+    "docs/archive/purge-2026-08-21/engines-unreferenced/canary-tunnel-supervisor.js": [
+      "node:child_process",
+      "node:https",
+      "node:http",
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "docs/archive/purge-2026-08-21/engines-unreferenced/self-hosting-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:child_process",
+      "node:url"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-19/scripts/engine/authority-adapter.js": [],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-19/scripts/engine/context-compiler.js": [
+      "node:crypto",
+      "./authority-adapter.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-19/scripts/engine/mission-ledger.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-19/src/mcp-server.js": [
+      "node:readline",
+      "node:path",
+      "node:url",
+      "../scripts/engine/context-compiler.js",
+      "../scripts/engine/mission-ledger.js",
+      "../scripts/engine/authority-adapter.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/authority-adapter.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/authority-adapter.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/context-compiler.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/context-compiler.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/mcp-stdio-smoke.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/mission-ledger.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/mission-ledger.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/bin/eos.js": [
+      "../src/cli/mission-cli.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/scripts/engine/epistemic-evidence-engine.js": [
+      "../../src/core/sdd/epistemic-evidence-engine.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/scripts/engine/hitl-gatekeeper.js": [
+      "../../src/core/sdd/hitl-gatekeeper.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/scripts/engine/sdd-fsm-engine.js": [
+      "../../src/core/sdd/sdd-fsm-engine.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/cli/mission-cli.js": [
+      "../core/runtime/mission-runtime.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/adapters/cursor-mission-package.js": [
+      "node:crypto",
+      "node:path",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/adapters/cursor-return-ingestion-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/governed-technical-selection-engine.js": [
+      "node:crypto"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/operational-capability-receipt-engine.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/universal-technical-discovery-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/economics/token-economics-audit-engine.js": [
+      "node:crypto"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/governance/integration-gatekeeper.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/observability/executive-mission-reporter.js": [
+      "node:crypto"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/roles/role-skill-registry-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/runtime/mission-runtime.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "../discovery/universal-technical-discovery-engine.js",
+      "../discovery/governed-technical-selection-engine.js",
+      "../adapters/cursor-mission-package.js",
+      "../adapters/cursor-return-ingestion-engine.js",
+      "../roles/role-skill-registry-engine.js",
+      "../supervision/multi-agent-supervision-engine.js",
+      "../sdd/epistemic-evidence-engine.js",
+      "../observability/executive-mission-reporter.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sandbox/worktree-mutation-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:child_process",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sdd/epistemic-evidence-engine.js": [
+      "node:crypto",
+      "node:fs",
+      "node:path"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sdd/hitl-gatekeeper.js": [
+      "node:crypto"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sdd/sdd-fsm-engine.js": [
+      "node:crypto"
+    ],
+    "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/supervision/multi-agent-supervision-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "docs/archive/purge-2026-08-21/worktree-salvage/context-compiler-fix/scripts/engine/context-compiler.js": [
+      "node:crypto",
+      "./authority-adapter.js"
+    ],
+    "docs/archive/purge-2026-08-21/worktree-salvage/context-compiler-fix/tests/context-compiler-contract.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../scripts/engine/context-compiler.js"
+    ],
+    "docs/archive/purge-2026-08-21/worktree-salvage/eos-rc-c15/_rc_coverage_audit.mjs": [
+      "fs",
+      "path",
+      "crypto",
+      "child_process"
+    ],
+    "EOS-Lab/Andes-Retreat/astro.config.mjs": [
+      "astro/config"
+    ],
+    "EOS-Lab/Andes-Retreat/server.mjs": [
+      "node:http",
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "EOS-Lab/Canary-Alpha/src/components/BatchParamMigrationConsole.js": [
+      "node:crypto"
+    ],
+    "EOS-Lab/Canary-Alpha/src/components/ConfigPayloadImporter.js": [
+      "node:crypto"
+    ],
+    "EOS-Lab/Canary-Alpha/src/components/ContactSupportDispatcher.js": [
+      "node:crypto"
+    ],
+    "EOS-Lab/Canary-Alpha/src/components/CsvTabularDataUploader.js": [
+      "node:crypto"
+    ],
+    "EOS-Lab/Canary-Alpha/src/components/DiagnosticReporter.js": [
+      "node:crypto"
+    ],
+    "EOS-Lab/Canary-Alpha/src/components/WebhookPayloadDispatcher.js": [
+      "node:crypto"
+    ],
+    "EOS-Lab/Canary-Alpha/tests/batch-param-migration-console.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/components/BatchParamMigrationConsole.js"
+    ],
+    "EOS-Lab/Canary-Alpha/tests/config-payload-importer.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/components/ConfigPayloadImporter.js"
+    ],
+    "EOS-Lab/Canary-Alpha/tests/contact-support-dispatcher.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/components/ContactSupportDispatcher.js"
+    ],
+    "EOS-Lab/Canary-Alpha/tests/csv-tabular-data-uploader.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/components/CsvTabularDataUploader.js"
+    ],
+    "EOS-Lab/Canary-Alpha/tests/diagnostic-reporter.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/components/DiagnosticReporter.js"
+    ],
+    "EOS-Lab/Canary-Alpha/tests/webhook-payload-dispatcher.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/components/WebhookPayloadDispatcher.js"
+    ],
+    "EOS-Lab/Canary-Real-001/src/components/HeroConversionHeader.js": [],
+    "EOS-Lab/Canary-Real-001/src/components/LiveQuoteCalculator.js": [],
+    "EOS-Lab/Canary-Real-001/src/components/StepQualificationForm.js": [],
+    "EOS-Lab/Canary-Real-001/src/components/TelemetryEngine.js": [],
+    "EOS-Lab/Canary-Real-001/src/components/TrustProofSection.js": [],
+    "EOS-Lab/Canary-Real-001/src/components/WhatsAppPayloadDispatcher.js": [],
+    "EOS-Lab/FlowDesk/dist/db/database.js": [
+      "node:sqlite"
+    ],
+    "EOS-Lab/FlowDesk/dist/index.js": [
+      "hono",
+      "@hono/node-server",
+      "hono/cookie",
+      "zod",
+      "./db/database.js",
+      "./services/leadService.js",
+      "./services/authService.js",
+      "./views/dashboard.js",
+      "./views/login.js"
+    ],
+    "EOS-Lab/FlowDesk/dist/services/authService.js": [
+      "node:crypto"
+    ],
+    "EOS-Lab/FlowDesk/dist/services/leadService.js": [
+      "crypto"
+    ],
+    "EOS-Lab/FlowDesk/dist/views/dashboard.js": [
+      "./layout.js"
+    ],
+    "EOS-Lab/FlowDesk/dist/views/layout.js": [],
+    "EOS-Lab/FlowDesk/dist/views/login.js": [
+      "./layout.js"
+    ],
+    "EOS-Lab/Sonrisa-Nova/.astro/content-assets.mjs": [],
+    "EOS-Lab/Sonrisa-Nova/.astro/content-modules.mjs": [],
+    "EOS-Lab/Sonrisa-Nova/astro.config.mjs": [
+      "astro/config"
+    ],
+    "Fundacion/src/js/main.js": [
+      "./modules/dom.js",
+      "./modules/theme.js",
+      "./modules/clipboard.js"
+    ],
+    "Fundacion/src/js/modules/clipboard.js": [],
+    "Fundacion/src/js/modules/dom.js": [],
+    "Fundacion/src/js/modules/theme.js": [],
+    "Fundacion/tests/unit/dom.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../../src/js/modules/clipboard.js",
+      "../../src/js/modules/theme.js",
+      "../../src/js/modules/dom.js"
+    ],
+    "Luxe-Registry/src/domain/registryEngine.js": [],
+    "Luxe-Registry/src/server.js": [
+      "node:http",
+      "node:url",
+      "./domain/registryEngine.js"
+    ],
+    "Luxe-Registry/tests/luxeRegistry.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:http",
+      "../src/domain/registryEngine.js",
+      "../src/server.js"
+    ],
+    "Multimodal-Creative-Suite/src/domain/creativeEngine.js": [
+      "node:crypto"
+    ],
+    "Multimodal-Creative-Suite/src/server.js": [
+      "node:http",
+      "node:url",
+      "./domain/creativeEngine.js"
+    ],
+    "Multimodal-Creative-Suite/tests/multimodalCreative.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:http",
+      "../src/domain/creativeEngine.js",
+      "../src/server.js"
+    ],
+    "scripts/adapters/mock-browser-adapter.js": [],
+    "scripts/adapters/mock-code-adapter.js": [
+      "node:fs",
+      "node:path"
+    ],
+    "scripts/adapters/mock-research-adapter.js": [],
+    "scripts/adapters/mock-test-adapter.js": [],
+    "scripts/cli/eos.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "../engine/cursor-command-center-engine.js",
+      "../engine/autonomy-graduation-engine.js",
+      "../engine/mcp-provisioning-engine.js",
+      "../engine/autonomous-continuous-learning-loop.js",
+      "../engine/polyglot-language-harness.js",
+      "../engine/real-provider-adapter-engine.js",
+      "../engine/accessibility-validator-engine.js",
+      "../engine/seo-validator-engine.js"
+    ],
+    "scripts/d2_manifest_analyzer.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:child_process"
+    ],
+    "scripts/demo-golden-mission.js": [
+      "../src/core/runtime/mission-runtime.js"
+    ],
+    "scripts/deploy-canary.js": [
+      "node:child_process",
+      "node:fs",
+      "node:path"
+    ],
+    "scripts/engine/accessibility-validator-engine.js": [
+      "node:crypto"
+    ],
+    "scripts/engine/adaptive-adversary-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/adversarial-laboratory-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/authority-adapter.js": [
+      "../../src/core/authority/authority-adapter.js",
+      "../../src/core/authority/authority-adapter.js"
+    ],
+    "scripts/engine/autonomous-architect-advisor.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/autonomous-continuous-learning-loop.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/autonomous-ecosystem-manager-v1.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/autonomous-ecosystem-manager.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/autonomous-engineering-factory.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./autonomous-engineering-mission-engine.js",
+      "./strategy-engine.js",
+      "./strategy-simulator.js",
+      "./strategy-selection-engine.js",
+      "./capability-intelligence-engine.js",
+      "./autonomous-execution-runtime.js"
+    ],
+    "scripts/engine/autonomous-engineering-mission-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./autonomous-execution-runtime.js",
+      "./capability-intelligence-engine.js"
+    ],
+    "scripts/engine/autonomous-engineering-operating-loop.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./autonomous-engineering-factory.js",
+      "./autonomous-self-evolution-engine.js"
+    ],
+    "scripts/engine/autonomous-execution-runtime.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../adapters/mock-code-adapter.js",
+      "../adapters/mock-research-adapter.js",
+      "../adapters/mock-test-adapter.js",
+      "../adapters/mock-browser-adapter.js"
+    ],
+    "scripts/engine/autonomous-failsafe-harness.js": [
+      "node:crypto"
+    ],
+    "scripts/engine/autonomous-self-evolution-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/autonomy-graduation-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/blind-strategy-evaluation-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "./composition-policy-engine.js",
+      "./independent-telemetry-sink.js"
+    ],
+    "scripts/engine/canary-f001-predictive-transfer-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "./independent-telemetry-sink.js",
+      "./autonomy-graduation-engine.js",
+      "./effort-budget-engine.js"
+    ],
+    "scripts/engine/canary-i001-composition-executor.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "./independent-telemetry-sink.js",
+      "./autonomy-graduation-engine.js",
+      "./effort-budget-engine.js"
+    ],
+    "scripts/engine/canary-j001-composite-replication-executor.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "./independent-telemetry-sink.js",
+      "./autonomy-graduation-engine.js",
+      "./effort-budget-engine.js"
+    ],
+    "scripts/engine/canary-m002-replication-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "./independent-telemetry-sink.js",
+      "./autonomy-graduation-engine.js",
+      "./effort-budget-engine.js"
+    ],
+    "scripts/engine/canary-m003-replication-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "./independent-telemetry-sink.js",
+      "./autonomy-graduation-engine.js",
+      "./effort-budget-engine.js"
+    ],
+    "scripts/engine/canary-mission-executor.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "./independent-telemetry-sink.js",
+      "./autonomy-graduation-engine.js",
+      "./effort-budget-engine.js"
+    ],
+    "scripts/engine/canary-real-001-cohort-server.js": [
+      "node:http",
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "./independent-telemetry-sink.js"
+    ],
+    "scripts/engine/canary-triangulation-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/capability-intelligence-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/causal-replication-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./learning-validity-causality-engine.js"
+    ],
+    "scripts/engine/client-triangulation-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/closed-loop-learning-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./strategy-meta-optimization-engine.js",
+      "./experience-learning-engine.js",
+      "./autonomous-ecosystem-manager-v1.js"
+    ],
+    "scripts/engine/cognitive-execution-fabric.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./graph-intelligence-plane.js"
+    ],
+    "scripts/engine/cognitive-fabric-evaluation-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./cognitive-execution-fabric.js",
+      "./graph-intelligence-plane.js"
+    ],
+    "scripts/engine/cognitive-fabric-generalization-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./cognitive-execution-fabric.js",
+      "./graph-intelligence-plane.js"
+    ],
+    "scripts/engine/composition-policy-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/context-compiler.js": [
+      "../../src/core/runtime/context-compiler.js",
+      "../../src/core/runtime/context-compiler.js"
+    ],
+    "scripts/engine/contextual-learning-boundary-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/continuous-change-operations.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/cross-project-transfer-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/cursor-command-center-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/dynamic-replanning-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/effort-budget-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/elite-platform-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/epistemic-evidence-engine.js": [
+      "../../src/core/sdd/epistemic-evidence-engine.js",
+      "../../src/core/sdd/epistemic-evidence-engine.js"
+    ],
+    "scripts/engine/executive-arbitration-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/executive-generalization-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./executive-orchestrator-engine.js"
+    ],
+    "scripts/engine/executive-orchestrator-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./tool-discovery-ranking-engine.js",
+      "./parallel-work-graph-engine.js",
+      "./effort-budget-engine.js",
+      "./experience-learning-engine.js",
+      "./dynamic-replanning-engine.js",
+      "./executive-arbitration-engine.js"
+    ],
+    "scripts/engine/experience-learning-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/external-product-factory-pilot.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/frontier-evaluation-farm.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/frontier-realism-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/graph-intelligence-plane.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/hitl-gatekeeper.js": [
+      "../../src/core/sdd/hitl-gatekeeper.js",
+      "../../src/core/sdd/hitl-gatekeeper.js"
+    ],
+    "scripts/engine/independent-canary-reviewer.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "./independent-telemetry-sink.js"
+    ],
+    "scripts/engine/independent-telemetry-sink.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/independent-verification-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/learning-robustness-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./contextual-learning-boundary-engine.js"
+    ],
+    "scripts/engine/learning-validity-causality-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/long-run-independent-operation.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/long-run-stability-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/longitudinal-chaos-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/longitudinal-evidence-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/longitudinal-real-operation.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/master-falsification-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/master-package-consistency-auditor.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/mcp-provisioning-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/memory-integrity-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/mission-control-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/mission-ledger.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto"
+    ],
+    "scripts/engine/multi-bkm-composition-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/operationalization-program.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/parallel-work-graph-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/playwright-mcp-benchmark.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/polyglot-language-harness.js": [],
+    "scripts/engine/prediction-calibration-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/product-decision-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/product-factory-scale-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/production-readiness-review.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "./release-decision-engine.js"
+    ],
+    "scripts/engine/project-bootstrap-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/real-client-pilot-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/real-client-replication-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/real-operational-campaign-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/real-project-discovery-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/real-provider-adapter-engine.js": [
+      "node:crypto"
+    ],
+    "scripts/engine/real-world-autonomy-pilot.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/real-world-validation-program.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/release-decision-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/restricted-autonomy-operations.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/sdd-fsm-engine.js": [
+      "../../src/core/sdd/sdd-fsm-engine.js",
+      "../../src/core/sdd/sdd-fsm-engine.js"
+    ],
+    "scripts/engine/seo-validator-engine.js": [
+      "node:crypto"
+    ],
+    "scripts/engine/simulate-strategies.js": [
+      "./strategy-engine.js",
+      "./strategy-simulator.js",
+      "./strategy-selection-engine.js"
+    ],
+    "scripts/engine/spec-driven-product-loop.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/engine/strategy-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/strategy-meta-optimization-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/strategy-selection-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/strategy-simulator.js": [],
+    "scripts/engine/sustained-operation-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/system-wide-integrity-audit.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/tool-discovery-ranking-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/engine/transfer-and-unlearning-harness.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./memory-integrity-engine.js",
+      "./executive-orchestrator-engine.js"
+    ],
+    "scripts/engine/val-exp-002-dry-run-simulator.js": [
+      "node:fs",
+      "node:path",
+      "node:url",
+      "./value-instrumentation-engine.js"
+    ],
+    "scripts/engine/value-instrumentation-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/execute-autonomous-intake.js": [
+      "node:fs",
+      "node:path",
+      "../src/core/runtime/mission-runtime.js",
+      "node:test"
+    ],
+    "scripts/generate-dist-receipt.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "../src/core/runtime/mission-ontology.js"
+    ],
+    "scripts/generate-e2e-receipt.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "../src/core/memory-guard.js"
+    ],
+    "scripts/generate-verdict-a.js": [
+      "node:fs",
+      "node:path",
+      "../src/core/runtime/mission-ontology.js"
+    ],
+    "scripts/generate_d2_manifest.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:child_process"
+    ],
+    "scripts/git-watchdog.js": [
+      "node:child_process",
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url"
+    ],
+    "scripts/harmonize-git-boundary.js": [
+      "node:child_process",
+      "node:fs",
+      "node:path"
+    ],
+    "scripts/hooks/auto-lint.js": [
+      "node:fs",
+      "node:path"
+    ],
+    "scripts/hooks/evidence-logger.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto"
+    ],
+    "scripts/hooks/governance-gate.js": [
+      "node:path"
+    ],
+    "scripts/hooks/mission-sync.js": [
+      "node:fs",
+      "node:path"
+    ],
+    "scripts/mutation-audit.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:os",
+      "node:child_process"
+    ],
+    "scripts/package-runtime.js": [
+      "node:fs",
+      "node:path",
+      "./context-compiler.js",
+      "./mission-ontology.js",
+      "./src/mission-runtime.js",
+      "./src/context-compiler.js",
+      "./src/mission-ontology.js",
+      "./src/ledger-recovery.js",
+      "./src/sentinel-killswitch.js"
+    ],
+    "scripts/pleroma-purge.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/prune-eos.js": [
+      "node:fs",
+      "node:path",
+      "../src/core/runtime/control-plane-root.js"
+    ],
+    "scripts/purification_audit.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto"
+    ],
+    "scripts/run-engineering-loop.js": [
+      "node:fs",
+      "node:path",
+      "../src/core/runtime/mission-runtime.js"
+    ],
+    "scripts/update-manifest.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto"
+    ],
+    "scripts/validate_schemas.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/verify-eos.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "scripts/verify-release-package.js": [
+      "node:fs",
+      "node:path",
+      "../src/core/sdd/epistemic-evidence-engine.js"
+    ],
+    "src/cli/mission-cli.js": [
+      "../core/runtime/mission-runtime.js",
+      "../core/tutor/tutor-maestro.js",
+      "../core/runtime/operator-doctor.js",
+      "../core/runtime/operator-next.js",
+      "../core/runtime/control-plane-root.js",
+      "../core/runtime/mission-learning.js",
+      "node:fs"
+    ],
+    "src/core/adapters/cursor-mission-package.js": [
+      "node:crypto",
+      "node:path",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/adapters/cursor-return-ingestion-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/adapters/cursor-slash-command-bridge.js": [],
+    "src/core/adapters/gentleman-sdd-bridge.js": [
+      "node:crypto"
+    ],
+    "src/core/adversarial/adversarial-falsification-engine.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/ast/causal-ast-engine.js": [
+      "node:fs",
+      "node:path",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/authority/authority-adapter.js": [],
+    "src/core/authority/authority-truth-source.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "../sdd/sdd-fsm-engine.js",
+      "../sdd/epistemic-evidence-engine.js",
+      "../sdd/hitl-gatekeeper.js"
+    ],
+    "src/core/benchmark/autonomous-benchmark-harness-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/blueprints/golden-blueprint-engine.js": [
+      "node:crypto",
+      "node:fs",
+      "node:path",
+      "../contracts/schema-validator.js",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/consensus/byzantine-consensus-engine.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/contracts/autonomous-contract-synthesizer.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/contracts/schema-validator.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "src/core/discovery/contextual-skill-router-engine.js": [
+      "node:fs",
+      "node:path",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/discovery/governed-technical-selection-engine.js": [
+      "node:crypto"
+    ],
+    "src/core/discovery/operational-capability-receipt-engine.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/discovery/universal-technical-discovery-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto"
+    ],
+    "src/core/doctrine/formal-engineering-doctrine-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/drift.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "./runtime/control-plane-root.js"
+    ],
+    "src/core/economics/token-economics-audit-engine.js": [
+      "node:crypto"
+    ],
+    "src/core/evidence.js": [
+      "node:crypto"
+    ],
+    "src/core/evolution/autonomous-self-reflection-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/fdir-ontology.js": [
+      "node:crypto",
+      "./memory-guard.js"
+    ],
+    "src/core/fdir.js": [
+      "node:fs",
+      "node:path",
+      "./drift.js",
+      "./runtime/control-plane-root.js"
+    ],
+    "src/core/governance/contract-drift-monitor.js": [
+      "node:crypto"
+    ],
+    "src/core/governance/integration-gatekeeper.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/harness.js": [
+      "node:child_process",
+      "./evidence.js",
+      "./sandbox.js"
+    ],
+    "src/core/index.js": [
+      "./runtime/spec-drift-detector.js",
+      "./runtime/cursor-tdd-auto-healer.js",
+      "./runtime/cursor-agent-council.js",
+      "./runtime/parallel-auditor-dag.js",
+      "./runtime/governance-tier.js",
+      "./runtime/context-compiler.js",
+      "./runtime/pareto-cost-router.js",
+      "./runtime/living-architecture-visualizer.js",
+      "./runtime/mutation-testing-engine.js",
+      "./runtime/traceability-matrix.js",
+      "./runtime/cryptographic-sentinel.js",
+      "./runtime/adversarial-red-team.js",
+      "./runtime/autonomous-kaizen.js",
+      "./runtime/otel-semantic-exporter.js",
+      "./runtime/git-transaction-watchdog.js",
+      "../mcp/guardrail-sandwich.js",
+      "./kernel.js",
+      "./drift.js",
+      "./fdir.js",
+      "./mediator.js",
+      "./intent-compiler.js",
+      "./sentinel-daemon.js",
+      "./provider-router.js",
+      "./scaffolder-clean.js",
+      "./process-governor.js",
+      "./knowledge-ontology.js",
+      "./orchestrator.js",
+      "./fdir-ontology.js",
+      "./runtime/tescohan-auditor.js",
+      "./runtime/triamazikamno-synthesis.js",
+      "./runtime/heptaparaparshinokh-ledger.js",
+      "./runtime/kabbalah-ledger.js",
+      "./runtime/distributed-justice-oracle.js",
+      "./runtime/ontological-firewall.js",
+      "./runtime/okidanokh-validator.js",
+      "./runtime/trogo-mesh.js",
+      "./runtime/ahimsa-filter.js",
+      "./runtime/triamazikamno-validator.js",
+      "./runtime/sentinel-self-remember.js",
+      "./runtime/l0-parser.js",
+      "./runtime/tdd-executor.js",
+      "./runtime/mission-orchestrator.js",
+      "./kernel.js",
+      "./runtime/spec-drift-detector.js",
+      "./runtime/cursor-tdd-auto-healer.js",
+      "./runtime/cursor-agent-council.js",
+      "./runtime/parallel-auditor-dag.js"
+    ],
+    "src/core/intelligence/cross-project-knowledge-synthesizer.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/intent-compiler.js": [
+      "node:crypto"
+    ],
+    "src/core/judgment/senior-judgment-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/kernel.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:child_process",
+      "./runtime/control-plane-root.js",
+      "./memory-guard.js"
+    ],
+    "src/core/knowledge-ontology.js": [],
+    "src/core/ledger-manager.js": [
+      "node:crypto",
+      "./memory-guard.js"
+    ],
+    "src/core/mcp/mcp-mission-bridge.js": [
+      "node:fs",
+      "node:path",
+      "node:child_process",
+      "../runtime/mission-runtime.js",
+      "../governance/integration-gatekeeper.js",
+      "../contracts/schema-validator.js",
+      "../rules/canonical-rules-index.js",
+      "../authority/authority-adapter.js",
+      "../runtime/context-compiler.js"
+    ],
+    "src/core/mediator.js": [
+      "node:crypto"
+    ],
+    "src/core/memory/epistemic-bkm-engine.js": [
+      "node:crypto",
+      "node:fs",
+      "node:path",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/memory-guard.js": [
+      "node:crypto"
+    ],
+    "src/core/memory.js": [
+      "node:fs/promises",
+      "node:fs",
+      "node:path",
+      "node:crypto"
+    ],
+    "src/core/meta/meta-engineering-methodology-selector-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/observability/executive-mission-reporter.js": [
+      "node:crypto"
+    ],
+    "src/core/observability/terminal-hud-engine.js": [],
+    "src/core/optimization/evolutionary-strategy-optimizer.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/optimization/first-principles-simplifier-engine.js": [
+      "node:crypto"
+    ],
+    "src/core/orchestration/hypergraph-speculative-engine.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/orchestration/mission-dag-pipeline-engine.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/orchestration/universal-agentic-extension-orchestrator.js": [
+      "node:fs",
+      "node:path",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/orchestrator.js": [
+      "./kernel.js",
+      "./process-governor.js",
+      "./knowledge-ontology.js",
+      "./drift.js",
+      "./fdir.js",
+      "./runtime/control-plane-root.js"
+    ],
+    "src/core/pilot/one_percent/lsm-tree-storage-engine.js": [
+      "../../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/pilot/one_percent/memory-profiler-inspector.js": [],
+    "src/core/pilot/one_percent/mini-bytecode-vm-engine.js": [],
+    "src/core/pilot/one_percent/raft-distributed-consensus-engine.js": [
+      "../../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/pilot/one_percent/sre-chaos-slo-engine.js": [],
+    "src/core/pilot/one_percent/staff-strategic-rfc-engine.js": [
+      "../../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/pilot/one_percent/virtual-kernel-journaling-fs.js": [
+      "../../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/pilot/pilot-kv-store.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/process-governor.js": [
+      "node:crypto",
+      "./memory-guard.js"
+    ],
+    "src/core/provider-router.js": [],
+    "src/core/qa/closed-loop-qa-observability-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/resilience/deterministic-chaos-engine.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/resilience/fdir-self-healing-engine.js": [
+      "node:crypto",
+      "node:fs",
+      "node:path",
+      "../sdd/epistemic-evidence-engine.js",
+      "../sandbox/worktree-mutation-engine.js"
+    ],
+    "src/core/roles/role-skill-registry-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/routing/cognitive-pareto-router.js": [
+      "node:crypto"
+    ],
+    "src/core/routing/predictive-token-governor.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/rules/canonical-rules-index.js": [
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "src/core/runtime/adversarial-red-team.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/ahimsa-filter.js": [
+      "node:path"
+    ],
+    "src/core/runtime/autonomous-kaizen.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/context-compiler.js": [
+      "node:fs",
+      "node:crypto"
+    ],
+    "src/core/runtime/control-plane-root.js": [
+      "node:path",
+      "node:url"
+    ],
+    "src/core/runtime/cryptographic-sentinel.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/cursor-agent-council.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/cursor-tdd-auto-healer.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/distributed-consciousness.js": [
+      "node:crypto",
+      "./okidanokh-validator.js"
+    ],
+    "src/core/runtime/distributed-justice-oracle.js": [
+      "node:crypto",
+      "./okidanokh-validator.js"
+    ],
+    "src/core/runtime/engine-surface.js": [],
+    "src/core/runtime/eos-transmutator.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/ephemeral-redundancy.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/forensic-sanitizer.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto"
+    ],
+    "src/core/runtime/git-transaction-watchdog.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/global-knowledge.js": [
+      "node:fs",
+      "node:path"
+    ],
+    "src/core/runtime/governance-tier.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/heptaparaparshinokh-ledger.js": [
+      "node:crypto",
+      "./okidanokh-validator.js"
+    ],
+    "src/core/runtime/kabbalah-ledger.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "./mission-ontology.js"
+    ],
+    "src/core/runtime/l0-parser.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/ledger-recovery.js": [
+      "node:fs",
+      "node:crypto",
+      "node:path",
+      "./mission-ontology.js"
+    ],
+    "src/core/runtime/living-architecture-visualizer.js": [],
+    "src/core/runtime/mcp-schema-validator.js": [],
+    "src/core/runtime/mission-learning.js": [
+      "node:fs",
+      "node:path"
+    ],
+    "src/core/runtime/mission-ontology.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/mission-orchestrator.js": [
+      "node:fs",
+      "node:path",
+      "./context-compiler.js",
+      "./mission-ontology.js",
+      "./tdd-executor.js",
+      "./triamazikamno-validator.js",
+      "./sentinel-self-remember.js",
+      "./kabbalah-ledger.js",
+      "./ahimsa-filter.js"
+    ],
+    "src/core/runtime/mission-runtime.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "./context-compiler.js",
+      "./mission-ontology.js",
+      "../discovery/universal-technical-discovery-engine.js",
+      "../discovery/governed-technical-selection-engine.js",
+      "../adapters/cursor-mission-package.js",
+      "../adapters/cursor-return-ingestion-engine.js",
+      "../roles/role-skill-registry-engine.js",
+      "../supervision/multi-agent-supervision-engine.js",
+      "../sdd/epistemic-evidence-engine.js",
+      "../observability/executive-mission-reporter.js",
+      "../authority/authority-truth-source.js",
+      "../sdd/hitl-gatekeeper.js",
+      "../governance/integration-gatekeeper.js",
+      "../contracts/schema-validator.js",
+      "../rules/canonical-rules-index.js",
+      "../sdd/sdd-fsm-engine.js",
+      "./mission-learning.js",
+      "./global-knowledge.js",
+      "../resilience/fdir-self-healing-engine.js",
+      "../routing/cognitive-pareto-router.js",
+      "../adversarial/adversarial-falsification-engine.js",
+      "../memory/epistemic-bkm-engine.js",
+      "../consensus/byzantine-consensus-engine.js",
+      "../optimization/first-principles-simplifier-engine.js",
+      "../orchestration/mission-dag-pipeline-engine.js",
+      "../resilience/deterministic-chaos-engine.js",
+      "../blueprints/golden-blueprint-engine.js",
+      "../observability/terminal-hud-engine.js",
+      "../scaffolding/autonomous-scaffolder-engine.js",
+      "../governance/contract-drift-monitor.js",
+      "../adapters/gentleman-sdd-bridge.js",
+      "../sandbox/autonomous-sandbox-evaluator.js",
+      "../optimization/evolutionary-strategy-optimizer.js",
+      "../adapters/cursor-slash-command-bridge.js",
+      "../orchestration/hypergraph-speculative-engine.js",
+      "../contracts/autonomous-contract-synthesizer.js",
+      "../routing/predictive-token-governor.js",
+      "../discovery/contextual-skill-router-engine.js",
+      "../orchestration/universal-agentic-extension-orchestrator.js",
+      "../ast/causal-ast-engine.js",
+      "../benchmark/autonomous-benchmark-harness-engine.js",
+      "../sdd/nanometric-spec-planner.js",
+      "../sdd/master-sdlc-nanometric-engine.js",
+      "../intelligence/cross-project-knowledge-synthesizer.js",
+      "../sdd/micro-cycle-engine.js",
+      "../judgment/senior-judgment-engine.js",
+      "../doctrine/formal-engineering-doctrine-engine.js",
+      "../systems/agentic-systems-thinking-engine.js",
+      "../meta/meta-engineering-methodology-selector-engine.js",
+      "../qa/closed-loop-qa-observability-engine.js",
+      "../scraping/high-speed-web-scraping-engine.js",
+      "../evolution/autonomous-self-reflection-engine.js",
+      "../pilot/one_percent/memory-profiler-inspector.js",
+      "../pilot/one_percent/virtual-kernel-journaling-fs.js",
+      "../pilot/one_percent/mini-bytecode-vm-engine.js",
+      "../pilot/one_percent/raft-distributed-consensus-engine.js",
+      "../pilot/one_percent/lsm-tree-storage-engine.js",
+      "../pilot/one_percent/sre-chaos-slo-engine.js",
+      "../pilot/one_percent/staff-strategic-rfc-engine.js",
+      "./mission-orchestrator.js"
+    ],
+    "src/core/runtime/mutation-testing-engine.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/okidanokh-validator.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/ontological-dashboard.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/ontological-firewall.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/operator-doctor.js": [
+      "node:fs",
+      "node:os",
+      "node:path",
+      "./engine-surface.js",
+      "./purpose-fulfillment.js"
+    ],
+    "src/core/runtime/operator-next.js": [
+      "node:fs",
+      "node:path"
+    ],
+    "src/core/runtime/otel-semantic-exporter.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/parallel-auditor-dag.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/pareto-cost-router.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/purpose-fulfillment.js": [
+      "node:fs",
+      "node:path"
+    ],
+    "src/core/runtime/self-observation-witness.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/sentinel-killswitch.js": [
+      "node:fs",
+      "node:crypto",
+      "./mission-ontology.js"
+    ],
+    "src/core/runtime/sentinel-self-remember.js": [
+      "node:process",
+      "node:os"
+    ],
+    "src/core/runtime/spec-drift-detector.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/tdd-executor.js": [
+      "node:child_process",
+      "node:fs"
+    ],
+    "src/core/runtime/tescohan-auditor.js": [
+      "node:fs"
+    ],
+    "src/core/runtime/tmr-ontology-engine.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/traceability-matrix.js": [
+      "node:crypto"
+    ],
+    "src/core/runtime/triamazikamno-synthesis.js": [
+      "node:crypto",
+      "./okidanokh-validator.js"
+    ],
+    "src/core/runtime/triamazikamno-validator.js": [
+      "node:fs",
+      "node:path",
+      "node:crypto"
+    ],
+    "src/core/runtime/trogo-mesh.js": [
+      "node:crypto",
+      "./okidanokh-validator.js"
+    ],
+    "src/core/sandbox/autonomous-sandbox-evaluator.js": [
+      "node:crypto",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/sandbox/worktree-mutation-engine.js": [
+      "node:fs",
+      "node:path",
+      "node:child_process",
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/sandbox.js": [
+      "node:fs/promises",
+      "node:path",
+      "node:os",
+      "node:crypto"
+    ],
+    "src/core/scaffolder-clean.js": [
+      "node:fs",
+      "node:path",
+      "./runtime/control-plane-root.js",
+      "./kernel.js",
+      "./process-governor.js",
+      "./knowledge-ontology.js",
+      "node:test",
+      "node:assert/strict",
+      "../src/core/${cleanName}.js"
+    ],
+    "src/core/scaffolding/autonomous-scaffolder-engine.js": [
+      "node:crypto",
+      "../../domain/entities/${kebabEntity}.js",
+      "node:test",
+      "node:assert/strict",
+      "../../../src/modules/${moduleName}/application/use-cases/${kebabUc}.js",
+      "../../../src/modules/${moduleName}/infrastructure/adapters/in-memory-${kebabEntity}-repository.js",
+      "../../domain/ports/${kebabEntity}-repository-port.js"
+    ],
+    "src/core/scraping/high-speed-web-scraping-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/sdd/epistemic-evidence-engine.js": [
+      "node:crypto",
+      "node:fs",
+      "node:path"
+    ],
+    "src/core/sdd/hitl-gatekeeper.js": [
+      "node:crypto"
+    ],
+    "src/core/sdd/master-sdlc-nanometric-engine.js": [
+      "./epistemic-evidence-engine.js"
+    ],
+    "src/core/sdd/micro-cycle-engine.js": [
+      "./epistemic-evidence-engine.js"
+    ],
+    "src/core/sdd/nanometric-spec-planner.js": [
+      "./epistemic-evidence-engine.js"
+    ],
+    "src/core/sdd/sdd-fsm-engine.js": [
+      "node:crypto"
+    ],
+    "src/core/sentinel-daemon.js": [
+      "node:crypto",
+      "./drift.js",
+      "./fdir.js",
+      "./memory-guard.js"
+    ],
+    "src/core/supervision/multi-agent-supervision-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/systems/agentic-systems-thinking-engine.js": [
+      "../sdd/epistemic-evidence-engine.js"
+    ],
+    "src/core/tutor/tutor-maestro.js": [],
+    "src/mcp/guardrail-sandwich.js": [
+      "node:crypto",
+      "node:fs",
+      "node:path"
+    ],
+    "src/mcp/handlers/audit-verifier-handler.js": [
+      "../../core/runtime/context-compiler.js",
+      "../../core/runtime/parallel-auditor-dag.js"
+    ],
+    "src/mcp/handlers/evidence-handler.js": [
+      "node:crypto"
+    ],
+    "src/mcp/handlers/governance-handler.js": [
+      "node:crypto"
+    ],
+    "src/mcp/handlers/mission-handler.js": [
+      "node:crypto"
+    ],
+    "src/mcp/router.js": [
+      "./handlers/governance-handler.js",
+      "./handlers/mission-handler.js",
+      "./handlers/evidence-handler.js",
+      "./handlers/audit-verifier-handler.js",
+      "../core/runtime/spec-drift-detector.js",
+      "./guardrail-sandwich.js"
+    ],
+    "src/mcp-server.js": [
+      "node:readline",
+      "node:fs",
+      "node:os",
+      "node:path",
+      "node:crypto",
+      "./core/runtime/context-compiler.js",
+      "./core/authority/authority-adapter.js",
+      "./core/mcp/mcp-mission-bridge.js",
+      "./core/runtime/control-plane-root.js",
+      "./core/kernel.js",
+      "./core/drift.js",
+      "./core/fdir.js",
+      "./core/mediator.js",
+      "./core/intent-compiler.js",
+      "./core/sentinel-daemon.js",
+      "./core/provider-router.js",
+      "./core/scaffolder-clean.js",
+      "./core/process-governor.js",
+      "./core/knowledge-ontology.js",
+      "./core/orchestrator.js",
+      "./core/fdir-ontology.js",
+      "./core/runtime/tdd-executor.js",
+      "./core/runtime/mcp-schema-validator.js",
+      "./core/runtime/mission-orchestrator.js",
+      "./core/runtime/triamazikamno-validator.js",
+      "./core/runtime/tescohan-auditor.js",
+      "./core/runtime/sentinel-self-remember.js",
+      "./core/runtime/heptaparaparshinokh-ledger.js",
+      "./core/runtime/distributed-justice-oracle.js",
+      "./core/runtime/ontological-firewall.js",
+      "./core/runtime/okidanokh-validator.js",
+      "./core/runtime/triamazikamno-synthesis.js",
+      "./core/runtime/trogo-mesh.js",
+      "./core/runtime/l0-parser.js",
+      "./mcp/router.js",
+      "./core/runtime/parallel-auditor-dag.js",
+      "./core/runtime/governance-tier.js",
+      "./core/runtime/context-compiler.js"
+    ],
+    "tests/accessibility-validator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/accessibility-validator-engine.js"
+    ],
+    "tests/adapter-architecture.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/adapters/mock-code-adapter.js",
+      "../scripts/adapters/mock-research-adapter.js",
+      "../scripts/adapters/mock-test-adapter.js",
+      "../scripts/adapters/mock-browser-adapter.js"
+    ],
+    "tests/adaptive-adversary.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/adaptive-adversary-engine.js"
+    ],
+    "tests/adversarial-chaos.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/adversarial-laboratory-engine.js"
+    ],
+    "tests/adversarial-falsification.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/adversarial/adversarial-falsification-engine.js"
+    ],
+    "tests/adversarial-red-team.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/adversarial-red-team.js"
+    ],
+    "tests/adversarial-tool-selection.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/tool-discovery-ranking-engine.js"
+    ],
+    "tests/agent-sdlc.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path"
+    ],
+    "tests/agentic-systems-thinking.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/systems/agentic-systems-thinking-engine.js"
+    ],
+    "tests/ahimsa-filter.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/mission-orchestrator.js",
+      "../src/mcp-server.js"
+    ],
+    "tests/authority-adapter.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/authority-adapter.js"
+    ],
+    "tests/authority-truth-source.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/authority/authority-truth-source.js",
+      "../src/core/sdd/sdd-fsm-engine.js",
+      "../src/core/runtime/mission-runtime.js"
+    ],
+    "tests/autonomous-architect-advisor.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/autonomous-architect-advisor.js"
+    ],
+    "tests/autonomous-benchmark-harness.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/benchmark/autonomous-benchmark-harness-engine.js"
+    ],
+    "tests/autonomous-continuous-learning.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/autonomous-continuous-learning-loop.js"
+    ],
+    "tests/autonomous-contract-synthesizer.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/contracts/autonomous-contract-synthesizer.js"
+    ],
+    "tests/autonomous-ecosystem-manager-v1.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/autonomous-ecosystem-manager-v1.js"
+    ],
+    "tests/autonomous-ecosystem-manager.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/autonomous-ecosystem-manager.js"
+    ],
+    "tests/autonomous-failsafe-harness.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/autonomous-failsafe-harness.js"
+    ],
+    "tests/autonomous-kaizen.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/autonomous-kaizen.js"
+    ],
+    "tests/autonomous-sandbox-evaluator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/sandbox/autonomous-sandbox-evaluator.js"
+    ],
+    "tests/autonomous-scaffolder.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/scaffolding/autonomous-scaffolder-engine.js",
+      "../../infrastructure/db.js"
+    ],
+    "tests/autonomous-self-reflection.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/evolution/autonomous-self-reflection-engine.js"
+    ],
+    "tests/autonomy-graduation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/autonomy-graduation-engine.js"
+    ],
+    "tests/byzantine-consensus.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/consensus/byzantine-consensus-engine.js"
+    ],
+    "tests/canary-f001-predictive-transfer.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/canary-f001-predictive-transfer-harness.js"
+    ],
+    "tests/canary-i001-composition-experiment.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/canary-i001-composition-executor.js"
+    ],
+    "tests/canary-independent-review.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/independent-canary-reviewer.js"
+    ],
+    "tests/canary-j001-composite-replication.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/canary-j001-composite-replication-executor.js"
+    ],
+    "tests/canary-m002-replication.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/canary-m002-replication-harness.js"
+    ],
+    "tests/canary-m003-replication.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/canary-m003-replication-harness.js"
+    ],
+    "tests/canary-mission-001.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/canary-mission-executor.js"
+    ],
+    "tests/canary-phase-b-validation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:url",
+      "../scripts/engine/autonomy-graduation-engine.js",
+      "../scripts/engine/effort-budget-engine.js",
+      "../scripts/engine/independent-telemetry-sink.js",
+      "../scripts/engine/autonomous-execution-runtime.js"
+    ],
+    "tests/canary-phase-g-calibration-governance.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/prediction-calibration-engine.js"
+    ],
+    "tests/canary-phase-h-composition-readiness.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/multi-bkm-composition-engine.js"
+    ],
+    "tests/canary-phase-k-composition-policy.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/composition-policy-engine.js"
+    ],
+    "tests/canary-phase-l-blind-evaluation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/blind-strategy-evaluation-engine.js"
+    ],
+    "tests/canary-phase-m-cross-project.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/cross-project-transfer-engine.js",
+      "EOS-Lab/Canary-Alpha/src/secrets.env"
+    ],
+    "tests/canary-phase-n-longitudinal-chaos.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/longitudinal-chaos-engine.js"
+    ],
+    "tests/canary-phase-p-master-falsification.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/master-falsification-engine.js"
+    ],
+    "tests/canary-phase-q-autonomy-graduation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/autonomy-graduation-engine.js"
+    ],
+    "tests/canary-real-001-browser-qa.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../EOS-Lab/Canary-Real-001/src/components/StepQualificationForm.js",
+      "../EOS-Lab/Canary-Real-001/src/components/WhatsAppPayloadDispatcher.js",
+      "../EOS-Lab/Canary-Real-001/src/components/LiveQuoteCalculator.js",
+      "../EOS-Lab/Canary-Real-001/src/components/HeroConversionHeader.js",
+      "../EOS-Lab/Canary-Real-001/src/components/TrustProofSection.js"
+    ],
+    "tests/canary-real-001-cohort-server.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:http",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/canary-real-001-cohort-server.js"
+    ],
+    "tests/canary-real-001-comprehensive-qa.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../EOS-Lab/Canary-Real-001/src/components/StepQualificationForm.js",
+      "../EOS-Lab/Canary-Real-001/src/components/WhatsAppPayloadDispatcher.js",
+      "../EOS-Lab/Canary-Real-001/src/components/LiveQuoteCalculator.js",
+      "../EOS-Lab/Canary-Real-001/src/components/HeroConversionHeader.js",
+      "../EOS-Lab/Canary-Real-001/src/components/TrustProofSection.js",
+      "../scripts/engine/accessibility-validator-engine.js"
+    ],
+    "tests/canary-real-001-telemetry-protocol.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../EOS-Lab/Canary-Real-001/src/components/TelemetryEngine.js",
+      "../scripts/engine/independent-telemetry-sink.js"
+    ],
+    "tests/canary-real-001.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../EOS-Lab/Canary-Real-001/src/components/StepQualificationForm.js",
+      "../EOS-Lab/Canary-Real-001/src/components/WhatsAppPayloadDispatcher.js",
+      "../EOS-Lab/Canary-Real-001/src/components/LiveQuoteCalculator.js",
+      "../EOS-Lab/Canary-Real-001/src/components/HeroConversionHeader.js",
+      "../EOS-Lab/Canary-Real-001/src/components/TrustProofSection.js"
+    ],
+    "tests/canary-triangulation-phase-e.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/canary-triangulation-engine.js"
+    ],
+    "tests/capability-intelligence.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/capability-intelligence-engine.js"
+    ],
+    "tests/causal-ast-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/ast/causal-ast-engine.js",
+      "./foo.js",
+      "./bar.js"
+    ],
+    "tests/causal-replication-e2e.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/causal-replication-harness.js"
+    ],
+    "tests/client-triangulation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/client-triangulation-engine.js"
+    ],
+    "tests/closed-loop-meta-learning.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/closed-loop-learning-engine.js"
+    ],
+    "tests/closed-loop-qa-observability.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/qa/closed-loop-qa-observability-engine.js"
+    ],
+    "tests/cognitive-execution-fabric.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/cognitive-execution-fabric.js",
+      "../scripts/engine/graph-intelligence-plane.js"
+    ],
+    "tests/cognitive-fabric-evaluation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/cognitive-fabric-evaluation-harness.js"
+    ],
+    "tests/cognitive-fabric-generalization.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/cognitive-fabric-generalization-harness.js"
+    ],
+    "tests/cognitive-pareto-router.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/routing/cognitive-pareto-router.js"
+    ],
+    "tests/context-compiler.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/context-compiler.js"
+    ],
+    "tests/contextual-learning-boundary.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/contextual-learning-boundary-engine.js"
+    ],
+    "tests/contextual-skill-router.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/discovery/contextual-skill-router-engine.js"
+    ],
+    "tests/continuous-change-operations.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/continuous-change-operations.js"
+    ],
+    "tests/contract-drift.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/governance/contract-drift-monitor.js"
+    ],
+    "tests/contradiction-resolution.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/executive-arbitration-engine.js"
+    ],
+    "tests/control-plane-hardening.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "tests/core/git-watchdog.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../../scripts/git-watchdog.js"
+    ],
+    "tests/core-index.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/index.js"
+    ],
+    "tests/cross-project-knowledge-synthesizer.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/intelligence/cross-project-knowledge-synthesizer.js"
+    ],
+    "tests/cryptographic-sentinel.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/cryptographic-sentinel.js"
+    ],
+    "tests/cursor-agent-council.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/cursor-agent-council.js"
+    ],
+    "tests/cursor-cli-harness.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/cli/eos.js"
+    ],
+    "tests/cursor-command-center.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/cursor-command-center-engine.js"
+    ],
+    "tests/cursor-slash-command-bridge.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/adapters/cursor-slash-command-bridge.js",
+      "../src/core/scaffolding/autonomous-scaffolder-engine.js"
+    ],
+    "tests/cursor-tdd-auto-healer.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/cursor-tdd-auto-healer.js"
+    ],
+    "tests/deploy-canary.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path"
+    ],
+    "tests/deterministic-chaos.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/resilience/deterministic-chaos-engine.js"
+    ],
+    "tests/distributed-consciousness.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/core/runtime/distributed-consciousness.js"
+    ],
+    "tests/distributed-justice-oracle.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/core/runtime/distributed-justice-oracle.js"
+    ],
+    "tests/drift.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/drift.js"
+    ],
+    "tests/dynamic-replanning.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/experience-learning-engine.js",
+      "../scripts/engine/dynamic-replanning-engine.js"
+    ],
+    "tests/e2e-client-integration.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../dist/runtime-core/src/mission-runtime.js"
+    ],
+    "tests/e2e-exhaustive-forensic-stress.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "../src/core/runtime/mission-runtime.js",
+      "../src/mcp-server.js",
+      "../src/core/runtime/control-plane-root.js"
+    ],
+    "tests/e2e-master-pipeline-simulation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../src/core/orchestrator.js",
+      "../src/core/provider-router.js",
+      "../src/core/scaffolder-clean.js",
+      "../src/core/fdir-ontology.js"
+    ],
+    "tests/effort-budget-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/effort-budget-engine.js"
+    ],
+    "tests/elite-platform.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/elite-platform-engine.js"
+    ],
+    "tests/engine-surface.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/runtime/engine-surface.js"
+    ],
+    "tests/engineering-loop-live.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/run-engineering-loop.js"
+    ],
+    "tests/eos-e2e-local-fixture.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/mission-runtime.js",
+      "../src/core/authority/authority-truth-source.js",
+      "../src/core/sdd/sdd-fsm-engine.js",
+      "../src/core/tutor/tutor-maestro.js"
+    ],
+    "tests/eos-local-contracts.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/contracts/schema-validator.js",
+      "../src/core/rules/canonical-rules-index.js",
+      "../src/core/runtime/mission-runtime.js",
+      "../src/core/sdd/hitl-gatekeeper.js",
+      "../src/core/sdd/sdd-fsm-engine.js"
+    ],
+    "tests/eos-negative-governance.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/authority/authority-truth-source.js",
+      "../src/core/sdd/sdd-fsm-engine.js",
+      "../src/core/runtime/mission-runtime.js",
+      "../src/core/governance/integration-gatekeeper.js"
+    ],
+    "tests/eos-top.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../bin/eos-top.js"
+    ],
+    "tests/eos-transmutator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/eos-transmutator.js"
+    ],
+    "tests/ephemeral-redundancy.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/ephemeral-redundancy.js"
+    ],
+    "tests/epistemic-bkm.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/memory/epistemic-bkm-engine.js"
+    ],
+    "tests/epistemic-uncertainty.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/executive-arbitration-engine.js"
+    ],
+    "tests/evidence.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/evidence.js"
+    ],
+    "tests/evolutionary-strategy-optimizer.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/optimization/evolutionary-strategy-optimizer.js"
+    ],
+    "tests/execution-runtime.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/autonomous-execution-runtime.js"
+    ],
+    "tests/executive-arbitration.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/executive-arbitration-engine.js"
+    ],
+    "tests/executive-generalization.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/executive-generalization-harness.js"
+    ],
+    "tests/executive-orchestrator-e2e.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/executive-orchestrator-engine.js"
+    ],
+    "tests/experience-learning.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/experience-learning-engine.js"
+    ],
+    "tests/external-product-factory-pilot.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/external-product-factory-pilot.js"
+    ],
+    "tests/factory-governance.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "tests/factory-proving.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/autonomous-engineering-factory.js"
+    ],
+    "tests/fdir-ontology.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/knowledge-ontology.js",
+      "../src/core/fdir-ontology.js"
+    ],
+    "tests/fdir-self-healing.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/resilience/fdir-self-healing-engine.js",
+      "../src/core/sandbox/worktree-mutation-engine.js"
+    ],
+    "tests/fdir.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/fdir.js",
+      "../src/core/drift.js"
+    ],
+    "tests/first-principles-simplifier.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/optimization/first-principles-simplifier-engine.js"
+    ],
+    "tests/fixtures/level3-sandbox/pilot/src/index.js": [
+      "./utils/math.js"
+    ],
+    "tests/fixtures/level3-sandbox/pilot/src/utils/math.js": [],
+    "tests/fixtures/worktrees/canary-base-fixture/src/calculator.js": [],
+    "tests/fixtures/worktrees/canary-base-fixture/tests/calculator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/calculator.js"
+    ],
+    "tests/forensic-sanitizer.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/forensic-sanitizer.js"
+    ],
+    "tests/formal-engineering-doctrine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/doctrine/formal-engineering-doctrine-engine.js"
+    ],
+    "tests/frontier-evaluation-farm.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/frontier-evaluation-farm.js"
+    ],
+    "tests/frontier-realism.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/frontier-realism-engine.js"
+    ],
+    "tests/gap002-provenance-readiness.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "tests/gentleman-sdd-bridge.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/adapters/gentleman-sdd-bridge.js"
+    ],
+    "tests/git-boundary.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../scripts/harmonize-git-boundary.js"
+    ],
+    "tests/git-transaction-watchdog.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/git-transaction-watchdog.js"
+    ],
+    "tests/golden-blueprint.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../src/core/blueprints/golden-blueprint-engine.js"
+    ],
+    "tests/governance-tier.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/governance-tier.js"
+    ],
+    "tests/graph-intelligence-plane.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/graph-intelligence-plane.js"
+    ],
+    "tests/guardrail-sandwich.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp/guardrail-sandwich.js"
+    ],
+    "tests/harness.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/harness.js"
+    ],
+    "tests/heptaparaparshinokh-ledger.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/core/runtime/heptaparaparshinokh-ledger.js"
+    ],
+    "tests/high-speed-web-scraping.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/scraping/high-speed-web-scraping-engine.js"
+    ],
+    "tests/hypergraph-speculative-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/orchestration/hypergraph-speculative-engine.js"
+    ],
+    "tests/independent-telemetry-sink.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/independent-telemetry-sink.js"
+    ],
+    "tests/independent-validation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/independent-verification-harness.js"
+    ],
+    "tests/intelligence.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "tests/intent-compiler.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/intent-compiler.js"
+    ],
+    "tests/inter-mission-resonator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/mission-orchestrator.js",
+      "../src/mcp-server.js"
+    ],
+    "tests/kabbalah-ledger.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/kabbalah-ledger.js"
+    ],
+    "tests/kernel.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../src/core/kernel.js"
+    ],
+    "tests/knowledge-ontology.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/knowledge-ontology.js"
+    ],
+    "tests/l0-parser.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/l0-parser.js"
+    ],
+    "tests/learning-robustness-e2e.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/learning-robustness-harness.js"
+    ],
+    "tests/learning-validity-causality.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/learning-validity-causality-engine.js"
+    ],
+    "tests/ledger-manager.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/core/ledger-manager.js"
+    ],
+    "tests/ledger-recovery.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/ledger-recovery.js",
+      "../src/core/runtime/mission-ontology.js"
+    ],
+    "tests/level3/audits/final-verifier-v1-3-audit.js": [
+      "fs",
+      "path",
+      "crypto",
+      "child_process",
+      "../common/verifier-integrity.js"
+    ],
+    "tests/level3/common/baseline.js": [
+      "crypto",
+      "./tree-hash.js",
+      "./verifier-integrity.js"
+    ],
+    "tests/level3/common/canonical-path.js": [
+      "path",
+      "fs"
+    ],
+    "tests/level3/common/canonical-path.test.js": [
+      "./canonical-path.js",
+      "path"
+    ],
+    "tests/level3/common/evidence-recorder.js": [
+      "fs",
+      "path"
+    ],
+    "tests/level3/common/sandbox.js": [
+      "fs",
+      "path",
+      "./tree-hash.js"
+    ],
+    "tests/level3/common/tree-hash.js": [
+      "fs",
+      "path",
+      "crypto"
+    ],
+    "tests/level3/common/verifier-integrity.js": [
+      "fs",
+      "crypto"
+    ],
+    "tests/level3/ec-007-rollback/rollback-suite.js": [
+      "../common/sandbox.js",
+      "../common/baseline.js",
+      "../common/tree-hash.js"
+    ],
+    "tests/level3/ec-008-adversarial/adversarial-suite.js": [
+      "../common/sandbox.js",
+      "../common/baseline.js",
+      "../common/tree-hash.js",
+      "../common/verifier-integrity.js"
+    ],
+    "tests/level3/ec-009-observability/observability-suite.js": [
+      "../common/sandbox.js",
+      "../common/tree-hash.js"
+    ],
+    "tests/level3/fundacion/fundacion-l3-runner.js": [
+      "fs",
+      "path",
+      "crypto",
+      "child_process",
+      "../common/tree-hash.js",
+      "../common/verifier-integrity.js",
+      "../common/evidence-recorder.js",
+      "./modules/dom.js",
+      "./modules/theme.js",
+      "./modules/clipboard.js",
+      "node:test",
+      "node:assert/strict",
+      "../../src/js/modules/clipboard.js",
+      "../../src/js/modules/theme.js",
+      "../../src/js/modules/dom.js"
+    ],
+    "tests/level3/multi-fixture/multi-fixture-runner.js": [
+      "fs",
+      "path",
+      "../common/sandbox.js",
+      "../common/baseline.js",
+      "../common/tree-hash.js",
+      "../common/verifier-integrity.js",
+      "../common/evidence-recorder.js",
+      "../common/canonical-path.js",
+      "../common/canonical-path.test.js"
+    ],
+    "tests/level3/pilot/pilot-runner.js": [
+      "fs",
+      "path",
+      "crypto",
+      "../common/sandbox.js",
+      "../common/baseline.js",
+      "../common/tree-hash.js",
+      "../common/verifier-integrity.js",
+      "../common/evidence-recorder.js",
+      "./utils/math.js"
+    ],
+    "tests/level3/run-all-l3-suites.js": [
+      "./ec-007-rollback/rollback-suite.js",
+      "./ec-008-adversarial/adversarial-suite.js",
+      "./ec-009-observability/observability-suite.js",
+      "./common/evidence-recorder.js",
+      "./common/verifier-integrity.js"
+    ],
+    "tests/living-architecture-visualizer.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/living-architecture-visualizer.js"
+    ],
+    "tests/long-run-independent-operation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/long-run-independent-operation.js"
+    ],
+    "tests/long-run-stability-500.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/long-run-stability-harness.js"
+    ],
+    "tests/long-run-stability.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/long-run-stability-harness.js"
+    ],
+    "tests/longitudinal-evidence.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/longitudinal-evidence-engine.js"
+    ],
+    "tests/longitudinal-real-operation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/longitudinal-real-operation.js"
+    ],
+    "tests/master-package-consistency.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/master-package-consistency-auditor.js"
+    ],
+    "tests/master-sdlc-nanometric.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/sdd/master-sdlc-nanometric-engine.js"
+    ],
+    "tests/mcp/red-teaming.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../../src/mcp/guardrail-sandwich.js"
+    ],
+    "tests/mcp-adversarial-review-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-akasha-engram-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-amens-audit-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-anupadaka-fuse-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-anupadaka-shield-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-autonomous-engineer-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-auxiliary-state-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-elemental-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-jeu-watch-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-jubilee-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-justice-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-kundalini-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-l0-parse-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-mahapralaya-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-melchizedek-govern-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-mercabah-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-mission-bridge.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/mcp-server.js",
+      "../src/core/mcp/mcp-mission-bridge.js"
+    ],
+    "tests/mcp-moses-transmute-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-octave-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-ontological-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-ontology.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js",
+      "../src/core/knowledge-ontology.js"
+    ],
+    "tests/mcp-orchestrator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-provisioning.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/mcp-provisioning-engine.js"
+    ],
+    "tests/mcp-readonly-guard.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../src/mcp-server.js",
+      "../scripts/engine/mission-ledger.js"
+    ],
+    "tests/mcp-router.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp/router.js"
+    ],
+    "tests/mcp-sandbox-execute-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-schema-firewall.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/mcp-schema-validator.js",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-stdio-smoke.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../src/mcp-server.js",
+      "../src/core/runtime/control-plane-root.js"
+    ],
+    "tests/mcp-tdd-executor.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/tdd-executor.js",
+      "node:test",
+      "node:assert/strict",
+      "./auth.js"
+    ],
+    "tests/mcp-telemetry-stream-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-tescohan-telescope-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-trees-anchor-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-triad-middleware.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/mission-orchestrator.js"
+    ],
+    "tests/mcp-triamazikamno-synthesis-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-trogo-mesh-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-voices-modulate-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mcp-zodiac-shield-tool.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/mcp-server.js"
+    ],
+    "tests/mediator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/mediator.js"
+    ],
+    "tests/memory-guard.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/core/memory-guard.js"
+    ],
+    "tests/memory-integrity.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/memory-integrity-engine.js"
+    ],
+    "tests/memory.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/memory.js"
+    ],
+    "tests/meta-engineering-selector.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/meta/meta-engineering-methodology-selector-engine.js"
+    ],
+    "tests/micro-cycle-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/sdd/micro-cycle-engine.js"
+    ],
+    "tests/mission-blueprint.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "../src/core/memory-guard.js"
+    ],
+    "tests/mission-control.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/mission-control-engine.js"
+    ],
+    "tests/mission-dag-pipeline.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/orchestration/mission-dag-pipeline-engine.js"
+    ],
+    "tests/mission-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/autonomous-engineering-mission-engine.js"
+    ],
+    "tests/mission-learning.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:os",
+      "node:path",
+      "node:url",
+      "../src/core/runtime/mission-learning.js",
+      "../src/core/runtime/global-knowledge.js",
+      "../src/core/adapters/cursor-mission-package.js"
+    ],
+    "tests/mission-ledger.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../scripts/engine/mission-ledger.js"
+    ],
+    "tests/mission-ontology-core.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/mission-ontology.js"
+    ],
+    "tests/mission-ontology-graph.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/mission-ontology.js"
+    ],
+    "tests/mission-runtime-intake.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/mission-runtime.js"
+    ],
+    "tests/multi-project-factory-e2e.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/project-bootstrap-engine.js"
+    ],
+    "tests/mutation-testing-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/mutation-testing-engine.js"
+    ],
+    "tests/nanometric-spec-planner.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/sdd/nanometric-spec-planner.js"
+    ],
+    "tests/okidanokh-validator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/core/runtime/okidanokh-validator.js"
+    ],
+    "tests/one-percent-canon-suite.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/pilot/one_percent/memory-profiler-inspector.js",
+      "../src/core/pilot/one_percent/virtual-kernel-journaling-fs.js",
+      "../src/core/pilot/one_percent/mini-bytecode-vm-engine.js",
+      "../src/core/pilot/one_percent/raft-distributed-consensus-engine.js",
+      "../src/core/pilot/one_percent/lsm-tree-storage-engine.js",
+      "../src/core/pilot/one_percent/sre-chaos-slo-engine.js",
+      "../src/core/pilot/one_percent/staff-strategic-rfc-engine.js"
+    ],
+    "tests/ontological-dashboard.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/ontological-dashboard.js"
+    ],
+    "tests/ontological-firewall.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/ontological-firewall.js"
+    ],
+    "tests/operating-loop.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/autonomous-engineering-operating-loop.js"
+    ],
+    "tests/operationalization-program.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/operationalization-program.js"
+    ],
+    "tests/operator-doctor.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "fs",
+      "os",
+      "path",
+      "../src/core/runtime/operator-doctor.js",
+      "../src/cli/mission-cli.js",
+      "../src/core/runtime/control-plane-root.js"
+    ],
+    "tests/operator-next.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:os",
+      "node:path",
+      "../src/core/runtime/operator-next.js",
+      "../src/cli/mission-cli.js"
+    ],
+    "tests/orchestrator-rollback.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/mission-orchestrator.js",
+      "../src/mcp-server.js"
+    ],
+    "tests/orchestrator-unification.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/mission-orchestrator.js"
+    ],
+    "tests/orchestrator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/core/orchestrator.js"
+    ],
+    "tests/otel-semantic-exporter.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/otel-semantic-exporter.js"
+    ],
+    "tests/p0-bounded-autonomous-mission.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/sdd/sdd-fsm-engine.js",
+      "../src/core/sdd/hitl-gatekeeper.js",
+      "../src/core/sdd/epistemic-evidence-engine.js",
+      "../scripts/engine/context-compiler.js"
+    ],
+    "tests/p0-fundacion-contract-boundary.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/sdd/sdd-fsm-engine.js",
+      "../src/core/sdd/hitl-gatekeeper.js"
+    ],
+    "tests/p1-discovery-schemas.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "tests/p1-governed-technical-selection.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/discovery/governed-technical-selection-engine.js",
+      "../src/core/discovery/universal-technical-discovery-engine.js"
+    ],
+    "tests/p1-multi-stack-discovery.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:path",
+      "node:url",
+      "../src/core/discovery/universal-technical-discovery-engine.js"
+    ],
+    "tests/p1-operational-capability-receipts.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/discovery/operational-capability-receipt-engine.js",
+      "../src/core/sdd/epistemic-evidence-engine.js"
+    ],
+    "tests/p2-adversarial-integration-gates.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/governance/integration-gatekeeper.js"
+    ],
+    "tests/p2-executive-mission-reporter.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/observability/executive-mission-reporter.js"
+    ],
+    "tests/p2-integration-gatekeeper.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/governance/integration-gatekeeper.js"
+    ],
+    "tests/p2-runtime-observability-reconciliation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/sdd/epistemic-evidence-engine.js",
+      "../src/core/discovery/universal-technical-discovery-engine.js",
+      "../src/core/discovery/governed-technical-selection-engine.js",
+      "../src/core/discovery/operational-capability-receipt-engine.js",
+      "../src/core/governance/integration-gatekeeper.js",
+      "../src/core/economics/token-economics-audit-engine.js",
+      "../src/core/observability/executive-mission-reporter.js"
+    ],
+    "tests/p2-token-economics.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/economics/token-economics-audit-engine.js"
+    ],
+    "tests/p3-bounded-worktree-canary.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/sandbox/worktree-mutation-engine.js",
+      "../src/core/supervision/multi-agent-supervision-engine.js",
+      "../src/core/sdd/epistemic-evidence-engine.js",
+      "node:test"
+    ],
+    "tests/p3-cursor-mission-package.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/adapters/cursor-mission-package.js",
+      "../src/core/sdd/epistemic-evidence-engine.js"
+    ],
+    "tests/p3-cursor-return-adapter.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/cli/mission-cli.js",
+      "../src/core/adapters/cursor-return-ingestion-engine.js",
+      "../src/core/sdd/epistemic-evidence-engine.js"
+    ],
+    "tests/p3-independent-operator-acceptance.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/cli/mission-cli.js",
+      "../src/core/sdd/epistemic-evidence-engine.js"
+    ],
+    "tests/p3-ledger-crash-recovery.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/sdd/epistemic-evidence-engine.js"
+    ],
+    "tests/p3-mission-cli.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/cli/mission-cli.js"
+    ],
+    "tests/p3-multi-agent-supervision.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/supervision/multi-agent-supervision-engine.js",
+      "../src/core/sdd/epistemic-evidence-engine.js"
+    ],
+    "tests/p3-role-skill-registry.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/roles/role-skill-registry-engine.js"
+    ],
+    "tests/p4-external-canary-contract.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/sdd/epistemic-evidence-engine.js",
+      "../src/core/governance/integration-gatekeeper.js"
+    ],
+    "tests/parallel-auditor-dag.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/parallel-auditor-dag.js"
+    ],
+    "tests/parallel-work-graph.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/parallel-work-graph-engine.js"
+    ],
+    "tests/pareto-cost-router.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/pareto-cost-router.js"
+    ],
+    "tests/pilot-kv-store.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/pilot/pilot-kv-store.js"
+    ],
+    "tests/playwright-mcp-benchmark.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/playwright-mcp-benchmark.js"
+    ],
+    "tests/pleroma-absolute.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/mission-orchestrator.js",
+      "node:test",
+      "node:assert/strict",
+      "./logic.js"
+    ],
+    "tests/polyglot-language-harness.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/polyglot-language-harness.js"
+    ],
+    "tests/polyglot-rust-wasm-integration.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/polyglot-language-harness.js"
+    ],
+    "tests/predictive-token-governor.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/routing/predictive-token-governor.js"
+    ],
+    "tests/process-governor.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/process-governor.js"
+    ],
+    "tests/product-decision-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/product-decision-engine.js"
+    ],
+    "tests/product-factory-scale.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/product-factory-scale-engine.js"
+    ],
+    "tests/production-readiness-review.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/production-readiness-review.js"
+    ],
+    "tests/project-bootstrap.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/project-bootstrap-engine.js"
+    ],
+    "tests/provider-router.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/provider-router.js"
+    ],
+    "tests/purgatorial-refinement.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/mission-orchestrator.js",
+      "../src/core/runtime/mcp-schema-validator.js"
+    ],
+    "tests/purpose-fulfillment.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:os",
+      "node:path",
+      "../src/core/runtime/purpose-fulfillment.js"
+    ],
+    "tests/real-client-pilot.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/real-client-pilot-engine.js"
+    ],
+    "tests/real-client-replication.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/real-client-replication-engine.js"
+    ],
+    "tests/real-operational-campaign.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/real-operational-campaign-engine.js"
+    ],
+    "tests/real-project-discovery.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/real-project-discovery-engine.js"
+    ],
+    "tests/real-provider-adapter.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/real-provider-adapter-engine.js"
+    ],
+    "tests/real-world-autonomy-pilot.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/real-world-autonomy-pilot.js"
+    ],
+    "tests/real-world-validation-program.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/real-world-validation-program.js"
+    ],
+    "tests/release-governance.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/production-readiness-review.js",
+      "../scripts/engine/release-decision-engine.js"
+    ],
+    "tests/restricted-autonomy-operations.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/restricted-autonomy-operations.js"
+    ],
+    "tests/runtime-pruning.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/mission-runtime.js"
+    ],
+    "tests/sandbox.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "../src/core/sandbox.js"
+    ],
+    "tests/scaffolder-clean.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../src/core/scaffolder-clean.js"
+    ],
+    "tests/schemas-p01.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path"
+    ],
+    "tests/sdd-evidence-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/sdd/epistemic-evidence-engine.js"
+    ],
+    "tests/sdd-fsm-transition-enforcer.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/sdd/sdd-fsm-engine.js"
+    ],
+    "tests/sdd-hitl-gatekeeper.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../src/core/sdd/hitl-gatekeeper.js"
+    ],
+    "tests/sdd-kernel-contracts.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url"
+    ],
+    "tests/self-evolution.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/autonomous-self-evolution-engine.js"
+    ],
+    "tests/self-observation-runtime.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/self-observation-witness.js"
+    ],
+    "tests/senior-judgment-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/judgment/senior-judgment-engine.js"
+    ],
+    "tests/sentinel-killswitch.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:crypto",
+      "node:os",
+      "../src/core/runtime/sentinel-killswitch.js"
+    ],
+    "tests/sentinel-self-remember.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/sentinel-self-remember.js"
+    ],
+    "tests/sentinel.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../src/core/sentinel-daemon.js"
+    ],
+    "tests/seo-validator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/seo-validator-engine.js"
+    ],
+    "tests/spec-drift-detector.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/spec-drift-detector.js"
+    ],
+    "tests/spec-driven-product-loop.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/spec-driven-product-loop.js"
+    ],
+    "tests/strategy-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/strategy-engine.js",
+      "../scripts/engine/strategy-simulator.js",
+      "../scripts/engine/strategy-selection-engine.js"
+    ],
+    "tests/strategy-meta-optimization.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/strategy-meta-optimization-engine.js"
+    ],
+    "tests/surgical-context-compiler.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/context-compiler.js",
+      "somewhere"
+    ],
+    "tests/sustained-operation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/sustained-operation-engine.js"
+    ],
+    "tests/system-integrity-audit.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/system-wide-integrity-audit.js"
+    ],
+    "tests/tdd-executor.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/tdd-executor.js",
+      "node:test",
+      "node:assert/strict",
+      "./calculator.js",
+      "node:test",
+      "node:assert/strict",
+      "./calculator.js"
+    ],
+    "tests/terminal-hud.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/observability/terminal-hud-engine.js"
+    ],
+    "tests/tescohan-auditor.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/tescohan-auditor.js",
+      "../src/mcp-server.js"
+    ],
+    "tests/tmr-ontology-engine.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/tmr-ontology-engine.js"
+    ],
+    "tests/tool-discovery-ranking.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/tool-discovery-ranking-engine.js"
+    ],
+    "tests/tool-privilege-escalation.test.js": [
+      "node:test",
+      "node:assert/strict"
+    ],
+    "tests/traceability-matrix.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/traceability-matrix.js"
+    ],
+    "tests/transfer-and-unlearning.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/transfer-and-unlearning-harness.js"
+    ],
+    "tests/triamazikamno-synthesis.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../src/core/runtime/triamazikamno-synthesis.js"
+    ],
+    "tests/triamazikamno-validator.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:os",
+      "../src/core/runtime/triamazikamno-validator.js",
+      "../src/mcp-server.js"
+    ],
+    "tests/trogo-mesh.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "../src/core/runtime/trogo-mesh.js"
+    ],
+    "tests/universal-agentic-extension.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../src/core/orchestration/universal-agentic-extension-orchestrator.js"
+    ],
+    "tests/val-exp-002-dry-run.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "../scripts/engine/val-exp-002-dry-run-simulator.js"
+    ],
+    "tests/value-instrumentation.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "../scripts/engine/value-instrumentation-engine.js"
+    ],
+    "tests/verdict-a.test.js": [
+      "node:test",
+      "node:assert/strict",
+      "node:fs",
+      "node:path",
+      "../src/core/runtime/mission-ontology.js"
+    ],
+    "tests/verifier-authorization-aware.test.js": [
+      "fs",
+      "path",
+      "node:assert/strict"
+    ]
+  },
+  "schema_inventory": [
+    "docs/schemas/agent-selection-record.schema.json",
+    "docs/schemas/architecture-decision.schema.json",
+    "docs/schemas/capability-entry.schema.json",
+    "docs/schemas/context_receipt.schema.json",
+    "docs/schemas/cursor-return-package.schema.json",
+    "docs/schemas/endpoint-contract.schema.json",
+    "docs/schemas/evidence-receipt.schema.json",
+    "docs/schemas/external-canary-contract.schema.json",
+    "docs/schemas/feature_list.schema.json",
+    "docs/schemas/golden-blueprint.schema.json",
+    "docs/schemas/hitl-decision-result.schema.json",
+    "docs/schemas/hitl-receipt.schema.json",
+    "docs/schemas/integration-contract.schema.json",
+    "docs/schemas/ledger-event.schema.json",
+    "docs/schemas/local/direction.local.schema.json",
+    "docs/schemas/local/hitl-receipt.local.schema.json",
+    "docs/schemas/local/mission-package.local.schema.json",
+    "docs/schemas/mission-executive-report.schema.json",
+    "docs/schemas/mission-package.schema.json",
+    "docs/schemas/model-capability.schema.json",
+    "docs/schemas/project-profile.schema.json",
+    "docs/schemas/role-profile.schema.json",
+    "docs/schemas/stack-candidate.schema.json",
+    "docs/schemas/task-contract.schema.json",
+    "docs/schemas/task-supervision-evaluation.schema.json",
+    "docs/schemas/token-economics-audit.schema.json",
+    "docs/schemas/transition-error.schema.json",
+    "docs/schemas/transition-event.schema.json"
+  ],
+  "release_inventory": [
+    "mission-package.schema.json",
+    "task-contract.schema.json",
+    "hitl-receipt.schema.json",
+    "project-profile.schema.json",
+    "stack-candidate.schema.json",
+    "architecture-decision.schema.json",
+    "model-capability.schema.json",
+    "endpoint-contract.schema.json",
+    "integration-contract.schema.json",
+    "token-economics-audit.schema.json",
+    "mission-executive-report.schema.json",
+    "cursor-return-package.schema.json",
+    "role-profile.schema.json",
+    "agent-selection-record.schema.json",
+    "task-supervision-evaluation.schema.json",
+    "external-canary-contract.schema.json"
+  ]
+}

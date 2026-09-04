@@ -1,0 +1,32 @@
+{
+  "catalog_id": "EPISTEMIC-DEMARCATION-001",
+  "version": "1.0.0",
+  "demarcation_principle": "La lectura más rigurosa consiste en respetar el valor filosófico/espiritual de una doctrina sin convertir metáforas religiosas o esotéricas en afirmaciones físicas o científicas sin evidencia.",
+  "epistemic_categories": [
+    {
+      "category": "Ciencia Establecida",
+      "status": "VERIFIED",
+      "criteria": "Definiciones operacionales, modelos matemáticos, leyes de conservación y experimentos reproducibles.",
+      "domains": ["Termodinámica", "Electromagnetismo", "Mecánica Cuántica", "Teoría de la Información"]
+    },
+    {
+      "category": "Filosofía e Interpretación Simbólica",
+      "status": "PARTIALLY_VERIFIED (Marco Fenomenológico/Cultural)",
+      "criteria": "Tradiciones hermenéuticas, ética, meditación, psicología fenomenológica y simbolismo de transformación interior.",
+      "domains": ["Gnosticismo Contemporáneo", "Alquimia Simbólica", "Hermenéutica Filosófica", "Psicología Transpersonal"]
+    },
+    {
+      "category": "Afirmaciones Físicas Esotéricas No Verificadas",
+      "status": "NOT_VERIFIED",
+      "criteria": "Afirmaciones sobre energías sutiles literales o poderes físicos que carecen de definición operacional y reproducibilidad.",
+      "domains": ["Transmutación Física Literal", "Energías No Medidas", "Dimensiones Físicas Ocultas"]
+    }
+  ],
+  "investigation_framework_5_axes": [
+    "1. Historia y Doctrina (Contexto textual de Samael Aun Weor)",
+    "2. Comparación Simbólica (Hermenéutica, Alquimia, Tantra, Hermetismo)",
+    "3. Ciencia Física y Termodinámica (Definiciones técnicas de energía, calor, entropía e información)",
+    "4. Psicología y Neurociencia (Atención, meditación, estados alterados y mecanismos cognitivos)",
+    "5. Evaluación Crítica Epistémica (Demarcación de Popper, contrastación y falsabilidad)"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://eos.system/schemas/evidence.v1.json",
+  "evidenceId": "EVD-P01-CONTEXT-LEDGER",
+  "missionId": "MSN-P01-CONTEXT-LEDGER-INTEGRATION",
+  "timestamp": "2026-08-19T21:27:50Z",
+  "baseCommitSha": "948a5c356ef8a504f82e2580f6238f496415c867",
+  "executionSummary": {
+    "status": "VERIFIED",
+    "focusedTestsPassed": 21,
+    "focusedTestsTotal": 21,
+    "fullRegressionTestsPassed": 684,
+    "fullRegressionTestsTotal": 684,
+    "strictVerificationChecksPassed": 471,
+    "level3SubtestsPassed": 16,
+    "zeroRegressions": true
+  },
+  "modulesCreated": [
+    "docs/schemas/feature_list.schema.json",
+    "docs/schemas/context_receipt.schema.json",
+    "scripts/engine/authority-adapter.js",
+    "scripts/engine/context-compiler.js",
+    "scripts/engine/mission-ledger.js",
+    "src/mcp-server.js",
+    "tests/authority-adapter.test.js",
+    "tests/context-compiler.test.js",
+    "tests/mission-ledger.test.js",
+    "tests/mcp-stdio-smoke.test.js"
+  ],
+  "modulesModified": [
+    "package.json"
+  ],
+  "commandOutputs": [
+    {
+      "command": "node --test tests/authority-adapter.test.js tests/context-compiler.test.js tests/mission-ledger.test.js tests/mcp-stdio-smoke.test.js",
+      "exitCode": 0,
+      "passed": 21,
+      "failed": 0,
+      "durationMs": 175.04
+    },
+    {
+      "command": "node --test tests/*.test.js tests/**/*.test.js",
+      "exitCode": 0,
+      "passed": 684,
+      "failed": 0,
+      "durationMs": 5571.26
+    },
+    {
+      "command": "node scripts/verify-eos.js --strict",
+      "exitCode": 0,
+      "passed": 471,
+      "failed": 0
+    },
+    {
+      "command": "node tests/level3/run-all-l3-suites.js",
+      "exitCode": 0,
+      "passed": 16,
+      "failed": 0
+    }
+  ],
+  "invariantsVerified": {
+    "monotonicLeastPrivilege": "VERIFIED (LEVEL_3 strictly maps to A3; invalid tokens evaluate to DENIED rank 0)",
+    "singleLedgerAuthority": "VERIFIED (Atomic writes, append-only run-log.jsonl, crash recovery)",
+    "externalWriteBarrier": "VERIFIED (Δ = 0 on PRJ-FUNDACION and external targets)",
+    "noProductionMutation": "VERIFIED (Zero cloud deploys, zero payment gateway calls)"
+  }
+}

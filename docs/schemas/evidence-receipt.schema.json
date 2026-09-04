@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/evidence-receipt.schema.json",
+  "title": "EOS Epistemic Evidence Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "mission_id",
+    "status",
+    "category",
+    "execution_context",
+    "provenance",
+    "assertions",
+    "issued_at",
+    "sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^EVD-[A-Z0-9-]+$"
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "task_id": {
+      "type": ["string", "null"]
+    },
+    "status": {
+      "enum": [
+        "VERIFIED",
+        "NOT_VERIFIED",
+        "NOT_RUN",
+        "UNKNOWN",
+        "BLOCKED",
+        "SIMULATION_ONLY"
+      ]
+    },
+    "category": {
+      "enum": [
+        "UNIT_TEST",
+        "INTEGRATION_TEST",
+        "STRICT_LINT",
+        "SECURITY_AUDIT",
+        "MANUAL_INSPECTION",
+        "HUMAN_DECISION"
+      ]
+    },
+    "execution_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "cwd_hash", "exit_code", "duration_ms"],
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cwd_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "exit_code": {
+          "type": "integer"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stdout_sha256", "stderr_sha256", "artifact_refs"],
+      "properties": {
+        "stdout_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "stderr_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "uri", "sha256"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uri": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement", "status"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": ["PASS", "FAIL", "SKIP"]
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

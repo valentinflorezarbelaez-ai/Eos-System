@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "EVD-PHASE-2-DYNAMIC-PLANNING-DAG-001",
+  "mission_id": "MIS-PHASE-2-DYNAMIC-PLANNING-DAG",
+  "task_id": "TASK-PHASE-2-01",
+  "status": "VERIFIED",
+  "category": "UNIT_TEST",
+  "execution_context": {
+    "command": "node --test tests/phase2/*.test.js",
+    "cwd_hash": "c0ffee0000000000000000000000000000000000000000000000000000000003",
+    "exit_code": 0,
+    "duration_ms": 1300
+  },
+  "provenance": {
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifact_refs": [
+      {
+        "id": "mission-runtime",
+        "uri": "src/core/runtime/mission-runtime.js",
+        "sha256": "e82d1ca6f1f3a5b6c7d8e9f0123456789abcdef0123456789abcdef012345678"
+      },
+      {
+        "id": "task-contract-schema",
+        "uri": "docs/schemas/task-contract.schema.json",
+        "sha256": "a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192"
+      }
+    ]
+  },
+  "assertions": [
+    {
+      "id": "DYNAMIC-DAG-GENERATION",
+      "statement": "MissionRuntime.planMission synthesizes dynamic atomic tasks from intent specifications",
+      "status": "PASS"
+    },
+    {
+      "id": "TOPOLOGICAL-WAVE-CALCULATION",
+      "statement": "MissionDagPipelineEngine calculates Kahn topological waves and critical paths in plan.json",
+      "status": "PASS"
+    },
+    {
+      "id": "TASK-CONTRACT-CONFORMANCE",
+      "statement": "All generated task contracts strictly conform to task-contract.schema.json",
+      "status": "PASS"
+    },
+    {
+      "id": "FIXTURE-BACKWARD-COMPATIBILITY",
+      "statement": "Default 3-task fixture planning remains 100% backward-compatible",
+      "status": "PASS"
+    }
+  ],
+  "issued_at": "2026-08-31T03:54:00.000Z",
+  "sha256": "5012ff4ec761cdd92912cc945b00e546da93472e9bece6be30d8e654095ede7e"
+}

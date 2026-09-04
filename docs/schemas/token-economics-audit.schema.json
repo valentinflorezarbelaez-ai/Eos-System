@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/token-economics-audit.schema.json",
+  "title": "EOS Token Economics and Cost Audit Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "audit_id",
+    "mission_id",
+    "timestamp",
+    "token_metrics",
+    "cost_metrics",
+    "redundancy_analysis",
+    "retry_analysis",
+    "efficiency_index",
+    "governance_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "audit_id": {
+      "type": "string",
+      "pattern": "^ECO-[A-Z0-9_-]+$"
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "token_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_input_tokens", "total_output_tokens", "total_tokens", "context_compilation_latency_ms"],
+      "properties": {
+        "total_input_tokens": { "type": "integer", "minimum": 0 },
+        "total_output_tokens": { "type": "integer", "minimum": 0 },
+        "total_tokens": { "type": "integer", "minimum": 0 },
+        "context_compilation_latency_ms": { "type": "number", "minimum": 0 }
+      }
+    },
+    "cost_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["estimated_cost_usd", "budget_cap_usd", "budget_consumed_pct"],
+      "properties": {
+        "estimated_cost_usd": { "type": "number", "minimum": 0 },
+        "budget_cap_usd": { "type": "number", "minimum": 0 },
+        "budget_consumed_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "redundancy_analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["duplicate_token_ratio_pct", "progressive_disclosure_score", "bloated_context_flag"],
+      "properties": {
+        "duplicate_token_ratio_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "progressive_disclosure_score": { "type": "number", "minimum": 0, "maximum": 10 },
+        "bloated_context_flag": { "type": "boolean" }
+      }
+    },
+    "retry_analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_retries", "identical_retries_blocked", "retry_taxonomy"],
+      "properties": {
+        "total_retries": { "type": "integer", "minimum": 0 },
+        "identical_retries_blocked": { "type": "integer", "minimum": 0 },
+        "retry_taxonomy": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["task_id", "attempt_number", "cause", "blocked_as_identical"],
+            "properties": {
+              "task_id": { "type": "string" },
+              "attempt_number": { "type": "integer" },
+              "cause": { "type": "string" },
+              "blocked_as_identical": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "efficiency_index": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["verified_assertions_count", "evidence_per_kilotoken_ratio", "cost_per_verified_outcome_usd"],
+      "properties": {
+        "verified_assertions_count": { "type": "integer", "minimum": 0 },
+        "evidence_per_kilotoken_ratio": { "type": "number", "minimum": 0 },
+        "cost_per_verified_outcome_usd": { "type": "number", "minimum": 0 }
+      }
+    },
+    "governance_status": {
+      "type": "string",
+      "enum": ["OPTIMAL", "WITHIN_BUDGET", "BUDGET_WARNING", "BUDGET_EXCEEDED", "BLOCKED_ON_IDENTICAL_RETRY"]
+    }
+  }
+}

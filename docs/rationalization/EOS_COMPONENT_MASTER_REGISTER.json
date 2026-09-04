@@ -1,0 +1,4481 @@
+{
+  "metadata": {
+    "title": "EOS Component Master Register",
+    "total_components_cataloged": 148,
+    "active_real": 130,
+    "test_only": 12,
+    "orphan": 0
+  },
+  "components": [
+    {
+      "component_id": "CMP-001",
+      "name": "cursor-mission-package",
+      "path": "src/core/adapters/cursor-mission-package.js",
+      "lines_of_code": 230,
+      "size_bytes": 9759,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/mission-learning.test.js",
+          "tests/p3-cursor-mission-package.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/runtime/mission-runtime.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-002",
+      "name": "cursor-return-ingestion-engine",
+      "path": "src/core/adapters/cursor-return-ingestion-engine.js",
+      "lines_of_code": 135,
+      "size_bytes": 5252,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/p3-cursor-return-adapter.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/runtime/mission-runtime.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-003",
+      "name": "cursor-slash-command-bridge",
+      "path": "src/core/adapters/cursor-slash-command-bridge.js",
+      "lines_of_code": 110,
+      "size_bytes": 3563,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/cursor-slash-command-bridge.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-004",
+      "name": "gentleman-sdd-bridge",
+      "path": "src/core/adapters/gentleman-sdd-bridge.js",
+      "lines_of_code": 87,
+      "size_bytes": 3145,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/gentleman-sdd-bridge.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-005",
+      "name": "adapter-registry",
+      "path": "src/core/adapters/llm/adapter-registry.js",
+      "lines_of_code": 94,
+      "size_bytes": 2889,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/phase0/llm-gemini-integration.test.js",
+          "tests/phase0/llm-negative-governance.test.js",
+          "tests/phase0/llm-port-contract.test.js",
+          "tests/phase0/llm-response-validation.test.js",
+          "tests/phase1/intent-compiler-governed.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/intelligence/governed-llm-service.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-006",
+      "name": "gemini-adapter",
+      "path": "src/core/adapters/llm/gemini-adapter.js",
+      "lines_of_code": 238,
+      "size_bytes": 8272,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/phase0/llm-gemini-integration.test.js",
+          "tests/phase0/llm-port-contract.test.js"
+        ],
+        "src": [
+          "src/core/adapters/llm/adapter-registry.js",
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-007",
+      "name": "adversarial-falsification-engine",
+      "path": "src/core/adversarial/adversarial-falsification-engine.js",
+      "lines_of_code": 167,
+      "size_bytes": 5937,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/adversarial-falsification.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-008",
+      "name": "causal-ast-engine",
+      "path": "src/core/ast/causal-ast-engine.js",
+      "lines_of_code": 178,
+      "size_bytes": 6058,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/causal-ast-engine.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-009",
+      "name": "authority-adapter",
+      "path": "src/core/authority/authority-adapter.js",
+      "lines_of_code": 106,
+      "size_bytes": 4678,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/authority-adapter.test.js",
+          "tests/authority-adapter.test.js",
+          "tests/governance-tier.test.js",
+          "tests/operator-doctor.test.js",
+          "tests/phase0/llm-negative-governance.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-19/src/mcp-server.js",
+          "src/core/governance/llm-authority-gate.js",
+          "src/core/mcp/mcp-mission-bridge.js",
+          "src/core/runtime/governance-tier.js",
+          "src/core/runtime/governed-task-executor.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-010",
+      "name": "authority-truth-source",
+      "path": "src/core/authority/authority-truth-source.js",
+      "lines_of_code": 284,
+      "size_bytes": 9884,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 5,
+      "consumers": {
+        "tests": [
+          "tests/authority-truth-source.test.js",
+          "tests/eos-e2e-local-fixture.test.js",
+          "tests/eos-negative-governance.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-011",
+      "name": "autonomous-benchmark-harness-engine",
+      "path": "src/core/benchmark/autonomous-benchmark-harness-engine.js",
+      "lines_of_code": 121,
+      "size_bytes": 3926,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/autonomous-benchmark-harness.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-012",
+      "name": "golden-blueprint-engine",
+      "path": "src/core/blueprints/golden-blueprint-engine.js",
+      "lines_of_code": 141,
+      "size_bytes": 4774,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 5,
+      "consumers": {
+        "tests": [
+          "tests/golden-blueprint.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-013",
+      "name": "byzantine-consensus-engine",
+      "path": "src/core/consensus/byzantine-consensus-engine.js",
+      "lines_of_code": 156,
+      "size_bytes": 5742,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/byzantine-consensus.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-014",
+      "name": "autonomous-contract-synthesizer",
+      "path": "src/core/contracts/autonomous-contract-synthesizer.js",
+      "lines_of_code": 142,
+      "size_bytes": 4413,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/autonomous-contract-synthesizer.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-015",
+      "name": "schema-validator",
+      "path": "src/core/contracts/schema-validator.js",
+      "lines_of_code": 164,
+      "size_bytes": 5679,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/eos-local-contracts.test.js",
+          "tests/mcp-schema-firewall.test.js",
+          "tests/phase0/llm-authority-gate.test.js",
+          "tests/phase0/llm-port-contract.test.js",
+          "tests/phase0/llm-receipt-engine.test.js",
+          "tests/phase0/llm-response-validation.test.js",
+          "tests/phase1/intent-compiler-governed.test.js",
+          "tests/phase2/dynamic-planning-dag.test.js",
+          "tests/phase3/governed-task-execution.test.js",
+          "tests/phase4/governed-closed-loop-repair.test.js",
+          "tests/phase5/autonomous-canary-proving.test.js",
+          "tests/phase6/persistent-knowledge-learning.test.js",
+          "tests/phase7/continuous-improvement-evolution.test.js",
+          "tests/purgatorial-refinement.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "src/core/blueprints/golden-blueprint-engine.js",
+          "src/core/governance/llm-authority-gate.js",
+          "src/core/intelligence/governed-llm-service.js",
+          "src/core/intelligence/llm-receipt-engine.js",
+          "src/core/intent-compiler.js",
+          "src/core/mcp/mcp-mission-bridge.js",
+          "src/core/memory/epistemic-knowledge-service.js",
+          "src/core/meta/continuous-improvement-orchestrator.js",
+          "src/core/runtime/autonomous-mission-prover.js",
+          "src/core/runtime/governed-auto-repair-service.js",
+          "src/core/runtime/governed-task-executor.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-016",
+      "name": "contextual-skill-router-engine",
+      "path": "src/core/discovery/contextual-skill-router-engine.js",
+      "lines_of_code": 160,
+      "size_bytes": 6011,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/contextual-skill-router.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-017",
+      "name": "governed-technical-selection-engine",
+      "path": "src/core/discovery/governed-technical-selection-engine.js",
+      "lines_of_code": 276,
+      "size_bytes": 11785,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/p1-governed-technical-selection.test.js",
+          "tests/p2-runtime-observability-reconciliation.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/runtime/mission-runtime.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-018",
+      "name": "operational-capability-receipt-engine",
+      "path": "src/core/discovery/operational-capability-receipt-engine.js",
+      "lines_of_code": 306,
+      "size_bytes": 12179,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/p1-operational-capability-receipts.test.js",
+          "tests/p2-runtime-observability-reconciliation.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-019",
+      "name": "universal-technical-discovery-engine",
+      "path": "src/core/discovery/universal-technical-discovery-engine.js",
+      "lines_of_code": 292,
+      "size_bytes": 12397,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/p1-governed-technical-selection.test.js",
+          "tests/p1-multi-stack-discovery.test.js",
+          "tests/p2-runtime-observability-reconciliation.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/runtime/mission-runtime.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-020",
+      "name": "formal-engineering-doctrine-engine",
+      "path": "src/core/doctrine/formal-engineering-doctrine-engine.js",
+      "lines_of_code": 78,
+      "size_bytes": 3025,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/formal-engineering-doctrine.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-021",
+      "name": "drift",
+      "path": "src/core/drift.js",
+      "lines_of_code": 94,
+      "size_bytes": 3181,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          "tests/canary-phase-g-calibration-governance.test.js",
+          "tests/canary-phase-l-blind-evaluation.test.js",
+          "tests/client-triangulation.test.js",
+          "tests/closed-loop-qa-observability.test.js",
+          "tests/cognitive-execution-fabric.test.js",
+          "tests/cognitive-fabric-generalization.test.js",
+          "tests/continuous-change-operations.test.js",
+          "tests/contract-drift.test.js",
+          "tests/drift.test.js",
+          "tests/e2e-exhaustive-forensic-stress.test.js",
+          "tests/external-product-factory-pilot.test.js",
+          "tests/fdir.test.js",
+          "tests/level3/audits/final-verifier-v1-3-audit.js",
+          "tests/living-architecture-visualizer.test.js",
+          "tests/long-run-independent-operation.test.js",
+          "tests/longitudinal-evidence.test.js",
+          "tests/otel-semantic-exporter.test.js",
+          "tests/pleroma-absolute.test.js",
+          "tests/product-factory-scale.test.js",
+          "tests/sdd-hitl-gatekeeper.test.js",
+          "tests/spec-drift-detector.test.js",
+          "tests/sustained-operation.test.js",
+          "tests/transfer-and-unlearning.test.js"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/governed-technical-selection-engine.js",
+          "src/core/discovery/governed-technical-selection-engine.js",
+          "src/core/fdir.js",
+          "src/core/governance/contract-drift-monitor.js",
+          "src/core/index.js",
+          "src/core/meta/meta-engineering-methodology-selector-engine.js",
+          "src/core/orchestrator.js",
+          "src/core/process-governor.js",
+          "src/core/qa/closed-loop-qa-observability-engine.js",
+          "src/core/runtime/living-architecture-visualizer.js",
+          "src/core/runtime/mcp-schema-validator.js",
+          "src/core/runtime/mission-orchestrator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/core/runtime/spec-drift-detector.js",
+          "src/core/sentinel-daemon.js",
+          "src/mcp/handlers/mission-handler.js",
+          "src/mcp/router.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-022",
+      "name": "token-economics-audit-engine",
+      "path": "src/core/economics/token-economics-audit-engine.js",
+      "lines_of_code": 198,
+      "size_bytes": 7948,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/p2-runtime-observability-reconciliation.test.js",
+          "tests/p2-token-economics.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-023",
+      "name": "evidence",
+      "path": "src/core/evidence.js",
+      "lines_of_code": 52,
+      "size_bytes": 1435,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          ".gemini/self-hosting-workspace/tests/adrEngine.test.js",
+          ".gemini/self-hosting-workspace/tests/benchmarkEngine.test.js",
+          ".gemini/self-hosting-workspace/tests/dualValidationEngine.test.js",
+          ".gemini/self-hosting-workspace/tests/evidenceEngine.test.js",
+          ".gemini/self-hosting-workspace/tests/executionOrchestrator.test.js",
+          ".gemini/self-hosting-workspace/tests/integrationEngine.test.js",
+          ".gemini/self-hosting-workspace/tests/knowledgePlane.test.js",
+          ".gemini/self-hosting-workspace/tests/negativeSecuritySuite.test.js",
+          ".gemini/self-hosting-workspace/tests/selfHostingLoop.test.js",
+          ".gemini/self-hosting-workspace/tests/synthesisEngine.test.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/context-compiler.test.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800282975.json",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/fixtures/test-ledger/feature_list_TEST-MIS-1787872318656.json",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/mission-ledger.test.js",
+          "docs/archive/purge-2026-08-21/worktree-salvage/context-compiler-fix/tests/fixtures/test-ledger/feature_list_TEST-MIS-1787291350456.json",
+          "docs/archive/purge-2026-08-21/worktree-salvage/context-compiler-fix/tests/fixtures/test-ledger/feature_list_TEST-MIS-1787291350466.json",
+          "docs/archive/purge-2026-08-21/worktree-salvage/context-compiler-fix/tests/fixtures/test-ledger/feature_list_TEST-MIS-1787291350482.json",
+          "docs/archive/purge-2026-08-21/worktree-salvage/context-compiler-fix/tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787291350498.json",
+          "docs/archive/purge-2026-08-21/worktree-salvage/context-compiler-fix/tests/fixtures/test-ledger/legacy/CURRENT_MISSION.json",
+          "tests/accessibility-validator.test.js",
+          "tests/adapter-architecture.test.js",
+          "tests/adversarial-red-team.test.js",
+          "tests/adversarial-tool-selection.test.js",
+          "tests/autonomy-graduation.test.js",
+          "tests/canary-phase-b-validation.test.js",
+          "tests/canary-phase-n-longitudinal-chaos.test.js",
+          "tests/canary-phase-q-autonomy-graduation.test.js",
+          "tests/canary-real-001-cohort-server.test.js",
+          "tests/canary-real-001-comprehensive-qa.test.js",
+          "tests/capability-intelligence.test.js",
+          "tests/causal-ast-engine.test.js",
+          "tests/cognitive-execution-fabric.test.js",
+          "tests/cognitive-pareto-router.test.js",
+          "tests/cursor-agent-council.test.js",
+          "tests/cursor-command-center.test.js",
+          "tests/e2e-master-pipeline-simulation.test.js",
+          "tests/eos-e2e-local-fixture.test.js",
+          "tests/eos-local-contracts.test.js",
+          "tests/epistemic-uncertainty.test.js",
+          "tests/evidence.test.js",
+          "tests/execution-runtime.test.js",
+          "tests/executive-arbitration.test.js",
+          "tests/executive-orchestrator-e2e.test.js",
+          "tests/factory-governance.test.js",
+          "tests/factory-proving.test.js",
+          "tests/fdir-self-healing.test.js",
+          "tests/fixtures/adversarial-projects/synthetic-adversarial-evidence/package.json",
+          "tests/fixtures/integration-gates/valid-integration-contract.json",
+          "tests/fixtures/sdd-contracts/invalid/invalid-hitl-expired.json",
+          "tests/fixtures/sdd-contracts/invalid/invalid-mission-bad-hash.json",
+          "tests/fixtures/sdd-contracts/invalid/invalid-mission-missing-authority.json",
+          "tests/fixtures/sdd-contracts/valid/valid-hitl-receipt.json",
+          "tests/fixtures/sdd-contracts/valid/valid-mission-package.json",
+          "tests/fixtures/sdd-contracts/valid/valid-task-contract.json",
+          "tests/fixtures/sdd-fsm/invalid-events/invalid-insufficient-authority.json",
+          "tests/fixtures/sdd-fsm/invalid-events/invalid-self-approval.json",
+          "tests/fixtures/sdd-fsm/invalid-events/invalid-simulation-only-evidence.json",
+          "tests/fixtures/sdd-fsm/invalid-events/invalid-skipped-gate.json",
+          "tests/fixtures/sdd-fsm/valid-events/event-01-vision-to-formulation.json",
+          "tests/fixtures/sdd-fsm/valid-events/event-03-direction-gate-to-discover.json",
+          "tests/fixtures/sdd-hitl/expired-receipt.json",
+          "tests/fixtures/sdd-hitl/valid-direction-receipt.json",
+          "tests/fixtures/sdd-hitl/valid-release-receipt.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787174851319.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787174857983.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787175317131.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787175506051.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787181411177.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787181411191.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787181411217.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787182838181.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787182838194.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787182838213.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281296430.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281296466.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281296514.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281372673.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281372684.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281372709.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281814687.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281814730.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281814794.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281879435.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281879447.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787281879501.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787282000927.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787282000956.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787282000997.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787282866177.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787282866189.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787282866229.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283019761.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283019774.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283019808.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283162988.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283163006.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283163024.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283330773.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283330782.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283330843.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283416676.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283416697.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283416718.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283718678.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283718692.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787283718713.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284053153.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284053164.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284053253.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284150208.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284150218.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284150244.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284248576.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284248588.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284248614.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284432216.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284432225.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284432251.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284788229.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284788245.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787284788274.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787285594473.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787285594502.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787285594525.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787285776961.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787285777004.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787285777031.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787285974544.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787285974575.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787285974602.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286122993.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286123003.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286123024.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286295341.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286295356.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286295377.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286413809.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286413827.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286413854.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286439080.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286439089.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286439110.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286666569.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286666578.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286666606.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286976096.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286976112.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787286976136.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287085729.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287085741.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287085764.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287256814.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287256827.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287256847.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287576863.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287576883.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287576903.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287598279.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287598306.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287598328.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287696212.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287696226.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787287696248.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787288606820.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787288606844.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787288606874.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787289060311.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787289060426.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787289060541.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787291029524.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787291029548.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787291029648.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441141965.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441141984.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441142009.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441152940.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441152957.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441152980.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441497258.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441497278.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441497313.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441545951.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441545977.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441545995.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441655030.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441655046.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441655070.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441994389.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441994439.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787441994491.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787774095132.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787774095260.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787774095587.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787788925507.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787788925633.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787788925810.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787789516139.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787789516289.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787789516588.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787789622187.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787789622304.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787789622501.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800246513.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800246597.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800246678.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800257902.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800257946.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800258078.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800289293.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800289385.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800289629.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800309555.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800309661.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800309871.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800329805.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800329888.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787800330128.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802133969.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802134058.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802134129.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802198579.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802198623.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802198691.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802413839.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802413861.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802413910.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802779423.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802779480.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787802779706.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787803222362.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787803222466.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787803222772.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787803681325.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787803681393.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787803681615.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787804020024.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787804020145.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787804020405.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787804272775.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787804272824.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787804272965.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805244508.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805244527.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805244611.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805272446.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805272567.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805272758.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805430508.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805430593.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805430949.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805582539.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805582689.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787805582897.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787807392571.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787807392625.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787807392805.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787807632831.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787807632886.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787807633038.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787807749900.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787807749952.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787807750120.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808312008.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808312072.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808312363.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808587230.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808587253.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808587344.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808781879.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808781910.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808781990.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808901488.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808901547.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787808901830.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809067060.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809067157.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809067433.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809358330.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809358423.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809358700.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809458424.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809458533.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809458799.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809567915.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809567959.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809568168.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809659246.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809659298.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809659447.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809746282.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809746323.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809746390.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809831790.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809831901.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787809832131.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787810070407.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787810070470.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787810070708.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787810235564.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787810235708.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787810235896.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787811315878.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787811315989.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787811316275.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787811823916.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787811824053.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787811824293.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787860704510.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787860704531.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787860704586.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787864931861.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787864931922.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787864932155.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787869705966.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787869705997.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787869706058.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787870092109.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787870092198.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787870092310.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787870722279.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787870722364.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787870722555.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787870800654.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787870800755.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787870801029.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787872331437.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787872331479.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787872331616.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787890040760.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787890040796.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787890040860.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787913865750.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787913865873.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787913866381.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787944693622.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787944693661.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787944693787.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787945119194.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787945119243.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787945119406.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787945504504.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787945504558.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787945504703.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787965995844.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787965995946.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787965996207.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787974493328.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787974493392.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1787974493606.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788014335609.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788014335629.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788014335695.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788014950823.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788014950843.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788014950961.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788014991821.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788014991843.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788014991908.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788015862602.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788015862639.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788015862699.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788016042043.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788016042066.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788016042119.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788016245582.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788016245614.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788016245669.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788017788215.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788017788254.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788017788344.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788018142170.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788018142210.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788018142339.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788018999287.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788018999311.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788018999370.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019428146.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019428518.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019429992.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019431531.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019432046.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019432396.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019432645.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019432778.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019433063.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019435723.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019435860.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019436029.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019463980.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019464124.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788019464570.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788020190818.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788020190878.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788020190956.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788065713704.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788065713772.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788065713909.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788185014367.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788185014385.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788185014459.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788190456504.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788190456573.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-1788190456788.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787181411230.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787182838228.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787281296549.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787281372721.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787281814842.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787281879516.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787282001041.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787282866249.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787283019837.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787283163041.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787283330857.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787283416733.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787283718728.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787284053268.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787284150257.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787284248626.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787284432265.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787284788295.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787285594543.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787285777049.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787285974617.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787286123060.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787286295392.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787286413870.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787286439126.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787286666619.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787286976151.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787287085780.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787287256866.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787287576923.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787287598365.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787287696265.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787288606899.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787289060599.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787291029681.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787441142028.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787441153021.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787441497328.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787441546016.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787441655085.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787441994538.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787774095667.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787788926017.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787789516801.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787789622669.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787800246715.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787800258194.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787800289754.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787800310080.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787800330332.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787802134163.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787802198753.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787802413961.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787802779929.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787803222903.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787803681747.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787804020639.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787804273123.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787805244669.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787805272857.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787805431151.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787805583097.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787807392984.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787807633293.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787807750323.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787808312522.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787808587381.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787808782034.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787808902347.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787809067555.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787809358865.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787809458994.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787809568296.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787809659563.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787809746430.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787809832208.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787810070853.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787810236036.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787811316485.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787811824502.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787860704631.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787864932377.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787869706100.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787870092411.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787870722668.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787870801134.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787872331749.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787890040901.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787913866587.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787944693882.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787945119485.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787945504770.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787965996368.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1787974493751.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788014335734.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788014950998.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788014991940.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788015862734.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788016042152.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788016245713.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788017788385.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788018142602.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788018999405.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788019430127.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788019432479.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788019433114.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788019436093.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788019464651.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788020190995.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788065714013.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788185014494.json",
+          "tests/fixtures/test-ledger/feature_list_TEST-MIS-RECOVER-1788190456903.json",
+          "tests/fixtures/test-ledger/legacy/CURRENT_MISSION.json",
+          "tests/formal-engineering-doctrine.test.js",
+          "tests/frontier-evaluation-farm.test.js",
+          "tests/graph-intelligence-plane.test.js",
+          "tests/guardrail-sandwich.test.js",
+          "tests/independent-telemetry-sink.test.js",
+          "tests/independent-validation.test.js",
+          "tests/intelligence.test.js",
+          "tests/kernel.test.js",
+          "tests/learning-validity-causality.test.js",
+          "tests/level3/audits/final-verifier-v1-3-audit.js",
+          "tests/level3/common/evidence-recorder.js",
+          "tests/level3/fundacion/fundacion-l3-runner.js",
+          "tests/level3/multi-fixture/multi-fixture-runner.js",
+          "tests/level3/pilot/pilot-runner.js",
+          "tests/level3/run-all-l3-suites.js",
+          "tests/longitudinal-evidence.test.js",
+          "tests/mcp-autonomous-engineer-tool.test.js",
+          "tests/mcp-orchestrator.test.js",
+          "tests/mcp-router.test.js",
+          "tests/memory-integrity.test.js",
+          "tests/meta-engineering-selector.test.js",
+          "tests/mission-control.test.js",
+          "tests/mission-engine.test.js",
+          "tests/mission-learning.test.js",
+          "tests/mission-ledger.test.js",
+          "tests/mission-ontology-core.test.js",
+          "tests/mission-ontology-graph.test.js",
+          "tests/multi-project-factory-e2e.test.js",
+          "tests/operating-loop.test.js",
+          "tests/orchestrator.test.js",
+          "tests/p0-bounded-autonomous-mission.test.js",
+          "tests/p1-discovery-schemas.test.js",
+          "tests/p1-governed-technical-selection.test.js",
+          "tests/p1-multi-stack-discovery.test.js",
+          "tests/p1-operational-capability-receipts.test.js",
+          "tests/p2-executive-mission-reporter.test.js",
+          "tests/p2-runtime-observability-reconciliation.test.js",
+          "tests/p2-token-economics.test.js",
+          "tests/p3-bounded-worktree-canary.test.js",
+          "tests/p3-cursor-mission-package.test.js",
+          "tests/p3-cursor-return-adapter.test.js",
+          "tests/p3-independent-operator-acceptance.test.js",
+          "tests/p3-ledger-crash-recovery.test.js",
+          "tests/p3-multi-agent-supervision.test.js",
+          "tests/p4-external-canary-contract.test.js",
+          "tests/parallel-auditor-dag.test.js",
+          "tests/phase0/llm-gemini-integration.test.js",
+          "tests/phase0/llm-negative-governance.test.js",
+          "tests/phase0/llm-port-contract.test.js",
+          "tests/phase0/llm-response-validation.test.js",
+          "tests/phase1/intent-compiler-governed.test.js",
+          "tests/phase2/dynamic-planning-dag.test.js",
+          "tests/phase3/governed-task-execution.test.js",
+          "tests/phase4/governed-closed-loop-repair.test.js",
+          "tests/phase5/autonomous-canary-proving.test.js",
+          "tests/phase6/persistent-knowledge-learning.test.js",
+          "tests/phase7/continuous-improvement-evolution.test.js",
+          "tests/pleroma-absolute.test.js",
+          "tests/product-decision-engine.test.js",
+          "tests/project-bootstrap.test.js",
+          "tests/RC_FILE_MANIFEST.json",
+          "tests/real-operational-campaign.test.js",
+          "tests/real-provider-adapter.test.js",
+          "tests/release-governance.test.js",
+          "tests/schemas-p01.test.js",
+          "tests/sdd-evidence-engine.test.js",
+          "tests/sdd-fsm-transition-enforcer.test.js",
+          "tests/sdd-hitl-gatekeeper.test.js",
+          "tests/self-evolution.test.js",
+          "tests/seo-validator.test.js",
+          "tests/strategy-engine.test.js",
+          "tests/sustained-operation.test.js",
+          "tests/terminal-hud.test.js",
+          "tests/tool-discovery-ranking.test.js",
+          "tests/traceability-matrix.test.js",
+          "tests/val-exp-002-dry-run.test.js"
+        ],
+        "src": [
+          ".gemini/self-hosting-workspace/src/core/adrEngine.js",
+          ".gemini/self-hosting-workspace/src/core/dualValidationEngine.js",
+          ".gemini/self-hosting-workspace/src/core/empiricalBaseline.js",
+          ".gemini/self-hosting-workspace/src/core/evidenceEngine.js",
+          ".gemini/self-hosting-workspace/src/core/executionOrchestrator.js",
+          ".gemini/self-hosting-workspace/src/core/knowledgePlane.js",
+          ".gemini/self-hosting-workspace/src/core/selfHostingLoop.js",
+          ".gemini/self-hosting-workspace/src/core/synthesisEngine.js",
+          ".gemini/self-hosting-workspace/src/indexer/provenanceIndexer.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-19/src/mcp-server.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/cli/mission-cli.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/adapters/cursor-mission-package.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/adapters/cursor-return-ingestion-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/governed-technical-selection-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/operational-capability-receipt-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/universal-technical-discovery-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/economics/token-economics-audit-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/governance/integration-gatekeeper.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/observability/executive-mission-reporter.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/roles/role-skill-registry-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/runtime/mission-runtime.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sandbox/worktree-mutation-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sdd/epistemic-evidence-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sdd/hitl-gatekeeper.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sdd/sdd-fsm-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/supervision/multi-agent-supervision-engine.js",
+          "Multimodal-Creative-Suite/src/domain/creativeEngine.js",
+          "src/cli/mission-cli.js",
+          "src/core/adapters/cursor-mission-package.js",
+          "src/core/adapters/cursor-return-ingestion-engine.js",
+          "src/core/adapters/gentleman-sdd-bridge.js",
+          "src/core/adapters/llm/gemini-adapter.js",
+          "src/core/adversarial/adversarial-falsification-engine.js",
+          "src/core/ast/causal-ast-engine.js",
+          "src/core/authority/authority-truth-source.js",
+          "src/core/benchmark/autonomous-benchmark-harness-engine.js",
+          "src/core/blueprints/golden-blueprint-engine.js",
+          "src/core/consensus/byzantine-consensus-engine.js",
+          "src/core/contracts/autonomous-contract-synthesizer.js",
+          "src/core/discovery/contextual-skill-router-engine.js",
+          "src/core/discovery/governed-technical-selection-engine.js",
+          "src/core/discovery/operational-capability-receipt-engine.js",
+          "src/core/discovery/universal-technical-discovery-engine.js",
+          "src/core/doctrine/formal-engineering-doctrine-engine.js",
+          "src/core/economics/token-economics-audit-engine.js",
+          "src/core/evolution/autonomous-self-reflection-engine.js",
+          "src/core/governance/integration-gatekeeper.js",
+          "src/core/harness.js",
+          "src/core/intelligence/cross-project-knowledge-synthesizer.js",
+          "src/core/intelligence/llm-receipt-engine.js",
+          "src/core/intent-compiler.js",
+          "src/core/judgment/senior-judgment-engine.js",
+          "src/core/kernel.js",
+          "src/core/mcp/mcp-mission-bridge.js",
+          "src/core/memory/epistemic-bkm-engine.js",
+          "src/core/memory/epistemic-knowledge-service.js",
+          "src/core/meta/continuous-improvement-orchestrator.js",
+          "src/core/meta/meta-engineering-methodology-selector-engine.js",
+          "src/core/observability/executive-mission-reporter.js",
+          "src/core/observability/terminal-hud-engine.js",
+          "src/core/optimization/evolutionary-strategy-optimizer.js",
+          "src/core/orchestration/hypergraph-speculative-engine.js",
+          "src/core/orchestration/mission-dag-pipeline-engine.js",
+          "src/core/orchestration/universal-agentic-extension-orchestrator.js",
+          "src/core/orchestrator.js",
+          "src/core/pilot/one_percent/lsm-tree-storage-engine.js",
+          "src/core/pilot/one_percent/raft-distributed-consensus-engine.js",
+          "src/core/pilot/one_percent/staff-strategic-rfc-engine.js",
+          "src/core/pilot/one_percent/virtual-kernel-journaling-fs.js",
+          "src/core/pilot/pilot-kv-store.js",
+          "src/core/qa/closed-loop-qa-observability-engine.js",
+          "src/core/resilience/deterministic-chaos-engine.js",
+          "src/core/resilience/fdir-self-healing-engine.js",
+          "src/core/roles/role-skill-registry-engine.js",
+          "src/core/routing/cognitive-pareto-router.js",
+          "src/core/routing/predictive-token-governor.js",
+          "src/core/runtime/adversarial-red-team.js",
+          "src/core/runtime/autonomous-mission-prover.js",
+          "src/core/runtime/context-compiler.js",
+          "src/core/runtime/cursor-agent-council.js",
+          "src/core/runtime/governed-auto-repair-service.js",
+          "src/core/runtime/governed-task-executor.js",
+          "src/core/runtime/living-architecture-visualizer.js",
+          "src/core/runtime/mcp-schema-validator.js",
+          "src/core/runtime/mission-learning.js",
+          "src/core/runtime/mission-ontology.js",
+          "src/core/runtime/mission-orchestrator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/core/runtime/ontological-firewall.js",
+          "src/core/runtime/operator-next.js",
+          "src/core/runtime/parallel-auditor-dag.js",
+          "src/core/runtime/traceability-matrix.js",
+          "src/core/sandbox/autonomous-sandbox-evaluator.js",
+          "src/core/sandbox/worktree-mutation-engine.js",
+          "src/core/scraping/high-speed-web-scraping-engine.js",
+          "src/core/sdd/epistemic-evidence-engine.js",
+          "src/core/sdd/hitl-gatekeeper.js",
+          "src/core/sdd/master-sdlc-nanometric-engine.js",
+          "src/core/sdd/micro-cycle-engine.js",
+          "src/core/sdd/nanometric-spec-planner.js",
+          "src/core/sdd/sdd-fsm-engine.js",
+          "src/core/supervision/multi-agent-supervision-engine.js",
+          "src/core/systems/agentic-systems-thinking-engine.js",
+          "src/core/tutor/tutor-maestro.js",
+          "src/mcp/handlers/evidence-handler.js",
+          "src/mcp/router.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-024",
+      "name": "autonomous-self-reflection-engine",
+      "path": "src/core/evolution/autonomous-self-reflection-engine.js",
+      "lines_of_code": 118,
+      "size_bytes": 4480,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/autonomous-self-reflection.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-025",
+      "name": "fdir-ontology",
+      "path": "src/core/fdir-ontology.js",
+      "lines_of_code": 86,
+      "size_bytes": 3150,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/e2e-master-pipeline-simulation.test.js",
+          "tests/fdir-ontology.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-026",
+      "name": "fdir",
+      "path": "src/core/fdir.js",
+      "lines_of_code": 87,
+      "size_bytes": 3407,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          "tests/cryptographic-sentinel.test.js",
+          "tests/e2e-exhaustive-forensic-stress.test.js",
+          "tests/e2e-master-pipeline-simulation.test.js",
+          "tests/eos-negative-governance.test.js",
+          "tests/fdir-ontology.test.js",
+          "tests/fdir-self-healing.test.js",
+          "tests/fdir.test.js",
+          "tests/fixtures/integration-gates/valid-integration-contract.json",
+          "tests/mcp-mission-bridge.test.js",
+          "tests/p2-adversarial-integration-gates.test.js",
+          "tests/p2-integration-gatekeeper.test.js",
+          "tests/runtime-pruning.test.js",
+          "tests/terminal-hud.test.js"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/governance/integration-gatekeeper.js",
+          "src/core/governance/integration-gatekeeper.js",
+          "src/core/index.js",
+          "src/core/mcp/mcp-mission-bridge.js",
+          "src/core/mediator.js",
+          "src/core/observability/terminal-hud-engine.js",
+          "src/core/orchestrator.js",
+          "src/core/runtime/cryptographic-sentinel.js",
+          "src/core/runtime/mcp-schema-validator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/core/sentinel-daemon.js",
+          "src/mcp/guardrail-sandwich.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-027",
+      "name": "contract-drift-monitor",
+      "path": "src/core/governance/contract-drift-monitor.js",
+      "lines_of_code": 105,
+      "size_bytes": 3576,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/contract-drift.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-028",
+      "name": "integration-gatekeeper",
+      "path": "src/core/governance/integration-gatekeeper.js",
+      "lines_of_code": 422,
+      "size_bytes": 17834,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/eos-negative-governance.test.js",
+          "tests/p2-adversarial-integration-gates.test.js",
+          "tests/p2-integration-gatekeeper.test.js",
+          "tests/p2-runtime-observability-reconciliation.test.js",
+          "tests/p4-external-canary-contract.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "src/core/mcp/mcp-mission-bridge.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-029",
+      "name": "llm-authority-gate",
+      "path": "src/core/governance/llm-authority-gate.js",
+      "lines_of_code": 87,
+      "size_bytes": 3364,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/phase0/llm-authority-gate.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/intelligence/governed-llm-service.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-030",
+      "name": "harness",
+      "path": "src/core/harness.js",
+      "lines_of_code": 91,
+      "size_bytes": 2704,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/autonomous-benchmark-harness.test.js",
+          "tests/autonomous-failsafe-harness.test.js",
+          "tests/canary-f001-predictive-transfer.test.js",
+          "tests/canary-m002-replication.test.js",
+          "tests/canary-m003-replication.test.js",
+          "tests/causal-replication-e2e.test.js",
+          "tests/cognitive-fabric-evaluation.test.js",
+          "tests/cognitive-fabric-generalization.test.js",
+          "tests/cursor-cli-harness.test.js",
+          "tests/executive-generalization.test.js",
+          "tests/harness.test.js",
+          "tests/independent-telemetry-sink.test.js",
+          "tests/independent-validation.test.js",
+          "tests/learning-robustness-e2e.test.js",
+          "tests/long-run-stability-500.test.js",
+          "tests/long-run-stability.test.js",
+          "tests/mcp-autonomous-engineer-tool.test.js",
+          "tests/memory.test.js",
+          "tests/playwright-mcp-benchmark.test.js",
+          "tests/polyglot-language-harness.test.js",
+          "tests/polyglot-rust-wasm-integration.test.js",
+          "tests/transfer-and-unlearning.test.js"
+        ],
+        "src": [
+          "src/cli/mission-cli.js",
+          "src/core/runtime/engine-surface.js",
+          "src/core/runtime/mcp-schema-validator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/mcp/guardrail-sandwich.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-031",
+      "name": "index",
+      "path": "src/core/index.js",
+      "lines_of_code": 86,
+      "size_bytes": 5057,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 5,
+      "consumers": {
+        "tests": [
+          ".gemini/self-hosting-workspace/tests/governanceEngine.test.js",
+          ".gemini/self-hosting-workspace/tests/knowledgePlane.test.js",
+          ".gemini/self-hosting-workspace/tests/selfHostingLoop.test.js",
+          "tests/adapter-architecture.test.js",
+          "tests/adversarial-red-team.test.js",
+          "tests/autonomous-benchmark-harness.test.js",
+          "tests/canary-phase-b-validation.test.js",
+          "tests/canary-real-001-browser-qa.test.js",
+          "tests/canary-real-001-cohort-server.test.js",
+          "tests/canary-real-001-comprehensive-qa.test.js",
+          "tests/capability-intelligence.test.js",
+          "tests/cognitive-pareto-router.test.js",
+          "tests/core/git-watchdog.test.js",
+          "tests/core-index.test.js",
+          "tests/e2e-master-pipeline-simulation.test.js",
+          "tests/elite-platform.test.js",
+          "tests/eos-local-contracts.test.js",
+          "tests/execution-runtime.test.js",
+          "tests/first-principles-simplifier.test.js",
+          "tests/fixtures/multi-stack-discovery/fixture-node-typescript/package.json",
+          "tests/ledger-manager.test.js",
+          "tests/ledger-recovery.test.js",
+          "tests/level3/audits/final-verifier-v1-3-audit.js",
+          "tests/level3/ec-007-rollback/rollback-suite.js",
+          "tests/level3/ec-008-adversarial/adversarial-suite.js",
+          "tests/level3/ec-009-observability/observability-suite.js",
+          "tests/level3/fundacion/fundacion-l3-runner.js",
+          "tests/level3/multi-fixture/multi-fixture-runner.js",
+          "tests/level3/pilot/pilot-runner.js",
+          "tests/mcp/red-teaming.test.js",
+          "tests/mcp-akasha-engram-tool.test.js",
+          "tests/mcp-schema-firewall.test.js",
+          "tests/memory.test.js",
+          "tests/mission-dag-pipeline.test.js",
+          "tests/one-percent-canon-suite.test.js",
+          "tests/p0-fundacion-contract-boundary.test.js",
+          "tests/p2-runtime-observability-reconciliation.test.js",
+          "tests/p2-token-economics.test.js",
+          "tests/p3-cursor-mission-package.test.js",
+          "tests/provider-router.test.js",
+          "tests/RC_FILE_MANIFEST.json",
+          "tests/real-world-validation-program.test.js",
+          "tests/restricted-autonomy-operations.test.js",
+          "tests/surgical-context-compiler.test.js",
+          "tests/verifier-authorization-aware.test.js"
+        ],
+        "src": [
+          ".gemini/self-hosting-workspace/src/indexer/provenanceIndexer.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/cli/mission-cli.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/universal-technical-discovery-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/economics/token-economics-audit-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sdd/epistemic-evidence-engine.js",
+          "src/cli/mission-cli.js",
+          "src/core/benchmark/autonomous-benchmark-harness-engine.js",
+          "src/core/blueprints/golden-blueprint-engine.js",
+          "src/core/discovery/universal-technical-discovery-engine.js",
+          "src/core/economics/token-economics-audit-engine.js",
+          "src/core/mcp/mcp-mission-bridge.js",
+          "src/core/mediator.js",
+          "src/core/memory.js",
+          "src/core/optimization/evolutionary-strategy-optimizer.js",
+          "src/core/orchestration/mission-dag-pipeline-engine.js",
+          "src/core/orchestrator.js",
+          "src/core/pilot/one_percent/raft-distributed-consensus-engine.js",
+          "src/core/provider-router.js",
+          "src/core/rules/canonical-rules-index.js",
+          "src/core/runtime/adversarial-red-team.js",
+          "src/core/runtime/context-compiler.js",
+          "src/core/runtime/governance-tier.js",
+          "src/core/runtime/heptaparaparshinokh-ledger.js",
+          "src/core/runtime/ledger-recovery.js",
+          "src/core/runtime/mcp-schema-validator.js",
+          "src/core/runtime/mission-ontology.js",
+          "src/core/runtime/mission-orchestrator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/core/sdd/epistemic-evidence-engine.js",
+          "src/core/sdd/master-sdlc-nanometric-engine.js",
+          "src/core/sdd/nanometric-spec-planner.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-032",
+      "name": "cross-project-knowledge-synthesizer",
+      "path": "src/core/intelligence/cross-project-knowledge-synthesizer.js",
+      "lines_of_code": 141,
+      "size_bytes": 4717,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/cross-project-knowledge-synthesizer.test.js"
+        ],
+        "src": [
+          "src/core/memory/epistemic-knowledge-service.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-033",
+      "name": "governed-llm-service",
+      "path": "src/core/intelligence/governed-llm-service.js",
+      "lines_of_code": 149,
+      "size_bytes": 6136,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 6,
+      "consumers": {
+        "tests": [
+          "tests/phase0/llm-gemini-integration.test.js",
+          "tests/phase0/llm-negative-governance.test.js",
+          "tests/phase0/llm-response-validation.test.js",
+          "tests/phase1/intent-compiler-governed.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/intent-compiler.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-034",
+      "name": "llm-budget-governor",
+      "path": "src/core/intelligence/llm-budget-governor.js",
+      "lines_of_code": 136,
+      "size_bytes": 4534,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/phase0/llm-budget-governor.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/intelligence/governed-llm-service.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-035",
+      "name": "llm-receipt-engine",
+      "path": "src/core/intelligence/llm-receipt-engine.js",
+      "lines_of_code": 122,
+      "size_bytes": 4418,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/phase0/llm-receipt-engine.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/intelligence/governed-llm-service.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-036",
+      "name": "intent-compiler",
+      "path": "src/core/intent-compiler.js",
+      "lines_of_code": 286,
+      "size_bytes": 11366,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          "tests/intent-compiler.test.js",
+          "tests/phase1/intent-compiler-governed.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-037",
+      "name": "senior-judgment-engine",
+      "path": "src/core/judgment/senior-judgment-engine.js",
+      "lines_of_code": 101,
+      "size_bytes": 3975,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/senior-judgment-engine.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-038",
+      "name": "kernel",
+      "path": "src/core/kernel.js",
+      "lines_of_code": 163,
+      "size_bytes": 6002,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 6,
+      "consumers": {
+        "tests": [
+          "tests/autonomous-failsafe-harness.test.js",
+          "tests/e2e-master-pipeline-simulation.test.js",
+          "tests/fixtures/sdd-evidence/valid-evidence-receipt.json",
+          "tests/kernel.test.js",
+          "tests/knowledge-ontology.test.js",
+          "tests/mcp-router.test.js",
+          "tests/mcp-schema-firewall.test.js",
+          "tests/memory.test.js",
+          "tests/one-percent-canon-suite.test.js",
+          "tests/sdd-evidence-engine.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/orchestrator.js",
+          "src/core/runtime/mcp-schema-validator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/core/scaffolder-clean.js",
+          "src/mcp/handlers/governance-handler.js",
+          "src/mcp/router.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-039",
+      "name": "knowledge-ontology",
+      "path": "src/core/knowledge-ontology.js",
+      "lines_of_code": 81,
+      "size_bytes": 2396,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/fdir-ontology.test.js",
+          "tests/knowledge-ontology.test.js",
+          "tests/mcp-ontology.test.js"
+        ],
+        "src": [
+          "src/core/fdir-ontology.js",
+          "src/core/index.js",
+          "src/core/orchestrator.js",
+          "src/core/scaffolder-clean.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-040",
+      "name": "ledger-manager",
+      "path": "src/core/ledger-manager.js",
+      "lines_of_code": 165,
+      "size_bytes": 5176,
+      "quality_classification": "ORPHAN",
+      "value_rating": "LOW",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "PARTIAL",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/ledger-manager.test.js"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-041",
+      "name": "mcp-mission-bridge",
+      "path": "src/core/mcp/mcp-mission-bridge.js",
+      "lines_of_code": 329,
+      "size_bytes": 10936,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 9,
+      "consumers": {
+        "tests": [
+          "tests/mcp-mission-bridge.test.js"
+        ],
+        "src": [
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-042",
+      "name": "mediator",
+      "path": "src/core/mediator.js",
+      "lines_of_code": 105,
+      "size_bytes": 4074,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/mediator.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-043",
+      "name": "epistemic-bkm-engine",
+      "path": "src/core/memory/epistemic-bkm-engine.js",
+      "lines_of_code": 151,
+      "size_bytes": 4975,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          "tests/epistemic-bkm.test.js"
+        ],
+        "src": [
+          "src/core/memory/epistemic-knowledge-service.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-044",
+      "name": "epistemic-knowledge-service",
+      "path": "src/core/memory/epistemic-knowledge-service.js",
+      "lines_of_code": 124,
+      "size_bytes": 4812,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 7,
+      "consumers": {
+        "tests": [
+          "tests/phase6/persistent-knowledge-learning.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-045",
+      "name": "memory-guard",
+      "path": "src/core/memory-guard.js",
+      "lines_of_code": 95,
+      "size_bytes": 3604,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/memory-guard.test.js",
+          "tests/mission-blueprint.test.js"
+        ],
+        "src": [
+          "src/core/fdir-ontology.js",
+          "src/core/kernel.js",
+          "src/core/ledger-manager.js",
+          "src/core/process-governor.js",
+          "src/core/sentinel-daemon.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-046",
+      "name": "memory",
+      "path": "src/core/memory.js",
+      "lines_of_code": 148,
+      "size_bytes": 4151,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          ".gemini/self-hosting-workspace/tests/adrEngine.test.js",
+          ".gemini/self-hosting-workspace/tests/selfHostingLoop.test.js",
+          "tests/adaptive-adversary.test.js",
+          "tests/agentic-systems-thinking.test.js",
+          "tests/autonomous-ecosystem-manager.test.js",
+          "tests/autonomous-scaffolder.test.js",
+          "tests/autonomous-self-reflection.test.js",
+          "tests/closed-loop-qa-observability.test.js",
+          "tests/cognitive-fabric-evaluation.test.js",
+          "tests/cognitive-fabric-generalization.test.js",
+          "tests/contextual-learning-boundary.test.js",
+          "tests/e2e-exhaustive-forensic-stress.test.js",
+          "tests/epistemic-bkm.test.js",
+          "tests/evolutionary-strategy-optimizer.test.js",
+          "tests/executive-arbitration.test.js",
+          "tests/executive-generalization.test.js",
+          "tests/frontier-evaluation-farm.test.js",
+          "tests/frontier-realism.test.js",
+          "tests/gentleman-sdd-bridge.test.js",
+          "tests/graph-intelligence-plane.test.js",
+          "tests/hypergraph-speculative-engine.test.js",
+          "tests/long-run-independent-operation.test.js",
+          "tests/long-run-stability-500.test.js",
+          "tests/long-run-stability.test.js",
+          "tests/longitudinal-evidence.test.js",
+          "tests/mcp-adversarial-review-tool.test.js",
+          "tests/mcp-kundalini-tool.test.js",
+          "tests/mcp-mahapralaya-tool.test.js",
+          "tests/memory-guard.test.js",
+          "tests/memory-integrity.test.js",
+          "tests/memory.test.js",
+          "tests/mission-blueprint.test.js",
+          "tests/one-percent-canon-suite.test.js",
+          "tests/operationalization-program.test.js",
+          "tests/p0-bounded-autonomous-mission.test.js",
+          "tests/p1-governed-technical-selection.test.js",
+          "tests/phase6/persistent-knowledge-learning.test.js",
+          "tests/phase7/continuous-improvement-evolution.test.js",
+          "tests/pleroma-absolute.test.js",
+          "tests/product-factory-scale.test.js",
+          "tests/real-client-replication.test.js",
+          "tests/restricted-autonomy-operations.test.js",
+          "tests/sentinel-self-remember.test.js"
+        ],
+        "src": [
+          ".gemini/self-hosting-workspace/src/core/adrEngine.js",
+          ".gemini/self-hosting-workspace/src/core/benchmarkEngine.js",
+          ".gemini/self-hosting-workspace/src/core/selfHostingLoop.js",
+          ".gemini/self-hosting-workspace/src/indexer/provenanceIndexer.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/governed-technical-selection-engine.js",
+          "src/app-fuerza/core/sync-wal.js",
+          "src/core/adapters/cursor-slash-command-bridge.js",
+          "src/core/adversarial/adversarial-falsification-engine.js",
+          "src/core/discovery/governed-technical-selection-engine.js",
+          "src/core/fdir-ontology.js",
+          "src/core/kernel.js",
+          "src/core/ledger-manager.js",
+          "src/core/meta/continuous-improvement-orchestrator.js",
+          "src/core/optimization/evolutionary-strategy-optimizer.js",
+          "src/core/orchestration/hypergraph-speculative-engine.js",
+          "src/core/pilot/one_percent/lsm-tree-storage-engine.js",
+          "src/core/pilot/one_percent/memory-profiler-inspector.js",
+          "src/core/process-governor.js",
+          "src/core/runtime/mission-orchestrator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/core/runtime/sentinel-self-remember.js",
+          "src/core/scaffolding/autonomous-scaffolder-engine.js",
+          "src/core/sentinel-daemon.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-047",
+      "name": "continuous-improvement-orchestrator",
+      "path": "src/core/meta/continuous-improvement-orchestrator.js",
+      "lines_of_code": 132,
+      "size_bytes": 5228,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 6,
+      "consumers": {
+        "tests": [
+          "tests/phase7/continuous-improvement-evolution.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-048",
+      "name": "meta-engineering-methodology-selector-engine",
+      "path": "src/core/meta/meta-engineering-methodology-selector-engine.js",
+      "lines_of_code": 104,
+      "size_bytes": 4393,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/meta-engineering-selector.test.js"
+        ],
+        "src": [
+          "src/core/meta/continuous-improvement-orchestrator.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-049",
+      "name": "executive-mission-reporter",
+      "path": "src/core/observability/executive-mission-reporter.js",
+      "lines_of_code": 192,
+      "size_bytes": 8155,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/p2-executive-mission-reporter.test.js",
+          "tests/p2-runtime-observability-reconciliation.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/runtime/mission-runtime.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-050",
+      "name": "terminal-hud-engine",
+      "path": "src/core/observability/terminal-hud-engine.js",
+      "lines_of_code": 136,
+      "size_bytes": 4732,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/terminal-hud.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-051",
+      "name": "evolutionary-strategy-optimizer",
+      "path": "src/core/optimization/evolutionary-strategy-optimizer.js",
+      "lines_of_code": 86,
+      "size_bytes": 3771,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/evolutionary-strategy-optimizer.test.js"
+        ],
+        "src": [
+          "src/core/meta/continuous-improvement-orchestrator.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-052",
+      "name": "first-principles-simplifier-engine",
+      "path": "src/core/optimization/first-principles-simplifier-engine.js",
+      "lines_of_code": 147,
+      "size_bytes": 5444,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/first-principles-simplifier.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-053",
+      "name": "hypergraph-speculative-engine",
+      "path": "src/core/orchestration/hypergraph-speculative-engine.js",
+      "lines_of_code": 134,
+      "size_bytes": 5021,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/hypergraph-speculative-engine.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-054",
+      "name": "mission-dag-pipeline-engine",
+      "path": "src/core/orchestration/mission-dag-pipeline-engine.js",
+      "lines_of_code": 188,
+      "size_bytes": 5716,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/mission-dag-pipeline.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-055",
+      "name": "universal-agentic-extension-orchestrator",
+      "path": "src/core/orchestration/universal-agentic-extension-orchestrator.js",
+      "lines_of_code": 161,
+      "size_bytes": 6036,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/universal-agentic-extension.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-056",
+      "name": "orchestrator",
+      "path": "src/core/orchestrator.js",
+      "lines_of_code": 197,
+      "size_bytes": 7742,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 6,
+      "consumers": {
+        "tests": [
+          ".gemini/self-hosting-workspace/tests/benchmarkEngine.test.js",
+          ".gemini/self-hosting-workspace/tests/executionOrchestrator.test.js",
+          ".gemini/self-hosting-workspace/tests/negativeSecuritySuite.test.js",
+          "tests/ahimsa-filter.test.js",
+          "tests/e2e-master-pipeline-simulation.test.js",
+          "tests/executive-orchestrator-e2e.test.js",
+          "tests/fixtures/sdd-contracts/invalid/invalid-mission-bad-hash.json",
+          "tests/fixtures/sdd-contracts/invalid/invalid-mission-missing-authority.json",
+          "tests/fixtures/sdd-contracts/valid/valid-mission-package.json",
+          "tests/inter-mission-resonator.test.js",
+          "tests/living-architecture-visualizer.test.js",
+          "tests/mcp-orchestrator.test.js",
+          "tests/mcp-schema-firewall.test.js",
+          "tests/mcp-stdio-smoke.test.js",
+          "tests/mcp-triad-middleware.test.js",
+          "tests/orchestrator-rollback.test.js",
+          "tests/orchestrator-unification.test.js",
+          "tests/orchestrator.test.js",
+          "tests/p0-bounded-autonomous-mission.test.js",
+          "tests/phase7/continuous-improvement-evolution.test.js",
+          "tests/pleroma-absolute.test.js",
+          "tests/purgatorial-refinement.test.js",
+          "tests/runtime-pruning.test.js",
+          "tests/sdd-fsm-transition-enforcer.test.js",
+          "tests/universal-agentic-extension.test.js"
+        ],
+        "src": [
+          ".gemini/self-hosting-workspace/src/core/empiricalBaseline.js",
+          "src/core/authority/authority-truth-source.js",
+          "src/core/index.js",
+          "src/core/orchestration/mission-dag-pipeline-engine.js",
+          "src/core/runtime/ahimsa-filter.js",
+          "src/core/runtime/living-architecture-visualizer.js",
+          "src/core/runtime/mcp-schema-validator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-057",
+      "name": "lsm-tree-storage-engine",
+      "path": "src/core/pilot/one_percent/lsm-tree-storage-engine.js",
+      "lines_of_code": 82,
+      "size_bytes": 2379,
+      "quality_classification": "ACTIVE_EXPERIMENTAL",
+      "value_rating": "MEDIUM",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/one-percent-canon-suite.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-058",
+      "name": "memory-profiler-inspector",
+      "path": "src/core/pilot/one_percent/memory-profiler-inspector.js",
+      "lines_of_code": 40,
+      "size_bytes": 1379,
+      "quality_classification": "ACTIVE_EXPERIMENTAL",
+      "value_rating": "MEDIUM",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/one-percent-canon-suite.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-059",
+      "name": "mini-bytecode-vm-engine",
+      "path": "src/core/pilot/one_percent/mini-bytecode-vm-engine.js",
+      "lines_of_code": 97,
+      "size_bytes": 2333,
+      "quality_classification": "ACTIVE_EXPERIMENTAL",
+      "value_rating": "MEDIUM",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/one-percent-canon-suite.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-060",
+      "name": "raft-distributed-consensus-engine",
+      "path": "src/core/pilot/one_percent/raft-distributed-consensus-engine.js",
+      "lines_of_code": 72,
+      "size_bytes": 1883,
+      "quality_classification": "ACTIVE_EXPERIMENTAL",
+      "value_rating": "MEDIUM",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/one-percent-canon-suite.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-061",
+      "name": "sre-chaos-slo-engine",
+      "path": "src/core/pilot/one_percent/sre-chaos-slo-engine.js",
+      "lines_of_code": 45,
+      "size_bytes": 1576,
+      "quality_classification": "ACTIVE_EXPERIMENTAL",
+      "value_rating": "MEDIUM",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/one-percent-canon-suite.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-062",
+      "name": "staff-strategic-rfc-engine",
+      "path": "src/core/pilot/one_percent/staff-strategic-rfc-engine.js",
+      "lines_of_code": 42,
+      "size_bytes": 1713,
+      "quality_classification": "ACTIVE_EXPERIMENTAL",
+      "value_rating": "MEDIUM",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/one-percent-canon-suite.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-063",
+      "name": "virtual-kernel-journaling-fs",
+      "path": "src/core/pilot/one_percent/virtual-kernel-journaling-fs.js",
+      "lines_of_code": 89,
+      "size_bytes": 2400,
+      "quality_classification": "ACTIVE_EXPERIMENTAL",
+      "value_rating": "MEDIUM",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/one-percent-canon-suite.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-064",
+      "name": "pilot-kv-store",
+      "path": "src/core/pilot/pilot-kv-store.js",
+      "lines_of_code": 112,
+      "size_bytes": 2745,
+      "quality_classification": "ORPHAN",
+      "value_rating": "LOW",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "PARTIAL",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/pilot-kv-store.test.js"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-065",
+      "name": "llm-port",
+      "path": "src/core/ports/llm-port.js",
+      "lines_of_code": 95,
+      "size_bytes": 2604,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/phase0/llm-authority-gate.test.js",
+          "tests/phase0/llm-budget-governor.test.js",
+          "tests/phase0/llm-negative-governance.test.js",
+          "tests/phase0/llm-port-contract.test.js",
+          "tests/phase0/llm-response-validation.test.js",
+          "tests/phase1/intent-compiler-governed.test.js"
+        ],
+        "src": [
+          "src/core/adapters/llm/adapter-registry.js",
+          "src/core/adapters/llm/gemini-adapter.js",
+          "src/core/governance/llm-authority-gate.js",
+          "src/core/index.js",
+          "src/core/intelligence/governed-llm-service.js",
+          "src/core/intelligence/llm-budget-governor.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-066",
+      "name": "process-governor",
+      "path": "src/core/process-governor.js",
+      "lines_of_code": 84,
+      "size_bytes": 2722,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/process-governor.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/orchestrator.js",
+          "src/core/scaffolder-clean.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-067",
+      "name": "provider-router",
+      "path": "src/core/provider-router.js",
+      "lines_of_code": 66,
+      "size_bytes": 2500,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/e2e-master-pipeline-simulation.test.js",
+          "tests/provider-router.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-068",
+      "name": "closed-loop-qa-observability-engine",
+      "path": "src/core/qa/closed-loop-qa-observability-engine.js",
+      "lines_of_code": 82,
+      "size_bytes": 2687,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/closed-loop-qa-observability.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-069",
+      "name": "deterministic-chaos-engine",
+      "path": "src/core/resilience/deterministic-chaos-engine.js",
+      "lines_of_code": 144,
+      "size_bytes": 4860,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/deterministic-chaos.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-070",
+      "name": "fdir-self-healing-engine",
+      "path": "src/core/resilience/fdir-self-healing-engine.js",
+      "lines_of_code": 262,
+      "size_bytes": 9434,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 5,
+      "consumers": {
+        "tests": [
+          "tests/fdir-self-healing.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-071",
+      "name": "role-skill-registry-engine",
+      "path": "src/core/roles/role-skill-registry-engine.js",
+      "lines_of_code": 222,
+      "size_bytes": 9881,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/p3-role-skill-registry.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/runtime/mission-runtime.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-072",
+      "name": "cognitive-pareto-router",
+      "path": "src/core/routing/cognitive-pareto-router.js",
+      "lines_of_code": 196,
+      "size_bytes": 6968,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/cognitive-pareto-router.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-073",
+      "name": "predictive-token-governor",
+      "path": "src/core/routing/predictive-token-governor.js",
+      "lines_of_code": 114,
+      "size_bytes": 3512,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/predictive-token-governor.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-074",
+      "name": "canonical-rules-index",
+      "path": "src/core/rules/canonical-rules-index.js",
+      "lines_of_code": 45,
+      "size_bytes": 1195,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/eos-local-contracts.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "src/core/mcp/mcp-mission-bridge.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-075",
+      "name": "adversarial-red-team",
+      "path": "src/core/runtime/adversarial-red-team.js",
+      "lines_of_code": 117,
+      "size_bytes": 4074,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/adversarial-red-team.test.js"
+        ],
+        "src": [
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-076",
+      "name": "ahimsa-filter",
+      "path": "src/core/runtime/ahimsa-filter.js",
+      "lines_of_code": 40,
+      "size_bytes": 1706,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/mission-orchestrator.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-077",
+      "name": "autonomous-kaizen",
+      "path": "src/core/runtime/autonomous-kaizen.js",
+      "lines_of_code": 95,
+      "size_bytes": 3278,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/autonomous-kaizen.test.js"
+        ],
+        "src": [
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-078",
+      "name": "autonomous-mission-prover",
+      "path": "src/core/runtime/autonomous-mission-prover.js",
+      "lines_of_code": 121,
+      "size_bytes": 4625,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          "tests/phase5/autonomous-canary-proving.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-079",
+      "name": "context-compiler",
+      "path": "src/core/runtime/context-compiler.js",
+      "lines_of_code": 331,
+      "size_bytes": 11861,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/context-compiler.test.js",
+          "docs/archive/purge-2026-08-21/worktree-salvage/context-compiler-fix/tests/context-compiler-contract.test.js",
+          "tests/context-compiler.test.js",
+          "tests/guardrail-sandwich.test.js",
+          "tests/operator-doctor.test.js",
+          "tests/p0-bounded-autonomous-mission.test.js",
+          "tests/RC_FILE_MANIFEST.json",
+          "tests/surgical-context-compiler.test.js"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-19/src/mcp-server.js",
+          "src/core/index.js",
+          "src/core/mcp/mcp-mission-bridge.js",
+          "src/core/runtime/mission-orchestrator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/mcp/handlers/audit-verifier-handler.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-080",
+      "name": "control-plane-root",
+      "path": "src/core/runtime/control-plane-root.js",
+      "lines_of_code": 12,
+      "size_bytes": 387,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/e2e-exhaustive-forensic-stress.test.js",
+          "tests/mcp-stdio-smoke.test.js",
+          "tests/operator-doctor.test.js"
+        ],
+        "src": [
+          "src/cli/mission-cli.js",
+          "src/core/drift.js",
+          "src/core/fdir.js",
+          "src/core/kernel.js",
+          "src/core/orchestrator.js",
+          "src/core/scaffolder-clean.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-081",
+      "name": "cryptographic-sentinel",
+      "path": "src/core/runtime/cryptographic-sentinel.js",
+      "lines_of_code": 103,
+      "size_bytes": 2696,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/cryptographic-sentinel.test.js"
+        ],
+        "src": [
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-082",
+      "name": "cursor-agent-council",
+      "path": "src/core/runtime/cursor-agent-council.js",
+      "lines_of_code": 121,
+      "size_bytes": 4265,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/cursor-agent-council.test.js"
+        ],
+        "src": [
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-083",
+      "name": "cursor-tdd-auto-healer",
+      "path": "src/core/runtime/cursor-tdd-auto-healer.js",
+      "lines_of_code": 151,
+      "size_bytes": 4996,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/cursor-tdd-auto-healer.test.js",
+          "tests/living-architecture-visualizer.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/governed-auto-repair-service.js",
+          "src/core/runtime/living-architecture-visualizer.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-084",
+      "name": "distributed-consciousness",
+      "path": "src/core/runtime/distributed-consciousness.js",
+      "lines_of_code": 119,
+      "size_bytes": 3532,
+      "quality_classification": "ORPHAN",
+      "value_rating": "LOW",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "PARTIAL",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/distributed-consciousness.test.js"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-085",
+      "name": "distributed-justice-oracle",
+      "path": "src/core/runtime/distributed-justice-oracle.js",
+      "lines_of_code": 70,
+      "size_bytes": 2219,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/distributed-justice-oracle.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-086",
+      "name": "engine-surface",
+      "path": "src/core/runtime/engine-surface.js",
+      "lines_of_code": 10,
+      "size_bytes": 496,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/engine-surface.test.js"
+        ],
+        "src": [
+          "src/core/runtime/operator-doctor.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-087",
+      "name": "eos-transmutator",
+      "path": "src/core/runtime/eos-transmutator.js",
+      "lines_of_code": 67,
+      "size_bytes": 2656,
+      "quality_classification": "ORPHAN",
+      "value_rating": "LOW",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "PARTIAL",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/eos-transmutator.test.js"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-088",
+      "name": "ephemeral-redundancy",
+      "path": "src/core/runtime/ephemeral-redundancy.js",
+      "lines_of_code": 70,
+      "size_bytes": 1963,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/ephemeral-redundancy.test.js",
+          "tests/mcp-autonomous-engineer-tool.test.js"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-089",
+      "name": "forensic-sanitizer",
+      "path": "src/core/runtime/forensic-sanitizer.js",
+      "lines_of_code": 125,
+      "size_bytes": 3593,
+      "quality_classification": "ORPHAN",
+      "value_rating": "LOW",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "PARTIAL",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/forensic-sanitizer.test.js"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-090",
+      "name": "git-transaction-watchdog",
+      "path": "src/core/runtime/git-transaction-watchdog.js",
+      "lines_of_code": 89,
+      "size_bytes": 2713,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/git-transaction-watchdog.test.js"
+        ],
+        "src": [
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-091",
+      "name": "global-knowledge",
+      "path": "src/core/runtime/global-knowledge.js",
+      "lines_of_code": 46,
+      "size_bytes": 1441,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/mission-learning.test.js",
+          "tests/operator-doctor.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js",
+          "src/core/runtime/purpose-fulfillment.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-092",
+      "name": "governance-tier",
+      "path": "src/core/runtime/governance-tier.js",
+      "lines_of_code": 211,
+      "size_bytes": 7141,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/governance-tier.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-093",
+      "name": "governed-auto-repair-service",
+      "path": "src/core/runtime/governed-auto-repair-service.js",
+      "lines_of_code": 184,
+      "size_bytes": 6393,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 6,
+      "consumers": {
+        "tests": [
+          "tests/phase4/governed-closed-loop-repair.test.js"
+        ],
+        "src": [
+          "src/core/runtime/governed-task-executor.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-094",
+      "name": "governed-task-executor",
+      "path": "src/core/runtime/governed-task-executor.js",
+      "lines_of_code": 292,
+      "size_bytes": 11706,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 8,
+      "consumers": {
+        "tests": [],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-095",
+      "name": "heptaparaparshinokh-ledger",
+      "path": "src/core/runtime/heptaparaparshinokh-ledger.js",
+      "lines_of_code": 123,
+      "size_bytes": 4068,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/heptaparaparshinokh-ledger.test.js",
+          "tests/living-architecture-visualizer.test.js",
+          "tests/octave-law-adversarial.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/living-architecture-visualizer.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-096",
+      "name": "kabbalah-ledger",
+      "path": "src/core/runtime/kabbalah-ledger.js",
+      "lines_of_code": 63,
+      "size_bytes": 2658,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          "tests/kabbalah-ledger.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/mission-orchestrator.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-097",
+      "name": "l0-parser",
+      "path": "src/core/runtime/l0-parser.js",
+      "lines_of_code": 61,
+      "size_bytes": 2511,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/l0-parser.test.js",
+          "tests/mcp-akasha-engram-tool.test.js",
+          "tests/mcp-sandbox-execute-tool.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-098",
+      "name": "ledger-recovery",
+      "path": "src/core/runtime/ledger-recovery.js",
+      "lines_of_code": 98,
+      "size_bytes": 3354,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          "tests/ledger-recovery.test.js"
+        ],
+        "src": [
+          "src/core/runtime/triamazikamno-validator.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-099",
+      "name": "living-architecture-visualizer",
+      "path": "src/core/runtime/living-architecture-visualizer.js",
+      "lines_of_code": 116,
+      "size_bytes": 3989,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/living-architecture-visualizer.test.js"
+        ],
+        "src": [
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-100",
+      "name": "mcp-schema-validator",
+      "path": "src/core/runtime/mcp-schema-validator.js",
+      "lines_of_code": 541,
+      "size_bytes": 27810,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/mcp-schema-firewall.test.js",
+          "tests/purgatorial-refinement.test.js"
+        ],
+        "src": [
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-101",
+      "name": "mission-learning",
+      "path": "src/core/runtime/mission-learning.js",
+      "lines_of_code": 78,
+      "size_bytes": 2696,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/mission-learning.test.js",
+          "tests/operator-doctor.test.js"
+        ],
+        "src": [
+          "src/cli/mission-cli.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/core/runtime/purpose-fulfillment.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-102",
+      "name": "mission-ontology",
+      "path": "src/core/runtime/mission-ontology.js",
+      "lines_of_code": 136,
+      "size_bytes": 5621,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/ledger-recovery.test.js",
+          "tests/mission-ontology-core.test.js",
+          "tests/mission-ontology-graph.test.js",
+          "tests/verdict-a.test.js"
+        ],
+        "src": [
+          "src/core/memory/epistemic-knowledge-service.js",
+          "src/core/runtime/kabbalah-ledger.js",
+          "src/core/runtime/ledger-recovery.js",
+          "src/core/runtime/mission-orchestrator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/core/runtime/sentinel-killswitch.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-103",
+      "name": "mission-orchestrator",
+      "path": "src/core/runtime/mission-orchestrator.js",
+      "lines_of_code": 400,
+      "size_bytes": 16294,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 9,
+      "consumers": {
+        "tests": [
+          "tests/ahimsa-filter.test.js",
+          "tests/inter-mission-resonator.test.js",
+          "tests/living-architecture-visualizer.test.js",
+          "tests/mcp-triad-middleware.test.js",
+          "tests/orchestrator-rollback.test.js",
+          "tests/orchestrator-unification.test.js",
+          "tests/pleroma-absolute.test.js",
+          "tests/purgatorial-refinement.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/living-architecture-visualizer.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-104",
+      "name": "mission-runtime",
+      "path": "src/core/runtime/mission-runtime.js",
+      "lines_of_code": 1144,
+      "size_bytes": 51162,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 68,
+      "consumers": {
+        "tests": [
+          "tests/authority-truth-source.test.js",
+          "tests/e2e-client-integration.test.js",
+          "tests/e2e-exhaustive-forensic-stress.test.js",
+          "tests/eos-e2e-local-fixture.test.js",
+          "tests/eos-local-contracts.test.js",
+          "tests/eos-negative-governance.test.js",
+          "tests/mission-runtime-intake.test.js",
+          "tests/operator-doctor.test.js",
+          "tests/phase2/dynamic-planning-dag.test.js",
+          "tests/phase3/governed-task-execution.test.js",
+          "tests/phase4/governed-closed-loop-repair.test.js",
+          "tests/phase5/autonomous-canary-proving.test.js",
+          "tests/phase6/persistent-knowledge-learning.test.js",
+          "tests/phase7/continuous-improvement-evolution.test.js",
+          "tests/RC_FILE_MANIFEST.json",
+          "tests/runtime-pruning.test.js"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/cli/mission-cli.js",
+          "src/cli/mission-cli.js",
+          "src/core/mcp/mcp-mission-bridge.js",
+          "src/core/runtime/autonomous-mission-prover.js",
+          "src/core/runtime/purpose-fulfillment.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-105",
+      "name": "mutation-testing-engine",
+      "path": "src/core/runtime/mutation-testing-engine.js",
+      "lines_of_code": 132,
+      "size_bytes": 4344,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/mutation-testing-engine.test.js"
+        ],
+        "src": [
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-106",
+      "name": "okidanokh-validator",
+      "path": "src/core/runtime/okidanokh-validator.js",
+      "lines_of_code": 37,
+      "size_bytes": 1280,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/okidanokh-validator.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/distributed-consciousness.js",
+          "src/core/runtime/distributed-justice-oracle.js",
+          "src/core/runtime/heptaparaparshinokh-ledger.js",
+          "src/core/runtime/triamazikamno-synthesis.js",
+          "src/core/runtime/trogo-mesh.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-107",
+      "name": "ontological-dashboard",
+      "path": "src/core/runtime/ontological-dashboard.js",
+      "lines_of_code": 73,
+      "size_bytes": 2340,
+      "quality_classification": "ORPHAN",
+      "value_rating": "LOW",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "PARTIAL",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/ontological-dashboard.test.js"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-108",
+      "name": "ontological-firewall",
+      "path": "src/core/runtime/ontological-firewall.js",
+      "lines_of_code": 72,
+      "size_bytes": 2262,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/ontological-firewall.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-109",
+      "name": "operator-doctor",
+      "path": "src/core/runtime/operator-doctor.js",
+      "lines_of_code": 136,
+      "size_bytes": 4220,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 5,
+      "consumers": {
+        "tests": [
+          "tests/operator-doctor.test.js"
+        ],
+        "src": [
+          "src/cli/mission-cli.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-110",
+      "name": "operator-next",
+      "path": "src/core/runtime/operator-next.js",
+      "lines_of_code": 164,
+      "size_bytes": 5458,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/operator-doctor.test.js",
+          "tests/operator-next.test.js"
+        ],
+        "src": [
+          "src/cli/mission-cli.js",
+          "src/core/runtime/purpose-fulfillment.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-111",
+      "name": "otel-semantic-exporter",
+      "path": "src/core/runtime/otel-semantic-exporter.js",
+      "lines_of_code": 134,
+      "size_bytes": 3615,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/otel-semantic-exporter.test.js"
+        ],
+        "src": [
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-112",
+      "name": "parallel-auditor-dag",
+      "path": "src/core/runtime/parallel-auditor-dag.js",
+      "lines_of_code": 153,
+      "size_bytes": 4923,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/parallel-auditor-dag.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/living-architecture-visualizer.js",
+          "src/mcp/handlers/audit-verifier-handler.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-113",
+      "name": "pareto-cost-router",
+      "path": "src/core/runtime/pareto-cost-router.js",
+      "lines_of_code": 116,
+      "size_bytes": 3629,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/pareto-cost-router.test.js"
+        ],
+        "src": [
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-114",
+      "name": "purpose-fulfillment",
+      "path": "src/core/runtime/purpose-fulfillment.js",
+      "lines_of_code": 77,
+      "size_bytes": 2384,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/purpose-fulfillment.test.js"
+        ],
+        "src": [
+          "src/core/runtime/operator-doctor.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-115",
+      "name": "self-observation-witness",
+      "path": "src/core/runtime/self-observation-witness.js",
+      "lines_of_code": 88,
+      "size_bytes": 3145,
+      "quality_classification": "ORPHAN",
+      "value_rating": "LOW",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "PARTIAL",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/self-observation-runtime.test.js"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-116",
+      "name": "sentinel-killswitch",
+      "path": "src/core/runtime/sentinel-killswitch.js",
+      "lines_of_code": 82,
+      "size_bytes": 3028,
+      "quality_classification": "ORPHAN",
+      "value_rating": "LOW",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "PARTIAL",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/sentinel-killswitch.test.js"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-117",
+      "name": "sentinel-self-remember",
+      "path": "src/core/runtime/sentinel-self-remember.js",
+      "lines_of_code": 55,
+      "size_bytes": 2188,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/sentinel-self-remember.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/mission-orchestrator.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-118",
+      "name": "spec-drift-detector",
+      "path": "src/core/runtime/spec-drift-detector.js",
+      "lines_of_code": 212,
+      "size_bytes": 6630,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/living-architecture-visualizer.test.js",
+          "tests/spec-drift-detector.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/living-architecture-visualizer.js",
+          "src/mcp/router.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-119",
+      "name": "tdd-executor",
+      "path": "src/core/runtime/tdd-executor.js",
+      "lines_of_code": 84,
+      "size_bytes": 3018,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/mcp-tdd-executor.test.js",
+          "tests/tdd-executor.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/mission-orchestrator.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-120",
+      "name": "tescohan-auditor",
+      "path": "src/core/runtime/tescohan-auditor.js",
+      "lines_of_code": 56,
+      "size_bytes": 2082,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/tescohan-auditor.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-121",
+      "name": "tmr-ontology-engine",
+      "path": "src/core/runtime/tmr-ontology-engine.js",
+      "lines_of_code": 78,
+      "size_bytes": 2822,
+      "quality_classification": "ORPHAN",
+      "value_rating": "LOW",
+      "runtime_status": "TEST_ONLY",
+      "evidence_rating": "PARTIAL",
+      "documentation_rating": "PARTIAL",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/tmr-ontology-engine.test.js"
+        ],
+        "src": []
+      }
+    },
+    {
+      "component_id": "CMP-122",
+      "name": "traceability-matrix",
+      "path": "src/core/runtime/traceability-matrix.js",
+      "lines_of_code": 118,
+      "size_bytes": 3826,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/traceability-matrix.test.js"
+        ],
+        "src": [
+          "src/core/index.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-123",
+      "name": "triamazikamno-synthesis",
+      "path": "src/core/runtime/triamazikamno-synthesis.js",
+      "lines_of_code": 82,
+      "size_bytes": 2981,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/triamazikamno-synthesis.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-124",
+      "name": "triamazikamno-validator",
+      "path": "src/core/runtime/triamazikamno-validator.js",
+      "lines_of_code": 73,
+      "size_bytes": 2992,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/triamazikamno-validator.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/core/runtime/mission-orchestrator.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-125",
+      "name": "trogo-mesh",
+      "path": "src/core/runtime/trogo-mesh.js",
+      "lines_of_code": 53,
+      "size_bytes": 2103,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/trogo-mesh.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-126",
+      "name": "autonomous-sandbox-evaluator",
+      "path": "src/core/sandbox/autonomous-sandbox-evaluator.js",
+      "lines_of_code": 125,
+      "size_bytes": 4478,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/autonomous-sandbox-evaluator.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-127",
+      "name": "worktree-mutation-engine",
+      "path": "src/core/sandbox/worktree-mutation-engine.js",
+      "lines_of_code": 211,
+      "size_bytes": 6994,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          "tests/fdir-self-healing.test.js",
+          "tests/p3-bounded-worktree-canary.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "src/core/resilience/fdir-self-healing-engine.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-128",
+      "name": "sandbox",
+      "path": "src/core/sandbox.js",
+      "lines_of_code": 71,
+      "size_bytes": 2131,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          "tests/autonomous-ecosystem-manager.test.js",
+          "tests/autonomous-sandbox-evaluator.test.js",
+          "tests/cognitive-fabric-evaluation.test.js",
+          "tests/e2e-exhaustive-forensic-stress.test.js",
+          "tests/executive-arbitration.test.js",
+          "tests/executive-orchestrator-e2e.test.js",
+          "tests/fdir-self-healing.test.js",
+          "tests/fixtures/integration-gates/valid-integration-contract.json",
+          "tests/fixtures/level3-sandbox/pilot/src/config.json",
+          "tests/level3/common/canonical-path.js",
+          "tests/level3/common/canonical-path.test.js",
+          "tests/level3/common/sandbox.js",
+          "tests/level3/ec-007-rollback/rollback-suite.js",
+          "tests/level3/ec-008-adversarial/adversarial-suite.js",
+          "tests/level3/ec-009-observability/observability-suite.js",
+          "tests/level3/multi-fixture/multi-fixture-runner.js",
+          "tests/level3/pilot/pilot-runner.js",
+          "tests/mcp-sandbox-execute-tool.test.js",
+          "tests/memory.test.js",
+          "tests/mission-ontology-graph.test.js",
+          "tests/multi-project-factory-e2e.test.js",
+          "tests/operationalization-program.test.js",
+          "tests/operator-next.test.js",
+          "tests/p1-operational-capability-receipts.test.js",
+          "tests/p2-adversarial-integration-gates.test.js",
+          "tests/p2-executive-mission-reporter.test.js",
+          "tests/p2-integration-gatekeeper.test.js",
+          "tests/p3-bounded-worktree-canary.test.js",
+          "tests/p3-independent-operator-acceptance.test.js",
+          "tests/production-readiness-review.test.js",
+          "tests/project-bootstrap.test.js",
+          "tests/RC_FILE_MANIFEST.json",
+          "tests/real-client-pilot.test.js",
+          "tests/real-world-autonomy-pilot.test.js",
+          "tests/sandbox.test.js",
+          "tests/verifier-authorization-aware.test.js"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/governed-technical-selection-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/operational-capability-receipt-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sandbox/worktree-mutation-engine.js",
+          "src/core/benchmark/autonomous-benchmark-harness-engine.js",
+          "src/core/discovery/governed-technical-selection-engine.js",
+          "src/core/discovery/operational-capability-receipt-engine.js",
+          "src/core/harness.js",
+          "src/core/meta/meta-engineering-methodology-selector-engine.js",
+          "src/core/resilience/fdir-self-healing-engine.js",
+          "src/core/runtime/mcp-schema-validator.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/core/sandbox/autonomous-sandbox-evaluator.js",
+          "src/core/sandbox/worktree-mutation-engine.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-129",
+      "name": "scaffolder-clean",
+      "path": "src/core/scaffolder-clean.js",
+      "lines_of_code": 163,
+      "size_bytes": 6632,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 9,
+      "consumers": {
+        "tests": [
+          "tests/e2e-master-pipeline-simulation.test.js",
+          "tests/scaffolder-clean.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-130",
+      "name": "autonomous-scaffolder-engine",
+      "path": "src/core/scaffolding/autonomous-scaffolder-engine.js",
+      "lines_of_code": 169,
+      "size_bytes": 5660,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 7,
+      "consumers": {
+        "tests": [
+          "tests/autonomous-scaffolder.test.js",
+          "tests/cursor-slash-command-bridge.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-131",
+      "name": "high-speed-web-scraping-engine",
+      "path": "src/core/scraping/high-speed-web-scraping-engine.js",
+      "lines_of_code": 145,
+      "size_bytes": 5080,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/high-speed-web-scraping.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-132",
+      "name": "epistemic-evidence-engine",
+      "path": "src/core/sdd/epistemic-evidence-engine.js",
+      "lines_of_code": 538,
+      "size_bytes": 16472,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [
+          "tests/causal-ast-engine.test.js",
+          "tests/p0-bounded-autonomous-mission.test.js",
+          "tests/p1-operational-capability-receipts.test.js",
+          "tests/p2-runtime-observability-reconciliation.test.js",
+          "tests/p3-bounded-worktree-canary.test.js",
+          "tests/p3-cursor-mission-package.test.js",
+          "tests/p3-cursor-return-adapter.test.js",
+          "tests/p3-independent-operator-acceptance.test.js",
+          "tests/p3-ledger-crash-recovery.test.js",
+          "tests/p3-multi-agent-supervision.test.js",
+          "tests/p4-external-canary-contract.test.js",
+          "tests/RC_FILE_MANIFEST.json",
+          "tests/sdd-evidence-engine.test.js"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/adapters/cursor-mission-package.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/adapters/cursor-return-ingestion-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/discovery/operational-capability-receipt-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/governance/integration-gatekeeper.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/roles/role-skill-registry-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/runtime/mission-runtime.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/sandbox/worktree-mutation-engine.js",
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/supervision/multi-agent-supervision-engine.js",
+          "src/core/adapters/cursor-mission-package.js",
+          "src/core/adapters/cursor-return-ingestion-engine.js",
+          "src/core/adapters/llm/gemini-adapter.js",
+          "src/core/adversarial/adversarial-falsification-engine.js",
+          "src/core/ast/causal-ast-engine.js",
+          "src/core/authority/authority-truth-source.js",
+          "src/core/benchmark/autonomous-benchmark-harness-engine.js",
+          "src/core/blueprints/golden-blueprint-engine.js",
+          "src/core/consensus/byzantine-consensus-engine.js",
+          "src/core/contracts/autonomous-contract-synthesizer.js",
+          "src/core/discovery/contextual-skill-router-engine.js",
+          "src/core/discovery/operational-capability-receipt-engine.js",
+          "src/core/doctrine/formal-engineering-doctrine-engine.js",
+          "src/core/evolution/autonomous-self-reflection-engine.js",
+          "src/core/governance/integration-gatekeeper.js",
+          "src/core/intelligence/cross-project-knowledge-synthesizer.js",
+          "src/core/intelligence/llm-receipt-engine.js",
+          "src/core/intent-compiler.js",
+          "src/core/judgment/senior-judgment-engine.js",
+          "src/core/memory/epistemic-bkm-engine.js",
+          "src/core/memory/epistemic-knowledge-service.js",
+          "src/core/meta/continuous-improvement-orchestrator.js",
+          "src/core/meta/meta-engineering-methodology-selector-engine.js",
+          "src/core/optimization/evolutionary-strategy-optimizer.js",
+          "src/core/orchestration/hypergraph-speculative-engine.js",
+          "src/core/orchestration/mission-dag-pipeline-engine.js",
+          "src/core/orchestration/universal-agentic-extension-orchestrator.js",
+          "src/core/pilot/one_percent/lsm-tree-storage-engine.js",
+          "src/core/pilot/one_percent/raft-distributed-consensus-engine.js",
+          "src/core/pilot/one_percent/staff-strategic-rfc-engine.js",
+          "src/core/pilot/one_percent/virtual-kernel-journaling-fs.js",
+          "src/core/pilot/pilot-kv-store.js",
+          "src/core/qa/closed-loop-qa-observability-engine.js",
+          "src/core/resilience/deterministic-chaos-engine.js",
+          "src/core/resilience/fdir-self-healing-engine.js",
+          "src/core/roles/role-skill-registry-engine.js",
+          "src/core/routing/predictive-token-governor.js",
+          "src/core/runtime/governed-auto-repair-service.js",
+          "src/core/runtime/governed-task-executor.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/core/sandbox/autonomous-sandbox-evaluator.js",
+          "src/core/sandbox/worktree-mutation-engine.js",
+          "src/core/scraping/high-speed-web-scraping-engine.js",
+          "src/core/sdd/master-sdlc-nanometric-engine.js",
+          "src/core/sdd/micro-cycle-engine.js",
+          "src/core/sdd/nanometric-spec-planner.js",
+          "src/core/supervision/multi-agent-supervision-engine.js",
+          "src/core/systems/agentic-systems-thinking-engine.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-133",
+      "name": "hitl-gatekeeper",
+      "path": "src/core/sdd/hitl-gatekeeper.js",
+      "lines_of_code": 415,
+      "size_bytes": 16931,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/eos-local-contracts.test.js",
+          "tests/p0-bounded-autonomous-mission.test.js",
+          "tests/p0-fundacion-contract-boundary.test.js",
+          "tests/RC_FILE_MANIFEST.json",
+          "tests/sdd-hitl-gatekeeper.test.js"
+        ],
+        "src": [
+          "src/core/authority/authority-truth-source.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-134",
+      "name": "master-sdlc-nanometric-engine",
+      "path": "src/core/sdd/master-sdlc-nanometric-engine.js",
+      "lines_of_code": 170,
+      "size_bytes": 5952,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/master-sdlc-nanometric.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-135",
+      "name": "micro-cycle-engine",
+      "path": "src/core/sdd/micro-cycle-engine.js",
+      "lines_of_code": 110,
+      "size_bytes": 4089,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/micro-cycle-engine.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-136",
+      "name": "nanometric-spec-planner",
+      "path": "src/core/sdd/nanometric-spec-planner.js",
+      "lines_of_code": 92,
+      "size_bytes": 3562,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/nanometric-spec-planner.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-137",
+      "name": "sdd-fsm-engine",
+      "path": "src/core/sdd/sdd-fsm-engine.js",
+      "lines_of_code": 415,
+      "size_bytes": 16985,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/authority-truth-source.test.js",
+          "tests/eos-e2e-local-fixture.test.js",
+          "tests/eos-local-contracts.test.js",
+          "tests/eos-negative-governance.test.js",
+          "tests/p0-bounded-autonomous-mission.test.js",
+          "tests/p0-fundacion-contract-boundary.test.js",
+          "tests/RC_FILE_MANIFEST.json",
+          "tests/sdd-fsm-transition-enforcer.test.js"
+        ],
+        "src": [
+          "src/core/authority/authority-truth-source.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-138",
+      "name": "sentinel-daemon",
+      "path": "src/core/sentinel-daemon.js",
+      "lines_of_code": 91,
+      "size_bytes": 3077,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 4,
+      "consumers": {
+        "tests": [
+          "tests/sentinel.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-139",
+      "name": "multi-agent-supervision-engine",
+      "path": "src/core/supervision/multi-agent-supervision-engine.js",
+      "lines_of_code": 195,
+      "size_bytes": 8060,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/p3-bounded-worktree-canary.test.js",
+          "tests/p3-multi-agent-supervision.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-21-rc-into-main/src/core/runtime/mission-runtime.js",
+          "src/core/runtime/governed-task-executor.js",
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-140",
+      "name": "agentic-systems-thinking-engine",
+      "path": "src/core/systems/agentic-systems-thinking-engine.js",
+      "lines_of_code": 86,
+      "size_bytes": 3636,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [
+          "tests/agentic-systems-thinking.test.js"
+        ],
+        "src": [
+          "src/core/runtime/mission-runtime.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-141",
+      "name": "tutor-maestro",
+      "path": "src/core/tutor/tutor-maestro.js",
+      "lines_of_code": 92,
+      "size_bytes": 2981,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 0,
+      "consumers": {
+        "tests": [
+          "tests/eos-e2e-local-fixture.test.js",
+          "tests/RC_FILE_MANIFEST.json"
+        ],
+        "src": [
+          "src/cli/mission-cli.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-142",
+      "name": "guardrail-sandwich",
+      "path": "src/mcp/guardrail-sandwich.js",
+      "lines_of_code": 191,
+      "size_bytes": 7059,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 3,
+      "consumers": {
+        "tests": [
+          "tests/guardrail-sandwich.test.js",
+          "tests/mcp/red-teaming.test.js"
+        ],
+        "src": [
+          "src/core/index.js",
+          "src/mcp/router.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-143",
+      "name": "audit-verifier-handler",
+      "path": "src/mcp/handlers/audit-verifier-handler.js",
+      "lines_of_code": 35,
+      "size_bytes": 1048,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 2,
+      "consumers": {
+        "tests": [],
+        "src": [
+          "src/mcp/router.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-144",
+      "name": "evidence-handler",
+      "path": "src/mcp/handlers/evidence-handler.js",
+      "lines_of_code": 35,
+      "size_bytes": 849,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [],
+        "src": [
+          "src/mcp/router.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-145",
+      "name": "governance-handler",
+      "path": "src/mcp/handlers/governance-handler.js",
+      "lines_of_code": 40,
+      "size_bytes": 894,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [],
+        "src": [
+          "src/mcp/router.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-146",
+      "name": "mission-handler",
+      "path": "src/mcp/handlers/mission-handler.js",
+      "lines_of_code": 37,
+      "size_bytes": 965,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 1,
+      "consumers": {
+        "tests": [],
+        "src": [
+          "src/mcp/router.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-147",
+      "name": "router",
+      "path": "src/mcp/router.js",
+      "lines_of_code": 101,
+      "size_bytes": 4233,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 6,
+      "consumers": {
+        "tests": [
+          "tests/cognitive-pareto-router.test.js",
+          "tests/contextual-skill-router.test.js",
+          "tests/e2e-master-pipeline-simulation.test.js",
+          "tests/living-architecture-visualizer.test.js",
+          "tests/mcp/red-teaming.test.js",
+          "tests/mcp-router.test.js",
+          "tests/pareto-cost-router.test.js",
+          "tests/provider-router.test.js"
+        ],
+        "src": [
+          "src/core/discovery/contextual-skill-router-engine.js",
+          "src/core/index.js",
+          "src/core/orchestration/universal-agentic-extension-orchestrator.js",
+          "src/core/routing/cognitive-pareto-router.js",
+          "src/core/runtime/living-architecture-visualizer.js",
+          "src/core/runtime/mission-runtime.js",
+          "src/mcp-server.js"
+        ]
+      }
+    },
+    {
+      "component_id": "CMP-148",
+      "name": "mcp-server",
+      "path": "src/mcp-server.js",
+      "lines_of_code": 2491,
+      "size_bytes": 119277,
+      "quality_classification": "ACTIVE_REAL",
+      "value_rating": "HIGH",
+      "runtime_status": "ACTIVE",
+      "evidence_rating": "VERIFIED",
+      "documentation_rating": "COMPLETE",
+      "dependencies_count": 38,
+      "consumers": {
+        "tests": [
+          "docs/archive/purge-2026-08-21/quarantine-2026-08-19/tests/mcp-stdio-smoke.test.js",
+          "tests/ahimsa-filter.test.js",
+          "tests/e2e-exhaustive-forensic-stress.test.js",
+          "tests/inter-mission-resonator.test.js",
+          "tests/mcp-adversarial-review-tool.test.js",
+          "tests/mcp-akasha-engram-tool.test.js",
+          "tests/mcp-amens-audit-tool.test.js",
+          "tests/mcp-anupadaka-fuse-tool.test.js",
+          "tests/mcp-anupadaka-shield-tool.test.js",
+          "tests/mcp-autonomous-engineer-tool.test.js",
+          "tests/mcp-auxiliary-state-tool.test.js",
+          "tests/mcp-elemental-tool.test.js",
+          "tests/mcp-jeu-watch-tool.test.js",
+          "tests/mcp-jubilee-tool.test.js",
+          "tests/mcp-justice-tool.test.js",
+          "tests/mcp-kundalini-tool.test.js",
+          "tests/mcp-l0-parse-tool.test.js",
+          "tests/mcp-mahapralaya-tool.test.js",
+          "tests/mcp-melchizedek-govern-tool.test.js",
+          "tests/mcp-mercabah-tool.test.js",
+          "tests/mcp-mission-bridge.test.js",
+          "tests/mcp-moses-transmute-tool.test.js",
+          "tests/mcp-octave-tool.test.js",
+          "tests/mcp-ontological-tool.test.js",
+          "tests/mcp-ontology.test.js",
+          "tests/mcp-orchestrator.test.js",
+          "tests/mcp-readonly-guard.test.js",
+          "tests/mcp-sandbox-execute-tool.test.js",
+          "tests/mcp-schema-firewall.test.js",
+          "tests/mcp-stdio-smoke.test.js",
+          "tests/mcp-telemetry-stream-tool.test.js",
+          "tests/mcp-tescohan-telescope-tool.test.js",
+          "tests/mcp-trees-anchor-tool.test.js",
+          "tests/mcp-triamazikamno-synthesis-tool.test.js",
+          "tests/mcp-trogo-mesh-tool.test.js",
+          "tests/mcp-voices-modulate-tool.test.js",
+          "tests/mcp-zodiac-shield-tool.test.js",
+          "tests/octave-law-adversarial.test.js",
+          "tests/operator-doctor.test.js",
+          "tests/orchestrator-rollback.test.js",
+          "tests/RC_FILE_MANIFEST.json",
+          "tests/sentinel-killswitch.test.js",
+          "tests/tescohan-auditor.test.js",
+          "tests/triamazikamno-validator.test.js"
+        ],
+        "src": [
+          "src/cli/mission-cli.js",
+          "src/core/mcp/mcp-mission-bridge.js",
+          "src/core/runtime/control-plane-root.js",
+          "src/core/runtime/operator-doctor.js",
+          "src/core/runtime/purpose-fulfillment.js",
+          "src/core/runtime/sentinel-killswitch.js"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/mission-executive-report.schema.json",
+  "title": "EOS Executive Mission Report Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "mission_id",
+    "generated_at",
+    "executive_summary",
+    "metric_provenance",
+    "task_execution_summary",
+    "evidence_verification_summary",
+    "token_and_cost_summary",
+    "deviations_and_retries",
+    "hitl_action_items",
+    "governance_invariants"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "report_id": {
+      "type": "string",
+      "pattern": "^RPT-[A-Z0-9_-]+$"
+    },
+    "mission_id": {
+      "type": "string",
+      "pattern": "^MIS-[A-Z0-9-]+$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "executive_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["goal", "overall_status", "duration_ms", "epistemic_verdict"],
+      "properties": {
+        "goal": { "type": "string" },
+        "overall_status": {
+          "type": "string",
+          "enum": ["SUCCESS", "PARTIAL_SUCCESS", "PAUSED", "FAILED", "BLOCKED_ON_GOVERNANCE"]
+        },
+        "duration_ms": { "type": "number", "minimum": 0 },
+        "epistemic_verdict": { "type": "string" }
+      }
+    },
+    "metric_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token_count", "cost_usd", "latency", "reversibility", "provider_reliability"],
+      "properties": {
+        "token_count": { "type": "string", "enum": ["MEASURED", "ESTIMATED", "SIMULATED", "NOT_RUN", "UNKNOWN"] },
+        "cost_usd": { "type": "string", "enum": ["MEASURED", "ESTIMATED", "SIMULATED", "NOT_RUN", "UNKNOWN"] },
+        "latency": { "type": "string", "enum": ["MEASURED", "ESTIMATED", "SIMULATED", "NOT_RUN", "UNKNOWN"] },
+        "reversibility": { "type": "string", "enum": ["MEASURED", "ESTIMATED", "SIMULATED", "NOT_RUN", "UNKNOWN"] },
+        "provider_reliability": { "type": "string", "enum": ["MEASURED", "ESTIMATED", "SIMULATED", "NOT_RUN", "UNKNOWN"] }
+      }
+    },
+    "task_execution_summary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["task_id", "name", "status", "attempts", "duration_ms"],
+        "properties": {
+          "task_id": { "type": "string" },
+          "name": { "type": "string" },
+          "status": { "type": "string", "enum": ["VERIFIED", "FAILED", "SKIPPED", "BLOCKED"] },
+          "attempts": { "type": "integer", "minimum": 1 },
+          "duration_ms": { "type": "number", "minimum": 0 }
+        }
+      }
+    },
+    "evidence_verification_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_receipts", "verified_receipts", "hash_chain_integrity", "ledger_chain_count"],
+      "properties": {
+        "total_receipts": { "type": "integer", "minimum": 0 },
+        "verified_receipts": { "type": "integer", "minimum": 0 },
+        "hash_chain_integrity": { "type": "string", "enum": ["VALID", "CORRUPTED", "UNINITIALIZED"] },
+        "ledger_chain_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "token_and_cost_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_tokens", "estimated_cost_usd", "budget_cap_usd", "efficiency_ratio_evidence_per_kt"],
+      "properties": {
+        "total_tokens": { "type": "integer", "minimum": 0 },
+        "estimated_cost_usd": { "type": "number", "minimum": 0 },
+        "budget_cap_usd": { "type": "number", "minimum": 0 },
+        "efficiency_ratio_evidence_per_kt": { "type": "number", "minimum": 0 }
+      }
+    },
+    "deviations_and_retries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["timestamp", "severity", "description", "action_taken"],
+        "properties": {
+          "timestamp": { "type": "string", "format": "date-time" },
+          "severity": { "type": "string", "enum": ["INFO", "WARNING", "CRITICAL"] },
+          "description": { "type": "string" },
+          "action_taken": { "type": "string" }
+        }
+      }
+    },
+    "hitl_action_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action_id", "gate", "status", "requested_decision"],
+        "properties": {
+          "action_id": { "type": "string" },
+          "gate": { "type": "string" },
+          "status": { "type": "string", "enum": ["PENDING", "APPROVED", "REJECTED"] },
+          "requested_decision": { "type": "string" }
+        }
+      }
+    },
+    "governance_invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["external_write_barrier_delta", "network_egress_status", "credentials_active_count"],
+      "properties": {
+        "external_write_barrier_delta": { "type": "integer", "enum": [0] },
+        "network_egress_status": { "type": "string", "enum": ["BLOCKED_OFFLINE", "RESTRICTED_SANDBOX", "OPEN"] },
+        "credentials_active_count": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

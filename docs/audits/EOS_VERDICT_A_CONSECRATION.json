@@ -1,0 +1,37 @@
+{
+  "intentId": "INT-CONSECRATION-VERDICT-A",
+  "contractHash": "sha256-dbd453f313247a5bab31743b347c745bc4ae527263cae8315e45116f32404cfa",
+  "authorityReceipt": {
+    "timestamp": "2026-08-31T14:24:03.942Z",
+    "justification": {
+      "optionsConsidered": [
+        "PROMOTE_TO_VERDICT_A_PRODUCTION_STABLE",
+        "ABORT_CONSECRATION"
+      ],
+      "why": "100% of integration loops, Git boundaries, and process guards verified with zero failures.",
+      "confidence": 1,
+      "transparencyGraphHash": "sha256-2e86a6befa1418052b4c5e4d90b5a3397a79e234b7303c2a514423598ec6a564"
+    },
+    "decision": "PROMOTE_TO_VERDICT_A_PRODUCTION_STABLE",
+    "graphNodes": [
+      {
+        "nodeId": "OPT-0",
+        "alternative": "ABORT_CONSECRATION",
+        "status": "DISCARDED",
+        "weightHash": "8bc6dd94"
+      },
+      {
+        "nodeId": "OPT-1",
+        "alternative": "PROMOTE_TO_VERDICT_A_PRODUCTION_STABLE",
+        "status": "SELECTED",
+        "weightHash": "024efe75"
+      }
+    ]
+  },
+  "evidenceChain": [
+    "CRYPTOGRAPHIC_RECEIPT",
+    "FORENSIC_AUDIT"
+  ],
+  "outcome": "VERDICT_A_STABLE",
+  "missionChainHash": "sha256-add489aabf3ec1f384f0101a0ad670c21afb8fae969008b94720ee858b8f8c4e"
+}

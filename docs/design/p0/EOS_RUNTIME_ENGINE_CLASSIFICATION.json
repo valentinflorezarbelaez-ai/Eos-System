@@ -1,0 +1,37 @@
+{
+  "audit_id": "P0-ENGINE-CLASSIFICATION-2026",
+  "generated_at": "2026-08-27T21:00:00Z",
+  "total_engines_inventoried": 42,
+  "classifications": {
+    "CANONICAL_ACTIVE": [
+      { "name": "AuthorityTruthSource", "path": "src/core/authority/authority-truth-source.js", "consumer": "MissionRuntime", "role": "Sole owner of FSM phase state & snapshot persistence" },
+      { "name": "HitlGatekeeper", "path": "src/core/sdd/hitl-gatekeeper.js", "consumer": "MissionRuntime", "role": "Validates human approval receipts against plan hashes" },
+      { "name": "SchemaValidator", "path": "src/core/contracts/schema-validator.js", "consumer": "MissionRuntime, Blueprints", "role": "Deterministic JSON schema validation engine" },
+      { "name": "CanonicalRulesIndex", "path": "src/core/rules/canonical-rules-index.js", "consumer": "MissionRuntime", "role": "Loads and resolves governance rules and constitutional constraints" },
+      { "name": "EOSContextCompiler", "path": "src/core/runtime/context-compiler.js", "consumer": "MissionRuntime, CLI, MCP", "role": "Token budgeting, anti-inflation firewall, secrets scanner" },
+      { "name": "EOSTDDExecutor", "path": "src/core/runtime/tdd-executor.js", "consumer": "MissionOrchestrator, Scaffolder", "role": "Closed-loop automated test runner and self-healer" },
+      { "name": "EOSTriamazikamnoValidator", "path": "src/core/runtime/triamazikamno-validator.js", "consumer": "MissionOrchestrator, MCP", "role": "Creational triad balance validator (Spec, Test, Code)" },
+      { "name": "EOSTescohanAuditor", "path": "src/core/runtime/tescohan-auditor.js", "consumer": "MissionOrchestrator, MCP", "role": "Static regex/AST optical code pureness scanner" },
+      { "name": "EOSKabbalahLedger", "path": "src/core/runtime/kabbalah-ledger.js", "consumer": "MissionRuntime", "role": "Multidimensional Sefirotic DAG ledger persistence" },
+      { "name": "FdirSelfHealingEngine", "path": "src/core/resilience/fdir-self-healing-engine.js", "consumer": "MissionRuntime", "role": "Detects tampered constitution files and restores from baseline" },
+      { "name": "UniversalTechnicalDiscoveryEngine", "path": "src/core/discovery/universal-technical-discovery-engine.js", "consumer": "MissionRuntime", "role": "Discovers project stacks, dependencies, and environment" }
+    ],
+    "SUPPORTING_DIAGNOSTICS": [
+      { "name": "TerminalHudEngine", "path": "src/core/observability/terminal-hud-engine.js", "consumer": "CLI, MCP", "role": "ANSI dashboard terminal rendering" },
+      { "name": "OperatorDoctor", "path": "src/core/runtime/operator-doctor.js", "consumer": "MissionCLI", "role": "Workspace health and environment sanity inspector" },
+      { "name": "OperatorNext", "path": "src/core/runtime/operator-next.js", "consumer": "MissionCLI", "role": "Recommends next governed action for operator" },
+      { "name": "MissionLearning", "path": "src/core/runtime/mission-learning.js", "consumer": "MissionRuntime, CLI", "role": "Persists and loads lessons learned from completed missions" }
+    ],
+    "EXPERIMENTAL_LAB_SIMULATION": [
+      { "name": "RaftDistributedConsensusEngine", "path": "src/core/pilot/one_percent/raft-distributed-consensus-engine.js", "disposition": "Move to EOS-Lab/ — unused in local runtime" },
+      { "name": "MiniBytecodeVmEngine", "path": "src/core/pilot/one_percent/mini-bytecode-vm-engine.js", "disposition": "Move to EOS-Lab/ — unused in local runtime" },
+      { "name": "LsmTreeStorageEngine", "path": "src/core/pilot/one_percent/lsm-tree-storage-engine.js", "disposition": "Move to EOS-Lab/ — unused in local runtime" },
+      { "name": "SreChaosSloEngine", "path": "src/core/pilot/one_percent/sre-chaos-slo-engine.js", "disposition": "Move to EOS-Lab/ — unused in local runtime" },
+      { "name": "VirtualKernelJournalingFs", "path": "src/core/pilot/one_percent/virtual-kernel-journaling-fs.js", "disposition": "Move to EOS-Lab/ — unused in local runtime" },
+      { "name": "StaffStrategicRfcEngine", "path": "src/core/pilot/one_percent/staff-strategic-rfc-engine.js", "disposition": "Move to EOS-Lab/ — unused in local runtime" },
+      { "name": "HighSpeedWebScrapingEngine", "path": "src/core/scraping/high-speed-web-scraping-engine.js", "disposition": "Lazy-load on demand — unused in core FSM" },
+      { "name": "EvolutionaryStrategyOptimizer", "path": "src/core/optimization/evolutionary-strategy-optimizer.js", "disposition": "Lazy-load on demand — unused in core FSM" },
+      { "name": "HyperGraphSpeculativeEngine", "path": "src/core/orchestration/hypergraph-speculative-engine.js", "disposition": "Lazy-load on demand — unused in core FSM" }
+    ]
+  }
+}

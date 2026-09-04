@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "title": "EOS Legacy Compatibility Register",
+    "total_items": 2
+  },
+  "legacy_items": [
+    {
+      "name": "eos.provider.health",
+      "status": "STUBBED_NOT_CONFIGURED",
+      "reason": "Legacy stub returning fixed NOT_CONFIGURED envelope."
+    },
+    {
+      "name": "eos.scaffolder.generate",
+      "status": "IN_MEMORY_TEMPLATES",
+      "reason": "Superseded by physical triad generator eos.scaffolder.clean."
+    }
+  ]
+}

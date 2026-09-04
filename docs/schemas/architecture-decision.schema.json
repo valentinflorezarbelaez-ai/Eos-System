@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eos.local/schemas/architecture-decision.schema.json",
+  "title": "EOS Machine-Readable Architecture Decision Record (ADR) Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "adr_id",
+    "title",
+    "status",
+    "date",
+    "deciders",
+    "context_and_problem",
+    "decision_drivers",
+    "considered_options",
+    "decision_outcome",
+    "consequences",
+    "epistemic_validation"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "adr_id": {
+      "type": "string",
+      "pattern": "^ADR-[0-9]{4}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PROPOSED", "APPROVED", "REJECTED", "DEPRECATED", "SUPERSEDED"]
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "deciders": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "context_and_problem": {
+      "type": "string",
+      "minLength": 10
+    },
+    "decision_drivers": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "considered_options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["option_id", "title", "description", "pros", "cons"],
+        "properties": {
+          "option_id": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "pros": { "type": "array", "items": { "type": "string" } },
+          "cons": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "minItems": 2
+    },
+    "decision_outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chosen_option_id", "justification", "approval_authority"],
+      "properties": {
+        "chosen_option_id": { "type": "string" },
+        "justification": { "type": "string" },
+        "approval_authority": {
+          "type": "string",
+          "enum": ["HUMAN_DIRECTOR", "AUTONOMOUS_DELEGATED", "TECHNICAL_COUNCIL"]
+        }
+      }
+    },
+    "consequences": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["positive", "negative", "risks_and_mitigations"],
+      "properties": {
+        "positive": { "type": "array", "items": { "type": "string" } },
+        "negative": { "type": "array", "items": { "type": "string" } },
+        "risks_and_mitigations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["risk", "mitigation"],
+            "properties": {
+              "risk": { "type": "string" },
+              "mitigation": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "epistemic_validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_receipt_id", "sha256_hash", "verification_test_path"],
+      "properties": {
+        "evidence_receipt_id": { "type": ["string", "null"] },
+        "sha256_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "verification_test_path": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

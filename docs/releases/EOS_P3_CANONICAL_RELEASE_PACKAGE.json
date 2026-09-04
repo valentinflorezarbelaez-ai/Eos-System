@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "release_id": "REL-EOS-3.7.0",
+  "release_name": "EOS Control Plane - P3 Milestone Closure Baseline",
+  "timestamp": "2026-08-20T23:30:00Z",
+  "git_baseline": "GOV-BASE-2026-001",
+  "authority_level": "LEVEL_0_READ_ONLY",
+  "verification_summary": {
+    "total_tests_passed": 838,
+    "total_tests_failed": 0,
+    "test_suites_count": 18,
+    "structural_verifier_checks_passed": 277,
+    "structural_verifier_failures": 0,
+    "canonical_schemas_valid": 16,
+    "schemas_inventory": [
+      "mission-package.schema.json",
+      "task-contract.schema.json",
+      "hitl-receipt.schema.json",
+      "project-profile.schema.json",
+      "stack-candidate.schema.json",
+      "architecture-decision.schema.json",
+      "model-capability.schema.json",
+      "endpoint-contract.schema.json",
+      "integration-contract.schema.json",
+      "token-economics-audit.schema.json",
+      "mission-executive-report.schema.json",
+      "cursor-return-package.schema.json",
+      "role-profile.schema.json",
+      "agent-selection-record.schema.json",
+      "task-supervision-evaluation.schema.json",
+      "external-canary-contract.schema.json"
+    ]
+  },
+  "milestones_closed_in_p3": [
+    {
+      "id": "P3.1",
+      "title": "Mission CLI & Compact Cursor Mission Package Generator",
+      "spec": "docs/specs/EOS-P3-1-MISSION-CLI-AND-CURSOR-PACKAGE-SPEC.md",
+      "claim": "EOS can receive a mission, create its local directory structure, formulate task contracts, and package instructions for Cursor."
+    },
+    {
+      "id": "P3.2",
+      "title": "Cursor Return Adapter & Ingestion Engine",
+      "spec": "docs/specs/EOS-P3-2-CURSOR-RETURN-ADAPTER-SPEC.md",
+      "claim": "EOS can ingest and validate return packages from Cursor, enforce scope boundaries, and detect secret leaks and test failures."
+    },
+    {
+      "id": "P3.3",
+      "title": "Role & Skill Registry Runtime",
+      "spec": "docs/specs/EOS-P3-3-ROLE-SKILL-REGISTRY-SPEC.md",
+      "claim": "EOS can register, evaluate, and select agent roles and skills in a governed, traceable manner with independent reviewers (author != reviewer)."
+    },
+    {
+      "id": "P3.4",
+      "title": "Supervision & Multi-Agent Correction Loop",
+      "spec": "docs/specs/EOS-P3-4-MULTI-AGENT-SUPERVISION-SPEC.md",
+      "claim": "EOS can supervise delegated tasks across 8 quality dimensions, issue structured correction directives, and escalate unresolvable defects to HITL."
+    },
+    {
+      "id": "P3.5",
+      "title": "Bounded Worktree Mutation Canary",
+      "spec": "docs/specs/EOS-P3-5-BOUNDED-WORKTREE-MUTATION-SPEC.md",
+      "claim": "EOS can coordinate a limited local code mutation inside an isolated worktree under contractual scope, tests, evidence, and mathematical rollback (Δ = 0)."
+    },
+    {
+      "id": "P3.6",
+      "title": "Ledger Crash Recovery, Concurrency & Operational Persistence",
+      "spec": "docs/specs/EOS-P3-6-LEDGER-CRASH-RECOVERY-SPEC.md",
+      "claim": "EOS can persist, lock, and verify ledger events across concurrent local agent operations, recover from trailing write crashes, and fail closed upon tampering."
+    },
+    {
+      "id": "P3.7",
+      "title": "Operator Manuals, Packaging & Formal P3 Baseline Closure",
+      "spec": "docs/manuals/MANUAL_DE_OPERACIONES_EOS.md",
+      "claim": "EOS provides complete, standalone operator manuals and reproducible release packaging for local mission orchestration."
+    }
+  ],
+  "prohibited_claims_and_boundaries": [
+    "Autonomous modification of external production projects (PRJ-FUNDACION strictly Δ = 0)",
+    "Unrestricted write permissions to main branch",
+    "Real network egress or cloud provider API execution without explicit human authorization",
+    "Operating-system level hypervisor or container sandboxing against arbitrary malicious code"
+  ]
+}

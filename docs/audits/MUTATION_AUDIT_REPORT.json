@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-08-29T16:03:42.940Z",
+  "engine": "EOS-CRISOL-MUTATION-RUNNER-V1",
+  "metrics": {
+    "totalMutants": 5,
+    "killed": 5,
+    "survived": 0,
+    "mutationScore": "100.00%",
+    "certified": true
+  },
+  "survivedGaps": [],
+  "killedAudit": [
+    {
+      "id": "MUT-ADVERSARIAL-RED-TEAM-001",
+      "file": "src\\core\\runtime\\adversarial-red-team.js",
+      "line": 16,
+      "mutator": "LOGICAL_OR_TO_AND"
+    },
+    {
+      "id": "MUT-ADVERSARIAL-RED-TEAM-002",
+      "file": "src\\core\\runtime\\adversarial-red-team.js",
+      "line": 17,
+      "mutator": "LOGICAL_OR_TO_AND"
+    },
+    {
+      "id": "MUT-ADVERSARIAL-RED-TEAM-003",
+      "file": "src\\core\\runtime\\adversarial-red-team.js",
+      "line": 19,
+      "mutator": "LOGICAL_OR_TO_AND"
+    },
+    {
+      "id": "MUT-ADVERSARIAL-RED-TEAM-004",
+      "file": "src\\core\\runtime\\adversarial-red-team.js",
+      "line": 20,
+      "mutator": "LOGICAL_AND_TO_OR"
+    },
+    {
+      "id": "MUT-ADVERSARIAL-RED-TEAM-005",
+      "file": "src\\core\\runtime\\adversarial-red-team.js",
+      "line": 22,
+      "mutator": "BOOLEAN_TRUE_TO_FALSE"
+    }
+  ],
+  "sha256": "03605bfddb370247c190da449311a7806d8cc5b9f0e98a042dc1490c8be2ef01"
+}
