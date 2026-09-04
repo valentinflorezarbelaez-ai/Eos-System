@@ -239,7 +239,8 @@ export class ProjectPipelineRunner {
         customRunners: {
           quality: async () => ({ status: 'VERIFIED', exitCode: 0, findings: [] }),
           security: async () => ({ status: 'VERIFIED', exitCode: 0, findings: [] }),
-          architecture: async () => ({ status: 'VERIFIED', exitCode: 0, findings: [] })
+          architecture: async () => ({ status: 'VERIFIED', exitCode: 0, findings: [] }),
+          // simplifier uses ParallelAuditorDAG default: FirstPrinciplesSimplifierEngine.analyzeCodeComplexity
         }
       });
 
@@ -250,7 +251,7 @@ export class ProjectPipelineRunner {
       ...(result.waves?.wave2_dynamic || [])
     ];
     const core = allResults.filter((r) =>
-      ['quality', 'security', 'architecture'].includes(r.name)
+      ['quality', 'security', 'architecture', 'simplifier'].includes(r.name)
     );
     const coreFailed = core.filter((r) => r.exitCode !== 0 || r.status !== 'VERIFIED');
 

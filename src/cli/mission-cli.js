@@ -15,7 +15,9 @@ import {
   parseOrchestrateArgs,
   PIPELINE_PHASES
 } from '../core/runtime/project-pipeline-runner.js';
+import { FirstPrinciplesSimplifierEngine } from '../core/optimization/first-principles-simplifier-engine.js';
 import fs from 'node:fs';
+import path from 'node:path';
 
 export class MissionCLI {
   constructor(options = {}) {
@@ -57,6 +59,10 @@ export class MissionCLI {
 
     if (command === 'orchestrate' || command === 'o') {
       return this.handleOrchestrateCommand(argv.slice(1));
+    }
+
+    if (command === 'simplify' || command === 's') {
+      return this.handleSimplifyCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -518,6 +524,197 @@ export class MissionCLI {
     };
   }
 
+  /**
+   * eos simplify [path|--project <id>] [--json] [--strict]
+   */
+  async handleSimplifyCommand(args = []) {
+    const isJson = args.includes('--json');
+    const isStrict = args.includes('--strict');
+    const projectIdx = args.indexOf('--project');
+    let projectId = null;
+    if (projectIdx !== -1 && args[projectIdx + 1]) {
+      projectId = args[projectIdx + 1];
+    }
+
+    let targetPath = null;
+    const nonFlagArgs = args.filter(a => !a.startsWith('--') && (projectIdx === -1 || (a !== projectId && a !== args[projectIdx])));
+    if (nonFlagArgs.length > 0) {
+      targetPath = nonFlagArgs[0];
+    }
+
+    const root = resolveControlPlaneRoot({ cwd: process.cwd() });
+    const pre = this.tutor.explainBefore({
+      action_id: 'eos.simplify',
+      objective: `Analyze code complexity and eliminate post-green bloat${projectId ? ` for project ${projectId}` : targetPath ? ` at ${targetPath}` : ''}`,
+      concept: 'First-Principles Simplifier (Musk Rule 2 / Boris Cherny post-green pattern)',
+      scope: [targetPath || projectId || 'workspace'],
+      cwd: root,
+      rationale: 'Prunes unnecessary wrappers, empty stubs, and bloat before commit',
+      expected_evidence: ['bloatIndex < 4.0', 'simplification recommendations'],
+      risks: ['Read-only analysis; no destructive changes'],
+      rollback: 'N/A',
+      hitl_status: 'NOT_REQUIRED'
+    });
+
+    const engine = new FirstPrinciplesSimplifierEngine();
+    const filesToScan = [];
+
+    const collectFiles = (dir) => {
+      if (!fs.existsSync(dir)) return;
+      const stat = fs.statSync(dir);
+      if (stat.isFile()) {
+        if (/\.(js|mjs|ts|tsx|py)$/.test(dir) && !dir.includes('node_modules') && !dir.includes('.git') && !dir.includes('dist') && !dir.includes('.next')) {
+          filesToScan.push(dir);
+        }
+        return;
+      }
+      const entries = fs.readdirSync(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        if (entry.name.startsWith('.') && entry.name !== '.missions') continue;
+        if (['node_modules', 'dist', '.next', '.git', 'build', '.tempmediaStorage', '.user_uploaded'].includes(entry.name)) continue;
+        const full = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          collectFiles(full);
+        } else if (/\.(js|mjs|ts|tsx|py)$/.test(entry.name)) {
+          filesToScan.push(full);
+        }
+      }
+    };
+
+    if (projectId) {
+      const regDir = path.join(root, 'docs', 'projects', 'registrations');
+      let foundPath = null;
+      if (fs.existsSync(regDir)) {
+        for (const file of fs.readdirSync(regDir)) {
+          if (file.endsWith('.json')) {
+            try {
+              const reg = JSON.parse(fs.readFileSync(path.join(regDir, file), 'utf8'));
+              const pIdUpper = projectId.toUpperCase();
+              if (
+                reg.project_id === pIdUpper ||
+                reg.projectId === pIdUpper ||
+                reg.id === pIdUpper ||
+                file.replace('.json', '').toUpperCase() === pIdUpper.replace('PRJ-', '')
+              ) {
+                foundPath = reg.path || reg.projectRoot || reg.local_path || reg.root;
+                break;
+              }
+            } catch {}
+          }
+        }
+      }
+      if (!foundPath) {
+        return {
+          success: false,
+          output: `Error: Project '${projectId}' not found in registry (docs/projects/registrations/).`
+        };
+      }
+      collectFiles(foundPath);
+    } else if (targetPath) {
+      const resolved = path.isAbsolute(targetPath) ? targetPath : path.resolve(process.cwd(), targetPath);
+      collectFiles(resolved);
+    } else {
+      const defaultSrc = path.join(process.cwd(), 'src');
+      if (fs.existsSync(defaultSrc)) {
+        collectFiles(defaultSrc);
+      } else {
+        collectFiles(process.cwd());
+      }
+    }
+
+    if (filesToScan.length === 0) {
+      return {
+        success: true,
+        output: `${pre}\n\nℹ️  No matching source files (.js, .ts, .tsx, .py) found to analyze.`
+      };
+    }
+
+    const fileResults = [];
+    let totalBloat = 0;
+    let overEngineeredCount = 0;
+
+    for (const filePath of filesToScan) {
+      try {
+        const content = fs.readFileSync(filePath, 'utf8');
+        const analysis = engine.analyzeCodeComplexity(content);
+        const plan = engine.generateSimplificationPlan(analysis);
+        totalBloat += analysis.bloatIndex;
+        if (analysis.isOverEngineered) overEngineeredCount++;
+
+        fileResults.push({
+          file: path.relative(root, filePath),
+          bloatIndex: analysis.bloatIndex,
+          isOverEngineered: analysis.isOverEngineered,
+          metrics: analysis.metrics,
+          recommendations: plan.recommendations,
+          estimatedLinesSaved: plan.estimated_lines_saved
+        });
+      } catch {
+        // Ignore read errors on binary or unreadable files
+      }
+    }
+
+    const avgBloat = fileResults.length > 0 ? (totalBloat / fileResults.length).toFixed(1) : '0.0';
+    const post = this.tutor.explainAfter(
+      { action_id: 'eos.simplify' },
+      {
+        observed: `Analyzed ${fileResults.length} files. Avg Bloat: ${avgBloat}/10. Over-engineered: ${overEngineeredCount}.`,
+        classification: overEngineeredCount === 0 ? 'VERIFIED' : 'FINDINGS_IDENTIFIED',
+        next_decision: overEngineeredCount === 0 ? 'Code is clean and minimal (KISS). Proceed to commit.' : 'Execute simplification recommendations to prune unnecessary bloat.'
+      }
+    );
+
+    if (isJson) {
+      return {
+        success: isStrict ? overEngineeredCount === 0 : true,
+        output: JSON.stringify({
+          filesAnalyzed: fileResults.length,
+          averageBloatIndex: parseFloat(avgBloat),
+          overEngineeredFilesCount: overEngineeredCount,
+          results: fileResults
+        }, null, 2),
+        data: { fileResults, avgBloat, overEngineeredCount }
+      };
+    }
+
+    const overEngineeredList = fileResults
+      .filter(f => f.isOverEngineered)
+      .slice(0, 10);
+
+    let report = `
+================================================================================
+🧹 EOS FIRST-PRINCIPLES CODE SIMPLIFIER (Post-Green Harness Gate)
+================================================================================
+Files Analyzed:        ${fileResults.length}
+Average Bloat Index:   ${avgBloat} / 10.0
+Over-Engineered Files: ${overEngineeredCount} ${overEngineeredCount > 0 ? '⚠️' : '✅'}
+Status:                ${overEngineeredCount === 0 ? 'CLEAN & MINIMAL (KISS)' : 'PRUNING REQUIRED'}
+================================================================================
+`;
+
+    if (overEngineeredList.length > 0) {
+      report += `\n🚨 HIGH BLOAT DETECTED IN THE FOLLOWING FILES:\n`;
+      for (const item of overEngineeredList) {
+        report += `\n📄 ${item.file} (Bloat Index: ${item.bloatIndex}/10)\n`;
+        report += `   - Metrics: ${item.metrics.codeLines} lines | Cyclomatic: ${item.metrics.estimatedCyclomaticComplexity} | Wrappers: ${item.metrics.passThroughWrappersCount} | Stubs: ${item.metrics.emptyClassesCount}\n`;
+        if (item.recommendations.length > 0) {
+          report += `   - Recommendations:\n`;
+          for (const rec of item.recommendations) {
+            report += `     • [${rec.action}]: ${rec.rationale} (Est. -${rec.estimatedLineReduction || rec.estimatedComplexityReduction} lines/branches)\n`;
+          }
+        }
+      }
+    } else {
+      report += `\n✨ Outstanding craftsmanship! All analyzed code is lean, direct, and free of unnecessary abstractions.\n`;
+    }
+
+    return {
+      success: isStrict ? overEngineeredCount === 0 : true,
+      output: `${pre}\n\n${report}\n${post}`,
+      data: { fileResults, avgBloat, overEngineeredCount }
+    };
+  }
+
   getHelp() {
     return `
 ================================================================================
@@ -530,6 +727,7 @@ USAGE:
   eos next --apply
   eos doctor
   eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
+  eos simplify [path|--project <id>] [--json] [--strict]
   eos mission <command> [options]
   eos role list
 
@@ -547,6 +745,10 @@ COMMANDS:
   eos orchestrate --project <PROJECT_ID> --pipeline <phase>
       Unified pipeline runner: registration contract → concurrent auditors →
       satellite lint/build/test validation → cryptographic EVD seal.
+
+  eos simplify [path|--project <id>] [--json] [--strict]
+      First-principles code bloat analyzer (Musk Rule 2 / Boris Cherny post-green harness).
+      Detects unnecessary wrapper layers, empty class stubs, and high cyclomatic branches.
 
   eos mission create --goal "<text>" [--project <path>]
       Initializes a new mission, discovers project profile, and creates .missions/<id>/

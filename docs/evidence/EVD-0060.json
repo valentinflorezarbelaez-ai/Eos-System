@@ -5,7 +5,7 @@
   "status": "VERIFIED",
   "scope": "PRJ-APP-FUERZA / pipeline:verify",
   "source": "EOS ProjectPipelineRunner",
-  "timestamp": "2026-09-04T18:18:08.544Z",
+  "timestamp": "2026-09-04T19:12:09.015Z",
   "actor": "EOS ProjectPipelineRunner",
   "action": "orchestrate --project PRJ-APP-FUERZA --pipeline verify",
   "command": "node bin/eos-orchestrator.js run --project PRJ-APP-FUERZA --phase verify",
@@ -13,8 +13,8 @@
   "actual": "VERIFIED",
   "result": "PASS",
   "confidence": "HIGH",
-  "sha256": "sha256-cd8192c47ff69b66d5951740ab892f5557f265fd1b720475dc53367e470d663d",
-  "digest": "sha256-cd8192c47ff69b66d5951740ab892f5557f265fd1b720475dc53367e470d663d",
+  "sha256": "sha256-5e5637b42df26595825e771dd3494084575c493b7a3d9e2c3e7eed4bfd26c11e",
+  "digest": "sha256-5e5637b42df26595825e771dd3494084575c493b7a3d9e2c3e7eed4bfd26c11e",
   "data": {
     "projectId": "PRJ-APP-FUERZA",
     "phase": "verify",
@@ -37,9 +37,14 @@
           "name": "security",
           "status": "VERIFIED",
           "exitCode": 0
+        },
+        {
+          "name": "simplifier",
+          "status": "VERIFIED",
+          "exitCode": 0
         }
       ],
-      "evidenceHash": "sha256-c77ab5d8ae255e08a03dbec2941e9c4fab2a948a3b47dbec9dbb7b4e639b7624"
+      "evidenceHash": "sha256-72377023a117f952e0618ad7fb0e32d54efc26f5752a1a63d324e8f08a85a282"
     },
     "satelliteValidation": {
       "status": "VERIFIED",
@@ -57,7 +62,7 @@
           "command": "npm --prefix atp-strength-frontend run build",
           "exitCode": 0,
           "status": "PASS",
-          "stdoutSnippet": "\n> atp-strength-frontend@0.1.0 build\n> next build\n\n▲ Next.js 16.3.4 (Turbopack)\n- Environments: .env.local\n✓ Running next.config.ts took 39ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 1039ms\n  Running TypeScript ...\n  Finished TypeScript in 2.7s ...\n  Collecting page data using 6 workers ...\n  Generating static pages using 6 workers (0/5) ...\n  Generating static pages using 6 workers (1/5) \r\n  Generating static pages using 6 workers (2/5) \r\n  Generating static page"
+          "stdoutSnippet": "\n> atp-strength-frontend@0.1.0 build\n> next build\n\n▲ Next.js 16.3.4 (Turbopack)\n- Environments: .env.local\n✓ Running next.config.ts took 42ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 1449ms\n  Running TypeScript ...\n  Finished TypeScript in 2.9s ...\n  Collecting page data using 6 workers ...\n  Generating static pages using 6 workers (0/5) ...\n  Generating static pages using 6 workers (1/5) \r\n  Generating static pages using 6 workers (2/5) \r\n  Generating static page"
         },
         {
           "id": "backend-ruff",

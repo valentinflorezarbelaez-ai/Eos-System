@@ -59,7 +59,9 @@
     "audit:mutation": "node scripts/mutation-audit.js",
     "commit:safe": "node scripts/git-watchdog.js --commit",
     "watchdog:audit": "node scripts/git-watchdog.js --audit",
-    "test:security": "node --test tests/mcp/red-teaming.test.js"
+    "test:security": "node --test tests/mcp/red-teaming.test.js",
+    "hooks:install": "node scripts/install-git-hooks.js",
+    "simplify": "node bin/eos.js simplify"
   },
   "keywords": [
     "eos",

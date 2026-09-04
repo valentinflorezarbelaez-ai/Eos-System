@@ -1,0 +1,88 @@
+---
+description: Harness Engineering & AI Champion Standard — Metodología TPC, Matriz de Modelos SDD y Patrón Boris Cherny
+globs:
+alwaysApply: true
+---
+
+# HARNESS ENGINEERING & AI CHAMPION STANDARD (LIDR & EOS v0.6.0)
+
+Este estándar formaliza la doctrina de **Harness Engineering** (Ingeniería de Arneses Agénticos) adoptada de LIDR Academy y el estándar de Boris Cherny (creador de Claude Code), integrada en el núcleo de **EOS v0.6.0**.
+
+---
+
+## 1. El Fundamento: Prevención del "Acceleration Whiplash"
+
+La investigación empírica de la industria (METR 2025 y Faros AI sobre 22.000 ingenieros) demuestra que la IA generativa sin un arnés riguroso produce un efecto contraproducente:
+* Aceleración aparente de tipeo: +33%.
+* **Latigazo río abajo (Whiplash):**
+  - Bugs en producción: **+54%**
+  - Incidentes de seguridad por PR: **+242.7%**
+  - Tiempo de Code Review humano: **+441% (5x más lento)**
+  - PRs mergeadas a ciegas sin revisión: **+31.3%**
+
+**Principio Rector de EOS:** La velocidad real se logra con **verificación determinista, especificaciones formales y barreras de escritura**, no tirando código a ciegas.
+
+---
+
+## 2. Metodología TPC (Tool, Prompt, Context)
+
+Toda tarea ejecutada en este workspace debe optimizar los tres pilares:
+
+| Pilar | Definición | Implementación en EOS |
+|---|---|---|
+| **Tool** | Las herramientas de primera clase dadas al agente | Servidor MCP nativo de 78 herramientas (`eos_doctor`, `eos_audit_project`, `eos_verify_strict`, `eos_log_evidence`), Git, Playwright, Context7. |
+| **Prompt** | Instrucciones directas, invariantes y contratos | Directiva de ejecución autónoma (Full-Auto), sin pedidos de permiso para comandos seguros, y rol de Senior Architect. |
+| **Context** | Información estructurada y quirúrgica | Reglas modulares `.mdc`, especificaciones vivas EARS/BDD, `registry.json` y AST Pruning. |
+
+---
+
+## 3. Matriz de Selección de Modelos por Fase SDD
+
+Queda estrictamente prohibido usar un solo modelo genérico para todas las etapas. El agente y el operador deben alinear la capacidad cognitiva con la fase:
+
+| Fase del SDD | Objetivo Técnico | Modelo Óptimo Recomendado | Modo de Razonamiento |
+|---|---|---|---|
+| **Fase 1: Intake & Discovery** | Ingesta masiva, extracción de requerimientos brutos y detección de lagunas | `gemini-2.5-pro` / `claude-3-7-sonnet-thinking` | Ventana de contexto masiva + CoT |
+| **Fase 2: Requerimientos EARS & BDD** | Lógica proposicional formal, contratos inequívocos | `claude-3-7-sonnet` / `o3-mini` | Razonamiento deductivo estricto |
+| **Fase 3: Arquitectura & ADRs** | Diseño Clean/Hexagonal, compensaciones y alternativas rechazadas | `claude-3-7-sonnet` (Thinking Extendido) | Evaluación de tradeoffs arquitectónicos |
+| **Fase 4: DAG de Tareas Atómicas** | Descomposición en subtareas de fallo-a-éxito ($F \to P$) | `claude-3-7-sonnet` / `gemini-2.5-flash` | Estructuración JSON determinista |
+| **Fase 5: Implementación TDD** | Escritura de código puro de dominio, use cases y adaptadores | `claude-3-7-sonnet` / `codex` | Ejecución precisa de difs mínimos |
+| **Fase 6: Verificación & Linter** | Chequeo estático de tipos, formateo y aserciones | **Compiladores Locales (Zero-LLM)** | `npm test`, `ruff check`, `verify:strict` |
+| **Fase 7: Auditoría Adversarial** | OWASP Top 10, sanitización, inyecciones y fuga de secretos | `claude-3-7-sonnet` / `security-auditor` | Análisis de vectores de ataque |
+
+---
+
+## 4. El Patrón Boris Cherny (Claude Code Standard)
+
+El agente debe aplicar las 3 disciplinas operativas de Boris Cherny en cada sesión:
+
+### A. Subagente / Paso "Code Simplifier"
+* Inmediatamente después de que los tests pasen en verde, **no des la tarea por terminada**.
+* Inspecciona el código recién escrito bajo el principio **KISS / YAGNI**:
+  - Elimina abstracciones prematuras y envoltorios innecesarios.
+  - Poda variables temporales no utilizadas y dead code.
+  - Mantén el código tan simple y directo que cualquier junior lo entienda sin esfuerzo.
+
+### B. El Hook "Verify App" (Bloqueo Pre-Commit)
+* Nunca hagas un commit ni concluyas una tarea sin ejecutar la verificación local:
+  ```bash
+  npm run verify:strict
+  ```
+* Si el proyecto es un satélite (ej. `PRJ-APP-FUERZA`), dispara el orquestador:
+  ```bash
+  node bin/eos-orchestrator.js run --project PRJ-APP-FUERZA --phase verify
+  ```
+
+### C. Guardrails Post-Edición
+* Tras aplicar un parche quirúrgico (`replace_file_content` / `multi_replace_file_content`), revalida la sintaxis del archivo antes de saltar a otra tarea para evitar acumular errores sintácticos invisibles.
+
+---
+
+## 5. El Arsenal de Herramientas MCP de EOS v0.6.0
+
+Para cualquier agente operando en este entorno, utiliza las herramientas nativas expuestas por `src/mcp-server.js`:
+- `eos_doctor`: Diagnostica la integridad del control plane, pins de MCP y valida ausencia de fugas de homedir.
+- `eos_audit_project`: Ejecuta la batería completa de auditores concurrentes (`quality`, `security`, `architecture`) sobre cualquier proyecto en `registry.json`.
+- `eos_verify_strict`: Ejecuta la verificación estricta de 482+ invariantes.
+- `eos_log_evidence`: Sella el registro de evidencia epistémica con hash criptográfico SHA-256.
+- CLI Orquestador: `node bin/eos-orchestrator.js run --project <ID> --phase [intake|recon|audit|verify|release]`.
