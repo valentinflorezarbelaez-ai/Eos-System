@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "RCPT-E2E-GREEN-001",
+  "evidence_id": "RCPT-E2E-GREEN-001",
+  "mission_id": "MIS-1788500673741-214B45",
+  "task_id": "TASK-01",
+  "category": "UNIT_TEST",
+  "status": "NOT_VERIFIED",
+  "execution_context": {
+    "command": "npx tsx --test tests/unit/leadService.test.ts",
+    "exit_code": 0,
+    "tdd_phase": "GREEN"
+  },
+  "provenance": {},
+  "assertions": [
+    "mixed pipeline snapshot matches expected counts"
+  ],
+  "evidence_payload": {
+    "tdd_phase": "GREEN",
+    "output": "TAP version 13\n# (node:3515) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: LeadService (In-Memory :memory: Test Suite)\n    # Subtest: should create a lead and record an initial lead_activity atomically\n    ok 1 - should create a lead and record an initial lead_activity atomically\n      ---\n      duration_ms: 39.466569\n      ...\n    # Subtest: should execute status update and append activity log inside single transaction\n    ok 2 - should execute status update and append activity log inside single transaction\n      ---\n      duration_ms: 30.328328\n      ...\n    # Subtest: should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale\n    ok 3 - should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale\n      ---\n      duration_ms: 27.493998\n      ...\n    # Subtest: should count tenant leads by status for a mixed pipeline\n    ok 4 - should count tenant leads by status for a mixed pipeline\n      ---\n      duration_ms: 27.761588\n      ...\n    1..4\nok 1 - LeadService (In-Memory :memory: Test Suite)\n  ---\n  duration_ms: 125.818012\n  type: 'suite'\n  ...\n1..1\n# tests 4\n# suites 1\n# pass 4\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 269.626066\n"
+  },
+  "verifier_id": "APPLY_BUILDER_NOT_VERIFIER",
+  "timestamp": "2026-09-04T05:45:46.476Z",
+  "sha256": "12b9b687059eeb7a66dc48d858a629864f2ae7b652490066e802554079024ef1",
+  "receipt_hash": "12b9b687059eeb7a66dc48d858a629864f2ae7b652490066e802554079024ef1",
+  "tdd_phase": "GREEN"
+}

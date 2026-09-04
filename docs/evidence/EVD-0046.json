@@ -1,0 +1,35 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0046",
+  "claim": "Workspace strict verifier and LIDR contract suite still pass after the lab E2E (organic gate, TDD receipts path, OpenSpec runtime, L0 purity).",
+  "status": "VERIFIED",
+  "scope": "Control Plane verify-eos --strict + lidr/openspec/spec-driven contract tests. Not full npm test, not production.",
+  "source": "docs/evidence/canonical_e2e_openspec_tdd_2026/verify-eos-strict.txt",
+  "timestamp": "2026-09-04T05:47:28Z",
+  "actor": "EOS Cloud Agent (canonical E2E OpenSpec+TDD loop)",
+  "action": "Ran contract tests and strict verifier after apply/archive.",
+  "command": "node --test tests/lidr-discipline-enforcement.test.js tests/openspec-runtime.test.js tests/lidr-specboot-discipline-bridge.test.js tests/spec-driven-product-loop.test.js; node scripts/verify-eos.js --strict",
+  "expected": "Contract tests pass; verify-eos includes organic-gate, tdd-receipts, rdd-stance, l0-purity, docs/evidence/tdd; 0 failures.",
+  "actual": "Contract suite 46/46 EXIT 0. verify-eos --strict Checks Passed 497 Failures 0 EXIT 0 (organic-gate, tdd-receipts, docs/evidence/tdd, rdd-stance, l0-purity). Independent harness harnessPassed=true isolation delta=0.",
+  "result": "PASS_WITHIN_VERIFIED_SCOPE",
+  "artifacts": [
+    "docs/evidence/canonical_e2e_openspec_tdd_2026/verify-eos-strict.txt",
+    "docs/evidence/canonical_e2e_openspec_tdd_2026/COMMAND_LOG.txt"
+  ],
+  "logs": [
+    "LIDR_ENFORCEMENT_TESTS EXIT 0 tests 46 pass 46",
+    "VERIFY_EOS_STRICT EXIT 0 Checks Passed 497 Failures 0",
+    "INDEPENDENT_HARNESS EXIT 0 harnessPassed true"
+  ],
+  "environment": { "os": "Linux 6.12.94+", "node": "v22.14.0" },
+  "confidence": "HIGH",
+  "risks": ["Full npm test was not re-run on this host; prior #17 report noted 2 pre-existing BYPASS gaps"],
+  "limitations": [
+    "Aikido scan BLOCKED — Aikido MCP live discovery failed",
+    "Cursor IDE slash-command automation NOT VERIFIED",
+    "PRODUCTION_READY = NO"
+  ],
+  "related_spec": "docs/manuals/OPENSPEC_RUNTIME.md",
+  "related_project": "PRJ-EOS-MISSION-OS",
+  "related_change": "flowdesk-lead-pipeline-snapshot"
+}

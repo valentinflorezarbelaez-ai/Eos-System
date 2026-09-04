@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "RCPT-E2E-RED-001",
+  "evidence_id": "RCPT-E2E-RED-001",
+  "mission_id": "MIS-1788500673741-214B45",
+  "task_id": "TASK-01",
+  "category": "UNIT_TEST",
+  "status": "NOT_VERIFIED",
+  "execution_context": {
+    "command": "npx tsx --test tests/unit/leadService.test.ts",
+    "exit_code": 1,
+    "tdd_phase": "RED"
+  },
+  "provenance": {},
+  "assertions": [
+    "countLeadsByStatus is not a function"
+  ],
+  "evidence_payload": {
+    "tdd_phase": "RED",
+    "output": "TAP version 13\n# (node:3416) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: LeadService (In-Memory :memory: Test Suite)\n    # Subtest: should create a lead and record an initial lead_activity atomically\n    ok 1 - should create a lead and record an initial lead_activity atomically\n      ---\n      duration_ms: 37.765198\n      ...\n    # Subtest: should execute status update and append activity log inside single transaction\n    ok 2 - should execute status update and append activity log inside single transaction\n      ---\n      duration_ms: 30.334356\n      ...\n    # Subtest: should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale\n    ok 3 - should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale\n      ---\n      duration_ms: 27.393234\n      ...\n    # Subtest: should count tenant leads by status for a mixed pipeline\n    not ok 4 - should count tenant leads by status for a mixed pipeline\n      ---\n      duration_ms: 27.484353\n      location: '/workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts:72:3'\n      failureType: 'testCodeFailure'\n      error: 'leadService.countLeadsByStatus is not a function'\n      code: 'ERR_TEST_FAILURE'\n      name: 'TypeError'\n      stack: |-\n        TestContext.<anonymous> (/workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts:92:34)\n        Test.runInAsyncScope (node:async_hooks:211:14)\n        Test.run (node:internal/test_runner/test:979:25)\n        async Suite.processPendingSubtests (node:internal/test_runner/test:677:7)\n      ...\n    1..4\nnot ok 1 - LeadService (In-Memory :memory: Test Suite)\n  ---\n  duration_ms: 123.762616\n  type: 'suite'\n  location: '/workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts:7:1'\n  failureType: 'subtestsFailed'\n  error: '1 subtest failed'\n  code: 'ERR_TEST_FAILURE'\n  ...\n1..1\n# tests 4\n# suites 1\n# pass 3\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 272.626062\n"
+  },
+  "verifier_id": "APPLY_BUILDER_NOT_VERIFIER",
+  "timestamp": "2026-09-04T05:45:46.476Z",
+  "sha256": "a86b027abd7c740c5e29c34a8f548124f8964995ac185d2c7c81669967183837",
+  "receipt_hash": "a86b027abd7c740c5e29c34a8f548124f8964995ac185d2c7c81669967183837",
+  "tdd_phase": "RED"
+}

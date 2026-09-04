@@ -1,0 +1,53 @@
+TAP version 13
+# (node:3416) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: LeadService (In-Memory :memory: Test Suite)
+    # Subtest: should create a lead and record an initial lead_activity atomically
+    ok 1 - should create a lead and record an initial lead_activity atomically
+      ---
+      duration_ms: 37.765198
+      ...
+    # Subtest: should execute status update and append activity log inside single transaction
+    ok 2 - should execute status update and append activity log inside single transaction
+      ---
+      duration_ms: 30.334356
+      ...
+    # Subtest: should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+    ok 3 - should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+      ---
+      duration_ms: 27.393234
+      ...
+    # Subtest: should count tenant leads by status for a mixed pipeline
+    not ok 4 - should count tenant leads by status for a mixed pipeline
+      ---
+      duration_ms: 27.484353
+      location: '/workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts:72:3'
+      failureType: 'testCodeFailure'
+      error: 'leadService.countLeadsByStatus is not a function'
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        TestContext.<anonymous> (/workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts:92:34)
+        Test.runInAsyncScope (node:async_hooks:211:14)
+        Test.run (node:internal/test_runner/test:979:25)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:677:7)
+      ...
+    1..4
+not ok 1 - LeadService (In-Memory :memory: Test Suite)
+  ---
+  duration_ms: 123.762616
+  type: 'suite'
+  location: '/workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts:7:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 4
+# suites 1
+# pass 3
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 272.626062

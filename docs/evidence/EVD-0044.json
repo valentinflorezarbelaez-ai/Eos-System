@@ -1,0 +1,27 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0044",
+  "claim": "Independent verify of the lab mission ledger + TDD receipts passes without granting a VERIFIED stamp to the builder.",
+  "status": "VERIFIED",
+  "scope": "MissionRuntime.verifyMission MIS-1788500673741-214B45 --strict-tdd. Not production identity.",
+  "source": "docs/evidence/canonical_e2e_openspec_tdd_2026/COMMAND_LOG.txt",
+  "timestamp": "2026-09-04T05:45:46Z",
+  "actor": "EOS Cloud Agent (canonical E2E OpenSpec+TDD loop)",
+  "action": "Wrote receipts under .missions/<id>/evidence/tdd and docs/evidence/tdd; ran eos mission verify --strict-tdd.",
+  "command": "node bin/eos.js mission verify MIS-1788500673741-214B45 --strict-tdd",
+  "expected": "Ledger valid, manifest match, TDD_RECEIPTS_AUDITED, can_claim_verified=false.",
+  "actual": "EXIT 0. Ledger Chain VALID (8 events). Manifest 100% MATCH. TDD receipts TDD_RECEIPTS_AUDITED (can_claim_verified=false).",
+  "result": "PASS_WITHIN_VERIFIED_SCOPE",
+  "artifacts": [
+    "docs/evidence/canonical_e2e_openspec_tdd_2026/loop-adapter-result.json",
+    "docs/evidence/tdd/flowdesk-pipeline-red.json"
+  ],
+  "logs": ["MISSION_VERIFY_STRICT_TDD EXIT 0"],
+  "environment": { "os": "Linux 6.12.94+", "node": "v22.14.0" },
+  "confidence": "HIGH",
+  "risks": [".missions/ is gitignored; durable copies live under docs/evidence/tdd/"],
+  "limitations": ["LOCAL_BOUNDED HITL fixture was used for plan; not a production HITL receipt"],
+  "related_spec": "openspec/changes/flowdesk-lead-pipeline-snapshot/tasks.md",
+  "related_project": "PRJ-FLOWDESK",
+  "related_change": "flowdesk-lead-pipeline-snapshot"
+}

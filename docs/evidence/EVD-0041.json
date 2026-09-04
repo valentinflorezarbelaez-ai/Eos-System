@@ -1,0 +1,30 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0041",
+  "claim": "Organic gate fail-closes accidental SDD spawn (size ignored) and proceeds only with explicit SDD request via Mission CLI.",
+  "status": "VERIFIED",
+  "scope": "src/core/sdd/organic-routing-gate.js + src/cli/mission-cli.js plan --spawn-sdd on MIS-1788500673741-214B45 targeting EOS-Lab/FlowDesk. Not production.",
+  "source": "docs/evidence/canonical_e2e_openspec_tdd_2026/COMMAND_LOG.txt",
+  "timestamp": "2026-09-04T05:44:38Z",
+  "actor": "EOS Cloud Agent (canonical E2E OpenSpec+TDD loop)",
+  "action": "evaluateSddCeremonySpawn unit proof; eos mission plan --spawn-sdd (deny); eos mission plan --spawn-sdd --explicit-sdd (allow).",
+  "command": "node bin/eos.js mission plan MIS-1788500673741-214B45 --spawn-sdd; node bin/eos.js mission plan MIS-1788500673741-214B45 --spawn-sdd --explicit-sdd",
+  "expected": "ACCIDENTAL_SDD_SPAWN exit 1 without --explicit-sdd; PLAN + route SDD + ORGANIC_ROUTING_GATE with --explicit-sdd.",
+  "actual": "Accidental spawn EXIT 1 ACCIDENTAL_SDD_SPAWN. Explicit spawn EXIT 0 phase=PLAN organic route=SDD (size ignored) tasks=3.",
+  "result": "PASS_WITHIN_VERIFIED_SCOPE",
+  "artifacts": [
+    "src/core/sdd/organic-routing-gate.js",
+    "docs/evidence/canonical_e2e_openspec_tdd_2026/COMMAND_LOG.txt"
+  ],
+  "logs": [
+    "MISSION_PLAN_ACCIDENTAL_SDD EXIT 1",
+    "MISSION_PLAN_EXPLICIT_SDD EXIT 0 route SDD"
+  ],
+  "environment": { "os": "Linux 6.12.94+", "node": "v22.14.0" },
+  "confidence": "HIGH",
+  "risks": ["Default planMission still auto-issues LOCAL_BOUNDED HITL receipts unless --require-hitl"],
+  "limitations": ["Cursor IDE slash-command /ff spawn path was not executed in the IDE"],
+  "related_spec": "openspec/changes/flowdesk-lead-pipeline-snapshot/proposal.md",
+  "related_project": "PRJ-FLOWDESK",
+  "related_change": "flowdesk-lead-pipeline-snapshot"
+}

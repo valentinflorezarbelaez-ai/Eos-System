@@ -1,0 +1,1371 @@
+===== OPENSPEC_CLI_VERSION =====
+CMD: node /workspace/scripts/openspec-cli.js --version
+CWD: /workspace
+START: 2026-09-04T05:41:26Z
+EXIT: 2
+OpenSpec CLI is not on PATH (not installed for this L0 clone).
+Optional host install is documented in docs/manuals/OPENSPEC_RUNTIME.md.
+This helper never adds npm dependencies or imports @fission-ai/openspec.
+
+===== ORGANIC_GATE_ACCIDENTAL =====
+CMD: node --input-type=module -e 
+import { evaluateSddCeremonySpawn } from './src/core/sdd/organic-routing-gate.js';
+const blocked = evaluateSddCeremonySpawn({ spawnSddCeremony: true, byteSize: 500000, loc: 2000 });
+console.log(JSON.stringify(blocked, null, 2));
+process.exit(blocked.blocked && blocked.code === 'ACCIDENTAL_SDD_SPAWN' ? 0 : 1);
+
+CWD: /workspace
+START: 2026-09-04T05:41:26Z
+EXIT: 0
+{
+  "allowed": false,
+  "blocked": true,
+  "code": "ACCIDENTAL_SDD_SPAWN",
+  "classification": {
+    "route": "DIRECT",
+    "triggers": [],
+    "size_ignored": true,
+    "size_signals": {
+      "byteSize": 500000,
+      "loc": 2000,
+      "fileCount": null
+    },
+    "rationale": "Smallest honest route is DIRECT (size ignored)"
+  },
+  "action": "BLOCK",
+  "next_action": "Refuse SDD ceremony. Size alone does not force SDD. Pass explicitSddRequest, acceptedProposal, or forceSddOverride (ADR-0010)."
+}
+
+===== ORGANIC_GATE_EXPLICIT =====
+CMD: node --input-type=module -e 
+import { evaluateSddCeremonySpawn } from './src/core/sdd/organic-routing-gate.js';
+const ok = evaluateSddCeremonySpawn({ spawnSddCeremony: true, explicitSddRequest: true, newFeature: true, publicContractChange: true });
+console.log(JSON.stringify(ok, null, 2));
+process.exit(ok.allowed && ok.code === 'SDD_JUSTIFIED' ? 0 : 1);
+
+CWD: /workspace
+START: 2026-09-04T05:41:26Z
+EXIT: 0
+{
+  "allowed": true,
+  "blocked": false,
+  "code": "SDD_JUSTIFIED",
+  "classification": {
+    "route": "SDD",
+    "triggers": [
+      "explicitSddRequest",
+      "newFeature",
+      "publicContractChange"
+    ],
+    "size_ignored": true,
+    "size_signals": {
+      "byteSize": null,
+      "loc": null,
+      "fileCount": null
+    },
+    "rationale": "SDD required by ADR-0010 triggers: explicitSddRequest, newFeature, publicContractChange"
+  },
+  "action": "PROCEED_SDD"
+}
+
+===== FLOWDESK_STRIP_TYPES_PROBE =====
+CMD: node --experimental-strip-types --test /workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts
+CWD: /workspace
+START: 2026-09-04T05:41:26Z
+EXIT: 1
+TAP version 13
+# node:internal/modules/esm/resolve:275
+#     throw new ERR_MODULE_NOT_FOUND(
+#           ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/EOS-Lab/FlowDesk/src/db/database.js' imported from /workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts
+#     at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+#     at moduleResolve (node:internal/modules/esm/resolve:860:10)
+#     at defaultResolve (node:internal/modules/esm/resolve:984:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:685:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:634:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:617:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:273:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:135:49) {
+#   code: 'ERR_MODULE_NOT_FOUND',
+#   url: 'file:///workspace/EOS-Lab/FlowDesk/src/db/database.js'
+# }
+# Node.js v22.14.0
+# Subtest: /workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts
+not ok 1 - /workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts
+  ---
+  duration_ms: 79.782688
+  location: '/workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 85.627523
+
+===== FLOWDESK_NPM_CI =====
+CMD: npm ci
+CWD: /workspace/EOS-Lab/FlowDesk
+START: 2026-09-04T05:41:34Z
+EXIT: 0
+
+added 9 packages, and audited 10 packages in 3m
+
+1 package is looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+npm notice
+npm notice New major version of npm available! 10.9.7 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice
+
+===== FLOWDESK_BASELINE_UNIT =====
+CMD: npm --prefix EOS-Lab/FlowDesk test -- tests/unit/leadService.test.ts
+CWD: /workspace
+START: 2026-09-04T05:44:33Z
+EXIT: 0
+
+> flowdesk@0.0.1 test
+> tsx --test tests/unit/leadService.test.ts tests/concurrency/concurrency.test.ts tests/unit/leadService.test.ts
+
+TAP version 13
+# (node:3165) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Concurrency & Optimistic Locking Test Suite (SQLite WAL Mode)
+    # Subtest: should prevent race condition when two writers attempt update with same expected_updated_at timestamp
+    ok 1 - should prevent race condition when two writers attempt update with same expected_updated_at timestamp
+      ---
+      duration_ms: 56.53932
+      ...
+    1..1
+ok 1 - Concurrency & Optimistic Locking Test Suite (SQLite WAL Mode)
+  ---
+  duration_ms: 57.271392
+  type: 'suite'
+  ...
+# (node:3166) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: LeadService (In-Memory :memory: Test Suite)
+    # Subtest: should create a lead and record an initial lead_activity atomically
+    ok 1 - should create a lead and record an initial lead_activity atomically
+      ---
+      duration_ms: 59.390879
+      ...
+    # Subtest: should execute status update and append activity log inside single transaction
+    ok 2 - should execute status update and append activity log inside single transaction
+      ---
+      duration_ms: 33.693334
+      ...
+    # Subtest: should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+    ok 3 - should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+      ---
+      duration_ms: 30.132164
+      ...
+    1..3
+ok 2 - LeadService (In-Memory :memory: Test Suite)
+  ---
+  duration_ms: 124.132373
+  type: 'suite'
+  ...
+1..2
+# tests 4
+# suites 2
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 304.952659
+
+===== MISSION_CREATE =====
+CMD: node bin/eos.js mission create --goal Add tenant-scoped LeadService.countLeadsByStatus pipeline snapshot on EOS-Lab/FlowDesk via explicit OpenSpec SDD ceremony (ADR-0010 E2E). --project EOS-Lab/FlowDesk
+CWD: /workspace
+START: 2026-09-04T05:44:33Z
+EXIT: 0
+📚 TUTOR (antes) — mission.create
+OBJECTIVE: Initialize a governed local mission from a human goal
+CONCEPT: MissionRuntime.createMission + AuthorityTruthSource.initMission
+CWD: /workspace
+SCOPE: .missions/<id>, mission-package.json, authority-snapshot.json
+RATIONALE: Creates isolated mission storage under .missions without touching main/Fundacion
+RISKS: Creates .missions directory; Discovery may read project files
+EXPECTED_EVIDENCE: mission_id; phase VISION_INTAKE; authority-snapshot.json
+ROLLBACK: Delete .missions/<mission_id> if unused
+HITL: NOT_REQUIRED
+
+✅ Mission Created Successfully:
+- Mission ID: MIS-1788500673741-214B45
+- Target Project: PRJ-FLOWDESK
+- Storage Directory: /workspace/.missions/MIS-1788500673741-214B45
+- Status: active
+
+📚 TUTOR (después) — mission.create
+OBSERVED: Created MIS-1788500673741-214B45 status=active
+EXIT_CODE: 0
+CLASSIFICATION: MEASURED
+INTERPRETATION: Mission OS storage initialized; phase owned by ATS
+NEXT: Run eos mission plan MIS-1788500673741-214B45
+
+Next step: Run 'eos mission plan MIS-1788500673741-214B45' to generate tasks.
+
+===== MISSION_PLAN_ACCIDENTAL_SDD =====
+CMD: node bin/eos.js mission plan MIS-1788500673741-214B45 --spawn-sdd
+CWD: /workspace
+START: 2026-09-04T05:44:37Z
+EXIT: 1
+Command execution error: ACCIDENTAL_SDD_SPAWN: Refuse SDD ceremony. Size alone does not force SDD. Pass explicitSddRequest, acceptedProposal, or forceSddOverride (ADR-0010).
+
+===== MISSION_PLAN_EXPLICIT_SDD =====
+CMD: node bin/eos.js mission plan MIS-1788500673741-214B45 --spawn-sdd --explicit-sdd
+CWD: /workspace
+START: 2026-09-04T05:44:38Z
+EXIT: 0
+📚 TUTOR (antes) — mission.plan
+OBJECTIVE: Advance mission through gated FSM to PLAN
+CONCEPT: Canonical transitions + HITL at HUMAN_DIRECTION_GATE
+CWD: /workspace
+SCOPE: .missions/<id>/artifacts, plan.json, authority-snapshot.json
+RATIONALE: R-ATS-01: All persisted mission phase mutations MUST go through AuthorityTruthSource.commitTransition. | R-HITL-01: Transitions requiring HITL must present a valid receipt; missing receipt denies and leaves state unchanged.
+RISKS: Issues LOCAL_BOUNDED fixture receipt unless --hitl-receipt/--require-hitl
+EXPECTED_EVIDENCE: phase PLAN; fsm_path recorded; tasks PLANNED
+ROLLBACK: mission pause; restore checkpoint; or delete disposable fixture
+HITL: LOCAL_BOUNDED_FIXTURE_ALLOWED
+
+📝 Mission Planned Successfully [MIS-1788500673741-214B45]:
+- Phase: PLAN
+- Organic route: SDD (size ignored)
+- Generated Tasks: 3
+- FSM: mission.formulate → mission.propose_direction → human.approve_direction → discovery.complete → definition.complete
+- Governance Gates: HITL_DIRECTION_APPROVAL, EVIDENCE_VERIFICATION_GATE, ORGANIC_ROUTING_GATE
+
+📚 TUTOR (después) — mission.plan
+OBSERVED: phase=PLAN tasks=3 steps=mission.formulate→mission.propose_direction→human.approve_direction→discovery.complete→definition.complete
+EXIT_CODE: 0
+CLASSIFICATION: MEASURED
+INTERPRETATION: Canonical FSM path used; deprecated runtime.plan_mission bridge not invoked
+NEXT: eos mission package MIS-1788500673741-214B45
+
+Next step: Run 'eos mission package MIS-1788500673741-214B45 --target cursor' to generate operator handoff.
+
+===== MISSION_INSPECT =====
+CMD: node bin/eos.js mission inspect MIS-1788500673741-214B45
+CWD: /workspace
+START: 2026-09-04T05:44:38Z
+EXIT: 0
+📋 Mission Inspection [MIS-1788500673741-214B45]:
+- Status: active | Phase: PLAN
+- Goal: Add tenant-scoped LeadService.countLeadsByStatus pipeline snapshot on EOS-Lab/FlowDesk via explicit OpenSpec SDD ceremony (ADR-0010 E2E).
+- Target Project: PRJ-FLOWDESK
+- Total Ledger Events: 8
+
+===== TDD_RED =====
+CMD: npx tsx --test tests/unit/leadService.test.ts
+CWD: /workspace/EOS-Lab/FlowDesk
+START: 2026-09-04T05:44:54Z
+EXIT: 1
+TAP version 13
+# (node:3416) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: LeadService (In-Memory :memory: Test Suite)
+    # Subtest: should create a lead and record an initial lead_activity atomically
+    ok 1 - should create a lead and record an initial lead_activity atomically
+      ---
+      duration_ms: 37.765198
+      ...
+    # Subtest: should execute status update and append activity log inside single transaction
+    ok 2 - should execute status update and append activity log inside single transaction
+      ---
+      duration_ms: 30.334356
+      ...
+    # Subtest: should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+    ok 3 - should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+      ---
+      duration_ms: 27.393234
+      ...
+    # Subtest: should count tenant leads by status for a mixed pipeline
+    not ok 4 - should count tenant leads by status for a mixed pipeline
+      ---
+      duration_ms: 27.484353
+      location: '/workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts:72:3'
+      failureType: 'testCodeFailure'
+      error: 'leadService.countLeadsByStatus is not a function'
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        TestContext.<anonymous> (/workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts:92:34)
+        Test.runInAsyncScope (node:async_hooks:211:14)
+        Test.run (node:internal/test_runner/test:979:25)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:677:7)
+      ...
+    1..4
+not ok 1 - LeadService (In-Memory :memory: Test Suite)
+  ---
+  duration_ms: 123.762616
+  type: 'suite'
+  location: '/workspace/EOS-Lab/FlowDesk/tests/unit/leadService.test.ts:7:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 4
+# suites 1
+# pass 3
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 272.626062
+
+===== TDD_GREEN =====
+CMD: npx tsx --test tests/unit/leadService.test.ts
+CWD: /workspace/EOS-Lab/FlowDesk
+START: 2026-09-04T05:45:10Z
+EXIT: 0
+TAP version 13
+# (node:3515) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: LeadService (In-Memory :memory: Test Suite)
+    # Subtest: should create a lead and record an initial lead_activity atomically
+    ok 1 - should create a lead and record an initial lead_activity atomically
+      ---
+      duration_ms: 39.466569
+      ...
+    # Subtest: should execute status update and append activity log inside single transaction
+    ok 2 - should execute status update and append activity log inside single transaction
+      ---
+      duration_ms: 30.328328
+      ...
+    # Subtest: should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+    ok 3 - should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+      ---
+      duration_ms: 27.493998
+      ...
+    # Subtest: should count tenant leads by status for a mixed pipeline
+    ok 4 - should count tenant leads by status for a mixed pipeline
+      ---
+      duration_ms: 27.761588
+      ...
+    1..4
+ok 1 - LeadService (In-Memory :memory: Test Suite)
+  ---
+  duration_ms: 125.818012
+  type: 'suite'
+  ...
+1..1
+# tests 4
+# suites 1
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 269.626066
+
+===== TDD_TRIANGULATE =====
+CMD: npx tsx --test tests/unit/leadService.test.ts
+CWD: /workspace/EOS-Lab/FlowDesk
+START: 2026-09-04T05:45:21Z
+EXIT: 0
+TAP version 13
+# (node:3610) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: LeadService (In-Memory :memory: Test Suite)
+    # Subtest: should create a lead and record an initial lead_activity atomically
+    ok 1 - should create a lead and record an initial lead_activity atomically
+      ---
+      duration_ms: 37.224887
+      ...
+    # Subtest: should execute status update and append activity log inside single transaction
+    ok 2 - should execute status update and append activity log inside single transaction
+      ---
+      duration_ms: 30.305058
+      ...
+    # Subtest: should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+    ok 3 - should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+      ---
+      duration_ms: 27.383462
+      ...
+    # Subtest: should count tenant leads by status for a mixed pipeline
+    ok 4 - should count tenant leads by status for a mixed pipeline
+      ---
+      duration_ms: 27.567853
+      ...
+    # Subtest: should return zero for every status when the tenant has no leads
+    ok 5 - should return zero for every status when the tenant has no leads
+      ---
+      duration_ms: 27.18036
+      ...
+    # Subtest: should isolate pipeline counts from another tenant
+    ok 6 - should isolate pipeline counts from another tenant
+      ---
+      duration_ms: 53.628139
+      ...
+    1..6
+ok 1 - LeadService (In-Memory :memory: Test Suite)
+  ---
+  duration_ms: 204.122144
+  type: 'suite'
+  ...
+1..1
+# tests 6
+# suites 1
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 351.558852
+
+===== FLOWDESK_FULL_SUITE =====
+CMD: npm test
+CWD: /workspace/EOS-Lab/FlowDesk
+START: 2026-09-04T05:45:21Z
+EXIT: 0
+
+> flowdesk@0.0.1 test
+> tsx --test tests/unit/leadService.test.ts tests/concurrency/concurrency.test.ts
+
+TAP version 13
+# (node:3674) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Concurrency & Optimistic Locking Test Suite (SQLite WAL Mode)
+    # Subtest: should prevent race condition when two writers attempt update with same expected_updated_at timestamp
+    ok 1 - should prevent race condition when two writers attempt update with same expected_updated_at timestamp
+      ---
+      duration_ms: 48.548852
+      ...
+    1..1
+ok 1 - Concurrency & Optimistic Locking Test Suite (SQLite WAL Mode)
+  ---
+  duration_ms: 49.183059
+  type: 'suite'
+  ...
+# (node:3675) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: LeadService (In-Memory :memory: Test Suite)
+    # Subtest: should create a lead and record an initial lead_activity atomically
+    ok 1 - should create a lead and record an initial lead_activity atomically
+      ---
+      duration_ms: 36.213337
+      ...
+    # Subtest: should execute status update and append activity log inside single transaction
+    ok 2 - should execute status update and append activity log inside single transaction
+      ---
+      duration_ms: 30.320933
+      ...
+    # Subtest: should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+    ok 3 - should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+      ---
+      duration_ms: 27.306279
+      ...
+    # Subtest: should count tenant leads by status for a mixed pipeline
+    ok 4 - should count tenant leads by status for a mixed pipeline
+      ---
+      duration_ms: 27.56181
+      ...
+    # Subtest: should return zero for every status when the tenant has no leads
+    ok 5 - should return zero for every status when the tenant has no leads
+      ---
+      duration_ms: 27.381068
+      ...
+    # Subtest: should isolate pipeline counts from another tenant
+    ok 6 - should isolate pipeline counts from another tenant
+      ---
+      duration_ms: 53.415162
+      ...
+    1..6
+ok 2 - LeadService (In-Memory :memory: Test Suite)
+  ---
+  duration_ms: 203.035025
+  type: 'suite'
+  ...
+1..2
+# tests 7
+# suites 2
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 340.789513
+
+===== SEAL_TDD_AND_ADAPTER_LOOP =====
+CMD: node docs/evidence/canonical_e2e_openspec_tdd_2026/seal-tdd-and-loop.mjs
+CWD: /workspace
+START: 2026-09-04T05:45:46Z
+EXIT: 0
+{
+  "missing_code": "TDD_EVIDENCE_MISSING",
+  "missing_pass": false,
+  "complete_code": "TDD_RECEIPTS_AUDITED",
+  "complete_pass": true,
+  "self_certify_code": "TDD_VERIFIED_CLAIM_DENIED",
+  "apply": "TASK_APPLIED_INCREMENTALLY",
+  "verify_pass": true,
+  "review_stance": "INFORMATIONAL",
+  "review_authorizes_delivery": false,
+  "rdd_denied_code": "RDD_DELIVERY_DENIED",
+  "mission_verify_valid": true,
+  "mission_tdd_code": "TDD_RECEIPTS_AUDITED"
+}
+
+===== MISSION_VERIFY_STRICT_TDD =====
+CMD: node bin/eos.js mission verify MIS-1788500673741-214B45 --strict-tdd
+CWD: /workspace
+START: 2026-09-04T05:45:46Z
+EXIT: 0
+🔒 Cryptographic Verification PASSED [MIS-1788500673741-214B45]:
+- Ledger Chain: VALID (8 events)
+- Manifest Files: 100% MATCH
+- TDD receipts: TDD_RECEIPTS_AUDITED (can_claim_verified=false)
+
+===== LIDR_ENFORCEMENT_TESTS =====
+CMD: node --test tests/lidr-discipline-enforcement.test.js tests/openspec-runtime.test.js tests/lidr-specboot-discipline-bridge.test.js tests/spec-driven-product-loop.test.js
+CWD: /workspace
+START: 2026-09-04T05:45:46Z
+EXIT: 0
+TAP version 13
+# Subtest: organic gate: size alone does not force SDD
+ok 1 - organic gate: size alone does not force SDD
+  ---
+  duration_ms: 0.652109
+  ...
+# Subtest: organic gate: delegated actor on DIRECT-eligible work is DELEGATED_DIRECT
+ok 2 - organic gate: delegated actor on DIRECT-eligible work is DELEGATED_DIRECT
+  ---
+  duration_ms: 0.097853
+  ...
+# Subtest: organic gate: explicit SDD request or accepted proposal classifies SDD
+ok 3 - organic gate: explicit SDD request or accepted proposal classifies SDD
+  ---
+  duration_ms: 0.124914
+  ...
+# Subtest: organic gate: accidental SDD spawn fail-closes; override allowed
+ok 4 - organic gate: accidental SDD spawn fail-closes; override allowed
+  ---
+  duration_ms: 0.383756
+  ...
+# Subtest: TDD receipts: RED must fail, GREEN must pass, command required
+ok 5 - TDD receipts: RED must fail, GREEN must pass, command required
+  ---
+  duration_ms: 0.878882
+  ...
+# Subtest: TDD apply claim: missing receipts cannot complete or claim VERIFIED
+ok 6 - TDD apply claim: missing receipts cannot complete or claim VERIFIED
+  ---
+  duration_ms: 0.513357
+  ...
+# Subtest: TDD verify audit: missing receipts fail; present receipts do not stamp VERIFIED
+ok 7 - TDD verify audit: missing receipts fail; present receipts do not stamp VERIFIED
+  ---
+  duration_ms: 0.547595
+  ...
+# Subtest: RDD stance: review is INFORMATIONAL and cannot grant delivery
+ok 8 - RDD stance: review is INFORMATIONAL and cannot grant delivery
+  ---
+  duration_ms: 0.215595
+  ...
+# Subtest: MissionRuntime: default create is DELEGATED_DIRECT; accidental --spawn-sdd blocked
+ok 9 - MissionRuntime: default create is DELEGATED_DIRECT; accidental --spawn-sdd blocked
+  ---
+  duration_ms: 27.901964
+  ...
+# Subtest: MissionRuntime: SDD spawn with explicit request records strict_tdd; verify needs receipts
+ok 10 - MissionRuntime: SDD spawn with explicit request records strict_tdd; verify needs receipts
+  ---
+  duration_ms: 23.669629
+  ...
+# Subtest: MissionRuntime: default local mission verify stays valid without TDD folder
+ok 11 - MissionRuntime: default local mission verify stays valid without TDD folder
+  ---
+  duration_ms: 27.51968
+  ...
+# Subtest: OpenSpec /ff without explicit SDD or override is fail-closed when caller strips the request
+ok 12 - OpenSpec /ff without explicit SDD or override is fail-closed when caller strips the request
+  ---
+  duration_ms: 0.277532
+  ...
+# Subtest: independent harness delegates organic / TDD / RDD checks
+ok 13 - independent harness delegates organic / TDD / RDD checks
+  ---
+  duration_ms: 0.481432
+  ...
+# Subtest: docs and verify-eos list enforcement surfaces; L0 still has no npm deps
+ok 14 - docs and verify-eos list enforcement surfaces; L0 still has no npm deps
+  ---
+  duration_ms: 0.332825
+  ...
+# Subtest: ADR-0010 exists as the canonical LIDR Specboot + Gentleman discipline bridge
+ok 15 - ADR-0010 exists as the canonical LIDR Specboot + Gentleman discipline bridge
+  ---
+  duration_ms: 1.77433
+  ...
+# Subtest: ADR-0010 defines organic routing: DIRECT vs SDD (size alone does not force SDD)
+ok 16 - ADR-0010 defines organic routing: DIRECT vs SDD (size alone does not force SDD)
+  ---
+  duration_ms: 0.281941
+  ...
+# Subtest: ADR-0010 requires strict TDD evidence for /apply and /verify
+ok 17 - ADR-0010 requires strict TDD evidence for /apply and /verify
+  ---
+  duration_ms: 0.191122
+  ...
+# Subtest: ADR-0010 RDD: independent review does not authorize delivery
+ok 18 - ADR-0010 RDD: independent review does not authorize delivery
+  ---
+  duration_ms: 0.205385
+  ...
+# Subtest: ADR-0010 lists explicit NON-goals and points to existing SSOT
+ok 19 - ADR-0010 lists explicit NON-goals and points to existing SSOT
+  ---
+  duration_ms: 0.248674
+  ...
+# Subtest: ADR-0010 classifies EARS as EOS/local IEEE-inspired convention, not a LIDR import
+ok 20 - ADR-0010 classifies EARS as EOS/local IEEE-inspired convention, not a LIDR import
+  ---
+  duration_ms: 0.248147
+  ...
+# Subtest: ADR-0010 maps opsx aliases, planning skills, and post-apply artifact update
+ok 21 - ADR-0010 maps opsx aliases, planning skills, and post-apply artifact update
+  ---
+  duration_ms: 0.25201
+  ...
+# Subtest: ADR-0010 lists optional LIDR skills and marks Gentleman Scope Rule as NON-core for L0
+ok 22 - ADR-0010 lists optional LIDR skills and marks Gentleman Scope Rule as NON-core for L0
+  ---
+  duration_ms: 0.242506
+  ...
+# Subtest: docs/decisions pointer exists and does not fork ADR-0010 SSOT
+ok 23 - docs/decisions pointer exists and does not fork ADR-0010 SSOT
+  ---
+  duration_ms: 0.275196
+  ...
+# Subtest: base-standards.md exists as the coding SSOT index
+ok 24 - base-standards.md exists as the coding SSOT index
+  ---
+  duration_ms: 0.32569
+  ...
+# Subtest: operator manual states SDD vs DIRECT routing rule
+ok 25 - operator manual states SDD vs DIRECT routing rule
+  ---
+  duration_ms: 0.203077
+  ...
+# Subtest: L0 purity: root package.json still has no npm dependencies
+ok 26 - L0 purity: root package.json still has no npm dependencies
+  ---
+  duration_ms: 0.152589
+  ...
+# Subtest: verify-eos REQUIRED_PATHS include ADR-0010 and base-standards
+ok 27 - verify-eos REQUIRED_PATHS include ADR-0010 and base-standards
+  ---
+  duration_ms: 0.790722
+  ...
+# Subtest: OpenSpec layout exists: config, specs, and one example change
+ok 28 - OpenSpec layout exists: config, specs, and one example change
+  ---
+  duration_ms: 0.769378
+  ...
+# Subtest: openspec/config.yaml context references base-standards, backend-standards, and ai-specs
+ok 29 - openspec/config.yaml context references base-standards, backend-standards, and ai-specs
+  ---
+  duration_ms: 0.303004
+  ...
+# Subtest: example change is a dry-run scaffold, not a core-engine feature
+ok 30 - example change is a dry-run scaffold, not a core-engine feature
+  ---
+  duration_ms: 0.318464
+  ...
+# Subtest: ai-specs/ points at existing EOS agents and skills (no Gentle-AI installer)
+ok 31 - ai-specs/ points at existing EOS agents and skills (no Gentle-AI installer)
+  ---
+  duration_ms: 0.193561
+  ...
+# Subtest: LIDR slash-command docs exist and do not replace Mission CLI
+ok 32 - LIDR slash-command docs exist and do not replace Mission CLI
+  ---
+  duration_ms: 0.338382
+  ...
+# Subtest: OpenSpec CLI helper stays outside L0 and does not add npm dependencies
+ok 33 - OpenSpec CLI helper stays outside L0 and does not add npm dependencies
+  ---
+  duration_ms: 0.26346
+  ...
+# Subtest: openspec:cli reports a docs-only install path when the CLI binary is absent
+ok 34 - openspec:cli reports a docs-only install path when the CLI binary is absent
+  ---
+  duration_ms: 22.457208
+  ...
+# Subtest: OpenSpec config prefers GWT and forbids treating EARS as a LIDR import
+ok 35 - OpenSpec config prefers GWT and forbids treating EARS as a LIDR import
+  ---
+  duration_ms: 0.205203
+  ...
+# Subtest: apply and archive docs require OpenSpec artifact update before archive
+ok 36 - apply and archive docs require OpenSpec artifact update before archive
+  ---
+  duration_ms: 0.544315
+  ...
+# Subtest: ai-specs lists optional LIDR skills without bulk-copying them
+ok 37 - ai-specs lists optional LIDR skills without bulk-copying them
+  ---
+  duration_ms: 0.604052
+  ...
+# Subtest: verify-eos REQUIRED_PATHS include OpenSpec runtime artifacts
+ok 38 - verify-eos REQUIRED_PATHS include OpenSpec runtime artifacts
+  ---
+  duration_ms: 0.288406
+  ...
+# Subtest: SDD-02 & 03: /enrich-us and /new + /ff create structured change envelope and task list
+ok 39 - SDD-02 & 03: /enrich-us and /new + /ff create structured change envelope and task list
+  ---
+  duration_ms: 0.740015
+  ...
+# Subtest: SDD-04: CognitiveGraphSpecBridge maps OpenSpec change to typed graph nodes and edges
+ok 40 - SDD-04: CognitiveGraphSpecBridge maps OpenSpec change to typed graph nodes and edges
+  ---
+  duration_ms: 0.174004
+  ...
+# Subtest: SDD-05b: /apply without TDD receipts cannot claim implementation complete
+ok 41 - SDD-05b: /apply without TDD receipts cannot claim implementation complete
+  ---
+  duration_ms: 0.413552
+  ...
+# Subtest: SDD-05 & 06: /apply executes small tasks incrementally one at a time under TDD
+ok 42 - SDD-05 & 06: /apply executes small tasks incrementally one at a time under TDD
+  ---
+  duration_ms: 1.075853
+  ...
+# Subtest: SDD-07 & 08: /verify and /adversarial-review validate spec compliance and red team checks
+ok 43 - SDD-07 & 08: /verify and /adversarial-review validate spec compliance and red team checks
+  ---
+  duration_ms: 1.380817
+  ...
+# Subtest: SDD-09 & 10: /archive and /commit persist BKM into Engram and generate conventional commit
+ok 44 - SDD-09 & 10: /archive and /commit persist BKM into Engram and generate conventional commit
+  ---
+  duration_ms: 0.133072
+  ...
+# Subtest: SDD-11: SddMcpMatcher binds appropriate MCPs to specific OpenSpec phases
+ok 45 - SDD-11: SddMcpMatcher binds appropriate MCPs to specific OpenSpec phases
+  ---
+  duration_ms: 0.136476
+  ...
+# Subtest: SDD-12: Executes full end-to-end Spec-Driven Product Loop (SDD-01 to SDD-12)
+ok 46 - SDD-12: Executes full end-to-end Spec-Driven Product Loop (SDD-01 to SDD-12)
+  ---
+  duration_ms: 0.371946
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 46
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 133.330835
+
+===== VERIFY_EOS_STRICT =====
+CMD: node scripts/verify-eos.js --strict
+CWD: /workspace
+START: 2026-09-04T05:47:28Z
+EXIT: 0
+====================================================
+   EOS SYSTEM — WORKSPACE VERIFICATION & AUDIT      
+   Mode: STRICT                      
+====================================================
+
+[VERIFIED]  .git (existence)
+[VERIFIED]  .gitignore (existence)
+[VERIFIED]  .editorconfig (existence)
+[VERIFIED]  package.json (existence)
+[VERIFIED]  .agents/AGENTS.md (existence)
+[VERIFIED]  .agents/skills/sdd/SKILL.md (existence)
+[VERIFIED]  .agents/skills/evidence-auditor/SKILL.md (existence)
+[VERIFIED]  .agents/skills/security-auditor/SKILL.md (existence)
+[VERIFIED]  .agents/skills/quality-auditor/SKILL.md (existence)
+[VERIFIED]  .agents/skills/accessibility-auditor/SKILL.md (existence)
+[VERIFIED]  .agents/skills/performance-auditor/SKILL.md (existence)
+[VERIFIED]  .agents/skills/seo-auditor/SKILL.md (existence)
+[VERIFIED]  .agents/skills/browser-qa/SKILL.md (existence)
+[VERIFIED]  docs/core/CONSTITUTION.md (existence)
+[VERIFIED]  docs/core/GOVERNANCE.md (existence)
+[VERIFIED]  docs/workflows/EOS_CYCLE.md (existence)
+[VERIFIED]  docs/workflows/TRACEABILITY.md (existence)
+[VERIFIED]  docs/workflows/INTAKE_PIPELINE.md (existence)
+[VERIFIED]  docs/workflows/SPECIFICATION_PIPELINE.md (existence)
+[VERIFIED]  docs/workflows/MULTI_AGENT_HANDOFF.md (existence)
+[VERIFIED]  docs/workflows/WEBSITE_QUALITY_MODEL.md (existence)
+[VERIFIED]  docs/architecture/adrs/ADR-0001-eos-workspace-initialization.md (existence)
+[VERIFIED]  docs/architecture/adrs/ADR-0002-autonomous-control-plane-architecture.md (existence)
+[VERIFIED]  docs/architecture/adrs/ADR-0009-github-actions-cicd.md (existence)
+[VERIFIED]  docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md (existence)
+[VERIFIED]  docs/decisions/ADR-0010-LIDR-SPECBOOT-GENTLEMAN-DISCIPLINE-BRIDGE.md (existence)
+[VERIFIED]  docs/base-standards.md (existence)
+[VERIFIED]  docs/backend-standards.md (existence)
+[VERIFIED]  docs/manuals/OPENSPEC_RUNTIME.md (existence)
+[VERIFIED]  openspec/config.yaml (existence)
+[VERIFIED]  ai-specs/README.md (existence)
+[VERIFIED]  scripts/openspec-cli.js (existence)
+[VERIFIED]  src/core/sdd/organic-routing-gate.js (existence)
+[VERIFIED]  src/core/sdd/tdd-evidence-receipt.js (existence)
+[VERIFIED]  src/core/governance/rdd-review-stance.js (existence)
+[VERIFIED]  docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md (existence)
+[VERIFIED]  docs/governance/CI_CD_CONTRACT.md (existence)
+[VERIFIED]  docs/governance/CI_CD_CONTRACT.json (existence)
+[VERIFIED]  .github/workflows/ci.yml (existence)
+[VERIFIED]  .github/workflows/cd-release-gate.yml (existence)
+[VERIFIED]  scripts/ci/assert-gha-contract.js (existence)
+[VERIFIED]  scripts/ci/extract-json-payload.js (existence)
+[VERIFIED]  tests/github-actions-cicd.test.js (existence)
+[VERIFIED]  docs/architecture/TOOL_AGNOSTIC_ARCHITECTURE.md (existence)
+[VERIFIED]  docs/architecture/CAPABILITY_INTELLIGENCE_ENGINE.md (existence)
+[VERIFIED]  docs/capabilities/schema.json (existence)
+[VERIFIED]  docs/capabilities/REGISTRY.json (existence)
+[VERIFIED]  docs/tools/schema.json (existence)
+[VERIFIED]  docs/tools/REGISTRY.json (existence)
+[VERIFIED]  docs/tools/SELECTION_ENGINE.json (existence)
+[VERIFIED]  docs/adapters/schema.json (existence)
+[VERIFIED]  docs/adapters/REGISTRY.json (existence)
+[VERIFIED]  docs/providers/schema.json (existence)
+[VERIFIED]  docs/providers/REGISTRY.json (existence)
+[VERIFIED]  docs/providers/SELECTION_POLICY.json (existence)
+[VERIFIED]  docs/agents/REGISTRY.json (existence)
+[VERIFIED]  docs/agents/SELECTION_ENGINE.json (existence)
+[VERIFIED]  docs/agents/TEAM_COMPOSITION.json (existence)
+[VERIFIED]  docs/orchestration/TASK_DECOMPOSITION.json (existence)
+[VERIFIED]  docs/orchestration/TASK_GRAPH.json (existence)
+[VERIFIED]  docs/orchestration/ENGINEERING_FACTORY.md (existence)
+[VERIFIED]  docs/orchestration/EXECUTION_PLANNER.json (existence)
+[VERIFIED]  docs/orchestration/FALLBACK_ENGINE.json (existence)
+[VERIFIED]  docs/orchestration/FAILURE_HANDLING.json (existence)
+[VERIFIED]  docs/policies/POLICY_ENGINE.json (existence)
+[VERIFIED]  docs/policies/AUTONOMY_RISK_MODEL.json (existence)
+[VERIFIED]  docs/policies/REVERSIBILITY_ENGINE.json (existence)
+[VERIFIED]  docs/projects/STATE_MACHINE.json (existence)
+[VERIFIED]  docs/orchestration/DRY_RUN_ENGINE.json (existence)
+[VERIFIED]  docs/architecture/ROLLBACK_STRATEGY.md (existence)
+[VERIFIED]  docs/knowledge/CONTINUOUS_LEARNING_LOOP.md (existence)
+[VERIFIED]  docs/knowledge/RESEARCH_ENGINE.md (existence)
+[VERIFIED]  docs/knowledge/AGENT_PERFORMANCE_MEMORY.json (existence)
+[VERIFIED]  docs/intelligence/sources/schema.json (existence)
+[VERIFIED]  docs/intelligence/sources/SOURCES.json (existence)
+[VERIFIED]  docs/intelligence/research/schema.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0001-gentleman-engram-study.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0002-multi-agent-orchestration-study.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0003-software-factory-study.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0004-tool-agnostic-adapter-architecture.json (existence)
+[VERIFIED]  docs/architecture/AUTONOMOUS_EXECUTION_RUNTIME.md (existence)
+[VERIFIED]  docs/orchestration/EXECUTION_RUNTIME.json (existence)
+[VERIFIED]  docs/orchestration/EXECUTION_STATE_MACHINE.json (existence)
+[VERIFIED]  docs/orchestration/REPLAN_ENGINE.json (existence)
+[VERIFIED]  docs/orchestration/EXECUTION_HISTORY.json (existence)
+[VERIFIED]  docs/orchestration/ENGINEERING_LIFECYCLE.json (existence)
+[VERIFIED]  docs/agents/AGENT_COUNCIL.json (existence)
+[VERIFIED]  docs/missions/schema.json (existence)
+[VERIFIED]  docs/missions/REGISTRY.json (existence)
+[VERIFIED]  docs/architecture/AUTONOMOUS_ENGINEERING_MISSION_ENGINE.md (existence)
+[VERIFIED]  docs/governance/META_GOVERNANCE_ENGINE.md (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0005-capability-selection-engine.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0006-autonomous-execution-runtime.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0007-autonomous-engineering-mission-simulation.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0008-engineering-factory-strategy-optimization.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0009-autonomous-engineering-mission-proving.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0010-autonomous-self-evaluation-evolution.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0011-autonomous-engineering-operating-loop.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0012-production-readiness-release-governance.json (existence)
+[VERIFIED]  docs/intelligence/research/RSC-0013-adversarial-engineering-chaos-resilience.json (existence)
+[VERIFIED]  docs/governance/RELEASE_GOVERNANCE_ENGINE.md (existence)
+[VERIFIED]  docs/governance/PRODUCTION_READINESS_MODEL.json (existence)
+[VERIFIED]  docs/governance/RELEASE_CONTRACT.json (existence)
+[VERIFIED]  docs/governance/ADVERSARIAL_TRUTH_PRINCIPLE.md (existence)
+[VERIFIED]  docs/governance/ADVERSARIAL_ATTACK_TAXONOMY.json (existence)
+[VERIFIED]  docs/governance/BLAST_RADIUS_MODEL.json (existence)
+[VERIFIED]  docs/governance/RESILIENCE_MODEL.json (existence)
+[VERIFIED]  docs/architecture/ENGINEERING_FACTORY.md (existence)
+[VERIFIED]  docs/architecture/AUTONOMOUS_ENGINEERING_FACTORY_PROVING.md (existence)
+[VERIFIED]  docs/architecture/AUTONOMOUS_SELF_EVOLUTION_ENGINE.md (existence)
+[VERIFIED]  docs/architecture/AUTONOMOUS_ENGINEERING_OPERATING_LOOP.md (existence)
+[VERIFIED]  docs/intelligence/ENGINEERING_ECONOMICS.md (existence)
+[VERIFIED]  docs/orchestration/STRATEGY_ENGINE.json (existence)
+[VERIFIED]  docs/orchestration/STRATEGY_SELECTION_POLICY.json (existence)
+[VERIFIED]  docs/orchestration/EVOLUTION_STATE_MACHINE.json (existence)
+[VERIFIED]  docs/orchestration/OPERATING_LOOP_STATE_MACHINE.json (existence)
+[VERIFIED]  docs/orchestration/OPERATING_LOOP_CONTRACT.json (existence)
+[VERIFIED]  docs/orchestration/RELEASE_GATE_STATE_MACHINE.json (existence)
+[VERIFIED]  docs/orchestration/GAME_DAY_STATE_MACHINE.json (existence)
+[VERIFIED]  docs/evolution/schema.json (existence)
+[VERIFIED]  docs/evolution/REGISTRY.json (existence)
+[VERIFIED]  docs/decisions/STRATEGY_DECISIONS/schema.json (existence)
+[VERIFIED]  docs/intelligence/AGENT_PERFORMANCE_MEMORY.json (existence)
+[VERIFIED]  docs/intelligence/TOOL_PERFORMANCE_MEMORY.json (existence)
+[VERIFIED]  docs/intelligence/patterns/schema.json (existence)
+[VERIFIED]  docs/intelligence/patterns/PAT-0001-spec-driven-development.json (existence)
+[VERIFIED]  docs/intelligence/patterns/PAT-0002-evidence-first-verification.json (existence)
+[VERIFIED]  docs/intelligence/anti-patterns/schema.json (existence)
+[VERIFIED]  docs/intelligence/anti-patterns/ANT-0001-premature-external-implementation.json (existence)
+[VERIFIED]  docs/intelligence/anti-patterns/ANT-0002-tool-first-blind-copying.json (existence)
+[VERIFIED]  docs/intelligence/comparisons/CMP-0001-industry-engineering-matrix.json (existence)
+[VERIFIED]  docs/intelligence/capabilities/schema.json (existence)
+[VERIFIED]  docs/intelligence/capabilities/CAP-0001-persistent-engineering-memory.json (existence)
+[VERIFIED]  docs/intelligence/decisions/schema.json (existence)
+[VERIFIED]  docs/intelligence/decisions/DEC-INT-0001-adopt-engram-memory-protocol.json (existence)
+[VERIFIED]  docs/intelligence/META_VERIFICATION.md (existence)
+[VERIFIED]  docs/intelligence/KNOWLEDGE_GRAPH_MODEL.md (existence)
+[VERIFIED]  docs/intelligence/CAPABILITY_VERIFICATION_MATRIX.md (existence)
+[VERIFIED]  scripts/adapters/mock-code-adapter.js (existence)
+[VERIFIED]  scripts/adapters/mock-research-adapter.js (existence)
+[VERIFIED]  scripts/adapters/mock-test-adapter.js (existence)
+[VERIFIED]  scripts/adapters/mock-browser-adapter.js (existence)
+[VERIFIED]  scripts/engine/capability-intelligence-engine.js (existence)
+[VERIFIED]  scripts/engine/autonomous-execution-runtime.js (existence)
+[VERIFIED]  scripts/engine/autonomous-engineering-mission-engine.js (existence)
+[VERIFIED]  scripts/engine/autonomous-engineering-factory.js (existence)
+[VERIFIED]  scripts/engine/autonomous-self-evolution-engine.js (existence)
+[VERIFIED]  scripts/engine/autonomous-engineering-operating-loop.js (existence)
+[VERIFIED]  scripts/engine/release-decision-engine.js (existence)
+[VERIFIED]  scripts/engine/production-readiness-review.js (existence)
+[VERIFIED]  scripts/engine/adversarial-laboratory-engine.js (existence)
+[VERIFIED]  scripts/engine/strategy-engine.js (existence)
+[VERIFIED]  scripts/engine/strategy-simulator.js (existence)
+[VERIFIED]  scripts/engine/strategy-selection-engine.js (existence)
+[VERIFIED]  scripts/engine/simulate-strategies.js (existence)
+[VERIFIED]  tests/fixtures/projects/synthetic-app/package.json (existence)
+[VERIFIED]  tests/fixtures/projects/synthetic-app/SPEC.json (existence)
+[VERIFIED]  tests/fixtures/projects/synthetic-app/AUTHORIZATION.json (existence)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-website/package.json (existence)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-api/package.json (existence)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-ecommerce/package.json (existence)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-data/package.json (existence)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-mobile/package.json (existence)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-ai-agent/package.json (existence)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-migration/package.json (existence)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-security-remediation/package.json (existence)
+[VERIFIED]  tests/fixtures/production-projects/synthetic-production-website/package.json (existence)
+[VERIFIED]  tests/fixtures/production-projects/synthetic-production-api/package.json (existence)
+[VERIFIED]  tests/fixtures/production-projects/synthetic-production-ecommerce/package.json (existence)
+[VERIFIED]  tests/fixtures/production-projects/synthetic-production-ai-agent/package.json (existence)
+[VERIFIED]  tests/fixtures/production-projects/synthetic-production-migration/package.json (existence)
+[VERIFIED]  tests/fixtures/adversarial-projects/synthetic-adversarial-tool/package.json (existence)
+[VERIFIED]  tests/fixtures/adversarial-projects/synthetic-adversarial-provider/package.json (existence)
+[VERIFIED]  tests/fixtures/adversarial-projects/synthetic-adversarial-agent/package.json (existence)
+[VERIFIED]  tests/fixtures/adversarial-projects/synthetic-adversarial-evidence/package.json (existence)
+[VERIFIED]  tests/fixtures/adversarial-projects/synthetic-adversarial-governance/package.json (existence)
+[VERIFIED]  tests/control-plane-hardening.test.js (existence)
+[VERIFIED]  tests/intelligence.test.js (existence)
+[VERIFIED]  tests/factory-governance.test.js (existence)
+[VERIFIED]  tests/adapter-architecture.test.js (existence)
+[VERIFIED]  tests/capability-intelligence.test.js (existence)
+[VERIFIED]  tests/execution-runtime.test.js (existence)
+[VERIFIED]  tests/mission-engine.test.js (existence)
+[VERIFIED]  tests/strategy-engine.test.js (existence)
+[VERIFIED]  tests/factory-proving.test.js (existence)
+[VERIFIED]  tests/self-evolution.test.js (existence)
+[VERIFIED]  tests/operating-loop.test.js (existence)
+[VERIFIED]  tests/release-governance.test.js (existence)
+[VERIFIED]  tests/adversarial-chaos.test.js (existence)
+[VERIFIED]  docs/evidence/schema.json (existence)
+[VERIFIED]  docs/evidence/TEMPLATE.md (existence)
+[VERIFIED]  docs/evidence/EVD-0001.json (existence)
+[VERIFIED]  docs/evidence/EVD-0002.json (existence)
+[VERIFIED]  docs/evidence/EVD-0003.json (existence)
+[VERIFIED]  docs/evidence/EVD-0004.json (existence)
+[VERIFIED]  docs/evidence/EVD-0005.json (existence)
+[VERIFIED]  docs/evidence/EVD-0006.json (existence)
+[VERIFIED]  docs/evidence/EVD-0007.json (existence)
+[VERIFIED]  docs/evidence/EVD-0008.json (existence)
+[VERIFIED]  docs/evidence/EVD-0009.json (existence)
+[VERIFIED]  docs/evidence/EVD-0010.json (existence)
+[VERIFIED]  docs/evidence/EVD-0011.json (existence)
+[VERIFIED]  docs/evidence/EVD-0012.json (existence)
+[VERIFIED]  docs/evidence/EVD-0013.json (existence)
+[VERIFIED]  docs/evidence/EVD-0014.json (existence)
+[VERIFIED]  docs/evidence/EVD-0015.json (existence)
+[VERIFIED]  docs/evidence/EVD-0016.json (existence)
+[VERIFIED]  docs/evidence/EVD-0017.json (existence)
+[VERIFIED]  docs/evidence/EVD-0018.json (existence)
+[VERIFIED]  docs/evidence/EVD-0019.json (existence)
+[VERIFIED]  docs/evidence/EVD-0020.json (existence)
+[VERIFIED]  docs/evidence/EVD-0021.json (existence)
+[VERIFIED]  docs/evidence/EVD-0022.json (existence)
+[VERIFIED]  docs/evidence/EVD-0023.json (existence)
+[VERIFIED]  docs/governance/EOS_INDEPENDENT_EMPIRICAL_VALIDATION_STANDARD.md (existence)
+[VERIFIED]  docs/governance/CLAIM_VALIDATION_MODEL.json (existence)
+[VERIFIED]  docs/governance/EVIDENCE_INDEPENDENCE_MODEL.json (existence)
+[VERIFIED]  docs/governance/FALSIFICATION_CONTRACT.json (existence)
+[VERIFIED]  docs/governance/CONTRADICTION_MODEL.json (existence)
+[VERIFIED]  docs/governance/VALIDATION_STATE_MACHINE.json (existence)
+[VERIFIED]  docs/governance/COMPLEXITY_BUDGET.json (existence)
+[VERIFIED]  scripts/engine/independent-verification-harness.js (existence)
+[VERIFIED]  tests/fixtures/falsification-projects/synthetic-falsification-valid/package.json (existence)
+[VERIFIED]  tests/fixtures/falsification-projects/synthetic-falsification-contradictory/package.json (existence)
+[VERIFIED]  tests/independent-validation.test.js (existence)
+[VERIFIED]  docs/specs/TEMPLATE.md (existence)
+[VERIFIED]  docs/projects/REGISTRY_MODEL.md (existence)
+[VERIFIED]  docs/projects/TEMPLATE.json (existence)
+[VERIFIED]  docs/projects/schema.json (existence)
+[VERIFIED]  docs/projects/registry.json (existence)
+[VERIFIED]  docs/projects/registrations/fundacion.json (existence)
+[VERIFIED]  docs/projects/registrations/fundacion/DECISION_RECORD.md (existence)
+[VERIFIED]  docs/projects/registrations/fundacion/IMPLEMENTATION_AUTHORIZATION.md (existence)
+[VERIFIED]  docs/intake/TEMPLATE.md (existence)
+[VERIFIED]  docs/intake/fundacion/PROJECT_CONTEXT.md (existence)
+[VERIFIED]  docs/intake/fundacion/CONTENT_INVENTORY.md (existence)
+[VERIFIED]  docs/intake/fundacion/OBSERVATIONS.md (existence)
+[VERIFIED]  docs/intake/fundacion/UNKNOWN_AND_GAPS.md (existence)
+[VERIFIED]  docs/intake/fundacion/REQUIREMENTS_DISCOVERY.md (existence)
+[VERIFIED]  docs/intake/fundacion/inventory.json (existence)
+[VERIFIED]  docs/specs/fundacion/SPEC-0001-fundacion-core.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_6_TECHNICAL_AUDIT.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_7_REMEDIATION.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_8_RELEASE_READINESS.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_9_STAGING_PREVIEW.md (existence)
+[VERIFIED]  docs/audits/EOS_CURRENT_STATE_AUDIT.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_10_CONTROL_PLANE_HARDENING.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_11_ENGINEERING_INTELLIGENCE.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_12_AUTONOMOUS_ENGINEERING_FACTORY.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_13_TOOL_AGNOSTIC_ARCHITECTURE.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_14_CAPABILITY_INTELLIGENCE.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_15_AUTONOMOUS_EXECUTION_RUNTIME.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_16_AUTONOMOUS_MISSION_SIMULATION.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_17_ENGINEERING_FACTORY.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_18_END_TO_END_MISSION_PROVING.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_19_AUTONOMOUS_SELF_EVALUATION.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_20_AUTONOMOUS_ENGINEERING_OPERATING_LOOP.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_21_AUTONOMOUS_RELEASE_GOVERNANCE.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_22_ADVERSARIAL_RESILIENCE.md (existence)
+[VERIFIED]  docs/evidence/EVD-0024.json (existence)
+[VERIFIED]  docs/evidence/EVD-0025.json (existence)
+[VERIFIED]  docs/evidence/EVD-0026.json (existence)
+[VERIFIED]  docs/evidence/EVD-0027.json (existence)
+[VERIFIED]  docs/evidence/EVD-0028.json (existence)
+[VERIFIED]  docs/evidence/EVD-0029.json (existence)
+[VERIFIED]  docs/evidence/EVD-0030.json (existence)
+[VERIFIED]  docs/evidence/EVD-0031.json (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_24_INDEPENDENT_VALIDATION.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_26_REAL_PROJECT_DISCOVERY.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_28_ECOSYSTEM_BENCHMARK.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_29_AGENTIC_INTEGRATION.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_30_REAL_PROJECT_PROPOSAL.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_30_CONTROLLED_IMPLEMENTATION.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_31_EXTERNAL_PRODUCT_VALIDATION.md (existence)
+[VERIFIED]  docs/audits/EOS_PHASE_32_BROWSER_RUNTIME_VALIDATION.md (existence)
+[VERIFIED]  docs/audits/EOS_FORENSIC_AUDIT_REPORT.md (existence)
+[VERIFIED]  docs/audits/EOS_FORENSIC_FINDINGS.json (existence)
+[VERIFIED]  docs/audits/EOS_FORENSIC_INVARIANTS.json (existence)
+[VERIFIED]  docs/audits/EOS_FORENSIC_CONTRADICTIONS.json (existence)
+[VERIFIED]  docs/audits/EOS_FORENSIC_REDUNDANCY.json (existence)
+[VERIFIED]  docs/audits/EOS_FORENSIC_COMPLEXITY.json (existence)
+[VERIFIED]  docs/audits/EOS_FORENSIC_EVIDENCE.json (existence)
+[VERIFIED]  docs/audits/EOS_FORENSIC_READINESS.json (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_AUDIT_REPORT.md (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_AUDIT_FINDINGS.json (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_INVARIANTS.json (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_CONTRADICTIONS.json (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_GOVERNANCE_MATRIX.json (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_STATE_MACHINE_AUDIT.json (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_EVIDENCE_AUDIT.json (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_SECURITY_AUDIT.json (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_COMPLEXITY_AUDIT.json (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_READINESS_ASSESSMENT.json (existence)
+[VERIFIED]  docs/audits/EOS_SYSTEM_AUDIT_EVIDENCE.json (existence)
+[VERIFIED]  docs/core/FOUNDATIONAL_CONTEXT.md (existence)
+[VERIFIED]  docs/audits/EOS_FOUNDATIONAL_CONTEXT_AUDIT.md (existence)
+[VERIFIED]  package.json (json-validity)
+[VERIFIED]  docs/capabilities/schema.json (json-validity)
+[VERIFIED]  docs/capabilities/REGISTRY.json (json-validity)
+[VERIFIED]  docs/tools/schema.json (json-validity)
+[VERIFIED]  docs/tools/REGISTRY.json (json-validity)
+[VERIFIED]  docs/tools/SELECTION_ENGINE.json (json-validity)
+[VERIFIED]  docs/adapters/schema.json (json-validity)
+[VERIFIED]  docs/adapters/REGISTRY.json (json-validity)
+[VERIFIED]  docs/providers/schema.json (json-validity)
+[VERIFIED]  docs/providers/REGISTRY.json (json-validity)
+[VERIFIED]  docs/providers/SELECTION_POLICY.json (json-validity)
+[VERIFIED]  docs/agents/REGISTRY.json (json-validity)
+[VERIFIED]  docs/agents/SELECTION_ENGINE.json (json-validity)
+[VERIFIED]  docs/agents/TEAM_COMPOSITION.json (json-validity)
+[VERIFIED]  docs/orchestration/TASK_DECOMPOSITION.json (json-validity)
+[VERIFIED]  docs/orchestration/TASK_GRAPH.json (json-validity)
+[VERIFIED]  docs/orchestration/EXECUTION_PLANNER.json (json-validity)
+[VERIFIED]  docs/orchestration/FALLBACK_ENGINE.json (json-validity)
+[VERIFIED]  docs/orchestration/EXECUTION_RUNTIME.json (json-validity)
+[VERIFIED]  docs/orchestration/EXECUTION_STATE_MACHINE.json (json-validity)
+[VERIFIED]  docs/orchestration/REPLAN_ENGINE.json (json-validity)
+[VERIFIED]  docs/orchestration/EXECUTION_HISTORY.json (json-validity)
+[VERIFIED]  docs/orchestration/FAILURE_HANDLING.json (json-validity)
+[VERIFIED]  docs/policies/POLICY_ENGINE.json (json-validity)
+[VERIFIED]  docs/policies/AUTONOMY_RISK_MODEL.json (json-validity)
+[VERIFIED]  docs/policies/REVERSIBILITY_ENGINE.json (json-validity)
+[VERIFIED]  docs/projects/STATE_MACHINE.json (json-validity)
+[VERIFIED]  docs/orchestration/DRY_RUN_ENGINE.json (json-validity)
+[VERIFIED]  docs/knowledge/AGENT_PERFORMANCE_MEMORY.json (json-validity)
+[VERIFIED]  docs/intelligence/sources/schema.json (json-validity)
+[VERIFIED]  docs/intelligence/sources/SOURCES.json (json-validity)
+[VERIFIED]  docs/intelligence/research/schema.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0001-gentleman-engram-study.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0002-multi-agent-orchestration-study.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0003-software-factory-study.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0004-tool-agnostic-adapter-architecture.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0005-capability-selection-engine.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0006-autonomous-execution-runtime.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0007-autonomous-engineering-mission-simulation.json (json-validity)
+[VERIFIED]  docs/intelligence/patterns/schema.json (json-validity)
+[VERIFIED]  docs/intelligence/patterns/PAT-0001-spec-driven-development.json (json-validity)
+[VERIFIED]  docs/intelligence/patterns/PAT-0002-evidence-first-verification.json (json-validity)
+[VERIFIED]  docs/intelligence/anti-patterns/schema.json (json-validity)
+[VERIFIED]  docs/intelligence/anti-patterns/ANT-0001-premature-external-implementation.json (json-validity)
+[VERIFIED]  docs/intelligence/anti-patterns/ANT-0002-tool-first-blind-copying.json (json-validity)
+[VERIFIED]  docs/intelligence/comparisons/CMP-0001-industry-engineering-matrix.json (json-validity)
+[VERIFIED]  docs/intelligence/capabilities/schema.json (json-validity)
+[VERIFIED]  docs/intelligence/capabilities/CAP-0001-persistent-engineering-memory.json (json-validity)
+[VERIFIED]  docs/intelligence/decisions/schema.json (json-validity)
+[VERIFIED]  docs/intelligence/decisions/DEC-INT-0001-adopt-engram-memory-protocol.json (json-validity)
+[VERIFIED]  tests/fixtures/projects/synthetic-app/package.json (json-validity)
+[VERIFIED]  tests/fixtures/projects/synthetic-app/SPEC.json (json-validity)
+[VERIFIED]  tests/fixtures/projects/synthetic-app/AUTHORIZATION.json (json-validity)
+[VERIFIED]  docs/evidence/schema.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0001.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0002.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0003.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0004.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0005.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0006.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0007.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0008.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0009.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0010.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0011.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0012.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0013.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0014.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0015.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0016.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0017.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0018.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0019.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0020.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0021.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0022.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0023.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0024.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0025.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0026.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0027.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0028.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0029.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0030.json (json-validity)
+[VERIFIED]  docs/evidence/EVD-0031.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0014-gentleman-ecosystem-benchmark.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0015-agentic-engineering-gap-analysis.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/fundacion/REAL_PROJECT_STATE.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/fundacion/REAL_PROJECT_DISCOVERY.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/fundacion/REAL_PROJECT_ARCHITECTURE_ASSESSMENT.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/fundacion/REAL_PROJECT_RISK_ASSESSMENT.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/fundacion/REAL_PROJECT_EVIDENCE.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/fundacion/REAL_PROJECT_UNCERTAINTIES.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/fundacion/REAL_PROJECT_CONTRADICTIONS.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/fundacion/REAL_PROJECT_RECOMMENDATIONS.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/fundacion/REAL_PROJECT_AUDIT_TRAIL.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_STATE.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_DISCOVERY.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_ARCHITECTURE_ASSESSMENT.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_RISK_ASSESSMENT.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_EVIDENCE.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_UNCERTAINTIES.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_CONTRADICTIONS.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_RECOMMENDATIONS.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_AUDIT_TRAIL.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_REQUIREMENTS.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/REAL_PROJECT_PROPOSAL.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/SPECIFICATION.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/ARCHITECTURE.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/DESIGN.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/TASK_DAG.json (json-validity)
+[VERIFIED]  docs/intelligence/real_projects/andes-retreat/VERIFICATION_PLAN.json (json-validity)
+[VERIFIED]  docs/audits/EOS_FORENSIC_FINDINGS.json (json-validity)
+[VERIFIED]  docs/audits/EOS_FORENSIC_INVARIANTS.json (json-validity)
+[VERIFIED]  docs/audits/EOS_FORENSIC_CONTRADICTIONS.json (json-validity)
+[VERIFIED]  docs/audits/EOS_FORENSIC_REDUNDANCY.json (json-validity)
+[VERIFIED]  docs/audits/EOS_FORENSIC_COMPLEXITY.json (json-validity)
+[VERIFIED]  docs/audits/EOS_FORENSIC_EVIDENCE.json (json-validity)
+[VERIFIED]  docs/audits/EOS_FORENSIC_READINESS.json (json-validity)
+[VERIFIED]  docs/governance/CLAIM_VALIDATION_MODEL.json (json-validity)
+[VERIFIED]  docs/governance/EVIDENCE_INDEPENDENCE_MODEL.json (json-validity)
+[VERIFIED]  docs/governance/FALSIFICATION_CONTRACT.json (json-validity)
+[VERIFIED]  docs/governance/CONTRADICTION_MODEL.json (json-validity)
+[VERIFIED]  docs/governance/VALIDATION_STATE_MACHINE.json (json-validity)
+[VERIFIED]  docs/governance/COMPLEXITY_BUDGET.json (json-validity)
+[VERIFIED]  tests/fixtures/falsification-projects/synthetic-falsification-valid/package.json (json-validity)
+[VERIFIED]  tests/fixtures/falsification-projects/synthetic-falsification-contradictory/package.json (json-validity)
+[VERIFIED]  docs/audits/EOS_SYSTEM_AUDIT_FINDINGS.json (json-validity)
+[VERIFIED]  docs/audits/EOS_SYSTEM_INVARIANTS.json (json-validity)
+[VERIFIED]  docs/audits/EOS_SYSTEM_CONTRADICTIONS.json (json-validity)
+[VERIFIED]  docs/audits/EOS_SYSTEM_GOVERNANCE_MATRIX.json (json-validity)
+[VERIFIED]  docs/audits/EOS_SYSTEM_STATE_MACHINE_AUDIT.json (json-validity)
+[VERIFIED]  docs/audits/EOS_SYSTEM_EVIDENCE_AUDIT.json (json-validity)
+[VERIFIED]  docs/audits/EOS_SYSTEM_SECURITY_AUDIT.json (json-validity)
+[VERIFIED]  docs/audits/EOS_SYSTEM_COMPLEXITY_AUDIT.json (json-validity)
+[VERIFIED]  docs/audits/EOS_SYSTEM_READINESS_ASSESSMENT.json (json-validity)
+[VERIFIED]  docs/audits/EOS_SYSTEM_AUDIT_EVIDENCE.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0012-production-readiness-release-governance.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0013-adversarial-engineering-chaos-resilience.json (json-validity)
+[VERIFIED]  docs/governance/ADVERSARIAL_ATTACK_TAXONOMY.json (json-validity)
+[VERIFIED]  docs/governance/BLAST_RADIUS_MODEL.json (json-validity)
+[VERIFIED]  docs/governance/RESILIENCE_MODEL.json (json-validity)
+[VERIFIED]  docs/orchestration/GAME_DAY_STATE_MACHINE.json (json-validity)
+[VERIFIED]  tests/fixtures/adversarial-projects/synthetic-adversarial-tool/package.json (json-validity)
+[VERIFIED]  tests/fixtures/adversarial-projects/synthetic-adversarial-provider/package.json (json-validity)
+[VERIFIED]  tests/fixtures/adversarial-projects/synthetic-adversarial-agent/package.json (json-validity)
+[VERIFIED]  tests/fixtures/adversarial-projects/synthetic-adversarial-evidence/package.json (json-validity)
+[VERIFIED]  tests/fixtures/adversarial-projects/synthetic-adversarial-governance/package.json (json-validity)
+[VERIFIED]  docs/governance/PRODUCTION_READINESS_MODEL.json (json-validity)
+[VERIFIED]  docs/governance/RELEASE_CONTRACT.json (json-validity)
+[VERIFIED]  docs/governance/CI_CD_CONTRACT.json (json-validity)
+[VERIFIED]  docs/orchestration/RELEASE_GATE_STATE_MACHINE.json (json-validity)
+[VERIFIED]  tests/fixtures/production-projects/synthetic-production-website/package.json (json-validity)
+[VERIFIED]  tests/fixtures/production-projects/synthetic-production-api/package.json (json-validity)
+[VERIFIED]  tests/fixtures/production-projects/synthetic-production-ecommerce/package.json (json-validity)
+[VERIFIED]  tests/fixtures/production-projects/synthetic-production-ai-agent/package.json (json-validity)
+[VERIFIED]  tests/fixtures/production-projects/synthetic-production-migration/package.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0009-autonomous-engineering-mission-proving.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0010-autonomous-self-evaluation-evolution.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0011-autonomous-engineering-operating-loop.json (json-validity)
+[VERIFIED]  docs/orchestration/EVOLUTION_STATE_MACHINE.json (json-validity)
+[VERIFIED]  docs/orchestration/OPERATING_LOOP_STATE_MACHINE.json (json-validity)
+[VERIFIED]  docs/orchestration/OPERATING_LOOP_CONTRACT.json (json-validity)
+[VERIFIED]  docs/evolution/schema.json (json-validity)
+[VERIFIED]  docs/evolution/REGISTRY.json (json-validity)
+[VERIFIED]  docs/orchestration/STRATEGY_ENGINE.json (json-validity)
+[VERIFIED]  docs/orchestration/STRATEGY_SELECTION_POLICY.json (json-validity)
+[VERIFIED]  docs/decisions/STRATEGY_DECISIONS/schema.json (json-validity)
+[VERIFIED]  docs/intelligence/AGENT_PERFORMANCE_MEMORY.json (json-validity)
+[VERIFIED]  docs/intelligence/TOOL_PERFORMANCE_MEMORY.json (json-validity)
+[VERIFIED]  docs/intelligence/research/RSC-0008-engineering-factory-strategy-optimization.json (json-validity)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-mobile/package.json (json-validity)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-ai-agent/package.json (json-validity)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-migration/package.json (json-validity)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-security-remediation/package.json (json-validity)
+[VERIFIED]  docs/agents/AGENT_COUNCIL.json (json-validity)
+[VERIFIED]  docs/orchestration/ENGINEERING_LIFECYCLE.json (json-validity)
+[VERIFIED]  docs/missions/schema.json (json-validity)
+[VERIFIED]  docs/missions/REGISTRY.json (json-validity)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-website/package.json (json-validity)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-api/package.json (json-validity)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-ecommerce/package.json (json-validity)
+[VERIFIED]  tests/fixtures/mission-projects/synthetic-data/package.json (json-validity)
+[VERIFIED]  docs/projects/TEMPLATE.json (json-validity)
+[VERIFIED]  docs/projects/schema.json (json-validity)
+[VERIFIED]  docs/projects/registry.json (json-validity)
+[VERIFIED]  docs/projects/registrations/fundacion.json (json-validity)
+[VERIFIED]  docs/intake/fundacion/inventory.json (json-validity)
+[VERIFIED]  .agents/skills/accessibility-auditor/SKILL.md (frontmatter)
+[VERIFIED]  .agents/skills/browser-qa/SKILL.md (frontmatter)
+[VERIFIED]  .agents/skills/evidence-auditor/SKILL.md (frontmatter)
+[VERIFIED]  .agents/skills/performance-auditor/SKILL.md (frontmatter)
+[VERIFIED]  .agents/skills/quality-auditor/SKILL.md (frontmatter)
+[VERIFIED]  .agents/skills/sdd/SKILL.md (frontmatter)
+[VERIFIED]  .agents/skills/security-auditor/SKILL.md (frontmatter)
+[VERIFIED]  .agents/skills/seo-auditor/SKILL.md (frontmatter)
+[VERIFIED]  package.json (l0-purity)
+[VERIFIED]  src/core/sdd/organic-routing-gate.js (organic-gate)
+[VERIFIED]  src/core/sdd/tdd-evidence-receipt.js (tdd-receipts)
+[VERIFIED]  docs/evidence/tdd (tdd-receipts)
+[VERIFIED]  src/core/governance/rdd-review-stance.js (rdd-stance)
+
+----------------------------------------------------
+Checks Passed: 497 | Failures: 0
+----------------------------------------------------
+STATUS: VERIFIED — All checks passed cleanly.
+
+
+===== INDEPENDENT_HARNESS =====
+CMD: node scripts/engine/independent-verification-harness.js --verify-independent
+CWD: /workspace
+START: 2026-09-04T05:47:28Z
+EXIT: 0
+EOS INDEPENDENT VERIFICATION HARNESS RESULTS:
+{
+  "timestamp": "2026-09-04T05:47:28.659Z",
+  "standard": "EOS_INDEPENDENT_EMPIRICAL_VALIDATION_STANDARD",
+  "version": "v0.3.0",
+  "phase": 24,
+  "targetIsolation": {
+    "path": "C:\\Users\\valen\\Documents\\Fundacion",
+    "baselineCount": 0,
+    "currentCount": 0,
+    "delta": 0,
+    "itemsMatch": true,
+    "isolated": true
+  },
+  "falsificationCasesEvaluated": 5,
+  "cases": [
+    {
+      "case": "A",
+      "outcome": "CORROBORATED",
+      "haltPromotion": false
+    },
+    {
+      "case": "B",
+      "outcome": "CONTRADICTION",
+      "haltPromotion": true
+    },
+    {
+      "case": "C",
+      "outcome": "FALSE_REJECTION_CANDIDATE",
+      "haltPromotion": false
+    },
+    {
+      "case": "D",
+      "outcome": "UNSUPPORTED_CLAIM",
+      "haltPromotion": true
+    },
+    {
+      "case": "E",
+      "outcome": "INTEGRITY_FAILURE",
+      "haltPromotion": true
+    }
+  ],
+  "metrics": {
+    "FAR": 0,
+    "FRR": 0,
+    "CDR": 1,
+    "EIR": 1
+  },
+  "complexityStatus": "WITHIN_BUDGET",
+  "validationState": "EMPIRICAL_VALIDATION_PENDING_EXTERNAL_REALITY",
+  "harnessPassed": true
+}
+
+===== FUNDACION_FREEZE =====
+CMD: git diff --exit-code -- Fundacion
+START: 2026-09-04T05:48:48Z
+EXIT: 0
+UNTRACKED:
+
+===== L0_PACKAGE_JSON =====
+CMD: node -e package.json deps
+{"deps":null,"dev":null}
+EXIT: 0
+
+===== NODE_CHECK_SEALER =====
+EXIT: 0
+[VERIFIED]  docs/evidence/tdd (tdd-receipts)
+[VERIFIED]  src/core/governance/rdd-review-stance.js (rdd-stance)
+
+----------------------------------------------------
+Checks Passed: 497 | Failures: 0
+----------------------------------------------------
+STATUS: VERIFIED — All checks passed cleanly.
+
