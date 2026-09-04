@@ -12,6 +12,7 @@
     "project_path": { "type": "string" },
     "created_at": { "type": "string" },
     "authority_level": { "type": "string" },
-    "budget_cap_usd": { "type": "number" }
+    "budget_cap_usd": { "type": "number" },
+    "organic_routing": { "type": "object" }
   }
 }

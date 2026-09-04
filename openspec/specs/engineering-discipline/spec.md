@@ -29,3 +29,23 @@ RDD outcomes are INFORMATIONAL. Review MUST NOT authorize merge, release, or ext
 - GIVEN an `/adversarial-review` with no findings
 - WHEN delivery is considered
 - THEN commit-to-main, PR merge, release, and Fundacion writes still require human / HITL / write-barrier authority
+
+### Requirement: Accidental SDD spawn is fail-closed
+
+Ceremony spawn without an explicit SDD request, accepted proposal, substantial trigger, or override MUST be blocked. File/diff size MUST NOT justify spawn.
+
+#### Scenario: Size-only spawn is blocked
+
+- GIVEN a large diff with no explicit SDD request and no accepted proposal
+- WHEN a heavy SDD / OpenSpec / orchestration ceremony is about to spawn
+- THEN the organic gate blocks (`ACCIDENTAL_SDD_SPAWN`) unless `forceSddOverride` is set
+
+### Requirement: Apply-complete needs TDD receipts
+
+When Strict TDD is in scope (tests exist or `strict_tdd`), an implementation-complete claim MUST present RED and GREEN receipts (TRIANGULATE when applicable). Missing receipts MUST NOT claim VERIFIED and MUST fail the verify gate.
+
+#### Scenario: Missing receipts fail verify
+
+- GIVEN Strict TDD in scope and an apply-complete claim
+- WHEN `/verify` or `verifyMission` runs without RED→GREEN receipts
+- THEN the TDD audit fails and VERIFIED is denied

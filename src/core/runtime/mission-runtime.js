@@ -25,6 +25,12 @@ import { IntegrationGatekeeper } from '../governance/integration-gatekeeper.js';
 import { SchemaValidator } from '../contracts/schema-validator.js';
 import { CanonicalRulesIndex } from '../rules/canonical-rules-index.js';
 import { SDD_STATES } from '../sdd/sdd-fsm-engine.js';
+import {
+  classifyOrganicRoute,
+  assertSddCeremonyAuthorized,
+  ORGANIC_ROUTES
+} from '../sdd/organic-routing-gate.js';
+import { auditTddReceipts } from '../sdd/tdd-evidence-receipt.js';
 
 export class MissionRuntime {
   constructor(options = {}) {
@@ -123,6 +129,13 @@ export class MissionRuntime {
     fs.writeFileSync(path.join(missionDir, 'project-profile.json'), profileStr, 'utf8');
 
     // 3. Direction record
+    const routingIntent = {
+      localAlreadyScopedFix: true,
+      delegatedActor: true,
+      ...(params.routing || {})
+    };
+    const organicRouting = classifyOrganicRoute(routingIntent);
+
     const direction = {
       mission_id: missionId,
       goal: params.goal,
@@ -131,7 +144,8 @@ export class MissionRuntime {
       project_path: projectPath,
       created_at: new Date().toISOString(),
       authority_level: params.authorityLevel || 'LEVEL_0',
-      budget_cap_usd: params.budgetCapUsd || 0.10
+      budget_cap_usd: params.budgetCapUsd || 0.10,
+      organic_routing: organicRouting
     };
     const directionStr = JSON.stringify(direction, null, 2);
     fs.writeFileSync(path.join(missionDir, 'direction.json'), directionStr, 'utf8');
@@ -179,7 +193,12 @@ export class MissionRuntime {
       },
       artifacts: { required: ['evidence_receipts'], produced: [] },
       orchestration: { assigned_roles: [], tasks: [] },
-      evidence_policy: { required_categories: ['UNIT_TEST'], hash_algorithm: 'SHA-256', chain_to_ledger: true }
+      evidence_policy: {
+        required_categories: ['UNIT_TEST'],
+        hash_algorithm: 'SHA-256',
+        chain_to_ledger: true,
+        strict_tdd: organicRouting.route === ORGANIC_ROUTES.SDD || params.strictTdd === true
+      }
     };
     const pkgStr = JSON.stringify(initialPkg, null, 2);
     this.schemas.assertValid(initialPkg, 'mission-package.local.schema.json', 'mission-package');
@@ -215,7 +234,8 @@ export class MissionRuntime {
       mission_id: missionId,
       status: 'active',
       mission_dir: missionDir,
-      project_id: profile.project_id
+      project_id: profile.project_id,
+      organic_routing: organicRouting
     };
   }
 
@@ -252,6 +272,7 @@ export class MissionRuntime {
       authority_phase: authorityPhase,
       phase_tamper_detected: Boolean(authorityPhase && pkg.phase && pkg.phase !== authorityPhase),
       direction,
+      organic_routing: direction.organic_routing || null,
       profile,
       events_count: events.length,
       latest_event: events.length > 0 ? events[events.length - 1] : null
@@ -278,6 +299,23 @@ export class MissionRuntime {
 
     this.schemas.assertValid(direction, 'direction.local.schema.json', 'direction');
     this.schemas.assertValid(pkg, 'mission-package.local.schema.json', 'mission-package');
+
+    const routingIntent = {
+      ...(direction.organic_routing?.intent || {}),
+      ...(options.routing || {}),
+      spawnSddCeremony: options.spawnSddCeremony === true,
+      forceSddOverride: options.forceSddOverride === true,
+      explicitSddRequest: options.explicitSddRequest === true,
+      acceptedProposal: options.acceptedProposal === true
+    };
+    const organicRouting = classifyOrganicRoute(routingIntent);
+    if (options.spawnSddCeremony === true) {
+      assertSddCeremonyAuthorized(routingIntent);
+      pkg.evidence_policy = { ...(pkg.evidence_policy || {}), strict_tdd: true };
+      const pkgGateStr = JSON.stringify(pkg, null, 2);
+      fs.writeFileSync(path.join(missionDir, 'mission-package.json'), pkgGateStr, 'utf8');
+      this._updateManifestFile(missionDir, 'mission-package.json', pkgGateStr);
+    }
 
     // Generate atomic tasks
     const tasks = [
@@ -352,7 +390,8 @@ export class MissionRuntime {
       mission_id: missionId,
       planned_at: new Date().toISOString(),
       tasks,
-      governance_gates: ['HITL_DIRECTION_APPROVAL', 'EVIDENCE_VERIFICATION_GATE'],
+      governance_gates: ['HITL_DIRECTION_APPROVAL', 'EVIDENCE_VERIFICATION_GATE', 'ORGANIC_ROUTING_GATE'],
+      organic_routing: organicRouting,
       fsm_path: [
         'VISION_INTAKE',
         'MISSION_FORMULATION',
@@ -361,7 +400,7 @@ export class MissionRuntime {
         'DEFINE',
         'PLAN'
       ],
-      rules_cited: this.rules.cite(['R-ATS-01', 'R-HITL-01', 'R-SCHEMA-01'])
+      rules_cited: this.rules.cite(['R-ATS-01', 'R-HITL-01', 'R-SCHEMA-01', 'R-ORGANIC-01'])
     };
     const planStr = JSON.stringify(plan, null, 2);
     fs.writeFileSync(path.join(missionDir, 'plan.json'), planStr, 'utf8');
@@ -631,8 +670,9 @@ export class MissionRuntime {
   /**
    * Verifies the cryptographic integrity of a mission
    * @param {string} missionId
+   * @param {object} [options]
    */
-  verifyMission(missionId) {
+  verifyMission(missionId, options = {}) {
     const missionDir = this.getMissionDir(missionId);
     if (!fs.existsSync(missionDir)) {
       throw new Error(`MISSION_NOT_FOUND: Mission '${missionId}' does not exist.`);
@@ -661,13 +701,61 @@ export class MissionRuntime {
       }
     }
 
+    const pkgFile = path.join(missionDir, 'mission-package.json');
+    const pkg = fs.existsSync(pkgFile) ? JSON.parse(fs.readFileSync(pkgFile, 'utf8')) : {};
+    const tddReceipts = this._loadTddReceipts(missionDir, options.tddReceipts);
+    const tddDir = path.join(missionDir, 'evidence', 'tdd');
+    const applyClaimed = options.applyClaimedComplete === true || fs.existsSync(tddDir);
+    const strictTdd =
+      options.strictTdd === true ||
+      pkg.evidence_policy?.strict_tdd === true ||
+      applyClaimed ||
+      tddReceipts.length > 0;
+    const tddAudit = auditTddReceipts({
+      receipts: tddReceipts,
+      strictTdd,
+      testsExist: options.testsExist === true || strictTdd,
+      requireRefactor: options.requireRefactor === true,
+      claimVerified: options.claimVerified === true,
+      inScope: strictTdd
+    });
+    if (!tddAudit.pass) {
+      discrepancies.push(`TDD evidence: ${tddAudit.code}${tddAudit.missing?.length ? ` missing ${tddAudit.missing.join(', ')}` : ''}`);
+    }
+
     return {
       mission_id: missionId,
-      valid: chainCheck.valid && manifestValid,
+      valid: chainCheck.valid && manifestValid && tddAudit.pass,
       ledger_chain: chainCheck,
       manifest_valid: manifestValid,
+      tdd_audit: tddAudit,
       discrepancies
     };
+  }
+
+  _loadTddReceipts(missionDir, extra = []) {
+    const receipts = [];
+    if (Array.isArray(extra)) {
+      receipts.push(...extra);
+    }
+    const tddDir = path.join(missionDir, 'evidence', 'tdd');
+    if (!fs.existsSync(tddDir)) {
+      return receipts;
+    }
+    const names = fs.readdirSync(tddDir).filter((n) => n.endsWith('.json'));
+    for (const name of names) {
+      try {
+        const parsed = JSON.parse(fs.readFileSync(path.join(tddDir, name), 'utf8'));
+        if (Array.isArray(parsed)) {
+          receipts.push(...parsed);
+        } else if (parsed && typeof parsed === 'object') {
+          receipts.push(parsed);
+        }
+      } catch {
+        receipts.push({ tdd_phase: null, invalid_file: name });
+      }
+    }
+    return receipts;
   }
 
   /**

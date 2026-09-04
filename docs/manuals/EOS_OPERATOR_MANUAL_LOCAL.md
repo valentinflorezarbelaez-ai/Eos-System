@@ -72,6 +72,12 @@ Cycle when SDD applies: `/enrich-us` → `/ff` or `/propose` → `/apply` → `/
 
 Independent review (RDD) is informational. It does **not** authorize commit-to-main, merge, release, or Fundación writes.
 
+**Enforced in code** (see `docs/manuals/OPENSPEC_RUNTIME.md` § Enforcement surfaces):
+
+- Accidental SDD ceremony spawn is fail-closed. `eos mission plan <id> --spawn-sdd` needs `--explicit-sdd` or `--sdd-override`.
+- Apply-complete without RED→GREEN receipts cannot pass `eos mission verify --strict-tdd` / `verify-eos --strict` TDD checks.
+- `/adversarial-review` cannot grant write or delivery.
+
 These slash names are operator vocabulary (`opsx:propose` / `opsx:apply` / `opsx:archive` are the same ceremony). They do not replace `node bin/eos.js` / `npm run eos:mission`. OpenSpec folders and optional CLI: `docs/manuals/OPENSPEC_RUNTIME.md`. Prefer Given/When/Then in specs.
 
 ## Non-goals

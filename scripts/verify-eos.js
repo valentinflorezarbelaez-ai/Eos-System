@@ -1,6 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { evaluateSddCeremonySpawn } from '../src/core/sdd/organic-routing-gate.js';
+import { evaluateApplyClaim, auditTddReceipts } from '../src/core/sdd/tdd-evidence-receipt.js';
+import { assertRddDoesNotGrantDelivery } from '../src/core/governance/rdd-review-stance.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,6 +54,9 @@ const REQUIRED_PATHS = [
   'openspec/config.yaml',
   'ai-specs/README.md',
   'scripts/openspec-cli.js',
+  'src/core/sdd/organic-routing-gate.js',
+  'src/core/sdd/tdd-evidence-receipt.js',
+  'src/core/governance/rdd-review-stance.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
   'docs/governance/CI_CD_CONTRACT.md',
   'docs/governance/CI_CD_CONTRACT.json',
@@ -662,6 +668,91 @@ function verifyWorkspace() {
             report.checks.push({ path: `.agents/skills/${skillName}/SKILL.md`, status: 'VERIFIED', type: 'frontmatter' });
           }
         }
+      }
+    }
+
+    // 3d. L0 purity — no root npm dependencies
+    const pkgPath = path.join(rootDir, 'package.json');
+    if (fs.existsSync(pkgPath)) {
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+      if (pkg.dependencies || pkg.devDependencies) {
+        report.failures.push({
+          path: 'package.json',
+          message: 'L0 NODE_BUILTINS_ONLY violated: root dependencies/devDependencies present',
+          type: 'l0-purity'
+        });
+      } else {
+        report.checks.push({ path: 'package.json', status: 'VERIFIED', type: 'l0-purity' });
+      }
+    }
+
+    // 3e. ADR-0010 enforcement surfaces (organic gate, TDD receipts, RDD stance)
+    const accidental = evaluateSddCeremonySpawn({
+      spawnSddCeremony: true,
+      byteSize: 999999,
+      loc: 5000,
+      fileCount: 80
+    });
+    if (accidental.allowed !== false || accidental.code !== 'ACCIDENTAL_SDD_SPAWN') {
+      report.failures.push({
+        path: 'src/core/sdd/organic-routing-gate.js',
+        message: 'Size-only SDD spawn must fail-closed (ADR-0010)',
+        type: 'organic-gate'
+      });
+    } else {
+      report.checks.push({ path: 'src/core/sdd/organic-routing-gate.js', status: 'VERIFIED', type: 'organic-gate' });
+    }
+
+    const missingTdd = evaluateApplyClaim({ claimComplete: true, strictTdd: true, testsExist: true, receipts: [] });
+    if (missingTdd.allowed !== false || missingTdd.can_claim_verified !== false) {
+      report.failures.push({
+        path: 'src/core/sdd/tdd-evidence-receipt.js',
+        message: 'Missing TDD receipts must deny apply-complete and VERIFIED claims',
+        type: 'tdd-receipts'
+      });
+    } else {
+      report.checks.push({ path: 'src/core/sdd/tdd-evidence-receipt.js', status: 'VERIFIED', type: 'tdd-receipts' });
+    }
+
+    const tddDir = path.join(rootDir, 'docs/evidence/tdd');
+    if (fs.existsSync(tddDir)) {
+      const files = fs.readdirSync(tddDir).filter((n) => n.endsWith('.json'));
+      const receipts = [];
+      for (const name of files) {
+        try {
+          const parsed = JSON.parse(fs.readFileSync(path.join(tddDir, name), 'utf8'));
+          if (Array.isArray(parsed)) receipts.push(...parsed);
+          else receipts.push(parsed);
+        } catch (err) {
+          report.failures.push({ path: `docs/evidence/tdd/${name}`, message: `Invalid TDD receipt JSON: ${err.message}`, type: 'tdd-receipts' });
+        }
+      }
+      if (receipts.length > 0) {
+        const audit = auditTddReceipts({ receipts, strictTdd: true, testsExist: true });
+        if (!audit.pass) {
+          report.failures.push({
+            path: 'docs/evidence/tdd',
+            message: `TDD receipt audit failed: ${audit.code}`,
+            type: 'tdd-receipts'
+          });
+        } else {
+          report.checks.push({ path: 'docs/evidence/tdd', status: 'VERIFIED', type: 'tdd-receipts' });
+        }
+      }
+    }
+
+    try {
+      assertRddDoesNotGrantDelivery({ authorizes_delivery: true });
+      report.failures.push({
+        path: 'src/core/governance/rdd-review-stance.js',
+        message: 'RDD must deny delivery grants',
+        type: 'rdd-stance'
+      });
+    } catch (err) {
+      if (err.code === 'RDD_DELIVERY_DENIED') {
+        report.checks.push({ path: 'src/core/governance/rdd-review-stance.js', status: 'VERIFIED', type: 'rdd-stance' });
+      } else {
+        report.failures.push({ path: 'src/core/governance/rdd-review-stance.js', message: err.message, type: 'rdd-stance' });
       }
     }
   }
