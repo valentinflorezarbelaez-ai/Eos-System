@@ -141,6 +141,30 @@ test('I2 isolation: unmutated sandbox matches T0 fingerprint', () => {
   fs.rmSync(sandbox, { recursive: true, force: true });
 });
 
+test('I2 isolation: non-source directories do not alter fingerprintTarget or isolation', () => {
+  const sandbox = sandboxFromFixture('eos-i2-iso-ignore-');
+  const t0 = harness.fingerprintTarget(sandbox);
+
+  const ignoredDirs = ['node_modules', '.git', '.next', 'dist', 'coverage'];
+  for (const dir of ignoredDirs) {
+    const full = path.join(sandbox, dir);
+    fs.mkdirSync(full, { recursive: true });
+    fs.writeFileSync(path.join(full, 'junk.txt'), `${dir}-noise\n`);
+  }
+
+  const t1 = harness.fingerprintTarget(sandbox);
+  assert.equal(t1.sha256, t0.sha256, 'ignored non-source trees must not change fingerprint');
+  assert.equal(t1.entryCount, t0.entryCount);
+
+  const isolation = harness.verifyTargetIsolation({
+    targetPath: sandbox,
+    baselineFingerprint: t0.sha256
+  });
+  assert.equal(isolation.isolated, true, 'non-source directories must not trigger an isolation breach');
+  assert.equal(isolation.sha256, t0.sha256);
+  fs.rmSync(sandbox, { recursive: true, force: true });
+});
+
 test('Contradiction case B is evaluated from filesystem evidence, not string literals alone', () => {
   assert.equal(typeof harness.evaluateContradictionCaseFromEvidence, 'function');
 

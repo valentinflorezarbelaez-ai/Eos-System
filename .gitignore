@@ -51,6 +51,11 @@ logs/
 tmp/
 temp/
 
+# Temporary database state
+*.db
+*.sqlite
+*.sqlite3
+
 # EOS Mission OS local runtime state (created by MissionRuntime under baseDir)
 .missions/
 
