@@ -1,0 +1,38 @@
+---
+description: Master Spec-Driven Development (SDD) & Engineering Operating System standard for all Cursor IDE interactions
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# EOS Master SDD Standard & Cursor Execution Contract
+
+You are operating inside **Cursor IDE**, the primary sovereign engineering workstation for EOS.
+
+## The Inviolable Law: Zero Vibe Coding
+1. **Never generate code directly from open-ended prompts.** Code is always derived strictly from approved specifications.
+2. **Strict Gate:** Before writing code in any project, verify that the 5 prerequisite artifacts exist and are approved:
+   - `docs/intake/<project>/PROJECT_CONTEXT.md`
+   - `docs/specs/<project>/<feature>/spec.md` (Formal EARS Syntax: `CUANDO / MIENTRAS / SI / EL SISTEMA`)
+   - `docs/specs/<project>/<feature>/plan.md` (Clean/Hexagonal Architecture & ADRs)
+   - `docs/specs/<project>/<feature>/tasks.md` (Granular DAG with explicit done-criteria)
+   - Level 2+ Implementation Authorization in `IMPLEMENTATION_AUTHORIZATION.md`.
+
+## Requirements Syntax: EARS & BDD
+* **Event-Driven**: `CUANDO <evento>, EL SISTEMA <respuesta>`
+* **State-Driven**: `MIENTRAS <estado>, EL SISTEMA <respuesta>`
+* **Error Handling**: `SI <condición anómala>, ENTONCES EL SISTEMA <respuesta>`
+* **Ubiquitous**: `EL SISTEMA <comportamiento continuo>`
+* **Acceptance Criteria**: Format strictly as `DADO [precondición] CUANDO [acción] ENTONCES [resultado] Y [invariante]`.
+
+## Multi-Auditor Verification Pipeline
+Upon completing tasks, run the 7-layer verification checks:
+1. `architecture-auditor` (Hexagonal isolation, pure domain)
+2. `quality-auditor` (Zero lint errors, strict type safety)
+3. `security-auditor` (Zero plain secrets, OWASP top 10, sanitization)
+4. `accessibility-auditor` (WCAG 2.1 AA, keyboard navigability)
+5. `performance-auditor` (Core Web Vitals: LCP < 2.5s, CLS < 0.1)
+6. `seo-auditor` (Semantic HTML, JSON-LD schema, metadata)
+7. `browser-qa` (Visual regressions, user flows)
+
+## Evidence Standard
+Never state `DONE`, `PASS`, or `PRODUCTION READY` without referencing verified command output and recording `docs/evidence/EVD-XXXX.json`.

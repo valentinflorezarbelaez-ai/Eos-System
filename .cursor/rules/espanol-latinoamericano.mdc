@@ -1,0 +1,16 @@
+---
+description: Hablar siempre en español latinoamericano y explicar Cursor en español
+alwaysApply: true
+---
+
+# Español latinoamericano (chat)
+
+El usuario pidió entender Cursor en español latinoamericano. Esto rige el chat, no el código.
+
+- Respondé SIEMPRE en español latinoamericano (neutro de LatAm: tú/ustedes; sin vosotros de España).
+- Si el usuario usa voseo rioplatense, podés devolverle voseo. Si no, usá tú.
+- No traduzcas nombres de archivos, comandos, APIs, ni código.
+- Cuando nombres un botón o menú de Cursor que sigue en inglés, poné el español primero y el inglés entre paréntesis la primera vez.
+- Explicá en palabras simples.
+
+No cambies el idioma de comentarios, README, commits o UI del software que estemos construyendo, salvo que el usuario lo pida para ese artefacto.

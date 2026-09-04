@@ -1,0 +1,62 @@
+---
+description: Al entrar a un trabajo, primero entender los lineamientos de la empresa y operar dentro de ellos
+alwaysApply: true
+---
+
+# Onboarding de empresa (prioriza sus reglas)
+
+Cuando Valentín entre a un trabajo, cliente o repo ajeno: **primero entender cómo trabaja esa empresa**, después escribir código.
+
+## Dos capas (no se pisan)
+
+**Capa A — Forma de la empresa (nos adaptamos):** stack, Git, tickets, linter, idioma de PRs, horarios de review, si usan SDD o no. Gana su handbook.
+
+**Capa B — Procesos fundamentales (siempre claros, no se negocian a cero):**
+1. Entender el problema y el alcance antes de codear (spec, aunque sea corta).
+2. Evidencia: test o comando, no “creo que anda”.
+3. Seguridad: secretos fuera del git, menos privilegio, no datos de clientes en el chat sin HITL.
+4. El código vive después del merge: cómo se despliega, se observa y se hace rollback.
+5. Arquitectura: límites claros; no mezclar IA/secretos en el monolito sin frontera.
+6. Escalar con métrica, no con moda (Kubernetes “por si acaso”).
+7. HITL en prod, pagos, legal y PII.
+
+Si la empresa no documenta la capa B, **igual la aplicamos** (preguntando si hace falta). Si documenta otra herramienta (GitLab, Jenkins, Django), usamos **esa** herramienta, con el mismo rigor de la capa B.
+
+EOS no impone Next/React/Tailwind ni Gentle SDD al equipo si ellos ya tienen flujo. Gentle SDD queda como método interno cuando no hay proceso, o en paralelo sin imponerlo.
+
+## Orden de autoridad
+
+1. Lo que diga Valentín de esa empresa (visión + lo que le enseñaron)
+2. Handbook / Notion / Confluence / wiki que él indique
+3. El repo: README, CONTRIBUTING, AGENTS.md, `.cursor/rules`, CODEOWNERS, CI, linters, EditorConfig
+4. Tickets (Jira, Linear, GitHub Issues) y plantilla de PR
+5. Recién ahí, defaults de EOS (estación fullstack, Gentle SDD)
+
+Si hay conflicto, gana la empresa. Si no está escrito, **preguntar**; no inventar política.
+
+## Primera sesión (obligatorio, antes de features)
+
+Leer y resumir en 8 puntos, con evidencia (archivo o URL):
+
+1. Qué producto es y para quién
+2. Stack real (lenguajes, framework, paquete, DB)
+3. Cómo se corre en local y cómo se testea (`npm test`, etc.)
+4. Git: rama base, PRs, reviews, squash/rebase, convención de commits
+5. Estilo: linter, formatter, nombres, estructura de carpetas
+6. Qué está prohibido (secretos, prod, force push, datos de clientes)
+7. Cómo se pide y se entrega trabajo (ticket → PR → QA)
+8. Quién aprueba (tech lead, HITL)
+
+Guardar ese resumen en `.cursor/rules/company-lineamientos.mdc` **del proyecto del trabajo** (no en Fundación, no en la constitución de EOS). Si el repo no debe recibir ese archivo, guardarlo solo en memoria Engram con `topic_key` `work/<empresa>/lineamientos`.
+
+## Cómo trabajar después
+
+- Usar **sus** scripts, linter y PR template.
+- Commits y PRs en el idioma y formato que ellos usen.
+- No “mejorar” arquitectura ni agregar librerías sin ticket o OK humano.
+- Gentle SDD solo si ellos no tienen proceso, o en paralelo interno sin imponerlo al equipo.
+- Legal, pagos, datos de clientes, producción: parar y preguntar.
+
+## Señales de que aún no entendemos la empresa
+
+No hay README ni wiki, o el usuario no pasó handbook: hacer 3 preguntas máximo (flujo git, comando de test, quién revisa) y esperar. No asumir Next, React, Tailwind, ni inglés/español.

@@ -1,0 +1,58 @@
+---
+description: MCP Tool Awareness — Teaches the agent about all available MCP servers and when to use each one
+globs:
+alwaysApply: true
+---
+
+# MCP Tool Awareness
+
+You have access to a powerful arsenal of MCP (Model Context Protocol) servers. Use the RIGHT tool for the RIGHT job.
+
+## Tool Selection Decision Tree
+
+Use only servers that are actually connected. Do not invent Brave/Docker/Postgres tools.
+
+### Research & Information Gathering
+- **WebSearch / WebFetch** (nativos de Cursor) → búsqueda y lectura de URLs
+- **Context7** → docs versionadas de librerías (npm, frameworks)
+- **Sequential Thinking** → razonamiento multi-paso (arquitectura, tradeoffs)
+- **NotebookLM** → notebooks de estudio ya autenticados en esta máquina
+
+### Code, GitHub y deploy
+- **GitHub** (remote `api.githubcopilot.com/mcp`) → repos, issues, PRs, Actions — requiere Connect/OAuth o PAT
+- **Git nativo / Shell** → log, diff, blame local (no hay MCP git aparte)
+- **Vercel** → proyectos y deploys (OAuth)
+- **Sentry** → errores y performance (OAuth)
+
+### Diseño y producto
+- **Figma plugin** → diseño ↔ código (oficial Cursor, no el npx viejo)
+- **Stitch** → generación de UI Google Stitch
+- **Playwright** → browser E2E / QA visual
+
+### Knowledge y comms
+- **Notion plugin** → wiki / tasks (OAuth del plugin)
+- **Gmail / Google Calendar / Google Drive** → Workspace remoto oficial
+- **Slack** → canales y mensajes (OAuth oficial `mcp.slack.com`)
+
+### EOS-Specific
+- **EOS Local** → misiones, evidencia, barreras, reportes
+- **Engram** → memoria persistente entre sesiones (no uses un MCP "memory" paralelo)
+
+## Composition Patterns
+
+### Deep Research Flow
+1. WebSearch → panorama
+2. WebFetch → fuentes autoritativas
+3. Context7 → docs de librería
+4. Sequential Thinking → síntesis
+
+### Code Review Flow
+1. GitHub MCP → PR/diff remoto
+2. Shell git → blame/log local
+3. Sequential Thinking → veredicto
+
+### Product / client flow
+1. Notion o Drive → spec
+2. Figma o Stitch → UI
+3. Playwright → verificar en browser
+4. EOS Local → evidencia

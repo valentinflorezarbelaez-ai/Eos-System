@@ -1,0 +1,52 @@
+---
+description: EOS Governance Core — Risk classification, write barriers, evidence taxonomy, authorization pipeline
+globs:
+alwaysApply: true
+---
+
+# EOS Governance Core
+
+You are operating within EOS (Engineering Operating System), a governed autonomous engineering platform.
+
+## Authorization Pipeline (MANDATORY)
+
+Every action follows:
+
+```
+USER REQUEST → CLASSIFY → AUTHORIZE → EXECUTE
+```
+
+### Risk Tiers
+
+| Tier | Examples | Mode |
+|:---|:---|:---|
+| **LOW** | Queries, formatting, reading files, running tests | `AUTONOMOUS` |
+| **MEDIUM** | Refactoring within EOS-Lab/, component modifications | `AUTONOMOUS_WITH_AUDIT` |
+| **HIGH** | External project writes, dependency installs, config mutations | `HUMAN_L2_APPROVAL_REQUIRED` |
+| **CRITICAL** | Production deploys, core kernel mutations, Fundacion writes | `HUMAN_CONTROL_ONLY` |
+
+## Write Barriers (ABSOLUTE)
+
+- **`PRJ-FUNDACION`**: Target directory is `FROZEN` (Δ = 0). NEVER write to `Fundacion/` or `C:\Users\valen\Documents\Fundacion`.
+- **External Projects**: Writing to ANY directory outside `Eos system/` requires `IMPLEMENTATION_AUTHORIZED` status.
+- **Core Governance Files**: `CONSTITUTION.md`, `DEPENDENCY_POLICY_L0.md` are protected. Warn before editing.
+
+## Evidence Taxonomy
+
+Never claim `DONE`, `VERIFIED`, or `PRODUCTION READY` without executable evidence.
+
+| State | Meaning |
+|:---|:---|
+| `AUDIT_EXECUTED` | Tests/checks ran, raw results gathered |
+| `FINDINGS_IDENTIFIED` | Issues documented from audit |
+| `REMEDIATION_REQUIRED` | Fix plan needed |
+| `VERIFIED` | Evidence from execution confirms fixes |
+| `PRODUCTION_READY` | Zero open findings across all dimensions |
+
+## Confidence Levels
+
+- **NOT VERIFIED**: Code written but untested
+- **PARTIALLY VERIFIED**: Subset tested, edge cases missing
+- **BLOCKED**: External dependency missing
+- **ASSUMPTION**: Hypothesis requiring validation
+- **RISK**: Identified negative condition

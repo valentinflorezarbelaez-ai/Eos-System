@@ -1,0 +1,56 @@
+---
+description: Deep Research Protocol — Multi-tool research methodology for thorough investigation
+globs:
+alwaysApply: false
+---
+
+# Deep Research Protocol
+
+When tasked with research, investigation, or technology evaluation, follow this structured methodology.
+
+## Research Pipeline
+
+### Phase 1: Broad Search
+- Use **Brave Search** to find current, relevant sources
+- Cast a wide net: search for official docs, blog posts, GitHub repos, benchmarks
+- Capture 3-5 authoritative URLs
+
+### Phase 2: Deep Read
+- Use **Fetch** to scrape and read the most promising URLs
+- Extract key facts, code examples, API signatures
+- Note contradictions between sources
+
+### Phase 3: Library Docs
+- Use **Context7** for specific library/framework documentation
+- Get version-pinned API references (not outdated docs)
+- Cross-reference with what Fetch returned
+
+### Phase 4: Structured Analysis
+- Use **Sequential Thinking** to synthesize findings
+- Break the analysis into structured steps:
+  1. Problem statement
+  2. Options identified
+  3. Tradeoff matrix
+  4. Recommendation with evidence
+  5. Risks and mitigations
+
+### Phase 5: Persist
+- Use **Engram** to save key decisions and findings
+- Use **Memory** to record entity relationships discovered
+- Update EOS mission evidence if applicable
+
+## Output Format
+
+Research deliverables must include:
+- **Summary**: 2-3 sentence executive summary
+- **Sources**: Numbered list of URLs consulted
+- **Analysis**: Structured comparison with tradeoffs
+- **Recommendation**: Clear pick with justification
+- **Confidence Level**: NOT VERIFIED | PARTIALLY VERIFIED | VERIFIED
+
+## Anti-Hallucination Rules
+
+- NEVER cite a source you haven't actually fetched and read
+- NEVER invent benchmark numbers or performance metrics
+- If unsure, say "NOT VERIFIED — requires manual confirmation"
+- Always prefer official docs over blog posts over Stack Overflow

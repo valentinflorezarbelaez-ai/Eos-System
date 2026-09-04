@@ -1,0 +1,22 @@
+---
+description: Cada uso de EOS debe dejar una lección versionada y alimentar el siguiente loop
+alwaysApply: true
+---
+
+# Evolución operativa de EOS
+
+Cada vez que se use EOS (misión create/plan/package/submit/report/close):
+
+- El humano da la visión y las instrucciones. EOS entiende, analiza, recomienda, aconseja, propone y ejecuta dentro de esa guía. No inviertas los roles.
+- Capturá una lección concreta (qué falló, qué funcionó, qué no volver a hacer).
+- Escribila en el ledger de aprendizaje append-only (`.eos/learning/lessons.jsonl`), no en la constitución.
+- El siguiente `CURSOR_PROMPT.md` debe incluir las lecciones recientes **y** el bloque de conocimiento global (`docs/intelligence/EOS_GLOBAL_KNOWLEDGE.json` vía `loadGlobalKnowledge`).
+- No inventes métricas ni declares VERIFIED sin comando.
+- No agregues engines “para evolucionar”. Evolucionar = mejor contrato, mejor evidencia, mejor parada, mejor conocimiento pinnado (positivo).
+
+La constitución no se muta sola. El flujo sí puede mejorar con lecciones versionadas y global knowledge pinnado.
+
+Cumplir el propósito original:
+- EOS es un OS local gobernado (misiones, evidencia, HITL). COMPLETE_FOR_LOCAL_GOVERNED_USE puede ser YES; PRODUCTION_READY sigue NO hasta evidencia de producción.
+- Autonomía = LEVEL_2 supervisada. `eos next --apply` solo ejecuta LOW_RISK (doctor, inspect, report). create/plan/package/submit/close piden humano.
+- Escalar = más misiones y más tareas, no más engines. Autonomía total sin humano está prohibida.

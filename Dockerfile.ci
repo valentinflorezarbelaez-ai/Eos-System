@@ -1,0 +1,24 @@
+# ==============================================================================
+# EOS SOVEREIGN CI/CD RUNNER — EPHEMERAL TESTING CONTAINER (PILAR 4)
+# Base: Node.js 20 Alpine (L0 Zero 3rd-Party Dependencies Policy)
+# ==============================================================================
+
+FROM node:20-alpine
+
+# Set deterministic production metadata & working directory
+ENV NODE_ENV=production
+WORKDIR /usr/src/eos-runtime
+
+# Copy core engine, test harnesses, scripts, governance specs, and configuration
+COPY package.json ./
+COPY CONSTITUTION.md ./
+COPY DEPENDENCY_POLICY_L0.md ./
+COPY .agents/ ./.agents/
+COPY bin/ ./bin/
+COPY src/ ./src/
+COPY scripts/ ./scripts/
+COPY tests/ ./tests/
+COPY docs/ ./docs/
+
+# Default execution: run strict integrity verification and core test suites
+CMD ["sh", "-c", "node scripts/verify-eos.js --strict && node --test tests/*.test.js"]

@@ -1,0 +1,34 @@
+---
+description: Tesis Gentleman (RSC-0016) — conocimiento global EOS; SDD DAG + director HITL
+alwaysApply: true
+---
+
+# Gentleman Book → EOS (RSC-0016) — GLOBAL
+
+Fuente digest: `docs/intelligence/research/RSC-0016-gentleman-programming-book-digest.md`  
+Pinned runtime: `docs/intelligence/EOS_GLOBAL_KNOWLEDGE.json` (inyectado en todo `CURSOR_PROMPT`).
+
+## Roles
+
+- **Humano** = director (decide alcance, aprueba diseño, valida evidencia).
+- **EOS / Agent** = orquestador.
+- **Subagentes / skills** = especialistas con contexto limpio por fase.
+
+## Pipeline
+
+`proposal → (specs ∥ design) → tasks → apply → verify → archive`
+
+Sin dependencia cumplida → **STOP**. Gatekeeper: artefactos deben existir antes de avanzar.
+
+## Obligatorio
+
+- Spec / acceptance criteria antes de implementar.
+- TDD: RED luego GREEN cuando el repo tenga tests.
+- Evidencia de comando antes de VERIFIED.
+- Forma de la empresa gana el stack.
+
+## Prohibido
+
+- Mutar la constitución por este digest.
+- Versionar el PDF del libro en el repo.
+- Imponer Claude Code / Anthropic / React Scope Rule a clientes que usen otro proceso.

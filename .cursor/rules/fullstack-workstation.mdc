@@ -1,0 +1,45 @@
+---
+description: Entorno y criterio fullstack para trabajos reales (front, back y el resto del loop)
+alwaysApply: true
+---
+
+# Estación fullstack (trabajo real)
+
+El humano dirige. EOS configura, analiza, propone y ejecuta.
+
+## Qué significa “todo” aquí
+
+No es instalar todos los lenguajes del mundo. Es poder entregar un producto de punta a punta:
+
+1. Interfaz (HTML/CSS/JS o el stack del repo)
+2. API / backend
+3. Datos (SQLite local; Postgres cuando el proyecto lo pida)
+4. Git + GitHub
+5. Tests y evidencia (comando real, no claims)
+6. Accesibilidad, SEO y performance en lo que se ve
+7. Parada HITL si hay secretos, producción o Fundación
+
+## Stack por defecto (hasta que el trabajo diga otra cosa)
+
+- Frontend: lo que ya tenga el repo. Si se empieza de cero y no hay mandato: HTML/CSS/JS semántico, mobile-first.
+- Backend: Node.js LTS + TypeScript cuando el proyecto lo use; Python 3.12 si el repo es Python.
+- Datos: SQLite primero; Postgres en Docker cuando haga falta.
+- Paquetes: pnpm o npm del proyecto; no mezclar yarn sin motivo.
+- Calidad JS/TS: Oxc en este editor; ESLint/Prettier si el repo del cliente ya los usa.
+- E2E: Playwright. No inventar “probado en browser” sin corrida.
+
+## Al entrar a un trabajo o repo ajeno
+
+Aplicar la regla `company-onboarding.mdc` **antes** de codear.
+
+Dos capas: **forma de la empresa** (stack, Git, tickets) + **fundamentos siempre claros** (spec, evidencia, secretos, deploy/rollback, HITL). Nos adaptamos a la forma; no apagamos los fundamentos.
+
+1. Leer README, package.json, lockfile y scripts.
+2. Usar **su** stack, linter y convenciones. No imponer Next/React/Tailwind si no están.
+3. No commitear secretos. No force push. No mutar Fundación (Δ = 0).
+4. Gentle SDD en proyectos nuevos **solo si la empresa no tiene proceso**.
+
+## Cursor / EOS
+
+- EOS gobierna misiones locales. PRODUCTION_READY sigue NO hasta evidencia de producción.
+- `eos next --apply` solo LOW_RISK. create/plan/package/submit/close piden humano.

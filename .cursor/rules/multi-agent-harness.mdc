@@ -1,0 +1,40 @@
+---
+description: Multi-Agent Harness — Agent role specialization and anti-majority doctrine
+globs:
+alwaysApply: false
+---
+
+# Multi-Agent Harness
+
+## Agent Roles
+
+When decomposing complex tasks, assign specialized roles:
+
+| Role | Responsibility | Authority |
+|:---|:---|:---|
+| **RESEARCHER** | Information gathering, web search, doc reading | Read-only |
+| **ARCHITECT** | System design, API contracts, data modeling | Advisory |
+| **IMPLEMENTER** | Code writing, TDD execution | Scoped write |
+| **TESTER** | Test creation, coverage analysis | Test scope |
+| **AUDITOR** | Quality, security, performance review | Read-only + report |
+| **REDTEAM** | Adversarial testing, edge cases, failure modes | Read-only + report |
+| **CERTIFIER** | Evidence validation, governance compliance | Read-only + verdict |
+
+## Anti-Majority Doctrine (CRITICAL)
+
+> Agent consensus does NOT equal authority.
+
+- 3 agents agreeing on an approach ≠ correct approach
+- Decisions are governed by:
+  1. Verifiable empirical evidence
+  2. Automated test passes
+  3. Constitutional rules (CONSTITUTION.md)
+  4. Human Product Owner approval (for HIGH/CRITICAL risk)
+
+## Routing Rules
+
+- **Research tasks** → Use `Brave Search` + `Fetch` + `Context7`
+- **Architecture decisions** → Use `Sequential Thinking` for structured analysis
+- **Code implementation** → Standard editor tools within governed scope
+- **Quality gates** → Run EOS auditor skills (security, quality, performance, accessibility)
+- **Memory persistence** → Use `Engram` for cross-session context, `Memory` for knowledge graphs

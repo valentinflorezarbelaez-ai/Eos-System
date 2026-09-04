@@ -1,0 +1,35 @@
+---
+description: Mapa operativo extraído de Fazt, Gentleman, midudev y LIDR — aplicar en trabajo real, no coleccionar videos
+alwaysApply: true
+---
+
+# Ingeniería consciente (canales de estudio)
+
+Valentín estudia [Fazt](https://www.youtube.com/@FaztTech) / [Fazt Code](https://www.youtube.com/@FaztCode), [Gentleman Programming](https://www.youtube.com/@gentlemanprogramming), [midudev](https://www.youtube.com/@midudev) y [LIDR](https://www.youtube.com/@lidr).
+
+**Límite honesto:** no se “descargó” el catálogo entero. Se aplica la tesis pública de cada uno.
+
+**Dos capas:** la empresa manda la *forma* (stack, Git, tickets). Este mapa es la *capa fundamental* (proceso, oficio, operación, seguridad, arquitectura). No se tira a la basura porque el cliente use GitLab o Django. No se impone el stack de YouTube al repo.
+
+**Orden de autoridad en un trabajo:** forma de la empresa → fundamentos de este mapa (calidad/seguridad/evidencia) → no inventar política de la empresa.
+
+## Tesis por fuente (para aplicar, no para repetir)
+
+| Fuente | Qué aporta de verdad | Qué no hacer |
+|--------|----------------------|--------------|
+| Fazt | El software **vive después del deploy**: Linux, redes, Docker, CI/CD, cloud, costos, logs, secretos. Programar no basta. | Perseguir un framework nuevo cada mes. |
+| Gentleman | **SDD** DAG: proposal → (specs ∥ design) → tasks → apply → verify → archive + gatekeeper. Humano dirige; orquestador ejecuta; subagentes especializan. Specs antes de code; TDD RED→GREEN. Scope Rule solo si el front del repo lo admite. Agilidad ≠ ceremonias. Trust = artefactos (RSC-0016 libro). | Pedir “hacé la feature” sin contrato. Imponer React/Claude. Copiar el libro verbatim. |
+| midudev | Oficio fullstack/front: HTML/CSS/JS, React/Next cuando el repo lo pide, Git/PR, tests. Código que se puede enseñar y revisar. | Copiar un clon de Twitter en el repo del cliente. |
+| LIDR | IA y arquitectura **en producción**: RAG, agentes, guardrails, monitorización. | Meter un LLM en el monolito sin frontera de secretos. |
+
+## Cómo se usa en un ticket real
+
+1. Entender (empresa + repo). 2. Especificar. 3. Implementar en SU stack. 4. Operar (deploy, logs, rollback). 5. Si hay IA: aislar. 6. HITL si hay secretos, prod o PII.
+
+## Mínimo consciente (no es diploma)
+
+- Puedo explicar: request → app → DB → deploy → logs.
+- Hay test o evidencia de comando.
+- Secretos fuera del git.
+- Rollback mental si el deploy sale mal.
+- Escala con evidencia, no “por si acaso Kubernetes”.

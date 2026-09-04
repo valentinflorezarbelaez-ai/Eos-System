@@ -1,0 +1,36 @@
+name: EOS Sovereign Continuous Verification & Integrity Pipeline
+
+on:
+  push:
+    branches: [ main, develop, master ]
+  pull_request:
+    branches: [ main, develop, master ]
+
+jobs:
+  verify-and-test:
+    name: Verify Integrity Invariants & Test Suites
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify Strict Integrity Invariants (482 Checks)
+        run: node scripts/verify-eos.js --strict
+
+      - name: Execute System Test Suites (1,520 Tests)
+        run: npm test
+
+      - name: Execute Level 3 Autonomous Orchestration (Fundación Pilot E2E)
+        run: node bin/eos-orchestrator.js
+
+      - name: Package Standalone Runtime
+        run: node scripts/package-runtime.js
+
+      - name: Validate Release Package Provenance
+        run: node scripts/generate-dist-receipt.js

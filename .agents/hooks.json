@@ -1,0 +1,58 @@
+{
+  "evidence-logger": {
+    "PostToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/evidence-logger.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "governance-gate": {
+    "PreToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/governance-gate.js",
+            "timeout": 3
+          }
+        ]
+      }
+    ]
+  },
+  "auto-lint": {
+    "PostToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content|multi_replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/auto-lint.js",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "mission-sync": {
+    "PostToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/hooks/mission-sync.js",
+            "timeout": 3
+          }
+        ]
+      }
+    ]
+  }
+}

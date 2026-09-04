@@ -1,0 +1,57 @@
+---
+description: TDD Pipeline — Test-first development cycle enforcement
+globs:
+  - "**/*.test.js"
+  - "**/*.test.ts"
+  - "**/*.spec.js"
+  - "**/*.spec.ts"
+  - "**/tests/**"
+  - "**/EOS-Lab/**"
+alwaysApply: false
+---
+
+# TDD Pipeline
+
+## The Cycle (NON-NEGOTIABLE)
+
+```
+RED → GREEN → REFACTOR → VERIFY
+```
+
+1. **RED**: Write a failing test FIRST. The test defines the contract.
+2. **GREEN**: Write the MINIMUM code to make the test pass. Nothing more.
+3. **REFACTOR**: Clean up without changing behavior. Tests must stay green.
+4. **VERIFY**: Run the full test suite. No regressions.
+
+## Rules
+
+- **No Code Without Tests**: Never write implementation code before the test exists.
+- **No Spec Without Approval**: Never write code before the OpenSpec (`proposal.md`, `spec.md`, `design.md`, `tasks.md`) is approved.
+- **Small Increments**: One purpose, one test, one commit.
+- **Test Names Are Documentation**: Use descriptive names that explain the behavior being tested.
+- **No Mocking What You Don't Own**: Only mock boundaries you control. For external APIs, use integration tests or test doubles.
+
+## Test File Conventions
+
+```
+tests/
+  ├── unit/           # Pure function tests, no I/O
+  ├── integration/    # Cross-module, file I/O, DB
+  └── e2e/            # Full system flows
+```
+
+## Commands
+
+```bash
+# Run all tests
+npm test
+
+# Run lab tests (TypeScript)
+npm run test:lab
+
+# Run everything
+npm run test:all
+
+# Verify system integrity
+npm run verify:strict
+```
