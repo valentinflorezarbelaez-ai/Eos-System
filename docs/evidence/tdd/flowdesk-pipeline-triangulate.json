@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "RCPT-E2E-TRI-001",
+  "evidence_id": "RCPT-E2E-TRI-001",
+  "mission_id": "MIS-1788500673741-214B45",
+  "task_id": "TASK-01",
+  "category": "UNIT_TEST",
+  "status": "NOT_VERIFIED",
+  "execution_context": {
+    "command": "npx tsx --test tests/unit/leadService.test.ts",
+    "exit_code": 0,
+    "tdd_phase": "TRIANGULATE"
+  },
+  "provenance": {},
+  "assertions": [
+    "empty pipeline zeros",
+    "tenant isolation"
+  ],
+  "evidence_payload": {
+    "tdd_phase": "TRIANGULATE",
+    "output": "TAP version 13\n# (node:3610) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: LeadService (In-Memory :memory: Test Suite)\n    # Subtest: should create a lead and record an initial lead_activity atomically\n    ok 1 - should create a lead and record an initial lead_activity atomically\n      ---\n      duration_ms: 37.224887\n      ...\n    # Subtest: should execute status update and append activity log inside single transaction\n    ok 2 - should execute status update and append activity log inside single transaction\n      ---\n      duration_ms: 30.305058\n      ...\n    # Subtest: should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale\n    ok 3 - should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale\n      ---\n      duration_ms: 27.383462\n      ...\n    # Subtest: should count tenant leads by status for a mixed pipeline\n    ok 4 - should count tenant leads by status for a mixed pipeline\n      ---\n      duration_ms: 27.567853\n      ...\n    # Subtest: should return zero for every status when the tenant has no leads\n    ok 5 - should return zero for every status when the tenant has no leads\n      ---\n      duration_ms: 27.18036\n      ...\n    # Subtest: should isolate pipeline counts from another tenant\n    ok 6 - should isolate pipeline counts from another tenant\n      ---\n      duration_ms: 53.628139\n      ...\n    1..6\nok 1 - LeadService (In-Memory :memory: Test Suite)\n  ---\n  duration_ms: 204.122144\n  type: 'suite'\n  ...\n1..1\n# tests 6\n# suites 1\n# pass 6\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 351.558852\n"
+  },
+  "verifier_id": "APPLY_BUILDER_NOT_VERIFIER",
+  "timestamp": "2026-09-04T05:45:46.476Z",
+  "sha256": "e24236dbff8df3c5eb229ecfa09806d59f994b7cccafae82e312e58aee0b4440",
+  "receipt_hash": "e24236dbff8df3c5eb229ecfa09806d59f994b7cccafae82e312e58aee0b4440",
+  "tdd_phase": "TRIANGULATE"
+}

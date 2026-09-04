@@ -1,0 +1,39 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0043",
+  "claim": "FlowDesk LeadService.countLeadsByStatus implemented with auditable RED→GREEN→TRIANGULATE receipts; builder cannot self-certify VERIFIED.",
+  "status": "PARTIALLY VERIFIED",
+  "scope": "EOS-Lab/FlowDesk LeadService + tests/unit/leadService.test.ts + src/core/sdd/tdd-evidence-receipt.js. Lab sandbox only.",
+  "source": "docs/evidence/canonical_e2e_openspec_tdd_2026/",
+  "timestamp": "2026-09-04T05:45:46Z",
+  "actor": "EOS Cloud Agent (canonical E2E OpenSpec+TDD loop)",
+  "action": "Wrote failing test; implemented method; added empty/isolation cases; sealed createTddPhaseReceipt JSON; audited missing vs complete vs self-certify.",
+  "command": "npx tsx --test tests/unit/leadService.test.ts",
+  "expected": "RED exit !== 0; GREEN exit 0; TRIANGULATE exit 0; missing receipts fail audit; builder claimVerified denied.",
+  "actual": "RED EXIT 1 (countLeadsByStatus is not a function). GREEN EXIT 0 (4/4). TRIANGULATE EXIT 0 (6/6). Full FlowDesk suite 7/7 EXIT 0. missing_audit TDD_EVIDENCE_MISSING pass=false. complete_audit TDD_RECEIPTS_AUDITED pass=true can_claim_verified=false. self_certify TDD_VERIFIED_CLAIM_DENIED.",
+  "result": "TDD_RECEIPTS_AUDITED",
+  "artifacts": [
+    "EOS-Lab/FlowDesk/src/services/leadService.ts",
+    "EOS-Lab/FlowDesk/tests/unit/leadService.test.ts",
+    "docs/evidence/tdd/flowdesk-pipeline-red.json",
+    "docs/evidence/tdd/flowdesk-pipeline-green.json",
+    "docs/evidence/tdd/flowdesk-pipeline-triangulate.json",
+    "docs/evidence/canonical_e2e_openspec_tdd_2026/loop-adapter-result.json"
+  ],
+  "logs": [
+    "TDD_RED EXIT 1",
+    "TDD_GREEN EXIT 0",
+    "TDD_TRIANGULATE EXIT 0",
+    "FLOWDESK_FULL_SUITE EXIT 0 tests 7 pass 7"
+  ],
+  "environment": { "os": "Linux 6.12.94+", "node": "v22.14.0" },
+  "confidence": "HIGH",
+  "risks": ["FlowDesk satellite required npm ci of already-locked tsx; strip-types without tsx failed on .js→.ts specifiers"],
+  "limitations": [
+    "Receipt epistemic_status remains NOT_VERIFIED on builder receipts (by design)",
+    "REFACTOR phase was not claimed and not recorded"
+  ],
+  "related_spec": "openspec/specs/flowdesk-pipeline/spec.md",
+  "related_project": "PRJ-FLOWDESK",
+  "related_change": "flowdesk-lead-pipeline-snapshot"
+}

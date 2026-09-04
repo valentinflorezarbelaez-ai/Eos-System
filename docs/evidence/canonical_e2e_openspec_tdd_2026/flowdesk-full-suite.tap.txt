@@ -1,0 +1,67 @@
+
+> flowdesk@0.0.1 test
+> tsx --test tests/unit/leadService.test.ts tests/concurrency/concurrency.test.ts
+
+TAP version 13
+# (node:3674) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Concurrency & Optimistic Locking Test Suite (SQLite WAL Mode)
+    # Subtest: should prevent race condition when two writers attempt update with same expected_updated_at timestamp
+    ok 1 - should prevent race condition when two writers attempt update with same expected_updated_at timestamp
+      ---
+      duration_ms: 48.548852
+      ...
+    1..1
+ok 1 - Concurrency & Optimistic Locking Test Suite (SQLite WAL Mode)
+  ---
+  duration_ms: 49.183059
+  type: 'suite'
+  ...
+# (node:3675) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: LeadService (In-Memory :memory: Test Suite)
+    # Subtest: should create a lead and record an initial lead_activity atomically
+    ok 1 - should create a lead and record an initial lead_activity atomically
+      ---
+      duration_ms: 36.213337
+      ...
+    # Subtest: should execute status update and append activity log inside single transaction
+    ok 2 - should execute status update and append activity log inside single transaction
+      ---
+      duration_ms: 30.320933
+      ...
+    # Subtest: should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+    ok 3 - should throw OptimisticConcurrencyError and trigger HTTP 409 mapping if updated_at is stale
+      ---
+      duration_ms: 27.306279
+      ...
+    # Subtest: should count tenant leads by status for a mixed pipeline
+    ok 4 - should count tenant leads by status for a mixed pipeline
+      ---
+      duration_ms: 27.56181
+      ...
+    # Subtest: should return zero for every status when the tenant has no leads
+    ok 5 - should return zero for every status when the tenant has no leads
+      ---
+      duration_ms: 27.381068
+      ...
+    # Subtest: should isolate pipeline counts from another tenant
+    ok 6 - should isolate pipeline counts from another tenant
+      ---
+      duration_ms: 53.415162
+      ...
+    1..6
+ok 2 - LeadService (In-Memory :memory: Test Suite)
+  ---
+  duration_ms: 203.035025
+  type: 'suite'
+  ...
+1..2
+# tests 7
+# suites 2
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 340.789513

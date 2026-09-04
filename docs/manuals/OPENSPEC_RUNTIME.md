@@ -68,3 +68,39 @@ Do **not** run `openspec init` in CI. The committed `openspec/` tree is the proj
 ## Organic routing reminder
 
 File/diff size alone does not force this ceremony. Use SDD when the human asks, a proposal is accepted, or the change is substantial (ADR-0010).
+
+## Enforcement surfaces (Tranche C)
+
+ADR-0010 is enforced in code (not only docs). Operator path:
+
+| Decision | How to act |
+| --- | --- |
+| **DIRECT** | Local already-scoped fix, docs/formatting, no new contract, no external write. Do **not** spawn `/ff` / OpenSpec / mission SDD ceremony. |
+| **DELEGATED_DIRECT** | Same honesty as DIRECT, executed by a delegated actor (Mission OS local plan). Size still ignored. |
+| **SDD** | Human asked for OpenSpec/Specboot, proposal accepted, new feature/subsystem/contract, or external write. Then `/enrich-us` → `/ff` or `/propose` → `/apply` → `/verify`. |
+
+**Accidental SDD spawn** (ceremony without explicit request / accepted proposal / substantial trigger) is **fail-closed**. Override only with `forceSddOverride` / `eos mission plan --spawn-sdd --sdd-override` (or `--explicit-sdd`).
+
+### Where the gate lives
+
+| Surface | Module |
+| --- | --- |
+| Classify + spawn gate | `src/core/sdd/organic-routing-gate.js` (`classifyOrganicRoute`, `assertSddCeremonyAuthorized`) |
+| TDD receipts | `src/core/sdd/tdd-evidence-receipt.js` (`createTddPhaseReceipt`, `evaluateApplyClaim`, `auditTddReceipts`) |
+| RDD informational | `src/core/governance/rdd-review-stance.js` |
+| Mission plan / verify | `src/core/runtime/mission-runtime.js` (`planMission` spawn flag, `verifyMission` TDD audit) |
+| `/apply`–`/verify`–`/adversarial-review` adapter | `scripts/engine/spec-driven-product-loop.js` |
+| Workspace verifier | `scripts/verify-eos.js --strict` (organic gate, TDD claim, RDD deny, L0 purity) |
+| Independent harness | `scripts/engine/independent-verification-harness.js` (`auditStrictTddReceipts`) |
+
+### How to supply TDD evidence
+
+For `/apply` or any apply-complete claim when tests exist or `strict_tdd` is set:
+
+1. Record **RED** (`exit_code !== 0`) then **GREEN** (`exit_code === 0`) with the command (`node --test <file>`).
+2. Record **TRIANGULATE** (second example / negative case) when Strict TDD is in scope.
+3. Record **REFACTOR** only if you claim a refactor pass.
+4. Put receipts on the apply call (`tddReceipts`) or under `.missions/<id>/evidence/tdd/*.json`.
+5. Do **not** stamp `VERIFIED` on builder receipts. `/verify` audits receipts; missing receipts fail the verify gate.
+
+Rules: `R-ORGANIC-01`, `R-TDD-01`, `R-RDD-01` in `docs/rules/CANONICAL_RULES_INDEX.json`.

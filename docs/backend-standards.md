@@ -13,7 +13,8 @@ Layer standard for Node Control Plane code. Indexed from `docs/base-standards.md
 
 - `node --test` (`npm test`) for Control Plane.
 - TDD when tests exist or behavior is added: RED → GREEN → TRIANGULATE → REFACTOR.
-- Evidence is command output. Do not weaken tests to obtain green.
+- Evidence is command output (`src/core/sdd/tdd-evidence-receipt.js`). Do not weaken tests to obtain green.
+- Organic routing before heavy SDD spawn: `src/core/sdd/organic-routing-gate.js`. Size does not force SDD.
 
 ## Architecture
 

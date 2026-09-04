@@ -142,4 +142,29 @@ export class LeadService {
     `);
     return stmt.all(leadId, userId);
   }
+
+  countLeadsByStatus(userId: string): Record<LeadStatus, number> {
+    const counts: Record<LeadStatus, number> = {
+      NUEVO: 0,
+      CONTACTADO: 0,
+      CALIFICADO: 0,
+      GANADO: 0,
+      PERDIDO: 0,
+    };
+
+    const rows = this.db.prepare(`
+      SELECT status, COUNT(*) AS n
+      FROM leads
+      WHERE user_id = ?
+      GROUP BY status
+    `).all(userId) as unknown as Array<{ status: LeadStatus; n: number | bigint }>;
+
+    for (const row of rows) {
+      if (Object.prototype.hasOwnProperty.call(counts, row.status)) {
+        counts[row.status] = Number(row.n);
+      }
+    }
+
+    return counts;
+  }
 }

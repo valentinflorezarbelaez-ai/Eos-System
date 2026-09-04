@@ -1,0 +1,140 @@
+{
+  "mission_id": "MIS-1788500673741-214B45",
+  "change_id": "flowdesk-lead-pipeline-snapshot",
+  "missing_receipts_audit": {
+    "pass": false,
+    "in_scope": true,
+    "can_claim_verified": false,
+    "epistemic_status": "NOT_VERIFIED",
+    "code": "TDD_EVIDENCE_MISSING",
+    "missing": [
+      "RED",
+      "GREEN",
+      "TRIANGULATE"
+    ],
+    "phases_present": [],
+    "next_action": "Record TDD receipts for: RED, GREEN, TRIANGULATE (ADR-0010). Cannot claim VERIFIED."
+  },
+  "complete_receipts_audit": {
+    "pass": true,
+    "in_scope": true,
+    "can_claim_verified": false,
+    "epistemic_status": "PARTIALLY VERIFIED",
+    "code": "TDD_RECEIPTS_AUDITED",
+    "missing": [],
+    "phases_present": [
+      "RED",
+      "GREEN",
+      "TRIANGULATE"
+    ]
+  },
+  "self_certify_denied": {
+    "pass": false,
+    "in_scope": true,
+    "can_claim_verified": false,
+    "epistemic_status": "NOT_VERIFIED",
+    "code": "TDD_VERIFIED_CLAIM_DENIED",
+    "missing": [],
+    "phases_present": [
+      "RED",
+      "GREEN",
+      "TRIANGULATE"
+    ],
+    "next_action": "Receipts can be audited; they do not authorize a VERIFIED stamp without independent evidence (ADR-0010)."
+  },
+  "adapter": {
+    "enrich": "ENRICHED",
+    "ff": "ARCHIVED",
+    "apply": "TASK_APPLIED_INCREMENTALLY",
+    "apply_epistemic": "NOT_VERIFIED",
+    "apply_can_claim_verified": false,
+    "verify": {
+      "testsRun": 2,
+      "testsPassed": 0,
+      "specComplianceScore": 0,
+      "verified": false,
+      "tdd_audit": {
+        "pass": true,
+        "in_scope": true,
+        "can_claim_verified": false,
+        "epistemic_status": "PARTIALLY VERIFIED",
+        "code": "TDD_RECEIPTS_AUDITED",
+        "missing": [],
+        "phases_present": [
+          "RED",
+          "GREEN",
+          "TRIANGULATE"
+        ]
+      },
+      "epistemic_status": "PARTIALLY VERIFIED",
+      "can_claim_verified": false
+    },
+    "review": {
+      "changeId": "flowdesk-lead-pipeline-snapshot",
+      "redTeamPassed": true,
+      "securityVulnerabilities": 0,
+      "accessibilityRegressions": 0,
+      "verdict": "ADVERSARIAL_REVIEW_PASSED",
+      "findings": [
+        "No Fundacion writes observed",
+        "No root npm dependency added",
+        "Builder receipts remain NOT VERIFIED"
+      ],
+      "authorizes_delivery": false,
+      "authorizes_write": false,
+      "authorizes_merge": false,
+      "authorizes_release": false,
+      "authorizes_fundacion_write": false,
+      "authorizes_external_write": false,
+      "grants_write": false,
+      "delivery_authorized": false,
+      "stance": "INFORMATIONAL",
+      "delivery_authority": "HUMAN_HITL_WRITE_BARRIER",
+      "rule_ids": [
+        "R-RDD-01",
+        "R-BOUNDARY-01"
+      ]
+    },
+    "archive": "ARCHIVED",
+    "commit_adapter": "COMMITTED_ATOMICALLY"
+  },
+  "rdd_delivery_denied": {
+    "code": "RDD_DELIVERY_DENIED",
+    "message": "RDD_DELIVERY_DENIED: Independent review is INFORMATIONAL and does not authorize delivery, write, merge, release, or Fundacion mutation (ADR-0010 / Article III)."
+  },
+  "rdd_stamp": {
+    "changeId": "flowdesk-lead-pipeline-snapshot",
+    "verdict": "INFORMATIONAL_CLEAN",
+    "authorizes_merge": false,
+    "authorizes_delivery": false,
+    "authorizes_write": false,
+    "authorizes_release": false,
+    "authorizes_fundacion_write": false,
+    "authorizes_external_write": false,
+    "grants_write": false,
+    "delivery_authorized": false,
+    "stance": "INFORMATIONAL",
+    "delivery_authority": "HUMAN_HITL_WRITE_BARRIER",
+    "rule_ids": [
+      "R-RDD-01",
+      "R-BOUNDARY-01"
+    ]
+  },
+  "mission_verify": {
+    "valid": true,
+    "tdd_audit": {
+      "pass": true,
+      "in_scope": true,
+      "can_claim_verified": false,
+      "epistemic_status": "PARTIALLY VERIFIED",
+      "code": "TDD_RECEIPTS_AUDITED",
+      "missing": [],
+      "phases_present": [
+        "GREEN",
+        "RED",
+        "TRIANGULATE"
+      ]
+    },
+    "discrepancies": []
+  }
+}

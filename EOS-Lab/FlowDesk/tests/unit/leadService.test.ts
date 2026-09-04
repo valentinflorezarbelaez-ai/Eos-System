@@ -68,4 +68,68 @@ describe('LeadService (In-Memory :memory: Test Suite)', () => {
       (err: any) => err instanceof OptimisticConcurrencyError
     );
   });
+
+  test('should count tenant leads by status for a mixed pipeline', () => {
+    leadService.createLead(testUser.id, {
+      name: 'Nueva',
+      email: 'nueva@flowdesk.io',
+      phone: '3000000001',
+    });
+    const contacted = leadService.createLead(testUser.id, {
+      name: 'Contactada',
+      email: 'contactada@flowdesk.io',
+      phone: '3000000002',
+      status: 'CONTACTADO',
+    });
+    leadService.createLead(testUser.id, {
+      name: 'Otra contactada',
+      email: 'otra@flowdesk.io',
+      phone: '3000000003',
+      status: 'CONTACTADO',
+    });
+    assert.equal(contacted.status, 'CONTACTADO');
+
+    const snapshot = leadService.countLeadsByStatus(testUser.id);
+    assert.deepEqual(snapshot, {
+      NUEVO: 1,
+      CONTACTADO: 2,
+      CALIFICADO: 0,
+      GANADO: 0,
+      PERDIDO: 0,
+    });
+  });
+
+  test('should return zero for every status when the tenant has no leads', () => {
+    const snapshot = leadService.countLeadsByStatus(testUser.id);
+    assert.deepEqual(snapshot, {
+      NUEVO: 0,
+      CONTACTADO: 0,
+      CALIFICADO: 0,
+      GANADO: 0,
+      PERDIDO: 0,
+    });
+  });
+
+  test('should isolate pipeline counts from another tenant', () => {
+    const otherUser = authService.registerUser('other@flowdesk.io', 'secure123');
+    leadService.createLead(otherUser.id, {
+      name: 'Ajena',
+      email: 'ajena@flowdesk.io',
+      phone: '3999999999',
+      status: 'GANADO',
+    });
+    leadService.createLead(testUser.id, {
+      name: 'Propia',
+      email: 'propia@flowdesk.io',
+      phone: '3111111111',
+      status: 'PERDIDO',
+    });
+
+    const mine = leadService.countLeadsByStatus(testUser.id);
+    const theirs = leadService.countLeadsByStatus(otherUser.id);
+    assert.equal(mine.PERDIDO, 1);
+    assert.equal(mine.GANADO, 0);
+    assert.equal(theirs.GANADO, 1);
+    assert.equal(theirs.PERDIDO, 0);
+  });
 });

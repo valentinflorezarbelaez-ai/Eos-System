@@ -1,0 +1,28 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0042",
+  "claim": "Official OpenSpec CLI is available on PATH for this L0 clone.",
+  "status": "BLOCKED",
+  "scope": "scripts/openspec-cli.js host adapter. Folder layout and Mission/OpenSpec scripts remain usable.",
+  "source": "docs/evidence/canonical_e2e_openspec_tdd_2026/COMMAND_LOG.txt",
+  "timestamp": "2026-09-04T05:41:26Z",
+  "actor": "EOS Cloud Agent (canonical E2E OpenSpec+TDD loop)",
+  "action": "Invoked repo helper; did not npm install @fission-ai/openspec (L0).",
+  "command": "node scripts/openspec-cli.js --version",
+  "expected": "Either a version string (host install) or documented exit 2 when binary missing.",
+  "actual": "EXIT 2 — OpenSpec CLI is not on PATH (not installed for this L0 clone). Helper pointed at docs/manuals/OPENSPEC_RUNTIME.md and did not add dependencies.",
+  "result": "BLOCKED_OPTIONAL_HOST_CLI",
+  "artifacts": [
+    "scripts/openspec-cli.js",
+    "openspec/config.yaml",
+    "openspec/changes/flowdesk-lead-pipeline-snapshot/proposal.md"
+  ],
+  "logs": ["OPENSPEC_CLI_VERSION EXIT 2"],
+  "environment": { "os": "Linux 6.12.94+", "node": "v22.14.0" },
+  "confidence": "HIGH",
+  "risks": ["Operators may confuse missing CLI with missing OpenSpec runtime; the committed openspec/ tree is the contract"],
+  "limitations": ["openspec archive / opsx CLI verbs were not executed; archive was a documented folder merge"],
+  "related_spec": "docs/manuals/OPENSPEC_RUNTIME.md",
+  "related_project": "PRJ-EOS-MISSION-OS",
+  "related_change": "flowdesk-lead-pipeline-snapshot"
+}

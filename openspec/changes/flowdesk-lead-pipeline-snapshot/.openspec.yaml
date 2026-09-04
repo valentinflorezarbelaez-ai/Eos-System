@@ -1,0 +1,13 @@
+schema: spec-driven
+created: 2026-09-04
+goal: Add a tenant-scoped lead pipeline snapshot (counts by status) on EOS-Lab/FlowDesk so the canonical OpenSpec + Strict TDD loop can be proven on a lab target.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - EOS-Lab/FlowDesk
+  - openspec-runtime
+  - tdd-evidence-receipts
+non_goals:
+  - Fundacion writes
+  - src/core kernel mutation
+  - root npm dependencies
