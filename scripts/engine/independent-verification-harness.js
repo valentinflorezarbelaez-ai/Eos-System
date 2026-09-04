@@ -14,6 +14,17 @@ const DEFAULT_FUNDACION_PATH = 'C:\\Users\\valen\\Documents\\Fundacion';
 const DEFAULT_EVIDENCE_DIR = path.join(rootDir, 'tests/fixtures/independent-verifier/cases');
 const CONTRADICTION_LIKE = new Set(['CONTRADICTION', 'INTEGRITY_FAILURE']);
 const HALT_WORTHY = new Set(['CONTRADICTION', 'INTEGRITY_FAILURE', 'UNSUPPORTED_CLAIM']);
+const IGNORED_DIRS = new Set([
+  'node_modules',
+  '.git',
+  '.next',
+  'dist',
+  'build',
+  'out',
+  'coverage',
+  '.turbo',
+  '.cache'
+]);
 
 function sha256Buffer(buf) {
   return createHash('sha256').update(buf).digest('hex');
@@ -68,7 +79,9 @@ export class IndependentVerificationHarness {
         const relPath = rel ? `${rel}/${name}` : name;
         const st = fs.lstatSync(full);
         if (st.isDirectory()) {
-          walk(full, relPath);
+          if (!IGNORED_DIRS.has(name)) {
+            walk(full, relPath);
+          }
           continue;
         }
         if (st.isFile()) {
