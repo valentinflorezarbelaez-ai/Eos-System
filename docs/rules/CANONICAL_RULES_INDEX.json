@@ -52,6 +52,27 @@
       "source": "docs/schemas/local",
       "statement": "Mission OS local MVP validates direction and mission-package against local schemas before plan advancement.",
       "enforcement": ["SchemaValidator", "MissionRuntime"]
+    },
+    {
+      "rule_id": "R-ORGANIC-01",
+      "title": "Organic routing gate",
+      "source": "docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md",
+      "statement": "Classify work as DIRECT, DELEGATED_DIRECT, or SDD before spawning heavy SDD ceremony. File/diff size alone must not force SDD. Accidental SDD spawn is fail-closed unless explicitSddRequest, acceptedProposal, or forceSddOverride.",
+      "enforcement": ["organic-routing-gate", "MissionRuntime.planMission"]
+    },
+    {
+      "rule_id": "R-TDD-01",
+      "title": "Strict TDD evidence receipts",
+      "source": "docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md",
+      "statement": "Apply-complete claims require auditable RED→GREEN receipts (TRIANGULATE/REFACTOR when Strict TDD or tests exist). Missing receipts cannot claim VERIFIED and cannot pass the verify gate.",
+      "enforcement": ["tdd-evidence-receipt", "MissionRuntime.verifyMission", "verify-eos --strict"]
+    },
+    {
+      "rule_id": "R-RDD-01",
+      "title": "RDD review is informational",
+      "source": "docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md",
+      "statement": "Independent or adversarial review does not authorize delivery, write, merge, release, or Fundacion mutation. Delivery remains human / HITL / write-barrier.",
+      "enforcement": ["rdd-review-stance", "OpenSpecLifecycleAdapter.executeAdversarialReview"]
     }
   ]
 }
