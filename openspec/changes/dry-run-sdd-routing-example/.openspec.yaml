@@ -1,0 +1,6 @@
+schema: spec-driven
+created: 2026-09-04
+goal: Dry-run scaffold that demonstrates the OpenSpec folder layout for EOS without implementing a Control Plane engine.
+affected_areas:
+  - openspec-runtime
+  - engineering-discipline

@@ -14,7 +14,7 @@ Enforces specification-first engineering for non-trivial features, refactoring, 
 
 `/verify` is independent of `/apply` (BUILDER ≠ VERIFIER). `/adversarial-review` is INFORMATIONAL (RDD) and does not authorize delivery.
 
-SSOT: `docs/base-standards.md`. Do not mutate `CONSTITUTION.md` without PO approval.
+SSOT: `docs/base-standards.md`, `docs/backend-standards.md`. Agent/skill index: `ai-specs/`. New OpenSpec changes: `openspec/changes/`. Runbook: `docs/manuals/OPENSPEC_RUNTIME.md`. Slash docs: `.cursor/commands/`. Do not mutate `CONSTITUTION.md` without PO approval. Do not replace `node bin/eos.js` / `npm run eos:mission`.
 
 ## Workflow
 

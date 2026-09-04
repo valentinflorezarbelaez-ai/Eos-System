@@ -72,7 +72,7 @@ Cycle when SDD applies: `/enrich-us` → `/ff` or `/propose` → `/apply` → `/
 
 Independent review (RDD) is informational. It does **not** authorize commit-to-main, merge, release, or Fundación writes.
 
-These slash names are operator vocabulary. They do not replace `node bin/eos.js` / `npm run eos:mission`.
+These slash names are operator vocabulary. They do not replace `node bin/eos.js` / `npm run eos:mission`. OpenSpec folders and optional CLI: `docs/manuals/OPENSPEC_RUNTIME.md`.
 
 ## Non-goals
 

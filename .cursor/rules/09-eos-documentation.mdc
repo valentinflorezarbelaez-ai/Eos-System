@@ -36,7 +36,7 @@ System artifacts: professional English. Do not paste the full constitution into 
 
 ## Specs and evidence
 
-- OpenSpec filenames: `proposal.md`, `spec.md`, `design.md`, `tasks.md`.
+- OpenSpec filenames: `proposal.md`, `spec.md`, `design.md`, `tasks.md`. New changes: `openspec/changes/`. Historical specs stay in `docs/specs/`. See ADR-0010 and `docs/manuals/OPENSPEC_RUNTIME.md`.
 - Record verification in `docs/evidence/` when the mission requires a sealed claim. Mark unverified text `NOT VERIFIED`.
 - Estimate ≠ quote. Pricing needs a legal disclaimer.
 - Do not claim `PRODUCTION_READY` in docs without executable evidence and PO sign-off.
