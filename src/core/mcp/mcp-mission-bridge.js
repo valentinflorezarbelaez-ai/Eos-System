@@ -13,6 +13,7 @@ import { IntegrationGatekeeper } from '../governance/integration-gatekeeper.js';
 import { SchemaValidator } from '../contracts/schema-validator.js';
 import { CanonicalRulesIndex } from '../rules/canonical-rules-index.js';
 import { calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
+import { MissionLedger } from '../../../scripts/engine/mission-ledger.js';
 
 export function normalizeToolName(name = '') {
   if (!name || typeof name !== 'string') return '';
@@ -237,30 +238,6 @@ export class McpMissionBridge {
     };
   }
 
-  recordEvidence(args = {}) {
-    const missionId = args.missionId || args.mission_id;
-    if (!missionId) {
-      const err = new Error('MISSING_MISSION_ID');
-      err.code = 'MISSING_MISSION_ID';
-      throw err;
-    }
-    const evidenceDir = path.join(this.runtime.getMissionDir(missionId), 'evidence');
-    const id = args.id || `EVD-${Date.now()}`;
-    const receipt = {
-      id,
-      mission_id: missionId,
-      status: args.status || 'RECORDED',
-      category: args.category || 'MANUAL',
-      recorded_at: new Date().toISOString(),
-      payload: args.payload || {},
-      epistemic_class: 'RECORDED_NOT_VERIFIED'
-    };
-    fs.mkdirSync(evidenceDir, { recursive: true });
-    const file = path.join(evidenceDir, `${id}.json`);
-    fs.writeFileSync(file, JSON.stringify(receipt, null, 2), 'utf8');
-    return { evidence: receipt, path: file };
-  }
-
   getEvidence(args = {}) {
     const id = args.id || args.evidenceId || args.evidence_id;
     const missionId = args.missionId || args.mission_id;
@@ -320,4 +297,36 @@ export class McpMissionBridge {
     fs.writeFileSync(file, JSON.stringify(receipt, null, 2), 'utf8');
     return { evidence: receipt, path: file };
   }
+
+  ledgerGetFeatures(args = {}) {
+    const missionId = args.missionId || args.id;
+    if (!missionId) return null;
+    const ledger = new MissionLedger({
+      baseDir: path.join(this.baseDir, '.eos', 'ledger'),
+      legacyDir: path.join(this.baseDir, 'EOS-MISSION-CONTROL')
+    });
+    return ledger.getFeatureList(missionId);
+  }
+
+  ledgerUpdateFeature(args = {}) {
+    const missionId = args.missionId || args.id;
+    const featureId = args.featureId;
+    const newStatus = args.newStatus;
+    const evidenceReceipt = args.evidenceReceipt || args.evidenceId || null;
+    const ledger = new MissionLedger({
+      baseDir: path.join(this.baseDir, '.eos', 'ledger'),
+      legacyDir: path.join(this.baseDir, 'EOS-MISSION-CONTROL')
+    });
+    return ledger.updateFeatureStatus(missionId, featureId, newStatus, evidenceReceipt);
+  }
+
+  missionRecover(args = {}) {
+    const missionId = args.missionId || args.id;
+    const ledger = new MissionLedger({
+      baseDir: path.join(this.baseDir, '.eos', 'ledger'),
+      legacyDir: path.join(this.baseDir, 'EOS-MISSION-CONTROL')
+    });
+    return ledger.recover(missionId);
+  }
 }
+

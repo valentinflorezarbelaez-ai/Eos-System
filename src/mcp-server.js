@@ -1113,6 +1113,17 @@ class EosMcpServer {
       };
     }
 
+    const guard = this.evaluateToolGuard(toolDef, env);
+    if (!guard.allowed) {
+      return {
+        tool: toolDef.name,
+        status: 'DENIED',
+        executed: false,
+        sideEffects: 'NONE',
+        reason: guard.reason
+      };
+    }
+
     try {
       this.schemaValidator.validate(name, args);
     } catch (schemaErr) {

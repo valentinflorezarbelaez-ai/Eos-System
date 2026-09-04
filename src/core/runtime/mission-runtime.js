@@ -31,6 +31,15 @@ import {
   ORGANIC_ROUTES
 } from '../sdd/organic-routing-gate.js';
 import { auditTddReceipts } from '../sdd/tdd-evidence-receipt.js';
+import { GoldenBlueprintEngine } from '../blueprints/golden-blueprint-engine.js';
+import { AutonomousSandboxEvaluator } from '../sandbox/autonomous-sandbox-evaluator.js';
+import { EvolutionaryStrategyOptimizer } from '../optimization/evolutionary-strategy-optimizer.js';
+import { EpistemicBkmEngine } from '../memory/epistemic-bkm-engine.js';
+import { ByzantineConsensusEngine } from '../consensus/byzantine-consensus-engine.js';
+import { ContractDriftMonitor } from '../governance/contract-drift-monitor.js';
+import { AutonomousScaffolderEngine } from '../scaffolding/autonomous-scaffolder-engine.js';
+import { TerminalHudEngine } from '../observability/terminal-hud-engine.js';
+import { ContextualSkillRouterEngine } from '../discovery/contextual-skill-router-engine.js';
 
 export class MissionRuntime {
   constructor(options = {}) {
@@ -48,6 +57,15 @@ export class MissionRuntime {
     this.integrationGate = options.integrationGate || new IntegrationGatekeeper();
     this.schemas = options.schemas || new SchemaValidator();
     this.rules = options.rules || new CanonicalRulesIndex();
+    this.blueprintEngine = options.blueprintEngine || new GoldenBlueprintEngine();
+    this.sandboxEvaluator = options.sandboxEvaluator || new AutonomousSandboxEvaluator();
+    this.evolutionOptimizer = options.evolutionOptimizer || new EvolutionaryStrategyOptimizer();
+    this.bkm = options.bkm || new EpistemicBkmEngine();
+    this.consensus = options.consensus || new ByzantineConsensusEngine();
+    this.driftMonitor = options.driftMonitor || new ContractDriftMonitor();
+    this.scaffolder = options.scaffolder || new AutonomousScaffolderEngine();
+    this.hud = options.hud || new TerminalHudEngine();
+    this.skillRouter = options.skillRouter || new ContextualSkillRouterEngine();
     this.allowLocalDirectorReceipt = options.allowLocalDirectorReceipt !== false;
   }
 
