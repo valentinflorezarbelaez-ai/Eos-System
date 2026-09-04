@@ -6,6 +6,15 @@
 
 import { MissionRuntime } from '../core/runtime/mission-runtime.js';
 import { TutorMaestro } from '../core/tutor/tutor-maestro.js';
+import { runOperatorDoctor, formatDoctorReport } from '../core/runtime/operator-doctor.js';
+import { listLocalMissions, suggestNextAction, formatNextReport, classifyApplyBand } from '../core/runtime/operator-next.js';
+import { resolveControlPlaneRoot } from '../core/runtime/control-plane-root.js';
+import { loadRecentLessons } from '../core/runtime/mission-learning.js';
+import {
+  ProjectPipelineRunner,
+  parseOrchestrateArgs,
+  PIPELINE_PHASES
+} from '../core/runtime/project-pipeline-runner.js';
 import fs from 'node:fs';
 
 export class MissionCLI {
@@ -20,8 +29,12 @@ export class MissionCLI {
    * @returns {Object} { success: boolean, output: string, data?: Object }
    */
   async run(argv = []) {
-    if (argv.length === 0 || argv[0] === '--help' || argv[0] === '-h') {
+    if (argv[0] === '--help' || argv[0] === '-h') {
       return { success: true, output: this.getHelp() };
+    }
+
+    if (argv.length === 0 || argv[0] === 'next' || argv[0] === 'n') {
+      return this.handleNextCommand(argv);
     }
 
     const command = argv[0];
@@ -42,10 +55,66 @@ export class MissionCLI {
       return this.handleDoctorCommand();
     }
 
+    if (command === 'orchestrate' || command === 'o') {
+      return this.handleOrchestrateCommand(argv.slice(1));
+    }
     return {
       success: false,
       output: `Unknown command: '${command}'. Run 'eos --help' for usage.`
     };
+  }
+
+  /**
+   * eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
+   */
+  async handleOrchestrateCommand(args = []) {
+    const { projectId, phase } = parseOrchestrateArgs(args);
+    if (!projectId) {
+      return {
+        success: false,
+        output: `Error: Missing --project. Usage: eos orchestrate --project <PROJECT_ID> --pipeline [${PIPELINE_PHASES.join('|')}]`
+      };
+    }
+
+    const root = resolveControlPlaneRoot({ cwd: process.cwd() });
+    const pre = this.tutor.explainBefore({
+      action_id: 'eos.orchestrate',
+      objective: `Run unified pipeline phase ${phase} for ${projectId}`,
+      concept: 'ProjectPipelineRunner — contract → auditors → satellite verify → EVD SHA-256',
+      scope: ['docs/projects/registrations/', 'docs/evidence/', projectId],
+      cwd: root,
+      rationale: 'Removes manual terminal friction across the 21-step constitution phases',
+      risks: ['Executes satellite lint/build/test when path is available'],
+      expected_evidence: ['exitCode 0', 'EVD sealed with sha256-'],
+      rollback: 'Delete generated EVD if run was exploratory',
+      hitl_status: 'NOT_REQUIRED'
+    });
+
+    try {
+      const runner = new ProjectPipelineRunner({ controlPlaneRoot: root });
+      const result = await runner.run(projectId, phase);
+      const post = this.tutor.explainAfter(
+        { action_id: 'eos.orchestrate' },
+        {
+          observed: `${result.projectId}/${result.phase} → ${result.success ? 'VERIFIED' : 'FAILED'} (${result.sha256})`,
+          exit_code: result.exitCode,
+          classification: result.success ? 'VERIFIED' : 'RISK',
+          interpretation: 'Unified pipeline completed without manual phase handoff',
+          next_decision: result.success ? 'Review sealed evidence' : 'Inspect auditor/satellite failures'
+        }
+      );
+
+      return {
+        success: result.success,
+        output: `${pre}\n\n🛰️ Pipeline ${result.phase} for ${result.projectId}\n- Auditors: ${result.steps.auditors?.status}\n- Satellite: ${result.steps.satelliteValidation?.status}\n- Evidence: ${result.evidencePath}\n- SHA-256: ${result.sha256}\n- Exit: ${result.exitCode}\n\n${post}`,
+        data: result
+      };
+    } catch (err) {
+      return {
+        success: false,
+        output: `Orchestrate failed: ${err.message}`
+      };
+    }
   }
 
   handleMissionCommand(args = []) {
@@ -176,10 +245,31 @@ export class MissionCLI {
         const targetIdx = args.indexOf('--target');
         const target = targetIdx !== -1 ? args[targetIdx + 1] : 'cursor';
 
+        const pre = this.tutor.explainBefore({
+          action_id: 'mission.package',
+          objective: 'Compile a Cursor operator handoff from the planned mission',
+          concept: 'MissionRuntime.packageMission → CURSOR_PROMPT.md',
+          scope: ['.missions/<id>/cursor/'],
+          rationale: 'Gives Cursor a bounded prompt without mutating Fundación',
+          risks: ['Writes cursor/ artifacts only'],
+          expected_evidence: ['CURSOR_PROMPT.md', 'manifest hash'],
+          rollback: 'Delete .missions/<id>/cursor if unused',
+          hitl_status: 'NOT_REQUIRED'
+        });
         const res = this.runtime.packageMission(missionId, target);
+        const post = this.tutor.explainAfter(
+          { action_id: 'mission.package' },
+          {
+            observed: `packaged ${res.mission_id} target=${res.target}`,
+            exit_code: 0,
+            classification: 'MEASURED',
+            interpretation: 'Operator package sealed; execute in Cursor then report',
+            next_decision: `Open ${res.cursor_prompt_path} then eos mission report ${res.mission_id}`
+          }
+        );
         return {
           success: true,
-          output: `📦 Cursor Mission Package Generated [${res.mission_id}]:\n- Target: ${res.target}\n- Manifest SHA-256: ${res.manifest_hash}\n- Operator Prompt: ${res.cursor_prompt_path}`,
+          output: `${pre}\n\n📦 Cursor Mission Package Generated [${res.mission_id}]:\n- Target: ${res.target}\n- Manifest SHA-256: ${res.manifest_hash}\n- Operator Prompt: ${res.cursor_prompt_path}\n\n${post}`,
           data: res
         };
       }
@@ -345,51 +435,86 @@ export class MissionCLI {
     };
   }
 
-  handleDoctorCommand() {
-    const checks = [];
-    const fail = (id, detail) => {
-      checks.push({ id, ok: false, detail });
-    };
-    const pass = (id, detail) => {
-      checks.push({ id, ok: true, detail });
-    };
+  handleNextCommand(argv = []) {
+    const root = resolveControlPlaneRoot();
+    const doctor = runOperatorDoctor({ root });
+    const missions = listLocalMissions(this.runtime.missionsRoot);
+    const suggestion = suggestNextAction({ doctorOk: doctor.ok, missions });
+    const lessonCount = loadRecentLessons(root, 500).length;
+    const apply = argv.includes('--apply');
+    const applyBand = classifyApplyBand(suggestion.command);
+    const card = formatNextReport({ doctor, suggestion, missions, lessonCount });
 
-    try {
-      const help = this.getHelp();
-      pass('CLI_HELP', 'Mission CLI help renders');
-      const home = process.env.HOME || process.env.USERPROFILE || '';
-      if (home && help.includes(home)) {
-        fail('HOMEDIR_LEAK', `Help text contains homedir ${home}`);
-      } else {
-        pass('HOMEDIR_LEAK', 'NO');
-      }
-    } catch (e) {
-      fail('CLI_HELP', e.message);
+    if (!apply) {
+      return {
+        success: doctor.ok,
+        output: card,
+        data: { doctor, missions, suggestion, lessonCount, apply_band: applyBand, applied: false }
+      };
     }
 
-    try {
-      this.runtime.schemas.loadSchema('direction.local.schema.json');
-      this.runtime.schemas.loadSchema('mission-package.local.schema.json');
-      this.runtime.schemas.loadSchema('hitl-receipt.local.schema.json');
-      pass('LOCAL_SCHEMAS', 'direction, mission-package, hitl-receipt load');
-    } catch (e) {
-      fail('LOCAL_SCHEMAS', e.message);
+    if (applyBand !== 'LOW_RISK') {
+      return {
+        success: true,
+        output: `${card}\nAPPLY: HITL_REQUIRED\nRUN MANUALLY: ${suggestion.command}`,
+        data: { doctor, missions, suggestion, lessonCount, apply_band: applyBand, applied: false, hitl_required: true }
+      };
     }
 
-    try {
-      const cited = this.runtime.rules.cite(['R-ATS-01', 'R-HITL-01', 'R-BOUNDARY-01']);
-      if (cited.length < 3) fail('RULES_INDEX', `expected 3 citations, got ${cited.length}`);
-      else pass('RULES_INDEX', cited.map((c) => c.split(':')[0]).join(', '));
-    } catch (e) {
-      fail('RULES_INDEX', e.message);
-    }
-
-    const allOk = checks.every((c) => c.ok);
-    const lines = checks.map((c) => `${c.ok ? 'PASS' : 'FAIL'}  ${c.id}: ${c.detail}`);
+    const applied = this._applyLowRiskSuggestion(suggestion);
     return {
-      success: allOk,
-      output: `EOS doctor\n${lines.join('\n')}\nVERDICT: ${allOk ? 'PASS' : 'FAIL'}\nHOMEDIR_LEAK: ${checks.find((c) => c.id === 'HOMEDIR_LEAK')?.ok ? 'NO' : 'YES'}`,
-      data: { checks, verdict: allOk ? 'PASS' : 'FAIL' }
+      success: applied.success,
+      output: `${card}\nAPPLY: EXECUTED\n${applied.output}`,
+      data: { doctor, missions, suggestion, lessonCount, apply_band: applyBand, applied: true, apply_result: applied.data }
+    };
+  }
+
+  _applyLowRiskSuggestion(suggestion) {
+    const cmd = suggestion.command || '';
+    if (cmd === 'eos doctor') {
+      return this.handleDoctorCommand();
+    }
+    const inspect = cmd.match(/^eos mission inspect\s+(\S+)/);
+    if (inspect) {
+      return this.handleMissionCommand(['inspect', inspect[1]]);
+    }
+    const report = cmd.match(/^eos mission report\s+(\S+)/);
+    if (report) {
+      return this.handleMissionCommand(['report', report[1]]);
+    }
+    return {
+      success: false,
+      output: `APPLY_REFUSED: unrecognized low-risk command ${cmd}`
+    };
+  }
+
+  handleDoctorCommand() {
+    const root = resolveControlPlaneRoot();
+    const report = runOperatorDoctor({ root });
+    const pre = this.tutor.explainBefore({
+      action_id: 'eos.doctor',
+      objective: 'Verify the local control plane is pinned to this repo, not the user home folder',
+      concept: 'OperatorDoctor — read-only file and MCP pin checks',
+      scope: ['bin/eos.js', 'src/mcp-server.js', '.cursor/mcp.json'],
+      cwd: root,
+      rationale: 'A homedir leak makes MCP report 0 missions and look like simulation',
+      risks: ['None — read only'],
+      expected_evidence: ['VERDICT PASS', 'HOMEDIR_LEAK NO'],
+      rollback: 'No mutation',
+      hitl_status: 'NOT_REQUIRED'
+    });
+    const after = this.tutor.explainAfter(
+      { action_id: 'eos.doctor' },
+      {
+        observed: report.ok ? 'Control plane healthy' : `Failed: ${report.failed.join(', ')}`,
+        classification: report.ok ? 'VERIFIED' : 'RISK',
+        next_decision: report.ok ? 'Create or inspect a mission' : 'Fix MCP cwd/args to the EOS repo'
+      }
+    );
+    return {
+      success: report.ok,
+      output: `${pre}\n\n${formatDoctorReport(report)}\n\n${after}`,
+      data: report
     };
   }
 
@@ -400,9 +525,29 @@ EOS CONTROL PLANE CLI (v3.1.0) — Autonomous Engineering Governance
 ================================================================================
 
 USAGE:
+  eos
+  eos next
+  eos next --apply
+  eos doctor
+  eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
   eos mission <command> [options]
+  eos role list
 
 COMMANDS:
+  eos / eos next
+      Suggest the next local governed command from doctor + mission phase.
+
+  eos next --apply
+      Execute the next command only if APPLY_BAND is LOW_RISK (doctor, inspect, report).
+      create/plan/package/submit/close stay HITL_REQUIRED.
+
+  eos doctor
+      Read-only check: control-plane files, MCP pin, no homedir leak.
+
+  eos orchestrate --project <PROJECT_ID> --pipeline <phase>
+      Unified pipeline runner: registration contract → concurrent auditors →
+      satellite lint/build/test validation → cryptographic EVD seal.
+
   eos mission create --goal "<text>" [--project <path>]
       Initializes a new mission, discovers project profile, and creates .missions/<id>/
 

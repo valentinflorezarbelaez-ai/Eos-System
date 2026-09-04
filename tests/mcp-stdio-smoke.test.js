@@ -1,14 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 import { EosMcpServer, CANONICAL_TOOLS } from '../src/mcp-server.js';
+import { resolveControlPlaneRoot } from '../src/core/runtime/control-plane-root.js';
 
-test('MCP-01: tools/list returns exactly 20 canonical tools', () => {
-  assert.equal(CANONICAL_TOOLS.length, 20);
+test('MCP-01: tools/list returns exactly 78 canonical tools', () => {
+  assert.equal(CANONICAL_TOOLS.length, 78);
   const names = CANONICAL_TOOLS.map(t => t.name);
   assert.ok(names.includes('eos.context.compile'));
   assert.ok(names.includes('eos.ledger.get_features'));
   assert.ok(names.includes('eos.authority.check'));
   assert.ok(names.includes('eos.mission.recover'));
+  assert.ok(names.includes('eos.blueprint.run'));
+  assert.ok(names.includes('eos.scaffolder.generate'));
+  assert.ok(names.includes('eos.scaffolder.execute'));
+  assert.ok(names.includes('eos.orchestrator.rollback'));
+  assert.ok(names.includes('eos.core.triamazikamno.validate'));
+  assert.ok(names.includes('eos.audit.tescohan.scan'));
+  assert.ok(names.includes('eos.skill.route'));
 });
 
 test('MCP-02: tools/call eos.authority.check executes AuthorityAdapter', async () => {
@@ -60,4 +70,32 @@ test('MCP-06: workspace.discover is wired (MEASURED)', async () => {
   assert.equal(res.status, 'SUCCESS');
   assert.equal(res.executed, true);
   assert.ok(res.workspace.has_mcp_server);
+});
+
+test('MCP-07: control-plane root is the repo, not a random process.cwd()', async () => {
+  const root = resolveControlPlaneRoot();
+  assert.equal(fs.existsSync(path.join(root, 'src', 'mcp-server.js')), true);
+  assert.equal(fs.existsSync(path.join(root, 'bin', 'eos.js')), true);
+  const server = new EosMcpServer();
+  const res = await server.handleToolCall('eos.mission.status', {});
+  assert.equal(res.status, 'SUCCESS');
+  assert.equal(path.normalize(res.mission_status.control_plane_root), path.normalize(root));
+  assert.equal(res.mission_status.homedir_leak, false);
+});
+
+test('MCP-08: no canonical tool returns SIMULATION_ONLY', async () => {
+  const server = new EosMcpServer();
+  const env = {
+    EOS_MODE: 'read-only',
+    EOS_AUTONOMY_LEVEL: 'LEVEL_0',
+    EOS_ALLOW_EXTERNAL_SIDE_EFFECTS: 'false'
+  };
+  for (const tool of CANONICAL_TOOLS) {
+    const res = await server.handleToolCall(tool.name, {}, env);
+    assert.notEqual(
+      res.status,
+      'SIMULATION_ONLY',
+      `${tool.name} must not fall through to simulation`
+    );
+  }
 });

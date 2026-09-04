@@ -1,0 +1,70 @@
+{
+  "id": "EVD-0060",
+  "evidenceId": "EVD-0060",
+  "claim": "Pipeline audit for PRJ-APP-FUERZA completed with status VERIFIED",
+  "status": "VERIFIED",
+  "scope": "PRJ-APP-FUERZA / pipeline:audit",
+  "source": "EOS ProjectPipelineRunner",
+  "timestamp": "2026-09-04T18:15:40.225Z",
+  "actor": "EOS ProjectPipelineRunner",
+  "action": "orchestrate --project PRJ-APP-FUERZA --pipeline audit",
+  "command": "node bin/eos-orchestrator.js run --project PRJ-APP-FUERZA --phase audit",
+  "expected": "Auditors VERIFIED; satellite validation PASS or control-plane proxy; EVD sealed",
+  "actual": "VERIFIED",
+  "result": "PASS",
+  "confidence": "HIGH",
+  "sha256": "sha256-1a2b8716ad03488c69f9a0064cb6d7ee0f52bff5660dfbd0e247242d34de1192",
+  "digest": "sha256-1a2b8716ad03488c69f9a0064cb6d7ee0f52bff5660dfbd0e247242d34de1192",
+  "data": {
+    "projectId": "PRJ-APP-FUERZA",
+    "phase": "audit",
+    "registrationPath": "C:\\Users\\valen\\Documents\\Eos system\\docs\\projects\\registrations\\app-fuerza.json",
+    "technicalStatus": "AUDIT_EXECUTED",
+    "auditors": {
+      "status": "VERIFIED",
+      "core": [
+        {
+          "name": "architecture",
+          "status": "VERIFIED",
+          "exitCode": 0
+        },
+        {
+          "name": "quality",
+          "status": "VERIFIED",
+          "exitCode": 0
+        },
+        {
+          "name": "security",
+          "status": "VERIFIED",
+          "exitCode": 0
+        }
+      ],
+      "evidenceHash": "sha256-5d0c11a385dc01df9c46ba7a5c2b7f1c4f6cfc47327d8908e7df272266cc77a5"
+    },
+    "satelliteValidation": {
+      "status": "DEGRADED_CONTROL_PLANE_PROXY",
+      "mode": "CONTROL_PLANE_PROXY",
+      "reason": "Satellite commands skipped or unavailable; validated control-plane proxies",
+      "proxyResults": [
+        {
+          "path": "src/app-fuerza/core/timers.js",
+          "exists": true
+        },
+        {
+          "path": "src/app-fuerza/core/sync-wal.js",
+          "exists": true
+        }
+      ],
+      "commandResults": []
+    },
+    "confirmedEvidence": {
+      "status": "CONFIRMED",
+      "evidenceId": "EVD-0007",
+      "path": "C:\\Users\\valen\\Documents\\Eos system\\docs\\evidence\\EVD-0007.json",
+      "sha256": "sha256-2ef327e8969521dc156c9ed4dbf91b7dae801cbc0487fdbd3a784f00db00b323",
+      "recordedStatus": "PRODUCTION_READY_WITHIN_TESTED_SCOPE",
+      "result": "PASS"
+    },
+    "pipelineStatus": "VERIFIED"
+  }
+}

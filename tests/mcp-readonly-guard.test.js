@@ -157,8 +157,8 @@ test('GUARD-07: Provider tools stay NOT_CONFIGURED; discover is wired', async ()
   assert.equal(res2.sideEffects, 'NONE');
 });
 
-test('GUARD-08: All 20 canonical tools have sideEffects and requiredAuthority metadata defined', () => {
-  assert.equal(CANONICAL_TOOLS.length, 20);
+test('GUARD-08: All 78 canonical tools have sideEffects and requiredAuthority metadata defined', () => {
+  assert.equal(CANONICAL_TOOLS.length, 78);
   for (const tool of CANONICAL_TOOLS) {
     assert.ok(tool.name, 'Tool must have name');
     assert.ok(tool.category, 'Tool must have category');
