@@ -8,6 +8,14 @@ description: "Spec Driven Development workflow skill for EOS workspace."
 ## Purpose
 Enforces specification-first engineering for non-trivial features, refactoring, and subsystem implementations.
 
+**When to use this skill:** follow organic routing in `docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md`. SDD is the default ceremony for substantial changes or when the human requests Specboot/OpenSpec. File/diff size alone does not force SDD. Trivial local fixes may go DIRECT.
+
+**LIDR cycle (substantial changes):** `/enrich-us` → `/ff` or `/propose` → `/apply` → `/verify` → `/adversarial-review` → `/archive` → `/commit`.
+
+`/verify` is independent of `/apply` (BUILDER ≠ VERIFIER). `/adversarial-review` is INFORMATIONAL (RDD) and does not authorize delivery.
+
+SSOT: `docs/base-standards.md`. Do not mutate `CONSTITUTION.md` without PO approval.
+
 ## Workflow
 
 1. **Specification Phase**:

@@ -9,6 +9,8 @@ Engineering in this workspace is specification-first, test-driven, and increment
 
 ## Canonical sources
 
+- `docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md` — LIDR Specboot + Gentleman DIRECT vs SDD, TDD evidence, RDD
+- `docs/base-standards.md` — coding/docs SSOT index
 - `docs/core/WORLD_CLASS_ENGINEERING_PIPELINE.md` — 21-step lifecycle
 - `.agents/skills/sdd/SKILL.md` — Spec Driven Development
 - `docs/specs/` — specifications (`proposal.md` → `spec.md` → `design.md` → `tasks.md`)
@@ -29,11 +31,11 @@ For non-trivial features, refactoring, or new subsystems:
 2. Record ADRs for non-obvious architectural trade-offs.
 3. Then implement the smallest slice that satisfies one task.
 
-Do not write production code before the OpenSpec for that change is in place, unless the human asked for a trivial, local, already-specified fix.
+Do not write production code before the OpenSpec for that change is in place, unless organic routing says DIRECT (human asked for a trivial local fix; file/diff size alone does not force SDD). See ADR-0010.
 
 ## TDD cycle
 
-`RED` (failing test) → `GREEN` (minimal implementation) → `REFACTOR` → `VERIFY`.
+`RED` (failing test) → `GREEN` (minimal implementation) → `TRIANGULATE` → `REFACTOR` → `VERIFY`.
 
 - One purpose, one test, one commit when practical.
 - Do not weaken or delete tests to obtain green.

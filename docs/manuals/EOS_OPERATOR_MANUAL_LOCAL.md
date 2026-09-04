@@ -59,6 +59,21 @@ Create/plan/close print Tutor pre/post explanations. `mission plan` walks the ca
 3. Disposable fixtures: delete the temp project directory.
 4. Never `git reset --hard` on main to “fix” Mission OS.
 
+## SDD vs DIRECT (organic routing)
+
+When changing this repo (or an authorized target), pick the smallest honest route. **File/diff size alone does not force SDD.** Canonical rule: `docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md`.
+
+| Route | Use when |
+| --- | --- |
+| **DIRECT** | Local already-scoped fix, docs/formatting, no new subsystem or external write. |
+| **SDD** (LIDR Specboot) | Human asks for OpenSpec / Specboot; proposal already accepted; new feature, architecture, public contract; or any external write (plus HITL / write barrier). |
+
+Cycle when SDD applies: `/enrich-us` → `/ff` or `/propose` → `/apply` → `/verify` → `/adversarial-review` → `/archive` → `/commit`.
+
+Independent review (RDD) is informational. It does **not** authorize commit-to-main, merge, release, or Fundación writes.
+
+These slash names are operator vocabulary. They do not replace `node bin/eos.js` / `npm run eos:mission`.
+
 ## Non-goals
 
 Production, credentials, network APIs, merge to main, Fundación mutation.
