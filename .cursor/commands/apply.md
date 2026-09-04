@@ -8,7 +8,7 @@ LIDR Specboot — implement **one** task with strict TDD evidence.
 ## Do
 
 1. RED → GREEN → TRIANGULATE → REFACTOR.
-2. Record command output (`node --test <file>` or the nearest suite). Narrative is `NOT VERIFIED`.
+2. Record command output (`node --test <file>` or the nearest suite) as TDD receipts (`src/core/sdd/tdd-evidence-receipt.js`). Narrative is `NOT VERIFIED`. Missing receipts fail `/verify`.
 3. Update OpenSpec artifacts (proposal / spec / design / tasks) so they match what was built. Do not leave a code-only tree.
 4. Do not self-certify. Leave `/verify` to a separate pass (BUILDER ≠ VERIFIER).
 

@@ -1,6 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { auditTddReceipts } from '../../src/core/sdd/tdd-evidence-receipt.js';
+import { evaluateSddCeremonySpawn } from '../../src/core/sdd/organic-routing-gate.js';
+import { assertRddDoesNotGrantDelivery } from '../../src/core/governance/rdd-review-stance.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,6 +39,27 @@ export class IndependentVerificationHarness {
     if (claim.externalVerified) return { independenceLevel: 'I4', status: 'EMPIRICALLY_VALIDATED' };
     if (claim.independentLocalVerified) return { independenceLevel: 'I2', status: 'INDEPENDENTLY_CORROBORATED' };
     return { independenceLevel: 'I1', status: 'INTERNALLY_VERIFIED' };
+  }
+
+  /**
+   * Independent TDD receipt audit (ADR-0010). Used when Strict TDD is in scope.
+   */
+  auditStrictTddReceipts(receipts = [], options = {}) {
+    return auditTddReceipts({
+      receipts,
+      strictTdd: options.strictTdd !== false,
+      testsExist: options.testsExist !== false,
+      requireRefactor: options.requireRefactor === true,
+      claimVerified: options.claimVerified === true
+    });
+  }
+
+  evaluateOrganicSpawn(intent = {}) {
+    return evaluateSddCeremonySpawn(intent);
+  }
+
+  evaluateRddStance(review = {}) {
+    return assertRddDoesNotGrantDelivery(review);
   }
 
   evaluateContradictionCase(eosSignal, verifierSignal, evidencePresent, evidenceTampered) {

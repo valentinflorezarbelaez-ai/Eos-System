@@ -2,6 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { assertSddCeremonyAuthorized } from '../../src/core/sdd/organic-routing-gate.js';
+import { assertApplyEvidenceComplete, auditTddReceipts } from '../../src/core/sdd/tdd-evidence-receipt.js';
+import { stampRddReview, assertRddDoesNotGrantDelivery } from '../../src/core/governance/rdd-review-stance.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,7 +28,16 @@ export class OpenSpecLifecycleAdapter {
   }
 
   // SDD-03: /new + /ff — Initiates change and fast-forwards spec artifacts
-  executeNewAndFastForward(changeId, enrichedContext) {
+  executeNewAndFastForward(changeId, enrichedContext, options = {}) {
+    const routing = options.routing || {};
+    assertSddCeremonyAuthorized({
+      spawnSddCeremony: true,
+      explicitSddRequest: options.explicitSddRequest !== false,
+      acceptedProposal: options.acceptedProposal === true || routing.acceptedProposal === true,
+      forceSddOverride: options.forceSddOverride === true,
+      ...routing
+    });
+
     const changeRecord = {
       changeId,
       context: enrichedContext,
@@ -46,54 +58,78 @@ export class OpenSpecLifecycleAdapter {
   }
 
   // SDD-05 & SDD-06: /apply — Incremental execution (One small task at a time)
-  executeApply(changeId, taskId) {
+  executeApply(changeId, taskId, options = {}) {
     const change = this.activeChanges.get(changeId);
     if (!change) throw new Error(`Change ${changeId} not found`);
 
     const task = change.tasksList.find(t => t.id === taskId);
     if (!task) throw new Error(`Task ${taskId} not found in change ${changeId}`);
 
+    const tddReceipts = options.tddReceipts || task.tddReceipts || [];
+    const applyEvidence = assertApplyEvidenceComplete({
+      receipts: tddReceipts,
+      strictTdd: options.strictTdd !== false,
+      testsExist: options.testsExist !== false,
+      requireRefactor: options.requireRefactor === true
+    });
+
     task.status = 'IMPLEMENTED_WITH_TDD';
     task.appliedAt = new Date().toISOString();
     task.diffHash = crypto.createHash('sha256').update(`${taskId}_DIFF`).digest('hex');
+    task.tddReceipts = tddReceipts;
+    task.tdd_evidence = applyEvidence;
 
     return {
       changeId,
       task,
+      tdd_evidence: applyEvidence,
       verdict: 'TASK_APPLIED_INCREMENTALLY'
     };
   }
 
   // SDD-07: /verify — Validates implementation against spec and tests
-  executeVerify(changeId) {
+  executeVerify(changeId, options = {}) {
     const change = this.activeChanges.get(changeId);
     const allTasksImplemented = change.tasksList.every(t => t.status === 'IMPLEMENTED_WITH_TDD');
+    const receipts = change.tasksList.flatMap((t) => t.tddReceipts || []);
+    const tddAudit = auditTddReceipts({
+      receipts,
+      strictTdd: options.strictTdd !== false,
+      testsExist: options.testsExist !== false,
+      requireRefactor: options.requireRefactor === true,
+      claimVerified: options.claimVerified === true
+    });
 
+    const verified = allTasksImplemented && tddAudit.pass;
     const testExecution = {
       testsRun: 2,
-      testsPassed: 2,
-      specComplianceScore: 10.0,
-      verified: allTasksImplemented
+      testsPassed: verified ? 2 : 0,
+      specComplianceScore: verified ? 10.0 : 0,
+      verified,
+      tdd_audit: tddAudit,
+      epistemic_status: tddAudit.epistemic_status,
+      can_claim_verified: false
     };
 
-    change.state = testExecution.verified ? 'VERIFIED' : 'VERIFICATION_FAILED';
+    change.state = verified ? 'VERIFICATION_AUDITED' : 'VERIFICATION_FAILED';
     return testExecution;
   }
 
   // SDD-08: /adversarial-review — Independent adversarial red team review
-  executeAdversarialReview(changeId) {
+  executeAdversarialReview(changeId, options = {}) {
     const change = this.activeChanges.get(changeId);
-    
-    const adversarialCheck = {
+
+    const adversarialCheck = assertRddDoesNotGrantDelivery({
       changeId,
       redTeamPassed: true,
       securityVulnerabilities: 0,
       accessibilityRegressions: 0,
-      verdict: 'ADVERSARIAL_REVIEW_PASSED'
-    };
+      verdict: 'ADVERSARIAL_REVIEW_PASSED',
+      ...(options.review || {})
+    });
 
-    change.state = 'ADVERSARIAL_REVIEW_APPROVED';
-    return adversarialCheck;
+    change.state = 'ADVERSARIAL_REVIEW_RECORDED';
+    return stampRddReview(adversarialCheck);
   }
 
   // SDD-09: /archive — Archives change into persistent memory & BKM
@@ -176,19 +212,36 @@ export class SpecDrivenProductLoopEngine {
 
   // SDD-01 to SDD-12: Full End-to-End Spec-Driven Product Loop
   executeFullSddLoop(changeId = 'CHG-001', intent = { goal: 'Accessible modal dialog', persona: 'Screen Reader User' }) {
+    assertSddCeremonyAuthorized({
+      spawnSddCeremony: true,
+      explicitSddRequest: intent.explicitSddRequest !== false,
+      acceptedProposal: intent.acceptedProposal === true,
+      forceSddOverride: intent.forceSddOverride === true,
+      ...(intent.routing || {})
+    });
+
     // 1. /enrich-us
     const enriched = this.lifecycle.executeEnrichUs(intent);
     const mcp1 = this.mcpMatcher.bindMcpToPhase('/enrich-us');
 
     // 2. /new + /ff
-    const change = this.lifecycle.executeNewAndFastForward(changeId, enriched);
+    const change = this.lifecycle.executeNewAndFastForward(changeId, enriched, {
+      explicitSddRequest: intent.explicitSddRequest !== false,
+      acceptedProposal: intent.acceptedProposal === true,
+      routing: intent.routing
+    });
 
     // 3. Graph Bridge
     const graphSync = this.graphBridge.bridgeChangeToGraph(changeId, change);
 
-    // 4. /apply (Task by Task)
-    const apply1 = this.lifecycle.executeApply(changeId, 'TASK-01');
-    const apply2 = this.lifecycle.executeApply(changeId, 'TASK-02');
+    // 4. /apply (Task by Task) — Strict TDD receipts required
+    const applyOpts = {
+      tddReceipts: intent.tddReceipts || [],
+      strictTdd: intent.strictTdd !== false,
+      testsExist: intent.testsExist !== false
+    };
+    const apply1 = this.lifecycle.executeApply(changeId, 'TASK-01', applyOpts);
+    const apply2 = this.lifecycle.executeApply(changeId, 'TASK-02', applyOpts);
 
     // 5. /verify
     const verification = this.lifecycle.executeVerify(changeId);
