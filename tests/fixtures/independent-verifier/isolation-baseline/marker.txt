@@ -1,0 +1,2 @@
+I2 isolation baseline — do not mutate this committed copy.
+Use a temp clone for mutation tests. Fundacion remains Δ=0.
