@@ -27,6 +27,7 @@ This file is the LIDR Specboot **base-standards** index for the EOS Control Plan
 - **L0 purity:** `DEPENDENCY_POLICY_L0.md` — `NODE_BUILTINS_ONLY`. No root `dependencies` / `devDependencies`.
 - **Evidence over claims.** `CLAIM → SOURCE → VERIFIED? → DISPLAYABLE?`
 - **BUILDER ≠ VERIFIER.** Independent review is informational (RDD). Delivery stays human / HITL / write-barrier.
+- **Spec syntax:** prefer Given/When/Then (BDD). EARS is an EOS/local IEEE-inspired convention if used — not a LIDR Specboot import (ADR-0010).
 
 ## Layer standards
 

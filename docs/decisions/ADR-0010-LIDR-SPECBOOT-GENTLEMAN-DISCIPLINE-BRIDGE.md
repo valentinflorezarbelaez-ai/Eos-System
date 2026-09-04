@@ -11,4 +11,4 @@ El registro canónico vive en:
 
 `docs/decisions/` guarda autorizaciones del Product Owner y **punteros**. No se duplica el ADR aquí (un solo SSOT, ADR-0001).
 
-Resumen operativo: LIDR Specboot + OpenSpec es la ceremonia SDD por defecto para cambios sustanciales; el ruteo Gentleman elige DIRECT vs SDD; RDD (revisión independiente) es INFORMATIONAL y no autoriza entrega.
+Resumen operativo: LIDR Specboot + OpenSpec es la ceremonia SDD por defecto para cambios sustanciales; el ruteo Gentleman elige DIRECT vs SDD; RDD (revisión independiente) es INFORMATIONAL y no autoriza entrega. EARS no es import LIDR (`UNKNOWN` / NOT FOUND); preferir Given/When/Then. Scope Rule de Gentleman es NON-core en L0 Mission OS.

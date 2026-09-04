@@ -50,6 +50,18 @@ Canonical OpenSpec filenames remain `proposal.md`, `spec.md`, `design.md`, `task
 
 Slash-command names are **operator vocabulary**. They must not replace or break `node bin/eos.js` / `npm run eos:mission`.
 
+LIDR Specboot (curriculum Adonis) also documents official OpenSpec aliases. Treat them as the **same ceremony**, not a second pipeline:
+
+| LIDR / operator name | OpenSpec / Adonis alias |
+| --- | --- |
+| `/propose` | `opsx:propose` / `/opsx-propose` |
+| `/apply` | `opsx:apply` / `/opsx-apply` |
+| `/archive` | `opsx:archive` / `/opsx-archive` |
+
+Planning skills (reference only; do not vendor their bodies): `openspec-ff-change`, `openspec-continue-change`. `/ff` maps to fast-forward; continue resumes an in-flight change.
+
+**Post-`/apply` before `/archive`:** update OpenSpec artifacts first (proposal/spec/design/tasks deltas that match what was built). Do not archive from code-only diffs. `/verify` still checks the updated artifacts; `/archive` merges those artifacts, not an undocumented implementation.
+
 ### 2. Organic routing (DIRECT vs SDD)
 
 Gentleman organic routing: take the **smallest route that is still honest**. File/diff size alone must not force SDD ceremony.
@@ -111,6 +123,36 @@ Independent review **does not authorize delivery**. The following remain under h
 - Constitution, policy-engine, or autonomy-level changes
 
 This is RDD aligned with Constitution **Article III** (external write barrier) and **Article IV** (autonomy ≠ write-anywhere), plus `R-HITL-01` / `R-BOUNDARY-01`.
+
+### 4.1 Requirements syntax — GWT preferred; EARS is local
+
+Org read-only research (2026-09-04): **EARS was NOT FOUND** in public LIDR-academy or Gentleman-Programming docs/repos (`UNKNOWN` as a Specboot literal). A live read of this repo’s `.cursorrules` also does **not** contain the string `EARS` (NOT FOUND on this checkout).
+
+If any EOS overlay, spec template, or future `.cursorrules` edit uses **EARS**, classify it as an **EOS/local convention inspired by IEEE-style requirements syntax** — **not a LIDR Specboot literal import**.
+
+**Prefer Given/When/Then (BDD / Gherkin).** Both LIDR OpenSpec and Gentleman SDD document GWT scenarios. `docs/specs/TEMPLATE.md` already uses Given-When-Then acceptance criteria. OpenSpec deltas in this repo MUST use GWT. EARS “WHEN / THE SYSTEM SHALL” phrasing is optional local flavor and must not be taught as Specboot canon.
+
+### 4.2 Optional LIDR skill imports (do not bulk-copy)
+
+Reference these LIDR skills when useful. **Do not bulk-copy** their files into `.agents/skills/` or `ai-specs/`:
+
+| Skill | Use |
+| --- | --- |
+| `enrich-us` | JTBD / value hypothesis (`/enrich-us`) |
+| `adversarial-review` | Informational RDD (`/adversarial-review`) |
+| `using-git-worktrees` | Isolated worktrees; not a merge grant |
+| `writing-skills` | How to write skills; does not raise autonomy |
+| `code-auditing` | Review aid; still INFORMATIONAL |
+| `openspec-sync-specs` | Sync spec deltas after apply |
+| `sync-agent-symlinks` | Tool-symlink hygiene if a human installs OpenSpec CLI |
+
+Pointers live in `ai-specs/skills/`. Missing local copies are expected.
+
+### 4.3 Gentleman Scope Rule — NON-core for L0 Mission OS
+
+Gentleman **Scope Rule** (place code in a **shared** module if it serves ≥2 features; otherwise keep it **local**) is frontend-placement architecture. It is **NON-core** for EOS L0 Mission OS unless the change actually touches frontend satellites (`EOS-Lab/` UI sats or an authorized FE target).
+
+Core Gentleman imports for this Control Plane remain: **organic routing**, **strict TDD** RED → GREEN → TRIANGULATE → REFACTOR, and **RDD informational** (no delivery authority).
 
 ### 5. NON-goals (explicitly refused wholesale imports)
 

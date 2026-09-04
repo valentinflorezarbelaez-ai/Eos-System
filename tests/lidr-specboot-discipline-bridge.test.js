@@ -71,6 +71,43 @@ test('ADR-0010 lists explicit NON-goals and points to existing SSOT', () => {
   assert.match(adr, /docs\/base-standards\.md/);
 });
 
+test('ADR-0010 classifies EARS as EOS/local IEEE-inspired convention, not a LIDR import', () => {
+  const adr = read(ADR_REL);
+  assert.match(adr, /\bEARS\b/);
+  assert.match(adr, /IEEE/);
+  assert.match(adr, /NOT.*(LIDR|Specboot).*import|not a LIDR Specboot literal import/i);
+  assert.match(adr, /Given\/When\/Then|Gherkin|BDD/);
+  assert.match(adr, /UNKNOWN|NOT FOUND/i);
+});
+
+test('ADR-0010 maps opsx aliases, planning skills, and post-apply artifact update', () => {
+  const adr = read(ADR_REL);
+  assert.match(adr, /opsx:propose|\/opsx-propose/);
+  assert.match(adr, /opsx:apply|\/opsx-apply/);
+  assert.match(adr, /opsx:archive|\/opsx-archive/);
+  assert.match(adr, /openspec-ff-change/);
+  assert.match(adr, /openspec-continue-change/);
+  assert.match(adr, /update OpenSpec artifacts first/i);
+});
+
+test('ADR-0010 lists optional LIDR skills and marks Gentleman Scope Rule as NON-core for L0', () => {
+  const adr = read(ADR_REL);
+  for (const skill of [
+    'enrich-us',
+    'adversarial-review',
+    'using-git-worktrees',
+    'writing-skills',
+    'code-auditing',
+    'openspec-sync-specs',
+    'sync-agent-symlinks'
+  ]) {
+    assert.match(adr, new RegExp(skill));
+  }
+  assert.match(adr, /do not bulk-copy|optional imports/i);
+  assert.match(adr, /Scope Rule/);
+  assert.match(adr, /NON-core/i);
+});
+
 test('docs/decisions pointer exists and does not fork ADR-0010 SSOT', () => {
   assert.ok(fs.existsSync(path.join(rootDir, DECISION_POINTER_REL)), `${DECISION_POINTER_REL} must exist`);
   const pointer = read(DECISION_POINTER_REL);
