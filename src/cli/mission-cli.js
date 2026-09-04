@@ -120,6 +120,9 @@ export class MissionCLI {
 
         const hitlIdx = args.indexOf('--hitl-receipt');
         const requireHitl = args.includes('--require-hitl');
+        const spawnSdd = args.includes('--spawn-sdd');
+        const sddOverride = args.includes('--sdd-override');
+        const explicitSdd = args.includes('--explicit-sdd');
         let hitlReceipt = null;
         if (hitlIdx !== -1) {
           const receiptPath = args[hitlIdx + 1];
@@ -143,7 +146,10 @@ export class MissionCLI {
 
         const res = this.runtime.planMission(missionId, {
           hitlReceipt,
-          requireExternalHitl: requireHitl
+          requireExternalHitl: requireHitl,
+          spawnSddCeremony: spawnSdd,
+          forceSddOverride: sddOverride,
+          explicitSddRequest: explicitSdd
         });
         const post = this.tutor.explainAfter(
           { action_id: 'mission.plan' },
@@ -157,7 +163,7 @@ export class MissionCLI {
         );
         return {
           success: true,
-          output: `${pre}\n\n📝 Mission Planned Successfully [${res.mission_id}]:\n- Phase: ${res.phase}\n- Generated Tasks: ${res.tasks_generated}\n- FSM: ${(res.transitions || []).map((t) => t.event_type).join(' → ')}\n- Governance Gates: ${res.plan.governance_gates.join(', ')}\n\n${post}\n\nNext step: Run 'eos mission package ${res.mission_id} --target cursor' to generate operator handoff.`,
+          output: `${pre}\n\n📝 Mission Planned Successfully [${res.mission_id}]:\n- Phase: ${res.phase}\n- Organic route: ${res.plan.organic_routing?.route || 'n/a'} (size ignored)\n- Generated Tasks: ${res.tasks_generated}\n- FSM: ${(res.transitions || []).map((t) => t.event_type).join(' → ')}\n- Governance Gates: ${res.plan.governance_gates.join(', ')}\n\n${post}\n\nNext step: Run 'eos mission package ${res.mission_id} --target cursor' to generate operator handoff.`,
           data: res
         };
       }
@@ -213,12 +219,17 @@ export class MissionCLI {
         const missionId = args[1];
         if (!missionId) return { success: false, output: "Error: Missing '<mission-id>' argument." };
 
-        const res = this.runtime.verifyMission(missionId);
+        const res = this.runtime.verifyMission(missionId, {
+          strictTdd: args.includes('--strict-tdd')
+        });
+        const tddLine = res.tdd_audit
+          ? `\n- TDD receipts: ${res.tdd_audit.code} (can_claim_verified=${res.tdd_audit.can_claim_verified})`
+          : '';
         return {
           success: res.valid,
           output: res.valid
-            ? `🔒 Cryptographic Verification PASSED [${res.mission_id}]:\n- Ledger Chain: VALID (${res.ledger_chain.count} events)\n- Manifest Files: 100% MATCH`
-            : `❌ Verification FAILED [${res.mission_id}]:\n- Ledger Chain: ${res.ledger_chain.valid ? 'VALID' : 'CORRUPTED'}\n- Discrepancies:\n${res.discrepancies.map(d => `  - ${d}`).join('\n')}`,
+            ? `🔒 Cryptographic Verification PASSED [${res.mission_id}]:\n- Ledger Chain: VALID (${res.ledger_chain.count} events)\n- Manifest Files: 100% MATCH${tddLine}`
+            : `❌ Verification FAILED [${res.mission_id}]:\n- Ledger Chain: ${res.ledger_chain.valid ? 'VALID' : 'CORRUPTED'}\n- Discrepancies:\n${res.discrepancies.map(d => `  - ${d}`).join('\n')}${tddLine}`,
           data: res
         };
       }
@@ -398,8 +409,10 @@ COMMANDS:
   eos mission inspect <mission-id>
       Displays current mission phase, direction, and ledger state.
 
-  eos mission plan <mission-id>
+  eos mission plan <mission-id> [--spawn-sdd] [--explicit-sdd] [--sdd-override]
       Generates atomic task contracts, roles, budgets, and plan.json.
+      --spawn-sdd fail-closes unless --explicit-sdd, accepted proposal, or --sdd-override
+      (ADR-0010: size alone does not force SDD).
 
   eos mission package <mission-id> [--target cursor]
       Compiles the compact Cursor Mission Package (CURSOR_PROMPT.md and JSON).
@@ -413,8 +426,9 @@ COMMANDS:
   eos mission submit <mission-id> --file <return-pkg.json>
       Ingests and reconciles a Cursor Return Package against task contracts.
 
-  eos mission verify <mission-id>
-      Verifies cryptographic SHA-256 hash chaining and integrity manifest.
+  eos mission verify <mission-id> [--strict-tdd]
+      Verifies cryptographic SHA-256 hash chaining, integrity manifest, and
+      (when Strict TDD is in scope) RED→GREEN TDD evidence receipts.
 
   eos mission submit <mission-id> --file <return-pkg.json>
       Ingests a Cursor Return Package (anti-replay, protected surfaces, secrets, tools).
