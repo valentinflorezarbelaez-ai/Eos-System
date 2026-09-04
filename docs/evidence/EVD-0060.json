@@ -1,23 +1,23 @@
 {
   "id": "EVD-0060",
   "evidenceId": "EVD-0060",
-  "claim": "Pipeline audit for PRJ-APP-FUERZA completed with status VERIFIED",
+  "claim": "Pipeline verify for PRJ-APP-FUERZA completed with status VERIFIED",
   "status": "VERIFIED",
-  "scope": "PRJ-APP-FUERZA / pipeline:audit",
+  "scope": "PRJ-APP-FUERZA / pipeline:verify",
   "source": "EOS ProjectPipelineRunner",
-  "timestamp": "2026-09-04T18:15:40.225Z",
+  "timestamp": "2026-09-04T18:18:08.544Z",
   "actor": "EOS ProjectPipelineRunner",
-  "action": "orchestrate --project PRJ-APP-FUERZA --pipeline audit",
-  "command": "node bin/eos-orchestrator.js run --project PRJ-APP-FUERZA --phase audit",
+  "action": "orchestrate --project PRJ-APP-FUERZA --pipeline verify",
+  "command": "node bin/eos-orchestrator.js run --project PRJ-APP-FUERZA --phase verify",
   "expected": "Auditors VERIFIED; satellite validation PASS or control-plane proxy; EVD sealed",
   "actual": "VERIFIED",
   "result": "PASS",
   "confidence": "HIGH",
-  "sha256": "sha256-1a2b8716ad03488c69f9a0064cb6d7ee0f52bff5660dfbd0e247242d34de1192",
-  "digest": "sha256-1a2b8716ad03488c69f9a0064cb6d7ee0f52bff5660dfbd0e247242d34de1192",
+  "sha256": "sha256-cd8192c47ff69b66d5951740ab892f5557f265fd1b720475dc53367e470d663d",
+  "digest": "sha256-cd8192c47ff69b66d5951740ab892f5557f265fd1b720475dc53367e470d663d",
   "data": {
     "projectId": "PRJ-APP-FUERZA",
-    "phase": "audit",
+    "phase": "verify",
     "registrationPath": "C:\\Users\\valen\\Documents\\Eos system\\docs\\projects\\registrations\\app-fuerza.json",
     "technicalStatus": "AUDIT_EXECUTED",
     "auditors": {
@@ -39,23 +39,34 @@
           "exitCode": 0
         }
       ],
-      "evidenceHash": "sha256-5d0c11a385dc01df9c46ba7a5c2b7f1c4f6cfc47327d8908e7df272266cc77a5"
+      "evidenceHash": "sha256-c77ab5d8ae255e08a03dbec2941e9c4fab2a948a3b47dbec9dbb7b4e639b7624"
     },
     "satelliteValidation": {
-      "status": "DEGRADED_CONTROL_PLANE_PROXY",
-      "mode": "CONTROL_PLANE_PROXY",
-      "reason": "Satellite commands skipped or unavailable; validated control-plane proxies",
-      "proxyResults": [
+      "status": "VERIFIED",
+      "mode": "SATELLITE",
+      "commandResults": [
         {
-          "path": "src/app-fuerza/core/timers.js",
-          "exists": true
+          "id": "frontend-lint",
+          "command": "npm --prefix atp-strength-frontend run lint",
+          "exitCode": 0,
+          "status": "PASS",
+          "stdoutSnippet": "\n> atp-strength-frontend@0.1.0 lint\n> eslint\n\n"
         },
         {
-          "path": "src/app-fuerza/core/sync-wal.js",
-          "exists": true
+          "id": "frontend-build",
+          "command": "npm --prefix atp-strength-frontend run build",
+          "exitCode": 0,
+          "status": "PASS",
+          "stdoutSnippet": "\n> atp-strength-frontend@0.1.0 build\n> next build\n\n▲ Next.js 16.3.4 (Turbopack)\n- Environments: .env.local\n✓ Running next.config.ts took 39ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 1039ms\n  Running TypeScript ...\n  Finished TypeScript in 2.7s ...\n  Collecting page data using 6 workers ...\n  Generating static pages using 6 workers (0/5) ...\n  Generating static pages using 6 workers (1/5) \r\n  Generating static pages using 6 workers (2/5) \r\n  Generating static page"
+        },
+        {
+          "id": "backend-ruff",
+          "command": "python -m ruff check atp-strength-backend",
+          "exitCode": 0,
+          "status": "PASS",
+          "stdoutSnippet": "\u001b[1;32mAll checks passed!\u001b[0m\n"
         }
-      ],
-      "commandResults": []
+      ]
     },
     "confirmedEvidence": {
       "status": "CONFIRMED",
