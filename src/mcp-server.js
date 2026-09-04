@@ -1115,7 +1115,6 @@ class EosMcpServer {
 
     try {
       this.schemaValidator.validate(name, args);
-      this.schemaValidator.validate(rawName, args);
     } catch (schemaErr) {
       return {
         tool: rawName,
@@ -1154,10 +1153,10 @@ class EosMcpServer {
       case 'eos.context.compile':
         return this._guarded(toolDef, env, () => {
           if (args.surgical === true && Array.isArray(args.filePaths) && args.filePaths.length > 0) {
-            const compiler = new EOSContextCompiler();
+            const compiler = new ContextCompiler();
             return { receipt: compiler.compileSurgicalContext(args.filePaths, args) };
           }
-          return { receipt: this.bridge.compileContext(args) };
+          return { receipt: ContextCompiler.compileMissionContext(args) };
         });
 
       case 'eos.audit.parallel_dag.run':
@@ -1195,7 +1194,7 @@ class EosMcpServer {
 
       case 'eos.authority.check':
         return this._guarded(toolDef, env, () => ({
-          auth: this.bridge.authorityCheck(args)
+          auth: AuthorityAdapter.checkAuthority(args.requiredLevel || args.required, args.grantedLevel || args.granted)
         }));
 
       case 'eos.mission.recover':

@@ -82,7 +82,55 @@ El agente debe aplicar las 3 disciplinas operativas de Boris Cherny en cada sesi
 
 Para cualquier agente operando en este entorno, utiliza las herramientas nativas expuestas por `src/mcp-server.js`:
 - `eos_doctor`: Diagnostica la integridad del control plane, pins de MCP y valida ausencia de fugas de homedir.
-- `eos_audit_project`: Ejecuta la batería completa de auditores concurrentes (`quality`, `security`, `architecture`) sobre cualquier proyecto en `registry.json`.
-- `eos_verify_strict`: Ejecuta la verificación estricta de 482+ invariantes.
+- `eos_audit_project`: Ejecuta la batería completa de auditores concurrentes (`quality`, `security`, `architecture`, `simplifier`) sobre cualquier proyecto en `registry.json`.
+- `eos_verify_strict`: Ejecuta la verificación estricta de 503+ invariantes.
 - `eos_log_evidence`: Sella el registro de evidencia epistémica con hash criptográfico SHA-256.
+- CLI Simplifier: `eos simplify [path|--project <ID>] [--strict] [--json]`.
 - CLI Orquestador: `node bin/eos-orchestrator.js run --project <ID> --phase [intake|recon|audit|verify|release]`.
+
+---
+
+## 6. Los Dos Casos de Uso Reina de Alto Impacto (Tech Sherpas / LIDR Standard)
+
+En ingeniería con IA, los mayores retornos industriales no provienen de inventar productos desde cero (vibe coding), sino de transformaciones con **alto volumen de código, objetivo claramente definido y resultado determinista**:
+
+### A. Modernización y Refactoring Legacy
+* **Definición:** Upgrades tecnológicos mayores (ej. React 18 $\to$ 19, Next Pages $\to$ App Router, Enzyme $\to$ React Testing Library, Java 17 $\to$ 21, PHP $\to$ Node).
+* **Principio de Especificación Latente:** La especificación **ya vive en el propio código** y en la documentación oficial de la tecnología destino. No requiere inventar producto ni lidiar con ambigüedad de negocio.
+* **Protocolo de Ejecución del Arnés:**
+  1. **Snapshot de Línea Base:** Captura del AST actual, dependencias y suite de pruebas inicial (`exit 0`).
+  2. **Reglas Canónicas de Destino:** Inyección de contratos estrictos de la nueva versión (ej. `react19-no-forwardref`, `async-suspense-boundaries`).
+  3. **DAG de Migración Atómica:** Transformación modular de abajo hacia arriba (Tipos/Lógica pura $\to$ Hooks/Servicios $\to$ Componentes de Presentación $\to$ Contenedores).
+  4. **Auto-Curación TDD:** Compilador y linter ejecutan el loop de feedback (`CursorTDDAutoHealer`).
+  5. **Poda por Primeros Principios (`eos simplify`):** Reducción de sobreingeniería post-migración.
+
+### B. Integración de Servicios y APIs de Terceros
+* **Definición:** Conexión con APIs REST/GraphQL, CRMs, ERPs, pasarelas de pago y webhooks externos.
+* **Principio de Contrato Puro:** El target está 100% delimitado por la especificación OpenAPI / JSON Schema del proveedor.
+* **Protocolo de Ejecución del Arnés:**
+  1. **Aislamiento en Adaptadores:** La lógica de dominio nunca toca el SDK del tercero directamente; se encapsula tras una interfaz abstracta pura.
+  2. **Validación de Esquema en Frontera:** Cada payload entrante y saliente se valida con `SchemaValidator` (fail-closed).
+  3. **Zero Plain Secrets:** Prohibición absoluta de credenciales o tokens en código; solo variables de entorno auditadas por el `PreCommitGuard`.
+  4. **Circuit Breakers y Resiliencia:** Manejo determinista de timeouts, reintentos exponenciales y fallbacks locales.
+
+---
+
+## 7. Reposicionamiento del Ingeniero Humano (Estrategia 90/10)
+
+El modelo es el motor; el arnés es el chasis y la telemetría. La IA no reemplaza al ingeniero, sino que reubica su valor:
+
+* **El Arnés Automatiza el 90–95%:** Tareas mecánicas, migración de llamadas sintácticas, formateo, tipado estricto, generación de tests de regresión y escaneo estático de seguridad.
+* **El Humano se Concentra en el 5–10% Crítico:**
+  1. **Validación del Plan:** Aprobación del DAG de tareas y arbitraje de compensaciones arquitectónicas.
+  2. **Casos Borde de Negocio:** Resolución de inconsistencias de dominio que ningún linter puede deducir.
+  3. **Compuerta Final (Gate-13):** Firma criptográfica y autorización de despliegue a producción.
+
+---
+
+## 8. El Mandato de Primeros Principios (Regla de Musk & Boris Cherny)
+
+* **Regla de Oro:** *"Si un archivo supera 4.5 de bloatIndex, la tarea está INCOMPLETA aunque todos los tests pasen."*
+* Todo código generado debe ser sometido a la poda implacable:
+  - Eliminar wrappers decorativos y capas de indirección de un solo uso.
+  - Convertir monolitos en contenedores esbeltos (< 25 líneas) con componentes de presentación atómicos.
+  - Verificar que `eos simplify --strict` otorgue veredicto **PASS**.

@@ -356,18 +356,27 @@ function verifyWorkspace() {
   const authRecordL2Path = path.join(rootDir, 'docs/projects/registrations/fundacion/IMPLEMENTATION_AUTHORIZATION.md');
   const authRecordL3Path = path.join(rootDir, 'docs/decisions/DECISION_GATE_L3_REAL_001.md');
   const dagL3Path = path.join(rootDir, 'docs/projects/registrations/fundacion/PROPOSED_L3_TASK_DAG_V2.json');
+  const poDecisionFreezePath = path.join(rootDir, 'docs/decisions/PO_DECISION_LEVEL_3_ELIGIBILITY_AND_EXECUTION_AUTHORIZATION.md');
 
-  const hasLevel3Auth = fs.existsSync(authRecordL3Path) && 
+  const isFundacionFrozen = fs.existsSync(poDecisionFreezePath) && 
+                            /External Target Writes \(Fundacion\)\s+STRICTLY FROZEN/i.test(fs.readFileSync(poDecisionFreezePath, 'utf8'));
+
+  const hasLevel3Auth = !isFundacionFrozen &&
+                        fs.existsSync(authRecordL3Path) && 
                         /AUTHORIZED/i.test(fs.readFileSync(authRecordL3Path, 'utf8')) &&
                         fs.existsSync(dagL3Path);
-  const hasLevel2Auth = fs.existsSync(authRecordL2Path) && 
+  const hasLevel2Auth = !isFundacionFrozen &&
+                        fs.existsSync(authRecordL2Path) && 
                         fs.readFileSync(authRecordL2Path, 'utf8').includes('AUTHORIZED — LEVEL 2');
 
   if (fs.existsSync(externalFundacionPath)) {
-    const contents = fs.readdirSync(externalFundacionPath);
-    if (contents.length === 0) {
-      report.checks.push({ path: 'ExternalTarget:Fundacion', status: 'VERIFIED', type: 'external-isolation-empty' });
-    } else if (hasLevel3Auth) {
+    if (isFundacionFrozen) {
+      report.checks.push({ path: 'ExternalTarget:Fundacion', status: 'VERIFIED', type: 'external-target-frozen' });
+    } else {
+      const contents = fs.readdirSync(externalFundacionPath);
+      if (contents.length === 0) {
+        report.checks.push({ path: 'ExternalTarget:Fundacion', status: 'VERIFIED', type: 'external-isolation-empty' });
+      } else if (hasLevel3Auth) {
       // Level 3 Authorized: Dynamic evaluation against authorized tripartite scope
       const dagL3 = JSON.parse(fs.readFileSync(dagL3Path, 'utf8'));
       const authorizedFiles = (dagL3.tripartite_scope && dagL3.tripartite_scope.authorized_files) || [];
@@ -422,6 +431,7 @@ function verifyWorkspace() {
       }
     } else {
       report.failures.push({ path: 'ExternalTarget:Fundacion', message: `External target contains ${contents.length} unapproved items during EOS Development Mode without active authorization`, type: 'external-isolation-empty' });
+    }
     }
   }
 

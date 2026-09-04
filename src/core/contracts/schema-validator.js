@@ -23,11 +23,16 @@ export class SchemaValidator {
 
   loadSchema(schemaFileName) {
     if (this._cache.has(schemaFileName)) return this._cache.get(schemaFileName);
-    const p = path.join(this.schemaRoot, schemaFileName);
+    let p = path.join(this.schemaRoot, schemaFileName);
     if (!fs.existsSync(p)) {
-      const err = new Error(`SCHEMA_NOT_FOUND: ${p}`);
-      err.code = 'SCHEMA_NOT_FOUND';
-      throw err;
+      const fallback = path.resolve(this.schemaRoot, '..', schemaFileName);
+      if (fs.existsSync(fallback)) {
+        p = fallback;
+      } else {
+        const err = new Error(`SCHEMA_NOT_FOUND: ${p}`);
+        err.code = 'SCHEMA_NOT_FOUND';
+        throw err;
+      }
     }
     const schema = JSON.parse(fs.readFileSync(p, 'utf8'));
     this._cache.set(schemaFileName, schema);

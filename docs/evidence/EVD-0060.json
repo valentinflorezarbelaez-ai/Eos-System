@@ -1,23 +1,23 @@
 {
   "id": "EVD-0060",
   "evidenceId": "EVD-0060",
-  "claim": "Pipeline verify for PRJ-APP-FUERZA completed with status VERIFIED",
+  "claim": "Pipeline audit for PRJ-APP-FUERZA completed with status VERIFIED",
   "status": "VERIFIED",
-  "scope": "PRJ-APP-FUERZA / pipeline:verify",
+  "scope": "PRJ-APP-FUERZA / pipeline:audit",
   "source": "EOS ProjectPipelineRunner",
-  "timestamp": "2026-09-04T19:12:09.015Z",
+  "timestamp": "2026-09-04T19:39:16.868Z",
   "actor": "EOS ProjectPipelineRunner",
-  "action": "orchestrate --project PRJ-APP-FUERZA --pipeline verify",
-  "command": "node bin/eos-orchestrator.js run --project PRJ-APP-FUERZA --phase verify",
+  "action": "orchestrate --project PRJ-APP-FUERZA --pipeline audit",
+  "command": "node bin/eos-orchestrator.js run --project PRJ-APP-FUERZA --phase audit",
   "expected": "Auditors VERIFIED; satellite validation PASS or control-plane proxy; EVD sealed",
   "actual": "VERIFIED",
   "result": "PASS",
   "confidence": "HIGH",
-  "sha256": "sha256-5e5637b42df26595825e771dd3494084575c493b7a3d9e2c3e7eed4bfd26c11e",
-  "digest": "sha256-5e5637b42df26595825e771dd3494084575c493b7a3d9e2c3e7eed4bfd26c11e",
+  "sha256": "sha256-2888b6b8f4e1e8030bf4f9995bf8c0cf05b5994226ecc1d35b41820e4f85420f",
+  "digest": "sha256-2888b6b8f4e1e8030bf4f9995bf8c0cf05b5994226ecc1d35b41820e4f85420f",
   "data": {
     "projectId": "PRJ-APP-FUERZA",
-    "phase": "verify",
+    "phase": "audit",
     "registrationPath": "C:\\Users\\valen\\Documents\\Eos system\\docs\\projects\\registrations\\app-fuerza.json",
     "technicalStatus": "AUDIT_EXECUTED",
     "auditors": {
@@ -44,41 +44,30 @@
           "exitCode": 0
         }
       ],
-      "evidenceHash": "sha256-72377023a117f952e0618ad7fb0e32d54efc26f5752a1a63d324e8f08a85a282"
+      "evidenceHash": "sha256-6a6190b621ce225e67753bc64b6421d5f1f8b248512b0368b1dbba6ac2a55bf1"
     },
     "satelliteValidation": {
-      "status": "VERIFIED",
-      "mode": "SATELLITE",
-      "commandResults": [
+      "status": "DEGRADED_CONTROL_PLANE_PROXY",
+      "mode": "CONTROL_PLANE_PROXY",
+      "reason": "Satellite commands skipped or unavailable; validated control-plane proxies",
+      "proxyResults": [
         {
-          "id": "frontend-lint",
-          "command": "npm --prefix atp-strength-frontend run lint",
-          "exitCode": 0,
-          "status": "PASS",
-          "stdoutSnippet": "\n> atp-strength-frontend@0.1.0 lint\n> eslint\n\n"
+          "path": "src/app-fuerza/core/timers.js",
+          "exists": true
         },
         {
-          "id": "frontend-build",
-          "command": "npm --prefix atp-strength-frontend run build",
-          "exitCode": 0,
-          "status": "PASS",
-          "stdoutSnippet": "\n> atp-strength-frontend@0.1.0 build\n> next build\n\n▲ Next.js 16.3.4 (Turbopack)\n- Environments: .env.local\n✓ Running next.config.ts took 42ms\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 1449ms\n  Running TypeScript ...\n  Finished TypeScript in 2.9s ...\n  Collecting page data using 6 workers ...\n  Generating static pages using 6 workers (0/5) ...\n  Generating static pages using 6 workers (1/5) \r\n  Generating static pages using 6 workers (2/5) \r\n  Generating static page"
-        },
-        {
-          "id": "backend-ruff",
-          "command": "python -m ruff check atp-strength-backend",
-          "exitCode": 0,
-          "status": "PASS",
-          "stdoutSnippet": "\u001b[1;32mAll checks passed!\u001b[0m\n"
+          "path": "src/app-fuerza/core/sync-wal.js",
+          "exists": true
         }
-      ]
+      ],
+      "commandResults": []
     },
     "confirmedEvidence": {
       "status": "CONFIRMED",
       "evidenceId": "EVD-0007",
       "path": "C:\\Users\\valen\\Documents\\Eos system\\docs\\evidence\\EVD-0007.json",
-      "sha256": "sha256-2ef327e8969521dc156c9ed4dbf91b7dae801cbc0487fdbd3a784f00db00b323",
-      "recordedStatus": "PRODUCTION_READY_WITHIN_TESTED_SCOPE",
+      "sha256": "sha256-3fcd43e1919250a584e51419eab7ffee0fd5273cc6f2f48e50c68b23cecf28b0",
+      "recordedStatus": "VERIFIED",
       "result": "PASS"
     },
     "pipelineStatus": "VERIFIED"

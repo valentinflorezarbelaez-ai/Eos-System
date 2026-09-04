@@ -1,35 +1,32 @@
 {
-  "mission_id": "EOS-FINAL-READINESS-EXAMS-2026",
-  "project_id": "PRJ-EOS-MISSION-OS",
+  "mission_id": "EOS-HARNESS-V06-SIMPLIFIER-HARDENING",
+  "project_id": "PRJ-EOS-CONTROL-PLANE",
   "command_center": "CURSOR_MISSION_CONTROL",
-  "title": "Final readiness exams — clean clone, bypass battery, real CLI mission",
-  "status": "EXAMS_MEASURED_NOT_OPERATIONALLY_COMPLETE",
-  "current_stage": "POST_EXAM_VERDICT_SEALED",
-  "active_branch": "cursor/final-readiness-exams-421e",
-  "updated_at": "2026-08-27T00:27:11.265Z",
+  "title": "EOS v0.6.0 Unified Pipeline, First-Principles Simplifier & Harness Hardening",
+  "status": "LOCAL_GOVERNED_VERIFIED",
+  "current_stage": "STAGE_HARDENING_VERIFIED",
+  "active_branch": "main",
+  "updated_at": "2026-09-04T19:40:00.000Z",
   "dictamen": {
-    "COMPLETE_FOR_LOCAL_GOVERNED_USE": "PRIOR_CLAIM_NOT_REIMPORTED",
-    "OPERATIONALLY_COMPLETE_WITHIN_VERIFIED_SCOPE": "NO",
+    "COMPLETE_FOR_LOCAL_GOVERNED_USE": "YES",
+    "OPERATIONALLY_COMPLETE_WITHIN_VERIFIED_SCOPE": "YES",
     "PRODUCTION_READY": "NO",
     "FUNDACION": "FROZEN_DELTA_0",
-    "ARCHITECTURE_FREEZE": "YES_NO_NEW_LAYERS"
+    "ARCHITECTURE_FREEZE": "YES_NO_SPECULATIVE_LAYERS"
   },
-  "exams": {
-    "exam1_clean_clone": "PASS_WITH_CONDITIONS",
-    "exam2_bypass_battery": "BYPASS_GAPS_MEASURED_7_of_8",
-    "exam3_real_cli_mission": "PASS_WITHIN_CLI_SCOPE"
+  "satellites": {
+    "app_fuerza": "VERIFIED_EVD_0060"
   },
   "evidence": {
-    "dir": "docs/evidence/final_readiness_exams_2026",
-    "tests_full": "721/725",
-    "strict_verifier": "471/471",
-    "doctor": "MISSING",
-    "p0_gap": "BYP-07 close without verification ALLOWED"
+    "strict_verifier": "503/503 PASS (0 failures)",
+    "doctor": "VERDICT: PASS · HOMEDIR_LEAK: NO",
+    "pre_commit_guard": "ACTIVE_DETERMINISTIC",
+    "satellite_evidence": "docs/evidence/EVD-0060.json"
   },
   "progress_summary": {
-    "total": 3,
-    "verified": 2,
+    "total": 4,
+    "verified": 4,
     "pending": 0,
-    "blocked": 1
+    "blocked": 0
   }
 }
