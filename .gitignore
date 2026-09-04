@@ -60,3 +60,5 @@ docs/sessions/checkpoints/
 docs/evolution/evolution_KAIZEN-*.json
 tests/fixtures/test-ledger/
 docs/archive/
+.eos/
+.windsurf/
