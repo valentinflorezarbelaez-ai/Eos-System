@@ -81,9 +81,9 @@ function main() {
       // Allowed
       process.exit(0);
     } catch (err) {
-      // On parse error, allow (don't break the agent)
-      process.stderr.write(`[EOS:governance-gate] ${err.message}\n`);
-      process.exit(0);
+      // Fail-closed: malformed stdin must not authorize a write.
+      process.stderr.write(`[EOS:governance-gate] FAIL-CLOSED: ${err.message}\n`);
+      process.exit(2);
     }
   });
 }

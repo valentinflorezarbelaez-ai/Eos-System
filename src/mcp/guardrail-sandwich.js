@@ -74,10 +74,17 @@ export function preToolGuardrail(toolName, params = {}, context = {}) {
   // 2. Check for protected files mutations
   const targetPath = params?.targetPath || params?.filePath || params?.file || params?.path || params?.TargetFile;
   if (targetPath && typeof targetPath === 'string') {
-    const normalizedPath = targetPath.replace(/\\/g, '/');
+    const resolvedPath = resolveTargetPath(targetPath);
+    const normalizedPath = resolvedPath.replace(/\\/g, '/');
+    const normalizedRaw = targetPath.replace(/\\/g, '/');
 
     for (const protectedFile of PROTECTED_FILES) {
-      if (normalizedPath === protectedFile || normalizedPath.endsWith(`/${protectedFile}`)) {
+      if (
+        normalizedPath === protectedFile ||
+        normalizedPath.endsWith(`/${protectedFile}`) ||
+        normalizedRaw === protectedFile ||
+        normalizedRaw.endsWith(`/${protectedFile}`)
+      ) {
         return {
           allowed: false,
           status: 'BLOCKED_CONSTITUTIONAL_MUTATION',
@@ -90,7 +97,7 @@ export function preToolGuardrail(toolName, params = {}, context = {}) {
     }
 
     for (const ext of PROTECTED_EXTENSIONS) {
-      if (normalizedPath.toLowerCase().endsWith(ext)) {
+      if (normalizedPath.toLowerCase().endsWith(ext) || normalizedRaw.toLowerCase().endsWith(ext)) {
         return {
           allowed: false,
           status: 'BLOCKED_KEY_MUTATION',
@@ -102,11 +109,29 @@ export function preToolGuardrail(toolName, params = {}, context = {}) {
       }
     }
 
-    // 3. External Boundary Violation
-    const isExternalTarget = normalizedPath.includes('Fundacion') ||
-      (!normalizedPath.includes('Eos system') && !normalizedPath.startsWith('dist') && !normalizedPath.startsWith('src') && !normalizedPath.startsWith('tests') && !normalizedPath.startsWith('docs') && !normalizedPath.startsWith('scripts') && path.isAbsolute(targetPath));
+    // 3. Fundacion is Δ=0 — never honor params.authorized self-auth, including level 0.
+    if (isFundacionGuardrailTarget(targetPath, resolvedPath)) {
+      return {
+        allowed: false,
+        status: 'BLOCKED_EXTERNAL_BOUNDARY_VIOLATION',
+        riskLevel: 'CRITICAL',
+        blockedPattern: 'UNAUTHORIZED_EXTERNAL_PATH',
+        reason: `FUNDACION_PROTECTED: Mutation of target [${targetPath}] is a FROZEN Fundacion write (Δ=0).`,
+        timestamp: new Date().toISOString()
+      };
+    }
 
-    const isAuthorized = (context.authorizationLevel && context.authorizationLevel >= 2) || params.authorized === true;
+    const isExternalTarget =
+      !normalizedPath.includes('Eos system') &&
+      !normalizedRaw.includes('Eos system') &&
+      !normalizedPath.startsWith('dist') &&
+      !normalizedPath.startsWith('src') &&
+      !normalizedPath.startsWith('tests') &&
+      !normalizedPath.startsWith('docs') &&
+      !normalizedPath.startsWith('scripts') &&
+      (path.isAbsolute(targetPath) || path.isAbsolute(resolvedPath));
+
+    const isAuthorized = Number(context.authorizationLevel) >= 2;
 
     if (isExternalTarget && !isAuthorized) {
       return {
@@ -166,6 +191,49 @@ export function postToolGuardrail(toolName, output, context = {}) {
     sanitizedOutput: payload,
     timestamp: new Date().toISOString()
   };
+}
+
+/**
+ * In-repo Fundacion segments plus external Documents/Fundacion (Win/POSIX/homedir).
+ * Mirrors McpMissionBridge / RISK.json STRICT_HARD_WRITE_BLOCK.
+ * @param {...string} candidates
+ * @returns {boolean}
+ */
+function isFundacionGuardrailTarget(...candidates) {
+  return candidates.some((candidate) => {
+    const normalized = String(candidate || '').replace(/\\/g, '/').toLowerCase();
+    if (!normalized) return false;
+    if (normalized.includes('documents/fundacion')) return true;
+    return /(^|\/)fundacion(\/|$)/.test(normalized);
+  });
+}
+
+/**
+ * Resolve a tool path, following realpath when the file exists.
+ * Missing targets walk up to the first existing parent and rejoin the tail.
+ * @param {string} targetPath
+ * @returns {string}
+ */
+function resolveTargetPath(targetPath) {
+  const resolved = path.resolve(targetPath);
+  try {
+    return fs.realpathSync(resolved);
+  } catch {
+    const tail = [];
+    let current = resolved;
+    while (true) {
+      const parent = path.dirname(current);
+      tail.unshift(path.basename(current));
+      if (parent === current) {
+        return resolved;
+      }
+      try {
+        return path.join(fs.realpathSync(parent), ...tail);
+      } catch {
+        current = parent;
+      }
+    }
+  }
 }
 
 /**

@@ -18,8 +18,8 @@ function buildGraphWithOrphanLink() {
   ontology.registrarNodo(TARGET_ID, 'ARCHITECTURE', { rol: 'sentinel-target' });
   ontology.crearEnlace(SOURCE_ID, TARGET_ID, 'GOVERNS');
 
-  // crearEnlace forbids orphans; inject a corrupt destino surgically.
-  ontology.obtenerNodo(SOURCE_ID).enlaces.push({
+  // crearEnlace forbids orphans; plant a corrupt destino via the test-only inject API.
+  ontology.injectCorruptLinkForTest(SOURCE_ID, {
     destino: ORPHAN_DESTINO,
     relacion: 'DEPENDS_ON'
   });

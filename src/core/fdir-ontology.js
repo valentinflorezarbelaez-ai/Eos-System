@@ -30,16 +30,21 @@ export class EOSFDIROntology {
     console.log('⚖️ [EOS FDIR ONTOLOGY] > Iniciando escaneo forense de consistencia relacional...');
     const reparaciones = [];
 
-    for (const [idNodo, nodo] of this.ontology.nodos.entries()) {
-      // 1. Validar Taxonomía Estricta
+    // Snapshot before mutate so insertion-order single-pass cannot skip reverse edges.
+    const snapshot = [...this.ontology.nodos.entries()];
+
+    // Phase 1 — purge invalid taxonomy (fixed-point: deleted ids are gone before edge walk).
+    for (const [idNodo, nodo] of snapshot) {
       if (!this.ontology.tiposPermitidos.includes(nodo.tipo)) {
         console.warn(`🚨 FDIR ONTOLOGY > Anomalía taxonómica en nodo [${idNodo}]. Tipo inválido: ${nodo.tipo}. Purgando...`);
         this.ontology.nodos.delete(idNodo);
         reparaciones.push({ nodoId: idNodo, accion: 'PURGED_INVALID_TYPE', tipoInvalido: nodo.tipo });
-        continue;
       }
+    }
 
-      // 2. Validar Enlaces Huérfanos
+    // Phase 2 — purge edges whose destino was removed in phase 1 (or was already missing).
+    const remaining = [...this.ontology.nodos.entries()];
+    for (const [idNodo, nodo] of remaining) {
       const enlacesValidos = [];
       for (const enlace of nodo.enlaces) {
         if (!this.ontology.nodos.has(enlace.destino)) {
@@ -55,7 +60,6 @@ export class EOSFDIROntology {
         }
       }
 
-      // Re-inyectar solo los enlaces sanos y verificados
       nodo.enlaces = enlacesValidos;
     }
 

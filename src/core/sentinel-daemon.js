@@ -33,6 +33,9 @@ export class EOSSentinelDaemon {
     this.estado = 'STOPPED';
     this.lastDiagnosticoOntology = null;
     this.lastSaned = null;
+    this._latidoLocked = false;
+    this._latidoInflight = null;
+    this._stopping = false;
   }
 
   /**
@@ -44,12 +47,18 @@ export class EOSSentinelDaemon {
       throw new Error('🚨 SENTINEL FAULT: Imposible encender el pulso sin las firmas del Ain Soph Aur.');
     }
 
+    if (this.handleInterval) {
+      clearInterval(this.handleInterval);
+      this.handleInterval = null;
+    }
+
+    this._stopping = false;
     this.lineasBaseAutorizadas = lineasBase;
     this.estado = 'RUNNING';
     console.log(`🛡️ [EOS SENTINEL] > Pulso autónomo iniciado. Latido configurado cada ${this.intervaloMs / 1000}s.`);
 
-    this.handleInterval = setInterval(async () => {
-      await this._ejecutarLatidoConsciente();
+    this.handleInterval = setInterval(() => {
+      void this._ejecutarLatidoConsciente();
     }, this.intervaloMs);
   }
 
@@ -57,12 +66,13 @@ export class EOSSentinelDaemon {
    * Safely halts the background sentinel process
    */
   detener() {
+    this._stopping = true;
     if (this.handleInterval) {
       clearInterval(this.handleInterval);
       this.handleInterval = null;
-      this.estado = 'STOPPED';
-      console.log('🛡️ [EOS SENTINEL] > Pulso replegado y detenido de forma segura.');
     }
+    this.estado = 'STOPPED';
+    console.log('🛡️ [EOS SENTINEL] > Pulso replegado y detenido de forma segura.');
   }
 
   /**
@@ -75,8 +85,27 @@ export class EOSSentinelDaemon {
 
   /**
    * Internal conscious heartbeat: drift FDIR plus optional ontology sanitation.
+   * Overlapping interval ticks skip while a heartbeat is inflight (max concurrent = 1).
    */
   async _ejecutarLatidoConsciente() {
+    if (this._latidoLocked || this._stopping) {
+      return this._latidoInflight;
+    }
+
+    this._latidoLocked = true;
+    this._latidoInflight = this._runLatidoConsciente();
+    try {
+      return await this._latidoInflight;
+    } finally {
+      this._latidoLocked = false;
+      this._latidoInflight = null;
+    }
+  }
+
+  /**
+   * @returns {Promise<{ diagnostico: object, diagnosticoOntology: object|null, councilFindings: object|null }|{ fault: true, estado: string, error: string }>}
+   */
+  async _runLatidoConsciente() {
     try {
       const diagnostico = await this.fdir.ejecutarCicloRecuperacion(this.lineasBaseAutorizadas);
 
@@ -123,8 +152,25 @@ export class EOSSentinelDaemon {
 
       return { diagnostico, diagnosticoOntology, councilFindings };
     } catch (error) {
+      this.estado = 'DEGRADED';
       console.error(`🚨 [SENTINEL PANIC] > Interrupción en el flujo de la conciencia de fondo: ${error.message}`);
-      return null;
+      try {
+        this._sellarLedger('SENTINEL-PANIC-FAULT', {
+          ley: 'FDIR_SENTINEL',
+          estado: 'DEGRADED',
+          error: error.message
+        });
+      } catch {
+        // Ledger seal is best-effort during panic; do not hide the fault.
+      }
+      return {
+        fault: true,
+        estado: 'DEGRADED',
+        error: error.message,
+        diagnostico: null,
+        diagnosticoOntology: null,
+        councilFindings: null
+      };
     }
   }
 

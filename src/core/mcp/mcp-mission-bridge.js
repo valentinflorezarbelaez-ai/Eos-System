@@ -5,6 +5,7 @@
  */
 
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 
@@ -14,6 +15,48 @@ import { SchemaValidator } from '../contracts/schema-validator.js';
 import { CanonicalRulesIndex } from '../rules/canonical-rules-index.js';
 import { calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
 import { MissionLedger } from '../../../scripts/engine/mission-ledger.js';
+
+/** RISK.json STRICT_HARD_WRITE_BLOCK plus POSIX / homedir Documents/Fundacion. */
+export const RISK_EXTERNAL_FUNDACION_ROOTS = [
+  'C:\\Users\\valen\\Documents\\Fundacion',
+  '/Users/valen/Documents/Fundacion'
+];
+
+/**
+ * @param {string} input
+ * @returns {string}
+ */
+export function normalizeBarrierPath(input) {
+  return String(input || '').replace(/\\/g, '/').toLowerCase();
+}
+
+/**
+ * True for in-repo Fundacion segments and external Documents/Fundacion (Win/POSIX/homedir).
+ * @param {...string} candidates
+ * @returns {boolean}
+ */
+export function isFundacionWriteTarget(...candidates) {
+  return candidates.some((candidate) => {
+    const normalized = normalizeBarrierPath(candidate);
+    if (!normalized) return false;
+    if (normalized.includes('documents/fundacion')) return true;
+    return /(^|\/)fundacion(\/|$)/.test(normalized);
+  });
+}
+
+/**
+ * @param {string} baseDir
+ * @returns {string[]}
+ */
+export function collectProtectedWriteRoots(baseDir) {
+  const roots = [
+    path.resolve(baseDir, 'Fundacion'),
+    path.resolve(baseDir, 'docs', 'governance'),
+    ...RISK_EXTERNAL_FUNDACION_ROOTS.map((root) => path.resolve(root)),
+    path.join(os.homedir(), 'Documents', 'Fundacion')
+  ];
+  return [...new Set(roots)];
+}
 
 export function normalizeToolName(name = '') {
   if (!name || typeof name !== 'string') return '';
@@ -170,14 +213,22 @@ export class McpMissionBridge {
   }
 
   barrierCheck(args = {}) {
-    const writePath = path.resolve(args.path || args.target || '');
-    const protectedRoots = [
-      path.resolve(this.baseDir, 'Fundacion'),
-      path.resolve(this.baseDir, 'docs', 'governance')
-    ];
-    const blocked = protectedRoots.some(
-      (root) => writePath === root || writePath.startsWith(root + path.sep)
-    );
+    const rawPath = args.path || args.target || '';
+    const writePath = path.resolve(rawPath);
+    const protectedRoots = collectProtectedWriteRoots(this.baseDir);
+    const blockedByRoot = protectedRoots.some((root) => {
+      if (writePath === root || writePath.startsWith(root + path.sep)) return true;
+      const rootNorm = normalizeBarrierPath(root);
+      const writeNorm = normalizeBarrierPath(writePath);
+      const rawNorm = normalizeBarrierPath(rawPath);
+      return (
+        writeNorm === rootNorm ||
+        writeNorm.startsWith(`${rootNorm}/`) ||
+        rawNorm === rootNorm ||
+        rawNorm.startsWith(`${rootNorm}/`)
+      );
+    });
+    const blocked = blockedByRoot || isFundacionWriteTarget(rawPath, writePath);
     return {
       path: writePath,
       allowed: !blocked,
