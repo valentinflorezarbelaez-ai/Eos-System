@@ -19,11 +19,13 @@ import { FirstPrinciplesSimplifierEngine } from '../core/optimization/first-prin
 import { ElevateOrchestrator } from '../core/elevate/elevate-orchestrator.js';
 import { ProjectOnboarder } from '../core/projects/project-onboarder.js';
 import { RelationalTraceabilityMatrix } from '../core/ontology/relational-traceability-matrix.js';
+import { AutonomousLoopEngine } from '../core/runtime/autonomous-loop-engine.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
 export class MissionCLI {
   constructor(options = {}) {
+    this.controlPlaneRoot = options.controlPlaneRoot || options.baseDir;
     this.runtime = new MissionRuntime(options);
     this.tutor = options.tutor || new TutorMaestro();
   }
@@ -86,6 +88,10 @@ export class MissionCLI {
 
     if (command === 'trace' || command === 't') {
       return this.handleTraceCommand(argv.slice(1));
+    }
+
+    if (command === 'loop' || command === 'l') {
+      return this.handleLoopCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -200,7 +206,7 @@ export class MissionCLI {
 
     try {
       const rtm = new RelationalTraceabilityMatrix({
-        controlPlaneRoot: this.runtime?.controlPlaneRoot || resolveControlPlaneRoot()
+        controlPlaneRoot: this.controlPlaneRoot || this.runtime?.controlPlaneRoot || resolveControlPlaneRoot()
       });
 
       // If calculating blast radius for a file or entity
@@ -228,6 +234,79 @@ export class MissionCLI {
       return { success: true, output: rtm.formatTraceTree(matrix), data: matrix };
     } catch (err) {
       return { success: false, output: `Trace Engine Failed: ${err.message}` };
+    }
+  }
+
+  /**
+   * eos loop [--project <id>] [--file <path>] [--once] [--heal] [--json]
+   */
+  async handleLoopCommand(args = []) {
+    const isJson = args.includes('--json');
+    const isOnce = args.includes('--once');
+    const isHeal = args.includes('--heal');
+
+    let projectId = null;
+    let filePath = null;
+
+    const projIdx = args.indexOf('--project');
+    if (projIdx !== -1 && args[projIdx + 1]) {
+      projectId = args[projIdx + 1];
+    }
+
+    const fileIdx = args.indexOf('--file');
+    if (fileIdx !== -1 && args[fileIdx + 1]) {
+      filePath = args[fileIdx + 1];
+    }
+
+    const nonFlags = args.filter(a => !a.startsWith('--') && a !== projectId && a !== filePath);
+    if (!filePath && nonFlags.length > 0) {
+      filePath = nonFlags[0];
+    }
+
+    const targetProject = projectId || 'PRJ-EOS-CONTROL-PLANE';
+
+    try {
+      const loop = new AutonomousLoopEngine({
+        controlPlaneRoot: this.controlPlaneRoot || this.runtime?.controlPlaneRoot || resolveControlPlaneRoot()
+      });
+
+      // If a specific file is targeted or once mode is requested
+      if (filePath || isOnce) {
+        let target = filePath;
+        if (!target) {
+          target = 'src/core/index.js';
+        }
+
+        const passResult = loop.runSurgicalPass(target, {
+          projectId: targetProject,
+          heal: isHeal
+        });
+
+        if (isJson) {
+          return {
+            success: passResult.status === 'VERIFIED',
+            output: JSON.stringify(passResult, null, 2),
+            data: passResult
+          };
+        }
+
+        return {
+          success: passResult.status === 'VERIFIED',
+          output: loop.formatLoopReport(passResult),
+          data: passResult
+        };
+      }
+
+      // Continuous Watcher Mode (Daemon)
+      const targetDir = this.runtime?.controlPlaneRoot || resolveControlPlaneRoot();
+      loop.startWatcher(targetDir, { projectId: targetProject, heal: isHeal }, (result) => {
+        console.log(loop.formatLoopReport(result));
+      });
+
+      const message = `⚡ EOS AUTONOMOUS LOOP ACTIVE: Monitoring '${targetDir}' for mutations [Project: ${targetProject}]... (Press Ctrl+C to stop)`;
+      return { success: true, output: isJson ? JSON.stringify({ status: 'ACTIVE', targetDir, targetProject }) : message };
+    } catch (err) {
+      return { success: false, output: `Loop Engine Failed: ${err.message}` };
     }
   }
 
@@ -999,6 +1078,7 @@ USAGE:
   eos fleet [--json]
   eos project onboard <path>
   eos trace [--project <id>] [--file <path>] [--entity <id>] [--json]
+  eos loop [--project <id>] [--file <path>] [--once] [--heal] [--json]
   eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
   eos simplify [path|--project <id>] [--json] [--strict]
   eos mission <command> [options]
@@ -1019,6 +1099,11 @@ COMMANDS:
       Enterprise Relational Traceability Matrix (RTM) & Causal Blast Radius Engine.
       Traces 7 layers (Intake ↔ Spec ↔ Plan ↔ Task ↔ Code ↔ Test ↔ Evidence)
       and calculates transitive mutation blast radius with risk tier classification.
+
+  eos loop [--project <id>] [--file <path>] [--once] [--heal] [--json]
+      Closed-loop mutation sensor and surgical TDD auto-healer.
+      Monitors file mutations, resolves impacted test suites via RTM in milliseconds,
+      executes surgical verification passes, and isolates regression root causes.
 
   eos orchestrate --project <PROJECT_ID> --pipeline <phase>
       Unified pipeline runner: registration contract → concurrent auditors →
