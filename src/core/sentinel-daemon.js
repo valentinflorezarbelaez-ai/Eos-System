@@ -24,6 +24,9 @@ export class EOSSentinelDaemon {
     this.detector = new EOSDriftDetector({ rootPath: this.rootPath });
     this.fdir = config.fdir || new EOSFDIR({ rootPath: this.rootPath, detector: this.detector });
     this.fdirOntology = config.fdirOntology || null;
+    this.scannerCouncil = config.scannerCouncil || null;
+    this.enableActiveImmunity = Boolean(config.enableActiveImmunity);
+    this.lastCouncilFindings = null;
     this.guard = new EOSMemoryGuard();
     this.lineasBaseAutorizadas = null;
     this.handleInterval = null;
@@ -98,7 +101,27 @@ export class EOSSentinelDaemon {
         }
       }
 
-      return { diagnostico, diagnosticoOntology };
+      let councilFindings = null;
+      if (this.enableActiveImmunity && this.scannerCouncil) {
+        const scanResult = await this.scannerCouncil.runFullScan();
+        councilFindings = scanResult?.findings || [];
+        this.lastCouncilFindings = councilFindings;
+        if (councilFindings.length > 0) {
+          console.warn(`🚨 [EOS SENTINEL] > Inmunidad activa: detectadas ${councilFindings.length} desviaciones.`);
+          this._sellarLedger('SENTINEL-ACTIVE-IMMUNITY-FINDINGS', {
+            ley: 'CONSTITUTION_LAW_VI_AND_V',
+            totalFindings: councilFindings.length,
+            findings: councilFindings.map(f => ({
+              id: f.ruleId || f.id,
+              vector: f.vector,
+              file: f.file,
+              severity: f.severity
+            }))
+          });
+        }
+      }
+
+      return { diagnostico, diagnosticoOntology, councilFindings };
     } catch (error) {
       console.error(`🚨 [SENTINEL PANIC] > Interrupción en el flujo de la conciencia de fondo: ${error.message}`);
       return null;
