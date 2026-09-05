@@ -1,6 +1,6 @@
 # SPEC-0001: Fundación Core Institutional Web Portal Specification
 
-* **Status:** `DRAFT — AWAITING PRODUCT OWNER APPROVAL`
+* **Status:** `APPROVED`
 * **Target Project:** `PRJ-FUNDACION`
 * **Path:** `C:\Users\valen\Documents\Fundacion`
 * **Implementation Status:** `NOT_STARTED`
