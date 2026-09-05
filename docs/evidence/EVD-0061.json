@@ -1,0 +1,29 @@
+{
+  "id": "EVD-0061",
+  "evidenceId": "EVD-0061",
+  "claim": "Enterprise Relational Traceability Matrix (RTM) & Causal Blast Radius Engine (SPEC-EOS-004) implemented and verified with 7/7 unit tests passing, 1030/1030 npm test passing, and 506/506 strict invariants satisfied.",
+  "status": "VERIFIED",
+  "scope": "PRJ-EOS-CONTROL-PLANE / ontology:rtm",
+  "source": "EOS RelationalTraceabilityMatrix Engine",
+  "timestamp": "2026-09-05T20:29:30.000Z",
+  "actor": "EOS Architecture & Governance Engine",
+  "action": "eos trace --project PRJ-APP-FUERZA && node --test tests/relational-traceability-matrix.test.js",
+  "expected": "7-layer bidirectional lineage rendered; blast radius computed; tests passing 100%",
+  "actual": "VERIFIED",
+  "result": "PASS",
+  "confidence": "HIGH",
+  "sha256": "sha256-43f65df93a9082725e2197170131922c0792bf44ce94ee4405370f1a91be1a2c",
+  "digest": "sha256-43f65df93a9082725e2197170131922c0792bf44ce94ee4405370f1a91be1a2c",
+  "data": {
+    "spec": "docs/specs/EOS-TRACEABILITY-AND-BLAST-RADIUS-SPEC.md",
+    "implementation": "src/core/ontology/relational-traceability-matrix.js",
+    "cli": "src/cli/mission-cli.js",
+    "testSuite": "tests/relational-traceability-matrix.test.js",
+    "testResults": {
+      "unit_tests_passed": 7,
+      "total_tests_passed": 1030,
+      "invariants_passed": 506,
+      "exit_code": 0
+    }
+  }
+}

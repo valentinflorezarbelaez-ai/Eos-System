@@ -18,6 +18,7 @@ import {
 import { FirstPrinciplesSimplifierEngine } from '../core/optimization/first-principles-simplifier-engine.js';
 import { ElevateOrchestrator } from '../core/elevate/elevate-orchestrator.js';
 import { ProjectOnboarder } from '../core/projects/project-onboarder.js';
+import { RelationalTraceabilityMatrix } from '../core/ontology/relational-traceability-matrix.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -81,6 +82,10 @@ export class MissionCLI {
 
     if (command === 'onboard') {
       return this.handleProjectCommand(['onboard', ...argv.slice(1)]);
+    }
+
+    if (command === 'trace' || command === 't') {
+      return this.handleTraceCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -151,6 +156,78 @@ export class MissionCLI {
       return { success: true, output: onboarder.formatFleetTable(status), data: status };
     } catch (err) {
       return { success: false, output: `Fleet Status Failed: ${err.message}` };
+    }
+  }
+
+  /**
+   * eos trace [--project <id>] [--file <path>] [--entity <id>] [--json]
+   */
+  async handleTraceCommand(args = []) {
+    const isJson = args.includes('--json');
+    let projectId = null;
+    let filePath = null;
+    let entityId = null;
+
+    const projIdx = args.indexOf('--project');
+    if (projIdx !== -1 && args[projIdx + 1]) {
+      projectId = args[projIdx + 1];
+    }
+
+    const fileIdx = args.indexOf('--file');
+    if (fileIdx !== -1 && args[fileIdx + 1]) {
+      filePath = args[fileIdx + 1];
+    }
+
+    const entityIdx = args.indexOf('--entity');
+    if (entityIdx !== -1 && args[entityIdx + 1]) {
+      entityId = args[entityIdx + 1];
+    }
+
+    // Support positional argument: eos trace <pathOrProjectId>
+    const nonFlags = args.filter(a => !a.startsWith('--') && a !== projectId && a !== filePath && a !== entityId);
+    if (!projectId && !filePath && !entityId && nonFlags.length > 0) {
+      const candidate = nonFlags[0];
+      if (candidate.startsWith('PRJ-') || candidate.startsWith('prj-')) {
+        projectId = candidate;
+      } else if (candidate.includes('/') || candidate.includes('\\') || candidate.endsWith('.js') || candidate.endsWith('.ts') || candidate.endsWith('.md')) {
+        filePath = candidate;
+      } else {
+        projectId = candidate;
+      }
+    }
+
+    const targetProject = projectId || 'PRJ-EOS-CONTROL-PLANE';
+
+    try {
+      const rtm = new RelationalTraceabilityMatrix({
+        controlPlaneRoot: this.runtime?.controlPlaneRoot || resolveControlPlaneRoot()
+      });
+
+      // If calculating blast radius for a file or entity
+      if (filePath || entityId) {
+        rtm.buildProjectMatrix(targetProject);
+        const blast = rtm.calculateEntityBlastRadius(filePath || entityId);
+
+        if (isJson) {
+          return { success: true, output: JSON.stringify(blast, null, 2), data: blast };
+        }
+        return { success: true, output: rtm.formatBlastRadius(blast), data: blast };
+      }
+
+      // Default: Build and show project traceability matrix
+      const matrix = rtm.buildProjectMatrix(targetProject);
+      if (isJson) {
+        const payload = {
+          summary: matrix,
+          nodes: Array.from(rtm.nodes.values()),
+          edges: Array.from(rtm.forwardEdges.entries()).map(([source, targets]) => ({ source, targets }))
+        };
+        return { success: true, output: JSON.stringify(payload, null, 2), data: payload };
+      }
+
+      return { success: true, output: rtm.formatTraceTree(matrix), data: matrix };
+    } catch (err) {
+      return { success: false, output: `Trace Engine Failed: ${err.message}` };
     }
   }
 
@@ -921,6 +998,7 @@ USAGE:
   eos doctor
   eos fleet [--json]
   eos project onboard <path>
+  eos trace [--project <id>] [--file <path>] [--entity <id>] [--json]
   eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
   eos simplify [path|--project <id>] [--json] [--strict]
   eos mission <command> [options]
@@ -936,6 +1014,11 @@ COMMANDS:
 
   eos doctor
       Read-only check: control-plane files, MCP pin, no homedir leak.
+
+  eos trace [--project <id>] [--file <path>] [--entity <id>] [--json]
+      Enterprise Relational Traceability Matrix (RTM) & Causal Blast Radius Engine.
+      Traces 7 layers (Intake ↔ Spec ↔ Plan ↔ Task ↔ Code ↔ Test ↔ Evidence)
+      and calculates transitive mutation blast radius with risk tier classification.
 
   eos orchestrate --project <PROJECT_ID> --pipeline <phase>
       Unified pipeline runner: registration contract → concurrent auditors →

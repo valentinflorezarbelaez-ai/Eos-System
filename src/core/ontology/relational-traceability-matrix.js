@@ -1,0 +1,976 @@
+/**
+ * @module RelationalTraceabilityMatrix
+ * @description Enterprise Relational Traceability Matrix (RTM) & Causal Blast Radius Engine for EOS.
+ * Formalizes bidirectional 7-layer lineage (L0 Intake ↔ L1 Spec ↔ L2 Plan ↔ L3 Task ↔ L4 Code ↔ L5 Test ↔ L6 Evidence)
+ * and computes multi-layer transitive blast radius with deterministic risk tiering.
+ *
+ * Implements SPEC-EOS-004 / IEEE 830 / ISO 26262 compliant traceability.
+ */
+
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { CausalAstEngine } from '../ast/causal-ast-engine.js';
+import { resolveControlPlaneRoot } from '../runtime/control-plane-root.js';
+
+export const TRACE_LAYERS = Object.freeze({
+  L0_INTAKE: 'L0_INTAKE',
+  L1_SPEC: 'L1_SPEC',
+  L2_PLAN: 'L2_PLAN',
+  L3_TASK: 'L3_TASK',
+  L4_CODE: 'L4_CODE',
+  L5_TEST: 'L5_TEST',
+  L6_EVIDENCE: 'L6_EVIDENCE'
+});
+
+export const RELATION_TYPES = Object.freeze({
+  // L0 <-> L1
+  DERIVED_FROM: 'DERIVED_FROM',
+  INFORMS: 'INFORMS',
+  // L1 <-> L2
+  ARCHITECTED_BY: 'ARCHITECTED_BY',
+  DECIDED_IN: 'DECIDED_IN',
+  // L2 <-> L3
+  DECOMPOSED_INTO: 'DECOMPOSED_INTO',
+  SCHEDULES: 'SCHEDULES',
+  // L3 <-> L4
+  IMPLEMENTED_BY: 'IMPLEMENTED_BY',
+  MUTATES: 'MUTATES',
+  // L4 <-> L4
+  IMPORTS: 'IMPORTS',
+  IMPORTED_BY: 'IMPORTED_BY',
+  // L4 <-> L5
+  VERIFIED_BY: 'VERIFIED_BY',
+  COVERS: 'COVERS',
+  // L5 <-> L6
+  SEALED_BY: 'SEALED_BY',
+  CERTIFIES: 'CERTIFIES'
+});
+
+export const RISK_TIERS = Object.freeze({
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  CRITICAL: 'CRITICAL'
+});
+
+const DEFAULT_REVERSE_RELATIONS = {
+  [RELATION_TYPES.DERIVED_FROM]: RELATION_TYPES.INFORMS,
+  [RELATION_TYPES.INFORMS]: RELATION_TYPES.DERIVED_FROM,
+  [RELATION_TYPES.ARCHITECTED_BY]: RELATION_TYPES.DECIDED_IN,
+  [RELATION_TYPES.DECIDED_IN]: RELATION_TYPES.ARCHITECTED_BY,
+  [RELATION_TYPES.DECOMPOSED_INTO]: RELATION_TYPES.SCHEDULES,
+  [RELATION_TYPES.SCHEDULES]: RELATION_TYPES.DECOMPOSED_INTO,
+  [RELATION_TYPES.IMPLEMENTED_BY]: RELATION_TYPES.MUTATES,
+  [RELATION_TYPES.MUTATES]: RELATION_TYPES.IMPLEMENTED_BY,
+  [RELATION_TYPES.IMPORTS]: RELATION_TYPES.IMPORTED_BY,
+  [RELATION_TYPES.IMPORTED_BY]: RELATION_TYPES.IMPORTS,
+  [RELATION_TYPES.VERIFIED_BY]: RELATION_TYPES.COVERS,
+  [RELATION_TYPES.COVERS]: RELATION_TYPES.VERIFIED_BY,
+  [RELATION_TYPES.SEALED_BY]: RELATION_TYPES.CERTIFIES,
+  [RELATION_TYPES.CERTIFIES]: RELATION_TYPES.SEALED_BY
+};
+
+export class RelationalTraceabilityMatrix {
+  /**
+   * @param {object} [options]
+   * @param {string} [options.controlPlaneRoot]
+   * @param {string} [options.baseDir]
+   */
+  constructor(options = {}) {
+    this.controlPlaneRoot = options.controlPlaneRoot || resolveControlPlaneRoot();
+    this.baseDir = options.baseDir || this.controlPlaneRoot;
+    this.nodes = new Map(); // nodeId -> TraceNode
+    this.forwardEdges = new Map(); // sourceId -> Array<{ target: string, relation: string }>
+    this.reverseEdges = new Map(); // targetId -> Array<{ source: string, relation: string }>
+    this.astEngine = new CausalAstEngine({ baseDir: this.controlPlaneRoot });
+  }
+
+  /**
+   * Clears the current in-memory graph
+   */
+  clear() {
+    this.nodes.clear();
+    this.forwardEdges.clear();
+    this.reverseEdges.clear();
+  }
+
+  /**
+   * Registers a node in the traceability matrix
+   * @param {object} node
+   * @param {string} node.id
+   * @param {string} node.layer
+   * @param {string} node.type
+   * @param {string} [node.title]
+   * @param {string} [node.path]
+   * @param {string} [node.sha256]
+   * @param {object} [node.metadata]
+   * @returns {object} The stored node
+   */
+  addNode(node) {
+    if (!node || !node.id || !node.layer) {
+      throw new Error(`INVALID_TRACE_NODE: id and layer are required. Got: ${JSON.stringify(node)}`);
+    }
+
+    if (!Object.values(TRACE_LAYERS).includes(node.layer)) {
+      throw new Error(`INVALID_TRACE_LAYER: '${node.layer}' is not a valid TRACE_LAYER.`);
+    }
+
+    const normalized = {
+      id: node.id,
+      layer: node.layer,
+      type: node.type || 'GENERIC_ENTITY',
+      title: node.title || node.id,
+      path: node.path ? node.path.replace(/\\/g, '/') : null,
+      sha256: node.sha256 || null,
+      metadata: node.metadata || {},
+      created_at: new Date().toISOString()
+    };
+
+    this.nodes.set(normalized.id, normalized);
+    return normalized;
+  }
+
+  /**
+   * Creates a bidirectional relation between two nodes
+   * @param {string} sourceId
+   * @param {string} targetId
+   * @param {string} relation
+   * @param {string} [reverseRelation]
+   */
+  addEdge(sourceId, targetId, relation, reverseRelation) {
+    if (!sourceId || !targetId || !relation) return;
+
+    if (!this.forwardEdges.has(sourceId)) {
+      this.forwardEdges.set(sourceId, []);
+    }
+    const forwardList = this.forwardEdges.get(sourceId);
+    if (!forwardList.some(e => e.target === targetId && e.relation === relation)) {
+      forwardList.push({ target: targetId, relation });
+    }
+
+    const revRel = reverseRelation || DEFAULT_REVERSE_RELATIONS[relation] || 'RELATED_TO';
+    if (!this.reverseEdges.has(targetId)) {
+      this.reverseEdges.set(targetId, []);
+    }
+    const reverseList = this.reverseEdges.get(targetId);
+    if (!reverseList.some(e => e.source === sourceId && e.relation === revRel)) {
+      reverseList.push({ source: sourceId, relation: revRel });
+    }
+  }
+
+  /**
+   * Discovers and registers project registration and context
+   * @param {string} projectId
+   * @returns {object|null} Project registration object
+   */
+  _resolveProject(projectId) {
+    if (!projectId) return null;
+    const cleanId = projectId.toUpperCase().trim();
+
+    // 1. Check docs/projects/registrations/*.json
+    const regDir = path.join(this.controlPlaneRoot, 'docs', 'projects', 'registrations');
+    if (fs.existsSync(regDir)) {
+      const files = fs.readdirSync(regDir);
+      for (const file of files) {
+        if (!file.endsWith('.json')) continue;
+        try {
+          const content = JSON.parse(fs.readFileSync(path.join(regDir, file), 'utf8'));
+          const pId = (content.project_id || content.projectId || '').toUpperCase();
+          if (pId === cleanId || file.replace('.json', '').toUpperCase() === cleanId.replace('PRJ-', '')) {
+            return content;
+          }
+        } catch {
+          // Ignore parse errors
+        }
+      }
+    }
+
+    // 2. Check docs/projects/registry.json
+    const registryPath = path.join(this.controlPlaneRoot, 'docs', 'projects', 'registry.json');
+    if (fs.existsSync(registryPath)) {
+      try {
+        const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+        const found = (registry.projects || []).find(p => (p.project_id || '').toUpperCase() === cleanId);
+        if (found) return found;
+      } catch {
+        // Ignore parse errors
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Helper to compute SHA-256 hash of a file or string
+   * @param {string} contentOrPath
+   * @param {boolean} [isFile=false]
+   * @returns {string}
+   */
+  _sha256(contentOrPath, isFile = false) {
+    const hash = crypto.createHash('sha256');
+    if (isFile) {
+      if (fs.existsSync(contentOrPath)) {
+        hash.update(fs.readFileSync(contentOrPath));
+        return hash.digest('hex');
+      }
+      return '0000000000000000000000000000000000000000000000000000000000000000';
+    }
+    hash.update(contentOrPath);
+    return hash.digest('hex');
+  }
+
+  /**
+   * Builds the comprehensive 7-layer traceability matrix for a given project
+   * @param {string} projectId
+   * @param {object} [options]
+   * @returns {object} Matrix build summary and relational data
+   */
+  buildProjectMatrix(projectId, options = {}) {
+    this.clear();
+    const project = this._resolveProject(projectId);
+    const resolvedId = project ? project.project_id : projectId;
+    const projectSlug = resolvedId.toLowerCase().replace(/^prj-/, '');
+
+    // -------------------------------------------------------------------------
+    // L0: INTAKE LAYER
+    // -------------------------------------------------------------------------
+    const intakeDir = path.join(this.controlPlaneRoot, 'docs', 'intake', projectSlug);
+    const intakeFiles = [];
+    if (fs.existsSync(intakeDir)) {
+      const entries = fs.readdirSync(intakeDir);
+      for (const entry of entries) {
+        if (entry.endsWith('.md') || entry.endsWith('.json')) {
+          intakeFiles.push(path.join(intakeDir, entry));
+        }
+      }
+    }
+
+    // Check project documentation array if empty
+    if (intakeFiles.length === 0 && project?.documentation) {
+      for (const doc of project.documentation) {
+        if (doc.includes('intake')) {
+          const fullDoc = path.resolve(this.controlPlaneRoot, doc);
+          if (fs.existsSync(fullDoc)) intakeFiles.push(fullDoc);
+        }
+      }
+    }
+
+    const intakeNodeIds = [];
+    if (intakeFiles.length > 0) {
+      for (const file of intakeFiles) {
+        const relPath = path.relative(this.controlPlaneRoot, file).replace(/\\/g, '/');
+        const nodeId = `ITK-${projectSlug.toUpperCase()}-${path.basename(file, path.extname(file)).toUpperCase()}`;
+        this.addNode({
+          id: nodeId,
+          layer: TRACE_LAYERS.L0_INTAKE,
+          type: 'INTAKE_CONTEXT',
+          title: `Intake: ${path.basename(file)}`,
+          path: relPath,
+          sha256: this._sha256(file, true),
+          metadata: { project_id: resolvedId }
+        });
+        intakeNodeIds.push(nodeId);
+      }
+    } else {
+      // Fallback synthetic root intake node
+      const fallbackId = `ITK-${projectSlug.toUpperCase()}-ROOT`;
+      this.addNode({
+        id: fallbackId,
+        layer: TRACE_LAYERS.L0_INTAKE,
+        type: 'INTAKE_CONTEXT',
+        title: `Intake Context for ${resolvedId}`,
+        path: `docs/intake/${projectSlug}/PROJECT_CONTEXT.md`,
+        metadata: { project_id: resolvedId, synthetic: true }
+      });
+      intakeNodeIds.push(fallbackId);
+    }
+
+    // -------------------------------------------------------------------------
+    // L1: SPECIFICATIONS LAYER (EARS Specs)
+    // -------------------------------------------------------------------------
+    const specCandidates = [];
+    const specsDir = path.join(this.controlPlaneRoot, 'docs', 'specs');
+    const projectSpecsDir = path.join(specsDir, projectSlug);
+
+    const scanSpecs = (dir) => {
+      if (!fs.existsSync(dir)) return;
+      const entries = fs.readdirSync(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        const full = path.join(dir, entry.name);
+        if (entry.isFile() && entry.name.endsWith('.md')) {
+          specCandidates.push(full);
+        }
+      }
+    };
+
+    scanSpecs(projectSpecsDir);
+    scanSpecs(specsDir);
+
+    const specNodeIds = [];
+    for (const specFile of specCandidates) {
+      try {
+        const content = fs.readFileSync(specFile, 'utf8');
+        // Match project relevance or SPEC identifier
+        const isProjectMatch = content.includes(resolvedId) ||
+          content.toLowerCase().includes(projectSlug) ||
+          specFile.includes(projectSlug);
+
+        if (isProjectMatch || resolvedId === 'PRJ-EOS-CONTROL-PLANE') {
+          const specMatch = content.match(/\[?(SPEC-[A-Z0-9-]+)\]?/i);
+          const specId = specMatch ? specMatch[1].toUpperCase() : `SPEC-${path.basename(specFile, '.md').toUpperCase()}`;
+          const relPath = path.relative(this.controlPlaneRoot, specFile).replace(/\\/g, '/');
+
+          if (!this.nodes.has(specId)) {
+            this.addNode({
+              id: specId,
+              layer: TRACE_LAYERS.L1_SPEC,
+              type: 'EARS_SPEC',
+              title: `Spec: ${path.basename(specFile, '.md')}`,
+              path: relPath,
+              sha256: this._sha256(specFile, true),
+              metadata: { project_id: resolvedId }
+            });
+            specNodeIds.push(specId);
+
+            // Connect L0 <-> L1
+            for (const itkId of intakeNodeIds) {
+              this.addEdge(itkId, specId, RELATION_TYPES.INFORMS, RELATION_TYPES.DERIVED_FROM);
+            }
+          }
+        }
+      } catch {
+        // Skip unreadable files
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // L2: ARCHITECTURE PLANS & ADRs
+    // -------------------------------------------------------------------------
+    const plansDir = path.join(this.controlPlaneRoot, 'docs', 'plans');
+    const adrsDir = path.join(this.controlPlaneRoot, 'docs', 'architecture', 'adrs');
+    const planCandidates = [];
+
+    const scanPlans = (dir) => {
+      if (!fs.existsSync(dir)) return;
+      for (const entry of fs.readdirSync(dir)) {
+        if (entry.endsWith('.md')) planCandidates.push(path.join(dir, entry));
+      }
+    };
+    scanPlans(plansDir);
+    scanPlans(adrsDir);
+
+    const planNodeIds = [];
+    for (const planFile of planCandidates) {
+      try {
+        const content = fs.readFileSync(planFile, 'utf8');
+        const matchesProject = content.includes(resolvedId) ||
+          content.toLowerCase().includes(projectSlug) ||
+          specNodeIds.some(sId => content.includes(sId));
+
+        if (matchesProject || resolvedId === 'PRJ-EOS-CONTROL-PLANE') {
+          const planMatch = content.match(/\[?(PLAN-[A-Z0-9-]+|ADR-[A-Z0-9-]+)\]?/i);
+          const planId = planMatch ? planMatch[1].toUpperCase() : `PLAN-${path.basename(planFile, '.md').toUpperCase()}`;
+          const relPath = path.relative(this.controlPlaneRoot, planFile).replace(/\\/g, '/');
+
+          if (!this.nodes.has(planId)) {
+            this.addNode({
+              id: planId,
+              layer: TRACE_LAYERS.L2_PLAN,
+              type: planFile.includes('adr') ? 'ADR' : 'ARCHITECTURE_PLAN',
+              title: `Plan: ${path.basename(planFile, '.md')}`,
+              path: relPath,
+              sha256: this._sha256(planFile, true),
+              metadata: { project_id: resolvedId }
+            });
+            planNodeIds.push(planId);
+
+            // Connect L1 <-> L2
+            for (const sId of specNodeIds) {
+              this.addEdge(sId, planId, RELATION_TYPES.ARCHITECTED_BY, RELATION_TYPES.DECIDED_IN);
+            }
+          }
+        }
+      } catch {
+        // Skip unreadable files
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // L3: ATOMIC TASK DAG
+    // -------------------------------------------------------------------------
+    const tasksDir = path.join(this.controlPlaneRoot, 'docs', 'tasks');
+    const taskCandidates = [];
+    if (fs.existsSync(tasksDir)) {
+      for (const entry of fs.readdirSync(tasksDir)) {
+        if (entry.endsWith('.md') || entry.endsWith('.json')) {
+          taskCandidates.push(path.join(tasksDir, entry));
+        }
+      }
+    }
+
+    const taskNodeIds = [];
+    for (const taskFile of taskCandidates) {
+      try {
+        const content = fs.readFileSync(taskFile, 'utf8');
+        const matchesProject = content.includes(resolvedId) ||
+          content.toLowerCase().includes(projectSlug) ||
+          planNodeIds.some(pId => content.includes(pId));
+
+        if (matchesProject || resolvedId === 'PRJ-EOS-CONTROL-PLANE') {
+          const taskMatch = content.match(/\[?(TASK-[A-Z0-9-]+|TSK-[A-Z0-9-]+)\]?/i);
+          const taskId = taskMatch ? taskMatch[1].toUpperCase() : `TASK-${path.basename(taskFile, path.extname(taskFile)).toUpperCase()}`;
+          const relPath = path.relative(this.controlPlaneRoot, taskFile).replace(/\\/g, '/');
+
+          if (!this.nodes.has(taskId)) {
+            this.addNode({
+              id: taskId,
+              layer: TRACE_LAYERS.L3_TASK,
+              type: 'TASK_DAG',
+              title: `Task DAG: ${path.basename(taskFile)}`,
+              path: relPath,
+              sha256: this._sha256(taskFile, true),
+              metadata: { project_id: resolvedId }
+            });
+            taskNodeIds.push(taskId);
+
+            // Connect L2 <-> L3
+            for (const pId of planNodeIds) {
+              this.addEdge(pId, taskId, RELATION_TYPES.DECOMPOSED_INTO, RELATION_TYPES.SCHEDULES);
+            }
+          }
+        }
+      } catch {
+        // Skip unreadable files
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // L4: SOURCE CODE & L5: TEST SUITES
+    // -------------------------------------------------------------------------
+    let targetCodeRoot = this.controlPlaneRoot;
+    if (project?.path && fs.existsSync(project.path) && resolvedId !== 'PRJ-EOS-CONTROL-PLANE') {
+      targetCodeRoot = project.path;
+    }
+
+    // Build AST dependency graph
+    this.astEngine.buildGraph(targetCodeRoot);
+
+    const codeNodeIds = [];
+    const testNodeIds = [];
+
+    // Classify AST files into L4 (Source Code) vs L5 (Test Suites)
+    for (const [filePath] of this.astEngine.dependencyGraph.entries()) {
+      const isTest = filePath.includes('test') ||
+        filePath.includes('__tests__') ||
+        filePath.endsWith('.test.js') ||
+        filePath.endsWith('.test.ts') ||
+        filePath.endsWith('.spec.js') ||
+        filePath.endsWith('.spec.ts');
+
+      const fullPath = path.resolve(targetCodeRoot, filePath);
+      const nodeId = `FILE:${filePath}`;
+
+      if (isTest) {
+        this.addNode({
+          id: nodeId,
+          layer: TRACE_LAYERS.L5_TEST,
+          type: 'TEST_SUITE',
+          title: `Test: ${path.basename(filePath)}`,
+          path: filePath,
+          sha256: this._sha256(fullPath, true),
+          metadata: { project_id: resolvedId }
+        });
+        testNodeIds.push(nodeId);
+      } else {
+        this.addNode({
+          id: nodeId,
+          layer: TRACE_LAYERS.L4_CODE,
+          type: 'SOURCE_CODE',
+          title: `Source: ${path.basename(filePath)}`,
+          path: filePath,
+          sha256: this._sha256(fullPath, true),
+          metadata: { project_id: resolvedId }
+        });
+        codeNodeIds.push(nodeId);
+
+        // Connect L3 <-> L4 (Tasks implement code)
+        for (const taskId of taskNodeIds) {
+          this.addEdge(taskId, nodeId, RELATION_TYPES.IMPLEMENTED_BY, RELATION_TYPES.MUTATES);
+        }
+      }
+    }
+
+    // Link L4 <-> L4 via imports
+    for (const [filePath, imports] of this.astEngine.dependencyGraph.entries()) {
+      const sourceNodeId = `FILE:${filePath}`;
+      for (const imp of imports) {
+        const targetNodeId = `FILE:${imp}`;
+        if (this.nodes.has(targetNodeId)) {
+          this.addEdge(sourceNodeId, targetNodeId, RELATION_TYPES.IMPORTS, RELATION_TYPES.IMPORTED_BY);
+        }
+      }
+    }
+
+    // Link L4 <-> L5 (Tests cover code)
+    for (const testId of testNodeIds) {
+      const testPath = this.nodes.get(testId).path;
+      // 1. Direct AST imports from test to code
+      const imports = Array.from(this.astEngine.dependencyGraph.get(testPath) || []);
+      for (const imp of imports) {
+        const codeId = `FILE:${imp}`;
+        if (this.nodes.has(codeId) && this.nodes.get(codeId).layer === TRACE_LAYERS.L4_CODE) {
+          this.addEdge(codeId, testId, RELATION_TYPES.VERIFIED_BY, RELATION_TYPES.COVERS);
+        }
+      }
+
+      // 2. Name-based heuristic matching (e.g. tests/foo.test.js covers src/foo.js)
+      const baseName = path.basename(testPath).replace(/\.(test|spec)\.[a-z]+$/, '');
+      for (const codeId of codeNodeIds) {
+        const codePath = this.nodes.get(codeId).path;
+        if (path.basename(codePath, path.extname(codePath)) === baseName) {
+          this.addEdge(codeId, testId, RELATION_TYPES.VERIFIED_BY, RELATION_TYPES.COVERS);
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // L6: CRYPTOGRAPHIC EVIDENCE LAYER
+    // -------------------------------------------------------------------------
+    const evidenceDir = path.join(this.controlPlaneRoot, 'docs', 'evidence');
+    const evidenceNodeIds = [];
+
+    if (fs.existsSync(evidenceDir)) {
+      const files = fs.readdirSync(evidenceDir);
+      for (const file of files) {
+        if (!file.endsWith('.json')) continue;
+        const fullEvidencePath = path.join(evidenceDir, file);
+        try {
+          const evd = JSON.parse(fs.readFileSync(fullEvidencePath, 'utf8'));
+          const isEvdMatch = evd.data?.projectId === resolvedId ||
+            evd.scope?.includes(resolvedId) ||
+            file.toLowerCase().includes(projectSlug);
+
+          if (isEvdMatch || resolvedId === 'PRJ-EOS-CONTROL-PLANE') {
+            const evdId = evd.id || evd.evidenceId || `EVD-${path.basename(file, '.json')}`;
+            const relPath = path.relative(this.controlPlaneRoot, fullEvidencePath).replace(/\\/g, '/');
+
+            this.addNode({
+              id: evdId,
+              layer: TRACE_LAYERS.L6_EVIDENCE,
+              type: 'EVIDENCE_RECEIPT',
+              title: `Evidence [${evdId}]: ${evd.claim || evd.action || 'Audit Receipt'}`,
+              path: relPath,
+              sha256: evd.sha256 || evd.digest || this._sha256(fullEvidencePath, true),
+              metadata: {
+                project_id: resolvedId,
+                status: evd.status || 'VERIFIED',
+                actor: evd.actor,
+                timestamp: evd.timestamp
+              }
+            });
+            evidenceNodeIds.push(evdId);
+
+            // Connect L5 <-> L6 and L4 <-> L6 via proxyResults or targeted context matching
+            let hasSpecificLinks = false;
+            if (evd.data?.proxyResults && Array.isArray(evd.data.proxyResults)) {
+              for (const pr of evd.data.proxyResults) {
+                const proxyFileId = `FILE:${pr.path}`;
+                if (this.nodes.has(proxyFileId)) {
+                  this.addEdge(proxyFileId, evdId, RELATION_TYPES.SEALED_BY, RELATION_TYPES.CERTIFIES);
+                  hasSpecificLinks = true;
+                }
+              }
+            }
+
+            // Check if evidence mentions specific tests or code in command, scope, claim, or data
+            const evdContext = `${evd.command || ''} ${evd.scope || ''} ${evd.claim || ''} ${JSON.stringify(evd.data || {})}`;
+            for (const tId of testNodeIds) {
+              const testPath = this.nodes.get(tId).path;
+              const testBase = path.basename(testPath);
+              if (evdContext.includes(testPath) || evdContext.includes(testBase)) {
+                this.addEdge(tId, evdId, RELATION_TYPES.SEALED_BY, RELATION_TYPES.CERTIFIES);
+                hasSpecificLinks = true;
+              }
+            }
+
+            // If project-specific (not the general control plane) and no specific links, link project tests
+            if (!hasSpecificLinks && resolvedId !== 'PRJ-EOS-CONTROL-PLANE' && evd.data?.projectId === resolvedId) {
+              for (const tId of testNodeIds) {
+                this.addEdge(tId, evdId, RELATION_TYPES.SEALED_BY, RELATION_TYPES.CERTIFIES);
+              }
+            }
+          }
+        } catch {
+          // Skip invalid evidence files
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // SUMMARY & METRICS COMPUTATION
+    // -------------------------------------------------------------------------
+    const nodesByLayer = {};
+    for (const layer of Object.values(TRACE_LAYERS)) {
+      nodesByLayer[layer] = Array.from(this.nodes.values()).filter(n => n.layer === layer).length;
+    }
+
+    let totalEdges = 0;
+    for (const edges of this.forwardEdges.values()) {
+      totalEdges += edges.length;
+    }
+
+    // Find orphans (0 degree)
+    const orphans = [];
+    for (const [id, node] of this.nodes.entries()) {
+      const outDeg = (this.forwardEdges.get(id) || []).length;
+      const inDeg = (this.reverseEdges.get(id) || []).length;
+      if (outDeg === 0 && inDeg === 0) {
+        orphans.push({ id, layer: node.layer, title: node.title });
+      }
+    }
+
+    // Coverage metrics
+    const coveredCodeCount = codeNodeIds.filter(id => (this.forwardEdges.get(id) || []).some(e => e.relation === RELATION_TYPES.VERIFIED_BY)).length;
+    const testSealedCount = testNodeIds.filter(id => (this.forwardEdges.get(id) || []).some(e => e.relation === RELATION_TYPES.SEALED_BY)).length;
+
+    const coverageRatio = codeNodeIds.length > 0 ? (coveredCodeCount / codeNodeIds.length) : 1.0;
+    const evidenceCoverageRatio = testNodeIds.length > 0 ? (testSealedCount / testNodeIds.length) : 1.0;
+
+    return {
+      project_id: resolvedId,
+      total_nodes: this.nodes.size,
+      nodes_by_layer: nodesByLayer,
+      total_edges: totalEdges,
+      orphans_count: orphans.length,
+      orphans,
+      code_coverage_ratio: Number((coverageRatio * 100).toFixed(1)),
+      evidence_coverage_ratio: Number((evidenceCoverageRatio * 100).toFixed(1)),
+      sha256: this._sha256(JSON.stringify({
+        project_id: resolvedId,
+        nodes: Array.from(this.nodes.keys()),
+        edges_count: totalEdges
+      }))
+    };
+  }
+
+  /**
+   * Calculates the upstream and downstream blast radius of mutating an entity or file
+   * @param {string} targetIdOrPath
+   * @param {object} [options]
+   * @returns {object} Blast radius analysis with risk tier and revalidation roadmap
+   */
+  calculateEntityBlastRadius(targetIdOrPath, options = {}) {
+    if (!targetIdOrPath) {
+      throw new Error('TARGET_REQUIRED: Target entity ID or file path is required to calculate blast radius.');
+    }
+
+    const normalizedTarget = targetIdOrPath.replace(/\\/g, '/');
+    let targetNode = this.nodes.get(normalizedTarget) || this.nodes.get(`FILE:${normalizedTarget}`);
+
+    // If node is not found in matrix, attempt dynamic file resolution
+    if (!targetNode) {
+      let resolvedFile = normalizedTarget;
+      if (path.isAbsolute(normalizedTarget)) {
+        resolvedFile = path.relative(this.controlPlaneRoot, normalizedTarget).replace(/\\/g, '/');
+      }
+      targetNode = {
+        id: `FILE:${resolvedFile}`,
+        layer: TRACE_LAYERS.L4_CODE,
+        type: 'SOURCE_CODE',
+        title: `Dynamic: ${path.basename(resolvedFile)}`,
+        path: resolvedFile
+      };
+    }
+
+    // 1. Traverse Downstream (Entities impacted by changes to target)
+    const directDependents = new Set();
+    const transitiveDependents = new Set();
+    const testsToRevalidate = new Set();
+    const invalidatedEvidence = new Set();
+    const affectedDocumentation = new Set();
+
+    // Check AST reverse graph for code dependencies
+    const filePath = targetNode.path || targetNode.id.replace(/^FILE:/, '');
+    const astDirect = this.astEngine.reverseGraph.get(filePath) || new Set();
+
+    for (const dep of astDirect) {
+      directDependents.add(dep);
+      if (dep.includes('test') || dep.endsWith('.test.js') || dep.endsWith('.spec.js')) {
+        testsToRevalidate.add(dep);
+      }
+    }
+
+    // Check forward and reverse edges in RTM
+    const forwardRtm = this.forwardEdges.get(targetNode.id) || [];
+    for (const edge of forwardRtm) {
+      const targetEntity = this.nodes.get(edge.target);
+      if (targetEntity) {
+        if (targetEntity.layer === TRACE_LAYERS.L5_TEST) {
+          testsToRevalidate.add(targetEntity.path || targetEntity.id);
+        } else if (targetEntity.layer === TRACE_LAYERS.L6_EVIDENCE) {
+          invalidatedEvidence.add(targetEntity);
+        } else if (targetEntity.layer === TRACE_LAYERS.L4_CODE) {
+          directDependents.add(targetEntity.path || targetEntity.id);
+        } else {
+          affectedDocumentation.add(targetEntity);
+        }
+      }
+    }
+
+    // Transitive BFS search for code dependencies
+    const queue = Array.from(directDependents);
+    const visited = new Set(directDependents);
+
+    while (queue.length > 0) {
+      const current = queue.shift();
+      const currentNext = this.astEngine.reverseGraph.get(current) || new Set();
+      for (const nextDep of currentNext) {
+        if (!visited.has(nextDep)) {
+          visited.add(nextDep);
+          transitiveDependents.add(nextDep);
+          queue.push(nextDep);
+          if (nextDep.includes('test') || nextDep.endsWith('.test.js') || nextDep.endsWith('.spec.js')) {
+            testsToRevalidate.add(nextDep);
+          }
+        }
+      }
+    }
+
+    // Direct and transitive tests also invalidate their sealing evidence receipts
+    for (const testPath of testsToRevalidate) {
+      const testId = `FILE:${testPath}`;
+      const testEdges = this.forwardEdges.get(testId) || [];
+      for (const edge of testEdges) {
+        if (edge.relation === RELATION_TYPES.SEALED_BY) {
+          const evdNode = this.nodes.get(edge.target);
+          if (evdNode && evdNode.layer === TRACE_LAYERS.L6_EVIDENCE) {
+            invalidatedEvidence.add(evdNode);
+          }
+        }
+      }
+    }
+
+    // 2. Upstream Lineage (What specifications, plans, and intake led to this entity)
+    const upstreamLineage = [];
+    const revQueue = [targetNode.id];
+    const revVisited = new Set();
+
+    while (revQueue.length > 0) {
+      const curr = revQueue.shift();
+      if (!revVisited.has(curr)) {
+        revVisited.add(curr);
+        const incoming = this.reverseEdges.get(curr) || [];
+        for (const edge of incoming) {
+          const parentNode = this.nodes.get(edge.source);
+          if (parentNode && !revVisited.has(parentNode.id)) {
+            upstreamLineage.push({
+              id: parentNode.id,
+              layer: parentNode.layer,
+              relation: edge.relation,
+              title: parentNode.title
+            });
+            revQueue.push(parentNode.id);
+          }
+        }
+      }
+    }
+
+    // 3. Risk Tier & Action Roadmap Classification
+    const directList = Array.from(directDependents);
+    const transitiveList = Array.from(transitiveDependents);
+    const testList = Array.from(testsToRevalidate);
+    const evidenceList = Array.from(invalidatedEvidence).map(e => ({
+      id: e.id,
+      path: e.path,
+      sha256: e.sha256,
+      status: 'STALE_REVALIDATION_REQUIRED'
+    }));
+
+    const totalAffectedCount = directList.length + transitiveList.length + testList.length + evidenceList.length;
+
+    // Check if target is a high-governance architectural file
+    const isCriticalContract = filePath.includes('CONSTITUTION.md') ||
+      filePath.includes('GOVERNANCE.md') ||
+      filePath.includes('schema.json') ||
+      filePath.includes('package.json') ||
+      filePath.includes('kernel.js');
+
+    let riskTier = RISK_TIERS.LOW;
+    let recommendedAction = 'STANDARD_TDD_CYCLE';
+
+    if (isCriticalContract || totalAffectedCount >= 10) {
+      riskTier = RISK_TIERS.CRITICAL;
+      recommendedAction = 'REQUIRE_HITL_GATE_AND_FULL_REGRESSION';
+    } else if (totalAffectedCount >= 5) {
+      riskTier = RISK_TIERS.HIGH;
+      recommendedAction = 'REQUIRE_FORMAL_AUDIT_BEFORE_MERGE';
+    } else if (totalAffectedCount >= 2) {
+      riskTier = RISK_TIERS.MEDIUM;
+      recommendedAction = 'REQUIRE_INTEGRATION_SUITE_REVALIDATION';
+    }
+
+    const report = {
+      target_entity: targetNode.id,
+      target_layer: targetNode.layer,
+      target_path: filePath,
+      risk_tier: riskTier,
+      total_affected_count: totalAffectedCount,
+      recommended_action: recommendedAction,
+      direct_dependents: directList,
+      transitive_dependents: transitiveList,
+      tests_to_revalidate: testList,
+      invalidated_evidence: evidenceList,
+      affected_documentation: Array.from(affectedDocumentation).map(d => ({ id: d.id, layer: d.layer, title: d.title })),
+      upstream_lineage: upstreamLineage,
+      timestamp: new Date().toISOString()
+    };
+
+    report.sha256 = this._sha256(JSON.stringify(report));
+    return report;
+  }
+
+  /**
+   * Formats the RTM into an ASCII hierarchical tree for terminal display
+   * @param {object} matrixData
+   * @returns {string}
+   */
+  formatTraceTree(matrixData) {
+    const lines = [
+      '================================================================================',
+      `🌐 EOS RELATIONAL TRACEABILITY MATRIX: [${matrixData.project_id || 'WORKSPACE'}]`,
+      '================================================================================'
+    ];
+
+    const layerOrder = [
+      TRACE_LAYERS.L0_INTAKE,
+      TRACE_LAYERS.L1_SPEC,
+      TRACE_LAYERS.L2_PLAN,
+      TRACE_LAYERS.L3_TASK,
+      TRACE_LAYERS.L4_CODE,
+      TRACE_LAYERS.L5_TEST,
+      TRACE_LAYERS.L6_EVIDENCE
+    ];
+
+    const layerLabels = {
+      [TRACE_LAYERS.L0_INTAKE]: 'L0: BUSINESS INTAKE',
+      [TRACE_LAYERS.L1_SPEC]: 'L1: EARS SPECIFICATIONS',
+      [TRACE_LAYERS.L2_PLAN]: 'L2: ARCHITECTURE PLANS & ADRs',
+      [TRACE_LAYERS.L3_TASK]: 'L3: ATOMIC TASK DAG',
+      [TRACE_LAYERS.L4_CODE]: 'L4: SOURCE CODE (AST)',
+      [TRACE_LAYERS.L5_TEST]: 'L5: TEST SUITES',
+      [TRACE_LAYERS.L6_EVIDENCE]: 'L6: CRYPTOGRAPHIC EVIDENCE'
+    };
+
+    const layerConnectors = {
+      [TRACE_LAYERS.L0_INTAKE]: '     ↕ INFORMS / DERIVED_FROM',
+      [TRACE_LAYERS.L1_SPEC]: '     ↕ ARCHITECTED_BY / DECIDED_IN',
+      [TRACE_LAYERS.L2_PLAN]: '     ↕ DECOMPOSED_INTO / SCHEDULES',
+      [TRACE_LAYERS.L3_TASK]: '     ↕ IMPLEMENTED_BY / MUTATES',
+      [TRACE_LAYERS.L4_CODE]: '     ↕ VERIFIED_BY / COVERS',
+      [TRACE_LAYERS.L5_TEST]: '     ↕ SEALED_BY / CERTIFIES',
+      [TRACE_LAYERS.L6_EVIDENCE]: ''
+    };
+
+    for (const layer of layerOrder) {
+      const layerNodes = Array.from(this.nodes.values()).filter(n => n.layer === layer);
+      lines.push(`${layerLabels[layer]} (${layerNodes.length} nodes)`);
+
+      if (layerNodes.length === 0) {
+        lines.push('  └─ (None registered)');
+      } else {
+        const displayLimit = 6;
+        const slice = layerNodes.slice(0, displayLimit);
+        slice.forEach((node, idx) => {
+          const isLast = idx === slice.length - 1 && layerNodes.length <= displayLimit;
+          const prefix = isLast ? '  └─' : '  ├─';
+          const shaTag = node.sha256 ? ` [${node.sha256.substring(0, 8)}...]` : '';
+          lines.push(`${prefix} [${node.id}] ${node.path || node.title}${shaTag}`);
+        });
+        if (layerNodes.length > displayLimit) {
+          lines.push(`  └─ ... and ${layerNodes.length - displayLimit} additional node(s)`);
+        }
+      }
+
+      if (layerConnectors[layer]) {
+        lines.push(layerConnectors[layer]);
+      }
+    }
+
+    lines.push('--------------------------------------------------------------------------------');
+    lines.push(`Summary: ${this.nodes.size} nodes, ${matrixData.total_edges || 0} edges | Code Coverage: ${matrixData.code_coverage_ratio || 0}% | Evidence Seals: ${matrixData.evidence_coverage_ratio || 0}%`);
+    lines.push('================================================================================');
+
+    return lines.join('\n');
+  }
+
+  /**
+   * Formats blast radius analysis into an ASCII impact report for terminal display
+   * @param {object} blastData
+   * @returns {string}
+   */
+  formatBlastRadius(blastData) {
+    const riskBadges = {
+      [RISK_TIERS.LOW]: '🟢 LOW (TDD Cycle)',
+      [RISK_TIERS.MEDIUM]: '🟡 MEDIUM (Integration Suite Revalidation)',
+      [RISK_TIERS.HIGH]: '🟠 HIGH (Formal Audit Required)',
+      [RISK_TIERS.CRITICAL]: '🔴 CRITICAL (HITL Gate & Full Regression)'
+    };
+
+    const lines = [
+      '================================================================================',
+      '💥 EOS CAUSAL BLAST RADIUS & IMPACT ANALYSIS',
+      '================================================================================',
+      `Target Entity  : ${blastData.target_entity}`,
+      `Layer          : ${blastData.target_layer}`,
+      `Path           : ${blastData.target_path}`,
+      `Risk Tier      : ${riskBadges[blastData.risk_tier] || blastData.risk_tier}`,
+      `Recommended    : ${blastData.recommended_action}`,
+      `SHA-256 Digest : ${blastData.sha256}`,
+      '--------------------------------------------------------------------------------',
+      `📦 DIRECT DEPENDENTS (${blastData.direct_dependents.length}):`
+    ];
+
+    if (blastData.direct_dependents.length === 0) {
+      lines.push('   (None detected)');
+    } else {
+      blastData.direct_dependents.slice(0, 8).forEach(d => lines.push(`   - ${d}`));
+      if (blastData.direct_dependents.length > 8) {
+        lines.push(`   ... and ${blastData.direct_dependents.length - 8} more`);
+      }
+    }
+
+    lines.push(`🔄 TRANSITIVE DEPENDENTS (${blastData.transitive_dependents.length}):`);
+    if (blastData.transitive_dependents.length === 0) {
+      lines.push('   (None detected)');
+    } else {
+      blastData.transitive_dependents.slice(0, 8).forEach(d => lines.push(`   - ${d}`));
+      if (blastData.transitive_dependents.length > 8) {
+        lines.push(`   ... and ${blastData.transitive_dependents.length - 8} more`);
+      }
+    }
+
+    lines.push(`🧪 TESTS TO REVALIDATE (${blastData.tests_to_revalidate.length}):`);
+    if (blastData.tests_to_revalidate.length === 0) {
+      lines.push('   (None required)');
+    } else {
+      blastData.tests_to_revalidate.forEach(t => lines.push(`   - 🎯 ${t}`));
+    }
+
+    lines.push(`📜 INVALIDATED EVIDENCE RECEIPTS (${blastData.invalidated_evidence.length}):`);
+    if (blastData.invalidated_evidence.length === 0) {
+      lines.push('   (Zero receipts affected)');
+    } else {
+      blastData.invalidated_evidence.forEach(e => lines.push(`   - ⚠️ [${e.id}] ${e.path} ➔ STALE_REVALIDATION_REQUIRED`));
+    }
+
+    if (blastData.upstream_lineage.length > 0) {
+      lines.push('--------------------------------------------------------------------------------');
+      lines.push(`🏛️ UPSTREAM LINEAGE ORIGIN (${blastData.upstream_lineage.length}):`);
+      blastData.upstream_lineage.slice(0, 5).forEach(u => lines.push(`   ← [${u.layer}] ${u.id}: ${u.title}`));
+    }
+
+    lines.push('================================================================================');
+    return lines.join('\n');
+  }
+}

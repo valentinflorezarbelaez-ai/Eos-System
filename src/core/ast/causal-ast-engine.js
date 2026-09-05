@@ -81,21 +81,40 @@ export class CausalAstEngine {
   buildGraph(targetDir = this.baseDir) {
     this.dependencyGraph.clear();
     this.reverseGraph.clear();
+    const effectiveBase = targetDir || this.baseDir;
+
+    const ignoredNames = new Set([
+      'node_modules',
+      '.git',
+      '.missions',
+      '.next',
+      '.turbo',
+      '.venv',
+      'venv',
+      'env',
+      '__pycache__',
+      'dist',
+      'build',
+      '.tempmediaStorage',
+      'coverage',
+      '.cache'
+    ]);
 
     const scanDirectory = (dir) => {
       if (!fs.existsSync(dir)) return;
       const entries = fs.readdirSync(dir, { withFileTypes: true });
 
       for (const entry of entries) {
-        if (entry.name === 'node_modules' || entry.name === '.git' || entry.name === '.missions') continue;
+        if (ignoredNames.has(entry.name)) continue;
+        if (entry.name.startsWith('.') && entry.name !== '.missions') continue;
         const fullPath = path.join(dir, entry.name);
 
         if (entry.isDirectory()) {
           scanDirectory(fullPath);
         } else if (entry.isFile()) {
           const ext = path.extname(entry.name);
-          if (['.js', '.ts', '.mjs', '.py', '.rs', '.go'].includes(ext)) {
-            const relPath = path.relative(this.baseDir, fullPath).replace(/\\/g, '/');
+          if (['.js', '.ts', '.mjs', '.py', '.rs', '.go', '.jsx', '.tsx'].includes(ext)) {
+            const relPath = path.relative(effectiveBase, fullPath).replace(/\\/g, '/');
             try {
               const content = fs.readFileSync(fullPath, 'utf8');
               const imports = this.extractImports(fullPath, content);
@@ -105,12 +124,34 @@ export class CausalAstEngine {
               }
 
               for (const imp of imports) {
-                this.dependencyGraph.get(relPath).add(imp);
-
-                if (!this.reverseGraph.has(imp)) {
-                  this.reverseGraph.set(imp, new Set());
+                let resolvedImp = imp;
+                if (imp.startsWith('.')) {
+                  const dirOfFile = path.dirname(fullPath);
+                  const resolvedTarget = path.resolve(dirOfFile, imp);
+                  resolvedImp = path.relative(effectiveBase, resolvedTarget).replace(/\\/g, '/');
+                  if (!path.extname(resolvedImp)) {
+                    for (const testExt of ['.js', '.ts', '.mjs', '.jsx', '.tsx', '/index.js', '/index.ts']) {
+                      if (fs.existsSync(path.resolve(effectiveBase, resolvedImp + testExt))) {
+                        resolvedImp = (resolvedImp + testExt).replace(/\\/g, '/');
+                        break;
+                      }
+                    }
+                  }
                 }
-                this.reverseGraph.get(imp).add(relPath);
+
+                this.dependencyGraph.get(relPath).add(resolvedImp);
+
+                if (!this.reverseGraph.has(resolvedImp)) {
+                  this.reverseGraph.set(resolvedImp, new Set());
+                }
+                this.reverseGraph.get(resolvedImp).add(relPath);
+
+                if (resolvedImp !== imp) {
+                  if (!this.reverseGraph.has(imp)) {
+                    this.reverseGraph.set(imp, new Set());
+                  }
+                  this.reverseGraph.get(imp).add(relPath);
+                }
               }
             } catch {
               // Ignore unreadable files gracefully
