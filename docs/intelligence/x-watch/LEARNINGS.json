@@ -1,7 +1,17 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-03T12:14:43.124Z",
+  "updated_at": "2026-09-05T12:18:18.626Z",
   "learnings": [
+    {
+      "learning_id": "LRN-CURSOR-cursor-com-blog-basis",
+      "title": "How Basis builds long-horizon accounting agents with Cursor",
+      "source_url": "https://cursor.com/blog/basis",
+      "published_at": "2026-09-04T12:00:00.000Z",
+      "summary": "Basis was built on Cursor from day one. Its accounting agents complete partnership tax returns up to 6x faster, and are trusted by 40% of the top 25 accounting firms.",
+      "apply_in_eos": "Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.",
+      "epistemic_status": "OBSERVED",
+      "x_timeline_verified": false
+    },
     {
       "learning_id": "LRN-CURSOR-forum-cursor-com-t-grok-bot-is-now-live-on-andro",
       "title": "Grok Bot is Now Live on Android",
@@ -537,7 +547,7 @@
       "title": "Claude Fable 5 - Out Now!",
       "source_url": "https://forum.cursor.com/t/claude-fable-5-out-now/162816",
       "published_at": "Tue, 09 Jun 2026 17:32:49 +0000",
-      "summary": "Announcement · Pricing · Docs Claude Fable 5 is now available in Cursor! It sets a new state of the art on CursorBench at 72.9%, 8 points above the previous best. Claude Fable 5 requires you to accept Anthropic’s data retention terms in your dashboard before you can use it. Your code is never used for training. Learn more in our docs . 63 posts - 29 participants Read full topic",
+      "summary": "Announcement · Pricing · Docs Claude Fable 5 is now available in Cursor! It sets a new state of the art on CursorBench at 72.9%, 8 points above the previous best. Claude Fable 5 requires you to accept Anthropic’s data retention terms in your dashboard before you can use it. Your code is never used for training. Learn more in our docs . 63 posts - 30 participants Read full topic",
       "apply_in_eos": "Claude/Opus availability is vendor catalog news. Do not treat a forum post as a production-quality certificate.",
       "epistemic_status": "OBSERVED",
       "x_timeline_verified": false

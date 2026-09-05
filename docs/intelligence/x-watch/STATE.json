@@ -29,6 +29,7 @@
     "forum.cursor.com-topic-170384",
     "https://cursor.com/blog/agent-swarm-model-economics",
     "https://cursor.com/blog/aiuc-1",
+    "https://cursor.com/blog/basis",
     "https://cursor.com/blog/builds",
     "https://cursor.com/blog/cloud-agent-environment",
     "https://cursor.com/blog/coinbase",
@@ -205,7 +206,7 @@
     "https://cursor.com/help/troubleshooting/reporting-bugs",
     "https://cursor.com/help/troubleshooting/tab-issues"
   ],
-  "last_ingest_at": "2026-09-03T12:14:43.110Z",
-  "last_item_count": 198,
-  "last_new_item_count": 4
+  "last_ingest_at": "2026-09-05T12:18:18.613Z",
+  "last_item_count": 92,
+  "last_new_item_count": 1
 }

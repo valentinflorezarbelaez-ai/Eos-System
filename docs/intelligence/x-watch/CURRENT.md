@@ -2,8 +2,8 @@
 
 Epistemic status: `TARGETS = WATCHLIST` | `RESULTS = OFFICIAL_FEEDS_ONLY`. `x_timeline_verified = false` for every row.
 
-Updated: 2026-09-03T12:14:43.124Z
-Store size: 204
+Updated: 2026-09-05T12:18:18.626Z
+Store size: 205
 
 ## Official product actions
 - **Cloud Agents Start 3x Faster with Builds** — Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.
