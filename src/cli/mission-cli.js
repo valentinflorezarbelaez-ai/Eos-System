@@ -20,6 +20,7 @@ import { ElevateOrchestrator } from '../core/elevate/elevate-orchestrator.js';
 import { ProjectOnboarder } from '../core/projects/project-onboarder.js';
 import { RelationalTraceabilityMatrix } from '../core/ontology/relational-traceability-matrix.js';
 import { AutonomousLoopEngine } from '../core/runtime/autonomous-loop-engine.js';
+import { AutonomousIntakeSynthesizer } from '../core/sdd/autonomous-intake-synthesizer.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -92,6 +93,10 @@ export class MissionCLI {
 
     if (command === 'loop' || command === 'l') {
       return this.handleLoopCommand(argv.slice(1));
+    }
+
+    if (command === 'intake' || command === 'i') {
+      return this.handleIntakeCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -307,6 +312,126 @@ export class MissionCLI {
       return { success: true, output: isJson ? JSON.stringify({ status: 'ACTIVE', targetDir, targetProject }) : message };
     } catch (err) {
       return { success: false, output: `Loop Engine Failed: ${err.message}` };
+    }
+  }
+
+  /**
+   * eos intake [--project <id>] [--synthesize] [--input <text|path>] [--out-dir <path>] [--json]
+   */
+  async handleIntakeCommand(args = []) {
+    let projectId = 'PRJ-INTAKE';
+    let input = '';
+    let outDir = '';
+    let jsonMode = false;
+
+    for (let i = 0; i < args.length; i++) {
+      if (args[i] === '--project' && args[i + 1]) {
+        projectId = args[i + 1];
+        i++;
+      } else if (args[i] === '--input' && args[i + 1]) {
+        input = args[i + 1];
+        i++;
+      } else if (args[i] === '--out-dir' && args[i + 1]) {
+        outDir = args[i + 1];
+        i++;
+      } else if (args[i] === '--json') {
+        jsonMode = true;
+      }
+    }
+
+    const nonFlags = args.filter(a => !a.startsWith('--') && a !== projectId && a !== input && a !== outDir && a !== 'synthesize');
+    if (!input && nonFlags.length > 0) {
+      input = nonFlags.join(' ');
+    }
+
+    const controlPlane = this.controlPlaneRoot || this.runtime?.controlPlaneRoot || resolveControlPlaneRoot();
+    const synthesizer = new AutonomousIntakeSynthesizer({ controlPlaneRoot: controlPlane });
+
+    // If input is not specified, check if docs/intake/<project> has files
+    if (!input && projectId) {
+      const slug = projectId.replace(/^PRJ-/, '').toLowerCase();
+      const projectIntakeDir = path.join(controlPlane, 'docs', 'intake', slug);
+      if (fs.existsSync(projectIntakeDir)) {
+        const files = fs.readdirSync(projectIntakeDir).filter(f => f.endsWith('.md') || f.endsWith('.txt'));
+        if (files.length > 0) {
+          input = path.join(projectIntakeDir, files[0]);
+        }
+      }
+    }
+
+    if (!input) {
+      return {
+        success: false,
+        output: "Error: No input provided. Specify --input <text|path> or a registered --project with intake docs."
+      };
+    }
+
+    const isFile = fs.existsSync(input) || fs.existsSync(path.resolve(controlPlane, input));
+    const inputPath = isFile ? (path.isAbsolute(input) ? input : path.resolve(controlPlane, input)) : null;
+    const rawText = isFile ? fs.readFileSync(inputPath, 'utf-8') : input;
+
+    try {
+      const pkg = synthesizer.compileFullSpecificationPackage({
+        projectId,
+        rawText,
+        inputPath,
+        outputDir: outDir || (projectId ? path.join(controlPlane, 'docs', 'specs', projectId.replace(/^PRJ-/, '').toLowerCase()) : null),
+        persistFiles: Boolean(outDir)
+      });
+
+      if (jsonMode) {
+        return {
+          success: true,
+          output: JSON.stringify(pkg, null, 2),
+          data: pkg
+        };
+      }
+
+      let report = `================================================================================\n`;
+      report += `📝 EOS AUTONOMOUS INTAKE & EARS SPECIFICATION SYNTHESIZER\n`;
+      report += `================================================================================\n\n`;
+      report += `• Project ID:          ${pkg.project_id}\n`;
+      report += `• Spec ID:             ${pkg.spec_id}\n`;
+      report += `• Integrity Hash:      ${pkg.sha256}\n`;
+      report += `• Ambiguities Flagged: ${pkg.ambiguity_audit.ambiguous_count}\n`;
+      report += `• EARS Rules:          ${pkg.ears_requirements.length} formalized\n`;
+      report += `• BDD Scenarios:       ${pkg.bdd_scenarios.length} generated\n`;
+      report += `• Atomic Tasks:        ${pkg.task_dag.total_tasks} planned\n\n`;
+
+      report += `--- [EARS FORMALIZED REQUIREMENTS] ---\n`;
+      for (const req of pkg.ears_requirements) {
+        report += `  [${req.id}] (${req.type}): ${req.statement}\n`;
+      }
+
+      report += `\n--- [BDD ACCEPTANCE SCENARIOS] ---\n`;
+      for (const scn of pkg.bdd_scenarios) {
+        report += `  [${scn.id}]: ${scn.gherkin.split('\n')[0]}\n`;
+        report += `    DADO:    ${scn.given}\n`;
+        report += `    CUANDO:  ${scn.when}\n`;
+        report += `    ENTONCES:${scn.then}\n`;
+      }
+
+      if (pkg.ambiguity_audit.has_ambiguities) {
+        report += `\n⚠️  [AMBIGUITY WARNINGS (${pkg.ambiguity_audit.ambiguous_count})]:\n`;
+        for (const finding of pkg.ambiguity_audit.findings.slice(0, 5)) {
+          report += `  - Term: "${finding.matched_text}" (Line ${finding.line_number}) -> Suggestion: ${finding.recommendation}\n`;
+        }
+      }
+
+      report += `\n================================================================================\n`;
+      report += `STATUS: INTAKE SYNTHESIZED & LOCKED DETERMINISTICALLY\n`;
+      report += `================================================================================\n`;
+
+      return {
+        success: true,
+        output: report,
+        data: pkg
+      };
+    } catch (err) {
+      return {
+        success: false,
+        output: `Intake synthesis failed: ${err.message}`
+      };
     }
   }
 
@@ -1079,6 +1204,7 @@ USAGE:
   eos project onboard <path>
   eos trace [--project <id>] [--file <path>] [--entity <id>] [--json]
   eos loop [--project <id>] [--file <path>] [--once] [--heal] [--json]
+  eos intake [--project <id>] [--synthesize] [--input <text|path>] [--out-dir <path>] [--json]
   eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
   eos simplify [path|--project <id>] [--json] [--strict]
   eos mission <command> [options]
@@ -1104,6 +1230,11 @@ COMMANDS:
       Closed-loop mutation sensor and surgical TDD auto-healer.
       Monitors file mutations, resolves impacted test suites via RTM in milliseconds,
       executes surgical verification passes, and isolates regression root causes.
+
+  eos intake [--project <id>] [--synthesize] [--input <text|path>] [--out-dir <path>] [--json]
+      Autonomous Intake & EARS Specification Synthesizer (SPEC-EOS-006).
+      Scans ambiguities, formalizes 4-pattern EARS requirements, derives BDD scenarios,
+      compiles 10-D SDLC envelope, and emits atomic task DAG.
 
   eos orchestrate --project <PROJECT_ID> --pipeline <phase>
       Unified pipeline runner: registration contract → concurrent auditors →

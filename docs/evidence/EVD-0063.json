@@ -1,0 +1,30 @@
+{
+  "id": "EVD-0063",
+  "evidenceId": "EVD-0063",
+  "claim": "Autonomous Intake & EARS Specification Synthesizer (SPEC-EOS-006) implemented and verified with 6/6 unit tests passing, 1043/1043 npm test passing, and 506/506 strict invariants satisfied.",
+  "status": "VERIFIED",
+  "scope": "PRJ-EOS-CONTROL-PLANE / sdd:intake",
+  "source": "EOS AutonomousIntakeSynthesizer",
+  "timestamp": "2026-09-05T21:45:00.000Z",
+  "actor": "EOS Architecture & Governance Engine",
+  "action": "eos intake --synthesize --input ... --json && node --test tests/autonomous-intake-synthesizer.test.js",
+  "command": "node --test tests/autonomous-intake-synthesizer.test.js",
+  "expected": "Raw intake ingested, subjective ambiguities scanned, EARS 4 patterns formalized, BDD scenarios derived, 10-D SDLC envelope compiled, and atomic task DAG generated.",
+  "actual": "VERIFIED",
+  "result": "PASS",
+  "confidence": "HIGH",
+  "sha256": "sha256-4e2994237012294abde243735a29f50b3a46089d996c656d1f71c4f355fce7ab",
+  "digest": "sha256-4e2994237012294abde243735a29f50b3a46089d996c656d1f71c4f355fce7ab",
+  "data": {
+    "spec": "docs/specs/EOS-INTAKE-EARS-SYNTHESIZER-SPEC.md",
+    "implementation": "src/core/sdd/autonomous-intake-synthesizer.js",
+    "cli": "src/cli/mission-cli.js",
+    "testSuite": "tests/autonomous-intake-synthesizer.test.js",
+    "testResults": {
+      "unit_tests_passed": 6,
+      "total_tests_passed": 1043,
+      "invariants_passed": 506,
+      "exit_code": 0
+    }
+  }
+}
