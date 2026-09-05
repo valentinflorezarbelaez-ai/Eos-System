@@ -1,0 +1,30 @@
+{
+  "id": "EVD-0064",
+  "evidenceId": "EVD-0064",
+  "claim": "Joint Operations Tactical Command Center & Autonomous Mission Director (SPEC-EOS-007) implemented and verified with 5/5 unit tests passing, 1048/1048 npm test passing, and 506/506 strict invariants satisfied.",
+  "status": "VERIFIED",
+  "scope": "PRJ-EOS-CONTROL-PLANE / runtime:ops",
+  "source": "EOS JointOperationsCommandCenter",
+  "timestamp": "2026-09-05T21:55:00.000Z",
+  "actor": "EOS Architecture & Governance Engine",
+  "action": "eos war-room && eos ops status --json && node --test tests/joint-operations-command-center.test.js",
+  "command": "node --test tests/joint-operations-command-center.test.js",
+  "expected": "Fleet assets radar aggregated, surgical operations dispatched with OPR receipts, intelligence dossier compiled, and 4-panel war room dashboard rendered.",
+  "actual": "VERIFIED",
+  "result": "PASS",
+  "confidence": "HIGH",
+  "sha256": "sha256-8b2e90a595bdb9eb9d69244275042fea8bcb937295a5c7814ccfb39dde982326",
+  "digest": "sha256-8b2e90a595bdb9eb9d69244275042fea8bcb937295a5c7814ccfb39dde982326",
+  "data": {
+    "spec": "docs/specs/EOS-JOINT-OPERATIONS-COMMAND-CENTER-SPEC.md",
+    "implementation": "src/core/runtime/joint-operations-command-center.js",
+    "cli": "src/cli/mission-cli.js",
+    "testSuite": "tests/joint-operations-command-center.test.js",
+    "testResults": {
+      "unit_tests_passed": 5,
+      "total_tests_passed": 1048,
+      "invariants_passed": 506,
+      "exit_code": 0
+    }
+  }
+}

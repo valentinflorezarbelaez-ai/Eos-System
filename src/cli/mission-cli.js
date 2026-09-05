@@ -21,6 +21,7 @@ import { ProjectOnboarder } from '../core/projects/project-onboarder.js';
 import { RelationalTraceabilityMatrix } from '../core/ontology/relational-traceability-matrix.js';
 import { AutonomousLoopEngine } from '../core/runtime/autonomous-loop-engine.js';
 import { AutonomousIntakeSynthesizer } from '../core/sdd/autonomous-intake-synthesizer.js';
+import { JointOperationsCommandCenter } from '../core/runtime/joint-operations-command-center.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -97,6 +98,14 @@ export class MissionCLI {
 
     if (command === 'intake' || command === 'i') {
       return this.handleIntakeCommand(argv.slice(1));
+    }
+
+    if (command === 'ops') {
+      return this.handleOpsCommand(argv.slice(1));
+    }
+
+    if (command === 'war-room' || command === 'warroom') {
+      return this.handleWarRoomCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -433,6 +442,102 @@ export class MissionCLI {
         output: `Intake synthesis failed: ${err.message}`
       };
     }
+  }
+
+  /**
+   * eos ops [status|dispatch|intel] [--project <id>] [--action <act>] [--json]
+   */
+  async handleOpsCommand(args = []) {
+    const sub = args[0] && !args[0].startsWith('--') ? args[0] : 'status';
+    const isJson = args.includes('--json');
+    const controlPlane = this.controlPlaneRoot || this.runtime?.controlPlaneRoot || resolveControlPlaneRoot();
+    const commandCenter = new JointOperationsCommandCenter({ controlPlaneRoot: controlPlane });
+
+    let projectId = null;
+    const projIdx = args.indexOf('--project');
+    if (projIdx !== -1 && args[projIdx + 1]) {
+      projectId = args[projIdx + 1];
+    }
+
+    let action = null;
+    const actIdx = args.indexOf('--action');
+    if (actIdx !== -1 && args[actIdx + 1]) {
+      action = args[actIdx + 1];
+    }
+
+    if (sub === 'status' || sub === 'war-room') {
+      const status = commandCenter.getFleetTacticalStatus();
+      if (isJson) {
+        return { success: true, output: JSON.stringify(status, null, 2), data: status };
+      }
+      return { success: true, output: commandCenter.formatWarRoomDashboard(status), data: status };
+    }
+
+    if (sub === 'dispatch') {
+      if (!projectId || !action) {
+        return {
+          success: false,
+          output: "Error: 'eos ops dispatch' requires '--project <id>' and '--action <trace|loop|intake|audit>'"
+        };
+      }
+      const receipt = commandCenter.dispatchSurgicalOperation({
+        projectId,
+        action,
+        params: {}
+      });
+      if (isJson) {
+        return { success: receipt.result === 'SUCCESS', output: JSON.stringify(receipt, null, 2), data: receipt };
+      }
+      let out = `================================================================================\n`;
+      out += `⚡ EOS SURGICAL OPERATION DISPATCHED [Receipt: ${receipt.receipt_id}]\n`;
+      out += `================================================================================\n`;
+      out += `• Project:   ${receipt.project_id}\n`;
+      out += `• Action:    ${receipt.action}\n`;
+      out += `• Result:    ${receipt.result}\n`;
+      out += `• Duration:  ${receipt.duration_ms}ms\n`;
+      out += `• Integrity: ${receipt.sha256}\n`;
+      if (receipt.error) {
+        out += `• Error:     ${receipt.error}\n`;
+      }
+      out += `================================================================================\n`;
+      return { success: receipt.result === 'SUCCESS', output: out, data: receipt };
+    }
+
+    if (sub === 'intel') {
+      if (!projectId) {
+        return {
+          success: false,
+          output: "Error: 'eos ops intel' requires '--project <id>'"
+        };
+      }
+      const dossier = commandCenter.compileIntelligenceDossier(projectId);
+      if (isJson) {
+        return { success: true, output: JSON.stringify(dossier, null, 2), data: dossier };
+      }
+      let out = `================================================================================\n`;
+      out += `🔍 EOS TACTICAL INTELLIGENCE DOSSIER [${dossier.dossier_id}]\n`;
+      out += `================================================================================\n`;
+      out += `• Project:        ${dossier.project_id}\n`;
+      out += `• Classification: ${dossier.classification}\n`;
+      out += `• Posture:        ${dossier.operational_posture}\n`;
+      out += `• Evidence Count: ${dossier.evidence_ledger.length} verified receipts\n`;
+      out += `• Integrity Hash: ${dossier.sha256}\n`;
+      out += `\n[THREAT VECTORS UNDER SURVEILLANCE]:\n`;
+      for (const tv of dossier.threat_vectors) {
+        out += `  - ${tv}\n`;
+      }
+      out += `================================================================================\n`;
+      return { success: true, output: out, data: dossier };
+    }
+
+    return {
+      success: false,
+      output: `Unknown ops subcommand: '${sub}'. Usage: eos ops [status|dispatch|intel]`
+    };
+  }
+
+  async handleWarRoomCommand(args = []) {
+    return this.handleOpsCommand(['status', ...args]);
   }
 
   /**
@@ -1205,6 +1310,8 @@ USAGE:
   eos trace [--project <id>] [--file <path>] [--entity <id>] [--json]
   eos loop [--project <id>] [--file <path>] [--once] [--heal] [--json]
   eos intake [--project <id>] [--synthesize] [--input <text|path>] [--out-dir <path>] [--json]
+  eos ops [status|dispatch|intel] [--project <id>] [--action <act>] [--json]
+  eos war-room [--json]
   eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
   eos simplify [path|--project <id>] [--json] [--strict]
   eos mission <command> [options]
@@ -1235,6 +1342,13 @@ COMMANDS:
       Autonomous Intake & EARS Specification Synthesizer (SPEC-EOS-006).
       Scans ambiguities, formalizes 4-pattern EARS requirements, derives BDD scenarios,
       compiles 10-D SDLC envelope, and emits atomic task DAG.
+
+  eos ops [status|dispatch|intel] [--project <id>] [--action <act>] [--json]
+      Joint Operations Tactical Command Center & Mission Director (SPEC-EOS-007).
+      Surveys fleet assets, dispatches surgical missions, and compiles intelligence dossiers.
+
+  eos war-room [--json]
+      High-density tactical situational awareness situation room terminal dashboard.
 
   eos orchestrate --project <PROJECT_ID> --pipeline <phase>
       Unified pipeline runner: registration contract → concurrent auditors →
