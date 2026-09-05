@@ -1,0 +1,27 @@
+{
+  "id": "EVD-0066",
+  "evidenceId": "EVD-0066",
+  "claim": "Context Minimalism & Living Rules Engine (SPEC-EOS-009) implemented and verified with 4/4 unit tests passing, token bloat detection, dynamic EARS distillation, and prompt minimalism.",
+  "status": "VERIFIED",
+  "scope": "PRJ-EOS-CONTROL-PLANE / rules:living-engine",
+  "source": "EOS LivingRulesEngine",
+  "timestamp": "2026-09-05T22:10:00.000Z",
+  "actor": "EOS Architecture & Rules Engine",
+  "action": "eos rules audit && node --test tests/living-rules-engine.test.js",
+  "command": "node --test tests/living-rules-engine.test.js",
+  "expected": "Rule directories scanned, token density and bloat detected, atomic EARS rules distilled from vetoes, and minimal prompt context generated under token budget.",
+  "actual": "VERIFIED",
+  "result": "PASS",
+  "confidence": "HIGH",
+  "sha256": "sha256-44267d06188112e3067fa14a2dc5fdb7546e91b222dbc64ab5831bcea16cd63c",
+  "digest": "sha256-44267d06188112e3067fa14a2dc5fdb7546e91b222dbc64ab5831bcea16cd63c",
+  "data": {
+    "spec": "docs/specs/EOS-LIVING-RULES-SPEC.md",
+    "implementation": "src/core/rules/living-rules-engine.js",
+    "testSuite": "tests/living-rules-engine.test.js",
+    "testResults": {
+      "unit_tests_passed": 4,
+      "exit_code": 0
+    }
+  }
+}

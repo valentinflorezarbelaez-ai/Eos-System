@@ -1,0 +1,27 @@
+{
+  "id": "EVD-0067",
+  "evidenceId": "EVD-0067",
+  "claim": "Git Worktree Swarm & Isolated Multi-Agent Session Orchestrator (SPEC-EOS-010) implemented and verified with 4/4 unit tests passing, worktree isolation, and Byzantine arbitration-gated reconciliation.",
+  "status": "VERIFIED",
+  "scope": "PRJ-EOS-CONTROL-PLANE / orchestration:worktree-swarm",
+  "source": "EOS WorktreeSwarmOrchestrator",
+  "timestamp": "2026-09-05T22:15:00.000Z",
+  "actor": "EOS Architecture & Orchestration Engine",
+  "action": "eos swarm spawn && node --test tests/worktree-swarm-orchestrator.test.js",
+  "command": "node --test tests/worktree-swarm-orchestrator.test.js",
+  "expected": "Isolated git worktrees provisioned on dedicated branches under .eos/worktrees/, commands executed in isolation, and reconciliation gated by Byzantine arbitration council.",
+  "actual": "VERIFIED",
+  "result": "PASS",
+  "confidence": "HIGH",
+  "sha256": "sha256-74dd753471de9c78457f1618e51855f9f8043c750d3a5dbbeac9bb10eb7acd43",
+  "digest": "sha256-74dd753471de9c78457f1618e51855f9f8043c750d3a5dbbeac9bb10eb7acd43",
+  "data": {
+    "spec": "docs/specs/EOS-WORKTREE-SWARM-SPEC.md",
+    "implementation": "src/core/orchestration/worktree-swarm-orchestrator.js",
+    "testSuite": "tests/worktree-swarm-orchestrator.test.js",
+    "testResults": {
+      "unit_tests_passed": 4,
+      "exit_code": 0
+    }
+  }
+}

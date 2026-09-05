@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "rules": [
+    {
+      "rule_id": "RULE-LIV-64D3E7",
+      "title": "Plain API key detected in config",
+      "source": "LivingEngine:CLI",
+      "statement": "CUANDO ocurra una anomalía en [CLI], EL SISTEMA aislará la falla y registrará evidencia criptográfica.",
+      "ears_pattern": "CUANDO_EL_SISTEMA",
+      "tokens_estimate": 26,
+      "created_at": "2026-09-05T22:13:38.976Z"
+    }
+  ]
+}

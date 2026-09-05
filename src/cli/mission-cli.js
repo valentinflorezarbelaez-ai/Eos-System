@@ -23,6 +23,8 @@ import { AutonomousLoopEngine } from '../core/runtime/autonomous-loop-engine.js'
 import { AutonomousIntakeSynthesizer } from '../core/sdd/autonomous-intake-synthesizer.js';
 import { JointOperationsCommandCenter } from '../core/runtime/joint-operations-command-center.js';
 import { MultiAgentArbitrationEngine } from '../core/governance/multi-agent-arbitration-engine.js';
+import { LivingRulesEngine } from '../core/rules/living-rules-engine.js';
+import { WorktreeSwarmOrchestrator } from '../core/orchestration/worktree-swarm-orchestrator.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -111,6 +113,14 @@ export class MissionCLI {
 
     if (command === 'council' || command === 'arbitrate' || command === 'c') {
       return this.handleCouncilCommand(argv.slice(1));
+    }
+
+    if (command === 'rules' || command === 'rule') {
+      return this.handleRulesCommand(argv.slice(1));
+    }
+
+    if (command === 'swarm' || command === 'worktree') {
+      return this.handleSwarmCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -611,6 +621,175 @@ export class MissionCLI {
         success: false,
         output: `Council Deliberation Failed: ${err.message}`
       };
+    }
+  }
+
+  /**
+   * eos rules [audit|distill|sync|prompt|list] [--json]
+   */
+  async handleRulesCommand(args = []) {
+    const isJson = args.includes('--json');
+    const sub = args.find(a => !a.startsWith('--')) || 'audit';
+    const controlPlane = this.controlPlaneRoot || this.runtime?.controlPlaneRoot || resolveControlPlaneRoot();
+    const engine = new LivingRulesEngine({ baseDir: controlPlane });
+
+    try {
+      if (sub === 'distill') {
+        const reasonIdx = args.indexOf('--reason');
+        const reason = reasonIdx !== -1 ? args[reasonIdx + 1] : args.filter(a => !a.startsWith('--') && a !== 'distill')[0] || 'Operational Invariant Protection';
+        const rule = engine.distillRule({ source: 'CLI', reason });
+
+        if (isJson) {
+          return { success: true, output: JSON.stringify(rule, null, 2), data: rule };
+        }
+        return {
+          success: true,
+          output: `\n✨ [EOS LIVING RULES]: Distilled living rule ${rule.rule_id}\n` +
+                  `Title:     ${rule.title}\n` +
+                  `Statement: ${rule.statement}\n` +
+                  `Pattern:   ${rule.ears_pattern} (${rule.tokens_estimate} tokens)\n`
+        };
+      }
+
+      if (sub === 'sync') {
+        const res = engine.syncRules();
+        if (isJson) return { success: true, output: JSON.stringify(res, null, 2), data: res };
+        return {
+          success: true,
+          output: `\n🔄 [EOS LIVING RULES]: Canonical rules synchronized.\nTotal registered: ${res.totalRegisteredLivingRules} rules.\nRegistry: ${res.registryPath}\n`
+        };
+      }
+
+      if (sub === 'prompt') {
+        const maxTokensArg = args.find(a => a.startsWith('--max-tokens='));
+        const maxTokens = maxTokensArg ? parseInt(maxTokensArg.split('=')[1], 10) : 1000;
+        const res = engine.exportMinimalPromptContext({ maxTokens });
+        if (isJson) return { success: true, output: JSON.stringify(res, null, 2), data: res };
+        return {
+          success: true,
+          output: `\n📜 [EOS MINIMAL PROMPT CONTEXT] (${res.tokenCount} tokens / ${res.ruleCount} rules):\n\n${res.promptContext}\n`
+        };
+      }
+
+      // Default: audit
+      const audit = engine.auditRules();
+      if (isJson) {
+        return { success: audit.status === 'CLEAN_MINIMAL', output: JSON.stringify(audit, null, 2), data: audit };
+      }
+
+      let report = `
+================================================================================
+📜 EOS LIVING RULES & CONTEXT MINIMALISM AUDIT (Boris Cherny Standard)
+================================================================================
+Status:               ${audit.status === 'CLEAN_MINIMAL' ? '✅ CLEAN & MINIMAL' : '⚠️ OPTIMIZATION RECOMMENDED'}
+Audited Files:        ${audit.auditedFilesCount}
+Discovered Rules:     ${audit.totalRulesDiscovered}
+Estimated Tokens:     ${audit.totalEstimatedTokens} tokens
+Bloated Rules (>250): ${audit.bloatedRulesCount} (${(audit.bloatRatio * 100).toFixed(1)}%)
+Recommendation:       ${audit.recommendation}
+================================================================================
+`;
+      if (audit.warnings.length > 0) {
+        report += '\n⚠️  BLOATED / NON-EARS DIRECTIVES:\n';
+        audit.warnings.slice(0, 5).forEach((w, idx) => {
+          report += `   ${idx + 1}. [${w.tokens} tok] ${w.file} (${w.ruleId || 'directive'}): ${w.reason}\n`;
+        });
+        if (audit.warnings.length > 5) {
+          report += `   ... and ${audit.warnings.length - 5} more. Run with --json for complete payload.\n`;
+        }
+      }
+
+      return {
+        success: true,
+        output: report,
+        data: audit
+      };
+    } catch (err) {
+      return { success: false, output: `Rules Operation Failed: ${err.message}` };
+    }
+  }
+
+  /**
+   * eos swarm [spawn|list|exec|reconcile|prune] <taskId> [args...] [--json]
+   */
+  async handleSwarmCommand(args = []) {
+    const isJson = args.includes('--json');
+    const sub = args.find(a => !a.startsWith('--')) || 'list';
+    const nonFlags = args.filter(a => !a.startsWith('--') && a !== sub);
+    const taskId = nonFlags[0] || 'default-task';
+
+    const controlPlane = this.controlPlaneRoot || this.runtime?.controlPlaneRoot || resolveControlPlaneRoot();
+    const orchestrator = new WorktreeSwarmOrchestrator({ baseDir: controlPlane });
+
+    try {
+      if (sub === 'spawn') {
+        const meta = orchestrator.spawnWorktree(taskId);
+        if (isJson) return { success: true, output: JSON.stringify(meta, null, 2), data: meta };
+        return {
+          success: true,
+          output: `\n🐝 [EOS SWARM]: Worktree provisioned successfully for task [${meta.taskId}].\n` +
+                  `Path:   ${meta.worktreePath}\n` +
+                  `Branch: ${meta.branch}\n` +
+                  `Status: ${meta.status}\n`
+        };
+      }
+
+      if (sub === 'exec') {
+        const cmd = nonFlags.slice(1).join(' ');
+        if (!cmd) {
+          return { success: false, output: "Error: Command required for exec. Usage: 'eos swarm exec <taskId> <command>'" };
+        }
+        const execRes = orchestrator.executeInWorktree(taskId, cmd);
+        if (isJson) return { success: execRes.exitCode === 0, output: JSON.stringify(execRes, null, 2), data: execRes };
+        return {
+          success: execRes.exitCode === 0,
+          output: `\n⚙️ [EOS SWARM EXEC] Task: ${taskId} | Exit: ${execRes.exitCode}\n${execRes.stdout || execRes.stderr}\n`
+        };
+      }
+
+      if (sub === 'reconcile') {
+        const autoMerge = args.includes('--merge');
+        const reconcileRes = orchestrator.reconcileWorktree(taskId, { autoMerge });
+        if (isJson) return { success: reconcileRes.status === 'RECONCILED', output: JSON.stringify(reconcileRes, null, 2), data: reconcileRes };
+        return {
+          success: reconcileRes.status === 'RECONCILED',
+          output: `\n⚖️ [EOS SWARM RECONCILE] Task: ${taskId}\n` +
+                  `Status:  ${reconcileRes.status}\n` +
+                  `Verdict: ${reconcileRes.verdict}\n` +
+                  `Merged:  ${reconcileRes.merged ? 'YES' : 'NO'}\n`
+        };
+      }
+
+      if (sub === 'prune') {
+        const pruneRes = orchestrator.pruneWorktree(taskId);
+        if (isJson) return { success: true, output: JSON.stringify(pruneRes, null, 2), data: pruneRes };
+        return {
+          success: true,
+          output: `\n🧹 [EOS SWARM PRUNE]: Worktree [${taskId}] removed cleanly.\n`
+        };
+      }
+
+      // Default: list
+      const list = orchestrator.listWorktrees();
+      if (isJson) return { success: true, output: JSON.stringify(list, null, 2), data: list };
+
+      let report = `
+================================================================================
+🐝 EOS WORKTREE SWARM — Isolated Multi-Agent Parallelism (Boris Cherny)
+================================================================================
+Active Worktrees: ${list.length}
+================================================================================
+`;
+      if (list.length === 0) {
+        report += '\nNo active swarm worktrees found. Spawn one with: eos swarm spawn <taskId>\n';
+      } else {
+        list.forEach((w, idx) => {
+          report += `${idx + 1}. [${w.taskId}] Branch: ${w.branch}\n   Path: ${w.worktreePath}\n`;
+        });
+      }
+      return { success: true, output: report, data: list };
+    } catch (err) {
+      return { success: false, output: `Swarm Operation Failed: ${err.message}` };
     }
   }
 
@@ -1387,6 +1566,8 @@ USAGE:
   eos ops [status|dispatch|intel] [--project <id>] [--action <act>] [--json]
   eos war-room [--json]
   eos council [--project <id>] [--file <path>] [--vote] [--json]
+  eos rules [audit|distill|sync|prompt|list] [--json]
+  eos swarm [spawn|list|exec|reconcile|prune] <taskId> [args...] [--json]
   eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
   eos simplify [path|--project <id>] [--json] [--strict]
   eos mission <command> [options]
@@ -1428,6 +1609,16 @@ COMMANDS:
   eos council [--project <id>] [--file <path>] [--vote] [--json]
       Multi-Agent Consensus & Byzantine Peer Review Arbitration Engine (SPEC-EOS-008).
       Enforces NASA IV&V Anti-Self-Certification, VETO desks, and supermajority consensus.
+
+  eos rules [audit|distill|sync|prompt|list] [--json]
+      Context Minimalism & Living Rules Engine (SPEC-EOS-009 / Boris Cherny Standard).
+      Audits rule bloat and token density, distills EARS living rules from vetoes,
+      and compiles minimal system prompt contexts.
+
+  eos swarm [spawn|list|exec|reconcile|prune] <taskId> [args...] [--json]
+      Git Worktree Swarm & Isolated Multi-Agent Session Orchestrator (SPEC-EOS-010).
+      Provisions isolated git worktree sandboxes, runs concurrent agent tasks,
+      and reconciles changes through Byzantine council arbitration.
 
   eos orchestrate --project <PROJECT_ID> --pipeline <phase>
       Unified pipeline runner: registration contract → concurrent auditors →

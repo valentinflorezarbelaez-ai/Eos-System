@@ -46,7 +46,7 @@ export class MultiAgentArbitrationEngine {
    */
   castBallot(deskId, artifact = {}) {
     const ballotId = `BLT-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
-    const fileContent = artifact.content || (artifact.filePath && fs.existsSync(artifact.filePath) ? fs.readFileSync(artifact.filePath, 'utf-8') : '');
+    const fileContent = artifact.content || (artifact.filePath && fs.existsSync(artifact.filePath) && fs.statSync(artifact.filePath).isFile() ? fs.readFileSync(artifact.filePath, 'utf-8') : '');
     const findings = [];
     let verdict = BALLOT_VERDICTS.APPROVE;
     let confidence = 'HIGH';
