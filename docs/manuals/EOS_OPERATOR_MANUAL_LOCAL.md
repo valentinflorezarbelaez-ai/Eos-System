@@ -43,6 +43,37 @@ Create/plan/close print Tutor pre/post explanations. `mission plan` walks the ca
 - Ledger under `.missions/<id>/ledger/`
 - Tasks should be `PLANNED` until real evidence promotes them
 
+## HUD — panel de verdad operativa (SSOT)
+
+Un solo panel en vivo. No copies recuentos históricos de docs (`471/471`, claims de freeze) como si fueran de **esta** corrida.
+
+```bash
+node bin/eos-hud.js
+node bin/eos-top.js --json
+npm run eos:hud -- --write
+npm run eos:hud -- --no-verify --json
+```
+
+| Flag | Efecto |
+| --- | --- |
+| `--json` | Snapshot JSON en stdout |
+| `--no-verify` | No lanza `verify-eos`; el panel verify queda `NOT VERIFIED` |
+| `--write` | Escribe `.eos/operator-hud.json` (estado vivo, no EVD sellado) |
+| `--snapshot PATH` | Escribe el JSON en PATH |
+
+### Cómo leer estados
+
+| Estado | Significa | Qué no hacer |
+| --- | --- | --- |
+| `VERIFIED` | Medido en **esta** corrida (`git rev-parse`, `verify-eos --strict --json`) | No sustituirlo por un número de un markdown viejo |
+| `OBSERVED` | Copiado de un archivo; siempre trae `source:` | No inventar un veredicto mezclando fuentes |
+| `NOT VERIFIED` | Falta archivo, verify salteado, o JSON ilegible | No tratarlo como PASS |
+| `DATED_FILE_CLAIM` | Número histórico en mission/state/freeze (path + fecha) | No usarlo como SSOT de checks/tests |
+
+`PRODUCTION_READY` y `COMPLETE_FOR_LOCAL_GOVERNED_USE` se listan **OBSERVED** desde `EOS-MISSION-CONTROL/CURRENT_MISSION.json`, `docs/releases/EOS_FREEZE_GATE_STATUS.md` y `docs/releases/RELEASE_CAPABILITY_MATRIX.md`. El HUD no inventa un dictamen unificado.
+
+El HUD **rechaza** slogans históricos sin fuente (`STALE_CLAIM_REFUSED`). Preferí `verify.passed` / `verify.failed` de esta corrida. El puntero E2E canónico, si existe, es `docs/evidence/canonical_e2e_openspec_tdd_2026/`.
+
 ## Diagnose
 
 | Symptom | Likely cause |

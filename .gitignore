@@ -59,6 +59,9 @@ temp/
 # EOS Mission OS local runtime state (created by MissionRuntime under baseDir)
 .missions/
 
+# Operator HUD live snapshots (not sealed evidence)
+.eos/
+
 # Ephemeral Runtime State
 .missions/
 docs/sessions/checkpoints/

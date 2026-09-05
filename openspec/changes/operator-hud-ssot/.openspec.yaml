@@ -1,0 +1,15 @@
+schema: spec-driven
+created: 2026-09-04
+goal: Give operators one live HUD that reports HEAD, this-run verify, mission, readiness file claims, error budget, and last E2E evidence without echoing stale hardcoded counts.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - src/core/observability
+  - bin
+  - docs/manuals
+  - scripts/verify-eos.js
+non_goals:
+  - Fundacion writes
+  - new root npm dependencies
+  - new dashboard framework or engine
+  - inventing PRODUCTION_READY
