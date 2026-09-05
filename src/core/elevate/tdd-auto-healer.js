@@ -8,6 +8,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
+import { resolvePreset } from './remediation-presets.js';
 
 export class TDDAutoHealer {
   /**
@@ -98,5 +99,33 @@ export class TDDAutoHealer {
         try { fs.unlinkSync(tempTestFile); } catch {}
       }
     }
+  }
+
+  /**
+   * Automatically resolves a preset and heals a finding via strict TDD
+   * @param {object} finding
+   * @returns {Promise<{ status: string, falsified: boolean, verified: boolean, message: string }>}
+   */
+  async healFinding(finding) {
+    const preset = resolvePreset(finding);
+    if (!preset) {
+      return {
+        status: 'UNSUPPORTED',
+        falsified: false,
+        verified: false,
+        message: `No surgical remediation preset found for finding: ${finding.ruleId || finding.message}`
+      };
+    }
+
+    const fullFilePath = path.join(this.targetPath, finding.file);
+    const testCode = preset.generateTest(fullFilePath, finding);
+    const patch = (code) => preset.apply(code);
+
+    return this.executeTask({
+      id: finding.ruleId || 'REMED-AUTO',
+      file: finding.file,
+      testCode,
+      patch
+    });
   }
 }
