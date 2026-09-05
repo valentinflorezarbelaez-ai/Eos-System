@@ -17,6 +17,7 @@ import {
 } from '../core/runtime/project-pipeline-runner.js';
 import { FirstPrinciplesSimplifierEngine } from '../core/optimization/first-principles-simplifier-engine.js';
 import { ElevateOrchestrator } from '../core/elevate/elevate-orchestrator.js';
+import { ProjectOnboarder } from '../core/projects/project-onboarder.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -69,10 +70,88 @@ export class MissionCLI {
     if (command === 'elevate' || command === 'e') {
       return this.handleElevateCommand(argv.slice(1));
     }
+
+    if (command === 'project' || command === 'p') {
+      return this.handleProjectCommand(argv.slice(1));
+    }
+
+    if (command === 'fleet' || command === 'f') {
+      return this.handleFleetCommand(argv.slice(1));
+    }
+
+    if (command === 'onboard') {
+      return this.handleProjectCommand(['onboard', ...argv.slice(1)]);
+    }
     return {
       success: false,
       output: `Unknown command: '${command}'. Run 'eos --help' for usage.`
     };
+  }
+
+  /**
+   * eos project onboard <targetPath>
+   * eos project list
+   */
+  async handleProjectCommand(args = []) {
+    const sub = args[0] || 'list';
+    if (sub === 'onboard' || sub === 'add') {
+      const targetPath = args[1];
+      if (!targetPath) {
+        return {
+          success: false,
+          output: "Error: Target path required. Usage: 'eos project onboard <path>'"
+        };
+      }
+      try {
+        const onboarder = new ProjectOnboarder({ controlPlaneRoot: this.runtime?.controlPlaneRoot });
+        const res = onboarder.onboardProject(targetPath);
+        const lines = [
+          '================================================================================',
+          `🚀 EOS PROJECT ONBOARDING: SUCCESS [${res.registration.project_id}]`,
+          '================================================================================',
+          `Name      : ${res.registration.name}`,
+          `Path      : ${res.registration.path}`,
+          `Type      : ${res.registration.project_type}`,
+          `Stack     : ${res.registration.stack.join(', ')}`,
+          `Branch    : ${res.registration.branch} (${res.registration.repository})`,
+          `Contract  : ${res.registrationPath}`,
+          `Intake    : ${res.contextPath}`,
+          '--------------------------------------------------------------------------------',
+          'Next Step :',
+          `  eos orchestrate --project ${res.registration.project_id} --pipeline recon`,
+          `  eos orchestrate --project ${res.registration.project_id} --pipeline audit`,
+          '================================================================================'
+        ];
+        return { success: true, output: lines.join('\n'), data: res };
+      } catch (err) {
+        return { success: false, output: `Project Onboarding Failed: ${err.message}` };
+      }
+    }
+
+    if (sub === 'list' || sub === 'status') {
+      return this.handleFleetCommand(args.slice(1));
+    }
+
+    return {
+      success: false,
+      output: `Unknown project subcommand: '${sub}'. Usage: 'eos project onboard <path>' or 'eos project list'`
+    };
+  }
+
+  /**
+   * eos fleet [--json]
+   */
+  async handleFleetCommand(args = []) {
+    try {
+      const onboarder = new ProjectOnboarder({ controlPlaneRoot: this.runtime?.controlPlaneRoot });
+      const status = onboarder.getFleetStatus();
+      if (args.includes('--json')) {
+        return { success: true, output: JSON.stringify(status, null, 2), data: status };
+      }
+      return { success: true, output: onboarder.formatFleetTable(status), data: status };
+    } catch (err) {
+      return { success: false, output: `Fleet Status Failed: ${err.message}` };
+    }
   }
 
   /**
@@ -840,6 +919,8 @@ USAGE:
   eos next
   eos next --apply
   eos doctor
+  eos fleet [--json]
+  eos project onboard <path>
   eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
   eos simplify [path|--project <id>] [--json] [--strict]
   eos mission <command> [options]

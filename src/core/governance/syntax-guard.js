@@ -69,11 +69,29 @@ export class SyntaxGuard {
    * @private
    */
   validateJavaScript(content, filename) {
+    if (filename !== 'inline' && fs.existsSync(filename)) {
+      try {
+        execSync(`node --check "${filename}"`, { stdio: ['ignore', 'pipe', 'pipe'] });
+        return { valid: true, error: null, filePath: filename, language: 'javascript' };
+      } catch (err) {
+        return { valid: false, error: `JavaScript Syntax Error: ${err.stderr?.toString() || err.message}`, filePath: filename, language: 'javascript' };
+      }
+    }
+
     try {
-      // vm.Script validates JS syntax without executing side effects
       new vm.Script(content, { filename });
       return { valid: true, error: null, filePath: filename, language: 'javascript' };
     } catch (err) {
+      if (err.message.includes('Cannot use import statement') || err.message.includes("Unexpected token 'export'")) {
+        try {
+          if (vm.SourceTextModule) {
+            new vm.SourceTextModule(content, { identifier: filename });
+            return { valid: true, error: null, filePath: filename, language: 'javascript' };
+          }
+        } catch (mErr) {
+          return { valid: false, error: `JavaScript ESM Syntax Error: ${mErr.message}`, filePath: filename, language: 'javascript' };
+        }
+      }
       return { valid: false, error: `JavaScript Syntax Error: ${err.message}`, filePath: filename, language: 'javascript' };
     }
   }
