@@ -444,6 +444,7 @@ function defaultExec(command, options = {}) {
 export function parseOrchestrateArgs(argv = []) {
   let projectId = null;
   let phase = 'verify';
+  let worktree = null;
 
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -457,8 +458,19 @@ export function parseOrchestrateArgs(argv = []) {
       phase = arg.split('=')[1];
     } else if (arg.startsWith('--pipeline=')) {
       phase = arg.split('=')[1];
+    } else if (arg === '--worktree' && argv[i + 1] && !argv[i + 1].startsWith('--')) {
+      worktree = argv[++i];
+    } else if (arg.startsWith('--worktree=')) {
+      worktree = arg.split('=').slice(1).join('=');
+    } else if (arg === '--worktree') {
+      worktree = true;
     }
   }
 
-  return { projectId, phase: String(phase).toLowerCase() };
+  const res = { projectId, phase: String(phase).toLowerCase() };
+  if (worktree !== null) {
+    res.worktree = worktree;
+  }
+  return res;
 }
+

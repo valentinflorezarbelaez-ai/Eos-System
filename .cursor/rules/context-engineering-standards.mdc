@@ -1,0 +1,72 @@
+---
+description: Context Engineering Standard — Estructura Técnica Canónica, Suite de Especificaciones y Flujo Sistemático
+globs:
+alwaysApply: true
+---
+
+# CONTEXT ENGINEERING STANDARD (LIDR & EOS)
+
+> "En la base de la pirámide agéntica está el Context Engineering: diseñar qué información ve el agente antes de responder. Sin esta base sólida, ningún arnés ni loop autónomo puede sostenerse." — *LIDR Academy*
+
+---
+
+## 1. El Rol del Context Engineering
+
+El **Context Engineering** no es simplemente escribir un buen prompt. Es la arquitectura de información que garantiza que cualquier agente o desarrollador, independientemente de su nivel de seniority, opere con las mismas reglas, contratos y restricciones sin depender de la suerte probabilística.
+
+### La Pirámide de Autonomía
+1. **Context Engineering (Base):** Especificaciones técnicas, contratos de datos, convenciones y directivas de proyecto.
+2. **Harness Engineering (Capa Media):** Aislamiento, ejecución en terminal, herramientas podadas y sensores deterministas.
+3. **Loop Engineering (Cúspide):** Orquestación autónoma, disparadores de feedback y toma de decisiones cerrada.
+
+---
+
+## 2. La Suite Canónica de Especificación de Contexto
+
+Todo proyecto gestionado o gobernado por EOS debe estructurar su contexto técnico bajo los siguientes artefactos:
+
+| Artefacto | Propósito Técnico | Ubicación Estándar |
+|---|---|---|
+| **Tech Stack & Environment** | Versiones fijadas de Node, Python, compiladores, flags de compilación y gestores de paquetes | `package.json`, `.editorconfig`, `CLEAN_CLONE.md` |
+| **Data Model & Contracts** | Definición estricta de entidades, esquemas JSON / Zod / OpenAPI, invariantes relacionales | `docs/architecture/DATA_MODEL.md` o `.cursor/rules/data-model.mdc` |
+| **Testing Standards** | Pirámide de pruebas, aserciones TDD, límites de mocks y cobertura obligatoria | `.cursor/rules/testing-standards.mdc` |
+| **Frontend & UI Standards** | Diseño atómico, accesibilidad WCAG AA, tokens CSS y patrones de componentes | `.cursor/rules/frontend-standards.mdc` |
+| **Development Guide** | Comandos locales de build, test, lint y ejecución sin pasos manuales opacos | `README.md`, `docs/guides/DEVELOPMENT_GUIDE.md` |
+
+---
+
+## 3. El Flujo Sistemático: De la Solicitud a Producción
+
+Queda prohibido saltar directamente del requerimiento en lenguaje natural al código fuente. El flujo canónico consta de 6 entregables verificables:
+
+```text
+[1. PRD / User Story]
+         │
+         ▼
+[2. Technical Ticket (EARS + BDD)]
+         │
+         ▼
+[3. Implementation Code (Pure Domain / TDD)]
+         │
+         ▼
+[4. Deterministic Tests (Unit / Integration)]
+         │
+         ▼
+[5. Test Execution Report (Exit Code 0)]
+         │
+         ▼
+[6. Living Documentation / OpenSpec Delta]
+```
+
+### Reglas de Transición
+* **Bloqueo Gate-1:** No se escribe código hasta que el Technical Ticket posea criterios de aceptación GIVEN-WHEN-THEN verificables.
+* **Bloqueo Gate-2:** No se da por completada una tarea sin el reporte de ejecución real (`exit code 0` capturado en terminal).
+* **Bloqueo Gate-3:** Las especificaciones vivas (`openspec/specs/`) deben actualizarse para reflejar cualquier adición o mutación del modelo de datos.
+
+---
+
+## 4. Principio de No-Contaminación de Contexto
+
+* **Cargar bajo demanda:** No inyectes toda la base de código en un solo prompt. Utiliza AST search, reglas contextuales asociadas a globs y lectura granular de archivos.
+* **Compacting & Offloading:** Cuando una sesión agéntica acumule más de 20 mensajes de razonamiento, sintetiza el estado en artefactos persistentes (`docs/tasks/` o `implementation_plan.md`) y libera la memoria de trabajo.
+* **Contratos Explícitos:** Toda interfaz entre módulos debe tiparse de forma estricta (TypeScript `strict: true` o Python Type Hints con Mypy).

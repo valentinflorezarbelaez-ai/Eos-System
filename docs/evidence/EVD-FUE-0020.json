@@ -1,7 +1,7 @@
 {
   "evidenceId": "EVD-FUE-0020",
-  "timestamp": "2026-09-05T00:24:47.139Z",
-  "digest": "sha256-158233b09614ee9a3cfc0522b421d710224befd708d0e9df84c2ae9a7c87b0b9",
+  "timestamp": "2026-09-05T19:07:05.749Z",
+  "digest": "sha256-d56fecdf86edf6a5e3d252579e9f5b3d27f10fb83e701de2daec8549364d8711",
   "data": {
     "mision": "PRJ-PILOTO-FUERZA-E2E",
     "proyecto": "App Fuerza",
@@ -18,8 +18,8 @@
     "circuitBreaker": "NOMINAL",
     "checksPassed": 482,
     "entries": [
-      "WAL-TX-89C88A48F5128539",
-      "WAL-TX-EDB304D38DC5F7E5"
+      "WAL-TX-70CB9809DB4023DB",
+      "WAL-TX-E8958CBAA27B1010"
     ]
   }
 }

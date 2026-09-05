@@ -20,6 +20,14 @@ describe('EOS ProjectPipelineRunner', () => {
       parseOrchestrateArgs(['--project=PRJ-APP-FUERZA', '--pipeline=audit']),
       { projectId: 'PRJ-APP-FUERZA', phase: 'audit' }
     );
+    assert.deepEqual(
+      parseOrchestrateArgs(['run', '--project', 'PRJ-APP-FUERZA', '--phase', 'verify', '--worktree']),
+      { projectId: 'PRJ-APP-FUERZA', phase: 'verify', worktree: true }
+    );
+    assert.deepEqual(
+      parseOrchestrateArgs(['run', '--project', 'PRJ-APP-FUERZA', '--phase', 'verify', '--worktree=../eos-worktrees/task-1']),
+      { projectId: 'PRJ-APP-FUERZA', phase: 'verify', worktree: '../eos-worktrees/task-1' }
+    );
     assert.ok(PIPELINE_PHASES.includes('verify'));
   });
 

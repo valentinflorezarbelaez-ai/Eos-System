@@ -41,10 +41,12 @@ import { L0Parser } from './core/runtime/l0-parser.js';
 import { McpRouter } from './mcp/router.js';
 import { ParallelAuditorDAG } from './core/runtime/parallel-auditor-dag.js';
 import { GovernanceTierClassifier } from './core/runtime/governance-tier.js';
-import { EOSContextCompiler } from './core/runtime/context-compiler.js';
 import { runOperatorDoctor } from './core/runtime/operator-doctor.js';
 import { ProjectPipelineRunner } from './core/runtime/project-pipeline-runner.js';
+import { pruneToolsByPhase, resolveToolPhase } from './core/mcp/tool-pruner.js';
 import { execSync } from 'node:child_process';
+
+
 
 const CANONICAL_TOOLS = [
   { name: 'eos.kernel.boot', description: 'Boot defensive EOS Kernel, validate constitution, and run 480 deterministic checks', category: 'GOVERNANCE', sideEffects: 'NONE', requiredAuthority: 'A0' },
@@ -151,11 +153,14 @@ function resolveMcpSurface(env = process.env) {
 
 function listTools(env = process.env) {
   const surface = resolveMcpSurface(env);
-  if (surface === 'lab' || surface === 'full') {
-    return CANONICAL_TOOLS.slice();
-  }
-  return CANONICAL_TOOLS.filter((tool) => TIER_A_TOOL_NAMES.has(tool.name));
+  const baseTools = (surface === 'lab' || surface === 'full')
+    ? CANONICAL_TOOLS.slice()
+    : CANONICAL_TOOLS.filter((tool) => TIER_A_TOOL_NAMES.has(tool.name));
+
+  const phase = resolveToolPhase(process.argv, env);
+  return pruneToolsByPhase(baseTools, phase);
 }
+
 
 const TOOL_INPUT_SCHEMAS = {
   'eos.doctor': {

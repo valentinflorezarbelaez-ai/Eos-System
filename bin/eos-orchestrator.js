@@ -319,10 +319,10 @@ async function main(argv = process.argv.slice(2)) {
     argv.some((a) => a.startsWith('--phase=') || a.startsWith('--pipeline='));
 
   if (wantsUnified) {
-    const { projectId, phase } = parseOrchestrateArgs(argv);
+    const { projectId, phase, worktree } = parseOrchestrateArgs(argv);
     if (!projectId) {
       console.error(
-        `Usage: node bin/eos-orchestrator.js run --project <PROJECT_ID> --phase [${PIPELINE_PHASES.join('|')}]`
+        `Usage: node bin/eos-orchestrator.js run --project <PROJECT_ID> --phase [${PIPELINE_PHASES.join('|')}] [--worktree[=<path>]]`
       );
       process.exit(1);
     }
@@ -330,11 +330,15 @@ async function main(argv = process.argv.slice(2)) {
     console.log('=============================================================');
     console.log('🛰️  EOS UNIFIED PROJECT PIPELINE RUNNER');
     console.log('=============================================================');
-    console.log(`🎯 Project : ${projectId}`);
-    console.log(`📐 Phase   : ${phase}`);
+    console.log(`🎯 Project  : ${projectId}`);
+    console.log(`📐 Phase    : ${phase}`);
+    if (worktree) {
+      console.log(`🌲 Worktree : ${typeof worktree === 'string' ? worktree : 'ISOLATED_AUTONOMOUS'}`);
+    }
 
     const runner = new ProjectPipelineRunner({ controlPlaneRoot: process.cwd() });
     const result = await runner.run(projectId, phase);
+
 
     console.log(`\n✔ Auditors     : ${result.steps.auditors?.status || 'n/a'}`);
     console.log(`✔ Satellite    : ${result.steps.satelliteValidation?.status || 'n/a'}`);

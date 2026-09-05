@@ -6,13 +6,20 @@ alwaysApply: true
 
 # HARNESS ENGINEERING & AI CHAMPION STANDARD (LIDR & EOS v0.6.0)
 
-Este estándar formaliza la doctrina de **Harness Engineering** (Ingeniería de Arneses Agénticos) adoptada de LIDR Academy y el estándar de Boris Cherny (creador de Claude Code), integrada en el núcleo de **EOS v0.6.0**.
+Este estándar formaliza la doctrina de **Harness Engineering** (Ingeniería de Arneses Agénticos) adoptada de LIDR Academy, el estándar de Boris Cherny (creador de Claude Code) y el ecosistema **Gentle-AI** (Gentleman Programming), integrados en el núcleo operativo de **EOS v0.6.0**.
 
 ---
 
-## 1. El Fundamento: Prevención del "Acceleration Whiplash"
+## 1. La Ecuación Fundamental y Prevención del "Acceleration Whiplash"
 
-La investigación empírica de la industria (METR 2025 y Faros AI sobre 22.000 ingenieros) demuestra que la IA generativa sin un arnés riguroso produce un efecto contraproducente:
+Mitchell Hashimoto formuló la ecuación rectora de los sistemas agénticos modernos:
+$$\text{Agent} = \text{Model} + \text{Harness}$$
+
+* **Model (CPU):** Capacidad bruta de inferencia y razonamiento probabilístico. Rara vez es el cuello de botella.
+* **Context (RAM):** Información estructurada, reglas y estado activo visible en la ventana de atención.
+* **Harness (OS):** Entorno de ejecución, herramientas, aislamiento, memoria persistente y bucles de retroalimentación determinista.
+
+La investigación empírica de la industria (METR 2025, Faros AI sobre 22.000 ingenieros, Vercel y Stripe) demuestra que la IA generativa sin un arnés riguroso produce el temido **Acceleration Whiplash**:
 * Aceleración aparente de tipeo: +33%.
 * **Latigazo río abajo (Whiplash):**
   - Bugs en producción: **+54%**
@@ -20,11 +27,74 @@ La investigación empírica de la industria (METR 2025 y Faros AI sobre 22.000 i
   - Tiempo de Code Review humano: **+441% (5x más lento)**
   - PRs mergeadas a ciegas sin revisión: **+31.3%**
 
-**Principio Rector de EOS:** La velocidad real se logra con **verificación determinista, especificaciones formales y barreras de escritura**, no tirando código a ciegas.
+Por el contrario, un arnés riguroso invierte la ecuación:
+* **Vercel Text-to-SQL Agent:** Al podar el 80% de las herramientas expuestas y reforzar el arnés, la tasa de éxito subió al **100%**, el agente fue **3.5x más rápido** y consumió **-37% de tokens**.
+* **LangChain Terminal-Bench 2.0:** Sin cambiar de modelo, solo optimizando el arnés de ejecución y los sensores, saltó del puesto #30 al **#5 global**.
+* **Stripe:** Más de 1.300 PRs semanales revisadas y validadas de forma autónoma porque el arnés ejecuta los checks deterministas antes de tocar a un humano.
+
+**Principio Rector de EOS:** La velocidad real se logra con **verificación determinista, especificaciones formales, barreras de escritura y aislamiento físico**, nunca tirando código a ciegas.
 
 ---
 
-## 2. Metodología TPC (Tool, Prompt, Context)
+## 2. Las 6 Primitivas Fundamentales del Arnés de EOS
+
+Todo arnés agéntico de producción en EOS se compone de 6 primitivas invariantes:
+
+| # | Primitiva | Función Técnica | Implementación en EOS |
+|---|---|---|---|
+| 1 | **Durable Filesystem** | Almacenamiento durable que sobrevive a pasos y reinicios | Estructura de árbol canónica, `docs/intake/`, `docs/evidence/` y Git. |
+| 2 | **Code Execution** | Terminal como computadora de propósito general | Ejecución local mediante `run_command` / PowerShell / Bash sin emulaciones ficticias. |
+| 3 | **Sandbox & Isolation** | Protección del entorno anfitrión y branches de producción | Barrera de escritura externa (`EXTERNAL_PROJECT_WRITE_BARRIER`) y **Git Worktrees**. |
+| 4 | **Memory & Search** | Retención persistente entre sesiones y compactaciones | Protocolo **Engram** (SQLite + FTS5), `mem_save`, `mem_context` y AST search. |
+| 5 | **Context Management** | Prevención de pudrición de contexto (*context rot*) | Compactación guiada, offloading a artefactos, poda quirúrgica y AST Pruning. |
+| 6 | **Guides & Sensors** | Guías previas (*act before*) y Sensores posteriores (*act after*) | **Guías:** `AGENTS.md`, `.mdc`, linters, tipos estrictos.<br>**Sensores:** `npm run verify:strict`, suite TDD, `EVD-XXXX.json`, diffs de Git (RDD). |
+
+---
+
+## 3. El Principio de Poda de Herramientas (Tool Pruning)
+
+* **Menos es Más:** Un agente sobrecargado con decenas de herramientas ambiguas alucina llamadas y degrada su razonamiento.
+* **Exposición Quirúrgica:** Cada fase del ciclo agéntico solo debe recibir las herramientas estrictamente necesarias para su objetivo:
+  - *Fase de Exploración:* Solo lectura y búsqueda (`view_file`, `grep_search`, `read_url_content`).
+  - *Fase de Implementación:* Edición quirúrgica (`replace_file_content`, `multi_replace_file_content`) y compilador local.
+  - *Fase de Verificación:* Sensores deterministas (`run_command` con linters y test runners).
+
+---
+
+## 4. Aislamiento Físico con Git Worktrees
+
+Para evitar colisiones entre sesiones concurrentes, agentes paralelos o tareas de larga duración, EOS adopta el aislamiento nativo de Git:
+
+```bash
+# Crear un worktree aislado para una tarea o subagente
+git worktree add ../eos-worktrees/task-feat-auth feat/auth-service
+
+# Operar dentro del árbol aislado sin contaminar el workspace principal
+cd ../eos-worktrees/task-feat-auth
+
+# Al terminar y verificar con éxito (exit 0)
+git worktree remove ../eos-worktrees/task-feat-auth
+```
+
+* Cada subagente o sesión pesada opera en su propia copia de trabajo en el sistema de archivos.
+* No hay riesgos de sobreescritura accidental ni mezclas de estado sucio en `git status`.
+
+---
+
+## 5. Matriz de los 4 Frameworks de Especificación y Desarrollo
+
+EOS sintetiza lo mejor de los cuatro frameworks líderes para ingeniería agéntica:
+
+| Framework | Enfoque Principal | Cuándo Usarlo en EOS |
+|---|---|---|
+| **OpenSpec (Fission-AI)** | Delta-specs ligeras para proyectos brownfield (`openspec/changes/`, `openspec/specs/`) | **Ruta Ágil por Defecto:** Tareas cotidianas, refactors modulares y cambios evolutivos sobre código existente. |
+| **Spec-Kit (GitHub)** | Gobernanza formal con compuertas estrictas (`constitution → specify → plan → tasks → analyze → implement`) | **Ruta de Alto Riesgo:** Módulos de misión crítica, migraciones de seguridad o cambios en `CONSTITUTION.md`. |
+| **Superpowers** | Plugins de comportamiento con TDD estricto (Red $\to$ Green $\to$ Refactor), YAGNI, DRY y Worktrees nativos | **Disciplina de Codificación:** Ejecución obligatoria durante la fase de implementación de use cases y dominio. |
+| **Spec-Boot (LIDR)** | Kit de especificaciones portables entre copilotos (`api-spec.yml`, `data-model.md`, `development_guide.md`) | **Onboarding y Satélites:** Estandarización de repositorios externos antes de habilitar escritura. |
+
+---
+
+## 6. Metodología TPC (Tool, Prompt, Context)
 
 Toda tarea ejecutada en este workspace debe optimizar los tres pilares:
 
@@ -36,9 +106,9 @@ Toda tarea ejecutada en este workspace debe optimizar los tres pilares:
 
 ---
 
-## 3. Matriz de Selección de Modelos por Fase SDD
+## 7. Matriz de Selección de Modelos por Fase SDD
 
-Queda estrictamente prohibido usar un solo modelo genérico para todas las etapas. El agente y el operador deben alinear la capacidad cognitiva con la fase:
+Queda estrictamente prohibido usar un solo modelo genérico para todas las etapas:
 
 | Fase del SDD | Objetivo Técnico | Modelo Óptimo Recomendado | Modo de Razonamiento |
 |---|---|---|---|
@@ -46,15 +116,15 @@ Queda estrictamente prohibido usar un solo modelo genérico para todas las etapa
 | **Fase 2: Requerimientos EARS & BDD** | Lógica proposicional formal, contratos inequívocos | `claude-3-7-sonnet` / `o3-mini` | Razonamiento deductivo estricto |
 | **Fase 3: Arquitectura & ADRs** | Diseño Clean/Hexagonal, compensaciones y alternativas rechazadas | `claude-3-7-sonnet` (Thinking Extendido) | Evaluación de tradeoffs arquitectónicos |
 | **Fase 4: DAG de Tareas Atómicas** | Descomposición en subtareas de fallo-a-éxito ($F \to P$) | `claude-3-7-sonnet` / `gemini-2.5-flash` | Estructuración JSON determinista |
-| **Fase 5: Implementación TDD** | Escritura de código puro de dominio, use cases y adaptadores | `claude-3-7-sonnet` / `codex` | Ejecución precisa de difs mínimos |
+| **Fase 5: Implementación TDD** | Escritura de código puro de dominio, use cases y adaptadores | `claude-3-7-sonnet` / `codex` | Ejecución precisa de diffs mínimos |
 | **Fase 6: Verificación & Linter** | Chequeo estático de tipos, formateo y aserciones | **Compiladores Locales (Zero-LLM)** | `npm test`, `ruff check`, `verify:strict` |
 | **Fase 7: Auditoría Adversarial** | OWASP Top 10, sanitización, inyecciones y fuga de secretos | `claude-3-7-sonnet` / `security-auditor` | Análisis de vectores de ataque |
 
 ---
 
-## 4. El Patrón Boris Cherny (Claude Code Standard)
+## 8. El Patrón Boris Cherny & Disciplinas Claude Code
 
-El agente debe aplicar las 3 disciplinas operativas de Boris Cherny en cada sesión:
+El agente debe aplicar las disciplinas operativas de Boris Cherny en cada sesión:
 
 ### A. Subagente / Paso "Code Simplifier"
 * Inmediatamente después de que los tests pasen en verde, **no des la tarea por terminada**.
@@ -63,7 +133,7 @@ El agente debe aplicar las 3 disciplinas operativas de Boris Cherny en cada sesi
   - Poda variables temporales no utilizadas y dead code.
   - Mantén el código tan simple y directo que cualquier junior lo entienda sin esfuerzo.
 
-### B. El Hook "Verify App" (Bloqueo Pre-Commit)
+### B. El Hook "Verify App" (Bloqueo Pre-Commit / Pre-Done)
 * Nunca hagas un commit ni concluyas una tarea sin ejecutar la verificación local:
   ```bash
   npm run verify:strict
@@ -78,30 +148,29 @@ El agente debe aplicar las 3 disciplinas operativas de Boris Cherny en cada sesi
 
 ---
 
-## 5. El Arsenal de Herramientas MCP de EOS v0.6.0
+## 9. Receipt-Driven Development (RDD - Gentle-AI Standard)
 
-Para cualquier agente operando en este entorno, utiliza las herramientas nativas expuestas por `src/mcp-server.js`:
-- `eos_doctor`: Diagnostica la integridad del control plane, pins de MCP y valida ausencia de fugas de homedir.
-- `eos_audit_project`: Ejecuta la batería completa de auditores concurrentes (`quality`, `security`, `architecture`, `simplifier`) sobre cualquier proyecto en `registry.json`.
-- `eos_verify_strict`: Ejecuta la verificación estricta de 503+ invariantes.
-- `eos_log_evidence`: Sella el registro de evidencia epistémica con hash criptográfico SHA-256.
-- CLI Simplifier: `eos simplify [path|--project <ID>] [--strict] [--json]`.
-- CLI Orquestador: `node bin/eos-orchestrator.js run --project <ID> --phase [intake|recon|audit|verify|release]`.
+* **Prueba sobre Narrativa:** Ninguna afirmación como "funciona correctamente" o "los tests pasan" tiene validez epistémica si proviene únicamente de la narración del agente.
+* **Recibo Criptográfico:** La validez se deriva exclusivamente de:
+  1. El diff exacto en Git (`git diff`).
+  2. El código de salida del compilador (`exit code 0`).
+  3. El hash de evidencia sellado en `docs/evidence/EVD-XXXX.json`.
+* Si un test falla, la tarea está en estado `REMEDIATION_REQUIRED`, sin excepciones.
 
 ---
 
-## 6. Los Dos Casos de Uso Reina de Alto Impacto (Tech Sherpas / LIDR Standard)
+## 10. Los Dos Casos de Uso Reina de Alto Impacto (LIDR Standard)
 
-En ingeniería con IA, los mayores retornos industriales no provienen de inventar productos desde cero (vibe coding), sino de transformaciones con **alto volumen de código, objetivo claramente definido y resultado determinista**:
+En ingeniería con IA, los mayores retornos industriales provienen de transformaciones con **alto volumen de código, objetivo claramente definido y resultado determinista**:
 
 ### A. Modernización y Refactoring Legacy
 * **Definición:** Upgrades tecnológicos mayores (ej. React 18 $\to$ 19, Next Pages $\to$ App Router, Enzyme $\to$ React Testing Library, Java 17 $\to$ 21, PHP $\to$ Node).
-* **Principio de Especificación Latente:** La especificación **ya vive en el propio código** y en la documentación oficial de la tecnología destino. No requiere inventar producto ni lidiar con ambigüedad de negocio.
+* **Principio de Especificación Latente:** La especificación **ya vive en el propio código** y en la documentación oficial de la tecnología destino.
 * **Protocolo de Ejecución del Arnés:**
   1. **Snapshot de Línea Base:** Captura del AST actual, dependencias y suite de pruebas inicial (`exit 0`).
-  2. **Reglas Canónicas de Destino:** Inyección de contratos estrictos de la nueva versión (ej. `react19-no-forwardref`, `async-suspense-boundaries`).
-  3. **DAG de Migración Atómica:** Transformación modular de abajo hacia arriba (Tipos/Lógica pura $\to$ Hooks/Servicios $\to$ Componentes de Presentación $\to$ Contenedores).
-  4. **Auto-Curación TDD:** Compilador y linter ejecutan el loop de feedback (`CursorTDDAutoHealer`).
+  2. **Reglas Canónicas de Destino:** Inyección de contratos estrictos de la nueva versión.
+  3. **DAG de Migración Atómica:** Transformación modular de abajo hacia arriba (Tipos/Lógica pura $\to$ Hooks/Servicios $\to$ Componentes $\to$ Contenedores).
+  4. **Auto-Curación TDD:** Compilador y linter ejecutan el loop de feedback.
   5. **Poda por Primeros Principios (`eos simplify`):** Reducción de sobreingeniería post-migración.
 
 ### B. Integración de Servicios y APIs de Terceros
@@ -110,16 +179,16 @@ En ingeniería con IA, los mayores retornos industriales no provienen de inventa
 * **Protocolo de Ejecución del Arnés:**
   1. **Aislamiento en Adaptadores:** La lógica de dominio nunca toca el SDK del tercero directamente; se encapsula tras una interfaz abstracta pura.
   2. **Validación de Esquema en Frontera:** Cada payload entrante y saliente se valida con `SchemaValidator` (fail-closed).
-  3. **Zero Plain Secrets:** Prohibición absoluta de credenciales o tokens en código; solo variables de entorno auditadas por el `PreCommitGuard`.
+  3. **Zero Plain Secrets:** Prohibición absoluta de credenciales o tokens en código; solo variables de entorno auditadas.
   4. **Circuit Breakers y Resiliencia:** Manejo determinista de timeouts, reintentos exponenciales y fallbacks locales.
 
 ---
 
-## 7. Reposicionamiento del Ingeniero Humano (Estrategia 90/10)
+## 11. Reposicionamiento del Ingeniero Humano (Estrategia 90/10)
 
 El modelo es el motor; el arnés es el chasis y la telemetría. La IA no reemplaza al ingeniero, sino que reubica su valor:
 
-* **El Arnés Automatiza el 90–95%:** Tareas mecánicas, migración de llamadas sintácticas, formateo, tipado estricto, generación de tests de regresión y escaneo estático de seguridad.
+* **El Arnés Automatiza el 90–95%:** Tareas mecánicas, migración sintáctica, formateo, tipado estricto, generación de tests de regresión y escaneo estático de seguridad.
 * **El Humano se Concentra en el 5–10% Crítico:**
   1. **Validación del Plan:** Aprobación del DAG de tareas y arbitraje de compensaciones arquitectónicas.
   2. **Casos Borde de Negocio:** Resolución de inconsistencias de dominio que ningún linter puede deducir.
@@ -127,10 +196,11 @@ El modelo es el motor; el arnés es el chasis y la telemetría. La IA no reempla
 
 ---
 
-## 8. El Mandato de Primeros Principios (Regla de Musk & Boris Cherny)
+## 12. El Mandato de Primeros Principios (Regla de Musk & Boris Cherny)
 
 * **Regla de Oro:** *"Si un archivo supera 4.5 de bloatIndex, la tarea está INCOMPLETA aunque todos los tests pasen."*
 * Todo código generado debe ser sometido a la poda implacable:
   - Eliminar wrappers decorativos y capas de indirección de un solo uso.
   - Convertir monolitos en contenedores esbeltos (< 25 líneas) con componentes de presentación atómicos.
   - Verificar que `eos simplify --strict` otorgue veredicto **PASS**.
+
