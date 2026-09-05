@@ -726,6 +726,9 @@ export function applyHint(item) {
   if (title.includes('campus')) {
     return 'Campus community is vendor outreach. No EOS Control Plane change.';
   }
+  if (link.includes('blog/basis')) {
+    return 'Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.';
+  }
   if (titleOrLink.includes('spacex') || link.includes('joining-spacex')) {
     return 'Org/acquisition news. Do not change EOS governance from vendor ownership claims; keep FUNDACION frozen.';
   }

@@ -2596,6 +2596,7 @@ test('applyHint is specific for current official product titles', () => {
     { title: 'Self-hosted machines', link: 'https://cursor.com/changelog/self-hosted-machines' },
     { title: 'Grok Bot is Now Live on Android', link: 'https://forum.cursor.com/t/grok-bot-is-now-live-on-android/170384' },
     { title: 'Nokia analyzes 50M+ lines of code in two weeks with Cursor', link: 'https://cursor.com/blog/nokia' },
+    { title: 'How Basis builds long-horizon accounting agents with Cursor', link: 'https://cursor.com/blog/basis' },
     { title: 'Run cloud agents on machines you manage', link: 'https://cursor.com/blog/self-hosted-machines' },
     { title: 'Cursor is now a part of SpaceX', link: 'https://cursor.com/blog/joining-spacex' },
     { title: 'Introducing Grok 4.6', link: 'https://cursor.com/blog/grok-4-6' },
@@ -2744,6 +2745,19 @@ test('applyHint for Nokia customer blog is low-priority press story without enab
   assert.equal(/enable/i.test(hint), false);
 });
 
+test('applyHint for Basis customer blog is press story not Cloud Agent Builds', () => {
+  const hint = applyHint({
+    title: 'How Basis builds long-horizon accounting agents with Cursor',
+    link: 'https://cursor.com/blog/basis',
+    summary: 'Basis was built on Cursor from day one. Its accounting agents complete partnership tax returns up to 6x faster, and are trusted by 40% of the top 25 accounting firms.'
+  });
+  assert.match(hint, /customer\/press/i);
+  assert.equal(/enable/i.test(hint), false);
+  assert.equal(/default start path/i.test(hint), false);
+  assert.equal(/Slack/i.test(hint), false);
+  assert.equal(hint.includes('timers'), false);
+});
+
 test('selectCurrentLearnings clusters self-hosted changelog and blog onto Builds without evicting Router', () => {
   const selected = selectCurrentLearnings([
     {
@@ -2823,6 +2837,12 @@ test('selectCurrentLearnings clusters self-hosted changelog and blog onto Builds
       source_url: 'https://cursor.com/help/models-and-usage/usage-limits',
       published_at: null,
       apply_in_eos: 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.'
+    },
+    {
+      title: 'How Basis builds long-horizon accounting agents with Cursor',
+      source_url: 'https://cursor.com/blog/basis',
+      published_at: '2026-09-04T12:00:00.000Z',
+      apply_in_eos: 'Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.'
     }
   ]);
   const urls = selected.map((row) => row.source_url);
@@ -2835,6 +2855,7 @@ test('selectCurrentLearnings clusters self-hosted changelog and blog onto Builds
   assert.equal(urls.includes('https://cursor.com/changelog/self-hosted-machines'), false);
   assert.equal(urls.includes('https://cursor.com/blog/self-hosted-machines'), false);
   assert.equal(urls.includes('https://forum.cursor.com/t/grok-bot-is-now-live-on-android/170384'), false);
+  assert.equal(urls.includes('https://cursor.com/blog/basis'), false);
 });
 
 test('applyHint does not treat forum subscription wording as changelog harness news', () => {
@@ -9191,6 +9212,7 @@ test('repo CURRENT.md leads with product actions, not customer stories', () => {
   assert.equal(current.includes('cursor.com/blog/self-hosted-machines'), false);
   assert.equal(current.includes('forum.cursor.com/t/grok-bot-is-now-live-on-android'), false);
   assert.equal(current.includes('cursor.com/blog/nokia'), false);
+  assert.equal(current.includes('cursor.com/blog/basis'), false);
   assert.equal(current.includes('cursor.com/changelog/origin-code-hosting'), false);
   assert.match(current, /cursor.com\/help\/models-and-usage\/usage-limits/);
   assert.match(current, /cursor.com\/docs\/cloud-agent(?!\/)/);
