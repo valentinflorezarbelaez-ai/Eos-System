@@ -5,7 +5,7 @@
   "status": "VERIFIED",
   "scope": "PRJ-APP-FUERZA / pipeline:audit",
   "source": "EOS ProjectPipelineRunner",
-  "timestamp": "2026-09-05T22:13:57.767Z",
+  "timestamp": "2026-09-05T22:24:06.605Z",
   "actor": "EOS ProjectPipelineRunner",
   "action": "orchestrate --project PRJ-APP-FUERZA --pipeline audit",
   "command": "node bin/eos-orchestrator.js run --project PRJ-APP-FUERZA --phase audit",
@@ -13,8 +13,8 @@
   "actual": "VERIFIED",
   "result": "PASS",
   "confidence": "HIGH",
-  "sha256": "sha256-a793c2ccd49f9f3491b761c755ecc8c91b91e594d06c2dfc8cfac4044f335ec2",
-  "digest": "sha256-a793c2ccd49f9f3491b761c755ecc8c91b91e594d06c2dfc8cfac4044f335ec2",
+  "sha256": "sha256-4cdb5c16b5f7b88baf18612b60e162d289e88d5e41b29db774a8a90c10b5006c",
+  "digest": "sha256-4cdb5c16b5f7b88baf18612b60e162d289e88d5e41b29db774a8a90c10b5006c",
   "data": {
     "projectId": "PRJ-APP-FUERZA",
     "phase": "audit",
@@ -44,7 +44,7 @@
           "exitCode": 0
         }
       ],
-      "evidenceHash": "sha256-a0ee971638f94bc28b9fcfdd0f9ba926a4d12ae454a5125714ac77d57b3990b8"
+      "evidenceHash": "sha256-0931d78317be6e2a3b84dea25f2e139f0eb0f293a474435974721019f4fe1a1b"
     },
     "satelliteValidation": {
       "status": "DEGRADED_CONTROL_PLANE_PROXY",
