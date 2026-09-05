@@ -16,6 +16,7 @@ import {
   PIPELINE_PHASES
 } from '../core/runtime/project-pipeline-runner.js';
 import { FirstPrinciplesSimplifierEngine } from '../core/optimization/first-principles-simplifier-engine.js';
+import { ElevateOrchestrator } from '../core/elevate/elevate-orchestrator.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -63,6 +64,10 @@ export class MissionCLI {
 
     if (command === 'simplify' || command === 's') {
       return this.handleSimplifyCommand(argv.slice(1));
+    }
+
+    if (command === 'elevate' || command === 'e') {
+      return this.handleElevateCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -746,6 +751,84 @@ Status:                ${overEngineeredCount === 0 ? 'CLEAN & MINIMAL (KISS)' : 
     };
   }
 
+  /**
+   * eos elevate [target-path] [--mode=audit|heal] [--format=json|markdown|table] [--strict]
+   */
+  async handleElevateCommand(args = []) {
+    const isJson = args.includes('--json') || args.some(a => a === '--format=json');
+    const isMarkdown = args.some(a => a === '--format=markdown');
+    const isStrict = args.includes('--strict');
+    const modeArg = args.find(a => a.startsWith('--mode='));
+    const mode = modeArg ? modeArg.split('=')[1] : 'audit';
+
+    const nonFlagArgs = args.filter(a => !a.startsWith('--'));
+    const targetPath = path.resolve(process.cwd(), nonFlagArgs[0] || '.');
+
+    const orchestrator = new ElevateOrchestrator({ targetPath });
+    const result = await orchestrator.execute({ mode, strict: isStrict });
+
+    if (isJson) {
+      return {
+        success: isStrict ? result.summary.bySeverity.critical === 0 : true,
+        output: JSON.stringify(result, null, 2),
+        data: result
+      };
+    }
+
+    if (isMarkdown) {
+      return {
+        success: isStrict ? result.summary.bySeverity.critical === 0 : true,
+        output: result.markdownReport,
+        data: result
+      };
+    }
+
+    let report = `
+================================================================================
+🏆 EOS-ELEVATE — Elite Autonomous Remediation & Code Elevation Engine
+================================================================================
+Target:    ${result.targetPath}
+Mode:      ${result.mode.toUpperCase()}
+Timestamp: ${new Date().toISOString()}
+--------------------------------------------------------------------------------
+
+🔍 MULTI-VECTOR AUDIT RESULTS:
+   Scanned Files:  ${result.summary.totalScannedFiles}
+   Total Findings: ${result.summary.totalFindings}
+   - Security:      ${result.summary.byVector.security} (Critical: ${result.summary.bySeverity.critical}, High: ${result.summary.bySeverity.high})
+   - Architecture:  ${result.summary.byVector.architecture}
+   - Quality:       ${result.summary.byVector.quality}
+   - Performance:   ${result.summary.byVector.performance}
+   - Accessibility: ${result.summary.byVector.accessibility}
+
+🔑 Cryptographic Root Digest (SHA-256):
+   ${result.evidence.digest}
+`;
+
+    if (result.findings.length > 0) {
+      report += '\n📋 TOP ACTIONABLE FINDINGS:\n';
+      result.findings.slice(0, 5).forEach((f, idx) => {
+        report += `   ${idx + 1}. [${f.severity}] ${f.ruleId} @ ${f.file}:${f.line}\n`;
+        report += `      ${f.message}\n`;
+      });
+      if (result.findings.length > 5) {
+        report += `   ... and ${result.findings.length - 5} additional finding(s). Run with --format=markdown for full breakdown.\n`;
+      }
+    } else {
+      report += '\n✨ ZERO DEFECTS: Target codebase meets elite Tier-1 engineering standards.\n';
+    }
+
+    report += '\n================================================================================\n';
+    report += `STATUS: ${result.status} · Epistemic: AUDIT_EXECUTED · Exit Code: 0\n`;
+    report += '================================================================================\n';
+
+    return {
+      success: isStrict ? result.summary.bySeverity.critical === 0 : true,
+      output: report,
+      data: result
+    };
+  }
+
   getHelp() {
     return `
 ================================================================================
@@ -822,6 +905,9 @@ COMMANDS:
 
   eos doctor
       Operator health check: CLI help, schema load, rules index, homedir leak.
+
+  eos elevate [target-path] [--mode=audit|heal] [--strict]
+      Elite autonomous multi-vector code audit, root cause analysis, and TDD healing.
 
 SAFETY INVARIANTS:
   - Default Authority: LEVEL_0 / READ_ONLY

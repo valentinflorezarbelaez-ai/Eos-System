@@ -19,6 +19,8 @@
     "test:unit": "node --test $(find tests -name '*.test.js')",
     "mcp:start": "node src/mcp-server.js",
     "eos": "node bin/eos.js",
+    "eos:elevate": "node bin/eos-elevate.js",
+    "test:elevate": "node --test tests/elevate-scanner-council.test.js tests/elevate-rca-remediation.test.js tests/elevate-orchestrator-e2e.test.js",
     "eos:top": "node bin/eos-top.js",
     "eos:hud": "node bin/eos-hud.js",
     "eos:sentinel": "node bin/eos-sentinel.js",
