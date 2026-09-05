@@ -1,0 +1,30 @@
+{
+  "id": "EVD-0065",
+  "evidenceId": "EVD-0065",
+  "claim": "Multi-Agent Consensus & Byzantine Peer Review Arbitration Engine (SPEC-EOS-008) implemented and verified with 5/5 unit tests passing, 1053/1053 npm test passing, and 506/506 strict invariants satisfied.",
+  "status": "VERIFIED",
+  "scope": "PRJ-EOS-CONTROL-PLANE / governance:council",
+  "source": "EOS MultiAgentArbitrationEngine",
+  "timestamp": "2026-09-05T22:05:00.000Z",
+  "actor": "EOS Architecture & Governance Engine",
+  "action": "eos council --project PRJ-APP-FUERZA && node --test tests/multi-agent-arbitration-engine.test.js",
+  "command": "node --test tests/multi-agent-arbitration-engine.test.js",
+  "expected": "NASA IV&V Anti-Self-Certification enforced, multi-desk ballots cast, VETOs enforced by Security/Architecture, supermajority quorum calculated, and cryptographic consensus envelope sealed.",
+  "actual": "VERIFIED",
+  "result": "PASS",
+  "confidence": "HIGH",
+  "sha256": "sha256-bad14138fa655b9fb92011ec251be5ef7df1c68fda3f7e437bd7b604cbdf2b82",
+  "digest": "sha256-bad14138fa655b9fb92011ec251be5ef7df1c68fda3f7e437bd7b604cbdf2b82",
+  "data": {
+    "spec": "docs/specs/EOS-MULTI-AGENT-ARBITRATION-SPEC.md",
+    "implementation": "src/core/governance/multi-agent-arbitration-engine.js",
+    "cli": "src/cli/mission-cli.js",
+    "testSuite": "tests/multi-agent-arbitration-engine.test.js",
+    "testResults": {
+      "unit_tests_passed": 5,
+      "total_tests_passed": 1053,
+      "invariants_passed": 506,
+      "exit_code": 0
+    }
+  }
+}

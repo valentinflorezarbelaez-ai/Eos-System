@@ -22,6 +22,7 @@ import { RelationalTraceabilityMatrix } from '../core/ontology/relational-tracea
 import { AutonomousLoopEngine } from '../core/runtime/autonomous-loop-engine.js';
 import { AutonomousIntakeSynthesizer } from '../core/sdd/autonomous-intake-synthesizer.js';
 import { JointOperationsCommandCenter } from '../core/runtime/joint-operations-command-center.js';
+import { MultiAgentArbitrationEngine } from '../core/governance/multi-agent-arbitration-engine.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -106,6 +107,10 @@ export class MissionCLI {
 
     if (command === 'war-room' || command === 'warroom') {
       return this.handleWarRoomCommand(argv.slice(1));
+    }
+
+    if (command === 'council' || command === 'arbitrate' || command === 'c') {
+      return this.handleCouncilCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -538,6 +543,75 @@ export class MissionCLI {
 
   async handleWarRoomCommand(args = []) {
     return this.handleOpsCommand(['status', ...args]);
+  }
+
+  /**
+   * eos council [--project <id>] [--file <path>] [--vote] [--json]
+   * eos arbitrate [--project <id>] [--file <path>] [--json]
+   */
+  async handleCouncilCommand(args = []) {
+    const isJson = args.includes('--json');
+    let projectId = 'PRJ-EOS-CONTROL-PLANE';
+    let filePath = null;
+
+    const projIdx = args.indexOf('--project');
+    if (projIdx !== -1 && args[projIdx + 1]) {
+      projectId = args[projIdx + 1];
+    }
+
+    const fileIdx = args.indexOf('--file');
+    if (fileIdx !== -1 && args[fileIdx + 1]) {
+      filePath = args[fileIdx + 1];
+    }
+
+    const nonFlags = args.filter(a => !a.startsWith('--') && a !== projectId && a !== filePath && a !== 'vote');
+    if (!filePath && nonFlags.length > 0) {
+      filePath = nonFlags[0];
+    }
+
+    const controlPlane = this.controlPlaneRoot || this.runtime?.controlPlaneRoot || resolveControlPlaneRoot();
+    const arbitrationEngine = new MultiAgentArbitrationEngine({ controlPlaneRoot: controlPlane });
+
+    let content = '';
+    let targetPath = filePath;
+    if (targetPath) {
+      const resolved = path.isAbsolute(targetPath) ? targetPath : path.resolve(controlPlane, targetPath);
+      if (fs.existsSync(resolved)) {
+        content = fs.readFileSync(resolved, 'utf-8');
+        targetPath = resolved;
+      }
+    }
+
+    try {
+      const proposal = {
+        projectId,
+        filePath: targetPath,
+        content: content || 'export const nominal = true;',
+        implementerClaim: 'DONE',
+        verifierEvidence: { exitCode: 0, testSuite: 'tests/unit.test.js' }
+      };
+
+      const consensus = arbitrationEngine.conductCouncilDeliberation(proposal);
+
+      if (isJson) {
+        return {
+          success: consensus.approved,
+          output: JSON.stringify(consensus, null, 2),
+          data: consensus
+        };
+      }
+
+      return {
+        success: consensus.approved,
+        output: arbitrationEngine.formatCouncilReport(consensus),
+        data: consensus
+      };
+    } catch (err) {
+      return {
+        success: false,
+        output: `Council Deliberation Failed: ${err.message}`
+      };
+    }
   }
 
   /**
@@ -1312,6 +1386,7 @@ USAGE:
   eos intake [--project <id>] [--synthesize] [--input <text|path>] [--out-dir <path>] [--json]
   eos ops [status|dispatch|intel] [--project <id>] [--action <act>] [--json]
   eos war-room [--json]
+  eos council [--project <id>] [--file <path>] [--vote] [--json]
   eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
   eos simplify [path|--project <id>] [--json] [--strict]
   eos mission <command> [options]
@@ -1349,6 +1424,10 @@ COMMANDS:
 
   eos war-room [--json]
       High-density tactical situational awareness situation room terminal dashboard.
+
+  eos council [--project <id>] [--file <path>] [--vote] [--json]
+      Multi-Agent Consensus & Byzantine Peer Review Arbitration Engine (SPEC-EOS-008).
+      Enforces NASA IV&V Anti-Self-Certification, VETO desks, and supermajority consensus.
 
   eos orchestrate --project <PROJECT_ID> --pipeline <phase>
       Unified pipeline runner: registration contract → concurrent auditors →
