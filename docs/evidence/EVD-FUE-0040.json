@@ -1,0 +1,39 @@
+{
+  "evidenceId": "EVD-FUE-0040",
+  "timestamp": "2026-09-05T21:25:00.000Z",
+  "specRef": "SPEC-0004-fuerza-data-sync-neon",
+  "data": {
+    "project": "PRJ-APP-FUERZA",
+    "architecture": "Offline-First WAL & Neon PostgreSQL Resilience",
+    "epistemicState": "VERIFIED",
+    "backend": {
+      "framework": "FastAPI 0.115+",
+      "orm": "SQLAlchemy 2.0+ with pool_recycle=300 & pool_pre_ping=True",
+      "testSuite": "tests/test_api.py",
+      "testsPassing": 5,
+      "testsFailing": 0,
+      "linter": "Ruff - All checks passed"
+    },
+    "frontend": {
+      "walEngine": "walEngine.mjs (SHA-256 Checksummed FIFO)",
+      "telemetryAttached": ["rpe", "rir", "e1rm"],
+      "testsPassing": 27,
+      "testsFailing": 0
+    },
+    "requirementsCovered": [
+      "REQ-EARS-SYNC-01",
+      "REQ-EARS-SYNC-02",
+      "REQ-EARS-SYNC-03",
+      "REQ-EARS-SYNC-04"
+    ],
+    "artifactsCreatedOrModified": [
+      "docs/specs/app-fuerza/SPEC-0004-fuerza-data-sync-neon.md",
+      ".eos/satellites/app-fuerza/atp-strength-backend/src/domain/models.py",
+      ".eos/satellites/app-fuerza/atp-strength-backend/src/repository/state_repo.py",
+      ".eos/satellites/app-fuerza/atp-strength-backend/src/routes/state.py",
+      ".eos/satellites/app-fuerza/atp-strength-backend/src/config/database.py",
+      ".eos/satellites/app-fuerza/atp-strength-backend/tests/test_api.py",
+      ".eos/satellites/app-fuerza/atp-strength-frontend/src/app/hooks/createWorkoutHandlers.ts"
+    ]
+  }
+}

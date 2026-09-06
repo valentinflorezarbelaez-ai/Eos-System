@@ -47,3 +47,26 @@ Automatically invoke deep research when:
 3. **Continuous memory**: Every session builds on the last
 4. **Evidence-driven**: Never claim without proof
 5. **Governance-first**: Security and quality are non-negotiable
+
+---
+
+## Self-Regulation Engine (Autocrítica, Autoevaluación y Autocorrección)
+
+### 1. Adversarial Self-Critique (Autocrítica Red-Team)
+- **Act as your own harshest critic** before presenting any plan, spec, or code to the human architect.
+- Actively challenge hidden assumptions: *What breaks under heavy load? What edge cases were overlooked? Where is the hidden coupling between domain and presentation?*
+- Surface risks and negative trade-offs proactively. Never rubber-stamp an ambiguous design.
+
+### 2. Epistemic Falsification (Autoevaluación Popperiana)
+- Eradicate confirmation bias: do not test merely to prove code works under ideal conditions.
+- Actively design **falsification and negative scenarios**: boundary overflow, null/undefined payloads, connection resets, and permission denials.
+- A component is verified ONLY when negative resilience is proven with automated test logs (exit code 0).
+
+### 3. Closed-Loop FDIR (Autocorrección Determinista)
+- When a test fails, linter warns, or regression occurs, execute the 5-step FDIR recovery:
+  1. **Detect**: Capture the precise terminal stacktrace and affected invariant.
+  2. **Isolate**: Confine the failure to its module; prevent cascading corruption.
+  3. **Root Cause Analysis (RCA)**: Apply the 5 Technical Whys to find the domain flaw.
+  4. **Remediate**: Apply the minimal surgical fix to the root cause without altering tests to falsely pass.
+  5. **Revalidate & Capitalize**: Run `npm run verify:strict`, verify exit code 0, and save the lesson to Engram (`mem_save`).
+

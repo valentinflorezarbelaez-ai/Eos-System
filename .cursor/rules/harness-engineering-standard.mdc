@@ -204,3 +204,47 @@ El modelo es el motor; el arnés es el chasis y la telemetría. La IA no reempla
   - Convertir monolitos en contenedores esbeltos (< 25 líneas) con componentes de presentación atómicos.
   - Verificar que `eos simplify --strict` otorgue veredicto **PASS**.
 
+---
+
+## 13. La Tríada de Autogobierno de EOS: Autocrítica, Autoevaluación y Autocorrección (FDIR)
+
+Para alcanzar el estado de perfección absoluta sin depender de la supervisión micro del humano, EOS implementa la **Tríada de Autogobierno**:
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                 LA TRÍADA DE AUTOGOBIERNO                   │
+├──────────────────────────────┬──────────────────────────────┤
+│ 1. AUTOCRÍTICA ADVERSARIAL   │ Red Team interno. Desafía    │
+│    (El Abogado del Diablo)   │ supuestos antes de codificar.│
+├──────────────────────────────┼──────────────────────────────┤
+│ 2. AUTOEVALUACIÓN POPPERIANA │ Búsqueda activa de fallos    │
+│    (Falsacionismo Empírico)  │ mediante pruebas negativas.  │
+├──────────────────────────────┼──────────────────────────────┤
+│ 3. AUTOCORRECCIÓN FDIR       │ Detección, Aislamiento, RCA, │
+│    (Cierre de Bucle y Memoria│ Remediación y Aprendizaje.   │
+└──────────────────────────────┴──────────────────────────────┘
+```
+
+### 1. Autocrítica Adversarial (Red-Team Interno)
+* Antes de someter cualquier propuesta arquitectónica o especificación formal a la aprobación del humano, el sistema ejecuta un escaneo adversarial:
+  - **Vector de Fragilidad 1 (Asunciones):** Identifica toda hipótesis no demostrada con evidencia física.
+  - **Vector de Fragilidad 2 (Casos Borde):** Cuestiona escenarios extremos de concurrencia, carga o datos vacíos.
+  - **Vector de Fragilidad 3 (Acoplamiento):** Denuncia dependencias espurias entre el dominio y frameworks visuales o librerías de terceros.
+
+### 2. Autoevaluación Popperiana (Falsacionismo Riguroso)
+* En EOS rige el principio de Karl Popper: **una teoría solo es científica si es falsable**.
+* Está terminantemente prohibido escribir suites de pruebas complacientes que solo evalúen el *happy path*.
+* Toda especificación debe incluir contratos de falsación que demuestren cómo responde el sistema ante:
+  - Payloads corruptos o tipos incompatibles (debe fallar *fail-closed* con código de error canónico).
+  - Caídas súbitas de conexión de red o interrupción del host remoto.
+  - Excedentes de presupuesto de memoria o tiempo de respuesta.
+
+### 3. Autocorrección Determinista y FDIR de Bucle Cerrado
+* Ante cualquier desvío, advertencia de linter o falla de test, el sistema entra en el protocolo clínico de **FDIR**:
+  1. **DETECCIÓN:** Se captura el síntoma exacto y la línea física del fallo.
+  2. **AISLAMIENTO:** Se aísla el módulo fallido para evitar propagación al resto del grafo.
+  3. **DIAGNÓSTICO RAÍZ (RCA):** Se aplican los 5 Porqués de Toyota para encontrar la falla conceptual en el dominio, jamás en el síntoma superficial.
+  4. **REMEDIACIÓN:** Se aplica el cambio quirúrgico mínimo suficiente. Modificar un test para forzar que pase sin corregir la causa raíz es causa de nulidad inmediata.
+  5. **REVALIDACIÓN Y CAPITALIZACIÓN:** Se corre `npm run verify:strict` con exit code 0 y se persiste la causa y solución en la memoria profunda **Engram**.
+
+

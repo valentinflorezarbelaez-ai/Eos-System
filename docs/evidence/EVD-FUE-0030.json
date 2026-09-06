@@ -1,0 +1,34 @@
+{
+  "evidenceId": "EVD-FUE-0030",
+  "timestamp": "2026-09-05T20:54:00.000Z",
+  "specRef": "SPEC-0003-fuerza-autoregulation-rpe",
+  "data": {
+    "project": "PRJ-APP-FUERZA",
+    "architecture": "Clean / Hexagonal Domain Engine",
+    "epistemicState": "VERIFIED",
+    "testsExecuted": [
+      "tests/rpe-autoregulation.test.mjs",
+      "tests/timers.test.mjs",
+      "tests/wal.test.mjs"
+    ],
+    "totalTestsPassing": 27,
+    "totalTestsFailing": 0,
+    "eslintErrors": 0,
+    "eslintWarnings": 0,
+    "typecheck": "PASS_CLEAN",
+    "requirementsCovered": [
+      "REQ-EARS-AUTO-01",
+      "REQ-EARS-AUTO-02",
+      "REQ-EARS-AUTO-03",
+      "REQ-EARS-AUTO-04"
+    ],
+    "artifactsCreated": [
+      "docs/specs/app-fuerza/SPEC-0003-fuerza-autoregulation-rpe.md",
+      ".eos/satellites/app-fuerza/atp-strength-frontend/src/lib/rpeEngine.mjs",
+      ".eos/satellites/app-fuerza/atp-strength-frontend/tests/rpe-autoregulation.test.mjs",
+      ".eos/satellites/app-fuerza/atp-strength-frontend/src/lib/engine-shims.d.ts",
+      ".eos/satellites/app-fuerza/atp-strength-frontend/src/lib/workoutStrategies.ts",
+      ".eos/satellites/app-fuerza/atp-strength-frontend/src/app/components/WorkoutLogger.tsx"
+    ]
+  }
+}
