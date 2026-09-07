@@ -6,6 +6,7 @@ import { evaluateApplyClaim, auditTddReceipts } from '../src/core/sdd/tdd-eviden
 import { assertRddDoesNotGrantDelivery } from '../src/core/governance/rdd-review-stance.js';
 import { ArchitecturalFitnessEngine } from '../src/core/ast/architectural-fitness-engine.js';
 import { ContractEvidenceSealer } from '../src/core/formal/contract-evidence-sealer.js';
+import { EconomicContractValidator } from '../src/core/formal/economic-contract-validator.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,9 +63,11 @@ const REQUIRED_PATHS = [
   'src/core/observability/operator-hud.js',
   'src/core/ast/architectural-fitness-engine.js',
   'src/core/formal/contract-evidence-sealer.js',
+  'src/core/formal/economic-contract-validator.js',
   'tests/architectural-fitness.test.js',
   'tests/knowledge-ontology-consolidation.test.js',
   'tests/contract-evidence-sealer.test.js',
+  'tests/economic-contract-validator.test.js',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -859,6 +862,34 @@ function verifyWorkspace() {
         path: 'ContractEvidenceSealer',
         message: `Contract evidence sealer audit failed: ${err.message}`,
         type: 'contract-sealer'
+      });
+    }
+
+    // 3h. Economic & Operational Risk Contract Engine (ECR Invariants & Circuit Breaker)
+    try {
+      const econValidator = new EconomicContractValidator();
+      const evalSample = econValidator.evaluateTelemetry(
+        { max_tokens: 50000, max_cost_usd: 0.50, max_latency_ms: 1000 },
+        { tokens_consumed: 15000, cost_usd: 0.05, latency_ms: 120 }
+      );
+      if (evalSample.compliant && evalSample.verdict === 'ECONOMIC_CONTRACT_SATISFIED') {
+        report.checks.push({
+          path: `EconomicContractValidator (ECR Circuit Breaker Armed & Active: score ${evalSample.efficiency_score}/100)`,
+          status: 'VERIFIED',
+          type: 'economic-contract'
+        });
+      } else {
+        report.failures.push({
+          path: 'EconomicContractValidator',
+          message: 'Economic contract validator baseline evaluation failed',
+          type: 'economic-contract'
+        });
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'EconomicContractValidator',
+        message: `Economic contract validator check failed: ${err.message}`,
+        type: 'economic-contract'
       });
     }
   }

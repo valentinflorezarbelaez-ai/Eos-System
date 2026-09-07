@@ -30,6 +30,7 @@ import { JplSafetyAuditor } from '../core/formal/jpl-safety-auditor.js';
 import { ExecutiveDossierEngine } from '../core/reporting/executive-dossier-engine.js';
 import { ArchitecturalFitnessEngine } from '../core/ast/architectural-fitness-engine.js';
 import { ContractEvidenceSealer } from '../core/formal/contract-evidence-sealer.js';
+import { EconomicContractValidator } from '../core/formal/economic-contract-validator.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -146,6 +147,10 @@ export class MissionCLI {
 
     if (command === 'seal') {
       return this.handleSealCommand(argv.slice(1));
+    }
+
+    if (command === 'econ' || command === 'economic') {
+      return this.handleEconomicCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -1817,6 +1822,9 @@ Timestamp: ${new Date().toISOString()}
     let projectId = null;
     let command = null;
     let claim = null;
+    let tokens = null;
+    let cost = null;
+    let latency = null;
 
     for (let i = 0; i < args.length; i++) {
       if (args[i] === '--spec' && args[i + 1]) specId = args[++i];
@@ -1824,6 +1832,9 @@ Timestamp: ${new Date().toISOString()}
       else if (args[i] === '--project' && args[i + 1]) projectId = args[++i];
       else if ((args[i] === '--cmd' || args[i] === '--command') && args[i + 1]) command = args[++i];
       else if (args[i] === '--claim' && args[i + 1]) claim = args[++i];
+      else if (args[i] === '--tokens' && args[i + 1]) tokens = parseInt(args[++i], 10);
+      else if (args[i] === '--cost' && args[i + 1]) cost = parseFloat(args[++i]);
+      else if (args[i] === '--latency' && args[i + 1]) latency = parseFloat(args[++i]);
     }
 
     if (!specId) {
@@ -1854,6 +1865,12 @@ Timestamp: ${new Date().toISOString()}
         }
       }
 
+      const telemetry = (tokens !== null || cost !== null || latency !== null) ? {
+        tokens_consumed: tokens,
+        cost_usd: cost,
+        latency_ms: latency
+      } : undefined;
+
       const result = sealer.sealContractEvidence({
         specId,
         taskId,
@@ -1862,7 +1879,8 @@ Timestamp: ${new Date().toISOString()}
         command: command || 'node --test',
         exitCode,
         stdout,
-        stderr
+        stderr,
+        telemetry
       });
 
       if (isJson) {
@@ -1884,6 +1902,9 @@ Timestamp: ${new Date().toISOString()}
       out += `Cryptographic Seal: ${result.seal_hash}\n`;
       out += `Saved Path:         ${result.path}\n\n`;
       out += `Claim:              ${result.record.claim}\n`;
+      if (result.record.economic_provenance && result.record.economic_provenance.verdict) {
+        out += `Economic Verdict:   ${result.record.economic_provenance.verdict}\n`;
+      }
 
       return {
         success: result.success,
@@ -1894,6 +1915,96 @@ Timestamp: ${new Date().toISOString()}
       return {
         success: false,
         output: `Error sealing evidence contract: ${err.message}`
+      };
+    }
+  }
+
+  /**
+   * eos econ --spec <specId> [--tokens <n>] [--cost <usd>] [--latency <ms>] [--blast <n>] [--json]
+   * Evaluates telemetry against economic, financial, SLA, and operational risk contract invariants
+   */
+  async handleEconomicCommand(args = []) {
+    const isJson = args.includes('--json');
+    let specId = null;
+    let tokens = null;
+    let cost = null;
+    let latency = null;
+    let memory = null;
+    let blast = null;
+
+    for (let i = 0; i < args.length; i++) {
+      if (args[i] === '--spec' && args[i + 1]) specId = args[++i];
+      else if (args[i] === '--tokens' && args[i + 1]) tokens = parseInt(args[++i], 10);
+      else if (args[i] === '--cost' && args[i + 1]) cost = parseFloat(args[++i]);
+      else if (args[i] === '--latency' && args[i + 1]) latency = parseFloat(args[++i]);
+      else if (args[i] === '--memory' && args[i + 1]) memory = parseFloat(args[++i]);
+      else if (args[i] === '--blast' && args[i + 1]) blast = parseInt(args[++i], 10);
+    }
+
+    try {
+      const validator = new EconomicContractValidator();
+      const sealer = new ContractEvidenceSealer({ controlPlaneRoot: this.controlPlaneRoot || process.cwd() });
+      
+      let specContent = '';
+      if (specId) {
+        const spec = sealer.findSpec(specId);
+        if (!spec) {
+          return { success: false, output: `Error: Specification '${specId}' not found.` };
+        }
+        specContent = spec.content;
+      }
+
+      const contract = validator.extractEconomicContract(specContent);
+      const telemetry = {};
+      if (tokens !== null) telemetry.tokens_consumed = tokens;
+      if (cost !== null) telemetry.cost_usd = cost;
+      if (latency !== null) telemetry.latency_ms = latency;
+      if (memory !== null) telemetry.memory_mb = memory;
+      if (blast !== null) telemetry.blast_radius = blast;
+
+      const evalResult = validator.evaluateTelemetry(contract, telemetry);
+
+      if (isJson) {
+        return {
+          success: evalResult.compliant,
+          output: JSON.stringify(evalResult, null, 2),
+          data: evalResult
+        };
+      }
+
+      let out = `====================================================\n`;
+      out += `   EOS ECONOMIC & RISK CONTRACT AUDIT RECEIPT       \n`;
+      out += `====================================================\n\n`;
+      out += `Verdict:            ${evalResult.verdict}\n`;
+      out += `Circuit Breaker:    ${evalResult.circuit_breaker_tripped ? 'TRIPPED (HALT)' : 'ARMED / OK'}\n`;
+      out += `Efficiency Score:   ${evalResult.efficiency_score} / 100\n`;
+      out += `Violations Count:   ${evalResult.violations_count}\n\n`;
+
+      out += `Contract Thresholds:\n`;
+      out += `  - Max Tokens:        ${evalResult.contract_evaluated.max_tokens}\n`;
+      out += `  - Max Cost USD:      $${evalResult.contract_evaluated.max_cost_usd}\n`;
+      out += `  - Max Latency:       ${evalResult.contract_evaluated.max_latency_ms}ms\n`;
+      out += `  - Max Memory:        ${evalResult.contract_evaluated.max_memory_mb}MB\n`;
+      out += `  - Max Blast Radius:  ${evalResult.contract_evaluated.max_blast_radius} entities\n`;
+      out += `  - Reversibility:     ${evalResult.contract_evaluated.reversibility_tier}\n\n`;
+
+      if (evalResult.violations.length > 0) {
+        out += `Violations:\n`;
+        for (const v of evalResult.violations) {
+          out += `  [${v.severity}] ${v.message}\n`;
+        }
+        out += `\n`;
+      }
+
+      return {
+        success: evalResult.compliant,
+        output: out,
+        data: evalResult
+      };
+    } catch (err) {
+      return {
+        success: false,
+        output: `Error evaluating economic contract: ${err.message}`
       };
     }
   }

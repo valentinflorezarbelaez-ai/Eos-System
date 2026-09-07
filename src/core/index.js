@@ -73,6 +73,7 @@ export { L0Parser, L0Parser as FormalGrammarParser } from './runtime/l0-parser.j
 export { EOSTDDExecutor, EOSTDDExecutor as ClosedLoopTDDExecutor } from './runtime/tdd-executor.js';
 export { EOSMissionOrchestrator, EOSMissionOrchestrator as MissionLifecycleOrchestrator } from './runtime/mission-orchestrator.js';
 export { ContractEvidenceSealer, EARS_PATTERNS } from './formal/contract-evidence-sealer.js';
+export { EconomicContractValidator, REVERSIBILITY_TIERS } from './formal/economic-contract-validator.js';
 
 // Default export
 import { EOSKernel } from './kernel.js';

@@ -13,6 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { resolveControlPlaneRoot } from '../runtime/control-plane-root.js';
+import { EconomicContractValidator } from './economic-contract-validator.js';
 
 export const EARS_PATTERNS = [
   /\bWHEN\b/i,
@@ -38,6 +39,7 @@ export class ContractEvidenceSealer {
     this.controlPlaneRoot = options.controlPlaneRoot || resolveControlPlaneRoot();
     this.evidenceDir = options.evidenceDir || path.join(this.controlPlaneRoot, 'docs', 'evidence');
     this.specsDir = options.specsDir || path.join(this.controlPlaneRoot, 'docs', 'specs');
+    this.economicValidator = options.economicValidator || new EconomicContractValidator();
   }
 
   /**
@@ -203,10 +205,22 @@ export class ContractEvidenceSealer {
       );
     }
 
-    // 2. Epistemic Law III Enforcement
-    const isSuccess = exitCode === 0;
+    // 2. Epistemic Law III & Economic Contract Enforcement
+    const economicContract = options.economicContract || this.economicValidator.extractEconomicContract(spec.content);
+    let economicEvaluation = null;
+    if (options.telemetry) {
+      economicEvaluation = this.economicValidator.evaluateTelemetry(economicContract, options.telemetry);
+    }
+
+    let isSuccess = exitCode === 0;
+    let failureReason = null;
+    if (isSuccess && economicEvaluation && economicEvaluation.circuit_breaker_tripped) {
+      isSuccess = false;
+      failureReason = `Economic circuit breaker tripped: ${economicEvaluation.violations.map(v => v.message).join('; ')}`;
+    }
+
     const status = isSuccess ? 'VERIFIED' : 'NOT VERIFIED';
-    const result = isSuccess ? 'PASS' : 'FAIL';
+    const result = isSuccess ? 'PASS' : (failureReason ? 'ECONOMIC_VIOLATION' : 'FAIL');
     const confidence = isSuccess ? 'HIGH' : 'LOW';
 
     // 3. Generate Sequential Evidence ID
@@ -216,10 +230,15 @@ export class ContractEvidenceSealer {
     // 4. Compute Merkle Cryptographic Seal
     const stdoutHash = this.hashString(stdout);
     const stderrHash = this.hashString(stderr);
-    const sealPayload = `${evdId}:${spec.relativePath}:${taskId || 'NONE'}:${projectId || 'CORE'}:${command}:${exitCode}:${stdoutHash}:${stderrHash}:${timestamp}`;
+    const economicDigest = economicEvaluation ? this.hashString(JSON.stringify(economicEvaluation)) : 'NONE';
+    const sealPayload = `${evdId}:${spec.relativePath}:${taskId || 'NONE'}:${projectId || 'CORE'}:${command}:${exitCode}:${stdoutHash}:${stderrHash}:${economicDigest}:${timestamp}`;
     const sealHash = `sha256-${this.hashString(sealPayload)}`;
 
     // 5. Build Schema-Compliant Record
+    const actualMessage = isSuccess
+      ? `Command exited cleanly with code 0. EARS contract satisfied.${economicEvaluation ? ` Economic contract: ${economicEvaluation.verdict} (efficiency ${economicEvaluation.efficiency_score}%).` : ''}`
+      : (failureReason || `Command failed with exit code ${exitCode}. Error output: ${stderr.slice(0, 150)}`);
+
     const evidenceRecord = {
       $schema: './schema.json',
       id: evdId,
@@ -231,10 +250,8 @@ export class ContractEvidenceSealer {
       actor,
       action: `Executed and verified contract ${spec.relativePath}${taskId ? ` under task ${taskId}` : ''}`,
       command,
-      expected: `Exit code 0 and satisfaction of formal EARS contract in ${spec.relativePath}`,
-      actual: isSuccess
-        ? `Command exited cleanly with code 0. EARS contract satisfied.`
-        : `Command failed with exit code ${exitCode}. Error output: ${stderr.slice(0, 150)}`,
+      expected: `Exit code 0, satisfaction of formal EARS contract, and compliance with economic budget invariants in ${spec.relativePath}`,
+      actual: actualMessage,
       result,
       artifacts: artifacts.map(a => a.replace(/\\/g, '/')),
       environment: {
@@ -251,6 +268,10 @@ export class ContractEvidenceSealer {
         spec_file: spec.relativePath,
         ears_patterns_matched: earsCheck.matchedPatterns,
         stdout_sha256: stdoutHash
+      },
+      economic_provenance: economicEvaluation || {
+        verdict: 'DEFAULT_LIMITS_APPLIED',
+        contract: economicContract
       }
     };
 
