@@ -38,6 +38,15 @@ describe('EOS ProjectPipelineRunner', () => {
     assert.ok(registrationPath.includes('app-fuerza'));
   });
 
+  test('loadProjectRegistration resolves PRJ-FUNDACION and PRJ-PERFORMANCE-TALENT', () => {
+    const root = process.cwd();
+    const fundacion = loadProjectRegistration('PRJ-FUNDACION', root);
+    assert.equal(fundacion.registration.project_id, 'PRJ-FUNDACION');
+
+    const talent = loadProjectRegistration('PRJ-PERFORMANCE-TALENT', root);
+    assert.equal(talent.registration.project_id, 'PRJ-PERFORMANCE-TALENT');
+  });
+
   test('verify phase runs auditors, confirms EVD-0007, and seals SHA-256 evidence', async () => {
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-pipeline-'));
     const regDir = path.join(tmp, 'docs/projects/registrations');

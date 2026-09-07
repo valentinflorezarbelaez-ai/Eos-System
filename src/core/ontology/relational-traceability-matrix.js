@@ -308,6 +308,7 @@ export class RelationalTraceabilityMatrix {
     scanSpecs(specsDir);
 
     const specNodeIds = [];
+    const specContents = new Map();
     for (const specFile of specCandidates) {
       try {
         const content = fs.readFileSync(specFile, 'utf8');
@@ -332,10 +333,31 @@ export class RelationalTraceabilityMatrix {
               metadata: { project_id: resolvedId }
             });
             specNodeIds.push(specId);
+            specContents.set(specId, content);
 
-            // Connect L0 <-> L1
-            for (const itkId of intakeNodeIds) {
-              this.addEdge(itkId, specId, RELATION_TYPES.INFORMS, RELATION_TYPES.DERIVED_FROM);
+            // Connect L0 <-> L1 (Intake informs Spec - surgical matching)
+            const matchedIntakes = intakeNodeIds.filter(itkId => {
+              const itkNode = this.nodes.get(itkId);
+              const itkBase = itkNode?.path ? path.basename(itkNode.path) : '';
+              const itkSlug = itkId.replace(/^ITK-[A-Z0-9_-]+-/, '');
+              return content.includes(itkId) ||
+                (itkBase && content.includes(itkBase)) ||
+                (itkSlug && content.toLowerCase().includes(itkSlug.toLowerCase()));
+            });
+
+            if (matchedIntakes.length > 0) {
+              for (const itkId of matchedIntakes) {
+                this.addEdge(itkId, specId, RELATION_TYPES.INFORMS, RELATION_TYPES.DERIVED_FROM);
+              }
+            } else if (intakeNodeIds.length <= 2) {
+              for (const itkId of intakeNodeIds) {
+                this.addEdge(itkId, specId, RELATION_TYPES.INFORMS, RELATION_TYPES.DERIVED_FROM);
+              }
+            } else {
+              const rootIntake = intakeNodeIds.find(id => id.includes('ROOT') || id.includes('CONTEXT')) || intakeNodeIds[0];
+              if (rootIntake) {
+                this.addEdge(rootIntake, specId, RELATION_TYPES.INFORMS, RELATION_TYPES.DERIVED_FROM);
+              }
             }
           }
         }
@@ -361,6 +383,7 @@ export class RelationalTraceabilityMatrix {
     scanPlans(adrsDir);
 
     const planNodeIds = [];
+    const planContents = new Map();
     for (const planFile of planCandidates) {
       try {
         const content = fs.readFileSync(planFile, 'utf8');
@@ -384,10 +407,22 @@ export class RelationalTraceabilityMatrix {
               metadata: { project_id: resolvedId }
             });
             planNodeIds.push(planId);
+            planContents.set(planId, content);
 
-            // Connect L1 <-> L2
-            for (const sId of specNodeIds) {
-              this.addEdge(sId, planId, RELATION_TYPES.ARCHITECTED_BY, RELATION_TYPES.DECIDED_IN);
+            // Connect L1 <-> L2 (Spec architected into Plan - surgical matching)
+            const matchedSpecs = specNodeIds.filter(sId => {
+              const sBase = sId.replace(/^SPEC-/, '');
+              return content.includes(sId) || (sBase.length > 3 && content.includes(sBase));
+            });
+
+            if (matchedSpecs.length > 0) {
+              for (const sId of matchedSpecs) {
+                this.addEdge(sId, planId, RELATION_TYPES.ARCHITECTED_BY, RELATION_TYPES.DECIDED_IN);
+              }
+            } else if (specNodeIds.length <= 2) {
+              for (const sId of specNodeIds) {
+                this.addEdge(sId, planId, RELATION_TYPES.ARCHITECTED_BY, RELATION_TYPES.DECIDED_IN);
+              }
             }
           }
         }
@@ -410,6 +445,7 @@ export class RelationalTraceabilityMatrix {
     }
 
     const taskNodeIds = [];
+    const taskContents = new Map();
     for (const taskFile of taskCandidates) {
       try {
         const content = fs.readFileSync(taskFile, 'utf8');
@@ -433,10 +469,22 @@ export class RelationalTraceabilityMatrix {
               metadata: { project_id: resolvedId }
             });
             taskNodeIds.push(taskId);
+            taskContents.set(taskId, content);
 
-            // Connect L2 <-> L3
-            for (const pId of planNodeIds) {
-              this.addEdge(pId, taskId, RELATION_TYPES.DECOMPOSED_INTO, RELATION_TYPES.SCHEDULES);
+            // Connect L2 <-> L3 (Plan decomposed into Task - surgical matching)
+            const matchedPlans = planNodeIds.filter(pId => {
+              const pBase = pId.replace(/^(PLAN|ADR)-/, '');
+              return content.includes(pId) || (pBase.length > 3 && content.includes(pBase));
+            });
+
+            if (matchedPlans.length > 0) {
+              for (const pId of matchedPlans) {
+                this.addEdge(pId, taskId, RELATION_TYPES.DECOMPOSED_INTO, RELATION_TYPES.SCHEDULES);
+              }
+            } else if (planNodeIds.length <= 2) {
+              for (const pId of planNodeIds) {
+                this.addEdge(pId, taskId, RELATION_TYPES.DECOMPOSED_INTO, RELATION_TYPES.SCHEDULES);
+              }
             }
           }
         }
@@ -493,10 +541,31 @@ export class RelationalTraceabilityMatrix {
           metadata: { project_id: resolvedId }
         });
         codeNodeIds.push(nodeId);
+      }
+    }
 
-        // Connect L3 <-> L4 (Tasks implement code)
-        for (const taskId of taskNodeIds) {
-          this.addEdge(taskId, nodeId, RELATION_TYPES.IMPLEMENTED_BY, RELATION_TYPES.MUTATES);
+    // Connect L3 <-> L4 (Tasks implement code - surgical path and name matching)
+    for (const taskId of taskNodeIds) {
+      const taskContent = taskContents.get(taskId) || '';
+      const matchedCodes = [];
+
+      for (const codeId of codeNodeIds) {
+        const codeNode = this.nodes.get(codeId);
+        const codePath = (codeNode?.path || '').replace(/\\/g, '/');
+        const codeBase = path.basename(codePath);
+
+        if (taskContent.includes(codePath) || (codeBase.length > 5 && taskContent.includes(codeBase))) {
+          matchedCodes.push(codeId);
+        }
+      }
+
+      if (matchedCodes.length > 0) {
+        for (const codeId of matchedCodes) {
+          this.addEdge(taskId, codeId, RELATION_TYPES.IMPLEMENTED_BY, RELATION_TYPES.MUTATES);
+        }
+      } else if (codeNodeIds.length <= 2) {
+        for (const codeId of codeNodeIds) {
+          this.addEdge(taskId, codeId, RELATION_TYPES.IMPLEMENTED_BY, RELATION_TYPES.MUTATES);
         }
       }
     }
@@ -969,6 +1038,210 @@ export class RelationalTraceabilityMatrix {
       lines.push(`🏛️ UPSTREAM LINEAGE ORIGIN (${blastData.upstream_lineage.length}):`);
       blastData.upstream_lineage.slice(0, 5).forEach(u => lines.push(`   ← [${u.layer}] ${u.id}: ${u.title}`));
     }
+
+    lines.push('================================================================================');
+    return lines.join('\n');
+  }
+
+  /**
+   * Performs an enterprise relational integrity and orphan link audit on the project's matrix
+   * @param {string} projectId
+   * @param {object} [options]
+   * @returns {object} Integrity audit report with health score and identified gaps
+   */
+  auditRelationalIntegrity(projectId, options = {}) {
+    const summary = this.buildProjectMatrix(projectId, options);
+    const gaps = {
+      orphan_intakes: [],
+      orphan_specs: [],
+      orphan_plans: [],
+      orphan_tasks: [],
+      untested_code: [],
+      unsealed_tests: [],
+      dangling_references: []
+    };
+
+    // 1. Audit Intakes (L0): Should inform at least 1 spec
+    for (const [id, node] of this.nodes.entries()) {
+      if (node.layer === TRACE_LAYERS.L0_INTAKE) {
+        const outEdges = (this.forwardEdges.get(id) || []).filter(e => e.relation === RELATION_TYPES.INFORMS);
+        if (outEdges.length === 0) {
+          gaps.orphan_intakes.push({ id, title: node.title, path: node.path });
+        }
+      }
+    }
+
+    // 2. Audit Specs (L1): Should be architected by at least 1 plan
+    for (const [id, node] of this.nodes.entries()) {
+      if (node.layer === TRACE_LAYERS.L1_SPEC) {
+        const outEdges = (this.forwardEdges.get(id) || []).filter(e => e.relation === RELATION_TYPES.ARCHITECTED_BY);
+        if (outEdges.length === 0) {
+          gaps.orphan_specs.push({ id, title: node.title, path: node.path });
+        }
+      }
+    }
+
+    // 3. Audit Plans (L2): Should be decomposed into at least 1 task
+    for (const [id, node] of this.nodes.entries()) {
+      if (node.layer === TRACE_LAYERS.L2_PLAN) {
+        const outEdges = (this.forwardEdges.get(id) || []).filter(e => e.relation === RELATION_TYPES.DECOMPOSED_INTO);
+        if (outEdges.length === 0) {
+          gaps.orphan_plans.push({ id, title: node.title, path: node.path });
+        }
+      }
+    }
+
+    // 4. Audit Tasks (L3): Should implement at least 1 code file
+    for (const [id, node] of this.nodes.entries()) {
+      if (node.layer === TRACE_LAYERS.L3_TASK) {
+        const outEdges = (this.forwardEdges.get(id) || []).filter(e => e.relation === RELATION_TYPES.IMPLEMENTED_BY);
+        if (outEdges.length === 0) {
+          gaps.orphan_tasks.push({ id, title: node.title, path: node.path });
+        }
+      }
+    }
+
+    // 5. Audit Code (L4): Should be verified by at least 1 test suite
+    for (const [id, node] of this.nodes.entries()) {
+      if (node.layer === TRACE_LAYERS.L4_CODE) {
+        const outEdges = (this.forwardEdges.get(id) || []).filter(e => e.relation === RELATION_TYPES.VERIFIED_BY);
+        if (outEdges.length === 0) {
+          gaps.untested_code.push({ id, title: node.title, path: node.path });
+        }
+      }
+    }
+
+    // 6. Audit Tests (L5): Should be sealed by at least 1 evidence receipt
+    for (const [id, node] of this.nodes.entries()) {
+      if (node.layer === TRACE_LAYERS.L5_TEST) {
+        const outEdges = (this.forwardEdges.get(id) || []).filter(e => e.relation === RELATION_TYPES.SEALED_BY);
+        if (outEdges.length === 0) {
+          gaps.unsealed_tests.push({ id, title: node.title, path: node.path });
+        }
+      }
+    }
+
+    // 7. Check dangling references: examine physical existence of file paths in nodes
+    for (const [id, node] of this.nodes.entries()) {
+      if (node.path && !node.metadata?.synthetic) {
+        const fullPath = path.resolve(this.controlPlaneRoot, node.path);
+        if (!fs.existsSync(fullPath)) {
+          const project = this._resolveProject(projectId);
+          if (project?.path) {
+            const altPath = path.resolve(project.path, node.path);
+            if (!fs.existsSync(altPath)) {
+              gaps.dangling_references.push({ id, layer: node.layer, path: node.path, reason: 'FILE_NOT_FOUND' });
+            }
+          } else {
+            gaps.dangling_references.push({ id, layer: node.layer, path: node.path, reason: 'FILE_NOT_FOUND' });
+          }
+        }
+      }
+    }
+
+    // Compute Health Score (0 - 100)
+    let score = 100;
+    const totalGaps = gaps.orphan_specs.length +
+      gaps.orphan_plans.length +
+      gaps.orphan_tasks.length +
+      (gaps.dangling_references.length * 2);
+
+    // Untested code penalty ratio (up to 30 points)
+    const codeTotal = summary.nodes_by_layer[TRACE_LAYERS.L4_CODE] || 0;
+    const codeUntestedRatio = codeTotal > 0 ? (gaps.untested_code.length / codeTotal) : 0;
+    score -= Math.round(codeUntestedRatio * 30);
+
+    // Unsealed test penalty ratio (up to 20 points)
+    const testTotal = summary.nodes_by_layer[TRACE_LAYERS.L5_TEST] || 0;
+    const testUnsealedRatio = testTotal > 0 ? (gaps.unsealed_tests.length / testTotal) : 0;
+    score -= Math.round(testUnsealedRatio * 20);
+
+    // Structural gap penalties (5 points per gap)
+    score -= Math.min(50, totalGaps * 5);
+    score = Math.max(0, Math.min(100, score));
+
+    let status = 'EXCELLENT';
+    if (score < 50) status = 'CRITICAL_GAPS';
+    else if (score < 70) status = 'DEGRADED';
+    else if (score < 90) status = 'ACCEPTABLE';
+
+    return {
+      project_id: summary.project_id,
+      timestamp: new Date().toISOString(),
+      health_score: score,
+      status,
+      summary,
+      gaps,
+      total_gaps: totalGaps + gaps.untested_code.length + gaps.unsealed_tests.length,
+      recommendations: this._generateRelationalRecommendations(gaps)
+    };
+  }
+
+  /**
+   * Generates actionable recommendations based on detected relational gaps
+   * @param {object} gaps
+   * @returns {Array<string>}
+   */
+  _generateRelationalRecommendations(gaps) {
+    const recs = [];
+    if (gaps.orphan_specs.length > 0) {
+      recs.push(`Decompose ${gaps.orphan_specs.length} orphan specification(s) into Architecture Plans (ADRs) or Tasks: ${gaps.orphan_specs.slice(0, 3).map(s => s.id).join(', ')}`);
+    }
+    if (gaps.orphan_tasks.length > 0) {
+      recs.push(`Specify target code file paths in ${gaps.orphan_tasks.length} task(s) to establish implementation lineage: ${gaps.orphan_tasks.slice(0, 3).map(t => t.id).join(', ')}`);
+    }
+    if (gaps.untested_code.length > 0) {
+      recs.push(`Create test suites covering ${gaps.untested_code.length} unverified source module(s): ${gaps.untested_code.slice(0, 3).map(c => c.id).join(', ')}`);
+    }
+    if (gaps.unsealed_tests.length > 0) {
+      recs.push(`Execute test runner and capture cryptographic evidence receipts for ${gaps.unsealed_tests.length} unsealed test(s): ${gaps.unsealed_tests.slice(0, 3).map(t => t.id).join(', ')}`);
+    }
+    if (gaps.dangling_references.length > 0) {
+      recs.push(`Resolve ${gaps.dangling_references.length} dangling file reference(s) that do not exist on disk: ${gaps.dangling_references.slice(0, 3).map(d => d.path).join(', ')}`);
+    }
+    if (recs.length === 0) {
+      recs.push('Relational matrix is fully synchronized and sealed with 0 open structural gaps.');
+    }
+    return recs;
+  }
+
+  /**
+   * Formats relational integrity audit report into an ASCII report for terminal display
+   * @param {object} auditData
+   * @returns {string}
+   */
+  formatRelationalAudit(auditData) {
+    const statusBadges = {
+      EXCELLENT: '🟢 EXCELLENT (Fully Synchronized)',
+      ACCEPTABLE: '🟡 ACCEPTABLE (Minor Lineage Gaps)',
+      DEGRADED: '🟠 DEGRADED (Significant Unverified Surfaces)',
+      CRITICAL_GAPS: '🔴 CRITICAL GAPS (Broken Traceability)'
+    };
+
+    const lines = [
+      '================================================================================',
+      `🛡️ EOS RELATIONAL INTEGRITY AUDIT: [${auditData.project_id}]`,
+      '================================================================================',
+      `Health Score   : ${auditData.health_score} / 100`,
+      `Status         : ${statusBadges[auditData.status] || auditData.status}`,
+      `Total Nodes    : ${auditData.summary.total_nodes} (${auditData.summary.total_edges} edges)`,
+      `Coverage Ratios: Code ${auditData.summary.code_coverage_ratio}% | Evidence ${auditData.summary.evidence_coverage_ratio}%`,
+      '--------------------------------------------------------------------------------',
+      '🔍 GAPS BREAKDOWN:',
+      `  - Orphan Intakes       : ${auditData.gaps.orphan_intakes.length}`,
+      `  - Orphan Specs         : ${auditData.gaps.orphan_specs.length}`,
+      `  - Orphan Plans         : ${auditData.gaps.orphan_plans.length}`,
+      `  - Orphan Tasks         : ${auditData.gaps.orphan_tasks.length}`,
+      `  - Untested Source Files: ${auditData.gaps.untested_code.length}`,
+      `  - Unsealed Test Suites : ${auditData.gaps.unsealed_tests.length}`,
+      `  - Dangling References  : ${auditData.gaps.dangling_references.length}`,
+      '--------------------------------------------------------------------------------',
+      '💡 ACTIONABLE RECOMMENDATIONS:'
+    ];
+
+    auditData.recommendations.forEach((rec, idx) => {
+      lines.push(`  ${idx + 1}. ${rec}`);
+    });
 
     lines.push('================================================================================');
     return lines.join('\n');

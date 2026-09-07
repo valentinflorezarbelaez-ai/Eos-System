@@ -36,9 +36,24 @@ const SATELLITE_VERIFY_PROFILES = {
       'src/app-fuerza/core/sync-wal.js'
     ]
   },
+  'PRJ-FUNDACION': {
+    confirmEvidenceId: null,
+    evidenceId: 'EVD-0070',
+    commands: [
+      { id: 'frontend-build', command: 'npm run build', cwdRelative: '.' },
+      { id: 'frontend-lint', command: 'npm run lint', cwdRelative: '.' }
+    ],
+    controlPlaneProxies: []
+  },
   'PRJ-JORGE-REMODELACIONES': {
     confirmEvidenceId: null,
     evidenceId: 'EVD-0061',
+    commands: [],
+    controlPlaneProxies: []
+  },
+  'PRJ-PERFORMANCE-TALENT': {
+    confirmEvidenceId: null,
+    evidenceId: 'EVD-0071',
     commands: [],
     controlPlaneProxies: []
   },

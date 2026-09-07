@@ -27,6 +27,7 @@ import { LivingRulesEngine } from '../core/rules/living-rules-engine.js';
 import { WorktreeSwarmOrchestrator } from '../core/orchestration/worktree-swarm-orchestrator.js';
 import { PropertyBasedFalsifier } from '../core/formal/property-based-falsifier.js';
 import { JplSafetyAuditor } from '../core/formal/jpl-safety-auditor.js';
+import { ExecutiveDossierEngine } from '../core/reporting/executive-dossier-engine.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -131,6 +132,10 @@ export class MissionCLI {
 
     if (command === 'safety' || command === 'jpl') {
       return this.handleSafetyCommand(argv.slice(1));
+    }
+
+    if (command === 'dossier' || command === 'brief' || command === 'report') {
+      return this.handleDossierCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -257,6 +262,16 @@ export class MissionCLI {
           return { success: true, output: JSON.stringify(blast, null, 2), data: blast };
         }
         return { success: true, output: rtm.formatBlastRadius(blast), data: blast };
+      }
+
+      // Check if relational integrity audit mode is requested
+      const isAudit = args.includes('--audit') || args.includes('--gaps') || args.includes('-a');
+      if (isAudit) {
+        const auditReport = rtm.auditRelationalIntegrity(targetProject);
+        if (isJson) {
+          return { success: true, output: JSON.stringify(auditReport, null, 2), data: auditReport };
+        }
+        return { success: true, output: rtm.formatRelationalAudit(auditReport), data: auditReport };
       }
 
       // Default: Build and show project traceability matrix
@@ -907,6 +922,59 @@ Findings Count:        ${report.findingsCount}
       };
     } catch (err) {
       return { success: false, output: `Safety Audit Failed: ${err.message}` };
+    }
+  }
+
+  /**
+   * eos dossier [--project <id>] [--fleet] [--save] [--json]
+   * eos brief [--project <id>]
+   * eos report [--project <id>]
+   */
+  async handleDossierCommand(args = []) {
+    const isJson = args.includes('--json');
+    const isFleet = args.includes('--fleet');
+    const isSave = args.includes('--save');
+
+    let projectId = null;
+    const projIdx = args.indexOf('--project');
+    if (projIdx !== -1 && args[projIdx + 1]) {
+      projectId = args[projIdx + 1];
+    } else {
+      const nonFlags = args.filter(a => !a.startsWith('--'));
+      if (nonFlags.length > 0) {
+        projectId = nonFlags[0];
+      }
+    }
+
+    try {
+      const engine = new ExecutiveDossierEngine({
+        controlPlaneRoot: this.controlPlaneRoot || this.runtime?.controlPlaneRoot || resolveControlPlaneRoot()
+      });
+
+      if (isFleet || (!projectId && args.length === 0)) {
+        const res = engine.compileFleetDossier({ save: isSave });
+        if (isJson) {
+          return { success: true, output: JSON.stringify(res.fleetData, null, 2), data: res.fleetData };
+        }
+        let out = res.terminalOutput;
+        if (res.savedPath) {
+          out += `\n\n📄 Fleet executive summary saved to: ${res.savedPath}`;
+        }
+        return { success: true, output: out, data: res.fleetData };
+      }
+
+      const targetProject = projectId || 'PRJ-EOS-CONTROL-PLANE';
+      const res = engine.compileProjectDossier(targetProject, { save: isSave });
+      if (isJson) {
+        return { success: true, output: JSON.stringify(res.dossier, null, 2), data: res.dossier };
+      }
+      let out = res.terminalOutput;
+      if (res.savedPath) {
+        out += `\n\n📄 Executive report saved to: ${res.savedPath}`;
+      }
+      return { success: true, output: out, data: res.dossier };
+    } catch (err) {
+      return { success: false, output: `Executive Dossier Error: ${err.message}` };
     }
   }
 
@@ -1689,6 +1757,7 @@ USAGE:
   eos safety [--file <path>] [--strict] [--json]
   eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
   eos simplify [path|--project <id>] [--json] [--strict]
+  eos dossier [--project <id>] [--fleet] [--save] [--json]
   eos mission <command> [options]
   eos role list
 
@@ -1754,6 +1823,11 @@ COMMANDS:
   eos simplify [path|--project <id>] [--json] [--strict]
       First-principles code bloat analyzer (Musk Rule 2 / Boris Cherny post-green harness).
       Detects unnecessary wrapper layers, empty class stubs, and high cyclomatic branches.
+
+  eos dossier [--project <id>] [--fleet] [--save] [--json]
+      Autonomous Executive Dossier & Briefing Engine.
+      Translates 7-layer RTM lineage, cryptographic evidence (EVD-XXXX), and architectural
+      trade-offs into actionable executive reports for leadership and senior evaluators.
 
   eos mission create --goal "<text>" [--project <path>]
       Initializes a new mission, discovers project profile, and creates .missions/<id>/

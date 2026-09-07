@@ -196,5 +196,96 @@ test('RelationalTraceabilityMatrix - Unit & Integration Test Suite', async (t) =
     assert.equal(traceFileRes.success, true);
     assert.ok(traceFileRes.output.includes('EOS CAUSAL BLAST RADIUS'));
     assert.ok(traceFileRes.output.includes('TESTS TO REVALIDATE'));
+
+    // 4. eos trace --project PRJ-APP-FUERZA --audit
+    const traceAuditRes = await cli.run(['trace', '--project', 'PRJ-APP-FUERZA', '--audit']);
+    assert.equal(traceAuditRes.success, true);
+    assert.ok(traceAuditRes.output.includes('EOS RELATIONAL INTEGRITY AUDIT'));
+    assert.ok(traceAuditRes.output.includes('Health Score'));
+  });
+
+  await t.test('surgical granular linking: isolates multi-branch specifications and tasks', () => {
+    // Add Branch 2 into synthetic project
+    fs.writeFileSync(
+      path.join(controlPlaneRoot, 'docs', 'specs', 'synthetic-app', 'SPEC-SYNTH-002.md'),
+      '# [SPEC-SYNTH-002]: Auth Subsystem\nCUANDO usuario inicia sesion, EL SISTEMA autentica.',
+      'utf8'
+    );
+    fs.writeFileSync(
+      path.join(controlPlaneRoot, 'docs', 'plans', 'PLAN-SYNTH-002.md'),
+      '# [PLAN-SYNTH-002]: Auth Architecture\nExplicitly architects SPEC-SYNTH-002 only.',
+      'utf8'
+    );
+    fs.writeFileSync(
+      path.join(controlPlaneRoot, 'docs', 'tasks', 'TASKS-SYNTH-002.md'),
+      '# [TASK-SYNTH-002]: Auth Implementation\nDecomposed from PLAN-SYNTH-002.\nTouches src/synthetic/auth.js.',
+      'utf8'
+    );
+    fs.writeFileSync(
+      path.join(controlPlaneRoot, 'src', 'synthetic', 'auth.js'),
+      'export class SynthAuth { authenticate() { return true; } }',
+      'utf8'
+    );
+    fs.writeFileSync(
+      path.join(controlPlaneRoot, 'tests', 'synthetic', 'auth.test.js'),
+      "import { SynthAuth } from '../../src/synthetic/auth.js';\n// auth test",
+      'utf8'
+    );
+
+    rtm.buildProjectMatrix('PRJ-SYNTHETIC-APP');
+
+    // 1. Verify surgical plan isolation: PLAN-SYNTH-001 connects to SPEC-SYNTH-001, not SPEC-SYNTH-002
+    const plan1Incoming = (rtm.reverseEdges.get('PLAN-SYNTH-001') || []).map(e => e.source);
+    assert.ok(plan1Incoming.includes('SPEC-SYNTH-001'), 'PLAN-001 should connect to SPEC-001');
+    assert.ok(!plan1Incoming.includes('SPEC-SYNTH-002'), 'PLAN-001 MUST NOT connect to SPEC-002');
+
+    // 2. Verify surgical plan isolation: PLAN-SYNTH-002 connects to SPEC-SYNTH-002, not SPEC-SYNTH-001
+    const plan2Incoming = (rtm.reverseEdges.get('PLAN-SYNTH-002') || []).map(e => e.source);
+    assert.ok(plan2Incoming.includes('SPEC-SYNTH-002'), 'PLAN-002 should connect to SPEC-002');
+    assert.ok(!plan2Incoming.includes('SPEC-SYNTH-001'), 'PLAN-002 MUST NOT connect to SPEC-001');
+
+    // 3. Verify surgical task isolation
+    const task1Incoming = (rtm.reverseEdges.get('TASK-SYNTH-001') || []).map(e => e.source);
+    assert.ok(task1Incoming.includes('PLAN-SYNTH-001'));
+    assert.ok(!task1Incoming.includes('PLAN-SYNTH-002'));
+
+    const task2Incoming = (rtm.reverseEdges.get('TASK-SYNTH-002') || []).map(e => e.source);
+    assert.ok(task2Incoming.includes('PLAN-SYNTH-002'));
+    assert.ok(!task2Incoming.includes('PLAN-SYNTH-001'));
+
+    // 4. Verify surgical task -> code isolation
+    const task2Out = (rtm.forwardEdges.get('TASK-SYNTH-002') || []).map(e => e.target);
+    assert.ok(task2Out.includes('FILE:src/synthetic/auth.js'), 'TASK-002 touches auth.js');
+    assert.ok(!task2Out.includes('FILE:src/synthetic/engine.js'), 'TASK-002 MUST NOT touch engine.js');
+
+    // 5. Verify blast radius on auth.js does NOT invalidate engine test or evidence
+    const authBlast = rtm.calculateEntityBlastRadius('src/synthetic/auth.js');
+    assert.ok(!authBlast.tests_to_revalidate.some(t => t.includes('engine.test.js')));
+    assert.ok(!authBlast.invalidated_evidence.some(e => e.id === 'EVD-SYNTH-001'));
+  });
+
+  await t.test('audits relational integrity and detects structural gaps', () => {
+    const audit = rtm.auditRelationalIntegrity('PRJ-SYNTHETIC-APP');
+    assert.equal(audit.project_id, 'PRJ-SYNTHETIC-APP');
+    assert.ok(audit.health_score >= 50);
+    assert.ok(audit.status);
+    assert.ok(Array.isArray(audit.recommendations));
+
+    // Verify formatRelationalAudit output
+    const formatted = rtm.formatRelationalAudit(audit);
+    assert.ok(formatted.includes('EOS RELATIONAL INTEGRITY AUDIT'));
+    assert.ok(formatted.includes('Health Score'));
+    assert.ok(formatted.includes('GAPS BREAKDOWN'));
+    assert.ok(formatted.includes('ACTIONABLE RECOMMENDATIONS'));
+
+    // Inject an orphan spec without plan/tasks
+    fs.writeFileSync(
+      path.join(controlPlaneRoot, 'docs', 'specs', 'synthetic-app', 'SPEC-SYNTH-ORPHAN.md'),
+      '# [SPEC-SYNTH-ORPHAN]: Orphan Capability\nNo architecture plan decomposes this.',
+      'utf8'
+    );
+
+    const auditWithOrphan = rtm.auditRelationalIntegrity('PRJ-SYNTHETIC-APP');
+    assert.ok(auditWithOrphan.gaps.orphan_specs.some(s => s.id === 'SPEC-SYNTH-ORPHAN'));
   });
 });

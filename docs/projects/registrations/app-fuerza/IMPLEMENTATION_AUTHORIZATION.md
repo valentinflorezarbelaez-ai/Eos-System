@@ -18,6 +18,8 @@ The execution agent is authorized to operate within `C:\Users\valen\Documents\AP
 - `atp-strength-backend/src/routes/strength.py`
 - `atp-strength-backend/src/repository/state_repo.py`
 - `atp-strength-backend/src/repository/strength_repo.py`
+- `atp-strength-frontend/src/app/page.tsx`
+- `atp-strength-frontend/src/app/components/ZenDashboardClient.tsx`
 
 ### B. Authorized Metadata Directories (`authorized_metadata_dirs`)
 - `.git/` (git commits using conventional commits)

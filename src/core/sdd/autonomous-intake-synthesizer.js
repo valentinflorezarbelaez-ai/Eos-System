@@ -97,7 +97,16 @@ export class AutonomousIntakeSynthesizer {
     const rawItems = rawText
       .split(/\r?\n/)
       .map(line => line.trim())
-      .filter(line => line.length > 0 && !line.startsWith('#'))
+      .filter(line => {
+        if (!line || line.startsWith('#')) return false;
+        // Filter markdown table rows or table dividers
+        if (line.startsWith('|') || line.endsWith('|') || /^[-:| ]+$/.test(line)) return false;
+        // Filter document metadata bullets e.g. * **Project ID:** ... or - **Author / Architect:** ...
+        if (/^[-*•]?\s*\*\*[a-z0-9_ /-]+:\*\*/i.test(line)) return false;
+        // Filter horizontal rules
+        if (/^[-*_]{3,}$/.test(line)) return false;
+        return true;
+      })
       .map(line => line.replace(/^[-*•\d.)\]\s]+/, '').trim())
       .filter(line => line.length > 10);
 
