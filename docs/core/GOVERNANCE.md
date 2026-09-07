@@ -26,6 +26,8 @@ Before declaring any task or phase complete, the following gates must pass:
 2. **Verification Gate**: Execution of test script (`npm run verify -- --strict`) or automated evidence log.
 3. **Classification Gate**: Every claim assigned one of the 6 formal statuses (`VERIFIED`, `NOT VERIFIED`, `PARTIALLY VERIFIED`, `BLOCKED`, `ASSUMPTION`, `RISK`).
 4. **Traceability Gate**: Commit created with clear conventional commit messaging.
+5. **Anti-Overengineering Gate (Ponytail Ladder)**: Verification that code implements minimal solution without speculative abstractions (ADR-0011).
+6. **Pre-Merge Harness Gate (Tripartite Standard)**: Confirmation of (a) Spec Compliance, (b) 100% Green Automated Sensor Evidence, and (c) Zero Scope Leakage prior to merge review.
 
 ---
 
