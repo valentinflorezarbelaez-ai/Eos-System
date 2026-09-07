@@ -52,9 +52,10 @@ export { EOSSentinelDaemon } from './sentinel-daemon.js';
 export { EOSProviderRouter } from './provider-router.js';
 export { EOSScaffolderClean } from './scaffolder-clean.js';
 export { EOSProcessGovernor } from './process-governor.js';
-export { EOSKnowledgeOntology } from './knowledge-ontology.js';
+export { EOSKnowledgeOntology, LAYER_TAXONOMY_MAP } from './knowledge-ontology.js';
 export { EOSOrchestrator } from './orchestrator.js';
 export { EOSFDIROntology } from './fdir-ontology.js';
+export { RelationalTraceabilityMatrix, TRACE_LAYERS, RELATION_TYPES, RISK_TIERS } from './ontology/relational-traceability-matrix.js';
 
 // Canonical Runtime Engines with Modern Aliases
 export { EOSTescohanAuditor, EOSTescohanAuditor as CodePurityAuditor } from './runtime/tescohan-auditor.js';

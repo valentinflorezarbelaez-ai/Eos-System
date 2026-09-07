@@ -61,6 +61,7 @@ const REQUIRED_PATHS = [
   'src/core/observability/operator-hud.js',
   'src/core/ast/architectural-fitness-engine.js',
   'tests/architectural-fitness.test.js',
+  'tests/knowledge-ontology-consolidation.test.js',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',

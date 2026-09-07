@@ -65,9 +65,19 @@ export class EOSFDIROntology {
 
     const estadoFinal = reparaciones.length === 0 ? 'NOMINAL' : 'SANED';
 
+    // Phase 3 — Unified Relational Integrity Audit (if backed by RTM)
+    let auditoriaRelacional = null;
+    if (this.ontology.rtm && typeof this.ontology.rtm.auditRelationalIntegrity === 'function') {
+      auditoriaRelacional = this.ontology.rtm.auditRelationalIntegrity();
+    }
+
     // Si hubo intervención del escudo, generamos y validamos el recibo telemétrico
     if (estadoFinal === 'SANED') {
-      const metadata = { reparaciones, timestamp: new Date().toISOString() };
+      const metadata = {
+        reparaciones,
+        auditoriaRelacional: auditoriaRelacional ? { healthScore: auditoriaRelacional.healthScore, status: auditoriaRelacional.status } : null,
+        timestamp: new Date().toISOString()
+      };
       const rawContent = JSON.stringify(metadata);
       const hash = crypto.createHash('sha256').update(rawContent).digest('hex');
 
@@ -83,7 +93,8 @@ export class EOSFDIROntology {
     return {
       estado: estadoFinal,
       totalReparaciones: reparaciones.length,
-      reparaciones
+      reparaciones,
+      auditoriaRelacional
     };
   }
 }

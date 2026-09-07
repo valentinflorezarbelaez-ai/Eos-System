@@ -132,6 +132,13 @@ export class RelationalTraceabilityMatrix {
   }
 
   /**
+   * Fluent alias for addNode
+   */
+  registerNode(node) {
+    return this.addNode(node);
+  }
+
+  /**
    * Creates a bidirectional relation between two nodes
    * @param {string} sourceId
    * @param {string} targetId
@@ -157,6 +164,13 @@ export class RelationalTraceabilityMatrix {
     if (!reverseList.some(e => e.source === sourceId && e.relation === revRel)) {
       reverseList.push({ source: sourceId, relation: revRel });
     }
+  }
+
+  /**
+   * Fluent alias for addEdge
+   */
+  connect(sourceId, targetId, relation, reverseRelation) {
+    return this.addEdge(sourceId, targetId, relation, reverseRelation);
   }
 
   /**
@@ -226,11 +240,13 @@ export class RelationalTraceabilityMatrix {
    * @param {object} [options]
    * @returns {object} Matrix build summary and relational data
    */
-  buildProjectMatrix(projectId, options = {}) {
+  buildProjectMatrix(projectId = 'PRJ-EOS-CONTROL-PLANE', options = {}) {
     this.clear();
-    const project = this._resolveProject(projectId);
-    const resolvedId = project ? project.project_id : projectId;
-    const projectSlug = resolvedId.toLowerCase().replace(/^prj-/, '');
+    const resolvedInput = projectId || 'PRJ-EOS-CONTROL-PLANE';
+    const project = this._resolveProject(resolvedInput);
+    const resolvedId = project ? project.project_id : resolvedInput;
+    const projectSlug = (resolvedId || 'eos-control-plane').toLowerCase().replace(/^prj-/, '');
+    this.currentProjectId = resolvedId;
 
     // -------------------------------------------------------------------------
     // L0: INTAKE LAYER
@@ -880,11 +896,13 @@ export class RelationalTraceabilityMatrix {
     }
 
     const report = {
+      target: targetNode.id,
       target_entity: targetNode.id,
       target_layer: targetNode.layer,
       target_path: filePath,
       risk_tier: riskTier,
       total_affected_count: totalAffectedCount,
+      totalAffectedCount,
       recommended_action: recommendedAction,
       direct_dependents: directList,
       transitive_dependents: transitiveList,
@@ -897,6 +915,13 @@ export class RelationalTraceabilityMatrix {
 
     report.sha256 = this._sha256(JSON.stringify(report));
     return report;
+  }
+
+  /**
+   * Fluent alias for calculateEntityBlastRadius
+   */
+  calculateBlastRadius(targetIdOrPath, options = {}) {
+    return this.calculateEntityBlastRadius(targetIdOrPath, options);
   }
 
   /**
@@ -1050,7 +1075,32 @@ export class RelationalTraceabilityMatrix {
    * @returns {object} Integrity audit report with health score and identified gaps
    */
   auditRelationalIntegrity(projectId, options = {}) {
-    const summary = this.buildProjectMatrix(projectId, options);
+    let effectiveProjectId = projectId;
+    let effectiveOptions = options;
+    if (typeof projectId === 'object' && projectId !== null) {
+      effectiveOptions = projectId;
+      effectiveProjectId = effectiveOptions.projectId;
+    }
+
+    let summary;
+    if (this.nodes.size === 0 || effectiveProjectId) {
+      summary = this.buildProjectMatrix(effectiveProjectId || 'PRJ-EOS-CONTROL-PLANE', effectiveOptions);
+    } else {
+      const nodesByLayer = {};
+      for (const layer of Object.values(TRACE_LAYERS)) {
+        nodesByLayer[layer] = Array.from(this.nodes.values()).filter(n => n.layer === layer).length;
+      }
+      let totalEdges = 0;
+      for (const edges of this.forwardEdges.values()) {
+        totalEdges += edges.length;
+      }
+      summary = {
+        project_id: this.currentProjectId || 'PRJ-EOS-CONTROL-PLANE',
+        total_nodes: this.nodes.size,
+        nodes_by_layer: nodesByLayer,
+        total_edges: totalEdges
+      };
+    }
     const gaps = {
       orphan_intakes: [],
       orphan_specs: [],
@@ -1169,6 +1219,7 @@ export class RelationalTraceabilityMatrix {
       project_id: summary.project_id,
       timestamp: new Date().toISOString(),
       health_score: score,
+      healthScore: score,
       status,
       summary,
       gaps,

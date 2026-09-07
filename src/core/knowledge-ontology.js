@@ -2,14 +2,37 @@
  * @module EOSKnowledgeOntology
  * @description Deterministic Knowledge Ontology and Relationship Graph for EOS.
  * Models and governs typed connections between entities across Governance, Architecture, Metrics, and Missions.
- * Enforces strict taxonomic rules and prohibits orphan links.
+ * Enforces strict taxonomic rules, prohibits orphan links, and provides unified 7-layer traceability bridging.
  */
 
+import { RelationalTraceabilityMatrix, TRACE_LAYERS } from './ontology/relational-traceability-matrix.js';
+
+export const LAYER_TAXONOMY_MAP = Object.freeze({
+  L0_INTAKE: 'MISSION',
+  L1_SPEC: 'GOVERNANCE',
+  L2_PLAN: 'ARCHITECTURE',
+  L3_TASK: 'MISSION',
+  L4_CODE: 'ARCHITECTURE',
+  L5_TEST: 'METRIC',
+  L6_EVIDENCE: 'METRIC'
+});
+
 export class EOSKnowledgeOntology {
-  constructor() {
+  /**
+   * @param {object} [options]
+   * @param {string} [options.baseDir]
+   * @param {RelationalTraceabilityMatrix} [options.rtm]
+   */
+  constructor(options = {}) {
+    this.baseDir = options.baseDir || process.cwd();
     this.tiposPermitidos = ['GOVERNANCE', 'ARCHITECTURE', 'METRIC', 'MISSION'];
     this._nodos = new Map();
     this.nodos = this._createEncapsulatedNodos();
+    this.rtm = options.rtm || null;
+
+    if (this.rtm) {
+      this.hydrateFromTraceMatrix(this.rtm);
+    }
   }
 
   /**
@@ -96,6 +119,158 @@ export class EOSKnowledgeOntology {
     const live = this._nodos.get(id);
     if (!live) return undefined;
     return this._exponerNodoInmutable(live);
+  }
+
+  /**
+   * Hydrates the knowledge ontology from a RelationalTraceabilityMatrix instance.
+   * Maps 7-layer trace nodes to the 4 canonical taxonomy types and creates typed links.
+   * @param {RelationalTraceabilityMatrix} rtm
+   * @returns {{ hydratedNodes: number, hydratedEdges: number }}
+   */
+  hydrateFromTraceMatrix(rtm) {
+    if (!rtm || !rtm.nodes) {
+      throw new Error('🚨 ONTOLOGY FAULT: Se requiere una instancia válida de RelationalTraceabilityMatrix.');
+    }
+    this.rtm = rtm;
+    let nodeCount = 0;
+    let edgeCount = 0;
+
+    // 1. Register all nodes mapped to taxonomy
+    for (const [nodeId, traceNode] of rtm.nodes.entries()) {
+      const targetTipo = LAYER_TAXONOMY_MAP[traceNode.layer] || 'ARCHITECTURE';
+
+      if (this._nodos.has(nodeId)) {
+        const existing = this._nodos.get(nodeId);
+        existing.tipo = targetTipo;
+        existing.metadatos = {
+          ...existing.metadatos,
+          ...(traceNode.metadata || {}),
+          layer: traceNode.layer,
+          label: traceNode.label,
+          path: traceNode.path
+        };
+      } else {
+        const nodo = {
+          id: nodeId,
+          tipo: targetTipo,
+          timestamp: traceNode.timestamp || new Date().toISOString(),
+          metadatos: {
+            layer: traceNode.layer,
+            label: traceNode.label,
+            path: traceNode.path,
+            ...(traceNode.metadata || {})
+          },
+          enlaces: []
+        };
+        this._nodos.set(nodeId, nodo);
+      }
+      nodeCount++;
+    }
+
+    // 2. Register all edges
+    for (const [sourceId, edges] of rtm.forwardEdges.entries()) {
+      const source = this._nodos.get(sourceId);
+      if (!source) continue;
+
+      for (const edge of edges) {
+        if (!this._nodos.has(edge.target)) continue;
+
+        const alreadyLinked = source.enlaces.some(
+          e => e.destino === edge.target && e.relacion === edge.relation
+        );
+        if (!alreadyLinked) {
+          source.enlaces.push({
+            destino: edge.target,
+            relacion: edge.relation
+          });
+          edgeCount++;
+        }
+      }
+    }
+
+    return { hydratedNodes: nodeCount, hydratedEdges: edgeCount };
+  }
+
+  /**
+   * Builds a RelationalTraceabilityMatrix for the project and hydrates this ontology.
+   * @param {string} projectId
+   * @param {object} [options]
+   * @returns {Promise<{ hydratedNodes: number, hydratedEdges: number, projectRoot: string, projectId: string }>}
+   */
+  async syncWithProject(projectId, options = {}) {
+    const rtm = new RelationalTraceabilityMatrix({
+      controlPlaneRoot: options.controlPlaneRoot || this.baseDir,
+      ...options
+    });
+    await rtm.buildTraceMatrix({ projectId, ...options });
+    const result = this.hydrateFromTraceMatrix(rtm);
+    return {
+      ...result,
+      projectRoot: rtm.projectRoot,
+      projectId
+    };
+  }
+
+  /**
+   * Delegates blast radius calculation to the underlying RTM.
+   * @param {string} entityId
+   * @param {object} [options]
+   * @returns {object}
+   */
+  calculateBlastRadius(entityId, options = {}) {
+    if (!this.rtm) {
+      throw new Error('🚨 ONTOLOGY FAULT: calculateBlastRadius requiere haber sincronizado un RelationalTraceabilityMatrix.');
+    }
+    return this.rtm.calculateBlastRadius(entityId, options);
+  }
+
+  /**
+   * Delegates relational integrity audit to the underlying RTM.
+   * @param {object} [options]
+   * @returns {object}
+   */
+  auditRelationalIntegrity(options = {}) {
+    if (!this.rtm) {
+      throw new Error('🚨 ONTOLOGY FAULT: auditRelationalIntegrity requiere haber sincronizado un RelationalTraceabilityMatrix.');
+    }
+    return this.rtm.auditRelationalIntegrity(options);
+  }
+
+  /**
+   * Returns complete cross-layer lineage (upstream and downstream) for a given entity.
+   * @param {string} entityId
+   * @returns {{ entity: object, upstream: Array<object>, downstream: Array<object> }}
+   */
+  obtenerLinaje(entityId) {
+    const node = this.obtenerNodo(entityId);
+    if (!node) {
+      throw new Error(`🚨 ONTOLOGY FAULT: Nodo [${entityId}] no encontrado.`);
+    }
+
+    const downstream = (node.enlaces || []).map(e => ({
+      target: e.destino,
+      relation: e.relacion,
+      node: this.obtenerNodo(e.destino)
+    }));
+
+    const upstream = [];
+    for (const other of this._nodos.values()) {
+      for (const e of other.enlaces || []) {
+        if (e.destino === entityId) {
+          upstream.push({
+            source: other.id,
+            relation: e.relacion,
+            node: this._exponerNodoInmutable(other)
+          });
+        }
+      }
+    }
+
+    return {
+      entity: node,
+      upstream,
+      downstream
+    };
   }
 
   /**
