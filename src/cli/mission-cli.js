@@ -28,6 +28,7 @@ import { WorktreeSwarmOrchestrator } from '../core/orchestration/worktree-swarm-
 import { PropertyBasedFalsifier } from '../core/formal/property-based-falsifier.js';
 import { JplSafetyAuditor } from '../core/formal/jpl-safety-auditor.js';
 import { ExecutiveDossierEngine } from '../core/reporting/executive-dossier-engine.js';
+import { ArchitecturalFitnessEngine } from '../core/ast/architectural-fitness-engine.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -136,6 +137,10 @@ export class MissionCLI {
 
     if (command === 'dossier' || command === 'brief' || command === 'report') {
       return this.handleDossierCommand(argv.slice(1));
+    }
+
+    if (command === 'fitness' || command === 'arch') {
+      return this.handleFitnessCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -288,6 +293,73 @@ export class MissionCLI {
       return { success: true, output: rtm.formatTraceTree(matrix), data: matrix };
     } catch (err) {
       return { success: false, output: `Trace Engine Failed: ${err.message}` };
+    }
+  }
+
+  /**
+   * eos fitness [--project <id>] [--path <dir>] [--json]
+   * Architectural Fitness Function — Clean Architecture dependency rule enforcement.
+   */
+  async handleFitnessCommand(args = []) {
+    const isJson = args.includes('--json');
+
+    let targetPath = null;
+    const pathIdx = args.indexOf('--path');
+    if (pathIdx !== -1 && args[pathIdx + 1]) {
+      targetPath = args[pathIdx + 1];
+    }
+
+    let projectId = null;
+    const projIdx = args.indexOf('--project');
+    if (projIdx !== -1 && args[projIdx + 1]) {
+      projectId = args[projIdx + 1];
+    }
+
+    // Positional argument: eos fitness <pathOrProjectId>
+    const nonFlags = args.filter(a => !a.startsWith('--') && a !== targetPath && a !== projectId);
+    if (!targetPath && !projectId && nonFlags.length > 0) {
+      const candidate = nonFlags[0];
+      if (candidate.startsWith('PRJ-') || candidate.startsWith('prj-')) {
+        projectId = candidate;
+      } else {
+        targetPath = candidate;
+      }
+    }
+
+    // Resolve target directory
+    if (!targetPath && projectId) {
+      try {
+        const cpRoot = this.controlPlaneRoot || this.runtime?.controlPlaneRoot || resolveControlPlaneRoot();
+        const registryPath = path.join(cpRoot, 'docs', 'projects', 'registry.json');
+        if (fs.existsSync(registryPath)) {
+          const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+          const project = registry.projects?.find(p => p.project_id === projectId || p.project_id === projectId.toUpperCase());
+          if (project?.path) {
+            targetPath = project.path;
+          }
+        }
+      } catch { /* fallthrough to default */ }
+    }
+
+    if (!targetPath) {
+      targetPath = this.controlPlaneRoot || this.runtime?.controlPlaneRoot || resolveControlPlaneRoot();
+    }
+
+    try {
+      const engine = new ArchitecturalFitnessEngine({ baseDir: targetPath });
+      const report = engine.audit(targetPath);
+
+      if (isJson) {
+        return { success: true, output: JSON.stringify(report, null, 2), data: report };
+      }
+
+      return {
+        success: report.status === 'CLEAN',
+        output: engine.formatReport(report),
+        data: report
+      };
+    } catch (err) {
+      return { success: false, output: `Architectural Fitness Audit Failed: ${err.message}` };
     }
   }
 
@@ -1757,6 +1829,7 @@ USAGE:
   eos safety [--file <path>] [--strict] [--json]
   eos orchestrate --project <PROJECT_ID> --pipeline [intake|recon|audit|verify|release]
   eos simplify [path|--project <id>] [--json] [--strict]
+  eos fitness [--project <id>] [--path <dir>] [--json]
   eos dossier [--project <id>] [--fleet] [--save] [--json]
   eos mission <command> [options]
   eos role list
@@ -1823,6 +1896,13 @@ COMMANDS:
   eos simplify [path|--project <id>] [--json] [--strict]
       First-principles code bloat analyzer (Musk Rule 2 / Boris Cherny post-green harness).
       Detects unnecessary wrapper layers, empty class stubs, and high cyclomatic branches.
+
+  eos fitness [--project <id>] [--path <dir>] [--json]
+       Architectural Fitness Function Engine (Ford/Parsons/Kua Standard).
+       Enforces Clean Architecture dependency rules via static AST import analysis.
+       Detects boundary violations where inner layers import from outer layers.
+       Classifies domain purity (L0), application isolation (L1), infrastructure (L2),
+       and presentation (L3) with deterministic fitness scoring 0-100.
 
   eos dossier [--project <id>] [--fleet] [--save] [--json]
       Autonomous Executive Dossier & Briefing Engine.
