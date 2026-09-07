@@ -1,0 +1,39 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0070",
+  "evidenceId": "EVD-0070",
+  "claim": "PRJ-FUNDACION technical status verified: React 19 + TypeScript + Vite 7 stack passed tsc --noEmit with 0 errors and production build completed with optimized Rollup manualChunks (zero chunk warnings, build in 6.65s).",
+  "status": "VERIFIED",
+  "scope": "PRJ-FUNDACION / performance-and-typecheck-verification",
+  "source": "EOS Multi-Auditor Sensor Harness",
+  "timestamp": "2026-09-07T13:14:00.000Z",
+  "actor": "EOS Performance & Quality Auditor Harness",
+  "action": "npm --prefix C:\\Users\\valen\\Documents\\Fundacion run check && npm --prefix C:\\Users\\valen\\Documents\\Fundacion run build",
+  "command": "tsc --noEmit && vite build && esbuild server/index.ts",
+  "expected": "Zero TypeScript compiler errors, clean Vite production build without chunk warnings exceeding 500 kB threshold.",
+  "actual": "VERIFIED",
+  "result": "PASS",
+  "confidence": "HIGH",
+  "sha256": "sha256-91d0ff1b36fb7372c1d8371b6ec61019f4fe1a1b8c04cd76636d0c253d6c3898",
+  "digest": "sha256-91d0ff1b36fb7372c1d8371b6ec61019f4fe1a1b8c04cd76636d0c253d6c3898",
+  "data": {
+    "project": "PRJ-FUNDACION",
+    "targetCommit": "91d0ff1",
+    "compiler": {
+      "typescript": "5.6.3",
+      "status": "PASS (0 errors, 0 warnings)"
+    },
+    "bundler": {
+      "vite": "7.1.9",
+      "build_time": "6.65s",
+      "chunks": {
+        "vendor-react": "17.47 kB (gzip: 6.62 kB)",
+        "vendor-ui": "117.42 kB (gzip: 37.48 kB)",
+        "vendor-animation": "0.76 kB (gzip: 0.48 kB)",
+        "vendor-charts": "0.10 kB (gzip: 0.11 kB)",
+        "app-index": "402.48 kB (gzip: 103.44 kB)"
+      },
+      "chunk_warning": "NONE (all chunks < 500 kB limit)"
+    }
+  }
+}

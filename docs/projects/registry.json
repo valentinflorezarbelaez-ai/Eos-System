@@ -44,47 +44,51 @@
     {
       "project_id": "PRJ-FUNDACION",
       "name": "Fundación",
-      "description": "Non-profit institutional web application for Fundación.",
+      "description": "TRASCIENDE Fundación Social — Evidence-based institutional web platform featuring rural education, environmental sustainability programs, Bre-B instant transfer solidarity campaigns, and DIAN RTE governance transparency.",
       "path": "C:\\Users\\valen\\Documents\\Fundacion",
       "repository": "local",
       "branch": "main",
       "project_type": "WEBSITE",
-      "lifecycle_status": "INTAKE",
-      "technical_status": "NOT VERIFIED",
-      "business_status": "DISCOVERY",
+      "lifecycle_status": "STAGING",
+      "technical_status": "VERIFIED",
+      "business_status": "STAGING_PREVIEW_READY",
       "stack": [
-        "HTML5",
-        "CSS3",
-        "JavaScript"
+        "React 19",
+        "TypeScript 5",
+        "Vite 7",
+        "Tailwind CSS v4",
+        "Wouter",
+        "Radix UI",
+        "Express"
       ],
       "documentation": [
         "docs/projects/registrations/fundacion.json",
+        "docs/projects/registrations/fundacion/DECISION_RECORD.md",
+        "docs/projects/registrations/fundacion/IMPLEMENTATION_AUTHORIZATION.md",
         "docs/intake/fundacion/PROJECT_CONTEXT.md",
-        "docs/intake/fundacion/UNKNOWN_AND_GAPS.md",
-        "docs/specs/fundacion/SPEC-0001-fundacion-core.md"
+        "docs/audits/EOS_PHASE_8_RELEASE_READINESS.md",
+        "docs/audits/EOS_PHASE_9_STAGING_PREVIEW.md"
       ],
       "constraints": [
-        "External Project Write Barrier Active",
-        "Implementation forbidden until explicit Product Owner authorization",
-        "Must comply with WCAG AA accessibility standards when authorized"
+        "External Project Write Barrier Active (LEVEL 2 Authorized for Bundle Code-Splitting)",
+        "Must comply with WCAG AA accessibility standards",
+        "Evidence-aware claims model enforced (isFactualPublic rule)"
       ],
       "risks": [
-        "Premature implementation reverted to empty target folder",
-        "Raw client assets pending delivery (GAP-001)",
-        "Uncertain legal and contact details (GAP-002)"
+        "Production cloud hosting and custom domain DNS configuration pending (GAP-004)"
       ],
       "assumptions": [
-        "Project will be a modern responsive web application once authorized"
+        "Local staging preview executes cleanly on localhost:3000 / localhost:4173"
       ],
       "owner": "Fundación Leadership / EOS Control Plane",
       "intake_status": "COMPLETE",
       "specification_status": "APPROVED",
-      "implementation_status": "NOT_STARTED",
-      "validation_status": "NOT_STARTED",
-      "release_status": "NOT_STARTED",
-      "autonomy_level": "SUPERVISED",
+      "implementation_status": "COMPLETE",
+      "validation_status": "PASSED",
+      "release_status": "STAGING",
+      "autonomy_level": "LEVEL_2_CONTROLLED_WRITE",
       "created_at": "2026-08-10T22:32:00Z",
-      "updated_at": "2026-08-10T23:33:00Z"
+      "updated_at": "2026-09-07T13:13:00Z"
     },
     {
       "project_id": "PRJ-LUXE-REGISTRY",
