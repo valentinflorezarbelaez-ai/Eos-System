@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { evaluateSddCeremonySpawn } from '../src/core/sdd/organic-routing-gate.js';
 import { evaluateApplyClaim, auditTddReceipts } from '../src/core/sdd/tdd-evidence-receipt.js';
 import { assertRddDoesNotGrantDelivery } from '../src/core/governance/rdd-review-stance.js';
+import { ArchitecturalFitnessEngine } from '../src/core/ast/architectural-fitness-engine.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,6 +59,8 @@ const REQUIRED_PATHS = [
   'src/core/sdd/tdd-evidence-receipt.js',
   'src/core/governance/rdd-review-stance.js',
   'src/core/observability/operator-hud.js',
+  'src/core/ast/architectural-fitness-engine.js',
+  'tests/architectural-fitness.test.js',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -767,6 +770,40 @@ function verifyWorkspace() {
       } else {
         report.failures.push({ path: 'src/core/governance/rdd-review-stance.js', message: err.message, type: 'rdd-stance' });
       }
+    }
+
+    // 3f. Architectural Fitness Functions (AST Dependency Inversion & Cycle Guardrails)
+    try {
+      const archEngine = new ArchitecturalFitnessEngine({ baseDir: rootDir });
+      const archReport = archEngine.auditArchitecture(path.join(rootDir, 'src'));
+      if (!archReport.compliant) {
+        for (const violation of archReport.violations) {
+          report.failures.push({
+            path: violation.from,
+            message: `${violation.reason} (target: ${violation.to})`,
+            type: 'architectural-fitness'
+          });
+        }
+        for (const cycle of archReport.cycles) {
+          report.failures.push({
+            path: cycle[0],
+            message: `Circular dependency detected: ${cycle.join(' -> ')}`,
+            type: 'architectural-cycle'
+          });
+        }
+      } else {
+        report.checks.push({
+          path: `src (Architectural Fitness: 0 violations, 0 cycles across ${archReport.total_files} files)`,
+          status: 'VERIFIED',
+          type: 'architectural-fitness'
+        });
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'src',
+        message: `Architectural fitness audit failed: ${err.message}`,
+        type: 'architectural-fitness'
+      });
     }
   }
 

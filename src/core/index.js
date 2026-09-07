@@ -21,6 +21,8 @@ export { AutonomousKaizenEngine } from './runtime/autonomous-kaizen.js';
 export { OTelSemanticExporter, SPAN_KINDS } from './runtime/otel-semantic-exporter.js';
 export { GitTransactionWatchdog } from './runtime/git-transaction-watchdog.js';
 export { GuardrailSandwich } from '../mcp/guardrail-sandwich.js';
+export { CausalAstEngine } from './ast/causal-ast-engine.js';
+export { ArchitecturalFitnessEngine, DEFAULT_CLEAN_LAYERS } from './ast/architectural-fitness-engine.js';
 
 // Governed Intelligence & LLM Integration (Phase 0)
 export {

@@ -11,11 +11,13 @@
  *   L3 PRESENTATION (UI/CLI)         → may import DOMAIN, APPLICATION, INFRASTRUCTURE
  *
  * Any import from an inner layer to an outer layer is a VIOLATION.
+ * In addition, module dependency graphs must be strictly acyclic (0 circular dependencies).
  */
 
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { CausalAstEngine } from './causal-ast-engine.js';
 
 export const ARCHITECTURE_LAYERS = Object.freeze({
   L0_DOMAIN: 'L0_DOMAIN',
@@ -25,7 +27,7 @@ export const ARCHITECTURE_LAYERS = Object.freeze({
   UNKNOWN: 'UNKNOWN'
 });
 
-const LAYER_RANK = {
+export const LAYER_RANK = {
   [ARCHITECTURE_LAYERS.L0_DOMAIN]: 0,
   [ARCHITECTURE_LAYERS.L1_APPLICATION]: 1,
   [ARCHITECTURE_LAYERS.L2_INFRASTRUCTURE]: 2,
@@ -37,22 +39,88 @@ const LAYER_RANK = {
  * Default layer classification rules based on directory path conventions.
  * Projects can override these via a `.fitness.json` config file.
  */
-const DEFAULT_LAYER_RULES = [
+export const DEFAULT_LAYER_RULES = [
   // L0 Domain
-  { pattern: /(?:^|\/)(?:domain|entities|value-objects|aggregates|core\/models?)(?:\/|$)/i, layer: ARCHITECTURE_LAYERS.L0_DOMAIN },
+  { pattern: /(?:^|\/)(?:domain|entities|value-objects|aggregates|core\/models?|core\/contracts|core\/doctrine)(?:\/|$)/i, layer: ARCHITECTURE_LAYERS.L0_DOMAIN },
   // L1 Application
-  { pattern: /(?:^|\/)(?:application|use-cases|usecases|commands|queries|handlers|services)(?:\/|$)/i, layer: ARCHITECTURE_LAYERS.L1_APPLICATION },
+  { pattern: /(?:^|\/)(?:application|use-cases|usecases|commands|queries|handlers|services|core\/sdd|core\/runtime|core\/formal|core\/intelligence)(?:\/|$)/i, layer: ARCHITECTURE_LAYERS.L1_APPLICATION },
   // L2 Infrastructure
-  { pattern: /(?:^|\/)(?:infrastructure|adapters|repositories|persistence|database|config|api|ports)(?:\/|$)/i, layer: ARCHITECTURE_LAYERS.L2_INFRASTRUCTURE },
+  { pattern: /(?:^|\/)(?:infrastructure|adapters|repositories|persistence|database|config|api|ports|mcp)(?:\/|$)/i, layer: ARCHITECTURE_LAYERS.L2_INFRASTRUCTURE },
   // L3 Presentation
-  { pattern: /(?:^|\/)(?:presentation|ui|views|pages|components|cli|controllers|routes)(?:\/|$)/i, layer: ARCHITECTURE_LAYERS.L3_PRESENTATION }
+  { pattern: /(?:^|\/)(?:presentation|ui|views|pages|components|cli|controllers|routes|bin)(?:\/|$)/i, layer: ARCHITECTURE_LAYERS.L3_PRESENTATION }
+];
+
+/**
+ * Clean layer definitions for fine-grained dependency filtering and cycle detection.
+ */
+export const DEFAULT_CLEAN_LAYERS = [
+  {
+    id: 'domain',
+    name: 'Domain (Core Business Rules & Contracts)',
+    level: 0,
+    matches: (filePath) => {
+      const p = filePath.replace(/\\/g, '/').replace(/^(\.\/)?src\//, '');
+      return (
+        p.includes('core/contracts/') ||
+        p.includes('core/doctrine/') ||
+        p.includes('/domain/')
+      );
+    },
+    forbiddenImports: ['adapters', 'infra', 'cli', 'presentation', 'bin']
+  },
+  {
+    id: 'application',
+    name: 'Application (Use Cases & Orchestration)',
+    level: 1,
+    matches: (filePath) => {
+      const p = filePath.replace(/\\/g, '/').replace(/^(\.\/)?src\//, '');
+      return (
+        (p.startsWith('core/') || p.includes('/application/')) &&
+        !p.includes('core/contracts/') &&
+        !p.includes('core/doctrine/') &&
+        !p.includes('core/adapters/') &&
+        !p.includes('/domain/')
+      );
+    },
+    forbiddenImports: ['cli', 'presentation', 'bin']
+  },
+  {
+    id: 'adapters',
+    name: 'Adapters (Infrastructure & External Interfaces)',
+    level: 2,
+    matches: (filePath) => {
+      const p = filePath.replace(/\\/g, '/').replace(/^(\.\/)?src\//, '');
+      return (
+        p.includes('core/adapters/') ||
+        p.startsWith('adapters/') ||
+        p.includes('/infrastructure/') ||
+        p.includes('mcp')
+      );
+    },
+    forbiddenImports: ['cli', 'bin']
+  },
+  {
+    id: 'presentation',
+    name: 'Presentation / Delivery (CLI & UI)',
+    level: 3,
+    matches: (filePath) => {
+      const p = filePath.replace(/\\/g, '/').replace(/^(\.\/)?src\//, '');
+      return (
+        p.startsWith('cli/') ||
+        p.startsWith('bin/') ||
+        p.includes('/ui/') ||
+        p.includes('/presentation/')
+      );
+    },
+    forbiddenImports: []
+  }
 ];
 
 /**
  * Known framework/library imports that indicate an outer-layer dependency
  * when found in domain or application code.
  */
-const FRAMEWORK_BOUNDARY_MARKERS = Object.freeze({
+export const FRAMEWORK_BOUNDARY_MARKERS = Object.freeze({
   // React / Next.js (Presentation)
   react: ARCHITECTURE_LAYERS.L3_PRESENTATION,
   'react-dom': ARCHITECTURE_LAYERS.L3_PRESENTATION,
@@ -94,6 +162,8 @@ export class ArchitecturalFitnessEngine {
    * @param {Array<object>} [options.layerRules] - Custom layer classification rules
    * @param {object} [options.frameworkMarkers] - Custom framework boundary markers
    * @param {Array<string>} [options.excludePatterns] - Glob-like patterns to exclude from analysis
+   * @param {Array<object>} [options.layers] - Clean layer definitions
+   * @param {CausalAstEngine} [options.astEngine] - AST dependency engine
    */
   constructor(options = {}) {
     this.baseDir = options.baseDir || process.cwd();
@@ -103,6 +173,8 @@ export class ArchitecturalFitnessEngine {
       'node_modules', '.git', '.next', 'dist', 'build', '__pycache__',
       '.venv', 'venv', 'coverage', '.cache', '.turbo'
     ];
+    this.layers = options.layers || DEFAULT_CLEAN_LAYERS;
+    this.astEngine = options.astEngine || new CausalAstEngine({ baseDir: this.baseDir });
   }
 
   /**
@@ -118,6 +190,21 @@ export class ArchitecturalFitnessEngine {
       }
     }
     return ARCHITECTURE_LAYERS.UNKNOWN;
+  }
+
+  /**
+   * Identifies which architectural clean layer definition a given file path belongs to.
+   * @param {string} filePath
+   * @returns {object|null}
+   */
+  classifyCleanLayer(filePath) {
+    const normalized = filePath.replace(/\\/g, '/');
+    for (const layer of this.layers) {
+      if (layer.matches(normalized)) {
+        return layer;
+      }
+    }
+    return null;
   }
 
   /**
@@ -148,7 +235,8 @@ export class ArchitecturalFitnessEngine {
     } else if (ext === '.py') {
       const lines = content.split('\n');
       for (let i = 0; i < lines.length; i++) {
-        const pyMatch = lines[i].match(/(?:from|import)\s+([a-zA-Z0-9_.]+)/);
+        const line = lines[i];
+        const pyMatch = line.match(/(?:from|import)\s+([a-zA-Z0-9_\.]+)/);
         if (pyMatch) {
           results.push({ raw: pyMatch[1], resolved: pyMatch[1], line: i + 1 });
         }
@@ -159,7 +247,7 @@ export class ArchitecturalFitnessEngine {
   }
 
   /**
-   * Resolves a relative import to a project-relative path.
+   * Resolves a relative import specifier to a project-root-relative path.
    * @param {string} sourceFile
    * @param {string} importSpecifier
    * @returns {string}
@@ -222,6 +310,51 @@ export class ArchitecturalFitnessEngine {
 
     walk(dir);
     return files;
+  }
+
+  /**
+   * Detects all directed cycles in the module dependency graph using DFS.
+   * @param {Map<string, Set<string>>} dependencyGraph
+   * @returns {Array<string[]>}
+   */
+  findCycles(dependencyGraph) {
+    const cycles = [];
+    const visited = new Set();
+    const recStack = new Map(); // node -> index in current path
+    const currentPath = [];
+
+    const dfs = (node) => {
+      visited.add(node);
+      recStack.set(node, currentPath.length);
+      currentPath.push(node);
+
+      const neighbors = dependencyGraph.get(node) || new Set();
+      for (const next of neighbors) {
+        if (!dependencyGraph.has(next)) continue;
+
+        if (recStack.has(next)) {
+          const cycleStartIdx = recStack.get(next);
+          const cycle = currentPath.slice(cycleStartIdx).concat(next);
+          const cycleStr = cycle.join(' -> ');
+          if (!cycles.some(c => c.join(' -> ') === cycleStr)) {
+            cycles.push(cycle);
+          }
+        } else if (!visited.has(next)) {
+          dfs(next);
+        }
+      }
+
+      currentPath.pop();
+      recStack.delete(node);
+    };
+
+    for (const node of dependencyGraph.keys()) {
+      if (!visited.has(node)) {
+        dfs(node);
+      }
+    }
+
+    return cycles;
   }
 
   /**
@@ -310,6 +443,57 @@ export class ArchitecturalFitnessEngine {
         score, status, violations_count: violations.length,
         files: violations.map(v => `${v.file}:${v.line}:${v.import_specifier}`)
       })).digest('hex')
+    };
+  }
+
+  /**
+   * Audits the target directory for architectural fitness (Dependency Rule & Cycle Freedom via AST).
+   * @param {string} [targetDir]
+   * @returns {object} Full fitness assessment report
+   */
+  auditArchitecture(targetDir = this.baseDir) {
+    this.astEngine.buildGraph(targetDir);
+    const graph = this.astEngine.dependencyGraph;
+
+    const violations = [];
+    let evaluatedEdges = 0;
+
+    for (const [sourceFile, importedFiles] of graph.entries()) {
+      const sourceLayer = this.classifyCleanLayer(sourceFile);
+      if (!sourceLayer) continue;
+
+      for (const importedFile of importedFiles) {
+        evaluatedEdges++;
+        const targetLayer = this.classifyCleanLayer(importedFile);
+        if (!targetLayer) continue;
+
+        if (sourceLayer.forbiddenImports.includes(targetLayer.id)) {
+          violations.push({
+            from: sourceFile,
+            to: importedFile,
+            fromLayer: sourceLayer.name,
+            toLayer: targetLayer.name,
+            reason: `Dependency Rule Violation: ${sourceLayer.name} (Level ${sourceLayer.level}) cannot depend on outer layer ${targetLayer.name} (Level ${targetLayer.level})`
+          });
+        }
+      }
+    }
+
+    const cycles = this.findCycles(graph);
+    const penalty = (violations.length * 15) + (cycles.length * 20);
+    const score = Math.max(0, 100 - penalty);
+    const compliant = violations.length === 0 && cycles.length === 0;
+
+    return {
+      compliant,
+      score,
+      total_files: graph.size,
+      total_dependencies: evaluatedEdges,
+      violations_count: violations.length,
+      violations,
+      cycles_count: cycles.length,
+      cycles,
+      timestamp: new Date().toISOString()
     };
   }
 
