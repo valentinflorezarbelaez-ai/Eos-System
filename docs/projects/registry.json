@@ -363,6 +363,53 @@
       "autonomy_level": "SUPERVISED",
       "created_at": "2026-09-03T17:56:00Z",
       "updated_at": "2026-09-05T22:30:00Z"
+    },
+    {
+      "project_id": "PRJ-PERFORMANCE-TALENT",
+      "name": "Performance Talent Group",
+      "description": "High-authority digital platform and talent acquisition hub for Performance Talent Group, connecting top-tier executive and specialized talent with market-leading organizations.",
+      "path": "C:\\Users\\valen\\Documents\\Performance-Talent-Group",
+      "repository": "local",
+      "branch": "main",
+      "project_type": "WEBSITE",
+      "lifecycle_status": "INTAKE",
+      "technical_status": "NOT VERIFIED",
+      "business_status": "AWAITING_CLIENT_PACKAGE",
+      "stack": [
+        "HTML5",
+        "Tailwind CSS",
+        "JavaScript",
+        "Vite"
+      ],
+      "documentation": [
+        "docs/projects/registrations/performance-talent.json",
+        "docs/intake/performance-talent/PROJECT_CONTEXT.md",
+        "docs/intake/performance-talent/INTAKE_CHECKLIST.md"
+      ],
+      "constraints": [
+        "External Project Write Barrier Active (READ ONLY until Level 2 Authorization)",
+        "Clean/Hexagonal architectural boundaries",
+        "WCAG 2.1 AA accessibility compliance",
+        "Core Web Vitals green zone (LCP < 2.0s, CLS < 0.1, INP < 150ms)",
+        "Zero plain secrets or credentials"
+      ],
+      "risks": [
+        "Awaiting client brand guidelines and core value proposition package",
+        "Target hosting and domain DNS unconfigured"
+      ],
+      "assumptions": [
+        "High-conversion corporate/executive recruiting and talent representation portal",
+        "Primary conversion goal is lead submission (talent inquiry & employer talent request)"
+      ],
+      "owner": "Performance Talent Group Leadership / EOS Control Plane",
+      "intake_status": "IN_PROGRESS",
+      "specification_status": "NOT_STARTED",
+      "implementation_status": "NOT_STARTED",
+      "validation_status": "NOT_STARTED",
+      "release_status": "NOT_STARTED",
+      "autonomy_level": "SUPERVISED",
+      "created_at": "2026-09-07T16:20:00Z",
+      "updated_at": "2026-09-07T16:20:00Z"
     }
   ]
 }
