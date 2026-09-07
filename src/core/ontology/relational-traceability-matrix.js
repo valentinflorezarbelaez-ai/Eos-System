@@ -679,6 +679,31 @@ export class RelationalTraceabilityMatrix {
               }
             }
 
+            // 3. Contract-Based Linkage: L1 (Spec) <-> L6 (Evidence)
+            const relatedSpec = evd.related_spec || evd.spec_id || evd.contract_provenance?.spec_file;
+            for (const sId of specNodeIds) {
+              const specNode = this.nodes.get(sId);
+              const specPath = specNode?.path || '';
+              const specBase = path.basename(specPath, '.md');
+              if (
+                (relatedSpec && (relatedSpec.includes(sId) || relatedSpec.includes(specBase) || (specPath && relatedSpec.includes(specPath)))) ||
+                evdContext.includes(sId) ||
+                (specBase && evdContext.includes(specBase))
+              ) {
+                this.addEdge(sId, evdId, RELATION_TYPES.SEALED_BY, RELATION_TYPES.CERTIFIES);
+                hasSpecificLinks = true;
+              }
+            }
+
+            // 4. Task-Based Linkage: L3 (Task) <-> L6 (Evidence)
+            const relatedTask = evd.related_task || evd.task_id;
+            for (const tkId of taskNodeIds) {
+              if ((relatedTask && relatedTask === tkId) || evdContext.includes(tkId)) {
+                this.addEdge(tkId, evdId, RELATION_TYPES.SEALED_BY, RELATION_TYPES.CERTIFIES);
+                hasSpecificLinks = true;
+              }
+            }
+
             // If project-specific (not the general control plane) and no specific links, link project tests
             if (!hasSpecificLinks && resolvedId !== 'PRJ-EOS-CONTROL-PLANE' && evd.data?.projectId === resolvedId) {
               for (const tId of testNodeIds) {

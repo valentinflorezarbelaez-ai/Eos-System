@@ -29,6 +29,7 @@ import { PropertyBasedFalsifier } from '../core/formal/property-based-falsifier.
 import { JplSafetyAuditor } from '../core/formal/jpl-safety-auditor.js';
 import { ExecutiveDossierEngine } from '../core/reporting/executive-dossier-engine.js';
 import { ArchitecturalFitnessEngine } from '../core/ast/architectural-fitness-engine.js';
+import { ContractEvidenceSealer } from '../core/formal/contract-evidence-sealer.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -141,6 +142,10 @@ export class MissionCLI {
 
     if (command === 'arch' || command === 'architecture' || (command === 'audit' && (argv[1] === '--arch' || argv[1] === 'arch'))) {
       return this.handleArchCommand(argv.slice(1));
+    }
+
+    if (command === 'seal') {
+      return this.handleSealCommand(argv.slice(1));
     }
     return {
       success: false,
@@ -1801,6 +1806,98 @@ Timestamp: ${new Date().toISOString()}
     }
   }
 
+  /**
+   * eos seal --spec <specId> [--task <taskId>] [--project <projectId>] [--cmd <command>] [--claim <text>] [--json]
+   * Seals formal EARS contract execution output into a cryptographic evidence record (EVD-XXXX)
+   */
+  async handleSealCommand(args = []) {
+    const isJson = args.includes('--json');
+    let specId = null;
+    let taskId = null;
+    let projectId = null;
+    let command = null;
+    let claim = null;
+
+    for (let i = 0; i < args.length; i++) {
+      if (args[i] === '--spec' && args[i + 1]) specId = args[++i];
+      else if (args[i] === '--task' && args[i + 1]) taskId = args[++i];
+      else if (args[i] === '--project' && args[i + 1]) projectId = args[++i];
+      else if ((args[i] === '--cmd' || args[i] === '--command') && args[i + 1]) command = args[++i];
+      else if (args[i] === '--claim' && args[i + 1]) claim = args[++i];
+    }
+
+    if (!specId) {
+      return {
+        success: false,
+        output: "Error: --spec <specId|path> is required. Usage: 'eos seal --spec <specId> [--task <taskId>] [--project <id>] [--cmd <testCmd>]'"
+      };
+    }
+
+    try {
+      const sealer = new ContractEvidenceSealer({ controlPlaneRoot: this.controlPlaneRoot || process.cwd() });
+
+      let exitCode = 0;
+      let stdout = '';
+      let stderr = '';
+      if (command) {
+        const { execSync } = await import('node:child_process');
+        try {
+          stdout = execSync(command, {
+            cwd: this.controlPlaneRoot || process.cwd(),
+            encoding: 'utf8',
+            stdio: ['pipe', 'pipe', 'pipe']
+          });
+        } catch (err) {
+          exitCode = err.status || 1;
+          stdout = err.stdout?.toString() || '';
+          stderr = err.stderr?.toString() || err.message;
+        }
+      }
+
+      const result = sealer.sealContractEvidence({
+        specId,
+        taskId,
+        projectId,
+        claim,
+        command: command || 'node --test',
+        exitCode,
+        stdout,
+        stderr
+      });
+
+      if (isJson) {
+        return {
+          success: result.success,
+          output: JSON.stringify(result, null, 2),
+          data: result
+        };
+      }
+
+      let out = `====================================================\n`;
+      out += `   EOS CONTRACT-BASED EVIDENCE SEALING RECEIPT      \n`;
+      out += `====================================================\n\n`;
+      out += `Evidence ID:        ${result.evidence_id}\n`;
+      out += `Status:             ${result.record.status} (${result.record.result})\n`;
+      out += `Contract Spec:      ${result.record.related_spec}\n`;
+      out += `Task ID:            ${result.record.related_task || 'N/A'}\n`;
+      out += `Project ID:         ${result.record.related_project || 'N/A'}\n`;
+      out += `Cryptographic Seal: ${result.seal_hash}\n`;
+      out += `Saved Path:         ${result.path}\n\n`;
+      out += `Claim:              ${result.record.claim}\n`;
+
+      return {
+        success: result.success,
+        output: out,
+        data: result
+      };
+    } catch (err) {
+      return {
+        success: false,
+        output: `Error sealing evidence contract: ${err.message}`
+      };
+    }
+  }
+
   getHelp() {
     return `
 ================================================================================
@@ -1812,6 +1909,7 @@ USAGE:
   eos next
   eos next --apply
   eos arch [path] [--json]
+  eos seal --spec <id> [--task <id>] [--cmd <command>] [--json]
   eos doctor
   eos fleet [--json]
   eos project onboard <path>

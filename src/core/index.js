@@ -72,6 +72,7 @@ export { EOSSentinelSelfRemember, EOSSentinelSelfRemember as ProcessMemoryAuditS
 export { L0Parser, L0Parser as FormalGrammarParser } from './runtime/l0-parser.js';
 export { EOSTDDExecutor, EOSTDDExecutor as ClosedLoopTDDExecutor } from './runtime/tdd-executor.js';
 export { EOSMissionOrchestrator, EOSMissionOrchestrator as MissionLifecycleOrchestrator } from './runtime/mission-orchestrator.js';
+export { ContractEvidenceSealer, EARS_PATTERNS } from './formal/contract-evidence-sealer.js';
 
 // Default export
 import { EOSKernel } from './kernel.js';

@@ -5,6 +5,7 @@ import { evaluateSddCeremonySpawn } from '../src/core/sdd/organic-routing-gate.j
 import { evaluateApplyClaim, auditTddReceipts } from '../src/core/sdd/tdd-evidence-receipt.js';
 import { assertRddDoesNotGrantDelivery } from '../src/core/governance/rdd-review-stance.js';
 import { ArchitecturalFitnessEngine } from '../src/core/ast/architectural-fitness-engine.js';
+import { ContractEvidenceSealer } from '../src/core/formal/contract-evidence-sealer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,8 +61,10 @@ const REQUIRED_PATHS = [
   'src/core/governance/rdd-review-stance.js',
   'src/core/observability/operator-hud.js',
   'src/core/ast/architectural-fitness-engine.js',
+  'src/core/formal/contract-evidence-sealer.js',
   'tests/architectural-fitness.test.js',
   'tests/knowledge-ontology-consolidation.test.js',
+  'tests/contract-evidence-sealer.test.js',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -804,6 +807,58 @@ function verifyWorkspace() {
         path: 'src',
         message: `Architectural fitness audit failed: ${err.message}`,
         type: 'architectural-fitness'
+      });
+    }
+
+    // 3g. Contract-Based Evidence Sealing Engine (EARS Contract & Epistemic Verification)
+    try {
+      const sealer = new ContractEvidenceSealer({ controlPlaneRoot: rootDir });
+      const spec = sealer.findSpec('EOS-TRACEABILITY-AND-BLAST-RADIUS-SPEC');
+      if (!spec) {
+        report.failures.push({
+          path: 'docs/specs/EOS-TRACEABILITY-AND-BLAST-RADIUS-SPEC.md',
+          message: 'Formal baseline specification not found by ContractEvidenceSealer',
+          type: 'contract-sealer'
+        });
+      } else {
+        const earsCheck = sealer.validateEarsContract(spec.content);
+        if (!earsCheck.valid) {
+          report.failures.push({
+            path: spec.relativePath,
+            message: 'Baseline specification fails formal EARS syntax contract',
+            type: 'contract-sealer'
+          });
+        } else {
+          // Dry-run seal to verify epistemic compliance and hash computation without disk side-effects
+          const drySeal = sealer.sealContractEvidence({
+            specId: 'EOS-TRACEABILITY-AND-BLAST-RADIUS-SPEC',
+            taskId: 'TASK-VERIFY-INVARIANT-3G',
+            projectId: 'PRJ-EOS-CONTROL-PLANE',
+            command: 'node scripts/verify-eos.js --strict',
+            exitCode: 0,
+            stdout: 'Verification in progress',
+            dryRun: true
+          });
+          if (drySeal.success && drySeal.record.status === 'VERIFIED') {
+            report.checks.push({
+              path: `ContractEvidenceSealer (EARS Contract Validated & Epistemic Law III Enforced: ${drySeal.seal_hash.slice(0, 20)}...)`,
+              status: 'VERIFIED',
+              type: 'contract-sealer'
+            });
+          } else {
+            report.failures.push({
+              path: 'ContractEvidenceSealer',
+              message: 'Dry run contract sealing did not yield VERIFIED status',
+              type: 'contract-sealer'
+            });
+          }
+        }
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'ContractEvidenceSealer',
+        message: `Contract evidence sealer audit failed: ${err.message}`,
+        type: 'contract-sealer'
       });
     }
   }

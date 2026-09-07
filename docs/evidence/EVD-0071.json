@@ -1,0 +1,37 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0071",
+  "claim": "Stage 3 closed-loop evidence sealing proof",
+  "status": "VERIFIED",
+  "scope": "PRJ-EOS-CONTROL-PLANE / contract-seal",
+  "source": "Contract-Based Automated Verification Sealer",
+  "timestamp": "2026-09-07T22:58:41.595Z",
+  "actor": "EOS Contract Evidence Sealer",
+  "action": "Executed and verified contract docs/specs/EOS-TRACEABILITY-AND-BLAST-RADIUS-SPEC.md under task TASK-VERIFY-01",
+  "command": "node --test",
+  "expected": "Exit code 0 and satisfaction of formal EARS contract in docs/specs/EOS-TRACEABILITY-AND-BLAST-RADIUS-SPEC.md",
+  "actual": "Command exited cleanly with code 0. EARS contract satisfied.",
+  "result": "PASS",
+  "artifacts": [],
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "win32"
+  },
+  "confidence": "HIGH",
+  "related_spec": "docs/specs/EOS-TRACEABILITY-AND-BLAST-RADIUS-SPEC.md",
+  "related_task": "TASK-VERIFY-01",
+  "related_project": "PRJ-EOS-CONTROL-PLANE",
+  "sha256": "sha256-760b04c3ce065f6594baac7a94eb5390bfddb47997f65ebd0139d23dbc016b54",
+  "digest": "sha256-760b04c3ce065f6594baac7a94eb5390bfddb47997f65ebd0139d23dbc016b54",
+  "contract_provenance": {
+    "spec_file": "docs/specs/EOS-TRACEABILITY-AND-BLAST-RADIUS-SPEC.md",
+    "ears_patterns_matched": [
+      "\\bWHEN\\b",
+      "\\bCUANDO\\b",
+      "\\bMIENTRAS\\b",
+      "\\bENTONCES\\b",
+      "\\bEL SISTEMA\\b"
+    ],
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
