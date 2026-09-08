@@ -68,7 +68,9 @@
     "test:roi3": "node --test tests/roi3-i25-mission-loop-properties.test.js tests/roi3-i25-write-barrier-properties.test.js tests/roi3-i25-seam-mutants-a.test.js tests/roi3-i25-seam-mutants-b.test.js",
     "audit:mutation:sample": "node scripts/mutation-audit.js --sample 20",
     "custody:verify": "node scripts/custody-verify.js",
-    "test:roi4": "node --test tests/roi4-i3-evidence-custody.test.js"
+    "test:roi4": "node --test tests/roi4-i3-evidence-custody.test.js",
+    "gameday:long-run": "node scripts/ci/long-run-gameday.js",
+    "test:roi5": "node --test tests/roi5-long-run-gameday.test.js"
   },
   "keywords": [
     "eos",
