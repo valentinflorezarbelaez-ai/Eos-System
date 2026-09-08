@@ -27,6 +27,8 @@ import {
   WriteBarrierDeniedError
 } from '../write-barrier/index.js';
 
+import { EvidenceCustody } from '../sdd/evidence-custody.js';
+
 export class MissionLoopDeniedError extends Error {
   /**
    * @param {string} message
@@ -50,6 +52,16 @@ export class MissionLoopRuntime {
     this.getMissionDir =
       options.getMissionDir ||
       ((missionId) => path.join(this.baseDir, '.missions', missionId));
+    this.custodyEnabled = options.custody !== false && options.custodyEnabled !== false;
+    this.custody = options.custody instanceof EvidenceCustody
+      ? options.custody
+      : (this.custodyEnabled
+          ? new EvidenceCustody({
+              controlPlaneRoot: this.baseDir,
+              baseDir: options.custodyBaseDir,
+              enabled: true
+            })
+          : null);
   }
 
   loopStatePath(missionId) {
@@ -139,7 +151,15 @@ export class MissionLoopRuntime {
     };
     state.receipts = Array.isArray(state.receipts) ? state.receipts : [];
     state.receipts.push(entry);
-    return this.saveState(missionId, state);
+    const savedReceiptState = this.saveState(missionId, state);
+    if (this.custody) {
+      this.custody.sealMissionLoopReceipt({
+        mission_id: missionId,
+        kind: entry.kind || 'receipt',
+        ...entry
+      });
+    }
+    return savedReceiptState;
   }
 
   /**
@@ -198,13 +218,23 @@ export class MissionLoopRuntime {
     state.stage = to;
     state.last_transition = { from, to, at: receipt.recorded_at };
     const saved = this.saveState(missionId, state);
+    let custody_event = null;
+    if (this.custody) {
+      custody_event = this.custody.sealMissionLoopAdvance({
+        mission_id: missionId,
+        from,
+        to,
+        ok: args.ok !== false
+      });
+    }
     return {
       mission_id: missionId,
       from,
       to,
       stage: saved.stage,
       receipts: saved.receipts,
-      epistemic_class: 'MEASURED'
+      epistemic_class: 'MEASURED',
+      custody_event
     };
   }
 

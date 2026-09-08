@@ -2,19 +2,15 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: a212e5436761e7737befb053cdfb02abe5581734
-main_subject: Merge pull request #31 from valentinflorezarbelaez-ai/cursor/roi2-engine-prune
-
-branch_hygiene: cursor/roi3-i25-mutation-property (ROI3 only; not merged)
-
+main_tip: a7dd7ba93ae393ec72f7f95c19710d8aadd653f9main_subject: Merge pull request #32 from valentinflorezarbelaez-ai/cursor/roi3-i25-mutation-property
+branch_hygiene: cursor/roi4-i3-custody (ROI4 I3 only; not merged)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (ROI3 I2.5 mutation/property; HITL branch protection)
-
+updated_at: 2026-09-08 America/Bogota (ROI4 I3 evidence custody; PRODUCTION_READY=NO)
 ```
 
 ## Post-fusion status (main tip 0c96b4c)
@@ -54,3 +50,9 @@ Fusion PRs landed on `main` (evidence: `git log` merge subjects):
 ## Not production
 
 External production readiness is explicitly **not** asserted.
+
+## ROI4 I3 evidence custody
+
+- Report: docs/releases/ROI4_I3_CUSTODY_2026-09-08.md
+- ADR: docs/architecture/adrs/ADR-0015-evidence-custody-canonical-ledger.md
+- Branch cursor/roi4-i3-custody — do not merge; do not start ROI5+

@@ -7,6 +7,7 @@ import { assertRddDoesNotGrantDelivery } from '../src/core/governance/rdd-review
 import { ArchitecturalFitnessEngine } from '../src/core/ast/architectural-fitness-engine.js';
 import { ContractEvidenceSealer } from '../src/core/formal/contract-evidence-sealer.js';
 import { EconomicContractValidator } from '../src/core/formal/economic-contract-validator.js';
+import { EvidenceCustody } from '../src/core/sdd/evidence-custody.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,6 +64,9 @@ const REQUIRED_PATHS = [
   'src/core/observability/operator-hud.js',
   'src/core/ast/architectural-fitness-engine.js',
   'src/core/formal/contract-evidence-sealer.js',
+  'src/core/sdd/evidence-custody.js',
+  'scripts/custody-verify.js',
+  'tests/roi4-i3-evidence-custody.test.js',
   'src/core/formal/economic-contract-validator.js',
   'tests/architectural-fitness.test.js',
   'tests/knowledge-ontology-consolidation.test.js',
@@ -862,6 +866,31 @@ function verifyWorkspace() {
         path: 'ContractEvidenceSealer',
         message: `Contract evidence sealer audit failed: ${err.message}`,
         type: 'contract-sealer'
+      });
+    }
+
+    // 3g2. ROI4 I3 Evidence Custody (canonical HashChainedLedger facade; fail-closed)
+    try {
+      const custody = new EvidenceCustody({ controlPlaneRoot: rootDir });
+      const audit = custody.audit();
+      if (!audit.valid) {
+        report.failures.push({
+          path: 'src/core/sdd/evidence-custody.js',
+          message: `Custody chain DENY: ${audit.error || audit.verdict}`,
+          type: 'evidence-custody'
+        });
+      } else {
+        report.checks.push({
+          path: `EvidenceCustody (${audit.verdict}, count=${audit.count || 0})`,
+          status: 'VERIFIED',
+          type: 'evidence-custody'
+        });
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'src/core/sdd/evidence-custody.js',
+        message: `Evidence custody audit failed: ${err.message}`,
+        type: 'evidence-custody'
       });
     }
 
