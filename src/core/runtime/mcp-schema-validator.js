@@ -18,10 +18,12 @@ export class EOSMCPSchemaValidator {
       "eos.mission.start": { type: "object", properties: { id: { type: "string" }, idMision: { type: "string" }, goal: { type: "string" }, type: { type: "string" }, target: { type: "string" }, requirements: { type: "array" }, context: { type: "object" }, projectPath: { type: "string" }, authorityLevel: { type: "string" } }, additionalProperties: false },
       "eos.mission.status": { type: "object", properties: { missionId: { type: "string" }, id: { type: "string" } }, additionalProperties: false },
       "eos.mission.recover": { type: "object", properties: { missionId: { type: "string" }, id: { type: "string" } }, additionalProperties: false },
+      "eos.mission.loop.status": { type: "object", properties: { missionId: { type: "string" }, mission_id: { type: "string" }, id: { type: "string" } }, additionalProperties: false },
+      "eos.mission.loop.advance": { type: "object", properties: { missionId: { type: "string" }, mission_id: { type: "string" }, to: { type: "string" }, target: { type: "string" }, stage: { type: "string" }, evidence: { type: "object" }, ok: { type: "boolean" } }, required: ["to"], additionalProperties: false },
       "eos.orchestrator.init": { type: "object", properties: { idMision: { type: "string" }, descripcion: { type: "string" } }, required: ["idMision", "descripcion"], additionalProperties: false },
       "eos.orchestrator.advance": { type: "object", properties: { idMision: { type: "string" }, hashEvidencia: { type: "string" } }, required: ["idMision", "hashEvidencia"], additionalProperties: false },
       "eos.orchestrator.rollback": { type: "object", properties: { missionId: { type: "string" }, reason: { type: "string" } }, required: ["missionId", "reason"], additionalProperties: false },
-      "eos.blueprint.run": { type: "object", properties: { path: { type: "string" }, blueprint_path: { type: "string" }, missionContext: { type: "object" } }, additionalProperties: false },
+      "eos.blueprint.run": { type: "object", properties: { path: { type: "string" }, blueprint_path: { type: "string" }, missionContext: { type: "object" }, missionId: { type: "string" }, mission_id: { type: "string" } }, additionalProperties: false },
 
       // 3. Compilador de Contexto y Ledger
       "eos.context.compile": { type: "object", properties: { mission: { type: "object" }, contract: { type: "object" }, files: { type: "array" }, maxBudgetTokens: { type: "number" }, characterBudget: { type: "number" } }, additionalProperties: false },
@@ -470,8 +472,8 @@ export class EOSMCPSchemaValidator {
 
       // 8. Andamiaje, TDD y Ontología
       "eos.scaffolder.generate": { type: "object", properties: { componentName: { type: "string" }, architecture: { type: "string" }, outputDir: { type: "string" } }, additionalProperties: false },
-      "eos.scaffolder.clean": { type: "object", properties: { nombreComponente: { type: "string" } }, required: ["nombreComponente"], additionalProperties: false },
-      "eos.scaffolder.execute": { type: "object", properties: { srcPath: { type: "string" }, testPath: { type: "string" }, maxIterations: { type: "number" } }, required: ["srcPath", "testPath"], additionalProperties: false },
+      "eos.scaffolder.clean": { type: "object", properties: { nombreComponente: { type: "string" }, missionId: { type: "string" }, mission_id: { type: "string" }, writeRoots: { type: "array" }, assertPaths: { type: "array" } }, required: ["nombreComponente"], additionalProperties: false },
+      "eos.scaffolder.execute": { type: "object", properties: { srcPath: { type: "string" }, testPath: { type: "string" }, maxIterations: { type: "number" }, missionId: { type: "string" }, mission_id: { type: "string" }, writeRoots: { type: "array" } }, required: ["srcPath", "testPath"], additionalProperties: false },
       "eos.process.governor.validate": { type: "object", properties: { idOperacion: { type: "string" }, payloadSimulacion: { type: "any" } }, additionalProperties: false },
       "eos.ontology.query": { type: "object", properties: { idNodo: { type: "string" } }, required: ["idNodo"], additionalProperties: false },
       "eos.ontology.link": { type: "object", properties: { idOrigen: { type: "string" }, idDestino: { type: "string" }, tipoRelacion: { type: "string" } }, required: ["idOrigen", "idDestino", "tipoRelacion"], additionalProperties: false },

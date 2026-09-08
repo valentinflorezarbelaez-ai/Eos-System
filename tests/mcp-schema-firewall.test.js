@@ -6,8 +6,8 @@ import { CANONICAL_TOOLS } from '../src/mcp-server.js';
 test('⚙️ MCP Schema Firewall — Universal Perimeter Insulation (74/74 Coverage)', async (t) => {
   const validator = new EOSMCPSchemaValidator();
 
-  await t.test('100% of the 74 canonical tools are indexed with strict schemas in both dot and snake formats', () => {
-    assert.strictEqual(CANONICAL_TOOLS.length, 78);
+  await t.test('100% of the 80 canonical tools are indexed with strict schemas in both dot and snake formats', () => {
+    assert.strictEqual(CANONICAL_TOOLS.length, 80);
     for (const tool of CANONICAL_TOOLS) {
       const dotKey = tool.name;
       const snakeKey = tool.name.replace(/\./g, '_');

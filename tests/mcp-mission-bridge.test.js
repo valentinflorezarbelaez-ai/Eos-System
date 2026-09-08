@@ -10,6 +10,37 @@ import os from 'node:os';
 import { EosMcpServer } from '../src/mcp-server.js';
 import { McpMissionBridge, normalizeToolName } from '../src/core/mcp/mcp-mission-bridge.js';
 
+async function advanceLoopTo(server, env, missionId, target) {
+  const full = ['Intent', 'Spec', 'Plan', 'Act', 'Evidence', 'Verify', 'Archive'];
+  const status = await server.handleToolCall('eos.mission.loop.status', { missionId }, env);
+  let stage = status.mission_loop?.stage || 'Intent';
+  const targetIdx = full.indexOf(target);
+  if (targetIdx < 0) throw new Error('bad target ' + target);
+  let i = full.indexOf(stage);
+  while (i < targetIdx) {
+    const to = full[i + 1];
+    if (to === 'Verify') {
+      const ev = await server.handleToolCall(
+        'eos.evidence.record',
+        { missionId, id: 'EVD-BRIDGE-LOOP-' + Date.now(), payload: { bridge: true } },
+        env
+      );
+      if (ev.status !== 'SUCCESS') {
+        throw new Error('evidence before verify failed: ' + (ev.reason || ''));
+      }
+    }
+    const step = await server.handleToolCall('eos.mission.loop.advance', { missionId, to }, env);
+    if (step.status !== 'SUCCESS') {
+      throw new Error('advance to ' + to + ' failed: ' + (step.reason || ''));
+    }
+    stage = to;
+    i++;
+  }
+  return stage;
+}
+
+
+
 test('BRIDGE-01: normalize underscore names', () => {
   assert.equal(normalizeToolName('eos_mission_status'), 'eos.mission.status');
   assert.equal(normalizeToolName('eos.mission.status'), 'eos.mission.status');
@@ -64,26 +95,31 @@ test('BRIDGE-02: mission resolve/start/status/plan/report via MCP read-write LEV
   assert.equal(report.status, 'SUCCESS');
   assert.ok(report.report);
 
-  const verify = await server.handleToolCall(
-    'eos.verifier.run',
-    { missionId: started.mission.mission_id },
-    env
-  );
-  assert.equal(verify.status, 'SUCCESS');
-  assert.equal(verify.verification.ok, true);
-
-  const fdir = await server.handleToolCall('eos.fdir.status', {}, env);
-  assert.equal(fdir.status, 'SUCCESS');
-  assert.equal(fdir.fdir.fdirSafeModeTripped, false);
+  // Phase 5: advance Intent→…→Evidence before evidence.record / Verify before verifier.run
+  await advanceLoopTo(server, env, started.mission.mission_id, 'Evidence');
 
   const recorded = await server.handleToolCall(
     'eos.evidence.record',
     { missionId: started.mission.mission_id, category: 'UNIT_TEST', payload: { note: 'wired via bridge' } },
     env
   );
-  assert.equal(recorded.status, 'SUCCESS');
+  assert.equal(recorded.status, 'SUCCESS', recorded.reason || '');
   assert.equal(recorded.evidence.mission_id, started.mission.mission_id);
   assert.ok(fs.existsSync(recorded.path));
+
+  await advanceLoopTo(server, env, started.mission.mission_id, 'Verify');
+
+  const verify = await server.handleToolCall(
+    'eos.verifier.run',
+    { missionId: started.mission.mission_id },
+    env
+  );
+  assert.equal(verify.status, 'SUCCESS', verify.reason || '');
+  assert.equal(verify.verification.ok, true);
+
+  const fdir = await server.handleToolCall('eos.fdir.status', {}, env);
+  assert.equal(fdir.status, 'SUCCESS');
+  assert.equal(fdir.fdir.fdirSafeModeTripped, false);
 
   const fetched = await server.handleToolCall(
     'eos.evidence.get',
@@ -125,6 +161,8 @@ test('BRIDGE-04: evidence.record writes SHA-256 and rejects missing mission', as
     env
   );
   assert.equal(started.status, 'SUCCESS', started.reason || '');
+
+  await advanceLoopTo(server, env, started.mission.mission_id, 'Evidence');
 
   const recorded = await server.handleToolCall(
     'eos.evidence.record',

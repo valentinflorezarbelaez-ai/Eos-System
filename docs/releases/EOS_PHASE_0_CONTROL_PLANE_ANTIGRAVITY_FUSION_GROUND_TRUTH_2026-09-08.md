@@ -73,3 +73,12 @@ Phase 0b publishes a verified inventory of the local control-plane surface befor
 - Wired: `scripts/hooks/governance-gate.js`, `McpMissionBridge.barrierCheck`
 - Tests: `tests/write-barrier-sandbox.test.js` (+ existing L8 write-barrier suite)
 - Fundacion Δ=0 untouched; PRODUCTION_READY remains NO
+## Phase 5 follow-through (Mission Loop MCP enforcement)
+
+- SSOT: src/core/mcp/mission-loop.js — Intent → Spec → Plan → Act → Evidence → Verify → Archive
+- Runtime: src/core/mcp/mission-loop-runtime.js + bridge methods on McpMissionBridge
+- MCP tools: eos.mission.loop.status, eos.mission.loop.advance
+- Act writes: Phase 4 withWriteScope / ssertWritable (Fundacion Δ=0)
+- Docs: docs/missions/MISSION_LOOP_ENFORCEMENT.md, docs/architecture/adrs/ADR-0014-mission-loop-mcp-enforcement.md
+- Tests: 	ests/mission-loop-enforcement.test.js
+- PRODUCTION_READY remains NO; Fundacion untouched

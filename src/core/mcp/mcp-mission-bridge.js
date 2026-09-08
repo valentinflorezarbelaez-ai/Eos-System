@@ -20,6 +20,13 @@ import {
   isFundacionPath as wbIsFundacionPath
 } from '../write-barrier/index.js';
 
+import {
+  MissionLoopRuntime,
+  MissionLoopDeniedError,
+  MISSION_LOOP_STAGES,
+  isActWriteTool
+} from './mission-loop-runtime.js';
+
 
 /** RISK.json STRICT_HARD_WRITE_BLOCK plus POSIX / homedir Documents/Fundacion. */
 export const RISK_EXTERNAL_FUNDACION_ROOTS = [
@@ -63,6 +70,8 @@ export function collectProtectedWriteRoots(baseDir) {
   return [...new Set(roots)];
 }
 
+export { MissionLoopDeniedError, MISSION_LOOP_STAGES, isActWriteTool };
+
 export function normalizeToolName(name = '') {
   if (!name || typeof name !== 'string') return '';
   // Cursor/adapters often use underscores: eos_mission_status → eos.mission.status
@@ -91,6 +100,12 @@ export class McpMissionBridge {
       options.integrationGate || this.runtime.integrationGate || new IntegrationGatekeeper();
     this.schemas = options.schemas || this.runtime.schemas || new SchemaValidator();
     this.rules = options.rules || this.runtime.rules || new CanonicalRulesIndex();
+    this.loopRuntime =
+      options.loopRuntime ||
+      new MissionLoopRuntime({
+        baseDir: this.baseDir,
+        getMissionDir: (id) => this.runtime.getMissionDir(id)
+      });
   }
 
   resolveIntent(args = {}) {
@@ -124,12 +139,21 @@ export class McpMissionBridge {
       err.code = 'MISSING_GOAL';
       throw err;
     }
-    return this.runtime.createMission({
+    const created = this.runtime.createMission({
       goal,
       projectPath: args.projectPath || args.project_path || this.baseDir,
       authorityLevel: args.authorityLevel || 'LEVEL_0',
       businessContext: args.businessContext
     });
+    const missionId = created.mission_id || created.missionId;
+    if (missionId) {
+      const loop = this.loopRuntime.initLoop(missionId);
+      created.mission_loop = {
+        stage: loop.stage,
+        schema_version: loop.schema_version
+      };
+    }
+    return created;
   }
 
   missionStatus(args = {}) {
@@ -272,14 +296,27 @@ export class McpMissionBridge {
     const pkg = JSON.parse(fs.readFileSync(path.join(missionDir, 'mission-package.json'), 'utf8'));
     const d = this.schemas.validate(direction, 'direction.local.schema.json');
     const p = this.schemas.validate(pkg, 'mission-package.local.schema.json');
-    return {
+    const ok = d.valid && p.valid;
+    const verification = {
       mission_id: missionId,
       direction_valid: d.valid,
       package_valid: p.valid,
       errors: [...d.errors, ...p.errors],
-      ok: d.valid && p.valid,
+      ok,
       epistemic_class: 'MEASURED'
     };
+    try {
+      this.loopRuntime.appendReceipt(missionId, {
+        kind: 'verify',
+        stage: MISSION_LOOP_STAGES.VERIFY,
+        ok,
+        direction_valid: d.valid,
+        package_valid: p.valid
+      });
+    } catch (err) {
+      if (err.code !== 'MISSION_LOOP_MISSING') throw err;
+    }
+    return verification;
   }
 
   policyValidate(args = {}) {
@@ -350,6 +387,17 @@ export class McpMissionBridge {
     fs.mkdirSync(evidenceDir, { recursive: true });
     const file = path.join(evidenceDir, `${id}.json`);
     fs.writeFileSync(file, JSON.stringify(receipt, null, 2), 'utf8');
+    try {
+      this.loopRuntime.appendReceipt(missionId, {
+        kind: 'evidence',
+        stage: MISSION_LOOP_STAGES.EVIDENCE,
+        ok: true,
+        evidence_id: id,
+        path: file
+      });
+    } catch (err) {
+      if (err.code !== 'MISSION_LOOP_MISSING') throw err;
+    }
     return { evidence: receipt, path: file };
   }
 
@@ -382,6 +430,41 @@ export class McpMissionBridge {
       legacyDir: path.join(this.baseDir, 'EOS-MISSION-CONTROL')
     });
     return ledger.recover(missionId);
+  }
+
+  getMissionLoopRuntime() {
+    return this.loopRuntime;
+  }
+
+  missionLoopStatus(args = {}) {
+    const missionId = args.missionId || args.mission_id || args.id;
+    if (!missionId) {
+      const err = new Error('MISSING_MISSION_ID');
+      err.code = 'MISSING_MISSION_ID';
+      throw err;
+    }
+    const state = this.loopRuntime.loadState(missionId);
+    if (!state) {
+      return {
+        found: false,
+        mission_id: missionId,
+        note: 'No mission-loop.json — start mission to initialize Intent',
+        epistemic_class: 'MEASURED'
+      };
+    }
+    return { found: true, ...state };
+  }
+
+  advanceMissionLoop(args = {}) {
+    return this.loopRuntime.advance(args);
+  }
+
+  enforceMissionLoop(toolName, args = {}) {
+    return this.loopRuntime.enforceTool(toolName, args);
+  }
+
+  async runActWithWriteScope(options, fn) {
+    return this.loopRuntime.runActWithWriteScope(options, fn);
   }
 }
 

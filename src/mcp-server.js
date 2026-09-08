@@ -11,7 +11,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { ContextCompiler } from './core/runtime/context-compiler.js';
 import { AuthorityAdapter } from './core/authority/authority-adapter.js';
-import { McpMissionBridge, normalizeToolName } from './core/mcp/mcp-mission-bridge.js';
+import { McpMissionBridge, normalizeToolName, MissionLoopDeniedError } from './core/mcp/mcp-mission-bridge.js';
 import { resolveControlPlaneRoot } from './core/runtime/control-plane-root.js';
 import { EOSKernel } from './core/kernel.js';
 import { EOSDriftDetector } from './core/drift.js';
@@ -126,7 +126,9 @@ const CANONICAL_TOOLS = [
   { name: 'eos.doctor', description: 'Instant control-plane health diagnosis and homedir path-leak detection', category: 'GOVERNANCE', sideEffects: 'READ_ONLY', requiredAuthority: 'A0' },
   { name: 'eos.audit.project', description: 'Execute concurrent quality/security/architecture audit against any registered project', category: 'AUDIT', sideEffects: 'READ_ONLY', requiredAuthority: 'A0' },
   { name: 'eos.verify.strict', description: 'Execute the 482+ invariant strict verifier (verify:strict)', category: 'QUALITY', sideEffects: 'READ_ONLY', requiredAuthority: 'A0' },
-  { name: 'eos.log.evidence', description: 'Create strict epistemic evidence records with deterministic SHA-256 hashing', category: 'EVIDENCE', sideEffects: 'LEDGER_WRITE', requiredAuthority: 'A1' }
+  { name: 'eos.log.evidence', description: 'Create strict epistemic evidence records with deterministic SHA-256 hashing', category: 'EVIDENCE', sideEffects: 'LEDGER_WRITE', requiredAuthority: 'A1' },
+  { name: 'eos.mission.loop.status', description: 'Read Phase 5 mission loop stage + receipts (Intent→Archive)', category: 'MISSION', sideEffects: 'READ_ONLY', requiredAuthority: 'A0' },
+  { name: 'eos.mission.loop.advance', description: 'Advance Phase 5 mission loop one legal stage (fail-closed; Archive requires Verify success)', category: 'MISSION', sideEffects: 'LEDGER_WRITE', requiredAuthority: 'A1' }
 ];
 
 /** Tier A default advertise set — SSOT: docs/rationalization/EOS_TOOL_SURFACE_FINAL.md */
@@ -163,6 +165,27 @@ function listTools(env = process.env) {
 
 
 const TOOL_INPUT_SCHEMAS = {
+  'eos.mission.loop.status': {
+    type: 'object',
+    properties: {
+      missionId: { type: 'string', description: 'Mission id (MIS-...)' },
+      mission_id: { type: 'string', description: 'Alias for missionId' }
+    },
+    additionalProperties: false
+  },
+  'eos.mission.loop.advance': {
+    type: 'object',
+    properties: {
+      missionId: { type: 'string', description: 'Mission id (MIS-...)' },
+      mission_id: { type: 'string', description: 'Alias for missionId' },
+      to: { type: 'string', description: 'Target stage: Spec|Plan|Act|Evidence|Verify|Archive' },
+      target: { type: 'string', description: 'Alias for to' },
+      evidence: { type: 'object', description: 'Optional evidence hook payload' },
+      ok: { type: 'boolean', description: 'Receipt ok flag (default true)' }
+    },
+    required: ['to'],
+    additionalProperties: false
+  },
   'eos.doctor': {
     type: 'object',
     properties: {},
@@ -1123,13 +1146,22 @@ class EosMcpServer {
         ...data
       };
     } catch (err) {
+      const denied =
+        err instanceof MissionLoopDeniedError ||
+        String(err.code || '').startsWith('MISSION_LOOP') ||
+        String(err.code || '').startsWith('ILLEGAL_STAGE') ||
+        String(err.code || '') === 'ARCHIVE_REQUIRES_VERIFY' ||
+        String(err.code || '') === 'VERIFY_REQUIRES_EVIDENCE' ||
+        String(err.code || '') === 'ACT_WRITE_SCOPE_REQUIRED' ||
+        String(err.code || '') === 'ACT_WRITE_DENIED' ||
+        String(err.code || '') === 'MISSION_LOOP_MISSION_REQUIRED';
       return {
         tool: toolDef.name,
-        status: 'ERROR',
+        status: denied ? 'DENIED' : 'ERROR',
         executed: false,
         sideEffects: 'NONE',
         reason: err.message,
-        code: err.code || 'TOOL_ERROR'
+        code: err.code || (denied ? 'MISSION_LOOP_DENIED' : 'TOOL_ERROR')
       };
     }
   }
@@ -1172,7 +1204,30 @@ class EosMcpServer {
       };
     }
 
-    switch (name) {
+    
+    try {
+      this.bridge.enforceMissionLoop(name, args);
+    } catch (loopErr) {
+      const denied =
+        loopErr instanceof MissionLoopDeniedError ||
+        String(loopErr.code || '').startsWith('MISSION_LOOP') ||
+        String(loopErr.code || '').startsWith('ILLEGAL_STAGE') ||
+        String(loopErr.code || '') === 'ARCHIVE_REQUIRES_VERIFY' ||
+        String(loopErr.code || '') === 'VERIFY_REQUIRES_EVIDENCE' ||
+        String(loopErr.code || '') === 'ACT_WRITE_SCOPE_REQUIRED' ||
+        String(loopErr.code || '') === 'ACT_WRITE_DENIED' ||
+        String(loopErr.code || '') === 'MISSION_LOOP_MISSION_REQUIRED';
+      return {
+        tool: name,
+        status: denied ? 'DENIED' : 'ERROR',
+        executed: false,
+        sideEffects: 'NONE',
+        reason: loopErr.message,
+        code: loopErr.code || 'MISSION_LOOP_DENIED'
+      };
+    }
+
+switch (name) {
       case 'eos.kernel.boot':
         return this._guarded(toolDef, env, async () => {
           const result = await this.kernel.boot();
@@ -1276,6 +1331,16 @@ class EosMcpServer {
             }
           };
         });
+
+      case 'eos.mission.loop.status':
+        return this._guarded(toolDef, env, () => ({
+          mission_loop: this.bridge.missionLoopStatus(args)
+        }));
+
+      case 'eos.mission.loop.advance':
+        return this._guarded(toolDef, env, () => ({
+          mission_loop: this.bridge.advanceMissionLoop(args)
+        }));
 
       case 'eos.policy.validate':
         return this._guarded(toolDef, env, () => ({
@@ -1414,43 +1479,79 @@ class EosMcpServer {
 
       case 'eos.scaffolder.clean':
         return this._guarded(toolDef, env, async () => {
-          const res = await this.cleanScaffolder.generarEstructuraModulo(args.nombreComponente);
-          return {
-            status: 'SUCCESS',
-            executed: true,
-            scaffolding: res
+          const missionId = args.missionId || args.mission_id;
+          const run = async () => {
+            const res = await this.cleanScaffolder.generarEstructuraModulo(args.nombreComponente);
+            return {
+              status: 'SUCCESS',
+              executed: true,
+              scaffolding: res
+            };
           };
+          if (!missionId) {
+            throw new MissionLoopDeniedError(
+              "MISSION_LOOP_MISSION_REQUIRED: Act tool 'eos.scaffolder.clean' requires missionId",
+              'MISSION_LOOP_MISSION_REQUIRED'
+            );
+          }
+          return this.bridge.runActWithWriteScope(
+            {
+              missionId,
+              roots: args.writeRoots || ['src', 'tests', 'docs', 'config', 'scripts'],
+              assertPaths: args.assertPaths || []
+            },
+            run
+          );
         });
 
       case 'eos.scaffolder.execute':
         return this._guarded(toolDef, env, async () => {
-          const executor = new EOSTDDExecutor({ maxIterations: args.maxIterations || 5 });
-          const patchRoutine = (srcFilePath, errorContext) => {
-            console.error(`🚨 [MCP TDD CORRECTION LOOP] > Dispatching fault trace context to file system...`);
-          };
-          const resultadoTDD = executor.executeTDDLoop(args.srcPath, args.testPath, patchRoutine);
-
-          if (resultadoTDD.status === 'TDD_BUDGET_EXCEEDED') {
-            return {
-              status: 'TDD_BUDGET_EXCEEDED',
-              executed: false,
-              lastError: resultadoTDD.lastError
-            };
+          const missionId = args.missionId || args.mission_id;
+          if (!missionId) {
+            throw new MissionLoopDeniedError(
+              "MISSION_LOOP_MISSION_REQUIRED: Act tool 'eos.scaffolder.execute' requires missionId",
+              'MISSION_LOOP_MISSION_REQUIRED'
+            );
           }
+          return this.bridge.runActWithWriteScope(
+            {
+              missionId,
+              roots: args.writeRoots || ['src', 'tests', 'docs', 'config', 'scripts'],
+              assertPaths: [args.srcPath, args.testPath].filter(Boolean)
+            },
+            async () => {
+              const executor = new EOSTDDExecutor({ maxIterations: args.maxIterations || 5 });
+              const patchRoutine = () => {
+                console.error('🚨 [MCP TDD CORRECTION LOOP] > Dispatching fault trace context to file system...');
+              };
+              const resultadoTDD = executor.executeTDDLoop(args.srcPath, args.testPath, patchRoutine);
 
-          const tx = await this.kernel.registrarTransaccionLedger(`TDD-AUTO-HEAL-${path.basename(args.srcPath).toUpperCase()}`, {
-            srcPath: args.srcPath,
-            testPath: args.testPath,
-            status: resultadoTDD.status,
-            iterations: resultadoTDD.iterations
-          });
+              if (resultadoTDD.status === 'TDD_BUDGET_EXCEEDED') {
+                return {
+                  status: 'TDD_BUDGET_EXCEEDED',
+                  executed: false,
+                  lastError: resultadoTDD.lastError
+                };
+              }
 
-          return {
-            status: 'SUCCESS',
-            executed: true,
-            iterations: resultadoTDD.iterations,
-            ledger_receipt: tx
-          };
+              const tx = await this.kernel.registrarTransaccionLedger(
+                `TDD-AUTO-HEAL-${path.basename(args.srcPath).toUpperCase()}`,
+                {
+                  srcPath: args.srcPath,
+                  testPath: args.testPath,
+                  status: resultadoTDD.status,
+                  iterations: resultadoTDD.iterations
+                }
+              );
+
+              return {
+                status: 'SUCCESS',
+                executed: true,
+                iterations: resultadoTDD.iterations,
+                ledger_receipt: tx
+              };
+            }
+          );
         });
 
       case 'eos.process.governor.validate':
