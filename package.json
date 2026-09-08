@@ -18,6 +18,7 @@
     "test:core": "node --test tests/authority-truth-source.test.js tests/eos-negative-governance.test.js tests/eos-e2e-local-fixture.test.js tests/eos-local-contracts.test.js",
     "test:unit": "node scripts/test-runner.js",
     "mcp:start": "node src/mcp-server.js",
+    "mcp:sync": "node scripts/mcp-ssot-sync.js",
     "eos": "node bin/eos.js",
     "eos:elevate": "node bin/eos-elevate.js",
     "test:elevate": "node --test tests/elevate-scanner-council.test.js tests/elevate-rca-remediation.test.js tests/elevate-orchestrator-e2e.test.js",

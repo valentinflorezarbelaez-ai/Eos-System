@@ -1,0 +1,344 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-09-08",
+  "description": "EOS MCP SSOT. Generated consumers via scripts/mcp-ssot-sync.js.",
+  "engramFallbackNote": "Use engram on PATH in tracked files; local absolute fallback OK untracked.",
+  "profiles": {
+    "L0_READONLY": {
+      "description": "Read-only",
+      "env": {
+        "EOS_MODE": "read-only",
+        "EOS_AUTONOMY_LEVEL": "LEVEL_0",
+        "EOS_ALLOW_EXTERNAL_SIDE_EFFECTS": "false"
+      }
+    },
+    "L1_LOCAL_GOVERNED": {
+      "description": "Local governed MVP",
+      "env": {
+        "EOS_MODE": "read-write",
+        "EOS_AUTONOMY_LEVEL": "LEVEL_1",
+        "EOS_ALLOW_EXTERNAL_SIDE_EFFECTS": "false",
+        "EOS_SCOPE": "LOCAL_GOVERNED_MVP"
+      }
+    }
+  },
+  "coreServers": {
+    "eos-local": {
+      "command": "node",
+      "args": [
+        "src/mcp-server.js"
+      ]
+    },
+    "engram": {
+      "command": "engram",
+      "args": [
+        "mcp",
+        "--tools=agent"
+      ],
+      "description": "Persistent memory and causal learning graph across sessions and context compactions."
+    }
+  },
+  "consumers": {
+    ".agents/mcp_config.json": {
+      "profile": "L0_READONLY",
+      "gitignored": false,
+      "extraServers": {
+        "context7": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "--package=@upstash/context7-mcp@2.2.5",
+            "--",
+            "context7-mcp"
+          ]
+        },
+        "github": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-github"
+          ],
+          "env": {
+            "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+          }
+        },
+        "filesystem": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-filesystem",
+            "."
+          ]
+        },
+        "brave-search": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-brave-search"
+          ],
+          "env": {
+            "BRAVE_API_KEY": "${BRAVE_SEARCH_API_KEY}"
+          }
+        },
+        "memory": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@anthropic/mcp-server-memory"
+          ]
+        },
+        "sequential-thinking": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-sequential-thinking"
+          ]
+        },
+        "fetch": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-fetch"
+          ]
+        },
+        "git": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-git"
+          ]
+        },
+        "postgres": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-postgres",
+            "${POSTGRES_CONNECTION_STRING}"
+          ]
+        },
+        "docker": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-docker"
+          ]
+        },
+        "notion": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@notionhq/notion-mcp-server"
+          ],
+          "env": {
+            "OPENAPI_MCP_HEADERS": "{\"Authorization\":\"Bearer ${NOTION_API_KEY}\",\"Notion-Version\":\"2022-06-28\"}"
+          }
+        }
+      }
+    },
+    ".cursor/mcp.json": {
+      "profile": "L1_LOCAL_GOVERNED",
+      "gitignored": false,
+      "extraServers": {
+        "playwright": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@playwright/mcp@latest"
+          ],
+          "description": "Automated end-to-end browser QA, DOM inspection, visual regressions, and accessibility audits."
+        },
+        "context7": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "--package=@upstash/context7-mcp@2.2.5",
+            "--",
+            "context7-mcp"
+          ],
+          "description": "Deep AST codebase indexing, semantic symbol search, and architectural dependency mapping."
+        },
+        "figma": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "figma-developer-mcp",
+            "--stdio"
+          ],
+          "env": {
+            "FIGMA_API_KEY": "${FIGMA_API_KEY}"
+          },
+          "description": "Design system tokens extraction, component inspect, and pixel-perfect design-to-code alignment."
+        },
+        "jira": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@atlassian/jira-mcp-server"
+          ],
+          "env": {
+            "JIRA_HOST": "${JIRA_HOST}",
+            "JIRA_API_TOKEN": "${JIRA_API_TOKEN}"
+          },
+          "description": "Enterprise issue tracking, sprint tasks synchronization, and acceptance criteria linking."
+        },
+        "trello": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-trello"
+          ],
+          "env": {
+            "TRELLO_API_KEY": "${TRELLO_API_KEY}",
+            "TRELLO_TOKEN": "${TRELLO_TOKEN}"
+          },
+          "description": "Kanban board task management, card movements, and workflow stage tracking."
+        },
+        "slack": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-slack"
+          ],
+          "env": {
+            "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+            "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+          },
+          "description": "Operational notifications, deployment broadcasts, incident escalation, and human-in-the-loop alerts."
+        },
+        "stitch": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@stitch/mcp-data-server"
+          ],
+          "description": "Data schema stitching, multi-source API integration, and contract synthesis."
+        }
+      }
+    },
+    ".windsurf/mcp.json": {
+      "profile": "L1_LOCAL_GOVERNED",
+      "gitignored": true,
+      "extraServers": {
+        "context7": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "--package=@upstash/context7-mcp@2.2.5",
+            "--",
+            "context7-mcp"
+          ]
+        },
+        "playwright": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@playwright/mcp@latest"
+          ]
+        },
+        "github": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-github"
+          ],
+          "env": {
+            "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+          }
+        },
+        "filesystem": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-filesystem",
+            "."
+          ]
+        },
+        "brave-search": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-brave-search"
+          ],
+          "env": {
+            "BRAVE_API_KEY": "${BRAVE_SEARCH_API_KEY}"
+          }
+        },
+        "memory": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@anthropic/mcp-server-memory"
+          ]
+        },
+        "sequential-thinking": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-sequential-thinking"
+          ]
+        },
+        "fetch": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-fetch"
+          ]
+        },
+        "git": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-git"
+          ]
+        },
+        "postgres": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-postgres",
+            "${POSTGRES_CONNECTION_STRING}"
+          ]
+        },
+        "docker": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-docker"
+          ]
+        },
+        "notion": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@notionhq/notion-mcp-server"
+          ],
+          "env": {
+            "OPENAPI_MCP_HEADERS": "{\"Authorization\":\"Bearer ${NOTION_API_KEY}\",\"Notion-Version\":\"2022-06-28\"}"
+          }
+        },
+        "figma": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "figma-developer-mcp",
+            "--stdio"
+          ],
+          "env": {
+            "FIGMA_API_KEY": "${FIGMA_API_KEY}"
+          }
+        },
+        "slack": {
+          "command": "npx",
+          "args": [
+            "-y",
+            "@modelcontextprotocol/server-slack"
+          ],
+          "env": {
+            "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+            "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+          }
+        }
+      }
+    }
+  }
+}

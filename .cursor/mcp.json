@@ -2,7 +2,9 @@
   "mcpServers": {
     "eos-local": {
       "command": "node",
-      "args": ["src/mcp-server.js"],
+      "args": [
+        "src/mcp-server.js"
+      ],
       "env": {
         "EOS_MODE": "read-write",
         "EOS_AUTONOMY_LEVEL": "LEVEL_1",
@@ -12,22 +14,37 @@
     },
     "engram": {
       "command": "engram",
-      "args": ["mcp", "--tools=agent"],
+      "args": [
+        "mcp",
+        "--tools=agent"
+      ],
       "description": "Persistent memory and causal learning graph across sessions and context compactions."
     },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ],
       "description": "Automated end-to-end browser QA, DOM inspection, visual regressions, and accessibility audits."
     },
     "context7": {
       "command": "npx",
-      "args": ["-y", "--package=@upstash/context7-mcp@2.2.5", "--", "context7-mcp"],
+      "args": [
+        "-y",
+        "--package=@upstash/context7-mcp@2.2.5",
+        "--",
+        "context7-mcp"
+      ],
       "description": "Deep AST codebase indexing, semantic symbol search, and architectural dependency mapping."
     },
     "figma": {
       "command": "npx",
-      "args": ["-y", "figma-developer-mcp", "--stdio"],
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--stdio"
+      ],
       "env": {
         "FIGMA_API_KEY": "${FIGMA_API_KEY}"
       },
@@ -35,7 +52,10 @@
     },
     "jira": {
       "command": "npx",
-      "args": ["-y", "@atlassian/jira-mcp-server"],
+      "args": [
+        "-y",
+        "@atlassian/jira-mcp-server"
+      ],
       "env": {
         "JIRA_HOST": "${JIRA_HOST}",
         "JIRA_API_TOKEN": "${JIRA_API_TOKEN}"
@@ -44,7 +64,10 @@
     },
     "trello": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-trello"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-trello"
+      ],
       "env": {
         "TRELLO_API_KEY": "${TRELLO_API_KEY}",
         "TRELLO_TOKEN": "${TRELLO_TOKEN}"
@@ -53,7 +76,10 @@
     },
     "slack": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-slack"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-slack"
+      ],
       "env": {
         "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
         "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
@@ -62,7 +88,10 @@
     },
     "stitch": {
       "command": "npx",
-      "args": ["-y", "@stitch/mcp-data-server"],
+      "args": [
+        "-y",
+        "@stitch/mcp-data-server"
+      ],
       "description": "Data schema stitching, multi-source API integration, and contract synthesis."
     }
   }

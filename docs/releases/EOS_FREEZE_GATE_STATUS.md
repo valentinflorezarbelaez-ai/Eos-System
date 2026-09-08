@@ -2,20 +2,27 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main: 78b28d61c0c92136b8bb078bf36b1ba0930549cf (= origin/main)
+main_at_phase0b_branch_start: 385e577c0fc33534621b89884cc563d722d2fdad
+branch: cursor/phase-0b1-mcp-ssot
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-Fundacion: Δ=0
-tests: 20/20 PASS at merge
-pushed_at: 2026-08-21 local
+Fundacion: Delta=0 (untouched this change set)
+ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
+mcp_ssot: docs/mcp/MCP_SSOT.md
+updated_at: 2026-09-08 America/Bogota
 ```
 
-## Published
+## Phase 0b refresh
 
-- `git push origin main` → `948a5c3..78b28d6`
-- `git push origin rc/eos-mission-os-local-complete-2026-08-21` → new tag
+- Published ground-truth freeze inventory for control-plane / Antigravity fusion.
+- PRODUCTION_READY remains **NO**.
+- Dictamen remains **COMPLETE_FOR_LOCAL_GOVERNED_USE**.
 
-## Not pushed (optional)
+## Historical publish notes
 
-- `release/eos-mission-os-rc`
-- `integrate/eos-mission-os-rc`
+- Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`
+- Tag: `rc/eos-mission-os-local-complete-2026-08-21`
+
+## Not production
+
+External production readiness is explicitly **not** asserted.
