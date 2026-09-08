@@ -8,7 +8,8 @@ describe('EOS Test Runner: Discovery and Filtering', () => {
     const testsDir = path.resolve(process.cwd(), 'tests');
     const files = discoverTestFiles(testsDir);
     assert.ok(Array.isArray(files), 'Must return an array of file paths');
-    assert.ok(files.length > 100, `Expected over 100 test files, discovered ${files.length}`);
+    assert.ok(files.length >= 80, `Expected >= 80 live test files after ROI2 engine quarantine, discovered ${files.length}`);
+    assert.ok(files.length < 120, `Live tests/ should stay slim after ROI2; discovered ${files.length}`);
     assert.ok(files.every(f => f.endsWith('.test.js')), 'All discovered files must end with .test.js');
   });
 

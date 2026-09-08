@@ -10,3 +10,12 @@
 | `sdd-fsm-engine.js` | `scripts/engine/sdd-fsm-engine.js` | Duplicate stub of canonical FSM | `src/core/sdd/sdd-fsm-engine.js` |
 
 Restore by moving these files back to `scripts/engine/` if a consumer still needs the legacy stub path. `src/` must not import these paths.
+
+
+---
+
+## ROI2 engine prune (2026-09-08)
+
+See `archive/quarantine/engine-roi2/MANIFEST.md` and `INVENTORY.json`.
+
+80 research/canary engines + 88 companion tests moved from `scripts/engine/` / `tests/` (reversible). Canonical keep set: 19 files.
