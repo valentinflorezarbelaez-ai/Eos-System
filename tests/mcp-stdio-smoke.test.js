@@ -5,8 +5,8 @@ import path from 'node:path';
 import { EosMcpServer, CANONICAL_TOOLS } from '../src/mcp-server.js';
 import { resolveControlPlaneRoot } from '../src/core/runtime/control-plane-root.js';
 
-test('MCP-01: tools/list returns exactly 78 canonical tools', () => {
-  assert.equal(CANONICAL_TOOLS.length, 78);
+test('MCP-01: tools/list returns exactly 80 canonical tools', () => {
+  assert.equal(CANONICAL_TOOLS.length, 80);
   const names = CANONICAL_TOOLS.map(t => t.name);
   assert.ok(names.includes('eos.context.compile'));
   assert.ok(names.includes('eos.ledger.get_features'));

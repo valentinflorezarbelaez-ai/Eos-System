@@ -14,9 +14,9 @@ import { MissionRuntime } from '../src/core/runtime/mission-runtime.js';
 import { EosMcpServer, CANONICAL_TOOLS } from '../src/mcp-server.js';
 import { resolveControlPlaneRoot } from '../src/core/runtime/control-plane-root.js';
 
-test('E2E-FORENSIC-01: MCP Server exposes all 78 tools with strict metadata & authorization', async () => {
+test('E2E-FORENSIC-01: MCP Server exposes all 80 tools with strict metadata & authorization', async () => {
   const server = new EosMcpServer();
-  assert.equal(CANONICAL_TOOLS.length, 78);
+  assert.equal(CANONICAL_TOOLS.length, 80);
 
   // Test critical tool calls
   const statusRes = await server.handleToolCall('eos.mission.status', {});
