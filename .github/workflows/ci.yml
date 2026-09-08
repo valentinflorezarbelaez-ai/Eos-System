@@ -1,4 +1,5 @@
 name: EOS CI
+# Fail-closed required checks: verify + test (+ syntax, governance-gates). No continue-on-error.
 
 on:
   push:

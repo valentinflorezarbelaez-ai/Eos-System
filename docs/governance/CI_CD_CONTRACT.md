@@ -28,3 +28,6 @@ CD evaluates whether a revision is a **release candidate evidence pack**. It doe
 Triggers: `workflow_dispatch`, tags `rc/*`.
 
 Verdict axiom: **CI pass ≠ PRODUCTION READY ≠ RELEASE APPROVED**.
+
+## ROI3 fail-closed note
+Orphan workflow YAMLs outside this contract are rejected by scripts/ci/assert-gha-contract.js. Legacy eos-ci.yml removed. continue-on-error true is forbidden on EOS CI.

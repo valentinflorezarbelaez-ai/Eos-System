@@ -2,16 +2,19 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 36d85b590b5f5f0c73b7b8911e9e0492062e6e4c
-main_subject: Merge pull request #30 from valentinflorezarbelaez-ai/cursor/roi1-post-fusion-hygiene
-branch_hygiene: cursor/roi2-engine-prune (ROI2 only; not merged)
+main_tip: a212e5436761e7737befb053cdfb02abe5581734
+main_subject: Merge pull request #31 from valentinflorezarbelaez-ai/cursor/roi2-engine-prune
+
+branch_hygiene: cursor/roi3-i25-mutation-property (ROI3 only; not merged)
+
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (ROI2 engine prune quarantine)
+updated_at: 2026-09-08 America/Bogota (ROI3 I2.5 mutation/property; HITL branch protection)
+
 ```
 
 ## Post-fusion status (main tip 0c96b4c)
