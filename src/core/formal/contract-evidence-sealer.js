@@ -14,6 +14,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { resolveControlPlaneRoot } from '../runtime/control-plane-root.js';
 import { EconomicContractValidator } from './economic-contract-validator.js';
+import { EvidenceCustody } from '../sdd/evidence-custody.js';
 
 export const EARS_PATTERNS = [
   /\bWHEN\b/i,
@@ -40,6 +41,16 @@ export class ContractEvidenceSealer {
     this.evidenceDir = options.evidenceDir || path.join(this.controlPlaneRoot, 'docs', 'evidence');
     this.specsDir = options.specsDir || path.join(this.controlPlaneRoot, 'docs', 'specs');
     this.economicValidator = options.economicValidator || new EconomicContractValidator();
+    this.custodyEnabled = options.custody !== false && options.custodyEnabled !== false;
+    this.custody = options.custody instanceof EvidenceCustody
+      ? options.custody
+      : (this.custodyEnabled
+          ? new EvidenceCustody({
+              controlPlaneRoot: this.controlPlaneRoot,
+              baseDir: options.custodyBaseDir,
+              enabled: true
+            })
+          : null);
   }
 
   /**
@@ -275,13 +286,25 @@ export class ContractEvidenceSealer {
       }
     };
 
+
     const targetFilePath = path.join(this.evidenceDir, `${evdId}.json`);
+    let custody_event = null;
 
     if (!dryRun) {
       if (!fs.existsSync(this.evidenceDir)) {
         fs.mkdirSync(this.evidenceDir, { recursive: true });
       }
       fs.writeFileSync(targetFilePath, JSON.stringify(evidenceRecord, null, 2) + '\n', 'utf8');
+      if (this.custody) {
+        custody_event = this.custody.sealEvdRecord({
+          evidence_id: evdId,
+          seal_hash: sealHash,
+          related_spec: evidenceRecord.related_spec,
+          related_project: evidenceRecord.related_project,
+          status: evidenceRecord.status,
+          dry_run: false
+        });
+      }
     }
 
     return {
@@ -289,7 +312,8 @@ export class ContractEvidenceSealer {
       evidence_id: evdId,
       path: targetFilePath,
       seal_hash: sealHash,
-      record: evidenceRecord
+      record: evidenceRecord,
+      custody_event
     };
   }
 }
