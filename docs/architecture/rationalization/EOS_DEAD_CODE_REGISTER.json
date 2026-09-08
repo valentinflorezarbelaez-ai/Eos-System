@@ -16,5 +16,565 @@
     "reason": "Zero direct import consumers and superseded by canonical implementation.",
     "classification": "DUPLICATE",
     "action": "ARCHIVE_OR_DELETE"
+  },
+  {
+    "artifact": "scripts/engine/accessibility-validator-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/accessibility-validator-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/adaptive-adversary-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/adaptive-adversary-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/authority-adapter.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/authority-adapter.js"
+  },
+  {
+    "artifact": "scripts/engine/autonomous-architect-advisor.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/autonomous-architect-advisor.js"
+  },
+  {
+    "artifact": "scripts/engine/autonomous-continuous-learning-loop.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/autonomous-continuous-learning-loop.js"
+  },
+  {
+    "artifact": "scripts/engine/autonomous-ecosystem-manager-v1.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/autonomous-ecosystem-manager-v1.js"
+  },
+  {
+    "artifact": "scripts/engine/autonomous-ecosystem-manager.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/autonomous-ecosystem-manager.js"
+  },
+  {
+    "artifact": "scripts/engine/autonomous-failsafe-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/autonomous-failsafe-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/autonomy-graduation-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/autonomy-graduation-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/blind-strategy-evaluation-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/blind-strategy-evaluation-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/canary-f001-predictive-transfer-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/canary-f001-predictive-transfer-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/canary-i001-composition-executor.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/canary-i001-composition-executor.js"
+  },
+  {
+    "artifact": "scripts/engine/canary-j001-composite-replication-executor.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/canary-j001-composite-replication-executor.js"
+  },
+  {
+    "artifact": "scripts/engine/canary-m002-replication-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/canary-m002-replication-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/canary-m003-replication-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/canary-m003-replication-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/canary-mission-executor.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/canary-mission-executor.js"
+  },
+  {
+    "artifact": "scripts/engine/canary-real-001-cohort-server.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/canary-real-001-cohort-server.js"
+  },
+  {
+    "artifact": "scripts/engine/canary-triangulation-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/canary-triangulation-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/canary-tunnel-supervisor.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/canary-tunnel-supervisor.js"
+  },
+  {
+    "artifact": "scripts/engine/causal-replication-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/causal-replication-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/client-triangulation-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/client-triangulation-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/closed-loop-learning-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/closed-loop-learning-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/cognitive-execution-fabric.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/cognitive-execution-fabric.js"
+  },
+  {
+    "artifact": "scripts/engine/cognitive-fabric-evaluation-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/cognitive-fabric-evaluation-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/cognitive-fabric-generalization-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/cognitive-fabric-generalization-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/composition-policy-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/composition-policy-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/context-compiler.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/context-compiler.js"
+  },
+  {
+    "artifact": "scripts/engine/contextual-learning-boundary-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/contextual-learning-boundary-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/continuous-change-operations.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/continuous-change-operations.js"
+  },
+  {
+    "artifact": "scripts/engine/cross-project-transfer-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/cross-project-transfer-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/cursor-command-center-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/cursor-command-center-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/dynamic-replanning-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/dynamic-replanning-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/effort-budget-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/effort-budget-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/elite-platform-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/elite-platform-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/executive-arbitration-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/executive-arbitration-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/executive-generalization-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/executive-generalization-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/executive-orchestrator-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/executive-orchestrator-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/experience-learning-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/experience-learning-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/external-product-factory-pilot.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/external-product-factory-pilot.js"
+  },
+  {
+    "artifact": "scripts/engine/frontier-evaluation-farm.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/frontier-evaluation-farm.js"
+  },
+  {
+    "artifact": "scripts/engine/frontier-realism-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/frontier-realism-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/graph-intelligence-plane.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/graph-intelligence-plane.js"
+  },
+  {
+    "artifact": "scripts/engine/independent-canary-reviewer.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/independent-canary-reviewer.js"
+  },
+  {
+    "artifact": "scripts/engine/independent-telemetry-sink.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/independent-telemetry-sink.js"
+  },
+  {
+    "artifact": "scripts/engine/learning-robustness-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/learning-robustness-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/learning-validity-causality-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/learning-validity-causality-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/long-run-independent-operation.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/long-run-independent-operation.js"
+  },
+  {
+    "artifact": "scripts/engine/long-run-stability-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/long-run-stability-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/longitudinal-chaos-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/longitudinal-chaos-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/longitudinal-evidence-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/longitudinal-evidence-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/longitudinal-real-operation.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/longitudinal-real-operation.js"
+  },
+  {
+    "artifact": "scripts/engine/master-falsification-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/master-falsification-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/master-package-consistency-auditor.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/master-package-consistency-auditor.js"
+  },
+  {
+    "artifact": "scripts/engine/mcp-provisioning-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/mcp-provisioning-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/memory-integrity-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/memory-integrity-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/mission-control-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/mission-control-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/multi-bkm-composition-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/multi-bkm-composition-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/operationalization-program.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/operationalization-program.js"
+  },
+  {
+    "artifact": "scripts/engine/parallel-work-graph-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/parallel-work-graph-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/playwright-mcp-benchmark.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/playwright-mcp-benchmark.js"
+  },
+  {
+    "artifact": "scripts/engine/polyglot-language-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/polyglot-language-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/prediction-calibration-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/prediction-calibration-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/product-decision-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/product-decision-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/product-factory-scale-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/product-factory-scale-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/project-bootstrap-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/project-bootstrap-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/real-client-pilot-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/real-client-pilot-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/real-client-replication-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/real-client-replication-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/real-operational-campaign-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/real-operational-campaign-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/real-provider-adapter-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/real-provider-adapter-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/real-world-autonomy-pilot.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/real-world-autonomy-pilot.js"
+  },
+  {
+    "artifact": "scripts/engine/real-world-validation-program.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/real-world-validation-program.js"
+  },
+  {
+    "artifact": "scripts/engine/restricted-autonomy-operations.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/restricted-autonomy-operations.js"
+  },
+  {
+    "artifact": "scripts/engine/self-hosting-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/self-hosting-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/seo-validator-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/seo-validator-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/strategy-meta-optimization-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/strategy-meta-optimization-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/sustained-operation-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/sustained-operation-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/tool-discovery-ranking-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/tool-discovery-ranking-engine.js"
+  },
+  {
+    "artifact": "scripts/engine/transfer-and-unlearning-harness.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/transfer-and-unlearning-harness.js"
+  },
+  {
+    "artifact": "scripts/engine/val-exp-002-dry-run-simulator.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/val-exp-002-dry-run-simulator.js"
+  },
+  {
+    "artifact": "scripts/engine/value-instrumentation-engine.js",
+    "reason": "ROI2: test-only or orphan research/canary harness; not required by verify/MCP/pkg/LIDR keep set.",
+    "classification": "LEGACY_RESEARCH",
+    "action": "QUARANTINED_ROI2",
+    "quarantine": "archive/quarantine/engine-roi2/scripts-engine/value-instrumentation-engine.js"
   }
 ]

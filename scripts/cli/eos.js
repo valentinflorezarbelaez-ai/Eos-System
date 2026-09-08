@@ -3,18 +3,19 @@
 // =========================================================================
 // EOS — UNIFIED CURSOR COMMAND CENTER & MULTI-MODEL HARNESS CLI
 // Operational Interface for Cursor IDE Terminal & Agent Workspace
+// ROI2: research engine imports remapped to archive/quarantine/engine-roi2 (legacy CLI).
 // =========================================================================
 
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { McpProvisioningEngine } from '../engine/mcp-provisioning-engine.js';
-import { AutonomousContinuousLearningLoop } from '../engine/autonomous-continuous-learning-loop.js';
-import { PolyglotLanguageHarness } from '../engine/polyglot-language-harness.js';
-import { RealProviderAdapterEngine } from '../engine/real-provider-adapter-engine.js';
-import { AccessibilityValidatorEngine } from '../engine/accessibility-validator-engine.js';
-import { SeoValidatorEngine } from '../engine/seo-validator-engine.js';
+import { McpProvisioningEngine } from '../../archive/quarantine/engine-roi2/scripts-engine/mcp-provisioning-engine.js';
+import { AutonomousContinuousLearningLoop } from '../../archive/quarantine/engine-roi2/scripts-engine/autonomous-continuous-learning-loop.js';
+import { PolyglotLanguageHarness } from '../../archive/quarantine/engine-roi2/scripts-engine/polyglot-language-harness.js';
+import { RealProviderAdapterEngine } from '../../archive/quarantine/engine-roi2/scripts-engine/real-provider-adapter-engine.js';
+import { AccessibilityValidatorEngine } from '../../archive/quarantine/engine-roi2/scripts-engine/accessibility-validator-engine.js';
+import { SeoValidatorEngine } from '../../archive/quarantine/engine-roi2/scripts-engine/seo-validator-engine.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
