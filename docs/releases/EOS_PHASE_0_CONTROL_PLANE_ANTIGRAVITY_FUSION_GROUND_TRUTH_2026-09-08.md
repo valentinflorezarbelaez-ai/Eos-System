@@ -57,3 +57,10 @@ Phase 0b publishes a verified inventory of the local control-plane surface befor
 - No merge to main in this phase
 - No Fundacion changes
 
+## Phase 2 follow-through (agent entrypoints)
+
+- Thin root stubs: AGENTS.md, GEMINI.md, CLAUDE.md, codex.md
+- Canonical protocol remains .agents/AGENTS.md (undiluted)
+- Doc: docs/agents/AGENT_ENTRYPOINTS.md
+- Drift guard: scripts/agent-entrypoints-check.js + tests/agent-entrypoints.test.js
+- OpenSpec mandatory steps tracked: docs/openspec-tasks-mandatory-steps.md
