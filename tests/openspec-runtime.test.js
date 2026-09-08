@@ -125,10 +125,10 @@ test('apply and archive docs require OpenSpec artifact update before archive', (
   assert.match(runtime, /opsx:propose|\/opsx-propose/);
 });
 
-test('ai-specs lists optional LIDR skills without bulk-copying them', () => {
+test('ai-specs tracks integrated LIDR Specboot skills as SSOT', () => {
   const skills = read('ai-specs/skills/README.md');
-  assert.match(skills, /optional imports/i);
-  assert.match(skills, /do not bulk-copy/i);
+  assert.match(skills, /Active LIDR Specboot Skills \(Integrated\)/i);
+  assert.match(skills, /incorporated and calibrated/i);
   for (const skill of [
     'enrich-us',
     'adversarial-review',
@@ -141,8 +141,8 @@ test('ai-specs lists optional LIDR skills without bulk-copying them', () => {
     assert.match(skills, new RegExp(skill));
     assert.equal(
       fs.existsSync(path.join(rootDir, 'ai-specs/skills', skill, 'SKILL.md')),
-      false,
-      `must not bulk-copy ${skill}`
+      true,
+      `must track ${skill} under ai-specs/skills`
     );
   }
   assert.match(skills, /Scope Rule/);
