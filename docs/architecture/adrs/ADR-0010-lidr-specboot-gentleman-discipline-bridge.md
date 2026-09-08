@@ -132,9 +132,9 @@ If any EOS overlay, spec template, or future `.cursorrules` edit uses **EARS**, 
 
 **Prefer Given/When/Then (BDD / Gherkin).** Both LIDR OpenSpec and Gentleman SDD document GWT scenarios. `docs/specs/TEMPLATE.md` already uses Given-When-Then acceptance criteria. OpenSpec deltas in this repo MUST use GWT. EARS “WHEN / THE SYSTEM SHALL” phrasing is optional local flavor and must not be taught as Specboot canon.
 
-### 4.2 Optional LIDR skill imports (do not bulk-copy)
+### 4.2 Tracked LIDR Specboot skills (SSOT)
 
-Reference these LIDR skills when useful. **Do not bulk-copy** their files into `.agents/skills/` or `ai-specs/`:
+These LIDR Specboot skills are **tracked** under `ai-specs/skills/` (and mirrored under `.agents/skills/` where applicable) after ROI1. They are integrated EOS skill surface — not optional remote-only imports:
 
 | Skill | Use |
 | --- | --- |
@@ -146,7 +146,7 @@ Reference these LIDR skills when useful. **Do not bulk-copy** their files into `
 | `openspec-sync-specs` | Sync spec deltas after apply |
 | `sync-agent-symlinks` | Tool-symlink hygiene if a human installs OpenSpec CLI |
 
-Pointers live in `ai-specs/skills/`. Missing local copies are expected.
+Inventory and calibration notes live in `ai-specs/skills/README.md`. Do not fork alternate copies outside those tracked paths.
 
 ### 4.3 Gentleman Scope Rule — NON-core for L0 Mission OS
 

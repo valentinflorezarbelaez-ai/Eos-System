@@ -78,7 +78,18 @@ Phase 0b publishes a verified inventory of the local control-plane surface befor
 - SSOT: src/core/mcp/mission-loop.js — Intent → Spec → Plan → Act → Evidence → Verify → Archive
 - Runtime: src/core/mcp/mission-loop-runtime.js + bridge methods on McpMissionBridge
 - MCP tools: eos.mission.loop.status, eos.mission.loop.advance
-- Act writes: Phase 4 withWriteScope / ssertWritable (Fundacion Δ=0)
+- Act writes: Phase 4 withWriteScope / assertWritable (Fundacion Δ=0)
 - Docs: docs/missions/MISSION_LOOP_ENFORCEMENT.md, docs/architecture/adrs/ADR-0014-mission-loop-mcp-enforcement.md
-- Tests: 	ests/mission-loop-enforcement.test.js
+- Tests: tests/mission-loop-enforcement.test.js
 - PRODUCTION_READY remains NO; Fundacion untouched
+
+## ROI1 follow-through (dirty-tree hygiene + post-fusion status)
+
+- Hygiene branch: `cursor/roi1-post-fusion-hygiene` (from main tip `0c96b4c`; not merged by this change set)
+- Freeze gate refreshed: `docs/releases/EOS_FREEZE_GATE_STATUS.md` — dictamen **COMPLETE_FOR_LOCAL_GOVERNED_USE**, **PRODUCTION_READY: NO**
+- Fusion PRs on main: #26 (MCP SSOT), #27 (agent entrypoints), #28 (write barrier), #29 (mission loop)
+- Antigravity: tracked `agy-daemon.cmd`; workstation remote-control instance name intent **eos-workstation**
+- Dirty-tree triage evidence: `docs/releases/ROI1_DIRTY_TREE_TRIAGE_2026-09-08.md`
+- TRACK: intentional LIDR/OpenSpec skills under `.agents/skills/` + `ai-specs/skills/`, harness architecture docs, KI-ACCELERATION-WHIPLASH
+- DEFER: foreign ai-specs agent stubs, PRJ-APP-FUERZA evidence/dossier churn, ATP screenshots, `EOS-Lab/Transmission-Live/`
+- Fundacion Δ=0 untouched; no secrets force-added; no PRODUCTION_READY=YES

@@ -90,7 +90,7 @@ test('ADR-0010 maps opsx aliases, planning skills, and post-apply artifact updat
   assert.match(adr, /update OpenSpec artifacts first/i);
 });
 
-test('ADR-0010 lists optional LIDR skills and marks Gentleman Scope Rule as NON-core for L0', () => {
+test('ADR-0010 lists tracked LIDR skills and marks Gentleman Scope Rule as NON-core for L0', () => {
   const adr = read(ADR_REL);
   for (const skill of [
     'enrich-us',
@@ -103,7 +103,8 @@ test('ADR-0010 lists optional LIDR skills and marks Gentleman Scope Rule as NON-
   ]) {
     assert.match(adr, new RegExp(skill));
   }
-  assert.match(adr, /do not bulk-copy|optional imports/i);
+  assert.match(adr, /Tracked LIDR Specboot skills|tracked/i);
+  assert.match(adr, /ai-specs\/skills/);
   assert.match(adr, /Scope Rule/);
   assert.match(adr, /NON-core/i);
 });

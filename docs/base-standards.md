@@ -36,13 +36,16 @@ This file is the LIDR Specboot **base-standards** index for the EOS Control Plan
 | Backend / Control Plane | `docs/backend-standards.md` (if present) plus `.cursor/rules/03-eos-architecture.mdc` and `DEPENDENCY_POLICY_L0.md` |
 | Frontend / UI | `.cursor/rules/07-eos-product-and-ux.mdc` (product locale; no theme-kit import) |
 | Documentation | `.cursor/rules/09-eos-documentation.mdc` |
-| Testing | `.cursor/rules/06-eos-testing-and-verification.mdc` |
+| Testing & Execution | `.cursor/rules/06-eos-testing-and-verification.mdc` & [`docs/openspec-tasks-mandatory-steps.md`](openspec-tasks-mandatory-steps.md) |
 | Security / authority | `.cursor/rules/04-eos-security-and-authority.mdc` |
-| Agent protocol | `.agents/AGENTS.md`, `.cursorrules` |
+| Agent protocol | `.agents/AGENTS.md`, `AGENTS.md`, `.cursorrules` |
+| Operational Skills | `.agents/skills/`, `ai-specs/skills/` |
 
-## OpenSpec filenames
+## OpenSpec filenames & execution
 
 `proposal.md` → `spec.md` → `design.md` → `tasks.md`
+
+All tasks must follow [`docs/openspec-tasks-mandatory-steps.md`](openspec-tasks-mandatory-steps.md) (autonomous agent test execution; zero user delegation).
 
 ## Frozen surfaces (never “just a refactor”)
 
