@@ -64,3 +64,12 @@ Phase 0b publishes a verified inventory of the local control-plane surface befor
 - Doc: docs/agents/AGENT_ENTRYPOINTS.md
 - Drift guard: scripts/agent-entrypoints-check.js + tests/agent-entrypoints.test.js
 - OpenSpec mandatory steps tracked: docs/openspec-tasks-mandatory-steps.md
+
+## Phase 4 follow-through (Write Barrier sandbox)
+
+- Module: `src/core/write-barrier/` — process-scoped `withWriteScope` + realpath SSOT allowlist
+- SSOT roots: `config/security/write-barrier-ssot-roots.json`
+- Docs: `docs/security/WRITE_BARRIER_SANDBOX.md`, `docs/architecture/adrs/ADR-0013-write-barrier-sandbox.md`
+- Wired: `scripts/hooks/governance-gate.js`, `McpMissionBridge.barrierCheck`
+- Tests: `tests/write-barrier-sandbox.test.js` (+ existing L8 write-barrier suite)
+- Fundacion Δ=0 untouched; PRODUCTION_READY remains NO

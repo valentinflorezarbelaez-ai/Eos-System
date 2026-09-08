@@ -15,6 +15,11 @@ import { SchemaValidator } from '../contracts/schema-validator.js';
 import { CanonicalRulesIndex } from '../rules/canonical-rules-index.js';
 import { calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
 import { MissionLedger } from '../../../scripts/engine/mission-ledger.js';
+import {
+  barrierCheck as writeBarrierCheck,
+  isFundacionPath as wbIsFundacionPath
+} from '../write-barrier/index.js';
+
 
 /** RISK.json STRICT_HARD_WRITE_BLOCK plus POSIX / homedir Documents/Fundacion. */
 export const RISK_EXTERNAL_FUNDACION_ROOTS = [
@@ -213,31 +218,30 @@ export class McpMissionBridge {
   }
 
   barrierCheck(args = {}) {
-    const rawPath = args.path || args.target || '';
-    const writePath = path.resolve(rawPath);
-    const protectedRoots = collectProtectedWriteRoots(this.baseDir);
-    const blockedByRoot = protectedRoots.some((root) => {
-      if (writePath === root || writePath.startsWith(root + path.sep)) return true;
-      const rootNorm = normalizeBarrierPath(root);
-      const writeNorm = normalizeBarrierPath(writePath);
-      const rawNorm = normalizeBarrierPath(rawPath);
-      return (
-        writeNorm === rootNorm ||
-        writeNorm.startsWith(`${rootNorm}/`) ||
-        rawNorm === rootNorm ||
-        rawNorm.startsWith(`${rootNorm}/`)
-      );
+    // Phase 4: delegate to Write Barrier sandbox (Fundacion Δ=0 + SSOT / scope).
+    const verdict = writeBarrierCheck({
+      path: args.path || args.target || '',
+      target: args.target,
+      repoRoot: this.baseDir
     });
-    const blocked = blockedByRoot || isFundacionWriteTarget(rawPath, writePath);
+    const protectedRoots = collectProtectedWriteRoots(this.baseDir);
+    const blocked =
+      verdict.allowed === false ||
+      isFundacionWriteTarget(args.path || args.target || '', verdict.path) ||
+      wbIsFundacionPath(args.path || args.target || '', verdict.path);
     return {
-      path: writePath,
+      path: verdict.path || path.resolve(args.path || args.target || ''),
       allowed: !blocked,
-      protected_roots: protectedRoots,
-      reason: blocked ? 'PROTECTED_SURFACE' : 'OK',
+      protected_roots: [...new Set([...(verdict.protected_roots || []), ...protectedRoots])],
+      reason: blocked
+        ? verdict.reason === 'OK'
+          ? 'PROTECTED_SURFACE'
+          : verdict.reason || 'PROTECTED_SURFACE'
+        : 'OK',
+      scope_active: Boolean(verdict.scope_active),
       epistemic_class: 'MEASURED'
     };
   }
-
   fdirStatus() {
     return {
       fdirSafeModeTripped: Boolean(this.integrationGate.fdirSafeModeTripped),
