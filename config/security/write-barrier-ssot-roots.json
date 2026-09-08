@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "description": "SSOT realpath allowlist roots for the Phase 4 Write Barrier sandbox. Paths are repo-relative; resolved via realpath at runtime. Fundacion is always denied even if listed.",
+  "repoRelativeAllowRoots": [
+    "src",
+    "tests",
+    "scripts",
+    "docs",
+    "config",
+    "openspec",
+    ".agents",
+    ".cursor",
+    "ai-specs",
+    "bin",
+    "EOS-MISSION-CONTROL"
+  ],
+  "alwaysDenyRepoRelative": [
+    "Fundacion",
+    "docs/governance"
+  ],
+  "protectedFilesRepoRelative": [
+    "CONSTITUTION.md",
+    "DEPENDENCY_POLICY_L0.md",
+    "docs/core/CONSTITUTION.md"
+  ]
+}
