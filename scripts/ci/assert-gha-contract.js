@@ -159,6 +159,29 @@ export function assertGithubActionsContract(rootDir) {
     }
   }
 
+  // Fail-closed: every workflow YAML under .github/workflows must be declared
+  // in CI_CD_CONTRACT.json (prevents orphan soft-CI like legacy eos-ci.yml).
+  const workflowsDir = path.join(rootDir, '.github', 'workflows');
+  if (fs.existsSync(workflowsDir)) {
+    const allowedBasenames = new Set(
+      Object.values(contract.workflows).map((w) => path.basename(w.path))
+    );
+    for (const name of fs.readdirSync(workflowsDir)) {
+      if (!/\.(yml|yaml)$/i.test(name)) continue;
+      if (!allowedBasenames.has(name)) {
+        failures.push(
+          `orphan workflow .github/workflows/${name} is not declared in docs/governance/CI_CD_CONTRACT.json`
+        );
+      }
+    }
+  }
+
+  // Required CI must not soft-pass.
+  const ciYaml = readWorkflow(rootDir, contract.workflows.ci.path);
+  if (/continue-on-error:\s*true/.test(ciYaml)) {
+    failures.push('ci.yml must remain fail-closed (no continue-on-error: true)');
+  }
+
   return {
     ok: failures.length === 0,
     failures,

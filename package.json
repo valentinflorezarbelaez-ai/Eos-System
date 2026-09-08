@@ -64,7 +64,9 @@
     "watchdog:audit": "node scripts/git-watchdog.js --audit",
     "test:security": "node --test tests/mcp/red-teaming.test.js",
     "hooks:install": "node scripts/install-git-hooks.js",
-    "simplify": "node bin/eos.js simplify"
+    "simplify": "node bin/eos.js simplify",
+    "test:roi3": "node --test tests/roi3-i25-mission-loop-properties.test.js tests/roi3-i25-write-barrier-properties.test.js tests/roi3-i25-seam-mutants-a.test.js tests/roi3-i25-seam-mutants-b.test.js",
+    "audit:mutation:sample": "node scripts/mutation-audit.js --sample 20"
   },
   "keywords": [
     "eos",
