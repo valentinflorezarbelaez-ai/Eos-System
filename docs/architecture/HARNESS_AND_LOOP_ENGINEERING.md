@@ -127,9 +127,24 @@ git worktree remove ../eos-worktrees/<task-id>
 
 ---
 
-## 7. Dual-Route Specification Integration: OpenSpec & Spec-Kit
+## 7. Specification Framework Landscape & EOS Dual-Route Decision
 
-EOS unifies both industry paradigms based on risk:
+> **Source:** LIDR Harness Engineering Workshop (Sep 2026) + EOS architectural experience.
+
+### 7.1 Framework Comparison Matrix
+
+Four specification frameworks dominate the agentic development ecosystem, each optimized for different engineering cultures and risk profiles:
+
+| Framework | Paradigm | Strengths | Weaknesses | Best For |
+|---|---|---|---|---|
+| **OpenSpec** | Living delta-specs, lightweight evolution | Fast brownfield iteration; schema-first; minimal ceremony | Less formal for high-risk domains; depends on team discipline | Agile teams, rapid prototyping, incremental refactoring |
+| **Spec-Kit** | Formal governance, EARS + BDD + ADRs | Constitutional-grade rigor; full traceability; audit-ready | Heavy ceremony; slower iteration; overkill for small changes | Security-critical, compliance-heavy, core architecture |
+| **Superpowers** | Conversational AI-assisted spec generation | Low friction; accessible to non-technical stakeholders | Can produce ambiguous specs without engineering review; lacks formal gates | Discovery phases, stakeholder alignment, rapid ideation |
+| **Spec-Boot** | Bootstrapping from existing code to specs | Excellent for reverse-engineering undocumented codebases | Generated specs may inherit existing architectural debt | Legacy modernization, documentation debt reduction |
+
+### 7.2 EOS Dual-Route Architecture
+
+EOS deliberately combines **OpenSpec** (brownfield) and **Spec-Kit** (critical governance) as complementary routes rather than adopting a single framework. The routing decision is deterministic:
 
 ```text
                     [Inbound Engineering Task]
@@ -146,3 +161,13 @@ EOS unifies both industry paradigms based on risk:
   - Architecture Review ADRs      - Fast Brownfield Refactoring
   - Level 2+ PO Authorization     - Direct TDD Implementation
 ```
+
+### 7.3 Why Not Single-Framework?
+
+| Concern | Single Framework Risk | EOS Dual-Route Mitigation |
+|---|---|---|
+| Over-governance | OpenSpec-only lacks formal gates for critical changes | Spec-Kit route enforces EARS + BDD + ADR for high-risk |
+| Under-governance | Spec-Kit-only creates ceremony bottleneck for trivial fixes | OpenSpec route enables fast delta-specs for brownfield |
+| Adoption friction | Superpowers/Spec-Boot lack the rigor EOS demands | Both routes enforce Evidence Over Claims and deterministic verification |
+| Tool lock-in | Single vendor dependency | Framework-agnostic — routing logic is independent of spec tooling |
+

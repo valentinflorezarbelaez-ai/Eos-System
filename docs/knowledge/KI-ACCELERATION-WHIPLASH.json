@@ -1,0 +1,58 @@
+{
+  "id": "KI-ACCELERATION-WHIPLASH",
+  "title": "Acceleration Whiplash — Empirical Evidence for Harness Engineering",
+  "type": "discovery",
+  "created": "2026-09-08",
+  "source": "LIDR Harness Engineering Workshop (Sep 2026), Álvaro Moya",
+  "status": "active",
+  "summary": "Industry-scale empirical data proving that ungovernered AI-assisted development increases individual throughput while simultaneously degrading team quality metrics. This evidence is the empirical foundation for EOS Harness Engineering, Tripartite Pre-Merge Evaluation, and Evidence Over Claims policies.",
+  "references": [
+    {
+      "name": "Faros AI — The Acceleration Whiplash",
+      "scope": "22,000 developers, 4,000 teams",
+      "url": "https://www.faros.ai/blog/the-acceleration-whiplash"
+    },
+    {
+      "name": "METR Study — AI Developer Productivity",
+      "scope": "Controlled experiment with professional developers",
+      "url": "https://metr.org/research"
+    },
+    {
+      "name": "Stack Overflow Developer Survey 2025",
+      "url": "https://survey.stackoverflow.co/2025/"
+    },
+    {
+      "name": "Lightcast — AI Skills Salary Premium",
+      "url": "https://lightcast.io"
+    }
+  ],
+  "findings": {
+    "adoption_scale": {
+      "ai_assistant_usage": "92.6% of developers use AI assistants monthly (Stack Overflow 2025)",
+      "github_copilot_subscribers": "4.7M paid subscribers, 90% of Fortune 100",
+      "salary_premium": "+28% average salary (~$18,000 USD/year) for developers with AI skills (Lightcast)"
+    },
+    "individual_productivity_gains": {
+      "epics_per_developer": "+66%",
+      "throughput": "+33.7%",
+      "routine_task_reduction": "46% time reduction in well-integrated teams (McKinsey)"
+    },
+    "team_quality_degradation_without_governance": {
+      "bugs_per_developer": "+54%",
+      "incidents_per_pr": "+242.7%",
+      "review_time_increase": "+441% (5x longer reviews)",
+      "prs_merged_without_review": "31.3%"
+    },
+    "perception_vs_reality": {
+      "study": "METR",
+      "finding": "Developers without structured systems completed tasks 19% SLOWER with AI while believing they were 20% FASTER",
+      "implication": "Subjective velocity perception is unreliable; only deterministic sensor output (tests, linters, exit codes) provides valid evidence"
+    }
+  },
+  "eos_policy_mapping": {
+    "tripartite_pre_merge": "Directly addresses 31.3% unreviewed PRs and +441% review time — automated sensor gates replace manual bottleneck",
+    "evidence_over_claims": "Directly addresses METR perception gap — agents cannot self-certify velocity or quality",
+    "harness_engineering": "Directly addresses +54% bugs and +242.7% incidents — structured harness with guides and sensors prevents quality degradation",
+    "tool_pruning": "Indirectly addresses throughput gains — focused tool exposure maximizes quality of AI output while maintaining speed"
+  }
+}
