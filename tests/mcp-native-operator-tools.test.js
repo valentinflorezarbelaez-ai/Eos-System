@@ -12,7 +12,7 @@ describe('EOS native operator MCP tools (v0.6)', () => {
     assert.ok(names.includes('eos.audit.project'));
     assert.ok(names.includes('eos.verify.strict'));
     assert.ok(names.includes('eos.log.evidence'));
-    assert.equal(CANONICAL_TOOLS.length, 78);
+    assert.equal(CANONICAL_TOOLS.length, 80);
   });
 
   test('eos_doctor underscore alias reports VERDICT PASS without homedir leak', async () => {

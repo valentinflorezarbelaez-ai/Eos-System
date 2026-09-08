@@ -6,7 +6,7 @@ test('MCP Tool #74 — eos.pleroma.akasha.engram Wire Protocol & FTS5 Local Memo
   const server = new EosMcpServer();
 
   await t.test('CANONICAL_TOOLS exposes eos.pleroma.akasha.engram as tool #74', () => {
-    assert.strictEqual(CANONICAL_TOOLS.length, 78);
+    assert.strictEqual(CANONICAL_TOOLS.length, 80);
     const tool = CANONICAL_TOOLS.find(t => t.name === 'eos.pleroma.akasha.engram');
     assert.ok(tool);
     assert.strictEqual(tool.category, 'DATA');
