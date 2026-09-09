@@ -91,7 +91,8 @@
     "test:p3": "node --test tests/eos-p3-hooks-install-smoke.test.js",
     "test:p4": "node --test tests/eos-p4-mission-local-evd-seal.test.js",
     "test:p5": "node --test tests/eos-p5-mcp-catalog-reconcile.test.js",
-    "test:p6": "node --test tests/eos-p6-complexity-prune-inventory.test.js"
+    "test:p6": "node --test tests/eos-p6-complexity-prune-inventory.test.js",
+    "test:q2": "node --test tests/eos-q2-ci-seam-pack-p-tests.test.js"
   },
   "keywords": [
     "eos",
