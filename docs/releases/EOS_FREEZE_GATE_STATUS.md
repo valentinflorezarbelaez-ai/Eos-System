@@ -330,6 +330,16 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - DEFER dirty unstaged unchanged
 
+
+
+## R3 Doctor / fusion-light Ladder5 surfaces (2026-09-09)
+
+- Report: `docs/releases/EOS_R3_DOCTOR_FUSION_LIGHT_L5_SURFACES_2026-09-09.md`
+- Branch: `cursor/eos-r3-doctor-fusion-light-l5-surfaces` — push/compare only; do not merge without PO
+- operator-doctor POST_FUSION observes MISSION_ARTIFACT_WRITE + P6_INVENTORY_LOCK; fusion-light optional subset + light exports
+- NON-CLAIM doctor != verify:strict; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged
+- Freeze `main_tip` pin **not** moved in R3 (tip refresh is separate mission)
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`
