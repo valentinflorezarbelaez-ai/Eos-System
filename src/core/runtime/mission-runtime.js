@@ -40,6 +40,7 @@ import { ContractDriftMonitor } from '../governance/contract-drift-monitor.js';
 import { AutonomousScaffolderEngine } from '../scaffolding/autonomous-scaffolder-engine.js';
 import { TerminalHudEngine } from '../observability/terminal-hud-engine.js';
 import { ContextualSkillRouterEngine } from '../discovery/contextual-skill-router-engine.js';
+import { writeMissionArtifactFile } from './mission-artifact-write.js';
 
 export class MissionRuntime {
   constructor(options = {}) {
@@ -73,6 +74,16 @@ export class MissionRuntime {
     return path.join(this.missionsRoot, missionId);
   }
 
+  /** @private Q5: mission artifact write via Write Barrier envelope (not EVD). */
+  _governedMissionWrite(missionDir, targetPath, content, label) {
+    return writeMissionArtifactFile({
+      controlPlaneRoot: this.baseDir,
+      targetPath,
+      content,
+      label: label || 'mission-runtime'
+    });
+  }
+
   _updateManifestFile(missionDir, relPath, contentStr) {
     const manifestFile = path.join(missionDir, 'integrity-manifest.json');
     const manifest = fs.existsSync(manifestFile)
@@ -81,7 +92,12 @@ export class MissionRuntime {
 
     manifest.files[relPath] = calculateSha256(contentStr);
     manifest.updated_at = new Date().toISOString();
-    fs.writeFileSync(manifestFile, JSON.stringify(manifest, null, 2), 'utf8');
+    this._governedMissionWrite(
+      missionDir,
+      manifestFile,
+      JSON.stringify(manifest, null, 2),
+      'integrity-manifest'
+    );
   }
 
   /** Keep integrity-manifest in lockstep after ATS rewrites mission-package.json. */
@@ -113,7 +129,7 @@ export class MissionRuntime {
       2
     );
     fs.mkdirSync(path.join(missionDir, 'evidence'), { recursive: true });
-    fs.writeFileSync(this._nonceStorePath(missionDir), payload, 'utf8');
+    this._governedMissionWrite(missionDir, this._nonceStorePath(missionDir), payload, 'consumed-nonces');
     this._updateManifestFile(missionDir, 'evidence/consumed-nonces.json', payload);
   }
 
@@ -144,7 +160,7 @@ export class MissionRuntime {
     // 2. Discover project profile
     const profile = this.discoveryEngine.discoverProject(projectPath);
     const profileStr = JSON.stringify(profile, null, 2);
-    fs.writeFileSync(path.join(missionDir, 'project-profile.json'), profileStr, 'utf8');
+    this._governedMissionWrite(missionDir, path.join(missionDir, 'project-profile.json'), profileStr, 'project-profile');
 
     // 3. Direction record
     const routingIntent = {
@@ -166,7 +182,7 @@ export class MissionRuntime {
       organic_routing: organicRouting
     };
     const directionStr = JSON.stringify(direction, null, 2);
-    fs.writeFileSync(path.join(missionDir, 'direction.json'), directionStr, 'utf8');
+    this._governedMissionWrite(missionDir, path.join(missionDir, 'direction.json'), directionStr, 'direction');
 
     // 4. Initial ledger and event
     const ledger = new HashChainedLedger({ baseDir: path.join(missionDir, 'ledger') });
@@ -221,7 +237,7 @@ export class MissionRuntime {
     const pkgStr = JSON.stringify(initialPkg, null, 2);
     this.schemas.assertValid(initialPkg, 'mission-package.local.schema.json', 'mission-package');
     this.schemas.assertValid(direction, 'direction.local.schema.json', 'direction');
-    fs.writeFileSync(path.join(missionDir, 'mission-package.json'), pkgStr, 'utf8');
+    this._governedMissionWrite(missionDir, path.join(missionDir, 'mission-package.json'), pkgStr, 'mission-package');
 
     // Constitutional init: AuthorityTruthSource is the sole writer of persisted phase
     this.ats.initMission({
@@ -246,7 +262,7 @@ export class MissionRuntime {
         'mission-package.json': calculateSha256(pkgAfterAts)
       }
     };
-    fs.writeFileSync(path.join(missionDir, 'integrity-manifest.json'), JSON.stringify(manifest, null, 2), 'utf8');
+    this._governedMissionWrite(missionDir, path.join(missionDir, 'integrity-manifest.json'), JSON.stringify(manifest, null, 2), 'integrity-manifest-init');
 
     return {
       mission_id: missionId,
@@ -331,7 +347,7 @@ export class MissionRuntime {
       assertSddCeremonyAuthorized(routingIntent);
       pkg.evidence_policy = { ...(pkg.evidence_policy || {}), strict_tdd: true };
       const pkgGateStr = JSON.stringify(pkg, null, 2);
-      fs.writeFileSync(path.join(missionDir, 'mission-package.json'), pkgGateStr, 'utf8');
+      this._governedMissionWrite(missionDir, path.join(missionDir, 'mission-package.json'), pkgGateStr, 'mission-package-gate');
       this._updateManifestFile(missionDir, 'mission-package.json', pkgGateStr);
     }
 
@@ -396,11 +412,11 @@ export class MissionRuntime {
         status: task.status
       };
       const taskStr = JSON.stringify(taskContract, null, 2);
-      fs.writeFileSync(path.join(missionDir, 'tasks', `${task.task_id}.json`), taskStr, 'utf8');
+      this._governedMissionWrite(missionDir, path.join(missionDir, 'tasks', `${task.task_id}.json`), taskStr, 'task-contract');
       this._updateManifestFile(missionDir, `tasks/${task.task_id}.json`, taskStr);
 
       const selectionStr = JSON.stringify(selection, null, 2);
-      fs.writeFileSync(path.join(missionDir, 'selections', `SEL-${task.task_id}.json`), selectionStr, 'utf8');
+      this._governedMissionWrite(missionDir, path.join(missionDir, 'selections', `SEL-${task.task_id}.json`), selectionStr, 'selection');
       this._updateManifestFile(missionDir, `selections/SEL-${task.task_id}.json`, selectionStr);
     }
 
@@ -421,7 +437,7 @@ export class MissionRuntime {
       rules_cited: this.rules.cite(['R-ATS-01', 'R-HITL-01', 'R-SCHEMA-01', 'R-ORGANIC-01'])
     };
     const planStr = JSON.stringify(plan, null, 2);
-    fs.writeFileSync(path.join(missionDir, 'plan.json'), planStr, 'utf8');
+    this._governedMissionWrite(missionDir, path.join(missionDir, 'plan.json'), planStr, 'plan');
     this._updateManifestFile(missionDir, 'plan.json', planStr);
 
     const authority = direction.authority_level || 'LEVEL_0';
@@ -440,7 +456,7 @@ export class MissionRuntime {
     pkgCommitted.orchestration = pkgCommitted.orchestration || {};
     pkgCommitted.orchestration.tasks = tasks;
     const pkgStr = JSON.stringify(pkgCommitted, null, 2);
-    fs.writeFileSync(pkgFile, pkgStr, 'utf8');
+    this._governedMissionWrite(missionDir, pkgFile, pkgStr, 'mission-package-plan');
     this._updateManifestFile(missionDir, 'mission-package.json', pkgStr);
 
     // Log event
@@ -536,7 +552,7 @@ export class MissionRuntime {
       });
       fs.mkdirSync(path.join(missionDir, 'hitl'), { recursive: true });
       const receiptStr = JSON.stringify(hitlReceipt, null, 2);
-      fs.writeFileSync(path.join(missionDir, 'hitl', 'direction-approval.json'), receiptStr, 'utf8');
+      this._governedMissionWrite(missionDir, path.join(missionDir, 'hitl', 'direction-approval.json'), receiptStr, 'hitl-receipt');
       this._updateManifestFile(missionDir, 'hitl/direction-approval.json', receiptStr);
       this.schemas.assertValid(hitlReceipt, 'hitl-receipt.local.schema.json', 'hitl-receipt');
     }
@@ -552,7 +568,7 @@ export class MissionRuntime {
   _writeMissionArtifact(missionDir, kind, payload) {
     const body = typeof payload === 'string' ? payload : JSON.stringify(payload, null, 2);
     const rel = `artifacts/${kind}.json`;
-    fs.writeFileSync(path.join(missionDir, rel), body, 'utf8');
+    this._governedMissionWrite(missionDir, path.join(missionDir, rel), body, `artifact:${kind}`);
     this._updateManifestFile(missionDir, rel, body);
     return {
       id: kind,
@@ -600,8 +616,8 @@ export class MissionRuntime {
 
     // Write to cursor subdirectory
     const cursorPkgStr = JSON.stringify(jsonPackage, null, 2);
-    fs.writeFileSync(path.join(missionDir, 'cursor', 'mission-package.json'), cursorPkgStr, 'utf8');
-    fs.writeFileSync(path.join(missionDir, 'cursor', 'CURSOR_PROMPT.md'), markdownPrompt, 'utf8');
+    this._governedMissionWrite(missionDir, path.join(missionDir, 'cursor', 'mission-package.json'), cursorPkgStr, 'cursor-package');
+    this._governedMissionWrite(missionDir, path.join(missionDir, 'cursor', 'CURSOR_PROMPT.md'), markdownPrompt, 'cursor-prompt');
 
     // Update integrity manifest
     this._updateManifestFile(missionDir, 'cursor/mission-package.json', cursorPkgStr);
@@ -677,8 +693,8 @@ export class MissionRuntime {
 
     // Save reports
     const reportJsonStr = JSON.stringify(jsonReport, null, 2);
-    fs.writeFileSync(path.join(missionDir, 'reports', 'executive-report.json'), reportJsonStr, 'utf8');
-    fs.writeFileSync(path.join(missionDir, 'reports', 'EXECUTIVE_REPORT.md'), markdownReport, 'utf8');
+    this._governedMissionWrite(missionDir, path.join(missionDir, 'reports', 'executive-report.json'), reportJsonStr, 'executive-report-json');
+    this._governedMissionWrite(missionDir, path.join(missionDir, 'reports', 'EXECUTIVE_REPORT.md'), markdownReport, 'executive-report-md');
     this._updateManifestFile(missionDir, 'reports/executive-report.json', reportJsonStr);
     this._updateManifestFile(missionDir, 'reports/EXECUTIVE_REPORT.md', markdownReport);
 
@@ -910,7 +926,7 @@ export class MissionRuntime {
     // Save assessment to evidence folder
     const assessmentFile = path.join(missionDir, 'evidence', `return-${taskId}-assessment.json`);
     const assessmentStr = JSON.stringify(evaluation, null, 2);
-    fs.writeFileSync(assessmentFile, assessmentStr, 'utf8');
+    this._governedMissionWrite(missionDir, assessmentFile, assessmentStr, 'return-assessment');
     this._updateManifestFile(missionDir, `evidence/return-${taskId}-assessment.json`, assessmentStr);
 
     // Load selection record if available
@@ -921,7 +937,7 @@ export class MissionRuntime {
     const supervision = this.supervisionEngine.evaluateSubmission(taskContract, selectionRecord, returnPkg, []);
     const supervisionFile = path.join(missionDir, 'evidence', `supervision-${taskId}.json`);
     const supervisionStr = JSON.stringify(supervision, null, 2);
-    fs.writeFileSync(supervisionFile, supervisionStr, 'utf8');
+    this._governedMissionWrite(missionDir, supervisionFile, supervisionStr, 'supervision');
     this._updateManifestFile(missionDir, `evidence/supervision-${taskId}.json`, supervisionStr);
 
     // Log to ledger

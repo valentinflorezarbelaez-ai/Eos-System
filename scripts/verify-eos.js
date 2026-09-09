@@ -9,6 +9,7 @@ import { ContractEvidenceSealer } from '../src/core/formal/contract-evidence-sea
 import { EconomicContractValidator } from '../src/core/formal/economic-contract-validator.js';
 import { EvidenceCustody } from '../src/core/sdd/evidence-custody.js';
 import { auditCanonicalEvdWritePaths, auditMissionLocalEvdWritePaths } from '../src/core/sdd/evd-seal-path.js';
+import { auditMissionArtifactWritePaths } from '../src/core/runtime/mission-artifact-write.js';
 import { verifyEngramContract } from '../src/core/memory/engram-contract.js';
 import { auditFusionControlPlane, FUSION_CP_REQUIRED_PATHS } from './lib/fusion-cp-lock.js';
 import { auditSentinelFdir, SENTINEL_FDIR_REQUIRED_PATHS } from './lib/sentinel-fdir-lock.js';
@@ -1005,6 +1006,30 @@ function verifyWorkspace() {
         path: 'src/core/memory/engram-contract.js',
         message: 'Engram contract audit failed: ' + err.message,
         type: 'engram-contract'
+      });
+    }
+
+    // 3g2d. Q5 mission-artifact write governance (selected writers via Write Barrier envelope)
+    try {
+      const missionArtifactAudit = auditMissionArtifactWritePaths(rootDir);
+      if (!missionArtifactAudit.ok) {
+        report.failures.push({
+          path: 'src/core/runtime/mission-artifact-write.js',
+          message: 'Q5 mission-artifact write bypass detected: ' + JSON.stringify(missionArtifactAudit.violations),
+          type: 'mission-artifact-write'
+        });
+      } else {
+        report.checks.push({
+          path: 'MissionArtifactWrite (routed=' + (missionArtifactAudit.routedOk || []).join(',') + ')',
+          status: 'VERIFIED',
+          type: 'mission-artifact-write'
+        });
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'src/core/runtime/mission-artifact-write.js',
+        message: 'Q5 mission-artifact write governance audit failed: ' + err.message,
+        type: 'mission-artifact-write'
       });
     }
 

@@ -50,6 +50,7 @@ updated_at: 2026-09-09 America/Bogota (Q1 Ladder5 tip refresh; pin to main@74332
 | MCP catalog reconcile (P5) | COMPLETE | MEASURED (#58; EOS_P5_MCP_CATALOG_RECONCILE_2026-09-09.md; catalog 80==CANONICAL_TOOLS; test:p5) |
 | Complexity prune inventory (P6) | COMPLETE | MEASURED (#59; EOS_P6_COMPLEXITY_PRUNE_INVENTORY_2026-09-09.md; docs inventory only; optional observe NON-CLAIM; Ladder4 P1-P6 complete after merge) |
 | Ladder 5 maturity gap audit | COMPLETE | MEASURED (#60; EOS_MATURITY_LADDER_5_AUDIT_2026-09-09.md; Q1-Q6 ordered) |
+| Q5 mission artifact write governance | COMPLETE | MEASURED (branch cursor/eos-q5-mission-artifact-write-governance; .missions Write Barrier + envelope; test:q5; PRODUCTION_READY=NO) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -75,3 +76,7 @@ PRODUCTION_READY: NO
 - Prior P1 tip pin 5917abc24b5ee03eabdc4e741ffe1d06f168c013 (Ladder 4 audit #53 / P1) retired
 - Rows added/normalized for P1 Ladder4 tip refresh, P2 CI seam-pack N2-N6, P3 hooks install (+ P4-P6) + Ladder 5 audit
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Q5 notes
+
+- Selected mission artifact writers routed through Write Barrier/.missions envelope; no parallel EVD ledger; Fundacion Delta=0; tip pin not moved.

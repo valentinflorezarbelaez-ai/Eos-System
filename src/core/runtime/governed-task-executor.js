@@ -17,6 +17,7 @@ import { MultiAgentSupervisionEngine } from '../supervision/multi-agent-supervis
 import { GovernedAutoRepairService } from './governed-auto-repair-service.js';
 import { sealEvd } from '../sdd/evd-seal-path.js';
 import { EvidenceCustody } from '../sdd/evidence-custody.js';
+import { writeMissionArtifactFile } from './mission-artifact-write.js';
 
 export class GovernedTaskExecutor {
   /**
@@ -47,6 +48,16 @@ export class GovernedTaskExecutor {
       return path.dirname(parent);
     }
     return process.cwd();
+  }
+
+  /** @private Q5: mission artifact write via Write Barrier envelope (not EVD). */
+  _governedMissionWrite(missionDir, targetPath, content, label) {
+    return writeMissionArtifactFile({
+      controlPlaneRoot: this._resolveControlPlaneRoot(missionDir),
+      targetPath,
+      content,
+      label: label || 'governed-task-executor'
+    });
   }
 
   /**
@@ -133,7 +144,7 @@ export class GovernedTaskExecutor {
     // 2. Transition Task Status to 'running'
     taskContract.status = 'running';
     taskContract.started_at = new Date().toISOString();
-    fs.writeFileSync(taskFile, JSON.stringify(taskContract, null, 2), 'utf8');
+    this._governedMissionWrite(missionDir, taskFile, JSON.stringify(taskContract, null, 2), 'task-status-running');
 
     const evidenceDir = path.join(missionDir, 'evidence');
     if (!fs.existsSync(evidenceDir)) {
@@ -281,7 +292,7 @@ export class GovernedTaskExecutor {
     taskContract.result_ref = receiptId;
     taskContract.duration_ms = durationMs;
     const taskFinalStr = JSON.stringify(taskContract, null, 2);
-    fs.writeFileSync(taskFile, taskFinalStr, 'utf8');
+    this._governedMissionWrite(missionDir, taskFile, taskFinalStr, 'task-status-final');
     this._updateManifestFile(missionDir, `tasks/${taskId}.json`, taskFinalStr);
 
     // 6. Record Immutable Event in Ledger
@@ -317,7 +328,7 @@ export class GovernedTaskExecutor {
       manifest.files = manifest.files || {};
       manifest.files[relPath] = calculateSha256(contentStr);
       manifest.updated_at = new Date().toISOString();
-      fs.writeFileSync(manifestFile, JSON.stringify(manifest, null, 2), 'utf8');
+      this._governedMissionWrite(missionDir, manifestFile, JSON.stringify(manifest, null, 2), 'integrity-manifest');
     } catch {
       // Manifest update best effort
     }
