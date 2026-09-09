@@ -11,7 +11,7 @@ Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-09 America/Bogota (P5 MCP catalog reconcile 80; PRODUCTION_READY=NO)
+updated_at: 2026-09-09 America/Bogota (P6 complexity prune inventory; Ladder4 P1-P6 complete after merge; PRODUCTION_READY=NO)
 ```
 
 ## Closed on main (fusion + ROI1–6 + Ladder2 M1–M6 + G7 + Ladder3 N1–N6 + Ladder4 audit)
@@ -217,6 +217,24 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - `test:p4` + mission-local audit in verify:strict; no false DENY on sealEvd callers
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; dirty tree deferred unchanged
+
+
+## P5 MCP catalog reconcile (2026-09-09)
+
+- Report: docs/releases/EOS_P5_MCP_CATALOG_RECONCILE_2026-09-09.md
+- Merged via #58 (6bc0472) — catalog 80 == live CANONICAL_TOOLS; test:p5
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+
+## P6 Complexity prune inventory (+ optional soak observe) (2026-09-09)
+
+- Report: docs/releases/EOS_P6_COMPLEXITY_PRUNE_INVENTORY_2026-09-09.md
+- Branch: cursor/eos-p6-complexity-prune-inventory — push/compare only; do not merge without PO
+- Docs-only ranked prune candidates for src/core islands not required by verify/fusion-cp/sentinel/doctor; ROI2 already done; **no code delete/move**
+- Optional HUD/doctor/gameday --soak observe recipe is NON-CLAIM / opt-in; **no mandatory CI soak**
+- **After merge: Ladder 4 P1–P6 complete**; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unchanged
+- Next work requires a new maturity ladder / PO brief (do not silently start Ladder 5 here)
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`
