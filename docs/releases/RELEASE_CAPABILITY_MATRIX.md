@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 74332e2938090e1e8e64d41310a46d2a722bf741
+evaluated_tip: 4753240eb003ecb3948e17d93e5511a7b35a40f0
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #60 from valentinflorezarbelaez-ai/cursor/eos-ladder-5-audit
-updated_at: 2026-09-09 America/Bogota (Q1 Ladder5 tip refresh; pin to main@74332e2 post audit #60; PRODUCTION_READY=NO)
+main_subject: Merge pull request #67 from valentinflorezarbelaez-ai/cursor/eos-ladder6-audit
+updated_at: 2026-09-09 America/Bogota (R1 Ladder6 tip refresh; pin to main@4753240 post audit #67; Q6 close was 7c82d43; PRODUCTION_READY=NO)
 ```
 
 
@@ -50,7 +50,13 @@ updated_at: 2026-09-09 America/Bogota (Q1 Ladder5 tip refresh; pin to main@74332
 | MCP catalog reconcile (P5) | COMPLETE | MEASURED (#58; EOS_P5_MCP_CATALOG_RECONCILE_2026-09-09.md; catalog 80==CANONICAL_TOOLS; test:p5) |
 | Complexity prune inventory (P6) | COMPLETE | MEASURED (#59; EOS_P6_COMPLEXITY_PRUNE_INVENTORY_2026-09-09.md; docs inventory only; optional observe NON-CLAIM; Ladder4 P1-P6 complete after merge) |
 | Ladder 5 maturity gap audit | COMPLETE | MEASURED (#60; EOS_MATURITY_LADDER_5_AUDIT_2026-09-09.md; Q1-Q6 ordered) |
-| Q5 mission artifact write governance | COMPLETE | MEASURED (branch cursor/eos-q5-mission-artifact-write-governance; .missions Write Barrier + envelope; test:q5; PRODUCTION_READY=NO) |
+| Ladder5 tip refresh (Q1) | COMPLETE | MEASURED (#61; EOS_Q1_LADDER5_TIP_REFRESH_2026-09-09.md; freeze+matrix to 74332e2) |
+| CI seam-pack P-tests (Q2) | COMPLETE | MEASURED (#62; EOS_Q2_CI_SEAM_PACK_P_TESTS_2026-09-09.md; seam-pack test:p2 + p4..p6; test:q2) |
+| Doctor / fusion-light L4 surfaces (Q3) | COMPLETE | MEASURED (#63; EOS_Q3_DOCTOR_FUSION_LIGHT_L4_SURFACES_2026-09-09.md; POST_FUSION L4; test:q3) |
+| Complexity budget recount (Q4) | COMPLETE | MEASURED (#64; EOS_Q4_COMPLEXITY_BUDGET_RECOUNT_2026-09-09.md; AT_CEILING 35/35; test:q4) |
+| Q5 mission artifact write governance | COMPLETE | MEASURED (#65; EOS_Q5_MISSION_ARTIFACT_WRITE_GOVERNANCE_2026-09-09.md; Write Barrier .missions; test:q5) |
+| P6 inventory verify lock (Q6) | COMPLETE | MEASURED (#66; EOS_Q6_P6_INVENTORY_VERIFY_LOCK_2026-09-09.md; p6-inventory-lock.js; test:q6) |
+| Ladder 6 maturity gap audit | COMPLETE | MEASURED (#67; EOS_MATURITY_LADDER_6_AUDIT_2026-09-09.md; R1-R6 ordered) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -70,13 +76,16 @@ COMPLETE_WITH_CONDITIONS: (subset)
 PRODUCTION_READY: NO
 ```
 
-## Tip refresh notes (Q1)
+## Tip refresh notes (R1)
 
-- evaluated_tip pinned to OBSERVED main tip after Ladder 5 audit #60: 74332e2938090e1e8e64d41310a46d2a722bf741
-- Prior P1 tip pin 5917abc24b5ee03eabdc4e741ffe1d06f168c013 (Ladder 4 audit #53 / P1) retired
-- Rows added/normalized for P1 Ladder4 tip refresh, P2 CI seam-pack N2-N6, P3 hooks install (+ P4-P6) + Ladder 5 audit
+- evaluated_tip pinned to OBSERVED main tip after Ladder 6 audit #67: 4753240eb003ecb3948e17d93e5511a7b35a40f0
+- Q6 close tip was 7c82d43adc2e57db606fcf831016052b11aa19f5 (#66); pin uses post-audit 4753240 so HUD freeze observe does not DIVERGE immediately (same honesty pattern as L5 Q1)
+- Prior Q1 tip pin 74332e2938090e1e8e64d41310a46d2a722bf741 (Ladder 5 audit #60 / Q1) retired
+- Rows added/normalized for Q1 tip refresh, Q2 CI seam-pack P-tests, Q3 doctor/fusion-light L4, Q4 complexity recount, Q5 mission-artifact, Q6 P6 inventory lock + Ladder 6 audit
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
-## Q5 notes
+## Q5–Q6 notes (historical)
 
-- Selected mission artifact writers routed through Write Barrier/.missions envelope; no parallel EVD ledger; Fundacion Delta=0; tip pin not moved.
+- Q5: Selected mission artifact writers routed through Write Barrier/.missions envelope; no parallel EVD ledger; Fundacion Delta=0.
+- Q6: verify:strict fail-closed P6 inventory lock; NON-CLAIM inventory ≠ executed prune.
+- Tip pin moved by R1 (this refresh) to post-L6-audit main@4753240.

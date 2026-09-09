@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 74332e2938090e1e8e64d41310a46d2a722bf741
-main_subject: Merge pull request #60 from valentinflorezarbelaez-ai/cursor/eos-ladder-5-audit
-branch_hygiene: clean (main == origin/main @ 74332e2; Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 audit #60 closed on main)
+main_tip: 4753240eb003ecb3948e17d93e5511a7b35a40f0
+main_subject: Merge pull request #67 from valentinflorezarbelaez-ai/cursor/eos-ladder6-audit
+branch_hygiene: clean (main == origin/main @ 4753240; Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 audit #67 closed on main)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-09 America/Bogota (Q1 Ladder5 tip refresh; pin to main@74332e2 post audit #60; PRODUCTION_READY=NO)
+updated_at: 2026-09-09 America/Bogota (R1 Ladder6 tip refresh; pin to main@4753240 post audit #67; Q6 close was 7c82d43; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 audit)
+## Closed on main (fusion + ROI1-6 + Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 audit)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `74332e2938090e1e8e64d41310a46d2a722bf741`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `4753240eb003ecb3948e17d93e5511a7b35a40f0`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -55,6 +55,13 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | P5 MCP catalog reconcile | #58 | 6bc0472 | `EOS_P5_MCP_CATALOG_RECONCILE_2026-09-09.md`; catalog 80==CANONICAL_TOOLS; test:p5 |
 | P6 complexity prune inventory | #59 | 333b5bd | `EOS_P6_COMPLEXITY_PRUNE_INVENTORY_2026-09-09.md`; inventory only; test:p6 |
 | Ladder 5 maturity gap audit | #60 | 74332e2 | `EOS_MATURITY_LADDER_5_AUDIT_2026-09-09.md` (Q1-Q6 ordered; Q1 tip refresh separate) |
+| Q1 Ladder5 tip refresh | #61 | 2a55864 | `EOS_Q1_LADDER5_TIP_REFRESH_2026-09-09.md`; freeze+matrix to 74332e2 |
+| Q2 CI seam-pack P-tests | #62 | 21455a4 | `EOS_Q2_CI_SEAM_PACK_P_TESTS_2026-09-09.md`; ci.yml seam-pack test:p2 + p4..p6; test:q2 |
+| Q3 Doctor / fusion-light L4 | #63 | 00dd01d | `EOS_Q3_DOCTOR_FUSION_LIGHT_L4_SURFACES_2026-09-09.md`; POST_FUSION L4; test:q3 |
+| Q4 Complexity budget recount | #64 | 6a56b85 | `EOS_Q4_COMPLEXITY_BUDGET_RECOUNT_2026-09-09.md`; AT_CEILING 35/35; test:q4 |
+| Q5 Mission artifact write gov | #65 | 9a58bc4 | `EOS_Q5_MISSION_ARTIFACT_WRITE_GOVERNANCE_2026-09-09.md`; Write Barrier .missions; test:q5 |
+| Q6 P6 inventory verify lock | #66 | 7c82d43 | `EOS_Q6_P6_INVENTORY_VERIFY_LOCK_2026-09-09.md`; p6-inventory-lock.js; test:q6 |
+| Ladder 6 maturity gap audit | #67 | 4753240 | `EOS_MATURITY_LADDER_6_AUDIT_2026-09-09.md` (R1-R6 ordered; R1 tip refresh separate) |
 
 ### Antigravity / agy remote-control
 
@@ -302,6 +309,18 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - Freeze `main_tip` pin **not** moved in Q6 (tip refresh is separate mission)
 
+
+## R1 Ladder 6 tip refresh (2026-09-09)
+
+- Report: `docs/releases/EOS_R1_LADDER6_TIP_REFRESH_2026-09-09.md`
+- Branch: `cursor/eos-r1-ladder6-tip-refresh` — push/compare only; do not merge without PO
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`4753240eb003ecb3948e17d93e5511a7b35a40f0` (Ladder 6 audit #67)
+- Honesty: Q6 close tip was `7c82d43adc2e57db606fcf831016052b11aa19f5` (#66); pin uses post-audit tip `4753240` so HUD freeze observe does not DIVERGE immediately (same pattern as L5 Q1 → post-audit #60)
+- Matrix rows added/normalized for Q1 tip refresh, Q2 CI seam-pack P-tests, Q3 doctor/fusion-light L4, Q4 complexity recount, Q5 mission-artifact, Q6 P6 inventory lock + Ladder 6 audit MEASURED
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- Prior Q1 tip pin `74332e2938090e1e8e64d41310a46d2a722bf741` retired (historical)
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`
@@ -313,6 +332,8 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Prior N1 tip pin (pre-P1): `e6d1d06ac7450bc8fc94153e4bad7465396a472e`
 - Prior P1 tip pin (pre-Q1): `5917abc24b5ee03eabdc4e741ffe1d06f168c013`
 - Prior P6 main tip (pre-L5 audit): `333b5bd198e9d584ad639e67b678ceea373563a5`
+- Prior Q1 tip pin (pre-R1): `74332e2938090e1e8e64d41310a46d2a722bf741`
+- Prior Q6 close tip (pre-L6 audit): `7c82d43adc2e57db606fcf831016052b11aa19f5`
 
 ## Not production
 
@@ -339,5 +360,5 @@ External production readiness is explicitly **not** asserted.
 - Report: `docs/releases/EOS_MATURITY_LADDER_6_AUDIT_2026-09-09.md`
 - Branch: `cursor/eos-ladder6-audit` — push/compare only; do not merge without PO
 - Audit base tip OBSERVED: main@`7c82d43adc2e57db606fcf831016052b11aa19f5` (Q6 #66)
-- Freeze `main_tip` SSOT unchanged (still Q1 pin `74332e2`); tip refresh is ordered **R1** (not implemented in this audit branch)
+- Merged as #67 (`4753240`); freeze tip refreshed by **R1** to main@`4753240eb003ecb3948e17d93e5511a7b35a40f0` (Q6 close was `7c82d43`)
 - Ordered next ladder R1–R6; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
