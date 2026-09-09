@@ -76,13 +76,41 @@ export function assertUnderMissionsRoot(targetPath, controlPlaneRoot) {
 
 /**
  * Ensure ephemeral control planes (temp fixtures) have SSOT including `.missions`.
- * Does not mutate an existing production SSOT file.
+ * Seeds missing SSOT; if an existing fixture SSOT omits `.missions`, idempotently
+ * prepends that allow root without weakening deny lists. No-op when already present
+ * (production SSOT already includes `.missions`).
  * @param {string} controlPlaneRoot
  */
 export function ensureMissionsWriteBarrierSsot(controlPlaneRoot) {
   const root = path.resolve(controlPlaneRoot);
   const configPath = path.join(root, SSOT_CONFIG_REL);
-  if (fs.existsSync(configPath)) return { seeded: false, configPath };
+  if (fs.existsSync(configPath)) {
+    let raw;
+    try {
+      raw = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    } catch {
+      // Leave invalid SSOT for loadSsotRoots fail-closed; do not silently rewrite.
+      return { seeded: false, patched: false, configPath };
+    }
+    const allows = Array.isArray(raw.repoRelativeAllowRoots)
+      ? raw.repoRelativeAllowRoots.map(String)
+      : [];
+    if (allows.includes(MISSION_ARTIFACT_ALLOW_ROOT)) {
+      return { seeded: false, patched: false, configPath };
+    }
+    // Ephemeral / pre-Q5 fixtures often omit .missions while listing other roots.
+    // Idempotently add the mission-artifact allow root without weakening deny lists.
+    const next = {
+      ...raw,
+      version: Number(raw.version) || 1,
+      repoRelativeAllowRoots: [MISSION_ARTIFACT_ALLOW_ROOT, ...allows],
+      alwaysDenyRepoRelative: Array.isArray(raw.alwaysDenyRepoRelative)
+        ? raw.alwaysDenyRepoRelative.map(String)
+        : ['Fundacion', 'docs/governance']
+    };
+    fs.writeFileSync(configPath, `${JSON.stringify(next, null, 2)}\n`, 'utf8');
+    return { seeded: false, patched: true, configPath, code: 'MISSIONS_ROOT_ENSURED' };
+  }
   fs.mkdirSync(path.dirname(configPath), { recursive: true });
   const payload = {
     version: 1,
@@ -100,7 +128,7 @@ export function ensureMissionsWriteBarrierSsot(controlPlaneRoot) {
     protectedFilesRepoRelative: []
   };
   fs.writeFileSync(configPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
-  return { seeded: true, configPath };
+  return { seeded: true, patched: false, configPath };
 }
 
 /**

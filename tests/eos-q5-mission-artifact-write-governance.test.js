@@ -78,6 +78,42 @@ describe('Q5 mission artifact write governance', () => {
     assert.match(fs.readFileSync(target, 'utf8'), /"ok": true/);
   });
 
+  it('ensureMissionsWriteBarrierSsot patches incomplete existing fixture SSOT', () => {
+    // Mirrors mission-loop / Phase4 fixtures that predate Q5 .missions allow root.
+    fs.mkdirSync(path.join(tempRoot, 'config', 'security'), { recursive: true });
+    const ssotPath = path.join(tempRoot, 'config', 'security', 'write-barrier-ssot-roots.json');
+    fs.writeFileSync(
+      ssotPath,
+      JSON.stringify(
+        {
+          version: 1,
+          repoRelativeAllowRoots: ['src', 'tests', 'docs', 'config', 'scripts'],
+          alwaysDenyRepoRelative: ['Fundacion']
+        },
+        null,
+        2
+      ),
+      'utf8'
+    );
+    const ensured = ensureMissionsWriteBarrierSsot(tempRoot);
+    assert.equal(ensured.patched, true);
+    const raw = JSON.parse(fs.readFileSync(ssotPath, 'utf8'));
+    assert.ok(raw.repoRelativeAllowRoots.includes(MISSION_ARTIFACT_ALLOW_ROOT));
+    // Other roots preserved — do not weaken / replace global allowlist.
+    assert.ok(raw.repoRelativeAllowRoots.includes('src'));
+    assert.ok(raw.alwaysDenyRepoRelative.includes('Fundacion'));
+
+    const target = path.join(tempRoot, '.missions', 'MIS-LOOP', 'direction.json');
+    const result = writeMissionArtifactFile({
+      controlPlaneRoot: tempRoot,
+      targetPath: target,
+      content: JSON.stringify({ goal: 'loop' }, null, 2),
+      label: 'q5-incomplete-ssot'
+    });
+    assert.equal(result.governed, true);
+    assert.ok(fs.existsSync(target));
+  });
+
   it('writeMissionArtifactFile denies Fundacion paths', () => {
     ensureMissionsWriteBarrierSsot(tempRoot);
     fs.mkdirSync(path.join(tempRoot, 'Fundacion'), { recursive: true });

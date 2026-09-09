@@ -48,7 +48,7 @@ function makeTempRepo() {
     JSON.stringify(
       {
         version: 1,
-        repoRelativeAllowRoots: ['src', 'tests', 'docs', 'config', 'scripts'],
+        repoRelativeAllowRoots: ['.missions', 'src', 'tests', 'docs', 'config', 'scripts'],
         alwaysDenyRepoRelative: ['Fundacion']
       },
       null,
