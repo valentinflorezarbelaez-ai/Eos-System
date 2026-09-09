@@ -121,3 +121,49 @@ test("MCP-SSOT-03: --check fails when eos-local drifts from SSOT", async () => {
   const agentsResult = check.results.find((r) => r.path === ".agents/mcp_config.json");
   assert.equal(agentsResult.status, "DRIFT");
 });
+
+test("MCP-SSOT-04: check allows missing gitignored consumer", async () => {
+  const { runSync } = await loadSync();
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "eos-mcp-ssot-"));
+  const ssotPath = writeMinimalSsot(root);
+  // Generate only tracked consumers by writing them, leave windsurf absent
+  runSync({ root, ssotPath, check: false });
+  const windsurfPath = path.join(root, ".windsurf/mcp.json");
+  fs.rmSync(windsurfPath, { force: true });
+  const check = runSync({ root, ssotPath, check: true });
+  assert.equal(check.ok, true);
+  assert.equal(check.drifted, false);
+  const windsurf = check.results.find((r) => r.path === ".windsurf/mcp.json");
+  assert.equal(windsurf.status, "ABSENT_OK");
+  assert.equal(windsurf.gitignored, true);
+  const agents = check.results.find((r) => r.path === ".agents/mcp_config.json");
+  assert.equal(agents.status, "OK");
+});
+
+test("MCP-SSOT-05: check still fails on drift for present gitignored consumer", async () => {
+  const { runSync } = await loadSync();
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "eos-mcp-ssot-"));
+  const ssotPath = writeMinimalSsot(root);
+  runSync({ root, ssotPath, check: false });
+  const windsurfPath = path.join(root, ".windsurf/mcp.json");
+  const doc = JSON.parse(fs.readFileSync(windsurfPath, "utf8"));
+  doc.mcpServers["eos-local"].env.EOS_MODE = "tampered";
+  fs.writeFileSync(windsurfPath, JSON.stringify(doc, null, 2) + "\n");
+  const check = runSync({ root, ssotPath, check: true });
+  assert.equal(check.ok, false);
+  assert.equal(check.drifted, true);
+  const windsurf = check.results.find((r) => r.path === ".windsurf/mcp.json");
+  assert.equal(windsurf.status, "DRIFT");
+});
+
+test("MCP-SSOT-06: check still fails when tracked consumer is missing", async () => {
+  const { runSync } = await loadSync();
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "eos-mcp-ssot-"));
+  const ssotPath = writeMinimalSsot(root);
+  runSync({ root, ssotPath, check: false });
+  fs.rmSync(path.join(root, ".agents/mcp_config.json"), { force: true });
+  const check = runSync({ root, ssotPath, check: true });
+  assert.equal(check.ok, false);
+  const agents = check.results.find((r) => r.path === ".agents/mcp_config.json");
+  assert.equal(agents.status, "MISSING");
+});

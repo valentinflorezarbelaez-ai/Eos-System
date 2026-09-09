@@ -163,7 +163,7 @@ export function auditFusionControlPlane(rootDir) {
     const syncResult = runSync({ root: root, ssotPath: ssotPath, check: true });
     if (!syncResult.ok) {
       const bad = (syncResult.results || [])
-        .filter(function (r) { return r.status !== 'OK'; })
+        .filter(function (r) { return r.status !== 'OK' && r.status !== 'ABSENT_OK'; })
         .map(function (r) { return r.path + ':' + r.status; })
         .join(', ');
       throw new Error('MCP SSOT sync contract drift: ' + bad);
