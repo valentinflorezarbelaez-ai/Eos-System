@@ -137,6 +137,8 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'gameday:long-run', 'CI GameDay long-run');
         assertContains(yaml, 'seam-pack', 'CI seam-pack job');
         assertContains(yaml, 'test:roi3', 'CI ROI seam pack');
+        assertContains(yaml, 'test:n2', 'CI Ladder3 N seam pack');
+        assertContains(yaml, 'test:n6', 'CI Ladder3 N seam pack end');
       } catch (err) {
         failures.push(err.message);
       }
