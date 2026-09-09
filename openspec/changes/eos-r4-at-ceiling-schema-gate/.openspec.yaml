@@ -1,0 +1,18 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Fail-closed AT_CEILING schema pressure gate — deny new docs/schemas JSON while COMPLEXITY_BUDGET is at ceiling (35/35) or dishonest WITHIN_BUDGET; wire audit into verify:strict.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - scripts/lib/complexity-budget-lock.js
+  - scripts/verify-eos.js
+  - tests/eos-r4-at-ceiling-schema-gate.test.js
+  - docs/governance/COMPLEXITY_BUDGET.json
+  - docs/releases
+non_goals:
+  - Fundacion writes
+  - App Fuerza writes
+  - raising max_schemas
+  - executing P6 prune/quarantine
+  - new root npm dependencies
+  - claiming PRODUCTION_READY

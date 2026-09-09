@@ -340,6 +340,16 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - NON-CLAIM doctor != verify:strict; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged
 - Freeze `main_tip` pin **not** moved in R3 (tip refresh is separate mission)
 
+## R4 AT_CEILING schema pressure gate (2026-09-09)
+
+- Report: `docs/releases/EOS_R4_AT_CEILING_SCHEMA_GATE_2026-09-09.md`
+- Branch: `cursor/eos-r4-at-ceiling-schema-gate` — push/compare only; do not merge without PO
+- Fail-closed gate: while COMPLEXITY_BUDGET is **AT_CEILING** (schemas 35/35, `recursive_docs_schemas_json`), verify:strict DENIES OVER count / dishonest WITHIN_BUDGET / missing counting_rule; new schemas under `docs/schemas` **FORBIDDEN** unless PO raises max or prunes
+- Lock: `scripts/lib/complexity-budget-lock.js`; `test:r4`
+- NON-CLAIM: Gate != executed prune; P6 quarantine NOT executed; PRODUCTION_READY: NO; Fundacion Delta=0
+- Freeze `main_tip` pin **not** moved in R4 (tip refresh is separate mission)
+
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`

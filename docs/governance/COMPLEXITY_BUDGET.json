@@ -40,6 +40,13 @@
   "honesty_lock": {
     "ladder": "Ladder 5 Q4 / K4",
     "date": "2026-09-09",
-    "note": "Pre-Q4 claim schemas:33 WITHIN_BUDGET was dishonest vs recursive filesystem count 35. Q4 locks recursive rule + AT_CEILING. Optional PO quarantine of P6 candidates NOT executed (no paths named)."
+    "note": "Pre-Q4 claim schemas:33 WITHIN_BUDGET was dishonest vs recursive filesystem count 35. Q4 locks recursive rule + AT_CEILING. Optional PO quarantine of P6 candidates NOT executed (no paths named).",
+    "r4_gate": "2026-09-09 Ladder 6 R4 AT_CEILING schema pressure gate wired into verify:strict"
+  },
+  "policy": {
+    "at_ceiling_new_schemas": "FORBIDDEN",
+    "rule": "While status is AT_CEILING, new schema JSON files under docs/schemas/ are forbidden unless PO raises budgets.max_schemas or prunes existing schemas.",
+    "gate": "scripts/lib/complexity-budget-lock.js (R4) — fail-closed in verify:strict",
+    "non_claim": "Gate != executed prune. Inventory != quarantine. Optional PO quarantine of P6 candidates NOT executed (no paths named)."
   }
 }
