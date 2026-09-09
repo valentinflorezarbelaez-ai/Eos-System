@@ -72,6 +72,10 @@ diff --git a/config.js b/config.js
     assert.ok(fs.existsSync(targetHook));
     const content = fs.readFileSync(targetHook, 'utf8');
     assert.ok(content.includes('node scripts/pre-commit-hook.js'));
+    const pushHook = path.join(tempHooksDir, 'pre-push');
+    assert.ok(fs.existsSync(pushHook));
+    const pushContent = fs.readFileSync(pushHook, 'utf8');
+    assert.ok(pushContent.includes('node scripts/pre-push-hook.js'));
 
     fs.rmSync(tempHooksDir, { recursive: true, force: true });
   });

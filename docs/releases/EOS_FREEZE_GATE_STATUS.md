@@ -80,3 +80,10 @@ External production readiness is explicitly **not** asserted.
 - Base tip at branch start: e88fc04 (audit #38 on main)
 - PRODUCTION_READY remains NO; Fundacion Delta=0; DEFER dirty unstaged unchanged
 
+
+## M2 Local main-push surrogate (2026-09-08)
+
+- Report: docs/releases/EOS_M2_LOCAL_MAIN_PUSH_SURROGATE_2026-09-08.md
+- Branch: cursor/eos-m2-local-main-push-surrogate - push/compare only; do not merge without PO
+- Local pre-push surrogate fail-closed for main; **local surrogate ≠ GH enforcement** (ROI3 remains RULE_CREATED_NOT_ENFORCED)
+- PRODUCTION_READY remains NO; Fundacion Delta=0

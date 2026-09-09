@@ -52,3 +52,9 @@ This doc does **not** recommend changing visibility; it only records the option.
 - CI pass / rule create is **not** PRODUCTION_READY.
 - Fundacion untouched.
 - No merge to `main` from this docs branch is implied by recording status alone.
+
+## Local main-push surrogate (M2, 2026-09-08)
+
+- Report: `docs/releases/EOS_M2_LOCAL_MAIN_PUSH_SURROGATE_2026-09-08.md`
+- Local optional pre-push fail-closed blocks direct/force updates to main unless EOS_ALLOW_MAIN_PUSH=1.
+- **Local surrogate ≠ GitHub enforcement.** Status remains **RULE_CREATED_NOT_ENFORCED** on Free private. Do not claim GH protection is active.
