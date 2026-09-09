@@ -454,3 +454,12 @@ External production readiness is explicitly **not** asserted.
 - Lock: `scripts/lib/context-pack-lock.js`; `test:s2`; verify:strict block 3g10
 - NON-CLAIM: index ≠ runtime context completo / index != full runtime context engineering; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING)
 - Freeze `main_tip` pin **not** moved in S2 (tip refresh was S1)
+## S3 Loop Engineering + 4Q guides/sensors (2026-09-09)
+
+- Report: `docs/releases/EOS_S3_LOOP_ENGINEERING_4Q_2026-09-09.md`
+- SSOT: `docs/harness/LOOP_ENGINEERING_4Q.md`
+- ADR: `docs/architecture/adrs/ADR-0017-loop-engineering-4q.md`
+- Branch: `cursor/eos-s3-loop-engineering-4q` — push/compare only; do not merge without PO
+- Lock: `scripts/lib/loop-engineering-lock.js`; `test:s3`; verify:strict block 3g11
+- NON-CLAIM: policy ≠ productive autonomy; Loop Engineering ≠ verify:strict; doctor ≠ verify; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING)
+- Freeze `main_tip` pin **not** moved in S3 (tip refresh was S1)

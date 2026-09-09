@@ -102,7 +102,8 @@
     "test:r4": "node --test tests/eos-r4-at-ceiling-schema-gate.test.js",
     "test:r5": "node --test tests/eos-r5-deferred-writers-governance.test.js",
     "test:r6": "node --test tests/eos-r6-complexity-budget-verify-closeout.test.js",
-    "test:s2": "node --test tests/eos-s2-context-pack-tpc.test.js"
+    "test:s2": "node --test tests/eos-s2-context-pack-tpc.test.js",
+    "test:s3": "node --test tests/eos-s3-loop-engineering-4q.test.js"
   },
   "keywords": [
     "eos",

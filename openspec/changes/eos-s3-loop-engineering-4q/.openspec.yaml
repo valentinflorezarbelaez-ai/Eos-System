@@ -1,0 +1,26 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 7 S3 — Loop Engineering policy + 4Q matrix (feedforward/feedback × computational/inferential) mapped to real EOS surfaces; guides→act→sensors→feedback cycle; doctor/mission honesty NON-CLAIM; verify:strict existence lock; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING).
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-s3-loop-engineering-4q
+  - docs/harness/LOOP_ENGINEERING_4Q.md
+  - docs/architecture/adrs/ADR-0017-loop-engineering-4q.md
+  - scripts/lib/loop-engineering-lock.js
+  - scripts/verify-eos.js
+  - tests/eos-s3-loop-engineering-4q.test.js
+  - package.json
+  - src/core/runtime/operator-doctor.js
+  - docs/releases/EOS_S3_LOOP_ENGINEERING_4Q_2026-09-09.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - claiming productive autonomy / autonomous loop solved
+  - rewriting ADR-0011 or ADR-0014
+  - adding docs/schemas JSON (AT_CEILING)
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip not moved)
+  - S4-S6 implementation
