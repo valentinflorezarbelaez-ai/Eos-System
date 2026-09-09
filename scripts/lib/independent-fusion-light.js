@@ -2,14 +2,15 @@
  * @module independent-fusion-light
  * N5 — Independent verifier fusion-light pack (Ladder 3 H5).
  * Q3 — Optional Ladder4 observe subset: hooks-install / mcp-catalog / mission-local.
+ * R3 — Optional Ladder5 observe subset: mission-artifact-write / p6-inventory-lock.
  *
  * Fail-closed path existence + light import/API smoke for EvidenceCustody,
- * EngramContract, fusion-cp-lock, evd-seal-path, and Q3 L4 observe modules.
+ * EngramContract, fusion-cp-lock, evd-seal-path, Q3 L4, and R3 L5 observe modules.
  * Reuses POST_FUSION_CRITICAL_PATHS ids from operator-doctor.
  *
  * This is NOT verify:strict, NOT full GameDay soak, NOT production certification.
- * Light checks do NOT run full hooks-install / mcp-catalog / mission-local audit bodies
- * (those remain verify:strict).
+ * Light checks do NOT run full hooks-install / mcp-catalog / mission-local /
+ * mission-artifact-write / p6-inventory-lock audit bodies (those remain verify:strict).
  * PRODUCTION_READY: NO
  */
 import fs from 'node:fs';
@@ -45,6 +46,14 @@ import {
   auditMcpCatalogLock,
   MCP_CATALOG_REQUIRED_PATHS
 } from './mcp-catalog-lock.js';
+import {
+  auditMissionArtifactWritePaths,
+  writeMissionArtifactFile
+} from '../../src/core/runtime/mission-artifact-write.js';
+import {
+  auditP6InventoryLock,
+  P6_INVENTORY_REQUIRED_PATHS
+} from './p6-inventory-lock.js';
 
 /** Subset of doctor post-fusion paths covered by independent fusion-light. */
 export const FUSION_LIGHT_PATH_IDS = Object.freeze([
@@ -54,7 +63,9 @@ export const FUSION_LIGHT_PATH_IDS = Object.freeze([
   'EVD_SEAL',
   'HOOKS_INSTALL',
   'MCP_CATALOG',
-  'MISSION_LOCAL_EVD'
+  'MISSION_LOCAL_EVD',
+  'MISSION_ARTIFACT_WRITE',
+  'P6_INVENTORY_LOCK'
 ]);
 
 export const FUSION_LIGHT_REQUIRED_PATHS = Object.freeze(
@@ -73,7 +84,8 @@ export const FUSION_LIGHT_NON_CLAIMS = Object.freeze([
   'NOT Fundacion mutation authorization (Fundacion Delta=0 retained)',
   'NOT GitHub branch-protection enforcement (local surrogate only)',
   'NOT replacement of ROI4 custody:verify / ROI6 engram:verify deep suites',
-  'NOT full hooks-install smoke / mcp-catalog reconcile / mission-local EVD audit bodies (Q3 observe = path + light export only; verify:strict owns those audits)'
+  'NOT full hooks-install smoke / mcp-catalog reconcile / mission-local EVD audit bodies (Q3 observe = path + light export only; verify:strict owns those audits)',
+  'NOT full mission-artifact-write / p6-inventory-lock audit bodies (R3 observe = path + light export only; verify:strict owns those audits)'
 ]);
 
 /**
@@ -259,6 +271,47 @@ export function auditFusionLight(rootDir) {
     });
   }
 
+  // R3 Ladder5 observe (light export only; do NOT invoke full audit bodies)
+  try {
+    if (typeof auditMissionArtifactWritePaths !== 'function') {
+      throw new Error('auditMissionArtifactWritePaths export missing');
+    }
+    if (typeof writeMissionArtifactFile !== 'function') {
+      throw new Error('writeMissionArtifactFile export missing');
+    }
+    checks.push({
+      path: 'mission-artifact-write (auditMissionArtifactWritePaths + writeMissionArtifactFile exports; body owned by verify:strict)',
+      status: 'VERIFIED',
+      type: 'fusion-light-mission-artifact'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'src/core/runtime/mission-artifact-write.js',
+      message: 'mission-artifact-write light import failed: ' + err.message,
+      type: 'fusion-light-mission-artifact'
+    });
+  }
+
+  try {
+    if (typeof auditP6InventoryLock !== 'function') {
+      throw new Error('auditP6InventoryLock export missing');
+    }
+    if (!Array.isArray(P6_INVENTORY_REQUIRED_PATHS) || P6_INVENTORY_REQUIRED_PATHS.length < 3) {
+      throw new Error('P6_INVENTORY_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'p6-inventory-lock (auditP6InventoryLock export + REQUIRED_PATHS n=' + P6_INVENTORY_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-p6-inventory'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/p6-inventory-lock.js',
+      message: 'p6-inventory-lock light import failed: ' + err.message,
+      type: 'fusion-light-p6-inventory'
+    });
+  }
+
   return {
     ok: failures.length === 0,
     enabled: true,
@@ -281,7 +334,7 @@ export function fusionLightDisabledReport() {
     checks: [],
     failures: [],
     nonClaims: [
-      'FUSION-LIGHT DISABLED via --no-fusion-light: custody/engram/fusion-cp/evd-seal/hooks-install/mcp-catalog/mission-local NOT independently light-checked',
+      'FUSION-LIGHT DISABLED via --no-fusion-light: custody/engram/fusion-cp/evd-seal/hooks-install/mcp-catalog/mission-local/mission-artifact-write/p6-inventory-lock NOT independently light-checked',
       ...FUSION_LIGHT_NON_CLAIMS
     ],
     requiredPaths: [...FUSION_LIGHT_REQUIRED_PATHS]

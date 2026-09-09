@@ -33,8 +33,8 @@ function parseCliPayload(stdout) {
 }
 
 describe('N5 independent verifier fusion-light', () => {
-  it('FUSION_LIGHT_REQUIRED_PATHS reuses doctor custody/engram/fusion-cp/evd-seal + Q3 L4', () => {
-    assert.deepEqual([...FUSION_LIGHT_PATH_IDS], ['FUSION_CP', 'CUSTODY', 'ENGRAM', 'EVD_SEAL', 'HOOKS_INSTALL', 'MCP_CATALOG', 'MISSION_LOCAL_EVD']);
+  it('FUSION_LIGHT_REQUIRED_PATHS reuses doctor custody/engram/fusion-cp/evd-seal + Q3 L4 + R3 L5', () => {
+    assert.deepEqual([...FUSION_LIGHT_PATH_IDS], ['FUSION_CP', 'CUSTODY', 'ENGRAM', 'EVD_SEAL', 'HOOKS_INSTALL', 'MCP_CATALOG', 'MISSION_LOCAL_EVD', 'MISSION_ARTIFACT_WRITE', 'P6_INVENTORY_LOCK']);
     const doctorRels = POST_FUSION_CRITICAL_PATHS
       .filter((p) => FUSION_LIGHT_PATH_IDS.includes(p.id))
       .map((p) => p.rel);
@@ -46,6 +46,8 @@ describe('N5 independent verifier fusion-light', () => {
     assert.ok(FUSION_LIGHT_REQUIRED_PATHS.includes('scripts/lib/hooks-install-smoke.js'));
     assert.ok(FUSION_LIGHT_REQUIRED_PATHS.includes('scripts/lib/mcp-catalog-lock.js'));
     assert.ok(FUSION_LIGHT_REQUIRED_PATHS.includes('tests/eos-p4-mission-local-evd-seal.test.js'));
+    assert.ok(FUSION_LIGHT_REQUIRED_PATHS.includes('src/core/runtime/mission-artifact-write.js'));
+    assert.ok(FUSION_LIGHT_REQUIRED_PATHS.includes('scripts/lib/p6-inventory-lock.js'));
   });
 
   it('PASS: auditFusionLight on live tip verifies path + light import types', () => {
@@ -61,6 +63,8 @@ describe('N5 independent verifier fusion-light', () => {
     assert.ok(result.checks.some((c) => c.type === 'fusion-light-hooks-install'));
     assert.ok(result.checks.some((c) => c.type === 'fusion-light-mcp-catalog'));
     assert.ok(result.checks.some((c) => c.type === 'fusion-light-mission-local'));
+    assert.ok(result.checks.some((c) => c.type === 'fusion-light-mission-artifact'));
+    assert.ok(result.checks.some((c) => c.type === 'fusion-light-p6-inventory'));
     assert.ok(result.nonClaims.length >= FUSION_LIGHT_NON_CLAIMS.length);
     assert.ok(result.nonClaims.some((n) => /NOT verify:strict/i.test(n)));
   });
