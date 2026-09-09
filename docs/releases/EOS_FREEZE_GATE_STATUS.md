@@ -333,3 +333,11 @@ External production readiness is explicitly **not** asserted.
 - Audit base tip OBSERVED: main@`333b5bd198e9d584ad639e67b678ceea373563a5` (P6 #59)
 - Merged as #60 (`74332e2`); freeze tip refreshed by **Q1** to main@`74332e2938090e1e8e64d41310a46d2a722bf741`
 - Ordered next ladder Q1–Q6; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
+
+## Ladder 6 maturity gap audit (2026-09-09)
+
+- Report: `docs/releases/EOS_MATURITY_LADDER_6_AUDIT_2026-09-09.md`
+- Branch: `cursor/eos-ladder6-audit` — push/compare only; do not merge without PO
+- Audit base tip OBSERVED: main@`7c82d43adc2e57db606fcf831016052b11aa19f5` (Q6 #66)
+- Freeze `main_tip` SSOT unchanged (still Q1 pin `74332e2`); tip refresh is ordered **R1** (not implemented in this audit branch)
+- Ordered next ladder R1–R6; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
