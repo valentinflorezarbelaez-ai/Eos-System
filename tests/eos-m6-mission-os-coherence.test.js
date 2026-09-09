@@ -7,6 +7,11 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
+const FREEZE = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
+
+/** OBSERVED pattern used by operator-hud / test:m4: main_tip: <40-hex> */
+const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
+const FULL_SHA = /^[0-9a-f]{40}$/;
 
 async function loadCoherence() {
   return import('../src/core/observability/mission-os-coherence.js');
@@ -154,14 +159,17 @@ test('M6: coherence doc + release note + package script exist', () => {
   assert.equal(pkg.scripts['test:m6'], 'node --test tests/eos-m6-mission-os-coherence.test.js');
 });
 
-test('M6: freeze gate notes Ladder 2 complete-after-merge + G7', () => {
-  const freeze = fs.readFileSync(
-    path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md'),
-    'utf8'
-  );
+test('M6: freeze gate notes Ladder 2 complete + G7 (tip OBSERVED)', () => {
+  const freeze = fs.readFileSync(FREEZE, 'utf8');
+  const tip = freeze.match(TIP_LINE)?.[1];
+  assert.ok(tip, 'freeze gate must declare main_tip: <40-hex>');
+  assert.match(tip, FULL_SHA);
+  // Tip is OBSERVED from freeze SSOT (N1 pin); do not invent PRODUCTION_READY
   assert.match(freeze, /M6 Mission OS/);
-  assert.match(freeze, /Ladder 2 M1-M6 complete after this merges/i);
+  // Post-merge freeze wording (N1): Ladder 2 already complete on main — not "after this merges"
+  assert.match(freeze, /Ladder 2 M1-M6 complete/i);
   assert.match(freeze, /G7/);
   assert.match(freeze, /DEFERRED/);
   assert.match(freeze, /PRODUCTION_READY: NO/);
+  assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/i);
 });

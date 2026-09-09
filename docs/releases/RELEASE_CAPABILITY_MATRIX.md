@@ -1,13 +1,13 @@
-﻿# EOS Local Release — Capability Matrix
+# EOS Local Release — Capability Matrix
 
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 3c675dd2acca86b55cbf5e7b30b84f0e8464b6b5
+evaluated_tip: e6d1d06ac7450bc8fc94153e4bad7465396a472e
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #41 from valentinflorezarbelaez-ai/cursor/eos-m3-hud-verify-surfaces
-updated_at: 2026-09-08 America/Bogota (M4 SSOT tip refresh)
+main_subject: Merge pull request #46 from valentinflorezarbelaez-ai/cursor/eos-ladder-3-audit
+updated_at: 2026-09-08 America/Bogota (N1 Ladder3 SSOT tip refresh)
 ```
 
 
@@ -34,7 +34,10 @@ updated_at: 2026-09-08 America/Bogota (M4 SSOT tip refresh)
 | Strict-verify fusion control-plane lock | COMPLETE | VERIFIED (#39; fusion-cp-lock.js; verify:strict) |
 | Local main-push surrogate (pre-push) | COMPLETE_WITH_CONDITIONS | MEASURED (#40; local surrogate not GH enforcement) |
 | Operator HUD post-fusion verify surfaces | COMPLETE | VERIFIED (#41; evidence-custody / engram / fusion-cp-*) |
-| Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37) |
+| CI GameDay / ROI seam-pack | COMPLETE | VERIFIED (#43; ci.yml job seam-pack; test:m5; CI-safe gameday:long-run) |
+| Mission OS ATS to mission-loop coherence | COMPLETE | MEASURED (#44; MISSION_OS_ATS_MISSION_LOOP_COHERENCE.md; mission-os-coherence.js) |
+| EVD custody seal path (G7) | COMPLETE | VERIFIED (#45; evd-seal-path.js; sealEvd SSOT; test:g7) |
+| Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
 | MCP SSOT + consumer sync | COMPLETE | VERIFIED (#26; MCP_SSOT.md) |
@@ -53,9 +56,9 @@ COMPLETE_WITH_CONDITIONS: (subset)
 PRODUCTION_READY: NO
 ```
 
-## Tip refresh notes (M4)
+## Tip refresh notes (N1)
 
-- evaluated_tip pinned to OBSERVED main tip after M3 #41: 3c675dd2acca86b55cbf5e7b30b84f0e8464b6b5
-- Prior stale tip d7cd6fa (pre-fusion RC) retired
-- Rows added for WB / mission-loop / custody / engram / gameday / fusion-cp lock / local push surrogate / HUD
-- Does not invent PRODUCTION_READY or Fundacion work
+- evaluated_tip pinned to OBSERVED main tip after Ladder 3 audit #46: e6d1d06ac7450bc8fc94153e4bad7465396a472e
+- Prior M4 tip pin 3c675dd (M3) retired
+- Rows added for CI GameDay / ROI seam-pack (M5), Mission OS ATS to mission-loop coherence (M6), EVD custody seal path (G7)
+- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work

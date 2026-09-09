@@ -24,12 +24,16 @@ Until that changes, the rule is recorded / visible but **will not block** direct
 | Require a pull request before merging | **ON** |
 | Require status checks to pass before merging | **ON** |
 | Require branches to be up to date before merging | **ON** |
-| Required status checks | Workspace verify (strict); Node test suite; JavaScript syntax; Local governance engines |
+| Required status checks (display names) | Workspace verify (strict); Node test suite; JavaScript syntax; Local governance engines; **CI GameDay / ROI seam pack** |
 | Allow force pushes | **OFF** |
 | Allow deletions | **OFF** |
 | Enforcement | **Not enforced** (Free private caveat) |
 
 Legacy orphan `eos-ci.yml` was removed in ROI3. Do not re-add it as a required check.
+
+### 5th check note (N1 / M5)
+
+CI job `seam-pack` publishes display name **`CI GameDay / ROI seam pack`**. This doc **lists** that display name among required-check names for operator honesty after M5. Listing it here does **not** assert that GitHub Settings currently enforce it, nor that Free-plan private enforcement is active. Status remains **RULE_CREATED_NOT_ENFORCED**.
 
 ## Enforcement caveat
 
@@ -52,6 +56,7 @@ This doc does **not** recommend changing visibility; it only records the option.
 - CI pass / rule create is **not** PRODUCTION_READY.
 - Fundacion untouched.
 - No merge to `main` from this docs branch is implied by recording status alone.
+- Naming the 5th check is **not** a claim that GH Settings were updated or that enforcement is active.
 
 ## Local main-push surrogate (M2, 2026-09-08)
 
