@@ -2,9 +2,11 @@
  * @module GentlemanSddBridge
  * @description Integration bridge connecting EOS with Gentleman Programming,
  * Cursor Rules (.mdc), and Engram Persistent Memory (mem_save, mem_context).
+ * ROI6: formatEngramMemoryEnvelope delegates to SSOT engram-contract.
  */
 
-import { createHash, randomBytes } from 'node:crypto';
+import { randomBytes } from 'node:crypto';
+import { buildEngramEnvelope } from '../memory/engram-contract.js';
 
 export class GentlemanSddBridge {
   constructor(options = {}) {
@@ -38,9 +40,10 @@ globs: ["src/**/*.js", "tests/**/*.test.js"]
   }
 
   /**
-   * Formats an EOS architectural decision or milestone into an Engram-compliant mem_save payload
+   * Formats an EOS architectural decision or milestone into an Engram-compliant mem_save payload.
+   * ROI6: returns unified envelope (Gentleman fields + seal fields) via SSOT contract.
    * @param {object} event { title, type, decision, rationale, affectedPaths, learnings }
-   * @returns {object} Engram mem_save payload
+   * @returns {object} Engram envelope (schema eos.engram.envelope/v1)
    */
   formatEngramMemoryEnvelope(event = {}) {
     const title = event.title || 'Architectural Decision Record';
@@ -54,14 +57,16 @@ globs: ["src/**/*.js", "tests/**/*.test.js"]
       event.learnings ? `Learned: ${event.learnings}` : ''
     ].filter(Boolean).join('\n');
 
-    return {
+    return buildEngramEnvelope({
       title,
       type,
       scope: 'project',
       topic_key: topicKey,
+      key: topicKey,
       capture_prompt: false,
-      content
-    };
+      content,
+      tags: Array.isArray(event.tags) ? event.tags : ['gentleman', 'sdd']
+    });
   }
 
   /**

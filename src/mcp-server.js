@@ -45,6 +45,7 @@ import { runOperatorDoctor } from './core/runtime/operator-doctor.js';
 import { ProjectPipelineRunner } from './core/runtime/project-pipeline-runner.js';
 import { pruneToolsByPhase, resolveToolPhase } from './core/mcp/tool-pruner.js';
 import { execSync } from 'node:child_process';
+import { EosMemory } from './core/memory.js';
 
 
 
@@ -122,7 +123,7 @@ const CANONICAL_TOOLS = [
   { name: 'eos.environment.sandbox.execute', description: 'Ephemeral MicroVM sandbox execution harness, automated REPL test loop feedback, and zero-waste memory deallocation', category: 'INFRASTRUCTURE', sideEffects: 'LEDGER_WRITE', requiredAuthority: 'A1' },
   { name: 'eos.security.adversarial.review', description: 'Geburah adversarial static code review, automated CodeQL and Semgrep AST vulnerability auditor, and zero-debt merge gatekeeper', category: 'SECURITY', sideEffects: 'LEDGER_WRITE', requiredAuthority: 'A1' },
   { name: 'eos.sdlc.engineer.autonomous', description: 'Closed-loop autonomous SDLC engineer harness, MCTS virtual sandbox branching, automated REPL self-healing, and browser CDP inspection', category: 'SDLC', sideEffects: 'LEDGER_WRITE', requiredAuthority: 'A1' },
-  { name: 'eos.pleroma.akasha.engram', description: 'Akashic Engram local persistent memory server, lock-free SQLite FTS5 full-text lexical indexing, and zero-amnesia context caching', category: 'DATA', sideEffects: 'LEDGER_WRITE', requiredAuthority: 'A1' },
+  { name: 'eos.pleroma.akasha.engram', description: 'Local Engram JSONL adapter via EosMemory SSOT (.eos/engram/). Not FTS5/SQLite - use external engram MCP on PATH for real FTS5', category: 'DATA', sideEffects: 'LEDGER_WRITE', requiredAuthority: 'A1' },
   { name: 'eos.doctor', description: 'Instant control-plane health diagnosis and homedir path-leak detection', category: 'GOVERNANCE', sideEffects: 'READ_ONLY', requiredAuthority: 'A0' },
   { name: 'eos.audit.project', description: 'Execute concurrent quality/security/architecture audit against any registered project', category: 'AUDIT', sideEffects: 'READ_ONLY', requiredAuthority: 'A0' },
   { name: 'eos.verify.strict', description: 'Execute the 482+ invariant strict verifier (verify:strict)', category: 'QUALITY', sideEffects: 'READ_ONLY', requiredAuthority: 'A0' },
@@ -2534,28 +2535,36 @@ switch (name) {
       case 'eos.pleroma.akasha.engram':
       case 'eos_pleroma_akasha_engram': {
         this.schemaValidator.validate(name, args);
-        return this._guarded(toolDef, env, () => {
+        return this._guarded(toolDef, env, async () => {
           const prof = args.executionProfile || {};
-          if (prof.fts5IndexingActive !== true) {
+          // Honest: local adapter is JSONL via EosMemory SSOT — never claim FTS5 consecration.
+          if (prof.fts5IndexingActive === true) {
             return {
-              status: 'DEGRADED_PERSISTENCE_MODE_REJECTED',
+              status: 'FTS5_NOT_AVAILABLE_USE_EXTERNAL_ENGRAM',
               monadMemoryKey: args.monadMemoryKey,
-              message: '💥 [ENGRAM FAULT] > Se requiere indexación léxica FTS5 activa para garantizar persistencia lock-free.'
+              fts5: false,
+              backend: 'eos-memory-jsonl',
+              externalEngramMcp: 'engram (PATH) via config/mcp/eos-mcp.ssot.json',
+              message: '[ENGRAM] Local MCP tool does not provide SQLite FTS5. Use external engram MCP (mem_save/mem_context) from config/mcp/eos-mcp.ssot.json for real FTS5. For local JSONL persist, set executionProfile.fts5IndexingActive=false.'
             };
           }
-          const rawPayload = `${args.monadMemoryKey}:${args.contentPayload}:${JSON.stringify(prof)}:${args.anupadakaProof}:${Date.now()}`;
-          const signature = createHash('sha256').update(rawPayload).digest('hex');
+          const memory = new EosMemory({ repoRoot: this.baseDir });
+          const entry = await memory.save({
+            key: args.monadMemoryKey,
+            title: args.monadMemoryKey,
+            content: args.contentPayload,
+            topic_key: args.monadMemoryKey,
+            tags: ['mcp-adapter', 'akasha-engram']
+          });
           return {
-            status: 'AKASHIC_ENGRAM_RECORD_CONSECRATED',
+            status: 'LOCAL_ENGRAM_ADAPTER_PERSISTED',
             monadMemoryKey: args.monadMemoryKey,
-            metadata: {
-              keyIndexed: args.monadMemoryKey,
-              bytesWritten: Buffer.byteLength(args.contentPayload, 'utf8'),
-              tokenizationStatus: 'LOCK_FREE_FTS5_COMPLETED',
-              searchLatencyNs: 450
-            },
-            anupadakaSealSignature: `sha256-${signature}`,
-            message: `🧠 [AKASHIC ENGRAM CONSECRATED] > Registro ${args.monadMemoryKey} persistido e indexado con FTS5 lock-free y cero amnesia.`
+            fts5: false,
+            backend: 'eos-memory-jsonl',
+            storagePath: memory.storagePath,
+            envelope: entry,
+            anupadakaSealSignature: 'sha256-' + entry.sha256Seal,
+            message: '[ENGRAM LOCAL ADAPTER] Persisted ' + args.monadMemoryKey + ' to SSOT JSONL (.eos/engram/). Not FTS5 — external engram MCP remains Golden Path.'
           };
         });
       }

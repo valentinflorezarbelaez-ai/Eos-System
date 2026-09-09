@@ -8,6 +8,7 @@ import { ArchitecturalFitnessEngine } from '../src/core/ast/architectural-fitnes
 import { ContractEvidenceSealer } from '../src/core/formal/contract-evidence-sealer.js';
 import { EconomicContractValidator } from '../src/core/formal/economic-contract-validator.js';
 import { EvidenceCustody } from '../src/core/sdd/evidence-custody.js';
+import { verifyEngramContract } from '../src/core/memory/engram-contract.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -67,6 +68,8 @@ const REQUIRED_PATHS = [
   'src/core/sdd/evidence-custody.js',
   'scripts/custody-verify.js',
   'tests/roi4-i3-evidence-custody.test.js',
+  'src/core/memory/engram-contract.js',
+  'tests/roi6-engram-unify.test.js',
   'src/core/formal/economic-contract-validator.js',
   'tests/architectural-fitness.test.js',
   'tests/knowledge-ontology-consolidation.test.js',
@@ -891,6 +894,31 @@ function verifyWorkspace() {
         path: 'src/core/sdd/evidence-custody.js',
         message: `Evidence custody audit failed: ${err.message}`,
         type: 'evidence-custody'
+      });
+    }
+
+
+    // 3g3. ROI6 Engram SSOT path + envelope contract (no live engram CLI required)
+    try {
+      const engram = verifyEngramContract(rootDir);
+      if (!engram.ok) {
+        report.failures.push({
+          path: 'src/core/memory/engram-contract.js',
+          message: 'Engram contract verify returned not ok',
+          type: 'engram-contract'
+        });
+      } else {
+        report.checks.push({
+          path: 'EngramContract (' + engram.schema + ', ' + engram.relative + ')',
+          status: 'VERIFIED',
+          type: 'engram-contract'
+        });
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'src/core/memory/engram-contract.js',
+        message: 'Engram contract audit failed: ' + err.message,
+        type: 'engram-contract'
       });
     }
 

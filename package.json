@@ -70,7 +70,9 @@
     "custody:verify": "node scripts/custody-verify.js",
     "test:roi4": "node --test tests/roi4-i3-evidence-custody.test.js",
     "gameday:long-run": "node scripts/ci/long-run-gameday.js",
-    "test:roi5": "node --test tests/roi5-long-run-gameday.test.js"
+    "test:roi5": "node --test tests/roi5-long-run-gameday.test.js",
+    "test:roi6": "node --test tests/roi6-engram-unify.test.js",
+    "engram:verify": "node scripts/engram-verify.js"
   },
   "keywords": [
     "eos",
