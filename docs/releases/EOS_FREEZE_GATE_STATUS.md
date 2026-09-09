@@ -411,3 +411,15 @@ External production readiness is explicitly **not** asserted.
 - NON-CLAIM: candado ≠ executed prune; no max_schemas raise; no P6 prune; PRODUCTION_READY=NO; Fundacion Delta=0
 - Freeze `main_tip` pin **not** moved in R6 (tip refresh is separate mission)
 
+## Ladder 7 LIDR Harness Workshop adoption + maturity gap audit (2026-09-09)
+
+- Adoption: `docs/releases/EOS_LIDR_HARNESS_WORKSHOP_ADOPTION_2026-09-09.md`
+- Audit: `docs/releases/EOS_MATURITY_LADDER_7_AUDIT_2026-09-09.md`
+- Branch: `cursor/eos-ladder7-lidr-harness-adoption` — push/compare only; do not merge without PO
+- Audit base tip OBSERVED: main@`e431e2c2886f687c642944bbfe426aa48018e84e` (R6 #73; Ladder 6 R1–R6 closed)
+- Sources: Notion workshop material; grabación page; blogs `que-es-harness-engineering` + `como-ahorrar-tokens`; Spec-Boot https://github.com/LIDR-academy/lidr-specboot; intake `LIDR-HARNESS-ENGINEERING-202609.md`
+- Ordered next ladder **S1–S6**: tip refresh; Context Pack TPC index + lifecycle; Loop Engineering + 4Q guides/sensors; worktree policy+smoke; MCP/tool KEEP inventory; model routing + ratchet error→rule
+- Recommend start **S1** (tip refresh) on a follow-on branch — **freeze `main_tip` pin NOT moved in this audit** (still R1 pin `4753240eb003ecb3948e17d93e5511a7b35a40f0` until S1)
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- NON-CLAIM: adoption ≠ fusion rewrite; not "solves any problem"; external token-tool/cache figures are material claims
