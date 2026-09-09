@@ -184,3 +184,11 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 ## Not production
 
 External production readiness is explicitly **not** asserted.
+
+## Ladder 4 maturity gap audit (2026-09-08)
+
+- Report: `docs/releases/EOS_MATURITY_LADDER_4_AUDIT_2026-09-08.md`
+- Branch: `cursor/eos-ladder-4-audit` — push/compare only; do not merge without PO
+- Audit base tip OBSERVED: main@`6021ec26b783907a819e3bb85ff68d23ddccf11e` (N6 #52)
+- Freeze `main_tip` SSOT unchanged (still N1 pin `e6d1d06`); tip refresh is ordered **P1** (not implemented in this audit branch)
+- Ordered next ladder P1–P6; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
