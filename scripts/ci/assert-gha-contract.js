@@ -139,6 +139,7 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:roi3', 'CI ROI seam pack');
         assertContains(yaml, 'test:n2', 'CI Ladder3 N seam pack');
         assertContains(yaml, 'test:n6', 'CI Ladder3 N seam pack end');
+        assertContains(yaml, 'test:p3', 'CI Ladder4 P3 hooks-install smoke');
       } catch (err) {
         failures.push(err.message);
       }

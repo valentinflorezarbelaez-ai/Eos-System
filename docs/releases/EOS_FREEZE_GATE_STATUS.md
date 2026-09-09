@@ -11,7 +11,7 @@ Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (P2 CI seam-pack N2-N6; PRODUCTION_READY=NO)
+updated_at: 2026-09-08 America/Bogota (P3 hooks-install smoke; PRODUCTION_READY=NO)
 ```
 
 ## Closed on main (fusion + ROI1–6 + Ladder2 M1–M6 + G7 + Ladder3 N1–N6 + Ladder4 audit)
@@ -196,6 +196,16 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Branch: `cursor/eos-p2-ci-seam-pack-n2-n6` — push/compare only; do not merge without PO
 - CI `seam-pack` named pack extended with CI-safe `test:n2`..`test:n6` (in addition to gameday + roi3-6 + m1-m4); Fundacion delta-0 unchanged
 - No new CI job / display name; HITL status remains RULE_CREATED_NOT_ENFORCED; no billing claims
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+
+
+## P3 hooks-install CI/verify smoke (2026-09-08)
+
+- Report: `docs/releases/EOS_P3_HOOKS_INSTALL_SMOKE_2026-09-08.md`
+- Branch: `cursor/eos-p3-hooks-install-smoke` — push/compare only; do not merge without PO
+- CI `seam-pack` adds CI-safe `test:p3` (temp-dir installer smoke; checkout `.git` untouched)
+- `verify:strict` audits installer surface + smoke; NON-CLAIM local != GH enforcement
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 

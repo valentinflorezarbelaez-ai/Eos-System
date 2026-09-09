@@ -18,7 +18,7 @@ Machine-readable companion: `docs/governance/CI_CD_CONTRACT.json`.
 | test | `npm test` | Forbidden |
 | syntax | `node --check` on `bin/`, `src/`, `scripts/`, `tests/` | Forbidden |
 | governance-gates | `evaluate:release`, `verify:independent`, `audit:system` | Forbidden |
-| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` | Forbidden |
+| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p3` | Forbidden |
 
 Triggers: `push` to `main`, `pull_request`, `workflow_dispatch`.
 
@@ -38,3 +38,6 @@ Fifth CI job `seam-pack` (`CI GameDay / ROI seam pack`) is contract-required. If
 
 ## P2 seam-pack note (2026-09-08)
 seam-pack named pack extended with CI-safe `test:n2`..`test:n6` (Ladder 3 N locks). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.
+
+## P3 hooks-install smoke note (2026-09-08)
+seam-pack named pack extended with CI-safe `test:p3` (temp-dir hooks installer smoke; does not mutate checkout `.git`). verify:strict also audits installer surface + smoke. Local surrogate != GH enforcement. No soak. No new GH billing claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.
