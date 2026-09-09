@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 5917abc24b5ee03eabdc4e741ffe1d06f168c013
+evaluated_tip: 74332e2938090e1e8e64d41310a46d2a722bf741
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #53 from valentinflorezarbelaez-ai/cursor/eos-ladder-4-audit
-updated_at: 2026-09-09 America/Bogota (P6 complexity prune inventory; Ladder4 P1-P6 complete after merge; PRODUCTION_READY=NO)
+main_subject: Merge pull request #60 from valentinflorezarbelaez-ai/cursor/eos-ladder-5-audit
+updated_at: 2026-09-09 America/Bogota (Q1 Ladder5 tip refresh; pin to main@74332e2 post audit #60; PRODUCTION_READY=NO)
 ```
 
 
@@ -42,10 +42,14 @@ updated_at: 2026-09-09 America/Bogota (P6 complexity prune inventory; Ladder4 P1
 | HUD + fusion-cp post-G7/M6 (N4) | COMPLETE | VERIFIED (#50; HUD evd-seal + fusion-cp lock; test:n4) |
 | Independent verifier fusion-light (N5) | COMPLETE | VERIFIED (#51; verify:independent fusion-light; test:n5) |
 | Sentinel/FDIR strict-verify lock (N6) | COMPLETE | VERIFIED (#52; sentinel-fdir-lock.js; test:n6) |
-| Ladder 4 maturity gap audit | COMPLETE | MEASURED (#53; EOS_MATURITY_LADDER_4_AUDIT_2026-09-08.md; P1–P6 ordered) |
-| Mission-local EVD seal (P4) | COMPLETE | MEASURED (branch cursor/eos-p4-mission-local-evd-seal; sealEvd mission-local; test:p4) |
-| MCP catalog reconcile (P5) | COMPLETE | MEASURED (branch cursor/eos-p5-mcp-catalog-reconcile; catalog 80==CANONICAL_TOOLS; test:p5) |
-| Complexity prune inventory (P6) | COMPLETE | MEASURED (branch cursor/eos-p6-complexity-prune-inventory; docs inventory only; optional observe NON-CLAIM; Ladder4 P1-P6 complete after merge) |
+| Ladder 4 maturity gap audit | COMPLETE | MEASURED (#53; EOS_MATURITY_LADDER_4_AUDIT_2026-09-08.md; P1-P6 ordered) |
+| Ladder4 tip refresh (P1) | COMPLETE | MEASURED (#54; EOS_P1_LADDER4_TIP_REFRESH_2026-09-08.md; freeze+matrix to 5917abc) |
+| CI seam-pack N2-N6 (P2) | COMPLETE | MEASURED (#55; EOS_P2_CI_SEAM_PACK_N2_N6_2026-09-08.md; seam-pack test:n2..n6; test:p2) |
+| Hooks install CI/verify smoke (P3) | COMPLETE | MEASURED (#56; EOS_P3_HOOKS_INSTALL_SMOKE_2026-09-08.md; hooks-install-smoke; test:p3) |
+| Mission-local EVD seal (P4) | COMPLETE | MEASURED (#57; EOS_P4_MISSION_LOCAL_EVD_SEAL_2026-09-09.md; sealEvd mission-local; test:p4) |
+| MCP catalog reconcile (P5) | COMPLETE | MEASURED (#58; EOS_P5_MCP_CATALOG_RECONCILE_2026-09-09.md; catalog 80==CANONICAL_TOOLS; test:p5) |
+| Complexity prune inventory (P6) | COMPLETE | MEASURED (#59; EOS_P6_COMPLEXITY_PRUNE_INVENTORY_2026-09-09.md; docs inventory only; optional observe NON-CLAIM; Ladder4 P1-P6 complete after merge) |
+| Ladder 5 maturity gap audit | COMPLETE | MEASURED (#60; EOS_MATURITY_LADDER_5_AUDIT_2026-09-09.md; Q1-Q6 ordered) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -65,9 +69,9 @@ COMPLETE_WITH_CONDITIONS: (subset)
 PRODUCTION_READY: NO
 ```
 
-## Tip refresh notes (P1)
+## Tip refresh notes (Q1)
 
-- evaluated_tip pinned to OBSERVED main tip after Ladder 4 audit #53: 5917abc24b5ee03eabdc4e741ffe1d06f168c013
-- Prior N1 tip pin e6d1d06ac7450bc8fc94153e4bad7465396a472e (Ladder 3 audit #46) retired
-- Rows added for N2 EVD scripts+bin seal, N3 operator doctor, N4 HUD/fusion-cp, N5 independent fusion-light, N6 Sentinel/FDIR lock, Ladder 4 audit
+- evaluated_tip pinned to OBSERVED main tip after Ladder 5 audit #60: 74332e2938090e1e8e64d41310a46d2a722bf741
+- Prior P1 tip pin 5917abc24b5ee03eabdc4e741ffe1d06f168c013 (Ladder 4 audit #53 / P1) retired
+- Rows added/normalized for P1 Ladder4 tip refresh, P2 CI seam-pack N2-N6, P3 hooks install (+ P4-P6) + Ladder 5 audit
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
