@@ -1,21 +1,21 @@
-# EOS Local Release — Capability Matrix
+﻿# EOS Local Release — Capability Matrix
 
 ```text
 document: RELEASE_CAPABILITY_MATRIX
-release_branch: release/eos-mission-os-rc
-evaluated_tip: d7cd6fa8406ce57dcafeb761cb57ad7687229753
+release_branch: main
+evaluated_tip: 3c675dd2acca86b55cbf5e7b30b84f0e8464b6b5
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
-main_protected: 1b269932943c46849e463b293ace471a9745d3f1
+PRODUCTION_READY: NO
+main_subject: Merge pull request #41 from valentinflorezarbelaez-ai/cursor/eos-m3-hud-verify-surfaces
+updated_at: 2026-09-08 America/Bogota (M4 SSOT tip refresh)
 ```
+
 
 | Capability | Status | Evidence class |
 | --- | --- | --- |
 | RC reproducible Mission OS package | COMPLETE | VERIFIED |
-| `node bin/eos.js` / `npm run eos:mission` | COMPLETE | MEASURED |
-| Legacy `npm run eos` | COMPLETE_WITH_CONDITIONS | Documented non-Mission entry |
 | AuthorityTruthSource + commitTransition | COMPLETE | VERIFIED |
 | Canonical FSM plan path (no bridge in runtime) | COMPLETE | VERIFIED (ATS-07, E2E-01/05) |
-| Deprecated `runtime.plan_mission` retained for compat tests | COMPLETE_WITH_CONDITIONS | Explicit `deprecated: true` |
 | HitlGatekeeper + local/external receipts | COMPLETE | VERIFIED (E2E-02/04/05) |
 | IntegrationGatekeeper FDIR on close | COMPLETE | VERIFIED (NEG-03) |
 | Epistemic honesty (PLANNED / NOT_PROVEN) | COMPLETE | MEASURED |
@@ -25,8 +25,19 @@ main_protected: 1b269932943c46849e463b293ace471a9745d3f1
 | Canonical rules index v0 | COMPLETE | VERIFIED (RULES-01) |
 | Negative governance suite | COMPLETE | VERIFIED (NEG + ATS) |
 | E2E fixture + HITL reject/approve + checkpoint | COMPLETE | VERIFIED (E2E-01..05) |
+
+| Write Barrier sandbox (scoped realpath allowlist) | COMPLETE | VERIFIED (#28; ADR-0013) |
+| Mission loop enforcement (Intent-Archive overlay) | COMPLETE | VERIFIED (#29; ADR-0014) |
+| Evidence custody via canonical HashChainedLedger | COMPLETE | VERIFIED (#33; ADR-0015; custody:verify) |
+| Engram path/envelope contract SSOT | COMPLETE | VERIFIED (#35; ADR-0016; engram:verify) |
+| Long-run GameDay harness (CI-safe default N) | COMPLETE | VERIFIED (#34; gameday:long-run; no soak claim) |
+| Strict-verify fusion control-plane lock | COMPLETE | VERIFIED (#39; fusion-cp-lock.js; verify:strict) |
+| Local main-push surrogate (pre-push) | COMPLETE_WITH_CONDITIONS | MEASURED (#40; local surrogate not GH enforcement) |
+| Operator HUD post-fusion verify surfaces | COMPLETE | VERIFIED (#41; evidence-custody / engram / fusion-cp-*) |
+| Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37) |
 | Production / network / credentials | FUTURE | BLOCKED |
-| Merge to main | FUTURE | BLOCKED |
+| PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
+| MCP SSOT + consumer sync | COMPLETE | VERIFIED (#26; MCP_SSOT.md) |
 
 ## Dictamen
 
@@ -37,13 +48,14 @@ COMPLETE_WITH_CONDITIONS: (subset)
   - Default plan may issue MEASURED_LOCAL_FIXTURE HITL receipt (LOCAL_BOUNDED)
   - Use --require-hitl / --hitl-receipt for external director receipt
   - Deprecated bridge exists for compat tests only; runtime does not call it
-  - No merge to main; no network; no Fundación mutation; fixture projects only
+  - GH branch protection RULE_CREATED_NOT_ENFORCED (Free private); local pre-push surrogate only
+  - No network production; no Fundacion mutation; fixture projects only
 PRODUCTION_READY: NO
 ```
 
-## Evidence command
+## Tip refresh notes (M4)
 
-```text
-node --test tests/authority-truth-source.test.js tests/eos-negative-governance.test.js tests/eos-e2e-local-fixture.test.js tests/eos-local-contracts.test.js
-→ 20/20 pass (at freeze)
-```
+- evaluated_tip pinned to OBSERVED main tip after M3 #41: 3c675dd2acca86b55cbf5e7b30b84f0e8464b6b5
+- Prior stale tip d7cd6fa (pre-fusion RC) retired
+- Rows added for WB / mission-loop / custody / engram / gameday / fusion-cp lock / local push surrogate / HUD
+- Does not invent PRODUCTION_READY or Fundacion work
