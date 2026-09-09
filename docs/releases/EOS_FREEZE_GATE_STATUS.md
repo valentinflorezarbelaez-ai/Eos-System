@@ -292,6 +292,16 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - Freeze `main_tip` pin **not** moved in Q5 (tip refresh is separate mission)
 
+## Q6 P6 inventory verify lock (2026-09-09)
+
+- Report: `docs/releases/EOS_Q6_P6_INVENTORY_VERIFY_LOCK_2026-09-09.md`
+- Branch: `cursor/eos-q6-p6-inventory-verify-lock` — push/compare only; do not merge without PO
+- `verify:strict` fail-closed if P6 inventory doc/required sections missing (`scripts/lib/p6-inventory-lock.js`)
+- `test:q6` TDD; Q2 CI `test:p6` remains; NON-CLAIM inventory != executed prune
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- Freeze `main_tip` pin **not** moved in Q6 (tip refresh is separate mission)
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`

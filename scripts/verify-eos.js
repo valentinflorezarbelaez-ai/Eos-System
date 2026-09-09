@@ -15,6 +15,7 @@ import { auditFusionControlPlane, FUSION_CP_REQUIRED_PATHS } from './lib/fusion-
 import { auditSentinelFdir, SENTINEL_FDIR_REQUIRED_PATHS } from './lib/sentinel-fdir-lock.js';
 import { auditHooksInstallSurface, HOOKS_INSTALL_REQUIRED_PATHS } from './lib/hooks-install-smoke.js';
 import { auditMcpCatalogLock, MCP_CATALOG_REQUIRED_PATHS } from './lib/mcp-catalog-lock.js';
+import { auditP6InventoryLock, P6_INVENTORY_REQUIRED_PATHS } from './lib/p6-inventory-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -107,6 +108,11 @@ const REQUIRED_PATHS = [
   'scripts/lib/mcp-catalog-lock.js',
   'tests/eos-p5-mcp-catalog-reconcile.test.js',
   'docs/releases/EOS_P5_MCP_CATALOG_RECONCILE_2026-09-09.md',
+  'scripts/lib/p6-inventory-lock.js',
+  'tests/eos-p6-complexity-prune-inventory.test.js',
+  'tests/eos-q6-p6-inventory-verify-lock.test.js',
+  'docs/releases/EOS_P6_COMPLEXITY_PRUNE_INVENTORY_2026-09-09.md',
+  'docs/releases/EOS_Q6_P6_INVENTORY_VERIFY_LOCK_2026-09-09.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -375,7 +381,8 @@ const REQUIRED_PATHS = [
   // N6 Sentinel/FDIR strict-verify lock (Ladder 3 H6)
   ...SENTINEL_FDIR_REQUIRED_PATHS,
   ...HOOKS_INSTALL_REQUIRED_PATHS,
-  ...MCP_CATALOG_REQUIRED_PATHS
+  ...MCP_CATALOG_REQUIRED_PATHS,
+  ...P6_INVENTORY_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1098,6 +1105,24 @@ function verifyWorkspace() {
         path: 'scripts/lib/mcp-catalog-lock.js',
         message: 'MCP catalog lock audit failed: ' + err.message,
         type: 'mcp-catalog-lock'
+      });
+    }
+
+
+    // 3g8. Q6 P6 inventory verify lock (doc + required sections; inventory != executed prune)
+    try {
+      const p6Inventory = auditP6InventoryLock(rootDir);
+      for (const c of p6Inventory.checks) {
+        report.checks.push(c);
+      }
+      for (const f of p6Inventory.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/p6-inventory-lock.js',
+        message: 'P6 inventory lock audit failed: ' + err.message,
+        type: 'p6-inventory-lock'
       });
     }
 
