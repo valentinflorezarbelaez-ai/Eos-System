@@ -281,6 +281,17 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - Freeze `main_tip` pin **not** moved in Q4 (tip refresh is separate mission)
 
+
+## Q5 Mission artifact write governance (2026-09-09)
+
+- Report: `docs/releases/EOS_Q5_MISSION_ARTIFACT_WRITE_GOVERNANCE_2026-09-09.md`
+- Branch: `cursor/eos-q5-mission-artifact-write-governance` — push/compare only; do not merge without PO
+- `.missions` allowlisted in Write Barrier SSOT; envelope `mission-artifact-write.js`; routed task/manifest + key mission-runtime artifact writers
+- No parallel EVD ledger; App Fuerza/Fundacion untouched; `test:q5`
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- Freeze `main_tip` pin **not** moved in Q5 (tip refresh is separate mission)
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`

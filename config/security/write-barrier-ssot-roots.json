@@ -1,7 +1,8 @@
 {
   "version": 1,
-  "description": "SSOT realpath allowlist roots for the Phase 4 Write Barrier sandbox. Paths are repo-relative; resolved via realpath at runtime. Fundacion is always denied even if listed.",
+  "description": "SSOT realpath allowlist roots for the Phase 4 Write Barrier sandbox. Paths are repo-relative; resolved via realpath at runtime. Fundacion is always denied even if listed. Q5 adds .missions for mission-artifact governance.",
   "repoRelativeAllowRoots": [
+    ".missions",
     "src",
     "tests",
     "scripts",
