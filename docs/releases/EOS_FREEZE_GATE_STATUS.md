@@ -56,3 +56,12 @@ External production readiness is explicitly **not** asserted.
 - Report: docs/releases/ROI4_I3_CUSTODY_2026-09-08.md
 - ADR: docs/architecture/adrs/ADR-0015-evidence-custody-canonical-ledger.md
 - Branch cursor/roi4-i3-custody — do not merge; do not start ROI5+
+
+
+## ROI6 Engram path/contract unify
+
+- Report: docs/releases/ROI6_ENGRAM_UNIFY_2026-09-08.md
+- ADR: docs/architecture/adrs/ADR-0016-engram-local-ssot-contract.md
+- Branch cursor/roi6-engram-unify — LAST ROI; do not merge; stop after push
+- Canonical local path: .eos/engram/memory.jsonl; external engram MCP PATH remains Golden Path for FTS5
+- PRODUCTION_READY remains NO

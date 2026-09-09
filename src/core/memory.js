@@ -2,19 +2,37 @@ import fs from 'node:fs/promises';
 import fsSync from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import {
+  resolveDefaultEngramStoragePath,
+  assertEngramPath,
+  buildEngramEnvelope,
+  assertEngramEnvelope,
+  computeEngramSeal
+} from './memory/engram-contract.js';
+import { resolveRepoRoot } from './write-barrier/paths.js';
 
 /**
  * @file src/core/memory.js
  * @description Akashic Causal Memory & Lexical Search Engine for EOS Mission OS.
  * Zero external dependencies (pure Node.js native primitives).
+ * ROI6: default storage is SSOT `.eos/engram/memory.jsonl` (not docs/intelligence/akasha).
  */
 export class EosMemory {
   /**
    * @param {Object} [options]
    * @param {string} [options.storagePath]
+   * @param {string} [options.repoRoot]
+   * @param {boolean} [options.skipPathAssert] — tests only; still defaults to SSOT path
    */
   constructor(options = {}) {
-    this.storagePath = options.storagePath || path.join(process.cwd(), 'docs', 'intelligence', 'akasha_memory.jsonl');
+    this.repoRoot = options.repoRoot || resolveRepoRoot();
+    const requested = options.storagePath || resolveDefaultEngramStoragePath(this.repoRoot);
+    if (options.skipPathAssert === true) {
+      this.storagePath = path.resolve(requested);
+    } else {
+      const asserted = assertEngramPath(requested, { repoRoot: this.repoRoot });
+      this.storagePath = asserted.path;
+    }
     this.quarantinedCount = 0;
     this._ensureStorageDirectory();
   }
@@ -32,33 +50,33 @@ export class EosMemory {
    * @returns {string}
    */
   _computeSeal(data) {
-    const raw = `${data.id}:${data.key}:${data.content}:${data.epistemicState || 'VERIFIED'}`;
-    return crypto.createHash('sha256').update(raw, 'utf8').digest('hex');
+    return computeEngramSeal(data);
   }
 
   /**
-   * Saves a new memory record with cryptographic verification.
+   * Saves a new memory record with cryptographic verification (ROI6 envelope).
    * @param {Object} record
    * @param {string} record.key
    * @param {string} record.content
    * @param {string} [record.title]
    * @param {string} [record.epistemicState]
    * @param {string[]} [record.tags]
+   * @param {string} [record.type]
+   * @param {string} [record.topic_key]
    * @returns {Promise<Object>}
    */
   async save(record) {
     const id = `MEM-${Date.now()}-${crypto.randomBytes(3).toString('hex')}`;
-    const entry = {
+    const entry = buildEngramEnvelope({
+      ...record,
       id,
       key: record.key,
       title: record.title || record.key,
       content: record.content,
       epistemicState: record.epistemicState || 'VERIFIED',
-      tags: record.tags || [],
-      createdAt: new Date().toISOString()
-    };
-
-    entry.sha256Seal = this._computeSeal(entry);
+      tags: record.tags || []
+    });
+    assertEngramEnvelope(entry);
 
     const line = JSON.stringify(entry) + '\n';
     await fs.appendFile(this.storagePath, line, 'utf8');
@@ -67,6 +85,7 @@ export class EosMemory {
 
   /**
    * Loads all healthy records from disk, quarantining tampered lines.
+   * Accepts ROI6 envelopes and legacy pre-ROI6 seal-only records.
    * @returns {Promise<Object[]>}
    */
   async loadRecords() {
@@ -108,6 +127,7 @@ export class EosMemory {
 
   /**
    * Performs indexed lexical scoring search across memory records.
+   * Honest lexical match — not SQLite FTS5.
    * @param {string} query
    * @param {number} [limit=10]
    * @returns {Promise<Array<Object & { score: number }>>}
@@ -140,7 +160,6 @@ export class EosMemory {
 
     scored.sort((a, b) => b.score - a.score);
 
-    // Buffer zeroization on transient search results
     const results = scored.slice(0, limit);
     return results;
   }
