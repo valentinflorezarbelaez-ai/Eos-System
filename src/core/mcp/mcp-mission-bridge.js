@@ -14,6 +14,8 @@ import { IntegrationGatekeeper } from '../governance/integration-gatekeeper.js';
 import { SchemaValidator } from '../contracts/schema-validator.js';
 import { CanonicalRulesIndex } from '../rules/canonical-rules-index.js';
 import { calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
+import { sealEvd } from '../sdd/evd-seal-path.js';
+import { EvidenceCustody } from '../sdd/evidence-custody.js';
 import { MissionLedger } from '../../../scripts/engine/mission-ledger.js';
 import {
   barrierCheck as writeBarrierCheck,
@@ -106,6 +108,8 @@ export class McpMissionBridge {
         baseDir: this.baseDir,
         getMissionDir: (id) => this.runtime.getMissionDir(id)
       });
+    this.custody = options.custody || null;
+    this.custodyBaseDir = options.custodyBaseDir || null;
   }
 
   resolveIntent(args = {}) {
@@ -384,21 +388,40 @@ export class McpMissionBridge {
       ...receiptBody,
       sha256: calculateSha256(JSON.stringify(receiptBody))
     };
-    fs.mkdirSync(evidenceDir, { recursive: true });
-    const file = path.join(evidenceDir, `${id}.json`);
-    fs.writeFileSync(file, JSON.stringify(receipt, null, 2), 'utf8');
+    // P4: mission-local EVD write MUST go through sealEvd + EvidenceCustody (no raw bypass)
+    const custody =
+      this.custody instanceof EvidenceCustody
+        ? this.custody
+        : new EvidenceCustody({
+            controlPlaneRoot: this.baseDir,
+            baseDir: this.custodyBaseDir,
+            enabled: true
+          });
+    const sealed = sealEvd({
+      controlPlaneRoot: this.baseDir,
+      evidenceDir,
+      record: receipt,
+      custody,
+      custodyBaseDir: this.custodyBaseDir,
+      dryRun: false
+    });
     try {
       this.loopRuntime.appendReceipt(missionId, {
         kind: 'evidence',
         stage: MISSION_LOOP_STAGES.EVIDENCE,
         ok: true,
         evidence_id: id,
-        path: file
+        path: sealed.path,
+        custody_event_hash: sealed.custody_event?.event_hash || null
       });
     } catch (err) {
       if (err.code !== 'MISSION_LOOP_MISSING') throw err;
     }
-    return { evidence: receipt, path: file };
+    return {
+      evidence: sealed.record,
+      path: sealed.path,
+      custody_event: sealed.custody_event
+    };
   }
 
   ledgerGetFeatures(args = {}) {

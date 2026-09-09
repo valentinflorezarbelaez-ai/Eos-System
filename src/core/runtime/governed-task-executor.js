@@ -15,6 +15,8 @@ import { SchemaValidator } from '../contracts/schema-validator.js';
 import { HashChainedLedger, calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
 import { MultiAgentSupervisionEngine } from '../supervision/multi-agent-supervision-engine.js';
 import { GovernedAutoRepairService } from './governed-auto-repair-service.js';
+import { sealEvd } from '../sdd/evd-seal-path.js';
+import { EvidenceCustody } from '../sdd/evidence-custody.js';
 
 export class GovernedTaskExecutor {
   /**
@@ -31,6 +33,20 @@ export class GovernedTaskExecutor {
       validator: this.validator,
       llmService: options.llmService
     });
+    this.controlPlaneRoot = options.controlPlaneRoot || null;
+    this.custody = options.custody || null;
+    this.custodyBaseDir = options.custodyBaseDir || null;
+  }
+
+  /** @private Resolve control-plane root for custody (parent of .missions). */
+  _resolveControlPlaneRoot(missionDir) {
+    if (this.controlPlaneRoot) return this.controlPlaneRoot;
+    const resolved = path.resolve(missionDir);
+    const parent = path.dirname(resolved);
+    if (path.basename(parent) === '.missions') {
+      return path.dirname(parent);
+    }
+    return process.cwd();
   }
 
   /**
@@ -237,10 +253,26 @@ export class GovernedTaskExecutor {
     // Assert receipt validity against schema
     this.validator.assertValid(evidenceReceipt, 'evidence-receipt.schema.json', 'evidence-receipt');
 
-    // Save Evidence Receipt
-    const evidenceFile = path.join(evidenceDir, `${receiptId}.json`);
-    const evidenceStr = JSON.stringify(evidenceReceipt, null, 2);
-    fs.writeFileSync(evidenceFile, evidenceStr, 'utf8');
+    // P4: mission-local EVD write MUST go through sealEvd + EvidenceCustody (no raw bypass)
+    const controlPlaneRoot = this._resolveControlPlaneRoot(missionDir);
+    const custody =
+      this.custody instanceof EvidenceCustody
+        ? this.custody
+        : new EvidenceCustody({
+            controlPlaneRoot,
+            baseDir: this.custodyBaseDir,
+            enabled: true
+          });
+    const sealed = sealEvd({
+      controlPlaneRoot,
+      evidenceDir,
+      record: { ...evidenceReceipt, id: receiptId },
+      custody,
+      custodyBaseDir: this.custodyBaseDir,
+      dryRun: false
+    });
+    const evidenceFile = sealed.path;
+    const evidenceStr = `${JSON.stringify(sealed.record, null, 2)}\n`;
     this._updateManifestFile(missionDir, `evidence/${receiptId}.json`, evidenceStr);
 
     // 5. Update Task Contract Status
@@ -268,7 +300,9 @@ export class GovernedTaskExecutor {
 
     return {
       taskContract,
-      evidenceReceipt,
+      evidenceReceipt: sealed.record,
+      evidencePath: evidenceFile,
+      custody_event: sealed.custody_event,
       exitCode,
       durationMs
     };

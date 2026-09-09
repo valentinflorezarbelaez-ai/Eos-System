@@ -4,10 +4,11 @@
  * Fail-closed: every non-dryRun write MUST advance EvidenceCustody (ROI4 / ADR-0015).
  * No parallel ledger. Reuses EvidenceCustody.sealEvdRecord.
  *
- * Mission-local evidence dirs (e.g. .missions/<id>/evidence) are out of scope;
- * they use mission ledgers, not the control-plane docs/evidence custody chain.
+ * Mission-local evidence dirs (e.g. .missions/<id>/evidence) are in P4 scope:
+ * writers must call sealEvd (same SSOT / EvidenceCustody) or fail the mission-local audit.
  *
  * N2: static audit scans src/ + scripts/ + bin/ (not src-only).
+ * P4: mission-local EVD raw writeFileSync is audited separately (no false DENY on sealEvd callers).
  */
 
 import fs from 'node:fs';
@@ -234,14 +235,90 @@ export function auditCanonicalEvdWritePaths(controlPlaneRoot) {
 }
 
 /**
- * Inventory helpers for release reports / operators.
+ * True when source appears to raw-write EVD JSON under missionDir/evidence.
+ * Intentional sealEvd callers (no writeFileSync of evidenceFile/file) are NOT flagged.
+ * Task/manifest writeFileSync alone is NOT flagged.
+ * @param {string} text
  */
+export function sourceWritesMissionLocalEvd(text) {
+  if (!text || typeof text !== 'string') return false;
+  if (!/writeFileSync\s*\(/.test(text)) return false;
+
+  // SSOT module itself may write any evidenceDir via sealEvd
+  if (/CANONICAL_EVD_SEAL_MODULE/.test(text) && /writeFileSync\s*\(\s*targetFilePath/.test(text)) {
+    return true;
+  }
+
+  const joinsMissionEvidence =
+    /path\.join\([^;]*\bmissionDir\b[^;]*['"]evidence['"]/.test(text) ||
+    (/\bmissionDir\b/.test(text) &&
+      /path\.join\([^;]*evidenceDir[^;]*|path\.join\([^)]*['"]evidence['"]/.test(text));
+
+  if (!joinsMissionEvidence) return false;
+
+  const namesEvd =
+    /\bEVD-/.test(text) ||
+    /\breceiptId\b/.test(text) ||
+    /\bevidenceId\b/.test(text) ||
+    /\bevdId\b/.test(text) ||
+    /\bevidence_id\b/.test(text);
+
+  const writesEvidenceTarget =
+    /writeFileSync\s*\(\s*(?:evidenceFile|file)\b/.test(text) ||
+    /writeFileSync\s*\(\s*path\.join\([^)]*evidenceDir/.test(text);
+
+  return namesEvd && writesEvidenceTarget;
+}
+
+/**
+ * Fail-closed static audit for mission-local EVD writers under .missions/<id>/evidence.
+ * Only sealEvd SSOT may writeFileSync those EVD artifacts.
+ */
+export function auditMissionLocalEvdWritePaths(controlPlaneRoot) {
+  const root = path.resolve(controlPlaneRoot || process.cwd());
+  const files = [];
+  for (const relRoot of EVD_AUDIT_SCAN_ROOTS) {
+    walkJsFiles(path.join(root, relRoot), files);
+  }
+  const sanctioned = [];
+  const violations = [];
+
+  for (const abs of files) {
+    const rel = path.relative(root, abs).replace(/\\/g, '/');
+    const text = fs.readFileSync(abs, 'utf8');
+    if (!sourceWritesMissionLocalEvd(text)) continue;
+
+    if (CANONICAL_EVD_SEAL_MODULES.includes(rel)) {
+      sanctioned.push(rel);
+    } else {
+      violations.push({ path: rel, code: 'EVD_MISSION_LOCAL_BYPASS_WRITE' });
+    }
+  }
+
+  const ssotAbs = path.join(root, CANONICAL_EVD_SEAL_MODULE);
+  if (!fs.existsSync(ssotAbs)) {
+    violations.push({ path: CANONICAL_EVD_SEAL_MODULE, code: 'EVD_SEAL_SSOT_MISSING' });
+  }
+
+  return {
+    ok: violations.length === 0,
+    ssot: CANONICAL_EVD_SEAL_MODULE,
+    sanctioned,
+    violations,
+    scanned: files.length,
+    roots: [...EVD_AUDIT_SCAN_ROOTS],
+    scope: 'mission-local'
+  };
+}
+
+/** Inventory helpers for release reports / operators. */
 export function inventoryCanonicalEvdWriters(controlPlaneRoot) {
   const audit = auditCanonicalEvdWritePaths(controlPlaneRoot);
   return {
     ...audit,
     note:
       'Canonical docs/evidence EVD writers must go through sealEvd (G7/N2). ' +
-      'Audit scans src/ + scripts/ + bin/. Mission-local evidence dirs are out of scope.'
+      'Mission-local .missions/<id>/evidence EVD writers must also use sealEvd (P4). ' +
+      'Audit scans src/ + scripts/ + bin.'
   };
 }

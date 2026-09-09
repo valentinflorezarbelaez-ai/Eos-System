@@ -8,7 +8,7 @@ import { ArchitecturalFitnessEngine } from '../src/core/ast/architectural-fitnes
 import { ContractEvidenceSealer } from '../src/core/formal/contract-evidence-sealer.js';
 import { EconomicContractValidator } from '../src/core/formal/economic-contract-validator.js';
 import { EvidenceCustody } from '../src/core/sdd/evidence-custody.js';
-import { auditCanonicalEvdWritePaths } from '../src/core/sdd/evd-seal-path.js';
+import { auditCanonicalEvdWritePaths, auditMissionLocalEvdWritePaths } from '../src/core/sdd/evd-seal-path.js';
 import { verifyEngramContract } from '../src/core/memory/engram-contract.js';
 import { auditFusionControlPlane, FUSION_CP_REQUIRED_PATHS } from './lib/fusion-cp-lock.js';
 import { auditSentinelFdir, SENTINEL_FDIR_REQUIRED_PATHS } from './lib/sentinel-fdir-lock.js';
@@ -98,6 +98,8 @@ const REQUIRED_PATHS = [
   'scripts/lib/hooks-install-smoke.js',
   'tests/eos-p3-hooks-install-smoke.test.js',
   'docs/releases/EOS_P3_HOOKS_INSTALL_SMOKE_2026-09-08.md',
+  'tests/eos-p4-mission-local-evd-seal.test.js',
+  'docs/releases/EOS_P4_MISSION_LOCAL_EVD_SEAL_2026-09-09.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -950,6 +952,31 @@ function verifyWorkspace() {
         type: 'evd-seal-path'
       });
     }
+
+    // 3g2c. P4 mission-local EVD seal path (fail-closed static audit)
+    try {
+      const missionEvdAudit = auditMissionLocalEvdWritePaths(rootDir);
+      if (!missionEvdAudit.ok) {
+        report.failures.push({
+          path: 'src/core/sdd/evd-seal-path.js',
+          message: 'P4 mission-local EVD bypass writers detected: ' + JSON.stringify(missionEvdAudit.violations),
+          type: 'evd-seal-path-mission-local'
+        });
+      } else {
+        report.checks.push({
+          path: 'EvdSealPathMissionLocal (sanctioned=' + (missionEvdAudit.sanctioned || []).join(',') + ')',
+          status: 'VERIFIED',
+          type: 'evd-seal-path-mission-local'
+        });
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'src/core/sdd/evd-seal-path.js',
+        message: 'P4 mission-local EVD seal path audit failed: ' + err.message,
+        type: 'evd-seal-path-mission-local'
+      });
+    }
+
     // 3g3. ROI6 Engram SSOT path + envelope contract (no live engram CLI required)
     try {
       const engram = verifyEngramContract(rootDir);
