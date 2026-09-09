@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: e6d1d06ac7450bc8fc94153e4bad7465396a472e
+evaluated_tip: 5917abc24b5ee03eabdc4e741ffe1d06f168c013
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #46 from valentinflorezarbelaez-ai/cursor/eos-ladder-3-audit
-updated_at: 2026-09-08 America/Bogota (N1 Ladder3 SSOT tip refresh)
+main_subject: Merge pull request #53 from valentinflorezarbelaez-ai/cursor/eos-ladder-4-audit
+updated_at: 2026-09-08 America/Bogota (P1 Ladder4 SSOT tip refresh post audit #53)
 ```
 
 
@@ -37,6 +37,12 @@ updated_at: 2026-09-08 America/Bogota (N1 Ladder3 SSOT tip refresh)
 | CI GameDay / ROI seam-pack | COMPLETE | VERIFIED (#43; ci.yml job seam-pack; test:m5; CI-safe gameday:long-run) |
 | Mission OS ATS to mission-loop coherence | COMPLETE | MEASURED (#44; MISSION_OS_ATS_MISSION_LOOP_COHERENCE.md; mission-os-coherence.js) |
 | EVD custody seal path (G7) | COMPLETE | VERIFIED (#45; evd-seal-path.js; sealEvd SSOT; test:g7) |
+| EVD scripts+bin seal (N2) | COMPLETE | VERIFIED (#48; sealEvd scripts/bin; test:n2) |
+| Operator doctor (N3) | COMPLETE | VERIFIED (#49; bin/eos-doctor.js; eos:doctor; test:n3) |
+| HUD + fusion-cp post-G7/M6 (N4) | COMPLETE | VERIFIED (#50; HUD evd-seal + fusion-cp lock; test:n4) |
+| Independent verifier fusion-light (N5) | COMPLETE | VERIFIED (#51; verify:independent fusion-light; test:n5) |
+| Sentinel/FDIR strict-verify lock (N6) | COMPLETE | VERIFIED (#52; sentinel-fdir-lock.js; test:n6) |
+| Ladder 4 maturity gap audit | COMPLETE | MEASURED (#53; EOS_MATURITY_LADDER_4_AUDIT_2026-09-08.md; P1–P6 ordered) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -56,9 +62,9 @@ COMPLETE_WITH_CONDITIONS: (subset)
 PRODUCTION_READY: NO
 ```
 
-## Tip refresh notes (N1)
+## Tip refresh notes (P1)
 
-- evaluated_tip pinned to OBSERVED main tip after Ladder 3 audit #46: e6d1d06ac7450bc8fc94153e4bad7465396a472e
-- Prior M4 tip pin 3c675dd (M3) retired
-- Rows added for CI GameDay / ROI seam-pack (M5), Mission OS ATS to mission-loop coherence (M6), EVD custody seal path (G7)
+- evaluated_tip pinned to OBSERVED main tip after Ladder 4 audit #53: 5917abc24b5ee03eabdc4e741ffe1d06f168c013
+- Prior N1 tip pin e6d1d06ac7450bc8fc94153e4bad7465396a472e (Ladder 3 audit #46) retired
+- Rows added for N2 EVD scripts+bin seal, N3 operator doctor, N4 HUD/fusion-cp, N5 independent fusion-light, N6 Sentinel/FDIR lock, Ladder 4 audit
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
