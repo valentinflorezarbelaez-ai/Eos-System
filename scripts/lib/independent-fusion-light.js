@@ -1,12 +1,15 @@
 /**
  * @module independent-fusion-light
  * N5 — Independent verifier fusion-light pack (Ladder 3 H5).
+ * Q3 — Optional Ladder4 observe subset: hooks-install / mcp-catalog / mission-local.
  *
  * Fail-closed path existence + light import/API smoke for EvidenceCustody,
- * EngramContract, fusion-cp-lock, and evd-seal-path. Reuses
- * POST_FUSION_CRITICAL_PATHS ids from operator-doctor.
+ * EngramContract, fusion-cp-lock, evd-seal-path, and Q3 L4 observe modules.
+ * Reuses POST_FUSION_CRITICAL_PATHS ids from operator-doctor.
  *
  * This is NOT verify:strict, NOT full GameDay soak, NOT production certification.
+ * Light checks do NOT run full hooks-install / mcp-catalog / mission-local audit bodies
+ * (those remain verify:strict).
  * PRODUCTION_READY: NO
  */
 import fs from 'node:fs';
@@ -31,15 +34,27 @@ import {
 import {
   sealEvd,
   CANONICAL_EVD_SEAL_MODULE,
-  auditCanonicalEvdWritePaths
+  auditCanonicalEvdWritePaths,
+  auditMissionLocalEvdWritePaths
 } from '../../src/core/sdd/evd-seal-path.js';
+import {
+  auditHooksInstallSurface,
+  HOOKS_INSTALL_REQUIRED_PATHS
+} from './hooks-install-smoke.js';
+import {
+  auditMcpCatalogLock,
+  MCP_CATALOG_REQUIRED_PATHS
+} from './mcp-catalog-lock.js';
 
 /** Subset of doctor post-fusion paths covered by independent fusion-light. */
 export const FUSION_LIGHT_PATH_IDS = Object.freeze([
   'FUSION_CP',
   'CUSTODY',
   'ENGRAM',
-  'EVD_SEAL'
+  'EVD_SEAL',
+  'HOOKS_INSTALL',
+  'MCP_CATALOG',
+  'MISSION_LOCAL_EVD'
 ]);
 
 export const FUSION_LIGHT_REQUIRED_PATHS = Object.freeze(
@@ -57,7 +72,8 @@ export const FUSION_LIGHT_NON_CLAIMS = Object.freeze([
   'NOT App Fuerza delivery certification',
   'NOT Fundacion mutation authorization (Fundacion Delta=0 retained)',
   'NOT GitHub branch-protection enforcement (local surrogate only)',
-  'NOT replacement of ROI4 custody:verify / ROI6 engram:verify deep suites'
+  'NOT replacement of ROI4 custody:verify / ROI6 engram:verify deep suites',
+  'NOT full hooks-install smoke / mcp-catalog reconcile / mission-local EVD audit bodies (Q3 observe = path + light export only; verify:strict owns those audits)'
 ]);
 
 /**
@@ -185,6 +201,64 @@ export function auditFusionLight(rootDir) {
     });
   }
 
+  // Q3 Ladder4 observe (light export only; do NOT invoke full audit bodies)
+  try {
+    if (typeof auditHooksInstallSurface !== 'function') {
+      throw new Error('auditHooksInstallSurface export missing');
+    }
+    if (!Array.isArray(HOOKS_INSTALL_REQUIRED_PATHS) || HOOKS_INSTALL_REQUIRED_PATHS.length < 4) {
+      throw new Error('HOOKS_INSTALL_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'hooks-install-smoke (auditHooksInstallSurface export + REQUIRED_PATHS n=' + HOOKS_INSTALL_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-hooks-install'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/hooks-install-smoke.js',
+      message: 'hooks-install-smoke light import failed: ' + err.message,
+      type: 'fusion-light-hooks-install'
+    });
+  }
+
+  try {
+    if (typeof auditMcpCatalogLock !== 'function') {
+      throw new Error('auditMcpCatalogLock export missing');
+    }
+    if (!Array.isArray(MCP_CATALOG_REQUIRED_PATHS) || MCP_CATALOG_REQUIRED_PATHS.length < 3) {
+      throw new Error('MCP_CATALOG_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'mcp-catalog-lock (auditMcpCatalogLock export + REQUIRED_PATHS n=' + MCP_CATALOG_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-mcp-catalog'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/mcp-catalog-lock.js',
+      message: 'mcp-catalog-lock light import failed: ' + err.message,
+      type: 'fusion-light-mcp-catalog'
+    });
+  }
+
+  try {
+    if (typeof auditMissionLocalEvdWritePaths !== 'function') {
+      throw new Error('auditMissionLocalEvdWritePaths export missing');
+    }
+    checks.push({
+      path: 'mission-local EVD (auditMissionLocalEvdWritePaths export; body owned by verify:strict)',
+      status: 'VERIFIED',
+      type: 'fusion-light-mission-local'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'src/core/sdd/evd-seal-path.js#auditMissionLocalEvdWritePaths',
+      message: 'mission-local EVD light import failed: ' + err.message,
+      type: 'fusion-light-mission-local'
+    });
+  }
+
   return {
     ok: failures.length === 0,
     enabled: true,
@@ -207,7 +281,7 @@ export function fusionLightDisabledReport() {
     checks: [],
     failures: [],
     nonClaims: [
-      'FUSION-LIGHT DISABLED via --no-fusion-light: custody/engram/fusion-cp/evd-seal NOT independently light-checked',
+      'FUSION-LIGHT DISABLED via --no-fusion-light: custody/engram/fusion-cp/evd-seal/hooks-install/mcp-catalog/mission-local NOT independently light-checked',
       ...FUSION_LIGHT_NON_CLAIMS
     ],
     requiredPaths: [...FUSION_LIGHT_REQUIRED_PATHS]
