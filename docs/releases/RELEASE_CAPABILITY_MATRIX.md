@@ -7,7 +7,7 @@ evaluated_tip: 5917abc24b5ee03eabdc4e741ffe1d06f168c013
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 main_subject: Merge pull request #53 from valentinflorezarbelaez-ai/cursor/eos-ladder-4-audit
-updated_at: 2026-09-08 America/Bogota (P1 Ladder4 SSOT tip refresh post audit #53)
+updated_at: 2026-09-09 America/Bogota (P6 complexity prune inventory; Ladder4 P1-P6 complete after merge; PRODUCTION_READY=NO)
 ```
 
 
@@ -45,6 +45,7 @@ updated_at: 2026-09-08 America/Bogota (P1 Ladder4 SSOT tip refresh post audit #5
 | Ladder 4 maturity gap audit | COMPLETE | MEASURED (#53; EOS_MATURITY_LADDER_4_AUDIT_2026-09-08.md; P1–P6 ordered) |
 | Mission-local EVD seal (P4) | COMPLETE | MEASURED (branch cursor/eos-p4-mission-local-evd-seal; sealEvd mission-local; test:p4) |
 | MCP catalog reconcile (P5) | COMPLETE | MEASURED (branch cursor/eos-p5-mcp-catalog-reconcile; catalog 80==CANONICAL_TOOLS; test:p5) |
+| Complexity prune inventory (P6) | COMPLETE | MEASURED (branch cursor/eos-p6-complexity-prune-inventory; docs inventory only; optional observe NON-CLAIM; Ladder4 P1-P6 complete after merge) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
