@@ -445,3 +445,12 @@ External production readiness is explicitly **not** asserted.
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - Prior R1 tip pin `4753240eb003ecb3948e17d93e5511a7b35a40f0` retired (historical)
 
+
+## S2 Context Pack TPC index + lifecycle (2026-09-09)
+
+- Report: `docs/releases/EOS_S2_CONTEXT_PACK_TPC_2026-09-09.md`
+- Index SSOT: `docs/harness/CONTEXT_PACK_TPC.md`
+- Branch: `cursor/eos-s2-context-pack-tpc` — push/compare only; do not merge without PO
+- Lock: `scripts/lib/context-pack-lock.js`; `test:s2`; verify:strict block 3g10
+- NON-CLAIM: index ≠ runtime context completo / index != full runtime context engineering; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING)
+- Freeze `main_tip` pin **not** moved in S2 (tip refresh was S1)
