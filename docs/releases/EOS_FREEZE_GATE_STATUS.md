@@ -11,7 +11,7 @@ Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (N1 tip pin retained; N2/N3 branch notes added — see N2/N3 sections; PRODUCTION_READY=NO)
+updated_at: 2026-09-08 America/Bogota (N1 tip pin retained; N2/N3/N4 branch notes added — see N2/N3/N4 sections; PRODUCTION_READY=NO)
 ```
 
 ## Closed on main (fusion + ROI1–6 + Ladder2 M1–M6 + G7 + Ladder3 audit)
@@ -142,6 +142,16 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Wires `bin/eos-doctor.js` + `eos:doctor`; extends operator-doctor with post-fusion presence checks (verify/fusion-cp/custody/engram/evd-seal/pre-push)
 - Optional HUD OBSERVED doctor section; verify:strict existence lock for doctor bin/module
 - `test:n3`; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
+- Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
+
+
+## N4 HUD + fusion-cp post-G7/M6 lock (2026-09-08)
+
+- Report: `docs/releases/EOS_N4_HUD_FUSION_CP_POST_G7_2026-09-08.md`
+- Branch: `cursor/eos-n4-hud-fusion-cp-lock` — push/compare only; do not merge without PO
+- HUD VERIFY_SURFACE_TYPES adds `evd-seal-path` (+ `fusion-cp-coherence` / `fusion-cp-pre-push` smoke types)
+- fusion-cp-lock extends required paths + light smoke for ADR-0015/0016, mission-os-coherence, pre-push-hook
+- `test:n4`; verify:strict DENYs if missing; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
 - Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
 
 ## Historical publish notes

@@ -84,6 +84,8 @@ const REQUIRED_PATHS = [
   'src/core/runtime/operator-doctor.js',
   'tests/eos-n3-operator-doctor.test.js',
   'docs/releases/EOS_N3_OPERATOR_DOCTOR_2026-09-08.md',
+  'tests/eos-n4-hud-fusion-cp-lock.test.js',
+  'docs/releases/EOS_N4_HUD_FUSION_CP_POST_G7_2026-09-08.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',

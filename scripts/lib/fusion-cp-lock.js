@@ -1,10 +1,12 @@
 /**
  * @module fusion-cp-lock
  * M1 — Strict-verify fusion control-plane lock (Ladder 2 G1).
+ * N4 — Post-G7/M6 extensions: ADR-0015/0016, mission-os-coherence, pre-push-hook.
  *
  * Fail-closed existence + light import/API smoke for Write Barrier,
  * Mission Loop runtime, MCP SSOT (+ sync contract), long-run GameDay harness,
- * and ADR-0013/0014. No full GameDay soak (keep CI fast).
+ * ADR-0013/0014/0015/0016, Mission OS coherence map, and local pre-push surrogate.
+ * No full GameDay soak (keep CI fast).
  *
  * PRODUCTION_READY: NO
  */
@@ -31,6 +33,16 @@ import {
   DEFAULT_CI_ITERATIONS,
   FAULT_CATALOG
 } from '../../src/core/adversarial/long-run-gameday-harness.js';
+import {
+  getMissionOsCoherenceMap,
+  assertCoherenceMapComplete,
+  COHERENCE_SCHEMA
+} from '../../src/core/observability/mission-os-coherence.js';
+import {
+  evaluateMainPushGuard,
+  parsePrePushLine,
+  ALLOW_ENV_KEY
+} from '../pre-push-hook.js';
 
 /** Relative paths that must exist for fusion control-plane integrity. */
 export const FUSION_CP_REQUIRED_PATHS = Object.freeze([
@@ -43,7 +55,12 @@ export const FUSION_CP_REQUIRED_PATHS = Object.freeze([
   'scripts/mcp-ssot-sync.js',
   'src/core/adversarial/long-run-gameday-harness.js',
   'docs/architecture/adrs/ADR-0013-write-barrier-sandbox.md',
-  'docs/architecture/adrs/ADR-0014-mission-loop-mcp-enforcement.md'
+  'docs/architecture/adrs/ADR-0014-mission-loop-mcp-enforcement.md',
+  // N4 post-G7/M6 locks
+  'docs/architecture/adrs/ADR-0015-evidence-custody-canonical-ledger.md',
+  'docs/architecture/adrs/ADR-0016-engram-local-ssot-contract.md',
+  'src/core/observability/mission-os-coherence.js',
+  'scripts/pre-push-hook.js'
 ]);
 
 /**
@@ -202,6 +219,76 @@ export function auditFusionControlPlane(rootDir) {
       path: 'src/core/adversarial/long-run-gameday-harness.js',
       message: 'GameDay harness smoke failed: ' + err.message,
       type: 'fusion-cp-gameday'
+    });
+  }
+
+  // --- Mission OS coherence map light smoke (N4 / M6) ---
+  try {
+    if (typeof getMissionOsCoherenceMap !== 'function' || typeof assertCoherenceMapComplete !== 'function') {
+      throw new Error('mission-os-coherence API surface incomplete');
+    }
+    const map = getMissionOsCoherenceMap();
+    if (!map || map.schema !== COHERENCE_SCHEMA) {
+      throw new Error('coherence map schema mismatch');
+    }
+    if (!Array.isArray(map.rows) || map.rows.length < 1) {
+      throw new Error('coherence map rows missing');
+    }
+    const completeness = assertCoherenceMapComplete();
+    if (!completeness || completeness.ok !== true) {
+      throw new Error('assertCoherenceMapComplete did not return ok');
+    }
+    checks.push({
+      path: 'MissionOsCoherence (schema=' + COHERENCE_SCHEMA + ', rows=' + map.rows.length + ', ats=' + completeness.ats_documented + ')',
+      status: 'VERIFIED',
+      type: 'fusion-cp-coherence'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'src/core/observability/mission-os-coherence.js',
+      message: 'Mission OS coherence smoke failed: ' + err.message,
+      type: 'fusion-cp-coherence'
+    });
+  }
+
+  // --- Pre-push main-guard light smoke (N4 / M2 surrogate) ---
+  try {
+    if (typeof evaluateMainPushGuard !== 'function' || typeof parsePrePushLine !== 'function') {
+      throw new Error('pre-push-hook API surface incomplete');
+    }
+    if (ALLOW_ENV_KEY !== 'EOS_ALLOW_MAIN_PUSH') {
+      throw new Error('ALLOW_ENV_KEY drift');
+    }
+    const line = 'refs/heads/feature abc1234 refs/heads/main def5678';
+    const parsed = parsePrePushLine(line);
+    if (!parsed || parsed.remoteRef !== 'refs/heads/main') {
+      throw new Error('parsePrePushLine failed for main update');
+    }
+    const denied = evaluateMainPushGuard({
+      lines: [line],
+      env: {},
+      isAncestor: () => true
+    });
+    if (denied.allowed !== false || denied.reason !== 'MAIN_PUSH_DENIED') {
+      throw new Error('pre-push DENY smoke failed: ' + JSON.stringify(denied));
+    }
+    const featureOk = evaluateMainPushGuard({
+      lines: ['refs/heads/feature abc1234 refs/heads/feature def5678'],
+      env: {}
+    });
+    if (featureOk.allowed !== true) {
+      throw new Error('pre-push feature allow smoke failed');
+    }
+    checks.push({
+      path: 'PrePushHook (parse + MAIN_PUSH_DENIED + feature allow)',
+      status: 'VERIFIED',
+      type: 'fusion-cp-pre-push'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/pre-push-hook.js',
+      message: 'Pre-push hook smoke failed: ' + err.message,
+      type: 'fusion-cp-pre-push'
     });
   }
 
