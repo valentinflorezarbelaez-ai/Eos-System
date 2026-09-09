@@ -11,7 +11,7 @@ Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (P3 hooks-install smoke; PRODUCTION_READY=NO)
+updated_at: 2026-09-09 America/Bogota (P4 mission-local EVD seal; PRODUCTION_READY=NO)
 ```
 
 ## Closed on main (fusion + ROI1–6 + Ladder2 M1–M6 + G7 + Ladder3 N1–N6 + Ladder4 audit)
@@ -209,6 +209,14 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 
+## P4 Mission-local EVD seal / custody (2026-09-09)
+
+- Report: `docs/releases/EOS_P4_MISSION_LOCAL_EVD_SEAL_2026-09-09.md`
+- Branch: `cursor/eos-p4-mission-local-evd-seal` — push/compare only; do not merge without PO
+- bridge + governed-task-executor mission-local EVD writes route through `sealEvd` + EvidenceCustody
+- `test:p4` + mission-local audit in verify:strict; no false DENY on sealEvd callers
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; dirty tree deferred unchanged
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`

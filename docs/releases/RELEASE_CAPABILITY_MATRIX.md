@@ -43,6 +43,7 @@ updated_at: 2026-09-08 America/Bogota (P1 Ladder4 SSOT tip refresh post audit #5
 | Independent verifier fusion-light (N5) | COMPLETE | VERIFIED (#51; verify:independent fusion-light; test:n5) |
 | Sentinel/FDIR strict-verify lock (N6) | COMPLETE | VERIFIED (#52; sentinel-fdir-lock.js; test:n6) |
 | Ladder 4 maturity gap audit | COMPLETE | MEASURED (#53; EOS_MATURITY_LADDER_4_AUDIT_2026-09-08.md; P1–P6 ordered) |
+| Mission-local EVD seal (P4) | COMPLETE | MEASURED (branch cursor/eos-p4-mission-local-evd-seal; sealEvd mission-local; test:p4) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
