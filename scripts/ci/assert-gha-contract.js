@@ -149,6 +149,8 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:q4', 'CI Ladder5 Q4 complexity recount');
         assertContains(yaml, 'test:q5', 'CI Ladder5 Q5 mission-artifact');
         assertContains(yaml, 'test:q6', 'CI Ladder5 Q6 P6 inventory lock');
+        assertContains(yaml, 'test:r4', 'CI Ladder6 R4 complexity-budget lock');
+        assertContains(yaml, 'test:r5', 'CI Ladder6 R5 deferred-writers lock');
       } catch (err) {
         failures.push(err.message);
       }

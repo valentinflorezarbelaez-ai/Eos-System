@@ -1,0 +1,25 @@
+schema: spec-driven
+created: 2026-09-09
+goal: R6 closeout — document K6 CLOSED_BY_R4 (verify complexity-budget lock already in R4); seal CI seam-pack with test:r4 + test:r5; meta-tests + NON-CLAIM candado!=prune; Spanish evidence. Do not reimplement lock.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-r6-complexity-budget-verify-closeout
+  - .github/workflows/ci.yml
+  - docs/governance/CI_CD_CONTRACT.md
+  - scripts/ci/assert-gha-contract.js
+  - tests/eos-m5-ci-gameday-seam-pack.test.js
+  - tests/github-actions-cicd.test.js
+  - tests/eos-r2-ci-seam-pack-q-tests.test.js
+  - tests/eos-r6-complexity-budget-verify-closeout.test.js
+  - package.json
+  - docs/releases
+non_goals:
+  - reimplementing auditComplexityBudgetLock / complexity-budget-lock.js
+  - raising max_schemas
+  - executing P6 prune/quarantine
+  - Fundacion writes
+  - App Fuerza writes
+  - claiming PRODUCTION_READY
+  - doctor/fusion-light bloat (optional skipped)
+  - new root npm dependencies

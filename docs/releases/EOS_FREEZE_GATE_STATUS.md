@@ -402,3 +402,12 @@ External production readiness is explicitly **not** asserted.
 - NON-CLAIM: no fake Write Barrier route; no parallel EVD ledger; PRODUCTION_READY=NO; Fundacion Delta=0; App Fuerza untouched
 - Freeze `main_tip` pin **not** moved in R5 (tip refresh is separate mission)
 
+## R6 Complexity-budget verify closeout (2026-09-09)
+
+- Report: `docs/releases/EOS_R6_COMPLEXITY_BUDGET_VERIFY_CLOSEOUT_2026-09-09.md`
+- Branch: `cursor/eos-r6-complexity-budget-verify-closeout` — push/compare only; do not merge without PO
+- **K6 CLOSED_BY_R4** — verify lock already in R4; R6 seals CI `test:r4`+`test:r5` + meta-tests + NON-CLAIM candado ≠ prune
+- **Ladder 6 R1–R6 close pending this merge** (cierre pendiente de este merge)
+- NON-CLAIM: candado ≠ executed prune; no max_schemas raise; no P6 prune; PRODUCTION_READY=NO; Fundacion Delta=0
+- Freeze `main_tip` pin **not** moved in R6 (tip refresh is separate mission)
+
