@@ -8,7 +8,7 @@ import { assertGithubActionsContract } from '../scripts/ci/assert-gha-contract.j
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 
-test('M5: CI workflow declares seam-pack GameDay / ROI pack', () => {
+test('P2: CI workflow declares seam-pack Ladder3 N2-N6 pack', () => {
   const yaml = fs.readFileSync(path.join(rootDir, '.github/workflows/ci.yml'), 'utf8');
   assert.match(yaml, /^  seam-pack:/m);
   assert.match(yaml, /name:\s*CI GameDay \/ ROI seam pack/);
@@ -21,22 +21,20 @@ test('M5: CI workflow declares seam-pack GameDay / ROI pack', () => {
   assert.equal(/soak/i.test(yaml.split('seam-pack:')[1] || ''), false);
 });
 
-test('M5: CI_CD_CONTRACT.json lists seam-pack job', () => {
-  const contract = JSON.parse(
-    fs.readFileSync(path.join(rootDir, 'docs/governance/CI_CD_CONTRACT.json'), 'utf8')
-  );
-  assert.ok(contract.workflows.ci.jobs.includes('seam-pack'));
-  assert.equal(contract.production_deploy, 'FORBIDDEN');
-  assert.equal(contract.fundacion_mutation, 'FORBIDDEN');
+test('P2: CI_CD_CONTRACT.md documents n2..n6', () => {
+  const md = fs.readFileSync(path.join(rootDir, 'docs/governance/CI_CD_CONTRACT.md'), 'utf8');
+  assert.ok(md.includes('test:n2'));
+  assert.ok(md.includes('test:n6'));
+  assert.ok(md.includes('P2 seam-pack note'));
 });
 
-test('M5: assert-gha-contract verifies seam-pack surface', () => {
+test('P2: assert-gha-contract verifies N seam surface', () => {
   const result = assertGithubActionsContract(rootDir);
   assert.deepEqual(result.failures, []);
   assert.equal(result.ok, true);
 });
 
-test('M5: package script test:m5 exists', () => {
+test('P2: package script test:p2 exists', () => {
   const pkg = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf8'));
-  assert.equal(pkg.scripts['test:m5'], 'node --test tests/eos-m5-ci-gameday-seam-pack.test.js');
+  assert.equal(pkg.scripts['test:p2'], 'node --test tests/eos-p2-ci-seam-pack-n2-n6.test.js');
 });

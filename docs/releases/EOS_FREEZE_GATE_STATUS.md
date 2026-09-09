@@ -11,7 +11,7 @@ Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (P1 Ladder4 SSOT tip refresh post audit #53; PRODUCTION_READY=NO)
+updated_at: 2026-09-08 America/Bogota (P2 CI seam-pack N2-N6; PRODUCTION_READY=NO)
 ```
 
 ## Closed on main (fusion + ROI1–6 + Ladder2 M1–M6 + G7 + Ladder3 N1–N6 + Ladder4 audit)
@@ -95,6 +95,7 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Report: `docs/releases/EOS_M5_CI_GAMEDAY_ROI_SEAM_PACK_2026-09-08.md`
 - Merged as #43
 - CI adds fail-closed job `seam-pack` (`CI GameDay / ROI seam pack`): CI-safe `gameday:long-run` (default N) + named `test:roi3`..`test:roi6` / `test:m1`..`test:m4`; Fundacion delta-0 on every job
+- **P2 extension:** named pack later adds `test:n2`..`test:n6` (see P2 section); no soak
 - **HITL:** 5th check display name listed in `ROI3_BRANCH_PROTECTION_HITL.md` without claiming GH enforcement (still RULE_CREATED_NOT_ENFORCED on Free private)
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 
@@ -189,6 +190,15 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - Prior N1 tip pin `e6d1d06ac7450bc8fc94153e4bad7465396a472e` retired (historical)
+## P2 CI seam-pack N2-N6 (2026-09-08)
+
+- Report: `docs/releases/EOS_P2_CI_SEAM_PACK_N2_N6_2026-09-08.md`
+- Branch: `cursor/eos-p2-ci-seam-pack-n2-n6` — push/compare only; do not merge without PO
+- CI `seam-pack` named pack extended with CI-safe `test:n2`..`test:n6` (in addition to gameday + roi3-6 + m1-m4); Fundacion delta-0 unchanged
+- No new CI job / display name; HITL status remains RULE_CREATED_NOT_ENFORCED; no billing claims
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`
