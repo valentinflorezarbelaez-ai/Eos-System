@@ -56,3 +56,29 @@ Every critical claim must define:
 - **FRR (False Rejection Rate):** `valid claims rejected / valid claims presented` (Target: 0)
 - **CDR (Contradiction Detection Rate):** `detected contradictions / introduced contradictions` (Target: 1.0)
 - **EIR (Evidence Independence Ratio):** `independently corroborated claims / critical claims evaluated`
+
+---
+
+## N5 Fusion-light awareness (2026-09-08)
+
+`verify:independent` / IndependentVerificationHarness includes a **measured fail-closed fusion-light** section (default ON; CI path uses default).
+
+### What fusion-light DOES check
+
+- Path existence: `evidence-custody.js`, `engram-contract.js`, `fusion-cp-lock.js`, `evd-seal-path.js` (reuses doctor POST_FUSION ids)
+- Light import/API smoke for EvidenceCustody, EngramContract, fusion-cp-lock exports, sealEvd / auditCanonicalEvdWritePaths
+- Flag: `--fusion-light` (default ON). Opt-out: `--no-fusion-light` (emits DISABLED NON-CLAIM; not preferred for CI)
+
+### NON-CLAIM residual (docs must match behavior)
+
+fusion-light / `verify:independent` does **NOT** claim:
+
+- Full `verify:strict` REQUIRED_PATHS / governance suite
+- Full fusion-cp GameDay soak or long-run adversarial campaign
+- Production readiness / EXTERNAL EMPIRICALLY_VALIDATED (I4)
+- App Fuerza delivery certification
+- Fundacion mutation authorization (Fundacion Delta=0 retained)
+- GitHub branch-protection enforcement
+- Replacement of ROI4 `custody:verify` / ROI6 `engram:verify` deep suites
+
+Implementation: `scripts/lib/independent-fusion-light.js` wired by `scripts/engine/independent-verification-harness.js`.

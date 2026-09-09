@@ -5,6 +5,11 @@ import { fileURLToPath } from 'node:url';
 import { auditTddReceipts } from '../../src/core/sdd/tdd-evidence-receipt.js';
 import { evaluateSddCeremonySpawn } from '../../src/core/sdd/organic-routing-gate.js';
 import { assertRddDoesNotGrantDelivery } from '../../src/core/governance/rdd-review-stance.js';
+import {
+  auditFusionLight,
+  fusionLightDisabledReport,
+  FUSION_LIGHT_NON_CLAIMS
+} from '../lib/independent-fusion-light.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,8 +35,14 @@ function sha256Buffer(buf) {
   return createHash('sha256').update(buf).digest('hex');
 }
 
+/**
+ * Parse CLI args for independent harness.
+ * --fusion-light is DEFAULT ON (N5). Pass --no-fusion-light to disable (NON-CLAIM path).
+ */
 function parseIndependentArgs(argv) {
-  const options = {};
+  const options = {
+    fusionLight: true
+  };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--target') {
@@ -43,6 +54,13 @@ function parseIndependentArgs(argv) {
     } else if (arg === '--evidence-dir') {
       options.evidenceDir = argv[i + 1];
       i += 1;
+    } else if (arg === '--control-plane-root') {
+      options.controlPlaneRoot = argv[i + 1];
+      i += 1;
+    } else if (arg === '--fusion-light') {
+      options.fusionLight = true;
+    } else if (arg === '--no-fusion-light') {
+      options.fusionLight = false;
     }
   }
   return options;
@@ -233,6 +251,19 @@ export class IndependentVerificationHarness {
     };
   }
 
+  /**
+   * N5: measured fusion-light section (default ON).
+   * Audits control-plane root (EOS), not the Fundacion isolation target.
+   */
+  runFusionLight(options = {}) {
+    const enabled = options.fusionLight !== false;
+    if (!enabled) {
+      return fusionLightDisabledReport();
+    }
+    const controlPlaneRoot = options.controlPlaneRoot || rootDir;
+    return auditFusionLight(controlPlaneRoot);
+  }
+
   runIndependentValidationSuite(options = {}) {
     const targetPath = options.targetPath || DEFAULT_FUNDACION_PATH;
     const baselineFingerprint = options.baselineFingerprint
@@ -240,20 +271,25 @@ export class IndependentVerificationHarness {
     const cases = this.loadFalsificationCases(options.evidenceDir || DEFAULT_EVIDENCE_DIR);
     const isolation = this.verifyTargetIsolation({ targetPath, baselineFingerprint });
     const metrics = this.computeMetrics(cases);
+    const fusionLight = this.runFusionLight(options);
+    const corePassed = isolation.isolated && metrics.CDR === 1 && metrics.FAR === 0;
+    const harnessPassed = corePassed && fusionLight.ok === true;
 
     return {
       timestamp: new Date().toISOString(),
       standard: 'EOS_INDEPENDENT_EMPIRICAL_VALIDATION_STANDARD',
-      version: 'v0.3.0',
+      version: 'v0.3.0+n5-fusion-light',
       phase: 24,
       independenceLevel: 'I2',
       targetIsolation: isolation,
       falsificationCasesEvaluated: cases.length,
       cases,
       metrics,
+      fusionLight,
+      nonClaims: fusionLight.nonClaims || [...FUSION_LIGHT_NON_CLAIMS],
       complexityStatus: this.complexityBudget.status,
       validationState: 'EMPIRICAL_VALIDATION_PENDING_EXTERNAL_REALITY',
-      harnessPassed: isolation.isolated && metrics.CDR === 1 && metrics.FAR === 0,
+      harnessPassed,
       harnessIdentity: {
         script: 'scripts/engine/independent-verification-harness.js',
         sha256: this.harnessScriptSha256()
