@@ -616,6 +616,10 @@ export function renderOperatorHud(snapshot) {
   }
   lines.push('             ATS control: ' + ((coherence.ats_control_states || []).join('|') || 'n/a'));
   const gap = coherence.deferred_next_gap || {};
+  const closed = coherence.closed_gap_g7 || gap.closed_gap || null;
+  if (closed && closed.id) {
+    lines.push('             closed_gap: ' + closed.id + ' ' + (closed.status || '') + ' — ' + (closed.title || ''));
+  }
   lines.push('             next_gap: ' + (gap.id || 'n/a') + ' ' + (gap.status || '') + ' — ' + (gap.title || ''));
 
   lines.push('------------------------------------------------------------');

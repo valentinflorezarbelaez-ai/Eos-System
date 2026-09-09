@@ -12,6 +12,8 @@ import crypto from 'node:crypto';
 import { execSync } from 'node:child_process';
 import { resolveControlPlaneRoot } from './runtime/control-plane-root.js';
 import { EOSMemoryGuard } from './memory-guard.js';
+import { sealEvd } from './sdd/evd-seal-path.js';
+import { EvidenceCustody } from './sdd/evidence-custody.js';
 
 export class EOSKernel {
   constructor(options = {}) {
@@ -109,19 +111,32 @@ export class EOSKernel {
       status: 'VERIFIED',
       recorded_at: new Date().toISOString(),
       sha256_hash: hash,
+      sha256: hash,
       payload,
       epistemic_class: 'MEASURED_AND_VERIFIED'
     };
 
-    if (!fs.existsSync(this.evidenceDir)) {
-      fs.mkdirSync(this.evidenceDir, { recursive: true });
-    }
+    // G7: route canonical docs/evidence writes through sealEvd + EvidenceCustody
+    const custody = this.custody instanceof EvidenceCustody
+      ? this.custody
+      : new EvidenceCustody({
+          controlPlaneRoot: this.rootPath,
+          baseDir: this.custodyBaseDir,
+          enabled: true
+        });
 
-    const archivoDestino = path.join(this.evidenceDir, `${recibo.id}.json`);
-    fs.writeFileSync(archivoDestino, JSON.stringify(recibo, null, 2), 'utf-8');
+    const sealed = sealEvd({
+      controlPlaneRoot: this.rootPath,
+      evidenceDir: this.evidenceDir,
+      record: recibo,
+      custody,
+      dryRun: false
+    });
+
     return {
       recibo,
-      ruta: archivoDestino
+      ruta: sealed.path,
+      custody_event: sealed.custody_event
     };
   }
 

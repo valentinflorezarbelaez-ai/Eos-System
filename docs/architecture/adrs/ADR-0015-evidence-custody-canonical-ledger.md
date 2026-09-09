@@ -16,3 +16,7 @@
 ## Consequences
 
 Tamper-evident custody without parallel ledger. Empty genesis PASS for fresh clones. ROI5+ external notarization out of scope.
+
+## Amendment (G7 - 2026-09-08)
+
+Canonical docs/evidence EVD writes MUST go through sealEvd SSOT (src/core/sdd/evd-seal-path.js), which always advances EvidenceCustody on non-dryRun. Bypass writers are fail-closed (runtime DENY + static audit). Mission-local evidence dirs remain on mission ledgers.

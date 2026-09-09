@@ -9,6 +9,8 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execSync } from 'node:child_process';
 import { ParallelAuditorDAG } from './parallel-auditor-dag.js';
+import { sealEvd } from '../sdd/evd-seal-path.js';
+import { EvidenceCustody } from '../sdd/evidence-custody.js';
 
 export const PIPELINE_PHASES = Object.freeze([
   'intake',
@@ -417,11 +419,20 @@ export class ProjectPipelineRunner {
       delete record.id;
     }
 
-    const fileName = evidenceId.endsWith('.json') ? evidenceId : `${evidenceId}.json`;
-    const filePath = path.join(dir, fileName);
-    fs.writeFileSync(filePath, JSON.stringify(record, null, 2), 'utf8');
+    const sealed = sealEvd({
+      controlPlaneRoot: this.controlPlaneRoot,
+      evidenceDir: dir,
+      record: {
+        ...record,
+        id: record.id || evidenceId
+      },
+      custody: this.custody instanceof EvidenceCustody
+        ? this.custody
+        : new EvidenceCustody({ controlPlaneRoot: this.controlPlaneRoot }),
+      dryRun: false
+    });
 
-    return { path: filePath, sha256, evidenceId, record };
+    return { path: sealed.path, sha256, evidenceId, record: sealed.record, custody_event: sealed.custody_event };
   }
 }
 

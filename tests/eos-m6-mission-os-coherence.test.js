@@ -82,8 +82,9 @@ test('M6: every mission-loop stage is mapped; all ATS stages documented', async 
   assert.match(map.claim, /does not replace ATS/i);
   assert.equal(map.roles.MISSION_LOOP.replaces, null);
   assert.equal(map.roles.ATS_SDD.replaces, null);
-  assert.equal(map.deferred_next_gap.id, 'G7');
-  assert.equal(map.deferred_next_gap.status, 'DEFERRED');
+  assert.equal(map.deferred_next_gap.status, 'NONE');
+  assert.equal(map.closed_gap_g7.id, 'G7');
+  assert.equal(map.closed_gap_g7.status, 'CLOSED');
 
   for (const stage of coherence.MISSION_LOOP_ORDER) {
     assert.ok(map.map[stage], 'missing map for ' + stage);
@@ -129,8 +130,8 @@ test('M6: HUD snapshot exposes mission_os_coherence without replace claim', asyn
   assert.match(text, /does not replace ATS/i);
   assert.match(text, /Intent\s*->/);
   assert.match(text, /Archive\s*->/);
-  assert.match(text, /G7/);
-  assert.match(text, /DEFERRED/);
+  assert.match(text, /G7|closed_gap|CLOSED/i);
+  assert.match(text, /CLOSED|NONE/);
   assert.doesNotMatch(text, /PRODUCTION_READY=YES/);
   assert.doesNotMatch(text, /replaces ATS/i);
 });
@@ -153,7 +154,7 @@ test('M6: coherence doc + release note + package script exist', () => {
   assert.equal(pkg.scripts['test:m6'], 'node --test tests/eos-m6-mission-os-coherence.test.js');
 });
 
-test('M6: freeze gate notes Ladder 2 complete-after-merge + G7 deferred', () => {
+test('M6: freeze gate notes Ladder 2 complete-after-merge + G7', () => {
   const freeze = fs.readFileSync(
     path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md'),
     'utf8'

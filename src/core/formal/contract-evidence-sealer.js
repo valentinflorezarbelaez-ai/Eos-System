@@ -15,6 +15,7 @@ import crypto from 'node:crypto';
 import { resolveControlPlaneRoot } from '../runtime/control-plane-root.js';
 import { EconomicContractValidator } from './economic-contract-validator.js';
 import { EvidenceCustody } from '../sdd/evidence-custody.js';
+import { sealEvd } from '../sdd/evd-seal-path.js';
 
 export const EARS_PATTERNS = [
   /\bWHEN\b/i,
@@ -291,20 +292,16 @@ export class ContractEvidenceSealer {
     let custody_event = null;
 
     if (!dryRun) {
-      if (!fs.existsSync(this.evidenceDir)) {
-        fs.mkdirSync(this.evidenceDir, { recursive: true });
-      }
-      fs.writeFileSync(targetFilePath, JSON.stringify(evidenceRecord, null, 2) + '\n', 'utf8');
-      if (this.custody) {
-        custody_event = this.custody.sealEvdRecord({
-          evidence_id: evdId,
-          seal_hash: sealHash,
-          related_spec: evidenceRecord.related_spec,
-          related_project: evidenceRecord.related_project,
-          status: evidenceRecord.status,
-          dry_run: false
-        });
-      }
+      // G7: canonical EVD write MUST go through sealEvd SSOT (custody fail-closed)
+      const sealed = sealEvd({
+        controlPlaneRoot: this.controlPlaneRoot,
+        evidenceDir: this.evidenceDir,
+        record: evidenceRecord,
+        custody: this.custody,
+        custodyEnabled: this.custodyEnabled && !!this.custody,
+        dryRun: false
+      });
+      custody_event = sealed.custody_event;
     }
 
     return {

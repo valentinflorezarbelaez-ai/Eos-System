@@ -8,6 +8,7 @@ import { ArchitecturalFitnessEngine } from '../src/core/ast/architectural-fitnes
 import { ContractEvidenceSealer } from '../src/core/formal/contract-evidence-sealer.js';
 import { EconomicContractValidator } from '../src/core/formal/economic-contract-validator.js';
 import { EvidenceCustody } from '../src/core/sdd/evidence-custody.js';
+import { auditCanonicalEvdWritePaths } from '../src/core/sdd/evd-seal-path.js';
 import { verifyEngramContract } from '../src/core/memory/engram-contract.js';
 import { auditFusionControlPlane, FUSION_CP_REQUIRED_PATHS } from './lib/fusion-cp-lock.js';
 
@@ -67,6 +68,9 @@ const REQUIRED_PATHS = [
   'src/core/ast/architectural-fitness-engine.js',
   'src/core/formal/contract-evidence-sealer.js',
   'src/core/sdd/evidence-custody.js',
+  'src/core/sdd/evd-seal-path.js',
+  'tests/eos-g7-evd-custody-seal-path.test.js',
+  'docs/releases/EOS_G7_EVD_CUSTODY_SEAL_PATH_2026-09-08.md',
   'scripts/custody-verify.js',
   'tests/roi4-i3-evidence-custody.test.js',
   'src/core/memory/engram-contract.js',
@@ -901,6 +905,30 @@ function verifyWorkspace() {
     }
 
 
+
+    // 3g2b. G7 canonical EVD seal path (fail-closed static audit)
+    try {
+      const evdAudit = auditCanonicalEvdWritePaths(rootDir);
+      if (!evdAudit.ok) {
+        report.failures.push({
+          path: 'src/core/sdd/evd-seal-path.js',
+          message: 'G7 EVD bypass writers detected: ' + JSON.stringify(evdAudit.violations),
+          type: 'evd-seal-path'
+        });
+      } else {
+        report.checks.push({
+          path: 'EvdSealPath (sanctioned=' + (evdAudit.sanctioned || []).join(',') + ')',
+          status: 'VERIFIED',
+          type: 'evd-seal-path'
+        });
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'src/core/sdd/evd-seal-path.js',
+        message: 'G7 EVD seal path audit failed: ' + err.message,
+        type: 'evd-seal-path'
+      });
+    }
     // 3g3. ROI6 Engram SSOT path + envelope contract (no live engram CLI required)
     try {
       const engram = verifyEngramContract(rootDir);

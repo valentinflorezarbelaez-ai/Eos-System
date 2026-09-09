@@ -99,6 +99,15 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY: NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - OBSERVED branch-start main tip: `112bb2d` (M5 #43); freeze `main_tip` SSOT left at prior pin unless a later tip-refresh mission updates freeze + matrix together
+## G7 EVD custody seal path (2026-09-08)
+
+- Report: `docs/releases/EOS_G7_EVD_CUSTODY_SEAL_PATH_2026-09-08.md`
+- Branch: `cursor/eos-g7-evd-custody-seal-path` — push/compare only; do not merge without PO
+- SSOT `sealEvd` + fail-closed audit; sealer + kernel routed through custody
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY: NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- OBSERVED branch-start main tip: `97b1965` (M6 #44)
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`
