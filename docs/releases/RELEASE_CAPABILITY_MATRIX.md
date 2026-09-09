@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 4753240eb003ecb3948e17d93e5511a7b35a40f0
+evaluated_tip: 1d1b224cb41d32aa7de6519af7a7a48b5968f87f
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #67 from valentinflorezarbelaez-ai/cursor/eos-ladder6-audit
-updated_at: 2026-09-09 America/Bogota (R1 Ladder6 tip refresh; pin to main@4753240 post audit #67; Q6 close was 7c82d43; PRODUCTION_READY=NO)
+main_subject: Merge pull request #74 from valentinflorezarbelaez-ai/cursor/eos-ladder7-lidr-harness-adoption
+updated_at: 2026-09-09 America/Bogota (S1 Ladder7 tip refresh; pin to main@1d1b224 post audit #74; L6 close was e431e2c; PRODUCTION_READY=NO)
 ```
 
 
@@ -57,6 +57,13 @@ updated_at: 2026-09-09 America/Bogota (R1 Ladder6 tip refresh; pin to main@47532
 | Q5 mission artifact write governance | COMPLETE | MEASURED (#65; EOS_Q5_MISSION_ARTIFACT_WRITE_GOVERNANCE_2026-09-09.md; Write Barrier .missions; test:q5) |
 | P6 inventory verify lock (Q6) | COMPLETE | MEASURED (#66; EOS_Q6_P6_INVENTORY_VERIFY_LOCK_2026-09-09.md; p6-inventory-lock.js; test:q6) |
 | Ladder 6 maturity gap audit | COMPLETE | MEASURED (#67; EOS_MATURITY_LADDER_6_AUDIT_2026-09-09.md; R1-R6 ordered) |
+| Ladder6 tip refresh (R1) | COMPLETE | MEASURED (#68; EOS_R1_LADDER6_TIP_REFRESH_2026-09-09.md; freeze+matrix to 4753240) |
+| CI seam-pack Q-tests (R2) | COMPLETE | MEASURED (#69; EOS_R2_CI_SEAM_PACK_Q_TESTS_2026-09-09.md; seam-pack test:q2..q6; test:r2) |
+| Doctor / fusion-light L5 surfaces (R3) | COMPLETE | MEASURED (#70; EOS_R3_DOCTOR_FUSION_LIGHT_L5_SURFACES_2026-09-09.md; POST_FUSION L5; test:r3) |
+| AT_CEILING schema gate (R4) | COMPLETE | MEASURED (#71; EOS_R4_AT_CEILING_SCHEMA_GATE_2026-09-09.md; complexity-budget-lock; test:r4) |
+| Deferred writers Choice B (R5) | COMPLETE | MEASURED (#72; EOS_R5_DEFERRED_WRITERS_GOVERNANCE_2026-09-09.md; deferred-writers-lock; test:r5) |
+| Complexity verify closeout (R6) | COMPLETE | MEASURED (#73; EOS_R6_COMPLEXITY_BUDGET_VERIFY_CLOSEOUT_2026-09-09.md; K6 CLOSED_BY_R4; CI test:r4/r5) |
+| Ladder 7 LIDR harness adoption + audit | COMPLETE | MEASURED (#74; EOS_MATURITY_LADDER_7_AUDIT_2026-09-09.md; EOS_LIDR_HARNESS_WORKSHOP_ADOPTION_2026-09-09.md; S1-S6 ordered) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -76,16 +83,22 @@ COMPLETE_WITH_CONDITIONS: (subset)
 PRODUCTION_READY: NO
 ```
 
-## Tip refresh notes (R1)
+## Tip refresh notes (S1)
 
-- evaluated_tip pinned to OBSERVED main tip after Ladder 6 audit #67: 4753240eb003ecb3948e17d93e5511a7b35a40f0
-- Q6 close tip was 7c82d43adc2e57db606fcf831016052b11aa19f5 (#66); pin uses post-audit 4753240 so HUD freeze observe does not DIVERGE immediately (same honesty pattern as L5 Q1)
-- Prior Q1 tip pin 74332e2938090e1e8e64d41310a46d2a722bf741 (Ladder 5 audit #60 / Q1) retired
-- Rows added/normalized for Q1 tip refresh, Q2 CI seam-pack P-tests, Q3 doctor/fusion-light L4, Q4 complexity recount, Q5 mission-artifact, Q6 P6 inventory lock + Ladder 6 audit
+- evaluated_tip pinned to OBSERVED main tip after Ladder 7 audit #74: 1d1b224cb41d32aa7de6519af7a7a48b5968f87f
+- L6 close tip was e431e2c2886f687c642944bbfe426aa48018e84e (#73); pin uses post-audit 1d1b224 so HUD freeze observe does not DIVERGE immediately (same honesty pattern as L6 R1 / L5 Q1)
+- Prior R1 tip pin 4753240eb003ecb3948e17d93e5511a7b35a40f0 (Ladder 6 audit #67 / R1) retired
+- Rows added/normalized for R1 tip refresh, R2 CI seam-pack Q-tests, R3 doctor/fusion-light L5, R4 AT_CEILING schema gate, R5 deferred writers, R6 complexity verify closeout + Ladder 7 audit
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## R1–R6 notes (historical)
+
+- R1: Tip pin to post-L6-audit main@4753240; Q1–Q6 + L6 audit rows.
+- R2–R6: CI Q-tests, doctor/fusion-light L5, AT_CEILING gate, deferred writers Choice B, K6 CLOSED_BY_R4 closeout.
+- Tip pin moved by S1 (this refresh) to post-L7-audit main@1d1b224.
 
 ## Q5–Q6 notes (historical)
 
 - Q5: Selected mission artifact writers routed through Write Barrier/.missions envelope; no parallel EVD ledger; Fundacion Delta=0.
 - Q6: verify:strict fail-closed P6 inventory lock; NON-CLAIM inventory ≠ executed prune.
-- Tip pin moved by R1 (this refresh) to post-L6-audit main@4753240.
+- Tip pin moved by R1 to post-L6-audit main@4753240; superseded by S1.

@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 4753240eb003ecb3948e17d93e5511a7b35a40f0
-main_subject: Merge pull request #67 from valentinflorezarbelaez-ai/cursor/eos-ladder6-audit
-branch_hygiene: clean (main == origin/main @ 4753240; Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 audit #67 closed on main)
+main_tip: 1d1b224cb41d32aa7de6519af7a7a48b5968f87f
+main_subject: Merge pull request #74 from valentinflorezarbelaez-ai/cursor/eos-ladder7-lidr-harness-adoption
+branch_hygiene: clean (main == origin/main @ 1d1b224; Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 audit #74 closed on main)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-09 America/Bogota (R1 Ladder6 tip refresh; pin to main@4753240 post audit #67; Q6 close was 7c82d43; PRODUCTION_READY=NO)
+updated_at: 2026-09-09 America/Bogota (S1 Ladder7 tip refresh; pin to main@1d1b224 post audit #74; L6 close was e431e2c; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 audit)
+## Closed on main (fusion + ROI1-6 + Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 audit)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `4753240eb003ecb3948e17d93e5511a7b35a40f0`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `1d1b224cb41d32aa7de6519af7a7a48b5968f87f`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -62,6 +62,13 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | Q5 Mission artifact write gov | #65 | 9a58bc4 | `EOS_Q5_MISSION_ARTIFACT_WRITE_GOVERNANCE_2026-09-09.md`; Write Barrier .missions; test:q5 |
 | Q6 P6 inventory verify lock | #66 | 7c82d43 | `EOS_Q6_P6_INVENTORY_VERIFY_LOCK_2026-09-09.md`; p6-inventory-lock.js; test:q6 |
 | Ladder 6 maturity gap audit | #67 | 4753240 | `EOS_MATURITY_LADDER_6_AUDIT_2026-09-09.md` (R1-R6 ordered; R1 tip refresh separate) |
+| R1 Ladder6 tip refresh | #68 | b1293f8 | `EOS_R1_LADDER6_TIP_REFRESH_2026-09-09.md`; freeze+matrix to 4753240 |
+| R2 CI seam-pack Q-tests | #69 | 92463e2 | `EOS_R2_CI_SEAM_PACK_Q_TESTS_2026-09-09.md`; seam-pack test:q2..q6; test:r2 |
+| R3 Doctor / fusion-light L5 | #70 | a4917bb | `EOS_R3_DOCTOR_FUSION_LIGHT_L5_SURFACES_2026-09-09.md`; POST_FUSION L5; test:r3 |
+| R4 AT_CEILING schema gate | #71 | d35c65a | `EOS_R4_AT_CEILING_SCHEMA_GATE_2026-09-09.md`; complexity-budget-lock; test:r4 |
+| R5 Deferred writers Choice B | #72 | 2e04639 | `EOS_R5_DEFERRED_WRITERS_GOVERNANCE_2026-09-09.md`; deferred-writers-lock; test:r5 |
+| R6 Complexity verify closeout | #73 | e431e2c | `EOS_R6_COMPLEXITY_BUDGET_VERIFY_CLOSEOUT_2026-09-09.md`; K6 CLOSED_BY_R4; CI test:r4/r5 |
+| Ladder 7 LIDR harness adoption + audit | #74 | 1d1b224 | `EOS_MATURITY_LADDER_7_AUDIT_2026-09-09.md` + `EOS_LIDR_HARNESS_WORKSHOP_ADOPTION_2026-09-09.md` (S1-S6 ordered; S1 tip refresh separate) |
 
 ### Antigravity / agy remote-control
 
@@ -363,6 +370,8 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Prior P6 main tip (pre-L5 audit): `333b5bd198e9d584ad639e67b678ceea373563a5`
 - Prior Q1 tip pin (pre-R1): `74332e2938090e1e8e64d41310a46d2a722bf741`
 - Prior Q6 close tip (pre-L6 audit): `7c82d43adc2e57db606fcf831016052b11aa19f5`
+- Prior R1 tip pin (pre-S1): `4753240eb003ecb3948e17d93e5511a7b35a40f0`
+- Prior L6 close tip (pre-L7 audit): `e431e2c2886f687c642944bbfe426aa48018e84e`
 
 ## Not production
 
@@ -407,7 +416,7 @@ External production readiness is explicitly **not** asserted.
 - Report: `docs/releases/EOS_R6_COMPLEXITY_BUDGET_VERIFY_CLOSEOUT_2026-09-09.md`
 - Branch: `cursor/eos-r6-complexity-budget-verify-closeout` — push/compare only; do not merge without PO
 - **K6 CLOSED_BY_R4** — verify lock already in R4; R6 seals CI `test:r4`+`test:r5` + meta-tests + NON-CLAIM candado ≠ prune
-- **Ladder 6 R1–R6 close pending this merge** (cierre pendiente de este merge)
+- **Ladder 6 R1–R6 closed** on main after #73 (`e431e2c`)
 - NON-CLAIM: candado ≠ executed prune; no max_schemas raise; no P6 prune; PRODUCTION_READY=NO; Fundacion Delta=0
 - Freeze `main_tip` pin **not** moved in R6 (tip refresh is separate mission)
 
@@ -415,11 +424,24 @@ External production readiness is explicitly **not** asserted.
 
 - Adoption: `docs/releases/EOS_LIDR_HARNESS_WORKSHOP_ADOPTION_2026-09-09.md`
 - Audit: `docs/releases/EOS_MATURITY_LADDER_7_AUDIT_2026-09-09.md`
-- Branch: `cursor/eos-ladder7-lidr-harness-adoption` — push/compare only; do not merge without PO
+- Branch: `cursor/eos-ladder7-lidr-harness-adoption` — merged via #74
 - Audit base tip OBSERVED: main@`e431e2c2886f687c642944bbfe426aa48018e84e` (R6 #73; Ladder 6 R1–R6 closed)
 - Sources: Notion workshop material; grabación page; blogs `que-es-harness-engineering` + `como-ahorrar-tokens`; Spec-Boot https://github.com/LIDR-academy/lidr-specboot; intake `LIDR-HARNESS-ENGINEERING-202609.md`
 - Ordered next ladder **S1–S6**: tip refresh; Context Pack TPC index + lifecycle; Loop Engineering + 4Q guides/sensors; worktree policy+smoke; MCP/tool KEEP inventory; model routing + ratchet error→rule
-- Recommend start **S1** (tip refresh) on a follow-on branch — **freeze `main_tip` pin NOT moved in this audit** (still R1 pin `4753240eb003ecb3948e17d93e5511a7b35a40f0` until S1)
+- Merged as #74 (`1d1b224`); freeze tip refreshed by **S1** to main@`1d1b224cb41d32aa7de6519af7a7a48b5968f87f` (L6 close was `e431e2c`)
+- Ordered next ladder S1–S6; recommend start **S1** (this refresh)
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - NON-CLAIM: adoption ≠ fusion rewrite; not "solves any problem"; external token-tool/cache figures are material claims
+
+## S1 Ladder 7 tip refresh (2026-09-09)
+
+- Report: `docs/releases/EOS_S1_LADDER7_TIP_REFRESH_2026-09-09.md`
+- Branch: `cursor/eos-s1-ladder7-tip-refresh` — push/compare only; do not merge without PO
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`1d1b224cb41d32aa7de6519af7a7a48b5968f87f` (Ladder 7 audit #74)
+- Honesty: L6 close tip was `e431e2c2886f687c642944bbfe426aa48018e84e` (#73); pin uses post-audit tip `1d1b224` so HUD freeze observe does not DIVERGE immediately (same pattern as L6 R1 → post-audit #67 / L5 Q1 → post-audit #60)
+- Matrix rows added/normalized for R1 tip refresh, R2 CI seam-pack Q-tests, R3 doctor/fusion-light L5, R4 AT_CEILING schema gate, R5 deferred writers, R6 complexity verify closeout + Ladder 7 audit MEASURED
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- Prior R1 tip pin `4753240eb003ecb3948e17d93e5511a7b35a40f0` retired (historical)
+

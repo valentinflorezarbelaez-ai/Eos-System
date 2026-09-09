@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** R1 pinned tip: main after Ladder 6 audit #67 (Q6 close was 7c82d43) */
-const EXPECTED_TIP = '4753240eb003ecb3948e17d93e5511a7b35a40f0';
+/** S1 pinned tip: main after Ladder 7 audit #74 (L6 close was e431e2c) */
+const EXPECTED_TIP = '1d1b224cb41d32aa7de6519af7a7a48b5968f87f';
 
-test('M4/R1: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
+test('M4/S1: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal R1 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal S1 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -32,7 +32,7 @@ test('M4/R1: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   assert.doesNotMatch(text, /Branch cursor\/roi6-engram-unify — LAST ROI; do not merge/i);
 });
 
-test('M4/R1: capability matrix evaluated_tip equals freeze main_tip (SSOT)', () => {
+test('M4/S1: capability matrix evaluated_tip equals freeze main_tip (SSOT)', () => {
   const freeze = fs.readFileSync(FREEZE, 'utf8');
   const matrix = fs.readFileSync(MATRIX, 'utf8');
   const tip = freeze.match(TIP_LINE)?.[1];
@@ -40,7 +40,7 @@ test('M4/R1: capability matrix evaluated_tip equals freeze main_tip (SSOT)', () 
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal R1 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal S1 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -74,14 +74,21 @@ test('M4/R1: capability matrix evaluated_tip equals freeze main_tip (SSOT)', () 
     'Complexity budget recount',
     'Q5 mission artifact write governance',
     'P6 inventory verify lock',
-    'Ladder 6 maturity gap audit'
+    'Ladder 6 maturity gap audit',
+    'Ladder6 tip refresh',
+    'CI seam-pack Q-tests',
+    'Doctor / fusion-light L5 surfaces',
+    'AT_CEILING schema gate',
+    'Deferred writers Choice B',
+    'Complexity verify closeout',
+    'Ladder 7 LIDR harness adoption'
   ]) {
     assert.ok(matrix.includes(needle), 'matrix missing row for: ' + needle);
   }
   assert.doesNotMatch(matrix, /\|\s*Merge to main\s*\|\s*FUTURE\s*\|\s*BLOCKED\s*\|/i);
 });
 
-test('R1: HITL lists 5th check display name without claiming GH enforcement', () => {
+test('S1: HITL lists 5th check display name without claiming GH enforcement', () => {
   const text = fs.readFileSync(HITL, 'utf8');
   assert.match(text, /CI GameDay \/ ROI seam pack/);
   assert.match(text, /RULE_CREATED_NOT_ENFORCED/);
