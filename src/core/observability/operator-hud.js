@@ -22,7 +22,15 @@ export const VERIFY_SURFACE_TYPES = Object.freeze([
   'organic-gate',
   'tdd-receipts',
   'rdd-stance',
-  'l0-purity'
+  'l0-purity',
+  // Post-fusion verify surfaces (exact type strings from verify-eos.js / fusion-cp-lock.js)
+  'evidence-custody',
+  'engram-contract',
+  'fusion-cp-lock',
+  'fusion-cp-write-barrier',
+  'fusion-cp-mission-loop',
+  'fusion-cp-mcp-ssot',
+  'fusion-cp-gameday'
 ]);
 
 const CANONICAL_E2E_REL = 'docs/evidence/canonical_e2e_openspec_tdd_2026';
@@ -135,21 +143,81 @@ export function summarizeVerifyReport(report, meta = {}) {
   };
 }
 
+
+/**
+ * OBSERVED freeze-file main_tip vs live git HEAD.
+ * Informational / fail-closed mismatch only — never invents PRODUCTION_READY.
+ */
+export function observeFreezeTipVsHead(baseDir, options = {}) {
+  const source = FREEZE_REL;
+  const text = readUtf8(path.join(baseDir, source));
+  const freezeMatch = text ? text.match(/^main_tip:\s*([0-9a-f]{7,40})\b/mi) : null;
+  const freeze_main_tip = freezeMatch ? freezeMatch[1] : null;
+
+  let live_head = options.liveHead || null;
+  let head_error = null;
+  if (!live_head) {
+    const run = options.execGit || ((args) =>
+      execFileSync('git', args, { cwd: baseDir, encoding: 'utf8', timeout: 15000, stdio: ['ignore', 'pipe', 'pipe'] }).toString().trim()
+    );
+    try {
+      live_head = run(['rev-parse', 'HEAD']);
+    } catch (err) {
+      head_error = err.message;
+      live_head = null;
+    }
+  }
+
+  if (!freeze_main_tip || !live_head) {
+    return {
+      epistemic: HUD_EPISTEMIC.NOT_VERIFIED,
+      source,
+      freeze_main_tip,
+      live_head,
+      match: false,
+      note: 'Informational only; missing freeze tip or live HEAD — no PRODUCTION_READY claim',
+      error: head_error || (!freeze_main_tip ? 'main_tip not parsed from freeze gate' : null)
+    };
+  }
+
+  const tipShort = freeze_main_tip.slice(0, 7);
+  const headShort = live_head.slice(0, 7);
+  const match =
+    live_head === freeze_main_tip ||
+    live_head.startsWith(freeze_main_tip) ||
+    freeze_main_tip.startsWith(headShort) ||
+    live_head.startsWith(tipShort);
+
+  return {
+    epistemic: HUD_EPISTEMIC.OBSERVED,
+    source,
+    freeze_main_tip,
+    live_head,
+    match,
+    note: match
+      ? 'OBSERVED freeze tip matches live HEAD (informational; PRODUCTION_READY unchanged)'
+      : 'OBSERVED freeze tip diverges from live HEAD (informational / fail-closed; no PRODUCTION_READY claim)'
+  };
+}
+
 function measureGit(baseDir, gitIdentity, execGit) {
   if (gitIdentity && gitIdentity.head_short) {
     return {
       head_short: gitIdentity.head_short,
+      head_full: gitIdentity.head_full || null,
       branch: gitIdentity.branch || null,
       epistemic: HUD_EPISTEMIC.VERIFIED,
       source: gitIdentity.source || 'git rev-parse'
     };
   }
   const run = execGit || ((args) =>
-    execFileSync('git', args, { cwd: baseDir, encoding: 'utf8', timeout: 15000 }).trim()
+    execFileSync('git', args, { cwd: baseDir, encoding: 'utf8', timeout: 15000, stdio: ['ignore', 'pipe', 'pipe'] }).toString().trim()
   );
   try {
+    const head_full = run(['rev-parse', 'HEAD']);
     return {
-      head_short: run(['rev-parse', '--short', 'HEAD']),
+      head_short: head_full.slice(0, 7),
+      head_full,
       branch: run(['rev-parse', '--abbrev-ref', 'HEAD']),
       epistemic: HUD_EPISTEMIC.VERIFIED,
       source: 'git rev-parse'
@@ -428,11 +496,17 @@ export function collectOperatorHud(options = {}) {
     canonical_e2e: observeCanonicalE2e(baseDir)
   };
 
+  const freeze_tip = observeFreezeTipVsHead(baseDir, {
+    liveHead: options.liveHead || git.head_full || git.head_short || null,
+    execGit: options.execGit
+  });
+
   return {
     schema: HUD_SCHEMA,
     generated_at: options.now || new Date().toISOString(),
     git,
     verify,
+    freeze_tip,
     mission: {
       epistemic: mission.epistemic,
       source: mission.source,
@@ -463,12 +537,18 @@ export function renderOperatorHud(snapshot) {
   const evidence = snapshot.evidence || {};
   const claims = snapshot.file_claims || [];
 
+  const freezeTip = snapshot.freeze_tip || {};
+  const freezeMatchLabel =
+    freezeTip.match === true ? 'MATCH' : freezeTip.match === false ? 'DIVERGE' : 'UNKNOWN';
+
   const lines = [
     'EOS OPERATOR HUD — live truth panel',
     `generated: ${snapshot.generated_at || ''}`,
     '============================================================',
     `GIT          ${git.epistemic || HUD_EPISTEMIC.NOT_VERIFIED}  HEAD=${git.head_short || 'UNKNOWN'}  branch=${git.branch || 'UNKNOWN'}`,
     `             source: ${git.source || 'git rev-parse'}`,
+    `FREEZE_TIP  ${freezeTip.epistemic || HUD_EPISTEMIC.NOT_VERIFIED}  match=${freezeMatchLabel}  freeze=${freezeTip.freeze_main_tip || 'UNKNOWN'}  live=${freezeTip.live_head || 'UNKNOWN'}`,
+    `             source: ${freezeTip.source || FREEZE_REL}  note: informational only — no PRODUCTION_READY claim`,
     '------------------------------------------------------------',
     `VERIFY       ${verify.epistemic || HUD_EPISTEMIC.NOT_VERIFIED}  this run: ${verify.command || 'verify-eos --strict --json'}`,
     `             passed=${verify.passed ?? 'n/a'}  failed=${verify.failed ?? 'n/a'}  status=${verify.status || 'n/a'}  exit=${verify.exit_code ?? 'n/a'}`,

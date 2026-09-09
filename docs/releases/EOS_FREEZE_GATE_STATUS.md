@@ -2,7 +2,8 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: a7dd7ba93ae393ec72f7f95c19710d8aadd653f9main_subject: Merge pull request #32 from valentinflorezarbelaez-ai/cursor/roi3-i25-mutation-property
+main_tip: ed8d960c5b9cb42bcf73fd01b59f6fb4625a300a
+main_subject: Merge pull request #40 from valentinflorezarbelaez-ai/cursor/eos-m2-local-main-push-surrogate
 branch_hygiene: cursor/roi4-i3-custody (ROI4 I3 only; not merged)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
@@ -10,7 +11,7 @@ Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (ROI4 I3 evidence custody; PRODUCTION_READY=NO)
+updated_at: 2026-09-08 America/Bogota (M3 HUD verify surfaces; tip refreshed OBSERVED vs live HEAD; PRODUCTION_READY=NO)
 ```
 
 ## Post-fusion status (main tip 0c96b4c)
@@ -87,3 +88,11 @@ External production readiness is explicitly **not** asserted.
 - Branch: cursor/eos-m2-local-main-push-surrogate - push/compare only; do not merge without PO
 - Local pre-push surrogate fail-closed for main; **local surrogate ≠ GH enforcement** (ROI3 remains RULE_CREATED_NOT_ENFORCED)
 - PRODUCTION_READY remains NO; Fundacion Delta=0
+## M3 Operator HUD post-fusion verify surfaces (2026-09-08)
+
+- Report: docs/releases/EOS_M3_HUD_VERIFY_SURFACES_2026-09-08.md
+- Branch: cursor/eos-m3-hud-verify-surfaces - push/compare only; do not merge without PO
+- HUD VERIFY_SURFACE_TYPES now includes evidence-custody, engram-contract, fusion-cp-* (exact verify-eos type strings)
+- OBSERVED freeze main_tip vs live HEAD is informational / fail-closed; does **not** invent PRODUCTION_READY
+- Tip SHA refreshed to live main OBSERVED tip ed8d960 (was stale a7dd7ba); ROI4/6 notes remain historical
+- PRODUCTION_READY remains NO; Fundacion Delta=0; DEFER dirty unstaged unchanged
