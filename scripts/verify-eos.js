@@ -19,6 +19,7 @@ import { auditP6InventoryLock, P6_INVENTORY_REQUIRED_PATHS } from './lib/p6-inve
 import { auditComplexityBudgetLock, COMPLEXITY_BUDGET_REQUIRED_PATHS } from './lib/complexity-budget-lock.js';
 import { auditDeferredWritersLock, DEFERRED_WRITERS_REQUIRED_PATHS } from './lib/deferred-writers-lock.js';
 import { auditContextPackLock, CONTEXT_PACK_REQUIRED_PATHS } from './lib/context-pack-lock.js';
+import { auditLoopEngineeringLock, LOOP_ENGINEERING_REQUIRED_PATHS } from './lib/loop-engineering-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -129,6 +130,11 @@ const REQUIRED_PATHS = [
   'tests/eos-s2-context-pack-tpc.test.js',
   'docs/harness/CONTEXT_PACK_TPC.md',
   'docs/releases/EOS_S2_CONTEXT_PACK_TPC_2026-09-09.md',
+  'scripts/lib/loop-engineering-lock.js',
+  'tests/eos-s3-loop-engineering-4q.test.js',
+  'docs/harness/LOOP_ENGINEERING_4Q.md',
+  'docs/architecture/adrs/ADR-0017-loop-engineering-4q.md',
+  'docs/releases/EOS_S3_LOOP_ENGINEERING_4Q_2026-09-09.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -401,7 +407,8 @@ const REQUIRED_PATHS = [
   ...P6_INVENTORY_REQUIRED_PATHS,
   ...COMPLEXITY_BUDGET_REQUIRED_PATHS,
   ...DEFERRED_WRITERS_REQUIRED_PATHS,
-  ...CONTEXT_PACK_REQUIRED_PATHS
+  ...CONTEXT_PACK_REQUIRED_PATHS,
+  ...LOOP_ENGINEERING_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1196,7 +1203,24 @@ function verifyWorkspace() {
       });
     }
 
-    // 3h. Economic & Operational Risk Contract Engine (ECR Invariants & Circuit Breaker)
+        // 3g11. S3 Loop Engineering 4Q matrix verify lock (existence + section needles; policy != autonomy)
+    try {
+      const loopEng = auditLoopEngineeringLock(rootDir);
+      for (const c of loopEng.checks) {
+        report.checks.push(c);
+      }
+      for (const f of loopEng.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/loop-engineering-lock.js',
+        message: 'Loop Engineering 4Q lock audit failed: ' + err.message,
+        type: 'loop-engineering-lock'
+      });
+    }
+
+// 3h. Economic & Operational Risk Contract Engine (ECR Invariants & Circuit Breaker)
     try {
       const econValidator = new EconomicContractValidator();
       const evalSample = econValidator.evaluateTelemetry(

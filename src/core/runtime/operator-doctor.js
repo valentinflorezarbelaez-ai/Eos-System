@@ -7,6 +7,7 @@
  * R3: Ladder5 observe — mission-artifact-write / p6-inventory-lock surfaces.
  *
  * NON-CLAIM: doctor is OBSERVED honesty / presence-light only — NOT verify:strict.
+ * S3: Loop Engineering policy ≠ verify:strict / ≠ productive autonomy.
  * PRODUCTION_READY: NO
  */
 
@@ -32,6 +33,7 @@ export const DOCTOR_NON_CLAIMS = Object.freeze([
   'NOT production readiness / PRODUCTION_READY remains NO',
   'NOT App Fuerza delivery certification',
   'NOT Fundacion mutation authorization (Fundacion Delta=0 retained)',
+  'NOT Loop Engineering autonomy — Loop Engineering policy ≠ verify:strict and ≠ productive autonomy (matrix/taxonomy only)',
   'NOT replacement of independent fusion-light or GameDay soak'
 ]);
 
