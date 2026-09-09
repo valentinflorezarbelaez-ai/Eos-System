@@ -1,0 +1,20 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 7 audit + LIDR Harness Workshop adoption docs only. Order S1-S6 (tip refresh, Context Pack TPC+lifecycle, Loop Engineering+4Q, worktree smoke, MCP KEEP inventory, model routing+ratchet). Do not flip PRODUCTION_READY; do not implement S1-S6; tip pin unchanged until S1.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-ladder7-lidr-harness-adoption
+  - docs/releases/EOS_LIDR_HARNESS_WORKSHOP_ADOPTION_2026-09-09.md
+  - docs/releases/EOS_MATURITY_LADDER_7_AUDIT_2026-09-09.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - implementing S1-S6 runtime/code
+  - changing freeze main_tip (S1)
+  - Fundacion writes
+  - App Fuerza writes
+  - executing MCP/tool prune
+  - installing rtk/codegraph/caveman/ponytail/Headroom
+  - cloning lidr-specboot into EOS
+  - claiming EOS solves any problem / whiplash solved
