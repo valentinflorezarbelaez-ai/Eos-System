@@ -11,7 +11,7 @@ Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (N1 tip pin retained; N2 branch note added — see N2 section; PRODUCTION_READY=NO)
+updated_at: 2026-09-08 America/Bogota (N1 tip pin retained; N2/N3 branch notes added — see N2/N3 sections; PRODUCTION_READY=NO)
 ```
 
 ## Closed on main (fusion + ROI1–6 + Ladder2 M1–M6 + G7 + Ladder3 audit)
@@ -132,6 +132,16 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Extends `auditCanonicalEvdWritePaths` to scan `src/` + `scripts/` + `bin/`; routes L3 suspects through `sealEvd`
 - Known routed writers: `scripts/run-engineering-loop.js`, `bin/eos-orchestrator.js`, `scripts/exam-clean-clone.js`
 - `test:n2` + `test:g7`; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
+- Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
+
+
+## N3 Operator doctor wire + fusion checks (2026-09-08)
+
+- Report: `docs/releases/EOS_N3_OPERATOR_DOCTOR_2026-09-08.md`
+- Branch: `cursor/eos-n3-operator-doctor` — push/compare only; do not merge without PO
+- Wires `bin/eos-doctor.js` + `eos:doctor`; extends operator-doctor with post-fusion presence checks (verify/fusion-cp/custody/engram/evd-seal/pre-push)
+- Optional HUD OBSERVED doctor section; verify:strict existence lock for doctor bin/module
+- `test:n3`; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
 - Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
 
 ## Historical publish notes
