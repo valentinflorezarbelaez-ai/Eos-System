@@ -252,6 +252,15 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - Prior P1 tip pin `5917abc24b5ee03eabdc4e741ffe1d06f168c013` retired (historical)
+## Q2 CI seam-pack Ladder4 P-tests (2026-09-09)
+
+- Report: `docs/releases/EOS_Q2_CI_SEAM_PACK_P_TESTS_2026-09-09.md`
+- Branch: `cursor/eos-q2-ci-seam-pack-p-tests` — push/compare only; do not merge without PO
+- seam-pack adds CI-safe p2 + p4..p6 (keep p3 + prior n/m/roi/gameday packs)
+- No soak; no new GH billing / enforcement claims; Fundacion Delta=0
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- DEFER dirty unstaged unchanged
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`
