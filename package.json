@@ -98,7 +98,8 @@
     "test:q5": "node --test tests/eos-q5-mission-artifact-write-governance.test.js",
     "test:q6": "node --test tests/eos-q6-p6-inventory-verify-lock.test.js",
     "test:r2": "node --test tests/eos-r2-ci-seam-pack-q-tests.test.js",
-    "test:r3": "node --test tests/eos-r3-doctor-fusion-light-l5-surfaces.test.js"
+    "test:r3": "node --test tests/eos-r3-doctor-fusion-light-l5-surfaces.test.js",
+    "test:r4": "node --test tests/eos-r4-at-ceiling-schema-gate.test.js"
   },
   "keywords": [
     "eos",

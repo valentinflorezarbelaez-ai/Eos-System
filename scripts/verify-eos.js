@@ -16,6 +16,7 @@ import { auditSentinelFdir, SENTINEL_FDIR_REQUIRED_PATHS } from './lib/sentinel-
 import { auditHooksInstallSurface, HOOKS_INSTALL_REQUIRED_PATHS } from './lib/hooks-install-smoke.js';
 import { auditMcpCatalogLock, MCP_CATALOG_REQUIRED_PATHS } from './lib/mcp-catalog-lock.js';
 import { auditP6InventoryLock, P6_INVENTORY_REQUIRED_PATHS } from './lib/p6-inventory-lock.js';
+import { auditComplexityBudgetLock, COMPLEXITY_BUDGET_REQUIRED_PATHS } from './lib/complexity-budget-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -115,6 +116,9 @@ const REQUIRED_PATHS = [
   'tests/eos-q6-p6-inventory-verify-lock.test.js',
   'docs/releases/EOS_P6_COMPLEXITY_PRUNE_INVENTORY_2026-09-09.md',
   'docs/releases/EOS_Q6_P6_INVENTORY_VERIFY_LOCK_2026-09-09.md',
+  'scripts/lib/complexity-budget-lock.js',
+  'tests/eos-r4-at-ceiling-schema-gate.test.js',
+  'docs/releases/EOS_R4_AT_CEILING_SCHEMA_GATE_2026-09-09.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -384,7 +388,8 @@ const REQUIRED_PATHS = [
   ...SENTINEL_FDIR_REQUIRED_PATHS,
   ...HOOKS_INSTALL_REQUIRED_PATHS,
   ...MCP_CATALOG_REQUIRED_PATHS,
-  ...P6_INVENTORY_REQUIRED_PATHS
+  ...P6_INVENTORY_REQUIRED_PATHS,
+  ...COMPLEXITY_BUDGET_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1125,6 +1130,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/p6-inventory-lock.js',
         message: 'P6 inventory lock audit failed: ' + err.message,
         type: 'p6-inventory-lock'
+      });
+    }
+
+    // 3g9. R4 AT_CEILING schema pressure / complexity-budget honesty lock
+    try {
+      const complexityBudget = auditComplexityBudgetLock(rootDir);
+      for (const c of complexityBudget.checks) {
+        report.checks.push(c);
+      }
+      for (const f of complexityBudget.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/complexity-budget-lock.js',
+        message: 'Complexity budget lock audit failed: ' + err.message,
+        type: 'complexity-budget-lock'
       });
     }
 
