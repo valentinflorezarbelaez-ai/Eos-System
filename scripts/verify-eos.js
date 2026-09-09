@@ -9,6 +9,7 @@ import { ContractEvidenceSealer } from '../src/core/formal/contract-evidence-sea
 import { EconomicContractValidator } from '../src/core/formal/economic-contract-validator.js';
 import { EvidenceCustody } from '../src/core/sdd/evidence-custody.js';
 import { verifyEngramContract } from '../src/core/memory/engram-contract.js';
+import { auditFusionControlPlane, FUSION_CP_REQUIRED_PATHS } from './lib/fusion-cp-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -337,7 +338,9 @@ const REQUIRED_PATHS = [
   'docs/audits/EOS_SYSTEM_READINESS_ASSESSMENT.json',
   'docs/audits/EOS_SYSTEM_AUDIT_EVIDENCE.json',
   'docs/core/FOUNDATIONAL_CONTEXT.md',
-  'docs/audits/EOS_FOUNDATIONAL_CONTEXT_AUDIT.md'
+  'docs/audits/EOS_FOUNDATIONAL_CONTEXT_AUDIT.md',
+  // M1 fusion control-plane lock (Ladder 2 G1)
+  ...FUSION_CP_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -919,6 +922,23 @@ function verifyWorkspace() {
         path: 'src/core/memory/engram-contract.js',
         message: 'Engram contract audit failed: ' + err.message,
         type: 'engram-contract'
+      });
+    }
+
+    // 3g4. M1 Fusion control-plane lock (Write Barrier / Mission Loop / MCP SSOT / GameDay / ADR-0013/0014)
+    try {
+      const fusion = auditFusionControlPlane(rootDir);
+      for (const c of fusion.checks) {
+        report.checks.push(c);
+      }
+      for (const f of fusion.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/fusion-cp-lock.js',
+        message: 'Fusion CP lock audit failed: ' + err.message,
+        type: 'fusion-cp-lock'
       });
     }
 

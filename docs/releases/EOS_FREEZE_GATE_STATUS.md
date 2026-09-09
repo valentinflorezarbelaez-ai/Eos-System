@@ -72,3 +72,11 @@ External production readiness is explicitly **not** asserted.
 - Status: **RULE_CREATED_NOT_ENFORCED** (Free private) — rule for `main` exists (PR required, status checks + up-to-date ON; force push/deletions OFF; required checks: Workspace verify (strict), Node test suite, JavaScript syntax, Local governance engines)
 - Enforcement inactive until Team/Enterprise (or public — PO only; do not change visibility without PO)
 - PRODUCTION_READY remains **NO**; Fundacion untouched
+## M1 Strict-verify fusion control-plane lock (2026-09-08)
+
+- Report: docs/releases/EOS_M1_STRICT_VERIFY_CP_LOCK_2026-09-08.md
+- Branch: cursor/eos-m1-strict-verify-cp-lock - push/compare only; do not merge without PO
+- Locks Write Barrier, Mission Loop runtime, MCP SSOT sync contract, long-run GameDay harness, ADR-0013/0014 via verify:strict (existence + light smoke; no soak)
+- Base tip at branch start: e88fc04 (audit #38 on main)
+- PRODUCTION_READY remains NO; Fundacion Delta=0; DEFER dirty unstaged unchanged
+
