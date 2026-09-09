@@ -38,7 +38,12 @@ export const VERIFY_SURFACE_TYPES = Object.freeze([
   'fusion-cp-gameday',
   // N4 post-G7/M6 fusion-cp light smoke types
   'fusion-cp-coherence',
-  'fusion-cp-pre-push'
+  'fusion-cp-pre-push',
+  // N6 Sentinel/FDIR strict-verify lock types
+  'sentinel-fdir-lock',
+  'sentinel-fdir-daemon',
+  'sentinel-fdir-engine',
+  'sentinel-fdir-ontology'
 ]);
 
 const CANONICAL_E2E_REL = 'docs/evidence/canonical_e2e_openspec_tdd_2026';
@@ -471,6 +476,45 @@ function observeCanonicalE2e(baseDir) {
 }
 
 
+function observeDefenseWiring(baseDir) {
+  const binRel = 'bin/eos-sentinel.js';
+  const daemonRel = 'src/core/sentinel-daemon.js';
+  const fdirRel = 'src/core/fdir.js';
+  const ontologyRel = 'src/core/fdir-ontology.js';
+  const bin_present = relExists(baseDir, binRel);
+  const daemon_present = relExists(baseDir, daemonRel);
+  const fdir_present = relExists(baseDir, fdirRel);
+  const ontology_present = relExists(baseDir, ontologyRel);
+  let script_present = false;
+  let script_value = null;
+  const pkgPath = path.join(baseDir, 'package.json');
+  if (fs.existsSync(pkgPath)) {
+    try {
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+      script_value =
+        (pkg.scripts &&
+          (pkg.scripts['eos:sentinel'] ||
+            pkg.scripts['sentinel:daemon'] ||
+            pkg.scripts['sentinel:start'])) ||
+        null;
+      script_present = Boolean(script_value);
+    } catch {
+      script_present = false;
+    }
+  }
+  const complete = bin_present && daemon_present && fdir_present && ontology_present;
+  return {
+    epistemic: complete ? HUD_EPISTEMIC.OBSERVED : HUD_EPISTEMIC.NOT_VERIFIED,
+    bin_present,
+    daemon_present,
+    fdir_present,
+    ontology_present,
+    script_present,
+    script: script_value,
+    sources: [binRel, daemonRel, fdirRel, ontologyRel, 'package.json']
+  };
+}
+
 function observeDoctorWiring(baseDir) {
   const binRel = 'bin/eos-doctor.js';
   const moduleRel = 'src/core/runtime/operator-doctor.js';
@@ -537,6 +581,7 @@ export function collectOperatorHud(options = {}) {
   const mission_os_coherence = getMissionOsCoherenceMap();
 
   const doctor = observeDoctorWiring(baseDir);
+  const defense = observeDefenseWiring(baseDir);
 
   const freeze_tip = observeFreezeTipVsHead(baseDir, {
     liveHead: options.liveHead || git.head_full || git.head_short || null,
@@ -561,7 +606,8 @@ export function collectOperatorHud(options = {}) {
     error_budget,
     evidence,
     file_claims,
-    doctor
+    doctor,
+    defense
   };
 }
 
@@ -665,6 +711,12 @@ export function renderOperatorHud(snapshot) {
   lines.push('DOCTOR      ' + (doctor.epistemic || HUD_EPISTEMIC.NOT_VERIFIED) + '  bin=' + (doctor.bin_present ? 'yes' : 'no') + '  module=' + (doctor.module_present ? 'yes' : 'no') + '  script=' + (doctor.script_present ? 'yes' : 'no'));
   lines.push('             eos-doctor wiring OBSERVED — existence only, not a verify substitute');
   lines.push('             sources: ' + ((doctor.sources || []).join(', ') || 'n/a'));
+
+  const defense = snapshot.defense || {};
+  lines.push('------------------------------------------------------------');
+  lines.push('DEFENSE     ' + (defense.epistemic || HUD_EPISTEMIC.NOT_VERIFIED) + '  sentinel=' + (defense.bin_present ? 'yes' : 'no') + '  daemon=' + (defense.daemon_present ? 'yes' : 'no') + '  fdir=' + (defense.fdir_present ? 'yes' : 'no') + '  ontology=' + (defense.ontology_present ? 'yes' : 'no'));
+  lines.push('             Sentinel/FDIR wiring OBSERVED — existence only, not a verify substitute');
+  lines.push('             sources: ' + ((defense.sources || []).join(', ') || 'n/a'));
 
   lines.push('FILE CLAIMS  DATED_FILE_CLAIM (not live SSOT)');
   if (claims.length === 0) {

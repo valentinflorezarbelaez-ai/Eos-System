@@ -11,7 +11,7 @@ Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (N1 tip pin retained; N2/N3/N4/N5 branch notes added — see N2/N3/N4/N5 sections; PRODUCTION_READY=NO)
+updated_at: 2026-09-08 America/Bogota (N1 tip pin retained; N2–N6 branch notes added — see N2–N6 sections; Ladder 3 N1–N6 complete after N6 merge; PRODUCTION_READY=NO)
 ```
 
 ## Closed on main (fusion + ROI1–6 + Ladder2 M1–M6 + G7 + Ladder3 audit)
@@ -161,6 +161,15 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Branch: `cursor/eos-n5-independent-fusion-light` — push/compare only; do not merge without PO
 - `verify:independent` fail-closed fusion-light (default ON): custody/engram/fusion-cp/evd-seal path + light import; explicit NON-CLAIM residual
 - `test:n5`; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
+- Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
+
+## N6 Sentinel/FDIR strict-verify lock (2026-09-08)
+
+- Report: `docs/releases/EOS_N6_SENTINEL_FDIR_STRICT_LOCK_2026-09-08.md`
+- Branch: `cursor/eos-n6-sentinel-fdir-lock` — push/compare only; do not merge without PO
+- `verify:strict` REQUIREs eos-sentinel + sentinel-daemon + fdir + fdir-ontology paths; light construct/API smoke (no soak)
+- Optional HUD OBSERVED defense section; `test:n6`; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
+- **Ladder 3 N1–N6 complete after this branch merges** (freeze `main_tip` SSOT remains N1 pin until a future tip-refresh)
 - Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
 
 ## Historical publish notes

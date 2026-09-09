@@ -85,7 +85,8 @@
     "eos:doctor": "node bin/eos-doctor.js",
     "test:n3": "node --test tests/eos-n3-operator-doctor.test.js",
     "test:n4": "node --test tests/eos-n4-hud-fusion-cp-lock.test.js",
-    "test:n5": "node --test tests/eos-n5-independent-fusion-light.test.js"
+    "test:n5": "node --test tests/eos-n5-independent-fusion-light.test.js",
+    "test:n6": "node --test tests/eos-n6-sentinel-fdir-lock.test.js"
   },
   "keywords": [
     "eos",
