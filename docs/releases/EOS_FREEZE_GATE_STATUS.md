@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: e6d1d06ac7450bc8fc94153e4bad7465396a472e
-main_subject: Merge pull request #46 from valentinflorezarbelaez-ai/cursor/eos-ladder-3-audit
-branch_hygiene: clean (main == origin/main @ e6d1d06; Ladder2 M1–M6 + G7 + Ladder3 audit #46 closed on main)
+main_tip: 5917abc24b5ee03eabdc4e741ffe1d06f168c013
+main_subject: Merge pull request #53 from valentinflorezarbelaez-ai/cursor/eos-ladder-4-audit
+branch_hygiene: clean (main == origin/main @ 5917abc; Ladder2 M1–M6 + G7 + Ladder3 N1–N6 + Ladder4 audit #53 closed on main)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (N1 tip pin retained; N2–N6 branch notes added — see N2–N6 sections; Ladder 3 N1–N6 complete after N6 merge; PRODUCTION_READY=NO)
+updated_at: 2026-09-08 America/Bogota (P1 Ladder4 SSOT tip refresh post audit #53; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1–6 + Ladder2 M1–M6 + G7 + Ladder3 audit)
+## Closed on main (fusion + ROI1–6 + Ladder2 M1–M6 + G7 + Ladder3 N1–N6 + Ladder4 audit)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `e6d1d06ac7450bc8fc94153e4bad7465396a472e`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `5917abc24b5ee03eabdc4e741ffe1d06f168c013`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -40,7 +40,14 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | M5 CI GameDay / ROI seam-pack | #43 | 112bb2d | `EOS_M5_CI_GAMEDAY_ROI_SEAM_PACK_2026-09-08.md`; `ci.yml` job `seam-pack` |
 | M6 Mission OS ATS to loop coherence | #44 | 97b1965 | `EOS_M6_MISSION_OS_COHERENCE_2026-09-08.md`; `mission-os-coherence.js` |
 | G7 EVD custody seal path | #45 | ed120dc | `EOS_G7_EVD_CUSTODY_SEAL_PATH_2026-09-08.md`; `evd-seal-path.js`; `sealEvd` |
-| Ladder 3 maturity gap audit | #46 | e6d1d06 | `EOS_MATURITY_LADDER_3_AUDIT_2026-09-08.md` (N1–N6 ordered; N1 implemented separately) |
+| Ladder 3 maturity gap audit | #46 | e6d1d06 | `EOS_MATURITY_LADDER_3_AUDIT_2026-09-08.md` (N1–N6 ordered; N1 tip refresh separate) |
+| N1 Ladder3 tip refresh | #47 | 07ddc18 | `EOS_N1_LADDER3_TIP_REFRESH_2026-09-08.md`; freeze+matrix to e6d1d06 |
+| N2 EVD scripts+bin seal | #48 | 036f669 | `EOS_N2_EVD_SCRIPTS_BIN_SEAL_2026-09-08.md`; sealEvd scripts/bin; test:n2 |
+| N3 Operator doctor | #49 | 73b6f47 | `EOS_N3_OPERATOR_DOCTOR_2026-09-08.md`; bin/eos-doctor.js; test:n3 |
+| N4 HUD + fusion-cp post-G7/M6 | #50 | 33740a6 | `EOS_N4_HUD_FUSION_CP_POST_G7_2026-09-08.md`; HUD/fusion-cp lock; test:n4 |
+| N5 Independent verifier fusion-light | #51 | c0d63dc | `EOS_N5_INDEPENDENT_VERIFIER_FUSION_LIGHT_2026-09-08.md`; verify:independent; test:n5 |
+| N6 Sentinel/FDIR strict-verify lock | #52 | 6021ec2 | `EOS_N6_SENTINEL_FDIR_STRICT_LOCK_2026-09-08.md`; sentinel-fdir-lock.js; test:n6 |
+| Ladder 4 maturity gap audit | #53 | 5917abc | `EOS_MATURITY_LADDER_4_AUDIT_2026-09-08.md` (P1–P6 ordered; P1 tip refresh separate) |
 
 ### Antigravity / agy remote-control
 
@@ -132,7 +139,7 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Extends `auditCanonicalEvdWritePaths` to scan `src/` + `scripts/` + `bin/`; routes L3 suspects through `sealEvd`
 - Known routed writers: `scripts/run-engineering-loop.js`, `bin/eos-orchestrator.js`, `scripts/exam-clean-clone.js`
 - `test:n2` + `test:g7`; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
-- Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
+- Historical: freeze `main_tip` left at N1 pin during N2–N6; **superseded by P1** tip refresh to main@5917abc
 
 
 ## N3 Operator doctor wire + fusion checks (2026-09-08)
@@ -142,7 +149,7 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Wires `bin/eos-doctor.js` + `eos:doctor`; extends operator-doctor with post-fusion presence checks (verify/fusion-cp/custody/engram/evd-seal/pre-push)
 - Optional HUD OBSERVED doctor section; verify:strict existence lock for doctor bin/module
 - `test:n3`; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
-- Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
+- Historical: freeze `main_tip` left at N1 pin during N2–N6; **superseded by P1** tip refresh to main@5917abc
 
 
 ## N4 HUD + fusion-cp post-G7/M6 lock (2026-09-08)
@@ -152,7 +159,7 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - HUD VERIFY_SURFACE_TYPES adds `evd-seal-path` (+ `fusion-cp-coherence` / `fusion-cp-pre-push` smoke types)
 - fusion-cp-lock extends required paths + light smoke for ADR-0015/0016, mission-os-coherence, pre-push-hook
 - `test:n4`; verify:strict DENYs if missing; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
-- Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
+- Historical: freeze `main_tip` left at N1 pin during N2–N6; **superseded by P1** tip refresh to main@5917abc
 
 
 ## N5 Independent verifier fusion-light (2026-09-08)
@@ -161,7 +168,7 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Branch: `cursor/eos-n5-independent-fusion-light` — push/compare only; do not merge without PO
 - `verify:independent` fail-closed fusion-light (default ON): custody/engram/fusion-cp/evd-seal path + light import; explicit NON-CLAIM residual
 - `test:n5`; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
-- Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
+- Historical: freeze `main_tip` left at N1 pin during N2–N6; **superseded by P1** tip refresh to main@5917abc
 
 ## N6 Sentinel/FDIR strict-verify lock (2026-09-08)
 
@@ -169,9 +176,19 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Branch: `cursor/eos-n6-sentinel-fdir-lock` — push/compare only; do not merge without PO
 - `verify:strict` REQUIREs eos-sentinel + sentinel-daemon + fdir + fdir-ontology paths; light construct/API smoke (no soak)
 - Optional HUD OBSERVED defense section; `test:n6`; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
-- **Ladder 3 N1–N6 complete after this branch merges** (freeze `main_tip` SSOT remains N1 pin until a future tip-refresh)
-- Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
+- **Ladder 3 N1–N6 complete** on main after #52
+- Historical: freeze `main_tip` left at N1 pin during N2–N6; **superseded by P1** tip refresh to main@5917abc
 
+
+## P1 Ladder 4 tip refresh (2026-09-08)
+
+- Report: `docs/releases/EOS_P1_LADDER4_TIP_REFRESH_2026-09-08.md`
+- Branch: `cursor/eos-p1-ladder4-tip-refresh` — push/compare only; do not merge without PO
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`5917abc24b5ee03eabdc4e741ffe1d06f168c013` (Ladder 4 audit #53)
+- Matrix rows added for N2 EVD scripts+bin seal, N3 operator doctor, N4 HUD/fusion-cp, N5 independent fusion-light, N6 Sentinel/FDIR lock
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- Prior N1 tip pin `e6d1d06ac7450bc8fc94153e4bad7465396a472e` retired (historical)
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`
@@ -180,6 +197,7 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Prior M3 OBSERVED tip (pre-M4): `ed8d960c5b9cb42bcf73fd01b59f6fb4625a300a`
 - Prior M4 tip pin (pre-N1): `3c675dd2acca86b55cbf5e7b30b84f0e8464b6b5`
 - Prior G7 main tip (pre-audit / pre-N1): `ed120dc523cf54ebdc4890aadf75aeee195bc0a2`
+- Prior N1 tip pin (pre-P1): `e6d1d06ac7450bc8fc94153e4bad7465396a472e`
 
 ## Not production
 
@@ -188,7 +206,7 @@ External production readiness is explicitly **not** asserted.
 ## Ladder 4 maturity gap audit (2026-09-08)
 
 - Report: `docs/releases/EOS_MATURITY_LADDER_4_AUDIT_2026-09-08.md`
-- Branch: `cursor/eos-ladder-4-audit` — push/compare only; do not merge without PO
+- Branch: `cursor/eos-ladder-4-audit` — merged via #53
 - Audit base tip OBSERVED: main@`6021ec26b783907a819e3bb85ff68d23ddccf11e` (N6 #52)
-- Freeze `main_tip` SSOT unchanged (still N1 pin `e6d1d06`); tip refresh is ordered **P1** (not implemented in this audit branch)
+- Merged as #53 (`5917abc`); freeze tip refreshed by **P1** to main@`5917abc24b5ee03eabdc4e741ffe1d06f168c013`
 - Ordered next ladder P1–P6; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
