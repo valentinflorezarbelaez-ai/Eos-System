@@ -73,7 +73,8 @@
     "test:roi5": "node --test tests/roi5-long-run-gameday.test.js",
     "test:roi6": "node --test tests/roi6-engram-unify.test.js",
     "engram:verify": "node scripts/engram-verify.js",
-    "test:m1": "node --test tests/eos-m1-strict-verify-cp-lock.test.js"
+    "test:m1": "node --test tests/eos-m1-strict-verify-cp-lock.test.js",
+    "test:m2": "node --test tests/pre-push-main-guard.test.js"
   },
   "keywords": [
     "eos",
