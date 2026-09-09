@@ -1,18 +1,18 @@
 # EOS MCP Tool Governance & Capability Matrix
-## Comprehensive Architectural Audit of the 74 Exposed Tools in `eos-local`
+## Comprehensive Architectural Audit of the 80 Exposed Tools in `eos-local`
 
 ---
 
 ### Executive Summary
 
-An exhaustive forensic and architectural capability audit was conducted across the **74 tools** registered in `CANONICAL_TOOLS` within `src/mcp-server.js` for the `eos-local` MCP server.
+An exhaustive forensic and architectural capability audit was conducted across the **80 tools** registered in `CANONICAL_TOOLS` within `src/mcp-server.js` for the `eos-local` MCP server.
 
 | Metric | Measured Value | Architectural Finding |
 |---|---|---|
-| **Total Exposed Tools** | **74** | Defined in `CANONICAL_TOOLS` and dispatched via JSON-RPC stdio |
-| **Canonical Operational Tools** | **51 (68.9%)** | Real implementations connected to Kernel, MissionRuntime, AST parsers, or FDIR |
-| **Simulation / Theatrical Tools** | **22 (29.7%)** | Mock handlers returning generated SHA-256 hashes without physical execution |
-| **Legacy / Stubbed Tools** | **1 (1.4%)** | Hardcoded `NOT_CONFIGURED` return envelope (`eos.provider.health`) |
+| **Total Exposed Tools** | **80** | Defined in `CANONICAL_TOOLS` and dispatched via JSON-RPC stdio |
+| **Canonical Operational Tools** | **57 (71.3%)** | Real implementations connected to Kernel, MissionRuntime, AST parsers, or FDIR |
+| **Simulation / Theatrical Tools** | **22 (27.5%)** | Mock handlers returning generated SHA-256 hashes without physical execution |
+| **Legacy / Stubbed Tools** | **1 (1.3%)** | Hardcoded `NOT_CONFIGURED` return envelope (`eos.provider.health`) |
 | **Critical Path Tools** | **19 (25.7%)** | Essential minimal toolset for the Spec-Driven Development (SDD) Golden Path |
 | **Directly Connected to MissionRuntime** | **19 (25.7%)** | Wires directly through `McpMissionBridge` into `MissionRuntime` |
 | **Tools with Real Policy Enforcement** | **51 (68.9%)** | Protected by `evaluateToolGuard` (mode, autonomy rank, side-effects) and real schema logic |
@@ -24,7 +24,7 @@ An exhaustive forensic and architectural capability audit was conducted across t
 
 ### The 16 Classification Groups
 
-The 74 tools have been classified into the 16 architectural groups based on operational domain and true capability:
+The 80 tools have been classified into the 16 architectural groups based on operational domain and true capability:
 
 ```
 1. CORE_OPERATIONAL (16 Tools):
@@ -150,7 +150,7 @@ Exposing 22 simulation tools alongside 51 operational tools creates severe archi
 
 ---
 
-### Master 74-Tool Governance Table
+### Master 80-Tool Governance Table
 
 | # | Tool Name | Group | Class | Auth | Side Effects | Real Implementation Owner | Risk | Runtime Status |
 |---|---|---|---|---|---|---|---|---|
@@ -228,6 +228,12 @@ Exposing 22 simulation tools alongside 51 operational tools creates severe archi
 | 72 | `eos.security.adversarial.review` | SECURITY | Simulation | A1 | Ledger-Write (Simulated) | `src/mcp-server.js` | **LOW** | Tested only in test/mcp-adversarial-review-tool.test.js |
 | 73 | `eos.sdlc.engineer.autonomous` | SIMULATION | Simulation | A1 | Ledger-Write (Simulated) | `src/mcp-server.js` | **LOW** | Tested only in test/mcp-autonomous-engineer-tool.test.js |
 | 74 | `eos.pleroma.akasha.engram` | SIMULATION | Simulation | A1 | Ledger-Write (Simulated) | `src/mcp-server.js` | **LOW** | Tested only in test/mcp-akasha-engram-tool.test.js |
+| 75 | `eos.doctor` | GOVERNANCE | Canonical | A0 | Read-Only | `src/core/runtime/operator-doctor.js` | **LOW** | Active via bin/eos-doctor.js and MCP |
+| 76 | `eos.audit.project` | AUDIT | Canonical | A0 | Read-Only | `src/core/runtime/project-pipeline-runner.js` | **LOW** | Active in MCP native operator tools |
+| 77 | `eos.verify.strict` | QUALITY | Canonical | A0 | Read-Only | `scripts/verify-eos.js` | **LOW** | Active in MCP native operator tools |
+| 78 | `eos.log.evidence` | EVIDENCE | Canonical | A1 | Ledger-Write | `src/core/sdd/evd-seal-path.js` | **MEDIUM** | Active; routes through sealEvd |
+| 79 | `eos.mission.loop.status` | MISSION | Canonical | A0 | Read-Only | `src/core/mcp/mcp-mission-bridge.js` | **LOW** | Active in Phase 5 mission loop |
+| 80 | `eos.mission.loop.advance` | MISSION | Canonical | A1 | Ledger-Write | `src/core/mcp/mcp-mission-bridge.js` | **MEDIUM** | Active in Phase 5 mission loop |
 
 ---
 

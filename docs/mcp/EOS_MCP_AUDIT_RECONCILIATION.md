@@ -61,3 +61,10 @@ Six major contradictions and architectural drifts were detected and reconciled.
 - **Formal Resolution**: Mark as duplicate simulation stubs.
 
 ---
+
+
+---
+
+### [P5] Catalog reconcile to live CANONICAL_TOOLS (80)
+- **Date**: 2026-09-09
+- **Resolution**: EOS_MCP_TOOL_CATALOG.json and governance matrix/capability model updated from 74 to 80; six tools documented (eos.doctor, eos.audit.project, eos.verify.strict, eos.log.evidence, eos.mission.loop.status, eos.mission.loop.advance); verify lock scripts/lib/mcp-catalog-lock.js.

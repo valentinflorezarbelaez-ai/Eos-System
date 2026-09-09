@@ -5,7 +5,7 @@
 
 ### The Minimal Critical Path Architecture
 
-Of the 74 tools in the `eos-local` MCP catalog, exactly **19 tools** constitute the true, hardened Critical Path required to execute the 21-step Master Engineering Pipeline from Intake to Verification.
+Of the 80 tools in the `eos-local` MCP catalog, exactly **19 tools** constitute the true, hardened Critical Path required to execute the 21-step Master Engineering Pipeline from Intake to Verification.
 
 ```mermaid
 flowchart TD
