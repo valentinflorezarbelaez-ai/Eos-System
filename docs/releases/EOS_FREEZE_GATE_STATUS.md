@@ -87,6 +87,18 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - OBSERVED branch-start main tip: `444dfc6e69d466e035acefb84ea815914c8ffde2` (M4 #42); freeze `main_tip` SSOT left at M4 pin unless a later tip-refresh mission updates both freeze + matrix together
 
+
+## M6 Mission OS dual-FSM coherence (2026-09-08)
+
+- Report: `docs/releases/EOS_M6_MISSION_OS_COHERENCE_2026-09-08.md`
+- Branch: `cursor/eos-m6-mission-os-coherence` — push/compare only; do not merge without PO
+- Operator map: ATS/SDD_STATES ↔ MCP mission-loop stages in `docs/orchestration/MISSION_OS_ATS_MISSION_LOOP_COHERENCE.md` + `src/core/observability/mission-os-coherence.js` (HUD field `mission_os_coherence`)
+- ADR-0014 unchanged: mission loop is MCP overlay; does **not** replace ATS / Mission OS FSM; no second FSM; no mass `src/core` prune
+- **Ladder 2 M1-M6 complete after this merges** (freeze note; tip refresh may follow merge)
+- **G7** (EVD paths skipping custody) = **DEFERRED** next gap — not implemented here
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY: NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- OBSERVED branch-start main tip: `112bb2d` (M5 #43); freeze `main_tip` SSOT left at prior pin unless a later tip-refresh mission updates freeze + matrix together
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`

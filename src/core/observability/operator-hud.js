@@ -9,6 +9,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync, execFileSync } from 'node:child_process';
+import {
+  getMissionOsCoherenceMap,
+  assertCoherenceMapComplete
+} from './mission-os-coherence.js';
 
 export const HUD_SCHEMA = 'eos.operator-hud.v1';
 export const HUD_EPISTEMIC = Object.freeze({
@@ -496,6 +500,9 @@ export function collectOperatorHud(options = {}) {
     canonical_e2e: observeCanonicalE2e(baseDir)
   };
 
+  assertCoherenceMapComplete();
+  const mission_os_coherence = getMissionOsCoherenceMap();
+
   const freeze_tip = observeFreezeTipVsHead(baseDir, {
     liveHead: options.liveHead || git.head_full || git.head_short || null,
     execGit: options.execGit
@@ -507,6 +514,7 @@ export function collectOperatorHud(options = {}) {
     git,
     verify,
     freeze_tip,
+    mission_os_coherence,
     mission: {
       epistemic: mission.epistemic,
       source: mission.source,
@@ -597,6 +605,18 @@ export function renderOperatorHud(snapshot) {
     `             canonical E2E: ${e2e.present ? e2e.path : 'absent'}  ${e2e.epistemic || HUD_EPISTEMIC.NOT_VERIFIED}`
   );
   if (e2e.operator_report) lines.push(`             operator_report: ${e2e.operator_report}`);
+
+  const coherence = snapshot.mission_os_coherence || {};
+  lines.push('------------------------------------------------------------');
+  lines.push('MISSION_OS_COHERENCE  OBSERVED map — overlay does not replace ATS');
+  lines.push('             claim: ' + (coherence.claim || 'missing'));
+  lines.push('             schema: ' + (coherence.schema || 'n/a') + '  docs: ' + (coherence.docs || 'n/a'));
+  for (const row of coherence.rows || []) {
+    lines.push('             ' + row.mission_loop_stage + ' -> ' + (row.ats_stages || []).join('|'));
+  }
+  lines.push('             ATS control: ' + ((coherence.ats_control_states || []).join('|') || 'n/a'));
+  const gap = coherence.deferred_next_gap || {};
+  lines.push('             next_gap: ' + (gap.id || 'n/a') + ' ' + (gap.status || '') + ' — ' + (gap.title || ''));
 
   lines.push('------------------------------------------------------------');
   lines.push('FILE CLAIMS  DATED_FILE_CLAIM (not live SSOT)');
