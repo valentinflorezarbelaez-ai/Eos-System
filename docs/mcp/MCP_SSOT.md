@@ -14,6 +14,8 @@ Canonical: config/mcp/eos-mcp.ssot.json
 - Rebuild eos-local + engram from SSOT; extras from extraServers
 - Relative src/mcp-server.js; engram on PATH in tracked files
 - .windsurf is gitignored but generated
+- Check mode: gitignored consumers may be ABSENT_OK (CI/checkout); tracked consumers must exist
+- If a gitignored consumer is present locally, check still fails on DRIFT
 
 ## Engram fallback
 

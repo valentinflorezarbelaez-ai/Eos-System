@@ -4,6 +4,12 @@
  * Usage:
  *   node scripts/mcp-ssot-sync.js          # write consumers
  *   node scripts/mcp-ssot-sync.js --check   # exit 1 on drift
+ *
+ * Check policy:
+ * - Tracked consumers (gitignored:false): must exist and match SSOT (MISSING/DRIFT fail).
+ * - Gitignored consumers (gitignored:true): MISSING is OK in check (not in checkout);
+ *   if present locally, content must still match SSOT (DRIFT fails).
+ * Sync (write) still generates all declared consumers, including gitignored ones.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -97,10 +103,17 @@ export function runSync(options = {}) {
       currentText = fs.readFileSync(absPath, 'utf8');
     }
 
+    const gitignored = Boolean(spec.gitignored);
+
     let status = 'OK';
     if (currentText === null) {
-      drifted = true;
-      status = 'MISSING';
+      if (check && gitignored) {
+        // Gitignored consumers are generated locally; absence in CI/checkout is not drift.
+        status = 'ABSENT_OK';
+      } else {
+        drifted = true;
+        status = 'MISSING';
+      }
     } else if (currentText !== desiredText) {
       try {
         const cur = JSON.parse(currentText);
@@ -124,7 +137,7 @@ export function runSync(options = {}) {
     results.push({
       path: relPath,
       status,
-      gitignored: Boolean(spec.gitignored),
+      gitignored,
       profile: spec.profile,
     });
   }
