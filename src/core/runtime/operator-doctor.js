@@ -3,6 +3,10 @@
  * @description Read-only health check for local governed EOS use.
  * Detects homedir MCP leaks and missing control-plane files. No network, no writes.
  * N3: post-fusion existence/light checks (verify/fusion-cp/custody/engram/evd-seal/pre-push).
+ * Q3: Ladder4 observe — hooks-install / mcp-catalog / mission-local lock surfaces.
+ *
+ * NON-CLAIM: doctor is OBSERVED honesty / presence-light only — NOT verify:strict.
+ * PRODUCTION_READY: NO
  */
 
 import fs from 'node:fs';
@@ -20,8 +24,20 @@ function addCheck(checks, id, ok, detail) {
 }
 
 /**
+ * Explicit NON-CLAIM residual: doctor observes presence; it does not certify verify:strict.
+ */
+export const DOCTOR_NON_CLAIMS = Object.freeze([
+  'NOT verify:strict — doctor is OBSERVED presence/light only; does not run hooks-install smoke, mcp-catalog reconcile, mission-local EVD audit, or sentinel-fdir lock bodies',
+  'NOT production readiness / PRODUCTION_READY remains NO',
+  'NOT App Fuerza delivery certification',
+  'NOT Fundacion mutation authorization (Fundacion Delta=0 retained)',
+  'NOT replacement of independent fusion-light or GameDay soak'
+]);
+
+/**
  * Post-fusion critical paths — fail-closed on missing (existence/light).
  * Relative to control-plane root.
+ * Q3 extends with Ladder4 observe surfaces (hooks-install / mcp-catalog / mission-local).
  */
 export const POST_FUSION_CRITICAL_PATHS = Object.freeze([
   { id: 'VERIFY', rel: 'scripts/verify-eos.js' },
@@ -29,7 +45,10 @@ export const POST_FUSION_CRITICAL_PATHS = Object.freeze([
   { id: 'CUSTODY', rel: 'src/core/sdd/evidence-custody.js' },
   { id: 'ENGRAM', rel: 'src/core/memory/engram-contract.js' },
   { id: 'EVD_SEAL', rel: 'src/core/sdd/evd-seal-path.js' },
-  { id: 'PRE_PUSH', rel: 'scripts/pre-push-hook.js' }
+  { id: 'PRE_PUSH', rel: 'scripts/pre-push-hook.js' },
+  { id: 'HOOKS_INSTALL', rel: 'scripts/lib/hooks-install-smoke.js' },
+  { id: 'MCP_CATALOG', rel: 'scripts/lib/mcp-catalog-lock.js' },
+  { id: 'MISSION_LOCAL_EVD', rel: 'tests/eos-p4-mission-local-evd-seal.test.js' }
 ]);
 
 /**
@@ -47,10 +66,10 @@ export const DOCTOR_WIRING_PATHS = Object.freeze([
  * @param {boolean} [options.skipMcpFile]
  * @param {boolean} [options.skipPurpose]
  * @param {boolean} [options.skipRuntimeEngines]
- * @param {boolean} [options.skipPostFusion] skip N3 fusion-era path checks
+ * @param {boolean} [options.skipPostFusion] skip N3/Q3 fusion-era path checks
  * @param {boolean} [options.skipDoctorWiring] skip bin/module self-wiring checks
  * @param {string} [options.workspaceMcpPath]
- * @returns {{ ok: boolean, root: string, homedir_leak: boolean, checks: object[], failed: string[] }}
+ * @returns {{ ok: boolean, root: string, homedir_leak: boolean, checks: object[], failed: string[], nonClaims: string[] }}
  */
 export function runOperatorDoctor(options = {}) {
   const root = path.resolve(options.root || process.cwd());
@@ -136,7 +155,7 @@ export function runOperatorDoctor(options = {}) {
     );
   }
 
-  // N3 — post-fusion critical presence (fail-closed). Existence/light only; no network/writes.
+  // N3/Q3 — post-fusion + Ladder4 critical presence (fail-closed). Existence/light only; no network/writes.
   if (!options.skipPostFusion) {
     for (const item of POST_FUSION_CRITICAL_PATHS) {
       const abs = path.join(root, item.rel);
@@ -191,11 +210,13 @@ export function runOperatorDoctor(options = {}) {
     root,
     homedir_leak: leak,
     checks,
-    failed
+    failed,
+    nonClaims: [...DOCTOR_NON_CLAIMS]
   };
 }
 
 export function formatDoctorReport(report) {
+  const nonClaims = report.nonClaims || DOCTOR_NON_CLAIMS;
   const lines = [
     '================================================================================',
     'EOS DOCTOR — local governed control-plane check',
@@ -203,8 +224,12 @@ export function formatDoctorReport(report) {
     `ROOT: ${report.root}`,
     `HOMEDIR_LEAK: ${report.homedir_leak ? 'YES' : 'NO'}`,
     `VERDICT: ${report.ok ? 'PASS' : 'FAIL'}`,
+    'NON-CLAIM: doctor ≠ verify:strict (presence/light OBSERVED only)',
     '',
     ...report.checks.map((c) => `[${c.ok ? 'PASS' : 'FAIL'}] ${c.id} — ${c.detail}`),
+    '',
+    'NON-CLAIMS:',
+    ...nonClaims.map((n) => `  - ${n}`),
     '================================================================================'
   ];
   return lines.join('\n');
@@ -232,7 +257,7 @@ export function runOperatorDoctorCli(argv = [], options = {}) {
   }
   if (help) {
     return {
-      output: 'eos-doctor read-only local check. Flags: --root --json --help\n',
+      output: 'eos-doctor read-only local check. Flags: --root --json --help\nNON-CLAIM: doctor ≠ verify:strict.\n',
       exitCode: 0,
       report: null
     };

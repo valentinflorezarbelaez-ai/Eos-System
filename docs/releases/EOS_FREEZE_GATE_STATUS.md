@@ -261,6 +261,14 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - DEFER dirty unstaged unchanged
 
+
+## Q3 Doctor / fusion-light Ladder4 surfaces (2026-09-09)
+
+- Report: `docs/releases/EOS_Q3_DOCTOR_FUSION_LIGHT_L4_SURFACES_2026-09-09.md`
+- Branch: `cursor/eos-q3-doctor-fusion-light-l4-surfaces` - push/compare only; do not merge without PO
+- operator-doctor POST_FUSION observes HOOKS_INSTALL + MCP_CATALOG + MISSION_LOCAL_EVD; fusion-light optional subset + light exports
+- NON-CLAIM doctor != verify:strict; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`

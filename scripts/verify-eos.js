@@ -92,6 +92,8 @@ const REQUIRED_PATHS = [
   'scripts/lib/independent-fusion-light.js',
   'tests/eos-n5-independent-fusion-light.test.js',
   'docs/releases/EOS_N5_INDEPENDENT_VERIFIER_FUSION_LIGHT_2026-09-08.md',
+  'tests/eos-q3-doctor-fusion-light-l4-surfaces.test.js',
+  'docs/releases/EOS_Q3_DOCTOR_FUSION_LIGHT_L4_SURFACES_2026-09-09.md',
   'scripts/lib/sentinel-fdir-lock.js',
   'tests/eos-n6-sentinel-fdir-lock.test.js',
   'docs/releases/EOS_N6_SENTINEL_FDIR_STRICT_LOCK_2026-09-08.md',
