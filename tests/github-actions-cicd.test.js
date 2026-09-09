@@ -81,3 +81,11 @@ test('GHA-007: extract-json-payload strips CLI banners into valid JSON', async (
   assert.deepEqual(JSON.parse(payload), [{ provingId: 'PROVING-001' }]);
   assert.throws(() => extractJsonPayload('no payload here'), /No JSON payload/);
 });
+
+test('GHA-008: CI workflow includes seam-pack GameDay / ROI pack', () => {
+  const yaml = readWorkflow(rootDir, '.github/workflows/ci.yml');
+  assert.match(yaml, /^  seam-pack:/m);
+  assert.match(yaml, /gameday:long-run/);
+  assert.match(yaml, /test:roi3/);
+  assert.match(yaml, /test:m4/);
+});

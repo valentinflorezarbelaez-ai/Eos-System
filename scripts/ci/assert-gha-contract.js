@@ -134,6 +134,9 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'evaluate:release', 'CI release engine');
         assertContains(yaml, 'verify:independent', 'CI independent harness');
         assertContains(yaml, 'audit:system', 'CI system audit');
+        assertContains(yaml, 'gameday:long-run', 'CI GameDay long-run');
+        assertContains(yaml, 'seam-pack', 'CI seam-pack job');
+        assertContains(yaml, 'test:roi3', 'CI ROI seam pack');
       } catch (err) {
         failures.push(err.message);
       }

@@ -33,7 +33,7 @@ EOS has local verification (`scripts/verify-eos.js`, `node --test`) and release-
 
 ```text
 GitHub event
-  → .github/workflows/ci.yml          (verify | test | syntax | governance-gates)
+  → .github/workflows/ci.yml          (verify | test | syntax | governance-gates | seam-pack)
   → .github/workflows/cd-release-gate.yml  (re-run CI commands + persist evidence)
   → docs/governance/CI_CD_CONTRACT.json    (machine-readable policy)
   → scripts/ci/assert-gha-contract.js      (local + CI contract check)
