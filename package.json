@@ -76,7 +76,8 @@
     "test:m1": "node --test tests/eos-m1-strict-verify-cp-lock.test.js",
     "test:m2": "node --test tests/pre-push-main-guard.test.js",
     "test:m3": "node --test tests/eos-m3-hud-verify-surfaces.test.js",
-    "test:m4": "node --test tests/eos-m4-release-ssot-tip.test.js"
+    "test:m4": "node --test tests/eos-m4-release-ssot-tip.test.js",
+    "test:m5": "node --test tests/eos-m5-ci-gameday-seam-pack.test.js"
   },
   "keywords": [
     "eos",

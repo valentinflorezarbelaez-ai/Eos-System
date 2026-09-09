@@ -77,6 +77,16 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 
+## M5 CI GameDay / ROI seam pack (2026-09-08)
+
+- Report: `docs/releases/EOS_M5_CI_GAMEDAY_ROI_SEAM_PACK_2026-09-08.md`
+- Branch: `cursor/eos-m5-ci-gameday-seam-pack` — push/compare only; do not merge without PO
+- CI adds fail-closed job `seam-pack` (`CI GameDay / ROI seam pack`): CI-safe `gameday:long-run` (default N) + named `test:roi3`..`test:roi6` / `test:m1`..`test:m4`; Fundacion delta-0 on every job
+- **HITL caveat:** required-check list may need update to include the 5th check name; do not invent GH enforcement (still RULE_CREATED_NOT_ENFORCED on Free private)
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- OBSERVED branch-start main tip: `444dfc6e69d466e035acefb84ea815914c8ffde2` (M4 #42); freeze `main_tip` SSOT left at M4 pin unless a later tip-refresh mission updates both freeze + matrix together
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`

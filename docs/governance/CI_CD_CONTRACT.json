@@ -46,14 +46,29 @@
     "ci": {
       "name": "EOS CI",
       "path": ".github/workflows/ci.yml",
-      "jobs": ["verify", "test", "syntax", "governance-gates"],
-      "on": ["push", "pull_request", "workflow_dispatch"]
+      "jobs": [
+        "verify",
+        "test",
+        "syntax",
+        "governance-gates",
+        "seam-pack"
+      ],
+      "on": [
+        "push",
+        "pull_request",
+        "workflow_dispatch"
+      ]
     },
     "cd_release_gate": {
       "name": "EOS CD Release Gate",
       "path": ".github/workflows/cd-release-gate.yml",
-      "jobs": ["release-gate"],
-      "on": ["workflow_dispatch", "push"],
+      "jobs": [
+        "release-gate"
+      ],
+      "on": [
+        "workflow_dispatch",
+        "push"
+      ],
       "production_deploy": false,
       "requires_env": {
         "EOS_PRODUCTION_DEPLOY": "false",

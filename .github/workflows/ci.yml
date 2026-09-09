@@ -1,5 +1,5 @@
 name: EOS CI
-# Fail-closed required checks: verify + test (+ syntax, governance-gates). No continue-on-error.
+# Fail-closed required checks: verify + test + syntax + governance-gates + seam-pack. No continue-on-error.
 
 on:
   push:
@@ -104,6 +104,35 @@ jobs:
         run: npm run verify:independent
       - name: System-wide integrity audit
         run: npm run audit:system
+      - name: Fundacion freeze (delta 0)
+        run: |
+          git diff --exit-code -- Fundacion
+          extra="$(git ls-files --others --exclude-standard -- Fundacion || true)"
+          test -z "$extra"
+
+  seam-pack:
+    name: CI GameDay / ROI seam pack
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: CI-safe long-run GameDay (default N)
+        run: npm run gameday:long-run
+      - name: Named ROI / Ladder seam pack
+        run: |
+          npm run test:roi3
+          npm run test:roi4
+          npm run test:roi5
+          npm run test:roi6
+          npm run test:m1
+          npm run test:m2
+          npm run test:m3
+          npm run test:m4
       - name: Fundacion freeze (delta 0)
         run: |
           git diff --exit-code -- Fundacion
