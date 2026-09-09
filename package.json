@@ -83,7 +83,8 @@
     "test:g7": "node --test tests/eos-g7-evd-custody-seal-path.test.js",
     "test:n2": "node --test tests/eos-n2-evd-scripts-bin-seal.test.js",
     "eos:doctor": "node bin/eos-doctor.js",
-    "test:n3": "node --test tests/eos-n3-operator-doctor.test.js"
+    "test:n3": "node --test tests/eos-n3-operator-doctor.test.js",
+    "test:n4": "node --test tests/eos-n4-hud-fusion-cp-lock.test.js"
   },
   "keywords": [
     "eos",

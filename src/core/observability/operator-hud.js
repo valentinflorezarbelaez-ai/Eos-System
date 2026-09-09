@@ -30,11 +30,15 @@ export const VERIFY_SURFACE_TYPES = Object.freeze([
   // Post-fusion verify surfaces (exact type strings from verify-eos.js / fusion-cp-lock.js)
   'evidence-custody',
   'engram-contract',
+  'evd-seal-path',
   'fusion-cp-lock',
   'fusion-cp-write-barrier',
   'fusion-cp-mission-loop',
   'fusion-cp-mcp-ssot',
-  'fusion-cp-gameday'
+  'fusion-cp-gameday',
+  // N4 post-G7/M6 fusion-cp light smoke types
+  'fusion-cp-coherence',
+  'fusion-cp-pre-push'
 ]);
 
 const CANONICAL_E2E_REL = 'docs/evidence/canonical_e2e_openspec_tdd_2026';
