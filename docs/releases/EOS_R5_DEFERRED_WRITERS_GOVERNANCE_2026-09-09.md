@@ -95,3 +95,17 @@ Tras push de esta rama (merge requiere PO / HITL):
 - `epistemic-evidence-engine.js` `writeFileSync` ~314/349
 - `ledger-recovery.js` `writeFileSync` ~30
 - other non-selected `src/core` writers (inventario §3)
+
+---
+
+## 8. CI hotfix — TR-01 live-suite ceiling (post-push)
+
+**Root cause:** R5 añadió `tests/eos-r5-deferred-writers-governance.test.js` (CI-visible, `test:r5` + `verify:strict`). `discoverTestFiles(tests/)` pasó de 119 → **120**, rompiendo TR-01 (`files.length < 120` fijado en ROI2).
+
+**Decisión (producción-correcta):** el suite R5 **debe** contar como live (contrato Ladder 6 / gobernanza). No excluir ni marcar como no-live. Actualizar techo TR-01 `< 120` → `< 130` con evidencia: headroom mínimo para locks P/Q/R intencionales; **no** es reversión de cuarentena ROI2; el candado duro permanece.
+
+**Evidence:**
+- `node --test tests/test-runner.test.js` → TR-01 PASS (discovered 120, ceiling 130)
+- `npm run test:r5` / `npm run verify:strict` → deben seguir verdes
+
+**NON-CLAIM:** bump de techo ≠ debilitar ROI2; ≠ reintroducir harnesses de research/canary.

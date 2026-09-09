@@ -64,3 +64,11 @@
 - [x] Commit R5 artifacts only (do not stage DEFER dirty)
 - [x] Push branch `cursor/eos-r5-deferred-writers-governance`
 - [x] Do NOT open/merge PR
+
+## Step 11: CI hotfix TR-01 slim ceiling (post #72 CI fail)
+
+- [x] Root cause: R5 live suite pushed discover count to 120 vs TR-01 `< 120`
+- [x] Update `tests/test-runner.test.js` ceiling to `< 130` with Ladder6 intentional P/Q/R evidence (not ROI2 reversal)
+- [x] Document in Spanish evidence §8
+- [x] Re-verify `node --test tests/test-runner.test.js`, `npm run test:r5`, `npm run verify:strict`
+- [x] Commit + push same branch (updates PR #72); no new PR; no merge

@@ -8,8 +8,13 @@ describe('EOS Test Runner: Discovery and Filtering', () => {
     const testsDir = path.resolve(process.cwd(), 'tests');
     const files = discoverTestFiles(testsDir);
     assert.ok(Array.isArray(files), 'Must return an array of file paths');
+    // Floor: ROI2 engine quarantine removed research/canary harness suites.
     assert.ok(files.length >= 80, `Expected >= 80 live test files after ROI2 engine quarantine, discovered ${files.length}`);
-    assert.ok(files.length < 120, `Live tests/ should stay slim after ROI2; discovered ${files.length}`);
+    // Ceiling: stay slim vs pre-ROI2 bloat; Ladder 6 intentional P/Q/R governance
+    // suites (incl. eos-r5-deferred-writers-governance.test.js) are CI-visible and
+    // count as live — bump documented in EOS_R5 evidence / OpenSpec tasks (not a
+    // quarantine reversal). Hard lock remains; do not inflate casually.
+    assert.ok(files.length < 130, `Live tests/ should stay slim after ROI2 (+ Ladder6 intentional P/Q/R locks); discovered ${files.length}`);
     assert.ok(files.every(f => f.endsWith('.test.js')), 'All discovered files must end with .test.js');
   });
 
