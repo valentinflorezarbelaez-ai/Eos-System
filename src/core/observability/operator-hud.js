@@ -466,6 +466,35 @@ function observeCanonicalE2e(baseDir) {
   };
 }
 
+
+function observeDoctorWiring(baseDir) {
+  const binRel = 'bin/eos-doctor.js';
+  const moduleRel = 'src/core/runtime/operator-doctor.js';
+  const bin_present = relExists(baseDir, binRel);
+  const module_present = relExists(baseDir, moduleRel);
+  let script_present = false;
+  let script_value = null;
+  const pkgPath = path.join(baseDir, 'package.json');
+  if (fs.existsSync(pkgPath)) {
+    try {
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+      script_value = (pkg.scripts && (pkg.scripts['eos:doctor'] || pkg.scripts.doctor)) || null;
+      script_present = Boolean(script_value);
+    } catch {
+      script_present = false;
+    }
+  }
+  const complete = bin_present && module_present && script_present;
+  return {
+    epistemic: complete ? HUD_EPISTEMIC.OBSERVED : HUD_EPISTEMIC.NOT_VERIFIED,
+    bin_present,
+    module_present,
+    script_present,
+    script: script_value,
+    sources: [binRel, moduleRel, 'package.json']
+  };
+}
+
 export function collectOperatorHud(options = {}) {
   const baseDir = options.baseDir || process.cwd();
   const skipVerify = options.skipVerify === true;
@@ -503,6 +532,8 @@ export function collectOperatorHud(options = {}) {
   assertCoherenceMapComplete();
   const mission_os_coherence = getMissionOsCoherenceMap();
 
+  const doctor = observeDoctorWiring(baseDir);
+
   const freeze_tip = observeFreezeTipVsHead(baseDir, {
     liveHead: options.liveHead || git.head_full || git.head_short || null,
     execGit: options.execGit
@@ -525,7 +556,8 @@ export function collectOperatorHud(options = {}) {
     readiness,
     error_budget,
     evidence,
-    file_claims
+    file_claims,
+    doctor
   };
 }
 
@@ -623,6 +655,13 @@ export function renderOperatorHud(snapshot) {
   lines.push('             next_gap: ' + (gap.id || 'n/a') + ' ' + (gap.status || '') + ' — ' + (gap.title || ''));
 
   lines.push('------------------------------------------------------------');
+
+  const doctor = snapshot.doctor || {};
+  lines.push('------------------------------------------------------------');
+  lines.push('DOCTOR      ' + (doctor.epistemic || HUD_EPISTEMIC.NOT_VERIFIED) + '  bin=' + (doctor.bin_present ? 'yes' : 'no') + '  module=' + (doctor.module_present ? 'yes' : 'no') + '  script=' + (doctor.script_present ? 'yes' : 'no'));
+  lines.push('             eos-doctor wiring OBSERVED — existence only, not a verify substitute');
+  lines.push('             sources: ' + ((doctor.sources || []).join(', ') || 'n/a'));
+
   lines.push('FILE CLAIMS  DATED_FILE_CLAIM (not live SSOT)');
   if (claims.length === 0) {
     lines.push('             none');

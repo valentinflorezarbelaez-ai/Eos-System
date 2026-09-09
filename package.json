@@ -9,7 +9,8 @@
     "eos-sentinel": "./bin/eos-sentinel.js",
     "eos-orchestrator": "./bin/eos-orchestrator.js",
     "eos-hud": "./bin/eos-hud.js",
-    "eos-top": "./bin/eos-top.js"
+    "eos-top": "./bin/eos-top.js",
+    "eos-doctor": "./bin/eos-doctor.js"
   },
   "scripts": {
     "test": "node scripts/test-runner.js",
@@ -80,7 +81,9 @@
     "test:m5": "node --test tests/eos-m5-ci-gameday-seam-pack.test.js",
     "test:m6": "node --test tests/eos-m6-mission-os-coherence.test.js",
     "test:g7": "node --test tests/eos-g7-evd-custody-seal-path.test.js",
-    "test:n2": "node --test tests/eos-n2-evd-scripts-bin-seal.test.js"
+    "test:n2": "node --test tests/eos-n2-evd-scripts-bin-seal.test.js",
+    "eos:doctor": "node bin/eos-doctor.js",
+    "test:n3": "node --test tests/eos-n3-operator-doctor.test.js"
   },
   "keywords": [
     "eos",
