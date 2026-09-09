@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "EOSComplexityBudgetSchema",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "budgets": {
     "max_engines": 15,
     "max_state_machines": 10,
@@ -11,9 +11,35 @@
   "current_usage": {
     "engines": 13,
     "state_machines": 7,
-    "schemas": 33,
+    "schemas": 35,
     "governance_layers": 7
   },
+  "counting_rule": {
+    "schemas": {
+      "id": "recursive_docs_schemas_json",
+      "glob": "docs/schemas/**/*.json",
+      "description": "Count every *.json file under docs/schemas/ recursively (includes docs/schemas/local/). Locked by Ladder 5 Q4 honesty recount.",
+      "breakdown_at_lock": {
+        "top_level": 32,
+        "local": 3,
+        "recursive_total": 35
+      },
+      "alternatives_not_selected": {
+        "top_level_only": "docs/schemas/*.json excluding subdirs — would yield 32 (WITHIN_BUDGET); rejected because local/ schemas are still under docs/schemas and were part of the K4 discrepancy probe",
+        "registered": "explicit registry list — no maintained SSOT registry for schema budget; not selected"
+      }
+    },
+    "status_rule": {
+      "WITHIN_BUDGET": "current_usage.schemas < budgets.max_schemas",
+      "AT_CEILING": "current_usage.schemas === budgets.max_schemas",
+      "OVER": "current_usage.schemas > budgets.max_schemas"
+    }
+  },
   "optimization_target": "VALUE / COMPLEXITY",
-  "status": "WITHIN_BUDGET"
+  "status": "AT_CEILING",
+  "honesty_lock": {
+    "ladder": "Ladder 5 Q4 / K4",
+    "date": "2026-09-09",
+    "note": "Pre-Q4 claim schemas:33 WITHIN_BUDGET was dishonest vs recursive filesystem count 35. Q4 locks recursive rule + AT_CEILING. Optional PO quarantine of P6 candidates NOT executed (no paths named)."
+  }
 }
