@@ -9,6 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 
 const Q_SEAM = ['test:q2', 'test:q3', 'test:q4', 'test:q5', 'test:q6'];
+const R_SEAM = ['test:r4', 'test:r5'];
 const P_SEAM = ['test:p2', 'test:p3', 'test:p4', 'test:p5', 'test:p6'];
 
 test('R2: CI workflow seam-pack runs Ladder5 Q-tests (q2..q6) and keeps p2..p6', () => {
@@ -21,7 +22,8 @@ test('R2: CI workflow seam-pack runs Ladder5 Q-tests (q2..q6) and keeps p2..p6',
     'test:m1', 'test:m2', 'test:m3', 'test:m4',
     'test:n2', 'test:n3', 'test:n4', 'test:n5', 'test:n6',
     ...P_SEAM,
-    ...Q_SEAM
+    ...Q_SEAM,
+    ...R_SEAM
   ]) {
     assert.ok(yaml.includes(s), 'ci.yml missing ' + s);
   }

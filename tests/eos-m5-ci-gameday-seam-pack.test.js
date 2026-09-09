@@ -13,7 +13,7 @@ test('M5: CI workflow declares seam-pack GameDay / ROI pack', () => {
   assert.match(yaml, /^  seam-pack:/m);
   assert.match(yaml, /name:\s*CI GameDay \/ ROI seam pack/);
   assert.match(yaml, /gameday:long-run/);
-  for (const s of ['test:roi3', 'test:roi4', 'test:roi5', 'test:roi6', 'test:m1', 'test:m2', 'test:m3', 'test:m4', 'test:n2', 'test:n3', 'test:n4', 'test:n5', 'test:n6', 'test:p2', 'test:p3', 'test:p4', 'test:p5', 'test:p6', 'test:q2', 'test:q3', 'test:q4', 'test:q5', 'test:q6']) {
+  for (const s of ['test:roi3', 'test:roi4', 'test:roi5', 'test:roi6', 'test:m1', 'test:m2', 'test:m3', 'test:m4', 'test:n2', 'test:n3', 'test:n4', 'test:n5', 'test:n6', 'test:p2', 'test:p3', 'test:p4', 'test:p5', 'test:p6', 'test:q2', 'test:q3', 'test:q4', 'test:q5', 'test:q6', 'test:r4', 'test:r5']) {
     assert.ok(yaml.includes(s), 'ci.yml missing ' + s);
   }
   assert.ok(yaml.includes('Fundacion'), 'seam-pack must keep Fundacion freeze');
