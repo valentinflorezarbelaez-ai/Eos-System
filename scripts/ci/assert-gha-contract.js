@@ -144,6 +144,11 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:p4', 'CI Ladder4 P4 mission-local EVD');
         assertContains(yaml, 'test:p5', 'CI Ladder4 P5 MCP catalog');
         assertContains(yaml, 'test:p6', 'CI Ladder4 P6 complexity inventory');
+        assertContains(yaml, 'test:q2', 'CI Ladder5 Q2 seam-pack lock');
+        assertContains(yaml, 'test:q3', 'CI Ladder5 Q3 doctor/fusion-light');
+        assertContains(yaml, 'test:q4', 'CI Ladder5 Q4 complexity recount');
+        assertContains(yaml, 'test:q5', 'CI Ladder5 Q5 mission-artifact');
+        assertContains(yaml, 'test:q6', 'CI Ladder5 Q6 P6 inventory lock');
       } catch (err) {
         failures.push(err.message);
       }

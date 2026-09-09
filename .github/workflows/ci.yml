@@ -123,7 +123,7 @@ jobs:
           node-version: '22'
       - name: CI-safe long-run GameDay (default N)
         run: npm run gameday:long-run
-      - name: Named ROI / Ladder seam pack (incl. N2-N6 + P2/P3/P4-P6)
+      - name: Named ROI / Ladder seam pack (incl. N2-N6 + P2/P3/P4-P6 + Q2-Q6)
         run: |
           npm run test:roi3
           npm run test:roi4
@@ -143,6 +143,11 @@ jobs:
           npm run test:p4
           npm run test:p5
           npm run test:p6
+          npm run test:q2
+          npm run test:q3
+          npm run test:q4
+          npm run test:q5
+          npm run test:q6
       - name: Fundacion freeze (delta 0)
         run: |
           git diff --exit-code -- Fundacion
