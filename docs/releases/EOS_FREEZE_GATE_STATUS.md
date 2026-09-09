@@ -269,6 +269,18 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - operator-doctor POST_FUSION observes HOOKS_INSTALL + MCP_CATALOG + MISSION_LOCAL_EVD; fusion-light optional subset + light exports
 - NON-CLAIM doctor != verify:strict; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged
 
+
+## Q4 Complexity budget recount / honesty lock (2026-09-09)
+
+- Report: `docs/releases/EOS_Q4_COMPLEXITY_BUDGET_RECOUNT_2026-09-09.md`
+- Branch: `cursor/eos-q4-complexity-budget-recount` — push/compare only; do not merge without PO
+- Locks schema counting rule `recursive_docs_schemas_json` (`docs/schemas/**/*.json`); `current_usage.schemas` **35** / `max_schemas` **35** → status **AT_CEILING** (was dishonest 33/WITHIN_BUDGET)
+- `test:q4` fail-closed if budget schemas count ≠ recursive filesystem count
+- NON-CLAIM: optional PO quarantine of P6 candidates **NOT executed** (no paths named by PO); no silent delete
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- Freeze `main_tip` pin **not** moved in Q4 (tip refresh is separate mission)
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`
