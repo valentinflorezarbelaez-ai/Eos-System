@@ -321,6 +321,15 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - Prior Q1 tip pin `74332e2938090e1e8e64d41310a46d2a722bf741` retired (historical)
 
+## R2 CI seam-pack Ladder5 Q-tests (2026-09-09)
+
+- Report: `docs/releases/EOS_R2_CI_SEAM_PACK_Q_TESTS_2026-09-09.md`
+- Branch: `cursor/eos-r2-ci-seam-pack-q-tests` ? push/compare only; do not merge without PO
+- seam-pack adds CI-safe q2..q6 (keep p2..p6 + prior n/m/roi/gameday packs)
+- No soak; no new GH billing / enforcement claims; Fundacion Delta=0
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- DEFER dirty unstaged unchanged
+
 ## Historical publish notes
 
 - Prior main tip at original freeze publish: `78b28d61c0c92136b8bb078bf36b1ba0930549cf`
