@@ -85,3 +85,27 @@ None. No secrets (`.env`/tokens) force-added. No Fundacion paths touched.
 - No merge to `main`
 - No `PRODUCTION_READY=YES`
 - No Fundacion modifications
+
+---
+
+## Post-ladder addendum (2026-09-08, after ROI1–6 closed on main@0416d20)
+
+**Branch:** `cursor/post-ladder-deferred-hygiene`  
+**Companion note:** `docs/releases/POST_LADDER_HYGIENE_2026-09-08.md`  
+**Fundacion:** Δ=0 · **PRODUCTION_READY:** NO
+
+Re-inspected the DEFER set still dirty on the local clone after ladder merge. **No path promoted to TRACK** except this addendum + the companion hygiene note.
+
+| Path | Reconfirm |
+| --- | --- |
+| `ai-specs/agents/backend-developer.md` | DEFER — foreign Prisma/DDD stub |
+| `ai-specs/agents/frontend-developer.md` | DEFER — foreign React Bootstrap stub |
+| `ai-specs/agents/product-strategy-analyst.md` | DEFER — generic strategist stub |
+| `docs/evidence/EVD-0060.json` | DEFER — Fuerza RISK/FAIL re-hash only |
+| `docs/reports/executive/EXECUTIVE_DOSSIER_PRJ-APP-FUERZA.md` | DEFER — dossier timestamp/module churn |
+| `docs/audits/atp_apple_light.png` | DEFER — unreferenced ~387KB binary |
+| `docs/audits/atp_tidal_dark.png` | DEFER — unreferenced ~426KB binary |
+| `EOS-Lab/Transmission-Live/` | DEFER — lab audio/visualizer experiment |
+| `archive/quarantine/docs/evolution/` *(new porcelain since ROI1)* | DEFER — KAIZEN runtime dumps; not ROI2 engine-quarantine docs |
+
+ARCHIVE / DISCARD counts unchanged (0). No secrets force-added.
