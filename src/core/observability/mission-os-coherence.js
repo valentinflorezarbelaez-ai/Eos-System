@@ -110,11 +110,19 @@ export const MISSION_LOOP_TO_ATS = Object.freeze({
   })
 });
 
-export const DEFERRED_NEXT_GAP = Object.freeze({
+export const CLOSED_GAP_G7 = Object.freeze({
   id: 'G7',
   title: 'EVD write paths outside ContractEvidenceSealer may skip custody',
-  status: 'DEFERRED',
-  note: 'Deferred next gap after Ladder 2 M6 ? not implemented in this change set'
+  status: 'CLOSED',
+  note: 'Closed via sealEvd SSOT + fail-closed audit (docs/releases/EOS_G7_EVD_CUSTODY_SEAL_PATH_2026-09-08.md)'
+});
+
+export const DEFERRED_NEXT_GAP = Object.freeze({
+  id: null,
+  title: null,
+  status: 'NONE',
+  note: 'G7 closed; no deferred next gap declared in this change set',
+  closed_gap: CLOSED_GAP_G7
 });
 
 /**
@@ -144,6 +152,7 @@ export function getMissionOsCoherenceMap() {
     unmapped_ats_note:
       'ATS control states (PAUSED / BLOCKED / FAILED / CANCELLED) are ATS-only; the mission loop does not invent twin stages for them.',
     deferred_next_gap: DEFERRED_NEXT_GAP,
+    closed_gap_g7: CLOSED_GAP_G7,
     docs: 'docs/orchestration/MISSION_OS_ATS_MISSION_LOOP_COHERENCE.md'
   };
 }

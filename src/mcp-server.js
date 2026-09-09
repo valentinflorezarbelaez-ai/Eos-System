@@ -6,6 +6,8 @@
  */
 
 import fs from 'node:fs';
+import { sealEvd } from './core/sdd/evd-seal-path.js';
+import { EvidenceCustody } from './core/sdd/evidence-custody.js';
 import os from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -2653,11 +2655,14 @@ switch (name) {
             payload
           };
           if (!record.id) delete record.id;
-          const dir = path.join(this.baseDir, 'docs', 'evidence');
-          fs.mkdirSync(dir, { recursive: true });
-          const file = path.join(dir, `${evidenceId}.json`);
-          fs.writeFileSync(file, JSON.stringify(record, null, 2), 'utf8');
-          return { evidence: record, path: file, sha256 };
+          const sealed = sealEvd({
+            controlPlaneRoot: this.baseDir,
+            evidenceDir: path.join(this.baseDir, 'docs', 'evidence'),
+            record: { ...record, id: record.id || evidenceId },
+            custody: new EvidenceCustody({ controlPlaneRoot: this.baseDir }),
+            dryRun: false
+          });
+          return { evidence: sealed.record, path: sealed.path, sha256, custody_event: sealed.custody_event };
         });
 
       default:
