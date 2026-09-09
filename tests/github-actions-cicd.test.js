@@ -90,4 +90,5 @@ test('GHA-008: CI workflow includes seam-pack GameDay / ROI pack', () => {
   assert.match(yaml, /test:m4/);
   assert.match(yaml, /test:n2/);
   assert.match(yaml, /test:n6/);
+  assert.match(yaml, /test:p3/);
 });

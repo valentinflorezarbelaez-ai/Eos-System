@@ -87,7 +87,8 @@
     "test:n4": "node --test tests/eos-n4-hud-fusion-cp-lock.test.js",
     "test:n5": "node --test tests/eos-n5-independent-fusion-light.test.js",
     "test:n6": "node --test tests/eos-n6-sentinel-fdir-lock.test.js",
-    "test:p2": "node --test tests/eos-p2-ci-seam-pack-n2-n6.test.js"
+    "test:p2": "node --test tests/eos-p2-ci-seam-pack-n2-n6.test.js",
+    "test:p3": "node --test tests/eos-p3-hooks-install-smoke.test.js"
   },
   "keywords": [
     "eos",

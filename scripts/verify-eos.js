@@ -12,6 +12,7 @@ import { auditCanonicalEvdWritePaths } from '../src/core/sdd/evd-seal-path.js';
 import { verifyEngramContract } from '../src/core/memory/engram-contract.js';
 import { auditFusionControlPlane, FUSION_CP_REQUIRED_PATHS } from './lib/fusion-cp-lock.js';
 import { auditSentinelFdir, SENTINEL_FDIR_REQUIRED_PATHS } from './lib/sentinel-fdir-lock.js';
+import { auditHooksInstallSurface, HOOKS_INSTALL_REQUIRED_PATHS } from './lib/hooks-install-smoke.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -93,6 +94,10 @@ const REQUIRED_PATHS = [
   'scripts/lib/sentinel-fdir-lock.js',
   'tests/eos-n6-sentinel-fdir-lock.test.js',
   'docs/releases/EOS_N6_SENTINEL_FDIR_STRICT_LOCK_2026-09-08.md',
+  'scripts/install-git-hooks.js',
+  'scripts/lib/hooks-install-smoke.js',
+  'tests/eos-p3-hooks-install-smoke.test.js',
+  'docs/releases/EOS_P3_HOOKS_INSTALL_SMOKE_2026-09-08.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -359,7 +364,8 @@ const REQUIRED_PATHS = [
   // M1 fusion control-plane lock (Ladder 2 G1)
   ...FUSION_CP_REQUIRED_PATHS,
   // N6 Sentinel/FDIR strict-verify lock (Ladder 3 H6)
-  ...SENTINEL_FDIR_REQUIRED_PATHS
+  ...SENTINEL_FDIR_REQUIRED_PATHS,
+  ...HOOKS_INSTALL_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -999,6 +1005,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/sentinel-fdir-lock.js',
         message: 'Sentinel/FDIR lock audit failed: ' + err.message,
         type: 'sentinel-fdir-lock'
+      });
+    }
+
+    // 3g6. P3 hooks-install CI/verify smoke (temp .git/hooks; never mutates checkout .git)
+    try {
+      const hooksInstall = auditHooksInstallSurface(rootDir);
+      for (const c of hooksInstall.checks) {
+        report.checks.push(c);
+      }
+      for (const f of hooksInstall.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/hooks-install-smoke.js',
+        message: 'Hooks-install smoke audit failed: ' + err.message,
+        type: 'hooks-install-lock'
       });
     }
 
