@@ -10,6 +10,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { sealEvd } from '../src/core/sdd/evd-seal-path.js';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -100,10 +101,13 @@ try {
   report.error = err.message;
 }
 
-const outDir = path.join(REPO_ROOT, 'docs', 'evidence');
-fs.mkdirSync(outDir, { recursive: true });
-const outFile = path.join(outDir, 'EVD-FINAL-READINESS-CLEAN-CLONE.json');
-fs.writeFileSync(outFile, JSON.stringify(report, null, 2));
+report.id = 'EVD-FINAL-READINESS-CLEAN-CLONE';
+// N2: canonical docs/evidence write MUST go through sealEvd SSOT
+const sealed = sealEvd({
+  controlPlaneRoot: REPO_ROOT,
+  record: report
+});
+const outFile = sealed.path;
 console.log(JSON.stringify(report, null, 2));
 console.log(`\nWrote ${outFile}`);
 process.exit(report.verdict === 'PASS' ? 0 : 1);

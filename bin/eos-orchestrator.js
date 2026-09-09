@@ -21,6 +21,7 @@ import {
   parseOrchestrateArgs,
   PIPELINE_PHASES
 } from '../src/core/runtime/project-pipeline-runner.js';
+import { sealEvd } from '../src/core/sdd/evd-seal-path.js';
 
 const CONFIG = {
   MAX_REPAIR_ATTEMPTS: 5,
@@ -104,22 +105,23 @@ export class EosLevel3Orchestrator {
 
   /**
    * Genera el recibo inmutable con firma SHA-256 en docs/evidence/.
+   * N2: routes through sealEvd SSOT + EvidenceCustody.
    */
   generateEvidence(evidenceId, data) {
-    if (!fs.existsSync(CONFIG.EVIDENCE_DIR)) {
-      fs.mkdirSync(CONFIG.EVIDENCE_DIR, { recursive: true });
-    }
-
-    const evidencePath = path.join(CONFIG.EVIDENCE_DIR, `${evidenceId}.json`);
     const payload = {
+      id: evidenceId,
       evidenceId,
       timestamp: new Date().toISOString(),
       digest: `sha256-${crypto.createHash('sha256').update(JSON.stringify(data)).digest('hex')}`,
-      data
+      data,
+      status: 'VERIFIED'
     };
 
-    fs.writeFileSync(evidencePath, JSON.stringify(payload, null, 2), 'utf8');
-    console.log(`💾 [EVIDENCIA CERTIFICADA] Recibo guardado en: ${evidencePath}`);
+    const sealed = sealEvd({
+      controlPlaneRoot: process.cwd(),
+      record: payload
+    });
+    console.log(`💾 [EVIDENCIA CERTIFICADA] Recibo guardado en: ${sealed.path}`);
     return payload;
   }
 

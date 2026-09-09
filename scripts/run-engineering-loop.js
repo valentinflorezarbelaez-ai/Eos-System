@@ -7,6 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { MissionRuntime } from '../src/core/runtime/mission-runtime.js';
+import { sealEvd } from '../src/core/sdd/evd-seal-path.js';
 
 export async function runFullEngineeringLoop(options = {}) {
   const baseDir = options.baseDir || process.cwd();
@@ -106,6 +107,7 @@ export async function runFullEngineeringLoop(options = {}) {
 
   // STEP 8: PERSIST MASTER EVIDENCE RECEIPT
   const masterReceipt = {
+    id: 'EVD-ENGINEERING-LOOP-LIVE-001',
     receipt_id: 'EVD-ENGINEERING-LOOP-LIVE-001',
     mission_id: 'MSN-LOOP-LIVE-001',
     status: 'VERIFIED_LOOP_COMPLETE',
@@ -121,10 +123,14 @@ export async function runFullEngineeringLoop(options = {}) {
     timestamp: new Date().toISOString()
   };
 
-  const evidencePath = path.join(baseDir, 'docs/evidence/EVD-ENGINEERING-LOOP-LIVE-001.json');
-  fs.writeFileSync(evidencePath, JSON.stringify(masterReceipt, null, 2), 'utf-8');
+  // N2: canonical docs/evidence write MUST go through sealEvd SSOT
+  const sealed = sealEvd({
+    controlPlaneRoot: baseDir,
+    record: masterReceipt
+  });
+  const evidencePath = sealed.path;
 
-  console.log('================================================================');
+console.log('================================================================');
   console.log('🎉 LOOP ENGINEERING COMPLETADO AL 100% (STATUS: VERIFIED)');
   console.log(`📄 Recibo guardado en: ${evidencePath}`);
   console.log('================================================================\n');

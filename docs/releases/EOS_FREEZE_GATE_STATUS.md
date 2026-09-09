@@ -11,7 +11,7 @@ Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-08 America/Bogota (N1 Ladder3 tip refresh; fusion+ROI1–6 + Ladder2 M1–M6 + G7 + L3 audit closed; PRODUCTION_READY=NO)
+updated_at: 2026-09-08 America/Bogota (N1 tip pin retained; N2 branch note added — see N2 section; PRODUCTION_READY=NO)
 ```
 
 ## Closed on main (fusion + ROI1–6 + Ladder2 M1–M6 + G7 + Ladder3 audit)
@@ -124,6 +124,15 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 - HITL docs list 5th required-check display name `CI GameDay / ROI seam pack` without claiming GH enforcement
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
+
+## N2 EVD scripts+bin seal (2026-09-08)
+
+- Report: `docs/releases/EOS_N2_EVD_SCRIPTS_BIN_SEAL_2026-09-08.md`
+- Branch: `cursor/eos-n2-evd-scripts-bin-seal` — push/compare only; do not merge without PO
+- Extends `auditCanonicalEvdWritePaths` to scan `src/` + `scripts/` + `bin/`; routes L3 suspects through `sealEvd`
+- Known routed writers: `scripts/run-engineering-loop.js`, `bin/eos-orchestrator.js`, `scripts/exam-clean-clone.js`
+- `test:n2` + `test:g7`; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
+- Freeze `main_tip` SSOT unchanged (still N1 pin); this section is branch close-out note only
 
 ## Historical publish notes
 
