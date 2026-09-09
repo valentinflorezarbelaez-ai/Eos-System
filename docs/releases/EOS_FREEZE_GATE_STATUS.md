@@ -65,3 +65,10 @@ External production readiness is explicitly **not** asserted.
 - Branch cursor/roi6-engram-unify — LAST ROI; do not merge; stop after push
 - Canonical local path: .eos/engram/memory.jsonl; external engram MCP PATH remains Golden Path for FTS5
 - PRODUCTION_READY remains NO
+
+## Branch protection HITL (2026-09-08)
+
+- Report: `docs/releases/ROI3_BRANCH_PROTECTION_HITL.md`
+- Status: **RULE_CREATED_NOT_ENFORCED** (Free private) — rule for `main` exists (PR required, status checks + up-to-date ON; force push/deletions OFF; required checks: Workspace verify (strict), Node test suite, JavaScript syntax, Local governance engines)
+- Enforcement inactive until Team/Enterprise (or public — PO only; do not change visibility without PO)
+- PRODUCTION_READY remains **NO**; Fundacion untouched
