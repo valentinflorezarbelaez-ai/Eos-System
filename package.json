@@ -95,7 +95,8 @@
     "test:q2": "node --test tests/eos-q2-ci-seam-pack-p-tests.test.js",
     "test:q3": "node --test tests/eos-q3-doctor-fusion-light-l4-surfaces.test.js",
     "test:q4": "node --test tests/eos-q4-complexity-budget-recount.test.js",
-    "test:q5": "node --test tests/eos-q5-mission-artifact-write-governance.test.js"
+    "test:q5": "node --test tests/eos-q5-mission-artifact-write-governance.test.js",
+    "test:q6": "node --test tests/eos-q6-p6-inventory-verify-lock.test.js"
   },
   "keywords": [
     "eos",
