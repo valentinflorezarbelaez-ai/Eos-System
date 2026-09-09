@@ -1,11 +1,13 @@
 /**
  * @module EvdSealPath
- * @description G7 — SSOT for canonical docs/evidence/EVD-*.json writes.
+ * @description G7/N2 — SSOT for canonical docs/evidence/EVD-*.json writes.
  * Fail-closed: every non-dryRun write MUST advance EvidenceCustody (ROI4 / ADR-0015).
  * No parallel ledger. Reuses EvidenceCustody.sealEvdRecord.
  *
  * Mission-local evidence dirs (e.g. .missions/<id>/evidence) are out of scope;
  * they use mission ledgers, not the control-plane docs/evidence custody chain.
+ *
+ * N2: static audit scans src/ + scripts/ + bin/ (not src-only).
  */
 
 import fs from 'node:fs';
@@ -20,6 +22,9 @@ import { isFundacionPath } from '../write-barrier/paths.js';
 export const CANONICAL_EVD_SEAL_MODULE = 'src/core/sdd/evd-seal-path.js';
 
 export const CANONICAL_EVD_SEAL_MODULES = Object.freeze([CANONICAL_EVD_SEAL_MODULE]);
+
+/** Roots scanned by auditCanonicalEvdWritePaths (N2 honest scope). */
+export const EVD_AUDIT_SCAN_ROOTS = Object.freeze(['src', 'scripts', 'bin']);
 
 /**
  * Explicit DENY for untracked / bypass EVD writes that skip custody.
@@ -140,7 +145,12 @@ function walkJsFiles(dir, out = []) {
     if (entry.isDirectory()) {
       if (entry.name === 'node_modules' || entry.name === '.git') continue;
       walkJsFiles(full, out);
-    } else if (entry.isFile() && entry.name.endsWith('.js')) {
+    } else if (
+      entry.isFile() &&
+      (entry.name.endsWith('.js') ||
+        entry.name.endsWith('.mjs') ||
+        entry.name.endsWith('.cjs'))
+    ) {
       out.push(full);
     }
   }
@@ -156,28 +166,43 @@ export function sourceWritesCanonicalEvd(text) {
   if (!text || typeof text !== 'string') return false;
   if (!/writeFileSync\s*\(/.test(text)) return false;
 
-  // Strong: constructs docs/evidence and writes an EVD/evidenceId JSON file.
-  const joinsDocsEvidence =
-    /path\.join\([^;]*['"]docs['"]\s*,\s*['"]evidence['"]/.test(text) ||
-    (/\bEVIDENCE_DIR\b/.test(text) && /docs[\\/]+evidence|['"]docs['"]\s*,\s*['"]evidence['"]/.test(text));
-
-  const writesEvdJson =
-    (/writeFileSync\s*\(\s*(?:file|filePath|targetFilePath|archivoDestino)\b/.test(text) &&
-      (/\bevidenceId\b/.test(text) || /\bevdId\b/.test(text) || /\bEVD-/.test(text) || /\bidEvidencia\b/.test(text))) ||
-    (/writeFileSync\s*\(\s*path\.join\([^)]*evidenceDir/.test(text));
-
   // SSOT module itself
   if (/CANONICAL_EVD_SEAL_MODULE/.test(text) && /writeFileSync\s*\(\s*targetFilePath/.test(text)) {
     return true;
   }
 
-  return joinsDocsEvidence && writesEvdJson;
+  // Canonical control-plane docs/evidence (not missionDir/evidence).
+  const joinsDocsEvidence =
+    /path\.join\([^;]*['"]docs['"]\s*,\s*['"]evidence['"]/.test(text) ||
+    /['"]docs\/evidence/.test(text) ||
+    (/\bEVIDENCE_DIR\b/.test(text) &&
+      /docs[\\/]+evidence|['"]docs['"]\s*,\s*['"]evidence['"]/.test(text));
+
+  if (!joinsDocsEvidence) return false;
+
+  // Must look like an EVD artifact write (exclude exam report subdirs without EVD ids).
+  const namesEvd =
+    /\bEVD-/.test(text) ||
+    /\bevidenceId\b/.test(text) ||
+    /\bevdId\b/.test(text) ||
+    /\bidEvidencia\b/.test(text) ||
+    /\bevidence_id\b/.test(text);
+
+  const writesViaCommonTarget =
+    /writeFileSync\s*\(\s*(?:file|filePath|targetFilePath|archivoDestino|evidencePath|outFile)\b/.test(
+      text
+    ) ||
+    /writeFileSync\s*\(\s*path\.join\([^)]*(?:evidenceDir|EVIDENCE_DIR|outDir)/.test(text);
+
+  return namesEvd && writesViaCommonTarget;
 }
 
 export function auditCanonicalEvdWritePaths(controlPlaneRoot) {
   const root = path.resolve(controlPlaneRoot || process.cwd());
-  const srcRoot = path.join(root, 'src');
-  const files = walkJsFiles(srcRoot);
+  const files = [];
+  for (const relRoot of EVD_AUDIT_SCAN_ROOTS) {
+    walkJsFiles(path.join(root, relRoot), files);
+  }
   const sanctioned = [];
   const violations = [];
 
@@ -203,7 +228,8 @@ export function auditCanonicalEvdWritePaths(controlPlaneRoot) {
     ssot: CANONICAL_EVD_SEAL_MODULE,
     sanctioned,
     violations,
-    scanned: files.length
+    scanned: files.length,
+    roots: [...EVD_AUDIT_SCAN_ROOTS]
   };
 }
 
@@ -215,7 +241,7 @@ export function inventoryCanonicalEvdWriters(controlPlaneRoot) {
   return {
     ...audit,
     note:
-      'Canonical docs/evidence EVD writers must go through sealEvd (G7). ' +
-      'Mission-local evidence dirs are out of scope.'
+      'Canonical docs/evidence EVD writers must go through sealEvd (G7/N2). ' +
+      'Audit scans src/ + scripts/ + bin/. Mission-local evidence dirs are out of scope.'
   };
 }

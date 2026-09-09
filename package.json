@@ -79,7 +79,8 @@
     "test:m4": "node --test tests/eos-m4-release-ssot-tip.test.js",
     "test:m5": "node --test tests/eos-m5-ci-gameday-seam-pack.test.js",
     "test:m6": "node --test tests/eos-m6-mission-os-coherence.test.js",
-    "test:g7": "node --test tests/eos-g7-evd-custody-seal-path.test.js"
+    "test:g7": "node --test tests/eos-g7-evd-custody-seal-path.test.js",
+    "test:n2": "node --test tests/eos-n2-evd-scripts-bin-seal.test.js"
   },
   "keywords": [
     "eos",
