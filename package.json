@@ -101,7 +101,8 @@
     "test:r3": "node --test tests/eos-r3-doctor-fusion-light-l5-surfaces.test.js",
     "test:r4": "node --test tests/eos-r4-at-ceiling-schema-gate.test.js",
     "test:r5": "node --test tests/eos-r5-deferred-writers-governance.test.js",
-    "test:r6": "node --test tests/eos-r6-complexity-budget-verify-closeout.test.js"
+    "test:r6": "node --test tests/eos-r6-complexity-budget-verify-closeout.test.js",
+    "test:s2": "node --test tests/eos-s2-context-pack-tpc.test.js"
   },
   "keywords": [
     "eos",

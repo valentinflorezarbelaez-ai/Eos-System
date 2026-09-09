@@ -18,6 +18,7 @@ import { auditMcpCatalogLock, MCP_CATALOG_REQUIRED_PATHS } from './lib/mcp-catal
 import { auditP6InventoryLock, P6_INVENTORY_REQUIRED_PATHS } from './lib/p6-inventory-lock.js';
 import { auditComplexityBudgetLock, COMPLEXITY_BUDGET_REQUIRED_PATHS } from './lib/complexity-budget-lock.js';
 import { auditDeferredWritersLock, DEFERRED_WRITERS_REQUIRED_PATHS } from './lib/deferred-writers-lock.js';
+import { auditContextPackLock, CONTEXT_PACK_REQUIRED_PATHS } from './lib/context-pack-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -124,6 +125,10 @@ const REQUIRED_PATHS = [
   'tests/eos-r5-deferred-writers-governance.test.js',
   'docs/releases/EOS_R5_DEFERRED_WRITERS_INVENTORY_2026-09-09.md',
   'docs/releases/EOS_R5_DEFERRED_WRITERS_GOVERNANCE_2026-09-09.md',
+  'scripts/lib/context-pack-lock.js',
+  'tests/eos-s2-context-pack-tpc.test.js',
+  'docs/harness/CONTEXT_PACK_TPC.md',
+  'docs/releases/EOS_S2_CONTEXT_PACK_TPC_2026-09-09.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -395,7 +400,8 @@ const REQUIRED_PATHS = [
   ...MCP_CATALOG_REQUIRED_PATHS,
   ...P6_INVENTORY_REQUIRED_PATHS,
   ...COMPLEXITY_BUDGET_REQUIRED_PATHS,
-  ...DEFERRED_WRITERS_REQUIRED_PATHS
+  ...DEFERRED_WRITERS_REQUIRED_PATHS,
+  ...CONTEXT_PACK_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1170,6 +1176,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/complexity-budget-lock.js',
         message: 'Complexity budget lock audit failed: ' + err.message,
         type: 'complexity-budget-lock'
+      });
+    }
+
+    // 3g10. S2 Context Pack TPC index verify lock (existence + section needles; index != runtime)
+    try {
+      const contextPack = auditContextPackLock(rootDir);
+      for (const c of contextPack.checks) {
+        report.checks.push(c);
+      }
+      for (const f of contextPack.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/context-pack-lock.js',
+        message: 'Context Pack TPC lock audit failed: ' + err.message,
+        type: 'context-pack-lock'
       });
     }
 

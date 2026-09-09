@@ -1,0 +1,26 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 7 S2 — Context Pack TPC index (Tool/Prompt/Context) + lifecycle policy notes (inject/compact/discard/reset/revisit-on-model-change) + verify:strict existence lock; NON-CLAIM index != full runtime context engineering; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING).
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-s2-context-pack-tpc
+  - docs/harness/CONTEXT_PACK_TPC.md
+  - scripts/lib/context-pack-lock.js
+  - scripts/verify-eos.js
+  - tests/eos-s2-context-pack-tpc.test.js
+  - package.json
+  - docs/releases/EOS_S2_CONTEXT_PACK_TPC_2026-09-09.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - AGENTS.md
+  - CLAUDE.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - implementing full runtime context orchestrator
+  - inventing frontend-standards / documentation-standards / development_guide content
+  - adding docs/schemas JSON (AT_CEILING)
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (S1 already closed)
+  - S3-S6 implementation
