@@ -1,0 +1,23 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 6 R5 / K5 — deferred post-Q5 writers governance via ranked inventory + fail-closed NON-CLAIM verify lock (Choice B). Do not fake-route HashChainedLedger / ledger-recovery through mission-artifact envelope or expand Write Barrier allowlist to .eos.
+routing: SDD
+explicit_sdd_request: true
+decision: B
+affected_areas:
+  - scripts/lib/deferred-writers-lock.js
+  - scripts/verify-eos.js
+  - tests/eos-r5-deferred-writers-governance.test.js
+  - docs/releases/EOS_R5_DEFERRED_WRITERS_INVENTORY_2026-09-09.md
+  - docs/releases/EOS_R5_DEFERRED_WRITERS_GOVERNANCE_2026-09-09.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - openspec/changes/eos-r5-deferred-writers-governance/
+non_goals:
+  - Fundacion writes
+  - App Fuerza writes
+  - parallel EVD ledger
+  - expanding Write Barrier allowlist to .eos
+  - routing HashChainedLedger through mission-artifact-write
+  - executing P6 prune
+  - new root npm dependencies
+  - claiming PRODUCTION_READY

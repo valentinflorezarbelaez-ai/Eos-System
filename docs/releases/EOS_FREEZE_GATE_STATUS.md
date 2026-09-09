@@ -391,3 +391,14 @@ External production readiness is explicitly **not** asserted.
 - Audit base tip OBSERVED: main@`7c82d43adc2e57db606fcf831016052b11aa19f5` (Q6 #66)
 - Merged as #67 (`4753240`); freeze tip refreshed by **R1** to main@`4753240eb003ecb3948e17d93e5511a7b35a40f0` (Q6 close was `7c82d43`)
 - Ordered next ladder R1–R6; PRODUCTION_READY=NO; Fundacion Delta=0; dirty tree deferred
+
+## R5 Deferred writers governance Choice B (2026-09-09)
+
+- Report: `docs/releases/EOS_R5_DEFERRED_WRITERS_GOVERNANCE_2026-09-09.md`
+- Inventory: `docs/releases/EOS_R5_DEFERRED_WRITERS_INVENTORY_2026-09-09.md`
+- Branch: `cursor/eos-r5-deferred-writers-governance` — push/compare only; do not merge without PO
+- Decision: **Choice B** — ranked inventory + fail-closed NON-CLAIM verify lock; deferred writers remain internal by design
+- Lock: `scripts/lib/deferred-writers-lock.js`; `test:r5`
+- NON-CLAIM: no fake Write Barrier route; no parallel EVD ledger; PRODUCTION_READY=NO; Fundacion Delta=0; App Fuerza untouched
+- Freeze `main_tip` pin **not** moved in R5 (tip refresh is separate mission)
+

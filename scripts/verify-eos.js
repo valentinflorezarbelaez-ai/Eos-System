@@ -17,6 +17,7 @@ import { auditHooksInstallSurface, HOOKS_INSTALL_REQUIRED_PATHS } from './lib/ho
 import { auditMcpCatalogLock, MCP_CATALOG_REQUIRED_PATHS } from './lib/mcp-catalog-lock.js';
 import { auditP6InventoryLock, P6_INVENTORY_REQUIRED_PATHS } from './lib/p6-inventory-lock.js';
 import { auditComplexityBudgetLock, COMPLEXITY_BUDGET_REQUIRED_PATHS } from './lib/complexity-budget-lock.js';
+import { auditDeferredWritersLock, DEFERRED_WRITERS_REQUIRED_PATHS } from './lib/deferred-writers-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -119,6 +120,10 @@ const REQUIRED_PATHS = [
   'scripts/lib/complexity-budget-lock.js',
   'tests/eos-r4-at-ceiling-schema-gate.test.js',
   'docs/releases/EOS_R4_AT_CEILING_SCHEMA_GATE_2026-09-09.md',
+  'scripts/lib/deferred-writers-lock.js',
+  'tests/eos-r5-deferred-writers-governance.test.js',
+  'docs/releases/EOS_R5_DEFERRED_WRITERS_INVENTORY_2026-09-09.md',
+  'docs/releases/EOS_R5_DEFERRED_WRITERS_GOVERNANCE_2026-09-09.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -389,7 +394,8 @@ const REQUIRED_PATHS = [
   ...HOOKS_INSTALL_REQUIRED_PATHS,
   ...MCP_CATALOG_REQUIRED_PATHS,
   ...P6_INVENTORY_REQUIRED_PATHS,
-  ...COMPLEXITY_BUDGET_REQUIRED_PATHS
+  ...COMPLEXITY_BUDGET_REQUIRED_PATHS,
+  ...DEFERRED_WRITERS_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1130,6 +1136,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/p6-inventory-lock.js',
         message: 'P6 inventory lock audit failed: ' + err.message,
         type: 'p6-inventory-lock'
+      });
+    }
+
+    // 3g9b. R5 deferred writers governance lock (Choice B NON-CLAIM inventory)
+    try {
+      const deferredWriters = auditDeferredWritersLock(rootDir);
+      for (const c of deferredWriters.checks) {
+        report.checks.push(c);
+      }
+      for (const f of deferredWriters.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/deferred-writers-lock.js',
+        message: 'Deferred writers lock audit failed: ' + err.message,
+        type: 'deferred-writers-lock'
       });
     }
 
