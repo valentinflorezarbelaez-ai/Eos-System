@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 9 U6 — OpenSpec CLI optional; fail-closed detect CLI presence; if ABSENT → HOLD + ritual/checklist; if PRESENT → smoke evidence; do NOT invent install success; OpenSpec light change folder ok even if CLI absent; TDD test:u6; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR; DEFER dirty unstaged.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-u6-openspec-cli-hold
+  - docs/harness/OPENSPEC_CLI_HOLD_RITUAL.md
+  - docs/releases/EOS_U6_OPENSPEC_CLI_HOLD_2026-09-09.md
+  - scripts/lib/openspec-cli-hold-lock.js
+  - scripts/ci/openspec-cli-hold-gate.js
+  - tests/eos-u6-openspec-cli-hold.test.js
+  - package.json
+  - scripts/verify-eos.js
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/harness/ANTIGRAVITY_FIRST.md
+  - docs/manuals/OPENSPEC_RUNTIME.md
+non_goals:
+  - inventing OpenSpec CLI install success when binary absent
+  - adding @fission-ai/openspec to package.json / src/core
+  - flipping PRODUCTION_READY
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip pin not moved)
+  - U7 SpecBoot stubs / U8 KEEP PO prune
+  - CloudAgent as SpecBoot default
+  - new docs/schemas JSON (AT_CEILING)
+  - staging DEFER dirty untracked files

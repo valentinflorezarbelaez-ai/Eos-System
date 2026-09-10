@@ -655,3 +655,11 @@ External production readiness is explicitly **not** asserted.
 - Extends T7: Admin HITL checklist + fail-closed DAEMON_ABSENT unless PRESENT proven; `adminRequired=true` documented, installExecuted=false; `test:u5`
 - NON-CLAIM: no pretend install; checklist ≠ daemon installed; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING; Antigravity-first (no CloudAgent)
 - Freeze `main_tip` pin **not** moved in U5 (tip refresh was U1; base main after U4 #95 @ a8602da)
+
+## U6 OpenSpec CLI optional HOLD (2026-09-09)
+
+- Report: `docs/releases/EOS_U6_OPENSPEC_CLI_HOLD_2026-09-09.md`
+- Branch: `cursor/eos-u6-openspec-cli-hold` — push only; do not merge without PO; NO PR
+- Fail-closed detect: CLI_ABSENT → HOLD + ritual; CLI_PRESENT → smoke only if proven; do NOT invent install; `test:u6`
+- NON-CLAIM: HOLD ≠ CLI installed; helper exit 2 ≠ L0 failure; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING; Antigravity-first (no CloudAgent)
+- Freeze `main_tip` pin **not** moved in U6 (tip refresh was U1; base main after U5 #96 @ 1f13dc3)
