@@ -558,3 +558,14 @@ External production readiness is explicitly **not** asserted.
 - Scripts: `observe:mission-os-evd` / `test:t4`; module `src/core/observability/mission-os-evd-observe-pack.js`
 - NON-CLAIM: observe pack ≠ production soak; long-run ≠ soak-prod; tip ALIGNED informational; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; no silent MCP prune; AT_CEILING
 - Freeze `main_tip` pin **not** moved in T4 (tip refresh separate; base main after T3 #85 @ 428106f)
+
+## T5 KEEP PO-named prune HOLD / gate (2026-09-09)
+
+- Report: `docs/releases/EOS_T5_KEEP_PO_PRUNE_HOLD_2026-09-09.md`
+- Branch: `cursor/eos-t5-keep-po-prune-hold` — push only; do not merge without PO
+- Decision: **HOLD — no prune this quarter** (gate/process only; NO silent deletes)
+- Runbook: `docs/harness/KEEP_PO_PRUNE_RITUAL.md`; lock `keep-po-prune-hold-lock.js`; gate `scripts/ci/keep-po-prune-gate.js` (NON-MUTATING)
+- Catalog reconcile green under HOLD (80==CANONICAL_TOOLS); S5 inventory unchanged
+- NON-CLAIM: inventory ≠ silent delete; HOLD ≠ executed prune; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
+- TR-01 live-suite ceiling bumped 130→140 (Ladder8 T4/T5 intentional suites; not ROI2 quarantine reversal)
+- Freeze `main_tip` pin **not** moved in T5 (tip refresh separate; base main after T4 #86 @ 203a8ca)
