@@ -10,11 +10,10 @@ describe('EOS Test Runner: Discovery and Filtering', () => {
     assert.ok(Array.isArray(files), 'Must return an array of file paths');
     // Floor: ROI2 engine quarantine removed research/canary harness suites.
     assert.ok(files.length >= 80, `Expected >= 80 live test files after ROI2 engine quarantine, discovered ${files.length}`);
-    // Ceiling: stay slim vs pre-ROI2 bloat; Ladder 6-8 intentional governance
-    // suites (R5 + Ladder8 T4/T5 locks) are CI-visible and
-    // count as live — bump documented in EOS_R5 / EOS_T5 evidence (not a
-    // quarantine reversal). Hard lock remains; do not inflate casually.
-    assert.ok(files.length < 140, `Live tests/ should stay slim after ROI2 (+ Ladder6-8 intentional governance locks); discovered ${files.length}`);
+    // Ceiling: stay slim vs pre-ROI2 bloat; Ladder 6-9 intentional governance
+    // suites (R5, Ladder8 T-series, Ladder9 U-series) are CI-visible and
+    // count as live. Hard lock remains; do not inflate casually.
+    assert.ok(files.length <= 145, `Live tests/ should stay slim after ROI2 (+ Ladder6-9 intentional governance locks); discovered ${files.length}`);
     assert.ok(files.every(f => f.endsWith('.test.js')), 'All discovered files must end with .test.js');
   });
 

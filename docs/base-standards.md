@@ -1,4 +1,4 @@
-# EOS base standards (SSOT index)
+﻿# EOS base standards (SSOT index)
 
 This file is the LIDR Specboot **base-standards** index for the EOS Control Plane. It does not invent new policy. It points at the documents that already govern the repo.
 
@@ -54,14 +54,12 @@ All tasks must follow [`docs/openspec-tasks-mandatory-steps.md`](openspec-tasks-
 - `GAP-002` — remains `UNKNOWN`
 - `GATE-13` — `CANARY_RESTRICTED` until recorded otherwise
 
-## SpecBoot INDEX stubs (U7)
+## SpecBoot DEFER stubs (U7 IGNORE)
 
-Thin SpecBoot checklist paths — **INDEX only**, not second SSOTs:
+SpecBoot checklist paths `docs/{development_guide,documentation-standards,frontend-standards}.md` stay **ABSENT** (S2 TPC must-not-invent). Honesty via:
 
-| Stub | Points at |
-| --- | --- |
-| `docs/development_guide.md` | this index + backend-standards + ADR-0010 + SPECBOOT_CYCLE |
-| `docs/documentation-standards.md` | this index + `.cursor/rules/09-eos-documentation.mdc` |
-| `docs/frontend-standards.md` | this index + `.cursor/rules/07-eos-product-and-ux.mdc` |
+- `docs/harness/SPECBOOT_DEFER_STUBS_INDEX.md` (allowed harness INDEX pointer)
+- `docs/harness/CONTEXT_PACK_TPC.md` MISSING / DEFER rows
+- Proxies: this index + backend-standards + ADR-0010 + SPECBOOT_CYCLE + layer rules
 
-**Disposition:** INDEX_STUBS. Gentleman wholesale content DEFER — no invent. Ritual: `docs/harness/SPECBOOT_DEFER_STUBS_RITUAL.md`.
+**Disposition:** IGNORE. Gentleman wholesale content DEFER — no invent. Ritual: `docs/harness/SPECBOOT_DEFER_STUBS_RITUAL.md`.

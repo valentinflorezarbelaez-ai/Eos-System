@@ -75,3 +75,7 @@ EOS-Lab/Transmission-Live/
 archive/quarantine/docs/evolution/
 docs/audits/atp_apple_light.png
 docs/audits/atp_tidal_dark.png
+# U7 SpecBoot DEFER stubs — IGNORE (S2 TPC must-not-invent; index elsewhere)
+docs/development_guide.md
+docs/documentation-standards.md
+docs/frontend-standards.md

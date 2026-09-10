@@ -1,4 +1,4 @@
-# Freeze gate status — PUBLISHED
+﻿# Freeze gate status — PUBLISHED
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
@@ -664,10 +664,10 @@ External production readiness is explicitly **not** asserted.
 - NON-CLAIM: HOLD ≠ CLI installed; helper exit 2 ≠ L0 failure; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING; Antigravity-first (no CloudAgent)
 - Freeze `main_tip` pin **not** moved in U6 (tip refresh was U1; base main after U5 #96 @ 1f13dc3)
 
-## U7 SpecBoot DEFER stubs INDEX (2026-09-09)
+## U7 SpecBoot DEFER stubs IGNORE (2026-09-09)
 
 - Report: `docs/releases/EOS_U7_SPECBOOT_DEFER_STUBS_2026-09-09.md`
-- Branch: `cursor/eos-u7-specboot-defer-stubs` — push only; do not merge without PO; NO PR
-- Disposition **INDEX_STUBS**: promote docs/{development_guide,documentation-standards,frontend-standards}.md as minimal honest EOS INDEX stubs; no Gentleman invent; `test:u7`
-- NON-CLAIM: INDEX stub ≠ Gentleman standards complete; PRODUCTION_READY=NO; Fundacion Delta=0; foreign ai-specs DEFER unstaged; AT_CEILING; Antigravity-first (no CloudAgent)
+- Branch: `cursor/eos-u7-specboot-defer-stubs` — push only (PR #98 update); do not merge without PO
+- Disposition **IGNORE**: do not invent docs/{development_guide,documentation-standards,frontend-standards}.md (S2 TPC must-not-invent); harness INDEX `docs/harness/SPECBOOT_DEFER_STUBS_INDEX.md`; no Gentleman invent; `test:u7` + `test:s2`
+- NON-CLAIM: harness INDEX ≠ Gentleman standards complete; PRODUCTION_READY=NO; Fundacion Delta=0; foreign ai-specs DEFER unstaged; AT_CEILING; Antigravity-first (no CloudAgent)
 - Freeze `main_tip` pin **not** moved in U7 (tip refresh was U1; base main after U6 #97 @ c8d79c1)

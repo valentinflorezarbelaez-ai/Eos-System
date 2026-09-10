@@ -1,15 +1,16 @@
-import fs from 'node:fs';
+﻿import fs from 'node:fs';
 import path from 'node:path';
 
 /**
  * @module specboot-defer-stubs-lock
- * U7 — SpecBoot DEFER stubs INDEX lock (Ladder 9 K7).
+ * U7 — SpecBoot DEFER stubs IGNORE lock (Ladder 9 K7).
  *
- * Fail-closed: three INDEX stubs + ritual + evidence must exist with
- * INDEX/DEFER/SSOT/no-Gentleman-invent language, PRODUCTION_READY=NO,
- * Fundacion Delta=0. Mode INDEX_STUBS. Not part of src/core.
+ * Fail-closed: ritual + evidence + harness INDEX pointer must exist with
+ * IGNORE/DEFER/no-Gentleman-invent language, PRODUCTION_READY=NO,
+ * Fundacion Delta=0. Mode IGNORE. Forbidden checklist paths must be ABSENT
+ * (S2 TPC must-not-invent). Not part of src/core.
  *
- * NON-CLAIM: INDEX stub != Gentleman standards complete. PRODUCTION_READY: NO
+ * NON-CLAIM: harness INDEX != Gentleman standards complete. PRODUCTION_READY: NO
  */
 
 export const SPECBOOT_DEFER_STUBS_EVIDENCE_DOC =
@@ -18,6 +19,10 @@ export const SPECBOOT_DEFER_STUBS_EVIDENCE_DOC =
 export const SPECBOOT_DEFER_STUBS_RITUAL_DOC =
   'docs/harness/SPECBOOT_DEFER_STUBS_RITUAL.md';
 
+export const SPECBOOT_DEFER_STUBS_INDEX_DOC =
+  'docs/harness/SPECBOOT_DEFER_STUBS_INDEX.md';
+
+/** Forbidden SpecBoot checklist paths — must remain ABSENT (S2 TPC). */
 export const SPECBOOT_DEFER_STUB_PATHS = Object.freeze([
   'docs/development_guide.md',
   'docs/documentation-standards.md',
@@ -28,7 +33,7 @@ export const SPECBOOT_DEFER_STUBS_EVIDENCE_REQUIRED_SECTIONS = Object.freeze([
   '## Objetivo (U7 / K7 DoD)',
   '## Disposition',
   '## No-claims',
-  'INDEX_STUBS',
+  'IGNORE',
   'DEFER',
   'Gentleman',
   'PRODUCTION_READY',
@@ -45,22 +50,25 @@ export const SPECBOOT_DEFER_STUBS_RITUAL_REQUIRED_SECTIONS = Object.freeze([
   '## 6. Non-claims',
   'FORBIDDEN',
   'Gentleman invent',
-  'INDEX_STUBS',
+  'IGNORE',
   'CloudAgent out of'
 ]);
 
-export const SPECBOOT_DEFER_STUB_REQUIRED_NEEDLES = Object.freeze([
-  'INDEX',
+export const SPECBOOT_DEFER_STUBS_INDEX_REQUIRED_NEEDLES = Object.freeze([
+  'IGNORE',
   'DEFER',
   'PRODUCTION_READY',
   'base-standards',
-  'Gentleman'
+  'Gentleman',
+  'frontend-standards',
+  'documentation-standards',
+  'development_guide'
 ]);
 
 export const SPECBOOT_DEFER_STUBS_REQUIRED_PATHS = Object.freeze([
   SPECBOOT_DEFER_STUBS_EVIDENCE_DOC,
   SPECBOOT_DEFER_STUBS_RITUAL_DOC,
-  ...SPECBOOT_DEFER_STUB_PATHS,
+  SPECBOOT_DEFER_STUBS_INDEX_DOC,
   'scripts/lib/specboot-defer-stubs-lock.js',
   'scripts/ci/specboot-defer-stubs-gate.js',
   'tests/eos-u7-specboot-defer-stubs.test.js',
@@ -68,16 +76,28 @@ export const SPECBOOT_DEFER_STUBS_REQUIRED_PATHS = Object.freeze([
 ]);
 
 export const SPECBOOT_DEFER_STUBS_NON_CLAIMS = Object.freeze([
-  'INDEX stub != Gentleman / LIDR standards complete',
+  'harness INDEX != Gentleman / LIDR standards complete',
   'FORBIDDEN Gentleman invent / mass invent content',
-  'triage / PROMOTE != PRODUCTION_READY flip',
+  'triage / IGNORE != PRODUCTION_READY flip',
   'ai-specs foreign remain DEFER unstaged',
   'PRODUCTION_READY remains NO',
-  'IGNORE not used for SpecBoot-named checklist paths in U7'
+  'IGNORE != invent docs/{development_guide,documentation-standards,frontend-standards}.md',
+  'S2 TPC must-not-invent remains in force'
 ]);
 
 function inferModeFromEvidence(text) {
-  if (text.includes('INDEX_STUBS')) return 'INDEX_STUBS';
+  if (/Decision:\s*\*\*IGNORE\*\*/i.test(text) || /Mode:\s*\*\*IGNORE\*\*/i.test(text)) {
+    return 'IGNORE';
+  }
+  if (
+    /Decision:\s*\*\*INDEX_STUBS\*\*/i.test(text) ||
+    /Mode:\s*\*\*INDEX_STUBS\*\*/i.test(text)
+  ) {
+    return 'INDEX_STUBS';
+  }
+  if (text.includes('INDEX_STUBS') && !/superseded|not delivered|FORBIDDEN for U7/i.test(text)) {
+    return 'INDEX_STUBS';
+  }
   if (text.includes('IGNORE') && text.includes('Disposition')) return 'IGNORE';
   return 'UNKNOWN';
 }
@@ -206,15 +226,15 @@ export function auditSpecbootDeferStubsLock(rootDir, options = {}) {
   }
 
   mode = inferModeFromEvidence(evidenceText);
-  if (mode !== 'INDEX_STUBS') {
+  if (mode !== 'IGNORE') {
     failures.push({
       path: SPECBOOT_DEFER_STUBS_EVIDENCE_DOC,
-      message: 'U7 evidence must declare disposition mode INDEX_STUBS',
+      message: 'U7 evidence must declare disposition mode IGNORE',
       type
     });
   } else {
     checks.push({
-      path: 'U7 mode INDEX_STUBS',
+      path: 'U7 mode IGNORE',
       status: 'VERIFIED',
       type
     });
@@ -274,38 +294,14 @@ export function auditSpecbootDeferStubsLock(rootDir, options = {}) {
   }
 
   if (!options.skipStubChecks) {
-    const stubTexts = options.stubTexts || {};
+    // IGNORE mode: forbidden checklist paths must be ABSENT
     for (const rel of SPECBOOT_DEFER_STUB_PATHS) {
-      let text = stubTexts[rel];
-      if (text === undefined) {
-        const full = path.join(rootDir, rel);
-        if (!fs.existsSync(full)) {
-          failures.push({
-            path: rel,
-            message: 'Required U7 INDEX stub missing',
-            type
-          });
-          continue;
-        }
-        text = fs.readFileSync(full, 'utf8');
-      }
-      for (const needle of SPECBOOT_DEFER_STUB_REQUIRED_NEEDLES) {
-        if (!text.includes(needle)) {
-          failures.push({
-            path: rel,
-            message: 'INDEX stub missing required needle: ' + needle,
-            type
-          });
-        }
-      }
-      if (
-        /theme-kit|Gentleman Design System|LIDR frontend kit imported wholesale/i.test(
-          text
-        )
-      ) {
+      const full = path.join(rootDir, rel);
+      if (fs.existsSync(full)) {
         failures.push({
           path: rel,
-          message: 'INDEX stub must not invent Gentleman/theme-kit wholesale',
+          message:
+            'U7 IGNORE: must not invent SpecBoot checklist path (S2 TPC must-not-invent)',
           type
         });
       }
@@ -315,10 +311,57 @@ export function auditSpecbootDeferStubsLock(rootDir, options = {}) {
         .length === 0
     ) {
       checks.push({
-        path: 'U7 three INDEX stubs present with required needles',
+        path: 'U7 three SpecBoot checklist paths ABSENT (IGNORE)',
         status: 'VERIFIED',
         type
       });
+    }
+
+    // Allowed harness INDEX pointer must exist
+    let indexText = options.indexDocText;
+    if (indexText === undefined) {
+      const full = path.join(rootDir, SPECBOOT_DEFER_STUBS_INDEX_DOC);
+      if (!fs.existsSync(full)) {
+        failures.push({
+          path: SPECBOOT_DEFER_STUBS_INDEX_DOC,
+          message: 'Required U7 harness INDEX pointer missing',
+          type
+        });
+      } else {
+        indexText = fs.readFileSync(full, 'utf8');
+      }
+    }
+    if (indexText !== undefined) {
+      for (const needle of SPECBOOT_DEFER_STUBS_INDEX_REQUIRED_NEEDLES) {
+        if (!indexText.includes(needle)) {
+          failures.push({
+            path: SPECBOOT_DEFER_STUBS_INDEX_DOC,
+            message: 'Harness INDEX missing required needle: ' + needle,
+            type
+          });
+        }
+      }
+      if (
+        /theme-kit|Gentleman Design System|LIDR frontend kit imported wholesale/i.test(
+          indexText
+        )
+      ) {
+        failures.push({
+          path: SPECBOOT_DEFER_STUBS_INDEX_DOC,
+          message: 'Harness INDEX must not invent Gentleman/theme-kit wholesale',
+          type
+        });
+      }
+      if (
+        failures.filter((f) => f.path === SPECBOOT_DEFER_STUBS_INDEX_DOC)
+          .length === 0
+      ) {
+        checks.push({
+          path: 'U7 harness INDEX pointer present with required needles',
+          status: 'VERIFIED',
+          type
+        });
+      }
     }
   }
 

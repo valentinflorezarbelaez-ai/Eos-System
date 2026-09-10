@@ -1,8 +1,9 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
  * U7 SpecBoot DEFER stubs gate (NON-MUTATING).
  *
- * Verifies INDEX_STUBS disposition for SpecBoot checklist docs.
+ * Verifies IGNORE disposition for SpecBoot checklist docs (S2 TPC
+ * must-not-invent). Index pointer lives under docs/harness/.
  * Never invents Gentleman standards. Never stages ai-specs.
  * Exit 0 on PASS; exit 1 on fail-closed. PRODUCTION_READY: NO
  */
@@ -32,6 +33,7 @@ export function runSpecbootDeferStubsGate(options = {}) {
     skipStubChecks: options.skipStubChecks === true,
     evidenceDocText: options.evidenceDocText,
     ritualDocText: options.ritualDocText,
+    indexDocText: options.indexDocText,
     stubTexts: options.stubTexts,
     docMissing: options.docMissing === true
   });
@@ -74,7 +76,7 @@ function formatReport(report) {
   }
   lines.push('');
   lines.push(
-    'NON-CLAIMS: INDEX stub != Gentleman complete; no Gentleman invent; ai-specs DEFER'
+    'NON-CLAIMS: harness INDEX != Gentleman complete; no Gentleman invent; IGNORE != invent forbidden paths; ai-specs DEFER'
   );
   return lines.join('\n');
 }
@@ -96,7 +98,7 @@ if (isMain) {
   if (args.help) {
     console.log(
       'Usage: node scripts/ci/specboot-defer-stubs-gate.js\n' +
-        'NON-MUTATING. INDEX_STUBS. No Gentleman invent. PRODUCTION_READY=NO.'
+        'NON-MUTATING. IGNORE. No Gentleman invent. PRODUCTION_READY=NO.'
     );
     process.exit(0);
   }
