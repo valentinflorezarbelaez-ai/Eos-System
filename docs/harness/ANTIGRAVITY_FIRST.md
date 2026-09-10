@@ -45,6 +45,7 @@ Operator checklist + honest status smoke: [`docs/harness/AGY_WORKSTATION_CHECKLI
 
 1. **OpenSpec CLI** (optional) — ceremony aliases `opsx:*`; not required for L0.
 2. **agy-daemon** — `agy-daemon.cmd install --name eos-workstation` (Admin HITL) when remote HITL needed; confirm with `agy-daemon.cmd status`. Do **not** pretend INSTALLED when status says Not installed.
+   - U5 Admin HITL checklist (optional, no install in CI): [`docs/harness/AGY_ADMIN_HITL_CHECKLIST.md`](./AGY_ADMIN_HITL_CHECKLIST.md); evidence `docs/releases/EOS_U5_AGY_ADMIN_HITL_CHECKLIST_2026-09-09.md`; gate `node scripts/ci/agy-admin-hitl-checklist.js` (`adminRequired=true` documented, `installExecuted=false`).
 3. Confirm local `agy` binary available before SpecBoot sessions.
 
 ## 6. Explicit non-goals

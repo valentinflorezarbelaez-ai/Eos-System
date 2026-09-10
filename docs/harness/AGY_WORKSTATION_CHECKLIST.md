@@ -82,3 +82,4 @@ Smoke is **NON-MUTATING**. It never runs `install` / `uninstall` / elevated Task
 - Antigravity-first ≠ AGY slash UX parity claim.
 - PRODUCTION_READY remains **NO**.
 - FORBIDDEN: pretend eos-workstation daemon INSTALLED when status says Not installed.
+- U5 Admin HITL extension: [`docs/harness/AGY_ADMIN_HITL_CHECKLIST.md`](./AGY_ADMIN_HITL_CHECKLIST.md) — `adminRequired=true` path documented but not executed; evidence `docs/releases/EOS_U5_AGY_ADMIN_HITL_CHECKLIST_2026-09-09.md`; gate `node scripts/ci/agy-admin-hitl-checklist.js`.

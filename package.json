@@ -119,7 +119,8 @@
     "test:t8": "node --test tests/eos-t8-dirty-defer-triage.test.js",
     "test:u2": "node --test tests/eos-u2-ci-seam-pack-t2-t8.test.js",
     "test:u3": "node --test tests/eos-u3-doctor-fusion-light-t4-t8.test.js",
-    "test:u4": "node --test tests/eos-u4-mission-os-deepen.test.js"
+    "test:u4": "node --test tests/eos-u4-mission-os-deepen.test.js",
+    "test:u5": "node --test tests/eos-u5-agy-admin-hitl-checklist.test.js"
   },
   "keywords": [
     "eos",
