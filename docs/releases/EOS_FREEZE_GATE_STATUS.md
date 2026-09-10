@@ -533,3 +533,11 @@ External production readiness is explicitly **not** asserted.
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - NON-CLAIM: L7 closed ≠ PRODUCTION_READY; inventory≠prune; routing≠auto-switch; CloudAgent remains out of default SpecBoot path
 
+## T2 CI seam-pack Ladder7 L7 locks (2026-09-09)
+
+- Report: `docs/releases/EOS_T2_CI_SEAM_PACK_L7_2026-09-09.md`
+- Branch: `cursor/eos-t2-ci-seam-pack-l7` — push/compare only; do not merge without PO
+- seam-pack adds CI-safe `test:s2`, `test:s3`, `test:s5`, `test:s6`, `test:specboot-agy` (keep `test:s4` + prior packs)
+- Lock meta: `test:t2`; assert-gha-contract + CI_CD_CONTRACT.md T2 note; GHA-008 / m5 list extended
+- NON-CLAIM: no soak; no new GH billing / enforcement; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING); Antigravity-first (no CloudAgent)
+- Freeze `main_tip` pin **not** moved in T2 (tip refresh was L7 closeout @ 167951d / merge #83 @ 3b29184)
