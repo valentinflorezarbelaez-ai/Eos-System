@@ -1,0 +1,8 @@
+schema: spec-driven
+created: 2026-09-10
+goal: Ladder 10 Maturity Gap Audit — Formal audit of EOS Control Plane maturity gaps for Ladder 10 (L10); evaluate deterministic multi-agent orchestration boundaries (Google ADK / PydanticAI patterns), dynamic context token hygiene, and FDIR automated healing; define ordered gap ladder V1–Vn; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; audit only.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-l10-audit
+  - docs/releases/EOS_MATURITY_LADDER_10_AUDIT_2026-09-10.md
