@@ -85,6 +85,12 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | T6 Complexity ceiling HOLD | #88 | 757f2de | `EOS_T6_COMPLEXITY_CEILING_HOLD_2026-09-09.md`; test:t6 |
 | T7 AGY workstation evidence | #89 | 1b48ff5 | `EOS_T7_AGY_WORKSTATION_EVIDENCE_2026-09-09.md`; test:t7 |
 
+### Ladder 10 (V1–V5) Closeout — 2026-09-10
+
+- Report: `docs/releases/EOS_LADDER_10_CLOSEOUT_2026-09-10.md`
+- Deliverables: V1 Audit & Roadmap, V2 Token Hygiene (`test:v2`), V3 Typed Multi-Agent Handoff Envelope (`test:v3`), V4 FDIR Sentinel Adversarial Gate (`test:v4`), V5 BUILDER != VERIFIER Runtime Enforcement (`test:v5`).
+- Status: **CLOSED_FOR_LOCAL_GOVERNED_USE**; PRODUCTION_READY remains **NO**; Fundacion & App de Fuerza Delta=0.
+
 ### Antigravity / agy remote-control
 
 - Tracked Windows daemon installer: `agy-daemon.cmd` (Antigravity CLI `--remote-control` via Task Scheduler / S4U).

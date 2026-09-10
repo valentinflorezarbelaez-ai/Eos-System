@@ -89,6 +89,12 @@ updated_at: 2026-09-09 America/Bogota (U1 tip refresh post L8/#90 + L9 audit #91
 | OpenSpec CLI optional HOLD (U6) | COMPLETE | MEASURED (EOS_U6_OPENSPEC_CLI_HOLD_2026-09-09.md; CLI_ABSENT_HOLD; test:u6; no invent install) |
 | SpecBoot DEFER stubs IGNORE (U7) | COMPLETE | MEASURED (EOS_U7_SPECBOOT_DEFER_STUBS_2026-09-09.md; IGNORE; harness INDEX; S2 TPC must-not-invent; test:u7+test:s2; ai-specs DEFER) |
 | Ladder 9 closeout | COMPLETE | MEASURED (EOS_LADDER_9_CLOSEOUT_2026-09-09.md; U1–U8 CLOSED for local governed use; PRODUCTION_READY=NO) |
+| Ladder 10 maturity gap audit (V1) | COMPLETE | MEASURED (EOS_MATURITY_LADDER_10_AUDIT_2026-09-10.md; V1–V5 ordered) |
+| Observation budget & token hygiene (V2) | COMPLETE | VERIFIED (bounded-output-filter.js; test:v2; 5/5 PASS) |
+| Typed multi-agent handoff contract (V3) | COMPLETE | VERIFIED (agent-handoff-envelope.js; test:v3; 4/4 PASS) |
+| FDIR sentinel & graph healing gate (V4) | COMPLETE | VERIFIED (fdir-sentinel-adversarial-gate.js; test:v4; 8/8 PASS) |
+| Runtime enforcement BUILDER != VERIFIER (V5) | COMPLETE | VERIFIED (builder-verifier-custody.js; test:v5; 8/8 PASS) |
+| Ladder 10 closeout | COMPLETE | MEASURED (EOS_LADDER_10_CLOSEOUT_2026-09-10.md; V1–V5 CLOSED for local governed use; PRODUCTION_READY=NO) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
