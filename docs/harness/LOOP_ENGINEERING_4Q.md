@@ -114,3 +114,9 @@ Post-act judgment sensors:
 ## 4. Verify lock
 
 `scripts/lib/loop-engineering-lock.js` → `auditLoopEngineeringLock` is wired into `verify:strict` (block **3g11**). Fail-closed if this SSOT or required needles/paths are missing.
+
+---
+
+## 5. Related harness (S4)
+
+Worktree isolation policy (one agent/session ≠ shared dirty dir; Spec-Boot map; CI-safe smoke): [`docs/harness/WORKTREE_ISOLATION_POLICY.md`](./WORKTREE_ISOLATION_POLICY.md).

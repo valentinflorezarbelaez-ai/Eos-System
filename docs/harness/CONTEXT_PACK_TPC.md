@@ -121,4 +121,6 @@ Fail-closed if this index is missing or required section needles disappear.
 - Fundacion Delta=0; App Fuerza untouched
 - No new `docs/schemas/**/*.json` (AT_CEILING)
 - Does not install Spec-Boot wholesale; does not claim LIDR workshop "solves any problem"
-- Does not implement S3–S6 (Loop / worktree / KEEP inventory / ratchet)
+- Does not implement S5–S6 (KEEP inventory / ratchet)
+- S3 Loop Engineering: `docs/harness/LOOP_ENGINEERING_4Q.md`
+- S4 Worktree isolation: [`docs/harness/WORKTREE_ISOLATION_POLICY.md`](./WORKTREE_ISOLATION_POLICY.md)

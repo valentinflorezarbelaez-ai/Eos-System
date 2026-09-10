@@ -20,6 +20,7 @@ import { auditComplexityBudgetLock, COMPLEXITY_BUDGET_REQUIRED_PATHS } from './l
 import { auditDeferredWritersLock, DEFERRED_WRITERS_REQUIRED_PATHS } from './lib/deferred-writers-lock.js';
 import { auditContextPackLock, CONTEXT_PACK_REQUIRED_PATHS } from './lib/context-pack-lock.js';
 import { auditLoopEngineeringLock, LOOP_ENGINEERING_REQUIRED_PATHS } from './lib/loop-engineering-lock.js';
+import { auditWorktreePolicyLock, WORKTREE_POLICY_REQUIRED_PATHS } from './lib/worktree-policy-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -135,6 +136,10 @@ const REQUIRED_PATHS = [
   'docs/harness/LOOP_ENGINEERING_4Q.md',
   'docs/architecture/adrs/ADR-0017-loop-engineering-4q.md',
   'docs/releases/EOS_S3_LOOP_ENGINEERING_4Q_2026-09-09.md',
+  'scripts/lib/worktree-policy-lock.js',
+  'tests/eos-s4-worktree-isolation.test.js',
+  'docs/harness/WORKTREE_ISOLATION_POLICY.md',
+  'docs/releases/EOS_S4_WORKTREE_ISOLATION_2026-09-09.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -408,7 +413,8 @@ const REQUIRED_PATHS = [
   ...COMPLEXITY_BUDGET_REQUIRED_PATHS,
   ...DEFERRED_WRITERS_REQUIRED_PATHS,
   ...CONTEXT_PACK_REQUIRED_PATHS,
-  ...LOOP_ENGINEERING_REQUIRED_PATHS
+  ...LOOP_ENGINEERING_REQUIRED_PATHS,
+  ...WORKTREE_POLICY_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1217,6 +1223,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/loop-engineering-lock.js',
         message: 'Loop Engineering 4Q lock audit failed: ' + err.message,
         type: 'loop-engineering-lock'
+      });
+    }
+
+    // 3g12. S4 Worktree isolation policy verify lock (existence + section needles; policy != swarm)
+    try {
+      const wtPolicy = auditWorktreePolicyLock(rootDir);
+      for (const c of wtPolicy.checks) {
+        report.checks.push(c);
+      }
+      for (const f of wtPolicy.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/worktree-policy-lock.js',
+        message: 'Worktree isolation policy lock audit failed: ' + err.message,
+        type: 'worktree-policy-lock'
       });
     }
 

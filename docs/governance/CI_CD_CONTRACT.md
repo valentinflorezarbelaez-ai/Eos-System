@@ -18,7 +18,7 @@ Machine-readable companion: `docs/governance/CI_CD_CONTRACT.json`.
 | test | `npm test` | Forbidden |
 | syntax | `node --check` on `bin/`, `src/`, `scripts/`, `tests/` | Forbidden |
 | governance-gates | `evaluate:release`, `verify:independent`, `audit:system` | Forbidden |
-| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` | Forbidden |
+| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s4` | Forbidden |
 
 Triggers: `push` to `main`, `pull_request`, `workflow_dispatch`.
 
@@ -51,3 +51,6 @@ seam-pack named pack extended with CI-safe `test:q2`..`test:q6` (Ladder 5 Q lock
 ## R6 seam-pack note (2026-09-09)
 seam-pack named pack extended with CI-safe `test:r4` + `test:r5` (Ladder 6 R locks; keep `test:q2`..`test:q6`). K6 CLOSED_BY_R4 — no lock reimplementation. No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.
 
+
+## S4 seam-pack note (2026-09-09)
+seam-pack named pack extended with CI-safe `test:s4` (Ladder 7 worktree isolation policy/CLI/path smoke; does **not** create real git worktrees). Keep `test:r4`..`test:r5`. No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO. NON-CLAIM: no swarm.
