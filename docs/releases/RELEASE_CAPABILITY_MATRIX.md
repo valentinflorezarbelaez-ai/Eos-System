@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 1d1b224cb41d32aa7de6519af7a7a48b5968f87f
+evaluated_tip: b785f014e2403964bb3fe36325c220a965295083
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #74 from valentinflorezarbelaez-ai/cursor/eos-ladder7-lidr-harness-adoption
-updated_at: 2026-09-09 America/Bogota (S1 Ladder7 tip refresh; pin to main@1d1b224 post audit #74; L6 close was e431e2c; PRODUCTION_READY=NO)
+main_subject: Merge pull request #79 from valentinflorezarbelaez-ai/cursor/eos-specboot-antigravity-first
+updated_at: 2026-09-09 America/Bogota (tip refresh post SpecBoot #79; pin to main@b785f01; prior S1 pin was 1d1b224; PRODUCTION_READY=NO)
 ```
 
 
@@ -64,6 +64,11 @@ updated_at: 2026-09-09 America/Bogota (S1 Ladder7 tip refresh; pin to main@1d1b2
 | Deferred writers Choice B (R5) | COMPLETE | MEASURED (#72; EOS_R5_DEFERRED_WRITERS_GOVERNANCE_2026-09-09.md; deferred-writers-lock; test:r5) |
 | Complexity verify closeout (R6) | COMPLETE | MEASURED (#73; EOS_R6_COMPLEXITY_BUDGET_VERIFY_CLOSEOUT_2026-09-09.md; K6 CLOSED_BY_R4; CI test:r4/r5) |
 | Ladder 7 LIDR harness adoption + audit | COMPLETE | MEASURED (#74; EOS_MATURITY_LADDER_7_AUDIT_2026-09-09.md; EOS_LIDR_HARNESS_WORKSHOP_ADOPTION_2026-09-09.md; S1-S6 ordered) |
+| Ladder7 tip refresh (S1) | COMPLETE | MEASURED (#75; EOS_S1_LADDER7_TIP_REFRESH_2026-09-09.md; freeze+matrix to 1d1b224) |
+| Context Pack TPC (S2) | COMPLETE | MEASURED (#76; EOS_S2_CONTEXT_PACK_TPC_2026-09-09.md; context-pack-lock; test:s2) |
+| Loop Engineering 4Q (S3) | COMPLETE | MEASURED (#77; EOS_S3_LOOP_ENGINEERING_4Q_2026-09-09.md; loop-engineering-lock; test:s3) |
+| Worktree isolation (S4) | COMPLETE | MEASURED (#78; EOS_S4_WORKTREE_ISOLATION_2026-09-09.md; worktree-policy-lock; test:s4) |
+| SpecBoot cycle + Antigravity-first | COMPLETE | MEASURED (#79; EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md; specboot-cycle-lock; test:specboot-agy) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -83,19 +88,26 @@ COMPLETE_WITH_CONDITIONS: (subset)
 PRODUCTION_READY: NO
 ```
 
-## Tip refresh notes (S1)
+## Tip refresh notes (post SpecBoot #79)
+
+- evaluated_tip pinned to OBSERVED main tip after SpecBoot/AGY #79: b785f014e2403964bb3fe36325c220a965295083
+- Prior S1 tip pin was 1d1b224cb41d32aa7de6519af7a7a48b5968f87f (post L7 audit #74); pin uses live main@b785f01 so HUD freeze observe does not DIVERGE immediately
+- Rows added/normalized for S1 tip refresh, S2 Context Pack TPC, S3 Loop Engineering 4Q, S4 Worktree isolation (#78), SpecBoot/AGY (#79)
+- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (S1) — historical
 
 - evaluated_tip pinned to OBSERVED main tip after Ladder 7 audit #74: 1d1b224cb41d32aa7de6519af7a7a48b5968f87f
-- L6 close tip was e431e2c2886f687c642944bbfe426aa48018e84e (#73); pin uses post-audit 1d1b224 so HUD freeze observe does not DIVERGE immediately (same honesty pattern as L6 R1 / L5 Q1)
+- L6 close tip was e431e2c2886f687c642944bbfe426aa48018e84e (#73); pin used post-audit 1d1b224
 - Prior R1 tip pin 4753240eb003ecb3948e17d93e5511a7b35a40f0 (Ladder 6 audit #67 / R1) retired
-- Rows added/normalized for R1 tip refresh, R2 CI seam-pack Q-tests, R3 doctor/fusion-light L5, R4 AT_CEILING schema gate, R5 deferred writers, R6 complexity verify closeout + Ladder 7 audit
-- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+- Rows added/normalized for R1–R6 + Ladder 7 audit
+- Superseded by tip-refresh-post-specboot to main@b785f01
 
 ## R1–R6 notes (historical)
 
 - R1: Tip pin to post-L6-audit main@4753240; Q1–Q6 + L6 audit rows.
 - R2–R6: CI Q-tests, doctor/fusion-light L5, AT_CEILING gate, deferred writers Choice B, K6 CLOSED_BY_R4 closeout.
-- Tip pin moved by S1 (this refresh) to post-L7-audit main@1d1b224.
+- Tip pin moved by S1 to post-L7-audit main@1d1b224; superseded by tip-refresh-post-specboot to main@b785f01.
 
 ## Q5–Q6 notes (historical)
 

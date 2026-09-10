@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 1d1b224cb41d32aa7de6519af7a7a48b5968f87f
-main_subject: Merge pull request #74 from valentinflorezarbelaez-ai/cursor/eos-ladder7-lidr-harness-adoption
-branch_hygiene: clean (main == origin/main @ 1d1b224; Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 audit #74 closed on main)
+main_tip: b785f014e2403964bb3fe36325c220a965295083
+main_subject: Merge pull request #79 from valentinflorezarbelaez-ai/cursor/eos-specboot-antigravity-first
+branch_hygiene: clean (main == origin/main @ b785f01; Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 S1-S4 + SpecBoot/AGY #79 closed on main)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-09 America/Bogota (S1 Ladder7 tip refresh; pin to main@1d1b224 post audit #74; L6 close was e431e2c; PRODUCTION_READY=NO)
+updated_at: 2026-09-09 America/Bogota (tip refresh post SpecBoot #79; pin to main@b785f01; prior S1 pin was 1d1b224; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 audit)
+## Closed on main (fusion + ROI1-6 + Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 S1-S4 + SpecBoot/AGY)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `1d1b224cb41d32aa7de6519af7a7a48b5968f87f`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `b785f014e2403964bb3fe36325c220a965295083`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -69,6 +69,11 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | R5 Deferred writers Choice B | #72 | 2e04639 | `EOS_R5_DEFERRED_WRITERS_GOVERNANCE_2026-09-09.md`; deferred-writers-lock; test:r5 |
 | R6 Complexity verify closeout | #73 | e431e2c | `EOS_R6_COMPLEXITY_BUDGET_VERIFY_CLOSEOUT_2026-09-09.md`; K6 CLOSED_BY_R4; CI test:r4/r5 |
 | Ladder 7 LIDR harness adoption + audit | #74 | 1d1b224 | `EOS_MATURITY_LADDER_7_AUDIT_2026-09-09.md` + `EOS_LIDR_HARNESS_WORKSHOP_ADOPTION_2026-09-09.md` (S1-S6 ordered; S1 tip refresh separate) |
+| S1 Ladder7 tip refresh | #75 | aa28b59 | `EOS_S1_LADDER7_TIP_REFRESH_2026-09-09.md`; freeze+matrix to 1d1b224 |
+| S2 Context Pack TPC | #76 | 897a50f | `EOS_S2_CONTEXT_PACK_TPC_2026-09-09.md`; context-pack-lock; test:s2 |
+| S3 Loop Engineering 4Q | #77 | f1c1577 | `EOS_S3_LOOP_ENGINEERING_4Q_2026-09-09.md`; loop-engineering-lock; test:s3 |
+| S4 Worktree isolation | #78 | d86ab23 | `EOS_S4_WORKTREE_ISOLATION_2026-09-09.md`; worktree-policy-lock; test:s4 |
+| SpecBoot cycle + Antigravity-first | #79 | b785f01 | `EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md`; specboot-cycle-lock; test:specboot-agy |
 
 ### Antigravity / agy remote-control
 
@@ -484,3 +489,13 @@ External production readiness is explicitly **not** asserted.
 - NON-CLAIM: CloudAgent out of default path; does **not** ban local Cursor IDE editing; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING)
 - Remaining install gaps: OpenSpec CLI (optional); `agy-daemon.cmd` eos-workstation (optional remote HITL)
 - Freeze `main_tip` pin **not** moved in this change (tip refresh was S1)
+
+## Tip refresh post SpecBoot / AGY (2026-09-09)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_SPECBOOT_2026-09-09.md`
+- Branch: `cursor/eos-tip-refresh-post-specboot` — push/compare only; do not merge without PO
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`b785f014e2403964bb3fe36325c220a965295083` (SpecBoot/AGY #79)
+- Honesty: prior S1 pin was `1d1b224cb41d32aa7de6519af7a7a48b5968f87f` (#74/#75 era); live main after S2–S4 + SpecBoot #79 is `b785f01` so HUD freeze observe does not DIVERGE immediately
+- Matrix rows added/normalized for S1 tip refresh, S2 Context Pack TPC, S3 Loop Engineering 4Q, S4 Worktree isolation (#78), SpecBoot/AGY (#79)
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
