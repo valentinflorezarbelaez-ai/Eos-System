@@ -9,6 +9,7 @@ Before executing tasks, read and apply:
 3. [`CONSTITUTION.md`](CONSTITUTION.md) and [`docs/core/CONSTITUTION.md`](docs/core/CONSTITUTION.md) — supreme constitution
 4. [`docs/openspec-tasks-mandatory-steps.md`](docs/openspec-tasks-mandatory-steps.md) — mandatory self-executed verification
 5. [`docs/mcp/MCP_SSOT.md`](docs/mcp/MCP_SSOT.md) — MCP consumer SSOT; sync with `npm run mcp:sync`
+6. [`docs/harness/SPECBOOT_CYCLE.md`](docs/harness/SPECBOOT_CYCLE.md) + [`docs/harness/ANTIGRAVITY_FIRST.md`](docs/harness/ANTIGRAVITY_FIRST.md) — SpecBoot cycle SSOT; **Antigravity-first** (no Cursor CloudAgent)
 
 Context Pack TPC index (Ladder 7 S2): [docs/harness/CONTEXT_PACK_TPC.md](docs/harness/CONTEXT_PACK_TPC.md) — Tool/Prompt/Context map + lifecycle policy (NON-CLAIM: index ≠ runtime orchestrator).
 

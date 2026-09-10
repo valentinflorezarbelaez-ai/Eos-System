@@ -1,4 +1,4 @@
-# EOS Loop Engineering — 4Q Guides/Sensors Matrix
+﻿# EOS Loop Engineering — 4Q Guides/Sensors Matrix
 
 **SSOT path:** `docs/harness/LOOP_ENGINEERING_4Q.md`  
 **ADR:** [`docs/architecture/adrs/ADR-0017-loop-engineering-4q.md`](../architecture/adrs/ADR-0017-loop-engineering-4q.md)  
@@ -20,6 +20,8 @@
 **Context Pack TPC (S2):** [`docs/harness/CONTEXT_PACK_TPC.md`](./CONTEXT_PACK_TPC.md)
 
 ---
+
+**SpecBoot cycle SSOT (Antigravity-first):** [`SPECBOOT_CYCLE.md`](SPECBOOT_CYCLE.md)
 
 ## 0. Purpose
 

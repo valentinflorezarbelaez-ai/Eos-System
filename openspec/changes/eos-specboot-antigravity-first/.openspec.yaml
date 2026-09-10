@@ -1,0 +1,36 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Wire SpecBoot LIDR cycle as EOS harness SSOT + Antigravity-first operating mode; mirror missing SpecBoot steps into .agents/skills (thin pointers, no fork); verify lock; PRODUCTION_READY=NO; Fundacion Delta=0; no Cursor CloudAgent in default path; no new docs/schemas JSON.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-specboot-antigravity-first
+  - docs/harness/SPECBOOT_CYCLE.md
+  - docs/harness/ANTIGRAVITY_FIRST.md
+  - docs/harness/CONTEXT_PACK_TPC.md
+  - AGENTS.md
+  - GEMINI.md
+  - CLAUDE.md
+  - openspec/config.yaml
+  - .agents/skills/ff
+  - .agents/skills/propose
+  - .agents/skills/apply
+  - .agents/skills/verify
+  - .agents/skills/archive
+  - .agents/skills/commit
+  - scripts/lib/specboot-cycle-lock.js
+  - scripts/verify-eos.js
+  - tests/eos-specboot-antigravity-first.test.js
+  - package.json
+  - docs/releases/EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - launching Cursor CloudAgent
+  - banning local Cursor IDE file editing
+  - forking full SpecBoot command bodies into duplicate skills
+  - adding docs/schemas JSON (AT_CEILING)
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip not moved)

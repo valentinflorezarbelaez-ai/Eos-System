@@ -473,3 +473,14 @@ External production readiness is explicitly **not** asserted.
 - CI: seam-pack + contract include CI-safe `test:s4` (policy/CLI/path; no git worktree churn)
 - NON-CLAIM: no swarm; policy ≠ swarm; CI smoke ≠ real worktree churn; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING)
 - Freeze `main_tip` pin **not** moved in S4 (tip refresh was S1)
+
+## SpecBoot cycle + Antigravity-first (2026-09-09)
+
+- Report: `docs/releases/EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md`
+- SSOT: `docs/harness/SPECBOOT_CYCLE.md` + `docs/harness/ANTIGRAVITY_FIRST.md`
+- Branch: `cursor/eos-specboot-antigravity-first` — push/compare only; do not merge without PO
+- AGY skill mirrors: `.agents/skills/{ff,propose,apply,verify,archive,commit}` → `.cursor/commands/*.md` (thin pointers)
+- Lock: `scripts/lib/specboot-cycle-lock.js`; `test:specboot-agy`; verify:strict block 3g13
+- NON-CLAIM: CloudAgent out of default path; does **not** ban local Cursor IDE editing; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING)
+- Remaining install gaps: OpenSpec CLI (optional); `agy-daemon.cmd` eos-workstation (optional remote HITL)
+- Freeze `main_tip` pin **not** moved in this change (tip refresh was S1)

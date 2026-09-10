@@ -8,6 +8,8 @@ context: |
   Agent/skill pack (pointers only): ai-specs/
   Operator SDD vs DIRECT: docs/manuals/EOS_OPERATOR_MANUAL_LOCAL.md
   OpenSpec runbook: docs/manuals/OPENSPEC_RUNTIME.md
+  SpecBoot cycle SSOT: docs/harness/SPECBOOT_CYCLE.md
+  Antigravity-first runtime: docs/harness/ANTIGRAVITY_FIRST.md (CloudAgent out of default path; local Cursor IDE editing allowed)
 
   Organic routing: smallest honest route. SDD when the human requests it or a
   proposal is accepted, or the change is substantial. File/diff size alone
