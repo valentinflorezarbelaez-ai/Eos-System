@@ -105,6 +105,7 @@
     "test:s2": "node --test tests/eos-s2-context-pack-tpc.test.js",
     "test:s3": "node --test tests/eos-s3-loop-engineering-4q.test.js",
     "test:s4": "node --test tests/eos-s4-worktree-isolation.test.js",
+    "test:s5": "node --test tests/eos-s5-mcp-tool-keep-inventory.test.js",
     "test:specboot-agy": "node --test tests/eos-specboot-antigravity-first.test.js"
   },
   "keywords": [
