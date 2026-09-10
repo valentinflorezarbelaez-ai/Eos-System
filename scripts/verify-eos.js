@@ -25,6 +25,7 @@ import { auditSpecbootCycleLock, SPECBOOT_CYCLE_REQUIRED_PATHS } from './lib/spe
 import { auditMcpToolKeepLock, MCP_TOOL_KEEP_REQUIRED_PATHS } from './lib/mcp-tool-keep-lock.js';
 import { auditModelRoutingRatchetLock, MODEL_ROUTING_RATCHET_REQUIRED_PATHS } from './lib/model-routing-ratchet-lock.js';
 import { auditKeepPoPruneHoldLock, KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS } from './lib/keep-po-prune-hold-lock.js';
+import { auditComplexityCeilingHoldLock, COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS } from './lib/complexity-ceiling-hold-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -118,6 +119,11 @@ const REQUIRED_PATHS = [
   'tests/eos-t5-keep-po-prune-hold.test.js',
   'docs/releases/EOS_T5_KEEP_PO_PRUNE_HOLD_2026-09-09.md',
   'docs/harness/KEEP_PO_PRUNE_RITUAL.md',
+  'scripts/lib/complexity-ceiling-hold-lock.js',
+  'scripts/ci/complexity-ceiling-hold-gate.js',
+  'tests/eos-t6-complexity-ceiling-hold.test.js',
+  'docs/releases/EOS_T6_COMPLEXITY_CEILING_HOLD_2026-09-09.md',
+  'docs/harness/COMPLEXITY_CEILING_HOLD_RITUAL.md',
   'scripts/lib/sentinel-fdir-lock.js',
   'tests/eos-n6-sentinel-fdir-lock.test.js',
   'docs/releases/EOS_N6_SENTINEL_FDIR_STRICT_LOCK_2026-09-08.md',
@@ -447,7 +453,8 @@ const REQUIRED_PATHS = [
   ...SPECBOOT_CYCLE_REQUIRED_PATHS,
     ...MCP_TOOL_KEEP_REQUIRED_PATHS,
   ...MODEL_ROUTING_RATCHET_REQUIRED_PATHS,
-  ...KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS
+  ...KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS,
+  ...COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1343,6 +1350,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/keep-po-prune-hold-lock.js',
         message: 'KEEP PO prune HOLD lock audit failed: ' + err.message,
         type: 'keep-po-prune-hold-lock'
+      });
+    }
+
+    // 3g17. T6 Complexity ceiling HOLD / standing order (HOLD or PO_NAMED; R4 budget green; no vibe schemas)
+    try {
+      const complexityCeilingHold = auditComplexityCeilingHoldLock(rootDir);
+      for (const c of complexityCeilingHold.checks) {
+        report.checks.push(c);
+      }
+      for (const f of complexityCeilingHold.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/complexity-ceiling-hold-lock.js',
+        message: 'Complexity ceiling HOLD lock audit failed: ' + err.message,
+        type: 'complexity-ceiling-hold-lock'
       });
     }
 

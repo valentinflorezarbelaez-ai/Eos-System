@@ -1,0 +1,28 @@
+﻿schema: spec-driven
+created: 2026-09-09
+goal: Ladder 8 T6 — Complexity ceiling standing-order HOLD (AT_CEILING; no new schemas) OR PO-named schema/engine prune from P6 inventory; verify complexity-budget lock green; no vibe schemas; TDD test:t6; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-t6-complexity-ceiling-hold
+  - docs/harness/COMPLEXITY_CEILING_HOLD_RITUAL.md
+  - docs/releases/EOS_T6_COMPLEXITY_CEILING_HOLD_2026-09-09.md
+  - scripts/lib/complexity-ceiling-hold-lock.js
+  - scripts/ci/complexity-ceiling-hold-gate.js
+  - tests/eos-t6-complexity-ceiling-hold.test.js
+  - package.json
+  - scripts/verify-eos.js
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - executed schema/engine prune without PO-named exact paths
+  - raising budgets.max_schemas without PO
+  - silent/vibe new docs/schemas JSON
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip not moved)
+  - T7+ Antigravity install / Dirty DEFER triage
+  - CloudAgent as SpecBoot default
+  - reimplementing R4 complexity-budget-lock

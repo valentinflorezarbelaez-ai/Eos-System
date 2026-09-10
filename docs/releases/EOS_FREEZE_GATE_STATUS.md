@@ -569,3 +569,13 @@ External production readiness is explicitly **not** asserted.
 - NON-CLAIM: inventory ≠ silent delete; HOLD ≠ executed prune; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
 - TR-01 live-suite ceiling bumped 130→140 (Ladder8 T4/T5 intentional suites; not ROI2 quarantine reversal)
 - Freeze `main_tip` pin **not** moved in T5 (tip refresh separate; base main after T4 #86 @ 203a8ca)
+
+## T6 Complexity ceiling HOLD / gate (2026-09-09)
+
+- Report: `docs/releases/EOS_T6_COMPLEXITY_CEILING_HOLD_2026-09-09.md`
+- Branch: `cursor/eos-t6-complexity-ceiling-hold` — push only; do not merge without PO
+- Decision: **HOLD — hold AT_CEILING; no new schemas** (standing order; no PO-named prune)
+- Runbook: `docs/harness/COMPLEXITY_CEILING_HOLD_RITUAL.md`; lock `complexity-ceiling-hold-lock.js`; gate `scripts/ci/complexity-ceiling-hold-gate.js` (NON-MUTATING)
+- R4 complexity-budget-lock green under HOLD (schemas 35/35 AT_CEILING); P6 inventory unchanged
+- NON-CLAIM: HOLD ≠ executed prune; inventory ≠ quarantine; gate ≠ budget bump; no vibe schemas; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
+- Freeze `main_tip` pin **not** moved in T6 (tip refresh separate; base after T5 #87 @ bf3edc7)
