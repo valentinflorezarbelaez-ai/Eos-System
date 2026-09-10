@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: b785f014e2403964bb3fe36325c220a965295083
-main_subject: Merge pull request #79 from valentinflorezarbelaez-ai/cursor/eos-specboot-antigravity-first
-branch_hygiene: clean (main == origin/main @ b785f01; Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 S1-S4 + SpecBoot/AGY #79 closed on main)
+main_tip: 167951d8fd78bdab8ea255f7278e22d9cb80f888
+main_subject: Merge pull request #82 from valentinflorezarbelaez-ai/cursor/eos-s6-model-routing-ratchet
+branch_hygiene: clean (main == origin/main @ 167951d; Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 S1-S6 + SpecBoot/AGY #79 + tip #80 closed on main; L7 harness adoption CLOSED for local governed use)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-09 America/Bogota (tip refresh post SpecBoot #79; pin to main@b785f01; prior S1 pin was 1d1b224; PRODUCTION_READY=NO)
+updated_at: 2026-09-09 America/Bogota (L7 closeout tip refresh post S6 #82; pin to main@167951d; prior tip-refresh-post-specboot pin was b785f01; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 S1-S4 + SpecBoot/AGY)
+## Closed on main (fusion + ROI1-6 + Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 S1-S6 + SpecBoot/AGY + tip #80)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `b785f014e2403964bb3fe36325c220a965295083`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `167951d8fd78bdab8ea255f7278e22d9cb80f888`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -74,6 +74,9 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | S3 Loop Engineering 4Q | #77 | f1c1577 | `EOS_S3_LOOP_ENGINEERING_4Q_2026-09-09.md`; loop-engineering-lock; test:s3 |
 | S4 Worktree isolation | #78 | d86ab23 | `EOS_S4_WORKTREE_ISOLATION_2026-09-09.md`; worktree-policy-lock; test:s4 |
 | SpecBoot cycle + Antigravity-first | #79 | b785f01 | `EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md`; specboot-cycle-lock; test:specboot-agy |
+| Tip refresh post SpecBoot/AGY | #80 | 7efb8b9 | `EOS_TIP_REFRESH_POST_SPECBOOT_2026-09-09.md`; freeze+matrix to b785f01 |
+| S5 MCP/tool KEEP inventory | #81 | bf8b5b8 | `EOS_S5_MCP_TOOL_KEEP_INVENTORY_2026-09-09.md`; mcp-tool-keep-lock; test:s5 |
+| S6 Model routing + ratchet | #82 | 167951d | `EOS_S6_MODEL_ROUTING_RATCHET_2026-09-09.md`; model-routing-ratchet-lock; test:s6 |
 
 ### Antigravity / agy remote-control
 
@@ -517,3 +520,16 @@ External production readiness is explicitly **not** asserted.
 - Lock: `scripts/lib/model-routing-ratchet-lock.js`; `test:s6`; verify:strict block 3g15
 - NON-CLAIM: no auto model switch without evidence; ritual ≠ autonomous self-heal; no whiplash-solved claim; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING); no silent tool delete
 - Freeze `main_tip` pin **not** moved in S6 (rebase base: origin/main @ bf8b5b8 = tip #80 + S5 #81; S6 does not retip freeze)
+
+
+## L7 closeout tip refresh (2026-09-09)
+
+- Report: `docs/releases/EOS_LADDER_7_CLOSEOUT_2026-09-09.md`
+- Branch: `cursor/eos-l7-closeout-tip` — push only; do not merge without PO; NO PR in this change set
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`167951d8fd78bdab8ea255f7278e22d9cb80f888` (S6 #82)
+- Honesty: prior tip-refresh-post-specboot pin was `b785f014e2403964bb3fe36325c220a965295083` (#79/#80 era); live main after tip #80 + S5 #81 + S6 #82 is `167951d` so HUD freeze observe does not DIVERGE immediately
+- Matrix: L7 S1–S6 + SpecBoot/AGY marked COMPLETE/MEASURED; **Ladder 7 harness adoption CLOSED for local governed use**
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged
+- NON-CLAIM: L7 closed ≠ PRODUCTION_READY; inventory≠prune; routing≠auto-switch; CloudAgent remains out of default SpecBoot path
+
