@@ -60,3 +60,6 @@ seam-pack named pack extended with CI-safe `test:s2`, `test:s3`, `test:s5`, `tes
 
 ## U2 seam-pack note (2026-09-09)
 seam-pack named pack extended with CI-safe `test:t2`..`test:t8` (Ladder 8 T2–T8 locks; keep `test:s2`..`test:s6` + `test:specboot-agy` + prior R/Q/P/N/M/ROI packs). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.
+
+## V4 seam-pack note (2026-09-10)
+seam-pack named pack extended with CI-safe `test:v2`, `test:v3`, `test:v4` (Ladder 10 V2–V4 locks: token hygiene output filter, typed multi-agent handoff envelope, FDIR sentinel adversarial gate; keep prior packs). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.

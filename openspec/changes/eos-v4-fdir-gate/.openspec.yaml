@@ -1,0 +1,12 @@
+schema: spec-driven
+created: 2026-09-10
+goal: Ladder 10 V4 — FDIR Sentinel & Graph Healing Gate in CI; autonomous immunological resilience verifying fail-closed detection of corrupt SHA-256 signatures, dynamic isolation and purging of orphan links (ORPHAN_LINK_PURGED) and taxonomy anomalies in EOSKnowledgeOntology, cryptographic ledger sealing in EOSSentinelDaemon, and CI seam-pack wiring; strict TDD test:v4; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-v4-fdir-gate
+  - scripts/ci/fdir-sentinel-adversarial-gate.js
+  - tests/eos-v4-fdir-sentinel-adversarial.test.js
+  - package.json
+  - .github/workflows/ci.yml
+  - docs/governance/CI_CD_CONTRACT.md
