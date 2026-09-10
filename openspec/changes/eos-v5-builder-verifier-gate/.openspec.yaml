@@ -1,0 +1,14 @@
+schema: spec-driven
+created: 2026-09-10
+goal: Ladder 10 V5 — Runtime Enforcement of BUILDER != VERIFIER Rule; custody validation guaranteeing builder_id and verifier_id disjunction across verification receipts, preventing self-certification at runtime in EvidenceCustody and SDD gatekeepers; strict TDD test:v5; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-v5-builder-verifier-gate
+  - src/core/governance/builder-verifier-custody.js
+  - src/core/sdd/evidence-custody.js
+  - scripts/ci/builder-verifier-custody-gate.js
+  - tests/eos-v5-builder-verifier-custody.test.js
+  - package.json
+  - .github/workflows/ci.yml
+  - docs/governance/CI_CD_CONTRACT.md
