@@ -109,7 +109,9 @@
     "test:specboot-agy": "node --test tests/eos-specboot-antigravity-first.test.js",
     "test:s6": "node --test tests/eos-s6-model-routing-ratchet.test.js",
     "test:t2": "node --test tests/eos-t2-ci-seam-pack-l7.test.js",
-    "test:t3": "node --test tests/eos-t3-doctor-fusion-light-l7-surfaces.test.js"
+    "test:t3": "node --test tests/eos-t3-doctor-fusion-light-l7-surfaces.test.js",
+    "test:t4": "node --test tests/eos-t4-mission-os-evd-observe-pack.test.js",
+    "observe:mission-os-evd": "node scripts/ci/mission-os-evd-observe-pack.js"
   },
   "keywords": [
     "eos",

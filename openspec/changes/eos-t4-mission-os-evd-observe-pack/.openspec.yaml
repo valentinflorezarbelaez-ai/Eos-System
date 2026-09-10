@@ -1,0 +1,26 @@
+﻿schema: spec-driven
+created: 2026-09-09
+goal: Ladder 8 T4 — Mission OS / EVD observe pack (CI-safe ritual: coherence + sealEvd + tip ALIGNED; EVD evidence; NON-CLAIM not soak-prod); TDD test:t4; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-t4-mission-os-evd-observe-pack
+  - src/core/observability/mission-os-evd-observe-pack.js
+  - scripts/ci/mission-os-evd-observe-pack.js
+  - tests/eos-t4-mission-os-evd-observe-pack.test.js
+  - package.json
+  - scripts/verify-eos.js
+  - docs/releases/EOS_T4_MISSION_OS_EVD_OBSERVE_PACK_2026-09-09.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip not moved)
+  - T5+ PO-named KEEP prune
+  - silent MCP/tool prune
+  - production soak claim / long-run ≠ soak-prod
+  - CloudAgent as SpecBoot default
+  - new docs/schemas JSON (AT_CEILING)
