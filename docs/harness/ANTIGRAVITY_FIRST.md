@@ -43,7 +43,7 @@
 
 Operator checklist + honest status smoke: [`docs/harness/AGY_WORKSTATION_CHECKLIST.md`](./AGY_WORKSTATION_CHECKLIST.md) (T7). Evidence: `docs/releases/EOS_T7_AGY_WORKSTATION_EVIDENCE_2026-09-09.md`. Smoke: `node scripts/ci/agy-workstation-smoke.js` (NON-MUTATING; no Admin).
 
-1. **OpenSpec CLI** (optional) — ceremony aliases `opsx:*`; not required for L0.
+1. **OpenSpec CLI** (optional) — ceremony aliases `opsx:*`; not required for L0. U6 HOLD ritual: [`docs/harness/OPENSPEC_CLI_HOLD_RITUAL.md`](./OPENSPEC_CLI_HOLD_RITUAL.md); evidence `docs/releases/EOS_U6_OPENSPEC_CLI_HOLD_2026-09-09.md`; gate `node scripts/ci/openspec-cli-hold-gate.js` (CLI_ABSENT_HOLD when not on PATH; do NOT invent PRESENT).
 2. **agy-daemon** — `agy-daemon.cmd install --name eos-workstation` (Admin HITL) when remote HITL needed; confirm with `agy-daemon.cmd status`. Do **not** pretend INSTALLED when status says Not installed.
    - U5 Admin HITL checklist (optional, no install in CI): [`docs/harness/AGY_ADMIN_HITL_CHECKLIST.md`](./AGY_ADMIN_HITL_CHECKLIST.md); evidence `docs/releases/EOS_U5_AGY_ADMIN_HITL_CHECKLIST_2026-09-09.md`; gate `node scripts/ci/agy-admin-hitl-checklist.js` (`adminRequired=true` documented, `installExecuted=false`).
 3. Confirm local `agy` binary available before SpecBoot sessions.

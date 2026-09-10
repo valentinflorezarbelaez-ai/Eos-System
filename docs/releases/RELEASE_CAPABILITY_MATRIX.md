@@ -109,7 +109,7 @@ PRODUCTION_READY: NO
 
 - evaluated_tip pinned to OBSERVED main tip after L9 audit #91: 8781bb3f6da9b8a404153b5f60f5199d18478226
 - Prior L8 closeout pin was 1b48ff5c386e83667d2caae78be29f3ad5a5efbb (T7 #89 era); live main after #90 + #91 is 8781bb3 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
-- Matrix: L8 T1–T8 COMPLETE/MEASURED + Ladder 9 audit MEASURED + U1 tip refresh MEASURED + U2 CI seam-pack MEASURED + U3 doctor/fusion-light MEASURED + U4 Mission OS deepen MEASURED + U5 AGY Admin HITL checklist MEASURED
+- Matrix: L8 T1–T8 COMPLETE/MEASURED + Ladder 9 audit MEASURED + U1 tip refresh MEASURED + U2 CI seam-pack MEASURED + U3 doctor/fusion-light MEASURED + U4 Mission OS deepen MEASURED + U5 AGY Admin HITL checklist MEASURED + U6 OpenSpec CLI HOLD MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
 ## Tip refresh notes (L8 closeout post T7 #89) — historical

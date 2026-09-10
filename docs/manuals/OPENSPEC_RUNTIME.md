@@ -63,6 +63,8 @@ npm run openspec:cli -- --version
 
 If `openspec` is not on `PATH`, the helper exits `2` and points here. That is expected on L0 clones.
 
+U6 fail-closed HOLD (optional this quarter): see `docs/harness/OPENSPEC_CLI_HOLD_RITUAL.md` and evidence `docs/releases/EOS_U6_OPENSPEC_CLI_HOLD_2026-09-09.md`. Gate: `node scripts/ci/openspec-cli-hold-gate.js`. Do **not** invent install success when ABSENT.
+
 Do **not** run `openspec init` in CI. The committed `openspec/` tree is the project structure.
 
 ## Organic routing reminder
