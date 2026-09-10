@@ -123,7 +123,8 @@
     "test:u5": "node --test tests/eos-u5-agy-admin-hitl-checklist.test.js",
     "test:u6": "node --test tests/eos-u6-openspec-cli-hold.test.js",
     "test:u7": "node --test tests/eos-u7-specboot-defer-stubs.test.js",
-    "test:v2": "node --test tests/bounded-output-filter.test.js"
+    "test:v2": "node --test tests/bounded-output-filter.test.js",
+    "test:v3": "node --test tests/agent-handoff-envelope.test.js"
   },
   "keywords": [
     "eos",

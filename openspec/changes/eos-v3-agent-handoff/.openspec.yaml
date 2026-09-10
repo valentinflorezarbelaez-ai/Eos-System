@@ -1,0 +1,10 @@
+schema: spec-driven
+created: 2026-09-10
+goal: Ladder 10 V3 — Typed Multi-Agent Handoff Contract (AgentHandoffEnvelope); deterministic schema validation for subagent phase transitions inspired by Google ADK and PydanticAI patterns; runtime enforcement of BUILDER != VERIFIER disjunction; strict TDD test:v3; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-v3-agent-handoff
+  - src/core/orchestration/agent-handoff-envelope.js
+  - tests/agent-handoff-envelope.test.js
+  - package.json
