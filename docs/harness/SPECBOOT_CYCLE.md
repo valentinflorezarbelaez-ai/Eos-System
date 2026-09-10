@@ -86,7 +86,7 @@ Thin mirrors = `SKILL.md` frontmatter + pointer to `.cursor/commands/<step>.md` 
 4. **MCP profile:** `.agents/mcp_config.json` is **L0_READONLY**. Cursor/Windsurf consumers are **L1_LOCAL_GOVERNED**. AGY via `.agents` MCP cannot rely on MCP write tools for `/apply`; use local shell + write-barrier + git on the feature branch.
 5. **Entrypoint:** Always start from `GEMINI.md` → `.agents/AGENTS.md` → this file + ADR-0010 + ANTIGRAVITY_FIRST.
 6. **OpenSpec CLI (optional):** External OpenSpec/`opsx:*` aliases are ceremony aliases only; not required for L0.
-7. **Spec-Boot standards stubs (DEFER):** `docs/frontend-standards.md`, `docs/documentation-standards.md`, `docs/development_guide.md` — thin DEFER stubs say fill with EOS stack (leave dirty unstaged until filled).
+7. **Spec-Boot standards INDEX stubs (U7 INDEX_STUBS):** `docs/frontend-standards.md`, `docs/documentation-standards.md`, `docs/development_guide.md` — tracked as minimal honest EOS **INDEX** stubs (DEFER/SSOT markers + pointers to base-standards / layer rules / ADR-0010). Gentleman wholesale content remains DEFER — **no Gentleman invent**. See `docs/harness/SPECBOOT_DEFER_STUBS_RITUAL.md` + `EOS_U7_SPECBOOT_DEFER_STUBS_2026-09-09.md`.
 8. **Do not confuse** Mission Loop MCP (`eos.mission.loop.*`) with SpecBoot slash ceremony — complementary, not substitutes.
 9. **Fundacion Δ=0** and **PRODUCTION_READY=NO** remain in force.
 

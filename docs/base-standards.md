@@ -53,3 +53,15 @@ All tasks must follow [`docs/openspec-tasks-mandatory-steps.md`](openspec-tasks-
 - `src/core/` product kernel — frozen unless the human names the exact change
 - `GAP-002` — remains `UNKNOWN`
 - `GATE-13` — `CANARY_RESTRICTED` until recorded otherwise
+
+## SpecBoot INDEX stubs (U7)
+
+Thin SpecBoot checklist paths — **INDEX only**, not second SSOTs:
+
+| Stub | Points at |
+| --- | --- |
+| `docs/development_guide.md` | this index + backend-standards + ADR-0010 + SPECBOOT_CYCLE |
+| `docs/documentation-standards.md` | this index + `.cursor/rules/09-eos-documentation.mdc` |
+| `docs/frontend-standards.md` | this index + `.cursor/rules/07-eos-product-and-ux.mdc` |
+
+**Disposition:** INDEX_STUBS. Gentleman wholesale content DEFER — no invent. Ritual: `docs/harness/SPECBOOT_DEFER_STUBS_RITUAL.md`.

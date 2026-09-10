@@ -1,0 +1,34 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 9 U7 — SpecBoot DEFER stubs triage/fill; docs/{development_guide,documentation-standards,frontend-standards}.md as minimal honest EOS INDEX stubs (DEFER/SSOT markers + pointers); no Gentleman invent; selective disposition INDEX_STUBS (not mass invent; not IGNORE of SpecBoot-required paths); ai-specs foreign remain DEFER unstaged; TDD test:u7; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-u7-specboot-defer-stubs
+  - docs/development_guide.md
+  - docs/documentation-standards.md
+  - docs/frontend-standards.md
+  - docs/harness/SPECBOOT_DEFER_STUBS_RITUAL.md
+  - docs/releases/EOS_U7_SPECBOOT_DEFER_STUBS_2026-09-09.md
+  - scripts/lib/specboot-defer-stubs-lock.js
+  - scripts/ci/specboot-defer-stubs-gate.js
+  - tests/eos-u7-specboot-defer-stubs.test.js
+  - package.json
+  - scripts/verify-eos.js
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/harness/SPECBOOT_CYCLE.md
+  - docs/base-standards.md
+non_goals:
+  - inventing Gentleman/LIDR frontend or docs standards wholesale
+  - mass invent content for the three stubs
+  - flipping PRODUCTION_READY
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip pin not moved)
+  - U8 KEEP PO prune
+  - CloudAgent as SpecBoot default
+  - new docs/schemas JSON (AT_CEILING)
+  - staging foreign ai-specs agents DEFER
+  - mass delete / DISCARD without PO names

@@ -86,6 +86,8 @@ updated_at: 2026-09-09 America/Bogota (U1 tip refresh post L8/#90 + L9 audit #91
 | Doctor / fusion-light T4–T8 surfaces (U3) | COMPLETE | MEASURED (EOS_U3_DOCTOR_FUSION_LIGHT_T4_T8_2026-09-09.md; POST_FUSION T4–T8; test:u3; doctor≠verify) |
 | Mission OS deepen (U4) | COMPLETE | MEASURED (EOS_U4_MISSION_OS_DEEPEN_2026-09-09.md; T4 baseline+ATS honesty+custody recurrent+HUD wiring; test:u4; ≠soak-prod) |
 | AGY Admin HITL checklist (U5) | COMPLETE | MEASURED (EOS_U5_AGY_ADMIN_HITL_CHECKLIST_2026-09-09.md; extends T7; DAEMON_ABSENT honest; adminRequired=true documented not executed; test:u5; no pretend) |
+| OpenSpec CLI optional HOLD (U6) | COMPLETE | MEASURED (EOS_U6_OPENSPEC_CLI_HOLD_2026-09-09.md; CLI_ABSENT_HOLD; test:u6; no invent install) |
+| SpecBoot DEFER stubs INDEX (U7) | COMPLETE | MEASURED (EOS_U7_SPECBOOT_DEFER_STUBS_2026-09-09.md; INDEX_STUBS; no Gentleman invent; test:u7; ai-specs DEFER) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -109,7 +111,7 @@ PRODUCTION_READY: NO
 
 - evaluated_tip pinned to OBSERVED main tip after L9 audit #91: 8781bb3f6da9b8a404153b5f60f5199d18478226
 - Prior L8 closeout pin was 1b48ff5c386e83667d2caae78be29f3ad5a5efbb (T7 #89 era); live main after #90 + #91 is 8781bb3 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
-- Matrix: L8 T1–T8 COMPLETE/MEASURED + Ladder 9 audit MEASURED + U1 tip refresh MEASURED + U2 CI seam-pack MEASURED + U3 doctor/fusion-light MEASURED + U4 Mission OS deepen MEASURED + U5 AGY Admin HITL checklist MEASURED + U6 OpenSpec CLI HOLD MEASURED
+- Matrix: L8 T1–T8 COMPLETE/MEASURED + Ladder 9 audit MEASURED + U1 tip refresh MEASURED + U2 CI seam-pack MEASURED + U3 doctor/fusion-light MEASURED + U4 Mission OS deepen MEASURED + U5 AGY Admin HITL checklist MEASURED + U6 OpenSpec CLI HOLD MEASURED + U7 SpecBoot DEFER stubs INDEX MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
 ## Tip refresh notes (L8 closeout post T7 #89) — historical
