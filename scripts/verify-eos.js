@@ -112,6 +112,8 @@ const REQUIRED_PATHS = [
   'docs/releases/EOS_R3_DOCTOR_FUSION_LIGHT_L5_SURFACES_2026-09-09.md',
   'tests/eos-t3-doctor-fusion-light-l7-surfaces.test.js',
   'docs/releases/EOS_T3_DOCTOR_FUSION_LIGHT_L7_SURFACES_2026-09-09.md',
+  'tests/eos-u3-doctor-fusion-light-t4-t8.test.js',
+  'docs/releases/EOS_U3_DOCTOR_FUSION_LIGHT_T4_T8_2026-09-09.md',
   'src/core/observability/mission-os-evd-observe-pack.js',
   'scripts/ci/mission-os-evd-observe-pack.js',
   'tests/eos-t4-mission-os-evd-observe-pack.test.js',

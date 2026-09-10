@@ -84,6 +84,11 @@ describe('Q3 doctor / fusion-light Ladder4 lock surfaces', () => {
         'scripts/lib/specboot-cycle-lock.js',
         'scripts/lib/mcp-tool-keep-lock.js',
         'scripts/lib/model-routing-ratchet-lock.js',
+        'src/core/observability/mission-os-evd-observe-pack.js',
+        'scripts/lib/keep-po-prune-hold-lock.js',
+        'scripts/lib/complexity-ceiling-hold-lock.js',
+        'scripts/lib/agy-workstation-lock.js',
+        'scripts/lib/dirty-defer-triage-lock.js',
 
         'EOS-MISSION-CONTROL/CURRENT_MISSION.json'
       ];

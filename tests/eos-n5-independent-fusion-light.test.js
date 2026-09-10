@@ -33,8 +33,8 @@ function parseCliPayload(stdout) {
 }
 
 describe('N5 independent verifier fusion-light', () => {
-  it('FUSION_LIGHT_REQUIRED_PATHS reuses doctor custody/engram/fusion-cp/evd-seal + Q3 L4 + R3 L5 + T3 L7', () => {
-    assert.deepEqual([...FUSION_LIGHT_PATH_IDS], ['FUSION_CP', 'CUSTODY', 'ENGRAM', 'EVD_SEAL', 'HOOKS_INSTALL', 'MCP_CATALOG', 'MISSION_LOCAL_EVD', 'MISSION_ARTIFACT_WRITE', 'P6_INVENTORY_LOCK', 'CONTEXT_PACK', 'LOOP_ENGINEERING', 'WORKTREE_POLICY', 'SPECBOOT_CYCLE', 'MCP_TOOL_KEEP', 'MODEL_ROUTING_RATCHET']);
+  it('FUSION_LIGHT_REQUIRED_PATHS reuses doctor custody/engram/fusion-cp/evd-seal + Q3 L4 + R3 L5 + T3 L7 + U3 T4–T8', () => {
+    assert.deepEqual([...FUSION_LIGHT_PATH_IDS], ['FUSION_CP', 'CUSTODY', 'ENGRAM', 'EVD_SEAL', 'HOOKS_INSTALL', 'MCP_CATALOG', 'MISSION_LOCAL_EVD', 'MISSION_ARTIFACT_WRITE', 'P6_INVENTORY_LOCK', 'CONTEXT_PACK', 'LOOP_ENGINEERING', 'WORKTREE_POLICY', 'SPECBOOT_CYCLE', 'MCP_TOOL_KEEP', 'MODEL_ROUTING_RATCHET', 'MISSION_OS_EVD', 'KEEP_PO_PRUNE_HOLD', 'COMPLEXITY_CEILING_HOLD', 'AGY_WORKSTATION', 'DIRTY_DEFER_TRIAGE']);
     const doctorRels = POST_FUSION_CRITICAL_PATHS
       .filter((p) => FUSION_LIGHT_PATH_IDS.includes(p.id))
       .map((p) => p.rel);
