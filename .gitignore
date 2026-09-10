@@ -70,3 +70,8 @@ tests/fixtures/test-ledger/
 docs/archive/
 .eos/
 .windsurf/
+# T8 Dirty DEFER triage — IGNORE disposition (files may remain on disk; not deleted)
+EOS-Lab/Transmission-Live/
+archive/quarantine/docs/evolution/
+docs/audits/atp_apple_light.png
+docs/audits/atp_tidal_dark.png
