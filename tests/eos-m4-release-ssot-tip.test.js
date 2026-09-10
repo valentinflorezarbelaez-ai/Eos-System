@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** L8 closeout tip refresh pinned tip: main after T7 #89 (prior L7 closeout pin was 167951d) */
-const EXPECTED_TIP = '1b48ff5c386e83667d2caae78be29f3ad5a5efbb';
+/** U1 tip refresh post L8/#90 + L9 #91 pinned tip: main@8781bb3 (prior L8 closeout pin was 1b48ff5; tip honesty restored) */
+const EXPECTED_TIP = '8781bb3f6da9b8a404153b5f60f5199d18478226';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal L8 closeout pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal U1 tip-refresh pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal L8 closeout pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal U1 tip-refresh pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -97,7 +97,9 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'Complexity ceiling HOLD',
     'AGY workstation evidence',
     'Dirty DEFER triage',
-    'Ladder 8 T1–T8 closeout'
+    'Ladder 8 T1–T8 closeout',
+    'Ladder 9 maturity gap audit',
+    'U1 tip refresh post L8'
   ]) {
     assert.ok(matrix.includes(needle), 'matrix missing row for: ' + needle);
   }

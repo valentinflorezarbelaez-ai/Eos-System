@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 1b48ff5c386e83667d2caae78be29f3ad5a5efbb
+evaluated_tip: 8781bb3f6da9b8a404153b5f60f5199d18478226
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #89 from valentinflorezarbelaez-ai/cursor/eos-t7-agy-workstation-evidence
-updated_at: 2026-09-09 America/Bogota (L8 closeout tip refresh post T7 #89; pin to main@1b48ff5; prior L7 closeout tip pin was 167951d; PRODUCTION_READY=NO)
+main_subject: Merge pull request #91 from valentinflorezarbelaez-ai/cursor/eos-l9-audit
+updated_at: 2026-09-09 America/Bogota (U1 tip refresh post L8/#90 + L9 audit #91; pin to main@8781bb3; prior L8 closeout pin was 1b48ff5; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -75,11 +75,13 @@ updated_at: 2026-09-09 America/Bogota (L8 closeout tip refresh post T7 #89; pin 
 | Complexity ceiling HOLD / gate (T6) | COMPLETE | MEASURED (EOS_T6_COMPLEXITY_CEILING_HOLD_2026-09-09.md; HOLD hold AT_CEILING no new schemas; complexity-ceiling-hold-lock; test:t6; no vibe schemas) |
 | AGY workstation evidence / smoke (T7) | COMPLETE | MEASURED (EOS_T7_AGY_WORKSTATION_EVIDENCE_2026-09-09.md; DAEMON_ABSENT honest; agy-workstation-lock; test:t7; no pretend; CloudAgent out of path) |
 | Dirty DEFER triage (T8) | COMPLETE | MEASURED (EOS_T8_DIRTY_DEFER_TRIAGE_2026-09-09.md; CATALOG+IGNORE; no mass delete; dirty-defer-triage-lock; test:t8) |
-| Ladder 8 T1–T8 closeout | COMPLETE | MEASURED (EOS_LADDER_8_CLOSEOUT_2026-09-09.md; T1–T8 CLOSED for local governed use; tip pin 1b48ff5; PRODUCTION_READY=NO) |
+| Ladder 8 T1–T8 closeout | COMPLETE | MEASURED (EOS_LADDER_8_CLOSEOUT_2026-09-09.md; T1–T8 CLOSED for local governed use; historical tip pin 1b48ff5 superseded by U1→8781bb3; PRODUCTION_READY=NO) |
 | SpecBoot cycle + Antigravity-first | COMPLETE | MEASURED (#79; EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md; specboot-cycle-lock; test:specboot-agy) |
 | MCP/tool KEEP inventory (S5) | COMPLETE | MEASURED (#81; EOS_S5_MCP_TOOL_KEEP_INVENTORY_2026-09-09.md; mcp-tool-keep-lock; test:s5; inventory≠prune) |
 | Model routing + ratchet (S6) | COMPLETE | MEASURED (#82; EOS_S6_MODEL_ROUTING_RATCHET_2026-09-09.md; model-routing-ratchet-lock; test:s6; no auto-switch claim) |
 | Ladder 7 harness adoption closeout | COMPLETE | MEASURED (EOS_LADDER_7_CLOSEOUT_2026-09-09.md; S1–S6 + SpecBoot/AGY CLOSED for local governed use; PRODUCTION_READY=NO) |
+| Ladder 9 maturity gap audit | COMPLETE | MEASURED (#91; EOS_MATURITY_LADDER_9_AUDIT_2026-09-09.md; audit base tip abdf07e post #90; U1–U8 ordered; tip honesty gap closed by U1) |
+| U1 tip refresh post L8 | COMPLETE | MEASURED (EOS_U1_TIP_REFRESH_POST_L8_2026-09-09.md; freeze+matrix to 8781bb3; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -99,7 +101,14 @@ COMPLETE_WITH_CONDITIONS: (subset)
 PRODUCTION_READY: NO
 ```
 
-## Tip refresh notes (L8 closeout post T7 #89)
+## Tip refresh notes (U1 post L8 / #90 + L9 audit #91)
+
+- evaluated_tip pinned to OBSERVED main tip after L9 audit #91: 8781bb3f6da9b8a404153b5f60f5199d18478226
+- Prior L8 closeout pin was 1b48ff5c386e83667d2caae78be29f3ad5a5efbb (T7 #89 era); live main after #90 + #91 is 8781bb3 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
+- Matrix: L8 T1–T8 COMPLETE/MEASURED + Ladder 9 audit MEASURED + U1 tip refresh MEASURED
+- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (L8 closeout post T7 #89) — historical
 
 - evaluated_tip pinned to OBSERVED main tip after T7 #89: 1b48ff5c386e83667d2caae78be29f3ad5a5efbb
 - Prior L7 closeout pin was 167951d8fd78bdab8ea255f7278e22d9cb80f888 (#82/#83); pin uses live main@1b48ff5 so HUD freeze observe does not DIVERGE immediately

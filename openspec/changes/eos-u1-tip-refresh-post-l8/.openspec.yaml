@@ -1,0 +1,18 @@
+schema: spec-driven
+created: 2026-09-09
+goal: U1 tip refresh post L8/#90 + L9 audit #91 — pin freeze main_tip + matrix evaluated_tip + test:m4 EXPECTED_TIP to main@8781bb3; matrix L9 audit MEASURED; tip honesty restored; PRODUCTION_READY=NO; Fundacion Delta=0.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-u1-tip-refresh-post-l8
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_U1_TIP_REFRESH_POST_L8_2026-09-09.md
+  - tests/eos-m4-release-ssot-tip.test.js
+non_goals:
+  - flipping PRODUCTION_READY
+  - implementing U2-U8
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - force-committing DEFER dirty unstaged
