@@ -1,4 +1,4 @@
-﻿# EOS Local Release — Capability Matrix
+# EOS Local Release — Capability Matrix
 
 ```text
 document: RELEASE_CAPABILITY_MATRIX
@@ -88,6 +88,7 @@ updated_at: 2026-09-09 America/Bogota (U1 tip refresh post L8/#90 + L9 audit #91
 | AGY Admin HITL checklist (U5) | COMPLETE | MEASURED (EOS_U5_AGY_ADMIN_HITL_CHECKLIST_2026-09-09.md; extends T7; DAEMON_ABSENT honest; adminRequired=true documented not executed; test:u5; no pretend) |
 | OpenSpec CLI optional HOLD (U6) | COMPLETE | MEASURED (EOS_U6_OPENSPEC_CLI_HOLD_2026-09-09.md; CLI_ABSENT_HOLD; test:u6; no invent install) |
 | SpecBoot DEFER stubs IGNORE (U7) | COMPLETE | MEASURED (EOS_U7_SPECBOOT_DEFER_STUBS_2026-09-09.md; IGNORE; harness INDEX; S2 TPC must-not-invent; test:u7+test:s2; ai-specs DEFER) |
+| Ladder 9 closeout | COMPLETE | MEASURED (EOS_LADDER_9_CLOSEOUT_2026-09-09.md; U1–U8 CLOSED for local governed use; PRODUCTION_READY=NO) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -111,7 +112,7 @@ PRODUCTION_READY: NO
 
 - evaluated_tip pinned to OBSERVED main tip after L9 audit #91: 8781bb3f6da9b8a404153b5f60f5199d18478226
 - Prior L8 closeout pin was 1b48ff5c386e83667d2caae78be29f3ad5a5efbb (T7 #89 era); live main after #90 + #91 is 8781bb3 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
-- Matrix: L8 T1–T8 COMPLETE/MEASURED + Ladder 9 audit MEASURED + U1 tip refresh MEASURED + U2 CI seam-pack MEASURED + U3 doctor/fusion-light MEASURED + U4 Mission OS deepen MEASURED + U5 AGY Admin HITL checklist MEASURED + U6 OpenSpec CLI HOLD MEASURED + U7 SpecBoot DEFER stubs IGNORE MEASURED
+- Matrix: L8 T1–T8 COMPLETE/MEASURED + Ladder 9 audit MEASURED + U1 tip refresh MEASURED + U2 CI seam-pack MEASURED + U3 doctor/fusion-light MEASURED + U4 Mission OS deepen MEASURED + U5 AGY Admin HITL checklist MEASURED + U6 OpenSpec CLI HOLD MEASURED + U7 SpecBoot DEFER stubs IGNORE MEASURED + Ladder 9 closeout MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
 ## Tip refresh notes (L8 closeout post T7 #89) — historical
