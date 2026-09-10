@@ -151,7 +151,12 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:q6', 'CI Ladder5 Q6 P6 inventory lock');
         assertContains(yaml, 'test:r4', 'CI Ladder6 R4 complexity-budget lock');
         assertContains(yaml, 'test:r5', 'CI Ladder6 R5 deferred-writers lock');
+        assertContains(yaml, 'test:s2', 'CI Ladder7 S2 context-pack TPC');
+        assertContains(yaml, 'test:s3', 'CI Ladder7 S3 loop-engineering 4Q');
         assertContains(yaml, 'test:s4', 'CI Ladder7 S4 worktree isolation smoke');
+        assertContains(yaml, 'test:s5', 'CI Ladder7 S5 MCP/tool KEEP inventory');
+        assertContains(yaml, 'test:s6', 'CI Ladder7 S6 model-routing-ratchet');
+        assertContains(yaml, 'test:specboot-agy', 'CI Ladder7 SpecBoot/AGY');
       } catch (err) {
         failures.push(err.message);
       }

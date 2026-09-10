@@ -68,6 +68,7 @@ updated_at: 2026-09-09 America/Bogota (L7 closeout tip refresh post S6 #82; pin 
 | Context Pack TPC (S2) | COMPLETE | MEASURED (#76; EOS_S2_CONTEXT_PACK_TPC_2026-09-09.md; context-pack-lock; test:s2) |
 | Loop Engineering 4Q (S3) | COMPLETE | MEASURED (#77; EOS_S3_LOOP_ENGINEERING_4Q_2026-09-09.md; loop-engineering-lock; test:s3) |
 | Worktree isolation (S4) | COMPLETE | MEASURED (#78; EOS_S4_WORKTREE_ISOLATION_2026-09-09.md; worktree-policy-lock; test:s4) |
+| CI seam-pack L7 locks (T2) | COMPLETE | MEASURED (EOS_T2_CI_SEAM_PACK_L7_2026-09-09.md; seam-pack test:s2/s3/s5/s6/specboot-agy; keep s4; test:t2) |
 | SpecBoot cycle + Antigravity-first | COMPLETE | MEASURED (#79; EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md; specboot-cycle-lock; test:specboot-agy) |
 | MCP/tool KEEP inventory (S5) | COMPLETE | MEASURED (#81; EOS_S5_MCP_TOOL_KEEP_INVENTORY_2026-09-09.md; mcp-tool-keep-lock; test:s5; inventory≠prune) |
 | Model routing + ratchet (S6) | COMPLETE | MEASURED (#82; EOS_S6_MODEL_ROUTING_RATCHET_2026-09-09.md; model-routing-ratchet-lock; test:s6; no auto-switch claim) |
