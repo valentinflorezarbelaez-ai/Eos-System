@@ -1,0 +1,21 @@
+﻿schema: spec-driven
+created: 2026-09-09
+goal: Ladder 7 S5 MCP/tool KEEP inventory — ranked KEEP vs prune-candidate tools from MCP catalog SSOT; verify lock; prune solo PO-named; NON-CLAIM inventory≠prune; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING no new schemas.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-s5-mcp-tool-keep-inventory
+  - docs/releases/EOS_S5_MCP_TOOL_KEEP_INVENTORY_2026-09-09.md
+  - scripts/lib/mcp-tool-keep-lock.js
+  - tests/eos-s5-mcp-tool-keep-inventory.test.js
+  - scripts/verify-eos.js
+  - package.json
+non_goals:
+  - flipping PRODUCTION_READY
+  - executing MCP/tool prune
+  - silent catalog delete
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - new docs/schemas JSON
+  - force-committing DEFER dirty unstaged

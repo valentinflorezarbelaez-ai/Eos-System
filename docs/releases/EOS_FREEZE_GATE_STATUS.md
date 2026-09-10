@@ -499,3 +499,12 @@ External production readiness is explicitly **not** asserted.
 - Matrix rows added/normalized for S1 tip refresh, S2 Context Pack TPC, S3 Loop Engineering 4Q, S4 Worktree isolation (#78), SpecBoot/AGY (#79)
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
+
+## S5 MCP/tool KEEP inventory (PO prune) (2026-09-09)
+
+- Report: `docs/releases/EOS_S5_MCP_TOOL_KEEP_INVENTORY_2026-09-09.md`
+- Branch: `cursor/eos-s5-mcp-tool-keep-inventory` — push/compare only; do not merge without PO
+- Inventario KEEP (57) + candidatos (23) from MCP catalog SSOT + dead/orphan register; pregunta "¿Qué puedo dejar de hacer?"
+- Lock: `scripts/lib/mcp-tool-keep-lock.js`; `test:s5`; verify:strict block 3g14
+- NON-CLAIM: inventory ≠ executed prune; prune solo PO-named; no silent delete; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING)
+- Freeze `main_tip` pin **not** moved in S5 (tip refresh was tip-refresh-post-specboot @ b785f01)
