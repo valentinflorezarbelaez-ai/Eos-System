@@ -1,0 +1,28 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 7 S6 — Model routing by task class + ratchet ritual (error→control); verify lock; NON-CLAIM no auto model switch without evidence; ritual≠self-heal; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING no new schemas.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-s6-model-routing-ratchet
+  - docs/harness/MODEL_ROUTING.md
+  - docs/harness/RATCHET_RITUAL.md
+  - docs/architecture/adrs/ADR-0018-model-routing-ratchet.md
+  - scripts/lib/model-routing-ratchet-lock.js
+  - tests/eos-s6-model-routing-ratchet.test.js
+  - scripts/verify-eos.js
+  - package.json
+  - docs/releases/EOS_S6_MODEL_ROUTING_RATCHET_2026-09-09.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - automatic model switcher / middleware
+  - claiming whiplash METR/Faros solved
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - new docs/schemas JSON
+  - silent MCP/tool delete
+  - Cursor CloudAgent as default SpecBoot path
+  - tip refresh (freeze main_tip pin not moved)
