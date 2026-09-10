@@ -63,3 +63,6 @@ seam-pack named pack extended with CI-safe `test:t2`..`test:t8` (Ladder 8 T2–T
 
 ## V4 seam-pack note (2026-09-10)
 seam-pack named pack extended with CI-safe `test:v2`, `test:v3`, `test:v4` (Ladder 10 V2–V4 locks: token hygiene output filter, typed multi-agent handoff envelope, FDIR sentinel adversarial gate; keep prior packs). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.
+
+## V5 seam-pack note (2026-09-10)
+seam-pack named pack extended with CI-safe `test:v5` (Ladder 10 V5 lock: BUILDER != VERIFIER runtime enforcement and custody gate; keep prior packs). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.

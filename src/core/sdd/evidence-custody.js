@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @module EvidenceCustody
  * @description ROI4 I3 — tamper-evident evidence custody over the canonical HashChainedLedger (ADR-0009).
  * Does NOT invent a parallel ledger. Seals verify receipts / mission-loop advances / EVD writes
@@ -16,6 +16,7 @@ import {
   canonicalJson
 } from './epistemic-evidence-engine.js';
 import { isFundacionPath } from '../write-barrier/paths.js';
+import { assertBuilderVerifierDisjunction } from '../governance/builder-verifier-custody.js';
 
 export const CUSTODY_CHAIN_ID = 'CP-EVIDENCE';
 
@@ -141,11 +142,19 @@ export class EvidenceCustody {
    * Seal an independent / verify receipt.
    */
   sealVerifyReceipt(receipt = {}) {
+    if (receipt.builder_id || receipt.verifier_id) {
+      assertBuilderVerifierDisjunction({
+        builder_id: receipt.builder_id,
+        verifier_id: receipt.verifier_id
+      });
+    }
+
     return this.append(CUSTODY_EVENT_TYPES.VERIFY_RECEIPT, {
       receipt_id: receipt.receipt_id || receipt.evidence_id || null,
       receipt_hash: receipt.receipt_hash || receipt.sha256 || null,
       mission_id: receipt.mission_id || null,
       status: receipt.status || null,
+      builder_id: receipt.builder_id || null,
       verifier_id: receipt.verifier_id || null
     });
   }
