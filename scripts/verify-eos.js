@@ -24,6 +24,7 @@ import { auditWorktreePolicyLock, WORKTREE_POLICY_REQUIRED_PATHS } from './lib/w
 import { auditSpecbootCycleLock, SPECBOOT_CYCLE_REQUIRED_PATHS } from './lib/specboot-cycle-lock.js';
 import { auditMcpToolKeepLock, MCP_TOOL_KEEP_REQUIRED_PATHS } from './lib/mcp-tool-keep-lock.js';
 import { auditModelRoutingRatchetLock, MODEL_ROUTING_RATCHET_REQUIRED_PATHS } from './lib/model-routing-ratchet-lock.js';
+import { auditKeepPoPruneHoldLock, KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS } from './lib/keep-po-prune-hold-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -112,6 +113,11 @@ const REQUIRED_PATHS = [
   'scripts/ci/mission-os-evd-observe-pack.js',
   'tests/eos-t4-mission-os-evd-observe-pack.test.js',
   'docs/releases/EOS_T4_MISSION_OS_EVD_OBSERVE_PACK_2026-09-09.md',
+  'scripts/lib/keep-po-prune-hold-lock.js',
+  'scripts/ci/keep-po-prune-gate.js',
+  'tests/eos-t5-keep-po-prune-hold.test.js',
+  'docs/releases/EOS_T5_KEEP_PO_PRUNE_HOLD_2026-09-09.md',
+  'docs/harness/KEEP_PO_PRUNE_RITUAL.md',
   'scripts/lib/sentinel-fdir-lock.js',
   'tests/eos-n6-sentinel-fdir-lock.test.js',
   'docs/releases/EOS_N6_SENTINEL_FDIR_STRICT_LOCK_2026-09-08.md',
@@ -440,7 +446,8 @@ const REQUIRED_PATHS = [
   ...WORKTREE_POLICY_REQUIRED_PATHS,
   ...SPECBOOT_CYCLE_REQUIRED_PATHS,
     ...MCP_TOOL_KEEP_REQUIRED_PATHS,
-  ...MODEL_ROUTING_RATCHET_REQUIRED_PATHS
+  ...MODEL_ROUTING_RATCHET_REQUIRED_PATHS,
+  ...KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1319,6 +1326,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/model-routing-ratchet-lock.js',
         message: 'Model routing + ratchet ritual lock audit failed: ' + err.message,
         type: 'model-routing-ratchet-lock'
+      });
+    }
+
+    // 3g16. T5 KEEP PO-named prune HOLD / gate (HOLD or PO_NAMED; catalog reconcile; inventory!=silent delete)
+    try {
+      const keepPoPruneHold = auditKeepPoPruneHoldLock(rootDir);
+      for (const c of keepPoPruneHold.checks) {
+        report.checks.push(c);
+      }
+      for (const f of keepPoPruneHold.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/keep-po-prune-hold-lock.js',
+        message: 'KEEP PO prune HOLD lock audit failed: ' + err.message,
+        type: 'keep-po-prune-hold-lock'
       });
     }
 

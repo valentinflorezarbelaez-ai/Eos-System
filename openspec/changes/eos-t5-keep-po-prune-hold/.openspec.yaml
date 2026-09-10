@@ -1,0 +1,28 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 8 T5 — KEEP PO-named prune gate/process OR explicit HOLD (no prune this quarter); catalog reconcile gate green; NON-CLAIM inventory≠silent delete; no executed prune; TDD test:t5; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-t5-keep-po-prune-hold
+  - docs/harness/KEEP_PO_PRUNE_RITUAL.md
+  - docs/releases/EOS_T5_KEEP_PO_PRUNE_HOLD_2026-09-09.md
+  - scripts/lib/keep-po-prune-hold-lock.js
+  - scripts/ci/keep-po-prune-gate.js
+  - tests/eos-t5-keep-po-prune-hold.test.js
+  - package.json
+  - scripts/verify-eos.js
+  - tests/test-runner.test.js
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - silent MCP/tool prune or catalog delete
+  - executed prune without PO-named exact tool names
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip not moved)
+  - T6+ complexity prune
+  - CloudAgent as SpecBoot default
+  - new docs/schemas JSON (AT_CEILING)
