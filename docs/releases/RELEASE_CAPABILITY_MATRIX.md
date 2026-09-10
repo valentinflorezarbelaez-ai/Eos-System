@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 167951d8fd78bdab8ea255f7278e22d9cb80f888
+evaluated_tip: 1b48ff5c386e83667d2caae78be29f3ad5a5efbb
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #82 from valentinflorezarbelaez-ai/cursor/eos-s6-model-routing-ratchet
-updated_at: 2026-09-09 America/Bogota (L7 closeout tip refresh post S6 #82; pin to main@167951d; prior tip pin was b785f01; PRODUCTION_READY=NO)
+main_subject: Merge pull request #89 from valentinflorezarbelaez-ai/cursor/eos-t7-agy-workstation-evidence
+updated_at: 2026-09-09 America/Bogota (L8 closeout tip refresh post T7 #89; pin to main@1b48ff5; prior L7 closeout tip pin was 167951d; PRODUCTION_READY=NO)
 ```
 
 
@@ -74,6 +74,8 @@ updated_at: 2026-09-09 America/Bogota (L7 closeout tip refresh post S6 #82; pin 
 | KEEP PO-named prune HOLD / gate (T5) | COMPLETE | MEASURED (EOS_T5_KEEP_PO_PRUNE_HOLD_2026-09-09.md; HOLD no prune this quarter; keep-po-prune-hold-lock; test:t5; inventory≠silent delete) |
 | Complexity ceiling HOLD / gate (T6) | COMPLETE | MEASURED (EOS_T6_COMPLEXITY_CEILING_HOLD_2026-09-09.md; HOLD hold AT_CEILING no new schemas; complexity-ceiling-hold-lock; test:t6; no vibe schemas) |
 | AGY workstation evidence / smoke (T7) | COMPLETE | MEASURED (EOS_T7_AGY_WORKSTATION_EVIDENCE_2026-09-09.md; DAEMON_ABSENT honest; agy-workstation-lock; test:t7; no pretend; CloudAgent out of path) |
+| Dirty DEFER triage (T8) | COMPLETE | MEASURED (EOS_T8_DIRTY_DEFER_TRIAGE_2026-09-09.md; CATALOG+IGNORE; no mass delete; dirty-defer-triage-lock; test:t8) |
+| Ladder 8 T1–T8 closeout | COMPLETE | MEASURED (EOS_LADDER_8_CLOSEOUT_2026-09-09.md; T1–T8 CLOSED for local governed use; tip pin 1b48ff5; PRODUCTION_READY=NO) |
 | SpecBoot cycle + Antigravity-first | COMPLETE | MEASURED (#79; EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md; specboot-cycle-lock; test:specboot-agy) |
 | MCP/tool KEEP inventory (S5) | COMPLETE | MEASURED (#81; EOS_S5_MCP_TOOL_KEEP_INVENTORY_2026-09-09.md; mcp-tool-keep-lock; test:s5; inventory≠prune) |
 | Model routing + ratchet (S6) | COMPLETE | MEASURED (#82; EOS_S6_MODEL_ROUTING_RATCHET_2026-09-09.md; model-routing-ratchet-lock; test:s6; no auto-switch claim) |
@@ -97,7 +99,14 @@ COMPLETE_WITH_CONDITIONS: (subset)
 PRODUCTION_READY: NO
 ```
 
-## Tip refresh notes (L7 closeout post S6 #82)
+## Tip refresh notes (L8 closeout post T7 #89)
+
+- evaluated_tip pinned to OBSERVED main tip after T7 #89: 1b48ff5c386e83667d2caae78be29f3ad5a5efbb
+- Prior L7 closeout pin was 167951d8fd78bdab8ea255f7278e22d9cb80f888 (#82/#83); pin uses live main@1b48ff5 so HUD freeze observe does not DIVERGE immediately
+- Matrix: T2–T8 COMPLETE/MEASURED; Ladder 8 T1–T8 CLOSED for local governed use
+- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (L7 closeout post S6 #82) — historical
 
 - evaluated_tip pinned to OBSERVED main tip after S6 #82: 167951d8fd78bdab8ea255f7278e22d9cb80f888
 - Prior tip-refresh-post-specboot pin was b785f014e2403964bb3fe36325c220a965295083 (#79/#80); pin uses live main@167951d so HUD freeze observe does not DIVERGE immediately

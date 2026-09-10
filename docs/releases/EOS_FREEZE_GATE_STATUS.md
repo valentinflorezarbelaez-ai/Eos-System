@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 167951d8fd78bdab8ea255f7278e22d9cb80f888
-main_subject: Merge pull request #82 from valentinflorezarbelaez-ai/cursor/eos-s6-model-routing-ratchet
-branch_hygiene: clean (main == origin/main @ 167951d; Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 S1-S6 + SpecBoot/AGY #79 + tip #80 closed on main; L7 harness adoption CLOSED for local governed use)
+main_tip: 1b48ff5c386e83667d2caae78be29f3ad5a5efbb
+main_subject: Merge pull request #89 from valentinflorezarbelaez-ai/cursor/eos-t7-agy-workstation-evidence
+branch_hygiene: clean (main == origin/main @ 1b48ff5; Ladder2–7 + Ladder8 T2–T7 closed on main via #84–#89; L8 T1–T8 CLOSED for local governed use after T8 triage/closeout; PRODUCTION_READY=NO)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-09 America/Bogota (L7 closeout tip refresh post S6 #82; pin to main@167951d; prior tip-refresh-post-specboot pin was b785f01; PRODUCTION_READY=NO)
+updated_at: 2026-09-09 America/Bogota (L8 closeout tip refresh post T7 #89; pin to main@1b48ff5; prior L7 closeout pin was 167951d; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2 M1-M6 + G7 + Ladder3 N1-N6 + Ladder4 P1-P6 + Ladder5 Q1-Q6 + Ladder6 R1-R6 + Ladder7 S1-S6 + SpecBoot/AGY + tip #80)
+## Closed on main (fusion + ROI1-6 + Ladder2–7 + SpecBoot/AGY + Ladder8 T2–T7 #84–#89)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `167951d8fd78bdab8ea255f7278e22d9cb80f888`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `1b48ff5c386e83667d2caae78be29f3ad5a5efbb`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -77,6 +77,13 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | Tip refresh post SpecBoot/AGY | #80 | 7efb8b9 | `EOS_TIP_REFRESH_POST_SPECBOOT_2026-09-09.md`; freeze+matrix to b785f01 |
 | S5 MCP/tool KEEP inventory | #81 | bf8b5b8 | `EOS_S5_MCP_TOOL_KEEP_INVENTORY_2026-09-09.md`; mcp-tool-keep-lock; test:s5 |
 | S6 Model routing + ratchet | #82 | 167951d | `EOS_S6_MODEL_ROUTING_RATCHET_2026-09-09.md`; model-routing-ratchet-lock; test:s6 |
+| L7 closeout tip refresh | #83 | 3b29184 | `EOS_LADDER_7_CLOSEOUT_2026-09-09.md`; freeze+matrix to 167951d |
+| T2 CI seam-pack L7 locks | #84 | (see freeze T2) | `EOS_T2_CI_SEAM_PACK_L7_2026-09-09.md`; test:t2 |
+| T3 Doctor / fusion-light L7 | #85 | (see freeze T3) | `EOS_T3_DOCTOR_FUSION_LIGHT_L7_SURFACES_2026-09-09.md`; test:t3 |
+| T4 Mission OS / EVD observe | #86 | (see freeze T4) | `EOS_T4_MISSION_OS_EVD_OBSERVE_PACK_2026-09-09.md`; test:t4 |
+| T5 KEEP PO prune HOLD | #87 | (see freeze T5) | `EOS_T5_KEEP_PO_PRUNE_HOLD_2026-09-09.md`; test:t5 |
+| T6 Complexity ceiling HOLD | #88 | 757f2de | `EOS_T6_COMPLEXITY_CEILING_HOLD_2026-09-09.md`; test:t6 |
+| T7 AGY workstation evidence | #89 | 1b48ff5 | `EOS_T7_AGY_WORKSTATION_EVIDENCE_2026-09-09.md`; test:t7 |
 
 ### Antigravity / agy remote-control
 
@@ -589,4 +596,17 @@ External production readiness is explicitly **not** asserted.
 - Status snapshot: local `agy` PRESENT; `agy-daemon` / eos-workstation **Not installed** (Admin HITL pending); OpenSpec CLI optional; CloudAgent out of SpecBoot default path
 - NON-CLAIM: checklist ≠ daemon installed; smoke ≠ Admin install; evidence ≠ pretend; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
 - Freeze `main_tip` pin **not** moved in T7 (tip refresh separate; base after T6 #88 @ 757f2de)
+## T8 Dirty DEFER triage + L8 closeout tip refresh (2026-09-09)
 
+- Report triage: `docs/releases/EOS_T8_DIRTY_DEFER_TRIAGE_2026-09-09.md`
+- Report closeout: `docs/releases/EOS_LADDER_8_CLOSEOUT_2026-09-09.md`
+- Ritual: `docs/harness/DIRTY_DEFER_TRIAGE_RITUAL.md`
+- Branch: `cursor/eos-t8-dirty-defer-triage` — push only; do not merge without PO; NO PR
+- Decision: **CATALOG + selective IGNORE** — no mass delete of DEFER without PO names
+- Lock: `dirty-defer-triage-lock.js`; gate `scripts/ci/dirty-defer-triage-gate.js` (NON-MUTATING); `test:t8`; verify:strict 3g19
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`1b48ff5c386e83667d2caae78be29f3ad5a5efbb` (T7 #89)
+- Honesty: prior L7 closeout pin was `167951d8fd78bdab8ea255f7278e22d9cb80f888` (#82/#83 era); live main after T2–T7 #84–#89 is `1b48ff5` so HUD freeze observe does not DIVERGE immediately
+- Matrix: T2–T8 MEASURED; **Ladder 8 T1–T8 CLOSED for local governed use**
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; remaining DEFER (foreign agents + SpecBoot thin stubs) unstaged
+- NON-CLAIM: triage/IGNORE ≠ deleted from disk; L8 closed ≠ PRODUCTION_READY; CloudAgent remains out of default SpecBoot path

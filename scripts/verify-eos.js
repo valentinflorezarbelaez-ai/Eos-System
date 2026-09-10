@@ -27,6 +27,7 @@ import { auditModelRoutingRatchetLock, MODEL_ROUTING_RATCHET_REQUIRED_PATHS } fr
 import { auditKeepPoPruneHoldLock, KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS } from './lib/keep-po-prune-hold-lock.js';
 import { auditComplexityCeilingHoldLock, COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS } from './lib/complexity-ceiling-hold-lock.js';
 import { auditAgyWorkstationLock, AGY_WORKSTATION_REQUIRED_PATHS } from './lib/agy-workstation-lock.js';
+import { auditDirtyDeferTriageLock, DIRTY_DEFER_TRIAGE_REQUIRED_PATHS } from './lib/dirty-defer-triage-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -461,7 +462,8 @@ const REQUIRED_PATHS = [
   ...MODEL_ROUTING_RATCHET_REQUIRED_PATHS,
   ...KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS,
   ...COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS,
-  ...AGY_WORKSTATION_REQUIRED_PATHS
+  ...AGY_WORKSTATION_REQUIRED_PATHS,
+  ...DIRTY_DEFER_TRIAGE_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1392,6 +1394,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/agy-workstation-lock.js',
         message: 'AGY workstation evidence lock audit failed: ' + err.message,
         type: 'agy-workstation-lock'
+      });
+    }
+
+    // 3g19. T8 Dirty DEFER triage + L8 closeout (catalog/IGNORE; no mass delete; tip pin)
+    try {
+      const dirtyDefer = auditDirtyDeferTriageLock(rootDir);
+      for (const c of dirtyDefer.checks) {
+        report.checks.push(c);
+      }
+      for (const f of dirtyDefer.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/dirty-defer-triage-lock.js',
+        message: 'Dirty DEFER triage lock audit failed: ' + err.message,
+        type: 'dirty-defer-triage-lock'
       });
     }
 

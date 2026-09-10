@@ -1,0 +1,27 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 8 T8 — Dirty DEFER triage (catalog promote/quarantine/ignore docs-only) + L8 closeout tip pin to live main after T7; no mass delete without PO names; TDD test:t8; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-t8-dirty-defer-triage
+  - docs/releases/EOS_T8_DIRTY_DEFER_TRIAGE_2026-09-09.md
+  - docs/releases/EOS_LADDER_8_CLOSEOUT_2026-09-09.md
+  - docs/harness/DIRTY_DEFER_TRIAGE_RITUAL.md
+  - scripts/lib/dirty-defer-triage-lock.js
+  - scripts/ci/dirty-defer-triage-gate.js
+  - tests/eos-t8-dirty-defer-triage.test.js
+  - package.json
+  - scripts/verify-eos.js
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - .gitignore
+non_goals:
+  - flipping PRODUCTION_READY
+  - mass delete of DEFER without PO names
+  - force-commit secrets / Fundacion / App Fuerza
+  - opening or merging PR
+  - CloudAgent as SpecBoot default
+  - new docs/schemas JSON (AT_CEILING)
+  - silent MCP/tool prune
