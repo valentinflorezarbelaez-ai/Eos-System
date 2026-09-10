@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 8 T3 — doctor/fusion-light observe L7 harness locks (SpecBoot/AGY, context-pack, loop 4Q, worktree, KEEP, routing/ratchet); TDD test:t3; NON-CLAIM doctor≠verify; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-t3-doctor-fusion-light-l7-surfaces
+  - src/core/runtime/operator-doctor.js
+  - scripts/lib/independent-fusion-light.js
+  - tests/eos-t3-doctor-fusion-light-l7-surfaces.test.js
+  - tests/eos-n3-operator-doctor.test.js
+  - tests/eos-n5-independent-fusion-light.test.js
+  - tests/eos-q3-doctor-fusion-light-l4-surfaces.test.js
+  - tests/eos-r3-doctor-fusion-light-l5-surfaces.test.js
+  - package.json
+  - scripts/verify-eos.js
+  - docs/releases/EOS_T3_DOCTOR_FUSION_LIGHT_L7_SURFACES_2026-09-09.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip not moved)
+  - T4+ Mission OS observe pack
+  - silent MCP/tool prune
+  - CloudAgent as SpecBoot default
+  - new docs/schemas JSON (AT_CEILING)

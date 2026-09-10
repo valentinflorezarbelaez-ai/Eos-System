@@ -3,14 +3,15 @@
  * N5 — Independent verifier fusion-light pack (Ladder 3 H5).
  * Q3 — Optional Ladder4 observe subset: hooks-install / mcp-catalog / mission-local.
  * R3 — Optional Ladder5 observe subset: mission-artifact-write / p6-inventory-lock.
+ * T3 — Optional Ladder7 observe subset: context-pack / loop-engineering / worktree / SpecBoot-AGY / KEEP / model-routing-ratchet.
  *
  * Fail-closed path existence + light import/API smoke for EvidenceCustody,
- * EngramContract, fusion-cp-lock, evd-seal-path, Q3 L4, and R3 L5 observe modules.
+ * EngramContract, fusion-cp-lock, evd-seal-path, Q3 L4, R3 L5, and T3 L7 observe modules.
  * Reuses POST_FUSION_CRITICAL_PATHS ids from operator-doctor.
  *
  * This is NOT verify:strict, NOT full GameDay soak, NOT production certification.
  * Light checks do NOT run full hooks-install / mcp-catalog / mission-local /
- * mission-artifact-write / p6-inventory-lock audit bodies (those remain verify:strict).
+ * mission-artifact-write / p6-inventory-lock / context-pack / loop-engineering / worktree / SpecBoot / KEEP / model-routing-ratchet audit bodies (those remain verify:strict).
  * PRODUCTION_READY: NO
  */
 import fs from 'node:fs';
@@ -54,6 +55,30 @@ import {
   auditP6InventoryLock,
   P6_INVENTORY_REQUIRED_PATHS
 } from './p6-inventory-lock.js';
+import {
+  auditContextPackLock,
+  CONTEXT_PACK_REQUIRED_PATHS
+} from './context-pack-lock.js';
+import {
+  auditLoopEngineeringLock,
+  LOOP_ENGINEERING_REQUIRED_PATHS
+} from './loop-engineering-lock.js';
+import {
+  auditWorktreePolicyLock,
+  WORKTREE_POLICY_REQUIRED_PATHS
+} from './worktree-policy-lock.js';
+import {
+  auditSpecbootCycleLock,
+  SPECBOOT_CYCLE_REQUIRED_PATHS
+} from './specboot-cycle-lock.js';
+import {
+  auditMcpToolKeepLock,
+  MCP_TOOL_KEEP_REQUIRED_PATHS
+} from './mcp-tool-keep-lock.js';
+import {
+  auditModelRoutingRatchetLock,
+  MODEL_ROUTING_RATCHET_REQUIRED_PATHS
+} from './model-routing-ratchet-lock.js';
 
 /** Subset of doctor post-fusion paths covered by independent fusion-light. */
 export const FUSION_LIGHT_PATH_IDS = Object.freeze([
@@ -65,7 +90,13 @@ export const FUSION_LIGHT_PATH_IDS = Object.freeze([
   'MCP_CATALOG',
   'MISSION_LOCAL_EVD',
   'MISSION_ARTIFACT_WRITE',
-  'P6_INVENTORY_LOCK'
+  'P6_INVENTORY_LOCK',
+  'CONTEXT_PACK',
+  'LOOP_ENGINEERING',
+  'WORKTREE_POLICY',
+  'SPECBOOT_CYCLE',
+  'MCP_TOOL_KEEP',
+  'MODEL_ROUTING_RATCHET'
 ]);
 
 export const FUSION_LIGHT_REQUIRED_PATHS = Object.freeze(
@@ -85,7 +116,8 @@ export const FUSION_LIGHT_NON_CLAIMS = Object.freeze([
   'NOT GitHub branch-protection enforcement (local surrogate only)',
   'NOT replacement of ROI4 custody:verify / ROI6 engram:verify deep suites',
   'NOT full hooks-install smoke / mcp-catalog reconcile / mission-local EVD audit bodies (Q3 observe = path + light export only; verify:strict owns those audits)',
-  'NOT full mission-artifact-write / p6-inventory-lock audit bodies (R3 observe = path + light export only; verify:strict owns those audits)'
+  'NOT full mission-artifact-write / p6-inventory-lock audit bodies (R3 observe = path + light export only; verify:strict owns those audits)',
+  'NOT full context-pack / loop-engineering / worktree-policy / SpecBoot-AGY / mcp-tool-keep / model-routing-ratchet audit bodies (T3 observe = path + light export only; verify:strict owns those audits)'
 ]);
 
 /**
@@ -312,6 +344,127 @@ export function auditFusionLight(rootDir) {
     });
   }
 
+  // T3 Ladder7 observe (light export only; do NOT invoke full audit bodies)
+  try {
+    if (typeof auditContextPackLock !== 'function') {
+      throw new Error('auditContextPackLock export missing');
+    }
+    if (!Array.isArray(CONTEXT_PACK_REQUIRED_PATHS) || CONTEXT_PACK_REQUIRED_PATHS.length < 2) {
+      throw new Error('CONTEXT_PACK_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'context-pack-lock (auditContextPackLock export + REQUIRED_PATHS n=' + CONTEXT_PACK_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-context-pack'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/context-pack-lock.js',
+      message: 'context-pack-lock light import failed: ' + err.message,
+      type: 'fusion-light-context-pack'
+    });
+  }
+
+  try {
+    if (typeof auditLoopEngineeringLock !== 'function') {
+      throw new Error('auditLoopEngineeringLock export missing');
+    }
+    if (!Array.isArray(LOOP_ENGINEERING_REQUIRED_PATHS) || LOOP_ENGINEERING_REQUIRED_PATHS.length < 2) {
+      throw new Error('LOOP_ENGINEERING_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'loop-engineering-lock (auditLoopEngineeringLock export + REQUIRED_PATHS n=' + LOOP_ENGINEERING_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-loop-engineering'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/loop-engineering-lock.js',
+      message: 'loop-engineering-lock light import failed: ' + err.message,
+      type: 'fusion-light-loop-engineering'
+    });
+  }
+
+  try {
+    if (typeof auditWorktreePolicyLock !== 'function') {
+      throw new Error('auditWorktreePolicyLock export missing');
+    }
+    if (!Array.isArray(WORKTREE_POLICY_REQUIRED_PATHS) || WORKTREE_POLICY_REQUIRED_PATHS.length < 2) {
+      throw new Error('WORKTREE_POLICY_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'worktree-policy-lock (auditWorktreePolicyLock export + REQUIRED_PATHS n=' + WORKTREE_POLICY_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-worktree-policy'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/worktree-policy-lock.js',
+      message: 'worktree-policy-lock light import failed: ' + err.message,
+      type: 'fusion-light-worktree-policy'
+    });
+  }
+
+  try {
+    if (typeof auditSpecbootCycleLock !== 'function') {
+      throw new Error('auditSpecbootCycleLock export missing');
+    }
+    if (!Array.isArray(SPECBOOT_CYCLE_REQUIRED_PATHS) || SPECBOOT_CYCLE_REQUIRED_PATHS.length < 2) {
+      throw new Error('SPECBOOT_CYCLE_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'specboot-cycle-lock (auditSpecbootCycleLock export + REQUIRED_PATHS n=' + SPECBOOT_CYCLE_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-specboot-cycle'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/specboot-cycle-lock.js',
+      message: 'specboot-cycle-lock light import failed: ' + err.message,
+      type: 'fusion-light-specboot-cycle'
+    });
+  }
+
+  try {
+    if (typeof auditMcpToolKeepLock !== 'function') {
+      throw new Error('auditMcpToolKeepLock export missing');
+    }
+    if (!Array.isArray(MCP_TOOL_KEEP_REQUIRED_PATHS) || MCP_TOOL_KEEP_REQUIRED_PATHS.length < 2) {
+      throw new Error('MCP_TOOL_KEEP_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'mcp-tool-keep-lock (auditMcpToolKeepLock export + REQUIRED_PATHS n=' + MCP_TOOL_KEEP_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-mcp-tool-keep'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/mcp-tool-keep-lock.js',
+      message: 'mcp-tool-keep-lock light import failed: ' + err.message,
+      type: 'fusion-light-mcp-tool-keep'
+    });
+  }
+
+  try {
+    if (typeof auditModelRoutingRatchetLock !== 'function') {
+      throw new Error('auditModelRoutingRatchetLock export missing');
+    }
+    if (!Array.isArray(MODEL_ROUTING_RATCHET_REQUIRED_PATHS) || MODEL_ROUTING_RATCHET_REQUIRED_PATHS.length < 2) {
+      throw new Error('MODEL_ROUTING_RATCHET_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'model-routing-ratchet-lock (auditModelRoutingRatchetLock export + REQUIRED_PATHS n=' + MODEL_ROUTING_RATCHET_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-model-routing-ratchet'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/model-routing-ratchet-lock.js',
+      message: 'model-routing-ratchet-lock light import failed: ' + err.message,
+      type: 'fusion-light-model-routing-ratchet'
+    });
+  }
+
   return {
     ok: failures.length === 0,
     enabled: true,
@@ -334,7 +487,7 @@ export function fusionLightDisabledReport() {
     checks: [],
     failures: [],
     nonClaims: [
-      'FUSION-LIGHT DISABLED via --no-fusion-light: custody/engram/fusion-cp/evd-seal/hooks-install/mcp-catalog/mission-local/mission-artifact-write/p6-inventory-lock NOT independently light-checked',
+      'FUSION-LIGHT DISABLED via --no-fusion-light: custody/engram/fusion-cp/evd-seal/hooks-install/mcp-catalog/mission-local/mission-artifact-write/p6-inventory-lock/context-pack/loop-engineering/worktree/SpecBoot/KEEP/model-routing-ratchet NOT independently light-checked',
       ...FUSION_LIGHT_NON_CLAIMS
     ],
     requiredPaths: [...FUSION_LIGHT_REQUIRED_PATHS]

@@ -106,6 +106,8 @@ const REQUIRED_PATHS = [
   'docs/releases/EOS_Q3_DOCTOR_FUSION_LIGHT_L4_SURFACES_2026-09-09.md',
   'tests/eos-r3-doctor-fusion-light-l5-surfaces.test.js',
   'docs/releases/EOS_R3_DOCTOR_FUSION_LIGHT_L5_SURFACES_2026-09-09.md',
+  'tests/eos-t3-doctor-fusion-light-l7-surfaces.test.js',
+  'docs/releases/EOS_T3_DOCTOR_FUSION_LIGHT_L7_SURFACES_2026-09-09.md',
   'scripts/lib/sentinel-fdir-lock.js',
   'tests/eos-n6-sentinel-fdir-lock.test.js',
   'docs/releases/EOS_N6_SENTINEL_FDIR_STRICT_LOCK_2026-09-08.md',

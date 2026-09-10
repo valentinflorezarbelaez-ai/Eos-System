@@ -78,6 +78,13 @@ describe('Q3 doctor / fusion-light Ladder4 lock surfaces', () => {
         'tests/eos-p4-mission-local-evd-seal.test.js',
         'src/core/runtime/mission-artifact-write.js',
         'scripts/lib/p6-inventory-lock.js',
+        'scripts/lib/context-pack-lock.js',
+        'scripts/lib/loop-engineering-lock.js',
+        'scripts/lib/worktree-policy-lock.js',
+        'scripts/lib/specboot-cycle-lock.js',
+        'scripts/lib/mcp-tool-keep-lock.js',
+        'scripts/lib/model-routing-ratchet-lock.js',
+
         'EOS-MISSION-CONTROL/CURRENT_MISSION.json'
       ];
       for (const rel of files) {

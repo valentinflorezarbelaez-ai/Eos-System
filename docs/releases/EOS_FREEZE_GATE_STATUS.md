@@ -541,3 +541,11 @@ External production readiness is explicitly **not** asserted.
 - Lock meta: `test:t2`; assert-gha-contract + CI_CD_CONTRACT.md T2 note; GHA-008 / m5 list extended
 - NON-CLAIM: no soak; no new GH billing / enforcement; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING); Antigravity-first (no CloudAgent)
 - Freeze `main_tip` pin **not** moved in T2 (tip refresh was L7 closeout @ 167951d / merge #83 @ 3b29184)
+
+## T3 Doctor / fusion-light Ladder7 surfaces (2026-09-09)
+
+- Report: `docs/releases/EOS_T3_DOCTOR_FUSION_LIGHT_L7_SURFACES_2026-09-09.md`
+- Branch: `cursor/eos-t3-doctor-fusion-light-l7-surfaces` — push/compare only; do not merge without PO
+- operator-doctor POST_FUSION observes CONTEXT_PACK + LOOP_ENGINEERING + WORKTREE_POLICY + SPECBOOT_CYCLE + MCP_TOOL_KEEP + MODEL_ROUTING_RATCHET; fusion-light optional subset + light exports
+- NON-CLAIM doctor != verify:strict; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; no silent MCP prune; AT_CEILING
+- Freeze `main_tip` pin **not** moved in T3 (tip refresh separate; base main after T2 #84 @ 9c41322)
