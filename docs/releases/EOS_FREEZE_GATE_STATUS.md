@@ -549,3 +549,12 @@ External production readiness is explicitly **not** asserted.
 - operator-doctor POST_FUSION observes CONTEXT_PACK + LOOP_ENGINEERING + WORKTREE_POLICY + SPECBOOT_CYCLE + MCP_TOOL_KEEP + MODEL_ROUTING_RATCHET; fusion-light optional subset + light exports
 - NON-CLAIM doctor != verify:strict; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; no silent MCP prune; AT_CEILING
 - Freeze `main_tip` pin **not** moved in T3 (tip refresh separate; base main after T2 #84 @ 9c41322)
+
+## T4 Mission OS / EVD observe pack (2026-09-09)
+
+- Report: `docs/releases/EOS_T4_MISSION_OS_EVD_OBSERVE_PACK_2026-09-09.md`
+- Branch: `cursor/eos-t4-mission-os-evd-observe-pack` — push only; do not merge without PO
+- Ritual CI-safe: coherence assert + sealEvd sandbox custody + HUD freeze tip ALIGNED (fixture MATCH) + EVD evidence
+- Scripts: `observe:mission-os-evd` / `test:t4`; module `src/core/observability/mission-os-evd-observe-pack.js`
+- NON-CLAIM: observe pack ≠ production soak; long-run ≠ soak-prod; tip ALIGNED informational; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; no silent MCP prune; AT_CEILING
+- Freeze `main_tip` pin **not** moved in T4 (tip refresh separate; base main after T3 #85 @ 428106f)

@@ -70,6 +70,7 @@ updated_at: 2026-09-09 America/Bogota (L7 closeout tip refresh post S6 #82; pin 
 | Worktree isolation (S4) | COMPLETE | MEASURED (#78; EOS_S4_WORKTREE_ISOLATION_2026-09-09.md; worktree-policy-lock; test:s4) |
 | CI seam-pack L7 locks (T2) | COMPLETE | MEASURED (EOS_T2_CI_SEAM_PACK_L7_2026-09-09.md; seam-pack test:s2/s3/s5/s6/specboot-agy; keep s4; test:t2) |
 | Doctor / fusion-light L7 surfaces (T3) | COMPLETE | MEASURED (EOS_T3_DOCTOR_FUSION_LIGHT_L7_SURFACES_2026-09-09.md; POST_FUSION L7; test:t3; doctor≠verify) |
+| Mission OS / EVD observe pack (T4) | COMPLETE | MEASURED (EOS_T4_MISSION_OS_EVD_OBSERVE_PACK_2026-09-09.md; coherence+sealEvd+tip ALIGNED; test:t4; ≠soak-prod) |
 | SpecBoot cycle + Antigravity-first | COMPLETE | MEASURED (#79; EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md; specboot-cycle-lock; test:specboot-agy) |
 | MCP/tool KEEP inventory (S5) | COMPLETE | MEASURED (#81; EOS_S5_MCP_TOOL_KEEP_INVENTORY_2026-09-09.md; mcp-tool-keep-lock; test:s5; inventory≠prune) |
 | Model routing + ratchet (S6) | COMPLETE | MEASURED (#82; EOS_S6_MODEL_ROUTING_RATCHET_2026-09-09.md; model-routing-ratchet-lock; test:s6; no auto-switch claim) |
