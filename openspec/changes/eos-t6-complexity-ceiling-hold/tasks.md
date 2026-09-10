@@ -25,4 +25,4 @@
 
 ## Step 4: Push (no PR)
 
-- [ ] Commit + push; report SHA + DoD
+- [x] Commit + push; report SHA + DoD
