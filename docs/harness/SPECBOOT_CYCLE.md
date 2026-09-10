@@ -1,14 +1,16 @@
-﻿# EOS SpecBoot Cycle — Antigravity-First Operator SSOT
+# EOS SpecBoot Cycle — Antigravity-First Operator SSOT
 
 **SSOT path:** `docs/harness/SPECBOOT_CYCLE.md`  
 **Date:** 2026-09-09  
 **PRODUCTION_READY:** NO  
 **Fundacion:** Delta=0 (untouched)  
-**Runtime mandate:** **Antigravity (`agy`) is the coding runtime.** Cursor CloudAgent launches are out of band for this cycle.
+**Runtime mandate:** **Antigravity (`agy`) is the coding runtime.** Cursor CloudAgent launches are out of band for this cycle.  
+**Runtime policy:** [`docs/harness/ANTIGRAVITY_FIRST.md`](./ANTIGRAVITY_FIRST.md)
 
 > **NON-CLAIM:** This document is an operator map + readiness gap list.  
 > It does **not** invent a new SpecBoot engine, orchestrator, or slash runtime.  
-> Ceremony authority remains ADR-0010 + existing skills/commands + OpenSpec layout.
+> Ceremony authority remains ADR-0010 + existing skills/commands + OpenSpec layout.  
+> AGY loads `.agents/skills/` (thin mirrors point at `.cursor/commands/` procedure SSOT — no body fork).
 
 ## 1. SpecBoot cycle (LIDR diagram)
 
@@ -51,9 +53,9 @@ Mandatory tasks protocol: [`openspec-tasks-mandatory-steps.md`](../openspec-task
 | `GEMINI.md` | Thin Antigravity/Gemini entrypoint → `.agents/AGENTS.md` |
 | `.agents/AGENTS.md` | Canonical agent protocol (all IDEs) |
 | `agy-daemon.cmd` + [`ANTIGRAVITY_REMOTE_CONTROL_AND_DAEMON_OPS.md`](../manuals/ANTIGRAVITY_REMOTE_CONTROL_AND_DAEMON_OPS.md) | Headless remote-control daemon; instance intent **eos-workstation** |
-| `.agents/skills/` | Multi-IDE skill pack AGY can load (partial SpecBoot coverage) |
+| `.agents/skills/` | **AGY skill pack** (SpecBoot steps mirrored; AGY loads this tree) |
 | `ai-specs/skills/` | Tracked LIDR skill inventory (ROI1) |
-| `.cursor/commands/` | Full SpecBoot slash bodies (Cursor-native vocabulary) |
+| `.cursor/commands/` | Full SpecBoot slash bodies (procedure SSOT; Cursor-native vocabulary) |
 | `.agents/skills/sdd/SKILL.md` | Documents the cycle; points at ADR-0010 |
 | `openspec/changes/` | Active OpenSpec change directories |
 | `docs/mcp/MCP_SSOT.md` + `npm run mcp:sync` | MCP consumer SSOT |
@@ -61,39 +63,39 @@ Mandatory tasks protocol: [`openspec-tasks-mandatory-steps.md`](../openspec-task
 
 ### Skill / command coverage matrix (verified 2026-09-09)
 
-| SpecBoot step | `.cursor/commands/` | `.agents/skills/` | `ai-specs/skills/` |
+| SpecBoot step | `.cursor/commands/` | `.agents/skills/` (AGY loads) | `ai-specs/skills/` |
 | --- | :---: | :---: | :---: |
 | enrich-us | yes | yes | yes |
-| ff | yes | **no** | **no** |
-| propose | yes | **no** | **no** |
-| apply | yes | **no** | **no** |
-| verify | yes | **no** | **no** |
+| ff | yes | yes (thin → commands) | **no** |
+| propose | yes | yes (thin → commands) | **no** |
+| apply | yes | yes (thin → commands) | **no** |
+| verify | yes | yes (thin → commands) | **no** |
 | adversarial-review | yes | yes | yes |
-| archive | yes | **no** | **no** |
-| commit | yes | **no** | yes |
+| archive | yes | yes (thin → commands) | **no** |
+| commit | yes | yes (thin → commands + ai-specs) | yes |
 | sdd (umbrella) | — | yes | — |
 | openspec-sync-specs | — | yes | yes |
 
+Thin mirrors = `SKILL.md` frontmatter + pointer to `.cursor/commands/<step>.md` (no huge body fork). Windows `core.symlinks=false` → pointer files preferred over git symlinks.
+
 ## 3. Gaps — what must be installed/configured for SpecBoot via Antigravity (not Cursor CloudAgent)
 
-1. **Runtime:** Use local **Antigravity / `agy`** (installed binary observed). Do **not** launch Cursor CloudAgent for SpecBoot work.
+1. **Runtime:** Use local **Antigravity / `agy`** (see [`ANTIGRAVITY_FIRST.md`](./ANTIGRAVITY_FIRST.md)). Do **not** launch Cursor CloudAgent for SpecBoot work.
 2. **Daemon (optional but intended):** `agy-daemon.cmd install --name eos-workstation` (Admin) so remote HITL works; confirm with `agy-daemon.cmd status`.
-3. **Slash parity gap:** Full SpecBoot step bodies live under `.cursor/commands/`. Antigravity does **not** automatically inherit Cursor slash commands. Until mirrored, AGY operators must:
-   - invoke the matching **skill** when present (`enrich-us`, `adversarial-review`, `sdd`), and/or
-   - open the corresponding `.cursor/commands/<step>.md` as the procedure SSOT and execute it manually in AGY chat.
-4. **Missing `.agents/skills` discrete steps:** `ff`, `propose`, `apply`, `verify`, `archive` (and `commit` only under `ai-specs/skills/`). Prefer thin skill wrappers that **point** at `.cursor/commands/*.md` — do not fork procedure bodies.
-5. **MCP profile:** `.agents/mcp_config.json` is **L0_READONLY**. Cursor/Windsurf consumers are **L1_LOCAL_GOVERNED**. AGY via `.agents` MCP cannot rely on MCP write tools for `/apply`; use local shell + write-barrier + git on the feature branch. No dedicated Antigravity MCP consumer row exists in SSOT yet (optional follow-on: add AGY consumer or document shell-first apply).
-6. **Entrypoint:** Always start from `GEMINI.md` → `.agents/AGENTS.md` → this file + ADR-0010. Do not dilute protocol into the stub.
-7. **OpenSpec CLI (optional):** External OpenSpec/`opsx:*` aliases are ceremony aliases only; not required for L0. If installed, keep symlinks via `sync-agent-symlinks` skill — do not vendor a new engine.
+3. **Slash UX gap:** Cursor slash commands remain under `.cursor/commands/`. AGY discovers **skills** under `.agents/skills/` (now mirrored for all SpecBoot steps). Operators invoke the skill name; procedure body SSOT stays the command file.
+4. **MCP profile:** `.agents/mcp_config.json` is **L0_READONLY**. Cursor/Windsurf consumers are **L1_LOCAL_GOVERNED**. AGY via `.agents` MCP cannot rely on MCP write tools for `/apply`; use local shell + write-barrier + git on the feature branch.
+5. **Entrypoint:** Always start from `GEMINI.md` → `.agents/AGENTS.md` → this file + ADR-0010 + ANTIGRAVITY_FIRST.
+6. **OpenSpec CLI (optional):** External OpenSpec/`opsx:*` aliases are ceremony aliases only; not required for L0.
+7. **Spec-Boot standards stubs (DEFER):** `docs/frontend-standards.md`, `docs/documentation-standards.md`, `docs/development_guide.md` — thin DEFER stubs say fill with EOS stack (leave dirty unstaged until filled).
 8. **Do not confuse** Mission Loop MCP (`eos.mission.loop.*`) with SpecBoot slash ceremony — complementary, not substitutes.
-9. **Fundacion Δ=0** and **PRODUCTION_READY=NO** remain in force for SpecBoot readiness work unless a separate authorization exists.
+9. **Fundacion Δ=0** and **PRODUCTION_READY=NO** remain in force.
 
 ## 4. Minimal operator checklist (AGY SpecBoot session)
 
-1. Confirm `agy` available; open repo; read `GEMINI.md` + this SSOT.
+1. Confirm `agy` available; open repo; read `GEMINI.md` + this SSOT + ANTIGRAVITY_FIRST.
 2. Organic routing (ADR-0010): DIRECT vs SDD — only run SpecBoot when SDD applies.
 3. Create/use feature branch or worktree (`using-git-worktrees` / WORKTREE_ISOLATION_POLICY).
-4. Walk the cycle; for missing AGY skills, execute the `.cursor/commands/<step>.md` procedure text.
+4. Walk the cycle via `.agents/skills/<step>` (procedure text at `.cursor/commands/<step>.md`).
 5. Evidence: `node --test` / `npm run verify` / `verify:strict` as required; no narrative-only DONE.
 6. Stop at PR-ready; **HITL** publishes/merges (no autonomous main merge).
 
@@ -102,6 +104,7 @@ Mandatory tasks protocol: [`openspec-tasks-mandatory-steps.md`](../openspec-task
 | Doc | Role |
 | --- | --- |
 | This file | SpecBoot cycle + AGY-first readiness SSOT |
+| [`ANTIGRAVITY_FIRST.md`](./ANTIGRAVITY_FIRST.md) | Primary runtime policy |
 | ADR-0010 | Discipline bridge (organic routing, TDD, RDD) |
 | `docs/harness/CONTEXT_PACK_TPC.md` | TPC index |
 | `docs/harness/LOOP_ENGINEERING_4Q.md` | Loop Engineering 4Q |
@@ -112,6 +115,7 @@ Mandatory tasks protocol: [`openspec-tasks-mandatory-steps.md`](../openspec-task
 ## 6. Explicit non-goals
 
 - No Cursor CloudAgent launches from this SSOT.
+- No ban on local Cursor IDE file editing (see ANTIGRAVITY_FIRST NON-CLAIM).
 - No new SpecBoot orchestrator / npm engine in L0.
 - No Constitution mutation.
 - No Fundacion writes.

@@ -21,6 +21,7 @@ import { auditDeferredWritersLock, DEFERRED_WRITERS_REQUIRED_PATHS } from './lib
 import { auditContextPackLock, CONTEXT_PACK_REQUIRED_PATHS } from './lib/context-pack-lock.js';
 import { auditLoopEngineeringLock, LOOP_ENGINEERING_REQUIRED_PATHS } from './lib/loop-engineering-lock.js';
 import { auditWorktreePolicyLock, WORKTREE_POLICY_REQUIRED_PATHS } from './lib/worktree-policy-lock.js';
+import { auditSpecbootCycleLock, SPECBOOT_CYCLE_REQUIRED_PATHS } from './lib/specboot-cycle-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -140,6 +141,11 @@ const REQUIRED_PATHS = [
   'tests/eos-s4-worktree-isolation.test.js',
   'docs/harness/WORKTREE_ISOLATION_POLICY.md',
   'docs/releases/EOS_S4_WORKTREE_ISOLATION_2026-09-09.md',
+  'scripts/lib/specboot-cycle-lock.js',
+  'tests/eos-specboot-antigravity-first.test.js',
+  'docs/harness/SPECBOOT_CYCLE.md',
+  'docs/harness/ANTIGRAVITY_FIRST.md',
+  'docs/releases/EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -414,7 +420,8 @@ const REQUIRED_PATHS = [
   ...DEFERRED_WRITERS_REQUIRED_PATHS,
   ...CONTEXT_PACK_REQUIRED_PATHS,
   ...LOOP_ENGINEERING_REQUIRED_PATHS,
-  ...WORKTREE_POLICY_REQUIRED_PATHS
+  ...WORKTREE_POLICY_REQUIRED_PATHS,
+  ...SPECBOOT_CYCLE_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1240,6 +1247,24 @@ function verifyWorkspace() {
         path: 'scripts/lib/worktree-policy-lock.js',
         message: 'Worktree isolation policy lock audit failed: ' + err.message,
         type: 'worktree-policy-lock'
+      });
+    }
+
+
+    // 3g13. SpecBoot cycle + Antigravity-first verify lock (existence + section needles; CloudAgent demoted)
+    try {
+      const specboot = auditSpecbootCycleLock(rootDir);
+      for (const c of specboot.checks) {
+        report.checks.push(c);
+      }
+      for (const f of specboot.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/specboot-cycle-lock.js',
+        message: 'SpecBoot cycle / Antigravity-first lock audit failed: ' + err.message,
+        type: 'specboot-cycle-lock'
       });
     }
 
