@@ -1,4 +1,4 @@
-# EOS Context Pack — TPC Index (Tool / Prompt / Context)
+﻿# EOS Context Pack — TPC Index (Tool / Prompt / Context)
 
 **SSOT path:** `docs/harness/CONTEXT_PACK_TPC.md`  
 **Ladder:** 7 / **Step:** S2 (K2)  
@@ -12,6 +12,7 @@
 > Operators and agents still follow existing rules/hooks/verify surfaces.  
 > index != full runtime context completo.
 
+**SpecBoot / Antigravity-first SSOT:** [`docs/harness/SPECBOOT_CYCLE.md`](SPECBOOT_CYCLE.md)  
 **LIDR adoption pointer:** [`docs/releases/EOS_LIDR_HARNESS_WORKSHOP_ADOPTION_2026-09-09.md`](../releases/EOS_LIDR_HARNESS_WORKSHOP_ADOPTION_2026-09-09.md)  
 **Audit DoD:** [`docs/releases/EOS_MATURITY_LADDER_7_AUDIT_2026-09-09.md`](../releases/EOS_MATURITY_LADDER_7_AUDIT_2026-09-09.md) (S2 row)
 
