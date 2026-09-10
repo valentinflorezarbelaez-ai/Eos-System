@@ -82,6 +82,7 @@ updated_at: 2026-09-09 America/Bogota (U1 tip refresh post L8/#90 + L9 audit #91
 | Ladder 7 harness adoption closeout | COMPLETE | MEASURED (EOS_LADDER_7_CLOSEOUT_2026-09-09.md; S1–S6 + SpecBoot/AGY CLOSED for local governed use; PRODUCTION_READY=NO) |
 | Ladder 9 maturity gap audit | COMPLETE | MEASURED (#91; EOS_MATURITY_LADDER_9_AUDIT_2026-09-09.md; audit base tip abdf07e post #90; U1–U8 ordered; tip honesty gap closed by U1) |
 | U1 tip refresh post L8 | COMPLETE | MEASURED (EOS_U1_TIP_REFRESH_POST_L8_2026-09-09.md; freeze+matrix to 8781bb3; tip honesty restored) |
+| CI seam-pack T2–T8 locks (U2) | COMPLETE | MEASURED (EOS_U2_CI_SEAM_PACK_T2_T8_2026-09-09.md; seam-pack test:t2..t8; test:u2) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -105,7 +106,7 @@ PRODUCTION_READY: NO
 
 - evaluated_tip pinned to OBSERVED main tip after L9 audit #91: 8781bb3f6da9b8a404153b5f60f5199d18478226
 - Prior L8 closeout pin was 1b48ff5c386e83667d2caae78be29f3ad5a5efbb (T7 #89 era); live main after #90 + #91 is 8781bb3 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
-- Matrix: L8 T1–T8 COMPLETE/MEASURED + Ladder 9 audit MEASURED + U1 tip refresh MEASURED
+- Matrix: L8 T1–T8 COMPLETE/MEASURED + Ladder 9 audit MEASURED + U1 tip refresh MEASURED + U2 CI seam-pack MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
 ## Tip refresh notes (L8 closeout post T7 #89) — historical
