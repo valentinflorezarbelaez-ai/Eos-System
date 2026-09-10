@@ -4,14 +4,15 @@
  * Q3 — Optional Ladder4 observe subset: hooks-install / mcp-catalog / mission-local.
  * R3 — Optional Ladder5 observe subset: mission-artifact-write / p6-inventory-lock.
  * T3 — Optional Ladder7 observe subset: context-pack / loop-engineering / worktree / SpecBoot-AGY / KEEP / model-routing-ratchet.
+ * U3 — Optional T4–T8 observe subset: mission-os-evd / keep-po-prune-hold / complexity-ceiling-hold / agy-workstation / dirty-defer-triage.
  *
  * Fail-closed path existence + light import/API smoke for EvidenceCustody,
- * EngramContract, fusion-cp-lock, evd-seal-path, Q3 L4, R3 L5, and T3 L7 observe modules.
+ * EngramContract, fusion-cp-lock, evd-seal-path, Q3 L4, R3 L5, T3 L7, and U3 T4–T8 observe modules.
  * Reuses POST_FUSION_CRITICAL_PATHS ids from operator-doctor.
  *
  * This is NOT verify:strict, NOT full GameDay soak, NOT production certification.
  * Light checks do NOT run full hooks-install / mcp-catalog / mission-local /
- * mission-artifact-write / p6-inventory-lock / context-pack / loop-engineering / worktree / SpecBoot / KEEP / model-routing-ratchet audit bodies (those remain verify:strict).
+ * mission-artifact-write / p6-inventory-lock / context-pack / loop-engineering / worktree / SpecBoot / KEEP / model-routing-ratchet / mission-os-evd / keep-po-prune-hold / complexity-ceiling-hold / agy-workstation / dirty-defer-triage audit bodies (those remain verify:strict).
  * PRODUCTION_READY: NO
  */
 import fs from 'node:fs';
@@ -79,6 +80,26 @@ import {
   auditModelRoutingRatchetLock,
   MODEL_ROUTING_RATCHET_REQUIRED_PATHS
 } from './model-routing-ratchet-lock.js';
+import {
+  runMissionOsEvdObservePack,
+  OBSERVE_PACK_REQUIRED_PATHS
+} from '../../src/core/observability/mission-os-evd-observe-pack.js';
+import {
+  auditKeepPoPruneHoldLock,
+  KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS
+} from './keep-po-prune-hold-lock.js';
+import {
+  auditComplexityCeilingHoldLock,
+  COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS
+} from './complexity-ceiling-hold-lock.js';
+import {
+  auditAgyWorkstationLock,
+  AGY_WORKSTATION_REQUIRED_PATHS
+} from './agy-workstation-lock.js';
+import {
+  auditDirtyDeferTriageLock,
+  DIRTY_DEFER_TRIAGE_REQUIRED_PATHS
+} from './dirty-defer-triage-lock.js';
 
 /** Subset of doctor post-fusion paths covered by independent fusion-light. */
 export const FUSION_LIGHT_PATH_IDS = Object.freeze([
@@ -96,7 +117,12 @@ export const FUSION_LIGHT_PATH_IDS = Object.freeze([
   'WORKTREE_POLICY',
   'SPECBOOT_CYCLE',
   'MCP_TOOL_KEEP',
-  'MODEL_ROUTING_RATCHET'
+  'MODEL_ROUTING_RATCHET',
+  'MISSION_OS_EVD',
+  'KEEP_PO_PRUNE_HOLD',
+  'COMPLEXITY_CEILING_HOLD',
+  'AGY_WORKSTATION',
+  'DIRTY_DEFER_TRIAGE'
 ]);
 
 export const FUSION_LIGHT_REQUIRED_PATHS = Object.freeze(
@@ -117,7 +143,8 @@ export const FUSION_LIGHT_NON_CLAIMS = Object.freeze([
   'NOT replacement of ROI4 custody:verify / ROI6 engram:verify deep suites',
   'NOT full hooks-install smoke / mcp-catalog reconcile / mission-local EVD audit bodies (Q3 observe = path + light export only; verify:strict owns those audits)',
   'NOT full mission-artifact-write / p6-inventory-lock audit bodies (R3 observe = path + light export only; verify:strict owns those audits)',
-  'NOT full context-pack / loop-engineering / worktree-policy / SpecBoot-AGY / mcp-tool-keep / model-routing-ratchet audit bodies (T3 observe = path + light export only; verify:strict owns those audits)'
+  'NOT full context-pack / loop-engineering / worktree-policy / SpecBoot-AGY / mcp-tool-keep / model-routing-ratchet audit bodies (T3 observe = path + light export only; verify:strict owns those audits)',
+  'NOT full mission-os-evd / keep-po-prune-hold / complexity-ceiling-hold / agy-workstation / dirty-defer-triage audit bodies (U3 observe = path + light export only; verify:strict owns those audits)'
 ]);
 
 /**
@@ -465,6 +492,108 @@ export function auditFusionLight(rootDir) {
     });
   }
 
+  // U3 T4–T8 observe (light export only; do NOT invoke full audit bodies)
+  try {
+    if (typeof runMissionOsEvdObservePack !== 'function') {
+      throw new Error('runMissionOsEvdObservePack export missing');
+    }
+    if (!Array.isArray(OBSERVE_PACK_REQUIRED_PATHS) || OBSERVE_PACK_REQUIRED_PATHS.length < 2) {
+      throw new Error('OBSERVE_PACK_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'mission-os-evd-observe-pack (runMissionOsEvdObservePack export + REQUIRED_PATHS n=' + OBSERVE_PACK_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-mission-os-evd'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'src/core/observability/mission-os-evd-observe-pack.js',
+      message: 'mission-os-evd-observe-pack light import failed: ' + err.message,
+      type: 'fusion-light-mission-os-evd'
+    });
+  }
+
+  try {
+    if (typeof auditKeepPoPruneHoldLock !== 'function') {
+      throw new Error('auditKeepPoPruneHoldLock export missing');
+    }
+    if (!Array.isArray(KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS) || KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS.length < 2) {
+      throw new Error('KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'keep-po-prune-hold-lock (auditKeepPoPruneHoldLock export + REQUIRED_PATHS n=' + KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-keep-po-prune-hold'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/keep-po-prune-hold-lock.js',
+      message: 'keep-po-prune-hold-lock light import failed: ' + err.message,
+      type: 'fusion-light-keep-po-prune-hold'
+    });
+  }
+
+  try {
+    if (typeof auditComplexityCeilingHoldLock !== 'function') {
+      throw new Error('auditComplexityCeilingHoldLock export missing');
+    }
+    if (!Array.isArray(COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS) || COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS.length < 2) {
+      throw new Error('COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'complexity-ceiling-hold-lock (auditComplexityCeilingHoldLock export + REQUIRED_PATHS n=' + COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-complexity-ceiling-hold'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/complexity-ceiling-hold-lock.js',
+      message: 'complexity-ceiling-hold-lock light import failed: ' + err.message,
+      type: 'fusion-light-complexity-ceiling-hold'
+    });
+  }
+
+  try {
+    if (typeof auditAgyWorkstationLock !== 'function') {
+      throw new Error('auditAgyWorkstationLock export missing');
+    }
+    if (!Array.isArray(AGY_WORKSTATION_REQUIRED_PATHS) || AGY_WORKSTATION_REQUIRED_PATHS.length < 2) {
+      throw new Error('AGY_WORKSTATION_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'agy-workstation-lock (auditAgyWorkstationLock export + REQUIRED_PATHS n=' + AGY_WORKSTATION_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-agy-workstation'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/agy-workstation-lock.js',
+      message: 'agy-workstation-lock light import failed: ' + err.message,
+      type: 'fusion-light-agy-workstation'
+    });
+  }
+
+  try {
+    if (typeof auditDirtyDeferTriageLock !== 'function') {
+      throw new Error('auditDirtyDeferTriageLock export missing');
+    }
+    if (!Array.isArray(DIRTY_DEFER_TRIAGE_REQUIRED_PATHS) || DIRTY_DEFER_TRIAGE_REQUIRED_PATHS.length < 2) {
+      throw new Error('DIRTY_DEFER_TRIAGE_REQUIRED_PATHS incomplete');
+    }
+    checks.push({
+      path: 'dirty-defer-triage-lock (auditDirtyDeferTriageLock export + REQUIRED_PATHS n=' + DIRTY_DEFER_TRIAGE_REQUIRED_PATHS.length + ')',
+      status: 'VERIFIED',
+      type: 'fusion-light-dirty-defer-triage'
+    });
+  } catch (err) {
+    failures.push({
+      path: 'scripts/lib/dirty-defer-triage-lock.js',
+      message: 'dirty-defer-triage-lock light import failed: ' + err.message,
+      type: 'fusion-light-dirty-defer-triage'
+    });
+  }
+
+
   return {
     ok: failures.length === 0,
     enabled: true,
@@ -487,7 +616,7 @@ export function fusionLightDisabledReport() {
     checks: [],
     failures: [],
     nonClaims: [
-      'FUSION-LIGHT DISABLED via --no-fusion-light: custody/engram/fusion-cp/evd-seal/hooks-install/mcp-catalog/mission-local/mission-artifact-write/p6-inventory-lock/context-pack/loop-engineering/worktree/SpecBoot/KEEP/model-routing-ratchet NOT independently light-checked',
+      'FUSION-LIGHT DISABLED via --no-fusion-light: custody/engram/fusion-cp/evd-seal/hooks-install/mcp-catalog/mission-local/mission-artifact-write/p6-inventory-lock/context-pack/loop-engineering/worktree/SpecBoot/KEEP/model-routing-ratchet/mission-os-evd/keep-po/ceiling/agy-workstation/dirty-defer NOT independently light-checked',
       ...FUSION_LIGHT_NON_CLAIMS
     ],
     requiredPaths: [...FUSION_LIGHT_REQUIRED_PATHS]

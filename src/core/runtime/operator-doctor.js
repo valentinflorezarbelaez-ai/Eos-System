@@ -6,6 +6,7 @@
  * Q3: Ladder4 observe — hooks-install / mcp-catalog / mission-local lock surfaces.
  * R3: Ladder5 observe — mission-artifact-write / p6-inventory-lock surfaces.
  * T3: Ladder7 observe — context-pack / loop-engineering / worktree / SpecBoot-AGY / KEEP / model-routing-ratchet.
+ * U3: Ladder8/9 observe — mission-os-evd / keep-po-prune-hold / complexity-ceiling-hold / agy-workstation / dirty-defer-triage.
  *
  * NON-CLAIM: doctor is OBSERVED honesty / presence-light only — NOT verify:strict.
  * S3: Loop Engineering policy ≠ verify:strict / ≠ productive autonomy.
@@ -36,6 +37,7 @@ export const DOCTOR_NON_CLAIMS = Object.freeze([
   'NOT Fundacion mutation authorization (Fundacion Delta=0 retained)',
   'NOT Loop Engineering autonomy — Loop Engineering policy ≠ verify:strict and ≠ productive autonomy (matrix/taxonomy only)',
   'NOT L7 harness lock full audits — context-pack / loop 4Q / worktree / SpecBoot-AGY / KEEP / routing-ratchet observe = presence/light only',
+  'NOT T4–T8 lock full audits — mission-os-evd / keep-po-prune-hold / complexity-ceiling-hold / agy-workstation / dirty-defer-triage observe = presence/light only',
   'NOT replacement of independent fusion-light or GameDay soak'
 ]);
 
@@ -45,6 +47,7 @@ export const DOCTOR_NON_CLAIMS = Object.freeze([
  * Q3 extends with Ladder4 observe surfaces (hooks-install / mcp-catalog / mission-local).
  * R3 extends with Ladder5 observe surfaces (mission-artifact-write / p6-inventory-lock).
  * T3 extends with Ladder7 observe surfaces (context-pack / loop-engineering / worktree / SpecBoot / KEEP / routing-ratchet).
+ * U3 extends with T4–T8 observe surfaces (mission-os-evd / keep-po-hold / ceiling-hold / agy-workstation / dirty-defer).
  */
 export const POST_FUSION_CRITICAL_PATHS = Object.freeze([
   { id: 'VERIFY', rel: 'scripts/verify-eos.js' },
@@ -63,7 +66,12 @@ export const POST_FUSION_CRITICAL_PATHS = Object.freeze([
   { id: 'WORKTREE_POLICY', rel: 'scripts/lib/worktree-policy-lock.js' },
   { id: 'SPECBOOT_CYCLE', rel: 'scripts/lib/specboot-cycle-lock.js' },
   { id: 'MCP_TOOL_KEEP', rel: 'scripts/lib/mcp-tool-keep-lock.js' },
-  { id: 'MODEL_ROUTING_RATCHET', rel: 'scripts/lib/model-routing-ratchet-lock.js' }
+  { id: 'MODEL_ROUTING_RATCHET', rel: 'scripts/lib/model-routing-ratchet-lock.js' },
+  { id: 'MISSION_OS_EVD', rel: 'src/core/observability/mission-os-evd-observe-pack.js' },
+  { id: 'KEEP_PO_PRUNE_HOLD', rel: 'scripts/lib/keep-po-prune-hold-lock.js' },
+  { id: 'COMPLEXITY_CEILING_HOLD', rel: 'scripts/lib/complexity-ceiling-hold-lock.js' },
+  { id: 'AGY_WORKSTATION', rel: 'scripts/lib/agy-workstation-lock.js' },
+  { id: 'DIRTY_DEFER_TRIAGE', rel: 'scripts/lib/dirty-defer-triage-lock.js' }
 ]);
 
 /**
@@ -81,7 +89,7 @@ export const DOCTOR_WIRING_PATHS = Object.freeze([
  * @param {boolean} [options.skipMcpFile]
  * @param {boolean} [options.skipPurpose]
  * @param {boolean} [options.skipRuntimeEngines]
- * @param {boolean} [options.skipPostFusion] skip N3/Q3/R3/T3 fusion-era path checks
+ * @param {boolean} [options.skipPostFusion] skip N3/Q3/R3/T3/U3 fusion-era path checks
  * @param {boolean} [options.skipDoctorWiring] skip bin/module self-wiring checks
  * @param {string} [options.workspaceMcpPath]
  * @returns {{ ok: boolean, root: string, homedir_leak: boolean, checks: object[], failed: string[], nonClaims: string[] }}
@@ -170,7 +178,7 @@ export function runOperatorDoctor(options = {}) {
     );
   }
 
-  // N3/Q3/R3/T3 — post-fusion + Ladder4/Ladder5/Ladder7 critical presence (fail-closed). Existence/light only; no network/writes.
+  // N3/Q3/R3/T3/U3 — post-fusion + Ladder4/5/7 + T4–T8 critical presence (fail-closed). Existence/light only; no network/writes.
   if (!options.skipPostFusion) {
     for (const item of POST_FUSION_CRITICAL_PATHS) {
       const abs = path.join(root, item.rel);
