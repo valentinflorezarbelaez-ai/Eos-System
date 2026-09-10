@@ -1,0 +1,10 @@
+schema: spec-driven
+created: 2026-09-10
+goal: Ladder 9 U8 / Closeout — Formal closeout of Ladder 9 (U1–U8); formalize EOS_LADDER_9_CLOSEOUT_2026-09-09.md evidence note; update RELEASE_CAPABILITY_MATRIX.md and EOS_FREEZE_GATE_STATUS.md with Ladder 9 closed-on-main readiness; reaffirm PO prune HOLD (no silent delete); Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; push only.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-u8-l9-closeout
+  - docs/releases/EOS_LADDER_9_CLOSEOUT_2026-09-09.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md

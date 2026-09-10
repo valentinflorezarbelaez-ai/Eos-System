@@ -1,4 +1,4 @@
-﻿# Freeze gate status — PUBLISHED
+# Freeze gate status — PUBLISHED
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
@@ -671,3 +671,13 @@ External production readiness is explicitly **not** asserted.
 - Disposition **IGNORE**: do not invent docs/{development_guide,documentation-standards,frontend-standards}.md (S2 TPC must-not-invent); harness INDEX `docs/harness/SPECBOOT_DEFER_STUBS_INDEX.md`; no Gentleman invent; `test:u7` + `test:s2`
 - NON-CLAIM: harness INDEX ≠ Gentleman standards complete; PRODUCTION_READY=NO; Fundacion Delta=0; foreign ai-specs DEFER unstaged; AT_CEILING; Antigravity-first (no CloudAgent)
 - Freeze `main_tip` pin **not** moved in U7 (tip refresh was U1; base main after U6 #97 @ c8d79c1)
+
+## Ladder 9 closeout (2026-09-09)
+
+- Report: `docs/releases/EOS_LADDER_9_CLOSEOUT_2026-09-09.md`
+- Branch: `cursor/eos-u8-l9-closeout` — push only; do not merge without PO; NO PR
+- Formal closeout of Ladder 9 (U1–U8): U1 tip refresh post L8, U2 CI seam-pack, U3 doctor/fusion-light T4–T8, U4 Mission OS deepen, U5 AGY Admin HITL checklist, U6 OpenSpec CLI HOLD, U7 SpecBoot DEFER stubs IGNORE, U8 PO prune HOLD standing order
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING (35/35 schemas)
+- NON-CLAIM: Ladder 9 closed != PRODUCTION_READY=YES; PO prune HOLD != silent delete
+
