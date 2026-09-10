@@ -157,6 +157,13 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:s5', 'CI Ladder7 S5 MCP/tool KEEP inventory');
         assertContains(yaml, 'test:s6', 'CI Ladder7 S6 model-routing-ratchet');
         assertContains(yaml, 'test:specboot-agy', 'CI Ladder7 SpecBoot/AGY');
+        assertContains(yaml, 'test:t2', 'CI Ladder8 T2 seam-pack lock');
+        assertContains(yaml, 'test:t3', 'CI Ladder8 T3 doctor/fusion-light');
+        assertContains(yaml, 'test:t4', 'CI Ladder8 T4 Mission OS EVD observe');
+        assertContains(yaml, 'test:t5', 'CI Ladder8 T5 KEEP PO prune HOLD');
+        assertContains(yaml, 'test:t6', 'CI Ladder8 T6 complexity ceiling HOLD');
+        assertContains(yaml, 'test:t7', 'CI Ladder8 T7 AGY workstation evidence');
+        assertContains(yaml, 'test:t8', 'CI Ladder8 T8 dirty DEFER triage');
       } catch (err) {
         failures.push(err.message);
       }

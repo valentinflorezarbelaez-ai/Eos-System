@@ -1,0 +1,28 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 9 U2 — CI seam-pack for L8 locks (test:t2..test:t8); TDD test:u2; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-u2-ci-seam-pack-t2-t8
+  - .github/workflows/ci.yml
+  - scripts/ci/assert-gha-contract.js
+  - docs/governance/CI_CD_CONTRACT.md
+  - tests/eos-u2-ci-seam-pack-t2-t8.test.js
+  - tests/eos-m5-ci-gameday-seam-pack.test.js
+  - tests/github-actions-cicd.test.js
+  - package.json
+  - docs/releases/EOS_U2_CI_SEAM_PACK_T2_T8_2026-09-09.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip not moved; U1 already pinned 8781bb3)
+  - U3+ doctor/fusion-light L8 surfaces
+  - soak / new GH billing claims
+  - CloudAgent as SpecBoot default
+  - new docs/schemas JSON (AT_CEILING)
+  - staging DEFER dirty untracked

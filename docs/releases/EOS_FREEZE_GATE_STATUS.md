@@ -621,3 +621,12 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged
 - NON-CLAIM: tip honesty != PRODUCTION_READY; L9 audit MEASURED != U2–U8 implemented; CloudAgent remains out of default SpecBoot path
+
+## U2 CI seam-pack Ladder8 T2–T8 locks (2026-09-09)
+
+- Report: `docs/releases/EOS_U2_CI_SEAM_PACK_T2_T8_2026-09-09.md`
+- Branch: `cursor/eos-u2-ci-seam-pack-t2-t8` — push/compare only; do not merge without PO; NO PR
+- seam-pack adds CI-safe `test:t2`..`test:t8` (keep L7 s2–s6 + specboot-agy + prior packs)
+- Lock meta: `test:u2`; assert-gha-contract + CI_CD_CONTRACT.md U2 note; GHA-008 / m5 list extended
+- NON-CLAIM: no soak; no new GH billing / enforcement; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; no new docs/schemas JSON (AT_CEILING); Antigravity-first (no CloudAgent)
+- Freeze `main_tip` pin **not** moved in U2 (tip refresh was U1 #92 @ 78d76dd)

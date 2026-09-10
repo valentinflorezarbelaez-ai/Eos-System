@@ -18,7 +18,7 @@ Machine-readable companion: `docs/governance/CI_CD_CONTRACT.json`.
 | test | `npm test` | Forbidden |
 | syntax | `node --check` on `bin/`, `src/`, `scripts/`, `tests/` | Forbidden |
 | governance-gates | `evaluate:release`, `verify:independent`, `audit:system` | Forbidden |
-| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s2`..`test:s6` + `test:specboot-agy` | Forbidden |
+| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s2`..`test:s6` + `test:specboot-agy` + `test:t2`..`test:t8` | Forbidden |
 
 Triggers: `push` to `main`, `pull_request`, `workflow_dispatch`.
 
@@ -57,3 +57,6 @@ seam-pack named pack extended with CI-safe `test:s4` (Ladder 7 worktree isolatio
 
 ## T2 seam-pack note (2026-09-09)
 seam-pack named pack extended with CI-safe `test:s2`, `test:s3`, `test:s5`, `test:s6`, `test:specboot-agy` (Ladder 7 L7 locks; keep `test:s4` + prior R/Q/P/N/M/ROI packs). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.
+
+## U2 seam-pack note (2026-09-09)
+seam-pack named pack extended with CI-safe `test:t2`..`test:t8` (Ladder 8 T2–T8 locks; keep `test:s2`..`test:s6` + `test:specboot-agy` + prior R/Q/P/N/M/ROI packs). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.
