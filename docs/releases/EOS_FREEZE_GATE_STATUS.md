@@ -579,3 +579,14 @@ External production readiness is explicitly **not** asserted.
 - R4 complexity-budget-lock green under HOLD (schemas 35/35 AT_CEILING); P6 inventory unchanged
 - NON-CLAIM: HOLD ≠ executed prune; inventory ≠ quarantine; gate ≠ budget bump; no vibe schemas; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
 - Freeze `main_tip` pin **not** moved in T6 (tip refresh separate; base after T5 #87 @ bf3edc7)
+
+## T7 AGY workstation evidence / smoke (2026-09-09)
+
+- Report: `docs/releases/EOS_T7_AGY_WORKSTATION_EVIDENCE_2026-09-09.md`
+- Branch: `cursor/eos-t7-agy-workstation-evidence` — push only; do not merge without PO
+- Decision: **DAEMON_ABSENT honest** — checklist + smoke fail-closed without Admin; do NOT pretend daemon installed
+- Runbook: `docs/harness/AGY_WORKSTATION_CHECKLIST.md`; lock `agy-workstation-lock.js`; smoke `scripts/ci/agy-workstation-smoke.js` (NON-MUTATING)
+- Status snapshot: local `agy` PRESENT; `agy-daemon` / eos-workstation **Not installed** (Admin HITL pending); OpenSpec CLI optional; CloudAgent out of SpecBoot default path
+- NON-CLAIM: checklist ≠ daemon installed; smoke ≠ Admin install; evidence ≠ pretend; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
+- Freeze `main_tip` pin **not** moved in T7 (tip refresh separate; base after T6 #88 @ 757f2de)
+

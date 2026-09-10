@@ -26,6 +26,7 @@ import { auditMcpToolKeepLock, MCP_TOOL_KEEP_REQUIRED_PATHS } from './lib/mcp-to
 import { auditModelRoutingRatchetLock, MODEL_ROUTING_RATCHET_REQUIRED_PATHS } from './lib/model-routing-ratchet-lock.js';
 import { auditKeepPoPruneHoldLock, KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS } from './lib/keep-po-prune-hold-lock.js';
 import { auditComplexityCeilingHoldLock, COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS } from './lib/complexity-ceiling-hold-lock.js';
+import { auditAgyWorkstationLock, AGY_WORKSTATION_REQUIRED_PATHS } from './lib/agy-workstation-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -124,6 +125,11 @@ const REQUIRED_PATHS = [
   'tests/eos-t6-complexity-ceiling-hold.test.js',
   'docs/releases/EOS_T6_COMPLEXITY_CEILING_HOLD_2026-09-09.md',
   'docs/harness/COMPLEXITY_CEILING_HOLD_RITUAL.md',
+  'scripts/lib/agy-workstation-lock.js',
+  'scripts/ci/agy-workstation-smoke.js',
+  'tests/eos-t7-agy-workstation-evidence.test.js',
+  'docs/releases/EOS_T7_AGY_WORKSTATION_EVIDENCE_2026-09-09.md',
+  'docs/harness/AGY_WORKSTATION_CHECKLIST.md',
   'scripts/lib/sentinel-fdir-lock.js',
   'tests/eos-n6-sentinel-fdir-lock.test.js',
   'docs/releases/EOS_N6_SENTINEL_FDIR_STRICT_LOCK_2026-09-08.md',
@@ -454,7 +460,8 @@ const REQUIRED_PATHS = [
     ...MCP_TOOL_KEEP_REQUIRED_PATHS,
   ...MODEL_ROUTING_RATCHET_REQUIRED_PATHS,
   ...KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS,
-  ...COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS
+  ...COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS,
+  ...AGY_WORKSTATION_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1367,6 +1374,24 @@ function verifyWorkspace() {
         path: 'scripts/lib/complexity-ceiling-hold-lock.js',
         message: 'Complexity ceiling HOLD lock audit failed: ' + err.message,
         type: 'complexity-ceiling-hold-lock'
+      });
+    }
+
+
+    // 3g18. T7 AGY workstation evidence / smoke (honest DAEMON_ABSENT|PRESENT; no Admin; no pretend)
+    try {
+      const agyWorkstation = auditAgyWorkstationLock(rootDir, { skipLiveProbe: true });
+      for (const c of agyWorkstation.checks) {
+        report.checks.push(c);
+      }
+      for (const f of agyWorkstation.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/agy-workstation-lock.js',
+        message: 'AGY workstation evidence lock audit failed: ' + err.message,
+        type: 'agy-workstation-lock'
       });
     }
 
