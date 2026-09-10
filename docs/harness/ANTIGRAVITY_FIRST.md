@@ -41,8 +41,10 @@
 
 ## 5. Remaining install gaps (operator)
 
+Operator checklist + honest status smoke: [`docs/harness/AGY_WORKSTATION_CHECKLIST.md`](./AGY_WORKSTATION_CHECKLIST.md) (T7). Evidence: `docs/releases/EOS_T7_AGY_WORKSTATION_EVIDENCE_2026-09-09.md`. Smoke: `node scripts/ci/agy-workstation-smoke.js` (NON-MUTATING; no Admin).
+
 1. **OpenSpec CLI** (optional) — ceremony aliases `opsx:*`; not required for L0.
-2. **agy-daemon** — `agy-daemon.cmd install --name eos-workstation` (Admin) when remote HITL needed; confirm with `agy-daemon.cmd status`.
+2. **agy-daemon** — `agy-daemon.cmd install --name eos-workstation` (Admin HITL) when remote HITL needed; confirm with `agy-daemon.cmd status`. Do **not** pretend INSTALLED when status says Not installed.
 3. Confirm local `agy` binary available before SpecBoot sessions.
 
 ## 6. Explicit non-goals

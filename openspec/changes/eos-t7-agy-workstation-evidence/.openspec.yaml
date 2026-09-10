@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 8 T7 — Antigravity eos-workstation evidence (checklist + honest status smoke); fail-closed when daemon absent WITHOUT requiring Admin; do NOT pretend daemon installed; OpenSpec CLI optional; CloudAgent out of path; TDD test:t7; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-t7-agy-workstation-evidence
+  - docs/harness/AGY_WORKSTATION_CHECKLIST.md
+  - docs/releases/EOS_T7_AGY_WORKSTATION_EVIDENCE_2026-09-09.md
+  - scripts/lib/agy-workstation-lock.js
+  - scripts/ci/agy-workstation-smoke.js
+  - tests/eos-t7-agy-workstation-evidence.test.js
+  - package.json
+  - scripts/verify-eos.js
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/harness/ANTIGRAVITY_FIRST.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Admin daemon install (HITL operator only)
+  - pretending agy-daemon / eos-workstation is installed when status says Not installed
+  - requiring OpenSpec CLI for L0
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip not moved)
+  - T8 Dirty DEFER triage force-commit
+  - CloudAgent as SpecBoot default
+  - new docs/schemas JSON (AT_CEILING)
