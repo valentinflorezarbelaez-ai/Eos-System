@@ -5,6 +5,7 @@
  * N3: post-fusion existence/light checks (verify/fusion-cp/custody/engram/evd-seal/pre-push).
  * Q3: Ladder4 observe — hooks-install / mcp-catalog / mission-local lock surfaces.
  * R3: Ladder5 observe — mission-artifact-write / p6-inventory-lock surfaces.
+ * T3: Ladder7 observe — context-pack / loop-engineering / worktree / SpecBoot-AGY / KEEP / model-routing-ratchet.
  *
  * NON-CLAIM: doctor is OBSERVED honesty / presence-light only — NOT verify:strict.
  * S3: Loop Engineering policy ≠ verify:strict / ≠ productive autonomy.
@@ -29,11 +30,12 @@ function addCheck(checks, id, ok, detail) {
  * Explicit NON-CLAIM residual: doctor observes presence; it does not certify verify:strict.
  */
 export const DOCTOR_NON_CLAIMS = Object.freeze([
-  'NOT verify:strict — doctor is OBSERVED presence/light only; does not run hooks-install smoke, mcp-catalog reconcile, mission-local EVD audit, mission-artifact-write audit, p6-inventory-lock audit, or sentinel-fdir lock bodies',
+  'NOT verify:strict — doctor is OBSERVED presence/light only; does not run hooks-install smoke, mcp-catalog reconcile, mission-local EVD audit, mission-artifact-write audit, p6-inventory-lock audit, sentinel-fdir, context-pack, loop-engineering, worktree-policy, SpecBoot/AGY, mcp-tool-keep, or model-routing-ratchet lock bodies',
   'NOT production readiness / PRODUCTION_READY remains NO',
   'NOT App Fuerza delivery certification',
   'NOT Fundacion mutation authorization (Fundacion Delta=0 retained)',
   'NOT Loop Engineering autonomy — Loop Engineering policy ≠ verify:strict and ≠ productive autonomy (matrix/taxonomy only)',
+  'NOT L7 harness lock full audits — context-pack / loop 4Q / worktree / SpecBoot-AGY / KEEP / routing-ratchet observe = presence/light only',
   'NOT replacement of independent fusion-light or GameDay soak'
 ]);
 
@@ -42,6 +44,7 @@ export const DOCTOR_NON_CLAIMS = Object.freeze([
  * Relative to control-plane root.
  * Q3 extends with Ladder4 observe surfaces (hooks-install / mcp-catalog / mission-local).
  * R3 extends with Ladder5 observe surfaces (mission-artifact-write / p6-inventory-lock).
+ * T3 extends with Ladder7 observe surfaces (context-pack / loop-engineering / worktree / SpecBoot / KEEP / routing-ratchet).
  */
 export const POST_FUSION_CRITICAL_PATHS = Object.freeze([
   { id: 'VERIFY', rel: 'scripts/verify-eos.js' },
@@ -54,7 +57,13 @@ export const POST_FUSION_CRITICAL_PATHS = Object.freeze([
   { id: 'MCP_CATALOG', rel: 'scripts/lib/mcp-catalog-lock.js' },
   { id: 'MISSION_LOCAL_EVD', rel: 'tests/eos-p4-mission-local-evd-seal.test.js' },
   { id: 'MISSION_ARTIFACT_WRITE', rel: 'src/core/runtime/mission-artifact-write.js' },
-  { id: 'P6_INVENTORY_LOCK', rel: 'scripts/lib/p6-inventory-lock.js' }
+  { id: 'P6_INVENTORY_LOCK', rel: 'scripts/lib/p6-inventory-lock.js' },
+  { id: 'CONTEXT_PACK', rel: 'scripts/lib/context-pack-lock.js' },
+  { id: 'LOOP_ENGINEERING', rel: 'scripts/lib/loop-engineering-lock.js' },
+  { id: 'WORKTREE_POLICY', rel: 'scripts/lib/worktree-policy-lock.js' },
+  { id: 'SPECBOOT_CYCLE', rel: 'scripts/lib/specboot-cycle-lock.js' },
+  { id: 'MCP_TOOL_KEEP', rel: 'scripts/lib/mcp-tool-keep-lock.js' },
+  { id: 'MODEL_ROUTING_RATCHET', rel: 'scripts/lib/model-routing-ratchet-lock.js' }
 ]);
 
 /**
@@ -72,7 +81,7 @@ export const DOCTOR_WIRING_PATHS = Object.freeze([
  * @param {boolean} [options.skipMcpFile]
  * @param {boolean} [options.skipPurpose]
  * @param {boolean} [options.skipRuntimeEngines]
- * @param {boolean} [options.skipPostFusion] skip N3/Q3/R3 fusion-era path checks
+ * @param {boolean} [options.skipPostFusion] skip N3/Q3/R3/T3 fusion-era path checks
  * @param {boolean} [options.skipDoctorWiring] skip bin/module self-wiring checks
  * @param {string} [options.workspaceMcpPath]
  * @returns {{ ok: boolean, root: string, homedir_leak: boolean, checks: object[], failed: string[], nonClaims: string[] }}
@@ -161,7 +170,7 @@ export function runOperatorDoctor(options = {}) {
     );
   }
 
-  // N3/Q3/R3 — post-fusion + Ladder4/Ladder5 critical presence (fail-closed). Existence/light only; no network/writes.
+  // N3/Q3/R3/T3 — post-fusion + Ladder4/Ladder5/Ladder7 critical presence (fail-closed). Existence/light only; no network/writes.
   if (!options.skipPostFusion) {
     for (const item of POST_FUSION_CRITICAL_PATHS) {
       const abs = path.join(root, item.rel);

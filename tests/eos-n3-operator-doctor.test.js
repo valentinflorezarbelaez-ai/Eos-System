@@ -71,7 +71,7 @@ function writeStubTree(root, { omitRel = null } = {}) {
 }
 
 describe('N3 operator doctor wire + fusion checks', () => {
-  it('POST_FUSION_CRITICAL_PATHS covers verify/fusion-cp/custody/engram/evd-seal/pre-push + Q3 L4 + R3 L5', () => {
+  it('POST_FUSION_CRITICAL_PATHS covers verify/fusion-cp/custody/engram/evd-seal/pre-push + Q3 L4 + R3 L5 + T3 L7', () => {
     const ids = POST_FUSION_CRITICAL_PATHS.map((p) => p.id);
     assert.deepEqual(ids, [
       'VERIFY',
@@ -84,7 +84,13 @@ describe('N3 operator doctor wire + fusion checks', () => {
       'MCP_CATALOG',
       'MISSION_LOCAL_EVD',
       'MISSION_ARTIFACT_WRITE',
-      'P6_INVENTORY_LOCK'
+      'P6_INVENTORY_LOCK',
+      'CONTEXT_PACK',
+      'LOOP_ENGINEERING',
+      'WORKTREE_POLICY',
+      'SPECBOOT_CYCLE',
+      'MCP_TOOL_KEEP',
+      'MODEL_ROUTING_RATCHET'
     ]);
     const rels = POST_FUSION_CRITICAL_PATHS.map((p) => p.rel);
     assert.ok(rels.includes('scripts/verify-eos.js'));
@@ -98,6 +104,12 @@ describe('N3 operator doctor wire + fusion checks', () => {
     assert.ok(rels.includes('tests/eos-p4-mission-local-evd-seal.test.js'));
     assert.ok(rels.includes('src/core/runtime/mission-artifact-write.js'));
     assert.ok(rels.includes('scripts/lib/p6-inventory-lock.js'));
+    assert.ok(rels.includes('scripts/lib/context-pack-lock.js'));
+    assert.ok(rels.includes('scripts/lib/loop-engineering-lock.js'));
+    assert.ok(rels.includes('scripts/lib/worktree-policy-lock.js'));
+    assert.ok(rels.includes('scripts/lib/specboot-cycle-lock.js'));
+    assert.ok(rels.includes('scripts/lib/mcp-tool-keep-lock.js'));
+    assert.ok(rels.includes('scripts/lib/model-routing-ratchet-lock.js'));
   });
 
   it('repo tip: doctor PASS with post-fusion + wiring checks present', () => {
