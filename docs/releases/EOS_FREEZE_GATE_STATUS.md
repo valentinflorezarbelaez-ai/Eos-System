@@ -508,3 +508,12 @@ External production readiness is explicitly **not** asserted.
 - Lock: `scripts/lib/mcp-tool-keep-lock.js`; `test:s5`; verify:strict block 3g14
 - NON-CLAIM: inventory ≠ executed prune; prune solo PO-named; no silent delete; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING)
 - Freeze `main_tip` pin **not** moved in S5 (tip refresh was tip-refresh-post-specboot @ b785f01)
+
+## S6 Model routing + ratchet ritual (2026-09-09)
+
+- Report: `docs/releases/EOS_S6_MODEL_ROUTING_RATCHET_2026-09-09.md`
+- Branch: `cursor/eos-s6-model-routing-ratchet` — push/compare only; do not merge without PO
+- Docs: `docs/harness/MODEL_ROUTING.md` + `docs/harness/RATCHET_RITUAL.md` + ADR-0018
+- Lock: `scripts/lib/model-routing-ratchet-lock.js`; `test:s6`; verify:strict block 3g15
+- NON-CLAIM: no auto model switch without evidence; ritual ≠ autonomous self-heal; no whiplash-solved claim; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING); no silent tool delete
+- Freeze `main_tip` pin **not** moved in S6 (rebase base: origin/main @ bf8b5b8 = tip #80 + S5 #81; S6 does not retip freeze)

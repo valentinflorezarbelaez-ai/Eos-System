@@ -23,6 +23,7 @@ import { auditLoopEngineeringLock, LOOP_ENGINEERING_REQUIRED_PATHS } from './lib
 import { auditWorktreePolicyLock, WORKTREE_POLICY_REQUIRED_PATHS } from './lib/worktree-policy-lock.js';
 import { auditSpecbootCycleLock, SPECBOOT_CYCLE_REQUIRED_PATHS } from './lib/specboot-cycle-lock.js';
 import { auditMcpToolKeepLock, MCP_TOOL_KEEP_REQUIRED_PATHS } from './lib/mcp-tool-keep-lock.js';
+import { auditModelRoutingRatchetLock, MODEL_ROUTING_RATCHET_REQUIRED_PATHS } from './lib/model-routing-ratchet-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -150,6 +151,12 @@ const REQUIRED_PATHS = [
   'scripts/lib/mcp-tool-keep-lock.js',
   'tests/eos-s5-mcp-tool-keep-inventory.test.js',
   'docs/releases/EOS_S5_MCP_TOOL_KEEP_INVENTORY_2026-09-09.md',
+  'scripts/lib/model-routing-ratchet-lock.js',
+  'tests/eos-s6-model-routing-ratchet.test.js',
+  'docs/harness/MODEL_ROUTING.md',
+  'docs/harness/RATCHET_RITUAL.md',
+  'docs/architecture/adrs/ADR-0018-model-routing-ratchet.md',
+  'docs/releases/EOS_S6_MODEL_ROUTING_RATCHET_2026-09-09.md',
   'bin/eos-hud.js',
   'bin/eos-top.js',
   'docs/specs/eos_core/SPEC-GHA-001-github-actions-cicd.md',
@@ -426,7 +433,8 @@ const REQUIRED_PATHS = [
   ...LOOP_ENGINEERING_REQUIRED_PATHS,
   ...WORKTREE_POLICY_REQUIRED_PATHS,
   ...SPECBOOT_CYCLE_REQUIRED_PATHS,
-    ...MCP_TOOL_KEEP_REQUIRED_PATHS
+    ...MCP_TOOL_KEEP_REQUIRED_PATHS,
+  ...MODEL_ROUTING_RATCHET_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1288,6 +1296,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/mcp-tool-keep-lock.js',
         message: 'MCP/tool KEEP inventory lock audit failed: ' + err.message,
         type: 'mcp-tool-keep-lock'
+      });
+    }
+
+    // 3g15. S6 model routing + ratchet ritual verify lock (docs + NON-CLAIM no auto switch / ritual!=self-heal)
+    try {
+      const modelRoutingRatchet = auditModelRoutingRatchetLock(rootDir);
+      for (const c of modelRoutingRatchet.checks) {
+        report.checks.push(c);
+      }
+      for (const f of modelRoutingRatchet.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/model-routing-ratchet-lock.js',
+        message: 'Model routing + ratchet ritual lock audit failed: ' + err.message,
+        type: 'model-routing-ratchet-lock'
       });
     }
 

@@ -70,6 +70,7 @@ updated_at: 2026-09-09 America/Bogota (tip refresh post SpecBoot #79; pin to mai
 | Worktree isolation (S4) | COMPLETE | MEASURED (#78; EOS_S4_WORKTREE_ISOLATION_2026-09-09.md; worktree-policy-lock; test:s4) |
 | SpecBoot cycle + Antigravity-first | COMPLETE | MEASURED (#79; EOS_SPECBOOT_ANTIGRAVITY_FIRST_2026-09-09.md; specboot-cycle-lock; test:specboot-agy) |
 | MCP/tool KEEP inventory (S5) | COMPLETE | MEASURED (EOS_S5_MCP_TOOL_KEEP_INVENTORY_2026-09-09.md; mcp-tool-keep-lock; test:s5; inventory≠prune) |
+| Model routing + ratchet (S6) | COMPLETE | MEASURED (EOS_S6_MODEL_ROUTING_RATCHET_2026-09-09.md; model-routing-ratchet-lock; test:s6; no auto-switch claim) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
