@@ -639,3 +639,11 @@ External production readiness is explicitly **not** asserted.
 - operator-doctor POST_FUSION observes MISSION_OS_EVD + KEEP_PO_PRUNE_HOLD + COMPLEXITY_CEILING_HOLD + AGY_WORKSTATION + DIRTY_DEFER_TRIAGE; fusion-light optional subset + light exports
 - NON-CLAIM doctor != verify:strict; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; no silent MCP prune; AT_CEILING
 - Freeze `main_tip` pin **not** moved in U3 (tip refresh was U1; base main after U2 #93 @ 782c612)
+
+## U4 Mission OS deepen post T4 (2026-09-09)
+
+- Report: `docs/releases/EOS_U4_MISSION_OS_DEEPEN_2026-09-09.md`
+- Branch: `cursor/eos-u4-mission-os-deepen` — push only; do not merge without PO; NO PR
+- Deepen: T4 baseline + ATS↔loop honesty + EVD custody chain recurrent + HUD wiring fragment; `test:u4` / `observe:mission-os-deepen`
+- NON-CLAIM deepen ≠ soak-prod; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; no silent MCP prune; AT_CEILING
+- Freeze `main_tip` pin **not** moved in U4 (tip refresh was U1; base main after U3 #94 @ 469fce8)

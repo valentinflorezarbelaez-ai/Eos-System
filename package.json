@@ -115,9 +115,11 @@
     "test:t6": "node --test tests/eos-t6-complexity-ceiling-hold.test.js",
     "test:t7": "node --test tests/eos-t7-agy-workstation-evidence.test.js",
     "observe:mission-os-evd": "node scripts/ci/mission-os-evd-observe-pack.js",
+    "observe:mission-os-deepen": "node scripts/ci/mission-os-deepen.js",
     "test:t8": "node --test tests/eos-t8-dirty-defer-triage.test.js",
     "test:u2": "node --test tests/eos-u2-ci-seam-pack-t2-t8.test.js",
-    "test:u3": "node --test tests/eos-u3-doctor-fusion-light-t4-t8.test.js"
+    "test:u3": "node --test tests/eos-u3-doctor-fusion-light-t4-t8.test.js",
+    "test:u4": "node --test tests/eos-u4-mission-os-deepen.test.js"
   },
   "keywords": [
     "eos",

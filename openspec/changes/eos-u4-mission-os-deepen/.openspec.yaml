@@ -1,0 +1,27 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 9 U4 — Mission OS deepen post-T4 (CI-safe ritual beyond fixture pack — ATS↔loop honesty + EVD custody chain recurrent + HUD wiring of observe pack; EVD evidence; NON-CLAIM ≠ soak-prod); TDD test:u4; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-u4-mission-os-deepen
+  - src/core/observability/mission-os-deepen.js
+  - scripts/ci/mission-os-deepen.js
+  - tests/eos-u4-mission-os-deepen.test.js
+  - package.json
+  - scripts/verify-eos.js
+  - docs/releases/EOS_U4_MISSION_OS_DEEPEN_2026-09-09.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip pin not moved)
+  - U5+ AGY Admin HITL / OpenSpec CLI optional / SpecBoot stubs / KEEP PO prune
+  - silent MCP/tool prune
+  - production soak claim / long-run ≠ soak-prod
+  - CloudAgent as SpecBoot default
+  - new docs/schemas JSON (AT_CEILING)
+  - staging DEFER dirty untracked files
