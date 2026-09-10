@@ -463,3 +463,13 @@ External production readiness is explicitly **not** asserted.
 - Lock: `scripts/lib/loop-engineering-lock.js`; `test:s3`; verify:strict block 3g11
 - NON-CLAIM: policy ≠ productive autonomy; Loop Engineering ≠ verify:strict; doctor ≠ verify; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING)
 - Freeze `main_tip` pin **not** moved in S3 (tip refresh was S1)
+
+## S4 Worktree isolation policy + smoke (2026-09-09)
+
+- Report: `docs/releases/EOS_S4_WORKTREE_ISOLATION_2026-09-09.md`
+- SSOT: `docs/harness/WORKTREE_ISOLATION_POLICY.md`
+- Branch: `cursor/eos-s4-worktree-isolation` — push/compare only; do not merge without PO
+- Lock: `scripts/lib/worktree-policy-lock.js`; `test:s4`; verify:strict block 3g12
+- CI: seam-pack + contract include CI-safe `test:s4` (policy/CLI/path; no git worktree churn)
+- NON-CLAIM: no swarm; policy ≠ swarm; CI smoke ≠ real worktree churn; PRODUCTION_READY=NO; Fundacion Delta=0; no new docs/schemas JSON (AT_CEILING)
+- Freeze `main_tip` pin **not** moved in S4 (tip refresh was S1)
