@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-09
+goal: Ladder 9 U5 — AGY daemon Admin HITL checklist (optional); do NOT install daemon (no Admin); honest Admin HITL checklist + fail-closed evidence status remains DAEMON_ABSENT / Not installed unless PRESENT proven; extend T7 AGY evidence; NON-CLAIM no pretend install; adminRequired=true path documented but not executed; TDD test:u5; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-u5-agy-admin-hitl-checklist
+  - docs/harness/AGY_ADMIN_HITL_CHECKLIST.md
+  - docs/releases/EOS_U5_AGY_ADMIN_HITL_CHECKLIST_2026-09-09.md
+  - scripts/lib/agy-admin-hitl-lock.js
+  - scripts/ci/agy-admin-hitl-checklist.js
+  - tests/eos-u5-agy-admin-hitl-checklist.test.js
+  - package.json
+  - scripts/verify-eos.js
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/harness/AGY_WORKSTATION_CHECKLIST.md
+  - docs/harness/ANTIGRAVITY_FIRST.md
+non_goals:
+  - Admin daemon install / Task Scheduler registration (HITL operator only; NOT executed in U5)
+  - pretending agy-daemon / eos-workstation INSTALLED when status says Not installed
+  - flipping PRODUCTION_READY
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (freeze tip pin not moved)
+  - U6+ OpenSpec CLI optional / SpecBoot stubs / KEEP PO prune
+  - CloudAgent as SpecBoot default
+  - new docs/schemas JSON (AT_CEILING)
+  - staging DEFER dirty untracked files

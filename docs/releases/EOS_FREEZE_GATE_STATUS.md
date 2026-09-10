@@ -647,3 +647,11 @@ External production readiness is explicitly **not** asserted.
 - Deepen: T4 baseline + ATS↔loop honesty + EVD custody chain recurrent + HUD wiring fragment; `test:u4` / `observe:mission-os-deepen`
 - NON-CLAIM deepen ≠ soak-prod; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; no silent MCP prune; AT_CEILING
 - Freeze `main_tip` pin **not** moved in U4 (tip refresh was U1; base main after U3 #94 @ 469fce8)
+
+## U5 AGY daemon Admin HITL checklist (2026-09-09)
+
+- Report: `docs/releases/EOS_U5_AGY_ADMIN_HITL_CHECKLIST_2026-09-09.md`
+- Branch: `cursor/eos-u5-agy-admin-hitl-checklist` — push only; do not merge without PO; NO PR
+- Extends T7: Admin HITL checklist + fail-closed DAEMON_ABSENT unless PRESENT proven; `adminRequired=true` documented, installExecuted=false; `test:u5`
+- NON-CLAIM: no pretend install; checklist ≠ daemon installed; PRODUCTION_READY=NO; Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING; Antigravity-first (no CloudAgent)
+- Freeze `main_tip` pin **not** moved in U5 (tip refresh was U1; base main after U4 #95 @ a8602da)
