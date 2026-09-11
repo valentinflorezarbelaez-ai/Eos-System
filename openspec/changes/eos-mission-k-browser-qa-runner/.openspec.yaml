@@ -1,0 +1,21 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0016 — Autonomous Chrome DevTools Browser QA Runner (LCP/CLS CWV, WCAG 2.1 AA a11y, screenshot receipts) with custody, 30s timeout, hermetic TDD. PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0016
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-k-browser-qa-runner
+  - src/core/qa/browser-qa-runner.js
+  - tests/runners/eos-browser-qa-runner.test.js
+  - scripts/test-runner.js
+  - package.json
+  - docs/releases/EOS_MISSION_K_BROWSER_QA_RUNNER_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new npm dependencies (no puppeteer/playwright packages)
+  - raising TR-01
+  - claiming live Chrome DevTools in CI (hermetic mock only by default)
