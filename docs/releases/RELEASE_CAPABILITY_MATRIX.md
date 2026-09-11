@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 1feb506fe5955286fdbe7aec6d2ba611102e249b
+evaluated_tip: 4bb5eb528b45e17464404a63e7909a0cb552da0f
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #120 from valentinflorezarbelaez-ai/grok/mission-h-worker-tool-execution
-updated_at: 2026-09-11 America/Bogota (tip refresh post #120; pin to main@1feb506; prior post-#118/#119 pin was ef1e75b/fa2b188; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #122 from valentinflorezarbelaez-ai/cursor/eos-google-gemini-provider
+updated_at: 2026-09-11 America/Bogota (tip refresh post #122; pin to main@4bb5eb5; prior post-#120/#121 pin was 1feb506/dc98567; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -109,6 +109,8 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #120; pin to main@1feb50
 | Tip refresh post #118 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_118_2026-09-11.md; freeze+matrix to ef1e75b; tip honesty restored) |
 | Mission H worker tool execution (#120) | COMPLETE | MEASURED (eos-mission-h-worker-tool-execution; test:compute-worker-h; SPEC-0012) |
 | Tip refresh post #120 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_120_2026-09-11.md; freeze+matrix to 1feb506; tip honesty restored) |
+| Google Gemini AI provider (SPEC-0013) | COMPLETE | MEASURED (eos-google-gemini-provider; test:gemini 9/9; SPEC-0013; PR #122 @ 4bb5eb5) |
+| Tip refresh post #122 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_122_2026-09-11.md; freeze+matrix to 4bb5eb5; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -156,6 +158,13 @@ PRODUCTION_READY: NO
 - evaluated_tip pinned to OBSERVED main tip after #120: 1feb506fe5955286fdbe7aec6d2ba611102e249b
 - Prior post-#118/#119 pin was ef1e75b0cf420a2e87fdc2d63b59608713cbea8b / fa2b1880b7964c0b6c3f711327ee10dfa9752f51 (#118 Mission G + #119 tip refresh); live main after #120 Mission H is 1feb506 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
 - Matrix: tip refresh post #118 MEASURED (historical) + Mission H worker tool execution MEASURED + tip refresh post #120 MEASURED
+- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (post #122)
+
+- evaluated_tip pinned to OBSERVED main tip after #122: 4bb5eb528b45e17464404a63e7909a0cb552da0f
+- Prior post-#120/#121 pin was 1feb506fe5955286fdbe7aec6d2ba611102e249b / dc985677930edcf80bb405057db4b6fb42df85eb (#120 Mission H + #121 tip refresh); live main after #122 Google Gemini provider is 4bb5eb5 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
+- Matrix: tip refresh post #120 MEASURED (historical) + Google Gemini AI provider MEASURED + tip refresh post #122 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
 ## Tip refresh notes (post #110)
