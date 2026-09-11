@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: e81af1a5c3fc41441020eefa18f5ce2b1c19bee4
+evaluated_tip: 25974368cd8c96ffd2fd3da5dc950a79f2cd722d
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #100 from valentinflorezarbelaez-ai/cursor/eos-v6-l10-closeout
-updated_at: 2026-09-11 America/Bogota (tip refresh post L10/#100; pin to main@e81af1a; prior U1 pin was 8781bb3; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #106 from valentinflorezarbelaez-ai/grok/mission-b-sensor-mutation-fortify
+updated_at: 2026-09-11 America/Bogota (tip refresh post #106; pin to main@2597436; prior post-L10 pin was e81af1a; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -95,7 +95,8 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post L10/#100; pin to main@e8
 | FDIR sentinel & graph healing gate (V4) | COMPLETE | VERIFIED (fdir-sentinel-adversarial-gate.js; test:v4; 8/8 PASS) |
 | Runtime enforcement BUILDER != VERIFIER (V5) | COMPLETE | VERIFIED (builder-verifier-custody.js; test:v5; 8/8 PASS) |
 | Ladder 10 closeout | COMPLETE | MEASURED (EOS_LADDER_10_CLOSEOUT_2026-09-10.md; V1–V5 CLOSED for local governed use; PRODUCTION_READY=NO) |
-| Tip refresh post L10 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_L10_2026-09-11.md; freeze+matrix to e81af1a; tip honesty restored) |
+| Tip refresh post L10 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_L10_2026-09-11.md; freeze+matrix to e81af1a; tip honesty restored; superseded tip pin by post #106) |
+| Tip refresh post #106 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_106_2026-09-11.md; freeze+matrix to 2597436; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -115,6 +116,14 @@ COMPLETE_WITH_CONDITIONS: (subset)
 PRODUCTION_READY: NO
 ```
 
+
+## Tip refresh notes (post #106)
+
+- evaluated_tip pinned to OBSERVED main tip after #106: 25974368cd8c96ffd2fd3da5dc950a79f2cd722d
+- Prior post-L10 pin was e81af1a5c3fc41441020eefa18f5ce2b1c19bee4 (#100/#101 era); live main after #101–#106 is 2597436 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
+- Do not reuse stale unmerged C1 pin 2d58d51 (post-#103)
+- Matrix: tip refresh post L10 MEASURED (historical) + tip refresh post #106 MEASURED
+- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
 ## Tip refresh notes (post L10 / #100)
 
