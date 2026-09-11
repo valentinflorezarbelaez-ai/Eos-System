@@ -31,6 +31,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-mission-b-sensor-mutation-fortify.test.js',
   'eos-mission-c2-ci-compute-worker.test.js',
   'mcp-capability-router.test.js',
+  'eos-compute-worker-mission-e.test.js',
 ]);
 
 /**

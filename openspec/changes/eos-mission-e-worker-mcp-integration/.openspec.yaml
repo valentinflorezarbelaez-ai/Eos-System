@@ -1,0 +1,22 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0010 — integrate McpCapabilityRouter into eos-compute-worker (mcpEnvelope on plan, enforceMcp abort MCP_CAPABILITY_DEFICIENT, mcp_envelope in custody seal, CLI --mcp-check / --enforce-mcp); AT_CEILING; PRODUCTION_READY=NO; Fundacion Delta=0.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0010
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-e-worker-mcp-integration
+  - scripts/runners/eos-compute-worker.js
+  - scripts/runners/eos-compute-worker-cli.js
+  - tests/runners/eos-compute-worker-mission-e.test.js
+  - scripts/test-runner.js
+  - package.json
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - mutating src/core (L0 purity; import McpCapabilityRouter only)
+  - new npm dependencies
+  - opening or merging PR
+  - new docs/schemas JSON (AT_CEILING)

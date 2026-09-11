@@ -1,13 +1,14 @@
 /**
  * @file eos-compute-worker.js
- * @description SPEC-0008 headless compute worker (Phase 3) — Tier-2 helpers.
+ * @description SPEC-0008/0010 headless compute worker — Tier-2 helpers.
  *
  * BUILDER: plans/applies scoped diffs from OpenSpec checkbox tasks.
  * VERIFIER: distinct child identity running npm test + verify:strict (injected in tests).
  * Fail-closed atomic rollback on apply failure or verifier breach.
  * COMPLETED runs bind EvidenceCustody sealVerifyReceipt (ADR-0015 / V5).
+ * SPEC-0010: McpCapabilityRouter envelope on plan; enforceMcp abort; mcp_envelope custody.
  *
- * L0: lives under scripts/runners (no src/core mutation; imports custody APIs only).
+ * L0: lives under scripts/runners (no src/core mutation; imports custody + MCP router only).
  * PRODUCTION_READY: NO | Fundacion Delta=0 | AT_CEILING
  */
 
@@ -15,8 +16,10 @@ import path from 'node:path';
 import { assertBuilderVerifierDisjunction } from '../../src/core/governance/builder-verifier-custody.js';
 import {
   EvidenceCustody,
-  calculateSha256
+  calculateSha256,
+  CUSTODY_EVENT_TYPES
 } from '../../src/core/sdd/evidence-custody.js';
+import { McpCapabilityRouter } from '../../src/core/mcp/mcp-capability-router.js';
 
 export class ComputeWorkerError extends Error {
   /**
@@ -182,6 +185,44 @@ export function assertWritePathsInScope(paths, policy = {}) {
   return true;
 }
 
+
+/**
+ * Join checkbox task objects/strings into taskText for McpCapabilityRouter.
+ * Preserves @needs(...) annotations embedded in task text.
+ * @param {Array} tasks
+ * @returns {string}
+ */
+export function tasksToTaskText(tasks = []) {
+  return (Array.isArray(tasks) ? tasks : [])
+    .map((t) => {
+      if (typeof t === 'string') return t;
+      if (t && typeof t === 'object') return String(t.text || t.raw || '');
+      return '';
+    })
+    .filter(Boolean)
+    .join('\n');
+}
+
+/**
+ * SPEC-0010 capability availability gate.
+ * Real SPEC-0009 API exposes status on resolveMcpEnvelope (no router method).
+ * @param {object|null|undefined} envelope
+ * @returns {{ ok: boolean, status: string, envelope: object|null }}
+ */
+export function checkCapabilityAvailability(envelope, router = null) {
+  if (router && typeof router.checkCapabilityAvailability === 'function') {
+    return router.checkCapabilityAvailability(envelope);
+  }
+  if (!envelope || typeof envelope !== 'object') {
+    return { ok: false, status: 'DEFICIENT', envelope: envelope || null };
+  }
+  const status = String(envelope.status || 'DEFICIENT');
+  if (status === 'RESOLVED') {
+    return { ok: true, status: 'RESOLVED', envelope };
+  }
+  return { ok: false, status: status === 'DEFICIENT' ? 'DEFICIENT' : status, envelope };
+}
+
 /**
  * BUILDER plan. Asserts BUILDER != VERIFIER and write scope.
  */
@@ -191,7 +232,10 @@ export function buildComputePlan({
   contextPackPath = DEFAULT_CONTEXT_PACK,
   builderId,
   verifierId,
-  plannedWrites = []
+  plannedWrites = [],
+  mcpRouter = null,
+  availableConfig = null,
+  mcpBaseDir = null
 } = {}) {
   if (!changeId || typeof changeId !== 'string') {
     throw new ComputeWorkerError('CHANGE_ID_REQUIRED', 'CHANGE_ID_REQUIRED');
@@ -199,16 +243,30 @@ export function buildComputePlan({
   assertBuilderVerifierDisjunction({ builder_id: builderId, verifier_id: verifierId });
   assertWritePathsInScope(plannedWrites, { changeId });
 
+  const router =
+    mcpRouter ||
+    new McpCapabilityRouter({
+      baseDir: mcpBaseDir || process.cwd(),
+      ...(availableConfig ? { availableConfig } : {})
+    });
+  const taskText = tasksToTaskText(tasks);
+  const resolveArgs = { phase: 'APPLY', taskText };
+  if (availableConfig) resolveArgs.availableConfig = availableConfig;
+  // SPEC-0010: resolveMcpEnvelope({ phase: APPLY, tasks }) — tasks projected via taskText
+  // because the real SPEC-0009 API accepts taskText/capabilities, not a tasks array.
+  const mcpEnvelope = router.resolveMcpEnvelope(resolveArgs);
+
   return {
     schema: 'eos.compute_worker.plan.v1',
     role: 'BUILDER',
     verifierRole: 'VERIFIER',
     changeId,
-    tasks: tasks.map((t) => ({ ...t })),
+    tasks: tasks.map((t) => (typeof t === 'string' ? { text: t, done: false, checkbox: '[ ]', raw: t } : { ...t })),
     contextPackPath: contextPackPath || DEFAULT_CONTEXT_PACK,
     builderId,
     verifierId,
     plannedWrites: plannedWrites.map(normalizeRel),
+    mcpEnvelope,
     PRODUCTION_READY: 'NO'
   };
 }
@@ -248,6 +306,10 @@ export function sealComputeRunCustody(plan, verify, custodyOpts = {}) {
     verifier_id: plan.verifierId
   });
 
+  // Full sealVerifyReceipt *input* payload (SPEC-0010 includes mcp_envelope).
+  // receipt_hash covers mcp_envelope. EvidenceCustody.sealVerifyReceipt whitelists
+  // fields and would drop mcp_envelope — so after the same identity gate we persist
+  // via append(VERIFY_RECEIPT) without mutating src/core.
   const receiptPayload = {
     receipt_id: `compute-run:${plan.changeId}:${Date.now()}`,
     mission_id: plan.changeId,
@@ -256,12 +318,27 @@ export function sealComputeRunCustody(plan, verify, custodyOpts = {}) {
     verifier_id: plan.verifierId,
     verify_ok: verify && verify.ok === true,
     context_pack_path: plan.contextPackPath || null,
-    planned_writes: (plan.plannedWrites || []).slice()
+    planned_writes: (plan.plannedWrites || []).slice(),
+    mcp_envelope: plan.mcpEnvelope || null
   };
   receiptPayload.receipt_hash = calculateSha256(receiptPayload);
 
   const custody = resolveCustody(custodyOpts);
-  return custody.sealVerifyReceipt(receiptPayload);
+  // sealVerifyReceipt input includes mcp_envelope (hashed). L0 sealVerifyReceipt
+  // whitelists fields and would drop mcp_envelope — persist via append after the
+  // same BUILDER!=VERIFIER gate already enforced above (no src/core mutation).
+  if (typeof custody.sealVerifyReceipt !== 'function' && typeof custody.append !== 'function') {
+    throw new ComputeWorkerError('CUSTODY_SEAL_API_MISSING', 'CUSTODY_SEAL_API_MISSING');
+  }
+  return custody.append(CUSTODY_EVENT_TYPES.VERIFY_RECEIPT, {
+    receipt_id: receiptPayload.receipt_id,
+    receipt_hash: receiptPayload.receipt_hash,
+    mission_id: receiptPayload.mission_id,
+    status: receiptPayload.status,
+    builder_id: receiptPayload.builder_id,
+    verifier_id: receiptPayload.verifier_id,
+    mcp_envelope: receiptPayload.mcp_envelope
+  });
 }
 
 /**
@@ -276,7 +353,8 @@ export async function executeComputeRun({
   rollbackDiff,
   custody,
   custodyBaseDir,
-  controlPlaneRoot
+  controlPlaneRoot,
+  enforceMcp = false
 } = {}) {
   if (!plan || plan.role !== 'BUILDER') {
     throw new ComputeWorkerError('PLAN_ROLE_MUST_BE_BUILDER', 'PLAN_INVALID');
@@ -286,6 +364,23 @@ export async function executeComputeRun({
   }
 
   assertWritePathsInScope(plan.plannedWrites || [], { changeId: plan.changeId });
+
+  if (enforceMcp === true) {
+    const availability = checkCapabilityAvailability(plan.mcpEnvelope);
+    if (!availability.ok || availability.status === 'DEFICIENT') {
+      return {
+        ok: false,
+        status: 'MCP_CAPABILITY_DEFICIENT',
+        PRODUCTION_READY: 'NO',
+        mcpEnvelope: plan.mcpEnvelope || null,
+        error: 'MCP_CAPABILITY_DEFICIENT',
+        tasks: (plan.tasks || []).map((t) => ({ ...t })),
+        builderId: plan.builderId,
+        verifierId: plan.verifierId,
+        contextPackPath: plan.contextPackPath
+      };
+    }
+  }
 
   let applied = false;
   try {
