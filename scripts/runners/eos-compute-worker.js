@@ -47,6 +47,13 @@ function assertTaskTextPathSafe(text) {
       'PATH_TRAVERSAL_REJECTED'
     );
   }
+  // Percent-encoded traversal / separators (e.g. @needs(%2e%2e%2f...))
+  if (/%2e/i.test(s) || /%2f/i.test(s) || /%5c/i.test(s)) {
+    throw new ComputeWorkerError(
+      `PATH_TRAVERSAL_REJECTED: percent-encoded path token in task text '${s}'`,
+      'PATH_TRAVERSAL_REJECTED'
+    );
+  }
   // Path segment traversal
   if (/(?:^|[/\\])\.\.(?:[/\\]|$)/.test(s) || s.includes('../') || s.includes('..\\')) {
     throw new ComputeWorkerError(
@@ -192,6 +199,52 @@ export function assertWritePathsInScope(paths, policy = {}) {
  * @param {Array} tasks
  * @returns {string}
  */
+
+/** Tokens that must never be accepted as MCP capability names (pollution / spoof). */
+const FORBIDDEN_MCP_CAPABILITY_TOKENS = new Set([
+  '__PROTO__',
+  'CONSTRUCTOR',
+  'PROTOTYPE',
+  'PROTO',
+]);
+
+/**
+ * Strip / reject adversarial @needs tokens before router resolution (worker-side harden).
+ * @param {string} taskText
+ */
+export function sanitizeMcpTaskText(taskText = '') {
+  const s = String(taskText || '');
+  assertTaskTextPathSafe(s);
+  const re = /@needs\(([^)]*)\)/gi;
+  let m;
+  while ((m = re.exec(s)) !== null) {
+    const raw = m[1] || '';
+    const tokens = raw.split(',').map((t) => t.trim()).filter(Boolean);
+    for (const tok of tokens) {
+      const up = tok.toUpperCase();
+      if (FORBIDDEN_MCP_CAPABILITY_TOKENS.has(up) || up.includes('__PROTO__')) {
+        throw new ComputeWorkerError(
+          `MCP_CAPABILITY_REJECTED: forbidden token '${tok}'`,
+          'MCP_CAPABILITY_REJECTED'
+        );
+      }
+      if (tok.includes('..') || tok.includes('/') || tok.includes('\\') || /%2e|%2f|%5c/i.test(tok)) {
+        throw new ComputeWorkerError(
+          `MCP_CAPABILITY_REJECTED: path-like token '${tok}'`,
+          'MCP_CAPABILITY_REJECTED'
+        );
+      }
+      if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(tok)) {
+        throw new ComputeWorkerError(
+          `MCP_CAPABILITY_REJECTED: malformed token '${tok}'`,
+          'MCP_CAPABILITY_REJECTED'
+        );
+      }
+    }
+  }
+  return s;
+}
+
 export function tasksToTaskText(tasks = []) {
   return (Array.isArray(tasks) ? tasks : [])
     .map((t) => {
@@ -249,12 +302,24 @@ export function buildComputePlan({
       baseDir: mcpBaseDir || process.cwd(),
       ...(availableConfig ? { availableConfig } : {})
     });
-  const taskText = tasksToTaskText(tasks);
+  const taskText = sanitizeMcpTaskText(tasksToTaskText(tasks));
   const resolveArgs = { phase: 'APPLY', taskText };
   if (availableConfig) resolveArgs.availableConfig = availableConfig;
   // SPEC-0010: resolveMcpEnvelope({ phase: APPLY, tasks }) — tasks projected via taskText
   // because the real SPEC-0009 API accepts taskText/capabilities, not a tasks array.
   const mcpEnvelope = router.resolveMcpEnvelope(resolveArgs);
+  // Fail-closed: APPLY must never claim L0_READONLY with writeAllowed true
+  if (
+    mcpEnvelope &&
+    mcpEnvelope.profile === 'L0_READONLY' &&
+    mcpEnvelope.authority &&
+    mcpEnvelope.authority.writeAllowed === true
+  ) {
+    throw new ComputeWorkerError(
+      'MCP_PROFILE_SPOOF: L0_READONLY cannot writeAllowed',
+      'MCP_PROFILE_SPOOF'
+    );
+  }
 
   return {
     schema: 'eos.compute_worker.plan.v1',
@@ -267,6 +332,7 @@ export function buildComputePlan({
     verifierId,
     plannedWrites: plannedWrites.map(normalizeRel),
     mcpEnvelope,
+    mcpAvailableConfig: availableConfig || null,
     PRODUCTION_READY: 'NO'
   };
 }
@@ -305,6 +371,76 @@ export function sealComputeRunCustody(plan, verify, custodyOpts = {}) {
     builder_id: plan.builderId,
     verifier_id: plan.verifierId
   });
+
+  // SPEC-0010-ADV: reject missing / tampered mcp_envelope before custody bind
+  if (!plan.mcpEnvelope || typeof plan.mcpEnvelope !== 'object') {
+    throw new ComputeWorkerError(
+      'MCP_ENVELOPE_REQUIRED: COMPLETED seal requires mcp_envelope',
+      'MCP_ENVELOPE_TAMPERED'
+    );
+  }
+  if (
+    plan.mcpEnvelope.profile === 'L0_READONLY' &&
+    plan.mcpEnvelope.authority &&
+    plan.mcpEnvelope.authority.writeAllowed === true
+  ) {
+    throw new ComputeWorkerError(
+      'MCP_ENVELOPE_TAMPERED: L0_READONLY with writeAllowed',
+      'MCP_ENVELOPE_TAMPERED'
+    );
+  }
+  if (custodyOpts.skipMcpIntegrity !== true) {
+    const env = plan.mcpEnvelope;
+    if (env.schema !== 'eos.mcp_capability_envelope.v1') {
+      throw new ComputeWorkerError(
+        'MCP_ENVELOPE_TAMPERED: invalid schema',
+        'MCP_ENVELOPE_TAMPERED'
+      );
+    }
+    if (env.status !== 'RESOLVED' && env.status !== 'DEFICIENT') {
+      throw new ComputeWorkerError(
+        'MCP_ENVELOPE_TAMPERED: invalid status',
+        'MCP_ENVELOPE_TAMPERED'
+      );
+    }
+    if (env.phase === 'APPLY' && env.profile !== 'L1_LOCAL_GOVERNED') {
+      throw new ComputeWorkerError(
+        'MCP_ENVELOPE_TAMPERED: APPLY requires L1_LOCAL_GOVERNED',
+        'MCP_ENVELOPE_TAMPERED'
+      );
+    }
+    if (custodyOpts.availableConfig || custodyOpts.mcpRouter) {
+      const router =
+        custodyOpts.mcpRouter ||
+        new McpCapabilityRouter({
+          baseDir: custodyOpts.mcpBaseDir || custodyOpts.controlPlaneRoot || process.cwd(),
+          ...(custodyOpts.availableConfig ? { availableConfig: custodyOpts.availableConfig } : {})
+        });
+      const fresh = router.resolveMcpEnvelope({
+        phase: 'APPLY',
+        taskText: sanitizeMcpTaskText(tasksToTaskText(plan.tasks || [])),
+        ...(custodyOpts.availableConfig ? { availableConfig: custodyOpts.availableConfig } : {})
+      });
+      const a = JSON.stringify({
+        status: env.status,
+        capabilities: env.capabilities,
+        resolvedServers: env.resolvedServers,
+        profile: env.profile
+      });
+      const b = JSON.stringify({
+        status: fresh.status,
+        capabilities: fresh.capabilities,
+        resolvedServers: fresh.resolvedServers,
+        profile: fresh.profile
+      });
+      if (a !== b) {
+        throw new ComputeWorkerError(
+          'MCP_ENVELOPE_TAMPERED: envelope does not match re-resolved projection',
+          'MCP_ENVELOPE_TAMPERED'
+        );
+      }
+    }
+  }
 
   // Full sealVerifyReceipt *input* payload (SPEC-0010 includes mcp_envelope).
   // receipt_hash covers mcp_envelope. EvidenceCustody.sealVerifyReceipt whitelists

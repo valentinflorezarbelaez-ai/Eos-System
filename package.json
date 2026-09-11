@@ -131,7 +131,8 @@
     "test:compute-worker": "node --test tests/runners/eos-compute-worker.test.js tests/runners/eos-compute-worker-fuzz.test.js tests/runners/eos-compute-worker-adversarial.test.js tests/runners/eos-compute-worker-mission-d.test.js",
     "test:c2": "node --test tests/eos-mission-c2-ci-compute-worker.test.js",
     "test:mcp-router": "node --test tests/mcp-capability-router.test.js",
-    "test:compute-worker-e": "node --test tests/runners/eos-compute-worker-mission-e.test.js"
+    "test:compute-worker-e": "node --test tests/runners/eos-compute-worker-mission-e.test.js",
+    "test:compute-worker-f": "node --test tests/runners/eos-compute-worker-mission-f-adversarial.test.js"
   },
   "keywords": [
     "eos",

@@ -1,0 +1,21 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0010-ADV — adversarial red-team of McpCapabilityRouter × eos-compute-worker (malformed @needs, prototype pollution, path traversal, enforceMcp fuzz, pre-disk DEFICIENT gate, profile spoof, custody envelope tamper, CLI exits, rollback). Harden worker-side sanitize + seal without mutating src/core. AT_CEILING; PRODUCTION_READY=NO; Fundacion Delta=0.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0010-ADV
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-f-worker-mcp-adversarial
+  - scripts/runners/eos-compute-worker.js
+  - tests/runners/eos-compute-worker-mission-f-adversarial.test.js
+  - scripts/test-runner.js
+  - package.json
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - mutating src/core (L0 purity)
+  - new npm dependencies
+  - raising TR-01 ceiling (exclude-from-slim instead)
+  - new docs/schemas JSON (AT_CEILING)
