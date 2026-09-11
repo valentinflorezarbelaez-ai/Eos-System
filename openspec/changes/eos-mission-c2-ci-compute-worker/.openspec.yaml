@@ -1,0 +1,26 @@
+﻿schema: spec-driven
+created: 2026-09-11
+goal: Mission C2 — wire npm run test:compute-worker (unit+fuzz+adversarial) into CI seam-pack fail-closed; optional test:u2; TDD test:c2 lock excluded from slim to hold TR-01 ≤145; Fundacion Delta=0; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-mission-c2-ci-compute-worker
+  - .github/workflows/ci.yml
+  - scripts/ci/assert-gha-contract.js
+  - scripts/test-runner.js
+  - docs/governance/CI_CD_CONTRACT.md
+  - tests/eos-mission-c2-ci-compute-worker.test.js
+  - tests/eos-m5-ci-gameday-seam-pack.test.js
+  - tests/github-actions-cicd.test.js
+  - package.json
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - tip refresh (base origin/main as-is; rebase if tip merges mid-flight)
+  - raising TR-01 slim ceiling above 145
+  - soak / new GH billing claims
+  - CloudAgent
+  - new docs/schemas JSON (AT_CEILING)
+  - new npm dependencies
