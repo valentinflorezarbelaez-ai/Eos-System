@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 25974368cd8c96ffd2fd3da5dc950a79f2cd722d
+evaluated_tip: dd6d7c3ddfd122535d320bf14ae2e03d8c626c15
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #106 from valentinflorezarbelaez-ai/grok/mission-b-sensor-mutation-fortify
-updated_at: 2026-09-11 America/Bogota (tip refresh post #106; pin to main@2597436; prior post-L10 pin was e81af1a; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #108 from valentinflorezarbelaez-ai/grok/mission-c2-ci-compute-worker
+updated_at: 2026-09-11 America/Bogota (tip refresh post #108; pin to main@dd6d7c3; prior post-#106 pin was 2597436; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -96,7 +96,8 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #106; pin to main@259743
 | Runtime enforcement BUILDER != VERIFIER (V5) | COMPLETE | VERIFIED (builder-verifier-custody.js; test:v5; 8/8 PASS) |
 | Ladder 10 closeout | COMPLETE | MEASURED (EOS_LADDER_10_CLOSEOUT_2026-09-10.md; V1–V5 CLOSED for local governed use; PRODUCTION_READY=NO) |
 | Tip refresh post L10 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_L10_2026-09-11.md; freeze+matrix to e81af1a; tip honesty restored; superseded tip pin by post #106) |
-| Tip refresh post #106 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_106_2026-09-11.md; freeze+matrix to 2597436; tip honesty restored) |
+| Tip refresh post #106 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_106_2026-09-11.md; freeze+matrix to 2597436; tip honesty restored; superseded tip pin by post #108) |
+| Tip refresh post #108 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_108_2026-09-11.md; freeze+matrix to dd6d7c3; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -117,6 +118,12 @@ PRODUCTION_READY: NO
 ```
 
 
+## Tip refresh notes (post #108)
+
+- evaluated_tip pinned to OBSERVED main tip after #108: dd6d7c3ddfd122535d320bf14ae2e03d8c626c15
+- Prior post-#106 pin was 25974368cd8c96ffd2fd3da5dc950a79f2cd722d (#106/#107 era); live main after #107 tip refresh + #108 Mission C2 CI compute worker is dd6d7c3 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
+- Matrix: tip refresh post #106 MEASURED (historical) + tip refresh post #108 MEASURED
+- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 ## Tip refresh notes (post #106)
 
 - evaluated_tip pinned to OBSERVED main tip after #106: 25974368cd8c96ffd2fd3da5dc950a79f2cd722d
