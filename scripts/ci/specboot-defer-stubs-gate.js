@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 /**
  * U7 SpecBoot DEFER stubs gate (NON-MUTATING).
  *
