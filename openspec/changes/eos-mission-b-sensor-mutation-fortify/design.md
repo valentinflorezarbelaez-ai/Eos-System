@@ -19,6 +19,16 @@ Scoped mutation fortification for three high-value false-positive sensors. Prefe
 - No new `src/core` modules; no new npm deps; AT_CEILING.
 - Do not expand verify-eos REQUIRED_PATHS (preserve 914 check count).
 
+## Slim-suite discovery (TR-01)
+
+Default `npm test` discovery counts every `*.test.js` under `tests/` against ceiling **<= 145**.
+Mission B mutation would be a live file on top of already-excluded Mission A fuzz + adversarial.
+Prefer **exclude-from-slim** over a TR-01 ceiling bump:
+
+- `scripts/test-runner.js` `SLIM_SUITE_EXCLUDES` includes `eos-mission-b-sensor-mutation-fortify.test.js` (alongside fuzz + adversarial)
+- Mutation remains on disk and is executed by `npm run test:mission-b` (explicit opt-in)
+- TR-05 asserts exclude; mutation coverage is not silently weakened
+
 ## Invariants
 
 AT_CEILING; PRODUCTION_READY=NO; Fundacion Δ=0; no CloudAgent; Tier 1/2 only.

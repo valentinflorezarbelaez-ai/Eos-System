@@ -19,14 +19,15 @@ const testsDir = path.join(rootDir, 'tests');
 
 /**
  * Basenames excluded from default slim discovery (npm test / TR-01).
- * Opt-in via dedicated npm scripts (e.g. npm run test:compute-worker).
+ * Opt-in via dedicated npm scripts (e.g. npm run test:compute-worker / test:mission-b).
  * Prefer exclude-from-slim over raising TR-01 ceiling for heavy adversarial fuzz
- * (Mission A fuzz + adversarial stress) so default suite stays lean without
- * silently weakening opt-in coverage.
+ * (Mission A fuzz + adversarial stress) and Mission B sensor mutation so the
+ * default suite stays lean without silently weakening opt-in coverage.
  */
 export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-compute-worker-fuzz.test.js',
   'eos-compute-worker-adversarial.test.js',
+  'eos-mission-b-sensor-mutation-fortify.test.js',
 ]);
 
 /**

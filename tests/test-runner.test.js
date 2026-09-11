@@ -13,8 +13,9 @@ describe('EOS Test Runner: Discovery and Filtering', () => {
     assert.ok(files.length >= 80, `Expected >= 80 live test files after ROI2 engine quarantine, discovered ${files.length}`);
     // Ceiling: stay slim vs pre-ROI2 bloat; Ladder 6-9 intentional governance
     // suites (R5, Ladder8 T-series, Ladder9 U-series) are CI-visible and
-    // count as live. Mission A adversarial fuzz is opt-in via SLIM_SUITE_EXCLUDES
-    // + npm run test:compute-worker (prefer exclude-from-slim over ceiling bump).
+    // count as live. Mission A fuzz/adversarial and Mission B mutation are opt-in
+    // via SLIM_SUITE_EXCLUDES + npm run test:compute-worker / test:mission-b
+    // (prefer exclude-from-slim over ceiling bump).
     // Hard lock remains; do not inflate casually.
     assert.ok(files.length <= 145, `Live tests/ should stay slim after ROI2 (+ Ladder6-9 intentional governance locks); discovered ${files.length}`);
     assert.ok(files.every(f => f.endsWith('.test.js')), 'All discovered files must end with .test.js');
@@ -50,6 +51,21 @@ describe('EOS Test Runner: Discovery and Filtering', () => {
     assert.ok(
       !files.some((f) => path.basename(f) === 'eos-compute-worker-adversarial.test.js'),
       'adversarial must not appear in default slim discovery'
+    );
+  });
+
+  it('TR-05: Mission B mutation suite is opt-in (excluded from slim discovery)', () => {
+    const testsDir = path.resolve(process.cwd(), 'tests');
+    const mbAbs = path.join(testsDir, 'eos-mission-b-sensor-mutation-fortify.test.js');
+    assert.ok(fs.existsSync(mbAbs), 'mission-b suite must remain on disk');
+    assert.ok(
+      SLIM_SUITE_EXCLUDES.has('eos-mission-b-sensor-mutation-fortify.test.js'),
+      'mission-b basename must be in SLIM_SUITE_EXCLUDES'
+    );
+    const files = discoverTestFiles(testsDir);
+    assert.ok(
+      !files.some((f) => path.basename(f) === 'eos-mission-b-sensor-mutation-fortify.test.js'),
+      'mission-b must not appear in default slim discovery'
     );
   });
 });

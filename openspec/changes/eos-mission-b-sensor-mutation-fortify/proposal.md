@@ -15,6 +15,7 @@ Mission B is **scoped** — not a full 914-check mutation flip.
    - **T8 dirty-defer NON-MUTATING**: gate run leaves working tree untouched; ritual stripped of NON-MUTATING → FAIL-CLOSED.
 3. Minimal Tier-2 fortification in `builder-verifier-custody.js` only where mutation proves a gap (normalize format/ZW chars before compare).
 4. Wire `npm run test:mission-b` (no new deps).
+5. Exclude mutation suite from default slim discovery (`SLIM_SUITE_EXCLUDES`) so TR-01 ceiling stays 145 without weakening opt-in coverage.
 
 ## Definition of Done
 

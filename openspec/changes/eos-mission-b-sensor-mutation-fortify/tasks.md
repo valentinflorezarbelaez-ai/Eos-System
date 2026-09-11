@@ -27,6 +27,15 @@
 - [x] `npm run test:v5` + `test:u7` + `test:t8` EXIT 0
 - [x] `npm run verify:strict` EXIT 0 (914 checks)
 
+## Step 4b: CI hotfix — TR-01 slim discovery (post #104/#105)
+
+- [x] Root cause: mutation suite would push `discoverTestFiles(tests/)` past TR-01 `<= 145` (fuzz + adversarial already excluded)
+- [x] Prefer **exclude-from-slim** (not ceiling bump): add `eos-mission-b-sensor-mutation-fortify.test.js` to `SLIM_SUITE_EXCLUDES` alongside fuzz + adversarial
+- [x] Keep mutation available via `npm run test:mission-b` (coverage not weakened)
+- [x] TR-05 locks opt-in exclude; ceiling stays **145** (no silent weaken / no TR-01 inflate)
+- [x] Rebase onto origin/main @ 08f870e (#105 merge; includes #104)
+- [x] Re-verify: slim<=145; test-runner.test.js; `test:mission-b`; `test:v5`; `verify:strict`
+
 ## Step 5: Commit + push (no PR)
 
 - [x] Conventional commit without Co-Authored-By / AI attribution
