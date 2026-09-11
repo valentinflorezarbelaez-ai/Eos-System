@@ -1,0 +1,9 @@
+schema: spec-driven
+created: 2026-09-10
+goal: Ladder 10 V2 — Observation Budget and Token Hygiene Guard; deterministic output filtering utility for terminal/process buffers (head + omission summary + tail); strict TDD test:v2; Ponytail Tier 2 pure utility; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-v2-token-hygiene
+  - src/core/runtime/bounded-output-filter.js
+  - tests/bounded-output-filter.test.js

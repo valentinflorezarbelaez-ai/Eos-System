@@ -57,6 +57,7 @@ describe('ROI4 I3 Evidence Custody', () => {
       receipt_id: 'RCPT-1',
       receipt_hash: 'deadbeef',
       status: 'NOT_VERIFIED',
+      builder_id: 'TEST_BUILDER',
       verifier_id: 'LOCAL'
     });
     const e2 = custody.sealMissionLoopAdvance({

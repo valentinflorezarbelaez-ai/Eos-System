@@ -222,7 +222,8 @@ export function runCustodyChainRecurrent(options = {}) {
   const receipt = custody.sealVerifyReceipt({
     receipt_id: `RCP-U4-DEEPEN-${ts}`,
     status: 'OBSERVED',
-    verifier_id: 'mission-os-deepen'
+    builder_id: 'mission-os-deepen-builder',
+    verifier_id: 'mission-os-deepen-verifier'
   });
 
   const custodyVerify = custody.verify({ failClosed: true });

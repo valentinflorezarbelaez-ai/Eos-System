@@ -163,6 +163,10 @@ jobs:
           npm run test:t6
           npm run test:t7
           npm run test:t8
+          npm run test:v2
+          npm run test:v3
+          npm run test:v4
+          npm run test:v5
       - name: Fundacion freeze (delta 0)
         run: |
           git diff --exit-code -- Fundacion

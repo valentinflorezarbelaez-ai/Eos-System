@@ -6,7 +6,7 @@
   "status": "LOCAL_GOVERNED_VERIFIED",
   "current_stage": "STAGE_HARDENING_VERIFIED",
   "active_branch": "main",
-  "updated_at": "2026-09-05T01:40:39.413Z",
+  "updated_at": "2026-09-10T23:07:00.000Z",
   "dictamen": {
     "COMPLETE_FOR_LOCAL_GOVERNED_USE": "YES",
     "OPERATIONALLY_COMPLETE_WITHIN_VERIFIED_SCOPE": "YES",
@@ -18,7 +18,7 @@
     "app_fuerza": "VERIFIED_EVD_0060"
   },
   "evidence": {
-    "strict_verifier": "506/506 PASS (0 failures)",
+    "strict_verifier": "914/914 PASS (0 failures)",
     "doctor": "VERDICT: PASS · HOMEDIR_LEAK: NO",
     "pre_commit_guard": "ACTIVE_DETERMINISTIC",
     "satellite_evidence": "docs/evidence/EVD-0060.json",

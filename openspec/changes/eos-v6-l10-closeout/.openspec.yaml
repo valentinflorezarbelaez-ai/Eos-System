@@ -1,0 +1,10 @@
+schema: spec-driven
+created: 2026-09-10
+goal: Ladder 10 Closeout (V1–V5); complete formal closeout of EOS Maturity Ladder 10, delivering Token Hygiene & Observation Budget (V2), Typed Multi-Agent Handoff Contract (V3), FDIR Sentinel & Graph Healing Gate in CI (V4), and Runtime Enforcement of BUILDER != VERIFIER (V5); updating release capability matrix and freeze gate status; 914+ strict verifications green; Fundacion Delta=0; AT_CEILING (35/35 schemas); PRODUCTION_READY=NO.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-v6-l10-closeout
+  - docs/releases/EOS_LADDER_10_CLOSEOUT_2026-09-10.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
