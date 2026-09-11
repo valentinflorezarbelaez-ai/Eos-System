@@ -1,0 +1,10 @@
+schema: spec-driven
+created: 2026-09-11
+goal: Dynamic MCP Capability Router & Multi-Tool Orchestration Engine; declarative capability mapping across UI/design, database, browser QA, VCS, memory, and governance; dynamic task-level MCP envelope projection; fail-closed availability sentinel; phase-governed least-privilege enforcement (L0_READONLY vs L1_LOCAL_GOVERNED); TDD test:mcp-router; Fundacion Delta=0; AT_CEILING; PRODUCTION_READY=NO.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-mcp-capability-router
+  - src/core/mcp/mcp-capability-router.js
+  - tests/mcp-capability-router.test.js
+  - package.json
