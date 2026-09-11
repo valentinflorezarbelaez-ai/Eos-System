@@ -1,0 +1,20 @@
+schema: spec-driven
+created: 2026-09-11
+goal: Tip honesty refresh post #116 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@0b3dacd (Mission F merge); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-116
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_116_2026-09-11.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-116
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - new JSON schemas
