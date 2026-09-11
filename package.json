@@ -137,7 +137,8 @@
     "test:compute-worker-h": "node --test tests/runners/eos-compute-worker-mission-h.test.js",
     "test:gemini": "node --test tests/gemini-provider.test.js",
     "test:compute-worker-i": "node --test tests/runners/eos-compute-worker-mission-i.test.js",
-    "test:stitch": "node --test tests/runners/eos-stitch-tool-bridge.test.js"
+    "test:stitch": "node --test tests/runners/eos-stitch-tool-bridge.test.js",
+    "test:browser-qa": "node --test tests/runners/eos-browser-qa-runner.test.js"
   },
   "keywords": [
     "eos",
