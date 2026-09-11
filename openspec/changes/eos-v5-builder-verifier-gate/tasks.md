@@ -32,3 +32,10 @@
 
 - [ ] Conventional commit without AI attribution
 - [ ] Push to `origin/cursor/eos-v5-builder-verifier-gate`
+
+## Step 6: CI regression — identity-bearing VERIFY_RECEIPT fixtures (PR #100)
+
+- [x] Root cause: V5 `sealVerifyReceipt` enforces disjunction when any identity is present; older ROI4/U4 fixtures set only `verifier_id` → `BUILDER_ID_MISSING` / `CUSTODY_CHAIN_RECURRENT`
+- [x] Preserve fail-closed BUILDER != VERIFIER; update fixtures to supply distinct `builder_id` + `verifier_id` (no production grandfather weaken)
+- [x] Re-verify: `node --test` on ROI4 I3 + U4 deepen; `npm run test:v5`; `npm run verify:strict`
+

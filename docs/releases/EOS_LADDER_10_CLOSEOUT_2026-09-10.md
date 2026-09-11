@@ -58,3 +58,22 @@ npm run verify:strict
 - Ladder 10 CLOSED != PRODUCTION_READY=YES (se mantiene estrictamente **NO**).
 - Zero vibe coding: ningún cambio de código sin especificación formal previa.
 - Los proyectos externos (`Fundacion`, `App de Fuerza`) permanecen intactos hasta completar la autorización formal para comenzar el ciclo de entrega.
+
+---
+
+## 5. Evidence addendum — PR #100 CI custody fixture fix
+
+**Date (America/Bogota):** 2026-09-11  
+**Branch:** `cursor/eos-v6-l10-closeout`  
+**Symptom:** Node suite failed on `CUSTODY_CHAIN_RECURRENT` and ROI4 I3 happy-path with `BUILDER_ID_MISSING` at `tests/roi4-i3-evidence-custody.test.js` (sealVerifyReceipt).
+
+**Root cause:** Ladder 10 V5 integrated `assertBuilderVerifierDisjunction` into `EvidenceCustody.sealVerifyReceipt`. When either `builder_id` or `verifier_id` is present, both are required and must differ. Pre-V5 fixtures in ROI4 I3 and U4 Mission OS deepen supplied only `verifier_id`, which fail-closed correctly as `BUILDER_ID_MISSING` and bubbled to `CUSTODY_CHAIN_RECURRENT`.
+
+**Fix (SDD, no production weaken):**
+- Updated ROI4 I3 happy-path fixture to supply distinct `builder_id` + `verifier_id`.
+- Updated U4 deepen recurrent custody seal to supply distinct builder/verifier identities.
+- Clarified grandfather rule in `evidence-custody.js`: identity-free VERIFY_RECEIPT seals remain allowed for non-claim/legacy appends; identity-bearing seals stay fail-closed on BUILDER == VERIFIER / missing identities.
+
+**Verification targets:** `npm run test:v5` EXIT 0; failing Node files EXIT 0; `npm run verify:strict` EXIT 0.  
+**Invariants:** Fundacion Δ=0; PRODUCTION_READY=NO; AT_CEILING intact; no PR / no merge from this note.
+

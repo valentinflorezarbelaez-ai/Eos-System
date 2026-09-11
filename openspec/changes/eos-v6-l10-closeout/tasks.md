@@ -24,3 +24,11 @@
 
 - [ ] Conventional commit without AI attribution
 - [ ] Push to `origin/cursor/eos-v6-l10-closeout`
+
+## Step 5: PR #100 CI blocker — BUILDER_ID_MISSING / CUSTODY_CHAIN_RECURRENT
+
+- [x] Reproduce Node suite failures on `cursor/eos-v6-l10-closeout`
+- [x] Fix identity-partial VERIFY_RECEIPT fixtures (ROI4 I3 + U4 deepen) without weakening V5 custody gate
+- [x] Append evidence note to Ladder 10 closeout release doc
+- [x] `verify:strict` EXIT 0; `test:v5` EXIT 0; previously failing tests EXIT 0
+

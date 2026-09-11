@@ -140,6 +140,9 @@ export class EvidenceCustody {
 
   /**
    * Seal an independent / verify receipt.
+   * Identity-bearing receipts require builder_id + verifier_id with BUILDER != VERIFIER
+   * (fail-closed). Identity-free receipts remain allowed as a grandfather path for
+   * non-claim / legacy chain appends — production custody is not silently weakened.
    */
   sealVerifyReceipt(receipt = {}) {
     if (receipt.builder_id || receipt.verifier_id) {
