@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 25974368cd8c96ffd2fd3da5dc950a79f2cd722d
-main_subject: Merge pull request #106 from valentinflorezarbelaez-ai/grok/mission-b-sensor-mutation-fortify
-branch_hygiene: clean (main == origin/main @ 2597436; Ladder2-10 CLOSED on main via #84-#100; #101 tip refresh post L10 + #102 compute worker + #103 L10 convergence receipt + #104 Mission A + #105 worker adversarial + #106 Mission B fortify merged; tip honesty restored post #106; PRODUCTION_READY=NO)
+main_tip: dd6d7c3ddfd122535d320bf14ae2e03d8c626c15
+main_subject: Merge pull request #108 from valentinflorezarbelaez-ai/grok/mission-c2-ci-compute-worker
+branch_hygiene: clean (main == origin/main @ dd6d7c3; Ladder2-10 CLOSED on main via #84-#100; #101 tip refresh post L10 + #102 compute worker + #103 L10 convergence receipt + #104 Mission A + #105 worker adversarial + #106 Mission B fortify + #107 tip refresh post #106 + #108 Mission C2 CI compute worker merged; tip honesty restored post #108; PRODUCTION_READY=NO)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-11 America/Bogota (tip refresh post #106; pin to main@2597436; prior post-L10 pin was e81af1a; tip honesty restored; PRODUCTION_READY=NO)
+updated_at: 2026-09-11 America/Bogota (tip refresh post #108; pin to main@dd6d7c3; prior post-#106 pin was 2597436; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + #101-#106)
+## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + #101-#108)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `25974368cd8c96ffd2fd3da5dc950a79f2cd722d`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `dd6d7c3ddfd122535d320bf14ae2e03d8c626c15`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -710,3 +710,16 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
 - NON-CLAIM: tip honesty != PRODUCTION_READY; #106 fortify != PRODUCTION_READY; CloudAgent remains out of default SpecBoot path
+
+## Tip refresh post #108 (2026-09-11)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_108_2026-09-11.md`
+- Branch: `grok/tip-refresh-post-108` — push only; do not merge without PO; NO PR in this change set
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`dd6d7c3ddfd122535d320bf14ae2e03d8c626c15` (#108 Mission C2 CI compute worker; post #107 tip refresh post #106)
+- Honesty restored: prior post-#106 pin was `25974368cd8c96ffd2fd3da5dc950a79f2cd722d` (#106/#107 era); live main after #107–#108 is `dd6d7c3` so HUD freeze observe does not DIVERGE immediately
+- Do not reuse stale post-#106 pin `25974368cd8c96ffd2fd3da5dc950a79f2cd722d` as live tip (superseded)
+- Matrix: prior tip refresh post #106 MEASURED + **tip refresh post #108 MEASURED**
+- Dirty-defer tip honesty pin moved with freeze (scripts/lib/dirty-defer-triage-lock.js)
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
+- NON-CLAIM: tip honesty != PRODUCTION_READY; #108 compute-worker CI != PRODUCTION_READY; CloudAgent remains out of default SpecBoot path

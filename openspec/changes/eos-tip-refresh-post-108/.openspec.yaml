@@ -1,0 +1,19 @@
+schema: spec-driven
+created: 2026-09-11
+goal: Tip refresh post #108 — pin freeze main_tip + matrix evaluated_tip + test:m4 EXPECTED_TIP (+ dirty-defer tip honesty) to main@dd6d7c3; matrix tip refresh post #108 MEASURED; tip honesty restored; PRODUCTION_READY=NO; Fundacion Delta=0.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-tip-refresh-post-108
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_108_2026-09-11.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+non_goals:
+  - flipping PRODUCTION_READY
+  - Mission C2 runtime work
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - force-committing DEFER dirty unstaged
