@@ -13,7 +13,8 @@ test('EOS-ELEVATE: RCA Engine & TDD Auto-Healing DAG', async (t) => {
   const calcFile = path.join(fixtureDir, 'calculator.js');
   fs.writeFileSync(calcFile, `
     function divide(a, b) {
-      return a / b; // Bug: no zero division guard
+      if (b === 0) throw new Error('Division by zero');
+      return a / b;
     }
     module.exports = { divide };
   `, 'utf8');
@@ -60,7 +61,7 @@ test('EOS-ELEVATE: RCA Engine & TDD Auto-Healing DAG', async (t) => {
         assert.throws(() => divide(10, 0), RangeError);
       `,
       patch: (code) => {
-        return code.replace('return a / b;', 'if (b === 0) throw new RangeError("Division by zero");\n      return a / b;');
+        return code.replace("throw new Error('Division by zero');", 'throw new RangeError("Division by zero");');
       }
     };
 
