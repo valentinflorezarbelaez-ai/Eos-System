@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 6fe7edc546062e928fa6d48b613692450a86d283
+evaluated_tip: 3d5659041c5ff25cbcf0e8b7a89b74f6067363ee
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #110 from valentinflorezarbelaez-ai/grok/mission-d-worker-execution-custody
-updated_at: 2026-09-11 America/Bogota (tip refresh post #110; pin to main@6fe7edc; prior post-#108 pin was dd6d7c3; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #112 from valentinflorezarbelaez-ai/cursor/eos-mcp-capability-router
+updated_at: 2026-09-11 America/Bogota (tip refresh post #112; pin to main@3d56590; prior post-#110 pin was 6fe7edc; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -99,6 +99,7 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #110; pin to main@6fe7ed
 | Tip refresh post #106 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_106_2026-09-11.md; freeze+matrix to 2597436; tip honesty restored; superseded tip pin by post #108) |
 | Tip refresh post #108 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_108_2026-09-11.md; freeze+matrix to dd6d7c3; tip honesty restored; superseded tip pin by post #110) |
 | Tip refresh post #110 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_110_2026-09-11.md; freeze+matrix to 6fe7edc; tip honesty restored) |
+| Tip refresh post #112 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_112_2026-09-11.md; freeze+matrix to 3d56590; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |

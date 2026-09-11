@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-110 to live main after #110 (was post-#108 dd6d7c3)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-112 to live main after #112 (was post-#110 6fe7edc)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '6fe7edc546062e928fa6d48b613692450a86d283') {
+      if (!tip || tip[1] !== '3d5659041c5ff25cbcf0e8b7a89b74f6067363ee') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-110 expected main_tip=6fe7edc546062e928fa6d48b613692450a86d283 (post #110; tip honesty restored)',
+            'tip-refresh-post-112 expected main_tip=3d5659041c5ff25cbcf0e8b7a89b74f6067363ee (post #112; tip honesty restored)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-110 / main@6fe7edc (post #110)',
+          path: 'freeze main_tip pinned to tip-refresh-post-112 / main@3d56590 (post #112)',
           status: 'VERIFIED',
           type
         });

@@ -1,0 +1,12 @@
+schema: spec-driven
+created: 2026-09-11
+goal: Tip refresh post #112 — align freeze main_tip + capability matrix evaluated_tip to main@3d56590 (PR #112 McpCapabilityRouter; post Mission D #110/#111); restore tip honesty; test:m4; test:t8; Fundacion Delta=0; PRODUCTION_READY=NO.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_112_2026-09-11.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-112/
