@@ -1,0 +1,19 @@
+schema: spec-driven
+created: 2026-09-11
+goal: Mission A adversarial fuzzing for SPEC-0008 compute worker + V5 builder/verifier custody — fail-closed parseCheckboxTasks (malformed/unicode/path traversal), assertBuilderVerifierDisjunction spoof/identical reject, rollback restores clean tree; AT_CEILING; PRODUCTION_READY=NO; Fundacion Delta=0.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0008-FUZZ
+affected_areas:
+  - openspec/changes/eos-mission-a-worker-custody-fuzz
+  - scripts/runners/eos-compute-worker.js
+  - src/core/governance/builder-verifier-custody.js
+  - tests/runners/eos-compute-worker-fuzz.test.js
+  - package.json
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new docs/schemas JSON (AT_CEILING)
+  - opening or merging PR
+  - weakening V5 production custody invariant

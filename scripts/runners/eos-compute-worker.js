@@ -28,7 +28,45 @@ export class ComputeWorkerError extends Error {
 const DEFAULT_CONTEXT_PACK = 'docs/harness/CONTEXT_PACK_TPC.md';
 
 /**
+ * Fail-closed: reject task text that embeds traversal / absolute / null-byte paths.
+ * @param {string} text
+ */
+function assertTaskTextPathSafe(text) {
+  const s = String(text);
+  if (s.includes('\0')) {
+    throw new ComputeWorkerError(
+      'PATH_TRAVERSAL_REJECTED: null byte in task text',
+      'PATH_TRAVERSAL_REJECTED'
+    );
+  }
+  // Path segment traversal
+  if (/(?:^|[/\\])\.\.(?:[/\\]|$)/.test(s) || s.includes('../') || s.includes('..\\')) {
+    throw new ComputeWorkerError(
+      `PATH_TRAVERSAL_REJECTED: traversal segment in task text '${s}'`,
+      'PATH_TRAVERSAL_REJECTED'
+    );
+  }
+  // Absolute POSIX path fragment (e.g. /etc/shadow)
+  if (/(?:^|[\s"'`(])\/(?:etc|var|usr|bin|sbin|home|root|tmp|proc|sys|dev)(?:\/|\s|$)/i.test(s) ||
+      /(?:^|[\s"'`(])\/[A-Za-z0-9._-]+(?:\/[A-Za-z0-9._-]+)+/.test(s)) {
+    throw new ComputeWorkerError(
+      `PATH_TRAVERSAL_REJECTED: absolute path in task text '${s}'`,
+      'PATH_TRAVERSAL_REJECTED'
+    );
+  }
+  // Windows drive-absolute
+  if (/[A-Za-z]:[\\/]/.test(s)) {
+    throw new ComputeWorkerError(
+      `PATH_TRAVERSAL_REJECTED: windows absolute path in task text '${s}'`,
+      'PATH_TRAVERSAL_REJECTED'
+    );
+  }
+}
+
+/**
  * Parse markdown checkbox tasks (- [ ] / - [x]).
+ * Requires GFM-shaped "- [ ] text" (whitespace between "-" and "[").
+ * Rejects path-traversal / null-byte task texts fail-closed.
  * @param {string} markdown
  * @returns {{ text: string, done: boolean, checkbox: string, raw: string }[]}
  */
@@ -36,12 +74,15 @@ export function parseCheckboxTasks(markdown = '') {
   const lines = String(markdown).split(/\r?\n/);
   const tasks = [];
   for (const raw of lines) {
-    const m = raw.match(/^\s*-\s*\[([ xX])\]\s+(.+?)\s*$/);
+    // Require whitespace after "-" so "-[ ]" is not treated as a task.
+    const m = raw.match(/^\s*-\s+\[([ xX])\]\s+(.+?)\s*$/);
     if (!m) continue;
     const mark = m[1];
+    const text = m[2];
+    assertTaskTextPathSafe(text);
     const done = mark.toLowerCase() === 'x';
     tasks.push({
-      text: m[2],
+      text,
       done,
       checkbox: done ? '[x]' : '[ ]',
       raw
