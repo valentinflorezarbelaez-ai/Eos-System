@@ -103,6 +103,18 @@ function normalizeRel(p) {
 }
 
 /**
+ * Best-effort decode for percent-encoded separators / dots (fail-closed probe).
+ * @param {string} p
+ */
+function decodeRelOnce(p) {
+  try {
+    return decodeURIComponent(String(p));
+  } catch {
+    return String(p);
+  }
+}
+
+/**
  * Default allow roots for a changeId.
  * @param {string} changeId
  */
@@ -123,12 +135,29 @@ export function defaultAllowRoots(changeId) {
  * @param {string[]} paths
  * @param {{ changeId: string, allowRoots?: string[] }} policy
  */
-export function assertWritePathsInScope(paths = [], policy = {}) {
+export function assertWritePathsInScope(paths, policy = {}) {
+  if (paths === undefined || paths === null || !Array.isArray(paths)) {
+    throw new ComputeWorkerError(
+      'OUT_OF_SCOPE_WRITE: paths must be an array',
+      'OUT_OF_SCOPE_WRITE'
+    );
+  }
   const allowRoots = (policy.allowRoots || defaultAllowRoots(policy.changeId)).map(normalizeRel);
-  const list = Array.isArray(paths) ? paths : [];
-  for (const p of list) {
+  for (const p of paths) {
     const rel = normalizeRel(p);
-    if (!rel || path.isAbsolute(rel) || rel.includes('..')) {
+    const decoded = normalizeRel(decodeRelOnce(rel));
+    const driveAbs = /^[A-Za-z]:\//.test(rel) || /^[A-Za-z]:\//.test(decoded);
+    if (
+      !rel ||
+      path.isAbsolute(rel) ||
+      path.isAbsolute(decoded) ||
+      driveAbs ||
+      rel.includes('..') ||
+      decoded.includes('..') ||
+      /%2e/i.test(String(p)) ||
+      /%2f/i.test(String(p)) ||
+      /%5c/i.test(String(p))
+    ) {
       throw new ComputeWorkerError(
         `OUT_OF_SCOPE_WRITE: invalid path '${p}'`,
         'OUT_OF_SCOPE_WRITE'
@@ -225,12 +254,35 @@ export async function executeComputeRun({
     };
   }
 
-  const verify = await runVerifier({
-    role: 'VERIFIER',
-    builderId: plan.builderId,
-    verifierId: plan.verifierId,
-    commands: ['npm test', 'npm run verify:strict']
-  });
+  let verify;
+  try {
+    verify = await runVerifier({
+      role: 'VERIFIER',
+      builderId: plan.builderId,
+      verifierId: plan.verifierId,
+      commands: ['npm test', 'npm run verify:strict']
+    });
+  } catch (err) {
+    if (applied && typeof rollbackDiff === 'function') {
+      await rollbackDiff({
+        plan,
+        reason: String(err && err.message ? err.message : err)
+      });
+    }
+    return {
+      ok: false,
+      status: 'ROLLED_BACK',
+      PRODUCTION_READY: 'NO',
+      verify: {
+        ok: false,
+        error: String(err && err.message ? err.message : err)
+      },
+      tasks: (plan.tasks || []).map((t) => ({ ...t, done: false, checkbox: '[ ]' })),
+      builderId: plan.builderId,
+      verifierId: plan.verifierId,
+      contextPackPath: plan.contextPackPath
+    };
+  }
 
   if (verify && verify.ok === true) {
     return {
