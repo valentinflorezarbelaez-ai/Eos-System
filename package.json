@@ -121,7 +121,8 @@
     "test:u3": "node --test tests/eos-u3-doctor-fusion-light-t4-t8.test.js",
     "test:u4": "node --test tests/eos-u4-mission-os-deepen.test.js",
     "test:u5": "node --test tests/eos-u5-agy-admin-hitl-checklist.test.js",
-    "test:u6": "node --test tests/eos-u6-openspec-cli-hold.test.js"
+    "test:u6": "node --test tests/eos-u6-openspec-cli-hold.test.js",
+    "test:u7": "node --test tests/eos-u7-specboot-defer-stubs.test.js"
   },
   "keywords": [
     "eos",

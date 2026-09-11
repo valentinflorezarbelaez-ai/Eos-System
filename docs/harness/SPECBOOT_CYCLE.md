@@ -1,4 +1,4 @@
-# EOS SpecBoot Cycle — Antigravity-First Operator SSOT
+﻿# EOS SpecBoot Cycle — Antigravity-First Operator SSOT
 
 **SSOT path:** `docs/harness/SPECBOOT_CYCLE.md`  
 **Date:** 2026-09-09  
@@ -86,7 +86,7 @@ Thin mirrors = `SKILL.md` frontmatter + pointer to `.cursor/commands/<step>.md` 
 4. **MCP profile:** `.agents/mcp_config.json` is **L0_READONLY**. Cursor/Windsurf consumers are **L1_LOCAL_GOVERNED**. AGY via `.agents` MCP cannot rely on MCP write tools for `/apply`; use local shell + write-barrier + git on the feature branch.
 5. **Entrypoint:** Always start from `GEMINI.md` → `.agents/AGENTS.md` → this file + ADR-0010 + ANTIGRAVITY_FIRST.
 6. **OpenSpec CLI (optional):** External OpenSpec/`opsx:*` aliases are ceremony aliases only; not required for L0.
-7. **Spec-Boot standards stubs (DEFER):** `docs/frontend-standards.md`, `docs/documentation-standards.md`, `docs/development_guide.md` — thin DEFER stubs say fill with EOS stack (leave dirty unstaged until filled).
+7. **Spec-Boot standards stubs (U7 IGNORE):** `docs/frontend-standards.md`, `docs/documentation-standards.md`, `docs/development_guide.md` — remain **ABSENT** (S2 TPC must-not-invent). Honesty via `docs/harness/SPECBOOT_DEFER_STUBS_INDEX.md` + CONTEXT_PACK_TPC MISSING/DEFER. Gentleman wholesale DEFER — **no Gentleman invent**. See `docs/harness/SPECBOOT_DEFER_STUBS_RITUAL.md` + `EOS_U7_SPECBOOT_DEFER_STUBS_2026-09-09.md`.
 8. **Do not confuse** Mission Loop MCP (`eos.mission.loop.*`) with SpecBoot slash ceremony — complementary, not substitutes.
 9. **Fundacion Δ=0** and **PRODUCTION_READY=NO** remain in force.
 
