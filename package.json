@@ -2,7 +2,7 @@
   "name": "eos-system",
   "version": "0.6.0",
   "private": true,
-  "description": "Engineering Operating System — Autonomous, reproducible, and auditable engineering control plane.",
+  "description": "Engineering Operating System \u2014 Autonomous, reproducible, and auditable engineering control plane.",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.js",
@@ -130,7 +130,8 @@
     "test:mission-b": "node --test tests/eos-mission-b-sensor-mutation-fortify.test.js",
     "test:compute-worker": "node --test tests/runners/eos-compute-worker.test.js tests/runners/eos-compute-worker-fuzz.test.js tests/runners/eos-compute-worker-adversarial.test.js tests/runners/eos-compute-worker-mission-d.test.js",
     "test:c2": "node --test tests/eos-mission-c2-ci-compute-worker.test.js",
-    "test:mcp-router": "node --test tests/mcp-capability-router.test.js"
+    "test:mcp-router": "node --test tests/mcp-capability-router.test.js",
+    "test:compute-worker-e": "node --test tests/runners/eos-compute-worker-mission-e.test.js"
   },
   "keywords": [
     "eos",

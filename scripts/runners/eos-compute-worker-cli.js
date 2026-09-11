@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 /**
  * @file eos-compute-worker-cli.js
- * @description SPEC-0008 Phase 3 Tier-2 CLI for eos-compute-worker.
+ * @description SPEC-0008/0010 Tier-2 CLI for eos-compute-worker.
  *
  * Usage: node scripts/runners/eos-compute-worker-cli.js --change=<changeId>
+ * Optional: --mcp-check (print MCP projection, exit 0)
+ *           --enforce-mcp (abort exit 4 on DEFICIENT)
  *
  * Reads openspec/changes/<changeId>/tasks.md, validates write scope,
  * runs executeComputeRun with real git rollback on breach.
@@ -35,7 +37,7 @@ const CONTEXT_PACK = 'docs/harness/CONTEXT_PACK_TPC.md';
  * @param {string[]} argv
  */
 export function parseCliArgs(argv = []) {
-  const out = { changeId: null, root: null, writes: null };
+  const out = { changeId: null, root: null, writes: null, mcpCheck: false, enforceMcp: false };
   for (const arg of argv) {
     if (arg.startsWith('--change=')) {
       out.changeId = arg.slice('--change='.length).trim();
@@ -47,6 +49,10 @@ export function parseCliArgs(argv = []) {
         .split(',')
         .map((s) => s.trim())
         .filter(Boolean);
+    } else if (arg === '--mcp-check') {
+      out.mcpCheck = true;
+    } else if (arg === '--enforce-mcp') {
+      out.enforceMcp = true;
     }
   }
   return out;
@@ -198,13 +204,26 @@ export async function runComputeWorkerCli(argv = [], deps = {}) {
       contextPackPath: CONTEXT_PACK,
       builderId,
       verifierId,
-      plannedWrites
+      plannedWrites,
+      availableConfig: deps.availableConfig,
+      mcpRouter: deps.mcpRouter,
+      mcpBaseDir: deps.mcpBaseDir || root
     });
   } catch (err) {
     return {
       exitCode: 3,
       error: String(err && err.message ? err.message : err)
     };
+  }
+
+  if (parsed.mcpCheck) {
+    const projection = plan.mcpEnvelope;
+    if (deps.print !== false) {
+      const line = JSON.stringify(projection, null, 2);
+      if (typeof deps.println === 'function') deps.println(line);
+      else console.log(line);
+    }
+    return { exitCode: 0, result: { status: 'MCP_CHECK', mcpEnvelope: projection } };
   }
 
   const applyDiff =
@@ -230,8 +249,17 @@ export async function runComputeWorkerCli(argv = [], deps = {}) {
     rollbackDiff,
     custody: deps.custody,
     custodyBaseDir: deps.custodyBaseDir,
-    controlPlaneRoot: deps.controlPlaneRoot || root
+    controlPlaneRoot: deps.controlPlaneRoot || root,
+    enforceMcp: parsed.enforceMcp === true
   });
+
+  if (result && result.status === 'MCP_CAPABILITY_DEFICIENT') {
+    return {
+      exitCode: 4,
+      result,
+      error: 'MCP_CAPABILITY_DEFICIENT'
+    };
+  }
 
   if (result && result.ok === true && result.status === 'COMPLETED') {
     return { exitCode: 0, result };
