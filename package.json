@@ -127,6 +127,7 @@
     "test:v3": "node --test tests/agent-handoff-envelope.test.js",
     "test:v4": "node --test tests/eos-v4-fdir-sentinel-adversarial.test.js",
     "test:v5": "node --test tests/eos-v5-builder-verifier-custody.test.js",
+    "test:mission-b": "node --test tests/eos-mission-b-sensor-mutation-fortify.test.js",
     "test:compute-worker": "node --test tests/runners/eos-compute-worker.test.js tests/runners/eos-compute-worker-fuzz.test.js tests/runners/eos-compute-worker-adversarial.test.js"
   },
   "keywords": [
