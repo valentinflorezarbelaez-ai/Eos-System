@@ -18,7 +18,19 @@ const rootDir = path.resolve(__dirname, '..');
 const testsDir = path.join(rootDir, 'tests');
 
 /**
+ * Basenames excluded from default slim discovery (npm test / TR-01).
+ * Opt-in via dedicated npm scripts (e.g. npm run test:compute-worker).
+ * Prefer exclude-from-slim over raising TR-01 ceiling for heavy adversarial fuzz
+ * (Mission A: eos-compute-worker-fuzz) so default suite stays lean without
+ * silently weakening fuzz coverage.
+ */
+export const SLIM_SUITE_EXCLUDES = new Set([
+  'eos-compute-worker-fuzz.test.js',
+]);
+
+/**
  * Recursively scans a directory for files matching a test suffix.
+ * Honors SLIM_SUITE_EXCLUDES (opt-in suites stay available via dedicated npm scripts).
  * @param {string} dir Directory to scan
  * @param {string} suffix File suffix to match (default: .test.js)
  * @returns {string[]} Relative or absolute paths to matching test files
@@ -37,6 +49,7 @@ export function discoverTestFiles(dir, suffix = '.test.js') {
           walk(fullPath);
         }
       } else if (entry.isFile() && entry.name.endsWith(suffix)) {
+        if (SLIM_SUITE_EXCLUDES.has(entry.name)) continue;
         results.push(fullPath);
       }
     }

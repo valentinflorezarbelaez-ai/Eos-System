@@ -13,6 +13,7 @@ SPEC-0008 (`eos-compute-worker`) and Ladder 10 V5 custody must fail-closed under
    - `executeComputeRun` rollback: child verify failure → working tree restored (no dirty residuals).
 3. Minimal Tier-1/2 hardening in worker/custody **only where tests prove gaps**.
 4. Wire fuzz file into `npm run test:compute-worker` (no new package.json dependencies).
+5. Exclude fuzz from default slim discovery (`SLIM_SUITE_EXCLUDES`) so TR-01 ceiling stays 145 without weakening opt-in fuzz coverage.
 
 ## Definition of Done (Mission A)
 

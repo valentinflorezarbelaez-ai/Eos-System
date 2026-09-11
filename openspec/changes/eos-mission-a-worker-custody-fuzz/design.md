@@ -20,6 +20,16 @@ Adversarial fuzz coverage for SPEC-0008 worker helpers and V5 custody disjunctio
 - Reject task texts that embed path traversal / null bytes during checkbox parse (fail-closed).
 - No new `src/core` modules beyond existing custody file; no new npm deps; AT_CEILING.
 
+
+## Slim-suite discovery (TR-01)
+
+Default `npm test` discovery counts every `*.test.js` under `tests/` against ceiling **<= 145**.
+Mission A fuzz would be the 146th live file. Prefer **exclude-from-slim** over a TR-01 ceiling bump:
+
+- `scripts/test-runner.js` `SLIM_SUITE_EXCLUDES` includes `eos-compute-worker-fuzz.test.js`
+- Fuzz remains on disk and is executed by `npm run test:compute-worker` (explicit opt-in)
+- TR-03 asserts exclude; fuzz coverage is not silently weakened
+
 ## Invariants
 
 AT_CEILING; PRODUCTION_READY=NO; Fundacion Δ=0; no CloudAgent.

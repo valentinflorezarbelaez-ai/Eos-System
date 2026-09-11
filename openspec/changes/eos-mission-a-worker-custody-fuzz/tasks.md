@@ -27,7 +27,16 @@
 - [x] `npm run test:v5` EXIT 0
 - [x] `npm run verify:strict` EXIT 0 (914 checks)
 
+
+## Step 4b: CI hotfix — TR-01 slim discovery (post #104 CI fail)
+
+- [x] Root cause: fuzz suite pushed `discoverTestFiles(tests/)` to **146** vs TR-01 `<= 145`
+- [x] Prefer **exclude-from-slim** (not ceiling bump): add `SLIM_SUITE_EXCLUDES` for `eos-compute-worker-fuzz.test.js`
+- [x] Keep fuzz available via `npm run test:compute-worker` (coverage not weakened)
+- [x] TR-03 locks opt-in exclude; ceiling stays **145** (no silent weaken / no TR-01 inflate)
+- [x] Re-verify: `verify:strict`, Node suite TR-01, `test:compute-worker`, `test:v5`
+
 ## Step 5: Commit + push (no PR)
 
-- [ ] Conventional commit without Co-Authored-By / AI attribution
-- [ ] Push branch; leave DEFER untracked unstaged; no PR
+- [x] Conventional commit without Co-Authored-By / AI attribution
+- [x] Push branch; leave DEFER untracked unstaged; no PR
