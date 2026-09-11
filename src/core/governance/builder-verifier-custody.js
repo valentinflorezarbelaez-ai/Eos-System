@@ -18,6 +18,17 @@ export class BuilderVerifierCustodyError extends Error {
 }
 
 /**
+ * Strip format / zero-width / control characters so spoofed same-token identities collide.
+ * Strengthens V5 disjunction; does not loosen existing checks.
+ * @param {string} id
+ */
+function normalizeCustodyIdentity(id) {
+  return String(id)
+    .replace(/[\u0000-\u001F\u007F-\u009F\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFEFF]/g, '')
+    .trim();
+}
+
+/**
  * Asserts strict disjunction between builder_id and verifier_id.
  * Throws BuilderVerifierCustodyError if identities are missing, identical, or use forbidden placeholders.
  *
@@ -41,8 +52,22 @@ export function assertBuilderVerifierDisjunction({ builder_id, verifier_id } = {
     );
   }
 
-  const cleanVerifier = verifier_id.trim();
-  const cleanBuilder = builder_id.trim();
+  const cleanVerifier = normalizeCustodyIdentity(verifier_id);
+  const cleanBuilder = normalizeCustodyIdentity(builder_id);
+
+  if (!cleanBuilder) {
+    throw new BuilderVerifierCustodyError(
+      'BUILDER_ID_MISSING: builder_id is required to establish verification custody',
+      'BUILDER_ID_MISSING'
+    );
+  }
+
+  if (!cleanVerifier) {
+    throw new BuilderVerifierCustodyError(
+      'VERIFIER_ID_MISSING: verifier_id is required to establish verification custody',
+      'VERIFIER_ID_MISSING'
+    );
+  }
 
   if (cleanVerifier === 'APPLY_BUILDER_NOT_VERIFIER') {
     throw new BuilderVerifierCustodyError(
@@ -84,8 +109,8 @@ export function validateVerificationReceiptCustody(receipt = {}) {
     return {
       valid: true,
       code: 'CUSTODY_DISJUNCTION_VERIFIED',
-      builder_id: receipt.builder_id.trim(),
-      verifier_id: receipt.verifier_id.trim()
+      builder_id: normalizeCustodyIdentity(receipt.builder_id),
+      verifier_id: normalizeCustodyIdentity(receipt.verifier_id)
     };
   } catch (err) {
     return {
