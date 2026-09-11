@@ -1,17 +1,22 @@
 /**
  * @file eos-compute-worker.js
- * @description SPEC-0008 headless compute worker (Phase 2) — Tier-2 helpers.
+ * @description SPEC-0008 headless compute worker (Phase 3) — Tier-2 helpers.
  *
  * BUILDER: plans/applies scoped diffs from OpenSpec checkbox tasks.
  * VERIFIER: distinct child identity running npm test + verify:strict (injected in tests).
- * Fail-closed rollback on verifier breach; reject out-of-scope writes.
+ * Fail-closed atomic rollback on apply failure or verifier breach.
+ * COMPLETED runs bind EvidenceCustody sealVerifyReceipt (ADR-0015 / V5).
  *
- * L0: lives under scripts/runners (no src/core mutation).
+ * L0: lives under scripts/runners (no src/core mutation; imports custody APIs only).
  * PRODUCTION_READY: NO | Fundacion Delta=0 | AT_CEILING
  */
 
 import path from 'node:path';
 import { assertBuilderVerifierDisjunction } from '../../src/core/governance/builder-verifier-custody.js';
+import {
+  EvidenceCustody,
+  calculateSha256
+} from '../../src/core/sdd/evidence-custody.js';
 
 export class ComputeWorkerError extends Error {
   /**
@@ -220,14 +225,58 @@ function markPendingDone(tasks) {
 }
 
 /**
- * Execute BUILDER apply then VERIFIER child; rollback on breach.
+ * Resolve EvidenceCustody instance (injectable for tests).
+ * @param {object} opts
+ */
+function resolveCustody(opts = {}) {
+  if (opts.custody) return opts.custody;
+  return new EvidenceCustody({
+    controlPlaneRoot: opts.controlPlaneRoot || process.cwd(),
+    baseDir: opts.custodyBaseDir
+  });
+}
+
+/**
+ * Seal COMPLETED run into EvidenceCustody (tamper-evident VERIFY_RECEIPT).
+ * @param {object} plan
+ * @param {object} verify
+ * @param {object} custodyOpts
+ */
+export function sealComputeRunCustody(plan, verify, custodyOpts = {}) {
+  assertBuilderVerifierDisjunction({
+    builder_id: plan.builderId,
+    verifier_id: plan.verifierId
+  });
+
+  const receiptPayload = {
+    receipt_id: `compute-run:${plan.changeId}:${Date.now()}`,
+    mission_id: plan.changeId,
+    status: 'COMPLETED',
+    builder_id: plan.builderId,
+    verifier_id: plan.verifierId,
+    verify_ok: verify && verify.ok === true,
+    context_pack_path: plan.contextPackPath || null,
+    planned_writes: (plan.plannedWrites || []).slice()
+  };
+  receiptPayload.receipt_hash = calculateSha256(receiptPayload);
+
+  const custody = resolveCustody(custodyOpts);
+  return custody.sealVerifyReceipt(receiptPayload);
+}
+
+/**
+ * Execute BUILDER apply then VERIFIER child; atomic rollback on apply/verifier breach.
+ * On COMPLETED, bind EvidenceCustody sealVerifyReceipt.
  * @param {object} args
  */
 export async function executeComputeRun({
   plan,
   applyDiff,
   runVerifier,
-  rollbackDiff
+  rollbackDiff,
+  custody,
+  custodyBaseDir,
+  controlPlaneRoot
 } = {}) {
   if (!plan || plan.role !== 'BUILDER') {
     throw new ComputeWorkerError('PLAN_ROLE_MUST_BE_BUILDER', 'PLAN_INVALID');
@@ -243,9 +292,16 @@ export async function executeComputeRun({
     await applyDiff(plan);
     applied = true;
   } catch (err) {
+    // Phase 3: fail-closed atomicity — rollback any mid-apply residuals.
+    if (typeof rollbackDiff === 'function') {
+      await rollbackDiff({
+        plan,
+        reason: String(err && err.message ? err.message : err)
+      });
+    }
     return {
       ok: false,
-      status: 'APPLY_FAILED',
+      status: 'APPLY_FAILED_ROLLED_BACK',
       PRODUCTION_READY: 'NO',
       error: String(err && err.message ? err.message : err),
       tasks: (plan.tasks || []).map((t) => ({ ...t })),
@@ -285,11 +341,39 @@ export async function executeComputeRun({
   }
 
   if (verify && verify.ok === true) {
+    let custodyReceipt;
+    try {
+      custodyReceipt = sealComputeRunCustody(plan, verify, {
+        custody,
+        custodyBaseDir,
+        controlPlaneRoot
+      });
+    } catch (err) {
+      if (applied && typeof rollbackDiff === 'function') {
+        await rollbackDiff({
+          plan,
+          reason: `custody_seal_failed: ${String(err && err.message ? err.message : err)}`
+        });
+      }
+      return {
+        ok: false,
+        status: 'ROLLED_BACK',
+        PRODUCTION_READY: 'NO',
+        error: String(err && err.message ? err.message : err),
+        verify,
+        tasks: (plan.tasks || []).map((t) => ({ ...t, done: false, checkbox: '[ ]' })),
+        builderId: plan.builderId,
+        verifierId: plan.verifierId,
+        contextPackPath: plan.contextPackPath
+      };
+    }
+
     return {
       ok: true,
       status: 'COMPLETED',
       PRODUCTION_READY: 'NO',
       verify,
+      custodyReceipt,
       tasks: markPendingDone(plan.tasks || []),
       builderId: plan.builderId,
       verifierId: plan.verifierId,
