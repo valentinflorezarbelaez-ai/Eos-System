@@ -190,7 +190,7 @@ viewOut = viewOut.replace(
 // Fix: setIsRunning may not be exported — use handleResetTimer/skip via remaining
 viewOut = viewOut.replace(
   'onSkip={() => { setIsRunning?.(false); }}',
-  'onSkip={() => { togglePlayPause(); }}'
+  'onSkip={() => { handleResetTimer(); }}'
 );
 
 const viewPath = path.join(root, 'src', 'app', 'components', 'ZenDashboardView.tsx');
