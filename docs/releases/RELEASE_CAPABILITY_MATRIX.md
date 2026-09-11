@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: ef1e75b0cf420a2e87fdc2d63b59608713cbea8b
+evaluated_tip: 1feb506fe5955286fdbe7aec6d2ba611102e249b
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #118 from valentinflorezarbelaez-ai/grok/mission-g-mcp-tool-dispatcher
-updated_at: 2026-09-11 America/Bogota (tip refresh post #118; pin to main@ef1e75b; prior post-#116/#117 pin was 0b3dacd/c2910a3; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #120 from valentinflorezarbelaez-ai/grok/mission-h-worker-tool-execution
+updated_at: 2026-09-11 America/Bogota (tip refresh post #120; pin to main@1feb506; prior post-#118/#119 pin was ef1e75b/fa2b188; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -107,6 +107,8 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #118; pin to main@ef1e75
 | Tip refresh post #116 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_116_2026-09-11.md; freeze+matrix to 0b3dacd; tip honesty restored) |
 | Mission G MCP tool dispatcher (#118) | COMPLETE | MEASURED (eos-mission-g-mcp-tool-dispatcher; test:mcp-dispatcher 11/11; SPEC-0011) |
 | Tip refresh post #118 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_118_2026-09-11.md; freeze+matrix to ef1e75b; tip honesty restored) |
+| Mission H worker tool execution (#120) | COMPLETE | MEASURED (eos-mission-h-worker-tool-execution; test:compute-worker-h; SPEC-0012) |
+| Tip refresh post #120 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_120_2026-09-11.md; freeze+matrix to 1feb506; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -147,6 +149,13 @@ PRODUCTION_READY: NO
 - evaluated_tip pinned to OBSERVED main tip after #118: ef1e75b0cf420a2e87fdc2d63b59608713cbea8b
 - Prior post-#116/#117 pin was 0b3dacd07633fc7192da41e822402ead61b19f64 / c2910a3aad63f1126b835efe507f453fb12a02b2 (#116 Mission F + #117 tip refresh); live main after #118 Mission G is ef1e75b so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
 - Matrix: tip refresh post #116 MEASURED (historical) + Mission G MCP tool dispatcher MEASURED + tip refresh post #118 MEASURED
+- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (post #120)
+
+- evaluated_tip pinned to OBSERVED main tip after #120: 1feb506fe5955286fdbe7aec6d2ba611102e249b
+- Prior post-#118/#119 pin was ef1e75b0cf420a2e87fdc2d63b59608713cbea8b / fa2b1880b7964c0b6c3f711327ee10dfa9752f51 (#118 Mission G + #119 tip refresh); live main after #120 Mission H is 1feb506 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
+- Matrix: tip refresh post #118 MEASURED (historical) + Mission H worker tool execution MEASURED + tip refresh post #120 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
 ## Tip refresh notes (post #110)
