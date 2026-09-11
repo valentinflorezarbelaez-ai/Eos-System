@@ -1,0 +1,21 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0017 — Wire native Stitch tools (stitch_*) into eos-compute-worker via stitch-tool-bridge (Mission J), mirroring Gemini Mission I. Hermetic TDD; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0017
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-l-stitch-worker-bridge
+  - scripts/runners/eos-compute-worker.js
+  - tests/runners/eos-compute-worker-mission-l.test.js
+  - scripts/test-runner.js
+  - package.json
+  - docs/releases/EOS_MISSION_L_STITCH_WORKER_BRIDGE_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new npm dependencies
+  - raising TR-01
+  - live Stitch in CI

@@ -9,6 +9,7 @@
  * SPEC-0010: McpCapabilityRouter envelope on plan; enforceMcp abort; mcp_envelope custody.
  * SPEC-0012: McpToolDispatcher toolCalls on plan; toolOutputs + tool_execution_hashes custody.
  * SPEC-0014: Native Gemini tools (gemini_query / gemini_structured) via gemini-tool-bridge.
+ * SPEC-0017: Native Stitch tools (stitch_*) via stitch-tool-bridge (Mission L).
  *
  * L0: lives under scripts/runners (no src/core mutation; imports custody + MCP router + dispatcher).
  * PRODUCTION_READY: NO | Fundacion Delta=0 | AT_CEILING
@@ -30,6 +31,12 @@ import {
   GEMINI_TOOL_TIMEOUT_MS,
   GEMINI_TOOL_MAX_BYTES
 } from '../../src/core/mcp/gemini-tool-bridge.js';
+import {
+  isStitchToolName,
+  executeStitchTool,
+  listStitchTools,
+  STITCH_TOOL_TIMEOUT_MS
+} from '../../src/core/mcp/stitch-tool-bridge.js';
 import { queryGemini } from '../../src/core/providers/gemini-provider.js';
 
 export class ComputeWorkerError extends Error {
@@ -377,11 +384,11 @@ export function normalizeToolCalls(plan, toolCallsArg) {
 }
 
 /**
- * Built-in compute tools discoverable without MCP (Mission I Gemini tools).
+ * Built-in compute tools discoverable without MCP (Mission I Gemini + Mission L Stitch).
  * @returns {{ name: string, description: string, inputSchema: object }[]}
  */
 export function listBuiltinComputeTools() {
-  return listGeminiTools();
+  return [...listGeminiTools(), ...listStitchTools()];
 }
 
 /**
@@ -393,6 +400,25 @@ export function isNativeGeminiToolCall(call) {
   if (!call || typeof call !== 'object') return false;
   if (isGeminiToolName(call.toolName)) return true;
   return String(call.serverName || '') === 'eos-gemini';
+}
+
+/**
+ * True when a toolCall should be routed through the native Stitch bridge
+ * (bypasses MCP stdio dispatcher). SPEC-0017 / Mission L.
+ * @param {{ serverName?: string, toolName?: string }} call
+ */
+export function isNativeStitchToolCall(call) {
+  if (!call || typeof call !== 'object') return false;
+  if (isStitchToolName(call.toolName)) return true;
+  return String(call.serverName || '') === 'eos-stitch';
+}
+
+/**
+ * True when a toolCall is any native builtin (Gemini or Stitch).
+ * @param {{ serverName?: string, toolName?: string }} call
+ */
+export function isNativeBuiltinToolCall(call) {
+  return isNativeGeminiToolCall(call) || isNativeStitchToolCall(call);
 }
 
 /**
@@ -605,7 +631,9 @@ export async function executeComputeRun({
   toolCalls = undefined,
   geminiFetchImpl = undefined,
   geminiQueryImpl = undefined,
-  geminiApiKey = undefined
+  geminiApiKey = undefined,
+  stitchClientImpl = undefined,
+  stitchFetchImpl = undefined
 } = {}) {
   if (!plan || plan.role !== 'BUILDER') {
     throw new ComputeWorkerError('PLAN_ROLE_MUST_BE_BUILDER', 'PLAN_INVALID');
@@ -633,14 +661,14 @@ export async function executeComputeRun({
     }
   }
 
-  // SPEC-0012/0014: dispatch toolCalls AFTER MCP gate, BEFORE applyDiff (failed tools never write).
-  // Gemini native tools (gemini_* / serverName eos-gemini) bypass MCP stdio dispatcher.
+  // SPEC-0012/0014/0017: dispatch toolCalls AFTER MCP gate, BEFORE applyDiff (failed tools never write).
+  // Gemini (gemini_* / eos-gemini) and Stitch (stitch_* / eos-stitch) bypass MCP stdio dispatcher.
   const resolvedCalls = normalizeToolCalls(plan, toolCalls);
   const toolOutputs = [];
   let applied = false;
 
   if (resolvedCalls.length > 0) {
-    const needsMcpDispatcher = resolvedCalls.some((c) => !isNativeGeminiToolCall(c));
+    const needsMcpDispatcher = resolvedCalls.some((c) => !isNativeBuiltinToolCall(c));
     if (
       needsMcpDispatcher &&
       (!toolDispatcher || typeof toolDispatcher.dispatch !== 'function')
@@ -680,6 +708,22 @@ export async function executeComputeRun({
             result: geminiOut.result,
             custody: geminiOut.custody
           });
+        } else if (isNativeStitchToolCall(call)) {
+          const stitchOut = await executeStitchTool({
+            toolName: call.toolName,
+            arguments: call.arguments || {},
+            clientImpl: stitchClientImpl,
+            fetchImpl: stitchFetchImpl,
+            timeoutMs:
+              call.timeoutMs != null ? call.timeoutMs : STITCH_TOOL_TIMEOUT_MS
+          });
+          toolOutputs.push({
+            serverName: call.serverName || 'eos-stitch',
+            toolName: call.toolName,
+            ok: true,
+            result: stitchOut.result,
+            custody: stitchOut.custody
+          });
         } else {
           const dispatched = await toolDispatcher.dispatch({
             serverName: call.serverName,
@@ -701,8 +745,10 @@ export async function executeComputeRun({
         const code = err && err.code ? String(err.code) : 'MCP_TOOL_DISPATCH_FAILED';
         const message = String(err && err.message ? err.message : err);
         const isGemini = isNativeGeminiToolCall(call);
+        const isStitch = isNativeStitchToolCall(call);
+        const defaultServer = isGemini ? 'eos-gemini' : isStitch ? 'eos-stitch' : '';
         toolOutputs.push({
-          serverName: call.serverName || (isGemini ? 'eos-gemini' : ''),
+          serverName: call.serverName || defaultServer,
           toolName: call.toolName,
           ok: false,
           result: null,
@@ -714,9 +760,14 @@ export async function executeComputeRun({
         if (typeof rollbackDiff === 'function') {
           await rollbackDiff({ plan, reason: `tool_dispatch_failed: ${message}` });
         }
+        const failStatus = isGemini
+          ? 'GEMINI_TOOL_FAILED'
+          : isStitch
+            ? 'STITCH_TOOL_FAILED'
+            : 'MCP_TOOL_DISPATCH_FAILED';
         return {
           ok: false,
-          status: isGemini ? 'GEMINI_TOOL_FAILED' : 'MCP_TOOL_DISPATCH_FAILED',
+          status: failStatus,
           PRODUCTION_READY: 'NO',
           error: message,
           errorCode: code,
@@ -854,3 +905,9 @@ export {
   GEMINI_TOOL_TIMEOUT_MS,
   GEMINI_TOOL_MAX_BYTES
 } from '../../src/core/mcp/gemini-tool-bridge.js';
+export {
+  isStitchToolName,
+  executeStitchTool,
+  listStitchTools,
+  STITCH_TOOL_TIMEOUT_MS
+} from '../../src/core/mcp/stitch-tool-bridge.js';
