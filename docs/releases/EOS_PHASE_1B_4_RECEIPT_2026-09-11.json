@@ -1,0 +1,81 @@
+﻿{
+  "phase": "EOS_L10_FULL_CONVERGENCE_AND_WORKER",
+  "main_sha": "c1e0d2119491264abe98f4f6dd40591ef225efd1",
+  "checks_passed": 914,
+  "verify_strict": "PASS",
+  "builder_verifier_enforced": true,
+  "fdir_status": "GREEN",
+  "epistemic_verdict": "COMPLETE_FOR_LOCAL_GOVERNED_USE",
+  "production_ready": false,
+  "fundacion_delta": 0,
+  "recorded_at_local": "2026-09-11T02:29:00-05:00",
+  "exits": {
+    "npm_run_test_v4": 0,
+    "node_scripts_ci_fdir_sentinel_adversarial_gate_js": 0,
+    "npm_run_verify_strict": 0,
+    "npm_run_test_v5": 0
+  },
+  "pr_trail": {
+    "98": "Merge pull request #98 from valentinflorezarbelaez-ai/cursor/eos-u7-specboot-defer-stubs @ 05fbc34",
+    "99": "Merge pull request #99 from valentinflorezarbelaez-ai/cursor/eos-u8-l9-closeout @ a261013",
+    "100": "Merge pull request #100 from valentinflorezarbelaez-ai/cursor/eos-v6-l10-closeout @ e81af1a",
+    "101": "Merge pull request #101 from valentinflorezarbelaez-ai/cursor/eos-tip-refresh-post-l10 @ a990bfa",
+    "102": "Merge pull request #102 from valentinflorezarbelaez-ai/cursor/eos-p2-compute-worker @ c1e0d21"
+  },
+  "dirty_triage": {
+    "mode": "CATALOG_ONLY",
+    "mass_delete": false,
+    "commit_of_pngs_or_foreign_agents": false,
+    "ai_specs_agents_untracked": {
+      "disposition": "DEFER",
+      "paths": [
+        "ai-specs/agents/backend-developer.md",
+        "ai-specs/agents/frontend-developer.md",
+        "ai-specs/agents/product-strategy-analyst.md"
+      ],
+      "why": "Foreign SpecBoot stubs; per EOS_T8_DIRTY_DEFER_TRIAGE_2026-09-09.md + DIRTY_DEFER_TRIAGE_RITUAL — leave untracked"
+    },
+    "root_pngs_untracked": {
+      "disposition": "IGNORE",
+      "count": 27,
+      "prefixes": ["biblioteca_*", "fundacion_*", "ptg_*"],
+      "paths": [
+        "biblioteca_author_mobile.png",
+        "biblioteca_books_mobile.png",
+        "biblioteca_desktop.png",
+        "biblioteca_fixed_full.png",
+        "biblioteca_full_page.png",
+        "biblioteca_mobile.png",
+        "fundacion_desktop_hero.png",
+        "fundacion_desktop_updated.png",
+        "fundacion_donation_modal.png",
+        "fundacion_mobile_hero.png",
+        "fundacion_modal_scrolled.png",
+        "fundacion_section_2.png",
+        "fundacion_section_3.png",
+        "ptg_epic_intro.png",
+        "ptg_full_page.png",
+        "ptg_ig_updated.png",
+        "ptg_intro_active.png",
+        "ptg_intro_full_epic.png",
+        "ptg_mobile_menu.png",
+        "ptg_mobile_top.png",
+        "ptg_modal.png",
+        "ptg_modal_scrolled.png",
+        "ptg_roster_updated.png",
+        "ptg_screen.png",
+        "ptg_screen_1500.png",
+        "ptg_screen_3800.png",
+        "ptg_screen_4500.png"
+      ],
+      "why": "Unreferenced screenshot binaries at repo root; IGNORE != delete; no force-commit"
+    },
+    "discard": "none"
+  },
+  "non_claims": [
+    "PRODUCTION_READY remains false",
+    "Fundacion Delta=0 (untouched)",
+    "Receipt docs-only on side branch; no PR opened",
+    "Dirty DEFER/IGNORE left on disk untracked"
+  ]
+}
