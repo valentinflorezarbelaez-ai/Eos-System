@@ -1,0 +1,75 @@
+version: 2
+
+updates:
+  # ==================== NPM DEPENDENCIES ====================
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    pull-request-branch-name:
+      separator: "-"
+    reviewers:
+      - "valentinflorezarbelaez-ai"
+    labels:
+      - "dependencies"
+      - "javascript"
+    commit-message:
+      prefix: "deps:"
+      prefix-development: "deps(dev):"
+    allow:
+      - dependency-type: "all"
+    ignore:
+      # Add packages to ignore here if needed
+    rebase-strategy: "auto"
+    auto-merge: false
+    # Target security updates only for critical versions
+    versioning-strategy: "auto"
+
+  # ==================== PIP DEPENDENCIES ====================
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    pull-request-branch-name:
+      separator: "-"
+    reviewers:
+      - "valentinflorezarbelaez-ai"
+    labels:
+      - "dependencies"
+      - "python"
+    commit-message:
+      prefix: "deps:"
+      prefix-development: "deps(dev):"
+    allow:
+      - dependency-type: "all"
+    rebase-strategy: "auto"
+    auto-merge: false
+
+  # ==================== GITHUB ACTIONS ====================
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    pull-request-branch-name:
+      separator: "-"
+    reviewers:
+      - "valentinflorezarbelaez-ai"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci:"
+    rebase-strategy: "auto"
+    auto-merge: false
