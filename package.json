@@ -133,7 +133,8 @@
     "test:mcp-router": "node --test tests/mcp-capability-router.test.js",
     "test:compute-worker-e": "node --test tests/runners/eos-compute-worker-mission-e.test.js",
     "test:compute-worker-f": "node --test tests/runners/eos-compute-worker-mission-f-adversarial.test.js",
-    "test:mcp-dispatcher": "node --test tests/mcp-tool-dispatcher.test.js"
+    "test:mcp-dispatcher": "node --test tests/mcp-tool-dispatcher.test.js",
+    "test:compute-worker-h": "node --test tests/runners/eos-compute-worker-mission-h.test.js"
   },
   "keywords": [
     "eos",

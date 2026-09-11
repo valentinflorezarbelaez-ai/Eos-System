@@ -1,0 +1,21 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0012 — wire McpToolDispatcher into eos-compute-worker executeComputeRun (toolCalls, fail-closed rollback, toolOutputs, custody tool_execution_hashes) + CLI --dispatch-tool. Zero npm deps. AT_CEILING; PRODUCTION_READY=NO; Fundacion Delta=0.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0012
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-h-worker-tool-execution
+  - scripts/runners/eos-compute-worker.js
+  - scripts/runners/eos-compute-worker-cli.js
+  - tests/runners/eos-compute-worker-mission-h.test.js
+  - scripts/test-runner.js
+  - package.json
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new npm dependencies
+  - raising TR-01
+  - mutating McpToolDispatcher internals (consume as-is)
