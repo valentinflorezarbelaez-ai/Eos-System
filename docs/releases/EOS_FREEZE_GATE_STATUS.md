@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 8781bb3f6da9b8a404153b5f60f5199d18478226
-main_subject: Merge pull request #91 from valentinflorezarbelaez-ai/cursor/eos-l9-audit
-branch_hygiene: clean (main == origin/main @ 8781bb3; Ladder2–8 CLOSED on main via #84–#90; L9 audit #91 merged; U1 tip honesty restored; PRODUCTION_READY=NO)
+main_tip: e81af1a5c3fc41441020eefa18f5ce2b1c19bee4
+main_subject: Merge pull request #100 from valentinflorezarbelaez-ai/cursor/eos-v6-l10-closeout
+branch_hygiene: clean (main == origin/main @ e81af1a; Ladder2–10 CLOSED on main via #84–#100; L10 closeout #100 merged; tip honesty restored post L10; PRODUCTION_READY=NO)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-09 America/Bogota (U1 tip refresh post L8/#90 + L9 audit #91; pin to main@8781bb3; prior L8 closeout pin was 1b48ff5; tip honesty restored; PRODUCTION_READY=NO)
+updated_at: 2026-09-11 America/Bogota (tip refresh post L10/#100; pin to main@e81af1a; prior U1 pin was 8781bb3; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2–7 + SpecBoot/AGY + Ladder8 T1–T8 #84–#90 + L9 audit #91)
+## Closed on main (fusion + ROI1-6 + Ladder2–10 + SpecBoot/AGY + L9 #91–#99 + L10 #100)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `8781bb3f6da9b8a404153b5f60f5199d18478226`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `e81af1a5c3fc41441020eefa18f5ce2b1c19bee4`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -686,4 +686,15 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING (35/35 schemas)
 - NON-CLAIM: Ladder 9 closed != PRODUCTION_READY=YES; PO prune HOLD != silent delete
+
+## Tip refresh post L10 / #100 (2026-09-11)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_L10_2026-09-11.md`
+- Branch: `cursor/eos-tip-refresh-post-l10` — push only; do not merge without PO; NO PR in this change set
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`e81af1a5c3fc41441020eefa18f5ce2b1c19bee4` (L10 closeout #100 merge; post L9 #91–#99 + V1–V6)
+- Honesty restored: prior U1 pin was `8781bb3f6da9b8a404153b5f60f5199d18478226` (L9 audit #91 era); live main after #92–#100 is `e81af1a` so HUD freeze observe does not DIVERGE immediately
+- Matrix: L9 closeout MEASURED + L10 V1–V5 + L10 closeout MEASURED + **tip refresh post L10 MEASURED**
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
+- NON-CLAIM: tip honesty != PRODUCTION_READY; L10 closed != Phase 2 compute worker done; CloudAgent remains out of default SpecBoot path
 
