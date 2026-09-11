@@ -27,6 +27,7 @@ const testsDir = path.join(rootDir, 'tests');
 export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-compute-worker-fuzz.test.js',
   'eos-compute-worker-adversarial.test.js',
+  'eos-compute-worker-mission-d.test.js',
   'eos-mission-b-sensor-mutation-fortify.test.js',
   'eos-mission-c2-ci-compute-worker.test.js',
 ]);

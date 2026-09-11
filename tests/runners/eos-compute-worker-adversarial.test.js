@@ -223,7 +223,7 @@ test('ADV parseCheckboxTasks: null/empty/non-string/multiline without checkboxes
 // 4. Rollback & Exception Resilience
 // ---------------------------------------------------------------------------
 
-test('ADV rollback: applyDiff unexpected Error → APPLY_FAILED (actual API; tasks unchanged)', async () => {
+test('ADV rollback: applyDiff unexpected Error → APPLY_FAILED_ROLLED_BACK (Phase 3 atomicity)', async () => {
   const plan = buildComputePlan(basePlanArgs());
   let rollbackCalls = 0;
   const result = await executeComputeRun({
@@ -238,10 +238,10 @@ test('ADV rollback: applyDiff unexpected Error → APPLY_FAILED (actual API; tas
   });
 
   assert.equal(result.ok, false);
-  assert.equal(result.status, 'APPLY_FAILED');
+  assert.equal(result.status, 'APPLY_FAILED_ROLLED_BACK');
   assert.equal(result.PRODUCTION_READY, 'NO');
   assert.match(result.error, /unexpected apply boom/);
-  assert.equal(rollbackCalls, 0);
+  assert.equal(rollbackCalls, 1);
   assert.ok(result.tasks.every((t) => t.done === false));
 });
 
