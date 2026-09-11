@@ -1,0 +1,18 @@
+schema: spec-driven
+created: 2026-09-11
+goal: Tip refresh post L10/#100 — pin freeze main_tip + matrix evaluated_tip + test:m4 EXPECTED_TIP to main@e81af1a; matrix L10 closeout + tip refresh MEASURED; tip honesty restored; PRODUCTION_READY=NO; Fundacion Delta=0.
+routing: SDD
+explicit_sdd_request: true
+affected_areas:
+  - openspec/changes/eos-tip-refresh-post-l10
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_L10_2026-09-11.md
+  - tests/eos-m4-release-ssot-tip.test.js
+non_goals:
+  - flipping PRODUCTION_READY
+  - implementing Phase 2 compute worker
+  - Fundacion writes
+  - App Fuerza writes
+  - opening or merging PR
+  - force-committing DEFER dirty unstaged
