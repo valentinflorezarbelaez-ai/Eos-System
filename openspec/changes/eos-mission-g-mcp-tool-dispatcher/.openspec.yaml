@@ -1,0 +1,21 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0011 — MCP Tool Dispatcher & stdio client bridge (JSON-RPC 2.0 Content-Length, handshake initialize/tools/list/tools/call, timeout fail-closed, bounded output, envelope.resolvedServers gate). Zero npm deps. AT_CEILING; PRODUCTION_READY=NO; Fundacion Delta=0.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0011
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-g-mcp-tool-dispatcher
+  - src/core/mcp/mcp-tool-dispatcher.js
+  - tests/mcp-tool-dispatcher.test.js
+  - tests/fixtures/mock-mcp-server.js
+  - scripts/test-runner.js
+  - package.json
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new npm dependencies
+  - raising TR-01 ceiling
+  - mutating compute worker in this change (consume later)
