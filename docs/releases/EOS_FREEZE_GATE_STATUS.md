@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 582adbd2f8d6dc9d17e2821098e8991756bc7979
-main_subject: Merge pull request #114 from valentinflorezarbelaez-ai/grok/mission-e-worker-mcp-integration
-branch_hygiene: clean (main == origin/main @ 582adbd; Ladder2-10 CLOSED on main via #84-#100; #101 tip refresh post L10 + #102 compute worker + #103 L10 convergence receipt + #104 Mission A + #105 worker adversarial + #106 Mission B fortify + #107 tip refresh post #106 + #108 Mission C2 CI compute worker + #109 tip refresh post #108 + #110 Mission D worker execution custody + #111 tip refresh post #110 + #112 McpCapabilityRouter merged + #113 tip refresh post #112 + #114 Mission E worker MCP integration; tip honesty restored post #114; PRODUCTION_READY=NO)
+main_tip: 0b3dacd07633fc7192da41e822402ead61b19f64
+main_subject: Merge pull request #116 from valentinflorezarbelaez-ai/grok/mission-f-worker-mcp-adversarial
+branch_hygiene: clean (main == origin/main @ 0b3dacd; Ladder2-10 CLOSED on main via #84-#100; #101 tip refresh post L10 + #102 compute worker + #103 L10 convergence receipt + #104 Mission A + #105 worker adversarial + #106 Mission B fortify + #107 tip refresh post #106 + #108 Mission C2 CI compute worker + #109 tip refresh post #108 + #110 Mission D worker execution custody + #111 tip refresh post #110 + #112 McpCapabilityRouter merged + #113 tip refresh post #112 + #114 Mission E worker MCP integration + #115 tip refresh post #114 + #116 Mission F worker MCP adversarial; tip honesty restored post #116; PRODUCTION_READY=NO)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-11 America/Bogota (tip refresh post #114; pin to main@582adbd; prior post-#112/#113 pin was 3d56590; tip honesty restored; PRODUCTION_READY=NO)
+updated_at: 2026-09-11 America/Bogota (tip refresh post #116; pin to main@0b3dacd; prior post-#114/#115 pin was 582adbd/aaab3a2; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + #101-#114)
+## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + #101-#116)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `582adbd2f8d6dc9d17e2821098e8991756bc7979`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `0b3dacd07633fc7192da41e822402ead61b19f64`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -86,6 +86,8 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | T7 AGY workstation evidence | #89 | 1b48ff5 | `EOS_T7_AGY_WORKSTATION_EVIDENCE_2026-09-09.md`; test:t7 |
 | Tip refresh post #112 | #113 | 4413aa7 | `EOS_TIP_REFRESH_POST_112_2026-09-11.md`; freeze+matrix to 3d56590 |
 | Mission E worker MCP integration | #114 | 582adbd | `eos-mission-e-worker-mcp-integration`; McpCapabilityRouter × compute-worker; test:compute-worker-e |
+| Tip refresh post #114 | #115 | aaab3a2 | `EOS_TIP_REFRESH_POST_114_2026-09-11.md`; freeze+matrix to 582adbd |
+| Mission F worker MCP adversarial | #116 | 0b3dacd | `eos-mission-f-worker-mcp-adversarial`; SPEC-0010-ADV; test:compute-worker-f 12/12 |
 
 ### Ladder 10 (V1–V5) Closeout — 2026-09-10
 
@@ -764,3 +766,16 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
 - NON-CLAIM: tip honesty != PRODUCTION_READY; #114 Mission E MCP != PRODUCTION_READY; CloudAgent remains out of default SpecBoot path
+
+## Tip refresh post #116 (2026-09-11)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_116_2026-09-11.md`
+- Branch: `grok/tip-refresh-post-116` — push only; do not merge without PO; NO PR in this change set
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`0b3dacd07633fc7192da41e822402ead61b19f64` (#116 Mission F worker MCP adversarial; post #115 tip refresh post #114)
+- Honesty restored: prior post-#114/#115 pin was `582adbd2f8d6dc9d17e2821098e8991756bc7979` / `aaab3a2c134d2255ef37ee89ba8ef3d59ebb7c13` (#114/#115 era); live main after #115–#116 is `0b3dacd` so HUD freeze observe does not DIVERGE immediately
+- Do not reuse stale post-#114 pin `582adbd2f8d6dc9d17e2821098e8991756bc7979` as live tip (superseded)
+- Matrix: prior tip refresh post #114 MEASURED + **tip refresh post #116 MEASURED**
+- Dirty-defer tip honesty pin moved with freeze (scripts/lib/dirty-defer-triage-lock.js)
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
+- NON-CLAIM: tip honesty != PRODUCTION_READY; #116 Mission F adversarial != PRODUCTION_READY; CloudAgent remains out of default SpecBoot path
