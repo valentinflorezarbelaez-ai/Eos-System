@@ -37,4 +37,19 @@ describe('EOS Test Runner: Discovery and Filtering', () => {
       'fuzz must not appear in default slim discovery'
     );
   });
+
+  it('TR-04: compute-worker adversarial is opt-in (excluded from slim discovery)', () => {
+    const testsDir = path.resolve(process.cwd(), 'tests');
+    const advAbs = path.join(testsDir, 'runners', 'eos-compute-worker-adversarial.test.js');
+    assert.ok(fs.existsSync(advAbs), 'adversarial suite must remain on disk');
+    assert.ok(
+      SLIM_SUITE_EXCLUDES.has('eos-compute-worker-adversarial.test.js'),
+      'adversarial basename must be in SLIM_SUITE_EXCLUDES'
+    );
+    const files = discoverTestFiles(testsDir);
+    assert.ok(
+      !files.some((f) => path.basename(f) === 'eos-compute-worker-adversarial.test.js'),
+      'adversarial must not appear in default slim discovery'
+    );
+  });
 });
