@@ -6,6 +6,8 @@
  * Usage: node scripts/runners/eos-compute-worker-cli.js --change=<changeId>
  * Optional: --mcp-check (print MCP projection, exit 0)
  *           --enforce-mcp (abort exit 4 on DEFICIENT)
+ *           --dispatch-tool=<server>:<tool>:<json_args> (repeatable; SPEC-0012)
+ *           --tool-dry-run (dispatch only, skip apply/verify)
  *
  * Reads openspec/changes/<changeId>/tasks.md, validates write scope,
  * runs executeComputeRun with real git rollback on breach.
@@ -26,6 +28,7 @@ import {
   ComputeWorkerError,
   defaultAllowRoots
 } from './eos-compute-worker.js';
+import { McpToolDispatcher } from '../../src/core/mcp/mcp-tool-dispatcher.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -37,7 +40,15 @@ const CONTEXT_PACK = 'docs/harness/CONTEXT_PACK_TPC.md';
  * @param {string[]} argv
  */
 export function parseCliArgs(argv = []) {
-  const out = { changeId: null, root: null, writes: null, mcpCheck: false, enforceMcp: false };
+  const out = {
+    changeId: null,
+    root: null,
+    writes: null,
+    mcpCheck: false,
+    enforceMcp: false,
+    dispatchTools: [],
+    toolDryRun: false
+  };
   for (const arg of argv) {
     if (arg.startsWith('--change=')) {
       out.changeId = arg.slice('--change='.length).trim();
@@ -53,6 +64,38 @@ export function parseCliArgs(argv = []) {
       out.mcpCheck = true;
     } else if (arg === '--enforce-mcp') {
       out.enforceMcp = true;
+    } else if (arg === '--tool-dry-run') {
+      out.toolDryRun = true;
+    } else if (arg.startsWith('--dispatch-tool=')) {
+      const raw = arg.slice('--dispatch-tool='.length);
+      const first = raw.indexOf(':');
+      if (first < 0) {
+        out.dispatchTools.push({
+          serverName: raw.trim(),
+          toolName: '',
+          arguments: {}
+        });
+        continue;
+      }
+      const second = raw.indexOf(':', first + 1);
+      const serverName = raw.slice(0, first).trim();
+      const toolName =
+        second < 0 ? raw.slice(first + 1).trim() : raw.slice(first + 1, second).trim();
+      const jsonRaw = second < 0 ? '{}' : raw.slice(second + 1);
+      let toolArgs = {};
+      try {
+        toolArgs = jsonRaw.trim() ? JSON.parse(jsonRaw) : {};
+      } catch {
+        toolArgs = {};
+      }
+      if (toolArgs === null || typeof toolArgs !== 'object' || Array.isArray(toolArgs)) {
+        toolArgs = {};
+      }
+      out.dispatchTools.push({
+        serverName,
+        toolName,
+        arguments: toolArgs
+      });
     }
   }
   return out;
@@ -196,6 +239,7 @@ export async function runComputeWorkerCli(argv = [], deps = {}) {
     process.env.EOS_VERIFIER_ID ||
     'eos-compute-worker-cli-verifier';
 
+  const availableConfig = deps.availableConfig || null;
   let plan;
   try {
     plan = buildComputePlan({
@@ -205,15 +249,20 @@ export async function runComputeWorkerCli(argv = [], deps = {}) {
       builderId,
       verifierId,
       plannedWrites,
-      availableConfig: deps.availableConfig,
+      availableConfig,
       mcpRouter: deps.mcpRouter,
-      mcpBaseDir: deps.mcpBaseDir || root
+      mcpBaseDir: deps.mcpBaseDir || root,
+      toolCalls: parsed.dispatchTools.length > 0 ? parsed.dispatchTools : null
     });
   } catch (err) {
     return {
       exitCode: 3,
       error: String(err && err.message ? err.message : err)
     };
+  }
+
+  if (parsed.dispatchTools.length > 0) {
+    plan.toolCalls = parsed.dispatchTools.map((c) => ({ ...c }));
   }
 
   if (parsed.mcpCheck) {
@@ -224,6 +273,64 @@ export async function runComputeWorkerCli(argv = [], deps = {}) {
       else console.log(line);
     }
     return { exitCode: 0, result: { status: 'MCP_CHECK', mcpEnvelope: projection } };
+  }
+
+  let toolDispatcher = deps.toolDispatcher || null;
+  if (!toolDispatcher && parsed.dispatchTools.length > 0) {
+    toolDispatcher = new McpToolDispatcher({
+      availableConfig: availableConfig || { servers: {} }
+    });
+  }
+
+  // Optional standalone tool dry-run: dispatch only, no apply/verify.
+  if (parsed.toolDryRun === true && parsed.dispatchTools.length > 0) {
+    const toolOutputs = [];
+    try {
+      if (!toolDispatcher || typeof toolDispatcher.dispatch !== 'function') {
+        return {
+          exitCode: 1,
+          error: 'MCP_TOOL_DISPATCHER_REQUIRED',
+          result: { status: 'MCP_TOOL_DISPATCHER_REQUIRED', toolOutputs }
+        };
+      }
+      for (const call of parsed.dispatchTools) {
+        const dispatched = await toolDispatcher.dispatch({
+          serverName: call.serverName,
+          toolName: call.toolName,
+          arguments: call.arguments || {},
+          envelope: plan.mcpEnvelope
+        });
+        toolOutputs.push({
+          serverName: call.serverName,
+          toolName: call.toolName,
+          ok: true,
+          result: dispatched && Object.prototype.hasOwnProperty.call(dispatched, 'result')
+            ? dispatched.result
+            : dispatched,
+          meta: dispatched && dispatched.meta ? dispatched.meta : undefined
+        });
+      }
+      const line = JSON.stringify({ status: 'TOOL_DRY_RUN', toolOutputs }, null, 2);
+      if (deps.print !== false) {
+        if (typeof deps.println === 'function') deps.println(line);
+        else console.log(line);
+      }
+      return { exitCode: 0, result: { status: 'TOOL_DRY_RUN', toolOutputs } };
+    } catch (err) {
+      const message = String(err && err.message ? err.message : err);
+      const code = err && err.code ? String(err.code) : 'MCP_TOOL_DISPATCH_FAILED';
+      toolOutputs.push({ ok: false, error: message, errorCode: code });
+      const line = JSON.stringify({ status: 'MCP_TOOL_DISPATCH_FAILED', toolOutputs }, null, 2);
+      if (deps.print !== false) {
+        if (typeof deps.println === 'function') deps.println(line);
+        else console.error(line);
+      }
+      return {
+        exitCode: 1,
+        error: message,
+        result: { status: 'MCP_TOOL_DISPATCH_FAILED', toolOutputs, errorCode: code }
+      };
+    }
   }
 
   const applyDiff =
@@ -250,7 +357,9 @@ export async function runComputeWorkerCli(argv = [], deps = {}) {
     custody: deps.custody,
     custodyBaseDir: deps.custodyBaseDir,
     controlPlaneRoot: deps.controlPlaneRoot || root,
-    enforceMcp: parsed.enforceMcp === true
+    enforceMcp: parsed.enforceMcp === true,
+    toolDispatcher,
+    toolCalls: parsed.dispatchTools.length > 0 ? parsed.dispatchTools : undefined
   });
 
   if (result && result.status === 'MCP_CAPABILITY_DEFICIENT') {
@@ -258,6 +367,18 @@ export async function runComputeWorkerCli(argv = [], deps = {}) {
       exitCode: 4,
       result,
       error: 'MCP_CAPABILITY_DEFICIENT'
+    };
+  }
+
+  if (
+    result &&
+    (result.status === 'MCP_TOOL_DISPATCH_FAILED' ||
+      result.status === 'MCP_TOOL_DISPATCHER_REQUIRED')
+  ) {
+    return {
+      exitCode: 1,
+      result,
+      error: result.error || result.status
     };
   }
 

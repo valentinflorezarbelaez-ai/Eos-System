@@ -7,8 +7,9 @@
  * Fail-closed atomic rollback on apply failure or verifier breach.
  * COMPLETED runs bind EvidenceCustody sealVerifyReceipt (ADR-0015 / V5).
  * SPEC-0010: McpCapabilityRouter envelope on plan; enforceMcp abort; mcp_envelope custody.
+ * SPEC-0012: McpToolDispatcher toolCalls on plan; toolOutputs + tool_execution_hashes custody.
  *
- * L0: lives under scripts/runners (no src/core mutation; imports custody + MCP router only).
+ * L0: lives under scripts/runners (no src/core mutation; imports custody + MCP router + dispatcher).
  * PRODUCTION_READY: NO | Fundacion Delta=0 | AT_CEILING
  */
 
@@ -20,6 +21,7 @@ import {
   CUSTODY_EVENT_TYPES
 } from '../../src/core/sdd/evidence-custody.js';
 import { McpCapabilityRouter } from '../../src/core/mcp/mcp-capability-router.js';
+import { McpToolDispatcher } from '../../src/core/mcp/mcp-tool-dispatcher.js';
 
 export class ComputeWorkerError extends Error {
   /**
@@ -288,7 +290,8 @@ export function buildComputePlan({
   plannedWrites = [],
   mcpRouter = null,
   availableConfig = null,
-  mcpBaseDir = null
+  mcpBaseDir = null,
+  toolCalls = null
 } = {}) {
   if (!changeId || typeof changeId !== 'string') {
     throw new ComputeWorkerError('CHANGE_ID_REQUIRED', 'CHANGE_ID_REQUIRED');
@@ -321,7 +324,7 @@ export function buildComputePlan({
     );
   }
 
-  return {
+  const plan = {
     schema: 'eos.compute_worker.plan.v1',
     role: 'BUILDER',
     verifierRole: 'VERIFIER',
@@ -335,6 +338,70 @@ export function buildComputePlan({
     mcpAvailableConfig: availableConfig || null,
     PRODUCTION_READY: 'NO'
   };
+  plan.toolCalls = Array.isArray(toolCalls) ? toolCalls.map((c) => ({ ...c })) : [];
+  return plan;
+}
+
+/**
+ * Prefer explicit toolCallsArg, else plan.toolCalls, else [].
+ * @param {object} plan
+ * @param {Array|null|undefined} toolCallsArg
+ * @returns {{ serverName: string, toolName: string, arguments?: object }[]}
+ */
+export function normalizeToolCalls(plan, toolCallsArg) {
+  if (Array.isArray(toolCallsArg)) {
+    return toolCallsArg.map((c) => ({
+      serverName: String(c && c.serverName != null ? c.serverName : ''),
+      toolName: String(c && c.toolName != null ? c.toolName : ''),
+      arguments: c && c.arguments && typeof c.arguments === 'object' ? c.arguments : {}
+    }));
+  }
+  const fromPlan = plan && Array.isArray(plan.toolCalls) ? plan.toolCalls : [];
+  return fromPlan.map((c) => ({
+    serverName: String(c && c.serverName != null ? c.serverName : ''),
+    toolName: String(c && c.toolName != null ? c.toolName : ''),
+    arguments: c && c.arguments && typeof c.arguments === 'object' ? c.arguments : {}
+  }));
+}
+
+/**
+ * Stable JSON → sha256 hex for each tool output; returns { hashes, joined }.
+ * Canonical payload per output: { serverName, toolName, ok, result }.
+ * @param {Array} toolOutputs
+ * @returns {{ hashes: string[], joined: string }}
+ */
+export function hashToolOutputs(toolOutputs = []) {
+  const list = Array.isArray(toolOutputs) ? toolOutputs : [];
+  const hashes = list.map((out) =>
+    calculateSha256({
+      serverName: out && out.serverName != null ? out.serverName : null,
+      toolName: out && out.toolName != null ? out.toolName : null,
+      ok: out && out.ok === true,
+      result: out && Object.prototype.hasOwnProperty.call(out, 'result') ? out.result : null
+    })
+  );
+  return { hashes, joined: hashes.join(',') };
+}
+
+/**
+ * Thin alias → dispatcher.dispatch(...)
+ * @param {McpToolDispatcher} dispatcher
+ * @param {{ serverName: string, toolName: string, arguments?: object }} call
+ * @param {object} envelope
+ */
+export async function dispatchToolCall(dispatcher, call, envelope) {
+  if (!dispatcher || typeof dispatcher.dispatch !== 'function') {
+    throw new ComputeWorkerError(
+      'MCP_TOOL_DISPATCHER_REQUIRED: dispatcher missing',
+      'MCP_TOOL_DISPATCHER_REQUIRED'
+    );
+  }
+  return dispatcher.dispatch({
+    serverName: call.serverName,
+    toolName: call.toolName,
+    arguments: call.arguments || {},
+    envelope
+  });
 }
 
 /**
@@ -457,6 +524,14 @@ export function sealComputeRunCustody(plan, verify, custodyOpts = {}) {
     planned_writes: (plan.plannedWrites || []).slice(),
     mcp_envelope: plan.mcpEnvelope || null
   };
+
+  const toolOutputs = Array.isArray(custodyOpts.toolOutputs) ? custodyOpts.toolOutputs : [];
+  if (toolOutputs.length > 0 || custodyOpts.toolOutputs != null) {
+    const { hashes } = hashToolOutputs(toolOutputs);
+    receiptPayload.tool_execution_hashes = hashes;
+  }
+
+  // Recalculate receipt_hash after optional tool_execution_hashes bind.
   receiptPayload.receipt_hash = calculateSha256(receiptPayload);
 
   const custody = resolveCustody(custodyOpts);
@@ -466,7 +541,7 @@ export function sealComputeRunCustody(plan, verify, custodyOpts = {}) {
   if (typeof custody.sealVerifyReceipt !== 'function' && typeof custody.append !== 'function') {
     throw new ComputeWorkerError('CUSTODY_SEAL_API_MISSING', 'CUSTODY_SEAL_API_MISSING');
   }
-  return custody.append(CUSTODY_EVENT_TYPES.VERIFY_RECEIPT, {
+  const appendPayload = {
     receipt_id: receiptPayload.receipt_id,
     receipt_hash: receiptPayload.receipt_hash,
     mission_id: receiptPayload.mission_id,
@@ -474,7 +549,11 @@ export function sealComputeRunCustody(plan, verify, custodyOpts = {}) {
     builder_id: receiptPayload.builder_id,
     verifier_id: receiptPayload.verifier_id,
     mcp_envelope: receiptPayload.mcp_envelope
-  });
+  };
+  if (Object.prototype.hasOwnProperty.call(receiptPayload, 'tool_execution_hashes')) {
+    appendPayload.tool_execution_hashes = receiptPayload.tool_execution_hashes;
+  }
+  return custody.append(CUSTODY_EVENT_TYPES.VERIFY_RECEIPT, appendPayload);
 }
 
 /**
@@ -490,7 +569,9 @@ export async function executeComputeRun({
   custody,
   custodyBaseDir,
   controlPlaneRoot,
-  enforceMcp = false
+  enforceMcp = false,
+  toolDispatcher = null,
+  toolCalls = undefined
 } = {}) {
   if (!plan || plan.role !== 'BUILDER') {
     throw new ComputeWorkerError('PLAN_ROLE_MUST_BE_BUILDER', 'PLAN_INVALID');
@@ -518,7 +599,78 @@ export async function executeComputeRun({
     }
   }
 
+  // SPEC-0012: dispatch toolCalls AFTER MCP gate, BEFORE applyDiff (failed tools never write).
+  const resolvedCalls = normalizeToolCalls(plan, toolCalls);
+  const toolOutputs = [];
   let applied = false;
+
+  if (resolvedCalls.length > 0) {
+    if (!toolDispatcher || typeof toolDispatcher.dispatch !== 'function') {
+      return {
+        ok: false,
+        status: 'MCP_TOOL_DISPATCHER_REQUIRED',
+        PRODUCTION_READY: 'NO',
+        error: 'MCP_TOOL_DISPATCHER_REQUIRED',
+        errorCode: 'MCP_TOOL_DISPATCHER_REQUIRED',
+        toolOutputs,
+        tasks: (plan.tasks || []).map((t) => ({ ...t })),
+        builderId: plan.builderId,
+        verifierId: plan.verifierId,
+        contextPackPath: plan.contextPackPath,
+        mcpEnvelope: plan.mcpEnvelope || null
+      };
+    }
+
+    for (const call of resolvedCalls) {
+      try {
+        const dispatched = await toolDispatcher.dispatch({
+          serverName: call.serverName,
+          toolName: call.toolName,
+          arguments: call.arguments || {},
+          envelope: plan.mcpEnvelope
+        });
+        toolOutputs.push({
+          serverName: call.serverName,
+          toolName: call.toolName,
+          ok: true,
+          result: dispatched && Object.prototype.hasOwnProperty.call(dispatched, 'result')
+            ? dispatched.result
+            : dispatched,
+          meta: dispatched && dispatched.meta ? dispatched.meta : undefined
+        });
+      } catch (err) {
+        const code = err && err.code ? String(err.code) : 'MCP_TOOL_DISPATCH_FAILED';
+        const message = String(err && err.message ? err.message : err);
+        toolOutputs.push({
+          serverName: call.serverName,
+          toolName: call.toolName,
+          ok: false,
+          result: null,
+          error: message,
+          errorCode: code
+        });
+        // Fail-closed: invoke rollback when provided (covers post-apply placement
+        // and defensive pre-apply callers that still inject rollbackDiff).
+        if (typeof rollbackDiff === 'function') {
+          await rollbackDiff({ plan, reason: `tool_dispatch_failed: ${message}` });
+        }
+        return {
+          ok: false,
+          status: 'MCP_TOOL_DISPATCH_FAILED',
+          PRODUCTION_READY: 'NO',
+          error: message,
+          errorCode: code,
+          toolOutputs,
+          tasks: (plan.tasks || []).map((t) => ({ ...t })),
+          builderId: plan.builderId,
+          verifierId: plan.verifierId,
+          contextPackPath: plan.contextPackPath,
+          mcpEnvelope: plan.mcpEnvelope || null
+        };
+      }
+    }
+  }
+
   try {
     await applyDiff(plan);
     applied = true;
@@ -535,6 +687,7 @@ export async function executeComputeRun({
       status: 'APPLY_FAILED_ROLLED_BACK',
       PRODUCTION_READY: 'NO',
       error: String(err && err.message ? err.message : err),
+      toolOutputs,
       tasks: (plan.tasks || []).map((t) => ({ ...t })),
       builderId: plan.builderId,
       verifierId: plan.verifierId
@@ -564,6 +717,7 @@ export async function executeComputeRun({
         ok: false,
         error: String(err && err.message ? err.message : err)
       },
+      toolOutputs,
       tasks: (plan.tasks || []).map((t) => ({ ...t, done: false, checkbox: '[ ]' })),
       builderId: plan.builderId,
       verifierId: plan.verifierId,
@@ -577,7 +731,8 @@ export async function executeComputeRun({
       custodyReceipt = sealComputeRunCustody(plan, verify, {
         custody,
         custodyBaseDir,
-        controlPlaneRoot
+        controlPlaneRoot,
+        toolOutputs
       });
     } catch (err) {
       if (applied && typeof rollbackDiff === 'function') {
@@ -592,6 +747,7 @@ export async function executeComputeRun({
         PRODUCTION_READY: 'NO',
         error: String(err && err.message ? err.message : err),
         verify,
+        toolOutputs,
         tasks: (plan.tasks || []).map((t) => ({ ...t, done: false, checkbox: '[ ]' })),
         builderId: plan.builderId,
         verifierId: plan.verifierId,
@@ -605,6 +761,7 @@ export async function executeComputeRun({
       PRODUCTION_READY: 'NO',
       verify,
       custodyReceipt,
+      toolOutputs,
       tasks: markPendingDone(plan.tasks || []),
       builderId: plan.builderId,
       verifierId: plan.verifierId,
@@ -621,9 +778,12 @@ export async function executeComputeRun({
     status: 'ROLLED_BACK',
     PRODUCTION_READY: 'NO',
     verify,
+    toolOutputs,
     tasks: (plan.tasks || []).map((t) => ({ ...t, done: false, checkbox: '[ ]' })),
     builderId: plan.builderId,
     verifierId: plan.verifierId,
     contextPackPath: plan.contextPackPath
   };
 }
+
+export { McpToolDispatcher };
