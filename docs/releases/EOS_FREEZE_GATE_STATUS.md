@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 1feb506fe5955286fdbe7aec6d2ba611102e249b
-main_subject: Merge pull request #120 from valentinflorezarbelaez-ai/grok/mission-h-worker-tool-execution
-branch_hygiene: clean (main == origin/main @ 1feb506; Ladder2-10 CLOSED on main via #84-#100; #101–#118 as prior + #119 tip refresh post #118 + #120 Mission H worker tool execution; tip honesty restored post #120; PRODUCTION_READY=NO)
+main_tip: 4bb5eb528b45e17464404a63e7909a0cb552da0f
+main_subject: Merge pull request #122 from valentinflorezarbelaez-ai/cursor/eos-google-gemini-provider
+branch_hygiene: clean (main == origin/main @ 4bb5eb5; Ladder2-10 CLOSED on main via #84-#100; #101–#120 as prior + #121 tip refresh post #120 + #122 Google Gemini AI provider; tip honesty restored post #122; PRODUCTION_READY=NO)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-11 America/Bogota (tip refresh post #120; pin to main@1feb506; prior post-#118/#119 pin was ef1e75b/fa2b188; tip honesty restored; PRODUCTION_READY=NO)
+updated_at: 2026-09-11 America/Bogota (tip refresh post #122; pin to main@4bb5eb5; prior post-#120/#121 pin was 1feb506/dc98567; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + #101-#120)
+## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + #101-#122)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `1feb506fe5955286fdbe7aec6d2ba611102e249b`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `4bb5eb528b45e17464404a63e7909a0cb552da0f`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -809,3 +809,16 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
 - NON-CLAIM: tip honesty != PRODUCTION_READY; #120 Mission H tool bridge != PRODUCTION_READY; CloudAgent remains out of default SpecBoot path
+
+## Tip refresh post #122 (2026-09-11)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_122_2026-09-11.md`
+- Branch: `cursor/eos-tip-refresh-post-122`
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`4bb5eb528b45e17464404a63e7909a0cb552da0f` (#122 Google Gemini AI provider; post #121 tip refresh post #120)
+- Honesty restored: prior post-#120/#121 pin was `1feb506fe5955286fdbe7aec6d2ba611102e249b` / `dc985677930edcf80bb405057db4b6fb42df85eb` (#120/#121 era); live main after #121–#122 is `4bb5eb5` so HUD freeze observe does not DIVERGE immediately
+- Do not reuse stale post-#120 pin `1feb506fe5955286fdbe7aec6d2ba611102e249b` as live tip (superseded)
+- Matrix: prior tip refresh post #120 MEASURED + **Google Gemini AI provider (SPEC-0013) MEASURED** + **tip refresh post #122 MEASURED**
+- Dirty-defer tip honesty pin moved with freeze (scripts/lib/dirty-defer-triage-lock.js)
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
+- NON-CLAIM: tip honesty != PRODUCTION_READY; #122 Gemini provider != PRODUCTION_READY; CloudAgent remains out of default SpecBoot path
