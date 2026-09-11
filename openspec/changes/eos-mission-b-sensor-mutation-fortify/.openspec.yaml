@@ -1,0 +1,20 @@
+schema: spec-driven
+created: 2026-09-11
+goal: Mission B scoped sensor mutation fortification — V5 builder-verifier custody (ZWSP/format spoof fail-closed), U7 SpecBoot must-not-invent temp-fixture FAIL-CLOSED, T8 Dirty DEFER NON-MUTATING gate oracle; AT_CEILING; PRODUCTION_READY=NO; Fundacion Delta=0.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-MISSION-B-SENSOR-MUTATION
+affected_areas:
+  - openspec/changes/eos-mission-b-sensor-mutation-fortify
+  - src/core/governance/builder-verifier-custody.js
+  - tests/eos-mission-b-sensor-mutation-fortify.test.js
+  - package.json
+non_goals:
+  - mutating all 914 verify checks
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new docs/schemas JSON (AT_CEILING)
+  - opening or merging PR
+  - weakening V5 / U7 / T8 production invariants
+  - Mission A compute-worker fuzz scope
