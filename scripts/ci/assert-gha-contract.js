@@ -164,6 +164,13 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:t6', 'CI Ladder8 T6 complexity ceiling HOLD');
         assertContains(yaml, 'test:t7', 'CI Ladder8 T7 AGY workstation evidence');
         assertContains(yaml, 'test:t8', 'CI Ladder8 T8 dirty DEFER triage');
+        assertContains(yaml, 'test:v2', 'CI Ladder10 V2 token hygiene');
+        assertContains(yaml, 'test:v3', 'CI Ladder10 V3 agent handoff');
+        assertContains(yaml, 'test:v4', 'CI Ladder10 V4 FDIR sentinel');
+        assertContains(yaml, 'test:v5', 'CI Ladder10 V5 builder-verifier custody');
+        assertContains(yaml, 'test:u2', 'CI Ladder9 U2 seam-pack lock');
+        assertContains(yaml, 'test:compute-worker', 'CI Mission C2 compute-worker pack');
+        assertContains(yaml, 'test:c2', 'CI Mission C2 seam-pack lock');
       } catch (err) {
         failures.push(err.message);
       }

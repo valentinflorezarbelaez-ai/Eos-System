@@ -18,7 +18,7 @@ Machine-readable companion: `docs/governance/CI_CD_CONTRACT.json`.
 | test | `npm test` | Forbidden |
 | syntax | `node --check` on `bin/`, `src/`, `scripts/`, `tests/` | Forbidden |
 | governance-gates | `evaluate:release`, `verify:independent`, `audit:system` | Forbidden |
-| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s2`..`test:s6` + `test:specboot-agy` + `test:t2`..`test:t8` | Forbidden |
+| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s2`..`test:s6` + `test:specboot-agy` + `test:t2`..`test:t8` + `test:v2`..`test:v5` + `test:u2` + `test:compute-worker` + `test:c2` | Forbidden |
 
 Triggers: `push` to `main`, `pull_request`, `workflow_dispatch`.
 
@@ -66,3 +66,5 @@ seam-pack named pack extended with CI-safe `test:v2`, `test:v3`, `test:v4` (Ladd
 
 ## V5 seam-pack note (2026-09-10)
 seam-pack named pack extended with CI-safe `test:v5` (Ladder 10 V5 lock: BUILDER != VERIFIER runtime enforcement and custody gate; keep prior packs). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.
+## C2 seam-pack note (2026-09-11)
+seam-pack named pack extended with CI-safe `test:u2` + `test:compute-worker` (SPEC-0008 unit+fuzz+adversarial) + `test:c2` lock (keep prior V2–V5 and T2–T8 packs). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO. C2 lock basename stays in SLIM_SUITE_EXCLUDES to hold TR-01 ≤145.
