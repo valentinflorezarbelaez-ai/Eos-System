@@ -1,0 +1,21 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0015 — Google Stitch UI generator bridge (list projects, generate screen, get screen, export designMd) with custody receipts, 30s timeout, 2MiB prompt bound, hermetic TDD. PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0015
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-j-stitch-tool-bridge
+  - src/core/mcp/stitch-tool-bridge.js
+  - tests/runners/eos-stitch-tool-bridge.test.js
+  - scripts/test-runner.js
+  - package.json
+  - docs/releases/EOS_MISSION_J_STITCH_TOOL_BRIDGE_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new npm dependencies
+  - raising TR-01
+  - wiring into compute worker this change (bridge-first; consumer missions later)

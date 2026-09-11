@@ -37,6 +37,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-compute-worker-mission-h.test.js',
   'gemini-provider.test.js',
   'eos-compute-worker-mission-i.test.js',
+  'eos-stitch-tool-bridge.test.js',
 ]);
 
 /**
