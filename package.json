@@ -135,7 +135,8 @@
     "test:compute-worker-f": "node --test tests/runners/eos-compute-worker-mission-f-adversarial.test.js",
     "test:mcp-dispatcher": "node --test tests/mcp-tool-dispatcher.test.js",
     "test:compute-worker-h": "node --test tests/runners/eos-compute-worker-mission-h.test.js",
-    "test:gemini": "node --test tests/gemini-provider.test.js"
+    "test:gemini": "node --test tests/gemini-provider.test.js",
+    "test:compute-worker-i": "node --test tests/runners/eos-compute-worker-mission-i.test.js"
   },
   "keywords": [
     "eos",

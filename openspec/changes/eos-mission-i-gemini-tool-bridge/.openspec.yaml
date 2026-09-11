@@ -1,0 +1,22 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0014 — Gemini tool bridge (gemini_query / gemini_structured) into eos-compute-worker with custody receipts, 30s timeout, 2MiB bound, hermetic TDD. PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0014
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-i-gemini-tool-bridge
+  - src/core/mcp/gemini-tool-bridge.js
+  - scripts/runners/eos-compute-worker.js
+  - tests/runners/eos-compute-worker-mission-i.test.js
+  - scripts/test-runner.js
+  - package.json
+  - docs/releases/EOS_MISSION_I_GEMINI_TOOL_BRIDGE_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new npm dependencies
+  - raising TR-01
+  - mutating gemini-provider.js (consume as-is)

@@ -8,6 +8,7 @@
  * COMPLETED runs bind EvidenceCustody sealVerifyReceipt (ADR-0015 / V5).
  * SPEC-0010: McpCapabilityRouter envelope on plan; enforceMcp abort; mcp_envelope custody.
  * SPEC-0012: McpToolDispatcher toolCalls on plan; toolOutputs + tool_execution_hashes custody.
+ * SPEC-0014: Native Gemini tools (gemini_query / gemini_structured) via gemini-tool-bridge.
  *
  * L0: lives under scripts/runners (no src/core mutation; imports custody + MCP router + dispatcher).
  * PRODUCTION_READY: NO | Fundacion Delta=0 | AT_CEILING
@@ -22,6 +23,14 @@ import {
 } from '../../src/core/sdd/evidence-custody.js';
 import { McpCapabilityRouter } from '../../src/core/mcp/mcp-capability-router.js';
 import { McpToolDispatcher } from '../../src/core/mcp/mcp-tool-dispatcher.js';
+import {
+  isGeminiToolName,
+  executeGeminiTool,
+  listGeminiTools,
+  GEMINI_TOOL_TIMEOUT_MS,
+  GEMINI_TOOL_MAX_BYTES
+} from '../../src/core/mcp/gemini-tool-bridge.js';
+import { queryGemini } from '../../src/core/providers/gemini-provider.js';
 
 export class ComputeWorkerError extends Error {
   /**
@@ -349,19 +358,41 @@ export function buildComputePlan({
  * @returns {{ serverName: string, toolName: string, arguments?: object }[]}
  */
 export function normalizeToolCalls(plan, toolCallsArg) {
-  if (Array.isArray(toolCallsArg)) {
-    return toolCallsArg.map((c) => ({
+  const mapCall = (c) => {
+    const out = {
       serverName: String(c && c.serverName != null ? c.serverName : ''),
       toolName: String(c && c.toolName != null ? c.toolName : ''),
       arguments: c && c.arguments && typeof c.arguments === 'object' ? c.arguments : {}
-    }));
+    };
+    if (c && c.timeoutMs != null && Number.isFinite(Number(c.timeoutMs))) {
+      out.timeoutMs = Number(c.timeoutMs);
+    }
+    return out;
+  };
+  if (Array.isArray(toolCallsArg)) {
+    return toolCallsArg.map(mapCall);
   }
   const fromPlan = plan && Array.isArray(plan.toolCalls) ? plan.toolCalls : [];
-  return fromPlan.map((c) => ({
-    serverName: String(c && c.serverName != null ? c.serverName : ''),
-    toolName: String(c && c.toolName != null ? c.toolName : ''),
-    arguments: c && c.arguments && typeof c.arguments === 'object' ? c.arguments : {}
-  }));
+  return fromPlan.map(mapCall);
+}
+
+/**
+ * Built-in compute tools discoverable without MCP (Mission I Gemini tools).
+ * @returns {{ name: string, description: string, inputSchema: object }[]}
+ */
+export function listBuiltinComputeTools() {
+  return listGeminiTools();
+}
+
+/**
+ * True when a toolCall should be routed through the native Gemini bridge
+ * (bypasses MCP stdio dispatcher).
+ * @param {{ serverName?: string, toolName?: string }} call
+ */
+export function isNativeGeminiToolCall(call) {
+  if (!call || typeof call !== 'object') return false;
+  if (isGeminiToolName(call.toolName)) return true;
+  return String(call.serverName || '') === 'eos-gemini';
 }
 
 /**
@@ -571,7 +602,10 @@ export async function executeComputeRun({
   controlPlaneRoot,
   enforceMcp = false,
   toolDispatcher = null,
-  toolCalls = undefined
+  toolCalls = undefined,
+  geminiFetchImpl = undefined,
+  geminiQueryImpl = undefined,
+  geminiApiKey = undefined
 } = {}) {
   if (!plan || plan.role !== 'BUILDER') {
     throw new ComputeWorkerError('PLAN_ROLE_MUST_BE_BUILDER', 'PLAN_INVALID');
@@ -599,13 +633,18 @@ export async function executeComputeRun({
     }
   }
 
-  // SPEC-0012: dispatch toolCalls AFTER MCP gate, BEFORE applyDiff (failed tools never write).
+  // SPEC-0012/0014: dispatch toolCalls AFTER MCP gate, BEFORE applyDiff (failed tools never write).
+  // Gemini native tools (gemini_* / serverName eos-gemini) bypass MCP stdio dispatcher.
   const resolvedCalls = normalizeToolCalls(plan, toolCalls);
   const toolOutputs = [];
   let applied = false;
 
   if (resolvedCalls.length > 0) {
-    if (!toolDispatcher || typeof toolDispatcher.dispatch !== 'function') {
+    const needsMcpDispatcher = resolvedCalls.some((c) => !isNativeGeminiToolCall(c));
+    if (
+      needsMcpDispatcher &&
+      (!toolDispatcher || typeof toolDispatcher.dispatch !== 'function')
+    ) {
       return {
         ok: false,
         status: 'MCP_TOOL_DISPATCHER_REQUIRED',
@@ -623,26 +662,47 @@ export async function executeComputeRun({
 
     for (const call of resolvedCalls) {
       try {
-        const dispatched = await toolDispatcher.dispatch({
-          serverName: call.serverName,
-          toolName: call.toolName,
-          arguments: call.arguments || {},
-          envelope: plan.mcpEnvelope
-        });
-        toolOutputs.push({
-          serverName: call.serverName,
-          toolName: call.toolName,
-          ok: true,
-          result: dispatched && Object.prototype.hasOwnProperty.call(dispatched, 'result')
-            ? dispatched.result
-            : dispatched,
-          meta: dispatched && dispatched.meta ? dispatched.meta : undefined
-        });
+        if (isNativeGeminiToolCall(call)) {
+          const geminiOut = await executeGeminiTool({
+            toolName: call.toolName,
+            arguments: call.arguments || {},
+            queryGeminiImpl: geminiQueryImpl || queryGemini,
+            fetchImpl: geminiFetchImpl,
+            apiKey: geminiApiKey,
+            timeoutMs:
+              call.timeoutMs != null ? call.timeoutMs : GEMINI_TOOL_TIMEOUT_MS,
+            maxBytes: GEMINI_TOOL_MAX_BYTES
+          });
+          toolOutputs.push({
+            serverName: call.serverName || 'eos-gemini',
+            toolName: call.toolName,
+            ok: true,
+            result: geminiOut.result,
+            custody: geminiOut.custody
+          });
+        } else {
+          const dispatched = await toolDispatcher.dispatch({
+            serverName: call.serverName,
+            toolName: call.toolName,
+            arguments: call.arguments || {},
+            envelope: plan.mcpEnvelope
+          });
+          toolOutputs.push({
+            serverName: call.serverName,
+            toolName: call.toolName,
+            ok: true,
+            result: dispatched && Object.prototype.hasOwnProperty.call(dispatched, 'result')
+              ? dispatched.result
+              : dispatched,
+            meta: dispatched && dispatched.meta ? dispatched.meta : undefined
+          });
+        }
       } catch (err) {
         const code = err && err.code ? String(err.code) : 'MCP_TOOL_DISPATCH_FAILED';
         const message = String(err && err.message ? err.message : err);
+        const isGemini = isNativeGeminiToolCall(call);
         toolOutputs.push({
-          serverName: call.serverName,
+          serverName: call.serverName || (isGemini ? 'eos-gemini' : ''),
           toolName: call.toolName,
           ok: false,
           result: null,
@@ -656,7 +716,7 @@ export async function executeComputeRun({
         }
         return {
           ok: false,
-          status: 'MCP_TOOL_DISPATCH_FAILED',
+          status: isGemini ? 'GEMINI_TOOL_FAILED' : 'MCP_TOOL_DISPATCH_FAILED',
           PRODUCTION_READY: 'NO',
           error: message,
           errorCode: code,
@@ -787,3 +847,10 @@ export async function executeComputeRun({
 }
 
 export { McpToolDispatcher };
+export {
+  isGeminiToolName,
+  executeGeminiTool,
+  listGeminiTools,
+  GEMINI_TOOL_TIMEOUT_MS,
+  GEMINI_TOOL_MAX_BYTES
+} from '../../src/core/mcp/gemini-tool-bridge.js';
