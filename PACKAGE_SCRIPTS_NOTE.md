@@ -1,12 +1,12 @@
-# Mission AK — package.json / slim patch fragment
+# Mission AL — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-ak.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-al.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:constitution-runtime-policy-gate": "node --test tests/eos-ak-constitution-runtime-policy-gate.test.js",
-"test:mission-ak": "node --test tests/eos-ak-constitution-runtime-policy-gate.test.js"
+"test:autonomy-replay-forensic-observer": "node --test tests/eos-al-autonomy-replay-forensic-observer.test.js",
+"test:mission-al": "node --test tests/eos-al-autonomy-replay-forensic-observer.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-ak.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-ak-constitution-runtime-policy-gate.test.js',
+'eos-al-autonomy-replay-forensic-observer.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
