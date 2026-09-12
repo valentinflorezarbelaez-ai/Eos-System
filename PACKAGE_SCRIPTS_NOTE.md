@@ -1,12 +1,12 @@
-# Mission AE — package.json / slim patch fragment
+# Mission AF — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-ae.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-af.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:token-budget-ecr": "node --test tests/eos-ae-token-budget-ecr.test.js",
-"test:mission-ae": "node --test tests/eos-ae-token-budget-ecr.test.js"
+"test:autonomous-execution-loop": "node --test tests/eos-af-autonomous-execution-loop.test.js",
+"test:mission-af": "node --test tests/eos-af-autonomous-execution-loop.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-ae.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-ae-token-budget-ecr.test.js',
+'eos-af-autonomous-execution-loop.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
