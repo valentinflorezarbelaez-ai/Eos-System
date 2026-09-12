@@ -1,0 +1,18 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Register EOS Maturity Ladder 15 Gap Audit (docs-only) after Ladder 14 closeout (Mission AH); propose ordered satellites AI/AJ/AK/AL/AM for Governed Multi-Session Autonomy & Evidence Economy — no Mission AI implementation in this change.
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-15-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_15_AUDIT_2026-09-12.md
+  - openspec/changes/eos-ladder-15-maturity-audit
+non_goals:
+  - implementing Mission AI/AJ/AK/AL/AM
+  - re-implementing Mission AD/AE/AF/AG/AH (L14 closed)
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
