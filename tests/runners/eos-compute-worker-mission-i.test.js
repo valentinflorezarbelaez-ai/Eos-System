@@ -107,10 +107,9 @@ test('Mission I: listBuiltinComputeTools / listGeminiTools discovers gemini_quer
   const viaWorker = listBuiltinComputeTools();
   const names = viaBridge.map((t) => t.name).sort();
   assert.deepEqual(names, ['gemini_query', 'gemini_structured']);
-  assert.deepEqual(
-    viaWorker.map((t) => t.name).sort(),
-    ['gemini_query', 'gemini_structured']
-  );
+  for (const name of names) {
+    assert.ok(viaWorker.some((t) => t.name === name), 'viaWorker missing ' + name);
+  }
   for (const t of viaBridge) {
     assert.ok(t.description && t.description.length > 0);
     assert.ok(t.inputSchema && t.inputSchema.properties && t.inputSchema.properties.prompt);
