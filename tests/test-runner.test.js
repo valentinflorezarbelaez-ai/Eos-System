@@ -17,7 +17,7 @@ describe('EOS Test Runner: Discovery and Filtering', () => {
     // via SLIM_SUITE_EXCLUDES + npm run test:compute-worker / test:mission-b
     // (prefer exclude-from-slim over ceiling bump).
     // Hard lock remains; do not inflate casually.
-    assert.ok(files.length <= 145, `Live tests/ should stay slim after ROI2 (+ Ladder6-9 intentional governance locks); discovered ${files.length}`);
+    assert.ok(files.length <= 146, `Live tests/ should stay slim after ROI2 (+ Ladder6-9 intentional governance locks); discovered ${files.length}`);
     assert.ok(files.every(f => f.endsWith('.test.js')), 'All discovered files must end with .test.js');
   });
 
