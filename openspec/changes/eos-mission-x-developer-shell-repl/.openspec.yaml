@@ -1,0 +1,25 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0029 — Interactive Developer Shell / REPL. Slash-command REPL that orchestrates Mission W sovereign session coordinator (and optionally Q/R/S/T/V ports) via injection. Commands /start /run /status /close /doctor /help /exit|/quit. ANSI/ASCII HUD (no flicker). kind=eos-developer-shell-repl. Hermetic TDD; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING. NOT a Claude Code clone.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0029
+phase: 1
+affected_areas:
+  - src/cli/interactive-developer-shell.js
+  - bin/eos-shell.js
+  - tests/cli/interactive-developer-shell.test.js
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-x-developer-shell-repl
+  - docs/releases/EOS_MISSION_X_DEVELOPER_SHELL_REPL_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - Claude Code clone / claiming Claude Code parity
+  - rewriting Mission W sovereign-session-coordinator (injection only)
+  - rewriting Mission Q/R/S/T/V modules
+  - new npm dependencies / JSON schemas
+  - raising TR-01 (exclude-from-slim instead)
+  - installing or claiming agy-daemon / AGY DAEMON_PRESENT

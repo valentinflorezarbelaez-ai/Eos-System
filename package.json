@@ -10,7 +10,8 @@
     "eos-orchestrator": "./bin/eos-orchestrator.js",
     "eos-hud": "./bin/eos-hud.js",
     "eos-top": "./bin/eos-top.js",
-    "eos-doctor": "./bin/eos-doctor.js"
+    "eos-doctor": "./bin/eos-doctor.js",
+    "eos-shell": "bin/eos-shell.js"
   },
   "scripts": {
     "test": "node scripts/test-runner.js",
@@ -159,7 +160,9 @@
     "test:fdir-remediation": "node --test tests/fdir/fdir-remediation-loop.test.js",
     "test:mission-v": "node --test tests/fdir/fdir-remediation-loop.test.js",
     "test:sovereign-session": "node --test tests/session/sovereign-session-coordinator.test.js",
-    "test:mission-w": "node --test tests/session/sovereign-session-coordinator.test.js"
+    "test:mission-w": "node --test tests/session/sovereign-session-coordinator.test.js",
+    "test:developer-shell": "node --test tests/cli/interactive-developer-shell.test.js",
+    "test:mission-x": "node --test tests/cli/interactive-developer-shell.test.js"
   },
   "keywords": [
     "eos",
