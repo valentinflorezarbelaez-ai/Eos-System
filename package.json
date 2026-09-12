@@ -174,7 +174,9 @@
     "test:mission-ab": "node --test tests/eos-ab-telemetry-server.test.js",
     "test:mission-ac": "node --test tests/eos-ac-ladder13-seam-pack.test.js",
     "test:ac13": "node --test tests/eos-ac-ladder13-seam-pack.test.js",
-    "test:ladder13-pack": "npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server"
+    "test:ladder13-pack": "npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server",
+    "test:llm-provider-port": "node --test tests/eos-ad-llm-provider-port.test.js",
+    "test:mission-ad": "node --test tests/eos-ad-llm-provider-port.test.js"
   },
   "keywords": [
     "eos",

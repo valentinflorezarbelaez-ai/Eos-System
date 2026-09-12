@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0035 / Mission AD — LLM Provider Port & Model Routing Adapter. Injectable port (openai|anthropic|gemini|ollama|fake) + MODEL_ROUTING.md SSOT + dynamic fallback; env-only secrets (Law VI); hermetic fake for CI; fail-closed MISSING_PROVIDER_CREDENTIAL / UNKNOWN_PROVIDER / ROUTING_SSOT_INVALID / ALL_PROVIDERS_FAILED. NON-CLAIM live LLM ≠ PRODUCTION_READY; keys never in repo; not AE/AF/AG/AH; not full eos-shell live loop. PRODUCTION_READY=NO; Fundacion Δ=0; AT_CEILING; Antigravity-first; no CloudAgent; zero new npm deps / no external LLM SDKs required for CI.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0035
+phase: 1
+affected_areas:
+  - src/core/llm/llm-provider-port.js
+  - src/core/llm/model-router.js
+  - src/core/llm/fake-llm-provider.js
+  - docs/model-routing/MODEL_ROUTING.md
+  - tests/eos-ad-llm-provider-port.test.js
+  - scripts/patch-mission-ad.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ad-llm-provider-port
+  - docs/releases/EOS_MISSION_AD_LLM_PROVIDER_PORT_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AE/AF/AG/AH
+  - wiring full eos-shell live loop (AF)
+  - shipping live HTTP LLM SDK transports as default CI path
+  - raising TR-01 (exclude-from-slim instead)
+  - API keys / secrets in repo
+  - new npm dependencies
+  - claiming live LLM ≡ PRODUCTION_READY
