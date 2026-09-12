@@ -1,0 +1,3 @@
+# Proposal — Tip refresh post #201
+
+Pin to `da18fdee83b624ee4e363ae1ec053da54d054d0c` after Mission AF (#201). Prior pin `4786826` (Mission AE #199); tip refresh post #199 merged as #200 (tip-200 full SHA not invented). Ladder 13 remains **CLOSED** (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout). Ladder 14 is **OPEN** (AD+AE+AF done; AG–AH pending). Honesty: Law VI pre-commit caught literal `sk-` in AF11; fixed with synthetic runtime keys. NON-CLAIM: Mission AF / Autonomous Execution Loop / live LLM ≠ PRODUCTION_READY; Mission AE / ECR ≠ billing ≠ PRODUCTION_READY; Mission AD / live LLM port ≠ PRODUCTION_READY; keys never in repo.
