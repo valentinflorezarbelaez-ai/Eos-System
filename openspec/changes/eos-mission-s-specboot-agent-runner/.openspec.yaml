@@ -1,0 +1,23 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0024 — Autonomous SpecBoot Agent Runner. Governed runner that reads an OpenSpec change (proposal.md + tasks.md), walks SpecBoot phases (PROPOSE→APPLY→VERIFY→ARCHIVE→COMMIT_READY), dispatches atomic apply tasks through Mission P loop-compute orchestration (optionally wired to Mission Q bindExecuteComputeRun), writes cryptographic EVD-XXXX.json evidence receipts, and closes change delta metadata — WITHOUT autonomous main merge (HITL publish/merge). Distinct from replacing node bin/eos.js / AGY skills wholesale. Hermetic TDD; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0024
+phase: 1
+affected_areas:
+  - src/core/specboot/specboot-agent-runner.js
+  - tests/specboot/specboot-agent-runner.test.js
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-s-specboot-agent-runner
+  - docs/releases/EOS_MISSION_S_SPECBOOT_AGENT_RUNNER_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - autonomous main merge / git push from runner
+  - replacing AGY skills / .cursor/commands / node bin/eos.js SpecBoot ceremony wholesale
+  - new npm dependencies / JSON schemas
+  - raising TR-01 (exclude-from-slim instead)
+  - rewriting mission-loop.js / eos-compute-worker.js / loop-compute-orchestrator.js / worker-runtime-daemon.js (prefer)

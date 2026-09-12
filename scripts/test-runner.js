@@ -46,6 +46,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'loop-compute-orchestrator.test.js',
   'worker-runtime-daemon.test.js',
   'fdir-sentinel-runtime.test.js',
+  'specboot-agent-runner.test.js',
 ]);
 
 /**
