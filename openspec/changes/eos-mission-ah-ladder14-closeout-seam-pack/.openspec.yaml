@@ -1,0 +1,26 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0039 / Mission AH — Ladder 14 CI Seam-Pack Consolidation & Closeout. Require AD/AE/AF/AG satellites (test:llm-provider-port, test:token-budget-ecr, test:autonomous-loop, test:live-tool-engine) in CI seam-pack; ensure AF alias test:autonomous-loop alongside test:autonomous-execution-loop; extend test:native-suite-pack; add test:mission-ah / test:ah14 / test:ladder14-pack; lock test slim-excluded; contract + assert-gha needles via idempotent CRLF-safe patcher; Ladder 14 closeout audit. PRODUCTION_READY=NO; Fundacion Δ=0; Antigravity-first; no CloudAgent; no soak; no continue-on-error; do not raise TR-01; Law VI held.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0039
+phase: 1
+affected_areas:
+  - .github/workflows/ci.yml
+  - package.json
+  - scripts/test-runner.js
+  - scripts/patch-mission-ah.mjs
+  - scripts/ci/assert-gha-contract.js
+  - tests/eos-ah-ladder14-seam-pack.test.js
+  - docs/governance/CI_CD_CONTRACT.md
+  - docs/releases/EOS_MISSION_AH_LADDER14_SEAM_PACK_2026-09-12.md
+  - docs/releases/EOS_LADDER_14_CLOSEOUT_2026-09-12.md
+  - openspec/changes/eos-mission-ah-ladder14-closeout-seam-pack
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion mutation
+  - raising TR-01 slim ceiling
+  - soak / continue-on-error
+  - Cursor CloudAgent
+  - new npm dependencies
+  - GH billing / branch-protection enforcement claims
