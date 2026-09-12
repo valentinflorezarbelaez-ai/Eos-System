@@ -13,17 +13,119 @@ export class EOSMCPSchemaValidator {
       "eos.kernel.evidence": { type: "object", properties: { idMision: { type: "string" }, rawBytes: { type: "string" }, missionId: { type: "string" }, intentId: { type: "string" }, payload: { type: "object" }, evidenceType: { type: "string" } }, additionalProperties: false },
       
       // 2. Misiones, Intenciones y Orquestador
-      "eos.mission.resolve": { type: "object", properties: { rawInstruction: { type: "string" }, intent: { type: "string" }, intentText: { type: "string" }, goal: { type: "string" }, projectPath: { type: "string" }, mission: { type: "object" } }, additionalProperties: false },
-      "eos.intent.expand": { type: "object", properties: { rawInstruction: { type: "string" }, targetSpecPath: { type: "string" } }, required: ["rawInstruction"], additionalProperties: false },
-      "eos.mission.start": { type: "object", properties: { id: { type: "string" }, idMision: { type: "string" }, goal: { type: "string" }, type: { type: "string" }, target: { type: "string" }, requirements: { type: "array" }, context: { type: "object" }, projectPath: { type: "string" }, authorityLevel: { type: "string" } }, additionalProperties: false },
-      "eos.mission.status": { type: "object", properties: { missionId: { type: "string" }, id: { type: "string" } }, additionalProperties: false },
-      "eos.mission.recover": { type: "object", properties: { missionId: { type: "string" }, id: { type: "string" } }, additionalProperties: false },
-      "eos.mission.loop.status": { type: "object", properties: { missionId: { type: "string" }, mission_id: { type: "string" }, id: { type: "string" } }, additionalProperties: false },
-      "eos.mission.loop.advance": { type: "object", properties: { missionId: { type: "string" }, mission_id: { type: "string" }, to: { type: "string" }, target: { type: "string" }, stage: { type: "string" }, evidence: { type: "object" }, ok: { type: "boolean" } }, required: ["to"], additionalProperties: false },
-      "eos.orchestrator.init": { type: "object", properties: { idMision: { type: "string" }, descripcion: { type: "string" } }, required: ["idMision", "descripcion"], additionalProperties: false },
-      "eos.orchestrator.advance": { type: "object", properties: { idMision: { type: "string" }, hashEvidencia: { type: "string" } }, required: ["idMision", "hashEvidencia"], additionalProperties: false },
-      "eos.orchestrator.rollback": { type: "object", properties: { missionId: { type: "string" }, reason: { type: "string" } }, required: ["missionId", "reason"], additionalProperties: false },
-      "eos.blueprint.run": { type: "object", properties: { path: { type: "string" }, blueprint_path: { type: "string" }, missionContext: { type: "object" }, missionId: { type: "string" }, mission_id: { type: "string" } }, additionalProperties: false },
+      "eos.mission.resolve": {
+        type: "object",
+        properties: {
+          rawInstruction: { type: "string" },
+          intent: { type: "string" },
+          intentText: { type: "string" },
+          goal: { type: "string" },
+          projectPath: { type: "string" },
+          mission: { type: "object" }
+        },
+        additionalProperties: false
+      },
+      "eos.intent.expand": {
+        type: "object",
+        properties: {
+          rawInstruction: { type: "string" },
+          targetSpecPath: { type: "string" }
+        },
+        required: ["rawInstruction"],
+        additionalProperties: false
+      },
+      "eos.mission.start": {
+        type: "object",
+        properties: {
+          id: { type: "string" },
+          idMision: { type: "string" },
+          goal: { type: "string" },
+          type: { type: "string" },
+          target: { type: "string" },
+          requirements: { type: "array" },
+          context: { type: "object" },
+          projectPath: { type: "string" },
+          authorityLevel: { type: "string" }
+        },
+        additionalProperties: false
+      },
+      "eos.mission.status": {
+        type: "object",
+        properties: {
+          missionId: { type: "string" },
+          id: { type: "string" }
+        },
+        additionalProperties: false
+      },
+      "eos.mission.recover": {
+        type: "object",
+        properties: {
+          missionId: { type: "string" },
+          id: { type: "string" }
+        },
+        additionalProperties: false
+      },
+      "eos.mission.loop.status": {
+        type: "object",
+        properties: {
+          missionId: { type: "string" },
+          mission_id: { type: "string" },
+          id: { type: "string" }
+        },
+        additionalProperties: false
+      },
+      "eos.mission.loop.advance": {
+        type: "object",
+        properties: {
+          missionId: { type: "string" },
+          mission_id: { type: "string" },
+          to: { type: "string" },
+          target: { type: "string" },
+          stage: { type: "string" },
+          evidence: { type: "object" },
+          ok: { type: "boolean" }
+        },
+        required: ["to"],
+        additionalProperties: false
+      },
+      "eos.orchestrator.init": {
+        type: "object",
+        properties: {
+          idMision: { type: "string" },
+          descripcion: { type: "string" }
+        },
+        required: ["idMision", "descripcion"],
+        additionalProperties: false
+      },
+      "eos.orchestrator.advance": {
+        type: "object",
+        properties: {
+          idMision: { type: "string" },
+          hashEvidencia: { type: "string" }
+        },
+        required: ["idMision", "hashEvidencia"],
+        additionalProperties: false
+      },
+      "eos.orchestrator.rollback": {
+        type: "object",
+        properties: {
+          missionId: { type: "string" },
+          reason: { type: "string" }
+        },
+        required: ["missionId", "reason"],
+        additionalProperties: false
+      },
+      "eos.blueprint.run": {
+        type: "object",
+        properties: {
+          path: { type: "string" },
+          blueprint_path: { type: "string" },
+          missionContext: { type: "object" },
+          missionId: { type: "string" },
+          mission_id: { type: "string" }
+        },
+        additionalProperties: false
+      },
 
       // 3. Compilador de Contexto y Ledger
       "eos.context.compile": { type: "object", properties: { mission: { type: "object" }, contract: { type: "object" }, files: { type: "array" }, maxBudgetTokens: { type: "number" }, characterBudget: { type: "number" } }, additionalProperties: false },
