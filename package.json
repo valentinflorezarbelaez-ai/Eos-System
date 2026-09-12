@@ -167,7 +167,9 @@
     "test:y12": "node --test tests/eos-y-ladder12-seam-pack.test.js",
     "test:ladder12-pack": "npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell",
     "test:target-flight": "node --test tests/eos-z-target-flight-sandbox.test.js",
-    "test:mission-z": "node --test tests/eos-z-target-flight-sandbox.test.js"
+    "test:mission-z": "node --test tests/eos-z-target-flight-sandbox.test.js",
+    "test:multi-agent-swarm": "node --test tests/eos-aa-multi-agent-swarm.test.js",
+    "test:mission-aa": "node --test tests/eos-aa-multi-agent-swarm.test.js"
   },
   "keywords": [
     "eos",
