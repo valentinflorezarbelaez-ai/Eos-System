@@ -714,7 +714,13 @@ export function renderOperatorHud(snapshot) {
 
   const defense = snapshot.defense || {};
   lines.push('------------------------------------------------------------');
-  lines.push('DEFENSE     ' + (defense.epistemic || HUD_EPISTEMIC.NOT_VERIFIED) + '  sentinel=' + (defense.bin_present ? 'yes' : 'no') + '  daemon=' + (defense.daemon_present ? 'yes' : 'no') + '  fdir=' + (defense.fdir_present ? 'yes' : 'no') + '  ontology=' + (defense.ontology_present ? 'yes' : 'no'));
+  lines.push(
+    `DEFENSE     ${defense.epistemic || HUD_EPISTEMIC.NOT_VERIFIED}  ` +
+    `sentinel=${defense.bin_present ? 'yes' : 'no'}  ` +
+    `daemon=${defense.daemon_present ? 'yes' : 'no'}  ` +
+    `fdir=${defense.fdir_present ? 'yes' : 'no'}  ` +
+    `ontology=${defense.ontology_present ? 'yes' : 'no'}`
+  );
   lines.push('             Sentinel/FDIR wiring OBSERVED — existence only, not a verify substitute');
   lines.push('             sources: ' + ((defense.sources || []).join(', ') || 'n/a'));
 
