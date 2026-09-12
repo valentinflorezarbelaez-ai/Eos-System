@@ -1,0 +1,1 @@
+Docs-only tip honesty. Mission AG MEASURED (Live Tool Engine); Ladder 13 CLOSED_FOR_LOCAL_GOVERNED_USE; Ladder 14 OPEN (AD+AE+AF+AG MEASURED, AH pending); still PRODUCTION_READY=NO. Prior AF tip da18fdee + tip-202 (#202; SHA not invented) + Mission AG e731396; no invented SHAs. NON-CLAIM Live Tool Engine ≠ PRODUCTION_READY / ≠ CloudAgent fleet.
