@@ -65,6 +65,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ab-telemetry-server.test.js',
 
   'eos-ac-ladder13-seam-pack.test.js',
+
+  'eos-ad-llm-provider-port.test.js',
 ]);
 
 /**
