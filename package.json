@@ -146,7 +146,9 @@
     "test:loop-compute": "node --test tests/orchestration/loop-compute-orchestrator.test.js",
     "test:mission-p": "node --test tests/orchestration/loop-compute-orchestrator.test.js",
     "test:worker-daemon": "node --test tests/compute/worker-runtime-daemon.test.js",
-    "test:mission-q": "node --test tests/compute/worker-runtime-daemon.test.js"
+    "test:mission-q": "node --test tests/compute/worker-runtime-daemon.test.js",
+    "test:fdir-sentinel": "node --test tests/fdir/fdir-sentinel-runtime.test.js",
+    "test:mission-r": "node --test tests/fdir/fdir-sentinel-runtime.test.js"
   },
   "keywords": [
     "eos",
