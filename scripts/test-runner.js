@@ -95,6 +95,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-aq-evidence-export-notarization.test.js',
 
   'eos-ar-ladder16-seam-pack.test.js',
+
+  'eos-as-cross-satellite-composition.test.js',
 ]);
 
 /**

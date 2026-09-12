@@ -209,7 +209,9 @@
     "test:mission-ar": "node --test tests/eos-ar-ladder16-seam-pack.test.js",
     "test:ar16": "node --test tests/eos-ar-ladder16-seam-pack.test.js",
     "test:l16": "node --test tests/eos-ar-ladder16-seam-pack.test.js",
-    "test:ladder16-pack": "npm run test:multi-workstation-federation && npm run test:provider-failover-resilience && npm run test:hitl-po-authority && npm run test:evidence-export-notarization && npm run test:mission-ar"
+    "test:ladder16-pack": "npm run test:multi-workstation-federation && npm run test:provider-failover-resilience && npm run test:hitl-po-authority && npm run test:evidence-export-notarization && npm run test:mission-ar",
+    "test:cross-satellite-composition": "node --test tests/eos-as-cross-satellite-composition.test.js",
+    "test:mission-as": "node --test tests/eos-as-cross-satellite-composition.test.js"
   },
   "keywords": [
     "eos",
