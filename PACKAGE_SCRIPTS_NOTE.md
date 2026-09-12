@@ -1,12 +1,12 @@
-# Mission AL — package.json / slim patch fragment
+# Mission AN — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-al.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-an.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:autonomy-replay-forensic-observer": "node --test tests/eos-al-autonomy-replay-forensic-observer.test.js",
-"test:mission-al": "node --test tests/eos-al-autonomy-replay-forensic-observer.test.js"
+"test:multi-workstation-federation": "node --test tests/eos-an-multi-workstation-session-federation.test.js",
+"test:mission-an": "node --test tests/eos-an-multi-workstation-session-federation.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-al.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-al-autonomy-replay-forensic-observer.test.js',
+'eos-an-multi-workstation-session-federation.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).

@@ -1,0 +1,27 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0045 / Mission AN — Multi-Workstation / Session Federation Port. Injectable federation port over AI+W; local peer sync/handoff API; sealed portable custody envelopes; conflict DENY + receipt; hermetic fakes (no real LAN in CI). Fail-closed TAMPER_DETECTED / TIP_MISMATCH / CUSTODY_CONFLICT / PARTIAL_APPLY_FORBIDDEN / SYNC_IN_PROGRESS / FUNDACION_DENY / MISSING_DEP. PRODUCTION_READY=NO. NON-CLAIM operator federation ≠ cloud agent fleet ≠ multi-tenant SaaS ≠ CloudAgent ≠ PRODUCTION_READY; not AO/AP/AQ/AR; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI; Law VI no static vendor-key literals.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0045
+phase: 1
+affected_areas:
+  - src/core/federation/multi-workstation-session-federation-port.js
+  - src/core/federation/federation-custody-envelope.js
+  - tests/eos-an-multi-workstation-session-federation.test.js
+  - scripts/patch-mission-an.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-an-multi-workstation-session-federation-port
+  - docs/releases/EOS_MISSION_AN_MULTI_WORKSTATION_FEDERATION_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AO/AP/AQ/AR
+  - cloud agent fleet / multi-tenant SaaS
+  - real LAN required in CI
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets / vendor-key literals in repo
+  - new npm dependencies
+  - claiming federation ≡ PRODUCTION_READY / cloud fleet
