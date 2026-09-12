@@ -473,7 +473,7 @@ test('AS16: helpers; CrossSatelliteCompositionError; AT–AW not implemented', (
   assert.equal(err.code, AS_CODES.COMPOSITION_DENIED);
   assert.equal(err.details.apiKey, '[REDACTED]');
 
-  // AV/AW must not appear as implemented modules in this payload (AT & AU are implemented)
+  // AW must not appear as implemented modules in this payload (AT, AU & AV are implemented)
   const srcRoot = path.join(ROOT, 'src');
   const walk = (dir) => {
     /** @type {string[]} */
@@ -487,13 +487,12 @@ test('AS16: helpers; CrossSatelliteCompositionError; AT–AW not implemented', (
   };
   const files = walk(srcRoot).map((f) => path.basename(f));
   for (const banned of [
-    'freeze-drift-observer',
     'ladder17-seam-pack'
   ]) {
     assert.equal(
       files.some((f) => f.includes(banned)),
       false,
-      `AV–AW artifact leaked: ${banned}`
+      `AW artifact leaked: ${banned}`
     );
   }
 
