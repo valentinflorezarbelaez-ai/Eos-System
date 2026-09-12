@@ -558,7 +558,11 @@ export function applyHint(item) {
     return 'ACP is optional local Cursor CLI protocol for custom clients. This Cloud Agent VM already runs ingest without an ACP client. Do not rotate this watch into agent acp, custom stdio clients, or IDE integrations for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliHeadlessUrl(item?.link)) {
-    return 'Headless CLI is optional local Cursor CLI for scripts. This Cloud Agent VM already runs ingest without print mode. Do not rotate this watch into print mode, --force, or install Cursor CLI for daily ingest. Do not put CURSOR_API_KEY in git. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Headless CLI is optional local Cursor CLI for scripts. ' +
+      'This Cloud Agent VM already runs ingest without print mode. ' +
+      'Do not rotate this watch into print mode, --force, or install Cursor CLI for daily ingest. ' +
+      'Do not put CURSOR_API_KEY in git. Keep the standing /goal. Keep environment.json + Builds. ' +
+      'Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorSdkTypescriptUrl(item?.link)) {
     return 'The TypeScript SDK is optional agent scripting. This watch uses official feeds, not @cursor/sdk or api.cursor.com. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
