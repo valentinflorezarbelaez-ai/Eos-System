@@ -7,6 +7,7 @@
  */
 
 import fs from 'node:fs';
+import crypto from "node:crypto";
 import path from 'node:path';
 
 import { MetaEngineeringMethodologySelectorEngine } from './meta-engineering-methodology-selector-engine.js';
@@ -91,7 +92,7 @@ export class ContinuousImprovementOrchestrator {
     const winnerScore = candidateResult.winner_fitness_score ?? 1.0;
 
     // 3. Formulate and Seal Strategy Decision Record
-    const decisionId = `STRAT-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+    const decisionId = `STRAT-${Date.now().toString(36).toUpperCase()}-${crypto.randomBytes(4).toString("hex").substring(0, 4).toUpperCase()}`;
     const rawDecision = {
       schema_version: '1.0.0',
       decision_id: decisionId,
