@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 90e89da4cf30b05fa600a9fae9a4697ffc33ffca
-main_subject: Merge pull request #197 from valentinflorezarbelaez-ai/grok/mission-ad-llm-provider-port
-branch_hygiene: clean (main == origin/main @ 90e89da; #101–#194 as prior + #195 tip refresh post #194 + #196 Ladder 14 Maturity Audit (tip-196 SHA not invented) + #197 Mission AD; prior clean tip 6be6aaf (post #195/#196 base before AD); tip honesty restored post #197; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout); Ladder 14 OPEN (AD MEASURED; AE–AH pending); PRODUCTION_READY=NO; Fundacion Delta=0)
+main_tip: 4786826c67015f185a45567ebc80ff6898a4a5ce
+main_subject: Merge pull request #199 from valentinflorezarbelaez-ai/grok/mission-ae-token-budget-ecr
+branch_hygiene: clean (main == origin/main @ 4786826; #101–#194 as prior + #195 tip refresh post #194 + #196 Ladder 14 Maturity Audit (tip-196 SHA not invented) + #197 Mission AD + #198 tip refresh post #197 + #199 Mission AE; prior tip-197 pin 90e89da + tip-198 74da0fc; tip honesty restored post #199; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout); Ladder 14 OPEN (AD+AE MEASURED; AF–AH pending); PRODUCTION_READY=NO; Fundacion Delta=0)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-12 America/Bogota (tip refresh post #197; pin to main@90e89da; prior clean tip 6be6aaf post #195/#196 base before AD; tip honesty restored; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 OPEN (AD MEASURED; AE–AH pending); PRODUCTION_READY=NO)
+updated_at: 2026-09-12 America/Bogota (tip refresh post #199; pin to main@4786826; prior tip-197 pin 90e89da + tip-198 74da0fc; tip honesty restored; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 OPEN (AD+AE MEASURED; AF–AH pending); PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + Ladder11 #176 + Ladder12 #184 + L13 audit #186 + #187 tip + #188 Mission Z + #189 tip + #190 Mission AA + #191 tip + #192 Mission AB + tip-192/#193 prior + #194 Mission AC + #195 tip refresh post #194 + #196 L14 audit + #197 Mission AD + #101-#197)
+## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + Ladder11 #176 + Ladder12 #184 + L13 audit #186 + #187 tip + #188 Mission Z + #189 tip + #190 Mission AA + #191 tip + #192 Mission AB + tip-192/#193 prior + #194 Mission AC + #195 tip refresh post #194 + #196 L14 audit + #197 Mission AD + #198 tip refresh post #197 + #199 Mission AE + #101-#199)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `90e89da4cf30b05fa600a9fae9a4697ffc33ffca`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `4786826c67015f185a45567ebc80ff6898a4a5ce`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -140,7 +140,9 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | Mission AC Ladder 13 Closeout Seam-Pack | #194 | c546af19 | `eos-mission-ac-ladder13-closeout-seam-pack`; SPEC-0034; test:mission-ac / test:ac13 / test:ladder13-pack; Mission AC MEASURED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE); CRLF patch e12b293 absorbed into #194 lineage |
 | Tip refresh post #194 | #195 | (SHA not invented; absorbed into post #195/#196 base 6be6aaf) | `EOS_TIP_REFRESH_POST_194_2026-09-12.md`; freeze+matrix historically to c546af19; superseded by post #197 pin |
 | Ladder 14 Maturity Audit | #196 | (SHA not invented; absorbed into post #195/#196 base 6be6aaf) | `EOS_MATURITY_LADDER_14_AUDIT_2026-09-12.md` (AD–AH ordered; audit MEASURED, NOT closed; L14 OPEN) |
-| Mission AD LLM Provider Port | #197 | 90e89da | `eos-mission-ad-llm-provider-port`; SPEC-0035; MODEL_ROUTING / LLM Provider Port; test:llm-provider-port / test:mission-ad; Mission AD MEASURED; Ladder 14 OPEN (AD done; AE–AH pending) |
+| Mission AD LLM Provider Port | #197 | 90e89da | `eos-mission-ad-llm-provider-port`; SPEC-0035; MODEL_ROUTING / LLM Provider Port; test:llm-provider-port / test:mission-ad; Mission AD MEASURED; Ladder 14 OPEN (AD+AE MEASURED; AF–AH pending) |
+| Tip refresh post #197 | #198 | 74da0fc | `EOS_TIP_REFRESH_POST_197_2026-09-12.md`; freeze+matrix historically to 90e89da; tip honesty restored then; superseded by post #199 pin |
+| Mission AE Token-Budget Circuit Breaker / ECR | #199 | 4786826 | `eos-mission-ae-token-budget-ecr`; SPEC-0036; Token-Budget Circuit Breaker / ECR; test:token-budget-ecr / test:mission-ae; Mission AE MEASURED; Ladder 14 OPEN (AD+AE MEASURED; AF–AH pending); NON-CLAIM ECR ≠ billing ≠ PRODUCTION_READY |
 
 ### Ladder 10 (V1–V5) Closeout — 2026-09-10
 
@@ -1233,7 +1235,7 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout)
 - NON-CLAIM: tip honesty != PRODUCTION_READY; Mission AC / Ladder 13 closeout != PRODUCTION_READY; CI != GH enforcement; CloudAgent out of SpecBoot path
-- Historical: freeze tip superseded by tip refresh post #197 pin to main@90e89da (Mission AD #197; prior clean tip 6be6aaf post #195/#196; tip-196 SHA not invented)
+- Historical: freeze tip superseded by tip refresh post #197 pin to main@90e89da; later superseded by tip refresh post #199 pin to main@4786826 (Mission AE #199)
 
 ## Ladder 14 Maturity Audit (2026-09-12)
 
@@ -1241,7 +1243,7 @@ External production readiness is explicitly **not** asserted.
 - Branch: `grok/ladder-14-maturity-audit` — merged via #196
 - Audit base tip OBSERVED: main@`c546af19` (Mission AC / Ladder 13 CLOSED); post #195/#196 composite base `6be6aaf` (tip-196 SHA not invented)
 - Ordered next ladder AD–AH; audit MEASURED, Ladder 14 **NOT closed**
-- Status: **MEASURED** — Ladder 14 **OPEN** (AD later MEASURED via #197; AE–AH pending); Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED
+- Status: **MEASURED** — Ladder 14 **OPEN** (AD later MEASURED via #197; AE later MEASURED via #199; AF–AH pending); Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; AT_CEILING; Antigravity-first (no CloudAgent)
 - NON-CLAIM: Ladder 14 audit MEASURED != AD/AE/AF/AG/AH implemented at audit time; L14 NOT closed
@@ -1253,19 +1255,44 @@ External production readiness is explicitly **not** asserted.
 - Base tip OBSERVED: prior clean tip `6be6aaf` (post #195/#196 base before AD; tip-196 SHA not invented)
 - Merged as #197 (`90e89da`); freeze tip refreshed by **tip refresh post #197** to main@`90e89da4cf30b05fa600a9fae9a4697ffc33ffca`
 - SPEC-0035: LLM Provider Port & Model Routing Adapter; MODEL_ROUTING SSOT; test:llm-provider-port / test:mission-ad
-- Status: **MEASURED** — Ladder 14 remains **OPEN** (AD MEASURED; AE–AH pending); Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED
+- Status: **MEASURED** — Ladder 14 remains **OPEN** (AD MEASURED; AE later MEASURED via #199; AF–AH pending); Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING; Antigravity-first (no CloudAgent)
-- NON-CLAIM: Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; MODEL_ROUTING != production LLM ops; AE/AF/AG/AH not implemented
+- NON-CLAIM: Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; MODEL_ROUTING != production LLM ops; AF/AG/AH not implemented at AD time
 
 ## Tip refresh post #197 (2026-09-12)
 
 - Report: `docs/releases/EOS_TIP_REFRESH_POST_197_2026-09-12.md`
-- Branch: `grok/tip-refresh-post-197`
-- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`90e89da4cf30b05fa600a9fae9a4697ffc33ffca` (#197 Mission AD; prior clean tip `6be6aaf` post #195/#196)
-- Honesty restored: prior clean tip `6be6aaf` (post #195/#196 base before AD; tip-196 SHA not invented); live main after #197 is `90e89da`
+- Branch: `grok/tip-refresh-post-197` — merged via #198 (`74da0fc`)
+- Freeze `main_tip` + matrix `evaluated_tip` pinned (historical) to OBSERVED main@`90e89da4cf30b05fa600a9fae9a4697ffc33ffca` (#197 Mission AD; prior clean tip `6be6aaf` post #195/#196)
+- Honesty restored (then): prior clean tip `6be6aaf`; live main after #197 is `90e89da`
 - Matrix: tip refresh post #194 MEASURED (historical) + **Ladder 14 Maturity Audit MEASURED** + **Mission AD LLM Provider Port MEASURED** + **tip refresh post #197 MEASURED**
+- Dirty-defer tip honesty pin moved with freeze (then)
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 OPEN (AD MEASURED; AE–AH pending at tip-197 time)
+- NON-CLAIM: tip honesty != PRODUCTION_READY; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 14 NOT closed; CloudAgent out of SpecBoot path
+- Historical: freeze tip superseded by tip refresh post #199 pin to main@4786826 (Mission AE #199; prior tip-198 `74da0fc`)
+
+## Mission AE Token-Budget Circuit Breaker / ECR (2026-09-12)
+
+- Report: `docs/releases/EOS_MISSION_AE_TOKEN_BUDGET_ECR_2026-09-12.md`
+- Branch: `grok/mission-ae-token-budget-ecr` — merged via #199
+- Base tip OBSERVED StartsWith: `90e89da` (Mission AD / tip-197 lineage); tip-198 `74da0fc` on main before AE
+- Merged as #199 (`4786826`); freeze tip refreshed by **tip refresh post #199** to main@`4786826c67015f185a45567ebc80ff6898a4a5ce`
+- SPEC-0036: Token-Budget Circuit Breaker / ECR; test:token-budget-ecr / test:mission-ae
+- Status: **MEASURED** — Ladder 14 remains **OPEN** (AD+AE MEASURED; AF–AH pending); Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; AT_CEILING; Antigravity-first (no CloudAgent)
+- NON-CLAIM: Mission AE / ECR != billing platform != PRODUCTION_READY; AF/AG/AH not implemented; keys never in repo
+
+## Tip refresh post #199 (2026-09-12)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_199_2026-09-12.md`
+- Branch: `grok/tip-refresh-post-199`
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`4786826c67015f185a45567ebc80ff6898a4a5ce` (#199 Mission AE; prior tip-197 pin `90e89da` + tip-198 `74da0fc`)
+- Honesty restored: live main after #199 is `4786826`
+- Matrix: tip refresh post #197 MEASURED (historical) + **Mission AE Token-Budget Circuit Breaker / ECR MEASURED** + **tip refresh post #199 MEASURED**
 - Dirty-defer tip honesty pin moved with freeze
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
-- Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout); Ladder 14 OPEN (AD MEASURED; AE–AH pending)
-- NON-CLAIM: tip honesty != PRODUCTION_READY; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 14 NOT closed; CloudAgent out of SpecBoot path
+- Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout); Ladder 14 OPEN (AD+AE MEASURED; AF–AH pending)
+- NON-CLAIM: tip honesty != PRODUCTION_READY; Mission AE / ECR != billing != PRODUCTION_READY; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 14 NOT closed; CloudAgent out of SpecBoot path
