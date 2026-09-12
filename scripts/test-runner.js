@@ -61,6 +61,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-z-target-flight-sandbox.test.js',
 
   'eos-aa-multi-agent-swarm.test.js',
+
+  'eos-ab-telemetry-server.test.js',
 ]);
 
 /**

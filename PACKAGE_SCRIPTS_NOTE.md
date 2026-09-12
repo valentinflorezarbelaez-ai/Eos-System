@@ -1,12 +1,12 @@
-# Mission AA — package.json / slim patch fragment
+# Mission AB — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-aa.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-ab.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:multi-agent-swarm": "node --test tests/eos-aa-multi-agent-swarm.test.js",
-"test:mission-aa": "node --test tests/eos-aa-multi-agent-swarm.test.js"
+"test:telemetry-server": "node --test tests/eos-ab-telemetry-server.test.js",
+"test:mission-ab": "node --test tests/eos-ab-telemetry-server.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-aa.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-aa-multi-agent-swarm.test.js',
+'eos-ab-telemetry-server.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
