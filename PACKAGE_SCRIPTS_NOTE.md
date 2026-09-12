@@ -1,12 +1,12 @@
-# Mission AF — package.json / slim patch fragment
+# Mission AG — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-af.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-ag.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:autonomous-execution-loop": "node --test tests/eos-af-autonomous-execution-loop.test.js",
-"test:mission-af": "node --test tests/eos-af-autonomous-execution-loop.test.js"
+"test:live-tool-engine": "node --test tests/eos-ag-live-tool-engine.test.js",
+"test:mission-ag": "node --test tests/eos-ag-live-tool-engine.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-af.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-af-autonomous-execution-loop.test.js',
+'eos-ag-live-tool-engine.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
