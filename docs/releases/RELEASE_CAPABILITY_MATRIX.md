@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 748bffd45b0c7c899595417cd324649bf1732d00
+evaluated_tip: 0122c555415ebffaeeeeaebfa064ed293d643a51
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #170 from valentinflorezarbelaez-ai/grok/mission-r-fdir-sentinel-runtime
-updated_at: 2026-09-11 America/Bogota (tip refresh post #170; pin to main@748bffd; prior post-#165/#169 pin was 2713ab2/faaed3a; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #172 from valentinflorezarbelaez-ai/grok/mission-s-specboot-agent-runner
+updated_at: 2026-09-11 America/Bogota (tip refresh post #172; pin to main@0122c55; prior post-#170/#171 pin was 748bffd/67f1911; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -130,7 +130,9 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #170; pin to main@748bff
 | Mission Q Worker runtime daemon (#165) | COMPLETE | MEASURED (eos-mission-q-worker-runtime-daemon; test:worker-daemon; SPEC-0022) |
 | Tip refresh post #165 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_165_2026-09-11.md; freeze+matrix to 2713ab2; tip honesty restored; superseded by #169/#170) |
 | Mission R FDIR Sentinel Runtime (#170) | COMPLETE | MEASURED (eos-mission-r-fdir-sentinel-runtime; test:fdir-sentinel; SPEC-0023) |
-| Tip refresh post #170 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_170_2026-09-11.md; freeze+matrix to 748bffd; tip honesty restored) |
+| Tip refresh post #170 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_170_2026-09-11.md; freeze+matrix to 748bffd; tip honesty restored; superseded by #171/#172) |
+| Mission S SpecBoot Agent Runner (#172) | COMPLETE | MEASURED (eos-mission-s-specboot-agent-runner; test:specboot-agent; SPEC-0024) |
+| Tip refresh post #172 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_172_2026-09-11.md; freeze+matrix to 0122c55; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -207,6 +209,13 @@ PRODUCTION_READY: NO
 - Prior post-#126/#127 pin was 791376fd9a8060a2205a9097de14f17ae7ea0d33 / 1b951afed09e42ce35ab6ea52abc5df4cb869d27 (#126 Mission J + #127 tip refresh); live main after #128 Mission K is aaad8e5 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
 - Matrix: tip refresh post #126 MEASURED (historical) + Mission K Browser QA Runner MEASURED + tip refresh post #128 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (post #172)
+
+- evaluated_tip pinned to OBSERVED main tip after #172: 0122c555415ebffaeeeeaebfa064ed293d643a51
+- Prior post-#170/#171 pin was 748bffd45b0c7c899595417cd324649bf1732d00 / 67f1911e0b3ad7bcb20ffbba52aeb9c2bc0a2533; live main after tip #171 + #172 Mission S is 0122c55 — **tip honesty restored**
+- Matrix: tip refresh post #170 MEASURED (historical) + Mission S SpecBoot Agent Runner MEASURED + tip refresh post #172 MEASURED
+- NON-CLAIM: Mission S != autonomous main merge; does not invent PRODUCTION_READY
 
 ## Tip refresh notes (post #170)
 
