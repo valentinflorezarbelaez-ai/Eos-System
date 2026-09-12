@@ -1,0 +1,46 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Tip honesty refresh post-#249 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@c12cc82 (PR #248 tip-247 + #249 Mission AT SPEC-0051 Operator Continuity / Crash-Recovery Custody Port + #250 AS16 scope fix; prior tip-247 pin 9139b15; full tip SHA placeholder c12cc8254267a7eb4fd4af06a8497e87c99fa4d5 resolved at bootstrap from origin/main); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout); Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout); Ladder 17 OPEN (AS+AT MEASURED; AU–AW pending). L16 CLOSED seal retained. Never say AS not measured. Never say AT not implemented. Never say L17 not audited. NON-CLAIM Mission AT MEASURED ≠ AU–AW implemented ≠ Ladder 17 CLOSED ≠ PRODUCTION_READY=YES / ≠ HA multi-region SaaS / ≠ CloudAgent fleet recovery. NON-CLAIM Ladder 16 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. NON-CLAIM Mission AS + AR + AN–AQ remain MEASURED.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-249
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_249_2026-09-12.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-249
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - inventing tip SHAs (full tip SHA unknown on box; placeholder replaced by bootstrap from origin/main StartsWith c12cc82)
+  - implementing Ladder 17 satellites AU–AW in this change
+  - claiming Ladder 17 CLOSED or AU–AW MEASURED as implemented
+  - claiming AS not measured (AS is MEASURED via #247)
+  - claiming AT not implemented (AT is MEASURED via #249)
+  - claiming Ladder 17 not audited (audit is MEASURED via #245)
+  - claiming Ladder 16 CLOSED_FOR_LOCAL_GOVERNED_USE equals PRODUCTION_READY=YES
+  - reopening Ladder 16 or claiming AR not implemented
+  - claiming Mission AT / Operator Continuity is PRODUCTION_READY, HA multi-region SaaS, multi-AZ failover, CloudAgent fleet recovery, or GH-enforced
+  - claiming Mission AS / Cross-Satellite Composition is PRODUCTION_READY, E2E product suite, CloudAgent orchestration, or GH-enforced
+  - claiming Mission AR / Ladder 16 Closeout is PRODUCTION_READY, CloudAgent fleet, or GH-enforced
+  - claiming Mission AQ / Evidence Export & Notarization Observer is PRODUCTION_READY, CloudAgent fleet, SIEM product, billing, or GH-enforced
+  - claiming Mission AP / HITL/PO Authority Channel Hardening is PRODUCTION_READY, CloudAgent fleet, SIEM product, or GH-enforced
+  - claiming Mission AO / Provider Failover & Resilience Router is PRODUCTION_READY, CloudAgent fleet, SLA product, multi-cloud billing, or GH-enforced
+  - claiming Mission AN / Multi-Workstation Session Federation is PRODUCTION_READY, CloudAgent fleet, multi-tenant SaaS, or GH-enforced
+  - claiming Mission AM / Ladder 15 Closeout is PRODUCTION_READY or GH-enforced
+  - claiming Mission AL / Autonomy Replay / Forensic Observer is PRODUCTION_READY, SIEM, billing, or GH-enforced
+  - claiming Mission AK / Constitution Runtime Policy Gate is PRODUCTION_READY, compliance certification, or GH-enforced
+  - claiming Mission AJ / Evidence Economy Ledger is PRODUCTION_READY, billing, or GH-enforced
+  - claiming Mission AI / multi-session is PRODUCTION_READY or GH-enforced
+  - claiming Mission AH / Ladder 14 Closeout is PRODUCTION_READY or GH-enforced
+  - claiming Mission AG / Live Tool Engine is PRODUCTION_READY or a CloudAgent fleet
+  - claiming Mission AF / Autonomous Execution Loop / live LLM is PRODUCTION_READY
+  - claiming Mission AE / ECR is PRODUCTION_READY or a billing platform
+  - claiming Mission AD / live LLM port is PRODUCTION_READY
+  - putting API keys in repo
+  - leaving Ladder 16 as OPEN or “AR pending”

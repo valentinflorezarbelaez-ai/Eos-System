@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-247 to live main after #246+#247 (was tip-245 pin 3a7fb75 / #246 @ 42c0180)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-249 to live main after #248+#249+#250 (was tip-247 pin 9139b15 / #248 tip-247 + #249 Mission AT + #250 AS16)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '9139b159f42df391cf8e9c22d109fdfb74ad5739') {
+      if (!tip || tip[1] !== 'c12cc8254267a7eb4fd4af06a8497e87c99fa4d5') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-247 expected main_tip=9139b159f42df391cf8e9c22d109fdfb74ad5739 (post-#247 / Mission AS; tip honesty restored; L16 CLOSED; L17 OPEN AS MEASURED; AT–AW pending)',
+            'tip-refresh-post-249 expected main_tip=c12cc8254267a7eb4fd4af06a8497e87c99fa4d5 (post-#249 / Mission AT (+ #250 AS16); tip honesty restored; L16 CLOSED; L17 OPEN AS+AT MEASURED; AU–AW pending)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-247 / main@9139b15 (post-#247 / Mission AS; L16 CLOSED; L17 OPEN AS MEASURED)',
+          path: 'freeze main_tip pinned to tip-refresh-post-249 / main@c12cc82 (post-#249 / Mission AT (+ #250 AS16); L16 CLOSED; L17 OPEN AS+AT MEASURED)',
           status: 'VERIFIED',
           type
         });
