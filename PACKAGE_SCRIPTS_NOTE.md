@@ -1,12 +1,12 @@
-# Mission AJ — package.json / slim patch fragment
+# Mission AK — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-aj.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-ak.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:evidence-economy-ledger": "node --test tests/eos-aj-evidence-economy-ledger.test.js",
-"test:mission-aj": "node --test tests/eos-aj-evidence-economy-ledger.test.js"
+"test:constitution-runtime-policy-gate": "node --test tests/eos-ak-constitution-runtime-policy-gate.test.js",
+"test:mission-ak": "node --test tests/eos-ak-constitution-runtime-policy-gate.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-aj.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-aj-evidence-economy-ledger.test.js',
+'eos-ak-constitution-runtime-policy-gate.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).

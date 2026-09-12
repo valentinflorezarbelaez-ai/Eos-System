@@ -1,0 +1,28 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0042 / Mission AK — Constitution Runtime Policy Gate. Injectable policy-as-code gate mapping selected CONSTITUTION MUST/SHALL clauses → enforceable runtime checks on autonomous path (session resume / tool dispatch / external write). Fail-closed on unknown/unmapped critical clauses. Deny+seal EVD receipts. PRODUCTION_READY=NO. NON-CLAIM constitution runtime ≠ full legal interpreter ≠ auto-amend constitution ≠ compliance certification product ≠ PRODUCTION_READY; not AL/AM; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI; Law VI no static vendor-key literals.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0042
+phase: 1
+affected_areas:
+  - src/core/policy/constitution-runtime-policy-gate.js
+  - src/core/policy/constitution-clause-allowlist.js
+  - tests/eos-ak-constitution-runtime-policy-gate.test.js
+  - scripts/patch-mission-ak.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ak-constitution-runtime-policy-gate
+  - docs/releases/EOS_MISSION_AK_CONSTITUTION_RUNTIME_POLICY_GATE_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AL/AM
+  - full legal interpreter / auto-amend constitution
+  - compliance certification product
+  - live network in CI
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets / vendor-key literals in repo
+  - new npm dependencies
+  - claiming constitution runtime ≡ PRODUCTION_READY
