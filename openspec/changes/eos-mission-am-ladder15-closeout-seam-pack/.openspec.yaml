@@ -1,0 +1,26 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0044 / Mission AM — Ladder 15 CI Seam-Pack Consolidation & Closeout. Require AI/AJ/AK/AL satellites (test:multi-session-autonomy, test:evidence-economy-ledger, test:constitution-runtime-policy-gate, test:autonomy-replay-forensic-observer) in CI seam-pack; extend test:native-suite-pack; add test:mission-am / test:am15 / test:ladder15-pack; lock test slim-excluded; contract + assert-gha needles via idempotent CRLF-safe patcher; Ladder 15 closeout audit. PRODUCTION_READY=NO; Fundacion Δ=0; Antigravity-first; no CloudAgent; no soak; no continue-on-error; do not raise TR-01; Law VI held.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0044
+phase: 1
+affected_areas:
+  - .github/workflows/ci.yml
+  - package.json
+  - scripts/test-runner.js
+  - scripts/patch-mission-am.mjs
+  - scripts/ci/assert-gha-contract.js
+  - tests/eos-am-ladder15-seam-pack.test.js
+  - docs/governance/CI_CD_CONTRACT.md
+  - docs/releases/EOS_MISSION_AM_LADDER15_SEAM_PACK_2026-09-12.md
+  - docs/releases/EOS_LADDER_15_CLOSEOUT_2026-09-12.md
+  - openspec/changes/eos-mission-am-ladder15-closeout-seam-pack
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion mutation
+  - raising TR-01 slim ceiling
+  - soak / continue-on-error
+  - Cursor CloudAgent
+  - new npm dependencies
+  - GH billing / branch-protection enforcement claims

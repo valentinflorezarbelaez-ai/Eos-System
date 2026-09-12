@@ -18,7 +18,7 @@ Machine-readable companion: `docs/governance/CI_CD_CONTRACT.json`.
 | test | `npm test` | Forbidden |
 | syntax | `node --check` on `bin/`, `src/`, `scripts/`, `tests/` | Forbidden |
 | governance-gates | `evaluate:release`, `verify:independent`, `audit:system` | Forbidden |
-| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s2`..`test:s6` + `test:specboot-agy` + `test:t2`..`test:t8` + `test:v2`..`test:v5` + `test:u2` + `test:compute-worker` + `test:c2` + `test:compute-worker-i`/`l`/`m`/`n`/`o` + `test:loop-compute` + `test:worker-daemon` + `test:fdir-sentinel` + `test:specboot-agent` + `test:external-write-gateway` (alias `test:native-suite-pack`) + `test:fdir-remediation`/`test:sovereign-session`/`test:developer-shell` (Ladder 12) + `test:target-flight`/`test:multi-agent-swarm`/`test:telemetry-server` (Ladder 13) + `test:llm-provider-port`/`test:token-budget-ecr`/`test:autonomous-loop`/`test:live-tool-engine` (Ladder 14) | Forbidden |
+| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s2`..`test:s6` + `test:specboot-agy` + `test:t2`..`test:t8` + `test:v2`..`test:v5` + `test:u2` + `test:compute-worker` + `test:c2` + `test:compute-worker-i`/`l`/`m`/`n`/`o` + `test:loop-compute` + `test:worker-daemon` + `test:fdir-sentinel` + `test:specboot-agent` + `test:external-write-gateway` (alias `test:native-suite-pack`) + `test:fdir-remediation`/`test:sovereign-session`/`test:developer-shell` (Ladder 12) + `test:target-flight`/`test:multi-agent-swarm`/`test:telemetry-server` (Ladder 13) + `test:llm-provider-port`/`test:token-budget-ecr`/`test:autonomous-loop`/`test:live-tool-engine` (Ladder 14) + `test:multi-session-autonomy`/`test:evidence-economy-ledger`/`test:constitution-runtime-policy-gate`/`test:autonomy-replay-forensic-observer` (Ladder 15) | Forbidden |
 
 Triggers: `push` to `main`, `pull_request`, `workflow_dispatch`.
 
@@ -92,3 +92,9 @@ seam-pack named pack extended with CI-safe Ladder 14 satellites: `test:llm-provi
 
 ## Ladder 14 note (2026-09-12)
 Ladder 14 closeout: AD (LLM provider port) + AE (token-budget ECR) + AF (autonomous execution loop) + AG (live tool engine) consolidated into CI seam-pack (SPEC-0039 / Mission AH). Dictamen COMPLETE_FOR_LOCAL_GOVERNED_USE. PRODUCTION_READY=NO. Fundacion Δ=0. See `docs/releases/EOS_LADDER_14_CLOSEOUT_2026-09-12.md`.
+
+## AM / Mission AM Ladder 15 seam-pack note (2026-09-12)
+seam-pack named pack extended with CI-safe Ladder 15 satellites: `test:multi-session-autonomy` (AI), `test:evidence-economy-ledger` (AJ), `test:constitution-runtime-policy-gate` (AK), `test:autonomy-replay-forensic-observer` (AL). Keep prior native-suite + packs (incl. Ladder 12/13/14). Local aliases: `test:ladder15-pack`, `test:mission-am` / `test:am15`. Lock basename `eos-am-ladder15-seam-pack.test.js` stays in SLIM_SUITE_EXCLUDES (TR-01 ≤145). No soak. No continue-on-error. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO. Law VI: zero static provider-secret prefix literals.
+
+## Ladder 15 note (2026-09-12)
+Ladder 15 closeout: AI (multi-session autonomy) + AJ (evidence-economy ledger) + AK (constitution runtime policy gate) + AL (autonomy replay forensic observer) consolidated into CI seam-pack (SPEC-0044 / Mission AM). Dictamen COMPLETE_FOR_LOCAL_GOVERNED_USE. PRODUCTION_READY=NO. Fundacion Δ=0. See `docs/releases/EOS_LADDER_15_CLOSEOUT_2026-09-12.md`.
