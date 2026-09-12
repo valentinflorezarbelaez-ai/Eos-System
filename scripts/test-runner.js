@@ -91,6 +91,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ao-provider-failover-resilience.test.js',
 
   'eos-ap-hitl-po-authority-channel.test.js',
+
+  'eos-aq-evidence-export-notarization.test.js',
 ]);
 
 /**

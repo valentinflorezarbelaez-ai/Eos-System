@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0048 / Mission AQ — Evidence Export & Notarization Observer. Injectable export observer over AJ EVD ledger (+ optional AL timeline); exportRange → sealed pack (manifest hashes linked to AJ chain tip); verifyPack → forensic FAIL on tamper/missing hash (no silent accept); observeNotary → optional notary stub receipts WITHOUT claiming legal compliance certification. Hermetic fakes; secrets sanitized (Law VI). Fail-closed EXPORT_OK / VERIFY_FAIL / TAMPER_DETECTED / MISSING_DEP / INVALID_REQUEST / SECRET_LEAK_FORBIDDEN / LEDGER_RANGE_EMPTY / NOTARY_OBSERVE_ONLY / PACK_SEAL_FAIL. PRODUCTION_READY=NO. NON-CLAIM export/notary ≠ compliance cert product ≠ external audit platform ≠ legal notarization service; not AR; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI; Law VI no static vendor-key literals; observe-only notary never claims legal compliance.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0048
+phase: 1
+affected_areas:
+  - src/core/evidence/evidence-export-notarization-observer.js
+  - src/core/evidence/sealed-evd-pack.js
+  - src/core/evidence/notary-stub.js
+  - tests/eos-aq-evidence-export-notarization.test.js
+  - scripts/patch-mission-aq.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-aq-evidence-export-notarization-observer
+  - docs/releases/EOS_MISSION_AQ_EVIDENCE_EXPORT_NOTARIZATION_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AR
+  - compliance certification product
+  - external audit platform
+  - legal notarization service
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets / vendor-key literals in repo
+  - new npm dependencies
+  - claiming export/notary ≡ compliance cert / legal notary / audit platform
+  - fetch/http in CI
