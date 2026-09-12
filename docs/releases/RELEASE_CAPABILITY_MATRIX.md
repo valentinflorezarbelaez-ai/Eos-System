@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 25de639e01d1ac17b70dfee05f068fd6a86f81ce
+evaluated_tip: 2713ab2be195c6b6969e6ccff5ccd2b089786e37
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #147 from valentinflorezarbelaez-ai/grok/mission-p-loop-worker-orchestration
-updated_at: 2026-09-11 America/Bogota (tip refresh post #147; pin to main@25de639; prior post-#145/#146 pin was 5649519/86d715b; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #165 from valentinflorezarbelaez-ai/grok/mission-q-worker-runtime-daemon
+updated_at: 2026-09-11 America/Bogota (tip refresh post #165; pin to main@2713ab2; prior post-#147/#151 pin was 25de639/04f4b2d; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -126,7 +126,9 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #147; pin to main@25de63
 | Mission O native-tools adversarial (#145) | COMPLETE | MEASURED (eos-mission-o-native-tools-adversarial; test:compute-worker-o; SPEC-0020) |
 | Tip refresh post #145 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_145_2026-09-11.md; freeze+matrix to 5649519; tip honesty restored; superseded tip pin by post #147) |
 | Mission P Loop × Worker orchestration (#147) | COMPLETE | MEASURED (eos-mission-p-loop-worker-orchestration; test:loop-compute; SPEC-0021) |
-| Tip refresh post #147 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_147_2026-09-11.md; freeze+matrix to 25de639; tip honesty restored) |
+| Tip refresh post #147 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_147_2026-09-11.md; freeze+matrix to 25de639; tip honesty restored; superseded tip pin by post #151/#165) |
+| Mission Q Worker runtime daemon (#165) | COMPLETE | MEASURED (eos-mission-q-worker-runtime-daemon; test:worker-daemon; SPEC-0022) |
+| Tip refresh post #165 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_165_2026-09-11.md; freeze+matrix to 2713ab2; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -203,6 +205,13 @@ PRODUCTION_READY: NO
 - Prior post-#126/#127 pin was 791376fd9a8060a2205a9097de14f17ae7ea0d33 / 1b951afed09e42ce35ab6ea52abc5df4cb869d27 (#126 Mission J + #127 tip refresh); live main after #128 Mission K is aaad8e5 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
 - Matrix: tip refresh post #126 MEASURED (historical) + Mission K Browser QA Runner MEASURED + tip refresh post #128 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (post #165)
+
+- evaluated_tip pinned to OBSERVED main tip after #165: 2713ab2be195c6b6969e6ccff5ccd2b089786e37
+- Prior post-#147/#151 pin was 25de639 / 04f4b2d1ca30e995eb6ebdd8846ee862c454abfe; live main after tip #151 + #165 Mission Q is 2713ab2 — **tip honesty restored**
+- Matrix: tip refresh post #147 MEASURED (historical) + Mission Q Worker runtime daemon MEASURED + tip refresh post #165 MEASURED
+- NON-CLAIM: Mission Q compute runtime ≠ AGY eos-workstation DAEMON_PRESENT; does not invent PRODUCTION_READY
 
 ## Tip refresh notes (post #147)
 
