@@ -1,0 +1,18 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Register EOS Maturity Ladder 14 Gap Audit (docs-only) after Ladder 13 closeout (Mission AC); propose ordered satellites AD/AE/AF/AG/AH for Autonomous Execution Loop & Live Tool Engine — no Mission AD implementation in this change.
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-14-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_14_AUDIT_2026-09-12.md
+  - openspec/changes/eos-ladder-14-maturity-audit
+non_goals:
+  - implementing Mission AD/AE/AF/AG/AH
+  - implementing Mission Z (L13 closed)
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
