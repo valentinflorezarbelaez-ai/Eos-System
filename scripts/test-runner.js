@@ -87,6 +87,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-am-ladder15-seam-pack.test.js',
 
   'eos-an-multi-workstation-session-federation.test.js',
+
+  'eos-ao-provider-failover-resilience.test.js',
 ]);
 
 /**

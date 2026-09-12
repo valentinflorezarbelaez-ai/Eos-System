@@ -1,0 +1,27 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0046 / Mission AO — Provider Failover & Resilience Router. Injectable router over AD+AE; ordered provider candidates; health/deny probes; budget-aware failover; hermetic fakes; secrets env-only (Law VI). Fail-closed PROVIDER_PROBE_FAIL / ECR_DENY / FAILOVER_EXHAUSTED / MISSING_DEP / INVALID_REQUEST / SECRET_LEAK_FORBIDDEN / HITL_REQUIRED. PRODUCTION_READY=NO. NON-CLAIM provider failover ≠ PRODUCTION_READY LLM ops ≠ SLA product ≠ multi-cloud billing; not AP/AQ/AR; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI; Law VI no static vendor-key literals.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0046
+phase: 1
+affected_areas:
+  - src/core/llm/provider-failover-resilience-router.js
+  - src/core/llm/provider-health-probe.js
+  - tests/eos-ao-provider-failover-resilience.test.js
+  - scripts/patch-mission-ao.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ao-provider-failover-resilience-router
+  - docs/releases/EOS_MISSION_AO_PROVIDER_FAILOVER_RESILIENCE_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AP/AQ/AR
+  - PRODUCTION_READY LLM ops / SLA product / multi-cloud billing
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets / vendor-key literals in repo
+  - new npm dependencies
+  - unbounded silent retry on exhaust
+  - claiming failover ≡ PRODUCTION_READY
