@@ -555,7 +555,14 @@ export function applyHint(item) {
     return 'Shell Mode is optional local Cursor CLI. This Cloud Agent VM already runs shell commands. Do not rotate this watch into Cursor CLI Shell Mode for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliAcpUrl(item?.link)) {
-    return 'ACP is optional local Cursor CLI protocol for custom clients. This Cloud Agent VM already runs ingest without an ACP client. Do not rotate this watch into agent acp, custom stdio clients, or IDE integrations for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return (
+      'ACP is optional local Cursor CLI protocol for custom clients. ' +
+      'This Cloud Agent VM already runs ingest without an ACP client. ' +
+      'Do not rotate this watch into agent acp, custom stdio clients, ' +
+      'or IDE integrations for daily ingest. Keep the standing /goal. ' +
+      'Keep environment.json + Builds. Honor included quota; ' +
+      'do not switch this watch to on-demand.'
+    );
   }
   if (isCursorCliHeadlessUrl(item?.link)) {
     return 'Headless CLI is optional local Cursor CLI for scripts. This Cloud Agent VM already runs ingest without print mode. Do not rotate this watch into print mode, --force, or install Cursor CLI for daily ingest. Do not put CURSOR_API_KEY in git. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
