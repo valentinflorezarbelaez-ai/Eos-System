@@ -26,11 +26,57 @@ export class EOSMCPSchemaValidator {
       "eos.blueprint.run": { type: "object", properties: { path: { type: "string" }, blueprint_path: { type: "string" }, missionContext: { type: "object" }, missionId: { type: "string" }, mission_id: { type: "string" } }, additionalProperties: false },
 
       // 3. Compilador de Contexto y Ledger
-      "eos.context.compile": { type: "object", properties: { mission: { type: "object" }, contract: { type: "object" }, files: { type: "array" }, maxBudgetTokens: { type: "number" }, characterBudget: { type: "number" } }, additionalProperties: false },
-      "eos.ledger.get_features": { type: "object", properties: { missionId: { type: "string" }, id: { type: "string" } }, additionalProperties: false },
-      "eos.ledger.update_feature": { type: "object", properties: { missionId: { type: "string" }, featureId: { type: "string" }, newStatus: { type: "string" }, evidenceId: { type: "string" }, evidence: { type: "object" } }, required: ["missionId", "featureId", "newStatus"], additionalProperties: false },
-      "eos.ledger.append": { type: "object", properties: { intentId: { type: "string" }, missionChainHash: { type: "string" } }, required: ["intentId", "missionChainHash"], additionalProperties: false },
-      "eos.ledger.octave.advance": { type: "object", properties: { octaveId: { type: "string" }, currentNote: { type: "string" }, targetNote: { type: "string" }, shockProof: { type: "object" } }, required: ["octaveId", "targetNote"], additionalProperties: false },
+      "eos.context.compile": {
+        type: "object",
+        properties: {
+          mission: { type: "object" },
+          contract: { type: "object" },
+          files: { type: "array" },
+          maxBudgetTokens: { type: "number" },
+          characterBudget: { type: "number" }
+        },
+        additionalProperties: false
+      },
+      "eos.ledger.get_features": {
+        type: "object",
+        properties: {
+          missionId: { type: "string" },
+          id: { type: "string" }
+        },
+        additionalProperties: false
+      },
+      "eos.ledger.update_feature": {
+        type: "object",
+        properties: {
+          missionId: { type: "string" },
+          featureId: { type: "string" },
+          newStatus: { type: "string" },
+          evidenceId: { type: "string" },
+          evidence: { type: "object" }
+        },
+        required: ["missionId", "featureId", "newStatus"],
+        additionalProperties: false
+      },
+      "eos.ledger.append": {
+        type: "object",
+        properties: {
+          intentId: { type: "string" },
+          missionChainHash: { type: "string" }
+        },
+        required: ["intentId", "missionChainHash"],
+        additionalProperties: false
+      },
+      "eos.ledger.octave.advance": {
+        type: "object",
+        properties: {
+          octaveId: { type: "string" },
+          currentNote: { type: "string" },
+          targetNote: { type: "string" },
+          shockProof: { type: "object" }
+        },
+        required: ["octaveId", "targetNote"],
+        additionalProperties: false
+      },
 
       // 4. Gobernanza, Autoridad, Políticas y Evidencias
       "eos.authority.check": { type: "object", properties: { component: { type: "string" }, requiredLevel: { type: "any" }, grantedLevel: { type: "any" }, required: { type: "any" }, granted: { type: "any" }, requiredAuth: { type: "string" } }, additionalProperties: false },
