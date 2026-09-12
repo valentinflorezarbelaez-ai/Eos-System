@@ -247,16 +247,16 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '1447918adc660023344cc998977c6e73ccb8b465') {
+      if (!tip || tip[1] !== '760d4851738f435444784ec22d49189d7d8e3f0b') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-252 expected main_tip=1447918adc660023344cc998977c6e73ccb8b465 (post-#252 / Mission AU (+ #253 AS16); tip honesty restored; L16 CLOSED; L17 OPEN AS+AT+AU MEASURED; AV–AW pending)',
+            'tip-refresh-post-aw expected main_tip=760d4851738f435444784ec22d49189d7d8e3f0b (post-#258 / Mission AW (+ #256 AV + #257 AS16); tip honesty restored; L17 CLOSED; L18 OPEN (AX–BB pending))',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-252 / main@1447918 (post-#252 / Mission AU (+ #253 AS16); L16 CLOSED; L17 OPEN AS+AT+AU MEASURED)',
+          path: 'freeze main_tip pinned to tip-refresh-post-aw / main@760d485 (post-#258 / Mission AW; L17 CLOSED; L18 OPEN)',
           status: 'VERIFIED',
           type
         });

@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 1447918adc660023344cc998977c6e73ccb8b465
+evaluated_tip: 760d4851738f435444784ec22d49189d7d8e3f0b
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #252 from valentinflorezarbelaez-ai/grok/mission-au-law-vi-secret-runtime-broker
-updated_at: 2026-09-12 America/Bogota (tip refresh post-#252; pin to main@1447918; prior tip-249 pin c12cc82 + #251 tip-249 + #252 Mission AU SPEC-0052 + #253 AS16 scope fix; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE); Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout); Ladder 17 OPEN (AS+AT+AU MEASURED; AV–AW pending); Ladder 15 Maturity Audit MEASURED; Tip refresh post #229 MEASURED (historical/superseded); Mission AI MEASURED; Mission AJ MEASURED; Mission AK MEASURED; Mission AL MEASURED; Mission AM MEASURED; Ladder 15 Closeout MEASURED; Tip refresh post-AM MEASURED (historical/superseded); Ladder 16 Maturity Audit MEASURED; Tip refresh post #233 MEASURED (historical/superseded); Mission AN MEASURED; Tip refresh post #235 MEASURED (historical/superseded); Mission AO MEASURED; Tip refresh post #237 MEASURED (historical/superseded); Mission AP MEASURED; Tip refresh post #239 MEASURED (historical/superseded); Mission AQ MEASURED; Tip refresh post #241 MEASURED (historical/superseded); Mission AR MEASURED; Ladder 16 Closeout MEASURED; Tip refresh post #243 MEASURED (historical/superseded); Ladder 17 Maturity Audit MEASURED; Tip refresh post #245 MEASURED (historical/superseded); Mission AS MEASURED; Tip refresh post #247 MEASURED (historical/superseded); Mission AT MEASURED; Tip refresh post #249 MEASURED (historical/superseded); Mission AU MEASURED; Tip refresh post #252 MEASURED; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #258 from valentinflorezarbelaez-ai/grok/mission-aw-ladder17-closeout-seam-pack
+updated_at: 2026-09-12 America/Bogota (tip refresh post-#258 / Ladder 17 Closeout; pin to main@760d485; prior tip-252 pin 1447918 + #255 tip-252 + #256 Mission AV SPEC-0053 + #257 AS16 scope fix + #258 Mission AW SPEC-0054; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 CLOSED; Ladder 15 CLOSED; Ladder 16 CLOSED; Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout); Ladder 18 OPEN (AX–BB pending); Mission AV MEASURED; Mission AW MEASURED; Ladder 17 Closeout MEASURED; Tip refresh post #258 MEASURED; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -205,7 +205,12 @@ updated_at: 2026-09-12 America/Bogota (tip refresh post-#252; pin to main@144791
 | Tip refresh post #249 | COMPLETE | MEASURED (historical/superseded; EOS_TIP_REFRESH_POST_249_2026-09-12.md; freeze+matrix historically to c12cc82…; tip-refresh-post-249; Ladder 16 CLOSED; Ladder 17 was OPEN AS+AT MEASURED; superseded by post-#252) |
 | Mission AU Law VI Secret Runtime Broker / Env Gate | COMPLETE | MEASURED (#252; SPEC-0052; test:mission-au / test:law-vi-broker / test:secret-runtime-broker; eos-mission-au-law-vi-secret-runtime-broker; Law VI Secret Runtime Broker; Env Gate; Fundacion Delta=0; Ladder 17 OPEN (AS+AT+AU MEASURED; AV–AW pending); NON-CLAIM Law VI Secret Runtime Broker ≠ vault/KMS/secret-manager SaaS ≠ cloud IAM ≠ PRODUCTION_READY ≠ CloudAgent fleet) |
 | AS16 scope fix (post-AU) | COMPLETE | MEASURED (#253; AS16 scope fix; AS+AT+AU MEASURED retained; AU MEASURED acknowledged; Ladder 17 OPEN (AS+AT+AU MEASURED; AV–AW pending); NON-CLAIM ≠ PRODUCTION_READY) |
-| Tip refresh post #252 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_252_2026-09-12.md; freeze+matrix to 1447918…; tip-refresh-post-252; Ladder 16 CLOSED; Ladder 17 OPEN AS+AT+AU MEASURED) |
+| Tip refresh post #252 | COMPLETE | MEASURED (historical/superseded; EOS_TIP_REFRESH_POST_252_2026-09-12.md; freeze+matrix historically to 1447918…; tip-refresh-post-252; Ladder 16 CLOSED; Ladder 17 was OPEN AS+AT+AU MEASURED; superseded by post-#258) |
+| Mission AV Governed State Freeze & Drift Observer | COMPLETE | MEASURED (#256; SPEC-0053; test:mission-av / test:freeze-drift; eos-mission-av-governed-state-freeze-drift-observer; Governed State Freeze & Drift Observer; Fundacion Delta=0; Ladder 17 OPEN (AS+AT+AU+AV MEASURED; AW pending); NON-CLAIM Governed State Freeze & Drift Observer ≠ live cloud drift sensor ≠ multi-region sync ≠ PRODUCTION_READY ≠ CloudAgent fleet) |
+| AS16 scope fix (post-AV) | COMPLETE | MEASURED (#257; AS16 scope fix; AS+AT+AU+AV MEASURED retained; AV MEASURED acknowledged; Ladder 17 OPEN (AS+AT+AU+AV MEASURED; AW pending); NON-CLAIM ≠ PRODUCTION_READY) |
+| Mission AW Ladder 17 CI Seam-Pack + Closeout | COMPLETE | MEASURED (#258; SPEC-0054; test:mission-aw / test:ladder17-pack; eos-mission-aw-ladder17-closeout-seam-pack; Fundacion Delta=0; Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout); Ladder 18 OPEN (AX–BB pending); NON-CLAIM CI seam-pack ≠ PRODUCTION_READY / ≠ GH enforcement) |
+| Ladder 17 Closeout | COMPLETE | MEASURED (EOS_LADDER_17_CLOSEOUT_2026-09-12.md; CLOSED_FOR_LOCAL_GOVERNED_USE; PRODUCTION_READY=NO) |
+| Tip refresh post #258 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_AW_2026-09-12.md; freeze+matrix to 760d485…; tip-refresh-post-aw; Ladder 17 CLOSED; Ladder 18 OPEN) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -283,7 +288,16 @@ PRODUCTION_READY: NO
 - Matrix: tip refresh post #126 MEASURED (historical) + Mission K Browser QA Runner MEASURED + tip refresh post #128 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
-## Tip refresh notes (post-#252)
+## Tip refresh notes (post-#258 / Ladder 17 Closeout)
+
+- evaluated_tip pinned to OBSERVED main tip after #255+#256+#257+#258: 760d4851738f435444784ec22d49189d7d8e3f0b (StartsWith 760d485; full via bootstrap)
+- Prior tip-252 pin 1447918 + tip refresh post-#252 merged as #255; live main after #256 Mission AV + #257 AS16 + #258 Mission AW StartsWith 760d485 — **tip honesty restored**
+- Matrix: Tip refresh post #252 MEASURED (historical/superseded by post-#258 pin) + Mission AV Governed State Freeze & Drift Observer MEASURED (#256; SPEC-0053; test:mission-av / test:freeze-drift) + AS16 scope fix MEASURED (#257) + Mission AW Ladder 17 CI Seam-Pack & Closeout MEASURED (#258; SPEC-0054; test:mission-aw / test:ladder17-pack) + Ladder 17 Closeout MEASURED + Tip refresh post #258 MEASURED (tip-refresh-post-aw); Mission AS + Mission AT + Mission AU remain MEASURED; Ladder 17 Maturity Audit remains MEASURED; Ladder 17 is **CLOSED** (`CLOSED_FOR_LOCAL_GOVERNED_USE`); Ladder 18 is **OPEN** (`AX–BB pending`)
+- **L17 CLOSED seal established:** Ladder 17 is CLOSED_FOR_LOCAL_GOVERNED_USE (AS+AT+AU+AV+AW MEASURED + seam-pack + closeout). NEVER reopen L17.
+- **L18 OPEN (AX–BB pending):** Ladder 18 is OPEN (AX–BB pending). Never say AV not implemented. Never say AW not implemented. Never say Ladder 17 not closed.
+- NON-CLAIM: Mission AW / Ladder 17 Closeout MEASURED != Ladder 18 implemented != PRODUCTION_READY=YES / != GH enforcement / != CloudAgent fleet; Mission AV / Governed State Freeze & Drift Observer MEASURED != live cloud drift sensor / != multi-region sync / != PRODUCTION_READY=YES; Mission AU / Law VI Secret Runtime Broker MEASURED != PRODUCTION_READY=YES; Mission AT / Operator Continuity MEASURED != PRODUCTION_READY=YES; Mission AS / Cross-Satellite Composition MEASURED != PRODUCTION_READY=YES; Ladder 17 CLOSED_FOR_LOCAL_GOVERNED_USE != PRODUCTION_READY=YES; Ladder 16 CLOSED_FOR_LOCAL_GOVERNED_USE != PRODUCTION_READY=YES; Ladder 15 CLOSED_FOR_LOCAL_GOVERNED_USE != PRODUCTION_READY=YES; Ladder 14 CLOSED_FOR_LOCAL_GOVERNED_USE != PRODUCTION_READY=YES; Ladder 13 CLOSED_FOR_LOCAL_GOVERNED_USE != PRODUCTION_READY=YES; Ladder 12 CLOSED; Ladder 11 CLOSED; Fundacion Delta=0; AT_CEILING; keys never in repo; does not invent PRODUCTION_READY or intermediate full SHAs beyond known prior tip-252 `1447918`; No AX–BB impl; never claim AS not measured; never claim AT not implemented; never claim AU not implemented; never claim AV not implemented; never claim AW not implemented; never claim Ladder 17 not closed; never reopen L17
+
+## Tip refresh notes (post-#252) — historical
 
 - evaluated_tip pinned to OBSERVED main tip after #251+#252+#253: 1447918adc660023344cc998977c6e73ccb8b465 (StartsWith 1447918; full via bootstrap)
 - Prior tip-249 pin c12cc82 + tip refresh post-#249 merged as #251; live main after #252 Mission AU + #253 AS16 StartsWith 1447918 — **tip honesty restored**

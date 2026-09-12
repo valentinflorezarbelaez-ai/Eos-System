@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Tip honesty refresh post-#258 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@760d485 (PR #255 tip-252 + #256 Mission AV SPEC-0053 Governed State Freeze & Drift Observer + #257 AS16 scope fix + #258 Mission AW SPEC-0054 Ladder 17 CI Seam-Pack & Closeout; prior tip-252 pin 1447918; full tip SHA 760d4851738f435444784ec22d49189d7d8e3f0b resolved from origin/main); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 CLOSED; Ladder 15 CLOSED; Ladder 16 CLOSED; Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout); Ladder 18 OPEN (AX–BB pending). L17 CLOSED seal established. Never say AS not measured. Never say AT not implemented. Never say AU not implemented. Never say AV not implemented. Never say AW not implemented. Never say Ladder 17 not closed. NON-CLAIM Mission AW MEASURED ≠ Ladder 18 implemented ≠ PRODUCTION_READY=YES. NON-CLAIM Ladder 17 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-AW
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_AW_2026-09-12.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-aw
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - implementing Ladder 18 satellites AX–BB in this change
+  - claiming Ladder 18 implemented or AX–BB MEASURED
+  - claiming AS not measured (AS is MEASURED via #247)
+  - claiming AT not implemented (AT is MEASURED via #249)
+  - claiming AU not implemented (AU is MEASURED via #252)
+  - claiming AV not implemented (AV is MEASURED via #256)
+  - claiming AW not implemented (AW is MEASURED via #258)
+  - claiming Ladder 17 not closed (Ladder 17 is CLOSED via #258 closeout)
+  - reopening Ladder 16 or Ladder 17
+  - claiming Mission AW / Ladder 17 Closeout is PRODUCTION_READY or GH-enforced
+  - putting API keys in repo
