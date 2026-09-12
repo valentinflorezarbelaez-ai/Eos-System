@@ -44,6 +44,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-compute-worker-mission-n.test.js',
   'eos-compute-worker-mission-o-adversarial.test.js',
   'loop-compute-orchestrator.test.js',
+  'worker-runtime-daemon.test.js',
 ]);
 
 /**

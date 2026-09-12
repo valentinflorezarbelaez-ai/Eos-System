@@ -1,0 +1,23 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0022 — Compute Worker Runtime Daemon. Long-lived in-process lifecycle wrapper around executeComputeRun (start/stop/status/acceptRun) so Mission P Loop×Worker orchestration can talk to a RUNNING compute runtime; fail-closed when stopped. Distinct from AGY agy-daemon / eos-workstation (T7/U5 stay honest DAEMON_ABSENT). Hermetic TDD; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0022
+phase: 1
+affected_areas:
+  - src/core/compute/worker-runtime-daemon.js
+  - tests/compute/worker-runtime-daemon.test.js
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-q-worker-runtime-daemon
+  - docs/releases/EOS_MISSION_Q_WORKER_RUNTIME_DAEMON_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - installing or claiming agy-daemon / AGY DAEMON_PRESENT
+  - new npm dependencies / JSON schemas
+  - raising TR-01 (exclude-from-slim instead)
+  - mutating scripts/runners/eos-compute-worker.js (prefer new module only)
+  - mutating src/core/mcp/mission-loop.js
