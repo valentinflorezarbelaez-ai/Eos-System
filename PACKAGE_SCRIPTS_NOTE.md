@@ -1,12 +1,12 @@
-# Mission V — package.json / slim patch fragment
+# Mission W — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-v.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-w.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:fdir-remediation": "node --test tests/fdir/fdir-remediation-loop.test.js",
-"test:mission-v": "node --test tests/fdir/fdir-remediation-loop.test.js"
+"test:sovereign-session": "node --test tests/session/sovereign-session-coordinator.test.js",
+"test:mission-w": "node --test tests/session/sovereign-session-coordinator.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,8 +14,8 @@ Applied idempotently by `scripts/patch-mission-v.mjs` on the host worktree.
 Add basename:
 
 ```js
-'fdir-remediation-loop.test.js',
+'sovereign-session-coordinator.test.js',
 ```
 
-to the existing `SLIM_SUITE_EXCLUDES` Set (after `external-write-gateway.test.js`
+to the existing `SLIM_SUITE_EXCLUDES` Set (after `fdir-remediation-loop.test.js`
 or whatever the tip currently ends with). Prefer exclude-from-slim over raising TR-01.
