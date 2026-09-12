@@ -186,7 +186,9 @@
     "test:autonomous-loop": "node --test tests/eos-af-autonomous-execution-loop.test.js",
     "test:mission-ah": "node --test tests/eos-ah-ladder14-seam-pack.test.js",
     "test:ah14": "node --test tests/eos-ah-ladder14-seam-pack.test.js",
-    "test:ladder14-pack": "npm run test:llm-provider-port && npm run test:token-budget-ecr && npm run test:autonomous-loop && npm run test:live-tool-engine && npm run test:mission-ah"
+    "test:ladder14-pack": "npm run test:llm-provider-port && npm run test:token-budget-ecr && npm run test:autonomous-loop && npm run test:live-tool-engine && npm run test:mission-ah",
+    "test:multi-session-autonomy": "node --test tests/eos-ai-multi-session-autonomy.test.js",
+    "test:mission-ai": "node --test tests/eos-ai-multi-session-autonomy.test.js"
   },
   "keywords": [
     "eos",
