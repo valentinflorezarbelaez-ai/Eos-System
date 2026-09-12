@@ -1,0 +1,27 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0053 / Mission AV — Governed State Freeze & Drift Observer (Release Honesty / Freeze-Drift Observer). Observe-only drift detector for tip SSOT vs freeze/matrix/m4 vs observed HEAD/origin/main; report drift MEASURED with sealed evidence; optional fail-closed local DENY of honesty claims until tip refresh. Fail-closed codes OK / MATCHED / DRIFT_MEASURED / DENY / TIP_MISMATCH / FREEZE_MATRIX_MISMATCH / INVALID_TIP / INVALID_REQUEST / MISSING_DEP / HONESTY_CLAIM_DENIED. PRODUCTION_READY=NO. NON-CLAIM ≠ auto-merge bot / ≠ GH required-check enforcement / ≠ GH billing change; not AW; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live git/network in CI; Law VI zero static vendor-key prefix literals.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0053
+phase: 1
+affected_areas:
+  - src/core/freeze-drift/governed-state-freeze-drift-observer.js
+  - src/core/freeze-drift/tip-pin-reader.js
+  - src/core/freeze-drift/drift-receipt.js
+  - src/core/freeze-drift/honesty-gate.js
+  - tests/eos-av-governed-state-freeze-drift-observer.test.js
+  - scripts/patch-mission-av.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-av-governed-state-freeze-drift-observer
+  - docs/releases/EOS_MISSION_AV_GOVERNED_STATE_FREEZE_DRIFT_OBSERVER_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - auto-merge bot
+  - GH required-check enforcement / branch-protection mutation
+  - GH billing upgrades
+  - AW (L17 CI seam-pack) implementation
+  - CloudAgent path
+  - live git required in hermetic tests

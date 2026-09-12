@@ -1,13 +1,13 @@
-# Mission AU — package.json / slim patch fragment
+# Mission AV — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-au.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-av.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:law-vi-broker": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js",
-"test:secret-runtime-broker": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js",
-"test:mission-au": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js"
+"test:freeze-drift": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js",
+"test:mission-av": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js",
+"test:release-honesty": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -15,7 +15,7 @@ Applied idempotently by `scripts/patch-mission-au.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-au-law-vi-secret-runtime-broker.test.js',
+'eos-av-governed-state-freeze-drift-observer.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).

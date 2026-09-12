@@ -101,6 +101,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-at-operator-continuity-crash-recovery.test.js',
 
   'eos-au-law-vi-secret-runtime-broker.test.js',
+
+  'eos-av-governed-state-freeze-drift-observer.test.js',
 ]);
 
 /**
