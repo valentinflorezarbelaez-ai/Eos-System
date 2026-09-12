@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#249 pinned tip: main@c12cc82 (prior tip-247 pin 9139b15 + #248 tip-247 + #249 Mission AT SPEC-0051 + #250 AS16 scope fix; tip honesty restored; Ladder 14 CLOSED; Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout); Ladder 17 OPEN (AS+AT MEASURED; AU–AW pending)) */
-const EXPECTED_TIP = 'c12cc8254267a7eb4fd4af06a8497e87c99fa4d5';
+/** Tip refresh post-#252 pinned tip: main@1447918 (prior tip-249 pin c12cc82 + #251 tip-249 + #252 Mission AU SPEC-0052 + #253 AS16 scope fix; tip honesty restored; Ladder 14 CLOSED; Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout); Ladder 17 OPEN (AS+AT+AU MEASURED; AV–AW pending)) */
+const EXPECTED_TIP = '1447918adc660023344cc998977c6e73ccb8b465';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-249 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-252 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-249 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-252 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -234,11 +234,20 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'SPEC-0051',
     'Operator Continuity',
     'Crash-Recovery',
+    'Mission AU',
+    'Tip refresh post #252',
+    'tip-refresh-post-252',
+    'SPEC-0052',
+    'Law VI',
+    'Secret Runtime Broker',
     'AS16',
     'Ladder 17 OPEN',
     'AS MEASURED',
     'AT MEASURED',
+    'AU MEASURED',
     'AS+AT',
+    'AS+AT+AU',
+    'AV–AW',
     'AU–AW',
     'AS–AW',
     'Sovereign Operator Continuity',
