@@ -528,67 +528,115 @@ export function applyHint(item) {
   const titleOrLink = `${title} ${link}`;
 
   if (title.includes('harness') || link.includes('changelog/08-19-26')) {
-    return 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS. Honor auto-CI-fix on PRs this agent opens.';
+    return 'Use Cloud Agent timers, GitHub PR subscriptions, or Slack — not X — to wake EOS. Honor auto-CI-fix '
+      + 'on PRs this agent opens.';
   }
   if (isCloudAgentOverviewUrl(item?.link)) {
     return 'Cloud Agents run on isolated VMs. Use environment.json + Builds; keep this watch on official feeds, not X.';
   }
   if (isCloudAgentCapabilitiesUrl(item?.link)) {
-    return 'Honor Cloud Agent subscriptions (GitHub PR, Slack, timers) and auto-CI-fix on PRs this agent opens. Do not scrape X.';
+    return 'Honor Cloud Agent subscriptions (GitHub PR, Slack, timers) and auto-CI-fix on PRs this agent opens. '
+      + 'Do not scrape X.';
   }
   if (isAgentOverviewUrl(item?.link)) {
-    return 'Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next tool call.';
+    return 'Keep long-lived EOS objectives in /goal. Steer running agents with follow-ups that wait for the next '
+      + 'tool call.';
   }
   if (isPlanModeDocUrl(item?.link)) {
-    return 'Plan Mode is optional desktop planning before code. Keep this watch on the standing /goal; do not rotate this Cloud Agent into Plan Mode for daily ingest. EOS TDD remains required. Honor included quota; do not switch this watch to on-demand.';
+    return 'Plan Mode is optional desktop planning before code. Keep this watch on the standing /goal; do not '
+      + 'rotate this Cloud Agent into Plan Mode for daily ingest. EOS TDD remains required. Honor included '
+      + 'quota; do not switch this watch to on-demand.';
   }
   if (isDebugModeDocUrl(item?.link)) {
-    return 'Debug Mode is optional desktop debugging with a local Cursor extension. This watch already uses EOS TDD in the Cloud Agent VM; do not rotate this Cloud Agent into Debug Mode for daily ingest. Keep the standing /goal. Honor included quota; do not switch this watch to on-demand.';
+    return 'Debug Mode is optional desktop debugging with a local Cursor extension. This watch already uses EOS '
+      + 'TDD in the Cloud Agent VM; do not rotate this Cloud Agent into Debug Mode for daily ingest. Keep the '
+      + 'standing /goal. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliOverviewUrl(item?.link)) {
-    return 'Cursor CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI or rotate this watch into print mode, sandbox, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Cursor CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the '
+      + 'local agent CLI. Do not install Cursor CLI or rotate this watch into print mode, sandbox, or Cloud '
+      + 'Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor '
+      + 'included quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliUsingUrl(item?.link)) {
-    return 'Using Agent in CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not rotate this watch into print mode, worktrees, ACP, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Using Agent in CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without '
+      + 'the local agent CLI. Do not rotate this watch into print mode, worktrees, ACP, or Cloud Agent '
+      + 'handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included '
+      + 'quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliShellModeUrl(item?.link)) {
-    return 'Shell Mode is optional local Cursor CLI. This Cloud Agent VM already runs shell commands. Do not rotate this watch into Cursor CLI Shell Mode for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Shell Mode is optional local Cursor CLI. This Cloud Agent VM already runs shell commands. Do not '
+      + 'rotate this watch into Cursor CLI Shell Mode for daily ingest. Keep the standing /goal. Keep '
+      + 'environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliAcpUrl(item?.link)) {
-    return 'ACP is optional local Cursor CLI protocol for custom clients. This Cloud Agent VM already runs ingest without an ACP client. Do not rotate this watch into agent acp, custom stdio clients, or IDE integrations for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'ACP is optional local Cursor CLI protocol for custom clients. This Cloud Agent VM already runs '
+      + 'ingest without an ACP client. Do not rotate this watch into agent acp, custom stdio clients, or IDE '
+      + 'integrations for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor '
+      + 'included quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliHeadlessUrl(item?.link)) {
-    return 'Headless CLI is optional local Cursor CLI for scripts. This Cloud Agent VM already runs ingest without print mode. Do not rotate this watch into print mode, --force, or install Cursor CLI for daily ingest. Do not put CURSOR_API_KEY in git. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Headless CLI is optional local Cursor CLI for scripts. This Cloud Agent VM already runs ingest '
+      + 'without print mode. Do not rotate this watch into print mode, --force, or install Cursor CLI for '
+      + 'daily ingest. Do not put CURSOR_API_KEY in git. Keep the standing /goal. Keep environment.json + '
+      + 'Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorSdkTypescriptUrl(item?.link)) {
-    return 'The TypeScript SDK is optional agent scripting. This watch uses official feeds, not @cursor/sdk or api.cursor.com. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'The TypeScript SDK is optional agent scripting. This watch uses official feeds, not @cursor/sdk or '
+      + 'api.cursor.com. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. '
+      + 'Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. '
+      + 'Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorSdkPythonUrl(item?.link)) {
-    return 'The Python SDK is optional agent scripting. This watch uses official feeds, not cursor-sdk or api.cursor.com. Do not install cursor-sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'The Python SDK is optional agent scripting. This watch uses official feeds, not cursor-sdk or '
+      + 'api.cursor.com. Do not install cursor-sdk or rotate this watch into SDK scripts for daily ingest. Do '
+      + 'not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor '
+      + 'included quota; do not switch this watch to on-demand.';
   }
   if (isCursorSdkBridgeUrl(item?.link)) {
-    return 'The SDK Bridge is optional local protocol for languages without a first-party SDK. This watch uses official feeds, not cursor-sdk-bridge or api.cursor.com. Do not install the SDK Bridge or rotate this watch into adapter scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'The SDK Bridge is optional local protocol for languages without a first-party SDK. This watch uses '
+      + 'official feeds, not cursor-sdk-bridge or api.cursor.com. Do not install the SDK Bridge or rotate '
+      + 'this watch into adapter scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as '
+      + 'source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to '
+      + 'on-demand.';
   }
   if (isTeamPricingUrl(item?.link)) {
-    return 'Team Pricing is vendor Teams and Enterprise billing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor team seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard. Keep environment.json + Builds.';
+    return 'Team Pricing is vendor Teams and Enterprise billing. Honor included quota. Do not switch this watch '
+      + 'to on-demand. Do not treat vendor team seat prices as EOS budget evidence. This Cloud Agent is not a '
+      + 'Teams admin dashboard. Keep environment.json + Builds.';
   }
   if (isTeamMembersUrl(item?.link)) {
-    return 'Members, roles, and seat types are vendor Teams admin config. Honor included quota. Do not switch this watch to on-demand. This Cloud Agent is not a Teams admin dashboard. Do not ingest Teams setup or SSO pages. Keep environment.json + Builds.';
+    return 'Members, roles, and seat types are vendor Teams admin config. Honor included quota. Do not switch '
+      + 'this watch to on-demand. This Cloud Agent is not a Teams admin dashboard. Do not ingest Teams setup '
+      + 'or SSO pages. Keep environment.json + Builds.';
   }
   if (isHelpPricingUrl(item?.link)) {
-    return 'Help Pricing and plans lists vendor individual and Teams plan names. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor plan prices as EOS budget evidence. Do not change this Cloud Agent billing from the dashboard. Keep environment.json + Builds.';
+    return 'Help Pricing and plans lists vendor individual and Teams plan names. Honor included quota. Do not '
+      + 'switch this watch to on-demand. Do not treat vendor plan prices as EOS budget evidence. Do not '
+      + 'change this Cloud Agent billing from the dashboard. Keep environment.json + Builds.';
   }
   if (isHelpAvailableModelsUrl(item?.link)) {
-    return 'Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep environment.json + Builds.';
+    return 'Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch '
+      + 'this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys '
+      + 'in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep '
+      + 'environment.json + Builds.';
   }
   if (isHelpCursorRouterUrl(item?.link)) {
-    return 'Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules still bind model and governance choices. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put API keys in git. Keep environment.json + Builds.';
+    return 'Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules '
+      + 'still bind model and governance choices. Honor included quota. Do not switch this watch to '
+      + 'on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not '
+      + 'put API keys in git. Keep environment.json + Builds.';
   }
   if (isHelpGrok45Url(item?.link)) {
-    return 'Help Grok 4.5 is a prior vendor Cursor Model. Honor Auto vs Composer pool and included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk. Do not put API keys in git. Keep environment.json + Builds.';
+    return 'Help Grok 4.5 is a prior vendor Cursor Model. Honor Auto vs Composer pool and included-credit '
+      + 'treatment from official help. Do not treat vendor quality claims as EOS evidence. Honor included '
+      + 'quota. Do not switch this watch to on-demand. Do not install @cursor/sdk. Do not put API keys in '
+      + 'git. Keep environment.json + Builds.';
   }
   if (isRulesDocUrl(item?.link)) {
-    return 'Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS governance.';
+    return 'Commit EOS conventions as .cursor/rules/*.mdc (plain .md is ignored). Use AGENTS.md for simple '
+      + 'instructions. Prefer /create-rule over dumping style guides. Team dashboard rules are not EOS '
+      + 'governance.';
   }
   if (isSkillsDocUrl(item?.link) || isPromptingDocUrl(item?.link)) {
     return 'Pin an EOS skill as a Custom Mode when a session must stay on one playbook.';
@@ -603,7 +651,8 @@ export function applyHint(item) {
     return 'Org/acquisition news. Do not change EOS governance from vendor ownership claims; keep FUNDACION frozen.';
   }
   if (link.includes('git-at-any-scale') || title.includes('git at any scale')) {
-    return 'Vendor git-scale narrative. GitHub remains source of truth for this repo unless Origin is explicitly adopted.';
+    return 'Vendor git-scale narrative. GitHub remains source of truth for this repo unless Origin is explicitly '
+      + 'adopted.';
   }
   if (link.includes('cloud-agent-environment') || titleOrLink.includes('cloud agent environment')) {
     return 'Put install work in environment.json install and keep start for live services. Builds consume that split.';
@@ -618,103 +667,181 @@ export function applyHint(item) {
     return 'Keep long-lived EOS objectives in /goal instead of one-shot prompts.';
   }
   if (isOriginMirrorUrl(item?.link)) {
-    return 'Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an optional mirror; Bugbot and Cursor Review do not require it.';
+    return 'Keep GitHub as the source of truth for this synced repo. Do not Detach from GitHub. Origin is an '
+      + 'optional mirror; Bugbot and Cursor Review do not require it.';
   }
   if (isOriginCreateRepositoryUrl(item?.link)) {
-    return 'Creating an Origin repository is optional paid git hosting. GitHub remains source of truth for this synced repo. Do not create an Origin repo or Detach from GitHub for this watch. This Cloud Agent VM already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Creating an Origin repository is optional paid git hosting. GitHub remains source of truth for this '
+      + 'synced repo. Do not create an Origin repo or Detach from GitHub for this watch. This Cloud Agent VM '
+      + 'already has its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch '
+      + 'this watch to on-demand.';
   }
   if (isOriginPullRequestsUrl(item?.link)) {
-    return 'Origin pull requests are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not open Origin PRs or Detach from GitHub for this watch. This Cloud Agent VM already opens GitHub PRs. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Origin pull requests are optional Origin hosting. GitHub remains source of truth for this synced '
+      + 'repo. Do not open Origin PRs or Detach from GitHub for this watch. This Cloud Agent VM already opens '
+      + 'GitHub PRs. Keep environment.json + Builds. Honor included quota; do not switch this watch to '
+      + 'on-demand.';
   }
   if (isOriginBrowseUrl(item?.link)) {
-    return 'Origin browse and search are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not use Origin browse or Detach from GitHub for this watch. This Cloud Agent VM already searches its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Origin browse and search are optional Origin hosting. GitHub remains source of truth for this synced '
+      + 'repo. Do not use Origin browse or Detach from GitHub for this watch. This Cloud Agent VM already '
+      + 'searches its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch '
+      + 'this watch to on-demand.';
   }
   if (isOriginSettingsUrl(item?.link)) {
-    return 'Origin repository settings are optional Origin hosting. GitHub remains source of truth for this synced repo. Do not Detach from GitHub or manage Origin Apps for this watch. This Cloud Agent VM already uses its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Origin repository settings are optional Origin hosting. GitHub remains source of truth for this '
+      + 'synced repo. Do not Detach from GitHub or manage Origin Apps for this watch. This Cloud Agent VM '
+      + 'already uses its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not '
+      + 'switch this watch to on-demand.';
   }
   if (isOriginCodebaseSettingsUrl(item?.link)) {
-    return 'Origin codebase settings are optional team-level Origin hosting. GitHub remains source of truth for this synced repo. Do not claim a codebase name, turn Origin on or off, or manage Origin Apps for this watch. Do not put Origin API tokens in git. This Cloud Agent VM already uses its GitHub checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Origin codebase settings are optional team-level Origin hosting. GitHub remains source of truth for '
+      + 'this synced repo. Do not claim a codebase name, turn Origin on or off, or manage Origin Apps for '
+      + 'this watch. Do not put Origin API tokens in git. This Cloud Agent VM already uses its GitHub '
+      + 'checkout. Keep environment.json + Builds. Honor included quota; do not switch this watch to '
+      + 'on-demand.';
   }
   if (isCloudAgentBestPracticesUrl(item?.link)) {
-    return 'Honor Cloud Agent setup (environment.json + Builds). Prefer OIDC over long-lived secrets. Use skills, AGENTS.md, and .cursor/rules for repo conventions. Do not put secrets in git.';
+    return 'Honor Cloud Agent setup (environment.json + Builds). Prefer OIDC over long-lived secrets. Use '
+      + 'skills, AGENTS.md, and .cursor/rules for repo conventions. Do not put secrets in git.';
   }
   if (isCloudAgentIdentityUrl(item?.link)) {
-    return 'Prefer short-lived OIDC JWTs minted in the Cloud Agent VM over long-lived secrets. Point agents at docs/cloud-agent/identity. Do not treat this socket as the Cloud Agents API. Verifiers must reject unexpected aud.';
+    return 'Prefer short-lived OIDC JWTs minted in the Cloud Agent VM over long-lived secrets. Point agents at '
+      + 'docs/cloud-agent/identity. Do not treat this socket as the Cloud Agents API. Verifiers must reject '
+      + 'unexpected aud.';
   }
   if (isCloudAgentMetadataUrl(item?.link)) {
-    return 'Read Cloud Agent run metadata from the VM socket; it is not a credential. Use OIDC JWTs when something outside the VM must verify identity. Do not confuse this with SDK/Cloud Agents API metadata tags.';
+    return 'Read Cloud Agent run metadata from the VM socket; it is not a credential. Use OIDC JWTs when '
+      + 'something outside the VM must verify identity. Do not confuse this with SDK/Cloud Agents API '
+      + 'metadata tags.';
   }
   if (isHooksDocUrl(item?.link)) {
-    return 'Commit command-based hooks as .cursor/hooks.json at the repo root so Cloud Agents pick them up. User-level ~/.cursor/hooks.json is not available in Cloud Agents. Do not rely on Tab, sessionStart, or prompt-based hooks in this environment.';
+    return 'Commit command-based hooks as .cursor/hooks.json at the repo root so Cloud Agents pick them up. '
+      + 'User-level ~/.cursor/hooks.json is not available in Cloud Agents. Do not rely on Tab, sessionStart, '
+      + 'or prompt-based hooks in this environment.';
   }
   if (isCloudAgentSecurityNetworkUrl(item?.link)) {
-    return 'Prefer Runtime Secrets or short-lived OIDC over long-lived keys in git. Treat [REDACTED] in transcripts as expected, not a missing secret. Honor Cloud Agent network allowlists; do not open *.s3 wildcards. Privacy Mode (Legacy) is not supported for Cloud Agents.';
+    return 'Prefer Runtime Secrets or short-lived OIDC over long-lived keys in git. Treat [REDACTED] in '
+      + 'transcripts as expected, not a missing secret. Honor Cloud Agent network allowlists; do not open '
+      + '*.s3 wildcards. Privacy Mode (Legacy) is not supported for Cloud Agents.';
   }
   if (isCloudAgentSecurityOverviewUrl(item?.link)) {
-    return 'Treat this page as the Cloud Agent security model, not the config reference. Honor isolated VMs, access that is never widened past the triggering user, Runtime Secrets/OIDC, network allowlists, .cursorignore, and draft-PR handoff. Privacy Mode (Legacy) is not supported. Do not treat SOC 2 or Trust Center claims as EOS evidence.';
+    return 'Treat this page as the Cloud Agent security model, not the config reference. Honor isolated VMs, '
+      + 'access that is never widened past the triggering user, Runtime Secrets/OIDC, network allowlists, '
+      + '.cursorignore, and draft-PR handoff. Privacy Mode (Legacy) is not supported. Do not treat SOC 2 or '
+      + 'Trust Center claims as EOS evidence.';
   }
   if (isCloudAgentSettingsUrl(item?.link)) {
-    return 'Treat Cloud Agents dashboard settings as team-admin config, not EOS governance. Keep environment.json + Builds as the start path and honor network allowlists. Do not turn on team follow-ups: a teammate can drive an agent that holds another user\'s secrets.';
+    return 'Treat Cloud Agents dashboard settings as team-admin config, not EOS governance. Keep '
+      + 'environment.json + Builds as the start path and honor network allowlists. Do not turn on team '
+      + 'follow-ups: a teammate can drive an agent that holds another user\'s secrets.';
   }
   if (isCloudAgentPrivateConnectivityUrl(item?.link)) {
-    return 'This Cloud Agent run is public cloud. Private Connectivity is Enterprise-only (AWS PrivateLink or Cloudflare Tunnel) for private Git/registries. It is not required for this watch. Keep GitHub as source of truth. Do not put tunnel tokens in git.';
+    return 'This Cloud Agent run is public cloud. Private Connectivity is Enterprise-only (AWS PrivateLink or '
+      + 'Cloudflare Tunnel) for private Git/registries. It is not required for this watch. Keep GitHub as '
+      + 'source of truth. Do not put tunnel tokens in git.';
   }
   if (isBugbotDocUrl(item?.link)) {
-    return 'Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket integration setup pages. Do not put Bugbot API keys in git.';
+    return 'Bugbot is optional PR review. EOS TDD evidence remains required. /review-bugbot is in-agent review, '
+      + 'not a substitute for tests. Keep GitHub as source of truth; do not ingest GitHub/GitLab/Bitbucket '
+      + 'integration setup pages. Do not put Bugbot API keys in git.';
   }
   if (isAgentReviewDocUrl(item?.link)) {
-    return 'Agent Review is optional in-editor review of local changes. EOS TDD evidence remains required. /agent-review is not a substitute for tests. Keep BUGBOT.md if this repo uses Bugbot rules. This watch already runs in the Cloud Agent VM, not the desktop Agents Window. Honor included quota; do not switch this watch to on-demand.';
+    return 'Agent Review is optional in-editor review of local changes. EOS TDD evidence remains required. '
+      + '/agent-review is not a substitute for tests. Keep BUGBOT.md if this repo uses Bugbot rules. This '
+      + 'watch already runs in the Cloud Agent VM, not the desktop Agents Window. Honor included quota; do '
+      + 'not switch this watch to on-demand.';
   }
   if (isSecurityAgentsDocUrl(item?.link)) {
-    return 'Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane check. /review-security is in-agent review, not a substitute for that check. Do not treat vendor finding counts as EOS evidence. Honor included quota; do not switch this watch to on-demand.';
+    return 'Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane '
+      + 'check. /review-security is in-agent review, not a substitute for that check. Do not treat vendor '
+      + 'finding counts as EOS evidence. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isApprovalAgentsDocUrl(item?.link)) {
-    return 'PR Routing & Approval is optional vendor automation. It does not replace EOS TDD or human review. Keep exact APPROVAL_POLICY.md and .cursor/approval-policies/ROUTING.md if this repo uses them. Do not treat vendor auto-approve as EOS evidence. Keep GitHub as source of truth; do not ingest Slack or Teams setup. Honor included quota; do not switch this watch to on-demand.';
+    return 'PR Routing & Approval is optional vendor automation. It does not replace EOS TDD or human review. '
+      + 'Keep exact APPROVAL_POLICY.md and .cursor/approval-policies/ROUTING.md if this repo uses them. Do '
+      + 'not treat vendor auto-approve as EOS evidence. Keep GitHub as source of truth; do not ingest Slack '
+      + 'or Teams setup. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCloudAgentMobileUrl(item?.link)) {
-    return 'This watch runs in the Cloud Agent VM, not on iPhone or iPad. Cursor for iOS is an optional beta client. Keep environment.json + Builds on the web. /remote-control hands a local session to the cloud; tool calls stay on the computer. Privacy Mode (Legacy) is not supported. Do not ingest GitHub or GitLab setup pages. Honor included quota; do not switch this watch to on-demand.';
+    return 'This watch runs in the Cloud Agent VM, not on iPhone or iPad. Cursor for iOS is an optional beta '
+      + 'client. Keep environment.json + Builds on the web. /remote-control hands a local session to the '
+      + 'cloud; tool calls stay on the computer. Privacy Mode (Legacy) is not supported. Do not ingest GitHub '
+      + 'or GitLab setup pages. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCloudAgentApiEndpointsUrl(item?.link)) {
-    return 'This watch uses official feeds, not the Cloud Agents API. Do not treat api.cursor.com as this ingest path. Do not put API keys in git. Keep GitHub as source of truth. Honor included quota; do not switch this watch to on-demand.';
+    return 'This watch uses official feeds, not the Cloud Agents API. Do not treat api.cursor.com as this ingest '
+      + 'path. Do not put API keys in git. Keep GitHub as source of truth. Honor included quota; do not '
+      + 'switch this watch to on-demand.';
   }
   if (isAgentsWindowDocUrl(item?.link)) {
-    return 'This watch already runs in the Cloud Agent VM, not in the desktop Agents Window. Use /in-cloud or /babysit when a local session must hand work to its own VM. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'This watch already runs in the Cloud Agent VM, not in the desktop Agents Window. Use /in-cloud or '
+      + '/babysit when a local session must hand work to its own VM. Keep environment.json + Builds. Honor '
+      + 'included quota; do not switch this watch to on-demand.';
   }
   if (isDesignModeDocUrl(item?.link)) {
-    return 'Design Mode is optional desktop visual prompting in the Agents Window. This watch already runs in the Cloud Agent VM, not the desktop Agents Window. Do not rotate this Cloud Agent into Design Mode for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Design Mode is optional desktop visual prompting in the Agents Window. This watch already runs in '
+      + 'the Cloud Agent VM, not the desktop Agents Window. Do not rotate this Cloud Agent into Design Mode '
+      + 'for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to '
+      + 'on-demand.';
   }
   if (isBrowserToolDocUrl(item?.link)) {
-    return 'Browser is optional desktop browser control. This watch already runs in the Cloud Agent VM and uses official feeds, not live sites. Do not rotate this Cloud Agent into Browser for daily ingest. Keep environment.json + Builds. Team MCP dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.';
+    return 'Browser is optional desktop browser control. This watch already runs in the Cloud Agent VM and uses '
+      + 'official feeds, not live sites. Do not rotate this Cloud Agent into Browser for daily ingest. Keep '
+      + 'environment.json + Builds. Team MCP dashboard controls are not EOS governance. Honor included quota; '
+      + 'do not switch this watch to on-demand.';
   }
   if (isTerminalToolDocUrl(item?.link)) {
-    return 'Terminal is optional desktop shell control with Run Mode and sandbox.json. This Cloud Agent VM already runs shell commands. Do not rotate this Cloud Agent into desktop Terminal for daily ingest. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Terminal is optional desktop shell control with Run Mode and sandbox.json. This Cloud Agent VM '
+      + 'already runs shell commands. Do not rotate this Cloud Agent into desktop Terminal for daily ingest. '
+      + 'Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isSearchToolDocUrl(item?.link)) {
-    return 'Search is optional desktop Instant Grep and Explore subagent. This Cloud Agent VM already searches the workspace. Do not rotate this Cloud Agent into desktop Search for daily ingest. Keep environment.json + Builds. Do not put .cursor/keys in git. Honor included quota; do not switch this watch to on-demand.';
+    return 'Search is optional desktop Instant Grep and Explore subagent. This Cloud Agent VM already searches '
+      + 'the workspace. Do not rotate this Cloud Agent into desktop Search for daily ingest. Keep '
+      + 'environment.json + Builds. Do not put .cursor/keys in git. Honor included quota; do not switch this '
+      + 'watch to on-demand.';
   }
   if (isCanvasToolDocUrl(item?.link)) {
-    return 'Canvases are optional desktop interactive artifacts in the Agents Window. This watch already runs in the Cloud Agent VM. Do not rotate this Cloud Agent into desktop Canvases for daily ingest. Keep environment.json + Builds. Shared canvases and team dashboard controls are not EOS governance. Honor included quota; do not switch this watch to on-demand.';
+    return 'Canvases are optional desktop interactive artifacts in the Agents Window. This watch already runs in '
+      + 'the Cloud Agent VM. Do not rotate this Cloud Agent into desktop Canvases for daily ingest. Keep '
+      + 'environment.json + Builds. Shared canvases and team dashboard controls are not EOS governance. Honor '
+      + 'included quota; do not switch this watch to on-demand.';
   }
   if (isWorktreesDocUrl(item?.link)) {
-    return 'Worktrees are optional desktop isolated Git checkouts in the Agents Window. This Cloud Agent VM already has its own checkout. Do not rotate this Cloud Agent into desktop worktrees for daily ingest. Keep environment.json + Builds. Do not put secrets in .cursor/worktrees.json. Honor included quota; do not switch this watch to on-demand.';
+    return 'Worktrees are optional desktop isolated Git checkouts in the Agents Window. This Cloud Agent VM '
+      + 'already has its own checkout. Do not rotate this Cloud Agent into desktop worktrees for daily '
+      + 'ingest. Keep environment.json + Builds. Do not put secrets in .cursor/worktrees.json. Honor included '
+      + 'quota; do not switch this watch to on-demand.';
   }
   if (isAgentSecurityDocUrl(item?.link)) {
-    return 'Agent Security is optional desktop guardrails for first-party tools, MCP, and network. This Cloud Agent VM already honors EOS TDD and .cursorignore. Do not rotate this Cloud Agent into desktop Agent Security settings for daily ingest. Keep environment.json + Builds. Run Modes are best-effort, not a hard security boundary. Honor included quota; do not switch this watch to on-demand.';
+    return 'Agent Security is optional desktop guardrails for first-party tools, MCP, and network. This Cloud '
+      + 'Agent VM already honors EOS TDD and .cursorignore. Do not rotate this Cloud Agent into desktop Agent '
+      + 'Security settings for daily ingest. Keep environment.json + Builds. Run Modes are best-effort, not a '
+      + 'hard security boundary. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isMcpDocUrl(item?.link)) {
-    return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS governance. Do not put API keys in git.';
+    return 'Commit project MCP servers as .cursor/mcp.json. User-level ~/.cursor/mcp.json is local IDE config, '
+      + 'not this Cloud Agent environment. Team dashboard MCP can reach Cloud Agents but is not EOS '
+      + 'governance. Do not put API keys in git.';
   }
   if (isPluginsDocUrl(item?.link)) {
-    return 'Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins and ~/.cursor/plugins/local are not EOS governance and are not this Cloud Agent environment. Do not delete a team marketplace without reviewing Cloud Agent MCP impact.';
+    return 'Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Team marketplace plugins and '
+      + '~/.cursor/plugins/local are not EOS governance and are not this Cloud Agent environment. Do not '
+      + 'delete a team marketplace without reviewing Cloud Agent MCP impact.';
   }
   if (isCustomizeCursorDocUrl(item?.link)) {
-    return 'Customize Cursor is optional desktop sidebar for plugins, skills, MCP, rules, and hooks. Keep EOS playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into desktop Customize for daily ingest. Keep environment.json + Builds. Team marketplace and dashboard Customize are not EOS governance. Honor included quota; do not switch this watch to on-demand.';
+    return 'Customize Cursor is optional desktop sidebar for plugins, skills, MCP, rules, and hooks. Keep EOS '
+      + 'playbooks as repo skills, rules, hooks, and .cursor/mcp.json. Do not rotate this Cloud Agent into '
+      + 'desktop Customize for daily ingest. Keep environment.json + Builds. Team marketplace and dashboard '
+      + 'Customize are not EOS governance. Honor included quota; do not switch this watch to on-demand.';
   }
   if (/\borigin\b/.test(title) || (/\borigin\b/.test(blob) && (blob.includes('host') || blob.includes('codebase') || blob.includes('git')))) {
     return 'Treat Origin as optional paid git hosting; GitHub remains source of truth for synced repos.';
   }
   if (title.includes('builds') || link.includes('changelog/08-13-26') || blob.includes('3x faster with builds') || isCloudAgentSetupUrl(item?.link)) {
-    return 'Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use start for live services.';
+    return 'Treat Cloud Agent Builds as the default start path. Keep install idempotent in environment.json; use '
+      + 'start for live services.';
   }
   if (title.includes('subagent') || link.includes('changelog/cloud-in-agents-window') || link.includes('/docs/subagents')) {
     return 'Run isolated subagents on their own VMs when work must not collide with the parent branch.';
@@ -726,7 +853,8 @@ export function applyHint(item) {
     return 'Steer running agents with follow-ups that wait for the next tool call.';
   }
   if (titleOrLink.includes('google workspace') || titleOrLink.includes('gmail') || link.includes('google-workspace')) {
-    return 'Gmail/Drive plugins are optional Workspace context. Authenticate them only if EOS needs mail/docs; they do not replace this changelog watch.';
+    return 'Gmail/Drive plugins are optional Workspace context. Authenticate them only if EOS needs mail/docs; '
+      + 'they do not replace this changelog watch.';
   }
   if (titleOrLink.includes('ipad') || titleOrLink.includes('ios-mobile') || title.includes('for ios')) {
     return 'iPad/iOS can launch Cloud Agents; this watch still runs in the Cloud Agent VM, not on the tablet.';
@@ -738,7 +866,8 @@ export function applyHint(item) {
     return 'Cursor Router picks models for Auto mode. EOS rules still bind model and governance choices.';
   }
   if (titleOrLink.includes('slack')) {
-    return 'Slack is a native Cloud Agent subscription. Reconnect Slack MCP to watch threads; X is still not a trigger.';
+    return 'Slack is a native Cloud Agent subscription. Reconnect Slack MCP to watch threads; X is still not a '
+      + 'trigger.';
   }
   if (titleOrLink.includes('side chat') || titleOrLink.includes('side-chat')) {
     return 'Park tangents in /side chats. Keep the Cursor/X learning goal on the main thread.';
@@ -792,7 +921,8 @@ export function applyHint(item) {
     return 'Computer-use agents are optional GUI control. This watch stays on official RSS, not desktop scraping.';
   }
   if (titleOrLink.includes('security review')) {
-    return 'Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane check.';
+    return 'Cursor Security Review is a vendor PR reviewer. EOS security-auditor skill remains the Control Plane '
+      + 'check.';
   }
   if (titleOrLink.includes('jetbrains')) {
     return 'JetBrains plugin is out of scope for this Cloud Agent workspace.';
@@ -810,7 +940,8 @@ export function applyHint(item) {
     return 'Parallel plans/PRs are optional. EOS still prefers one purpose per branch and evidence-gated commits.';
   }
   if (titleOrLink.includes('context usage')) {
-    return 'Inspect context usage before stuffing the prompt. This watch should stay on changelog + citations, not full-thread dumps.';
+    return 'Inspect context usage before stuffing the prompt. This watch should stay on changelog + citations, '
+      + 'not full-thread dumps.';
   }
   if (titleOrLink.includes('spend') || titleOrLink.includes('usage analytics') || titleOrLink.includes('model control') || link.includes('usage-limits') || title.includes('usage and limits')) {
     return 'Honor included quota. Stop this daily watch rather than switching to paid on-demand.';
@@ -819,28 +950,33 @@ export function applyHint(item) {
     return 'Mermaid in CLI is optional documentation. LEARNINGS.json remains the evidence store for this watch.';
   }
   if (link.includes('/help/models-and-usage/grok-4-6') || link.includes('cursor.com/help/models-and-usage/grok')) {
-    return 'Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat vendor quality claims as EOS evidence.';
+    return 'Honor Auto vs Composer pool and Grok 4.6 included-credit treatment from official help. Do not treat '
+      + 'vendor quality claims as EOS evidence.';
   }
   if (link.includes('cursor.com/docs/models-and-pricing') || title.includes('models & pricing')) {
     return 'Honor included Cursor Models vs Other Models pools. Do not treat vendor rates as EOS budget evidence.';
   }
   if (title.includes('grok bot')) {
-    return 'Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum announcements, not Grok Bot.';
+    return 'Grok Bot is a separate vendor product. This Cloud Agent watch stays on changelog + forum '
+      + 'announcements, not Grok Bot.';
   }
   if (title.includes('grok')) {
     return 'Grok model availability is vendor catalog news. EOS still evidence-gates quality claims.';
   }
   if (title.includes('opus') || title.includes('claude')) {
-    return 'Claude/Opus availability is vendor catalog news. Do not treat a forum post as a production-quality certificate.';
+    return 'Claude/Opus availability is vendor catalog news. Do not treat a forum post as a production-quality '
+      + 'certificate.';
   }
   if (title.includes('gpt-5') || title.includes('gpt 5') || title.includes('gpt-5.6')) {
     return 'GPT availability is vendor catalog news. EOS model policy stays in workspace rules.';
   }
   if (title.includes('mindgard')) {
-    return 'Vendor security-response post. Run EOS security-auditor on our diffs; do not treat the forum thread as VERIFIED.';
+    return 'Vendor security-response post. Run EOS security-auditor on our diffs; do not treat the forum thread '
+      + 'as VERIFIED.';
   }
   if (link.includes('aiuc-1') || title.includes('aiuc')) {
-    return 'Vendor security certification marketing. EOS security-auditor on our diffs remains the Control Plane check.';
+    return 'Vendor security certification marketing. EOS security-auditor on our diffs remains the Control Plane '
+      + 'check.';
   }
   if (link.includes('cursor.com/blog/')) {
     return 'Official Cursor blog post. Adopt only tooling we already run; customer/press stories are not EOS evidence.';
@@ -903,7 +1039,43 @@ function sourcePriority(url) {
 }
 
 function clusterRowPriority(url) {
-  if (isPromptingDocUrl(url) || isRulesDocUrl(url) || isMcpDocUrl(url) || isPluginsDocUrl(url) || isCustomizeCursorDocUrl(url) || isCloudAgentApiEndpointsUrl(url) || isCursorSdkTypescriptUrl(url) || isCursorSdkPythonUrl(url) || isCursorSdkBridgeUrl(url) || isTeamPricingUrl(url) || isTeamMembersUrl(url) || isHelpPricingUrl(url) || isHelpAvailableModelsUrl(url) || isHelpCursorRouterUrl(url) || isHelpGrok45Url(url) || isAgentReviewDocUrl(url) || isPlanModeDocUrl(url) || isDebugModeDocUrl(url) || isCursorCliOverviewUrl(url) || isCursorCliUsingUrl(url) || isCursorCliShellModeUrl(url) || isCursorCliAcpUrl(url) || isCursorCliHeadlessUrl(url) || isDesignModeDocUrl(url) || isBrowserToolDocUrl(url) || isTerminalToolDocUrl(url) || isSearchToolDocUrl(url) || isCanvasToolDocUrl(url) || isWorktreesDocUrl(url) || isAgentSecurityDocUrl(url) || isOriginCreateRepositoryUrl(url) || isOriginPullRequestsUrl(url) || isOriginBrowseUrl(url) || isOriginSettingsUrl(url) || isOriginCodebaseSettingsUrl(url)) {
+  if (
+    isPromptingDocUrl(url)
+    || isRulesDocUrl(url)
+    || isMcpDocUrl(url)
+    || isPluginsDocUrl(url)
+    || isCustomizeCursorDocUrl(url)
+    || isCloudAgentApiEndpointsUrl(url)
+    || isCursorSdkTypescriptUrl(url)
+    || isCursorSdkPythonUrl(url)
+    || isCursorSdkBridgeUrl(url)
+    || isTeamPricingUrl(url)
+    || isTeamMembersUrl(url)
+    || isHelpPricingUrl(url)
+    || isHelpAvailableModelsUrl(url)
+    || isHelpCursorRouterUrl(url)
+    || isHelpGrok45Url(url)
+    || isAgentReviewDocUrl(url)
+    || isPlanModeDocUrl(url)
+    || isDebugModeDocUrl(url)
+    || isCursorCliOverviewUrl(url)
+    || isCursorCliUsingUrl(url)
+    || isCursorCliShellModeUrl(url)
+    || isCursorCliAcpUrl(url)
+    || isCursorCliHeadlessUrl(url)
+    || isDesignModeDocUrl(url)
+    || isBrowserToolDocUrl(url)
+    || isTerminalToolDocUrl(url)
+    || isSearchToolDocUrl(url)
+    || isCanvasToolDocUrl(url)
+    || isWorktreesDocUrl(url)
+    || isAgentSecurityDocUrl(url)
+    || isOriginCreateRepositoryUrl(url)
+    || isOriginPullRequestsUrl(url)
+    || isOriginBrowseUrl(url)
+    || isOriginSettingsUrl(url)
+    || isOriginCodebaseSettingsUrl(url)
+  ) {
     return sourcePriority(url) + 0.5;
   }
   return sourcePriority(url);
