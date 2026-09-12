@@ -33,7 +33,18 @@ export class EOSMCPSchemaValidator {
       "eos.ledger.octave.advance": { type: "object", properties: { octaveId: { type: "string" }, currentNote: { type: "string" }, targetNote: { type: "string" }, shockProof: { type: "object" } }, required: ["octaveId", "targetNote"], additionalProperties: false },
 
       // 4. Gobernanza, Autoridad, Políticas y Evidencias
-      "eos.authority.check": { type: "object", properties: { component: { type: "string" }, requiredLevel: { type: "any" }, grantedLevel: { type: "any" }, required: { type: "any" }, granted: { type: "any" }, requiredAuth: { type: "string" } }, additionalProperties: false },
+      "eos.authority.check": {
+        type: "object",
+        properties: {
+          component: { type: "string" },
+          requiredLevel: { type: "any" },
+          grantedLevel: { type: "any" },
+          required: { type: "any" },
+          granted: { type: "any" },
+          requiredAuth: { type: "string" }
+        },
+        additionalProperties: false
+      },
       "eos.policy.validate": { type: "object", properties: { policyId: { type: "string" }, action: { type: "string" }, resource: { type: "string" }, context: { type: "object" } }, additionalProperties: false },
       "eos.evidence.record": { type: "object", properties: { id: { type: "string" }, category: { type: "string" }, status: { type: "string" }, missionId: { type: "string" }, intentId: { type: "string" }, evidenceType: { type: "string" }, payload: { type: "object" }, evidence: { type: "object" }, hash: { type: "string" }, rawBytes: { type: "string" } }, additionalProperties: false },
       "eos.evidence.get": { type: "object", properties: { evidenceId: { type: "string" }, id: { type: "string" }, missionId: { type: "string" }, mission_id: { type: "string" } }, additionalProperties: false },
