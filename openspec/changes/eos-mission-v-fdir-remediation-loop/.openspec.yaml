@@ -1,0 +1,23 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0027 — Autonomous FDIR Remediation Loop. Governed diagnose→remediate→verify cycle with maxAttempts budget, SHA-256 audit receipts (sealEvd-compatible), optional Mission R sentinel quarantine gate, and fail-closed ESCALATED_HITL when attempts are exhausted. Distinct from Mission R sentinel runtime and from AGY/daemon surfaces. Hermetic TDD; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0027
+phase: 1
+affected_areas:
+  - src/core/fdir/fdir-remediation-loop.js
+  - tests/fdir/fdir-remediation-loop.test.js
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-v-fdir-remediation-loop
+  - docs/releases/EOS_MISSION_V_FDIR_REMEDIATION_LOOP_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - installing or claiming agy-daemon / AGY DAEMON_PRESENT
+  - new npm dependencies / JSON schemas
+  - raising TR-01 (exclude-from-slim instead)
+  - rewriting src/core/fdir/fdir-sentinel-runtime.js / sentinel-daemon.js / fdir.js / fdir-ontology.js (prefer)
+  - infinite retry / uncontrolled throw on budget exhaust
