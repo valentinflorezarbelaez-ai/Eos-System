@@ -85,6 +85,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-al-autonomy-replay-forensic-observer.test.js',
 
   'eos-am-ladder15-seam-pack.test.js',
+
+  'eos-an-multi-workstation-session-federation.test.js',
 ]);
 
 /**
