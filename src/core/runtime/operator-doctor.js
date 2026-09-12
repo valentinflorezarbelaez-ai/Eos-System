@@ -31,13 +31,19 @@ function addCheck(checks, id, ok, detail) {
  * Explicit NON-CLAIM residual: doctor observes presence; it does not certify verify:strict.
  */
 export const DOCTOR_NON_CLAIMS = Object.freeze([
-  'NOT verify:strict — doctor is OBSERVED presence/light only; does not run hooks-install smoke, mcp-catalog reconcile, mission-local EVD audit, mission-artifact-write audit, p6-inventory-lock audit, sentinel-fdir, context-pack, loop-engineering, worktree-policy, SpecBoot/AGY, mcp-tool-keep, or model-routing-ratchet lock bodies',
+  'NOT verify:strict — doctor is OBSERVED presence/light only; does not run hooks-install ' +
+    'smoke, mcp-catalog reconcile, mission-local EVD audit, mission-artifact-write audit, ' +
+    'p6-inventory-lock audit, sentinel-fdir, context-pack, loop-engineering, worktree-policy, ' +
+    'SpecBoot/AGY, mcp-tool-keep, or model-routing-ratchet lock bodies',
   'NOT production readiness / PRODUCTION_READY remains NO',
   'NOT App Fuerza delivery certification',
   'NOT Fundacion mutation authorization (Fundacion Delta=0 retained)',
-  'NOT Loop Engineering autonomy — Loop Engineering policy ≠ verify:strict and ≠ productive autonomy (matrix/taxonomy only)',
-  'NOT L7 harness lock full audits — context-pack / loop 4Q / worktree / SpecBoot-AGY / KEEP / routing-ratchet observe = presence/light only',
-  'NOT T4–T8 lock full audits — mission-os-evd / keep-po-prune-hold / complexity-ceiling-hold / agy-workstation / dirty-defer-triage observe = presence/light only',
+  'NOT Loop Engineering autonomy — Loop Engineering policy ≠ verify:strict and ≠ productive autonomy ' +
+    '(matrix/taxonomy only)',
+  'NOT L7 harness lock full audits — context-pack / loop 4Q / worktree / SpecBoot-AGY / ' +
+    'KEEP / routing-ratchet observe = presence/light only',
+  'NOT T4–T8 lock full audits — mission-os-evd / keep-po-prune-hold / complexity-ceiling-hold / ' +
+    'agy-workstation / dirty-defer-triage observe = presence/light only',
   'NOT replacement of independent fusion-light or GameDay soak'
 ]);
 
