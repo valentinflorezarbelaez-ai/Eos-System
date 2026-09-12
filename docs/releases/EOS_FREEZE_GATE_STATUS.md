@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 2713ab2be195c6b6969e6ccff5ccd2b089786e37
-main_subject: Merge pull request #165 from valentinflorezarbelaez-ai/grok/mission-q-worker-runtime-daemon
-branch_hygiene: clean (main == origin/main @ 2713ab2; Ladder2-10 CLOSED on main via #84-#100; #101–#151 as prior + #165 Mission Q Worker runtime daemon; tip honesty restored post #165; PRODUCTION_READY=NO)
+main_tip: 748bffd45b0c7c899595417cd324649bf1732d00
+main_subject: Merge pull request #170 from valentinflorezarbelaez-ai/grok/mission-r-fdir-sentinel-runtime
+branch_hygiene: clean (main == origin/main @ 748bffd; Ladder2-10 CLOSED; #101–#169 as prior + #170 Mission R FDIR Sentinel Runtime; tip honesty restored post #170; PRODUCTION_READY=NO)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-11 America/Bogota (tip refresh post #165; pin to main@2713ab2; prior post-#147/#151 pin was 25de639/04f4b2d; tip honesty restored; PRODUCTION_READY=NO)
+updated_at: 2026-09-11 America/Bogota (tip refresh post #170; pin to main@748bffd; prior post-#165/#169 pin was 2713ab2/faaed3a; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + #101-#165)
+## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + #101-#170)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `2713ab2be195c6b6969e6ccff5ccd2b089786e37`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `748bffd45b0c7c899595417cd324649bf1732d00`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -112,6 +112,8 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | Mission P Loop × Worker orchestration | #147 | 25de639 | `eos-mission-p-loop-worker-orchestration`; SPEC-0021; test:loop-compute |
 | Tip refresh post #147 | #151 | 04f4b2d | `EOS_TIP_REFRESH_POST_147_2026-09-11.md`; freeze+matrix to 25de639 |
 | Mission Q Worker runtime daemon | #165 | 2713ab2 | `eos-mission-q-worker-runtime-daemon`; SPEC-0022; test:worker-daemon |
+| Tip refresh post #165 | #169 | faaed3a | `EOS_TIP_REFRESH_POST_165_2026-09-11.md`; freeze+matrix to 2713ab2 |
+| Mission R FDIR Sentinel Runtime | #170 | 748bffd | `eos-mission-r-fdir-sentinel-runtime`; SPEC-0023; test:fdir-sentinel |
 
 ### Ladder 10 (V1–V5) Closeout — 2026-09-10
 
@@ -959,3 +961,15 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
 - NON-CLAIM: tip honesty != PRODUCTION_READY; #165 Mission Q compute runtime daemon != AGY DAEMON_PRESENT; != PRODUCTION_READY; CloudAgent remains out of default SpecBoot path
+
+## Tip refresh post #170 (2026-09-11)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_170_2026-09-11.md`
+- Branch: `grok/tip-refresh-post-170`
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`748bffd45b0c7c899595417cd324649bf1732d00` (#170 Mission R; post #169 tip refresh post #165)
+- Honesty restored: prior post-#165/#169 pin was `2713ab2be195c6b6969e6ccff5ccd2b089786e37` / `faaed3a8596fb859e7b52e3eb230cbf42cb3aae6`; live main after #169–#170 is `748bffd`
+- Matrix: tip refresh post #165 MEASURED + **Mission R FDIR Sentinel Runtime MEASURED** + **tip refresh post #170 MEASURED**
+- Dirty-defer tip honesty pin moved with freeze
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; AT_CEILING
+- NON-CLAIM: tip honesty != PRODUCTION_READY; #170 FDIR sentinel runtime != AGY DAEMON_PRESENT; CloudAgent out of SpecBoot path
