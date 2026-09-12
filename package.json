@@ -203,7 +203,9 @@
     "test:provider-failover-resilience": "node --test tests/eos-ao-provider-failover-resilience.test.js",
     "test:mission-ao": "node --test tests/eos-ao-provider-failover-resilience.test.js",
     "test:hitl-po-authority": "node --test tests/eos-ap-hitl-po-authority-channel.test.js",
-    "test:mission-ap": "node --test tests/eos-ap-hitl-po-authority-channel.test.js"
+    "test:mission-ap": "node --test tests/eos-ap-hitl-po-authority-channel.test.js",
+    "test:evidence-export-notarization": "node --test tests/eos-aq-evidence-export-notarization.test.js",
+    "test:mission-aq": "node --test tests/eos-aq-evidence-export-notarization.test.js"
   },
   "keywords": [
     "eos",

@@ -1,12 +1,12 @@
-# Mission AP — package.json / slim patch fragment
+# Mission AQ — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-ap.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-aq.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:hitl-po-authority": "node --test tests/eos-ap-hitl-po-authority-channel.test.js",
-"test:mission-ap": "node --test tests/eos-ap-hitl-po-authority-channel.test.js"
+"test:evidence-export-notarization": "node --test tests/eos-aq-evidence-export-notarization.test.js",
+"test:mission-aq": "node --test tests/eos-aq-evidence-export-notarization.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-ap.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-ap-hitl-po-authority-channel.test.js',
+'eos-aq-evidence-export-notarization.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
