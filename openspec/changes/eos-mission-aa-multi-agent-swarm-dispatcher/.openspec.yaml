@@ -1,0 +1,25 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0032 / Mission AA — Multi-Agent Swarm Dispatcher (AgentHandoffEnvelope V3). Fail-closed Architect→Builder→Verifier dispatch with role alias normalization, BUILDER!=VERIFIER enforcement, BoundedOutputFilter token budget, capped in-process concurrency (maxConcurrent≤3), hash-chained handoff receipts. NON-CLAIM ≠ CloudAgent fleet / ≠ unbounded swarm. PRODUCTION_READY=NO; Fundacion Δ=0; AT_CEILING; Antigravity-first; no CloudAgent.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0032
+phase: 1
+affected_areas:
+  - src/core/swarm/agent-handoff-validator.js
+  - src/core/swarm/multi-agent-dispatcher.js
+  - tests/eos-aa-multi-agent-swarm.test.js
+  - scripts/patch-mission-aa.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-aa-multi-agent-swarm-dispatcher
+  - docs/releases/EOS_MISSION_AA_MULTI_AGENT_SWARM_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent / CloudAgent fleet
+  - unbounded swarm concurrency
+  - raising TR-01 (exclude-from-slim instead)
+  - Fundacion / App Fuerza tree mutation on disk
+  - new npm dependencies / JSON schemas
+  - claiming dispatcher ≡ production multi-agent autonomy
