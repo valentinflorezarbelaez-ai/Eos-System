@@ -1,12 +1,12 @@
-# Mission AN — package.json / slim patch fragment
+# Mission AO — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-an.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-ao.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:multi-workstation-federation": "node --test tests/eos-an-multi-workstation-session-federation.test.js",
-"test:mission-an": "node --test tests/eos-an-multi-workstation-session-federation.test.js"
+"test:provider-failover-resilience": "node --test tests/eos-ao-provider-failover-resilience.test.js",
+"test:mission-ao": "node --test tests/eos-ao-provider-failover-resilience.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-an.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-an-multi-workstation-session-federation.test.js',
+'eos-ao-provider-failover-resilience.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).

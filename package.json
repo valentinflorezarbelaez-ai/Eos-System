@@ -199,7 +199,9 @@
     "test:am15": "node --test tests/eos-am-ladder15-seam-pack.test.js",
     "test:ladder15-pack": "npm run test:multi-session-autonomy && npm run test:evidence-economy-ledger && npm run test:constitution-runtime-policy-gate && npm run test:autonomy-replay-forensic-observer && npm run test:mission-am",
     "test:multi-workstation-federation": "node --test tests/eos-an-multi-workstation-session-federation.test.js",
-    "test:mission-an": "node --test tests/eos-an-multi-workstation-session-federation.test.js"
+    "test:mission-an": "node --test tests/eos-an-multi-workstation-session-federation.test.js",
+    "test:provider-failover-resilience": "node --test tests/eos-ao-provider-failover-resilience.test.js",
+    "test:mission-ao": "node --test tests/eos-ao-provider-failover-resilience.test.js"
   },
   "keywords": [
     "eos",
