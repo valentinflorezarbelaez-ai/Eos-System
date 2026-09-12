@@ -77,6 +77,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ah-ladder14-seam-pack.test.js',
 
   'eos-ai-multi-session-autonomy.test.js',
+
+  'eos-aj-evidence-economy-ledger.test.js',
 ]);
 
 /**

@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0041 / Mission AJ — Evidence Economy Ledger. Append-only hash-chained EVD aggregation + chain verify + sanitized query SSOT at scale for AI/AK/AL consumers. Trans-session integrity. Cost attribution observe-only. PRODUCTION_READY=NO. NON-CLAIM EVD ledger ≠ external audit platform ≠ compliance certification ≠ PRODUCTION_READY; multi-session cost tracking ≠ billing product; not a second custody core (ADR-0015 HashChainedLedger); not AK/AL/AM; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0041
+phase: 1
+affected_areas:
+  - src/core/evidence/evidence-economy-ledger.js
+  - src/core/evidence/evidence-cost-tracker.js
+  - tests/eos-aj-evidence-economy-ledger.test.js
+  - scripts/patch-mission-aj.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-aj-evidence-economy-ledger
+  - docs/releases/EOS_MISSION_AJ_EVIDENCE_ECONOMY_LEDGER_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AK/AL/AM
+  - second competing custody core (ADR-0015 remains custody SSOT)
+  - external audit / compliance certification product
+  - billing product
+  - live network in CI
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets / vendor-key literals in repo
+  - new npm dependencies
+  - claiming EVD ledger ≡ PRODUCTION_READY
