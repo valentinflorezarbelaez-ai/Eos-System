@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 6a133077b5abc24f3e6dd0387f00470033aca90b
+evaluated_tip: 8cf55386f0829d5081b34753e15b142eb179df1f
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #225 from valentinflorezarbelaez-ai/grok/mission-aj-evidence-economy-ledger
-updated_at: 2026-09-12 America/Bogota (tip refresh post-#225; pin to main@6a13307; prior tip-222 pin ccb25a9 + tip-224 merge SHA not invented; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE); Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); Ladder 15 OPEN (AI+AJ MEASURED via #222/#225; AK–AM pending); Ladder 15 Maturity Audit MEASURED; Tip refresh post #222 MEASURED (historical); Mission AI MEASURED; Mission AJ MEASURED; Tip refresh post #225 MEASURED; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #227 from valentinflorezarbelaez-ai/grok/mission-ak-constitution-runtime-policy-gate
+updated_at: 2026-09-12 America/Bogota (tip refresh post-#227; pin to main@8cf5538; prior tip-225 pin 6a13307 + tip-226 merge SHA not invented; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE); Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); Ladder 15 OPEN (AI+AJ+AK MEASURED; AL pending); Ladder 15 Maturity Audit MEASURED; Tip refresh post #225 MEASURED (historical/superseded); Mission AI MEASURED; Mission AJ MEASURED; Mission AK MEASURED; Tip refresh post #227 MEASURED; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -170,12 +170,14 @@ updated_at: 2026-09-12 America/Bogota (tip refresh post-#225; pin to main@6a1330
 | Mission AH | COMPLETE | MEASURED (eos-mission-ah-ladder14-closeout-seam-pack; test:mission-ah / test:ah14 / test:ladder14-pack; SPEC-0039; Ladder 14 Closeout Seam-Pack; Fundacion Delta=0; Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); NON-CLAIM CI seam-pack ≠ PRODUCTION_READY / ≠ GH enforcement) |
 | Ladder 14 Closeout | COMPLETE | MEASURED (EOS_LADDER_14_CLOSEOUT_2026-09-12.md; AD/AE/AF/AG + Mission AH seam-pack; CLOSED_FOR_LOCAL_GOVERNED_USE; PRODUCTION_READY=NO) |
 | Tip refresh post-AH | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_AH_2026-09-12.md; freeze+matrix historically to 810fb6c0; tip honesty restored; tip-refresh-post-ah; superseded by post #220) |
-| Ladder 15 Maturity Audit | COMPLETE | MEASURED (#220; EOS_MATURITY_LADDER_15_AUDIT_2026-09-12.md; audit base tip 810fb6c0 post-AH/#219; AI–AM ordered; audit MEASURED, NOT closed; tip-219 SHA not invented; tip honesty gap closed by post #220; AI later MEASURED via #222; AJ later MEASURED via #225; AK–AM pending) |
+| Ladder 15 Maturity Audit | COMPLETE | MEASURED (#220; EOS_MATURITY_LADDER_15_AUDIT_2026-09-12.md; audit base tip 810fb6c0 post-AH/#219; AI–AM ordered; audit MEASURED, NOT closed; tip-219 SHA not invented; tip honesty gap closed by post #220; AI later MEASURED via #222; AJ later MEASURED via #225; AK later MEASURED via #227; AL pending) |
 | Tip refresh post #220 | COMPLETE | MEASURED (historical; superseded by post-#222 pin; EOS_TIP_REFRESH_POST_220_2026-09-12.md; freeze+matrix historically to 99944f41; tip-refresh-post-220) |
 | Mission AI Multi-Session Autonomy Coordinator | COMPLETE | MEASURED (#222; SPEC-0040; test:mission-ai / multi-session autonomy) |
-| Tip refresh post #222 | COMPLETE | MEASURED (historical; superseded by post-#225) |
+| Tip refresh post #222 | COMPLETE | MEASURED (historical; superseded by post-#225; later superseded by post-#227) |
 | Mission AJ Evidence Economy Ledger | COMPLETE | MEASURED (#225; SPEC-0041; test:mission-aj / evidence-economy-ledger) |
-| Tip refresh post #225 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_225_2026-09-12.md; freeze+matrix to 6a13307…) |
+| Tip refresh post #225 | COMPLETE | MEASURED (historical/superseded; EOS_TIP_REFRESH_POST_225_2026-09-12.md; freeze+matrix historically to 6a13307…; superseded by post-#227) |
+| Mission AK Constitution Runtime Policy Gate | COMPLETE | MEASURED (#227; SPEC-0042; test:mission-ak / constitution-runtime-policy-gate; Constitution Runtime / Policy Gate) |
+| Tip refresh post #227 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_227_2026-09-12.md; freeze+matrix to 8cf5538…) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -253,12 +255,20 @@ PRODUCTION_READY: NO
 - Matrix: tip refresh post #126 MEASURED (historical) + Mission K Browser QA Runner MEASURED + tip refresh post #128 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
-## Tip refresh notes (post #225)
+## Tip refresh notes (post #227)
 
-- evaluated_tip pinned to OBSERVED main tip after #224+#225: 6a133077b5abc24f3e6dd0387f00470033aca90b
-- Prior tip-222 pin ccb25a9 + tip refresh post-#222 merged as #224 (tip-224 merge SHA not invented); live main after #225 Mission AJ is 6a13307 — **tip honesty restored**
-- Matrix: Tip refresh post #222 MEASURED (historical; superseded by post-#225 pin) + Mission AJ Evidence Economy Ledger MEASURED + Tip refresh post #225 MEASURED (tip-refresh-post-225)
-- NON-CLAIM: Mission AJ / Evidence Economy Ledger != PRODUCTION_READY=YES / != billing / != external audit / != CloudAgent fleet; Mission AI / multi-session autonomy != PRODUCTION_READY=YES / != CloudAgent fleet / != unbounded autonomy product; Ladder 15 Maturity Audit MEASURED != Ladder 15 CLOSED; Ladder 15 OPEN (AI+AJ MEASURED via #222/#225; AK–AM pending); Mission AH / Ladder 14 Closeout / CI seam-pack != PRODUCTION_READY / != GH enforcement; Mission AG / Live Tool Engine != PRODUCTION_READY / != CloudAgent fleet; Mission AF / Autonomous Execution Loop / live LLM != PRODUCTION_READY; Mission AE / ECR != billing != PRODUCTION_READY; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); CI != GH enforcement; does not invent PRODUCTION_READY or tip-224 / intermediate full SHAs
+- evaluated_tip pinned to OBSERVED main tip after #226+#227: 8cf55386f0829d5081b34753e15b142eb179df1f
+- Prior tip-225 pin 6a13307 + tip refresh post-#225 merged as #226 (tip-226 merge SHA not invented); live main after #227 Mission AK is 8cf5538 — **tip honesty restored**
+- Matrix: Tip refresh post #225 MEASURED (historical/superseded by post-#227 pin) + Mission AK Constitution Runtime Policy Gate MEASURED + Tip refresh post #227 MEASURED (tip-refresh-post-227)
+- NON-CLAIM: Mission AK / Constitution Runtime Policy Gate != PRODUCTION_READY=YES / != compliance certification / != CloudAgent fleet; Mission AJ / Evidence Economy Ledger != PRODUCTION_READY=YES / != billing / != external audit / != CloudAgent fleet; Mission AI / multi-session autonomy != PRODUCTION_READY=YES / != CloudAgent fleet / != unbounded autonomy product; Ladder 15 Maturity Audit MEASURED != Ladder 15 CLOSED; Ladder 15 OPEN (AI+AJ+AK MEASURED; AL pending); Mission AH / Ladder 14 Closeout / CI seam-pack != PRODUCTION_READY / != GH enforcement; Mission AG / Live Tool Engine != PRODUCTION_READY / != CloudAgent fleet; Mission AF / Autonomous Execution Loop / live LLM != PRODUCTION_READY; Mission AE / ECR != billing != PRODUCTION_READY; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); CI != GH enforcement; does not invent PRODUCTION_READY or tip-226 / intermediate full SHAs
+
+## Tip refresh notes (post #225) — historical
+
+- evaluated_tip pinned (historical) to OBSERVED main tip after #224+#225: 6a133077b5abc24f3e6dd0387f00470033aca90b
+- Prior tip-222 pin ccb25a9 + tip refresh post-#222 merged as #224 (tip-224 merge SHA not invented); live main after #225 Mission AJ is 6a13307 — **tip honesty restored** (then)
+- Matrix: Tip refresh post #222 MEASURED (historical; superseded by post-#225 pin) + Mission AJ Evidence Economy Ledger MEASURED + Tip refresh post #225 MEASURED (tip-refresh-post-225; historical/superseded)
+- NON-CLAIM: Mission AJ / Evidence Economy Ledger != PRODUCTION_READY=YES / != billing / != external audit / != CloudAgent fleet; Mission AI / multi-session autonomy != PRODUCTION_READY=YES / != CloudAgent fleet / != unbounded autonomy product; Ladder 15 Maturity Audit MEASURED != Ladder 15 CLOSED; Ladder 15 was OPEN at tip-225 time (AI+AJ MEASURED via #222/#225; AK–AM pending then; AK later MEASURED via #227); Mission AH / Ladder 14 Closeout / CI seam-pack != PRODUCTION_READY / != GH enforcement; Mission AG / Live Tool Engine != PRODUCTION_READY / != CloudAgent fleet; Mission AF / Autonomous Execution Loop / live LLM != PRODUCTION_READY; Mission AE / ECR != billing != PRODUCTION_READY; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); CI != GH enforcement; does not invent PRODUCTION_READY or tip-224 / intermediate full SHAs
+- Historical: tip refresh post-#225 merged as #226 (SHA not invented); superseded by tip refresh post-#227 pin to main@8cf5538
 
 ## Tip refresh notes (post #222) — historical
 
@@ -266,7 +276,7 @@ PRODUCTION_READY: NO
 - Prior tip-220 pin 99944f41 + tip refresh post-#220 merged as #221 (tip-221 merge SHA not invented); live main after #222 Mission AI is ccb25a9 — **tip honesty restored** (then)
 - Matrix: Tip refresh post #220 MEASURED (historical; superseded by post-#222 pin) + Mission AI Multi-Session Autonomy Coordinator MEASURED + Tip refresh post #222 MEASURED (tip-refresh-post-222)
 - NON-CLAIM: Mission AI / multi-session autonomy != PRODUCTION_READY=YES / != CloudAgent fleet / != unbounded autonomy product; Ladder 15 Maturity Audit MEASURED != Ladder 15 CLOSED; Ladder 15 was OPEN at tip-222 time (AI MEASURED via #222; AJ–AM pending then; AJ later MEASURED via #225); Mission AH / Ladder 14 Closeout / CI seam-pack != PRODUCTION_READY / != GH enforcement; Mission AG / Live Tool Engine != PRODUCTION_READY / != CloudAgent fleet; Mission AF / Autonomous Execution Loop / live LLM != PRODUCTION_READY; Mission AE / ECR != billing != PRODUCTION_READY; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); CI != GH enforcement; does not invent PRODUCTION_READY or tip-221 / intermediate full SHAs
-- Historical: tip refresh post-#222 merged as #224 (SHA not invented); superseded by tip refresh post-#225 pin to main@6a13307
+- Historical: tip refresh post-#222 merged as #224 (SHA not invented); superseded by tip refresh post-#225 pin to main@6a13307; later superseded by tip refresh post-#227 pin to main@8cf5538
 
 ## Tip refresh notes (post #220) — historical
 
@@ -274,7 +284,7 @@ PRODUCTION_READY: NO
 - Prior AH pin 810fb6c0 + tip refresh post-AH merged as #219 (tip-219 full SHA not invented); live main after #220 Ladder 15 Maturity Audit is 99944f41 — **tip honesty restored** (then)
 - Matrix: Tip refresh post-AH MEASURED (historical) + Ladder 15 Maturity Audit MEASURED + Tip refresh post #220 MEASURED (tip-refresh-post-220)
 - NON-CLAIM: Ladder 15 Maturity Audit MEASURED != AI/AJ/AK/AL/AM implemented != Ladder 15 CLOSED != PRODUCTION_READY=YES / != GH enforcement; Mission AH / Ladder 14 Closeout / CI seam-pack != PRODUCTION_READY / != GH enforcement; Mission AG / Live Tool Engine != PRODUCTION_READY / != CloudAgent fleet; Mission AF / Autonomous Execution Loop / live LLM != PRODUCTION_READY; Mission AE / ECR != billing != PRODUCTION_READY; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); Ladder 15 was OPEN at tip-220 time (audit MEASURED; AI–AM pending; AI not implemented yet); CI != GH enforcement; does not invent PRODUCTION_READY or tip-219 / intermediate full SHAs
-- Historical: tip refresh post-#220 merged as #221 (SHA not invented); superseded by tip refresh post-#222 pin to main@ccb25a9; later superseded by tip refresh post-#225 pin to main@6a13307
+- Historical: tip refresh post-#220 merged as #221 (SHA not invented); superseded by tip refresh post-#222 pin to main@ccb25a9; later superseded by tip refresh post-#225 pin to main@6a13307; later superseded by tip refresh post-#227 pin to main@8cf5538
 
 ## Tip refresh notes (post-AH) — historical
 
