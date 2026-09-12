@@ -1,0 +1,38 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Tip honesty refresh post-#241 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@f4869c4 (PR #240 tip-239 @ ddc2a5a + #241 Mission AQ Evidence Export & Notarization Observer; prior tip-239 pin b991c3d; tip-240 full SHA not invented beyond ddc2a5a); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout); Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 OPEN (AN+AO+AP+AQ MEASURED via #235+#237+#239+#241; AR pending). NON-CLAIM Mission AQ ≠ AR implemented ≠ Ladder 16 CLOSED ≠ PRODUCTION_READY / ≠ GH enforcement / ≠ CloudAgent fleet. NON-CLAIM Mission AP + Mission AO + Mission AN remain MEASURED (historical via #239/#237/#235).
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-241
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_241_2026-09-12.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-241
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - inventing tip SHAs (incl. tip-240 full SHA beyond ddc2a5a / intermediate full SHAs)
+  - implementing AR / Ladder 16 satellites in this change
+  - claiming Ladder 16 is CLOSED, AR implemented, PRODUCTION_READY, or GH-enforced
+  - claiming AQ not implemented (AQ is MEASURED via #241)
+  - claiming Mission AQ / Evidence Export & Notarization Observer is PRODUCTION_READY, CloudAgent fleet, SIEM product, billing, or GH-enforced
+  - claiming Mission AP / HITL/PO Authority Channel Hardening is PRODUCTION_READY, CloudAgent fleet, SIEM product, or GH-enforced
+  - claiming Mission AO / Provider Failover & Resilience Router is PRODUCTION_READY, CloudAgent fleet, SLA product, multi-cloud billing, or GH-enforced
+  - claiming Mission AN / Multi-Workstation Session Federation is PRODUCTION_READY, CloudAgent fleet, multi-tenant SaaS, or GH-enforced
+  - claiming Mission AM / Ladder 15 Closeout is PRODUCTION_READY or GH-enforced
+  - claiming Mission AL / Autonomy Replay / Forensic Observer is PRODUCTION_READY, SIEM, billing, or GH-enforced
+  - claiming Mission AK / Constitution Runtime Policy Gate is PRODUCTION_READY, compliance certification, or GH-enforced
+  - claiming Mission AJ / Evidence Economy Ledger is PRODUCTION_READY, billing, or GH-enforced
+  - claiming Mission AI / multi-session is PRODUCTION_READY or GH-enforced
+  - claiming Mission AH / Ladder 14 Closeout is PRODUCTION_READY or GH-enforced
+  - claiming Mission AG / Live Tool Engine is PRODUCTION_READY or a CloudAgent fleet
+  - claiming Mission AF / Autonomous Execution Loop / live LLM is PRODUCTION_READY
+  - claiming Mission AE / ECR is PRODUCTION_READY or a billing platform
+  - claiming Mission AD / live LLM port is PRODUCTION_READY
+  - putting API keys in repo
