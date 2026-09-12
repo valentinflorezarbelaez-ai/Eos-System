@@ -154,7 +154,7 @@
     "test:mission-s": "node --test tests/specboot/specboot-agent-runner.test.js",
     "test:external-write-gateway": "node --test tests/governance/external-write-gateway.test.js",
     "test:mission-t": "node --test tests/governance/external-write-gateway.test.js",
-    "test:native-suite-pack": "npm run test:compute-worker-i && npm run test:compute-worker-l && npm run test:compute-worker-m && npm run test:compute-worker-n && npm run test:compute-worker-o && npm run test:loop-compute && npm run test:worker-daemon && npm run test:fdir-sentinel && npm run test:specboot-agent && npm run test:external-write-gateway && npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell && npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server",
+    "test:native-suite-pack": "npm run test:compute-worker-i && npm run test:compute-worker-l && npm run test:compute-worker-m && npm run test:compute-worker-n && npm run test:compute-worker-o && npm run test:loop-compute && npm run test:worker-daemon && npm run test:fdir-sentinel && npm run test:specboot-agent && npm run test:external-write-gateway && npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell && npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server && npm run test:llm-provider-port && npm run test:token-budget-ecr && npm run test:autonomous-loop && npm run test:live-tool-engine",
     "test:mission-u": "node --test tests/eos-u-native-suite-seam-pack.test.js",
     "test:u11": "npm run test:mission-u",
     "test:fdir-remediation": "node --test tests/fdir/fdir-remediation-loop.test.js",
@@ -182,7 +182,11 @@
     "test:autonomous-execution-loop": "node --test tests/eos-af-autonomous-execution-loop.test.js",
     "test:mission-af": "node --test tests/eos-af-autonomous-execution-loop.test.js",
     "test:live-tool-engine": "node --test tests/eos-ag-live-tool-engine.test.js",
-    "test:mission-ag": "node --test tests/eos-ag-live-tool-engine.test.js"
+    "test:mission-ag": "node --test tests/eos-ag-live-tool-engine.test.js",
+    "test:autonomous-loop": "node --test tests/eos-af-autonomous-execution-loop.test.js",
+    "test:mission-ah": "node --test tests/eos-ah-ladder14-seam-pack.test.js",
+    "test:ah14": "node --test tests/eos-ah-ladder14-seam-pack.test.js",
+    "test:ladder14-pack": "npm run test:llm-provider-port && npm run test:token-budget-ecr && npm run test:autonomous-loop && npm run test:live-tool-engine && npm run test:mission-ah"
   },
   "keywords": [
     "eos",

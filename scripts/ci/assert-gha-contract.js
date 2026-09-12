@@ -187,6 +187,10 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:target-flight', 'CI Mission AC target-flight (Z)');
         assertContains(yaml, 'test:multi-agent-swarm', 'CI Mission AC multi-agent-swarm (AA)');
         assertContains(yaml, 'test:telemetry-server', 'CI Mission AC telemetry-server (AB)');
+        assertContains(yaml, 'test:llm-provider-port', 'CI Mission AH llm-provider-port (AD)');
+        assertContains(yaml, 'test:token-budget-ecr', 'CI Mission AH token-budget-ecr (AE)');
+        assertContains(yaml, 'test:autonomous-loop', 'CI Mission AH autonomous-loop (AF)');
+        assertContains(yaml, 'test:live-tool-engine', 'CI Mission AH live-tool-engine (AG)');
       } catch (err) {
         failures.push(err.message);
       }
