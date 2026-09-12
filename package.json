@@ -176,7 +176,9 @@
     "test:ac13": "node --test tests/eos-ac-ladder13-seam-pack.test.js",
     "test:ladder13-pack": "npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server",
     "test:llm-provider-port": "node --test tests/eos-ad-llm-provider-port.test.js",
-    "test:mission-ad": "node --test tests/eos-ad-llm-provider-port.test.js"
+    "test:mission-ad": "node --test tests/eos-ad-llm-provider-port.test.js",
+    "test:token-budget-ecr": "node --test tests/eos-ae-token-budget-ecr.test.js",
+    "test:mission-ae": "node --test tests/eos-ae-token-budget-ecr.test.js"
   },
   "keywords": [
     "eos",
