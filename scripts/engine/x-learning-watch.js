@@ -546,7 +546,9 @@ export function applyHint(item) {
     return 'Debug Mode is optional desktop debugging with a local Cursor extension. This watch already uses EOS TDD in the Cloud Agent VM; do not rotate this Cloud Agent into Debug Mode for daily ingest. Keep the standing /goal. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliOverviewUrl(item?.link)) {
-    return 'Cursor CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI or rotate this watch into print mode, sandbox, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Cursor CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. ' +
+      'Do not install Cursor CLI or rotate this watch into print mode, sandbox, or Cloud Agent handoff for daily ingest. ' +
+      'Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliUsingUrl(item?.link)) {
     return 'Using Agent in CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not rotate this watch into print mode, worktrees, ACP, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
