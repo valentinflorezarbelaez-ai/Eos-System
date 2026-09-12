@@ -55,6 +55,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'sovereign-session-coordinator.test.js',
 
   'interactive-developer-shell.test.js',
+
+  'eos-y-ladder12-seam-pack.test.js',
 ]);
 
 /**

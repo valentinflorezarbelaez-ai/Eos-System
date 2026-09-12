@@ -181,6 +181,9 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:fdir-sentinel', 'CI Mission U fdir-sentinel (R)');
         assertContains(yaml, 'test:specboot-agent', 'CI Mission U specboot-agent (S)');
         assertContains(yaml, 'test:external-write-gateway', 'CI Mission U external-write-gateway (T)');
+        assertContains(yaml, 'test:fdir-remediation', 'CI Mission Y fdir-remediation (V)');
+        assertContains(yaml, 'test:sovereign-session', 'CI Mission Y sovereign-session (W)');
+        assertContains(yaml, 'test:developer-shell', 'CI Mission Y developer-shell (X)');
       } catch (err) {
         failures.push(err.message);
       }

@@ -154,7 +154,7 @@
     "test:mission-s": "node --test tests/specboot/specboot-agent-runner.test.js",
     "test:external-write-gateway": "node --test tests/governance/external-write-gateway.test.js",
     "test:mission-t": "node --test tests/governance/external-write-gateway.test.js",
-    "test:native-suite-pack": "npm run test:compute-worker-i && npm run test:compute-worker-l && npm run test:compute-worker-m && npm run test:compute-worker-n && npm run test:compute-worker-o && npm run test:loop-compute && npm run test:worker-daemon && npm run test:fdir-sentinel && npm run test:specboot-agent && npm run test:external-write-gateway",
+    "test:native-suite-pack": "npm run test:compute-worker-i && npm run test:compute-worker-l && npm run test:compute-worker-m && npm run test:compute-worker-n && npm run test:compute-worker-o && npm run test:loop-compute && npm run test:worker-daemon && npm run test:fdir-sentinel && npm run test:specboot-agent && npm run test:external-write-gateway && npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell",
     "test:mission-u": "node --test tests/eos-u-native-suite-seam-pack.test.js",
     "test:u11": "npm run test:mission-u",
     "test:fdir-remediation": "node --test tests/fdir/fdir-remediation-loop.test.js",
@@ -162,7 +162,10 @@
     "test:sovereign-session": "node --test tests/session/sovereign-session-coordinator.test.js",
     "test:mission-w": "node --test tests/session/sovereign-session-coordinator.test.js",
     "test:developer-shell": "node --test tests/cli/interactive-developer-shell.test.js",
-    "test:mission-x": "node --test tests/cli/interactive-developer-shell.test.js"
+    "test:mission-x": "node --test tests/cli/interactive-developer-shell.test.js",
+    "test:mission-y": "node --test tests/eos-y-ladder12-seam-pack.test.js",
+    "test:y12": "node --test tests/eos-y-ladder12-seam-pack.test.js",
+    "test:ladder12-pack": "npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell"
   },
   "keywords": [
     "eos",

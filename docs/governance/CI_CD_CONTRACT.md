@@ -18,7 +18,7 @@ Machine-readable companion: `docs/governance/CI_CD_CONTRACT.json`.
 | test | `npm test` | Forbidden |
 | syntax | `node --check` on `bin/`, `src/`, `scripts/`, `tests/` | Forbidden |
 | governance-gates | `evaluate:release`, `verify:independent`, `audit:system` | Forbidden |
-| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s2`..`test:s6` + `test:specboot-agy` + `test:t2`..`test:t8` + `test:v2`..`test:v5` + `test:u2` + `test:compute-worker` + `test:c2` + `test:compute-worker-i`/`l`/`m`/`n`/`o` + `test:loop-compute` + `test:worker-daemon` + `test:fdir-sentinel` + `test:specboot-agent` + `test:external-write-gateway` (alias `test:native-suite-pack`) | Forbidden |
+| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s2`..`test:s6` + `test:specboot-agy` + `test:t2`..`test:t8` + `test:v2`..`test:v5` + `test:u2` + `test:compute-worker` + `test:c2` + `test:compute-worker-i`/`l`/`m`/`n`/`o` + `test:loop-compute` + `test:worker-daemon` + `test:fdir-sentinel` + `test:specboot-agent` + `test:external-write-gateway` (alias `test:native-suite-pack`) + `test:fdir-remediation`/`test:sovereign-session`/`test:developer-shell` (Ladder 12) | Forbidden |
 
 Triggers: `push` to `main`, `pull_request`, `workflow_dispatch`.
 
@@ -74,3 +74,9 @@ seam-pack named pack extended with CI-safe native/macro mission satellites: `tes
 
 ## Ladder 11 note (2026-09-11)
 Ladder 11 closeout: macros P–T measured; native suite required in CI seam-pack (SPEC-0026 / Mission U). Dictamen COMPLETE_FOR_LOCAL_GOVERNED_USE. PRODUCTION_READY=NO. Fundacion Δ=0. See `docs/releases/EOS_LADDER_11_CLOSEOUT_2026-09-11.md`.
+
+## Y / Mission Y Ladder 12 seam-pack note (2026-09-11)
+seam-pack named pack extended with CI-safe Ladder 12 satellites: `test:fdir-remediation` (V), `test:sovereign-session` (W), `test:developer-shell` (X). Keep prior native-suite + packs. Local aliases: `test:ladder12-pack`, `test:mission-y` / `test:y12`. Lock basename `eos-y-ladder12-seam-pack.test.js` stays in SLIM_SUITE_EXCLUDES (TR-01 ≤145). No soak. No continue-on-error. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.
+
+## Ladder 12 note (2026-09-11)
+Ladder 12 closeout: V (FDIR remediation) + W (sovereign session) + X (developer shell) consolidated into CI seam-pack (SPEC-0030 / Mission Y). Dictamen COMPLETE_FOR_LOCAL_GOVERNED_USE. PRODUCTION_READY=NO. Fundacion Δ=0. See `docs/releases/EOS_LADDER_12_CLOSEOUT_2026-09-11.md`.
