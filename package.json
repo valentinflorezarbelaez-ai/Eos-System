@@ -2,7 +2,7 @@
   "name": "eos-system",
   "version": "0.6.0",
   "private": true,
-  "description": "Engineering Operating System \u2014 Autonomous, reproducible, and auditable engineering control plane.",
+  "description": "Engineering Operating System — Autonomous, reproducible, and auditable engineering control plane.",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.js",
@@ -150,7 +150,9 @@
     "test:fdir-sentinel": "node --test tests/fdir/fdir-sentinel-runtime.test.js",
     "test:mission-r": "node --test tests/fdir/fdir-sentinel-runtime.test.js",
     "test:specboot-agent": "node --test tests/specboot/specboot-agent-runner.test.js",
-    "test:mission-s": "node --test tests/specboot/specboot-agent-runner.test.js"
+    "test:mission-s": "node --test tests/specboot/specboot-agent-runner.test.js",
+    "test:external-write-gateway": "node --test tests/governance/external-write-gateway.test.js",
+    "test:mission-t": "node --test tests/governance/external-write-gateway.test.js"
   },
   "keywords": [
     "eos",

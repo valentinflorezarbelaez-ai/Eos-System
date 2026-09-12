@@ -1,0 +1,23 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0025a / Mission T-gate — External Project Write-Barrier Gateway L2 fail-closed. Additive overlay validates six Level-2 preconditions then authorizes writes against a hermetic fixture project root ONLY. Real Documents/Fundacion paths remain ALWAYS DENIED (ADR-0013 / FUNDACION_ALWAYS_DENY / Δ=0 intact). PRODUCTION_READY=NO; AT_CEILING; Antigravity-first; no CloudAgent.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0025a
+phase: 1
+affected_areas:
+  - src/core/governance/external-write-gateway.js
+  - tests/governance/external-write-gateway.test.js
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-t-external-write-gateway
+  - docs/releases/EOS_MISSION_T_EXTERNAL_WRITE_GATEWAY_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - weakening write-barrier FUNDACION_ALWAYS_DENY for real Fundacion
+  - mutating src/core/write-barrier/* (prefer additive overlay)
+  - Cursor CloudAgent
+  - raising TR-01 (exclude-from-slim instead)
+  - Fundacion / App Fuerza tree mutation on disk
+  - new npm dependencies / JSON schemas
