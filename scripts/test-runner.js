@@ -89,6 +89,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-an-multi-workstation-session-federation.test.js',
 
   'eos-ao-provider-failover-resilience.test.js',
+
+  'eos-ap-hitl-po-authority-channel.test.js',
 ]);
 
 /**

@@ -201,7 +201,9 @@
     "test:multi-workstation-federation": "node --test tests/eos-an-multi-workstation-session-federation.test.js",
     "test:mission-an": "node --test tests/eos-an-multi-workstation-session-federation.test.js",
     "test:provider-failover-resilience": "node --test tests/eos-ao-provider-failover-resilience.test.js",
-    "test:mission-ao": "node --test tests/eos-ao-provider-failover-resilience.test.js"
+    "test:mission-ao": "node --test tests/eos-ao-provider-failover-resilience.test.js",
+    "test:hitl-po-authority": "node --test tests/eos-ap-hitl-po-authority-channel.test.js",
+    "test:mission-ap": "node --test tests/eos-ap-hitl-po-authority-channel.test.js"
   },
   "keywords": [
     "eos",

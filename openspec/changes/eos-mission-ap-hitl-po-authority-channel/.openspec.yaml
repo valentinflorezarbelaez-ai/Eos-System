@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0047 / Mission AP — HITL / PO Authority Channel Hardening. Injectable authority channel over AI HITL + AK constitution gate; escalate → openRequest → decide(approve|deny) / tickTimeout → resume/DENY + sealed receipt with AJ-like ledger tip linkage; injectable AF-like scheduler pause; hermetic fakes; secrets sanitized (Law VI). Fail-closed HITL_REQUIRED / AUTHORITY_DENIED / AUTHORITY_TIMEOUT / AUTHORITY_OPEN / MISSING_DEP / INVALID_REQUEST / SECRET_LEAK_FORBIDDEN / LEDGER_LINK_FAIL / SCHEDULER_BLOCKED. PRODUCTION_READY=NO. NON-CLAIM authority ≠ GH branch-protection enforcement ≠ org IAM ≠ PRODUCTION_READY approval SaaS; not AQ/AR; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI; Law VI no static vendor-key literals; timeout DENY (no auto-approve).
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0047
+phase: 1
+affected_areas:
+  - src/core/authority/hitl-po-authority-channel.js
+  - src/core/authority/authority-receipt.js
+  - tests/eos-ap-hitl-po-authority-channel.test.js
+  - scripts/patch-mission-ap.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ap-hitl-po-authority-channel
+  - docs/releases/EOS_MISSION_AP_HITL_PO_AUTHORITY_CHANNEL_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AQ/AR
+  - GH required-check / branch-protection enforcement
+  - org IAM product
+  - PRODUCTION_READY approval SaaS
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets / vendor-key literals in repo
+  - new npm dependencies
+  - auto-approve on timeout
+  - claiming authority channel ≡ GH enforcement / IAM / approval SaaS
