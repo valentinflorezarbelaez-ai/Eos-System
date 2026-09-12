@@ -133,14 +133,13 @@ export class MultimodalCreativeEngine {
       throw new RequireHumanApprovalException(`REQUIRE_HUMAN_APPROVAL: Estimated cost $${estimatedCostUsd} USD exceeds provisional limit $${this.provisionalBudgetCapUsd} USD`);
     }
 
-    const generatedArtifacts = [];
-    let totalActualCost = 0;
+    const artifactPromises = requiredCapabilities.map(cap =>
+      this.executeCapabilityWithFallback(missionId, cap, cleanBrief, null, forceHighCost)
+    );
 
-    for (const cap of requiredCapabilities) {
-      const artifact = await this.executeCapabilityWithFallback(missionId, cap, cleanBrief, null, forceHighCost);
-      generatedArtifacts.push(artifact);
-      totalActualCost += artifact.cost_incurred_usd;
-    }
+    const generatedArtifacts = await Promise.all(artifactPromises);
+
+    const totalActualCost = generatedArtifacts.reduce((sum, artifact) => sum + artifact.cost_incurred_usd, 0);
 
     // Multimodal Composite QA Evaluation
     const meanQA = generatedArtifacts.reduce((sum, a) => sum + a.quality_assessment.final_score, 0) / generatedArtifacts.length;
