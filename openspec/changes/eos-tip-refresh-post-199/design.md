@@ -1,0 +1,1 @@
+Docs-only tip honesty. Mission AE MEASURED (Token-Budget Circuit Breaker / ECR); Ladder 13 CLOSED_FOR_LOCAL_GOVERNED_USE; Ladder 14 OPEN (AD+AE done, AF–AH pending); still PRODUCTION_READY=NO. Prior tip-197 pin 90e89da + tip-198 74da0fc + Mission AE 4786826; no invented SHAs.
