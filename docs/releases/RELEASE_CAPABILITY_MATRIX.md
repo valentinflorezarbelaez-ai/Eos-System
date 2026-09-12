@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 0122c555415ebffaeeeeaebfa064ed293d643a51
+evaluated_tip: e1e0b24ca32d60468fb4808db27a6ba4990310cf
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #172 from valentinflorezarbelaez-ai/grok/mission-s-specboot-agent-runner
-updated_at: 2026-09-11 America/Bogota (tip refresh post #172; pin to main@0122c55; prior post-#170/#171 pin was 748bffd/67f1911; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #174 from valentinflorezarbelaez-ai/grok/mission-t-external-write-gateway
+updated_at: 2026-09-11 America/Bogota (tip refresh post #174; pin to main@e1e0b24; prior post-#172/#173 pin was 0122c55/d88a5b4; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -132,7 +132,9 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #172; pin to main@0122c5
 | Mission R FDIR Sentinel Runtime (#170) | COMPLETE | MEASURED (eos-mission-r-fdir-sentinel-runtime; test:fdir-sentinel; SPEC-0023) |
 | Tip refresh post #170 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_170_2026-09-11.md; freeze+matrix to 748bffd; tip honesty restored; superseded by #171/#172) |
 | Mission S SpecBoot Agent Runner (#172) | COMPLETE | MEASURED (eos-mission-s-specboot-agent-runner; test:specboot-agent; SPEC-0024) |
-| Tip refresh post #172 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_172_2026-09-11.md; freeze+matrix to 0122c55; tip honesty restored) |
+| Tip refresh post #172 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_172_2026-09-11.md; freeze+matrix to 0122c55; tip honesty restored; superseded by #173/#174) |
+| Mission T External Write Gateway (#174) | COMPLETE | MEASURED (eos-mission-t-external-write-gateway; test:external-write-gateway; SPEC-0025a; Fundacion Delta=0) |
+| Tip refresh post #174 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_174_2026-09-11.md; freeze+matrix to e1e0b24; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -209,6 +211,13 @@ PRODUCTION_READY: NO
 - Prior post-#126/#127 pin was 791376fd9a8060a2205a9097de14f17ae7ea0d33 / 1b951afed09e42ce35ab6ea52abc5df4cb869d27 (#126 Mission J + #127 tip refresh); live main after #128 Mission K is aaad8e5 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
 - Matrix: tip refresh post #126 MEASURED (historical) + Mission K Browser QA Runner MEASURED + tip refresh post #128 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (post #174)
+
+- evaluated_tip pinned to OBSERVED main tip after #174: e1e0b24ca32d60468fb4808db27a6ba4990310cf
+- Prior post-#172/#173 pin was 0122c555415ebffaeeeeaebfa064ed293d643a51 / d88a5b4b45daaa200618f41ab52402f1cfaf8dae; live main after tip #173 + #174 Mission T is e1e0b24 — **tip honesty restored**
+- Matrix: tip refresh post #172 MEASURED (historical) + Mission T External Write Gateway MEASURED + tip refresh post #174 MEASURED
+- NON-CLAIM: Mission T-gate != real Fundacion writes; Fundacion Delta=0 intact; does not invent PRODUCTION_READY
 
 ## Tip refresh notes (post #172)
 
