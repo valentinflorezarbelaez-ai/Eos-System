@@ -1,12 +1,13 @@
-# Mission AT — package.json / slim patch fragment
+# Mission AU — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-at.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-au.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:operator-continuity": "node --test tests/eos-at-operator-continuity-crash-recovery.test.js",
-"test:mission-at": "node --test tests/eos-at-operator-continuity-crash-recovery.test.js"
+"test:law-vi-broker": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js",
+"test:secret-runtime-broker": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js",
+"test:mission-au": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +15,7 @@ Applied idempotently by `scripts/patch-mission-at.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-at-operator-continuity-crash-recovery.test.js',
+'eos-au-law-vi-secret-runtime-broker.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).

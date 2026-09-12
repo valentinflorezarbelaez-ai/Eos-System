@@ -99,6 +99,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-as-cross-satellite-composition.test.js',
 
   'eos-at-operator-continuity-crash-recovery.test.js',
+
+  'eos-au-law-vi-secret-runtime-broker.test.js',
 ]);
 
 /**

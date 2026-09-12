@@ -213,7 +213,10 @@
     "test:cross-satellite-composition": "node --test tests/eos-as-cross-satellite-composition.test.js",
     "test:mission-as": "node --test tests/eos-as-cross-satellite-composition.test.js",
     "test:operator-continuity": "node --test tests/eos-at-operator-continuity-crash-recovery.test.js",
-    "test:mission-at": "node --test tests/eos-at-operator-continuity-crash-recovery.test.js"
+    "test:mission-at": "node --test tests/eos-at-operator-continuity-crash-recovery.test.js",
+    "test:law-vi-broker": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js",
+    "test:secret-runtime-broker": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js",
+    "test:mission-au": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js"
   },
   "keywords": [
     "eos",
