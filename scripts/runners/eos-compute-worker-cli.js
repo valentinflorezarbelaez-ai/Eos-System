@@ -293,23 +293,25 @@ export async function runComputeWorkerCli(argv = [], deps = {}) {
           result: { status: 'MCP_TOOL_DISPATCHER_REQUIRED', toolOutputs }
         };
       }
-      for (const call of parsed.dispatchTools) {
+      const dispatchPromises = parsed.dispatchTools.map(async (call) => {
         const dispatched = await toolDispatcher.dispatch({
           serverName: call.serverName,
           toolName: call.toolName,
           arguments: call.arguments || {},
           envelope: plan.mcpEnvelope
         });
-        toolOutputs.push({
+        return {
           serverName: call.serverName,
           toolName: call.toolName,
           ok: true,
-          result: dispatched && Object.prototype.hasOwnProperty.call(dispatched, 'result')
+          result: dispatched && Object.prototype.hasOwnProperty.call(dispatched, "result")
             ? dispatched.result
             : dispatched,
           meta: dispatched && dispatched.meta ? dispatched.meta : undefined
-        });
-      }
+        };
+      });
+      const results = await Promise.all(dispatchPromises);
+      toolOutputs.push(...results);
       const line = JSON.stringify({ status: 'TOOL_DRY_RUN', toolOutputs }, null, 2);
       if (deps.print !== false) {
         if (typeof deps.println === 'function') deps.println(line);
