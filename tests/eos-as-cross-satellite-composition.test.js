@@ -473,7 +473,7 @@ test('AS16: helpers; CrossSatelliteCompositionError; AT–AW not implemented', (
   assert.equal(err.code, AS_CODES.COMPOSITION_DENIED);
   assert.equal(err.details.apiKey, '[REDACTED]');
 
-  // AT/AU/AV/AW must not appear as implemented modules in this payload
+  // AU/AV/AW must not appear as implemented modules in this payload (AT is implemented in Mission AT)
   const srcRoot = path.join(ROOT, 'src');
   const walk = (dir) => {
     /** @type {string[]} */
@@ -487,8 +487,6 @@ test('AS16: helpers; CrossSatelliteCompositionError; AT–AW not implemented', (
   };
   const files = walk(srcRoot).map((f) => path.basename(f));
   for (const banned of [
-    'operator-continuity',
-    'crash-recovery-custody',
     'secret-runtime-broker',
     'freeze-drift-observer',
     'ladder17-seam-pack'
@@ -496,7 +494,7 @@ test('AS16: helpers; CrossSatelliteCompositionError; AT–AW not implemented', (
     assert.equal(
       files.some((f) => f.includes(banned)),
       false,
-      `AT–AW artifact leaked: ${banned}`
+      `AU–AW artifact leaked: ${banned}`
     );
   }
 
