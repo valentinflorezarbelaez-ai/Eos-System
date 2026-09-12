@@ -8,7 +8,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { execSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 
 import { AuthorityAdapter } from '../authority/authority-adapter.js';
 import { SchemaValidator } from '../contracts/schema-validator.js';
@@ -18,6 +18,52 @@ import { GovernedAutoRepairService } from './governed-auto-repair-service.js';
 import { sealEvd } from '../sdd/evd-seal-path.js';
 import { EvidenceCustody } from '../sdd/evidence-custody.js';
 import { writeMissionArtifactFile } from './mission-artifact-write.js';
+
+/**
+ * Parses a command string into an executable and arguments, respecting quotes.
+ * @param {string} cmd
+ * @returns {{executable: string, args: string[]}}
+ */
+function parseCommand(cmd) {
+  if (Array.isArray(cmd)) {
+    return { executable: cmd[0], args: cmd.slice(1) };
+  }
+  const tokens = [];
+  let currentToken = '';
+  let inQuotes = false;
+  let quoteChar = '';
+
+  for (let i = 0; i < cmd.length; i++) {
+    const char = cmd[i];
+    if ((char === '"' || char === "'") && (i === 0 || cmd[i - 1] !== '\\')) {
+      if (!inQuotes) {
+        inQuotes = true;
+        quoteChar = char;
+      } else if (quoteChar === char) {
+        inQuotes = false;
+        quoteChar = '';
+      } else {
+        currentToken += char;
+      }
+    } else if (char === ' ' && !inQuotes) {
+      if (currentToken.length > 0) {
+        tokens.push(currentToken);
+        currentToken = '';
+      }
+    } else {
+      currentToken += char;
+    }
+  }
+  if (currentToken.length > 0) {
+    tokens.push(currentToken);
+  }
+
+  return {
+    executable: tokens[0],
+    args: tokens.slice(1)
+  };
+}
+
 
 export class GovernedTaskExecutor {
   /**
@@ -174,14 +220,25 @@ export class GovernedTaskExecutor {
           }
         });
 
-        const outputBuffer = execSync(cmd, {
+        const { executable, args } = parseCommand(cmd);
+        const spawnResult = spawnSync(executable, args, {
           cwd,
           stdio: 'pipe',
           env: childEnv,
           timeout: (taskContract.budget?.max_duration_seconds || 300) * 1000
         });
-        stdout = outputBuffer.toString();
-        exitCode = 0;
+
+        if (spawnResult.error) {
+          throw spawnResult.error;
+        }
+
+        stdout = spawnResult.stdout ? spawnResult.stdout.toString() : '';
+        stderr = spawnResult.stderr ? spawnResult.stderr.toString() : '';
+        exitCode = spawnResult.status ?? (spawnResult.signal ? 1 : 0);
+
+        if (exitCode !== 0 && !stderr) {
+           stderr = `Command failed with exit code ${exitCode}`;
+        }
       } else {
         // Default nominal verification pass
         stdout = `Task '${taskId}' (${taskContract.objective}) verified successfully.`;

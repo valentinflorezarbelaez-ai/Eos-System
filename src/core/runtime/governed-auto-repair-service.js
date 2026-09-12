@@ -8,11 +8,57 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { execSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 
 import { CursorTDDAutoHealer } from './cursor-tdd-auto-healer.js';
 import { SchemaValidator } from '../contracts/schema-validator.js';
 import { calculateSha256 } from '../sdd/epistemic-evidence-engine.js';
+
+/**
+ * Parses a command string into an executable and arguments, respecting quotes.
+ * @param {string} cmd
+ * @returns {{executable: string, args: string[]}}
+ */
+function parseCommand(cmd) {
+  if (Array.isArray(cmd)) {
+    return { executable: cmd[0], args: cmd.slice(1) };
+  }
+  const tokens = [];
+  let currentToken = '';
+  let inQuotes = false;
+  let quoteChar = '';
+
+  for (let i = 0; i < cmd.length; i++) {
+    const char = cmd[i];
+    if ((char === '"' || char === "'") && (i === 0 || cmd[i - 1] !== '\\')) {
+      if (!inQuotes) {
+        inQuotes = true;
+        quoteChar = char;
+      } else if (quoteChar === char) {
+        inQuotes = false;
+        quoteChar = '';
+      } else {
+        currentToken += char;
+      }
+    } else if (char === ' ' && !inQuotes) {
+      if (currentToken.length > 0) {
+        tokens.push(currentToken);
+        currentToken = '';
+      }
+    } else {
+      currentToken += char;
+    }
+  }
+  if (currentToken.length > 0) {
+    tokens.push(currentToken);
+  }
+
+  return {
+    executable: tokens[0],
+    args: tokens.slice(1)
+  };
+}
+
 
 export class GovernedAutoRepairService {
   /**
@@ -137,13 +183,23 @@ Provide the complete repaired source code replacement conforming to repair-direc
         const cmd = options.command || taskContract.execution_command;
         const cwd = options.cwd || path.dirname(targetSourcePath);
         try {
-          const out = execSync(cmd, {
+          const { executable, args } = parseCommand(cmd);
+          const spawnResult = spawnSync(executable, args, {
             cwd,
             stdio: 'pipe',
             env: { ...process.env, NODE_ENV: 'test' },
             timeout: 30000
           });
-          testResult = { exitCode: 0, stdout: out.toString(), stderr: '' };
+
+          if (spawnResult.error) {
+            throw spawnResult.error;
+          }
+
+          testResult = {
+            exitCode: spawnResult.status ?? (spawnResult.signal ? 1 : 0),
+            stdout: spawnResult.stdout ? spawnResult.stdout.toString() : '',
+            stderr: spawnResult.stderr ? spawnResult.stderr.toString() : ''
+          };
         } catch (err) {
           testResult = {
             exitCode: err.status ?? 1,
