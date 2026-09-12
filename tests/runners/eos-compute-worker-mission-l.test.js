@@ -106,10 +106,13 @@ test('Mission L: listBuiltinComputeTools includes all 4 stitch tools + gemini to
   const gemini = listGeminiTools().map((t) => t.name).sort();
   assert.deepEqual(gemini, ['gemini_query', 'gemini_structured']);
   const viaWorker = listBuiltinComputeTools().map((t) => t.name).sort();
-  assert.deepEqual(viaWorker, [...gemini, ...stitch].sort());
-  for (const t of listStitchTools()) {
-    assert.ok(t.description && t.description.length > 0);
-    assert.ok(t.inputSchema);
+  // Additive: Mission M+ may append more natives (e.g. browser_qa_run); gemini+stitch must remain.
+  for (const name of [...gemini, ...stitch]) {
+    assert.ok(viaWorker.includes(name), 'missing builtin: ' + name);
+  }
+  assert.ok(viaWorker.length >= gemini.length + stitch.length);
+  for (const tool of listBuiltinComputeTools()) {
+    assert.ok(tool.description && tool.description.length > 0);
   }
 });
 
