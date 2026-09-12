@@ -178,19 +178,13 @@ viewOut = viewOut.replace(
           exerciseReps={activeExercise.reps}
           onTogglePlayPause={togglePlayPause}
           onReset={handleResetTimer}
-          onSkip={() => { setIsRunning?.(false); }}
+          onSkip={() => { togglePlayPause(); }}
           onPlayChime={() => playChime(false)}
           onCloseZen={() => setZenFocusMode(false)}
         />
       )}
 
       {/* Footer */`
-);
-
-// Fix: setIsRunning may not be exported — use handleResetTimer/skip via remaining
-viewOut = viewOut.replace(
-  'onSkip={() => { setIsRunning?.(false); }}',
-  'onSkip={() => { togglePlayPause(); }}'
 );
 
 const viewPath = path.join(root, 'src', 'app', 'components', 'ZenDashboardView.tsx');
