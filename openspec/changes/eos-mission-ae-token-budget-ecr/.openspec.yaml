@@ -1,0 +1,26 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0036 / Mission AE — Token-Budget Circuit Breaker / ECR. Session-scoped enforceable budget gate for the execution loop; trip→DENY with TOKEN_BUDGET_EXCEEDED / ECR_TRIPPED + hitlRequired; receipt on trip; BoundedOutputFilter observe compatibility (AA reuse / thin self-contained filter); reset only via explicit opt-in / HITL; Law VI sanitize; hermetic tests; PRODUCTION_READY=NO. NON-CLAIM ECR ≠ billing platform ≠ PRODUCTION_READY; not AF/AG/AH; Fundacion Δ=0; Antigravity-first; no CloudAgent; zero new npm deps.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0036
+phase: 1
+affected_areas:
+  - src/core/budget/token-budget-circuit-breaker.js
+  - src/core/budget/ecr-budget-gate.js
+  - tests/eos-ae-token-budget-ecr.test.js
+  - scripts/patch-mission-ae.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ae-token-budget-ecr
+  - docs/releases/EOS_MISSION_AE_TOKEN_BUDGET_ECR_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AF/AG/AH
+  - billing platform / payment rails
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets in repo
+  - new npm dependencies
+  - claiming ECR ≡ PRODUCTION_READY or unbounded spend

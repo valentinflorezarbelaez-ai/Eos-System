@@ -67,6 +67,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ac-ladder13-seam-pack.test.js',
 
   'eos-ad-llm-provider-port.test.js',
+
+  'eos-ae-token-budget-ecr.test.js',
 ]);
 
 /**

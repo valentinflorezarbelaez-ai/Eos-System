@@ -1,12 +1,12 @@
-# Mission AD — package.json / slim patch fragment
+# Mission AE — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-ad.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-ae.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:llm-provider-port": "node --test tests/eos-ad-llm-provider-port.test.js",
-"test:mission-ad": "node --test tests/eos-ad-llm-provider-port.test.js"
+"test:token-budget-ecr": "node --test tests/eos-ae-token-budget-ecr.test.js",
+"test:mission-ae": "node --test tests/eos-ae-token-budget-ecr.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-ad.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-ad-llm-provider-port.test.js',
+'eos-ae-token-budget-ecr.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
