@@ -1,0 +1,27 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0038 / Mission AG — Live Tool Engine. Hermetic tool-call bus with native (in-process) and mcp (injectable mcpClient port — fake in tests) dispatch. Fail-closed UNKNOWN_TOOL / TOOL_UNAUTHORIZED. Law VI sanitize inputs AND outputs (deep redact). Custody receipt on each invoke. PRODUCTION_READY=NO. NON-CLAIM tool bus ≠ unbounded fleet ≠ CloudAgent ≠ PRODUCTION_READY; not AH; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0038
+phase: 1
+affected_areas:
+  - src/core/tools/live-tool-engine.js
+  - src/core/tools/tool-custody-receipt.js
+  - tests/eos-ag-live-tool-engine.test.js
+  - scripts/patch-mission-ag.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ag-live-tool-engine
+  - docs/releases/EOS_MISSION_AG_LIVE_TOOL_ENGINE_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AH
+  - live network in CI
+  - unbounded MCP / tool fleet
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets / vendor-key literals in repo
+  - new npm dependencies
+  - claiming tool bus ≡ PRODUCTION_READY
