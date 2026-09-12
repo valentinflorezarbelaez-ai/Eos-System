@@ -49,6 +49,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'specboot-agent-runner.test.js',
   'external-write-gateway.test.js',
   'eos-u-native-suite-seam-pack.test.js',
+
+  'fdir-remediation-loop.test.js',
 ]);
 
 /**
