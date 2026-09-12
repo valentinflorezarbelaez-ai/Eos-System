@@ -1,0 +1,21 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0019 — Prove and document multi-native tool composition (gemini → stitch → browser_qa) in one executeComputeRun via buildMultiNativeComposeToolCalls / MULTI_NATIVE_COMPOSE_ORDER. Hermetic TDD; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0019
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-n-multi-native-compose
+  - scripts/runners/eos-compute-worker.js
+  - tests/runners/eos-compute-worker-mission-n.test.js
+  - scripts/test-runner.js
+  - package.json
+  - docs/releases/EOS_MISSION_N_MULTI_NATIVE_COMPOSE_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new npm dependencies
+  - raising TR-01
+  - live Gemini/Stitch/Chrome in CI

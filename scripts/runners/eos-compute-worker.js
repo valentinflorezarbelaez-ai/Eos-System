@@ -11,6 +11,7 @@
  * SPEC-0014: Native Gemini tools (gemini_query / gemini_structured) via gemini-tool-bridge.
  * SPEC-0017: Native Stitch tools (stitch_*) via stitch-tool-bridge (Mission L).
  * SPEC-0018: Native Browser QA tools via browser-qa-runner (Mission M).
+ * SPEC-0019: Multi-native tool composition (gemini → stitch → browser_qa) in one run (Mission N).
  *
  * L0: lives under scripts/runners (no src/core mutation; imports custody + MCP router + dispatcher).
  * PRODUCTION_READY: NO | Fundacion Delta=0 | AT_CEILING
@@ -392,7 +393,7 @@ export function normalizeToolCalls(plan, toolCallsArg) {
 
 /**
  * Built-in compute tools discoverable without MCP
- * (Mission I Gemini + Mission L Stitch + Mission M Browser QA).
+ * (Mission I Gemini + Mission L Stitch + Mission M Browser QA; Mission N composes all three).
  * @returns {{ name: string, description: string, inputSchema: object }[]}
  */
 export function listBuiltinComputeTools() {
@@ -442,6 +443,73 @@ export function isNativeBuiltinToolCall(call) {
     isNativeStitchToolCall(call) ||
     isNativeBrowserQaToolCall(call)
   );
+}
+
+/**
+ * SPEC-0019 / Mission N — canonical multi-native compose server order.
+ * gemini → stitch → browser_qa (one sequential executeComputeRun).
+ */
+export const MULTI_NATIVE_COMPOSE_ORDER = Object.freeze([
+  'eos-gemini',
+  'eos-stitch',
+  'eos-browser-qa'
+]);
+
+/**
+ * SPEC-0019: Build an ordered toolCalls array for multi-native composition.
+ * Default: gemini_query → stitch_generate_screen → browser_qa_run.
+ *
+ * @param {object} [opts]
+ * @param {object} [opts.gemini] arguments for gemini_query
+ * @param {object} [opts.stitch] arguments for stitch_generate_screen
+ * @param {object} [opts.browserQa] arguments for browser_qa_run
+ * @param {object} [opts.geminiArguments] alias of gemini
+ * @param {object} [opts.stitchArguments] alias of stitch
+ * @param {object} [opts.browserQaArguments] alias of browserQa
+ * @returns {{ serverName: string, toolName: string, arguments: object }[]}
+ */
+export function buildMultiNativeComposeToolCalls(opts = {}) {
+  const o = opts && typeof opts === 'object' ? opts : {};
+  const geminiArgs =
+    o.gemini && typeof o.gemini === 'object'
+      ? o.gemini
+      : o.geminiArguments && typeof o.geminiArguments === 'object'
+        ? o.geminiArguments
+        : { prompt: 'multi-native compose probe' };
+  const stitchArgs =
+    o.stitch && typeof o.stitch === 'object'
+      ? o.stitch
+      : o.stitchArguments && typeof o.stitchArguments === 'object'
+        ? o.stitchArguments
+        : {
+            projectId: 'compose-project',
+            prompt: 'compose screen',
+            deviceType: 'DESKTOP'
+          };
+  const browserQaArgs =
+    o.browserQa && typeof o.browserQa === 'object'
+      ? o.browserQa
+      : o.browserQaArguments && typeof o.browserQaArguments === 'object'
+        ? o.browserQaArguments
+        : { url: 'https://example.test/' };
+
+  return [
+    {
+      serverName: 'eos-gemini',
+      toolName: 'gemini_query',
+      arguments: { ...geminiArgs }
+    },
+    {
+      serverName: 'eos-stitch',
+      toolName: 'stitch_generate_screen',
+      arguments: { ...stitchArgs }
+    },
+    {
+      serverName: 'eos-browser-qa',
+      toolName: 'browser_qa_run',
+      arguments: { ...browserQaArgs }
+    }
+  ];
 }
 
 /**
@@ -685,8 +753,10 @@ export async function executeComputeRun({
     }
   }
 
-  // SPEC-0012/0014/0017/0018: dispatch toolCalls AFTER MCP gate, BEFORE applyDiff (failed tools never write).
+  // SPEC-0012/0014/0017/0018/0019: dispatch toolCalls AFTER MCP gate, BEFORE applyDiff (failed tools never write).
   // Gemini / Stitch / Browser QA natives bypass MCP stdio dispatcher.
+  // SPEC-0019: multi-native composition uses the same sequential loop (order preserved via normalizeToolCalls);
+  // buildMultiNativeComposeToolCalls() emits gemini → stitch → browser_qa for one-run compose.
   const resolvedCalls = normalizeToolCalls(plan, toolCalls);
   const toolOutputs = [];
   let applied = false;
