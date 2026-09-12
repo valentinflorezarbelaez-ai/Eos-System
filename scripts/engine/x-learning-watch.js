@@ -549,7 +549,11 @@ export function applyHint(item) {
     return 'Cursor CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not install Cursor CLI or rotate this watch into print mode, sandbox, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliUsingUrl(item?.link)) {
-    return 'Using Agent in CLI is optional local terminal agent. This Cloud Agent VM already runs ingest without the local agent CLI. Do not rotate this watch into print mode, worktrees, ACP, or Cloud Agent handoff for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'Using Agent in CLI is optional local terminal agent. ' +
+      'This Cloud Agent VM already runs ingest without the local agent CLI. ' +
+      'Do not rotate this watch into print mode, worktrees, ACP, or Cloud Agent handoff for daily ingest. ' +
+      'Keep the standing /goal. Keep environment.json + Builds. ' +
+      'Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorCliShellModeUrl(item?.link)) {
     return 'Shell Mode is optional local Cursor CLI. This Cloud Agent VM already runs shell commands. Do not rotate this watch into Cursor CLI Shell Mode for daily ingest. Keep the standing /goal. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
