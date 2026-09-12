@@ -1,0 +1,16 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Register EOS Maturity Ladder 13 Gap Audit (docs-only) after Ladder 12 closeout; propose ordered satellites Z/AA/AB/AC for Level 2 Governed Autonomy — no Mission Z implementation in this change.
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-13-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_13_AUDIT_2026-09-12.md
+  - openspec/changes/eos-ladder-13-maturity-audit
+non_goals:
+  - implementing Mission Z/AA/AB/AC
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
