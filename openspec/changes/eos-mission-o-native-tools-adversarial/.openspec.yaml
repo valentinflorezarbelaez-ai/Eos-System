@@ -1,0 +1,21 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0020 — Adversarial red-team of eos-compute-worker natives (gemini / stitch / browser_qa / multi-native compose). Prove fail-closed mid-chain, unknown-tool MCP gate, compose-builder integrity, custody seal-only-on-success, dispatcher non-invocation on pure-native, and serverName spoof routing honesty. Hermetic TDD; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0020
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-o-native-tools-adversarial
+  - tests/runners/eos-compute-worker-mission-o-adversarial.test.js
+  - scripts/test-runner.js
+  - package.json
+  - docs/releases/EOS_MISSION_O_NATIVE_TOOLS_ADVERSARIAL_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new npm dependencies
+  - raising TR-01 (exclude-from-slim instead)
+  - live Gemini/Stitch/Chrome in CI
+  - worker mutation unless a proven fail-closed gap
