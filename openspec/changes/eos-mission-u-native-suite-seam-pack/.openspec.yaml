@@ -1,0 +1,24 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0026 / Mission U — CI Seam-Pack Grand Consolidation + Ladder 11 Closeout. Require native/macro mission satellites (compute-worker-i/l/m/n/o + loop-compute + worker-daemon + fdir-sentinel + specboot-agent + external-write-gateway) in CI seam-pack; add test:native-suite-pack alias; lock test; contract + assert-gha needles; Ladder 11 closeout audit. PRODUCTION_READY=NO; Fundacion Δ=0; Antigravity-first; no CloudAgent; no soak; no continue-on-error; do not raise TR-01.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0026
+phase: 1
+affected_areas:
+  - .github/workflows/ci.yml
+  - package.json
+  - tests/eos-u-native-suite-seam-pack.test.js
+  - docs/governance/CI_CD_CONTRACT.md
+  - scripts/ci/assert-gha-contract.js
+  - docs/releases/EOS_MISSION_U_NATIVE_SUITE_SEAM_PACK_2026-09-11.md
+  - docs/releases/EOS_LADDER_11_CLOSEOUT_2026-09-11.md
+  - openspec/changes/eos-mission-u-native-suite-seam-pack
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion mutation
+  - raising TR-01 slim ceiling
+  - soak / continue-on-error
+  - Cursor CloudAgent
+  - new npm dependencies
+  - GH billing / branch-protection enforcement claims

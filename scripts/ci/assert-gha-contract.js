@@ -171,6 +171,16 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:u2', 'CI Ladder9 U2 seam-pack lock');
         assertContains(yaml, 'test:compute-worker', 'CI Mission C2 compute-worker pack');
         assertContains(yaml, 'test:c2', 'CI Mission C2 seam-pack lock');
+        assertContains(yaml, 'test:compute-worker-i', 'CI Mission U compute-worker-i');
+        assertContains(yaml, 'test:compute-worker-l', 'CI Mission U compute-worker-l');
+        assertContains(yaml, 'test:compute-worker-m', 'CI Mission U compute-worker-m');
+        assertContains(yaml, 'test:compute-worker-n', 'CI Mission U compute-worker-n');
+        assertContains(yaml, 'test:compute-worker-o', 'CI Mission U compute-worker-o');
+        assertContains(yaml, 'test:loop-compute', 'CI Mission U loop-compute (P)');
+        assertContains(yaml, 'test:worker-daemon', 'CI Mission U worker-daemon (Q)');
+        assertContains(yaml, 'test:fdir-sentinel', 'CI Mission U fdir-sentinel (R)');
+        assertContains(yaml, 'test:specboot-agent', 'CI Mission U specboot-agent (S)');
+        assertContains(yaml, 'test:external-write-gateway', 'CI Mission U external-write-gateway (T)');
       } catch (err) {
         failures.push(err.message);
       }

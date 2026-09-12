@@ -18,7 +18,7 @@ Machine-readable companion: `docs/governance/CI_CD_CONTRACT.json`.
 | test | `npm test` | Forbidden |
 | syntax | `node --check` on `bin/`, `src/`, `scripts/`, `tests/` | Forbidden |
 | governance-gates | `evaluate:release`, `verify:independent`, `audit:system` | Forbidden |
-| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s2`..`test:s6` + `test:specboot-agy` + `test:t2`..`test:t8` + `test:v2`..`test:v5` + `test:u2` + `test:compute-worker` + `test:c2` | Forbidden |
+| seam-pack | `gameday:long-run` + `test:roi3`..`test:roi6` + `test:m1`..`test:m4` + `test:n2`..`test:n6` + `test:p2`..`test:p6` + `test:q2`..`test:q6` + `test:r4`..`test:r5` + `test:s2`..`test:s6` + `test:specboot-agy` + `test:t2`..`test:t8` + `test:v2`..`test:v5` + `test:u2` + `test:compute-worker` + `test:c2` + `test:compute-worker-i`/`l`/`m`/`n`/`o` + `test:loop-compute` + `test:worker-daemon` + `test:fdir-sentinel` + `test:specboot-agent` + `test:external-write-gateway` (alias `test:native-suite-pack`) | Forbidden |
 
 Triggers: `push` to `main`, `pull_request`, `workflow_dispatch`.
 
@@ -68,3 +68,9 @@ seam-pack named pack extended with CI-safe `test:v2`, `test:v3`, `test:v4` (Ladd
 seam-pack named pack extended with CI-safe `test:v5` (Ladder 10 V5 lock: BUILDER != VERIFIER runtime enforcement and custody gate; keep prior packs). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO.
 ## C2 seam-pack note (2026-09-11)
 seam-pack named pack extended with CI-safe `test:u2` + `test:compute-worker` (SPEC-0008 unit+fuzz+adversarial) + `test:c2` lock (keep prior V2–V5 and T2–T8 packs). No soak. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO. C2 lock basename stays in SLIM_SUITE_EXCLUDES to hold TR-01 ≤145.
+
+## U / Mission U seam-pack note (2026-09-11)
+seam-pack named pack extended with CI-safe native/macro mission satellites: `test:compute-worker-i`, `test:compute-worker-l`, `test:compute-worker-m`, `test:compute-worker-n`, `test:compute-worker-o`, `test:loop-compute`, `test:worker-daemon`, `test:fdir-sentinel`, `test:specboot-agent`, `test:external-write-gateway` (keep prior packs including `test:compute-worker` + `test:c2`). Local/CI alias: `test:native-suite-pack`. Lock: `test:mission-u` / `test:u11`. No soak. No continue-on-error. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO. Satellites stay slim-excluded (TR-01 ceiling not raised); running in seam-pack is OK (same pattern as `test:compute-worker`).
+
+## Ladder 11 note (2026-09-11)
+Ladder 11 closeout: macros P–T measured; native suite required in CI seam-pack (SPEC-0026 / Mission U). Dictamen COMPLETE_FOR_LOCAL_GOVERNED_USE. PRODUCTION_READY=NO. Fundacion Δ=0. See `docs/releases/EOS_LADDER_11_CLOSEOUT_2026-09-11.md`.
