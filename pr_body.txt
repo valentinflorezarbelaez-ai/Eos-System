@@ -1,0 +1,11 @@
+🎯 **What:** The testing gap addressed
+Created the missing test suite for `FundacionAllocation` in `tests/fundacion/allocation.test.js`. Mocked the dependency on `FundacionCore` using simple object literals to effectively decouple tests and focus entirely on the allocation module's integrity. Also bumped the test file count ceiling limit in `tests/test-runner.test.js` from 145 to 146 to accommodate the new file.
+
+📊 **Coverage:** What scenarios are now tested
+1. **`constructor`**: Validates correct core injection and allocations array initialization.
+2. **`getProjectBalance`**: Covers ledger tallying logic handling properties both at the root level (`amount`, `destination`) and nested within a `data` object, along with subtracting prior allocations.
+3. **`allocateFunds`**: Covers the happy path (balance check passes, produces correct receipt struct and logs it) as well as error conditions: non-numeric/negative amounts (`ERR-FUN-INVALID-ALLOCATION-AMOUNT`) and insufficient funds (`ERR-FUN-INSUFFICIENT-PROJECT-FUNDS`).
+4. **`generatePublicAuditReport`**: Covers the aggregation of net balances across multiple projects and handling edge case projects.
+
+✨ **Result:** The improvement in test coverage
+`FundacionAllocation` is now robustly tested against valid inputs, invalid inputs, edge cases, and unexpected balance conditions. The test suite passes completely and zero existing regressions were introduced.
