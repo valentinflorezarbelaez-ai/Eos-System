@@ -1,0 +1,5 @@
+## AW / Mission AW Ladder 17 seam-pack note (2026-09-12)
+seam-pack named pack extended with CI-safe Ladder 17 satellites: `test:cross-satellite-composition` (AS), `test:operator-continuity` (AT), `test:law-vi-broker` (AU), `test:freeze-drift` (AV). Keep prior native-suite + packs (incl. Ladder 12/13/14/15/16). Local aliases: `test:ladder17-pack`, `test:mission-aw` / `test:aw17` / `test:l17`. Lock basename `eos-aw-ladder17-seam-pack.test.js` stays in SLIM_SUITE_EXCLUDES (TR-01 ≤145). No soak. No continue-on-error. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO. Law VI: zero static provider-secret prefix literals. Tip honesty ritual deferred to post-AW tip refresh (not this mission).
+
+## Ladder 17 note (2026-09-12)
+Ladder 17 closeout: AS (cross-satellite composition harness) + AT (operator continuity / crash-recovery custody port) + AU (Law VI secret runtime broker) + AV (governed state freeze & drift observer) consolidated into CI seam-pack (SPEC-0054 / Mission AW). Dictamen COMPLETE_FOR_LOCAL_GOVERNED_USE. PRODUCTION_READY=NO. Fundacion Δ=0. See `docs/releases/EOS_LADDER_17_CLOSEOUT_2026-09-12.md`.

@@ -154,7 +154,7 @@
     "test:mission-s": "node --test tests/specboot/specboot-agent-runner.test.js",
     "test:external-write-gateway": "node --test tests/governance/external-write-gateway.test.js",
     "test:mission-t": "node --test tests/governance/external-write-gateway.test.js",
-    "test:native-suite-pack": "npm run test:compute-worker-i && npm run test:compute-worker-l && npm run test:compute-worker-m && npm run test:compute-worker-n && npm run test:compute-worker-o && npm run test:loop-compute && npm run test:worker-daemon && npm run test:fdir-sentinel && npm run test:specboot-agent && npm run test:external-write-gateway && npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell && npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server && npm run test:llm-provider-port && npm run test:token-budget-ecr && npm run test:autonomous-loop && npm run test:live-tool-engine && npm run test:multi-session-autonomy && npm run test:evidence-economy-ledger && npm run test:constitution-runtime-policy-gate && npm run test:autonomy-replay-forensic-observer && npm run test:multi-workstation-federation && npm run test:provider-failover-resilience && npm run test:hitl-po-authority && npm run test:evidence-export-notarization",
+    "test:native-suite-pack": "npm run test:compute-worker-i && npm run test:compute-worker-l && npm run test:compute-worker-m && npm run test:compute-worker-n && npm run test:compute-worker-o && npm run test:loop-compute && npm run test:worker-daemon && npm run test:fdir-sentinel && npm run test:specboot-agent && npm run test:external-write-gateway && npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell && npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server && npm run test:llm-provider-port && npm run test:token-budget-ecr && npm run test:autonomous-loop && npm run test:live-tool-engine && npm run test:multi-session-autonomy && npm run test:evidence-economy-ledger && npm run test:constitution-runtime-policy-gate && npm run test:autonomy-replay-forensic-observer && npm run test:multi-workstation-federation && npm run test:provider-failover-resilience && npm run test:hitl-po-authority && npm run test:evidence-export-notarization && npm run test:cross-satellite-composition && npm run test:operator-continuity && npm run test:law-vi-broker && npm run test:freeze-drift",
     "test:mission-u": "node --test tests/eos-u-native-suite-seam-pack.test.js",
     "test:u11": "npm run test:mission-u",
     "test:fdir-remediation": "node --test tests/fdir/fdir-remediation-loop.test.js",
@@ -219,7 +219,11 @@
     "test:mission-au": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js",
     "test:freeze-drift": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js",
     "test:mission-av": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js",
-    "test:release-honesty": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js"
+    "test:release-honesty": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js",
+    "test:mission-aw": "node --test tests/eos-aw-ladder17-seam-pack.test.js",
+    "test:aw17": "node --test tests/eos-aw-ladder17-seam-pack.test.js",
+    "test:l17": "node --test tests/eos-aw-ladder17-seam-pack.test.js",
+    "test:ladder17-pack": "npm run test:cross-satellite-composition && npm run test:operator-continuity && npm run test:law-vi-broker && npm run test:freeze-drift && npm run test:mission-aw"
   },
   "keywords": [
     "eos",

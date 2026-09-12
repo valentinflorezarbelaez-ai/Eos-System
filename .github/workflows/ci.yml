@@ -50,6 +50,10 @@ jobs:
           npm run test:provider-failover-resilience
           npm run test:hitl-po-authority
           npm run test:evidence-export-notarization
+          npm run test:cross-satellite-composition
+          npm run test:operator-continuity
+          npm run test:law-vi-broker
+          npm run test:freeze-drift
 
       - name: Fundacion freeze (delta 0)
         run: |
@@ -136,7 +140,7 @@ jobs:
           node-version: '22'
       - name: CI-safe long-run GameDay (default N)
         run: npm run gameday:long-run
-      - name: Named ROI / Ladder seam pack (incl. N2-N6 + P2/P3/P4-P6 + Q2-Q6 + R4-R5 + S2-S6 + SpecBoot/AGY + T2-T8 + V2-V5 + U2 + compute-worker + C2 + native-suite i/l/m/n/o + P–T) + Ladder 12 V/W/X + Ladder 13 Z/AA/AB + Ladder 14 AD/AE/AF/AG + Ladder 15 AI/AJ/AK/AL + Ladder 16 AN/AO/AP/AQ
+      - name: Named ROI / Ladder seam pack (incl. N2-N6 + P2/P3/P4-P6 + Q2-Q6 + R4-R5 + S2-S6 + SpecBoot/AGY + T2-T8 + V2-V5 + U2 + compute-worker + C2 + native-suite i/l/m/n/o + P–T) + Ladder 12 V/W/X + Ladder 13 Z/AA/AB + Ladder 14 AD/AE/AF/AG + Ladder 15 AI/AJ/AK/AL + Ladder 16 AN/AO/AP/AQ + Ladder 17 AS/AT/AU/AV
         run: |
           npm run test:roi3
           npm run test:roi4

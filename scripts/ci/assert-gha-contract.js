@@ -199,6 +199,10 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:provider-failover-resilience', 'CI Mission AR provider-failover-resilience (AO)');
         assertContains(yaml, 'test:hitl-po-authority', 'CI Mission AR hitl-po-authority (AP)');
         assertContains(yaml, 'test:evidence-export-notarization', 'CI Mission AR evidence-export-notarization (AQ)');
+        assertContains(yaml, 'test:cross-satellite-composition', 'CI Mission AW cross-satellite-composition (AS)');
+        assertContains(yaml, 'test:operator-continuity', 'CI Mission AW operator-continuity (AT)');
+        assertContains(yaml, 'test:law-vi-broker', 'CI Mission AW law-vi-broker (AU)');
+        assertContains(yaml, 'test:freeze-drift', 'CI Mission AW freeze-drift (AV)');
       } catch (err) {
         failures.push(err.message);
       }
