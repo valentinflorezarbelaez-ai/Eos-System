@@ -1,0 +1,24 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0051 / Mission AT — Operator Continuity / Crash-Recovery Custody Port. Continuity port over AI+W (+ optional AN envelopes); durable restart API; tamper/conflict/tip-mismatch DENY; hermetic crash fixtures. Fail-closed OK / RESTART_OK / TAMPER_DETECTED / TIP_MISMATCH / CUSTODY_CONFLICT / MISSING_DEP / INVALID_REQUEST / SECRET_LEAK_FORBIDDEN / FUNDACION_DENIED / PARTIAL_APPLY_FORBIDDEN. PRODUCTION_READY=NO. NON-CLAIM continuity ≠ HA multi-region SaaS ≠ multi-AZ failover product ≠ CloudAgent fleet recovery; not AU/AV/AW; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI; Law VI no static vendor-key literals.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0051
+phase: 1
+affected_areas:
+  - src/core/continuity/operator-continuity-crash-recovery-port.js
+  - src/core/continuity/continuity-receipt.js
+  - src/core/continuity/custody-snapshot.js
+  - tests/eos-at-operator-continuity-crash-recovery.test.js
+  - scripts/patch-mission-at.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-at-operator-continuity-crash-recovery
+  - docs/releases/EOS_MISSION_AT_OPERATOR_CONTINUITY_CRASH_RECOVERY_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - HA multi-region SaaS / multi-AZ failover product
+  - CloudAgent fleet recovery
+  - AU/AV/AW implementation
+  - rewriting full AI/AN (compose/reuse injectable fakes only)

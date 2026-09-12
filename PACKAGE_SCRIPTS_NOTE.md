@@ -1,12 +1,12 @@
-# Mission AS — package.json / slim patch fragment
+# Mission AT — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-as.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-at.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:cross-satellite-composition": "node --test tests/eos-as-cross-satellite-composition.test.js",
-"test:mission-as": "node --test tests/eos-as-cross-satellite-composition.test.js"
+"test:operator-continuity": "node --test tests/eos-at-operator-continuity-crash-recovery.test.js",
+"test:mission-at": "node --test tests/eos-at-operator-continuity-crash-recovery.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-as.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-as-cross-satellite-composition.test.js',
+'eos-at-operator-continuity-crash-recovery.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
