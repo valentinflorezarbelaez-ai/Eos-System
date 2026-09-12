@@ -1,0 +1,26 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0030 / Mission Y — Ladder 12 CI Seam-Pack Consolidation & Closeout. Require V/W/X satellites (test:fdir-remediation, test:sovereign-session, test:developer-shell) in CI seam-pack; extend test:native-suite-pack; add test:mission-y / test:y12 / test:ladder12-pack; lock test slim-excluded; contract + assert-gha needles via idempotent patcher; Ladder 12 closeout audit. PRODUCTION_READY=NO; Fundacion Δ=0; Antigravity-first; no CloudAgent; no soak; no continue-on-error; do not raise TR-01.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0030
+phase: 1
+affected_areas:
+  - .github/workflows/ci.yml
+  - package.json
+  - scripts/test-runner.js
+  - scripts/patch-mission-y.mjs
+  - scripts/ci/assert-gha-contract.js
+  - tests/eos-y-ladder12-seam-pack.test.js
+  - docs/governance/CI_CD_CONTRACT.md
+  - docs/releases/EOS_MISSION_Y_LADDER12_SEAM_PACK_2026-09-11.md
+  - docs/releases/EOS_LADDER_12_CLOSEOUT_2026-09-11.md
+  - openspec/changes/eos-mission-y-ladder12-closeout-seam-pack
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion mutation
+  - raising TR-01 slim ceiling
+  - soak / continue-on-error
+  - Cursor CloudAgent
+  - new npm dependencies
+  - GH billing / branch-protection enforcement claims
