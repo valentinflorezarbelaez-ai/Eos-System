@@ -216,7 +216,10 @@
     "test:mission-at": "node --test tests/eos-at-operator-continuity-crash-recovery.test.js",
     "test:law-vi-broker": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js",
     "test:secret-runtime-broker": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js",
-    "test:mission-au": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js"
+    "test:mission-au": "node --test tests/eos-au-law-vi-secret-runtime-broker.test.js",
+    "test:freeze-drift": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js",
+    "test:mission-av": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js",
+    "test:release-honesty": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js"
   },
   "keywords": [
     "eos",
