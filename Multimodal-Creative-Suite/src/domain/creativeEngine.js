@@ -133,12 +133,15 @@ export class MultimodalCreativeEngine {
       throw new RequireHumanApprovalException(`REQUIRE_HUMAN_APPROVAL: Estimated cost $${estimatedCostUsd} USD exceeds provisional limit $${this.provisionalBudgetCapUsd} USD`);
     }
 
-    const generatedArtifacts = [];
     let totalActualCost = 0;
 
-    for (const cap of requiredCapabilities) {
-      const artifact = await this.executeCapabilityWithFallback(missionId, cap, cleanBrief, null, forceHighCost);
-      generatedArtifacts.push(artifact);
+    const capabilitiesPromises = requiredCapabilities.map(cap =>
+      this.executeCapabilityWithFallback(missionId, cap, cleanBrief, null, forceHighCost)
+    );
+
+    const generatedArtifacts = await Promise.all(capabilitiesPromises);
+
+    for (const artifact of generatedArtifacts) {
       totalActualCost += artifact.cost_incurred_usd;
     }
 
