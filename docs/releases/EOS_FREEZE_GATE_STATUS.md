@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: d3667cd66c6eab0251b4367300191d710e341801
-main_subject: Merge pull request #178 from valentinflorezarbelaez-ai/grok/mission-v-fdir-remediation-loop
-branch_hygiene: clean (main == origin/main @ d3667cd; #101–#177 as prior + #178 Mission V FDIR Remediation Loop; tip honesty restored post #178; Ladder 11 CLOSED; PRODUCTION_READY=NO; Fundacion Delta=0; Mission V MEASURED)
+main_tip: 911d3ea0284e9bf2273e9977c5c856c049728b99
+main_subject: Merge pull request #180 from valentinflorezarbelaez-ai/grok/mission-w-sovereign-session-coordinator
+branch_hygiene: clean (main == origin/main @ 911d3ea; #101–#179 as prior + #180 Mission W Sovereign Session Coordinator; tip honesty restored post #180; Ladder 11 CLOSED; PRODUCTION_READY=NO; Fundacion Delta=0; Mission W MEASURED)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-11 America/Bogota (tip refresh post #178; pin to main@d3667cd; prior post-#176/#177 pin was a748618/24c9845; tip honesty restored; Ladder 11 CLOSED; Mission V MEASURED; PRODUCTION_READY=NO)
+updated_at: 2026-09-11 America/Bogota (tip refresh post #180; pin to main@911d3ea; prior post-#178/#179 pin was d3667cd/ef5a27c; tip honesty restored; Ladder 11 CLOSED; Mission W MEASURED; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + Ladder11 #176 + #101-#178)
+## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + Ladder11 #176 + #101-#180)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `d3667cd66c6eab0251b4367300191d710e341801`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `911d3ea0284e9bf2273e9977c5c856c049728b99`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -122,6 +122,8 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | Mission U Native Suite Seam-Pack | #176 | a748618 | `eos-mission-u-native-suite-seam-pack`; SPEC-0026; test:native-suite-pack; Ladder 11 |
 | Tip refresh post #176 | #177 | 24c9845 | `EOS_TIP_REFRESH_POST_176_2026-09-11.md`; freeze+matrix to a748618 |
 | Mission V FDIR Remediation Loop | #178 | d3667cd | `eos-mission-v-fdir-remediation-loop`; SPEC-0027; test:fdir-remediation; Mission V MEASURED |
+| Tip refresh post #178 | #179 | ef5a27c | `EOS_TIP_REFRESH_POST_178_2026-09-11.md`; freeze+matrix to d3667cd |
+| Mission W Sovereign Session Coordinator | #180 | 911d3ea | `eos-mission-w-sovereign-session-coordinator`; SPEC-0028; test:sovereign-session; Mission W MEASURED |
 
 ### Ladder 10 (V1–V5) Closeout — 2026-09-10
 
@@ -1036,3 +1038,16 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Mission V MEASURED
 - NON-CLAIM: tip honesty != PRODUCTION_READY; Mission V remediation loop != PRODUCTION_READY; CloudAgent out of SpecBoot path
+- Historical: freeze tip superseded by tip refresh post #180 pin to main@911d3ea (Mission W #180; tip #179 was ef5a27c)
+
+## Tip refresh post #180 (2026-09-11)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_180_2026-09-11.md`
+- Branch: `grok/tip-refresh-post-180`
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`911d3ea0284e9bf2273e9977c5c856c049728b99` (#180 Mission W; post #179 tip refresh post #178)
+- Honesty restored: prior post-#178/#179 pin was `d3667cd66c6eab0251b4367300191d710e341801` / `ef5a27c`; live main after #179–#180 is `911d3ea`
+- Matrix: tip refresh post #178 MEASURED (historical via #179) + **Mission W Sovereign Session Coordinator MEASURED** + **tip refresh post #180 MEASURED**
+- Dirty-defer tip honesty pin moved with freeze
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Mission W MEASURED
+- NON-CLAIM: tip honesty != PRODUCTION_READY; Mission W sovereign session coordinator != PRODUCTION_READY; != agy-daemon DAEMON_PRESENT; CloudAgent out of SpecBoot path
