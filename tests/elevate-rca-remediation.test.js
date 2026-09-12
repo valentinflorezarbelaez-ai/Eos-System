@@ -103,6 +103,40 @@ test('EOS-ELEVATE: RCA Engine & TDD Auto-Healing DAG', async (t) => {
     assert.equal(restoredContent, originalContent, 'Rollback must preserve exact pre-patch code');
   });
 
+
+  await t.test('HEAL-03: Suppresses unlink errors in finally block during cleanup', async () => {
+    const healer = new TDDAutoHealer({ targetPath: fixtureDir });
+
+    const simpleTask = {
+      id: 'TASK-UNLINK-TEST',
+      file: 'calculator.js',
+      description: 'Dummy task',
+      testCode: 'console.log("pass"); process.exit(0);',
+      patch: (code) => code
+    };
+
+    const originalUnlinkSync = fs.unlinkSync;
+    let unlinkCalled = false;
+
+    // Mock unlinkSync to throw
+    fs.unlinkSync = (filePath) => {
+      if (filePath.includes('temp_elevate_test_')) {
+        unlinkCalled = true;
+        throw new Error('EACCES: permission denied');
+      }
+      return originalUnlinkSync(filePath);
+    };
+
+    try {
+      const result = await healer.executeTask(simpleTask);
+      assert.equal(result.status, 'REMEDIATED');
+      assert.equal(unlinkCalled, true, 'unlinkSync should have been called');
+    } finally {
+      // Restore the mock
+      fs.unlinkSync = originalUnlinkSync;
+    }
+  });
+
   // Cleanup
   fs.rmSync(fixtureDir, { recursive: true, force: true });
 });
