@@ -1,0 +1,24 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0033 / Mission AB — Live Streaming & Visual Telemetry Server (SSE + optional JSON-RPC). Fail-closed localhost-only bind (127.0.0.1 / ::1); Law VI secret sanitization; event types session.state / agent.step / fdir.cycle / custody.receipt / shell.status. NON-CLAIM ≠ public internet ops / ≠ PRODUCTION_READY. PRODUCTION_READY=NO; Fundacion Δ=0; AT_CEILING; Antigravity-first; no CloudAgent; zero new npm deps.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0033
+phase: 1
+affected_areas:
+  - src/core/telemetry/telemetry-stream-server.js
+  - tests/eos-ab-telemetry-server.test.js
+  - scripts/patch-mission-ab.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ab-telemetry-stream-server
+  - docs/releases/EOS_MISSION_AB_TELEMETRY_STREAM_SERVER_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - binding 0.0.0.0 / public internet ops
+  - raising TR-01 (exclude-from-slim instead)
+  - Fundacion / App Fuerza tree mutation on disk
+  - new npm dependencies
+  - claiming SSE server ≡ production telemetry platform
