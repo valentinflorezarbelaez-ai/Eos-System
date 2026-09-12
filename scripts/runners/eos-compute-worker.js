@@ -10,6 +10,7 @@
  * SPEC-0012: McpToolDispatcher toolCalls on plan; toolOutputs + tool_execution_hashes custody.
  * SPEC-0014: Native Gemini tools (gemini_query / gemini_structured) via gemini-tool-bridge.
  * SPEC-0017: Native Stitch tools (stitch_*) via stitch-tool-bridge (Mission L).
+ * SPEC-0018: Native Browser QA tools via browser-qa-runner (Mission M).
  *
  * L0: lives under scripts/runners (no src/core mutation; imports custody + MCP router + dispatcher).
  * PRODUCTION_READY: NO | Fundacion Delta=0 | AT_CEILING
@@ -37,6 +38,12 @@ import {
   listStitchTools,
   STITCH_TOOL_TIMEOUT_MS
 } from '../../src/core/mcp/stitch-tool-bridge.js';
+import {
+  isBrowserQaToolName,
+  executeBrowserQaTool,
+  listBrowserQaTools,
+  BROWSER_QA_TIMEOUT_MS
+} from '../../src/core/qa/browser-qa-runner.js';
 import { queryGemini } from '../../src/core/providers/gemini-provider.js';
 
 export class ComputeWorkerError extends Error {
@@ -384,11 +391,12 @@ export function normalizeToolCalls(plan, toolCallsArg) {
 }
 
 /**
- * Built-in compute tools discoverable without MCP (Mission I Gemini + Mission L Stitch).
+ * Built-in compute tools discoverable without MCP
+ * (Mission I Gemini + Mission L Stitch + Mission M Browser QA).
  * @returns {{ name: string, description: string, inputSchema: object }[]}
  */
 export function listBuiltinComputeTools() {
-  return [...listGeminiTools(), ...listStitchTools()];
+  return [...listGeminiTools(), ...listStitchTools(), ...listBrowserQaTools()];
 }
 
 /**
@@ -414,11 +422,26 @@ export function isNativeStitchToolCall(call) {
 }
 
 /**
- * True when a toolCall is any native builtin (Gemini or Stitch).
+ * True when a toolCall should be routed through the native Browser QA runner
+ * (bypasses MCP stdio dispatcher). SPEC-0018 / Mission M.
+ * @param {{ serverName?: string, toolName?: string }} call
+ */
+export function isNativeBrowserQaToolCall(call) {
+  if (!call || typeof call !== 'object') return false;
+  if (isBrowserQaToolName(call.toolName)) return true;
+  return String(call.serverName || '') === 'eos-browser-qa';
+}
+
+/**
+ * True when a toolCall is any native builtin (Gemini, Stitch, or Browser QA).
  * @param {{ serverName?: string, toolName?: string }} call
  */
 export function isNativeBuiltinToolCall(call) {
-  return isNativeGeminiToolCall(call) || isNativeStitchToolCall(call);
+  return (
+    isNativeGeminiToolCall(call) ||
+    isNativeStitchToolCall(call) ||
+    isNativeBrowserQaToolCall(call)
+  );
 }
 
 /**
@@ -633,7 +656,8 @@ export async function executeComputeRun({
   geminiQueryImpl = undefined,
   geminiApiKey = undefined,
   stitchClientImpl = undefined,
-  stitchFetchImpl = undefined
+  stitchFetchImpl = undefined,
+  browserQaClientImpl = undefined
 } = {}) {
   if (!plan || plan.role !== 'BUILDER') {
     throw new ComputeWorkerError('PLAN_ROLE_MUST_BE_BUILDER', 'PLAN_INVALID');
@@ -661,8 +685,8 @@ export async function executeComputeRun({
     }
   }
 
-  // SPEC-0012/0014/0017: dispatch toolCalls AFTER MCP gate, BEFORE applyDiff (failed tools never write).
-  // Gemini (gemini_* / eos-gemini) and Stitch (stitch_* / eos-stitch) bypass MCP stdio dispatcher.
+  // SPEC-0012/0014/0017/0018: dispatch toolCalls AFTER MCP gate, BEFORE applyDiff (failed tools never write).
+  // Gemini / Stitch / Browser QA natives bypass MCP stdio dispatcher.
   const resolvedCalls = normalizeToolCalls(plan, toolCalls);
   const toolOutputs = [];
   let applied = false;
@@ -724,6 +748,23 @@ export async function executeComputeRun({
             result: stitchOut.result,
             custody: stitchOut.custody
           });
+        } else if (isNativeBrowserQaToolCall(call)) {
+          // Soft QA (qaOut.ok === false): still ok:true at toolOutputs — report
+          // delivered; do NOT fail-closed the run solely for soft CWV/a11y.
+          const qaOut = await executeBrowserQaTool({
+            toolName: call.toolName,
+            arguments: call.arguments || {},
+            clientImpl: browserQaClientImpl,
+            timeoutMs:
+              call.timeoutMs != null ? call.timeoutMs : BROWSER_QA_TIMEOUT_MS
+          });
+          toolOutputs.push({
+            serverName: call.serverName || 'eos-browser-qa',
+            toolName: call.toolName,
+            ok: true,
+            result: qaOut,
+            custody: qaOut.custody
+          });
         } else {
           const dispatched = await toolDispatcher.dispatch({
             serverName: call.serverName,
@@ -746,7 +787,14 @@ export async function executeComputeRun({
         const message = String(err && err.message ? err.message : err);
         const isGemini = isNativeGeminiToolCall(call);
         const isStitch = isNativeStitchToolCall(call);
-        const defaultServer = isGemini ? 'eos-gemini' : isStitch ? 'eos-stitch' : '';
+        const isBrowserQa = isNativeBrowserQaToolCall(call);
+        const defaultServer = isGemini
+          ? 'eos-gemini'
+          : isStitch
+            ? 'eos-stitch'
+            : isBrowserQa
+              ? 'eos-browser-qa'
+              : '';
         toolOutputs.push({
           serverName: call.serverName || defaultServer,
           toolName: call.toolName,
@@ -764,7 +812,9 @@ export async function executeComputeRun({
           ? 'GEMINI_TOOL_FAILED'
           : isStitch
             ? 'STITCH_TOOL_FAILED'
-            : 'MCP_TOOL_DISPATCH_FAILED';
+            : isBrowserQa
+              ? 'BROWSER_QA_TOOL_FAILED'
+              : 'MCP_TOOL_DISPATCH_FAILED';
         return {
           ok: false,
           status: failStatus,
@@ -911,3 +961,12 @@ export {
   listStitchTools,
   STITCH_TOOL_TIMEOUT_MS
 } from '../../src/core/mcp/stitch-tool-bridge.js';
+export {
+  isBrowserQaToolName,
+  executeBrowserQaTool,
+  listBrowserQaTools,
+  BROWSER_QA_TIMEOUT_MS,
+  BROWSER_QA_TOOL_NAMES,
+  runBrowserQa,
+  BrowserQaRunnerError
+} from '../../src/core/qa/browser-qa-runner.js';

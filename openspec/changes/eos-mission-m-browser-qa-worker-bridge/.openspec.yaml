@@ -1,0 +1,22 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0018 — Wire native Browser QA tool (browser_qa_run) into eos-compute-worker via browser-qa-runner (Mission K), mirroring Stitch Mission L / Gemini Mission I. Hermetic TDD; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0018
+phase: 1
+affected_areas:
+  - openspec/changes/eos-mission-m-browser-qa-worker-bridge
+  - scripts/runners/eos-compute-worker.js
+  - src/core/qa/browser-qa-runner.js
+  - tests/runners/eos-compute-worker-mission-m.test.js
+  - scripts/test-runner.js
+  - package.json
+  - docs/releases/EOS_MISSION_M_BROWSER_QA_WORKER_BRIDGE_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new npm dependencies
+  - raising TR-01
+  - live Chrome in CI

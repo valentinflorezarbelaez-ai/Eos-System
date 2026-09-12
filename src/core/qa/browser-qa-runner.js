@@ -417,3 +417,87 @@ export async function runBrowserQa({
     }
   };
 }
+
+// ---------------------------------------------------------------------------
+// SPEC-0018 Mission M — Native tool bridge surface (mirrors stitch-tool-bridge)
+// Soft QA failures stay return-shaped (ok:false); only infra throws.
+// ---------------------------------------------------------------------------
+
+export const BROWSER_QA_TOOL_NAMES = Object.freeze(['browser_qa_run']);
+
+const BROWSER_QA_TOOL_DESCRIPTIONS = Object.freeze({
+  browser_qa_run: {
+    name: 'browser_qa_run',
+    description:
+      'Run autonomous Browser QA (navigate → CWV → a11y → screenshot) against a URL via injectable clientImpl.',
+    inputSchema: {
+      type: 'object',
+      required: ['url'],
+      properties: {
+        url: {
+          type: 'string',
+          description: 'Target URL (http(s), about:blank, or file: for hermetic mocks)'
+        },
+        viewport: {
+          type: 'object',
+          description: 'Optional viewport hint passed through to hashing/client'
+        },
+        timeoutMs: {
+          type: 'number',
+          description: 'Optional per-call timeout override (ms)'
+        }
+      }
+    }
+  }
+});
+
+/**
+ * @returns {{ name: string, description: string, inputSchema: object }[]}
+ */
+export function listBrowserQaTools() {
+  return BROWSER_QA_TOOL_NAMES.map((name) => ({
+    ...BROWSER_QA_TOOL_DESCRIPTIONS[name]
+  }));
+}
+
+/**
+ * @param {string} name
+ * @returns {boolean}
+ */
+export function isBrowserQaToolName(name) {
+  return BROWSER_QA_TOOL_NAMES.includes(String(name || ''));
+}
+
+/**
+ * Execute a native Browser QA tool via runBrowserQa.
+ * Soft QA (CWV/a11y) returns ok:false without throw.
+ * Infra errors throw BrowserQaRunnerError.
+ *
+ * @param {object} opts
+ * @param {string} opts.toolName
+ * @param {object} [opts.arguments]
+ * @param {object} [opts.clientImpl]
+ * @param {number} [opts.timeoutMs]
+ * @returns {Promise<object>} runBrowserQa result (ok, cwv, a11y, screenshot, custody)
+ */
+export async function executeBrowserQaTool({
+  toolName,
+  arguments: args = {},
+  clientImpl,
+  timeoutMs = BROWSER_QA_TIMEOUT_MS
+} = {}) {
+  const name = String(toolName || '');
+  if (!isBrowserQaToolName(name)) {
+    throw new BrowserQaRunnerError(
+      `UNKNOWN_BROWSER_QA_TOOL: '${name}' is not a Browser QA tool`,
+      'UNKNOWN_BROWSER_QA_TOOL'
+    );
+  }
+  const a = args && typeof args === 'object' ? args : {};
+  return runBrowserQa({
+    url: a.url,
+    clientImpl,
+    timeoutMs: a.timeoutMs != null ? a.timeoutMs : timeoutMs,
+    viewport: a.viewport
+  });
+}
