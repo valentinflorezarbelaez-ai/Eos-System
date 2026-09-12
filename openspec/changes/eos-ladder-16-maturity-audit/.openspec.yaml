@@ -1,0 +1,18 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Register EOS Maturity Ladder 16 Gap Audit (docs-only) after Ladder 15 closeout (Mission AM); propose ordered satellites AN/AO/AP/AQ/AR for Governed Autonomy Hardening & Operator Federation — no Mission AN implementation in this change.
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-16-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_16_AUDIT_2026-09-12.md
+  - openspec/changes/eos-ladder-16-maturity-audit
+non_goals:
+  - implementing Mission AN/AO/AP/AQ/AR
+  - re-implementing Mission AI/AJ/AK/AL/AM (L15 closed)
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
