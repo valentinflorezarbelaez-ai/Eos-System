@@ -69,6 +69,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ad-llm-provider-port.test.js',
 
   'eos-ae-token-budget-ecr.test.js',
+
+  'eos-af-autonomous-execution-loop.test.js',
 ]);
 
 /**

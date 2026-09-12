@@ -178,7 +178,9 @@
     "test:llm-provider-port": "node --test tests/eos-ad-llm-provider-port.test.js",
     "test:mission-ad": "node --test tests/eos-ad-llm-provider-port.test.js",
     "test:token-budget-ecr": "node --test tests/eos-ae-token-budget-ecr.test.js",
-    "test:mission-ae": "node --test tests/eos-ae-token-budget-ecr.test.js"
+    "test:mission-ae": "node --test tests/eos-ae-token-budget-ecr.test.js",
+    "test:autonomous-execution-loop": "node --test tests/eos-af-autonomous-execution-loop.test.js",
+    "test:mission-af": "node --test tests/eos-af-autonomous-execution-loop.test.js"
   },
   "keywords": [
     "eos",
