@@ -1,0 +1,19 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Register EOS Maturity Ladder 17 Gap Audit (docs-only) after Ladder 16 closeout (Mission AR); propose ordered satellites AS/AT/AU/AV/AW for Sovereign Operator Continuity & Cross-Plane Composition — no Mission AS implementation in this change.
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-17-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_17_AUDIT_2026-09-12.md
+  - openspec/changes/eos-ladder-17-maturity-audit
+non_goals:
+  - implementing Mission AS/AT/AU/AV/AW
+  - re-implementing Mission AN/AO/AP/AQ/AR (L16 closed)
+  - re-implementing Mission AI/AJ/AK/AL/AM (L15 closed)
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
