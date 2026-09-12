@@ -57,6 +57,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'interactive-developer-shell.test.js',
 
   'eos-y-ladder12-seam-pack.test.js',
+
+  'eos-z-target-flight-sandbox.test.js',
 ]);
 
 /**
