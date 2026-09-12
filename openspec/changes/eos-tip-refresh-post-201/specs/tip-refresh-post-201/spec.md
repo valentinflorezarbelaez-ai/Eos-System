@@ -1,0 +1,3 @@
+# Spec — tip-refresh-post-201
+
+Freeze `main_tip` and matrix `evaluated_tip` SHALL equal `da18fdee83b624ee4e363ae1ec053da54d054d0c`. Retain PRODUCTION_READY=NO, Fundacion Delta=0, Ladder 11 CLOSED, Ladder 12 CLOSED, Ladder 13 **CLOSED** (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout), Ladder 14 **OPEN** (AD+AE+AF done; AG–AH pending) on main. Mission AF / Autonomous Execution Loop / live LLM SHALL NOT be claimed PRODUCTION_READY. Mission AE / Token-Budget Circuit Breaker / ECR SHALL NOT be claimed PRODUCTION_READY or a billing platform. Mission AD / live LLM port SHALL NOT be claimed PRODUCTION_READY. Keys SHALL never appear in repo. Tip-200 full SHA SHALL NOT be invented (tip refresh post #199 merged as #200 prior to #201).

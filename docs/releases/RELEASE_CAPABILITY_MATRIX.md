@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 4786826c67015f185a45567ebc80ff6898a4a5ce
+evaluated_tip: da18fdee83b624ee4e363ae1ec053da54d054d0c
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #199 from valentinflorezarbelaez-ai/grok/mission-ae-token-budget-ecr
-updated_at: 2026-09-12 America/Bogota (tip refresh post #199; pin to main@4786826; prior tip-197 pin 90e89da + tip-198 74da0fc; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE); Ladder 14 OPEN (AD+AE MEASURED; AF–AH pending); tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #201 from valentinflorezarbelaez-ai/grok/mission-af-autonomous-execution-loop
+updated_at: 2026-09-12 America/Bogota (tip refresh post #201; pin to main@da18fdee; prior tip-199 pin 4786826 + tip-200 #200 SHA not invented; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE); Ladder 14 OPEN (AD+AE+AF done; AG–AH pending); Law VI AF11 literal sk- → synthetic runtime keys; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -159,10 +159,12 @@ updated_at: 2026-09-12 America/Bogota (tip refresh post #199; pin to main@478682
 | Ladder 13 Closeout | COMPLETE | MEASURED (EOS_LADDER_13_CLOSEOUT_2026-09-12.md; Z/AA/AB + Mission AC seam-pack; CLOSED_FOR_LOCAL_GOVERNED_USE; PRODUCTION_READY=NO) |
 | Tip refresh post #194 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_194_2026-09-12.md; freeze+matrix to c546af19; tip honesty restored; superseded by #195/#196 base 6be6aaf + #197) |
 | Ladder 14 Maturity Audit | COMPLETE | MEASURED (#196; EOS_MATURITY_LADDER_14_AUDIT_2026-09-12.md; audit base tip c546af19 post #194; AD–AH ordered; audit MEASURED, NOT closed; tip-196 SHA not invented; tip honesty gap closed by post #197) |
-| Mission AD LLM Provider Port | COMPLETE | MEASURED (eos-mission-ad-llm-provider-port; test:llm-provider-port / test:mission-ad; SPEC-0035; MODEL_ROUTING / LLM Provider Port; Fundacion Delta=0; Ladder 14 OPEN (AD+AE MEASURED; AF–AH pending)) |
-| Tip refresh post #197 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_197_2026-09-12.md; freeze+matrix historically to 90e89da; tip honesty restored; superseded by #198/#199 → 4786826) |
-| Mission AE Token-Budget Circuit Breaker / ECR | COMPLETE | MEASURED (eos-mission-ae-token-budget-ecr; test:token-budget-ecr / test:mission-ae; SPEC-0036; Token-Budget Circuit Breaker / ECR; Fundacion Delta=0; Ladder 14 OPEN (AD+AE MEASURED; AF–AH pending); NON-CLAIM ECR ≠ billing ≠ PRODUCTION_READY) |
-| Tip refresh post #199 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_199_2026-09-12.md; freeze+matrix to 4786826; tip honesty restored) |
+| Mission AD LLM Provider Port | COMPLETE | MEASURED (eos-mission-ad-llm-provider-port; test:llm-provider-port / test:mission-ad; SPEC-0035; MODEL_ROUTING / LLM Provider Port; Fundacion Delta=0; Ladder 14 OPEN (AD+AE+AF done; AG–AH pending)) |
+| Tip refresh post #197 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_197_2026-09-12.md; freeze+matrix historically to 90e89da; tip honesty restored; superseded by #198/#199 → 4786826; later #200/#201 → da18fdee) |
+| Mission AE Token-Budget Circuit Breaker / ECR | COMPLETE | MEASURED (eos-mission-ae-token-budget-ecr; test:token-budget-ecr / test:mission-ae; SPEC-0036; Token-Budget Circuit Breaker / ECR; Fundacion Delta=0; Ladder 14 OPEN (AD+AE+AF done; AG–AH pending); NON-CLAIM ECR ≠ billing ≠ PRODUCTION_READY) |
+| Tip refresh post #199 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_199_2026-09-12.md; freeze+matrix historically to 4786826; tip honesty restored; superseded by #200/#201 → da18fdee; tip-200 SHA not invented) |
+| Mission AF Autonomous Execution Loop | COMPLETE | MEASURED (eos-mission-af-autonomous-execution-loop; test:autonomous-execution-loop / test:mission-af; SPEC-0037; Autonomous Execution Loop; Fundacion Delta=0; Ladder 14 OPEN (AD+AE+AF done; AG–AH pending); Law VI AF11 literal sk- → synthetic runtime keys; NON-CLAIM loop/live LLM ≠ PRODUCTION_READY) |
+| Tip refresh post #201 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_201_2026-09-12.md; freeze+matrix to da18fdee; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -240,12 +242,21 @@ PRODUCTION_READY: NO
 - Matrix: tip refresh post #126 MEASURED (historical) + Mission K Browser QA Runner MEASURED + tip refresh post #128 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
+## Tip refresh notes (post #201)
+
+- evaluated_tip pinned to OBSERVED main tip after #201: da18fdee83b624ee4e363ae1ec053da54d054d0c
+- Prior tip-199 pin 4786826 + tip refresh post #199 merged as #200 (tip-200 full SHA not invented); live main after #201 Mission AF is da18fdee — **tip honesty restored**
+- Honesty: Law VI pre-commit caught literal `sk-` in AF11; fixed with synthetic runtime keys
+- Matrix: tip refresh post #199 MEASURED (historical) + Mission AF Autonomous Execution Loop MEASURED + tip refresh post #201 MEASURED
+- NON-CLAIM: Mission AF / Autonomous Execution Loop / live LLM != PRODUCTION_READY=YES; Mission AE / ECR != billing != PRODUCTION_READY; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 OPEN (AD+AE+AF done; AG–AH pending); CI != GH enforcement; does not invent PRODUCTION_READY or tip-200 full SHA
+
 ## Tip refresh notes (post #199)
 
-- evaluated_tip pinned to OBSERVED main tip after #199: 4786826c67015f185a45567ebc80ff6898a4a5ce
-- Prior tip-197 pin 90e89da + tip-198 merge 74da0fc; live main after #199 Mission AE is 4786826 — **tip honesty restored**
+- evaluated_tip pinned (historical) to OBSERVED main tip after #199: 4786826c67015f185a45567ebc80ff6898a4a5ce
+- Prior tip-197 pin 90e89da + tip-198 merge 74da0fc; live main after #199 Mission AE is 4786826 — **tip honesty restored** (then)
 - Matrix: tip refresh post #197 MEASURED (historical) + Mission AE Token-Budget Circuit Breaker / ECR MEASURED + tip refresh post #199 MEASURED
-- NON-CLAIM: Mission AE / ECR != billing != PRODUCTION_READY=YES; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 OPEN (AD+AE MEASURED; AF–AH pending); CI != GH enforcement; does not invent PRODUCTION_READY
+- NON-CLAIM: Mission AE / ECR != billing != PRODUCTION_READY=YES; Mission AD / live LLM port != PRODUCTION_READY; keys never in repo; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 OPEN (AD+AE MEASURED; AF–AH pending at tip-199 time); CI != GH enforcement; does not invent PRODUCTION_READY
+- Historical: tip refresh post #199 merged as #200 (SHA not invented); superseded by tip refresh post #201 pin to main@da18fdee
 
 ## Tip refresh notes (post #197)
 
@@ -253,7 +264,7 @@ PRODUCTION_READY: NO
 - Prior clean tip 6be6aaf (post #195/#196 base before AD; tip-196 SHA not invented); live main after #197 Mission AD is 90e89da — **tip honesty restored** (then)
 - Matrix: tip refresh post #194 MEASURED (historical) + Ladder 14 Maturity Audit MEASURED + Mission AD LLM Provider Port MEASURED + tip refresh post #197 MEASURED
 - NON-CLAIM: Mission AD / live LLM port != PRODUCTION_READY=YES; keys never in repo; MODEL_ROUTING / LLM Provider Port != production LLM ops; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; Ladder 14 OPEN (AD MEASURED; AE–AH pending at tip-197 time); CI != GH enforcement; does not invent PRODUCTION_READY
-- Historical: superseded by tip refresh post #199 pin to main@4786826
+- Historical: superseded by tip refresh post #199 pin to main@4786826; later superseded by tip refresh post #201 pin to main@da18fdee
 
 ## Tip refresh notes (post #194)
 
@@ -261,7 +272,7 @@ PRODUCTION_READY: NO
 - Prior AB #192 / tip-192 refresh pin was 33752f362ec38f6d70ff5524a4be5035637adf51; tip refresh post #192 merged prior to #194 (#193 SHA not invented); live main after #194 Mission AC is c546af19 — **tip honesty restored** (then)
 - Matrix: tip refresh post #192 MEASURED (historical) + Mission AC Ladder 13 Closeout Seam-Pack MEASURED + Ladder 13 Closeout MEASURED + tip refresh post #194 MEASURED
 - NON-CLAIM: Mission AC / Ladder 13 CLOSED_FOR_LOCAL_GOVERNED_USE != PRODUCTION_READY=YES; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED; CI != GH enforcement; does not invent PRODUCTION_READY; CRLF e12b293 absorbed into #194 lineage
-- Historical: superseded by tip refresh post #197 pin to main@90e89da; later superseded by tip refresh post #199 pin to main@4786826
+- Historical: superseded by tip refresh post #197 pin to main@90e89da; later superseded by tip refresh post #199 pin to main@4786826; later superseded by tip refresh post #201 pin to main@da18fdee
 
 ## Tip refresh notes (post #192)
 
@@ -269,7 +280,7 @@ PRODUCTION_READY: NO
 - Prior post-#190/#191 pin was 097d0ecc121e02be6436bfc47c29d1bbdab307d1 / 82c32a5; live main after tip #191 + #192 Mission AB is 33752f36 — **tip honesty restored**
 - Matrix: tip refresh post #190 MEASURED (historical via #191) + Mission AB Telemetry Stream Server MEASURED + tip refresh post #192 MEASURED
 - NON-CLAIM: Mission AB MEASURED != AC implemented at tip #192 time; Ladder 13 was OPEN at tip #192 time (later CLOSED via #194); Ladder 11 CLOSED; Ladder 12 CLOSED; telemetry != public internet ops; does not invent PRODUCTION_READY
-- Historical: superseded by tip refresh post #194 pin to main@c546af19; later superseded by tip refresh post #197 pin to main@90e89da; later superseded by tip refresh post #199 pin to main@4786826
+- Historical: superseded by tip refresh post #194 pin to main@c546af19; later superseded by tip refresh post #197 pin to main@90e89da; later superseded by tip refresh post #199 pin to main@4786826; later superseded by tip refresh post #201 pin to main@da18fdee
 
 ## Tip refresh notes (post #190)
 

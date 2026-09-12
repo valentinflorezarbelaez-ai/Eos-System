@@ -1,0 +1,1 @@
+Docs-only tip honesty. Mission AF MEASURED (Autonomous Execution Loop); Ladder 13 CLOSED_FOR_LOCAL_GOVERNED_USE; Ladder 14 OPEN (AD+AE+AF done, AG–AH pending); still PRODUCTION_READY=NO. Prior AE tip 4786826 + tip-200 (#200; SHA not invented) + Mission AF da18fdee; no invented SHAs. Law VI AF11 literal sk- → synthetic runtime keys (honesty).
