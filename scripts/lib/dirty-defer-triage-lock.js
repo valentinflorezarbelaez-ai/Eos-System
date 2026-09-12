@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-243 to live main after #242+#243 (was tip-241 pin f4869c4 / #242 @ 2b3abec)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-245 to live main after #244+#245 (was tip-243 pin 10772d7 / #244 @ 49badda)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '10772d790409a80e14cb7b2fc97e411b98132fe9') {
+      if (!tip || tip[1] !== '3a7fb756aafe5848bbceeaaeaf050bb4d693bf6f') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-243 expected main_tip=10772d790409a80e14cb7b2fc97e411b98132fe9 (post-#243 / Mission AR; tip honesty restored; L16 CLOSED)',
+            'tip-refresh-post-245 expected main_tip=3a7fb756aafe5848bbceeaaeaf050bb4d693bf6f (post-#245 / Ladder 17 audit; tip honesty restored; L16 CLOSED; L17 OPEN audit MEASURED)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-243 / main@10772d7 (post-#243 / Mission AR; L16 CLOSED)',
+          path: 'freeze main_tip pinned to tip-refresh-post-245 / main@3a7fb75 (post-#245 / Ladder 17 audit; L16 CLOSED; L17 OPEN)',
           status: 'VERIFIED',
           type
         });
