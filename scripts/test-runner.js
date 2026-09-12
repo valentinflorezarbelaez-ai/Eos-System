@@ -47,6 +47,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'worker-runtime-daemon.test.js',
   'fdir-sentinel-runtime.test.js',
   'specboot-agent-runner.test.js',
+  'external-write-gateway.test.js',
 ]);
 
 /**
