@@ -43,11 +43,30 @@ export class ElevateOrchestrator {
     // 3. Phase 3: TDD Self-Healing (if mode is 'heal')
     const remediationResults = [];
     if (mode === 'heal' && dag.tasks.length > 0) {
+      // Group tasks by target file to prevent concurrent access violations
+      const tasksByFile = new Map();
       for (const task of dag.tasks) {
         if (typeof task.patch === 'function') {
-          const res = await this.healer.executeTask(task);
-          remediationResults.push(res);
+          if (!tasksByFile.has(task.file)) {
+            tasksByFile.set(task.file, []);
+          }
+          tasksByFile.get(task.file).push(task);
         }
+      }
+
+      // Execute file streams concurrently, but sequence tasks within each file stream
+      const filePromises = Array.from(tasksByFile.values()).map(async (fileTasks) => {
+        const streamResults = [];
+        for (const task of fileTasks) {
+          const res = await this.healer.executeTask(task);
+          streamResults.push(res);
+        }
+        return streamResults;
+      });
+
+      const groupedResults = await Promise.all(filePromises);
+      for (const results of groupedResults) {
+        remediationResults.push(...results);
       }
     }
 
