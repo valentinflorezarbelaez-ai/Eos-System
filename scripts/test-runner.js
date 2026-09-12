@@ -93,6 +93,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ap-hitl-po-authority-channel.test.js',
 
   'eos-aq-evidence-export-notarization.test.js',
+
+  'eos-ar-ladder16-seam-pack.test.js',
 ]);
 
 /**

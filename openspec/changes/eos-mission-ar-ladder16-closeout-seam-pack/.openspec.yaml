@@ -1,0 +1,28 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0049 / Mission AR — Ladder 16 CI Seam-Pack Consolidation & Closeout. Require AN/AO/AP/AQ satellites (test:multi-workstation-federation, test:provider-failover-resilience, test:hitl-po-authority, test:evidence-export-notarization) in CI seam-pack; extend test:native-suite-pack; add test:mission-ar / test:ar16 / test:l16 / test:ladder16-pack; lock test slim-excluded; contract + assert-gha needles via idempotent CRLF-safe patcher; Ladder 16 closeout audit. PRODUCTION_READY=NO; Fundacion Δ=0; Antigravity-first; no CloudAgent; no soak; no continue-on-error; do not raise TR-01; Law VI held; tip honesty deferred to post-AR tip refresh.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0049
+phase: 1
+affected_areas:
+  - .github/workflows/ci.yml
+  - package.json
+  - scripts/test-runner.js
+  - scripts/patch-mission-ar.mjs
+  - scripts/ci/assert-gha-contract.js
+  - tests/eos-ar-ladder16-seam-pack.test.js
+  - docs/governance/CI_CD_CONTRACT.md
+  - docs/releases/EOS_MISSION_AR_LADDER16_SEAM_PACK_2026-09-12.md
+  - docs/releases/EOS_LADDER_16_CLOSEOUT_2026-09-12.md
+  - openspec/changes/eos-mission-ar-ladder16-closeout-seam-pack
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion mutation
+  - raising TR-01 slim ceiling
+  - soak / continue-on-error
+  - Cursor CloudAgent
+  - new npm dependencies
+  - GH billing / branch-protection enforcement claims
+  - reimplementing AN/AO/AP/AQ modules
+  - tip honesty ritual (deferred post-AR tip refresh)
