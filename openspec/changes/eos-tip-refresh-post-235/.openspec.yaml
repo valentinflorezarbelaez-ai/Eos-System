@@ -1,0 +1,34 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Tip honesty refresh post-#235 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@b741e12 (PR #234 tip-233 @ b1a7164 + #235 Mission AN Multi-Workstation Session Federation Port; prior tip-233 pin 2123ca2; tip-234 full SHA not invented beyond b1a7164); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout); Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 OPEN (AN MEASURED via #235; AO–AR pending). NON-CLAIM Mission AN ≠ AO–AR implemented ≠ Ladder 16 CLOSED ≠ PRODUCTION_READY / ≠ GH enforcement / ≠ CloudAgent fleet.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-235
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_235_2026-09-12.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-235
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - inventing tip SHAs (incl. tip-234 full SHA beyond b1a7164 / intermediate full SHAs)
+  - implementing AO–AR / Ladder 16 satellites in this change
+  - claiming Ladder 16 is CLOSED, AO–AR implemented, PRODUCTION_READY, or GH-enforced
+  - claiming Mission AN / Multi-Workstation Session Federation is PRODUCTION_READY, CloudAgent fleet, multi-tenant SaaS, or GH-enforced
+  - claiming Mission AM / Ladder 15 Closeout is PRODUCTION_READY or GH-enforced
+  - claiming Mission AL / Autonomy Replay / Forensic Observer is PRODUCTION_READY, SIEM, billing, or GH-enforced
+  - claiming Mission AK / Constitution Runtime Policy Gate is PRODUCTION_READY, compliance certification, or GH-enforced
+  - claiming Mission AJ / Evidence Economy Ledger is PRODUCTION_READY, billing, or GH-enforced
+  - claiming Mission AI / multi-session is PRODUCTION_READY or GH-enforced
+  - claiming Mission AH / Ladder 14 Closeout is PRODUCTION_READY or GH-enforced
+  - claiming Mission AG / Live Tool Engine is PRODUCTION_READY or a CloudAgent fleet
+  - claiming Mission AF / Autonomous Execution Loop / live LLM is PRODUCTION_READY
+  - claiming Mission AE / ECR is PRODUCTION_READY or a billing platform
+  - claiming Mission AD / live LLM port is PRODUCTION_READY
+  - putting API keys in repo
