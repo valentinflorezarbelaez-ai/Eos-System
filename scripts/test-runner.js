@@ -53,6 +53,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'fdir-remediation-loop.test.js',
 
   'sovereign-session-coordinator.test.js',
+
+  'interactive-developer-shell.test.js',
 ]);
 
 /**
