@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: e83ac0dfedbd9ecae93a57d456aaa3935db0b11e
-main_subject: Merge pull request #184 from valentinflorezarbelaez-ai/grok/mission-y-ladder12-closeout-seam-pack
-branch_hygiene: clean (main == origin/main @ e83ac0d; #101–#182 as prior + #183 tip refresh post #182 + #184 Mission Y Ladder 12 CI Seam-Pack / Closeout; tip honesty restored post #184; Ladder 11 CLOSED; Ladder 12 CLOSED; PRODUCTION_READY=NO; Fundacion Delta=0; Mission Y MEASURED)
+main_tip: d426a3e1f52902c55a2b79b974861ced99660acb
+main_subject: Merge pull request #186 from valentinflorezarbelaez-ai/grok/ladder-13-maturity-audit
+branch_hygiene: clean (main == origin/main @ d426a3e; #101–#184 as prior + #185 tip refresh post #184 + #186 Ladder 13 Maturity Audit; tip honesty restored post #186; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 OPEN (audit MEASURED, NOT closed); PRODUCTION_READY=NO; Fundacion Delta=0)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-12 America/Bogota (tip refresh post #184; pin to main@e83ac0d; prior post-#182/#183 pin was 960f334a/a769cf6; tip honesty restored; Ladder 11 CLOSED; Ladder 12 CLOSED; Mission Y MEASURED; PRODUCTION_READY=NO)
+updated_at: 2026-09-12 America/Bogota (tip refresh post #186; pin to main@d426a3e; prior post-#184/#185 pin was e83ac0d/e7e0297; tip honesty restored; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 audit MEASURED (NOT closed — audit only); PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + Ladder11 #176 + Ladder12 #184 + #101-#184)
+## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + Ladder11 #176 + Ladder12 #184 + L13 audit #186 + #101-#186)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `e83ac0dfedbd9ecae93a57d456aaa3935db0b11e`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `d426a3e1f52902c55a2b79b974861ced99660acb`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -128,6 +128,8 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | Mission X Interactive Developer Shell / REPL | #182 | 960f334a | `eos-mission-x-developer-shell-repl`; SPEC-0029; test:developer-shell; Mission X MEASURED |
 | Tip refresh post #182 | #183 | a769cf6 | `EOS_TIP_REFRESH_POST_182_2026-09-11.md`; freeze+matrix to 960f334a |
 | Mission Y Ladder 12 CI Seam-Pack / Closeout | #184 | e83ac0d | `eos-mission-y-ladder12-closeout-seam-pack`; SPEC-0030; test:mission-y / test:y12 / test:ladder12-pack; Ladder 12 CLOSED; Mission Y MEASURED |
+| Tip refresh post #184 | #185 | e7e0297 | `EOS_TIP_REFRESH_POST_184_2026-09-12.md`; freeze+matrix to e83ac0d |
+| Ladder 13 Maturity Audit | #186 | d426a3e | `EOS_MATURITY_LADDER_13_AUDIT_2026-09-12.md` (Z–AC ordered; tip refresh separate; audit MEASURED, NOT closed) |
 
 ### Ladder 10 (V1–V5) Closeout — 2026-09-10
 
@@ -1087,3 +1089,28 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Mission Y MEASURED
 - NON-CLAIM: tip honesty != PRODUCTION_READY; Mission Y / Ladder 12 seam-pack != PRODUCTION_READY; != GH billing/enforcement; CloudAgent out of SpecBoot path
+- Historical: freeze tip superseded by tip refresh post #186 pin to main@d426a3e (Ladder 13 Maturity Audit #186; tip #185 was e7e0297)
+
+## Ladder 13 Maturity Audit (2026-09-12)
+
+- Report: `docs/releases/EOS_MATURITY_LADDER_13_AUDIT_2026-09-12.md`
+- Branch: `grok/ladder-13-maturity-audit` — merged via #186
+- Audit base tip OBSERVED: main@`e7e0297d9dadb4282d24822484eb93ed75ee6b5f` (tip refresh post #184 / #185)
+- Merged as #186 (`d426a3e`); freeze tip refreshed by **tip refresh post #186** to main@`d426a3e1f52902c55a2b79b974861ced99660acb`
+- Ordered next ladder **Z → AA → AB → AC** (SPEC-0031–0034); **do not implement Z in the audit branch**
+- Status: **MEASURED (audit only)** — Ladder 13 remains **OPEN**; Ladder 12 remains **CLOSED**
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING; Antigravity-first (no CloudAgent)
+- NON-CLAIM: audit MEASURED != Z/AA/AB/AC implemented; Ladder 13 NOT closed; Level 2 axis != PRODUCTION_READY; Target Flight != real Fundacion writes
+
+## Tip refresh post #186 (2026-09-12)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_186_2026-09-12.md`
+- Branch: `grok/tip-refresh-post-186`
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`d426a3e1f52902c55a2b79b974861ced99660acb` (#186 Ladder 13 Maturity Audit; post #185 tip refresh post #184)
+- Honesty restored: prior post-#184/#185 pin was `e83ac0dfedbd9ecae93a57d456aaa3935db0b11e` / `e7e0297`; live main after #185–#186 is `d426a3e`
+- Matrix: tip refresh post #184 MEASURED (historical via #185) + **Ladder 13 Maturity Audit MEASURED** + **tip refresh post #186 MEASURED**
+- Dirty-defer tip honesty pin moved with freeze
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 OPEN (audit MEASURED, NOT closed — audit only; Z not implemented)
+- NON-CLAIM: tip honesty != PRODUCTION_READY; Ladder 13 audit MEASURED != Z/AA/AB/AC implemented; Ladder 13 NOT closed; CloudAgent out of SpecBoot path

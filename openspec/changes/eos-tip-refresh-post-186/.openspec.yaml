@@ -1,0 +1,20 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Tip honesty refresh post #186 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@d426a3e (Ladder 13 Maturity Audit merge); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 OPEN (audit MEASURED, NOT closed); Z not implemented.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-186
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_186_2026-09-12.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-186
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - implementing Mission Z / closing Ladder 13
