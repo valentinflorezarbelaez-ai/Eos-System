@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: d426a3e1f52902c55a2b79b974861ced99660acb
-main_subject: Merge pull request #186 from valentinflorezarbelaez-ai/grok/ladder-13-maturity-audit
-branch_hygiene: clean (main == origin/main @ d426a3e; #101–#184 as prior + #185 tip refresh post #184 + #186 Ladder 13 Maturity Audit; tip honesty restored post #186; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 OPEN (audit MEASURED, NOT closed); PRODUCTION_READY=NO; Fundacion Delta=0)
+main_tip: 8604014715097de73df4514de097d0e6dbe8d545
+main_subject: Merge pull request #188 from valentinflorezarbelaez-ai/grok/mission-z-governed-target-flight-sandbox
+branch_hygiene: clean (main == origin/main @ 86040147; #101–#184 as prior + #185 tip refresh post #184 + #186 Ladder 13 Maturity Audit + #187 tip refresh post #186 + #188 Mission Z; tip honesty restored post #188; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 OPEN (Z MEASURED; AA/AB/AC pending); PRODUCTION_READY=NO; Fundacion Delta=0)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-12 America/Bogota (tip refresh post #186; pin to main@d426a3e; prior post-#184/#185 pin was e83ac0d/e7e0297; tip honesty restored; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 audit MEASURED (NOT closed — audit only); PRODUCTION_READY=NO)
+updated_at: 2026-09-12 America/Bogota (tip refresh post #188; pin to main@86040147; prior post-#186/#187 pin was d426a3e/e2ab1ec; tip honesty restored; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 OPEN (Z MEASURED; AA/AB/AC pending); PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + Ladder11 #176 + Ladder12 #184 + L13 audit #186 + #101-#186)
+## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + Ladder11 #176 + Ladder12 #184 + L13 audit #186 + #187 tip + #188 Mission Z + #101-#188)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `d426a3e1f52902c55a2b79b974861ced99660acb`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `8604014715097de73df4514de097d0e6dbe8d545`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -130,6 +130,8 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | Mission Y Ladder 12 CI Seam-Pack / Closeout | #184 | e83ac0d | `eos-mission-y-ladder12-closeout-seam-pack`; SPEC-0030; test:mission-y / test:y12 / test:ladder12-pack; Ladder 12 CLOSED; Mission Y MEASURED |
 | Tip refresh post #184 | #185 | e7e0297 | `EOS_TIP_REFRESH_POST_184_2026-09-12.md`; freeze+matrix to e83ac0d |
 | Ladder 13 Maturity Audit | #186 | d426a3e | `EOS_MATURITY_LADDER_13_AUDIT_2026-09-12.md` (Z–AC ordered; tip refresh separate; audit MEASURED, NOT closed) |
+| Tip refresh post #186 | #187 | e2ab1ec | `EOS_TIP_REFRESH_POST_186_2026-09-12.md`; freeze+matrix to d426a3e |
+| Mission Z Target Flight Sandbox | #188 | 86040147 | `eos-mission-z-governed-target-flight-sandbox`; SPEC-0031; test:target-flight / test:mission-z; Mission Z MEASURED; Ladder 13 OPEN (Z MEASURED; AA/AB/AC pending) |
 
 ### Ladder 10 (V1–V5) Closeout — 2026-09-10
 
@@ -1098,10 +1100,10 @@ External production readiness is explicitly **not** asserted.
 - Audit base tip OBSERVED: main@`e7e0297d9dadb4282d24822484eb93ed75ee6b5f` (tip refresh post #184 / #185)
 - Merged as #186 (`d426a3e`); freeze tip refreshed by **tip refresh post #186** to main@`d426a3e1f52902c55a2b79b974861ced99660acb`
 - Ordered next ladder **Z → AA → AB → AC** (SPEC-0031–0034); **do not implement Z in the audit branch**
-- Status: **MEASURED (audit only)** — Ladder 13 remains **OPEN**; Ladder 12 remains **CLOSED**
+- Status: **MEASURED (audit only)** — Ladder 13 remains **OPEN**; Ladder 12 remains **CLOSED**; Mission Z later MEASURED via #188 (AA/AB/AC pending)
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING; Antigravity-first (no CloudAgent)
-- NON-CLAIM: audit MEASURED != Z/AA/AB/AC implemented; Ladder 13 NOT closed; Level 2 axis != PRODUCTION_READY; Target Flight != real Fundacion writes
+- NON-CLAIM: audit MEASURED != Z/AA/AB/AC implemented at audit time; Ladder 13 NOT closed; Level 2 axis != PRODUCTION_READY; Target Flight != real Fundacion writes
 
 ## Tip refresh post #186 (2026-09-12)
 
@@ -1114,3 +1116,28 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 OPEN (audit MEASURED, NOT closed — audit only; Z not implemented)
 - NON-CLAIM: tip honesty != PRODUCTION_READY; Ladder 13 audit MEASURED != Z/AA/AB/AC implemented; Ladder 13 NOT closed; CloudAgent out of SpecBoot path
+- Historical: freeze tip superseded by tip refresh post #188 pin to main@86040147 (Mission Z #188; tip #187 was e2ab1ec)
+
+## Mission Z Target Flight Sandbox (2026-09-12)
+
+- Report: `docs/releases/EOS_MISSION_Z_TARGET_FLIGHT_SANDBOX_2026-09-12.md`
+- Branch: `grok/mission-z-governed-target-flight-sandbox` — merged via #188
+- Base tip OBSERVED: main@`e2ab1ecabb28643057b8f2625e0851e7fc69de01` (tip refresh post #186 / #187)
+- Merged as #188 (`86040147`); freeze tip refreshed by **tip refresh post #188** to main@`8604014715097de73df4514de097d0e6dbe8d545`
+- SPEC-0031: governed Level-2 Target Flight Sandbox + precondition verifier; test:target-flight / test:mission-z
+- Status: **MEASURED** — Ladder 13 remains **OPEN** (Z MEASURED; AA/AB/AC pending); Ladder 11 CLOSED; Ladder 12 CLOSED
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING; Antigravity-first (no CloudAgent)
+- NON-CLAIM: Mission Z sandbox != real Fundacion writes; simulation != Fundacion Δ opened; Level-2 receipts != PRODUCTION_READY; Ladder 13 NOT closed
+
+## Tip refresh post #188 (2026-09-12)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_188_2026-09-12.md`
+- Branch: `grok/tip-refresh-post-188`
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`8604014715097de73df4514de097d0e6dbe8d545` (#188 Mission Z; post #187 tip refresh post #186)
+- Honesty restored: prior post-#186/#187 pin was `d426a3e1f52902c55a2b79b974861ced99660acb` / `e2ab1ec`; live main after #187–#188 is `86040147`
+- Matrix: tip refresh post #186 MEASURED (historical via #187) + **Mission Z Target Flight Sandbox MEASURED** + **tip refresh post #188 MEASURED**
+- Dirty-defer tip honesty pin moved with freeze
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 OPEN (Z MEASURED; AA/AB/AC pending)
+- NON-CLAIM: tip honesty != PRODUCTION_READY; Mission Z MEASURED != AA/AB/AC implemented; Ladder 13 NOT closed; sandbox != live Fundacion writes; CloudAgent out of SpecBoot path
