@@ -1,0 +1,3 @@
+# Proposal — Tip refresh post #203
+
+Pin to `e731396a9b604a97d7819f95ee096f31599e393d` after Mission AG (#203). Prior pin `da18fdee` (Mission AF #201); tip refresh post #201 merged as #202 (tip-202 full SHA not invented). User lineage: PR #202 tip-201 + #203 Mission AG both merged at e731396. Ladder 13 remains **CLOSED** (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout). Ladder 14 is **OPEN** (AD+AE+AF+AG MEASURED; AH pending). NON-CLAIM: Mission AG / Live Tool Engine ≠ PRODUCTION_READY / ≠ CloudAgent fleet; Mission AF / Autonomous Execution Loop / live LLM ≠ PRODUCTION_READY; Mission AE / ECR ≠ billing ≠ PRODUCTION_READY; Mission AD / live LLM port ≠ PRODUCTION_READY; keys never in repo.
