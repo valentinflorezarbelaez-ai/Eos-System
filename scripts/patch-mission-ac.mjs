@@ -196,7 +196,7 @@ if (!fs.existsSync(ciPath)) {
     }
 
     yaml = yaml.replace(
-      /(Named ROI \/ Ladder seam pack[^\n]*)/,
+      /(Named ROI \/ Ladder seam pack[^\r\n]*)/,
       (m) =>
         m.includes('Ladder 13') || m.includes('target-flight')
           ? m
@@ -257,7 +257,7 @@ if (!fs.existsSync(contractPath)) {
       !md.includes('test:telemetry-server')
     ) {
       md = md.replace(
-        /(\| seam-pack \|[^\n]*?)( \| Forbidden \|)/,
+        /(\| seam-pack \|[^\r\n]*?)( \| Forbidden \|)/,
         (m, row, tail) => {
           if (row.includes('test:target-flight')) return m;
           return `${row} + \`test:target-flight\`/\`test:multi-agent-swarm\`/\`test:telemetry-server\` (Ladder 13)${tail}`;

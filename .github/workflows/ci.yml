@@ -123,7 +123,7 @@ jobs:
           node-version: '22'
       - name: CI-safe long-run GameDay (default N)
         run: npm run gameday:long-run
-      - name: Named ROI / Ladder seam pack (incl. N2-N6 + P2/P3/P4-P6 + Q2-Q6 + R4-R5 + S2-S6 + SpecBoot/AGY + T2-T8 + V2-V5 + U2 + compute-worker + C2 + native-suite i/l/m/n/o + P–T) + Ladder 12 V/W/X + Ladder 13 Z/AA/AB
+      - name: Named ROI / Ladder seam pack (incl. N2-N6 + P2/P3/P4-P6 + Q2-Q6 + R4-R5 + S2-S6 + SpecBoot/AGY + T2-T8 + V2-V5 + U2 + compute-worker + C2 + native-suite i/l/m/n/o + P–T) + Ladder 12 V/W/X + Ladder 13 Z/AA/AB
         run: |
           npm run test:roi3
           npm run test:roi4
