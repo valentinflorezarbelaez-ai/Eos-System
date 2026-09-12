@@ -1,0 +1,25 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0052 / Mission AU — Law VI Secret Runtime Broker / Env Gate. Typed runtime broker over AO (+ AD); env-gate API; inject-only to allowlisted provider adapters; DENY if secret would enter EVD/federation/repo bodies; hermetic fake env; sealed receipts without secret values. Fail-closed OK / DENY / MISSING_ENV / ADAPTER_NOT_ALLOWLISTED / ENV_KEY_NOT_ALLOWLISTED / SECRET_LEAK_FORBIDDEN / INVALID_REQUEST / MISSING_DEP / FUNDACION_DENIED. PRODUCTION_READY=NO. NON-CLAIM broker ≠ vault/KMS/secret-manager SaaS/cloud IAM; not AV/AW; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI; Law VI zero static vendor-key prefix literals (rg CLEAN).
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0052
+phase: 1
+affected_areas:
+  - src/core/secrets/secret-runtime-broker.js
+  - src/core/secrets/env-gate.js
+  - src/core/secrets/secret-leak-guard.js
+  - src/core/secrets/broker-receipt.js
+  - tests/eos-au-law-vi-secret-runtime-broker.test.js
+  - scripts/patch-mission-au.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-au-law-vi-secret-runtime-broker
+  - docs/releases/EOS_MISSION_AU_LAW_VI_SECRET_RUNTIME_BROKER_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - vault / KMS / secret-manager SaaS / cloud IAM product
+  - AV/AW implementation
+  - static provider secret literals in repo
+  - CloudAgent path
