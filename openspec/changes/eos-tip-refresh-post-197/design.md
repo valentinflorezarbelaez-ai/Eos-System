@@ -1,0 +1,1 @@
+Docs-only tip honesty. Mission AD MEASURED (LLM Provider Port / MODEL_ROUTING); Ladder 13 CLOSED_FOR_LOCAL_GOVERNED_USE; Ladder 14 OPEN (AD done, AE–AH pending); still PRODUCTION_READY=NO. Prior clean tip 6be6aaf + Mission AD 90e89da; tip-196 SHA not invented.
