@@ -192,7 +192,9 @@
     "test:evidence-economy-ledger": "node --test tests/eos-aj-evidence-economy-ledger.test.js",
     "test:mission-aj": "node --test tests/eos-aj-evidence-economy-ledger.test.js",
     "test:constitution-runtime-policy-gate": "node --test tests/eos-ak-constitution-runtime-policy-gate.test.js",
-    "test:mission-ak": "node --test tests/eos-ak-constitution-runtime-policy-gate.test.js"
+    "test:mission-ak": "node --test tests/eos-ak-constitution-runtime-policy-gate.test.js",
+    "test:autonomy-replay-forensic-observer": "node --test tests/eos-al-autonomy-replay-forensic-observer.test.js",
+    "test:mission-al": "node --test tests/eos-al-autonomy-replay-forensic-observer.test.js"
   },
   "keywords": [
     "eos",

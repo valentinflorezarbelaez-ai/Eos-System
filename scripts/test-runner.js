@@ -81,6 +81,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-aj-evidence-economy-ledger.test.js',
 
   'eos-ak-constitution-runtime-policy-gate.test.js',
+
+  'eos-al-autonomy-replay-forensic-observer.test.js',
 ]);
 
 /**

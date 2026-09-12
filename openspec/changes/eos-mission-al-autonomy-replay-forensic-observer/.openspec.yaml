@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0043 / Mission AL — Autonomy Replay & Forensic Observer. Hermetic injectable fail-closed replay observer over AJ ledger + AI session records; deterministic re-walk of sealed multi-session timelines reproducing cycle ordering and deny/allow outcomes; forensic timeline export; optional AE ECR attribution observe-only. MUST NOT mutate live ledger/session state. PRODUCTION_READY=NO. NON-CLAIM ≠ SIEM product ≠ PRODUCTION_READY cost billing ≠ billing accuracy; observe-only; no live state mutation; not AM; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI; Law VI no static vendor-key literals.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0043
+phase: 1
+affected_areas:
+  - src/core/observability/autonomy-replay-forensic-observer.js
+  - src/core/observability/forensic-timeline-export.js
+  - tests/eos-al-autonomy-replay-forensic-observer.test.js
+  - scripts/patch-mission-al.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-al-autonomy-replay-forensic-observer
+  - docs/releases/EOS_MISSION_AL_AUTONOMY_REPLAY_FORENSIC_OBSERVER_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AM
+  - SIEM product
+  - billing accuracy / PRODUCTION_READY cost billing
+  - live autonomy state mutation (append/save)
+  - live network in CI
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets / vendor-key literals in repo
+  - new npm dependencies
+  - claiming autonomy replay ≡ PRODUCTION_READY
