@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: a748618f2f0e1104d941cdfc135f9a930395284f
-main_subject: Merge pull request #176 from valentinflorezarbelaez-ai/grok/mission-u-native-suite-seam-pack
-branch_hygiene: clean (main == origin/main @ a748618; #101–#175 as prior + #176 Mission U Native Suite Seam-Pack + Ladder 11 CLOSED; tip honesty restored post #176; PRODUCTION_READY=NO; Fundacion Delta=0)
+main_tip: d3667cd66c6eab0251b4367300191d710e341801
+main_subject: Merge pull request #178 from valentinflorezarbelaez-ai/grok/mission-v-fdir-remediation-loop
+branch_hygiene: clean (main == origin/main @ d3667cd; #101–#177 as prior + #178 Mission V FDIR Remediation Loop; tip honesty restored post #178; Ladder 11 CLOSED; PRODUCTION_READY=NO; Fundacion Delta=0; Mission V MEASURED)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-11 America/Bogota (tip refresh post #176; pin to main@a748618; prior post-#174/#175 pin was e1e0b24/2d630ef; tip honesty restored; Ladder 11 CLOSED; PRODUCTION_READY=NO)
+updated_at: 2026-09-11 America/Bogota (tip refresh post #178; pin to main@d3667cd; prior post-#176/#177 pin was a748618/24c9845; tip honesty restored; Ladder 11 CLOSED; Mission V MEASURED; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + Ladder11 #176 + #101-#176)
+## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + Ladder11 #176 + #101-#178)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `a748618f2f0e1104d941cdfc135f9a930395284f`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `d3667cd66c6eab0251b4367300191d710e341801`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -120,6 +120,8 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | Mission T External Write Gateway | #174 | e1e0b24 | `eos-mission-t-external-write-gateway`; SPEC-0025a; test:external-write-gateway |
 | Tip refresh post #174 | #175 | 2d630ef | `EOS_TIP_REFRESH_POST_174_2026-09-11.md`; freeze+matrix to e1e0b24 |
 | Mission U Native Suite Seam-Pack | #176 | a748618 | `eos-mission-u-native-suite-seam-pack`; SPEC-0026; test:native-suite-pack; Ladder 11 |
+| Tip refresh post #176 | #177 | 24c9845 | `EOS_TIP_REFRESH_POST_176_2026-09-11.md`; freeze+matrix to a748618 |
+| Mission V FDIR Remediation Loop | #178 | d3667cd | `eos-mission-v-fdir-remediation-loop`; SPEC-0027; test:fdir-remediation; Mission V MEASURED |
 
 ### Ladder 10 (V1–V5) Closeout — 2026-09-10
 
@@ -1022,3 +1024,15 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; AT_CEILING; Ladder 11 closeout on main via #176
 - NON-CLAIM: tip honesty != PRODUCTION_READY; Ladder 11 != PRODUCTION_READY; native suite in CI != production deploy; CloudAgent out of SpecBoot path
+
+## Tip refresh post #178 (2026-09-11)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_178_2026-09-11.md`
+- Branch: `grok/tip-refresh-post-178`
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`d3667cd66c6eab0251b4367300191d710e341801` (#178 Mission V; post #177 tip refresh post #176)
+- Honesty restored: prior post-#176/#177 pin was `a748618f2f0e1104d941cdfc135f9a930395284f` / `24c9845`; live main after #177–#178 is `d3667cd`
+- Matrix: tip refresh post #176 MEASURED (historical via #177) + **Mission V FDIR Remediation Loop MEASURED** + **tip refresh post #178 MEASURED**
+- Dirty-defer tip honesty pin moved with freeze
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Mission V MEASURED
+- NON-CLAIM: tip honesty != PRODUCTION_READY; Mission V remediation loop != PRODUCTION_READY; CloudAgent out of SpecBoot path
