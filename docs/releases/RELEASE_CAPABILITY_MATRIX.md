@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 3b4fe5b7f03bfb9063a272092deb32b0974bb8e9
+evaluated_tip: 564951983ca5edf5ee4d1061fd0e85c7c013f976
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #136 from valentinflorezarbelaez-ai/grok/mission-n-multi-native-compose
-updated_at: 2026-09-11 America/Bogota (tip refresh post #136; pin to main@3b4fe5b; prior post-#134/#135 pin was 5e208e4/5c5a1bd; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #145 from valentinflorezarbelaez-ai/grok/mission-o-native-tools-adversarial
+updated_at: 2026-09-11 America/Bogota (tip refresh post #145; pin to main@5649519; prior post-#136/#138 pin was 3b4fe5b/2d8f6d7; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -122,7 +122,9 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #136; pin to main@3b4fe5
 | Mission M Browser QA worker bridge (#134) | COMPLETE | MEASURED (eos-mission-m-browser-qa-worker-bridge; test:compute-worker-m; SPEC-0018) |
 | Tip refresh post #134 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_134_2026-09-11.md; freeze+matrix to 5e208e4; tip honesty restored; superseded tip pin by post #136) |
 | Mission N multi-native compose (#136) | COMPLETE | MEASURED (eos-mission-n-multi-native-compose; test:compute-worker-n; SPEC-0019) |
-| Tip refresh post #136 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_136_2026-09-11.md; freeze+matrix to 3b4fe5b; tip honesty restored) |
+| Tip refresh post #136 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_136_2026-09-11.md; freeze+matrix to 3b4fe5b; tip honesty restored; superseded tip pin by post #145) |
+| Mission O native-tools adversarial (#145) | COMPLETE | MEASURED (eos-mission-o-native-tools-adversarial; test:compute-worker-o; SPEC-0020) |
+| Tip refresh post #145 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_145_2026-09-11.md; freeze+matrix to 5649519; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -198,6 +200,13 @@ PRODUCTION_READY: NO
 - evaluated_tip pinned to OBSERVED main tip after #128: aaad8e547c3f3f3bca2b6707399bcf36ddaefd62
 - Prior post-#126/#127 pin was 791376fd9a8060a2205a9097de14f17ae7ea0d33 / 1b951afed09e42ce35ab6ea52abc5df4cb869d27 (#126 Mission J + #127 tip refresh); live main after #128 Mission K is aaad8e5 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
 - Matrix: tip refresh post #126 MEASURED (historical) + Mission K Browser QA Runner MEASURED + tip refresh post #128 MEASURED
+- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (post #145)
+
+- evaluated_tip pinned to OBSERVED main tip after #145: 564951983ca5edf5ee4d1061fd0e85c7c013f976
+- Prior post-#136/#138 pin was 3b4fe5b7f03bfb9063a272092deb32b0974bb8e9 / 2d8f6d779523c1eee23e0b04178c3310ba4a026b (#136 Mission N + #138 tip refresh); live main after #138 tip + #145 Mission O is 5649519 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
+- Matrix: tip refresh post #136 MEASURED (historical) + Mission O native-tools adversarial MEASURED + tip refresh post #145 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
 ## Tip refresh notes (post #136)
