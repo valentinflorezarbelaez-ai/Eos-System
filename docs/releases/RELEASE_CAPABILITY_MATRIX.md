@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: a748618f2f0e1104d941cdfc135f9a930395284f
+evaluated_tip: d3667cd66c6eab0251b4367300191d710e341801
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #176 from valentinflorezarbelaez-ai/grok/mission-u-native-suite-seam-pack
-updated_at: 2026-09-11 America/Bogota (tip refresh post #176; pin to main@a748618; prior post-#174/#175 pin was e1e0b24/2d630ef; Ladder 11 CLOSED; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #178 from valentinflorezarbelaez-ai/grok/mission-v-fdir-remediation-loop
+updated_at: 2026-09-11 America/Bogota (tip refresh post #178; pin to main@d3667cd; prior post-#176/#177 pin was a748618/24c9845; Ladder 11 CLOSED; Mission V MEASURED; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -137,7 +137,9 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #176; pin to main@a74861
 | Tip refresh post #174 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_174_2026-09-11.md; freeze+matrix to e1e0b24; tip honesty restored; superseded by #175/#176) |
 | Mission U Native Suite Seam-Pack (#176) | COMPLETE | MEASURED (eos-mission-u-native-suite-seam-pack; test:native-suite-pack; SPEC-0026) |
 | Ladder 11 Closeout | COMPLETE | MEASURED (EOS_LADDER_11_CLOSEOUT_2026-09-11.md; macros P–T + native suite CI; PRODUCTION_READY=NO) |
-| Tip refresh post #176 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_176_2026-09-11.md; freeze+matrix to a748618; tip honesty restored) |
+| Tip refresh post #176 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_176_2026-09-11.md; freeze+matrix to a748618; tip honesty restored; superseded by #177/#178) |
+| Mission V FDIR Remediation Loop (#178) | COMPLETE | MEASURED (eos-mission-v-fdir-remediation-loop; test:fdir-remediation; SPEC-0027; Fundacion Delta=0) |
+| Tip refresh post #178 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_178_2026-09-11.md; freeze+matrix to d3667cd; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -214,6 +216,13 @@ PRODUCTION_READY: NO
 - Prior post-#126/#127 pin was 791376fd9a8060a2205a9097de14f17ae7ea0d33 / 1b951afed09e42ce35ab6ea52abc5df4cb869d27 (#126 Mission J + #127 tip refresh); live main after #128 Mission K is aaad8e5 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
 - Matrix: tip refresh post #126 MEASURED (historical) + Mission K Browser QA Runner MEASURED + tip refresh post #128 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (post #178)
+
+- evaluated_tip pinned to OBSERVED main tip after #178: d3667cd66c6eab0251b4367300191d710e341801
+- Prior post-#176/#177 pin was a748618f2f0e1104d941cdfc135f9a930395284f / 24c9845; live main after tip #177 + #178 Mission V is d3667cd — **tip honesty restored**
+- Matrix: tip refresh post #176 MEASURED (historical via #177) + Mission V FDIR Remediation Loop MEASURED + tip refresh post #178 MEASURED
+- NON-CLAIM: Mission V remediation loop != PRODUCTION_READY; Ladder 11 remains CLOSED; does not invent PRODUCTION_READY
 
 ## Tip refresh notes (post #176)
 
