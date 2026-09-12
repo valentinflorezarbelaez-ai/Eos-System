@@ -579,7 +579,10 @@ export function applyHint(item) {
     return 'Help Pricing and plans lists vendor individual and Teams plan names. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor plan prices as EOS budget evidence. Do not change this Cloud Agent billing from the dashboard. Keep environment.json + Builds.';
   }
   if (isHelpAvailableModelsUrl(item?.link)) {
-    return 'Help Available models lists vendor model names and Auto routing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Keep environment.json + Builds.';
+    return 'Help Available models lists vendor model names and Auto routing. Honor included quota. '
+      + 'Do not switch this watch to on-demand. Do not treat vendor model rates as EOS budget evidence. '
+      + 'Do not put API keys in git. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. '
+      + 'Keep environment.json + Builds.';
   }
   if (isHelpCursorRouterUrl(item?.link)) {
     return 'Help Cursor Router is vendor Auto routing with Cost, Balance, and Intelligence modes. EOS rules still bind model and governance choices. Honor included quota. Do not switch this watch to on-demand. Do not install @cursor/sdk or rotate this watch into SDK scripts for daily ingest. Do not put API keys in git. Keep environment.json + Builds.';
