@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#222 pinned tip: main@ccb25a9 (prior tip-220 pin 99944f41 + tip-221 merge SHA not invented; PR #221 tip-220 + #222 Mission AI; tip honesty restored; Ladder 14 CLOSED; Ladder 15 OPEN AI MEASURED via #222; AJ–AM pending) */
-const EXPECTED_TIP = 'ccb25a937cc4ae40b4cfb33cfd53e697af8f2eed';
+/** Tip refresh post-#225 pinned tip: main@6a13307 (prior tip-222 pin ccb25a9 + tip-224 merge SHA not invented; PR #224 tip-222 + #225 Mission AJ; tip honesty restored; Ladder 14 CLOSED; Ladder 15 OPEN AI+AJ MEASURED via #222/#225; AK–AM pending) */
+const EXPECTED_TIP = '6a133077b5abc24f3e6dd0387f00470033aca90b';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-222 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-225 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-222 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-225 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -189,6 +189,9 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'Tip refresh post #220',
     'Mission AI',
     'Tip refresh post #222',
+    'Mission AJ',
+    'Tip refresh post #225',
+    'Evidence Economy',
     'Multi-Session',
     'Maturity'
   ]) {

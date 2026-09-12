@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Tip honesty refresh post-#225 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@6a13307 (PR #224 tip-222 + #225 Mission AJ; prior tip-222 pin ccb25a9; tip-224 merge SHA not invented); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING; Ladder 11 CLOSED; Ladder 12 CLOSED; Ladder 13 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout); Ladder 14 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout); Ladder 15 OPEN (AI+AJ MEASURED via #222/#225; AK–AM pending). NON-CLAIM Mission AJ / Evidence Economy Ledger ≠ PRODUCTION_READY / ≠ Ladder 15 CLOSED / ≠ billing / ≠ GH enforcement / ≠ CloudAgent fleet.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-225
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_225_2026-09-12.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-225
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - inventing tip SHAs (incl. tip-224 / intermediate full SHAs)
+  - claiming Mission AJ / Evidence Economy Ledger is PRODUCTION_READY, Ladder 15 CLOSED, billing, or GH-enforced
+  - claiming Mission AI / multi-session is PRODUCTION_READY, Ladder 15 CLOSED, or GH-enforced
+  - claiming Mission AH / Ladder 14 Closeout is PRODUCTION_READY or GH-enforced
+  - claiming Mission AG / Live Tool Engine is PRODUCTION_READY or a CloudAgent fleet
+  - claiming Mission AF / Autonomous Execution Loop / live LLM is PRODUCTION_READY
+  - claiming Mission AE / ECR is PRODUCTION_READY or a billing platform
+  - claiming Mission AD / live LLM port is PRODUCTION_READY
+  - putting API keys in repo
+  - implementing Mission AK (or AL–AM) in this change
