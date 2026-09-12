@@ -1,0 +1,24 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0028 — Sovereign Session Coordinator. Orchestrates Mission Q/R/S/T/V ports (worker daemon, FDIR sentinel, SpecBoot, external write gateway, FDIR remediation loop) via injection without rewriting those modules. Lifecycle IDLE→INITIALIZING→SESSION_ACTIVE→CLOSING→SEALED→COMPLETED|ESCALATED_HITL. On SpecBoot APPLY/VERIFY fail, remediation (maxAttempts≤3) before HITL escalate. Close drains workers (drain:true) and seals consolidated EVD custody (SHA-256). Hermetic TDD; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0028
+phase: 1
+affected_areas:
+  - src/core/session/sovereign-session-coordinator.js
+  - tests/session/sovereign-session-coordinator.test.js
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-w-sovereign-session-coordinator
+  - docs/releases/EOS_MISSION_W_SOVEREIGN_SESSION_COORDINATOR_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - installing or claiming agy-daemon / AGY DAEMON_PRESENT
+  - new npm dependencies / JSON schemas
+  - raising TR-01 (exclude-from-slim instead)
+  - rewriting Mission Q/R/S/T/V modules (orchestrate via injection only)
+  - infinite retry / uncontrolled throw on budget exhaust
+  - replacing agy-daemon

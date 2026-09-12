@@ -157,7 +157,9 @@
     "test:mission-u": "node --test tests/eos-u-native-suite-seam-pack.test.js",
     "test:u11": "npm run test:mission-u",
     "test:fdir-remediation": "node --test tests/fdir/fdir-remediation-loop.test.js",
-    "test:mission-v": "node --test tests/fdir/fdir-remediation-loop.test.js"
+    "test:mission-v": "node --test tests/fdir/fdir-remediation-loop.test.js",
+    "test:sovereign-session": "node --test tests/session/sovereign-session-coordinator.test.js",
+    "test:mission-w": "node --test tests/session/sovereign-session-coordinator.test.js"
   },
   "keywords": [
     "eos",

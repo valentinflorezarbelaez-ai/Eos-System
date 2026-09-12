@@ -51,6 +51,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-u-native-suite-seam-pack.test.js',
 
   'fdir-remediation-loop.test.js',
+
+  'sovereign-session-coordinator.test.js',
 ]);
 
 /**
