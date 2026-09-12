@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: aaad8e547c3f3f3bca2b6707399bcf36ddaefd62
+evaluated_tip: bc748e4bdf00cb75eb734b07172ca531db8b17a1
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #128 from valentinflorezarbelaez-ai/grok/mission-k-browser-qa-runner
-updated_at: 2026-09-11 America/Bogota (tip refresh post #128; pin to main@aaad8e5; prior post-#126/#127 pin was 791376f/1b951af; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #132 from valentinflorezarbelaez-ai/grok/mission-l-stitch-worker-bridge
+updated_at: 2026-09-11 America/Bogota (tip refresh post #132; pin to main@bc748e4; prior post-#128/#129 pin was aaad8e5/9a19072; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -117,6 +117,8 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #128; pin to main@aaad8e
 | Tip refresh post #126 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_126_2026-09-11.md; freeze+matrix to 791376f; tip honesty restored) |
 | Mission K Browser QA Runner (#128) | COMPLETE | MEASURED (eos-mission-k-browser-qa-runner; test:browser-qa; SPEC-0016) |
 | Tip refresh post #128 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_128_2026-09-11.md; freeze+matrix to aaad8e5; tip honesty restored) |
+| Mission L Stitch worker bridge (#132) | COMPLETE | MEASURED (eos-mission-l-stitch-worker-bridge; test:compute-worker-l; SPEC-0017) |
+| Tip refresh post #132 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_132_2026-09-11.md; freeze+matrix to bc748e4; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -192,6 +194,13 @@ PRODUCTION_READY: NO
 - evaluated_tip pinned to OBSERVED main tip after #128: aaad8e547c3f3f3bca2b6707399bcf36ddaefd62
 - Prior post-#126/#127 pin was 791376fd9a8060a2205a9097de14f17ae7ea0d33 / 1b951afed09e42ce35ab6ea52abc5df4cb869d27 (#126 Mission J + #127 tip refresh); live main after #128 Mission K is aaad8e5 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
 - Matrix: tip refresh post #126 MEASURED (historical) + Mission K Browser QA Runner MEASURED + tip refresh post #128 MEASURED
+- Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
+
+## Tip refresh notes (post #132)
+
+- evaluated_tip pinned to OBSERVED main tip after #132: bc748e4bdf00cb75eb734b07172ca531db8b17a1
+- Prior post-#128/#129 pin was aaad8e547c3f3f3bca2b6707399bcf36ddaefd62 / 9a19072a3501f9278c943a4a03cd4ff4868c712f (#128 Mission K + #129 tip refresh); live main after #132 Mission L is bc748e4 so HUD freeze observe does not DIVERGE immediately — **tip honesty restored**
+- Matrix: tip refresh post #128 MEASURED (historical) + Mission L Stitch worker bridge MEASURED + tip refresh post #132 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
 ## Tip refresh notes (post #110)
