@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0050 / Mission AS — Cross-Satellite Composition Harness (AN×AO×AP×AQ). Injectable composition harness observing/integrating federation × failover × authority × export fail-closed. Compose don't rewrite — inject plane fakes/stubs of AN/AO/AP/AQ ports. Hermetic multi-plane scenarios; shared EVD receipt linkage; DENY on inconsistent plane state. Fail-closed OK / COMPOSITION_OK / PLANE_INCONSISTENT / COMPOSITION_DENIED / MISSING_DEP / INVALID_REQUEST / SECRET_LEAK_FORBIDDEN / EVD_LINK_FAIL / FUNDACION_DENIED / HITL_REQUIRED. PRODUCTION_READY=NO. NON-CLAIM composition ≠ E2E product suite ≠ PRODUCTION_READY integration platform ≠ CloudAgent orchestration; not AT/AU/AV/AW; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI; Law VI no static vendor-key literals.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0050
+phase: 1
+affected_areas:
+  - src/core/composition/cross-satellite-composition-harness.js
+  - src/core/composition/composition-receipt.js
+  - src/core/composition/plane-stubs.js
+  - tests/eos-as-cross-satellite-composition.test.js
+  - scripts/patch-mission-as.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-as-cross-satellite-composition-harness
+  - docs/releases/EOS_MISSION_AS_CROSS_SATELLITE_COMPOSITION_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AT/AU/AV/AW
+  - E2E product suite claim
+  - PRODUCTION_READY integration platform claim
+  - CloudAgent orchestration
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets / vendor-key literals in repo
+  - new npm dependencies
+  - vendoring full AN–AQ implementations (compose via stubs)
+  - fetch/http in CI

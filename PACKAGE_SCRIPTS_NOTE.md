@@ -1,12 +1,12 @@
-# Mission AQ — package.json / slim patch fragment
+# Mission AS — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-aq.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-as.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:evidence-export-notarization": "node --test tests/eos-aq-evidence-export-notarization.test.js",
-"test:mission-aq": "node --test tests/eos-aq-evidence-export-notarization.test.js"
+"test:cross-satellite-composition": "node --test tests/eos-as-cross-satellite-composition.test.js",
+"test:mission-as": "node --test tests/eos-as-cross-satellite-composition.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-aq.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-aq-evidence-export-notarization.test.js',
+'eos-as-cross-satellite-composition.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
