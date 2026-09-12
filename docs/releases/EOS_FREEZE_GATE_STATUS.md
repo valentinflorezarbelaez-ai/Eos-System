@@ -2,21 +2,21 @@
 
 ```text
 tag: rc/eos-mission-os-local-complete-2026-08-21 (origin)
-main_tip: 5e208e400a6bf614d7f0e0c9ad67bff52cfaf4e4
-main_subject: Merge pull request #134 from valentinflorezarbelaez-ai/grok/mission-m-browser-qa-worker-bridge
-branch_hygiene: clean (main == origin/main @ 5e208e4; Ladder2-10 CLOSED on main via #84-#100; #101–#133 as prior + #134 Mission M Browser QA worker bridge; tip honesty restored post #134; PRODUCTION_READY=NO)
+main_tip: 3b4fe5b7f03bfb9063a272092deb32b0974bb8e9
+main_subject: Merge pull request #136 from valentinflorezarbelaez-ai/grok/mission-n-multi-native-compose
+branch_hygiene: clean (main == origin/main @ 3b4fe5b; Ladder2-10 CLOSED on main via #84-#100; #101–#135 as prior + #136 Mission N multi-native compose; tip honesty restored post #136; PRODUCTION_READY=NO)
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 Fundacion: Delta=0 (untouched this change set)
 ground_truth: docs/releases/EOS_PHASE_0_CONTROL_PLANE_ANTIGRAVITY_FUSION_GROUND_TRUTH_2026-09-08.md
 mcp_ssot: docs/mcp/MCP_SSOT.md
 agy_remote_control: agy-daemon.cmd (tracked); instance name intent eos-workstation
-updated_at: 2026-09-11 America/Bogota (tip refresh post #134; pin to main@5e208e4; prior post-#132/#133 pin was bc748e4/43a5059; tip honesty restored; PRODUCTION_READY=NO)
+updated_at: 2026-09-11 America/Bogota (tip refresh post #136; pin to main@3b4fe5b; prior post-#134/#135 pin was 5e208e4/5c5a1bd; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
-## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + #101-#134)
+## Closed on main (fusion + ROI1-6 + Ladder2-10 + SpecBoot/AGY + L9 #91-#99 + L10 #100 + #101-#136)
 
-Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `5e208e400a6bf614d7f0e0c9ad67bff52cfaf4e4`.
+Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBSERVED: `3b4fe5b7f03bfb9063a272092deb32b0974bb8e9`.
 
 | Close-out | PR | Merge SHA | Evidence pointers |
 | --- | --- | --- | --- |
@@ -104,6 +104,8 @@ Evidence = `git log --merges` subjects on main + release reports / ADRs. Tip OBS
 | Mission L Stitch worker bridge | #132 | bc748e4 | `eos-mission-l-stitch-worker-bridge`; SPEC-0017; test:compute-worker-l |
 | Tip refresh post #132 | #133 | 43a5059 | `EOS_TIP_REFRESH_POST_132_2026-09-11.md`; freeze+matrix to bc748e4 |
 | Mission M Browser QA worker bridge | #134 | 5e208e4 | `eos-mission-m-browser-qa-worker-bridge`; SPEC-0018; test:compute-worker-m |
+| Tip refresh post #134 | #135 | 5c5a1bd | `EOS_TIP_REFRESH_POST_134_2026-09-11.md`; freeze+matrix to 5e208e4 |
+| Mission N multi-native compose | #136 | 3b4fe5b | `eos-mission-n-multi-native-compose`; SPEC-0019; test:compute-worker-n |
 
 ### Ladder 10 (V1–V5) Closeout — 2026-09-10
 
@@ -899,3 +901,16 @@ External production readiness is explicitly **not** asserted.
 - Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
 - Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
 - NON-CLAIM: tip honesty != PRODUCTION_READY; #134 Mission M Browser QA worker != PRODUCTION_READY; CloudAgent remains out of default SpecBoot path
+
+## Tip refresh post #136 (2026-09-11)
+
+- Report: `docs/releases/EOS_TIP_REFRESH_POST_136_2026-09-11.md`
+- Branch: `grok/tip-refresh-post-136` — push only; do not merge without PO; NO PR in this change set
+- Freeze `main_tip` + matrix `evaluated_tip` pinned to OBSERVED main@`3b4fe5b7f03bfb9063a272092deb32b0974bb8e9` (#136 Mission N multi-native compose; post #135 tip refresh post #134)
+- Honesty restored: prior post-#134/#135 pin was `5e208e400a6bf614d7f0e0c9ad67bff52cfaf4e4` / `5c5a1bd290b1da4623d72bf57acd013f5cbc49d8` (#134 Mission M + #135 tip refresh); live main after #135–#136 is `3b4fe5b` so HUD freeze observe does not DIVERGE immediately
+- Do not reuse stale post-#134 pin `5e208e400a6bf614d7f0e0c9ad67bff52cfaf4e4` as live tip (superseded)
+- Matrix: prior tip refresh post #134 MEASURED + **Mission N multi-native compose MEASURED** + **tip refresh post #136 MEASURED**
+- Dirty-defer tip honesty pin moved with freeze (scripts/lib/dirty-defer-triage-lock.js)
+- Dictamen unchanged: COMPLETE_FOR_LOCAL_GOVERNED_USE / PRODUCTION_READY=NO
+- Fundacion Delta=0; DEFER dirty unstaged unchanged; AT_CEILING
+- NON-CLAIM: tip honesty != PRODUCTION_READY; #136 Mission N multi-native compose != PRODUCTION_READY; CloudAgent remains out of default SpecBoot path
