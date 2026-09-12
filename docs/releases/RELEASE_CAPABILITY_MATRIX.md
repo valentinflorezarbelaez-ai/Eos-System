@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: d3667cd66c6eab0251b4367300191d710e341801
+evaluated_tip: 911d3ea0284e9bf2273e9977c5c856c049728b99
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: Merge pull request #178 from valentinflorezarbelaez-ai/grok/mission-v-fdir-remediation-loop
-updated_at: 2026-09-11 America/Bogota (tip refresh post #178; pin to main@d3667cd; prior post-#176/#177 pin was a748618/24c9845; Ladder 11 CLOSED; Mission V MEASURED; tip honesty restored; PRODUCTION_READY=NO)
+main_subject: Merge pull request #180 from valentinflorezarbelaez-ai/grok/mission-w-sovereign-session-coordinator
+updated_at: 2026-09-11 America/Bogota (tip refresh post #180; pin to main@911d3ea; prior post-#178/#179 pin was d3667cd/ef5a27c; Ladder 11 CLOSED; Mission W MEASURED; tip honesty restored; PRODUCTION_READY=NO)
 ```
 
 
@@ -139,7 +139,9 @@ updated_at: 2026-09-11 America/Bogota (tip refresh post #178; pin to main@d3667c
 | Ladder 11 Closeout | COMPLETE | MEASURED (EOS_LADDER_11_CLOSEOUT_2026-09-11.md; macros P–T + native suite CI; PRODUCTION_READY=NO) |
 | Tip refresh post #176 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_176_2026-09-11.md; freeze+matrix to a748618; tip honesty restored; superseded by #177/#178) |
 | Mission V FDIR Remediation Loop (#178) | COMPLETE | MEASURED (eos-mission-v-fdir-remediation-loop; test:fdir-remediation; SPEC-0027; Fundacion Delta=0) |
-| Tip refresh post #178 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_178_2026-09-11.md; freeze+matrix to d3667cd; tip honesty restored) |
+| Tip refresh post #178 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_178_2026-09-11.md; freeze+matrix to d3667cd; tip honesty restored; superseded by #179/#180) |
+| Mission W Sovereign Session Coordinator (#180) | COMPLETE | MEASURED (eos-mission-w-sovereign-session-coordinator; test:sovereign-session; SPEC-0028; Fundacion Delta=0) |
+| Tip refresh post #180 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_180_2026-09-11.md; freeze+matrix to 911d3ea; tip honesty restored) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
 | Production / network / credentials | FUTURE | BLOCKED |
 | PRODUCTION_READY flip | FUTURE | BLOCKED (explicit non-goal) |
@@ -217,12 +219,20 @@ PRODUCTION_READY: NO
 - Matrix: tip refresh post #126 MEASURED (historical) + Mission K Browser QA Runner MEASURED + tip refresh post #128 MEASURED
 - Does not invent PRODUCTION_READY, GH enforcement, or Fundacion work
 
+## Tip refresh notes (post #180)
+
+- evaluated_tip pinned to OBSERVED main tip after #180: 911d3ea0284e9bf2273e9977c5c856c049728b99
+- Prior post-#178/#179 pin was d3667cd66c6eab0251b4367300191d710e341801 / ef5a27c; live main after tip #179 + #180 Mission W is 911d3ea — **tip honesty restored**
+- Matrix: tip refresh post #178 MEASURED (historical via #179) + Mission W Sovereign Session Coordinator MEASURED + tip refresh post #180 MEASURED
+- NON-CLAIM: Mission W sovereign session coordinator != PRODUCTION_READY; != agy-daemon DAEMON_PRESENT; Ladder 11 remains CLOSED; does not invent PRODUCTION_READY
+
 ## Tip refresh notes (post #178)
 
 - evaluated_tip pinned to OBSERVED main tip after #178: d3667cd66c6eab0251b4367300191d710e341801
 - Prior post-#176/#177 pin was a748618f2f0e1104d941cdfc135f9a930395284f / 24c9845; live main after tip #177 + #178 Mission V is d3667cd — **tip honesty restored**
 - Matrix: tip refresh post #176 MEASURED (historical via #177) + Mission V FDIR Remediation Loop MEASURED + tip refresh post #178 MEASURED
 - NON-CLAIM: Mission V remediation loop != PRODUCTION_READY; Ladder 11 remains CLOSED; does not invent PRODUCTION_READY
+- Historical: superseded by tip refresh post #180 pin to main@911d3ea
 
 ## Tip refresh notes (post #176)
 
