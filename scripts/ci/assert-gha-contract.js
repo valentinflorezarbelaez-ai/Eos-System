@@ -191,6 +191,10 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:token-budget-ecr', 'CI Mission AH token-budget-ecr (AE)');
         assertContains(yaml, 'test:autonomous-loop', 'CI Mission AH autonomous-loop (AF)');
         assertContains(yaml, 'test:live-tool-engine', 'CI Mission AH live-tool-engine (AG)');
+        assertContains(yaml, 'test:multi-session-autonomy', 'CI Mission AM multi-session-autonomy (AI)');
+        assertContains(yaml, 'test:evidence-economy-ledger', 'CI Mission AM evidence-economy-ledger (AJ)');
+        assertContains(yaml, 'test:constitution-runtime-policy-gate', 'CI Mission AM constitution-runtime-policy-gate (AK)');
+        assertContains(yaml, 'test:autonomy-replay-forensic-observer', 'CI Mission AM autonomy-replay-forensic-observer (AL)');
       } catch (err) {
         failures.push(err.message);
       }

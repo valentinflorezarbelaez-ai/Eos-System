@@ -154,7 +154,7 @@
     "test:mission-s": "node --test tests/specboot/specboot-agent-runner.test.js",
     "test:external-write-gateway": "node --test tests/governance/external-write-gateway.test.js",
     "test:mission-t": "node --test tests/governance/external-write-gateway.test.js",
-    "test:native-suite-pack": "npm run test:compute-worker-i && npm run test:compute-worker-l && npm run test:compute-worker-m && npm run test:compute-worker-n && npm run test:compute-worker-o && npm run test:loop-compute && npm run test:worker-daemon && npm run test:fdir-sentinel && npm run test:specboot-agent && npm run test:external-write-gateway && npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell && npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server && npm run test:llm-provider-port && npm run test:token-budget-ecr && npm run test:autonomous-loop && npm run test:live-tool-engine",
+    "test:native-suite-pack": "npm run test:compute-worker-i && npm run test:compute-worker-l && npm run test:compute-worker-m && npm run test:compute-worker-n && npm run test:compute-worker-o && npm run test:loop-compute && npm run test:worker-daemon && npm run test:fdir-sentinel && npm run test:specboot-agent && npm run test:external-write-gateway && npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell && npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server && npm run test:llm-provider-port && npm run test:token-budget-ecr && npm run test:autonomous-loop && npm run test:live-tool-engine && npm run test:multi-session-autonomy && npm run test:evidence-economy-ledger && npm run test:constitution-runtime-policy-gate && npm run test:autonomy-replay-forensic-observer",
     "test:mission-u": "node --test tests/eos-u-native-suite-seam-pack.test.js",
     "test:u11": "npm run test:mission-u",
     "test:fdir-remediation": "node --test tests/fdir/fdir-remediation-loop.test.js",
@@ -194,7 +194,10 @@
     "test:constitution-runtime-policy-gate": "node --test tests/eos-ak-constitution-runtime-policy-gate.test.js",
     "test:mission-ak": "node --test tests/eos-ak-constitution-runtime-policy-gate.test.js",
     "test:autonomy-replay-forensic-observer": "node --test tests/eos-al-autonomy-replay-forensic-observer.test.js",
-    "test:mission-al": "node --test tests/eos-al-autonomy-replay-forensic-observer.test.js"
+    "test:mission-al": "node --test tests/eos-al-autonomy-replay-forensic-observer.test.js",
+    "test:mission-am": "node --test tests/eos-am-ladder15-seam-pack.test.js",
+    "test:am15": "node --test tests/eos-am-ladder15-seam-pack.test.js",
+    "test:ladder15-pack": "npm run test:multi-session-autonomy && npm run test:evidence-economy-ledger && npm run test:constitution-runtime-policy-gate && npm run test:autonomy-replay-forensic-observer && npm run test:mission-am"
   },
   "keywords": [
     "eos",

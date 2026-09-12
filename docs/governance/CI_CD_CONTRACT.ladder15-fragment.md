@@ -1,0 +1,5 @@
+## AM / Mission AM Ladder 15 seam-pack note (2026-09-12)
+seam-pack named pack extended with CI-safe Ladder 15 satellites: `test:multi-session-autonomy` (AI), `test:evidence-economy-ledger` (AJ), `test:constitution-runtime-policy-gate` (AK), `test:autonomy-replay-forensic-observer` (AL). Keep prior native-suite + packs (incl. Ladder 12/13/14). Local aliases: `test:ladder15-pack`, `test:mission-am` / `test:am15`. Lock basename `eos-am-ladder15-seam-pack.test.js` stays in SLIM_SUITE_EXCLUDES (TR-01 ≤145). No soak. No continue-on-error. No new GH billing / enforcement claims. Fundacion delta-0 unchanged. PRODUCTION_READY remains NO. Law VI: zero static provider-secret prefix literals.
+
+## Ladder 15 note (2026-09-12)
+Ladder 15 closeout: AI (multi-session autonomy) + AJ (evidence-economy ledger) + AK (constitution runtime policy gate) + AL (autonomy replay forensic observer) consolidated into CI seam-pack (SPEC-0044 / Mission AM). Dictamen COMPLETE_FOR_LOCAL_GOVERNED_USE. PRODUCTION_READY=NO. Fundacion Δ=0. See `docs/releases/EOS_LADDER_15_CLOSEOUT_2026-09-12.md`.
