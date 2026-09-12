@@ -63,6 +63,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-aa-multi-agent-swarm.test.js',
 
   'eos-ab-telemetry-server.test.js',
+
+  'eos-ac-ladder13-seam-pack.test.js',
 ]);
 
 /**
