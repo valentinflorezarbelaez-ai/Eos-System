@@ -567,7 +567,11 @@ export function applyHint(item) {
     return 'The Python SDK is optional agent scripting. This watch uses official feeds, not cursor-sdk or api.cursor.com. Do not install cursor-sdk or rotate this watch into SDK scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isCursorSdkBridgeUrl(item?.link)) {
-    return 'The SDK Bridge is optional local protocol for languages without a first-party SDK. This watch uses official feeds, not cursor-sdk-bridge or api.cursor.com. Do not install the SDK Bridge or rotate this watch into adapter scripts for daily ingest. Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
+    return 'The SDK Bridge is optional local protocol for languages without a first-party SDK. ' +
+      'This watch uses official feeds, not cursor-sdk-bridge or api.cursor.com. ' +
+      'Do not install the SDK Bridge or rotate this watch into adapter scripts for daily ingest. ' +
+      'Do not put CURSOR_API_KEY in git. Keep GitHub as source of truth. ' +
+      'Keep environment.json + Builds. Honor included quota; do not switch this watch to on-demand.';
   }
   if (isTeamPricingUrl(item?.link)) {
     return 'Team Pricing is vendor Teams and Enterprise billing. Honor included quota. Do not switch this watch to on-demand. Do not treat vendor team seat prices as EOS budget evidence. This Cloud Agent is not a Teams admin dashboard. Keep environment.json + Builds.';
