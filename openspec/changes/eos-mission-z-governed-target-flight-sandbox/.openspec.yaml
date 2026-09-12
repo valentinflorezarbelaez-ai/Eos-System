@@ -1,0 +1,27 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0031 / Mission Z — Governed Target Flight Sandbox & Level 2 Precondition Verifier. Fail-closed sandbox verifies the six T-gate L2 preconditions, captures a SHA-256 snapshot, applies mutations only in an ephemeral in-memory/tmpdir tree, hash-chains ledger receipts, and atomically rolls back on verify fail. Real Documents/Fundacion paths remain ALWAYS DENIED (ADR-0013 / FUNDACION_ALWAYS_DENY / Δ=0 intact). PRODUCTION_READY=NO; AT_CEILING; Antigravity-first; no CloudAgent.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0031
+phase: 1
+affected_areas:
+  - src/core/sandbox/precondition-gatekeeper.js
+  - src/core/sandbox/flight-rollback-engine.js
+  - src/core/sandbox/target-flight-sandbox.js
+  - tests/eos-z-target-flight-sandbox.test.js
+  - scripts/patch-mission-z.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-z-governed-target-flight-sandbox
+  - docs/releases/EOS_MISSION_Z_TARGET_FLIGHT_SANDBOX_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - weakening write-barrier FUNDACION_ALWAYS_DENY for real Fundacion
+  - mutating src/core/write-barrier/* or src/core/governance/external-write-gateway.js (prefer inject/compose)
+  - Cursor CloudAgent
+  - raising TR-01 (exclude-from-slim instead)
+  - Fundacion / App Fuerza tree mutation on disk
+  - new npm dependencies / JSON schemas
+  - claiming simulation opens Fundacion Δ
