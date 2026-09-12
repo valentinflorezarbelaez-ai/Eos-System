@@ -1,0 +1,23 @@
+schema: spec-driven
+created: 2026-09-11
+goal: SPEC-0021 — Mission Loop × Compute Worker governed orchestration. Advance Intent→…→Archive via evaluateStageTransition only; invoke executeComputeRun at Act with multi-native compose; soft Browser QA requires HITL before Archive; infra tool failures fail-closed (never Archive). Hermetic TDD; PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0021
+phase: 1
+affected_areas:
+  - src/core/orchestration/loop-compute-orchestrator.js
+  - tests/orchestration/loop-compute-orchestrator.test.js
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-p-loop-worker-orchestration
+  - docs/releases/EOS_MISSION_P_LOOP_WORKER_ORCHESTRATION_2026-09-11.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - new npm dependencies / JSON schemas
+  - raising TR-01 (exclude-from-slim instead)
+  - ATS / mission-package.phase writes
+  - mutating mission-loop.js unless additive export proven necessary
+  - shipping entire eos-compute-worker.js unless changed
