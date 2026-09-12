@@ -1,0 +1,26 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0034 / Mission AC — Ladder 13 CI Seam-Pack Consolidation & Closeout. Require Z/AA/AB satellites (test:target-flight, test:multi-agent-swarm, test:telemetry-server) in CI seam-pack; extend test:native-suite-pack; add test:mission-ac / test:ac13 / test:ladder13-pack; lock test slim-excluded; contract + assert-gha needles via idempotent patcher; Ladder 13 closeout audit. PRODUCTION_READY=NO; Fundacion Δ=0; Antigravity-first; no CloudAgent; no soak; no continue-on-error; do not raise TR-01.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0034
+phase: 1
+affected_areas:
+  - .github/workflows/ci.yml
+  - package.json
+  - scripts/test-runner.js
+  - scripts/patch-mission-ac.mjs
+  - scripts/ci/assert-gha-contract.js
+  - tests/eos-ac-ladder13-seam-pack.test.js
+  - docs/governance/CI_CD_CONTRACT.md
+  - docs/releases/EOS_MISSION_AC_LADDER13_SEAM_PACK_2026-09-12.md
+  - docs/releases/EOS_LADDER_13_CLOSEOUT_2026-09-12.md
+  - openspec/changes/eos-mission-ac-ladder13-closeout-seam-pack
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion mutation
+  - raising TR-01 slim ceiling
+  - soak / continue-on-error
+  - Cursor CloudAgent
+  - new npm dependencies
+  - GH billing / branch-protection enforcement claims

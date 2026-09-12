@@ -184,6 +184,9 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:fdir-remediation', 'CI Mission Y fdir-remediation (V)');
         assertContains(yaml, 'test:sovereign-session', 'CI Mission Y sovereign-session (W)');
         assertContains(yaml, 'test:developer-shell', 'CI Mission Y developer-shell (X)');
+        assertContains(yaml, 'test:target-flight', 'CI Mission AC target-flight (Z)');
+        assertContains(yaml, 'test:multi-agent-swarm', 'CI Mission AC multi-agent-swarm (AA)');
+        assertContains(yaml, 'test:telemetry-server', 'CI Mission AC telemetry-server (AB)');
       } catch (err) {
         failures.push(err.message);
       }
