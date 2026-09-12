@@ -1,0 +1,27 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0040 / Mission AI — Multi-Session Autonomy Coordinator. Durable create/suspend/resume across AF cycles with custody snapshots, generation counters, fail-closed SESSION_DRIFT / UNKNOWN_SESSION, Law VI sanitize, HITL default deny when requireHitl, optional injectable AF loop for runCycle. PRODUCTION_READY=NO. NON-CLAIM multi-session ≠ PRODUCTION_READY ≠ unbounded autonomy product; not AJ/AK/AL/AM; Fundacion Δ=0; Antigravity-first; zero new npm deps; no live network in CI.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0040
+phase: 1
+affected_areas:
+  - src/core/session/multi-session-autonomy-coordinator.js
+  - src/core/session/session-custody-store.js
+  - tests/eos-ai-multi-session-autonomy.test.js
+  - scripts/patch-mission-ai.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ai-multi-session-autonomy-coordinator
+  - docs/releases/EOS_MISSION_AI_MULTI_SESSION_AUTONOMY_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - Cursor CloudAgent
+  - implementing AJ/AK/AL/AM
+  - live network in CI
+  - unbounded multi-session agent fleet
+  - raising TR-01 (exclude-from-slim instead)
+  - secrets / vendor-key literals in repo
+  - new npm dependencies
+  - claiming multi-session ≡ PRODUCTION_READY
