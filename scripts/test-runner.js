@@ -113,6 +113,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-az-self-repair-fdir-bridge.test.js',
 
   'eos-ba-local-sandbox-container-port.test.js',
+
+  'eos-bb-ladder18-seam-pack.test.js',
 ]);
 
 /**
