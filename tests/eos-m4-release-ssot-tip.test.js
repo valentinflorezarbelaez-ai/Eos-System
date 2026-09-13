@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#258 pinned tip: main@760d485 (prior tip-252 pin 1447918 + #255 tip-252 + #256 Mission AV SPEC-0053 + #257 AS16 scope fix + #258 Mission AW SPEC-0054; tip honesty restored; Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout); Ladder 18 OPEN (AX–BB pending)) */
-const EXPECTED_TIP = '760d4851738f435444784ec22d49189d7d8e3f0b';
+/** Tip refresh post-#260 pinned tip: main@7fab2a9 / 7fab2a99187313837eb5f0fb3203f160e1d528b6 (prior tip base 760d485 L17 closeout / tip #259 lineage + #260 Ladder 18 Maturity Gap Audit; tip honesty restored; Ladder 14 CLOSED; Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout); Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout; never reopen; AS–AW MEASURED); Ladder 18 OPEN (audit MEASURED via #260; AX–BB pending; Sovereign Developer Engine; AX/AY/AZ/BA/BB pending not MEASURED)) */
+const EXPECTED_TIP = '7fab2a99187313837eb5f0fb3203f160e1d528b6';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-aw pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-260 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-aw pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-260 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -236,22 +236,10 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'Crash-Recovery',
     'Mission AU',
     'Tip refresh post #252',
-    'tip-refresh-post-252',
+    'tip-refresh-post-260',
     'SPEC-0052',
     'Law VI',
     'Secret Runtime Broker',
-    'Mission AV',
-    'SPEC-0053',
-    'freeze-drift',
-    'Governed State Freeze',
-    'Mission AW',
-    'SPEC-0054',
-    'ladder17-pack',
-    'Ladder 17 Closeout',
-    'Ladder 17 CLOSED',
-    'Ladder 18 OPEN',
-    'Tip refresh post #258',
-    'tip-refresh-post-aw',
     'AS16',
     'Ladder 17 OPEN',
     'AS MEASURED',
@@ -278,7 +266,34 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'Policy Gate',
     'Evidence Economy',
     'Multi-Session',
-    'Maturity'
+    'Maturity',
+    'Mission AV',
+    'Tip refresh post #252',
+    'tip-refresh-post-252',
+    'Release Honesty',
+    'Freeze-Drift',
+    'SPEC-0053',
+    'Mission AW',
+    'Ladder 17 Closeout',
+    'ladder17-pack',
+    'SPEC-0054',
+    'Tip refresh post #259',
+    'Ladder 17 CLOSED',
+    'AS–AW',
+    'AS+AT+AU+AV+AW',
+    'Ladder 18 Maturity Audit',
+    'Tip refresh post #260',
+    'tip-refresh-post-260',
+    'Ladder 18 OPEN',
+    'Sovereign Developer Engine',
+    'AX–BB',
+    'AX/AY/AZ/BA/BB',
+    'SPEC-0055',
+    'SPEC-0056',
+    'SPEC-0057',
+    'SPEC-0058',
+    'SPEC-0059'
+
   ]) {
     assert.ok(matrix.includes(needle), 'matrix missing row for: ' + needle);
   }
