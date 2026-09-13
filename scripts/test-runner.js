@@ -115,6 +115,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ba-local-sandbox-container-port.test.js',
 
   'eos-bb-ladder18-seam-pack.test.js',
+
+  'eos-bc-governed-patch-diff-apply-port.test.js',
 ]);
 
 /**
