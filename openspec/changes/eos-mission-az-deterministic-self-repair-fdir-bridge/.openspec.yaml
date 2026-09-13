@@ -1,0 +1,31 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0057 / Mission AZ — Deterministic Self-Repair & FDIR Remediation Bridge. Hermetic proposeRepair({ fault, allowlist, ports }) with phases CLASSIFY → GATE → PLAN → BRIDGE → SEAL. Fault classes SYNTAX_ERROR / MISSING_DEPENDENCY / BUDGET_TRIP / SCHEMA_DEVIATION (remediable) and UNBOUNDED_SELF_MOD / FUNDACION_WRITE / LAW_VI_LEAK (DENY). Deterministic bounded plan builder (stable ordering; no randomness; same fault → same planHash). Sealed EVD-style receipts with sha256 (node:crypto). Optional injectable fdirRemediator/fdirPort + axFault ports (compose/extend V FDIR + AX loop faults — do NOT rewrite V/AX/AY). Codes OK / COMPLETED / DENY / UNBOUNDED_SELF_MOD_FORBIDDEN / FUNDACION_DENY / LAW_VI_DENY / NOT_REMEDIABLE / INVALID_FAULT / MISSING_DEP / INVALID_REQUEST / HITL_REQUIRED. PRODUCTION_READY=NO. NON-CLAIM ≠ unbounded self-modifying AGI / ≠ unsupervised internet remediator / ≠ CloudAgent self-heal fleet; not BA/BB; Fundacion Δ=0; Antigravity-first; L17 CLOSED never reopen; L18 OPEN; AX+AY MEASURED; Law VI scan MODULE_DIR only (src/core/developer-engine — never scan tests/); hermetic in-memory fixtures only (no network).
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0057
+phase: 1
+affected_areas:
+  - src/core/developer-engine/self-repair-fdir-bridge.js
+  - src/core/developer-engine/fault-classifier.js
+  - src/core/developer-engine/repair-plan.js
+  - src/core/developer-engine/repair-receipt.js
+  - src/core/developer-engine/repair-policy-gate.js
+  - tests/eos-az-self-repair-fdir-bridge.test.js
+  - scripts/patch-mission-az.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-az-deterministic-self-repair-fdir-bridge
+  - docs/releases/EOS_MISSION_AZ_SELF_REPAIR_FDIR_BRIDGE_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting V/AX/AY source into this payload
+  - BA local container isolation
+  - BB L18 CI seam-pack
+  - CloudAgent path
+  - unbounded self-modifying AGI claim
+  - unsupervised internet remediator claim
+  - CloudAgent self-heal fleet claim
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
