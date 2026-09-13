@@ -1,0 +1,33 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Tip honesty refresh post-#268 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@001ce669aa3b84a531ee9146440a20eaf5355b41 (PR #268 Mission BA Local Sandboxed Container / Worker Isolation Port MEASURED / SPEC-0058; prior tip-266 pin 8b6d1e8b8da4d328ff9d9522d6e3d81f422c5d0d (AZ MEASURED) + tip refresh post-266 lineage; full tip SHA known — hardcode Expected/EXPECTED_TIP/main_tip/evaluated_tip); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING; Law VI held; Antigravity-first; Ladder 11–16 CLOSED; Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout; never reopen); Ladder 18 OPEN (AX+AY+AZ+BA MEASURED; BB pending; Sovereign Developer Engine). Never say AX not implemented. Never say AY not implemented. Never say AZ not implemented. Never say BA not implemented. Never say L18 audit not landed. Never reopen L17. NON-CLAIM Mission BA MEASURED ≠ BB implemented ≠ Ladder 18 CLOSED ≠ PRODUCTION_READY=YES. NON-CLAIM Mission AZ MEASURED ≠ BB implemented ≠ Ladder 18 CLOSED ≠ PRODUCTION_READY=YES. NON-CLAIM Mission AY MEASURED ≠ BB implemented ≠ Ladder 18 CLOSED ≠ PRODUCTION_READY=YES. NON-CLAIM Mission AX MEASURED ≠ BB implemented ≠ Ladder 18 CLOSED ≠ PRODUCTION_READY=YES. NON-CLAIM Ladder 17 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-268
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_268_2026-09-12.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-268
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - inventing intermediate tip SHAs beyond known prior full 8b6d1e8b8da4d328ff9d9522d6e3d81f422c5d0d and full tip 001ce669aa3b84a531ee9146440a20eaf5355b41
+  - implementing Ladder 18 satellite BB in this change
+  - claiming Ladder 18 CLOSED or BB MEASURED as implemented
+  - claiming AX not implemented (AX is MEASURED via #262) or AY not implemented (AY is MEASURED via #264) or AZ not implemented (AZ is MEASURED via #266) or BA not implemented (BA is MEASURED via #268)
+  - claiming Ladder 18 audit not landed (audit is MEASURED via #260)
+  - reopening Ladder 17 or claiming AS–AW not MEASURED
+  - claiming Ladder 17 CLOSED_FOR_LOCAL_GOVERNED_USE equals PRODUCTION_READY=YES
+  - reopening Ladder 16 or claiming AR not implemented
+  - claiming Sovereign Developer Engine is PRODUCTION_READY coding SaaS, unsupervised internet agent, full IDE, unbounded AGI, K8s multi-tenant cloud, or GH-enforced
+  - claiming Local Sandboxed Container / Worker Isolation Port is Docker Swarm/K8s multi-tenant SaaS, unsupervised container orchestration, or PRODUCTION_READY sandbox product
+  - claiming Deterministic Self-Repair & FDIR Remediation Bridge is unsupervised self-healing SaaS, K8s multi-tenant auto-remediation, or PRODUCTION_READY FDIR product
+  - claiming AST & Semantic Graph is full IDE, language-server marketplace, or CloudAgent code intelligence SaaS
+  - putting API keys in repo
+  - leaving Ladder 18 as “AX+AY+AZ MEASURED; BA–BB pending” without acknowledging AX+AY+AZ+BA MEASURED
