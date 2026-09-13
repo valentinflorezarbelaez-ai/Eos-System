@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#260 pinned tip: main@7fab2a9 / 7fab2a99187313837eb5f0fb3203f160e1d528b6 (prior tip base 760d485 L17 closeout / tip #259 lineage + #260 Ladder 18 Maturity Gap Audit; tip honesty restored; Ladder 14 CLOSED; Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout); Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout; never reopen; AS–AW MEASURED); Ladder 18 OPEN (audit MEASURED via #260; AX–BB pending; Sovereign Developer Engine; AX/AY/AZ/BA/BB pending not MEASURED)) */
-const EXPECTED_TIP = '7fab2a99187313837eb5f0fb3203f160e1d528b6';
+/** Tip refresh post-#262 pinned tip: main@be5db2b / be5db2b8c0a0cc8a339144e6b994b4e2cce1b6d1 (prior tip-260 pin 7fab2a99187313837eb5f0fb3203f160e1d528b6 + tip refresh post-260 + #262 Mission AX SPEC-0055; tip honesty restored; Ladder 14 CLOSED; Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout); Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout; never reopen; AS–AW MEASURED); Ladder 18 OPEN (AX MEASURED via #262; AY–BB pending; Sovereign Developer Engine; Mission AX MEASURED; AY/AZ/BA/BB pending not MEASURED)) */
+const EXPECTED_TIP = 'be5db2b8c0a0cc8a339144e6b994b4e2cce1b6d1';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-260 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-262 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-260 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-262 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -292,7 +292,18 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'SPEC-0056',
     'SPEC-0057',
     'SPEC-0058',
-    'SPEC-0059'
+    'SPEC-0059',
+    'Mission AX',
+    'Mission AX MEASURED',
+    'Tip refresh post #262',
+    'tip-refresh-post-262',
+    'test:mission-ax',
+    'test:developer-engine-core',
+    'Sovereign Developer Engine Core',
+    'Autonomous Code Loop',
+    'AY–BB',
+    'AY/AZ/BA/BB',
+    'AX MEASURED'
 
   ]) {
     assert.ok(matrix.includes(needle), 'matrix missing row for: ' + needle);
