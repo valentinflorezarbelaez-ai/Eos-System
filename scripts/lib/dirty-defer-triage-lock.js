@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-270 to live main after #270 Mission BB (prior tip-268 pin 001ce669aa3b84a531ee9146440a20eaf5355b41 (BA MEASURED) + tip refresh post-268 + #269 b206bf3 lineage)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-272 to live main after #272 L19 audit (prior tip-270 pin 2d1f461d80003583815634d6678c9bc67255bb20 (L18 CLOSED) + #271 8f51e94 lineage)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '2d1f461d80003583815634d6678c9bc67255bb20') {
+      if (!tip || tip[1] !== 'd162242b1274c507f59d5919e72928d29af3ec61') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-270 expected main_tip=2d1f461d80003583815634d6678c9bc67255bb20 (post-#270 / Mission BB MEASURED; tip honesty restored; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout)',
+            'tip-refresh-post-272 expected main_tip=d162242b1274c507f59d5919e72928d29af3ec61 (post-#272 / L19 audit MEASURED; tip honesty restored; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; L19 OPEN)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-270 / main@2d1f461 (post-#270 / Mission BB MEASURED; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout)',
+          path: 'freeze main_tip pinned to tip-refresh-post-272 / main@d162242 (post-#272 / L19 audit MEASURED; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; L19 OPEN)',
           status: 'VERIFIED',
           type
         });
