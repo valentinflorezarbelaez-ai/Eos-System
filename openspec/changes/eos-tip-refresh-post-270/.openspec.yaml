@@ -1,0 +1,34 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Tip honesty refresh post-#270 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@2d1f461d80003583815634d6678c9bc67255bb20 (PR #270 Mission BB Ladder 18 CI Seam-Pack Consolidation & Closeout MEASURED / SPEC-0059; prior tip-268 pin 001ce669aa3b84a531ee9146440a20eaf5355b41 (BA MEASURED) + tip refresh post-268 + tip refresh that landed #269 (b206bf3ebcab797ade293bff4da59a11af8e5f06) lineage; full tip SHA known — hardcode Expected/EXPECTED_TIP/main_tip/evaluated_tip); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING; Law VI held; Antigravity-first; Ladder 11–16 CLOSED; Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout; never reopen); Ladder 18 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Sovereign Developer Engine); L19 PENDING (no L19 impl). Never say AX–BB not implemented. Never say L18 audit not landed. Never leave L18 as OPEN or “BB pending”. Never reopen L17. NON-CLAIM Mission BB MEASURED ≠ PRODUCTION_READY=YES. NON-CLAIM Ladder 18 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. NON-CLAIM Ladder 17 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-270
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_270_2026-09-12.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-270
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - inventing intermediate tip SHAs beyond known prior full 001ce669aa3b84a531ee9146440a20eaf5355b41, known BB base b206bf3ebcab797ade293bff4da59a11af8e5f06, and full tip 2d1f461d80003583815634d6678c9bc67255bb20
+  - implementing Ladder 19 in this change
+  - claiming Ladder 18 remains OPEN or BB pending as current state
+  - claiming AX–BB not implemented
+  - claiming Ladder 18 audit not landed (audit is MEASURED via #260)
+  - reopening Ladder 17 or claiming AS–AW not MEASURED
+  - claiming Ladder 17 CLOSED_FOR_LOCAL_GOVERNED_USE equals PRODUCTION_READY=YES
+  - claiming Ladder 18 CLOSED_FOR_LOCAL_GOVERNED_USE equals PRODUCTION_READY=YES
+  - reopening Ladder 16 or claiming AR not implemented
+  - claiming Sovereign Developer Engine is PRODUCTION_READY coding SaaS, unsupervised internet agent, full IDE, unbounded AGI, K8s multi-tenant cloud, or GH-enforced
+  - claiming Local Sandboxed Container / Worker Isolation Port is Docker Swarm/K8s multi-tenant SaaS, unsupervised container orchestration, or PRODUCTION_READY sandbox product
+  - claiming Deterministic Self-Repair & FDIR Remediation Bridge is unsupervised self-healing SaaS, K8s multi-tenant auto-remediation, or PRODUCTION_READY FDIR product
+  - claiming AST & Semantic Graph is full IDE, language-server marketplace, or CloudAgent code intelligence SaaS
+  - putting API keys in repo
+  - leaving Ladder 18 as OPEN or “BB pending”

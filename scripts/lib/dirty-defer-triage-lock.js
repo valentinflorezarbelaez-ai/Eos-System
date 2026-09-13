@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-268 to live main after #268 Mission BA (prior tip-266 pin 8b6d1e8b8da4d328ff9d9522d6e3d81f422c5d0d (AZ MEASURED) + tip refresh post-266 lineage)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-270 to live main after #270 Mission BB (prior tip-268 pin 001ce669aa3b84a531ee9146440a20eaf5355b41 (BA MEASURED) + tip refresh post-268 + #269 b206bf3 lineage)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '001ce669aa3b84a531ee9146440a20eaf5355b41') {
+      if (!tip || tip[1] !== '2d1f461d80003583815634d6678c9bc67255bb20') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-268 expected main_tip=001ce669aa3b84a531ee9146440a20eaf5355b41 (post-#268 / Mission BA MEASURED; tip honesty restored; L17 CLOSED AS–AW MEASURED; L18 OPEN AX+AY+AZ+BA MEASURED; BB pending)',
+            'tip-refresh-post-270 expected main_tip=2d1f461d80003583815634d6678c9bc67255bb20 (post-#270 / Mission BB MEASURED; tip honesty restored; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-268 / main@001ce66 (post-#268 / Mission BA MEASURED; L17 CLOSED AS–AW MEASURED; L18 OPEN AX+AY+AZ+BA MEASURED; BB pending)',
+          path: 'freeze main_tip pinned to tip-refresh-post-270 / main@2d1f461 (post-#270 / Mission BB MEASURED; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout)',
           status: 'VERIFIED',
           type
         });
