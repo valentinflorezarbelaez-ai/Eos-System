@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Tip honesty refresh post-#262 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@be5db2b8c0a0cc8a339144e6b994b4e2cce1b6d1 (PR #262 Mission AX Sovereign Developer Engine Core MEASURED / SPEC-0055; prior tip-260 pin 7fab2a99187313837eb5f0fb3203f160e1d528b6 + tip refresh post-260 lineage; full tip SHA known — hardcode Expected/EXPECTED_TIP/main_tip/evaluated_tip); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING; Law VI held; Antigravity-first; Ladder 11–16 CLOSED; Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout; never reopen); Ladder 18 OPEN (AX MEASURED via #262; AY–BB pending; Sovereign Developer Engine). Never say AX not implemented. Never say L18 audit not landed. Never reopen L17. NON-CLAIM Mission AX MEASURED ≠ AY/AZ/BA/BB implemented ≠ Ladder 18 CLOSED ≠ PRODUCTION_READY=YES. NON-CLAIM Ladder 17 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-262
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_262_2026-09-12.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-262
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - inventing intermediate tip SHAs beyond known prior full 7fab2a99187313837eb5f0fb3203f160e1d528b6 and full tip be5db2b8c0a0cc8a339144e6b994b4e2cce1b6d1
+  - implementing Ladder 18 satellites AY/AZ/BA/BB in this change
+  - claiming Ladder 18 CLOSED or AY/AZ/BA/BB MEASURED as implemented
+  - claiming AX not implemented (AX is MEASURED via #262)
+  - claiming Ladder 18 audit not landed (audit is MEASURED via #260)
+  - reopening Ladder 17 or claiming AS–AW not MEASURED
+  - claiming Ladder 17 CLOSED_FOR_LOCAL_GOVERNED_USE equals PRODUCTION_READY=YES
+  - reopening Ladder 16 or claiming AR not implemented
+  - claiming Sovereign Developer Engine is PRODUCTION_READY coding SaaS, unsupervised internet agent, full IDE, unbounded AGI, K8s multi-tenant cloud, or GH-enforced
+  - putting API keys in repo
+  - leaving Ladder 18 as “AX–BB pending” without acknowledging AX MEASURED
