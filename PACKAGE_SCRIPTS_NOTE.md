@@ -1,12 +1,12 @@
-# Mission AY — package.json / slim patch fragment
+# Mission AZ — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-ay.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-az.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:ast-semantic-port": "node --test tests/eos-ay-ast-semantic-port.test.js",
-"test:mission-ay": "node --test tests/eos-ay-ast-semantic-port.test.js"
+"test:self-repair-bridge": "node --test tests/eos-az-self-repair-fdir-bridge.test.js",
+"test:mission-az": "node --test tests/eos-az-self-repair-fdir-bridge.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-ay.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-ay-ast-semantic-port.test.js',
+'eos-az-self-repair-fdir-bridge.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).

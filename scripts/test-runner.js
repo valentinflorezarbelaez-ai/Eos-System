@@ -109,6 +109,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ax-sovereign-developer-engine.test.js',
 
   'eos-ay-ast-semantic-port.test.js',
+
+  'eos-az-self-repair-fdir-bridge.test.js',
 ]);
 
 /**
