@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0058 / Mission BA — Local Sandboxed Container / Worker Isolation Port. Hermetic runIsolated({ step, rootPrison, allowlist, timeoutMs, networkPolicy, ports }) with phases VALIDATE → GATE → BOUNDARY → ISOLATE → SEAL. In-process sandbox simulator (NO real Docker/daemon). Enforce filesystem root prison, env scrubbing, process timeout, network block. DENY codes ESCAPE_DENY / NETWORK_DENY / FUNDACION_DENY / POLICY_DENY / TIMEOUT_DENY / INVALID_REQUEST / MISSING_DEP / ARTIFACT_NOT_ALLOWLISTED. Sealed EVD-style receipts with sha256 (node:crypto). Optional injectable computeWorker/l9Worker/l10Isolation + axEngine/ayPort/azRepair ports (compose/extend L9/L10 compute-worker isolation + AX/AY/AZ — do NOT rewrite those trees). Codes OK / COMPLETED / DENY / ESCAPE_DENY / NETWORK_DENY / FUNDACION_DENY / POLICY_DENY / TIMEOUT_DENY / INVALID_REQUEST / MISSING_DEP / ARTIFACT_NOT_ALLOWLISTED. PRODUCTION_READY=NO. NON-CLAIM ≠ K8s multi-tenant cloud / ≠ managed container SaaS / ≠ CloudAgent remote fleet; not BB; Fundacion Δ=0; Antigravity-first; L17 CLOSED never reopen; L18 OPEN; AX+AY+AZ MEASURED; Law VI scan MODULE_DIR only (src/core/developer-engine — never scan tests/); hermetic in-memory fixtures only (no network, no Docker daemon).
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0058
+phase: 1
+affected_areas:
+  - src/core/developer-engine/local-sandbox-container-port.js
+  - src/core/developer-engine/sandbox-boundary.js
+  - src/core/developer-engine/isolation-receipt.js
+  - src/core/developer-engine/sandbox-policy-gate.js
+  - tests/eos-ba-local-sandbox-container-port.test.js
+  - scripts/patch-mission-ba.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ba-local-sandboxed-container-worker-isolation
+  - docs/releases/EOS_MISSION_BA_LOCAL_SANDBOX_CONTAINER_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting L9/L10 compute-worker / AX/AY/AZ source into this payload
+  - BB L18 CI seam-pack
+  - CloudAgent path
+  - real Docker daemon / container runtime dependency
+  - K8s multi-tenant cloud claim
+  - managed container SaaS claim
+  - CloudAgent remote fleet claim
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
