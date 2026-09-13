@@ -226,7 +226,9 @@
     "test:ladder17-pack": "npm run test:cross-satellite-composition && npm run test:operator-continuity && npm run test:law-vi-broker && npm run test:freeze-drift && npm run test:mission-aw",
     "test:developer-engine-core": "node --test tests/eos-ax-sovereign-developer-engine.test.js",
     "test:mission-ax": "node --test tests/eos-ax-sovereign-developer-engine.test.js",
-    "test:sovereign-developer-engine": "node --test tests/eos-ax-sovereign-developer-engine.test.js"
+    "test:sovereign-developer-engine": "node --test tests/eos-ax-sovereign-developer-engine.test.js",
+    "test:ast-semantic-port": "node --test tests/eos-ay-ast-semantic-port.test.js",
+    "test:mission-ay": "node --test tests/eos-ay-ast-semantic-port.test.js"
   },
   "keywords": [
     "eos",

@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0056 / Mission AY — AST & Semantic Graph Reasoning Port. Hermetic JS-oriented structural reasoner reason({ sourceText, artifactPath, allowlist, query }) with phases PARSE → BUILD_GRAPH → QUERY. Minimal hermetic tokenizer/regex extractor (imports/exports, function/class, call sites, dependency edges) — NO acorn/babel; zero npm deps beyond node builtins. Sealed EVD-style receipts with sha256 (node:crypto). Codes OK / COMPLETED / DENY / PATH_NOT_ALLOWLISTED / SYNTAX_ERROR / MALFORMED_GRAPH / UNSAFE_QUERY / INVALID_REQUEST / MISSING_DEP / FUNDACION_DENY / QUERY_EMPTY. PRODUCTION_READY=NO. NON-CLAIM ≠ full IDE / ≠ language-server marketplace / ≠ CloudAgent code intelligence SaaS; not AZ/BA/BB; Fundacion Δ=0; Antigravity-first; L17 CLOSED never reopen; L18 OPEN; AX MEASURED; compose/extend AG + inject into AX (optional hooks only — do not rewrite AX/AG); Law VI zero forbidden provider secret prefix contiguous literals; hermetic in-memory fixtures only (no network, no real repo files required).
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0056
+phase: 1
+affected_areas:
+  - src/core/developer-engine/ast-semantic-port.js
+  - src/core/developer-engine/semantic-graph.js
+  - src/core/developer-engine/reasoning-receipt.js
+  - src/core/developer-engine/ast-policy-gate.js
+  - tests/eos-ay-ast-semantic-port.test.js
+  - scripts/patch-mission-ay.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ay-ast-semantic-graph-reasoning-port
+  - docs/releases/EOS_MISSION_AY_AST_SEMANTIC_GRAPH_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting AX/AG source into this payload
+  - AZ self-repair / FDIR bridge
+  - BA local container isolation
+  - BB L18 CI seam-pack
+  - CloudAgent path
+  - full IDE / language-server marketplace claim
+  - CloudAgent code intelligence SaaS claim
+  - acorn/babel/npm parser deps
+  - live network in hermetic tests

@@ -1,13 +1,12 @@
-# Mission AX — package.json / slim patch fragment
+# Mission AY — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-ax.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-ay.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:developer-engine-core": "node --test tests/eos-ax-sovereign-developer-engine.test.js",
-"test:mission-ax": "node --test tests/eos-ax-sovereign-developer-engine.test.js",
-"test:sovereign-developer-engine": "node --test tests/eos-ax-sovereign-developer-engine.test.js"
+"test:ast-semantic-port": "node --test tests/eos-ay-ast-semantic-port.test.js",
+"test:mission-ay": "node --test tests/eos-ay-ast-semantic-port.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -15,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-ax.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-ax-sovereign-developer-engine.test.js',
+'eos-ay-ast-semantic-port.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
