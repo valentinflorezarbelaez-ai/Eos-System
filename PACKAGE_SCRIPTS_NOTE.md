@@ -1,13 +1,13 @@
-# Mission AV — package.json / slim patch fragment
+# Mission AX — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-av.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-ax.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:freeze-drift": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js",
-"test:mission-av": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js",
-"test:release-honesty": "node --test tests/eos-av-governed-state-freeze-drift-observer.test.js"
+"test:developer-engine-core": "node --test tests/eos-ax-sovereign-developer-engine.test.js",
+"test:mission-ax": "node --test tests/eos-ax-sovereign-developer-engine.test.js",
+"test:sovereign-developer-engine": "node --test tests/eos-ax-sovereign-developer-engine.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -15,7 +15,7 @@ Applied idempotently by `scripts/patch-mission-av.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-av-governed-state-freeze-drift-observer.test.js',
+'eos-ax-sovereign-developer-engine.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
