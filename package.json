@@ -223,7 +223,10 @@
     "test:mission-aw": "node --test tests/eos-aw-ladder17-seam-pack.test.js",
     "test:aw17": "node --test tests/eos-aw-ladder17-seam-pack.test.js",
     "test:l17": "node --test tests/eos-aw-ladder17-seam-pack.test.js",
-    "test:ladder17-pack": "npm run test:cross-satellite-composition && npm run test:operator-continuity && npm run test:law-vi-broker && npm run test:freeze-drift && npm run test:mission-aw"
+    "test:ladder17-pack": "npm run test:cross-satellite-composition && npm run test:operator-continuity && npm run test:law-vi-broker && npm run test:freeze-drift && npm run test:mission-aw",
+    "test:developer-engine-core": "node --test tests/eos-ax-sovereign-developer-engine.test.js",
+    "test:mission-ax": "node --test tests/eos-ax-sovereign-developer-engine.test.js",
+    "test:sovereign-developer-engine": "node --test tests/eos-ax-sovereign-developer-engine.test.js"
   },
   "keywords": [
     "eos",

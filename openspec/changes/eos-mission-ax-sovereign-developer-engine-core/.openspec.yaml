@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-12
+goal: SPEC-0055 / Mission AX — Sovereign Developer Engine Core / Autonomous Code Loop. Governed Plan→Edit→Verify→Seal loop over allowlisted artifacts composing injectable AF-like + AG-like ports (fakes only — do not rewrite AF/AG). Fail-closed DENY on budget / HITL / Law VI / Fundacion / allowlist miss. Sealed EVD-style receipts with sha256 (node:crypto). Codes OK / COMPLETED / DENY / BUDGET_DENY / HITL_REQUIRED / LAW_VI_DENY / FUNDACION_DENY / ARTIFACT_NOT_ALLOWLISTED / VERIFY_FAILED / MISSING_DEP / INVALID_REQUEST / PHASE_DENIED. PRODUCTION_READY=NO. NON-CLAIM ≠ unsupervised internet-facing agent / ≠ PRODUCTION_READY coding SaaS / ≠ CloudAgent; not AY/AZ/BA/BB; Fundacion Δ=0; Antigravity-first; L17 CLOSED never reopen; L18 OPEN; axis Sovereign Developer Engine; Law VI zero forbidden provider secret prefix contiguous literals; zero new npm deps; hermetic fakes only (no network).
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0055
+phase: 1
+affected_areas:
+  - src/core/developer-engine/sovereign-developer-engine.js
+  - src/core/developer-engine/code-loop-phases.js
+  - src/core/developer-engine/engine-receipt.js
+  - src/core/developer-engine/policy-gate.js
+  - tests/eos-ax-sovereign-developer-engine.test.js
+  - scripts/patch-mission-ax.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-ax-sovereign-developer-engine-core
+  - docs/releases/EOS_MISSION_AX_SOVEREIGN_DEVELOPER_ENGINE_2026-09-12.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting AF/AG source into this payload
+  - AY AST/semantic port
+  - AZ self-repair / FDIR bridge
+  - BA local container isolation
+  - BB L18 CI seam-pack
+  - CloudAgent path
+  - unsupervised internet-facing agency
+  - PRODUCTION_READY coding SaaS claim
+  - live network in hermetic tests

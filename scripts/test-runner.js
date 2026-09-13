@@ -105,6 +105,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-av-governed-state-freeze-drift-observer.test.js',
 
   'eos-aw-ladder17-seam-pack.test.js',
+
+  'eos-ax-sovereign-developer-engine.test.js',
 ]);
 
 /**
