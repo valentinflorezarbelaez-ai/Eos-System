@@ -1,0 +1,21 @@
+schema: spec-driven
+created: 2026-09-12
+goal: Register EOS Maturity Ladder 18 Gap Audit (docs-only) after Ladder 17 closeout (Mission AW; AS–AW MEASURED); propose ordered satellites AX/AY/AZ/BA/BB for Sovereign Developer Engine — no Mission AX implementation in this change.
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-18-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_18_AUDIT_2026-09-12.md
+  - openspec/changes/eos-ladder-18-maturity-audit
+non_goals:
+  - implementing Mission AX/AY/AZ/BA/BB
+  - re-implementing Mission AS/AT/AU/AV/AW (L17 closed; never reopen L17)
+  - re-implementing Mission AN/AO/AP/AQ/AR (L16 closed)
+  - re-implementing Mission AI/AJ/AK/AL/AM (L15 closed)
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
+  - inventing full 40-hex tip beyond StartsWith 760d485
