@@ -236,7 +236,9 @@
     "test:mission-bb": "node --test tests/eos-bb-ladder18-seam-pack.test.js",
     "test:bb18": "node --test tests/eos-bb-ladder18-seam-pack.test.js",
     "test:l18": "node --test tests/eos-bb-ladder18-seam-pack.test.js",
-    "test:ladder18-pack": "npm run test:developer-engine-core && npm run test:ast-semantic-port && npm run test:self-repair-bridge && npm run test:local-sandbox-port && npm run test:mission-bb"
+    "test:ladder18-pack": "npm run test:developer-engine-core && npm run test:ast-semantic-port && npm run test:self-repair-bridge && npm run test:local-sandbox-port && npm run test:mission-bb",
+    "test:governed-patch-apply": "node --test tests/eos-bc-governed-patch-diff-apply-port.test.js",
+    "test:mission-bc": "node --test tests/eos-bc-governed-patch-diff-apply-port.test.js"
   },
   "keywords": [
     "eos",
