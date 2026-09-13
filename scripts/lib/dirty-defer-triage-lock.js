@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-266 to live main after #266 Mission AZ (prior tip-264 pin 32b7a0b62886b388b420e0d935342622faab84e9 (AY MEASURED) + tip refresh post-264 lineage)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-268 to live main after #268 Mission BA (prior tip-266 pin 8b6d1e8b8da4d328ff9d9522d6e3d81f422c5d0d (AZ MEASURED) + tip refresh post-266 lineage)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '8b6d1e8b8da4d328ff9d9522d6e3d81f422c5d0d') {
+      if (!tip || tip[1] !== '001ce669aa3b84a531ee9146440a20eaf5355b41') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-266 expected main_tip=8b6d1e8b8da4d328ff9d9522d6e3d81f422c5d0d (post-#266 / Mission AZ MEASURED; tip honesty restored; L17 CLOSED AS–AW MEASURED; L18 OPEN AX+AY+AZ MEASURED; BA–BB pending)',
+            'tip-refresh-post-268 expected main_tip=001ce669aa3b84a531ee9146440a20eaf5355b41 (post-#268 / Mission BA MEASURED; tip honesty restored; L17 CLOSED AS–AW MEASURED; L18 OPEN AX+AY+AZ+BA MEASURED; BB pending)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-266 / main@8b6d1e8 (post-#266 / Mission AZ MEASURED; L17 CLOSED AS–AW MEASURED; L18 OPEN AX+AY+AZ MEASURED; BA–BB pending)',
+          path: 'freeze main_tip pinned to tip-refresh-post-268 / main@001ce66 (post-#268 / Mission BA MEASURED; L17 CLOSED AS–AW MEASURED; L18 OPEN AX+AY+AZ+BA MEASURED; BB pending)',
           status: 'VERIFIED',
           type
         });
