@@ -123,6 +123,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-be-verification-replay-golden-receipt-port.test.js',
 
   'eos-bf-local-rc-packaging-artifact-notary-port.test.js',
+
+  'eos-bg-ladder19-seam-pack.test.js',
 ]);
 
 /**

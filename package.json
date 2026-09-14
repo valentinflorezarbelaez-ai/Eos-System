@@ -154,7 +154,7 @@
     "test:mission-s": "node --test tests/specboot/specboot-agent-runner.test.js",
     "test:external-write-gateway": "node --test tests/governance/external-write-gateway.test.js",
     "test:mission-t": "node --test tests/governance/external-write-gateway.test.js",
-    "test:native-suite-pack": "npm run test:compute-worker-i && npm run test:compute-worker-l && npm run test:compute-worker-m && npm run test:compute-worker-n && npm run test:compute-worker-o && npm run test:loop-compute && npm run test:worker-daemon && npm run test:fdir-sentinel && npm run test:specboot-agent && npm run test:external-write-gateway && npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell && npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server && npm run test:llm-provider-port && npm run test:token-budget-ecr && npm run test:autonomous-loop && npm run test:live-tool-engine && npm run test:multi-session-autonomy && npm run test:evidence-economy-ledger && npm run test:constitution-runtime-policy-gate && npm run test:autonomy-replay-forensic-observer && npm run test:multi-workstation-federation && npm run test:provider-failover-resilience && npm run test:hitl-po-authority && npm run test:evidence-export-notarization && npm run test:cross-satellite-composition && npm run test:operator-continuity && npm run test:law-vi-broker && npm run test:freeze-drift && npm run test:developer-engine-core && npm run test:ast-semantic-port && npm run test:self-repair-bridge && npm run test:local-sandbox-port",
+    "test:native-suite-pack": "npm run test:compute-worker-i && npm run test:compute-worker-l && npm run test:compute-worker-m && npm run test:compute-worker-n && npm run test:compute-worker-o && npm run test:loop-compute && npm run test:worker-daemon && npm run test:fdir-sentinel && npm run test:specboot-agent && npm run test:external-write-gateway && npm run test:fdir-remediation && npm run test:sovereign-session && npm run test:developer-shell && npm run test:target-flight && npm run test:multi-agent-swarm && npm run test:telemetry-server && npm run test:llm-provider-port && npm run test:token-budget-ecr && npm run test:autonomous-loop && npm run test:live-tool-engine && npm run test:multi-session-autonomy && npm run test:evidence-economy-ledger && npm run test:constitution-runtime-policy-gate && npm run test:autonomy-replay-forensic-observer && npm run test:multi-workstation-federation && npm run test:provider-failover-resilience && npm run test:hitl-po-authority && npm run test:evidence-export-notarization && npm run test:cross-satellite-composition && npm run test:operator-continuity && npm run test:law-vi-broker && npm run test:freeze-drift && npm run test:developer-engine-core && npm run test:ast-semantic-port && npm run test:self-repair-bridge && npm run test:local-sandbox-port && npm run test:governed-patch-apply && npm run test:multi-target-delivery && npm run test:verification-replay && npm run test:local-rc-packaging",
     "test:mission-u": "node --test tests/eos-u-native-suite-seam-pack.test.js",
     "test:u11": "npm run test:mission-u",
     "test:fdir-remediation": "node --test tests/fdir/fdir-remediation-loop.test.js",
@@ -244,7 +244,11 @@
     "test:verification-replay": "node --test tests/eos-be-verification-replay-golden-receipt-port.test.js",
     "test:mission-be": "node --test tests/eos-be-verification-replay-golden-receipt-port.test.js",
     "test:local-rc-packaging": "node --test tests/eos-bf-local-rc-packaging-artifact-notary-port.test.js",
-    "test:mission-bf": "node --test tests/eos-bf-local-rc-packaging-artifact-notary-port.test.js"
+    "test:mission-bf": "node --test tests/eos-bf-local-rc-packaging-artifact-notary-port.test.js",
+    "test:mission-bg": "node --test tests/eos-bg-ladder19-seam-pack.test.js",
+    "test:bg19": "node --test tests/eos-bg-ladder19-seam-pack.test.js",
+    "test:l19": "node --test tests/eos-bg-ladder19-seam-pack.test.js",
+    "test:ladder19-pack": "npm run test:governed-patch-apply && npm run test:multi-target-delivery && npm run test:verification-replay && npm run test:local-rc-packaging && npm run test:mission-bg"
   },
   "keywords": [
     "eos",
