@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-285 to live main after #285 Ladder 20 Maturity Gap Audit (prior tip-282 pin 31ecb8fd5fe6e39cc9f071a203a900e86ec35901 (L19 CLOSED / BG MEASURED))
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-287 to live main after #287 Mission BH (prior tip-286 pin e2e78a38be3a92e8c209c8dbe4814d575544b5ce (L20 audit MEASURED))
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== 'bf7cd040443378385261ce82b9c8c1102cb03a30') {
+      if (!tip || tip[1] !== '03154ec38aee5587593997ddb558646141406c9c') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-285 expected main_tip=bf7cd040443378385261ce82b9c8c1102cb03a30 (post-#285 / Ladder 20 Maturity Gap Audit MEASURED; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; L19 CLOSED BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; L20 audit MEASURED Sovereign Mission Continuity & Operator Fabric)',
+            'tip-refresh-post-287 expected main_tip=03154ec38aee5587593997ddb558646141406c9c (post-#287 / Mission BH MEASURED; tip honesty restored; tip-287 / main@03154ec; L16–L19 CLOSED_FOR_LOCAL_GOVERNED_USE retained; L20 OPEN BH MEASURED via #287; BI–BL pending; Sovereign Mission Continuity & Operator Fabric)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-285 / main@bf7cd04 (post-#285 / Ladder 20 Maturity Gap Audit MEASURED; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; L19 CLOSED BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; L20 audit MEASURED Sovereign Mission Continuity & Operator Fabric)',
+          path: 'freeze main_tip pinned to tip-refresh-post-287 / main@03154ec (post-#287 / Mission BH MEASURED; tip-287 / main@03154ec; L16–L19 CLOSED retained; L20 OPEN BH MEASURED; BI–BL pending)',
           status: 'VERIFIED',
           type
         });

@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Refresh freeze/matrix/m4 tip SSOT post-#287 (Mission BH MEASURED)
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-287
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_287_2026-09-14.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-287
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - inventing intermediate tip SHAs beyond known prior full e2e78a38be3a92e8c209c8dbe4814d575544b5ce and full tip 03154ec38aee5587593997ddb558646141406c9c
+  - implementing BI–BL in this change
+  - claiming BI/BJ/BK/BL MEASURED
+  - claiming L20 CLOSED
+  - claiming BH not MEASURED
+  - leaving Ladder 19 as OPEN or “BG pending”
+  - reopening Ladder 16/L17/L18/L19
+  - claiming Ladder 19 CLOSED_FOR_LOCAL_GOVERNED_USE equals PRODUCTION_READY=YES
+  - claiming L20 OPEN equals PRODUCTION_READY=YES
+  - putting API keys in repo
