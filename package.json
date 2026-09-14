@@ -248,7 +248,9 @@
     "test:mission-bg": "node --test tests/eos-bg-ladder19-seam-pack.test.js",
     "test:bg19": "node --test tests/eos-bg-ladder19-seam-pack.test.js",
     "test:l19": "node --test tests/eos-bg-ladder19-seam-pack.test.js",
-    "test:ladder19-pack": "npm run test:governed-patch-apply && npm run test:multi-target-delivery && npm run test:verification-replay && npm run test:local-rc-packaging && npm run test:mission-bg"
+    "test:ladder19-pack": "npm run test:governed-patch-apply && npm run test:multi-target-delivery && npm run test:verification-replay && npm run test:local-rc-packaging && npm run test:mission-bg",
+    "test:mission-bh": "node --test tests/eos-bh-mission-lifecycle-state-machine.test.js",
+    "test:mission-lifecycle": "node --test tests/eos-bh-mission-lifecycle-state-machine.test.js"
   },
   "keywords": [
     "eos",

@@ -1,0 +1,31 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Implement Mission Lifecycle State Machine (SPEC-0065) for Ladder 20 — pure FSM PROPOSED|OPEN|MEASURED|CLOSED_FOR_LOCAL_GOVERNED_USE with sealed TransitionReceipts (stableStringify + sha256 via node:crypto), fail-closed policy gate, hermetic in-memory history/replay. Axis Sovereign Mission Continuity & Operator Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN on src/core/mission only. L17/L18/L19 CLOSED never reopen. L20 OPEN (BH in progress; BI–BL pending). NON-CLAIM ≠ Jira/PM SaaS / ≠ distributed consensus/multi-region / ≠ PRODUCTION_READY=YES.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0065
+phase: 1
+affected_areas:
+  - src/core/mission/mission-lifecycle-state-machine.js
+  - src/core/mission/mission-lifecycle-policy-gate.js
+  - src/core/mission/mission-transition-receipt.js
+  - tests/eos-bh-mission-lifecycle-state-machine.test.js
+  - scripts/patch-mission-bh.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-20-mission-bh
+  - docs/releases/EOS_MISSION_BH_LIFECYCLE_STATE_MACHINE_2026-09-14.md
+  - docs/adrs/ADR-0024-mission-bh-lifecycle-state-machine.md
+  - docs/evidence/EOS_MISSION_BH_LIFECYCLE_STATE_MACHINE_EVD_2026-09-14.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting delivery/* / BE/BF/BG into mission/
+  - BI/BJ/BK/BL missions
+  - CloudAgent path
+  - Jira/PM SaaS product claim
+  - distributed consensus / multi-region claim
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
+  - soft-allow illegal transitions
+  - reopening L17 / L18 / L19

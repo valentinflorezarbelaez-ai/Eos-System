@@ -125,6 +125,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bf-local-rc-packaging-artifact-notary-port.test.js',
 
   'eos-bg-ladder19-seam-pack.test.js',
+
+  'eos-bh-mission-lifecycle-state-machine.test.js',
 ]);
 
 /**
