@@ -117,6 +117,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bb-ladder18-seam-pack.test.js',
 
   'eos-bc-governed-patch-diff-apply-port.test.js',
+
+  'eos-bd-multi-worktree-multi-target-delivery-port.test.js',
 ]);
 
 /**

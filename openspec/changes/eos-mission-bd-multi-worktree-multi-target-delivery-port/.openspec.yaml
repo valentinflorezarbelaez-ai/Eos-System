@@ -1,0 +1,31 @@
+schema: spec-driven
+created: 2026-09-13
+goal: SPEC-0061 / Mission BD — Multi-Worktree / Multi-Target Delivery Port. Hermetic deliver({ artifact, targets, allowlist, policy, applySeal, isolationObserve, federationObserve, ports }) with phases VALIDATE → GATE → DELIVER → SEAL. In-process / virtual-root governed delivery (NO real git worktree / NO remote CD). Enforce allowlist, Fundacion ALWAYS_DENY, BA isolation via injectable ports, optional BC apply seal, empty/malformed DENY, disallowed network/cloud fleet claim paths. Fail-closed multi-target (no partial success). Sealed EVD-style delivery receipts with sha256 (node:crypto). Optional injectable anFederation/federationObserve + baIsolation/axEngine + bcApply/applySeal ports (compose/extend AN federation observe + AX/BA isolation + BC apply observe — do NOT rewrite those trees). Codes OK / DELIVERED / DENY / FUNDACION_DENY / ALLOWLIST_DENY / ISOLATION_DENY / APPLY_SEAL_DENY / MALFORMED_ARTIFACT / INVALID_REQUEST / POLICY_DENY / NETWORK_DENY / LAW_VI_DENY. PRODUCTION_READY=NO. NON-CLAIM ≠ multi-tenant cloud fleet / ≠ Kubernetes CD / ≠ PRODUCTION_READY delivery product; not BE/BF/BG; Fundacion Δ=0; Antigravity-first; L17 CLOSED never reopen; L18 CLOSED never reopen (AX–BB MEASURED); L19 OPEN (BC MEASURED; BD in progress; BE–BG pending); Axis Sovereign Delivery & Verification Fabric; Law VI scan MODULE_DIR only (src/core/delivery — never scan tests/); hermetic in-memory fixtures only (no network, no git worktree, no remote CD).
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0061
+phase: 1
+affected_areas:
+  - src/core/delivery/multi-worktree-multi-target-delivery-port.js
+  - src/core/delivery/delivery-policy-gate.js
+  - src/core/delivery/delivery-receipt.js
+  - src/core/delivery/delivery-target-boundary.js
+  - tests/eos-bd-multi-worktree-multi-target-delivery-port.test.js
+  - scripts/patch-mission-bd.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-bd-multi-worktree-multi-target-delivery-port
+  - docs/releases/EOS_MISSION_BD_MULTI_WORKTREE_MULTI_TARGET_DELIVERY_2026-09-13.md
+  - docs/adrs/ADR-0019-mission-bd-multi-worktree-multi-target-delivery-port.md
+  - docs/evidence/EOS_MISSION_BD_EVIDENCE_2026-09-13.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting AN/AX/BA/BC source into this payload
+  - BE/BF/BG missions
+  - CloudAgent path
+  - real git worktree / git checkout dependency
+  - multi-tenant cloud fleet / Kubernetes CD claim
+  - PRODUCTION_READY delivery product claim
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
