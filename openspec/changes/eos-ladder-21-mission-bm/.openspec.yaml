@@ -1,0 +1,32 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Implement Agent Identity Attestation & Action Provenance Port (SPEC-0070) for Ladder 21 — hermetic HMAC-SHA256 agent registration, session signatures, sealed BM-RCPT-* receipts (stableStringify + sha256 via node:crypto over nine canonical fields), fail-closed policy gate (unsigned / unregistered / forged / prompt mismatch / impersonation / tool scope / FUNDACION_ALWAYS_DENY), facade registerAgent / attestAction / verifyProvenanceTrail. Axis Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN on BM-owned agent-* under NEW src/core/attestation/ (do NOT rewrite consensus/). L17–L20 CLOSED never reopen. L21 OPEN (BM in progress; BN–BQ pending). NON-CLAIM ≠ OAuth/OIDC/IAM / ≠ SAML IdP / ≠ PRODUCTION_READY=YES identity product.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0070
+phase: 1
+affected_areas:
+  - src/core/attestation/agent-action-receipt.js
+  - src/core/attestation/agent-identity-policy-gate.js
+  - src/core/attestation/agent-identity-attestation-port.js
+  - tests/eos-bm-agent-identity-attestation-port.test.js
+  - scripts/patch-mission-bm.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-21-mission-bm
+  - docs/releases/EOS_MISSION_BM_AGENT_IDENTITY_ATTESTATION_2026-09-14.md
+  - docs/adrs/ADR-0030-mission-bm-agent-identity-attestation.md
+  - docs/evidence/EOS_MISSION_BM_AGENT_IDENTITY_ATTESTATION_EVD_2026-09-14.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting src/core/consensus
+  - OAuth / OIDC / IAM / SAML IdP product
+  - BN / BO / BP / BQ missions
+  - CloudAgent path
+  - heavy JWT cloud identity product claim
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
+  - exclusive ownership of sibling dirs under src/core/
+  - soft-allow unsigned / unattested actions
+  - reopening L17 / L18 / L19 / L20
