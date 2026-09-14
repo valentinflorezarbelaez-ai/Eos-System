@@ -1,12 +1,12 @@
-# Mission BH — package.json / slim patch fragment
+# Mission BI — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-bh.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-bi.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:mission-bh": "node --test tests/eos-bh-mission-lifecycle-state-machine.test.js",
-"test:mission-lifecycle": "node --test tests/eos-bh-mission-lifecycle-state-machine.test.js"
+"test:mission-bi": "node --test tests/eos-bi-cross-session-continuity-replay-fabric.test.js",
+"test:cross-session-continuity": "node --test tests/eos-bi-cross-session-continuity-replay-fabric.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-bh.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-bh-mission-lifecycle-state-machine.test.js',
+'eos-bi-cross-session-continuity-replay-fabric.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
@@ -25,10 +25,10 @@ Hermetic satellite — excluded from slim so SLIM_COUNT stays ≤145.
 
 ## Envelope copy (bootstrap)
 
-`MISSION_BH_BOOTSTRAP.ps1` `$paths` / `git add` also copies:
+`MISSION_BI_BOOTSTRAP.ps1` `$paths` / `git add` also copies:
 
-- `docs/adrs/ADR-0024-mission-bh-lifecycle-state-machine.md`
-- `docs/evidence/EOS_MISSION_BH_LIFECYCLE_STATE_MACHINE_EVD_2026-09-14.md`
+- `docs/adrs/ADR-0025-mission-bi-cross-session-continuity-replay-fabric.md`
+- `docs/evidence/EOS_MISSION_BI_CROSS_SESSION_CONTINUITY_EVD_2026-09-14.md`
 - OpenSpec change folder (proposal / design / spec / tasks / `.openspec.yaml`)
 
 so future boots land the envelope. Docs-only; does not flip PRODUCTION_READY.
