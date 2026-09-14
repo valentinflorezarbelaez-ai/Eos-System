@@ -1,0 +1,6 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Implement Sovereign Telemetry & Forensic Trail Aggregator (SPEC-0073) for Ladder 21.
+routing:
+  team: core-platform
+  scope: mission-bp

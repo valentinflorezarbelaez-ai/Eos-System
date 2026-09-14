@@ -141,6 +141,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bn-continuous-integrity-sentinel.test.js',
 
   'eos-bo-multi-agent-consensus-gate.test.js',
+  'eos-bp-sovereign-telemetry-forensic-aggregator.test.js',
 ]);
 
 /**
