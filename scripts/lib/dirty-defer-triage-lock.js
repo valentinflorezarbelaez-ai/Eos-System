@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-295 to live main after #295 Mission BL / Ladder 20 CLOSED (prior tip-293 pin 6e508a175eb726ca396da9ae0a8f540b75bfe310 (BK MEASURED); Tip #294 dd225d9b9ca8851110ed6b38513e35c0092e02ff)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-297 to live main after #297 Ladder 21 audit MEASURED / L21 OPEN (prior tip-293 pin 6e508a175eb726ca396da9ae0a8f540b75bfe310 (BK MEASURED); Tip #294 dd225d9b9ca8851110ed6b38513e35c0092e02ff)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '6b9ab462eb8d607e4df9eaaf16efa57778d0c66a') {
+      if (!tip || tip[1] !== '707f234599eb922d8b2bc0b0aba34cdc988a9882') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-295 expected main_tip=6b9ab462eb8d607e4df9eaaf16efa57778d0c66a (post-#295 / Ladder 20 CLOSED; tip honesty restored; tip-295 / main@6b9ab46; L16–L19 CLOSED_FOR_LOCAL_GOVERNED_USE retained; L20 CLOSED BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric)',
+            'tip-refresh-post-297 expected main_tip=707f234599eb922d8b2bc0b0aba34cdc988a9882 (post-#297 / Ladder 21 OPEN Audit MEASURED; tip honesty restored; tip-297 / main@707f234; L16–L19 CLOSED_FOR_LOCAL_GOVERNED_USE retained; L20 CLOSED BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-295 / main@6b9ab46 (post-#295 / Ladder 20 CLOSED; tip-295 / main@6b9ab46; L16–L19 CLOSED retained; L20 CLOSED BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout)',
+          path: 'freeze main_tip pinned to tip-refresh-post-297 / main@707f234 (post-#297 / Ladder 21 OPEN Audit MEASURED; tip-297 / main@707f234; L16–L19 CLOSED retained; L20 CLOSED BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout)',
           status: 'VERIFIED',
           type
         });
