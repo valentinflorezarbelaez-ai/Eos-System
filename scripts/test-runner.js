@@ -137,6 +137,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bl-ladder20-seam-pack.test.js',
 
   'eos-bm-agent-identity-attestation-port.test.js',
+
+  'eos-bn-continuous-integrity-sentinel.test.js',
 ]);
 
 /**
