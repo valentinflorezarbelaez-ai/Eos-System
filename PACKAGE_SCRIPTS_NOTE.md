@@ -1,12 +1,12 @@
-# Mission BC — package.json / slim patch fragment
+# Mission BD — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-bc.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-bd.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:governed-patch-apply": "node --test tests/eos-bc-governed-patch-diff-apply-port.test.js",
-"test:mission-bc": "node --test tests/eos-bc-governed-patch-diff-apply-port.test.js"
+"test:multi-target-delivery": "node --test tests/eos-bd-multi-worktree-multi-target-delivery-port.test.js",
+"test:mission-bd": "node --test tests/eos-bd-multi-worktree-multi-target-delivery-port.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-bc.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-bc-governed-patch-diff-apply-port.test.js',
+'eos-bd-multi-worktree-multi-target-delivery-port.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
