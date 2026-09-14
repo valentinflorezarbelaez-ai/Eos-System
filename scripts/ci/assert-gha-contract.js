@@ -203,6 +203,10 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:ast-semantic-port', 'CI Mission BB ast-semantic-port (AY)');
         assertContains(yaml, 'test:self-repair-bridge', 'CI Mission BB self-repair-bridge (AZ)');
         assertContains(yaml, 'test:local-sandbox-port', 'CI Mission BB local-sandbox-port (BA)');
+        assertContains(yaml, 'test:governed-patch-apply', 'CI Mission BG governed-patch-apply (BC)');
+        assertContains(yaml, 'test:multi-target-delivery', 'CI Mission BG multi-target-delivery (BD)');
+        assertContains(yaml, 'test:verification-replay', 'CI Mission BG verification-replay (BE)');
+        assertContains(yaml, 'test:local-rc-packaging', 'CI Mission BG local-rc-packaging (BF)');
         assertContains(yaml, 'test:cross-satellite-composition', 'CI Mission AW cross-satellite-composition (AS)');
         assertContains(yaml, 'test:operator-continuity', 'CI Mission AW operator-continuity (AT)');
         assertContains(yaml, 'test:law-vi-broker', 'CI Mission AW law-vi-broker (AU)');
