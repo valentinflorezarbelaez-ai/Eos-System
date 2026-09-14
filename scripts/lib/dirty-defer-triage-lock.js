@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-307 to live main after #307 Mission BQ MEASURED / Ladder 21 CLOSED (prior tip-305 pin fad37c957432cae51c45c95f6f0fad8ed9e7e496; Mission BQ #307 e1c54ccbee3595bc312c1e97ae335f35605583f9)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-309 to live main after #309 Ladder 22 Maturity Gap Audit (prior tip-307 pin e1c54ccbee3595bc312c1e97ae335f35605583f9 + Tip #308 f1b7ed2ae56909403dc56094fd76f1ef4a17b864; Ladder 22 Audit #309 e74d3fcb56995a63e1202f28175f67ac4f3959d3)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== 'e1c54ccbee3595bc312c1e97ae335f35605583f9') {
+      if (!tip || tip[1] !== 'e74d3fcb56995a63e1202f28175f67ac4f3959d3') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-307 expected main_tip=e1c54ccbee3595bc312c1e97ae335f35605583f9 (post-#307 / Mission BQ MEASURED / Ladder 21 CLOSED_FOR_LOCAL_GOVERNED_USE; tip honesty restored; tip-307 / main@e1c54cc; L17–L21 CLOSED_FOR_LOCAL_GOVERNED_USE retained)',
+            'tip-refresh-post-309 expected main_tip=e74d3fcb56995a63e1202f28175f67ac4f3959d3 (post-#309 / Ladder 22 audit MEASURED / L22 OPEN; tip honesty restored; tip-309 / main@e74d3fc; L17–L21 CLOSED retained; L22 OPEN)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-307 / main@e1c54cc (post-#307 / Mission BQ MEASURED / Ladder 21 CLOSED_FOR_LOCAL_GOVERNED_USE; tip-307 / main@e1c54cc; L17–L21 CLOSED retained)',
+          path: 'freeze main_tip pinned to tip-refresh-post-309 / main@e74d3fc (post-#309 / Ladder 22 audit MEASURED / L22 OPEN; tip-309 / main@e74d3fc; L17–L21 CLOSED retained; L22 OPEN)',
           status: 'VERIFIED',
           type
         });

@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#307 pinned tip: main@e1c54cc / e1c54ccbee3595bc312c1e97ae335f35605583f9 (prior tip-305 pin fad37c957432cae51c45c95f6f0fad8ed9e7e496 + #307 Mission BQ Ladder 21 CI Seam-Pack Consolidation & Closeout (SPEC-0074); tip honesty restored; L17-L20 CLOSED retained; Ladder 21 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BM+BN+BO+BP+BQ MEASURED + seam-pack + closeout; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric)) */
-const EXPECTED_TIP = 'e1c54ccbee3595bc312c1e97ae335f35605583f9';
+/** Tip refresh post-#309 pinned tip: main@e74d3fc / e74d3fcb56995a63e1202f28175f67ac4f3959d3 (prior tip-307 pin e1c54ccbee3595bc312c1e97ae335f35605583f9 + Tip #308 f1b7ed2ae56909403dc56094fd76f1ef4a17b864 + #309 docs(audit): Ladder 22 Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric gap audit (LADDER-22-MATURITY-AUDIT); tip honesty restored; L17-L21 CLOSED retained; Ladder 22 OPEN (Audit MEASURED · BR–BV pending; Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric)) */
+const EXPECTED_TIP = 'e74d3fcb56995a63e1202f28175f67ac4f3959d3';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-307 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-309 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-307 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-309 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -516,7 +516,18 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'BN MEASURED',
     'Sovereign Multi-Agent Provenance',
     'Continuous Sentinel Fabric',
-    'BM+BN+BO+BP+BQ'
+    'BM+BN+BO+BP+BQ',
+    'Ladder 22 Maturity Audit',
+    'Ladder 22 OPEN',
+    'L22 OPEN',
+    'BR–BV',
+    'BR–BV pending',
+    'Audit MEASURED · BR–BV pending',
+    'Sovereign Intent Decomposition',
+    'Dynamic Workflow Orchestration',
+    'Tip refresh post #309',
+    'tip-refresh-post-309',
+    'Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric'
 
   ]) {
     assert.ok(matrix.includes(needle), 'matrix missing row for: ' + needle);
@@ -698,6 +709,24 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.doesNotMatch(matrixHeader, /L21 OPEN/);
   assert.match(freezeHeader, /L20 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BH\+BI\+BJ\+BK\+BL MEASURED/);
   assert.match(matrixHeader, /L20 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BH\+BI\+BJ\+BK\+BL MEASURED/);
+
+  // Ladder 22 OPEN after #309 Maturity Audit MEASURED (BR–BV pending)
+  assert.match(matrix, /\|\s*Ladder 22 Maturity Audit\s*\|/);
+  assert.match(matrix, /\|\s*Ladder 22 OPEN\s*\|/);
+  assert.match(matrix, /\|\s*L22 OPEN\s*\|/);
+  assert.match(matrix, /\|\s*Tip refresh post #309\s*\|/);
+  assert.doesNotMatch(matrix, /\|\s*Ladder 22 CLOSED\s*\|/);
+  assert.doesNotMatch(matrix, /\|\s*L22 CLOSED\s*\|/);
+  assert.match(freeze, /tip-refresh-post-309|Tip refresh post #309|tip refresh post-#309/);
+  assert.match(matrix, /tip-refresh-post-309/);
+  assert.match(freeze, /Ladder 22 Maturity Gap Audit|Ladder 22 Maturity Audit/);
+  assert.match(matrix, /Ladder 22 Maturity Gap Audit|Ladder 22 Maturity Audit/);
+  assert.match(freeze, /Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric/);
+  assert.match(matrix, /Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric/);
+  assert.match(freezeHeader, /L22 OPEN \(Audit MEASURED · BR–BV pending/);
+  assert.match(matrixHeader, /L22 OPEN \(Audit MEASURED · BR–BV pending/);
+  assert.doesNotMatch(freezeHeader, /L22 CLOSED/);
+  assert.doesNotMatch(matrixHeader, /L22 CLOSED/);
 
   assert.doesNotMatch(matrix, /\|\s*Merge to main\s*\|\s*FUTURE\s*\|\s*BLOCKED\s*\|/i);
 });

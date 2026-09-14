@@ -1,0 +1,12 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Restore tip honesty after #309 (Ladder 22 maturity gap audit); pin freeze/matrix/m4 to main@e74d3fc; record Ladder 22 OPEN (Audit MEASURED · BR–BV pending); retain L17–L21 CLOSED.
+routing:
+  team: core-platform
+  scope: tip-refresh-post-309
+spec: LADDER-22-MATURITY-AUDIT
+non_goals:
+  - implementing Mission BR/BS/BT/BU/BV
+  - reopening Ladder 17/18/19/20/21
+  - flipping PRODUCTION_READY
+  - Fundacion writes
