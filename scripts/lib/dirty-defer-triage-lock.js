@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-276 to live main after #276 Mission BD (prior tip-274 pin e07305a09a34df083c368d6426a3e6ad917117a4 (BC MEASURED) + #275 cc3b3bb lineage)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-278 to live main after #278 Mission BE (prior tip-276 pin bbe37d258bd06108aff133f8cca907cf5bd2ea18 (BD MEASURED) + #277 6aeb49c lineage)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== 'bbe37d258bd06108aff133f8cca907cf5bd2ea18') {
+      if (!tip || tip[1] !== 'c753cdcaef62b20b7f4c98b8140237713460d3ee') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-276 expected main_tip=bbe37d258bd06108aff133f8cca907cf5bd2ea18 (post-#276 / Mission BD MEASURED; tip honesty restored; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; L19 OPEN BC MEASURED + BD MEASURED; BE–BG pending)',
+            'tip-refresh-post-278 expected main_tip=c753cdcaef62b20b7f4c98b8140237713460d3ee (post-#278 / Mission BE MEASURED; tip honesty restored; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; L19 OPEN BC MEASURED + BD MEASURED + BE MEASURED; BF–BG pending)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-276 / main@bbe37d2 (post-#276 / Mission BD MEASURED; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; L19 OPEN BC MEASURED + BD MEASURED; BE–BG pending)',
+          path: 'freeze main_tip pinned to tip-refresh-post-278 / main@c753cdc (post-#278 / Mission BE MEASURED; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; L19 OPEN BC MEASURED + BD MEASURED + BE MEASURED; BF–BG pending)',
           status: 'VERIFIED',
           type
         });
