@@ -1,0 +1,27 @@
+﻿schema: spec-driven
+created: 2026-09-14
+goal: Refresh freeze/matrix/m4 tip SSOT post-#295 (Ladder 20 CLOSED)
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-295
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_295_2026-09-14.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-295
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - inventing intermediate tip SHAs beyond known prior full 6e508a175eb726ca396da9ae0a8f540b75bfe310, Tip #294 full dd225d9b9ca8851110ed6b38513e35c0092e02ff, and full tip 6b9ab462eb8d607e4df9eaaf16efa57778d0c66a
+  - starting Ladder 21
+  - claiming Ladder 20 CLOSED_FOR_LOCAL_GOVERNED_USE equals PRODUCTION_READY=YES
+  - leaving Ladder 20 as OPEN or “BL pending”
+  - reopening Ladder 16/L17/L18/L19/L20
+  - claiming BH–BL not MEASURED
+  - claiming L20 audit not landed
+  - putting API keys in repo
