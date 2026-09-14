@@ -1,0 +1,6 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Refresh freeze/matrix/m4 tip SSOT to main@6f4d45e post-#303 (Mission BO Multi-Agent Consensus & Two-Key Handoff Gate MEASURED). Never reopen L17–L20.
+routing:
+  team: core-platform
+  scope: tip-refresh

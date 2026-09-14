@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#301 pinned tip: main@f7fc885 / f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab (prior tip-300/post-#299 pin 5c9ec4db9165070e911b6121caba497d968d6050 (BM MEASURED tip refresh then) + #301 Mission BN Continuous Integrity Sentinel & FDIR Heartbeat Daemon (SPEC-0071); tip honesty restored; L17-L20 CLOSED retained (never reopen); L21 OPEN (BM MEASURED + BN MEASURED · BO–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric)) */
-const EXPECTED_TIP = 'f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab';
+/** Tip refresh post-#303 pinned tip: main@6f4d45e / 6f4d45eb0c92ea51735b6dbf4572f9866269a8b2 (prior tip-301/post-#301 pin f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab + #303 Mission BO Multi-Agent Consensus & Two-Key Handoff Gate (SPEC-0072); tip honesty restored; L17-L20 CLOSED retained; L21 OPEN (BM+BN+BO MEASURED · BP–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric)) */
+const EXPECTED_TIP = '6f4d45eb0c92ea51735b6dbf4572f9866269a8b2';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-301 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-303 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim

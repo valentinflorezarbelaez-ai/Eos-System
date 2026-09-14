@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-301 to live main after #301 Mission BN MEASURED / L21 OPEN (prior tip-300/post-#299 pin 5c9ec4db9165070e911b6121caba497d968d6050 (BM MEASURED tip refresh then); Mission BN #301 f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-303 to live main after #303 Mission BO MEASURED / L21 OPEN (prior tip-301 pin f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab; Mission BO #303 6f4d45eb0c92ea51735b6dbf4572f9866269a8b2)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== 'f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab') {
+      if (!tip || tip[1] !== '6f4d45eb0c92ea51735b6dbf4572f9866269a8b2') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-301 expected main_tip=f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab (post-#301 / Mission BN MEASURED / L21 OPEN BM MEASURED + BN MEASURED · BO–BQ pending; tip honesty restored; tip-301 / main@f7fc885; L16–L19 CLOSED_FOR_LOCAL_GOVERNED_USE retained; L20 CLOSED BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric)',
+            'tip-refresh-post-303 expected main_tip=6f4d45eb0c92ea51735b6dbf4572f9866269a8b2 (post-#303 / Mission BO MEASURED / L21 OPEN BM+BN+BO MEASURED · BP–BQ pending; tip honesty restored; tip-303 / main@6f4d45e; L17–L20 CLOSED_FOR_LOCAL_GOVERNED_USE retained)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-301 / main@f7fc885 (post-#301 / Mission BN MEASURED / L21 OPEN BM MEASURED + BN MEASURED · BO–BQ pending; tip-301 / main@f7fc885; L16–L19 CLOSED retained; L20 CLOSED BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout)',
+          path: 'freeze main_tip pinned to tip-refresh-post-303 / main@6f4d45e (post-#303 / Mission BO MEASURED / L21 OPEN BM+BN+BO MEASURED · BP–BQ pending; tip-303 / main@6f4d45e; L17–L20 CLOSED retained)',
           status: 'VERIFIED',
           type
         });

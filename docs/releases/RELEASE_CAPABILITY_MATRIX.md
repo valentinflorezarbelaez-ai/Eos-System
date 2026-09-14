@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab
+evaluated_tip: 6f4d45eb0c92ea51735b6dbf4572f9866269a8b2
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: feat(sentinel): Continuous Integrity Sentinel & FDIR Heartbeat Daemon (SPEC-0071)
-updated_at: 2026-09-14 America/Bogota (tip refresh post-#301; pin to main@f7fc885 / f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab; prior tip-300/post-#299 pin 5c9ec4db9165070e911b6121caba497d968d6050 (BM MEASURED tip refresh then) + #301 Mission BN Continuous Integrity Sentinel & FDIR Heartbeat Daemon (SPEC-0071); L17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS–AW MEASURED; never reopen); L18 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Sovereign Developer Engine; never reopen); L19 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; Sovereign Delivery & Verification Fabric; never reopen); L20 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric; never reopen); L21 OPEN (BM MEASURED + BN MEASURED · BO–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric); Ladder 19/20/21 Maturity Audit MEASURED; Mission BG MEASURED; Mission BH–BL MEASURED; Mission BM MEASURED; Mission BN MEASURED; Ladder 20 Closeout MEASURED; Tip refresh post #295/#296/#297/#298/#299/#300 historical/superseded; Tip refresh post #301 MEASURED; Ladder 21 Maturity Audit MEASURED; PRODUCTION_READY=NO; Fundacion Delta=0; Law VI; Antigravity-first)
+main_subject: feat(consensus): Multi-Agent Consensus & Two-Key Handoff Gate (SPEC-0072)
+updated_at: 2026-09-14 America/Bogota (tip refresh post-#303; pin to main@6f4d45e / 6f4d45eb0c92ea51735b6dbf4572f9866269a8b2; prior tip-301/post-#301 pin f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab + #303 Mission BO Multi-Agent Consensus & Two-Key Handoff Gate (SPEC-0072); L17–L20 CLOSED (never reopen); L21 OPEN (BM+BN+BO MEASURED · BP–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric); Mission BO MEASURED; PRODUCTION_READY=NO; Fundacion Delta=0; Law VI; Antigravity-first)
 ```
 
 
