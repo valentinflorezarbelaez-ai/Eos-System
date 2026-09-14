@@ -1,12 +1,12 @@
-# Mission BD — package.json / slim patch fragment
+# Mission BE — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-bd.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-be.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:multi-target-delivery": "node --test tests/eos-bd-multi-worktree-multi-target-delivery-port.test.js",
-"test:mission-bd": "node --test tests/eos-bd-multi-worktree-multi-target-delivery-port.test.js"
+"test:verification-replay": "node --test tests/eos-be-verification-replay-golden-receipt-port.test.js",
+"test:mission-be": "node --test tests/eos-be-verification-replay-golden-receipt-port.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-bd.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-bd-multi-worktree-multi-target-delivery-port.test.js',
+'eos-be-verification-replay-golden-receipt-port.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
@@ -25,11 +25,10 @@ Hermetic satellite — excluded from slim so SLIM_COUNT stays ≤145.
 
 ## Envelope copy (bootstrap)
 
-`MISSION_BD_BOOTSTRAP.ps1` `$paths` / `git add` also copies:
+`MISSION_BE_BOOTSTRAP.ps1` `$paths` / `git add` also copies:
 
-- `docs/adrs/ADR-0019-mission-bd-multi-worktree-multi-target-delivery-port.md`
-- `docs/evidence/EOS_MISSION_BD_EVIDENCE_2026-09-13.md`
+- `docs/adrs/ADR-0020-mission-be-verification-replay-golden-receipt-port.md`
+- `docs/evidence/EOS_MISSION_BE_EVIDENCE_2026-09-13.md`
+- OpenSpec change folder (proposal / design / spec / tasks / `.openspec.yaml`)
 
-so future boots land the envelope (spec/tasks/design already in the OpenSpec
-change folder). Docs-only; does not flip PRODUCTION_READY.
-
+so future boots land the envelope. Docs-only; does not flip PRODUCTION_READY.

@@ -119,6 +119,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bc-governed-patch-diff-apply-port.test.js',
 
   'eos-bd-multi-worktree-multi-target-delivery-port.test.js',
+
+  'eos-be-verification-replay-golden-receipt-port.test.js',
 ]);
 
 /**

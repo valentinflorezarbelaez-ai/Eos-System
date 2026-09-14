@@ -240,7 +240,9 @@
     "test:governed-patch-apply": "node --test tests/eos-bc-governed-patch-diff-apply-port.test.js",
     "test:mission-bc": "node --test tests/eos-bc-governed-patch-diff-apply-port.test.js",
     "test:multi-target-delivery": "node --test tests/eos-bd-multi-worktree-multi-target-delivery-port.test.js",
-    "test:mission-bd": "node --test tests/eos-bd-multi-worktree-multi-target-delivery-port.test.js"
+    "test:mission-bd": "node --test tests/eos-bd-multi-worktree-multi-target-delivery-port.test.js",
+    "test:verification-replay": "node --test tests/eos-be-verification-replay-golden-receipt-port.test.js",
+    "test:mission-be": "node --test tests/eos-be-verification-replay-golden-receipt-port.test.js"
   },
   "keywords": [
     "eos",

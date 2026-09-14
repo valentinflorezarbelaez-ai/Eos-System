@@ -1,0 +1,32 @@
+schema: spec-driven
+created: 2026-09-13
+goal: SPEC-0062 / Mission BE — Verification Replay & Golden Receipt Port. Hermetic replay({ candidate, golden, policy, ledgerObserve, autonomyReplayObserve, deliverySeal, applySeal, ports }) with phases VALIDATE → GATE → REPLAY → COMPARE → SEAL. In-process golden map + candidate sealed receipt objects (NO real verify:strict subprocess / NO SIEM / NO network). Enforce digest mismatch/drift DENY, custody-break DENY, Fundacion ALWAYS_DENY, missing/invalid required BC/BD seals when policy requires, malformed candidate/golden DENY, empty request DENY, HITL DENY. Fail-closed (no soft-match / continue-on-drift). Sealed EVD-style replay receipts with sha256 (node:crypto). Optional injectable ajLedger/ledgerObserve + alReplay/autonomyReplayObserve + bcApply/bdDelivery ports (compose/extend AJ ledger + AL replay observe + BC/BD seals — do NOT rewrite those trees). Codes OK / MATCHED / DENY / DIGEST_MISMATCH / DRIFT_DENY / CUSTODY_BREAK / FUNDACION_DENY / HITL_DENY / APPLY_SEAL_DENY / DELIVERY_SEAL_DENY / MALFORMED_CANDIDATE / MALFORMED_GOLDEN / INVALID_REQUEST / EMPTY_REQUEST / POLICY_DENY / LAW_VI_DENY. PRODUCTION_READY=NO. NON-CLAIM ≠ SIEM product / ≠ billing accuracy SaaS / ≠ PRODUCTION_READY verification product; not BF/BG; Fundacion Δ=0; Antigravity-first; L17 CLOSED never reopen; L18 CLOSED never reopen (AX–BB MEASURED); L19 OPEN (BC+BD MEASURED; BE in progress; BF–BG pending); Axis Sovereign Delivery & Verification Fabric; Law VI scan MODULE_DIR only (src/core/delivery — never scan tests/); hermetic in-memory fixtures only (no network, no verify:strict subprocess, no SIEM).
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0062
+phase: 1
+affected_areas:
+  - src/core/delivery/verification-replay-golden-receipt-port.js
+  - src/core/delivery/replay-policy-gate.js
+  - src/core/delivery/replay-receipt.js
+  - src/core/delivery/golden-receipt-boundary.js
+  - tests/eos-be-verification-replay-golden-receipt-port.test.js
+  - scripts/patch-mission-be.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-mission-be-verification-replay-golden-receipt-port
+  - docs/releases/EOS_MISSION_BE_VERIFICATION_REPLAY_GOLDEN_RECEIPT_2026-09-13.md
+  - docs/adrs/ADR-0020-mission-be-verification-replay-golden-receipt-port.md
+  - docs/evidence/EOS_MISSION_BE_EVIDENCE_2026-09-13.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting AJ/AL/BC/BD source into this payload
+  - BF/BG missions
+  - CloudAgent path
+  - live verify:strict subprocess / CI re-run as product
+  - SIEM product / billing accuracy SaaS claim
+  - PRODUCTION_READY verification product claim
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
+  - soft-match / continue-on-drift
