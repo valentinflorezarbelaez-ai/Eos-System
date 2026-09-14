@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-299 to live main after #299 Mission BM MEASURED / L21 OPEN (prior tip-298/post-#297 pin 1d8ff62bcc262edfc6a1b3b23fd6c19162821117 (L21 audit MEASURED tip refresh then); Mission BM #299 bb1fb656ba6ab4dd94042841e0a31bec0e57b3a1)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-301 to live main after #301 Mission BN MEASURED / L21 OPEN (prior tip-300/post-#299 pin 5c9ec4db9165070e911b6121caba497d968d6050 (BM MEASURED tip refresh then); Mission BN #301 f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== 'bb1fb656ba6ab4dd94042841e0a31bec0e57b3a1') {
+      if (!tip || tip[1] !== 'f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-299 expected main_tip=bb1fb656ba6ab4dd94042841e0a31bec0e57b3a1 (post-#299 / Mission BM MEASURED / L21 OPEN BM MEASURED · BN–BQ pending; tip honesty restored; tip-299 / main@bb1fb65; L16–L19 CLOSED_FOR_LOCAL_GOVERNED_USE retained; L20 CLOSED BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric)',
+            'tip-refresh-post-301 expected main_tip=f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab (post-#301 / Mission BN MEASURED / L21 OPEN BM MEASURED + BN MEASURED · BO–BQ pending; tip honesty restored; tip-301 / main@f7fc885; L16–L19 CLOSED_FOR_LOCAL_GOVERNED_USE retained; L20 CLOSED BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-299 / main@bb1fb65 (post-#299 / Mission BM MEASURED / L21 OPEN BM MEASURED · BN–BQ pending; tip-299 / main@bb1fb65; L16–L19 CLOSED retained; L20 CLOSED BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout)',
+          path: 'freeze main_tip pinned to tip-refresh-post-301 / main@f7fc885 (post-#301 / Mission BN MEASURED / L21 OPEN BM MEASURED + BN MEASURED · BO–BQ pending; tip-301 / main@f7fc885; L16–L19 CLOSED retained; L20 CLOSED BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout)',
           status: 'VERIFIED',
           type
         });
