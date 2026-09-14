@@ -1,0 +1,24 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Register EOS Maturity Ladder 20 Gap Audit (docs-only) after Ladder 19 closeout (Mission BG; BC–BG MEASURED + seam-pack); propose ordered satellites BH/BI/BJ/BK/BL for Sovereign Mission Continuity & Operator Fabric — no Mission BH implementation in this change. Never reopen L17, L18, or L19.
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-20-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_20_AUDIT_2026-09-14.md
+  - docs/adrs/ADR-0023-ladder-20-sovereign-mission-continuity-operator-fabric.md
+  - openspec/changes/eos-ladder-20-maturity-audit
+non_goals:
+  - implementing Mission BH/BI/BJ/BK/BL
+  - re-implementing Mission BC/BD/BE/BF/BG (L19 closed; never reopen L19)
+  - re-implementing Mission AX/AY/AZ/BA/BB (L18 closed; never reopen L18)
+  - re-implementing Mission AS/AT/AU/AV/AW (L17 closed; never reopen L17)
+  - re-implementing Mission AN/AO/AP/AQ/AR (L16 closed)
+  - re-implementing Mission AI/AJ/AK/AL/AM (L15 closed)
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
+  - inventing tip SHA other than full 1b27af956b377595e42a83ef53fb7bba6bb6a4e6
