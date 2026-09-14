@@ -266,7 +266,9 @@
     "test:mission-bn": "node --test tests/eos-bn-continuous-integrity-sentinel.test.js",
     "test:continuous-integrity-sentinel": "node --test tests/eos-bn-continuous-integrity-sentinel.test.js",
     "test:mission-bo": "node --test tests/eos-bo-multi-agent-consensus-gate.test.js",
-    "test:multi-agent-consensus-gate": "node --test tests/eos-bo-multi-agent-consensus-gate.test.js"
+    "test:multi-agent-consensus-gate": "node --test tests/eos-bo-multi-agent-consensus-gate.test.js",
+    "test:mission-bp": "node --test tests/eos-bp-sovereign-telemetry-forensic-aggregator.test.js",
+    "test:sovereign-telemetry": "node --test tests/eos-bp-sovereign-telemetry-forensic-aggregator.test.js"
   },
   "keywords": [
     "eos",
