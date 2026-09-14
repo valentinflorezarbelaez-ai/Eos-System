@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-303 to live main after #303 Mission BO MEASURED / L21 OPEN (prior tip-301 pin f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab; Mission BO #303 6f4d45eb0c92ea51735b6dbf4572f9866269a8b2)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-305 to live main after #305 Mission BP MEASURED / L21 OPEN (prior tip-303 pin 6f4d45eb0c92ea51735b6dbf4572f9866269a8b2; Mission BP #305 fad37c957432cae51c45c95f6f0fad8ed9e7e496)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '6f4d45eb0c92ea51735b6dbf4572f9866269a8b2') {
+      if (!tip || tip[1] !== 'fad37c957432cae51c45c95f6f0fad8ed9e7e496') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-303 expected main_tip=6f4d45eb0c92ea51735b6dbf4572f9866269a8b2 (post-#303 / Mission BO MEASURED / L21 OPEN BM+BN+BO MEASURED · BP–BQ pending; tip honesty restored; tip-303 / main@6f4d45e; L17–L20 CLOSED_FOR_LOCAL_GOVERNED_USE retained)',
+            'tip-refresh-post-305 expected main_tip=fad37c957432cae51c45c95f6f0fad8ed9e7e496 (post-#305 / Mission BP MEASURED / L21 OPEN BM+BN+BO+BP MEASURED · BQ pending; tip honesty restored; tip-305 / main@fad37c9; L17–L20 CLOSED_FOR_LOCAL_GOVERNED_USE retained)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-303 / main@6f4d45e (post-#303 / Mission BO MEASURED / L21 OPEN BM+BN+BO MEASURED · BP–BQ pending; tip-303 / main@6f4d45e; L17–L20 CLOSED retained)',
+          path: 'freeze main_tip pinned to tip-refresh-post-305 / main@fad37c9 (post-#305 / Mission BP MEASURED / L21 OPEN BM+BN+BO+BP MEASURED · BQ pending; tip-305 / main@fad37c9; L17–L20 CLOSED retained)',
           status: 'VERIFIED',
           type
         });
