@@ -207,6 +207,10 @@ export function assertGithubActionsContract(rootDir) {
         assertContains(yaml, 'test:multi-target-delivery', 'CI Mission BG multi-target-delivery (BD)');
         assertContains(yaml, 'test:verification-replay', 'CI Mission BG verification-replay (BE)');
         assertContains(yaml, 'test:local-rc-packaging', 'CI Mission BG local-rc-packaging (BF)');
+        assertContains(yaml, 'test:mission-bh', 'CI Mission BL mission-bh (BH)');
+        assertContains(yaml, 'test:mission-bi', 'CI Mission BL mission-bi (BI)');
+        assertContains(yaml, 'test:mission-bj', 'CI Mission BL mission-bj (BJ)');
+        assertContains(yaml, 'test:mission-bk', 'CI Mission BL mission-bk (BK)');
         assertContains(yaml, 'test:cross-satellite-composition', 'CI Mission AW cross-satellite-composition (AS)');
         assertContains(yaml, 'test:operator-continuity', 'CI Mission AW operator-continuity (AT)');
         assertContains(yaml, 'test:law-vi-broker', 'CI Mission AW law-vi-broker (AU)');
