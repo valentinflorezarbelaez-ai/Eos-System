@@ -254,7 +254,9 @@
     "test:mission-bi": "node --test tests/eos-bi-cross-session-continuity-replay-fabric.test.js",
     "test:cross-session-continuity": "node --test tests/eos-bi-cross-session-continuity-replay-fabric.test.js",
     "test:mission-bj": "node --test tests/eos-bj-operator-dashboard-hud-fabric.test.js",
-    "test:operator-dashboard-hud": "node --test tests/eos-bj-operator-dashboard-hud-fabric.test.js"
+    "test:operator-dashboard-hud": "node --test tests/eos-bj-operator-dashboard-hud-fabric.test.js",
+    "test:mission-bk": "node --test tests/eos-bk-governed-external-write-orchestrator.test.js",
+    "test:governed-external-write": "node --test tests/eos-bk-governed-external-write-orchestrator.test.js"
   },
   "keywords": [
     "eos",

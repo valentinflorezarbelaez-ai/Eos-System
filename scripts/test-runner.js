@@ -131,6 +131,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bi-cross-session-continuity-replay-fabric.test.js',
 
   'eos-bj-operator-dashboard-hud-fabric.test.js',
+
+  'eos-bk-governed-external-write-orchestrator.test.js',
 ]);
 
 /**
