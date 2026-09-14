@@ -139,6 +139,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bm-agent-identity-attestation-port.test.js',
 
   'eos-bn-continuous-integrity-sentinel.test.js',
+
+  'eos-bo-multi-agent-consensus-gate.test.js',
 ]);
 
 /**
