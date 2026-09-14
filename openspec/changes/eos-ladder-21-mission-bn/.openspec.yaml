@@ -1,0 +1,35 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Implement Continuous Integrity Sentinel & FDIR Heartbeat Daemon (SPEC-0071) for Ladder 21 — hermetic deterministic heartbeat (startHeartbeat / stopHeartbeat / pulseCheck / isolateDrift), sealed BN-RCPT-* receipts (stableStringify + sha256 via node:crypto over seven canonical fields), fail-closed integrity policy gate (DRIFT_DETECTED / DEGRADED / quarantine / FUNDACION_ALWAYS_DENY), optional injectable ports to freezeDriftObserver / contractDriftMonitor / fdirSentinel without rewriting siblings. Axis Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN on BN-owned sentinel-* / continuous-* under NEW src/core/sentinel/ (do NOT rewrite freeze-drift/ fdir/ governance/). L17–L20 CLOSED never reopen. L21 OPEN (BM MEASURED; BN in progress; BO–BQ pending). NON-CLAIM ≠ Datadog/Prometheus/K8s daemonset / ≠ heavy APM / ≠ PRODUCTION_READY=YES monitoring product.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0071
+phase: 1
+affected_areas:
+  - src/core/sentinel/sentinel-heartbeat-receipt.js
+  - src/core/sentinel/sentinel-integrity-policy-gate.js
+  - src/core/sentinel/continuous-integrity-sentinel-daemon.js
+  - tests/eos-bn-continuous-integrity-sentinel.test.js
+  - scripts/patch-mission-bn.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-21-mission-bn
+  - docs/releases/EOS_MISSION_BN_CONTINUOUS_INTEGRITY_SENTINEL_2026-09-14.md
+  - docs/adrs/ADR-0031-mission-bn-continuous-integrity-sentinel.md
+  - docs/evidence/EOS_MISSION_BN_CONTINUOUS_INTEGRITY_SENTINEL_EVD_2026-09-14.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting src/core/freeze-drift
+  - rewriting src/core/fdir
+  - rewriting src/core/governance/contract-drift-monitor.js
+  - Datadog / Prometheus / K8s daemonset product
+  - heavy APM product
+  - BO / BP / BQ missions
+  - CloudAgent path
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
+  - exclusive ownership of sibling dirs under src/core/
+  - soft-allow on drift / degraded
+  - reopening L17 / L18 / L19 / L20
+  - hanging timers after stopHeartbeat

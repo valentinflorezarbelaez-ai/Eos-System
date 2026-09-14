@@ -262,7 +262,9 @@
     "test:l20": "node --test tests/eos-bl-ladder20-seam-pack.test.js",
     "test:ladder20-pack": "npm run test:mission-bh && npm run test:mission-bi && npm run test:mission-bj && npm run test:mission-bk && npm run test:mission-bl",
     "test:mission-bm": "node --test tests/eos-bm-agent-identity-attestation-port.test.js",
-    "test:agent-identity-attestation": "node --test tests/eos-bm-agent-identity-attestation-port.test.js"
+    "test:agent-identity-attestation": "node --test tests/eos-bm-agent-identity-attestation-port.test.js",
+    "test:mission-bn": "node --test tests/eos-bn-continuous-integrity-sentinel.test.js",
+    "test:continuous-integrity-sentinel": "node --test tests/eos-bn-continuous-integrity-sentinel.test.js"
   },
   "keywords": [
     "eos",
