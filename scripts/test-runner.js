@@ -121,6 +121,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bd-multi-worktree-multi-target-delivery-port.test.js',
 
   'eos-be-verification-replay-golden-receipt-port.test.js',
+
+  'eos-bf-local-rc-packaging-artifact-notary-port.test.js',
 ]);
 
 /**
