@@ -1,0 +1,32 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Implement Governed External Write Orchestrator (SPEC-0068) for Ladder 20 — sealed BK-RCPT-* receipts (stableStringify + sha256 via node:crypto over eight canonical fields), fail-closed policy gate (FUNDACION_ALWAYS_DENY / allowlist / Level 2 auth / path containment / malformed), hermetic validatePreconditions / executeGovernedWrite / rollbackWrite facade with injectable T-gate / write-barrier / BC / BD ports. Six preconditions (Registry, Intake, Spec, Audit, Owner Approval, Level 2 Auth). Axis Sovereign Mission Continuity & Operator Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN on BK-owned governed-external-write-* under src/core/orchestration (siblings allowed). L17/L18/L19 CLOSED never reopen. L20 OPEN (BH+BI+BJ MEASURED; BK in progress; BL pending closeout). NON-CLAIM ≠ unsupervised fleet deploy / ≠ K8s/ArgoCD CD / ≠ PRODUCTION_READY=YES.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0068
+phase: 1
+affected_areas:
+  - src/core/orchestration/governed-external-write-orchestrator.js
+  - src/core/orchestration/governed-external-write-policy-gate.js
+  - src/core/orchestration/governed-external-write-receipt.js
+  - tests/eos-bk-governed-external-write-orchestrator.test.js
+  - scripts/patch-mission-bk.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-20-mission-bk
+  - docs/releases/EOS_MISSION_BK_GOVERNED_EXTERNAL_WRITE_2026-09-14.md
+  - docs/adrs/ADR-0027-mission-bk-governed-external-write-orchestrator.md
+  - docs/evidence/EOS_MISSION_BK_GOVERNED_EXTERNAL_WRITE_EVD_2026-09-14.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting write-barrier / delivery BC/BD / T-gate siblings
+  - BL mission
+  - CloudAgent path
+  - unsupervised fleet deploy product claim
+  - K8s / ArgoCD CD daemon
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
+  - exclusive ownership of src/core/orchestration/ (siblings may coexist)
+  - soft-allow missing preconditions or Fundacion targets
+  - reopening L17 / L18 / L19

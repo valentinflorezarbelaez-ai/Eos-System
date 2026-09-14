@@ -1,12 +1,12 @@
-# Mission BJ — package.json / slim patch fragment
+# Mission BK — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-bj.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-bk.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:mission-bj": "node --test tests/eos-bj-operator-dashboard-hud-fabric.test.js",
-"test:operator-dashboard-hud": "node --test tests/eos-bj-operator-dashboard-hud-fabric.test.js"
+"test:mission-bk": "node --test tests/eos-bk-governed-external-write-orchestrator.test.js",
+"test:governed-external-write": "node --test tests/eos-bk-governed-external-write-orchestrator.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,7 +14,7 @@ Applied idempotently by `scripts/patch-mission-bj.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-bj-operator-dashboard-hud-fabric.test.js',
+'eos-bk-governed-external-write-orchestrator.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
@@ -25,10 +25,10 @@ Hermetic satellite — excluded from slim so SLIM_COUNT stays ≤145.
 
 ## Envelope copy (bootstrap)
 
-`MISSION_BJ_BOOTSTRAP.ps1` `$paths` / `git add` also copies:
+`MISSION_BK_BOOTSTRAP.ps1` `$paths` / `git add` also copies:
 
-- `docs/adrs/ADR-0026-mission-bj-operator-dashboard-hud-fabric.md`
-- `docs/evidence/EOS_MISSION_BJ_OPERATOR_DASHBOARD_HUD_EVD_2026-09-14.md`
+- `docs/adrs/ADR-0027-mission-bk-governed-external-write-orchestrator.md`
+- `docs/evidence/EOS_MISSION_BK_GOVERNED_EXTERNAL_WRITE_EVD_2026-09-14.md`
 - OpenSpec change folder (proposal / design / spec / tasks / `.openspec.yaml`)
 
 so future boots land the envelope. Docs-only; does not flip PRODUCTION_READY.
