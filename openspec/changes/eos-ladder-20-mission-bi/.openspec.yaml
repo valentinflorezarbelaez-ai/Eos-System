@@ -1,0 +1,31 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Implement Cross-Session Continuity & Replay Fabric (SPEC-0066) for Ladder 20 — sealed BI-RCPT-* receipts (stableStringify + sha256 via node:crypto), fail-closed policy gate, hermetic captureCheckpoint / handoffSession / replaySessionHistory facade with injectable AT/AI/W/AL ports. Axis Sovereign Mission Continuity & Operator Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN on src/core/continuity only. L17/L18/L19 CLOSED never reopen. L20 OPEN (BH MEASURED; BI in progress; BJ–BL pending). NON-CLAIM ≠ HA multi-region SaaS / ≠ Raft/distributed clustering / ≠ PRODUCTION_READY=YES.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0066
+phase: 1
+affected_areas:
+  - src/core/continuity/cross-session-continuity-replay-fabric.js
+  - src/core/continuity/cross-session-continuity-policy-gate.js
+  - src/core/continuity/cross-session-continuity-receipt.js
+  - tests/eos-bi-cross-session-continuity-replay-fabric.test.js
+  - scripts/patch-mission-bi.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-20-mission-bi
+  - docs/releases/EOS_MISSION_BI_CROSS_SESSION_CONTINUITY_2026-09-14.md
+  - docs/adrs/ADR-0025-mission-bi-cross-session-continuity-replay-fabric.md
+  - docs/evidence/EOS_MISSION_BI_CROSS_SESSION_CONTINUITY_EVD_2026-09-14.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting mission/* / delivery/* / AT/AI/W/AL sources
+  - BJ/BK/BL missions
+  - CloudAgent path
+  - HA multi-region SaaS product claim
+  - Raft / distributed clustering claim
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
+  - soft-allow broken continuity / divergent checkpoints
+  - reopening L17 / L18 / L19

@@ -127,6 +127,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bg-ladder19-seam-pack.test.js',
 
   'eos-bh-mission-lifecycle-state-machine.test.js',
+
+  'eos-bi-cross-session-continuity-replay-fabric.test.js',
 ]);
 
 /**
