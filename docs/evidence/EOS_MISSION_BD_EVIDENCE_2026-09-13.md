@@ -10,7 +10,7 @@ envelope write time. America/Bogota date 2026-09-13.
 | Base tip (origin/main, #275, BC MEASURED) | `cc3b3bb475f3648dfb2c05520ab7229feb70f23c` |
 | Branch | `grok/mission-bd-multi-worktree-multi-target-delivery-port` |
 | Code commit | `e2cc34b4474ae72b435aa583d99e98ea0b5a1e6c` |
-| Envelope follow-up commit | (pending host push) — code commit `e2cc34b`; envelope commit TBD |
+| Envelope follow-up commit | (76a04d13b946c839b7483a6923da6106246b1579) — code commit `e2cc34b`; envelope commit TBD |
 | PR | #276 (open; merge **not** done) |
 | PRODUCTION_READY | `NO` |
 | Fundacion Δ | `0` |
