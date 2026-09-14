@@ -1,0 +1,1 @@
+Docs-only tip honesty to `707f234599eb922d8b2bc0b0aba34cdc988a9882`. Progression 5e0f94d → 707f234. L21 OPEN. Commit: docs(tip): refresh freeze/matrix/m4 tip SSOT to main@707f234 post-#297 / Ladder 21 audit MEASURED

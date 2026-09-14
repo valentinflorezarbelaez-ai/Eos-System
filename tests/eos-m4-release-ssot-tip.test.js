@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#295 pinned tip: main@6b9ab46 / 6b9ab462eb8d607e4df9eaaf16efa57778d0c66a (prior tip-293 pin 6e508a175eb726ca396da9ae0a8f540b75bfe310 (BK MEASURED) + Tip #294 dd225d9b9ca8851110ed6b38513e35c0092e02ff (tip post-#293 · BK MEASURED) + #295 Mission BL Ladder 20 CI Seam-Pack Consolidation & Closeout; tip honesty restored; Formal L20 CLOSED seal; L16–L19 CLOSED_FOR_LOCAL_GOVERNED_USE retained; L20 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric)) */
-const EXPECTED_TIP = '6b9ab462eb8d607e4df9eaaf16efa57778d0c66a';
+/** Tip refresh post-#297 pinned tip: main@707f234 / 707f234599eb922d8b2bc0b0aba34cdc988a9882 (prior tip-296/post-#295 pin 5e0f94d5ccb9e04384cc8d5970294760ba289ad5 (L20 CLOSED seal tip refresh) + #297 Ladder 21 Maturity Gap Audit; tip honesty restored; L17-L20 CLOSED retained (never reopen); L21 OPEN (Audit MEASURED · BM–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric)) */
+const EXPECTED_TIP = '707f234599eb922d8b2bc0b0aba34cdc988a9882';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-295 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-297 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-295 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-297 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -467,7 +467,17 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'Governed External Write Orchestrator',
     'Sovereign Mission Continuity & Operator Fabric',
     'never reopen L16',
-    'NEVER reopen L20'
+    'NEVER reopen L20',
+    'Tip refresh post #297',
+    'tip-refresh-post-297',
+    'Tip refresh post #296',
+    'Ladder 21 Maturity Audit',
+    'Ladder 21 OPEN',
+    'L21 OPEN',
+    'BM–BQ',
+    'Sovereign Multi-Agent Provenance',
+    'Continuous Sentinel Fabric',
+    'Audit MEASURED · BM–BQ pending'
 
   ]) {
     assert.ok(matrix.includes(needle), 'matrix missing row for: ' + needle);
@@ -599,6 +609,24 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.doesNotMatch(matrixHeader, /BJ–BL pending/);
   assert.doesNotMatch(freezeHeader, /BK–BL pending/);
   assert.doesNotMatch(matrixHeader, /BK–BL pending/);
+
+  // Formal L21 OPEN after #297 Ladder 21 audit
+  assert.match(matrix, /\|\s*Ladder 21 Maturity Audit\s*\|/);
+  assert.match(matrix, /\|\s*Ladder 21 OPEN\s*\|/);
+  assert.match(matrix, /\|\s*L21 OPEN\s*\|/);
+  assert.match(matrix, /\|\s*Tip refresh post #297\s*\|/);
+  assert.match(freeze, /L21 OPEN \(Audit MEASURED · BM–BQ pending/);
+  assert.match(matrix, /L21 OPEN \(Audit MEASURED · BM–BQ pending/);
+  assert.match(freeze, /tip-refresh-post-297|Tip refresh post #297|tip refresh post-#297/);
+  assert.match(matrix, /tip-refresh-post-297/);
+  assert.match(freeze, /Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric/);
+  assert.match(matrix, /Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric/);
+  assert.match(freezeHeader, /L21 OPEN \(Audit MEASURED · BM–BQ pending/);
+  assert.match(matrixHeader, /L21 OPEN \(Audit MEASURED · BM–BQ pending/);
+  assert.doesNotMatch(freezeHeader, /L21 CLOSED/);
+  assert.doesNotMatch(matrixHeader, /L21 CLOSED/);
+  assert.match(freezeHeader, /L20 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BH\+BI\+BJ\+BK\+BL MEASURED/);
+  assert.match(matrixHeader, /L20 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BH\+BI\+BJ\+BK\+BL MEASURED/);
 
   assert.doesNotMatch(matrix, /\|\s*Merge to main\s*\|\s*FUTURE\s*\|\s*BLOCKED\s*\|/i);
 });
