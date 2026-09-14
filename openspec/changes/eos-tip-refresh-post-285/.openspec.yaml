@@ -1,0 +1,18 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Refresh freeze/matrix/m4 tip SSOT to main@bf7cd04 post-#285 (Ladder 20 Maturity Gap Audit MEASURED; Sovereign Mission Continuity & Operator Fabric; BH–BL proposed). Never reopen L17, L18, or L19.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-285
+phase: 0
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_285_2026-09-14.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+non_goals:
+  - implementing Mission BH/BI/BJ/BK/BL
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - reopening L17 or L18 or L19

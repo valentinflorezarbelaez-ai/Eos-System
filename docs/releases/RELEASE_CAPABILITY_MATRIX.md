@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 31ecb8fd5fe6e39cc9f071a203a900e86ec35901
+evaluated_tip: bf7cd040443378385261ce82b9c8c1102cb03a30
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: feat(delivery): Ladder 19 CI Seam-Pack Consolidation & Closeout (SPEC-0064)
-updated_at: 2026-09-14 America/Bogota (tip refresh post-#282; pin to main@31ecb8f / 31ecb8fd5fe6e39cc9f071a203a900e86ec35901; prior tip-280 pin 37a36e9f0ed9dab61b3d997edd777e49d2eb7a16 (BF MEASURED) + #281 tip post-#280 (cc61266) + #282 Mission BG Ladder 19 CI Seam-Pack Consolidation & Closeout; Ladder 11–17 CLOSED; Ladder 18 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Sovereign Developer Engine; never reopen); L19 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; Sovereign Delivery & Verification Fabric; never reopen); L20 PENDING (do not start); Ladder 19 Maturity Audit MEASURED; Mission BC MEASURED; Mission BD MEASURED; Mission BE MEASURED; Mission BF MEASURED; Mission BG MEASURED; Ladder 19 Closeout MEASURED; Tip refresh post #280/#281 historical/superseded; Tip refresh post #282 MEASURED; Mission AX–BB MEASURED; Mission AS–AW MEASURED; Ladder 17 Closeout MEASURED; Ladder 18 Closeout MEASURED; PRODUCTION_READY=NO; Fundacion Delta=0; Law VI; Antigravity-first)
+main_subject: docs(audit): Ladder 20 Sovereign Mission Continuity & Operator Fabric gap audit (LADDER-20-MATURITY-AUDIT)
+updated_at: 2026-09-14 America/Bogota (tip refresh post-#285; pin to main@bf7cd04 / bf7cd040443378385261ce82b9c8c1102cb03a30; prior tip-282 pin 31ecb8fd5fe6e39cc9f071a203a900e86ec35901 (L19 CLOSED / BG MEASURED) + #285 Ladder 20 Maturity Gap Audit; Ladder 11–17 CLOSED; Ladder 18 CLOSED (never reopen); L19 CLOSED (never reopen); L20 audit MEASURED (Sovereign Mission Continuity & Operator Fabric; BH–BL proposed; OPEN); Ladder 20 Maturity Audit MEASURED; PRODUCTION_READY=NO; Fundacion Delta=0; Law VI; Antigravity-first)
 ```
 
 
