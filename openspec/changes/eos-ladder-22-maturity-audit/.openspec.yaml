@@ -1,0 +1,26 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Register EOS Maturity Ladder 22 Gap Audit (docs-only) after Ladder 21 closeout (Mission BQ; BM–BQ MEASURED + seam-pack); propose ordered satellites BR/BS/BT/BU/BV for Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric — no Mission BR implementation in this change. Never reopen L17, L18, L19, L20, or L21.
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-22-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_22_AUDIT_2026-09-14.md
+  - docs/adrs/ADR-0035-ladder-22-sovereign-intent-orchestration-fabric.md
+  - docs/evidence/EOS_LADDER_22_AUDIT_EVIDENCE_2026-09-14.md
+  - openspec/changes/eos-ladder-22-maturity-audit
+non_goals:
+  - implementing Mission BR/BS/BT/BU/BV
+  - re-implementing Mission BM/BN/BO/BP/BQ (L21 closed; never reopen L21)
+  - re-implementing Mission BH/BI/BJ/BK/BL (L20 closed; never reopen L20)
+  - re-implementing Mission BC/BD/BE/BF/BG (L19 closed; never reopen L19)
+  - re-implementing Mission AX/AY/AZ/BA/BB (L18 closed; never reopen L18)
+  - re-implementing Mission AS/AT/AU/AV/AW (L17 closed; never reopen L17)
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
+  - rewriting freeze/matrix tip pins in this audit PR
+  - inventing tip SHA other than full f1b7ed2ae56909403dc56094fd76f1ef4a17b864 (HEAD/audit base) or inventing freeze pin other than observed e1c54ccbee3595bc312c1e97ae335f35605583f9 (L21 CLOSED seal tip pin)
