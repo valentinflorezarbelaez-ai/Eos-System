@@ -66,13 +66,21 @@ export class FundacionAllocation {
    * @returns {number} Available balance
    */
   getProjectBalance(projectId) {
-    const totalDonated = this.core.ledger
-      .filter(item => (item.destination === projectId || item.data?.destination === projectId))
-      .reduce((sum, item) => sum + (item.amount || item.data?.amount || 0), 0);
+    // ⚡ Bolt: Single-pass loops to replace chained .filter().reduce()
+    // Impact: Avoids intermediate array allocations and reduces time complexity.
+    let totalDonated = 0;
+    for (const item of this.core.ledger) {
+      if (item.destination === projectId || item.data?.destination === projectId) {
+        totalDonated += (item.amount || item.data?.amount || 0);
+      }
+    }
 
-    const totalAllocated = this.allocations
-      .filter(item => item.projectId === projectId)
-      .reduce((sum, item) => sum + item.amount, 0);
+    let totalAllocated = 0;
+    for (const item of this.allocations) {
+      if (item.projectId === projectId) {
+        totalAllocated += item.amount;
+      }
+    }
 
     return totalDonated - totalAllocated;
   }
@@ -82,32 +90,38 @@ export class FundacionAllocation {
    * @returns {object} Public audit report
    */
   generatePublicAuditReport() {
+    // ⚡ Bolt: Use a single-pass hash map approach instead of looping over projects
+    // and performing .filter().reduce() inside the loop.
+    // Impact: Reduces time complexity from O(N*M) to O(N+M)
     const projectSummary = {};
 
-    // Collect all project IDs from donations and allocations
-    const projectIds = new Set();
-    this.core.ledger.forEach(item => {
+    // First pass: aggregate all donations from the ledger
+    for (const item of this.core.ledger) {
       const dest = item.destination || item.data?.destination;
-      if (dest) projectIds.add(dest);
-    });
-    this.allocations.forEach(item => {
-      if (item.projectId) projectIds.add(item.projectId);
-    });
+      if (dest) {
+        if (!projectSummary[dest]) {
+          projectSummary[dest] = { totalDonated: 0, totalAllocated: 0, netBalance: 0 };
+        }
+        projectSummary[dest].totalDonated += (item.amount || item.data?.amount || 0);
+      }
+    }
 
-    for (const pid of projectIds) {
-      const totalDonated = this.core.ledger
-        .filter(item => (item.destination === pid || item.data?.destination === pid))
-        .reduce((sum, item) => sum + (item.amount || item.data?.amount || 0), 0);
+    // Second pass: aggregate all allocations
+    for (const item of this.allocations) {
+      const pid = item.projectId;
+      if (pid) {
+        if (!projectSummary[pid]) {
+          projectSummary[pid] = { totalDonated: 0, totalAllocated: 0, netBalance: 0 };
+        }
+        projectSummary[pid].totalAllocated += item.amount;
+      }
+    }
 
-      const totalAllocated = this.allocations
-        .filter(item => item.projectId === pid)
-        .reduce((sum, item) => sum + item.amount, 0);
-
-      projectSummary[pid] = {
-        totalDonated,
-        totalAllocated,
-        netBalance: totalDonated - totalAllocated
-      };
+    // Third pass: compute net balances
+    for (const pid in projectSummary) {
+      if (Object.prototype.hasOwnProperty.call(projectSummary, pid)) {
+        projectSummary[pid].netBalance = projectSummary[pid].totalDonated - projectSummary[pid].totalAllocated;
+      }
     }
 
     return {
