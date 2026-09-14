@@ -1,0 +1,55 @@
+# Tip refresh post-#289 — 2026-09-14
+
+## Purpose
+
+Restore tip honesty after #289. Prior tip pin tip-287 / BH MEASURED `03154ec38aee5587593997ddb558646141406c9c` (StartsWith `03154ec`) plus Tip #288 tip post-#287 `82cbb86d3902f8637ace2f830e383cbb36a94f00` (StartsWith `82cbb86`) plus Mission BI Cross-Session Continuity & Replay Fabric (#289 / SPEC-0066) landed on main. Pin freeze/matrix/m4 to OBSERVED `origin/main` @ `5445fbbe97934c66c0951e40683319ea4583e86e` (StartsWith `5445fbb`; PR #289 = Mission BI Cross-Session Continuity & Replay Fabric MEASURED). Full tip SHA known on box — hardcode Expected / EXPECTED_TIP / main_tip / evaluated_tip to the full 40-hex (tip-247 style). Bootstrap WARN-continues if `origin/main` differs, preferring StartsWith `5445fbb`.
+
+**L16 CLOSED seal retained:** Ladder 16 remains `CLOSED_FOR_LOCAL_GOVERNED_USE` (AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout). NEVER reopen L16.
+
+**L17 CLOSED seal retained:** Ladder 17 remains `CLOSED_FOR_LOCAL_GOVERNED_USE` (AS+AT+AU+AV+AW MEASURED + seam-pack + closeout). NEVER reopen L17. AS–AW MEASURED.
+
+**L18 CLOSED seal retained:** Ladder 18 remains `CLOSED_FOR_LOCAL_GOVERNED_USE` (AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout). NEVER reopen L18. NEVER leave L18 as OPEN or “BB pending”. Axis **Sovereign Developer Engine**. Never say AX–BB not implemented. Never say Ladder 18 audit not landed. CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES (NON-CLAIM).
+
+**L19 CLOSED seal retained:** Ladder 19 remains `CLOSED_FOR_LOCAL_GOVERNED_USE` (BC+BD+BE+BF+BG MEASURED + seam-pack + closeout). NEVER leave L19 as OPEN or “BG pending”. NEVER reopen L19. Axis **Sovereign Delivery & Verification Fabric**. Never say BC–BG not MEASURED. Never say Ladder 19 audit not landed. CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES (NON-CLAIM).
+
+**L20 OPEN (BH MEASURED + BI MEASURED):** Ladder 20 OPEN (`BH MEASURED + BI MEASURED via #289; BJ–BL pending`); axis **Sovereign Mission Continuity & Operator Fabric**. Never say BH not MEASURED. Never say BI not MEASURED. Never say BJ/BK/BL MEASURED. Never say L20 CLOSED. Never reopen L16/L17/L18/L19. No BJ–BL impl in this tip refresh. Matrix: L20 BH MEASURED + BI MEASURED; BJ–BL pending (not MEASURED).
+
+## Observed tip
+
+| Field | Value |
+| --- | --- |
+| SHA | `5445fbbe97934c66c0951e40683319ea4583e86e` |
+| Short | `5445fbb` |
+| Subject | feat(continuity): Cross-Session Continuity & Replay Fabric (SPEC-0066) |
+| Prior pin | `03154ec38aee5587593997ddb558646141406c9c` (tip refresh post-#287 / BH MEASURED); Tip #288 `82cbb86d3902f8637ace2f830e383cbb36a94f00` (tip post-#287 · BH MEASURED); Mission BI #289 @ `5445fbb` |
+| Lineage note | Prior tip-287 pin `03154ec38aee5587593997ddb558646141406c9c` (BH MEASURED) + Tip #288 `82cbb86d3902f8637ace2f830e383cbb36a94f00` (tip post-#287 · BH MEASURED) + #289 Mission BI Cross-Session Continuity & Replay Fabric → tip `5445fbbe97934c66c0951e40683319ea4583e86e`; progression 82cbb86 → 5445fbb; do not invent intermediate full SHAs beyond known prior full `03154ec38aee5587593997ddb558646141406c9c`, Tip #288 full `82cbb86d3902f8637ace2f830e383cbb36a94f00`, and full tip `5445fbbe97934c66c0951e40683319ea4583e86e` |
+
+## Governance
+
+COMPLETE_FOR_LOCAL_GOVERNED_USE | PRODUCTION_READY=NO | Fundacion Δ=0 | AT_CEILING | Antigravity-first | Law VI held | Law VI CLEAN | Ladder 11 CLOSED | Ladder 12 CLOSED | Ladder 13 **CLOSED** (CLOSED_FOR_LOCAL_GOVERNED_USE; Z+AA+AB+AC MEASURED + closeout) | Ladder 14 **CLOSED** (CLOSED_FOR_LOCAL_GOVERNED_USE; AD+AE+AF+AG+AH MEASURED + seam-pack + closeout) | Ladder 15 **CLOSED** (`CLOSED_FOR_LOCAL_GOVERNED_USE`; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout) | Ladder 16 **CLOSED** (`CLOSED_FOR_LOCAL_GOVERNED_USE`; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout) | Ladder 17 **CLOSED** (`CLOSED_FOR_LOCAL_GOVERNED_USE`; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout) | Ladder 18 **CLOSED** (`CLOSED_FOR_LOCAL_GOVERNED_USE`; AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Sovereign Developer Engine) | Ladder 19 **CLOSED** (`CLOSED_FOR_LOCAL_GOVERNED_USE`; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; Sovereign Delivery & Verification Fabric) | Ladder 20 **OPEN** (`BH MEASURED + BI MEASURED via #289; BJ–BL pending`; Sovereign Mission Continuity & Operator Fabric)
+
+## L16–L19 CLOSED retained + L20 OPEN (BH MEASURED + BI MEASURED) note
+
+- Ladder 16 **CLOSED** (`CLOSED_FOR_LOCAL_GOVERNED_USE`; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout) — seal retained; never reopen
+- Ladder 17 **CLOSED** (`CLOSED_FOR_LOCAL_GOVERNED_USE`; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout) — seal retained; NEVER reopen L17; AS–AW MEASURED
+- Ladder 18 **CLOSED** (`CLOSED_FOR_LOCAL_GOVERNED_USE`; AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout) — seal retained; NEVER reopen L18; NEVER leave L18 as OPEN or “BB pending”
+- Ladder 19 **CLOSED** (`CLOSED_FOR_LOCAL_GOVERNED_USE`; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout) — seal retained; NEVER leave L19 as OPEN or “BG pending”; NEVER reopen L19; never say BC–BG not MEASURED; never say L19 audit not landed
+- Ladder 20 **OPEN** (`BH MEASURED + BI MEASURED via #289; BJ–BL pending`) — never say BH not MEASURED; never say BI not MEASURED; BJ–BL pending (not MEASURED); no BJ–BL impl in this change; never say L20 CLOSED
+- Ladder 20 Maturity Audit MEASURED (#284; BH–BL ordered; Sovereign Mission Continuity & Operator Fabric)
+- Tip refresh post #282 MEASURED (historical/superseded; Formal L19 CLOSED seal then; L20 was PENDING then)
+- Tip refresh post #286 MEASURED (historical/superseded; tip-refresh-post-286; prior pin `e2e78a38be3a92e8c209c8dbe4814d575544b5ce`; L20 audit MEASURED)
+- Tip refresh post #287 MEASURED (historical/superseded; tip-refresh-post-287; BH MEASURED tip honesty)
+- Tip refresh post #288 MEASURED (historical/superseded; tip post-#287 · BH MEASURED @ `82cbb86d3902f8637ace2f830e383cbb36a94f00`)
+- Mission BH MEASURED (#287; SPEC-0065; Mission Lifecycle State Machine; test:mission-bh)
+- Mission BI MEASURED (#289; SPEC-0066; Cross-Session Continuity & Replay Fabric; test:mission-bi / test:cross-session-continuity)
+- Tip refresh post #289 MEASURED (this change; tip-refresh-post-289)
+- verify:strict gates retained / SLIM≤145 / TR-01 / Fundacion Δ=0 / PRODUCTION_READY=NO
+- CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES (NON-CLAIM)
+- No BJ–BL impl in this change
+- L19 satellites: BC+BD+BE+BF+BG MEASURED + seam-pack + closeout (CLOSED retained)
+- L20 satellites: BH MEASURED + BI MEASURED; BJ–BL pending
+- Closed-on-main includes #287 Mission BH + #288 tip post-#287 + #289 Mission BI + tip refresh post-289
+
+## NON-CLAIM
+
+Tip honesty ≠ PRODUCTION_READY. Mission BI / Cross-Session Continuity & Replay Fabric MEASURED ≠ PRODUCTION_READY / ≠ HA multi-region SaaS / ≠ Raft/distributed clustering / ≠ CloudAgent fleet / ≠ GH Team enforcement. Mission BH / Mission Lifecycle State Machine MEASURED ≠ PRODUCTION_READY / ≠ unsupervised long-horizon autonomy SaaS / ≠ multi-tenant cloud fleet / ≠ CloudAgent fleet / ≠ GH Team enforcement. L20 OPEN ≠ L19 reopen ≠ PRODUCTION_READY=YES. Ladder 19 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. Ladder 18 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. Ladder 17 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. Sovereign Mission Continuity & Operator Fabric axis ≠ unsupervised long-horizon autonomy SaaS / ≠ multi-tenant cloud fleet / ≠ GH Team enforcement / ≠ PRODUCTION_READY operator product. Sovereign Delivery & Verification Fabric axis ≠ unsupervised auto-merge SaaS / ≠ GH Actions replacement / ≠ multi-tenant cloud fleet / ≠ K8s CD / ≠ SIEM product / ≠ billing accuracy SaaS / ≠ public registry / ≠ GH Releases / ≠ PRODUCTION_READY delivery product. Fundacion Δ=0 intact; CloudAgent out of SpecBoot path; Law VI held; Law VI CLEAN; Antigravity-first. No BJ–BL impl in this change. Never claim BH not MEASURED. Never claim BI not MEASURED. Never claim BJ/BK/BL MEASURED. Never claim L20 CLOSED. Never claim L19 audit not landed. Never claim BC–BG not MEASURED. Never leave L19 as OPEN or “BG pending”. Never reopen L19. Never reopen L18. Never reopen L17. Never reopen L16. Never claim AS–AW not MEASURED. Never claim AX–BB not MEASURED.
