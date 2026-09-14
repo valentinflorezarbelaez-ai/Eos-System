@@ -1,0 +1,7 @@
+schema: spec-driven
+created: 2026-09-14
+spec: SPEC-0074
+goal: Consolidate Ladder 21 (BM-BP) into CI Seam-Pack and formally close Ladder 21.
+routing:
+  team: core-platform
+  scope: mission-bq

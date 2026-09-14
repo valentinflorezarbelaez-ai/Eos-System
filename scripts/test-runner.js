@@ -142,6 +142,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
 
   'eos-bo-multi-agent-consensus-gate.test.js',
   'eos-bp-sovereign-telemetry-forensic-aggregator.test.js',
+  'eos-bq-ladder21-seam-pack.test.js',
 ]);
 
 /**
