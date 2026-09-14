@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-280 to live main after #280 Mission BF (prior tip-278 pin c753cdcaef62b20b7f4c98b8140237713460d3ee (BE MEASURED) + #279 21189a3 lineage)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-282 to live main after #282 Mission BG (prior tip-280 pin 37a36e9f0ed9dab61b3d997edd777e49d2eb7a16 (BF MEASURED) + #281 cc61266 lineage)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '37a36e9f0ed9dab61b3d997edd777e49d2eb7a16') {
+      if (!tip || tip[1] !== '31ecb8fd5fe6e39cc9f071a203a900e86ec35901') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-280 expected main_tip=37a36e9f0ed9dab61b3d997edd777e49d2eb7a16 (post-#280 / Mission BF MEASURED; tip honesty restored; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; L19 OPEN BC MEASURED + BD MEASURED + BE MEASURED + BF MEASURED; BG pending)',
+            'tip-refresh-post-282 expected main_tip=31ecb8fd5fe6e39cc9f071a203a900e86ec35901 (post-#282 / Mission BG MEASURED; tip honesty restored; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Formal L19 CLOSED seal CLOSED_FOR_LOCAL_GOVERNED_USE; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; never reopen L19; L20 PENDING)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-280 / main@37a36e9 (post-#280 / Mission BF MEASURED; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; L19 OPEN BC MEASURED + BD MEASURED + BE MEASURED + BF MEASURED; BG pending)',
+          path: 'freeze main_tip pinned to tip-refresh-post-282 / main@31ecb8f (post-#282 / Mission BG MEASURED; L17 CLOSED AS–AW MEASURED; L18 CLOSED AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Formal L19 CLOSED seal CLOSED_FOR_LOCAL_GOVERNED_USE; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; never reopen L19; L20 PENDING)',
           status: 'VERIFIED',
           type
         });

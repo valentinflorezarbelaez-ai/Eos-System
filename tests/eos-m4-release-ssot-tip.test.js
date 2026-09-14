@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#280 pinned tip: main@37a36e9 / 37a36e9f0ed9dab61b3d997edd777e49d2eb7a16 (prior tip-278 pin c753cdcaef62b20b7f4c98b8140237713460d3ee (BE MEASURED) + #279 tip post-#278 21189a3719265921c38901a734ddd1154323c761 + #280 Mission BF Local RC Packaging & Artifact Notary Port; tip honesty restored; Ladder 14 CLOSED; Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout); Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout; never reopen; AS–AW MEASURED); Ladder 18 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Sovereign Developer Engine; Mission AX–BB MEASURED; NEVER leave L18 OPEN or BB pending; never reopen L18); L19 OPEN (BC MEASURED + BD MEASURED + BE MEASURED + BF MEASURED via #280; BG pending; Sovereign Delivery & Verification Fabric)) */
-const EXPECTED_TIP = '37a36e9f0ed9dab61b3d997edd777e49d2eb7a16';
+/** Tip refresh post-#282 pinned tip: main@31ecb8f / 31ecb8fd5fe6e39cc9f071a203a900e86ec35901 (prior tip-280 pin 37a36e9f0ed9dab61b3d997edd777e49d2eb7a16 (BF MEASURED) + #281 tip post-#280 cc61266c05d1c2b9b7f4dab7642302dd74aeee9c + #282 Mission BG Ladder 19 CI Seam-Pack Consolidation & Closeout; tip honesty restored; Ladder 14 CLOSED; Ladder 15 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AI+AJ+AK+AL+AM MEASURED + seam-pack + closeout); Ladder 16 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AN+AO+AP+AQ+AR MEASURED + seam-pack + closeout); Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout; never reopen; AS–AW MEASURED); Ladder 18 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Sovereign Developer Engine; Mission AX–BB MEASURED; NEVER leave L18 OPEN or BB pending; never reopen L18); Ladder 19 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; Sovereign Delivery & Verification Fabric; Mission BC–BG MEASURED; NEVER leave L19 OPEN or BG pending; never reopen L19); L20 PENDING (do not start)) */
+const EXPECTED_TIP = '31ecb8fd5fe6e39cc9f071a203a900e86ec35901';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-280 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-282 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-280 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-282 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -363,17 +363,22 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'tip-refresh-post-278',
     'Tip refresh post #279',
     'Tip refresh post #280',
-    'tip-refresh-post-280',
+    'Tip refresh post #281',
+    'Tip refresh post #282',
+    'tip-refresh-post-282',
     'Ladder 19 Maturity Audit',
-    'L19 OPEN',
+    'L19 CLOSED',
+    'Ladder 19 CLOSED',
+    'Ladder 19 Closeout',
     'audit MEASURED',
     'BC MEASURED',
     'BD MEASURED',
     'BE MEASURED',
-    'BG pending',
     'BF MEASURED',
+    'BG MEASURED',
     'Mission BF MEASURED',
     'Mission BE MEASURED',
+    'Mission BG MEASURED',
     'Sovereign Delivery & Verification Fabric',
     'Mission BC',
     'Mission BC MEASURED',
@@ -395,14 +400,20 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'test:verification-replay',
     'test:mission-bf',
     'test:local-rc-packaging',
+    'test:mission-bg',
+    'test:ladder19-pack',
     'Local RC Packaging',
     'Artifact Notary',
     'Governed Patch',
     'Multi-Worktree',
     'Verification Replay',
     'Golden Receipt',
+    'L20 PENDING',
     'never reopen',
-    'NEVER reopen L18'
+    'NEVER reopen L18',
+    'NEVER reopen L19',
+    'never reopen L19',
+    'BC+BD+BE+BF+BG'
 
   ]) {
     assert.ok(matrix.includes(needle), 'matrix missing row for: ' + needle);
@@ -417,34 +428,44 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.doesNotMatch(freeze, /Ladder 18 OPEN \(AX\+AY\+AZ\+BA MEASURED; BB pending\)/);
   assert.doesNotMatch(matrix, /Ladder 18 OPEN \(AX\+AY\+AZ\+BA MEASURED; BB pending\)/);
 
-    // L19 OPEN after #280 Mission BF — current-state must show BC+BD+BE+BF MEASURED; BG pending
+    // Formal L19 CLOSED after #282 Mission BG — current-state must show BC+BD+BE+BF+BG MEASURED + closeout; L20 PENDING
+  assert.doesNotMatch(matrix, /\|\s*Ladder 19 OPEN\s*\|/);
   assert.doesNotMatch(matrix, /\|\s*Ladder 19 PENDING\s*\|/);
-  assert.match(matrix, /\|\s*Ladder 19 OPEN\s*\|/);
+  assert.match(matrix, /\|\s*Ladder 19 CLOSED\s*\|/);
   assert.match(matrix, /\|\s*Ladder 19 Maturity Audit\s*\|/);
-  assert.match(freeze, /L19 OPEN \(BC MEASURED \+ BD MEASURED \+ BE MEASURED \+ BF MEASURED via #280; BG pending/);
-  assert.match(matrix, /L19 OPEN \(BC MEASURED \+ BD MEASURED \+ BE MEASURED \+ BF MEASURED via #280; BG pending/);
+  assert.match(matrix, /\|\s*Ladder 19 Closeout\s*\|/);
+  assert.match(freeze, /Formal L19 CLOSED seal|Ladder 19 is \*\*CLOSED\*\*|L19 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
+  assert.match(freeze, /L19 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BC\+BD\+BE\+BF\+BG MEASURED \+ seam-pack \+ closeout/);
+  assert.match(matrix, /L19 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BC\+BD\+BE\+BF\+BG MEASURED \+ seam-pack \+ closeout/);
   assert.match(freeze, /Sovereign Delivery & Verification Fabric/);
   assert.match(matrix, /Sovereign Delivery & Verification Fabric/);
   assert.match(freeze, /never reopen L17|NEVER reopen L17/);
   assert.match(freeze, /never reopen L18|NEVER reopen L18/);
+  assert.match(freeze, /never reopen L19|NEVER reopen L19/);
   assert.match(matrix, /never reopen L17|NEVER reopen L17/);
   assert.match(matrix, /never reopen L18|NEVER reopen L18/);
+  assert.match(matrix, /never reopen L19|NEVER reopen L19/);
+  // Prohibit exact current-state OPEN seal string (historical "was OPEN" / "pending then" remain allowed)
+  assert.doesNotMatch(freeze, /Ladder 19 OPEN \(BC MEASURED \+ BD MEASURED \+ BE MEASURED \+ BF MEASURED via #280; BG pending\)/);
+  assert.doesNotMatch(matrix, /Ladder 19 OPEN \(BC MEASURED \+ BD MEASURED \+ BE MEASURED \+ BF MEASURED via #280; BG pending\)/);
+  assert.doesNotMatch(freeze, /L19 OPEN \(BC MEASURED \+ BD MEASURED \+ BE MEASURED \+ BF MEASURED via #280; BG pending\)/);
+  assert.doesNotMatch(matrix, /L19 OPEN \(BC MEASURED \+ BD MEASURED \+ BE MEASURED \+ BF MEASURED via #280; BG pending\)/);
   const freezeHeader = freeze.split('```')[1] || '';
   const matrixHeader = matrix.split('```')[1] || '';
-  assert.match(freezeHeader, /L19 OPEN \(BC MEASURED \+ BD MEASURED \+ BE MEASURED \+ BF MEASURED/);
-  assert.doesNotMatch(freezeHeader, /L19 PENDING \(Maturity Gap Audit next; no L19 impl\)/);
-  assert.doesNotMatch(freezeHeader, /L19 PENDING \(no L19 impl\)/);
-  assert.doesNotMatch(freezeHeader, /BF–BG pending/);
-  assert.doesNotMatch(freezeHeader, /BE–BG pending/);
-  assert.match(matrixHeader, /L19 OPEN \(BC MEASURED \+ BD MEASURED \+ BE MEASURED \+ BF MEASURED/);
-  assert.doesNotMatch(matrixHeader, /L19 PENDING \(no L19 impl\)/);
-  assert.doesNotMatch(matrixHeader, /BF–BG pending/);
-  assert.doesNotMatch(matrixHeader, /BE–BG pending/);
+  assert.match(freezeHeader, /L19 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BC\+BD\+BE\+BF\+BG MEASURED/);
+  assert.match(freezeHeader, /L20 PENDING/);
+  assert.doesNotMatch(freezeHeader, /L19 OPEN \(BC MEASURED/);
+  assert.doesNotMatch(freezeHeader, /BG pending(?! then)/);
+  assert.match(matrixHeader, /L19 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BC\+BD\+BE\+BF\+BG MEASURED/);
+  assert.match(matrixHeader, /L20 PENDING/);
+  assert.doesNotMatch(matrixHeader, /L19 OPEN \(BC MEASURED/);
+  assert.doesNotMatch(matrixHeader, /BG pending(?! then)/);
   assert.match(matrix, /\|\s*Mission BC\s*\|\s*COMPLETE\s*\|\s*MEASURED/);
   assert.match(matrix, /\|\s*Mission BD\s*\|\s*COMPLETE\s*\|\s*MEASURED/);
   assert.match(matrix, /\|\s*Mission BE\s*\|\s*COMPLETE\s*\|\s*MEASURED/);
   assert.match(matrix, /\|\s*Mission BF\s*\|\s*COMPLETE\s*\|\s*MEASURED/);
-  assert.doesNotMatch(matrix, /\|\s*Mission BG[^\n]*\|\s*COMPLETE\s*\|\s*MEASURED/);
+  assert.match(matrix, /\|\s*Mission BG\s*\|\s*COMPLETE\s*\|\s*MEASURED/);
+  assert.match(matrix, /\|\s*L20 PENDING\s*\|/);
 
   assert.match(freeze, /BC MEASURED/);
   assert.match(matrix, /BC MEASURED/);
@@ -454,17 +475,20 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(matrix, /BE MEASURED/);
   assert.match(freeze, /BF MEASURED/);
   assert.match(matrix, /BF MEASURED/);
-  assert.match(freeze, /BG pending/);
-  assert.match(matrix, /BG pending/);
-  // No current-state BF–BG pending (historical "BF–BG pending then" allowed)
-  assert.doesNotMatch(freezeHeader, /BF–BG pending/);
-  assert.doesNotMatch(matrixHeader, /BF–BG pending/);
+  assert.match(freeze, /BG MEASURED/);
+  assert.match(matrix, /BG MEASURED/);
+  assert.match(freeze, /Mission BG MEASURED|Mission BG Ladder 19/);
+  assert.match(matrix, /Mission BG MEASURED/);
   assert.match(freeze, /Mission BF MEASURED/);
   assert.match(matrix, /Mission BF MEASURED/);
   assert.match(freeze, /Mission BE MEASURED/);
   assert.match(matrix, /Mission BE MEASURED/);
   assert.match(freeze, /L17 CLOSED|never reopen L17|NEVER reopen L17/);
   assert.match(matrix, /L18 CLOSED|Ladder 18 CLOSED/);
+  assert.match(freeze, /L19 CLOSED|Ladder 19 CLOSED/);
+  assert.match(matrix, /L19 CLOSED|Ladder 19 CLOSED/);
+  assert.match(freeze, /L20 PENDING/);
+  assert.match(matrix, /L20 PENDING/);
 
   assert.doesNotMatch(matrix, /\|\s*Merge to main\s*\|\s*FUTURE\s*\|\s*BLOCKED\s*\|/i);
 });

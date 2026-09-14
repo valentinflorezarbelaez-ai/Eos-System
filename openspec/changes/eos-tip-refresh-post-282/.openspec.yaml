@@ -1,0 +1,43 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Tip honesty refresh post-#282 — pin freeze/matrix/m4/dirty-defer tip SSOT to main@31ecb8fd5fe6e39cc9f071a203a900e86ec35901 (PR #282 Mission BG Ladder 19 CI Seam-Pack Consolidation & Closeout MEASURED; prior tip-280 pin 37a36e9f0ed9dab61b3d997edd777e49d2eb7a16 (BF MEASURED) + #281 tip post-#280 cc61266c05d1c2b9b7f4dab7642302dd74aeee9c lineage; full tip SHA known — hardcode Expected/EXPECTED_TIP/main_tip/evaluated_tip); PRODUCTION_READY=NO; Fundacion Delta=0; AT_CEILING; Law VI held; Law VI CLEAN; Antigravity-first; TR-01 / SLIM ≤145; Ladder 11–16 CLOSED; Ladder 17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS+AT+AU+AV+AW MEASURED + seam-pack + closeout; never reopen); Ladder 18 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Sovereign Developer Engine; never reopen); Formal Ladder 19 CLOSED seal (CLOSED_FOR_LOCAL_GOVERNED_USE; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; Sovereign Delivery & Verification Fabric; never reopen; never leave OPEN or “BG pending”); L20 PENDING (do not start). Never say L19 audit not landed. Never say BC–BG not MEASURED. Never leave L19 as OPEN. Never reopen L16/L17/L18/L19. Never claim L20 OPEN or started. NON-CLAIM L19 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. NON-CLAIM Mission BG / seam-pack ≠ GH Team enforcement. NON-CLAIM Sovereign Delivery & Verification Fabric ≠ unsupervised auto-merge / K8s CD / SIEM / public registry.
+routing: SDD
+explicit_sdd_request: true
+spec_id: TIP-REFRESH-POST-282
+phase: 1
+affected_areas:
+  - docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - docs/releases/RELEASE_CAPABILITY_MATRIX.md
+  - docs/releases/EOS_TIP_REFRESH_POST_282_2026-09-14.md
+  - tests/eos-m4-release-ssot-tip.test.js
+  - scripts/lib/dirty-defer-triage-lock.js
+  - openspec/changes/eos-tip-refresh-post-282
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - inventing intermediate tip SHAs beyond known prior full 37a36e9f0ed9dab61b3d997edd777e49d2eb7a16, known tip-281 cc61266c05d1c2b9b7f4dab7642302dd74aeee9c, and full tip 31ecb8fd5fe6e39cc9f071a203a900e86ec35901
+  - implementing Ladder 20 in this change
+  - claiming L20 OPEN or started
+  - leaving Ladder 19 as OPEN or “BG pending”
+  - reopening Ladder 19 or claiming BC–BG not MEASURED
+  - claiming Ladder 19 audit not landed (audit is MEASURED via #272)
+  - claiming Mission BG not MEASURED or not implemented (BG is MEASURED via #282)
+  - claiming Mission BF not MEASURED or not implemented (BF is MEASURED via #280)
+  - claiming Mission BE not MEASURED or not implemented (BE is MEASURED via #278)
+  - claiming Mission BD not MEASURED or not implemented (BD is MEASURED via #276)
+  - claiming Mission BC not MEASURED or not implemented (BC is MEASURED via #274)
+  - leaving Ladder 18 as OPEN or “BB pending”
+  - reopening Ladder 18 or claiming AX–BB not MEASURED
+  - claiming AX–BB not implemented
+  - claiming Ladder 18 audit not landed (audit is MEASURED via #260)
+  - reopening Ladder 17 or claiming AS–AW not MEASURED
+  - claiming Ladder 17 CLOSED_FOR_LOCAL_GOVERNED_USE equals PRODUCTION_READY=YES
+  - claiming Ladder 18 CLOSED_FOR_LOCAL_GOVERNED_USE equals PRODUCTION_READY=YES
+  - claiming Ladder 19 CLOSED_FOR_LOCAL_GOVERNED_USE equals PRODUCTION_READY=YES
+  - reopening Ladder 16 or claiming AR not implemented
+  - claiming Sovereign Delivery & Verification Fabric is PRODUCTION_READY delivery product, unsupervised auto-merge SaaS, GH Actions replacement, multi-tenant cloud fleet, K8s CD, SIEM, billing accuracy SaaS, public registry, or GH Releases
+  - claiming Sovereign Developer Engine is PRODUCTION_READY coding SaaS, unsupervised internet agent, full IDE, unbounded AGI, K8s multi-tenant cloud, or GH-enforced
+  - claiming CI seam-pack equals GH Team / Enterprise enforcement
+  - putting API keys in repo
