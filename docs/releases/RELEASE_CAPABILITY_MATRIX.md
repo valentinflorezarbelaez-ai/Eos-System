@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 707f234599eb922d8b2bc0b0aba34cdc988a9882
+evaluated_tip: bb1fb656ba6ab4dd94042841e0a31bec0e57b3a1
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: docs(audit): Ladder 21 Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric gap audit (LADDER-21-MATURITY-AUDIT)
-updated_at: 2026-09-14 America/Bogota (tip refresh post-#297; pin to main@707f234 / 707f234599eb922d8b2bc0b0aba34cdc988a9882; prior tip-296/post-#295 pin 5e0f94d5ccb9e04384cc8d5970294760ba289ad5 (L20 CLOSED seal) + #297 Ladder 21 Maturity Gap Audit; L17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS–AW MEASURED; never reopen); L18 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Sovereign Developer Engine; never reopen); L19 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; Sovereign Delivery & Verification Fabric; never reopen); L20 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric; never reopen); L21 OPEN (Audit MEASURED · BM–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric); Ladder 19/20 Maturity Audit MEASURED; Mission BG MEASURED; Mission BH–BL MEASURED; Ladder 20 Closeout MEASURED; Tip refresh post #295/#296 historical/superseded; Tip refresh post #297 MEASURED; Ladder 21 Maturity Audit MEASURED; PRODUCTION_READY=NO; Fundacion Delta=0; Law VI; Antigravity-first)
+main_subject: feat(attestation): Agent Identity Attestation & Action Provenance Port (SPEC-0070)
+updated_at: 2026-09-14 America/Bogota (tip refresh post-#299; pin to main@bb1fb65 / bb1fb656ba6ab4dd94042841e0a31bec0e57b3a1; prior tip-298/post-#297 pin 1d8ff62bcc262edfc6a1b3b23fd6c19162821117 (L21 audit MEASURED tip refresh then) + #299 Mission BM Agent Identity Attestation & Action Provenance Port (SPEC-0070); L17 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AS–AW MEASURED; never reopen); L18 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; AX+AY+AZ+BA+BB MEASURED + seam-pack + closeout; Sovereign Developer Engine; never reopen); L19 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; Sovereign Delivery & Verification Fabric; never reopen); L20 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric; never reopen); L21 OPEN (BM MEASURED · BN–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric); Ladder 19/20/21 Maturity Audit MEASURED; Mission BG MEASURED; Mission BH–BL MEASURED; Mission BM MEASURED; Ladder 20 Closeout MEASURED; Tip refresh post #295/#296/#297/#298 historical/superseded; Tip refresh post #299 MEASURED; Ladder 21 Maturity Audit MEASURED; PRODUCTION_READY=NO; Fundacion Delta=0; Law VI; Antigravity-first)
 ```
 
 
@@ -263,10 +263,13 @@ updated_at: 2026-09-14 America/Bogota (tip refresh post-#297; pin to main@707f23
 | Ladder 20 Closeout | COMPLETE | MEASURED (EOS_LADDER_20_CLOSEOUT_2026-09-14.md; BH/BI/BJ/BK + Mission BL seam-pack; CLOSED_FOR_LOCAL_GOVERNED_USE; PRODUCTION_READY=NO; never reopen L20) |
 | Tip refresh post #295 | COMPLETE | MEASURED (historical/superseded; EOS_TIP_REFRESH_POST_295_2026-09-14.md; freeze+matrix historically to 6b9ab462eb8d607e4df9eaaf16efa57778d0c66a; tip-refresh-post-295; Formal L20 CLOSED seal; superseded by #297 + tip refresh post-#297) |
 | Tip refresh post #296 | COMPLETE | MEASURED (historical/superseded; tip post-#295 / L20 CLOSED seal @ 5e0f94d5ccb9e04384cc8d5970294760ba289ad5; StartsWith 5e0f94d; superseded by #297 Ladder 21 audit + tip refresh post-#297) |
-| Ladder 21 Maturity Audit | COMPLETE | MEASURED (#297; EOS_MATURITY_LADDER_21_AUDIT_2026-09-14.md; BM–BQ ordered (BM/BN/BO/BP/BQ); audit MEASURED; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric; L17–L20 CLOSED never reopen; L21 OPEN (Audit MEASURED · BM–BQ pending); SPEC-0070–0074 proposed) |
-| Tip refresh post #297 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_297_2026-09-14.md; freeze+matrix to 707f234599eb922d8b2bc0b0aba34cdc988a9882; tip-refresh-post-297; L17–L20 CLOSED retained; L21 OPEN (Audit MEASURED · BM–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric); never claim BM–BQ MEASURED; do not start Mission BM) |
-| L21 OPEN | COMPLETE | MEASURED (Audit MEASURED · BM–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric; NEVER reopen L17/L18/L19/L20; PRODUCTION_READY=NO) |
-| Ladder 21 OPEN | COMPLETE | MEASURED (Audit MEASURED · BM–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric; BM–BQ pending; never reopen L17–L20) |
+| Ladder 21 Maturity Audit | COMPLETE | MEASURED (#297; EOS_MATURITY_LADDER_21_AUDIT_2026-09-14.md; BM–BQ ordered (BM/BN/BO/BP/BQ); audit MEASURED; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric; L17–L20 CLOSED never reopen; L21 OPEN (BM MEASURED · BN–BQ pending; BM via #299); SPEC-0070–0074 proposed) |
+| Tip refresh post #297 | COMPLETE | MEASURED (historical/superseded; EOS_TIP_REFRESH_POST_297_2026-09-14.md; freeze+matrix historically to 707f234599eb922d8b2bc0b0aba34cdc988a9882; tip-refresh-post-297; L21 was OPEN Audit MEASURED · BM–BQ pending then; superseded by #299 Mission BM + tip refresh post-#299) |
+| Tip refresh post #298 | COMPLETE | MEASURED (historical/superseded; tip post-#297 / L21 OPEN audit MEASURED seal @ 1d8ff62bcc262edfc6a1b3b23fd6c19162821117; StartsWith 1d8ff62; L21 later BM MEASURED via #299; superseded by tip refresh post-#299) |
+| Mission BM | COMPLETE | MEASURED (#299; SPEC-0070; test:mission-bm / test:agent-identity-attestation; eos-ladder-21-mission-bm; Agent Identity Attestation & Action Provenance Port; Fundacion Delta=0; Ladder 17–L20 CLOSED retained (never reopen); L21 OPEN (BM MEASURED · BN–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric); NON-CLAIM Agent Identity Attestation & Action Provenance ≠ OAuth/OIDC/IAM ≠ PRODUCTION_READY identity product ≠ CloudAgent fleet) |
+| Tip refresh post #299 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_299_2026-09-14.md; freeze+matrix to bb1fb656ba6ab4dd94042841e0a31bec0e57b3a1; tip-refresh-post-299; L17–L20 CLOSED retained; L21 OPEN (BM MEASURED · BN–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric); never claim BN–BQ MEASURED; do not start Mission BN) |
+| L21 OPEN | COMPLETE | MEASURED (BM MEASURED · BN–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric; NEVER reopen L17/L18/L19/L20; PRODUCTION_READY=NO) |
+| Ladder 21 OPEN | COMPLETE | MEASURED (BM MEASURED · BN–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric; BN–BQ pending; never reopen L17–L20) |
 | Ladder 20 CLOSED | COMPLETE | MEASURED (CLOSED_FOR_LOCAL_GOVERNED_USE; BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric; Mission BH–BL MEASURED; NEVER claim BH–BL not MEASURED; NEVER claim L20 audit not landed; NEVER leave L20 as OPEN or “BL pending”; NEVER reopen L20; NEVER reopen L16/L17/L18/L19) |
 | L20 CLOSED | COMPLETE | MEASURED (CLOSED_FOR_LOCAL_GOVERNED_USE; BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric; never say BH–BL not MEASURED; never say L20 audit not landed; NEVER leave L20 as OPEN or “BL pending”; NEVER reopen L20; never reopen L16/L17/L18/L19) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
@@ -275,7 +278,17 @@ updated_at: 2026-09-14 America/Bogota (tip refresh post-#297; pin to main@707f23
 | MCP SSOT + consumer sync | COMPLETE | VERIFIED (#26; MCP_SSOT.md) |
 
 
-## Tip refresh notes (post-#295)
+## Tip refresh notes (post-#299)
+
+- evaluated_tip pinned to OBSERVED main tip after tip-297/#298 + #299: bb1fb656ba6ab4dd94042841e0a31bec0e57b3a1 (StartsWith bb1fb65; full SHA hardcoded tip-247 style; prior tip-298/post-#297 pin 1d8ff62bcc262edfc6a1b3b23fd6c19162821117 (L21 audit MEASURED tip refresh then))
+- Prior tip 1d8ff62bcc262edfc6a1b3b23fd6c19162821117 (post-#297/#298 L21 OPEN audit MEASURED) + #299 Mission BM Agent Identity Attestation & Action Provenance Port (SPEC-0070) → tip bb1fb656ba6ab4dd94042841e0a31bec0e57b3a1; tip honesty restored; progression 1d8ff62 → bb1fb65
+- Matrix: Tip refresh post #297/#298 MEASURED (historical/superseded) + **Mission BM MEASURED** (#299; SPEC-0070; test:mission-bm / test:agent-identity-attestation) + **Tip refresh post #299 MEASURED** (tip-refresh-post-299); Ladder 21 Maturity Audit remains MEASURED; L21 OPEN (BM MEASURED · BN–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric); Formal L17–L20 CLOSED seals retained
+- Dirty-defer tip honesty pin moved with freeze (tip-refresh-post-299 / bb1fb65; tip-299 / main@bb1fb65)
+- **L17–L20 CLOSED seals retained — NEVER reopen.**
+- **L21 OPEN (BM MEASURED · BN–BQ pending):** never say BM not MEASURED; never claim BN–BQ MEASURED; do not start Mission BN; never claim L21 CLOSED
+- NON-CLAIM: Mission BM / Agent Identity Attestation & Action Provenance MEASURED ≠ OAuth/OIDC/IAM ≠ PRODUCTION_READY identity product ≠ CloudAgent fleet ≠ BN–BQ implemented ≠ L21 CLOSED ≠ PRODUCTION_READY=YES; Fundacion Δ=0; Antigravity-first
+
+## Tip refresh notes (post-#295) — historical/superseded
 
 - evaluated_tip pinned to OBSERVED main tip after tip-293 + #294 + #295: 6b9ab462eb8d607e4df9eaaf16efa57778d0c66a (StartsWith 6b9ab46; full SHA hardcoded tip-247 style; prior tip-293 pin 6e508a175eb726ca396da9ae0a8f540b75bfe310 (BK MEASURED); Tip #294 dd225d9b9ca8851110ed6b38513e35c0092e02ff (tip post-#293 · BK MEASURED))
 - Prior tip-293 pin 6e508a175eb726ca396da9ae0a8f540b75bfe310 (BK MEASURED) + Tip #294 dd225d9b9ca8851110ed6b38513e35c0092e02ff (tip post-#293 · BK MEASURED) + #295 Mission BL Ladder 20 CI Seam-Pack Consolidation & Closeout (SPEC-0069) → tip 6b9ab462eb8d607e4df9eaaf16efa57778d0c66a; tip honesty restored; Formal L20 CLOSED seal; BH MEASURED; BI MEASURED; BJ MEASURED; BK MEASURED; BL MEASURED; progression dd225d9 → 6b9ab46
