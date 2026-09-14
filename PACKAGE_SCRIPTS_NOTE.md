@@ -1,12 +1,12 @@
-# Mission BN — package.json / slim patch fragment
+# Mission BO — package.json / slim patch fragment
 
-Applied idempotently by `scripts/patch-mission-bn.mjs` on the host worktree.
+Applied idempotently by `scripts/patch-mission-bo.mjs` on the host worktree.
 
 ## Scripts to add
 
 ```json
-"test:mission-bn": "node --test tests/eos-bn-continuous-integrity-sentinel.test.js",
-"test:continuous-integrity-sentinel": "node --test tests/eos-bn-continuous-integrity-sentinel.test.js"
+"test:mission-bo": "node --test tests/eos-bo-multi-agent-consensus-gate.test.js",
+"test:multi-agent-consensus-gate": "node --test tests/eos-bo-multi-agent-consensus-gate.test.js"
 ```
 
 ## SLIM_SUITE_EXCLUDES (scripts/test-runner.js)
@@ -14,21 +14,21 @@ Applied idempotently by `scripts/patch-mission-bn.mjs` on the host worktree.
 Add basename:
 
 ```js
-'eos-bn-continuous-integrity-sentinel.test.js',
+'eos-bo-multi-agent-consensus-gate.test.js',
 ```
 
 to the existing `SLIM_SUITE_EXCLUDES` Set (after the current last entry).
 CRLF-safe insert: patcher uses `[\s\S]` + `[\r\n]` patterns (NOT `[^\n]*` alone).
-Prefer exclude-from-slim over raising TR-01 (slim≤145) — same as BH/BK/BM.
+Prefer exclude-from-slim over raising TR-01 (slim≤145) — same as BH/BK/BM/BN.
 
 Hermetic satellite — excluded from slim so SLIM_COUNT stays ≤145.
 
 ## Envelope copy (bootstrap)
 
-`MISSION_BN_BOOTSTRAP.ps1` `$paths` / `git add` also copies:
+`MISSION_BO_BOOTSTRAP.ps1` `$paths` / `git add` also copies:
 
-- `docs/adrs/ADR-0031-mission-bn-continuous-integrity-sentinel.md`
-- `docs/evidence/EOS_MISSION_BN_CONTINUOUS_INTEGRITY_SENTINEL_EVD_2026-09-14.md`
+- `docs/adrs/ADR-0032-mission-bo-multi-agent-consensus-gate.md`
+- `docs/evidence/EOS_MISSION_BO_MULTI_AGENT_CONSENSUS_EVD_2026-09-14.md`
 - OpenSpec change folder (proposal / design / spec / tasks / `.openspec.yaml`)
 
 so future boots land the envelope. Docs-only; does not flip PRODUCTION_READY.

@@ -1,0 +1,36 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Implement Multi-Agent Consensus & Two-Key Handoff Gate (SPEC-0072) for Ladder 21 — hermetic submitProposal / submitAttestation / evaluateConsensus, sealed BO-RCPT-* receipts (stableStringify + sha256 via node:crypto over nine canonical fields), fail-closed two-key policy gate (SELF_VERIFY_DENY / MISSING_VERIFIER / MISSING_EVIDENCE / EVIDENCE_MISMATCH / ATTESTATION_REJECTED / FUNDACION_ALWAYS_DENY), optional injectable ports to custodyPort (builder-verifier-custody) / handoffEnvelope (agent-handoff-envelope) without rewriting siblings. Axis Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN on BO-owned two-key-* / multi-agent-consensus-gate.js under existing src/core/consensus/ (do NOT rewrite byzantine-consensus-engine.js — BI/BJ sibling-allow). L17–L20 CLOSED never reopen. L21 OPEN (BM MEASURED; BN MEASURED; BO in progress; BP–BQ pending). NON-CLAIM ≠ BFT/PoS/blockchain/P2P gossip / ≠ heavy Raft/Blockchain / ≠ PRODUCTION_READY=YES consensus product.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0072
+phase: 1
+affected_areas:
+  - src/core/consensus/two-key-consensus-receipt.js
+  - src/core/consensus/two-key-consensus-policy-gate.js
+  - src/core/consensus/multi-agent-consensus-gate.js
+  - tests/eos-bo-multi-agent-consensus-gate.test.js
+  - scripts/patch-mission-bo.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-21-mission-bo
+  - docs/releases/EOS_MISSION_BO_MULTI_AGENT_CONSENSUS_2026-09-14.md
+  - docs/adrs/ADR-0032-mission-bo-multi-agent-consensus-gate.md
+  - docs/evidence/EOS_MISSION_BO_MULTI_AGENT_CONSENSUS_EVD_2026-09-14.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting byzantine-consensus-engine.js
+  - rewriting src/core/governance/builder-verifier-custody.js
+  - rewriting src/core/orchestration/agent-handoff-envelope.js
+  - BFT / PoS / blockchain / P2P gossip product
+  - heavy Raft / Blockchain product
+  - BP / BQ missions
+  - CloudAgent path
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
+  - exclusive ownership of sibling files under src/core/consensus/
+  - soft-allow on self-verification
+  - reopening L17 / L18 / L19 / L20
+  - single-agent auto-approval
+  - unsigned async handoff

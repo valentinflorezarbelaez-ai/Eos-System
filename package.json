@@ -264,7 +264,9 @@
     "test:mission-bm": "node --test tests/eos-bm-agent-identity-attestation-port.test.js",
     "test:agent-identity-attestation": "node --test tests/eos-bm-agent-identity-attestation-port.test.js",
     "test:mission-bn": "node --test tests/eos-bn-continuous-integrity-sentinel.test.js",
-    "test:continuous-integrity-sentinel": "node --test tests/eos-bn-continuous-integrity-sentinel.test.js"
+    "test:continuous-integrity-sentinel": "node --test tests/eos-bn-continuous-integrity-sentinel.test.js",
+    "test:mission-bo": "node --test tests/eos-bo-multi-agent-consensus-gate.test.js",
+    "test:multi-agent-consensus-gate": "node --test tests/eos-bo-multi-agent-consensus-gate.test.js"
   },
   "keywords": [
     "eos",
