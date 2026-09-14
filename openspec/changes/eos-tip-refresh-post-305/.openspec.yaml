@@ -1,0 +1,6 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Refresh freeze/matrix/m4 tip SSOT to main@fad37c9 post-#305 (Mission BP Sovereign Telemetry & Forensic Trail Aggregator MEASURED). Never reopen L17–L20.
+routing:
+  team: core-platform
+  scope: tip-refresh

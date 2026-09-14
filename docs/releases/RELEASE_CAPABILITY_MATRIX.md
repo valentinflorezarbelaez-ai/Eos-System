@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 6f4d45eb0c92ea51735b6dbf4572f9866269a8b2
+evaluated_tip: fad37c957432cae51c45c95f6f0fad8ed9e7e496
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: feat(consensus): Multi-Agent Consensus & Two-Key Handoff Gate (SPEC-0072)
-updated_at: 2026-09-14 America/Bogota (tip refresh post-#303; pin to main@6f4d45e / 6f4d45eb0c92ea51735b6dbf4572f9866269a8b2; prior tip-301/post-#301 pin f7fc885851786dc74d3cb8ef1ea7d18e648dc5ab + #303 Mission BO Multi-Agent Consensus & Two-Key Handoff Gate (SPEC-0072); L17–L20 CLOSED (never reopen); L21 OPEN (BM+BN+BO MEASURED · BP–BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric); Mission BO MEASURED; PRODUCTION_READY=NO; Fundacion Delta=0; Law VI; Antigravity-first)
+main_subject: feat(telemetry): Sovereign Telemetry & Forensic Trail Aggregator (SPEC-0073)
+updated_at: 2026-09-14 America/Bogota (tip refresh post-#305; pin to main@fad37c9 / fad37c957432cae51c45c95f6f0fad8ed9e7e496; prior tip-303/post-#303 pin 6f4d45eb0c92ea51735b6dbf4572f9866269a8b2 + #305 Mission BP Sovereign Telemetry & Forensic Trail Aggregator (SPEC-0073); L17–L20 CLOSED (never reopen); L21 OPEN (BM+BN+BO+BP MEASURED · BQ pending; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric); Mission BP MEASURED; PRODUCTION_READY=NO; Fundacion Delta=0; Law VI; Antigravity-first)
 ```
 
 
