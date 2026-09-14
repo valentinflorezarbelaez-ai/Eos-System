@@ -1,3 +1,9 @@
+/**
+ * @file eos-bp-sovereign-telemetry-forensic-aggregator.test.js
+ * @description SPEC-0073 / Mission BP — Sovereign Telemetry & Forensic Trail Aggregator.
+ * Receipt integrity: BP-RCPT-*
+ * PRODUCTION_READY: NO
+ */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { SovereignTelemetryReceipt } from '../src/core/telemetry/sovereign-telemetry-receipt.js';
@@ -16,6 +22,7 @@ test('BP-01: SovereignTelemetryReceipt seals canonical payload with SHA-256', ()
   assert.equal(receipt.batchIndex, 1);
   assert.equal(receipt.entryCount, 1);
   assert.equal(receipt.status, 'VERIFIED');
+  assert.ok(receipt.receiptId.startsWith('BP-RCPT-'));
   assert.match(receipt.hash, /^[0-9a-f]{64}$/);
 });
 
