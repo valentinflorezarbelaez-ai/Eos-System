@@ -1,0 +1,1 @@
+Docs-only tip honesty to `bb1fb656ba6ab4dd94042841e0a31bec0e57b3a1`. Progression 1d8ff62 → bb1fb65. L21 OPEN (BM MEASURED · BN–BQ pending). Commit: docs(tip): refresh freeze/matrix/m4 tip SSOT to main@bb1fb65 post-#299 / Mission BM MEASURED
