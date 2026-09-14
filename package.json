@@ -252,7 +252,9 @@
     "test:mission-bh": "node --test tests/eos-bh-mission-lifecycle-state-machine.test.js",
     "test:mission-lifecycle": "node --test tests/eos-bh-mission-lifecycle-state-machine.test.js",
     "test:mission-bi": "node --test tests/eos-bi-cross-session-continuity-replay-fabric.test.js",
-    "test:cross-session-continuity": "node --test tests/eos-bi-cross-session-continuity-replay-fabric.test.js"
+    "test:cross-session-continuity": "node --test tests/eos-bi-cross-session-continuity-replay-fabric.test.js",
+    "test:mission-bj": "node --test tests/eos-bj-operator-dashboard-hud-fabric.test.js",
+    "test:operator-dashboard-hud": "node --test tests/eos-bj-operator-dashboard-hud-fabric.test.js"
   },
   "keywords": [
     "eos",

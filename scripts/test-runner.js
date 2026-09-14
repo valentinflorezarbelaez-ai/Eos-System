@@ -129,6 +129,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bh-mission-lifecycle-state-machine.test.js',
 
   'eos-bi-cross-session-continuity-replay-fabric.test.js',
+
+  'eos-bj-operator-dashboard-hud-fabric.test.js',
 ]);
 
 /**
