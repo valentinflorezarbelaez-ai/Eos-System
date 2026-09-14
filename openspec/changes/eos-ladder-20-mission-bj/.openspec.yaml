@@ -1,0 +1,32 @@
+schema: spec-driven
+created: 2026-09-14
+goal: Implement Operator Dashboard / HUD Fabric (SPEC-0067) for Ladder 20 — sealed BJ-RCPT-* receipts (stableStringify + sha256 via node:crypto), fail-closed policy gate (schema/freshness/integrity/Fundacion), hermetic registerSurface / generateSnapshot / renderTextSummary facade with injectable AV/AJ/BF/BE/HUD ports. Axis Sovereign Mission Continuity & Operator Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN on BJ-owned operator-dashboard-* under src/core/observability (siblings allowed). L17/L18/L19 CLOSED never reopen. L20 OPEN (BH+BI MEASURED; BJ in progress; BK–BL pending). NON-CLAIM ≠ observability SaaS (Grafana/Datadog/Prometheus) / ≠ external web GUI/HTTP server / ≠ PRODUCTION_READY=YES.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0067
+phase: 1
+affected_areas:
+  - src/core/observability/operator-dashboard-hud-fabric.js
+  - src/core/observability/operator-dashboard-policy-gate.js
+  - src/core/observability/operator-dashboard-receipt.js
+  - tests/eos-bj-operator-dashboard-hud-fabric.test.js
+  - scripts/patch-mission-bj.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-20-mission-bj
+  - docs/releases/EOS_MISSION_BJ_OPERATOR_DASHBOARD_HUD_2026-09-14.md
+  - docs/adrs/ADR-0026-mission-bj-operator-dashboard-hud-fabric.md
+  - docs/evidence/EOS_MISSION_BJ_OPERATOR_DASHBOARD_HUD_EVD_2026-09-14.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting operator-hud.js / terminal-hud-engine.js / freeze-drift / evidence / delivery BE/BF
+  - BK/BL missions
+  - CloudAgent path
+  - observability SaaS product claim (Grafana/Datadog/Prometheus)
+  - external web GUI / HTTP server
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
+  - exclusive ownership of src/core/observability/ (siblings may coexist)
+  - soft-allow stale/missing/mismatched surfaces
+  - reopening L17 / L18 / L19
