@@ -16,6 +16,8 @@ affected_areas:
   - package.json
   - openspec/changes/eos-mission-bd-multi-worktree-multi-target-delivery-port
   - docs/releases/EOS_MISSION_BD_MULTI_WORKTREE_MULTI_TARGET_DELIVERY_2026-09-13.md
+  - docs/adrs/ADR-0019-mission-bd-multi-worktree-multi-target-delivery-port.md
+  - docs/evidence/EOS_MISSION_BD_EVIDENCE_2026-09-13.md
 non_goals:
   - flipping PRODUCTION_READY
   - real Fundacion / Documents/Fundacion writes

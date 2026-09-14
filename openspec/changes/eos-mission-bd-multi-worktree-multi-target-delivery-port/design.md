@@ -33,3 +33,19 @@ allowlisted worktree / target ids (or `memory://`). No `child_process`, no
 
 Runtime-concat vendor prefix for detect/redact. Scan **MODULE_DIR only**.
 Prefer `env-fake-token-001` in tests.
+
+## ADR & alternatives (pointer)
+
+See `docs/adrs/ADR-0019-mission-bd-multi-worktree-multi-target-delivery-port.md`
+(Accepted — local governed, 2026-09-13). Decision: hermetic in-process
+virtual-root `deliver` with VALIDATE → GATE → DELIVER → SEAL, fail-closed
+whole-request DENY, injectable AN/BA/BC observe ports, Law VI MODULE_DIR-only.
+
+Rejected (technical reasons in the ADR): (1) real `git worktree` orchestration
+(non-hermetic, host-stateful, unsafe in `node --test`); (2) Kubernetes / CD
+pipeline port (claims cloud fleet / remote delivery product — NON-CLAIM);
+(3) rewriting AN/BA/BC source into `delivery/` (breaks isolation; BC siblings
+already coexist); (4) soak / continue-on-error partial success (dishonest
+receipt; violates fail-closed). Evidence:
+`docs/evidence/EOS_MISSION_BD_EVIDENCE_2026-09-13.md`.
+
