@@ -133,6 +133,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bj-operator-dashboard-hud-fabric.test.js',
 
   'eos-bk-governed-external-write-orchestrator.test.js',
+
+  'eos-bl-ladder20-seam-pack.test.js',
 ]);
 
 /**

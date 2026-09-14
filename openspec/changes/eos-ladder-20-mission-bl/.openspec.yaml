@@ -1,0 +1,36 @@
+schema: spec-driven
+created: 2026-09-14
+goal: SPEC-0069 / Mission BL — Ladder 20 CI Seam-Pack Consolidation & Closeout. Require BH/BI/BJ/BK satellites (test:mission-bh, test:mission-bi, test:mission-bj, test:mission-bk) in CI seam-pack; extend test:native-suite-pack; add test:mission-bl / test:bl20 / test:l20 / test:ladder20-pack; lock test slim-excluded; contract + assert-gha needles via idempotent CRLF-safe patcher; Ladder 20 closeout audit CLOSED_FOR_LOCAL_GOVERNED_USE. PRODUCTION_READY=NO; Fundacion Δ=0; Antigravity-first; no CloudAgent; no soak; no continue-on-error; do not raise TR-01; Law VI held; L17/L18/L19 CLOSED never reopen; never reopen L20 after closeout; tip honesty deferred to post-BL tip refresh; no rewrite of BH/BI/BJ/BK modules (compose via CI scripts only); receipt integrity BH-RCPT-* / BI-RCPT-* / BJ-RCPT-* / BK-RCPT-*.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0069
+phase: 1
+affected_areas:
+  - .github/workflows/ci.yml
+  - package.json
+  - scripts/test-runner.js
+  - scripts/patch-mission-bl.mjs
+  - scripts/ci/assert-gha-contract.js
+  - tests/eos-bl-ladder20-seam-pack.test.js
+  - docs/governance/CI_CD_CONTRACT.md
+  - docs/governance/CI_CD_CONTRACT.ladder20-fragment.md
+  - docs/releases/EOS_MISSION_BL_LADDER20_SEAM_PACK_2026-09-14.md
+  - docs/releases/EOS_LADDER_20_CLOSEOUT_2026-09-14.md
+  - docs/adrs/ADR-0028-mission-bl-ladder20-closeout-seam-pack.md
+  - docs/evidence/EOS_MISSION_BL_EVIDENCE_2026-09-14.md
+  - openspec/changes/eos-ladder-20-mission-bl
+non_goals:
+  - flipping PRODUCTION_READY
+  - Fundacion mutation
+  - raising TR-01 slim ceiling
+  - soak / continue-on-error
+  - Cursor CloudAgent
+  - new npm dependencies
+  - GH billing / Team / Enterprise / branch-protection enforcement claims
+  - rewriting BH/BI/BJ/BK modules
+  - reopening Ladder 17
+  - reopening Ladder 18
+  - reopening Ladder 19
+  - reopening Ladder 20 after closeout
+  - leaving Ladder 20 unclosed after BL
+  - tip honesty ritual (deferred post-BL tip refresh)
