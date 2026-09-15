@@ -1161,7 +1161,20 @@ Findings Count:        ${report.findingsCount}
         );
         return {
           success: true,
-          output: `${pre}\n\n📝 Mission Planned Successfully [${res.mission_id}]:\n- Phase: ${res.phase}\n- Organic route: ${res.plan.organic_routing?.route || 'n/a'} (size ignored)\n- Generated Tasks: ${res.tasks_generated}\n- FSM: ${(res.transitions || []).map((t) => t.event_type).join(' → ')}\n- Governance Gates: ${res.plan.governance_gates.join(', ')}\n\n${post}\n\nNext step: Run 'eos mission package ${res.mission_id} --target cursor' to generate operator handoff.`,
+          output: [
+            pre,
+            '',
+            `📝 Mission Planned Successfully [${res.mission_id}]:`,
+            `- Phase: ${res.phase}`,
+            `- Organic route: ${res.plan.organic_routing?.route || 'n/a'} (size ignored)`,
+            `- Generated Tasks: ${res.tasks_generated}`,
+            `- FSM: ${(res.transitions || []).map((t) => t.event_type).join(' → ')}`,
+            `- Governance Gates: ${res.plan.governance_gates.join(', ')}`,
+            '',
+            post,
+            '',
+            `Next step: Run 'eos mission package ${res.mission_id} --target cursor' to generate operator handoff.`
+          ].join('\n'),
           data: res
         };
       }
