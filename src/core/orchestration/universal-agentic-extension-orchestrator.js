@@ -114,8 +114,8 @@ export class UniversalAgenticExtensionOrchestrator {
     const handlers = this.hooks.get(hookName) || [];
     let state = { ...payload };
 
-    for (const handler of handlers) {
-      const res = await handler(state);
+    const results = await Promise.all(handlers.map(handler => handler({ ...state })));
+    for (const res of results) {
       if (res && typeof res === 'object') {
         state = { ...state, ...res };
       }
