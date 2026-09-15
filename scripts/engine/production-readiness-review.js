@@ -149,7 +149,10 @@ export class ProductionReadinessReviewEngine {
 
     // Recommendation Decision Logic: GO_WITH_RESTRICTIONS
     const reviewVerdict = 'GO_WITH_RESTRICTIONS';
-    const executiveSummary = 'EOS qualifies for graduated, risk-tiered operational deployment on authorized projects under continuous independent telemetry (GO_WITH_RESTRICTIONS). PRJ-FUNDACION remains frozen awaiting GAP-002 legal intake. General unfettered production autonomy (GATE-13) remains strictly closed.';
+    const executiveSummary =
+      'EOS qualifies for graduated, risk-tiered operational deployment on authorized projects under continuous ' +
+      'independent telemetry (GO_WITH_RESTRICTIONS). PRJ-FUNDACION remains frozen awaiting GAP-002 legal intake. ' +
+      'General unfettered production autonomy (GATE-13) remains strictly closed.';
 
     return {
       reviewProgram: 'EOS-PRODUCTION-READINESS-REVIEW-001',
