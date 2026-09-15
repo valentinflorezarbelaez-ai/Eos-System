@@ -1316,9 +1316,21 @@ Findings Count:        ${report.findingsCount}
 
         const res = this.runtime.submitReturnPackage(missionId, pkgFile);
         const icon = res.verdict === 'ACCEPT' ? '✅' : (res.verdict === 'REJECT' ? '❌' : '⚠️');
+        const deviations = res.deviations.length === 0 ? 'None (Clean)' : res.deviations.join(', ');
+        const risks = res.risks.length === 0 ? 'None' : res.risks.join(', ');
+
+        const outputLines = [
+          `${icon} Cursor Return Ingested [${res.mission_id} / ${res.task_id}]:`,
+          `- Ingestion Verdict: ${res.verdict}`,
+          `- Reconciliation Hash: ${res.reconciliation_hash}`,
+          `- Deviations: ${deviations}`,
+          `- Risks: ${risks}`,
+          `- Auto-Apply Status: BLOCKED (Requires manual approval)`
+        ];
+
         return {
           success: res.verdict === 'ACCEPT',
-          output: `${icon} Cursor Return Ingested [${res.mission_id} / ${res.task_id}]:\n- Ingestion Verdict: ${res.verdict}\n- Reconciliation Hash: ${res.reconciliation_hash}\n- Deviations: ${res.deviations.length === 0 ? 'None (Clean)' : res.deviations.join(', ')}\n- Risks: ${res.risks.length === 0 ? 'None' : res.risks.join(', ')}\n- Auto-Apply Status: BLOCKED (Requires manual approval)`,
+          output: outputLines.join('\n'),
           data: res
         };
       }
