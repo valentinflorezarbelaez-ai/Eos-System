@@ -1,5 +1,5 @@
 # EOS Fleet Executive Situation Report
-*Compiled on 2026-09-07T21:43:06.428Z*
+*Compiled on 2026-09-15T01:49:25.706Z*
 
 | Metric | Value |
 |---|---|
