@@ -471,12 +471,66 @@ export class EOSMCPSchemaValidator {
       },
 
       // 8. Andamiaje, TDD y Ontología
-      "eos.scaffolder.generate": { type: "object", properties: { componentName: { type: "string" }, architecture: { type: "string" }, outputDir: { type: "string" } }, additionalProperties: false },
-      "eos.scaffolder.clean": { type: "object", properties: { nombreComponente: { type: "string" }, missionId: { type: "string" }, mission_id: { type: "string" }, writeRoots: { type: "array" }, assertPaths: { type: "array" } }, required: ["nombreComponente"], additionalProperties: false },
-      "eos.scaffolder.execute": { type: "object", properties: { srcPath: { type: "string" }, testPath: { type: "string" }, maxIterations: { type: "number" }, missionId: { type: "string" }, mission_id: { type: "string" }, writeRoots: { type: "array" } }, required: ["srcPath", "testPath"], additionalProperties: false },
-      "eos.process.governor.validate": { type: "object", properties: { idOperacion: { type: "string" }, payloadSimulacion: { type: "any" } }, additionalProperties: false },
-      "eos.ontology.query": { type: "object", properties: { idNodo: { type: "string" } }, required: ["idNodo"], additionalProperties: false },
-      "eos.ontology.link": { type: "object", properties: { idOrigen: { type: "string" }, idDestino: { type: "string" }, tipoRelacion: { type: "string" } }, required: ["idOrigen", "idDestino", "tipoRelacion"], additionalProperties: false },
+      "eos.scaffolder.generate": {
+        type: "object",
+        properties: {
+          componentName: { type: "string" },
+          architecture: { type: "string" },
+          outputDir: { type: "string" }
+        },
+        additionalProperties: false
+      },
+      "eos.scaffolder.clean": {
+        type: "object",
+        properties: {
+          nombreComponente: { type: "string" },
+          missionId: { type: "string" },
+          mission_id: { type: "string" },
+          writeRoots: { type: "array" },
+          assertPaths: { type: "array" }
+        },
+        required: ["nombreComponente"],
+        additionalProperties: false
+      },
+      "eos.scaffolder.execute": {
+        type: "object",
+        properties: {
+          srcPath: { type: "string" },
+          testPath: { type: "string" },
+          maxIterations: { type: "number" },
+          missionId: { type: "string" },
+          mission_id: { type: "string" },
+          writeRoots: { type: "array" }
+        },
+        required: ["srcPath", "testPath"],
+        additionalProperties: false
+      },
+      "eos.process.governor.validate": {
+        type: "object",
+        properties: {
+          idOperacion: { type: "string" },
+          payloadSimulacion: { type: "any" }
+        },
+        additionalProperties: false
+      },
+      "eos.ontology.query": {
+        type: "object",
+        properties: {
+          idNodo: { type: "string" }
+        },
+        required: ["idNodo"],
+        additionalProperties: false
+      },
+      "eos.ontology.link": {
+        type: "object",
+        properties: {
+          idOrigen: { type: "string" },
+          idDestino: { type: "string" },
+          tipoRelacion: { type: "string" }
+        },
+        required: ["idOrigen", "idDestino", "tipoRelacion"],
+        additionalProperties: false
+      },
 
       // 9. Red y Logos Sefirótico
       "eos.net.logos.resonance_check": { type: "object", properties: { missionId: { type: "string" } }, required: ["missionId"], additionalProperties: false },
