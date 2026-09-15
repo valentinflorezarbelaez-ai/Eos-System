@@ -1,5 +1,5 @@
 # Executive Dossier: ATP Strength (App Fuerza) (PRJ-APP-FUERZA)
-*Compiled by EOS Autonomous Engineering Control Plane on 2026-09-15T02:05:35.143Z*
+*Compiled by EOS Autonomous Engineering Control Plane on 2026-09-15T02:10:05.760Z*
 
 ---
 
@@ -69,7 +69,7 @@ The following architectural decisions have been formalized to defend against cri
 | Evidence ID | File | Status | SHA-256 Hash | Recorded At |
 |---|---|---|---|---|
 | **`EVD-0047`** | `EVD-0047.json` | `VERIFIED` | `SHA256-RECORDED...` | 2026-09-04T04:13:00Z |
-| **`EVD-0060`** | `EVD-0060.json` | `RISK` | `sha256-079f9972a...` | 2026-09-15T01:59:41.709Z |
+| **`EVD-0060`** | `EVD-0060.json` | `RISK` | `sha256-af2e06572...` | 2026-09-15T02:05:37.285Z |
 | **`EVD-0069`** | `EVD-0069.json` | `VERIFIED` | `sha256-592f376a9...` | 2026-09-07T12:50:00.000Z |
 | **`EVD-FUE-0030`** | `EVD-FUE-0030.json` | `VERIFIED` | `SHA256-RECORDED...` | 2026-09-05T20:54:00.000Z |
 | **`EVD-FUE-0040`** | `EVD-FUE-0040.json` | `VERIFIED` | `SHA256-RECORDED...` | 2026-09-05T21:25:00.000Z |
