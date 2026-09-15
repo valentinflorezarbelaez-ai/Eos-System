@@ -148,6 +148,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bt-workflow-state-machine-checkpoint-port.test.js',
   'eos-bu-dynamic-consensus-orchestration-port.test.js',
   'eos-bv-dynamic-workflow-telemetry-port.test.js',
+  'eos-ladder22-seam-pack.test.js',
+  'eos-bw-sovereign-agentic-memory-port.test.js',
 ]);
 
 /**

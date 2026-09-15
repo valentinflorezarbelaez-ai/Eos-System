@@ -1,0 +1,24 @@
+schema_version: "1.0.0"
+change_id: "eos-ladder-23-mission-bw"
+title: "Mission BW: Sovereign Agentic Knowledge Graph & Associative Memory Port"
+status: "APPROVED"
+author: "Valentin Florez & Senior Architect"
+created_at: "2026-09-15"
+spec: "SPEC-0080"
+ladder: 23
+mission: "BW"
+invariants:
+  production_ready: "NO"
+  fundacion_delta: 0
+  write_barrier: "FUNDACION_ALWAYS_DENY"
+  law_vi: "HELD"
+  slim_ceiling: 145
+artifacts:
+  - "src/core/memory/sovereign-agentic-memory-port.js"
+  - "src/core/memory/agentic-memory-policy-gate.js"
+  - "src/core/memory/agentic-memory-receipt.js"
+  - "tests/eos-bw-sovereign-agentic-memory-port.test.js"
+  - "scripts/patch-mission-bw.mjs"
+  - "docs/adrs/ADR-0041-mission-bw-sovereign-agentic-memory.md"
+  - "docs/evidence/EOS_MISSION_BW_AGENTIC_MEMORY_EVD_2026-09-15.md"
+  - "docs/releases/EOS_MISSION_BW_AGENTIC_MEMORY_2026-09-15.md"

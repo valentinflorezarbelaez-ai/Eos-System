@@ -284,7 +284,11 @@
     "test:mission-bu": "node --test tests/eos-bu-dynamic-consensus-orchestration-port.test.js",
     "test:consensus-orchestration": "node --test tests/eos-bu-dynamic-consensus-orchestration-port.test.js",
     "test:mission-bv": "node --test tests/eos-bv-dynamic-workflow-telemetry-port.test.js",
-    "test:workflow-telemetry": "node --test tests/eos-bv-dynamic-workflow-telemetry-port.test.js"
+    "test:workflow-telemetry": "node --test tests/eos-bv-dynamic-workflow-telemetry-port.test.js",
+    "test:ladder22-seam": "node --test tests/eos-ladder22-seam-pack.test.js",
+    "test:ladder22-pack": "npm run test:mission-br && npm run test:mission-bs && npm run test:mission-bt && npm run test:mission-bu && npm run test:mission-bv && npm run test:ladder22-seam",
+    "test:mission-bw": "node --test tests/eos-bw-sovereign-agentic-memory-port.test.js",
+    "test:agentic-memory": "node --test tests/eos-bw-sovereign-agentic-memory-port.test.js"
   },
   "keywords": [
     "eos",
