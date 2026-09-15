@@ -1,0 +1,12 @@
+🔒 [Security] Fix Command Injection Vulnerability in MissionCLI
+
+🎯 What:
+Fixed a critical command injection vulnerability in `src/cli/mission-cli.js`. The `handleSealCommand` function was dynamically passing unfiltered string input from the `--cmd` argument to `execSync()`.
+
+⚠️ Risk:
+Any unsanitized user input passed to the `seal` command's `--cmd` argument would be directly evaluated by the shell (`execSync` invokes `/bin/sh`). This allowed attackers or automated workflows with poor input validation to execute arbitrary shell commands with the same privileges as the Node.js process (e.g. `eos seal --spec 123 --cmd "ls; cat /etc/passwd"`).
+
+🛡️ Solution:
+- Replaced the vulnerable `execSync` with `spawnSync` using `shell: false`.
+- Implemented `_tokenizeCommand` as a robust, dependency-free tokenizer string parser to correctly extract the executable and its arguments.
+- Safely passed the tokenized array to `spawnSync` guaranteeing that metacharacters will not be evaluated as shell commands.

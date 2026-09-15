@@ -1815,6 +1815,35 @@ Timestamp: ${new Date().toISOString()}
    * eos seal --spec <specId> [--task <taskId>] [--project <projectId>] [--cmd <command>] [--claim <text>] [--json]
    * Seals formal EARS contract execution output into a cryptographic evidence record (EVD-XXXX)
    */
+
+  _tokenizeCommand(cmdString) {
+    if (!cmdString) return [];
+    const args = [];
+    let current = '';
+    let inSingleQuote = false;
+    let inDoubleQuote = false;
+
+    for (let i = 0; i < cmdString.length; i++) {
+      const char = cmdString[i];
+      if (char === "'" && !inDoubleQuote) {
+        inSingleQuote = !inSingleQuote;
+      } else if (char === '"' && !inSingleQuote) {
+        inDoubleQuote = !inDoubleQuote;
+      } else if (char === ' ' && !inSingleQuote && !inDoubleQuote) {
+        if (current.length > 0) {
+          args.push(current);
+          current = '';
+        }
+      } else {
+        current += char;
+      }
+    }
+    if (current.length > 0) {
+      args.push(current);
+    }
+    return args;
+  }
+
   async handleSealCommand(args = []) {
     const isJson = args.includes('--json');
     let specId = null;
@@ -1851,13 +1880,29 @@ Timestamp: ${new Date().toISOString()}
       let stdout = '';
       let stderr = '';
       if (command) {
-        const { execSync } = await import('node:child_process');
+        const { spawnSync } = await import('node:child_process');
         try {
-          stdout = execSync(command, {
+          const parsedArgs = this._tokenizeCommand(command);
+          const executable = parsedArgs[0];
+          const execArgs = parsedArgs.slice(1);
+          const result = spawnSync(executable, execArgs, {
             cwd: this.controlPlaneRoot || process.cwd(),
             encoding: 'utf8',
-            stdio: ['pipe', 'pipe', 'pipe']
+            stdio: ['pipe', 'pipe', 'pipe'],
+            shell: false
           });
+
+          if (result.error) {
+            throw result.error;
+          }
+
+          exitCode = result.status || 0;
+          stdout = result.stdout?.toString() || '';
+          stderr = result.stderr?.toString() || '';
+
+          if (exitCode !== 0 && !stderr) {
+            stderr = `Command failed with exit code ${exitCode}`;
+          }
         } catch (err) {
           exitCode = err.status || 1;
           stdout = err.stdout?.toString() || '';
