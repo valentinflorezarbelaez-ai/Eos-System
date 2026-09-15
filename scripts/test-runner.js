@@ -150,6 +150,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bv-dynamic-workflow-telemetry-port.test.js',
   'eos-ladder22-seam-pack.test.js',
   'eos-bw-sovereign-agentic-memory-port.test.js',
+  'eos-bx-autonomous-self-healing-port.test.js',
 ]);
 
 /**

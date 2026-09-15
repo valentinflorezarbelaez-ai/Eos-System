@@ -288,7 +288,9 @@
     "test:ladder22-seam": "node --test tests/eos-ladder22-seam-pack.test.js",
     "test:ladder22-pack": "npm run test:mission-br && npm run test:mission-bs && npm run test:mission-bt && npm run test:mission-bu && npm run test:mission-bv && npm run test:ladder22-seam",
     "test:mission-bw": "node --test tests/eos-bw-sovereign-agentic-memory-port.test.js",
-    "test:agentic-memory": "node --test tests/eos-bw-sovereign-agentic-memory-port.test.js"
+    "test:agentic-memory": "node --test tests/eos-bw-sovereign-agentic-memory-port.test.js",
+    "test:mission-bx": "node --test tests/eos-bx-autonomous-self-healing-port.test.js",
+    "test:self-healing": "node --test tests/eos-bx-autonomous-self-healing-port.test.js"
   },
   "keywords": [
     "eos",
