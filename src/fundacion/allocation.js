@@ -84,30 +84,27 @@ export class FundacionAllocation {
   generatePublicAuditReport() {
     const projectSummary = {};
 
-    // Collect all project IDs from donations and allocations
-    const projectIds = new Set();
-    this.core.ledger.forEach(item => {
+    // Single pass accumulation (O(L + A)) instead of O(P * (L + A)) nested loops
+    for (const item of this.core.ledger) {
       const dest = item.destination || item.data?.destination;
-      if (dest) projectIds.add(dest);
-    });
-    this.allocations.forEach(item => {
-      if (item.projectId) projectIds.add(item.projectId);
-    });
+      if (dest) {
+        if (!projectSummary[dest]) {
+          projectSummary[dest] = { totalDonated: 0, totalAllocated: 0, netBalance: 0 };
+        }
+        const amt = item.amount || item.data?.amount || 0;
+        projectSummary[dest].totalDonated += amt;
+        projectSummary[dest].netBalance += amt;
+      }
+    }
 
-    for (const pid of projectIds) {
-      const totalDonated = this.core.ledger
-        .filter(item => (item.destination === pid || item.data?.destination === pid))
-        .reduce((sum, item) => sum + (item.amount || item.data?.amount || 0), 0);
-
-      const totalAllocated = this.allocations
-        .filter(item => item.projectId === pid)
-        .reduce((sum, item) => sum + item.amount, 0);
-
-      projectSummary[pid] = {
-        totalDonated,
-        totalAllocated,
-        netBalance: totalDonated - totalAllocated
-      };
+    for (const item of this.allocations) {
+      if (item.projectId) {
+        if (!projectSummary[item.projectId]) {
+          projectSummary[item.projectId] = { totalDonated: 0, totalAllocated: 0, netBalance: 0 };
+        }
+        projectSummary[item.projectId].totalAllocated += item.amount;
+        projectSummary[item.projectId].netBalance -= item.amount;
+      }
     }
 
     return {

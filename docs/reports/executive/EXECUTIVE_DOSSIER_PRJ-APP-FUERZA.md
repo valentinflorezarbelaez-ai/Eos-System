@@ -1,5 +1,5 @@
 # Executive Dossier: ATP Strength (App Fuerza) (PRJ-APP-FUERZA)
-*Compiled by EOS Autonomous Engineering Control Plane on 2026-09-10T22:55:53.512Z*
+*Compiled by EOS Autonomous Engineering Control Plane on 2026-09-15T10:20:44.913Z*
 
 ---
 
@@ -27,8 +27,8 @@ ATP Strength is a high-performance, offline-first athletic strength tracking pla
 - **L1 EARS Specifications**: 9
 - **L2 Architecture Plans & ADRs**: 5
 - **L3 Atomic Task DAGs**: 1
-- **L4 Source Code Modules**: 44
-- **L5 Verified Test Suites**: 5
+- **L4 Source Code Modules**: 624
+- **L5 Verified Test Suites**: 349
 - **L6 Cryptographic Evidence**: 3
 
 ---
@@ -69,7 +69,7 @@ The following architectural decisions have been formalized to defend against cri
 | Evidence ID | File | Status | SHA-256 Hash | Recorded At |
 |---|---|---|---|---|
 | **`EVD-0047`** | `EVD-0047.json` | `VERIFIED` | `SHA256-RECORDED...` | 2026-09-04T04:13:00Z |
-| **`EVD-0060`** | `EVD-0060.json` | `RISK` | `sha256-fa144d009...` | 2026-09-10T22:55:39.049Z |
+| **`EVD-0060`** | `EVD-0060.json` | `RISK` | `sha256-bfed628c1...` | 2026-09-15T10:19:38.062Z |
 | **`EVD-0069`** | `EVD-0069.json` | `VERIFIED` | `sha256-592f376a9...` | 2026-09-07T12:50:00.000Z |
 | **`EVD-FUE-0030`** | `EVD-FUE-0030.json` | `VERIFIED` | `SHA256-RECORDED...` | 2026-09-05T20:54:00.000Z |
 | **`EVD-FUE-0040`** | `EVD-FUE-0040.json` | `VERIFIED` | `SHA256-RECORDED...` | 2026-09-05T21:25:00.000Z |
