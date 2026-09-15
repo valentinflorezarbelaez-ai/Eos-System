@@ -1,0 +1,32 @@
+schema: spec-driven
+created: 2026-09-15
+goal: Implement Dynamic Agent Capability Matcher & Governed Dispatcher Port (SPEC-0076) for Ladder 22 — hermetic agent role & capability matching, task node dispatching in topological sequence, integration with BM identity attestation & BO consensus when required, sealed BS-RCPT-* receipts (stableStringify + sha256 via node:crypto over nine canonical fields), fail-closed policy gate (uncertified capability / unattested agent / clearance violation / FUNDACION_ALWAYS_DENY), facade registerAgentProfile / matchAgentForTask / dispatchTask / batchDispatchDag / verifyDispatchTrail. Axis Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN. L17–L21 CLOSED never reopen. L22 OPEN (BR done; BS in progress; BT–BV pending). NON-CLAIM ≠ Kubernetes scheduler / Celery / ≠ PRODUCTION_READY orchestrator.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0076
+phase: 1
+affected_areas:
+  - src/core/orchestration/agent-capability-matcher-receipt.js
+  - src/core/orchestration/agent-capability-matcher-policy-gate.js
+  - src/core/orchestration/dynamic-agent-capability-dispatcher-port.js
+  - tests/eos-bs-dynamic-agent-capability-dispatcher-port.test.js
+  - scripts/patch-mission-bs.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-22-mission-bs
+  - docs/releases/EOS_MISSION_BS_CAPABILITY_DISPATCHER_2026-09-15.md
+  - docs/adrs/ADR-0036-mission-bs-agent-capability-dispatcher.md
+  - docs/evidence/EOS_MISSION_BS_CAPABILITY_DISPATCHER_EVD_2026-09-15.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting src/core/attestation or src/core/consensus
+  - Kubernetes scheduler or Celery cluster product claims
+  - BT / BU / BV missions
+  - CloudAgent path
+  - heavy distributed queue infrastructure
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
+  - exclusive ownership of sibling dirs under src/core/
+  - soft-allow uncertified or unattested agent dispatch
+  - reopening L17 / L18 / L19 / L20 / L21

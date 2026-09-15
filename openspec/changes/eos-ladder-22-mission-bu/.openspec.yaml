@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-15
+goal: Implement Multi-Agent Consensus Orchestration Gate & Escalation Fabric (SPEC-0078) for Ladder 22 — hermetic multi-agent proposal submission, quorum-based voting protocols (unanimity, majority, k-of-n), attestation-verified voter identity, escalation management for deadlocked or critical operations, sealed BU-RCPT-* receipts (stableStringify + sha256 via node:crypto over nine canonical fields), fail-closed policy gate (quorum not met / unattested voter / conflicting votes / escalation timeout / FUNDACION_ALWAYS_DENY), facade submitProposal / castVote / evaluateConsensus / escalateDecision / verifyConsensusTrail. Axis Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN. L17–L21 CLOSED never reopen. L22 OPEN (BR, BS, BT done; BU in progress; BV pending). NON-CLAIM ≠ Raft/Paxos cluster / ≠ Blockchain consensus / ≠ PRODUCTION_READY distributed engine.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0078
+phase: 1
+affected_areas:
+  - src/core/orchestration/consensus-orchestration-receipt.js
+  - src/core/orchestration/consensus-orchestration-policy-gate.js
+  - src/core/orchestration/dynamic-consensus-orchestration-port.js
+  - tests/eos-bu-dynamic-consensus-orchestration-port.test.js
+  - scripts/patch-mission-bu.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-22-mission-bu
+  - docs/releases/EOS_MISSION_BU_CONSENSUS_ORCHESTRATION_2026-09-15.md
+  - docs/adrs/ADR-0038-mission-bu-consensus-orchestration.md
+  - docs/evidence/EOS_MISSION_BU_CONSENSUS_ORCHESTRATION_EVD_2026-09-15.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting src/core/attestation or src/core/consensus
+  - Raft / Paxos / Byzantine fault-tolerant cluster product claims
+  - blockchain smart contract claims
+  - BV mission
+  - CloudAgent path
+  - heavy distributed networking
+  - live network in hermetic tests
+  - reopening L17 / L18 / L19 / L20 / L21

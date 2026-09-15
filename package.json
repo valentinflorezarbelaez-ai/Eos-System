@@ -274,7 +274,17 @@
     "test:l21": "node --test tests/eos-bq-ladder21-seam-pack.test.js",
     "test:ladder21-pack": "npm run test:mission-bm && npm run test:mission-bn && npm run test:mission-bo && npm run test:mission-bp && npm run test:mission-bq",
     "test:two-key-consensus-gate": "node --test tests/eos-bo-multi-agent-consensus-gate.test.js",
-    "test:telemetry-forensic-trail": "node --test tests/eos-bp-sovereign-telemetry-forensic-aggregator.test.js"
+    "test:telemetry-forensic-trail": "node --test tests/eos-bp-sovereign-telemetry-forensic-aggregator.test.js",
+    "test:mission-br": "node --test tests/eos-br-sovereign-intent-parser-port.test.js",
+    "test:intent-parser": "node --test tests/eos-br-sovereign-intent-parser-port.test.js",
+    "test:mission-bs": "node --test tests/eos-bs-dynamic-agent-capability-dispatcher-port.test.js",
+    "test:capability-dispatcher": "node --test tests/eos-bs-dynamic-agent-capability-dispatcher-port.test.js",
+    "test:mission-bt": "node --test tests/eos-bt-workflow-state-machine-checkpoint-port.test.js",
+    "test:workflow-checkpoint": "node --test tests/eos-bt-workflow-state-machine-checkpoint-port.test.js",
+    "test:mission-bu": "node --test tests/eos-bu-dynamic-consensus-orchestration-port.test.js",
+    "test:consensus-orchestration": "node --test tests/eos-bu-dynamic-consensus-orchestration-port.test.js",
+    "test:mission-bv": "node --test tests/eos-bv-dynamic-workflow-telemetry-port.test.js",
+    "test:workflow-telemetry": "node --test tests/eos-bv-dynamic-workflow-telemetry-port.test.js"
   },
   "keywords": [
     "eos",

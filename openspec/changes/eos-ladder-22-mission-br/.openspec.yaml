@@ -1,0 +1,32 @@
+schema: spec-driven
+created: 2026-09-15
+goal: Implement Sovereign Intent Parser & Atomic Task DAG Decomposer Port (SPEC-0075) for Ladder 22 — hermetic intent parsing, formal task decomposition into acyclic directed graphs (DAG), cycle detection, dependency topology sorting, and sealed BR-RCPT-* receipts (stableStringify + sha256 via node:crypto over nine canonical fields), fail-closed policy gate (cyclical dependencies / ambiguous syntax / missing prerequisites / FUNDACION_ALWAYS_DENY), facade parseIntent / decomposeTaskDag / validateDagTopology / verifyDecompositionTrail. Axis Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN on BR-owned modules under NEW src/core/orchestration/ (do NOT rewrite attestation/ or consensus/). L17–L21 CLOSED never reopen. L22 OPEN (BR in progress; BS–BV pending). NON-CLAIM ≠ general AGI planner / ≠ PRODUCTION_READY workflow product.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0075
+phase: 1
+affected_areas:
+  - src/core/orchestration/intent-decomposition-receipt.js
+  - src/core/orchestration/intent-decomposition-policy-gate.js
+  - src/core/orchestration/sovereign-intent-parser-port.js
+  - tests/eos-br-sovereign-intent-parser-port.test.js
+  - scripts/patch-mission-br.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-22-mission-br
+  - docs/releases/EOS_MISSION_BR_INTENT_PARSER_DAG_DECOMPOSER_2026-09-15.md
+  - docs/adrs/ADR-0035-mission-br-sovereign-intent-parser.md
+  - docs/evidence/EOS_MISSION_BR_INTENT_PARSER_EVD_2026-09-15.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting src/core/attestation or src/core/consensus
+  - general AGI planner completeness
+  - BS / BT / BU / BV missions
+  - CloudAgent path
+  - heavy distributed orchestration claims (Temporal / Airflow)
+  - live network in hermetic tests
+  - Law VI scanning of tests/ directory
+  - exclusive ownership of sibling dirs under src/core/
+  - soft-allow cyclical or ambiguous task graphs
+  - reopening L17 / L18 / L19 / L20 / L21

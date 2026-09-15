@@ -143,6 +143,11 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bo-multi-agent-consensus-gate.test.js',
   'eos-bp-sovereign-telemetry-forensic-aggregator.test.js',
   'eos-bq-ladder21-seam-pack.test.js',
+  'eos-br-sovereign-intent-parser-port.test.js',
+  'eos-bs-dynamic-agent-capability-dispatcher-port.test.js',
+  'eos-bt-workflow-state-machine-checkpoint-port.test.js',
+  'eos-bu-dynamic-consensus-orchestration-port.test.js',
+  'eos-bv-dynamic-workflow-telemetry-port.test.js',
 ]);
 
 /**

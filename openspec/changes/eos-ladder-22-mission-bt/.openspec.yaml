@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-15
+goal: Implement Dynamic Workflow State Machine & Step-Level Checkpoint Fabric (SPEC-0077) for Ladder 22 — hermetic workflow lifecycle management, strict state transition enforcement, step-level cryptographic checkpointing with snapshot hashing, state restoration from verified checkpoints, sealed BT-RCPT-* receipts (stableStringify + sha256 via node:crypto over nine canonical fields), fail-closed policy gate (illegal transition / corrupted checkpoint / FUNDACION_ALWAYS_DENY), facade initWorkflow / transitionState / checkpointStep / restoreFromCheckpoint / verifyCheckpointTrail. Axis Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN. L17–L21 CLOSED never reopen. L22 OPEN (BR and BS done; BT in progress; BU–BV pending). NON-CLAIM ≠ AWS Step Functions / Temporal / ≠ PRODUCTION_READY distributed orchestrator.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0077
+phase: 1
+affected_areas:
+  - src/core/orchestration/workflow-checkpoint-receipt.js
+  - src/core/orchestration/workflow-checkpoint-policy-gate.js
+  - src/core/orchestration/dynamic-workflow-state-machine-port.js
+  - tests/eos-bt-workflow-state-machine-checkpoint-port.test.js
+  - scripts/patch-mission-bt.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-22-mission-bt
+  - docs/releases/EOS_MISSION_BT_WORKFLOW_CHECKPOINT_2026-09-15.md
+  - docs/adrs/ADR-0037-mission-bt-workflow-state-machine.md
+  - docs/evidence/EOS_MISSION_BT_WORKFLOW_CHECKPOINT_EVD_2026-09-15.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting src/core/attestation or src/core/consensus
+  - AWS Step Functions or Temporal cluster product claims
+  - BU / BV missions
+  - CloudAgent path
+  - heavy distributed persistence engines
+  - live network in hermetic tests
+  - reopening L17 / L18 / L19 / L20 / L21

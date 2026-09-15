@@ -1,0 +1,28 @@
+schema: spec-driven
+created: 2026-09-15
+goal: Implement Dynamic Workflow Telemetry & Sovereign Audit Fabric (SPEC-0079) for Ladder 22 — hermetic telemetry span collection, multi-mission receipt ingestion (BR, BS, BT, BU), execution metric aggregation (latencies, success rates, consensus ratios, rollbacks), cryptographic sovereign audit summary sealing, sealed BV-RCPT-* receipts (stableStringify + sha256 via node:crypto over nine canonical fields), fail-closed policy gate (incomplete audit trail / anomalous execution / tampered receipt / FUNDACION_ALWAYS_DENY), facade recordSpan / ingestReceipt / compileAuditSummary / verifyAuditSeal / getWorkflowMetrics. Axis Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN. L17–L21 CLOSED never reopen. L22 OPEN (BR, BS, BT, BU done; BV in progress; closes Ladder 22). NON-CLAIM ≠ Prometheus/Datadog / ≠ OpenTelemetry collector / ≠ PRODUCTION_READY cloud monitoring product.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0079
+phase: 1
+affected_areas:
+  - src/core/orchestration/workflow-telemetry-receipt.js
+  - src/core/orchestration/workflow-telemetry-policy-gate.js
+  - src/core/orchestration/dynamic-workflow-telemetry-port.js
+  - tests/eos-bv-dynamic-workflow-telemetry-port.test.js
+  - scripts/patch-mission-bv.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-22-mission-bv
+  - docs/releases/EOS_MISSION_BV_WORKFLOW_TELEMETRY_2026-09-15.md
+  - docs/adrs/ADR-0039-mission-bv-workflow-telemetry.md
+  - docs/evidence/EOS_MISSION_BV_WORKFLOW_TELEMETRY_EVD_2026-09-15.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - rewriting src/core/attestation or src/core/consensus
+  - Prometheus / Datadog / OpenTelemetry cloud SaaS product claims
+  - CloudAgent path
+  - heavy distributed networking or timeseries databases
+  - live network in hermetic tests
+  - reopening L17 / L18 / L19 / L20 / L21
