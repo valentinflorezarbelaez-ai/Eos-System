@@ -1347,9 +1347,20 @@ Findings Count:        ${report.findingsCount}
       const role = this.runtime.roleRegistry.getRole(roleId);
       if (!role) return { success: false, output: `Role '${roleId}' not found in registry.` };
 
+      const outputLines = [
+        `📋 Role Profile [${role.role_id} - ${role.name}]:`,
+        `- Description: ${role.description}`,
+        `- Max Authority: ${role.max_authority_level}`,
+        `- Budget Tier: ${role.budget_tier}`,
+        `- Capabilities:`,
+        role.capabilities.map(c => `  * ${c.domain}: ${c.technologies.join(', ')} (${c.evidence_level})`).join('\n'),
+        `- Allowed Tools: ${role.allowed_tools.join(', ')}`,
+        `- Protected Surfaces: ${role.protected_surfaces.join(', ') || '(None)'}`
+      ];
+
       return {
         success: true,
-        output: `📋 Role Profile [${role.role_id} - ${role.name}]:\n- Description: ${role.description}\n- Max Authority: ${role.max_authority_level}\n- Budget Tier: ${role.budget_tier}\n- Capabilities:\n${role.capabilities.map(c => `  * ${c.domain}: ${c.technologies.join(', ')} (${c.evidence_level})`).join('\n')}\n- Allowed Tools: ${role.allowed_tools.join(', ')}\n- Protected Surfaces: ${role.protected_surfaces.join(', ') || '(None)'}`,
+        output: outputLines.join('\n'),
         data: role
       };
     }
