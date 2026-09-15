@@ -1,0 +1,3 @@
+## 2024-03-24 - O(n²) Nested loop in Audit Generation
+**Learning:** Found a severe performance bottleneck in `src/fundacion/allocation.js`'s `generatePublicAuditReport`. The original code found all unique project IDs, then for each project ID it iterated over the entire `ledger` and `allocations` arrays again with `.filter().reduce()`. This resulted in O(P * (L + A)) complexity (where P=projects, L=ledger size, A=allocations size), essentially O(n²) behavior on large datasets, causing huge slowdowns when the ledger grows.
+**Action:** Replace nested loops that aggregate data with a single-pass hash map accumulation O(n+m). Iterate the source arrays exactly once, building up the aggregate values into a map.
