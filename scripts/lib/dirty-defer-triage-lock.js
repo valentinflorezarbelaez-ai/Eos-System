@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-336 to live main after #336 Mission CC (prior tip 0dbccfe507727a855a7518709619e5948b52b2ee; tip-335 lineage; Mission CC #336 94b26b90f59a6308d292c54944cee7f521fa3bb3; L24 OPEN (Audit + CB + CC MEASURED · CD–CF pending); L17–L23 CLOSED retained)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-338 to live main after #338 Mission CD (prior tip 94b26b90f59a6308d292c54944cee7f521fa3bb3; tip-337 lineage; Mission CD #338 06529426a44c1a6c4f5716474a1e2c95eaee09fb; L24 OPEN (Audit + CB + CC + CD MEASURED · CE–CF pending); L17–L23 CLOSED retained)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '94b26b90f59a6308d292c54944cee7f521fa3bb3') {
+      if (!tip || tip[1] !== '06529426a44c1a6c4f5716474a1e2c95eaee09fb') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-336 expected main_tip=94b26b90f59a6308d292c54944cee7f521fa3bb3 (post-#336 / Mission CC MEASURED / L24 OPEN (Audit + CB + CC MEASURED · CD–CF pending; Sovereign Cross-Ladder Composition, Mission Economics & Fleet Operator Fabric); tip honesty restored; tip-336 / main@94b26b9; L17–L23 CLOSED retained; never reopen L23; do not start Mission CD; do not claim CD–CF MEASURED)',
+            'tip-refresh-post-338 expected main_tip=06529426a44c1a6c4f5716474a1e2c95eaee09fb (post-#338 / Mission CD MEASURED / L24 OPEN (Audit + CB + CC + CD MEASURED · CE–CF pending; Sovereign Cross-Ladder Composition, Mission Economics & Fleet Operator Fabric); tip honesty restored; tip-338 / main@0652942; L17–L23 CLOSED retained; never reopen L23; do not start Mission CE; do not claim CE–CF MEASURED)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-336 / main@94b26b9 (post-#336 / Mission CC MEASURED / L24 OPEN; tip-336 / main@94b26b9; L17–L23 CLOSED retained; never reopen L23)',
+          path: 'freeze main_tip pinned to tip-refresh-post-338 / main@0652942 (post-#338 / Mission CD MEASURED / L24 OPEN; tip-338 / main@0652942; L17–L23 CLOSED retained; never reopen L23)',
           status: 'VERIFIED',
           type
         });
