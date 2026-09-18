@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-309 to live main after #309 Ladder 22 Maturity Gap Audit (prior tip-307 pin e1c54ccbee3595bc312c1e97ae335f35605583f9 + Tip #308 f1b7ed2ae56909403dc56094fd76f1ef4a17b864; Ladder 22 Audit #309 e74d3fcb56995a63e1202f28175f67ac4f3959d3)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-326 to live main after #326 Mission BY (prior tip dcaac8b5b52179b8fb1a402e1bfbeb4084df81c9; stale tip-309 pin e74d3fcb56995a63e1202f28175f67ac4f3959d3; Mission BY #326 3efd26231eaa8d77732051d2255031c9d66e0caa)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== 'e74d3fcb56995a63e1202f28175f67ac4f3959d3') {
+      if (!tip || tip[1] !== '3efd26231eaa8d77732051d2255031c9d66e0caa') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-309 expected main_tip=e74d3fcb56995a63e1202f28175f67ac4f3959d3 (post-#309 / Ladder 22 audit MEASURED / L22 OPEN; tip honesty restored; tip-309 / main@e74d3fc; L17–L21 CLOSED retained; L22 OPEN)',
+            'tip-refresh-post-326 expected main_tip=3efd26231eaa8d77732051d2255031c9d66e0caa (post-#326 / Mission BY MEASURED / L22 CLOSED / L23 OPEN (Audit + BW+BX+BY MEASURED · BZ–CA pending); tip honesty restored; tip-326 / main@3efd262; L17–L22 CLOSED retained; L23 OPEN)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-309 / main@e74d3fc (post-#309 / Ladder 22 audit MEASURED / L22 OPEN; tip-309 / main@e74d3fc; L17–L21 CLOSED retained; L22 OPEN)',
+          path: 'freeze main_tip pinned to tip-refresh-post-326 / main@3efd262 (post-#326 / Mission BY MEASURED / L22 CLOSED / L23 OPEN; tip-326 / main@3efd262; L17–L22 CLOSED retained; L23 OPEN)',
           status: 'VERIFIED',
           type
         });

@@ -3,11 +3,11 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: e74d3fcb56995a63e1202f28175f67ac4f3959d3
+evaluated_tip: 3efd26231eaa8d77732051d2255031c9d66e0caa
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
-main_subject: docs(audit): Ladder 22 Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric gap audit (LADDER-22-MATURITY-AUDIT) (#309)
-updated_at: 2026-09-14 America/Bogota (tip refresh post-#309; pin to main@e74d3fc / e74d3fcb56995a63e1202f28175f67ac4f3959d3; prior tip-307/post-#307 pin e1c54ccbee3595bc312c1e97ae335f35605583f9 + Tip #308 f1b7ed2ae56909403dc56094fd76f1ef4a17b864 + #309 Ladder 22 audit; tip honesty restored; Ladder 17 CLOSED; Ladder 18 CLOSED; L19 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; Sovereign Delivery & Verification Fabric; never reopen); L20 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric; never reopen); L21 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BM+BN+BO+BP+BQ MEASURED + seam-pack + closeout; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric; never reopen); L22 OPEN (Audit MEASURED · BR–BV pending; Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric); NEVER reopen L17–L21; PRODUCTION_READY=NO; Fundacion Delta=0; Law VI; Antigravity-first)
+main_subject: feat(sdd): Mission BY Autonomous EARS/BDD Spec Synthesizer Port (SPEC-0082) (#326)
+updated_at: 2026-09-18 America/Bogota (tip refresh post-#326; pin to main@3efd262 / 3efd26231eaa8d77732051d2255031c9d66e0caa; prior tip dcaac8b5b52179b8fb1a402e1bfbeb4084df81c9 (enterprise README after BX SPEC-0081 + Ladder 22 seal/BW on main) + #326 Mission BY; stale tip-309 pin e74d3fcb56995a63e1202f28175f67ac4f3959d3 retired; tip honesty restored; Ladder 17 CLOSED; Ladder 18 CLOSED; L19 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BC+BD+BE+BF+BG MEASURED + seam-pack + closeout; Sovereign Delivery & Verification Fabric; never reopen); L20 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric; never reopen); L21 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BM+BN+BO+BP+BQ MEASURED + seam-pack + closeout; Sovereign Multi-Agent Provenance & Continuous Sentinel Fabric; never reopen); L22 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BR+BS+BT+BU+BV MEASURED + seam-pack + closeout; Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric; never reopen); L23 OPEN (Audit + BW+BX+BY MEASURED · BZ–CA pending); NEVER reopen L17–L22; PRODUCTION_READY=NO; Fundacion Delta=0; Law VI; Antigravity-first)
 ```
 
 
@@ -281,9 +281,18 @@ updated_at: 2026-09-14 America/Bogota (tip refresh post-#309; pin to main@e74d3f
 | Tip refresh post #307 | COMPLETE | MEASURED (historical/superseded; EOS_TIP_REFRESH_POST_307_2026-09-14.md; freeze+matrix to e1c54cc; Formal Ladder 21 CLOSED seal; BM–BQ MEASURED; superseded by #309 Ladder 22 audit + tip refresh post-#309) |
 | Tip refresh post #308 | COMPLETE | MEASURED (historical/superseded; tip post-#307 / L21 CLOSED seal tip refresh @ f1b7ed2; StartsWith f1b7ed2; Ladder 21 CLOSED; superseded by #309 Ladder 22 audit + tip refresh post-#309) |
 | Ladder 22 Maturity Audit | COMPLETE | MEASURED (#309; EOS_MATURITY_LADDER_22_AUDIT_2026-09-14.md; BR–BV ordered (BR/BS/BT/BU/BV); audit MEASURED; Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric; L17–L21 CLOSED never reopen; L22 OPEN (Audit MEASURED · BR–BV pending); SPEC-0075–0079 proposed) |
-| Tip refresh post #309 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_309_2026-09-14.md; freeze+matrix to e74d3fc; tip-refresh-post-309; prior tip f1b7ed2 (post-#307/#308) + #309 Ladder 22 audit; L17–L21 CLOSED retained (never reopen); L22 OPEN (Audit MEASURED · BR–BV pending; Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric); never say L22 audit not landed; never claim BR–BV MEASURED; do not start Mission BR) |
-| L22 OPEN | COMPLETE | MEASURED (Audit MEASURED · BR–BV pending; Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric; NEVER reopen L17/L18/L19/L20/L21; PRODUCTION_READY=NO) |
-| Ladder 22 OPEN | COMPLETE | MEASURED (Audit MEASURED · BR–BV pending; Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric; BR–BV pending; never reopen L17–L21) |
+| Tip refresh post #309 | COMPLETE | MEASURED (historical/superseded; EOS_TIP_REFRESH_POST_309_2026-09-14.md; freeze+matrix historically to e74d3fc; tip-refresh-post-309; L22 was OPEN (Audit MEASURED · BR–BV pending then); superseded by L22 closeout + BW/BX + #326 Mission BY + tip refresh post-#326) |
+| Ladder 22 Closeout | COMPLETE | MEASURED (EOS_LADDER_22_CLOSEOUT_2026-09-15.md; BR/BS/BT/BU/BV + seam-pack; CLOSED_FOR_LOCAL_GOVERNED_USE; PRODUCTION_READY=NO; NEVER reopen L22) |
+| Ladder 22 CLOSED | COMPLETE | MEASURED (CLOSED_FOR_LOCAL_GOVERNED_USE; BR+BS+BT+BU+BV MEASURED + seam-pack + closeout; Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric; Mission BR–BV MEASURED; NEVER claim BR–BV not MEASURED; NEVER leave L22 as OPEN or “BR–BV pending”; NEVER reopen L22; NEVER reopen L17–L21) |
+| L22 CLOSED | COMPLETE | MEASURED (CLOSED_FOR_LOCAL_GOVERNED_USE; BR+BS+BT+BU+BV MEASURED + seam-pack + closeout; never reopen L22) |
+| Ladder 23 Maturity Audit | COMPLETE | MEASURED (L23 audit proposes BW→BX→BY→BZ→CA; audit MEASURED; L17–L22 CLOSED never reopen; L23 OPEN (Audit + BW+BX+BY MEASURED · BZ–CA pending)) |
+| Mission BW | COMPLETE | MEASURED (SPEC-0080; Mission BW MEASURED; L23 satellite; L17–L22 CLOSED retained; Fundacion Delta=0) |
+| Mission BX | COMPLETE | MEASURED (SPEC-0081; Mission BX MEASURED; L23 satellite; L17–L22 CLOSED retained; Fundacion Delta=0) |
+| Mission BY | COMPLETE | MEASURED (#326; SPEC-0082; test:mission-by; Autonomous EARS/BDD Spec Synthesizer Port; Mission BY MEASURED; L17–L22 CLOSED retained; L23 OPEN (Audit + BW+BX+BY MEASURED · BZ–CA pending); NON-CLAIM EARS/BDD Spec Synthesizer ≠ PRODUCTION_READY ≠ BZ/CA implemented) |
+| Tip refresh post #326 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_326_2026-09-18.md; freeze+matrix to 3efd262; tip-refresh-post-326; prior tip dcaac8b + #326 Mission BY; stale tip-309/e74d3fc retired; L17–L22 CLOSED retained (never reopen); L23 OPEN (Audit + BW+BX+BY MEASURED · BZ–CA pending); never claim BZ–CA MEASURED; do not start Mission BZ/CA) |
+| L23 OPEN | COMPLETE | MEASURED (Audit + BW+BX+BY MEASURED · BZ–CA pending; NEVER reopen L17–L22; PRODUCTION_READY=NO) |
+| Ladder 23 OPEN | COMPLETE | MEASURED (Audit + BW+BX+BY MEASURED · BZ–CA pending; BW MEASURED; BX MEASURED; BY MEASURED; BZ–CA pending; never reopen L17–L22) |
+| tip-refresh-post-326 | COMPLETE | MEASURED (tip honesty post-#326; main@3efd262; L22 CLOSED; L23 OPEN) |
 | Ladder 20 CLOSED | COMPLETE | MEASURED (CLOSED_FOR_LOCAL_GOVERNED_USE; BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric; Mission BH–BL MEASURED; NEVER claim BH–BL not MEASURED; NEVER claim L20 audit not landed; NEVER leave L20 as OPEN or “BL pending”; NEVER reopen L20; NEVER reopen L16/L17/L18/L19) |
 | L20 CLOSED | COMPLETE | MEASURED (CLOSED_FOR_LOCAL_GOVERNED_USE; BH+BI+BJ+BK+BL MEASURED + seam-pack + closeout; Sovereign Mission Continuity & Operator Fabric; never say BH–BL not MEASURED; never say L20 audit not landed; NEVER leave L20 as OPEN or “BL pending”; NEVER reopen L20; never reopen L16/L17/L18/L19) |
 | Branch protection HITL on main | COMPLETE_WITH_CONDITIONS | OBSERVED RULE_CREATED_NOT_ENFORCED (#37; 5th check named in docs, not GH-enforced) |
@@ -292,14 +301,25 @@ updated_at: 2026-09-14 America/Bogota (tip refresh post-#309; pin to main@e74d3f
 | MCP SSOT + consumer sync | COMPLETE | VERIFIED (#26; MCP_SSOT.md) |
 
 
-## Tip refresh notes (post-#309)
+## Tip refresh notes (post-#326)
+
+- evaluated_tip pinned to OBSERVED main tip after #326: 3efd26231eaa8d77732051d2255031c9d66e0caa (StartsWith 3efd262; full SHA hardcoded tip-247 style; prior tip dcaac8b5b52179b8fb1a402e1bfbeb4084df81c9 (enterprise README after BX SPEC-0081 + Ladder 22 seal/BW); stale tip-309 pin e74d3fcb56995a63e1202f28175f67ac4f3959d3 retired; Mission BY #326 @ 3efd262)
+- Prior tip dcaac8b5b52179b8fb1a402e1bfbeb4084df81c9 + #326 Mission BY Autonomous EARS/BDD Spec Synthesizer Port (SPEC-0082) → tip 3efd26231eaa8d77732051d2255031c9d66e0caa; tip honesty restored; L17–L22 CLOSED retained; Ladder 23 OPEN (Audit + BW+BX+BY MEASURED · BZ–CA pending); progression dcaac8b → 3efd262
+- Matrix: Ladder 22 Closeout MEASURED + Ladder 22 CLOSED + Ladder 23 Maturity Audit MEASURED + Mission BW MEASURED + Mission BX MEASURED + Mission BY MEASURED + Tip refresh post #326 MEASURED; L23 OPEN (Audit + BW+BX+BY MEASURED · BZ–CA pending); Formal L17–L22 CLOSED seals retained; Tip refresh post #309 MEASURED (historical/superseded; L22 was OPEN (Audit MEASURED · BR–BV pending then))
+- Dirty-defer tip honesty pin moved with freeze (tip-refresh-post-326 / 3efd262; tip-326 / main@3efd262)
+- **Formal Ladder 22 CLOSED seal — NEVER reopen L22:** Ladder 22 is CLOSED_FOR_LOCAL_GOVERNED_USE. NEVER leave L22 as OPEN or “BR–BV pending”. Never say BR–BV not MEASURED. Never say L22 audit/closeout not landed.
+- **Ladder 23 OPEN — DO NOT start Mission BZ/CA:** Ladder 23 is OPEN (Audit + BW+BX+BY MEASURED · BZ–CA pending). NEVER claim BZ–CA MEASURED. Never say BW/BX/BY not MEASURED.
+- NON-CLAIM: Ladder 22 CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY; Mission BY MEASURED ≠ BZ/CA implemented / ≠ PRODUCTION_READY; Fundacion Δ=0; Antigravity-first
+
+## Tip refresh notes (post-#309) — historical/superseded
+
 
 - evaluated_tip pinned to OBSERVED main tip after #309: e74d3fcb56995a63e1202f28175f67ac4f3959d3 (StartsWith e74d3fc; full SHA hardcoded tip-247 style; prior tip-307 pin e1c54ccbee3595bc312c1e97ae335f35605583f9 + Tip #308 f1b7ed2ae56909403dc56094fd76f1ef4a17b864; Ladder 22 Audit #309 @ e74d3fc)
 - Prior tip f1b7ed2ae56909403dc56094fd76f1ef4a17b864 + #309 Ladder 22 Maturity Gap Audit (SPEC-0075–0079 proposed) → tip e74d3fcb56995a63e1202f28175f67ac4f3959d3; tip honesty restored; L17–L21 CLOSED retained; Ladder 22 OPEN (Audit MEASURED · BR–BV pending; Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric); progression f1b7ed2 → e74d3fc
 - Matrix: Ladder 22 Maturity Audit MEASURED + Tip refresh post #309 MEASURED; L22 OPEN (Audit MEASURED · BR–BV pending; Sovereign Intent Decomposition & Dynamic Workflow Orchestration Fabric); Formal L17–L21 CLOSED seals retained
 - Dirty-defer tip honesty pin moved with freeze (tip-refresh-post-309 / e74d3fc; tip-309 / main@e74d3fc)
 - **L17–L21 CLOSED seals retained — NEVER reopen.**
-- **Ladder 22 OPEN — DO NOT start Mission BR:** Ladder 22 is OPEN (Audit MEASURED · BR–BV pending). NEVER claim BR–BV MEASURED. Never say Ladder 22 audit not landed.
+- **Ladder 22 OPEN — historical tip-309 seal (superseded):** Ladder 22 was OPEN (Audit MEASURED · BR–BV pending then). Later: BR–BV MEASURED + L22 CLOSED via closeout. Never say Ladder 22 audit not landed.
 - NON-CLAIM: Ladder 22 Audit MEASURED ≠ BR–BV implemented / ≠ PRODUCTION_READY; Fundacion Δ=0; Antigravity-first
 
 ## Tip refresh notes (post-#307)
