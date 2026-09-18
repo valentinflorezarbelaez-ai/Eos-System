@@ -310,7 +310,9 @@
     "test:mission-cg": "node --test tests/eos-cg-external-tool-federation-port.test.js",
     "test:external-tool-federation": "node --test tests/eos-cg-external-tool-federation-port.test.js",
     "test:mission-ch": "node --test tests/eos-ch-mission-archive-replay-port.test.js",
-    "test:mission-archive-replay": "node --test tests/eos-ch-mission-archive-replay-port.test.js"
+    "test:mission-archive-replay": "node --test tests/eos-ch-mission-archive-replay-port.test.js",
+    "test:mission-ci": "node --test tests/eos-ci-hitl-escalation-federation-port.test.js",
+    "test:hitl-escalation-federation": "node --test tests/eos-ci-hitl-escalation-federation-port.test.js"
   },
   "keywords": [
     "eos",

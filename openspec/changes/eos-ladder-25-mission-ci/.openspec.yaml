@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-25-mission-ci
+mission: CI
+spec: SPEC-0092
+title: Human Authority Escalation Federation Port
+ladder: 25
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-18"
