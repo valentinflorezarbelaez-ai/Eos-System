@@ -292,7 +292,9 @@
     "test:mission-bx": "node --test tests/eos-bx-autonomous-self-healing-port.test.js",
     "test:self-healing": "node --test tests/eos-bx-autonomous-self-healing-port.test.js",
     "test:mission-by": "node --test tests/eos-by-spec-synthesis-compiler-port.test.js",
-    "test:spec-synthesis": "node --test tests/eos-by-spec-synthesis-compiler-port.test.js"
+    "test:spec-synthesis": "node --test tests/eos-by-spec-synthesis-compiler-port.test.js",
+    "test:mission-bz": "node --test tests/eos-bz-merkle-ledger-notarization-port.test.js",
+    "test:merkle-ledger": "node --test tests/eos-bz-merkle-ledger-notarization-port.test.js"
   },
   "keywords": [
     "eos",
