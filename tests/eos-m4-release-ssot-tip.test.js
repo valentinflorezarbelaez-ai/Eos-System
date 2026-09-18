@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#330 pinned tip: main@02e635e / 02e635e4f05691d3c16a228370ce20d89c1bb681 (prior sealed tip 3a9a39bffdf57dff99f58a12b238f37642acd05b Mission BZ #328 / tip-refresh-post-328; tip refresh #329 on main with freeze staying on BZ until this refresh; #330 feat(ci): Mission CA Ladder 23 seam-pack consolidation & closeout (SPEC-0084) (#330); tip honesty restored; Formal Ladder 23 CLOSED; L17-L23 CLOSED retained; never reopen L23) */
-const EXPECTED_TIP = '02e635e4f05691d3c16a228370ce20d89c1bb681';
+/** Tip refresh post-#332 pinned tip: main@bdd5492 / bdd54927171634c9d52c8bcc73e6a0c45354d110 (prior sealed tip 02e635e4f05691d3c16a228370ce20d89c1bb681 Mission CA #330 / Formal L23 CLOSED / tip-refresh-post-330; tip refresh #331 on main with freeze staying on CA until this refresh; #332 docs(audit): Ladder 24 maturity gap audit — Cross-Ladder Composition & Fleet Operator Fabric (#332); tip honesty restored; Ladder 24 OPEN (Audit MEASURED · CB–CF pending); L17-L23 CLOSED retained; never reopen L23; do not start Mission CB; do not claim CB–CF MEASURED) */
+const EXPECTED_TIP = 'bdd54927171634c9d52c8bcc73e6a0c45354d110';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-330 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-332 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-330 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-332 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -567,6 +567,21 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'tip-refresh-post-328',
     'Tip refresh post #330',
     'tip-refresh-post-330',
+    'Ladder 24 Maturity Audit',
+    'Ladder 24 OPEN',
+    'L24 OPEN',
+    'CB–CF pending',
+    'Audit MEASURED · CB–CF pending',
+    'Sovereign Cross-Ladder Composition, Mission Economics & Fleet Operator Fabric',
+    'Tip refresh post #332',
+    'tip-refresh-post-332',
+    'Tip refresh post #331',
+    'SPEC-0085',
+    'SPEC-0086',
+    'SPEC-0087',
+    'SPEC-0088',
+    'SPEC-0089',
+    'Mission CB',
     'NEVER reopen L22',
     'never reopen L22',
     'NEVER reopen L23',
@@ -753,7 +768,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(freezeHeader, /L20 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BH\+BI\+BJ\+BK\+BL MEASURED/);
   assert.match(matrixHeader, /L20 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BH\+BI\+BJ\+BK\+BL MEASURED/);
 
-  // Formal L22 CLOSED retained; Formal L23 CLOSED after #330 Mission CA MEASURED (BW+BX+BY+BZ+CA MEASURED + seam-pack + closeout)
+  // Formal L22 CLOSED retained; Formal L23 CLOSED retained after #330; Ladder 24 OPEN after #332 audit (Audit MEASURED · CB–CF pending)
   assert.match(matrix, /\|\s*Ladder 22 Maturity Audit\s*\|/);
   assert.match(matrix, /\|\s*Ladder 22 CLOSED\s*\|/);
   assert.match(matrix, /\|\s*L22 CLOSED\s*\|/);
@@ -826,6 +841,36 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(matrix, /BW\+BX\+BY\+BZ MEASURED/);
   assert.match(freeze, /BW\+BX\+BY\+BZ\+CA MEASURED/);
   assert.match(matrix, /BW\+BX\+BY\+BZ\+CA MEASURED/);
+
+  // Ladder 24 OPEN after #332 audit (Audit MEASURED · CB–CF pending); L17–L23 CLOSED retained; never reopen L23
+  assert.match(matrix, /\|\s*Ladder 24 Maturity Audit\s*\|/);
+  assert.match(matrix, /\|\s*Ladder 24 OPEN\s*\|/);
+  assert.match(matrix, /\|\s*L24 OPEN\s*\|/);
+  assert.match(matrix, /\|\s*Tip refresh post #332\s*\|/);
+  assert.match(matrix, /\|\s*Tip refresh post #331\s*\|/);
+  assert.match(freeze, /tip-refresh-post-332|Tip refresh post #332|tip refresh post-#332/);
+  assert.match(matrix, /tip-refresh-post-332/);
+  assert.match(freeze, /Ladder 24 Maturity Gap Audit|Ladder 24 Maturity Audit|L24 OPEN/);
+  assert.match(matrix, /Ladder 24 Maturity Gap Audit|Ladder 24 Maturity Audit|L24 OPEN/);
+  assert.match(freeze, /Sovereign Cross-Ladder Composition, Mission Economics & Fleet Operator Fabric/);
+  assert.match(matrix, /Sovereign Cross-Ladder Composition, Mission Economics & Fleet Operator Fabric/);
+  assert.match(freeze, /CB–CF pending/);
+  assert.match(matrix, /CB–CF pending/);
+  assert.match(freeze, /Audit MEASURED · CB–CF pending/);
+  assert.match(matrix, /Audit MEASURED · CB–CF pending/);
+  assert.match(freeze, /SPEC-0085|Mission CB/);
+  assert.match(matrix, /SPEC-0085|Mission CB/);
+  assert.match(freezeHeader, /L24 OPEN \(Audit MEASURED · CB–CF pending/);
+  assert.match(matrixHeader, /L24 OPEN \(Audit MEASURED · CB–CF pending/);
+  assert.match(freezeHeader, /L23 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BW\+BX\+BY\+BZ\+CA MEASURED/);
+  assert.match(matrixHeader, /L23 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; BW\+BX\+BY\+BZ\+CA MEASURED/);
+  // Current-state header must show L24 OPEN; must NOT claim CB–CF MEASURED; L23 stays CLOSED (never reopen)
+  assert.doesNotMatch(freezeHeader, /L24 CLOSED/);
+  assert.doesNotMatch(matrixHeader, /L24 CLOSED/);
+  assert.doesNotMatch(freezeHeader, /CB–CF MEASURED/);
+  assert.doesNotMatch(matrixHeader, /CB–CF MEASURED/);
+  assert.doesNotMatch(freezeHeader, /L23 OPEN \(Audit MEASURED/);
+  assert.doesNotMatch(matrixHeader, /L23 OPEN \(Audit MEASURED/);
 
   assert.doesNotMatch(matrix, /\|\s*Merge to main\s*\|\s*FUTURE\s*\|\s*BLOCKED\s*\|/i);
 });
