@@ -160,6 +160,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-cc-mission-portfolio-budget-port.test.js',
 
   'eos-cd-fleet-activation-port.test.js',
+
+  'eos-ce-operator-reality-console-port.test.js',
 ]);
 
 /**
