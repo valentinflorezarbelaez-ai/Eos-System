@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-328 to live main after #328 Mission BZ (prior tip 3efd26231eaa8d77732051d2255031c9d66e0caa; tip-327/552f035 lineage; Mission BZ #328 3a9a39bffdf57dff99f58a12b238f37642acd05b)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-330 to live main after #330 Mission CA (prior tip 3a9a39bffdf57dff99f58a12b238f37642acd05b; tip-329 lineage; Mission CA #330 02e635e4f05691d3c16a228370ce20d89c1bb681; Formal Ladder 23 CLOSED)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '3a9a39bffdf57dff99f58a12b238f37642acd05b') {
+      if (!tip || tip[1] !== '02e635e4f05691d3c16a228370ce20d89c1bb681') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-328 expected main_tip=3a9a39bffdf57dff99f58a12b238f37642acd05b (post-#328 / Mission BZ MEASURED / L22 CLOSED / L23 OPEN (Audit + BW+BX+BY+BZ MEASURED · CA pending); tip honesty restored; tip-328 / main@3a9a39b; L17–L22 CLOSED retained; L23 OPEN)',
+            'tip-refresh-post-330 expected main_tip=02e635e4f05691d3c16a228370ce20d89c1bb681 (post-#330 / Mission CA MEASURED / Formal Ladder 23 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; BW+BX+BY+BZ+CA MEASURED + seam-pack + closeout); tip honesty restored; tip-330 / main@02e635e; L17–L23 CLOSED retained; never reopen L23)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-328 / main@3a9a39b (post-#328 / Mission BZ MEASURED / L22 CLOSED / L23 OPEN; tip-328 / main@3a9a39b; L17–L22 CLOSED retained; L23 OPEN)',
+          path: 'freeze main_tip pinned to tip-refresh-post-330 / main@02e635e (post-#330 / Mission CA MEASURED / Formal Ladder 23 CLOSED; tip-330 / main@02e635e; L17–L23 CLOSED retained; never reopen L23)',
           status: 'VERIFIED',
           type
         });
