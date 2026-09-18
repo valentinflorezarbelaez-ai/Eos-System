@@ -1,0 +1,23 @@
+schema: spec-driven
+created: 2026-09-18
+goal: Implement Ladder 24 CI Seam-Pack Consolidation & Closeout (SPEC-0089 / Mission CF) — unify CB–CE into fail-closed CI seam-pack + formal closeout. Axis Sovereign Cross-Ladder Composition, Mission Economics & Fleet Operator Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. L17–L23 CLOSED never reopen. After CF, L24 CLOSED_FOR_LOCAL_GOVERNED_USE never reopen. NON-CLAIM Seam-pack ≠ GitHub Enterprise enforcement. NON-CLAIM CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. Assume CE MEASURED on tip a4abb42. No freeze/matrix tip rewrite in this package.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0089
+phase: 1
+affected_areas:
+  - tests/eos-ladder24-seam-pack.test.js
+  - scripts/patch-mission-cf.mjs
+  - docs/releases/EOS_LADDER_24_CLOSEOUT_2026-09-18.md
+  - docs/evidence/EOS_MISSION_CF_LADDER24_SEAM_EVD_2026-09-18.md
+  - docs/adrs/ADR-0049-mission-cf-ladder24-seam-pack-closeout.md
+  - openspec/changes/eos-ladder-24-mission-cf
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - new product ports beyond seam/closeout
+  - GitHub Enterprise enforcement claims
+  - CloudAgent path
+  - reopening L17–L23
+  - tip-refresh / freeze-matrix rewrite (parent after merge)
+  - soft-allow soak / continue-on-error
