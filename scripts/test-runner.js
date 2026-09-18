@@ -154,6 +154,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-by-spec-synthesis-compiler-port.test.js',
   'eos-bz-merkle-ledger-notarization-port.test.js',
   'eos-ladder23-seam-pack.test.js',
+
+  'eos-cb-cross-ladder-composition-port.test.js',
 ]);
 
 /**
