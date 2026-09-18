@@ -1,0 +1,28 @@
+schema: spec-driven
+created: 2026-09-18
+goal: Implement Continuous Cryptographic Ledger Merkle Notarization Port (SPEC-0083) for Ladder 23 — sealed BZ-RCPT-* receipts (nine-field stableStringify + sha256 via node:crypto), fail-closed policy gate (batch bounds/Law VI/Fundacion), binary Merkle tree with Bitcoin-style odd-node duplication, O(log N) inclusion proofs, verifyTrail custody. Axis Sovereign Autonomous Synthesis, Distributed Invariant Consensus & Self-Reification Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI CLEAN on BZ-owned merkle-ledger-* under src/core/audit. L17–L22 CLOSED never reopen. L23 OPEN (BW+BX+BY MEASURED; BZ in progress; CA pending). NON-CLAIM ≠ public blockchain / ≠ cryptocurrency / ≠ PRODUCTION_READY=YES.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0083
+phase: 1
+affected_areas:
+  - src/core/audit/merkle-ledger-notarization-port.js
+  - src/core/audit/merkle-ledger-policy-gate.js
+  - src/core/audit/merkle-ledger-receipt.js
+  - tests/eos-bz-merkle-ledger-notarization-port.test.js
+  - scripts/patch-mission-bz.mjs
+  - scripts/test-runner.js
+  - package.json
+  - openspec/changes/eos-ladder-23-mission-bz
+  - docs/releases/EOS_MISSION_BZ_MERKLE_LEDGER_NOTARIZATION_2026-09-18.md
+  - docs/adrs/ADR-0044-mission-bz-merkle-ledger-notarization.md
+  - docs/evidence/EOS_MISSION_BZ_MERKLE_LEDGER_NOTARIZATION_EVD_2026-09-18.md
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - public blockchain / cryptocurrency product claims
+  - CA mission
+  - CloudAgent path
+  - reopening L17–L22
+  - soft-allow empty or oversized batches
+  - Law VI scanning of tests/ directory
