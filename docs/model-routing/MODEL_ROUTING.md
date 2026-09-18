@@ -17,7 +17,7 @@ and dynamic fallback chains consumed by `src/core/llm/model-router.js` and
 
 ### Provider ids
 
-`openai` | `anthropic` | `gemini` | `ollama` | `fake`
+`openai` | `anthropic` | `gemini` | `ollama` | `openrouter` | `fake`
 
 ### Env var names (values NEVER in repo — Law VI)
 
@@ -26,6 +26,7 @@ and dynamic fallback chains consumed by `src/core/llm/model-router.js` and
 | openai | `OPENAI_API_KEY` |
 | anthropic | `ANTHROPIC_API_KEY` |
 | gemini | `GEMINI_API_KEY` or `GOOGLE_API_KEY` |
+| openrouter | `OPENROUTER_API_KEY` (document only; value never in repo — Law VI) |
 | ollama | `OLLAMA_BASE_URL` (URL; not a secret) |
 | fake | _(none — hermetic)_ |
 

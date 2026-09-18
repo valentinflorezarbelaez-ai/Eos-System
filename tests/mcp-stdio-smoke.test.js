@@ -4,6 +4,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { EosMcpServer, CANONICAL_TOOLS } from '../src/mcp-server.js';
 import { resolveControlPlaneRoot } from '../src/core/runtime/control-plane-root.js';
+import { OpenRouterAdapter } from '../src/core/adapters/llm/openrouter-adapter.js';
+import { LlmAdapterRegistry } from '../src/core/adapters/llm/adapter-registry.js';
+import { EOSProviderRouter } from '../src/core/provider-router.js';
+import { createSecretRuntimeBroker } from '../src/core/secrets/secret-runtime-broker.js';
+import { createEcrBudgetGate } from '../src/core/budget/ecr-budget-gate.js';
 
 test('MCP-01: tools/list returns exactly 80 canonical tools', () => {
   assert.equal(CANONICAL_TOOLS.length, 80);
@@ -45,13 +50,28 @@ test('MCP-03: tools/call eos.context.compile compiles context cleanly', async ()
   assert.ok(res.receipt.sha256);
 });
 
-test('MCP-04: Provider tools remain honestly NOT_CONFIGURED (no fake wiring)', async () => {
+test('MCP-04: Provider tools fail closed with NO_CREDENTIALS when no env keys are wired', async () => {
   const server = new EosMcpServer();
-  const res = await server.handleToolCall('eos.provider.route', { prompt: 'x' });
+  const env = { EOS_MODE: 'read-write', EOS_AUTONOMY_LEVEL: 'LEVEL_4', EOS_ALLOW_EXTERNAL_SIDE_EFFECTS: 'false' };
 
-  assert.equal(res.status, 'NOT_CONFIGURED');
+  const res = await server.handleToolCall('eos.provider.route', {
+    taskType: 'ARCHITECTURE_DEEP',
+    prompt: 'Design the auth boundary'
+  }, env);
+
+  assert.equal(res.status, 'NO_CREDENTIALS');
+  assert.equal(res.code, 'NO_CREDENTIALS');
   assert.equal(res.executed, false);
   assert.equal(res.sideEffects, 'NONE');
+  assert.equal(res.PRODUCTION_READY, 'NO');
+
+  const health = await server.handleToolCall('eos.provider.health', {
+    provider: 'OPENROUTER'
+  }, env);
+  assert.equal(health.status, 'NO_CREDENTIALS');
+  assert.equal(health.executed, false);
+  assert.equal(health.sideEffects, 'NONE');
+  assert.equal(health.PRODUCTION_READY, 'NO');
 });
 
 test('MCP-05: underscore tool names normalize to dotted canonical names', async () => {
@@ -98,4 +118,51 @@ test('MCP-08: no canonical tool returns SIMULATION_ONLY', async () => {
       `${tool.name} must not fall through to simulation`
     );
   }
+});
+
+test('MCP-09: Real provider dispatch executes hermetically through injected doubles', async () => {
+  const OPENROUTER_ENDPOINT = 'https://openrouter.ai/api/v1/chat/completions';
+  const FAKE_KEY = 'env-fake-openrouter-key-001';
+  const calls = [];
+  const fetchDouble = async (url, requestOpts) => {
+    calls.push({ url, requestOpts });
+    return {
+      ok: true,
+      status: 200,
+      statusText: 'OK',
+      json: async () => ({
+        id: 'gen-mcp-9',
+        choices: [
+          { index: 0, message: { role: 'assistant', content: 'fake completion' }, finish_reason: 'stop' }
+        ],
+        usage: { prompt_tokens: 12, completion_tokens: 7, total_tokens: 19 }
+      })
+    };
+  };
+
+  const registry = new LlmAdapterRegistry();
+  registry.registerAdapter(new OpenRouterAdapter({ apiKey: FAKE_KEY, fetchImpl: fetchDouble }));
+  const router = new EOSProviderRouter({
+    registry,
+    secretBroker: createSecretRuntimeBroker({ env: { OPENROUTER_API_KEY: FAKE_KEY } }),
+    ecrGate: createEcrBudgetGate({ tokenThreshold: 100000 }),
+    timeoutMs: 5000
+  });
+  const server = new EosMcpServer(null, { providerRouter: router });
+  const env = { EOS_MODE: 'read-write', EOS_AUTONOMY_LEVEL: 'LEVEL_4', EOS_ALLOW_EXTERNAL_SIDE_EFFECTS: 'false' };
+
+  const res = await server.handleToolCall('eos.provider.route', {
+    taskType: 'ARCHITECTURE_DEEP',
+    prompt: 'Design the auth boundary'
+  }, env);
+
+  assert.equal(res.status, 'SUCCESS');
+  assert.equal(res.executed, true);
+  assert.equal(res.sideEffects, 'READ_ONLY');
+  assert.equal(res.provider_route.status, 'SUCCESS');
+  assert.equal(res.provider_route.PRODUCTION_READY, 'NO');
+  assert.equal(res.provider_route.modo, 'PRIMARY');
+  assert.equal(calls.length, 1, 'real dispatch must perform exactly one network call');
+  assert.equal(calls[0].url, OPENROUTER_ENDPOINT);
+  assert.equal(calls[0].requestOpts.headers.Authorization, `Bearer ${FAKE_KEY}`);
 });

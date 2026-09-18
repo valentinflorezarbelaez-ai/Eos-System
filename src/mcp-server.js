@@ -22,6 +22,9 @@ import { EOSHarmonicMediator } from './core/mediator.js';
 import { EOSIntentCompiler } from './core/intent-compiler.js';
 import { EOSSentinelDaemon } from './core/sentinel-daemon.js';
 import { EOSProviderRouter } from './core/provider-router.js';
+import { LlmAdapterRegistry } from './core/adapters/llm/adapter-registry.js';
+import { createSecretRuntimeBroker } from './core/secrets/secret-runtime-broker.js';
+import { createEcrBudgetGate } from './core/budget/ecr-budget-gate.js';
 import { EOSScaffolderClean } from './core/scaffolder-clean.js';
 import { EOSProcessGovernor } from './core/process-governor.js';
 import { EOSKnowledgeOntology } from './core/knowledge-ontology.js';
@@ -1037,7 +1040,15 @@ class EosMcpServer {
     this.mediator = options.mediator || new EOSHarmonicMediator();
     this.intentCompiler = options.intentCompiler || new EOSIntentCompiler();
     this.sentinel = options.sentinel || new EOSSentinelDaemon({ rootPath: this.baseDir });
-    this.providerRouter = options.providerRouter || new EOSProviderRouter();
+    // Real provider execution path (slice 3): default wiring stays hermetically
+    // fail-closed — the default secret broker starts with an EMPTY env map, so
+    // zero production credentials are reachable; keys arrive only via injected
+    // options (registry / secretBroker / ecrGate) from the operator.
+    this.providerRouter = options.providerRouter || new EOSProviderRouter({
+      registry: options.registry || new LlmAdapterRegistry(),
+      secretBroker: options.secretBroker || createSecretRuntimeBroker(),
+      ecrGate: options.ecrGate || createEcrBudgetGate()
+    });
     this.knowledgeOntology = new EOSKnowledgeOntology();
     this.processGovernor = new EOSProcessGovernor();
     this.schemaValidator = new EOSMCPSchemaValidator();
@@ -1729,38 +1740,56 @@ switch (name) {
         });
 
       case 'eos.provider.route':
-        if (args && (args.tipoTarea || args.taskType)) {
-          return this._guarded(toolDef, env, async () => {
-            const taskCategory = args.tipoTarea || args.taskType;
-            const forzarFallo = args.forzarFalloPrimario || false;
-            const resultado = await this.providerRouter.enrutarMision(taskCategory, forzarFallo);
-            return {
-              status: 'SUCCESS',
-              executed: true,
-              provider_route: resultado
-            };
-          });
+        if (!args || !(args.tipoTarea || args.taskType)) {
+          return {
+            tool: name,
+            status: 'ADAPTER_NOT_FOUND',
+            code: 'ADAPTER_NOT_FOUND',
+            executed: false,
+            sideEffects: 'NONE',
+            reason: 'no task type provided for provider routing',
+            PRODUCTION_READY: 'NO'
+          };
         }
-        return {
-          tool: name,
-          status: 'NOT_CONFIGURED',
-          executed: false,
-          sideEffects: 'NONE',
-          message:
-            'Provider routing is out of scope for local governed MVP (no network credentials). Use Cursor/local models outside EOS provider router.',
-          epistemic_class: 'NOT_VERIFIED'
-        };
+        return this._guarded(toolDef, env, async () => {
+          const taskCategory = args.tipoTarea || args.taskType;
+          const prompt = args.prompt || '';
+          // Hermetic simulation contract preserved: explicit Injection flags keep
+          // the deterministic fault-injection path (spec: Injection flags preserved).
+          if (args.forzarFalloPrimario || args.forzarFalloFallback) {
+            const simulado = await this.providerRouter.enrutarMision(
+              taskCategory,
+              Boolean(args.forzarFalloPrimario),
+              Boolean(args.forzarFalloFallback)
+            );
+            return { executed: true, provider_route: simulado };
+          }
+          const resultado = await this.providerRouter.enrutarMisionReal(taskCategory, {
+            messages: [{ role: 'user', content: String(prompt) }]
+          });
+          if (resultado.status === 'SUCCESS') {
+            return { executed: true, provider_route: resultado };
+          }
+          // Fail-closed envelope: _guarded spreads data over status/executed/sideEffects.
+          return { ...resultado };
+        });
 
       case 'eos.provider.health':
-        return {
-          tool: name,
-          status: 'NOT_CONFIGURED',
-          executed: false,
-          sideEffects: 'NONE',
-          message:
-            'Provider routing is out of scope for local governed MVP (no network credentials). Use Cursor/local models outside EOS provider router.',
-          epistemic_class: 'NOT_VERIFIED'
-        };
+        return this._guarded(toolDef, env, async () => {
+          const providerId = args && (args.providerId || args.provider);
+          const resultado = await this.providerRouter.probeProviderHealth(
+            providerId ? String(providerId) : ''
+          );
+          if (resultado.status === 'SUCCESS') {
+            return { executed: true, provider_health: resultado };
+          }
+          return {
+            ...resultado,
+            code: resultado.status,
+            executed: false,
+            sideEffects: 'NONE'
+          };
+        });
 
       case 'eos.sentinel.self_remember':
       case 'eos_sentinel_self_remember': {
