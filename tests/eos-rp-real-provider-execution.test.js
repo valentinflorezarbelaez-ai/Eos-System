@@ -1,7 +1,8 @@
 /**
  * @file eos-rp-real-provider-execution.test.js
- * @description Real Provider Execution (RP) — Slice 1 (PR 1): OpenRouterAdapter,
- * registry model→adapter mapping, and Law VI env-gate allowlist names.
+ * @description Real Provider Execution (RP) — Slice 1+2 (PR 1+2): OpenRouterAdapter,
+ * registry model→adapter mapping, Law VI env-gate allowlist names, and the real
+ * dispatch path (`enrutarMisionReal` + ECR budget gate + error bridge + health probe).
  * Hermetic: mock fetchImpl doubles ONLY. ZERO real network in CI.
  * PRODUCTION_READY: NO
  */
@@ -14,14 +15,17 @@ import {
   LlmTimeoutError,
   LlmRateLimitError,
   LlmProviderError,
-  LlmSchemaValidationError
+  LlmSchemaValidationError,
+  LlmBudgetError
 } from '../src/core/ports/llm-port.js';
 import { OpenRouterAdapter } from '../src/core/adapters/llm/openrouter-adapter.js';
+import { EOSProviderRouter } from '../src/core/provider-router.js';
 import {
   LlmAdapterRegistry,
   MODEL_ROUTING_MAP
 } from '../src/core/adapters/llm/adapter-registry.js';
 import { GeminiAdapter } from '../src/core/adapters/llm/gemini-adapter.js';
+import { createEcrBudgetGate } from '../src/core/budget/ecr-budget-gate.js';
 import {
   createEnvGate,
   DEFAULT_ALLOWLISTED_ENV_KEYS,
@@ -524,5 +528,452 @@ describe('LlmAdapterRegistry model→adapter routing map', () => {
   test('src/core/index.js re-exports OpenRouterAdapter', async () => {
     const core = await import('../src/core/index.js');
     assert.ok(core.OpenRouterAdapter === OpenRouterAdapter);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Slice 2 (PR 2): real dispatch through the router — enrutarMisionReal (D1/D2/D6),
+// ECR budget gate (spec: Budget gate before network I/O), error bridge (D4),
+// and probeProviderHealth (D5). All transport hermetic via fetchImpl doubles.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** AbortError-shaped failure for timeout simulation (matches fetch abort). */
+function abortError() {
+  const err = new Error('The operation was aborted');
+  err.name = 'AbortError';
+  return err;
+}
+
+/** LlmResponse-shaped success for the hermetic gemini fallback double. */
+function geminiSuccessBody() {
+  return {
+    schema_version: '1.0.0',
+    provider: 'GOOGLE',
+    model: 'gemini-1.5-pro',
+    request_id: 'rp-fallback-1',
+    status: 'COMPLETED',
+    structured_output: null,
+    raw_text: 'from fake gemini',
+    usage: { input_tokens: 3, output_tokens: 2, total_tokens: 5, estimated_cost_usd: 0.00001 },
+    latency_ms: 11,
+    timestamp: new Date().toISOString(),
+    errors: []
+  };
+}
+
+/**
+ * Hermetic GOOGLE_GEMINI double for router fallback tests: controllable queue of
+ * LlmResponse objects or errors. Implements receiveSecret to prove the broker
+ * handshake reaches the adapter. NEVER performs network I/O.
+ */
+class FakeGeminiAdapter extends LlmPort {
+  constructor(queue = []) {
+    super();
+    this.queue = [...queue];
+    this.injectedSecret = null;
+    this.inferCalls = 0;
+  }
+
+  getName() {
+    return 'GOOGLE_GEMINI';
+  }
+
+  getCapabilities() {
+    return {
+      provider: 'GOOGLE',
+      model_name: 'gemini-1.5-pro',
+      capabilities: { max_output_tokens: 8192 },
+      pricing_usd_per_million: { input_tokens: 1.25, output_tokens: 5 }
+    };
+  }
+
+  receiveSecret(value, _meta) {
+    this.injectedSecret = value;
+  }
+
+  async infer(request) {
+    this.inferCalls += 1;
+    const next = this.queue.shift();
+    if (next instanceof Error) throw next;
+    return next || geminiSuccessBody();
+  }
+}
+
+/**
+ * Build a router wired with a fetch-double-backed OPENROUTER adapter, a hermetic
+ * broker env map, and an ECR gate — zero real network possible.
+ * @param {object} [opts]
+ * @param {Record<string,string>} [opts.env] broker env (default no keys)
+ * @param {boolean} [opts.openrouter=true] register double-backed OPENROUTER
+ * @param {'default'|'fake'} [opts.gemini='default'] registry gemini entry
+ * @param {object} [opts.fetchOpts] makeFetchDouble options for OPENROUTER
+ * @param {object} [opts.gate] createEcrBudgetGate options
+ */
+function makeRouter(opts = {}) {
+  const registry = new LlmAdapterRegistry();
+  const fetchImpl = makeFetchDouble(opts.fetchOpts || { jsonBody: successBody() });
+  if (opts.openrouter !== false) {
+    registry.registerAdapter(new OpenRouterAdapter({ apiKey: FAKE_KEY, fetchImpl }));
+  }
+  if (opts.gemini === 'fake') {
+    registry.registerAdapter(new FakeGeminiAdapter(opts.geminiQueue || []));
+  }
+  const broker = createSecretRuntimeBroker({ env: opts.env || {} });
+  const ecrGate = createEcrBudgetGate(opts.gate || { tokenThreshold: 100000 });
+  const router = new EOSProviderRouter({
+    registry,
+    secretBroker: broker,
+    ecrGate,
+    timeoutMs: 5000
+  });
+  return { router, registry, broker, ecrGate, fetchImpl };
+}
+
+describe('EOSProviderRouter.enrutarMisionReal (dispatch + ECR budget gate)', () => {
+  test('successful PRIMARY dispatch returns the D6 receipt with usage and PRODUCTION_READY NO', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY }
+    });
+
+    const receipt = await router.enrutarMisionReal('ARCHITECTURE_DEEP', {
+      messages: [{ role: 'user', content: 'Summarize the EOS architecture.' }],
+      request_id: 'rp-dispatch-1'
+    });
+
+    assert.equal(receipt.status, 'SUCCESS');
+    assert.equal(receipt.executed, true);
+    assert.equal(receipt.proveedorUtilizado, 'claude-3-5-sonnet');
+    assert.equal(receipt.modo, 'PRIMARY');
+    assert.equal(typeof receipt.latency_ms, 'number');
+    assert.deepEqual(receipt.usage, {
+      input_tokens: 12,
+      output_tokens: 7,
+      total_tokens: 19,
+      estimated_cost_usd: 0.000141
+    });
+    assert.equal(receipt.PRODUCTION_READY, 'NO');
+
+    // Real dispatch happened: one network call, mapped model, broker-delivered key
+    assert.equal(fetchImpl.calls.length, 1);
+    const { url, requestOpts: reqOpts } = fetchImpl.calls[0];
+    assert.equal(url, OPENROUTER_ENDPOINT);
+    assert.equal(reqOpts.headers.Authorization, `Bearer ${FAKE_KEY}`);
+    assert.equal(JSON.parse(reqOpts.body).model, 'anthropic/claude-3.5-sonnet');
+  });
+
+  test('unmapped task type returns ADAPTER_NOT_FOUND with zero network I/O', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY }
+    });
+
+    const receipt = await router.enrutarMisionReal('UNKNOWN_TASK_XYZ', {
+      messages: [{ role: 'user', content: 'hi' }]
+    });
+
+    assert.equal(receipt.status, 'ADAPTER_NOT_FOUND');
+    assert.equal(receipt.executed, false);
+    assert.equal(receipt.sideEffects, 'NONE');
+    assert.equal(fetchImpl.calls.length, 0);
+  });
+
+  test('missing credentials return NO_CREDENTIALS with zero network I/O', async () => {
+    const { router, fetchImpl } = makeRouter({ env: {} });
+
+    const receipt = await router.enrutarMisionReal('ARCHITECTURE_DEEP', {
+      messages: [{ role: 'user', content: 'hi' }]
+    });
+
+    assert.equal(receipt.status, 'NO_CREDENTIALS');
+    assert.equal(receipt.executed, false);
+    assert.equal(fetchImpl.calls.length, 0);
+  });
+
+  test('exhausted ECR budget returns BUDGET_EXCEEDED before any network call', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY },
+      gate: { tokenThreshold: 100, initialTokens: 200 }
+    });
+
+    const receipt = await router.enrutarMisionReal('ARCHITECTURE_DEEP', {
+      messages: [{ role: 'user', content: 'hi' }]
+    });
+
+    assert.equal(receipt.status, 'BUDGET_EXCEEDED');
+    assert.equal(receipt.executed, false);
+    assert.equal(fetchImpl.calls.length, 0, 'double must never be called when ECR denies');
+  });
+
+  test('fallback retry after primary timeout succeeds with modo FALLBACK (calls within sanctioned count)', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY, GEMINI_API_KEY: 'fake-gemini-key' },
+      fetchOpts: { throwError: abortError() },
+      gemini: 'fake',
+      geminiQueue: [geminiSuccessBody()]
+    });
+
+    // CONTRACT_SYNTHESIS: primary gpt-4o → OPENROUTER (times out), fallback gemini-1-5-pro
+    const receipt = await router.enrutarMisionReal('CONTRACT_SYNTHESIS', {
+      messages: [{ role: 'user', content: 'hi' }]
+    });
+
+    assert.equal(receipt.status, 'SUCCESS');
+    assert.equal(receipt.modo, 'FALLBACK');
+    assert.equal(receipt.proveedorUtilizado, 'gemini-1-5-pro');
+    assert.deepEqual(receipt.usage, {
+      input_tokens: 3,
+      output_tokens: 2,
+      total_tokens: 5,
+      estimated_cost_usd: 0.00001
+    });
+    assert.ok(fetchImpl.calls.length <= 2, 'sanctioned fallback count never exceeded');
+    assert.equal(fetchImpl.calls.length, 1);
+  });
+
+  test('primary and fallback both time out → PROVIDER_TIMEOUT after exactly 2 network calls', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY },
+      fetchOpts: { throwError: abortError() }
+    });
+
+    // ARCHITECTURE_DEEP: primary claude-3-5-sonnet + fallback gpt-4o, both OPENROUTER
+    const receipt = await router.enrutarMisionReal('ARCHITECTURE_DEEP', {
+      messages: [{ role: 'user', content: 'hi' }]
+    });
+
+    assert.equal(receipt.status, 'PROVIDER_TIMEOUT');
+    assert.equal(receipt.executed, false);
+    assert.equal(receipt.providerCode, 'LLM_TIMEOUT');
+    assert.equal(fetchImpl.calls.length, 2, 'total network calls must equal the sanctioned count');
+  });
+});
+
+describe('EOSProviderRouter.enrutarMisionReal (LlmPort error bridge D4)', () => {
+  test('auth denied maps to PROVIDER_UNAVAILABLE with providerCode LLM_AUTH_DENIED and no retry', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY },
+      fetchOpts: { status: 401, statusText: 'Unauthorized', jsonBody: { error: { message: 'bad key' } } }
+    });
+
+    const receipt = await router.enrutarMisionReal('ARCHITECTURE_DEEP', {
+      messages: [{ role: 'user', content: 'hi' }]
+    });
+
+    assert.equal(receipt.status, 'PROVIDER_UNAVAILABLE');
+    assert.equal(receipt.providerCode, 'LLM_AUTH_DENIED');
+    assert.equal(receipt.executed, false);
+    assert.equal(fetchImpl.calls.length, 1, 'auth rejection must NOT retry the fallback');
+  });
+
+  test('rate limit on primary and fallback maps to PROVIDER_UNAVAILABLE with providerCode LLM_RATE_LIMITED after 2 calls', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY },
+      fetchOpts: { status: 429, statusText: 'Rate Limited', jsonBody: { error: { message: 'slow down' } } }
+    });
+
+    const receipt = await router.enrutarMisionReal('ARCHITECTURE_DEEP', {
+      messages: [{ role: 'user', content: 'hi' }]
+    });
+
+    assert.equal(receipt.status, 'PROVIDER_UNAVAILABLE');
+    assert.equal(receipt.providerCode, 'LLM_RATE_LIMITED');
+    assert.equal(fetchImpl.calls.length, 2);
+  });
+
+  test('LLM_BUDGET_EXCEEDED maps to BUDGET_EXCEEDED with providerCode and no retry', async () => {
+    // CONTEXT_MASSIVE primary gemini-1-5-pro → GOOGLE_GEMINI fake double (hermetic):
+    // a raw LlmBudgetError reaches the router bridge the same way a native adapter
+    // budget rejection would.
+    const { router, fetchImpl } = makeRouter({
+      env: { GEMINI_API_KEY: 'fake-gemini-key', OPENROUTER_API_KEY: FAKE_KEY },
+      gemini: 'fake',
+      geminiQueue: [new LlmBudgetError('provider budget exceeded', { tokens: 99999 })]
+    });
+
+    const receipt = await router.enrutarMisionReal('CONTEXT_MASSIVE', {
+      messages: [{ role: 'user', content: 'hi' }]
+    });
+
+    assert.equal(receipt.status, 'BUDGET_EXCEEDED');
+    assert.equal(receipt.providerCode, 'LLM_BUDGET_EXCEEDED');
+    assert.equal(fetchImpl.calls.length, 0, 'budget errors are not retryable and never fall through to fallback');
+  });
+
+  test('schema validation failure maps to PROVIDER_UNAVAILABLE with providerCode LLM_SCHEMA_VALIDATION_FAILED and no retry', async () => {
+    // GeminiAdapter surfaces structured-output parse failures as LlmSchemaValidationError;
+    // the fake double reproduces that exact adapter-level error for the router bridge.
+    const { router, fetchImpl } = makeRouter({
+      env: { GEMINI_API_KEY: 'fake-gemini-key', OPENROUTER_API_KEY: FAKE_KEY },
+      gemini: 'fake',
+      geminiQueue: [new LlmSchemaValidationError('bad json', { rawText: 'not json' })]
+    });
+
+    const receipt = await router.enrutarMisionReal('CONTEXT_MASSIVE', {
+      messages: [{ role: 'user', content: 'hi' }]
+    });
+
+    assert.equal(receipt.status, 'PROVIDER_UNAVAILABLE');
+    assert.equal(receipt.providerCode, 'LLM_SCHEMA_VALIDATION_FAILED');
+    assert.equal(fetchImpl.calls.length, 0);
+  });
+
+  test('provider failure on primary is retried on the fallback (modo FALLBACK)', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY, GEMINI_API_KEY: 'fake-gemini-key' },
+      fetchOpts: { throwError: new LlmProviderError('upstream 500', { status: 500 }) },
+      gemini: 'fake',
+      geminiQueue: [geminiSuccessBody()]
+    });
+
+    const receipt = await router.enrutarMisionReal('CONTRACT_SYNTHESIS', {
+      messages: [{ role: 'user', content: 'hi' }]
+    });
+
+    assert.equal(receipt.status, 'SUCCESS');
+    assert.equal(receipt.modo, 'FALLBACK');
+    assert.equal(fetchImpl.calls.length, 1);
+  });
+
+  test('keys and prompts never appear in receipts or error envelopes (opaque redaction)', async () => {
+    const secret = 'super-secret-key-value-123456';
+    const prompt = 'TOP-SECRET-PROMPT-CONTENT-987654';
+
+    // Router-level redaction: an adapter may echo the PROMPT unredacted (Gemini's
+    // native errors do) — the router bridge must strip full prompt content.
+    const pending = makeRouter({
+      env: { GEMINI_API_KEY: secret },
+      gemini: 'fake',
+      geminiQueue: [new LlmAuthError(`provider echoed [${prompt}] back`, { status: 401 })]
+    });
+    const receiptA = await pending.router.enrutarMisionReal('CONTEXT_MASSIVE', {
+      messages: [{ role: 'user', content: prompt }]
+    });
+    assert.equal(receiptA.status, 'PROVIDER_UNAVAILABLE');
+    assert.equal(receiptA.providerCode, 'LLM_AUTH_DENIED');
+    assert.equal(
+      JSON.stringify(receiptA).includes(prompt),
+      false,
+      'prompt must never appear in the envelope'
+    );
+
+    // Adapter-level redaction: a provider error body echoing the KEY is redacted by
+    // OpenRouterAdapter before the router surfaces it; router strips prompt too.
+    const { router: routerB, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY },
+      fetchOpts: {
+        status: 401,
+        statusText: 'Unauthorized',
+        jsonBody: { error: { message: `echo ${FAKE_KEY} and ${prompt}` } }
+      }
+    });
+    const receiptB = await routerB.enrutarMisionReal('ARCHITECTURE_DEEP', {
+      messages: [{ role: 'user', content: prompt }]
+    });
+    assert.equal(receiptB.status, 'PROVIDER_UNAVAILABLE');
+    const dumpB = JSON.stringify(receiptB);
+    assert.equal(dumpB.includes(FAKE_KEY), false, 'key must never appear in the envelope');
+    assert.equal(dumpB.includes(prompt), false, 'prompt must never appear in the envelope');
+    assert.equal(fetchImpl.calls.length, 1);
+  });
+});
+
+describe('EOSProviderRouter.probeProviderHealth (D5 timed probe + degradation)', () => {
+  test('configured OpenRouter probe returns SUCCESS with latency, credentials, PRODUCTION_READY NO, and probe body max_tokens 1', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY }
+    });
+
+    const result = await router.probeProviderHealth('OPENROUTER');
+
+    assert.equal(result.status, 'SUCCESS');
+    assert.deepEqual(result.credentials, { present: true });
+    assert.equal(typeof result.latency_ms, 'number');
+    assert.equal(result.PRODUCTION_READY, 'NO');
+    assert.equal(fetchImpl.calls.length, 1);
+    assert.equal(JSON.parse(fetchImpl.calls[0].requestOpts.body).max_tokens, 1);
+  });
+
+  test('unknown provider returns PROVIDER_UNAVAILABLE without throwing', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY }
+    });
+
+    const result = await router.probeProviderHealth('no-such-provider-xyz');
+
+    assert.equal(result.status, 'PROVIDER_UNAVAILABLE');
+    assert.deepEqual(result.credentials, { present: false });
+    assert.equal(result.PRODUCTION_READY, 'NO');
+    assert.equal(fetchImpl.calls.length, 0);
+  });
+
+  test('unconfigured provider returns NO_CREDENTIALS fail-closed without network', async () => {
+    const { router, fetchImpl } = makeRouter({ env: {} });
+
+    const result = await router.probeProviderHealth('OPENROUTER');
+
+    assert.equal(result.status, 'NO_CREDENTIALS');
+    assert.deepEqual(result.credentials, { present: false });
+    assert.equal(fetchImpl.calls.length, 0);
+  });
+
+  test('persistent probe timeout retries then reports PROVIDER_TIMEOUT with exactly 2 network calls', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { OPENROUTER_API_KEY: FAKE_KEY },
+      fetchOpts: { throwError: abortError() }
+    });
+
+    const result = await router.probeProviderHealth('OPENROUTER', { timeoutMs: 100, retries: 2 });
+
+    assert.equal(result.status, 'PROVIDER_TIMEOUT');
+    assert.equal(result.providerCode, 'LLM_TIMEOUT');
+    assert.equal(fetchImpl.calls.length, 2, 'timeout retries = retries limit');
+  });
+
+  test('Gemini presence-only probe reports SUCCESS with credentials present (no network)', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: { GEMINI_API_KEY: 'fake-gemini-key' }
+    });
+
+    const result = await router.probeProviderHealth('GOOGLE_GEMINI');
+
+    assert.equal(result.status, 'SUCCESS');
+    assert.deepEqual(result.credentials, { present: true });
+    assert.equal(result.latency_ms, 0);
+    assert.equal(result.PRODUCTION_READY, 'NO');
+    assert.equal(fetchImpl.calls.length, 0, 'presence-only path must never touch the network');
+  });
+
+  test('Gemini without credentials reports NO_CREDENTIALS fail-closed', async () => {
+    const { router } = makeRouter({ env: {} });
+
+    const result = await router.probeProviderHealth('GOOGLE_GEMINI');
+
+    assert.equal(result.status, 'NO_CREDENTIALS');
+    assert.deepEqual(result.credentials, { present: false });
+  });
+});
+
+describe('EOSProviderRouter zero-network fail-closed (TRIANGULATE)', () => {
+  test('all fail-closed paths keep the fetch double at zero network calls (double spy)', async () => {
+    const { router, fetchImpl } = makeRouter({
+      env: {},
+      gate: { tokenThreshold: 100, initialTokens: 200 }
+    });
+
+    const a = await router.enrutarMisionReal('UNKNOWN_TASK_XYZ', { messages: [{ role: 'user', content: 'hi' }] });
+    assert.equal(a.status, 'ADAPTER_NOT_FOUND');
+
+    const b = await router.enrutarMisionReal('ARCHITECTURE_DEEP', { messages: [{ role: 'user', content: 'hi' }] });
+    assert.equal(b.status, 'NO_CREDENTIALS');
+
+    const c = await router.enrutarMisionReal('TDD_COMPLEX', { messages: [{ role: 'user', content: 'hi' }] });
+    assert.equal(c.status, 'NO_CREDENTIALS');
+
+    const d = await router.probeProviderHealth('mystery-provider');
+    assert.equal(d.status, 'PROVIDER_UNAVAILABLE');
+
+    const e = await router.probeProviderHealth('OPENROUTER');
+    assert.equal(e.status, 'NO_CREDENTIALS');
+
+    assert.equal(fetchImpl.calls.length, 0, 'zero real network across every fail-closed path');
   });
 });
