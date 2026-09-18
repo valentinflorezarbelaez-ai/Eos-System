@@ -9,11 +9,11 @@
 | Chained PRs recommended | Yes |
 | Suggested split | PR 1 → PR 2 → PR 3 (design slice plan) |
 | Delivery strategy | auto-chain |
-| Chain strategy | pending |
+| Chain strategy | feature-branch-chain |
 
 Decision needed before apply: No
 Chained PRs recommended: Yes
-Chain strategy: pending
+Chain strategy: feature-branch-chain (resolved in apply preflight; PR 1 = branch `feat/rpe/1-adapter-registry` → target `feature/eos-real-provider-execution`)
 400-line budget risk: Medium
 
 ### Suggested Work Units
@@ -28,12 +28,12 @@ Slice boundaries: PR 1 start=create `openrouter-adapter.js`, finish=`MODEL_ROUTI
 
 ## Phase 1: Adapter + Registry + Broker Allowlist (PR 1)
 
-- [ ] 1.1 RED: add adapter describe-blocks in `tests/eos-rp-real-provider-execution.test.js` (`getName()==='OPENROUTER'`, LlmPort shape, injectable `fetchImpl` double, `receiveSecret`, key precedence `__runtimeSecret||apiKey||env`, 401/403/429/abort taxonomy, usage mapping, `probe()` shape) → RED output captured
-- [ ] 1.2 GREEN: create `src/core/adapters/llm/openrouter-adapter.js` per design Interfaces (OpenAI-compatible POST, `Authorization: Bearer`, AbortController timeout, `response_format` for structured schema, cost from capabilities) → GREEN
-- [ ] 1.3 TRIANGULATE: mock double sees Bearer only with injected key; zero secrets in adapter error dumps; no `PRODUCTION_READY` from adapter → GREEN
-- [ ] 1.4 RED+GREEN: extend `src/core/secrets/env-gate.js` allowlists — names `GEMINI_API_KEY`, `OPENROUTER_API_KEY`; adapters `adapter-gemini`, `adapter-openrouter` → RED assert via `checkInject`, GREEN via `npm run test:law-vi-broker`
-- [ ] 1.5 GREEN: wire `src/core/adapters/llm/adapter-registry.js` — register OpenRouterAdapter, `MODEL_ROUTING_MAP` + `resolveModel(matrixId)` (claude-3-5-sonnet→OPENROUTER/anthropic/claude-3.5-sonnet; gpt-4o→OPENROUTER/openai/gpt-4o; gemini-1-5-pro→GOOGLE_GEMINI/gemini-1.5-pro); `getAdapter`/prefix unchanged; re-export in `src/core/index.js` → GREEN
-- [ ] 1.6 REFACTOR: consolidate doubles; slice boundary `npm run test:core` 20/20 GREEN
+- [x] 1.1 RED: add adapter describe-blocks in `tests/eos-rp-real-provider-execution.test.js` (`getName()==='OPENROUTER'`, LlmPort shape, injectable `fetchImpl` double, `receiveSecret`, key precedence `__runtimeSecret||apiKey||env`, 401/403/429/abort taxonomy, usage mapping, `probe()` shape) → RED output captured (`ERR_MODULE_NOT_FOUND`)
+- [x] 1.2 GREEN: create `src/core/adapters/llm/openrouter-adapter.js` per design Interfaces (OpenAI-compatible POST, `Authorization: Bearer`, AbortController timeout, `response_format` for structured schema, cost from capabilities) → GREEN 15/15
+- [x] 1.3 TRIANGULATE: mock double sees Bearer only with injected key; zero secrets in adapter error dumps; no `PRODUCTION_READY` from adapter → GREEN 20/20
+- [x] 1.4 RED+GREEN: extend `src/core/secrets/env-gate.js` allowlists — names `GEMINI_API_KEY`, `OPENROUTER_API_KEY`; adapters `adapter-gemini`, `adapter-openrouter` → RED assert via `checkInject`, GREEN via `npm run test:law-vi-broker` (26/26 targeted; law-vi-broker 20/20)
+- [x] 1.5 GREEN: wire `src/core/adapters/llm/adapter-registry.js` — register OpenRouterAdapter, `MODEL_ROUTING_MAP` + `resolveModel(matrixId)` (claude-3-5-sonnet→OPENROUTER/anthropic/claude-3.5-sonnet; gpt-4o→OPENROUTER/openai/gpt-4o; gemini-1-5-pro→GOOGLE_GEMINI/gemini-1.5-pro); `getAdapter`/prefix unchanged; re-export in `src/core/index.js` → GREEN 34/34
+- [x] 1.6 REFACTOR: consolidate doubles; slice boundary `npm run test:core` 20/20 GREEN → 34/34 targeted; regression pack 130 pass / 1 skip; `test:core` 20/20
 
 ## Phase 2: Real Dispatch + Budget Gate + Health Probe (PR 2)
 

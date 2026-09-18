@@ -36,6 +36,7 @@ export {
   LlmRateLimitError
 } from './ports/llm-port.js';
 export { GeminiAdapter } from './adapters/llm/gemini-adapter.js';
+export { OpenRouterAdapter } from './adapters/llm/openrouter-adapter.js';
 export { LlmAdapterRegistry } from './adapters/llm/adapter-registry.js';
 export { LlmAuthorityGate } from './governance/llm-authority-gate.js';
 export { LlmBudgetGovernor } from './intelligence/llm-budget-governor.js';
