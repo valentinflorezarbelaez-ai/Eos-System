@@ -164,6 +164,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ce-operator-reality-console-port.test.js',
 
   'eos-ladder24-seam-pack.test.js',
+
+  'eos-cg-external-tool-federation-port.test.js',
 ]);
 
 /**
