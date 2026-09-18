@@ -308,7 +308,9 @@
     "test:ladder24-seam": "node --test tests/eos-ladder24-seam-pack.test.js",
     "test:ladder24-pack": "npm run test:mission-cb && npm run test:mission-cc && npm run test:mission-cd && npm run test:mission-ce && npm run test:ladder24-seam",
     "test:mission-cg": "node --test tests/eos-cg-external-tool-federation-port.test.js",
-    "test:external-tool-federation": "node --test tests/eos-cg-external-tool-federation-port.test.js"
+    "test:external-tool-federation": "node --test tests/eos-cg-external-tool-federation-port.test.js",
+    "test:mission-ch": "node --test tests/eos-ch-mission-archive-replay-port.test.js",
+    "test:mission-archive-replay": "node --test tests/eos-ch-mission-archive-replay-port.test.js"
   },
   "keywords": [
     "eos",

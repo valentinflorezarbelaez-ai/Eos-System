@@ -166,6 +166,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ladder24-seam-pack.test.js',
 
   'eos-cg-external-tool-federation-port.test.js',
+
+  'eos-ch-mission-archive-replay-port.test.js',
 ]);
 
 /**

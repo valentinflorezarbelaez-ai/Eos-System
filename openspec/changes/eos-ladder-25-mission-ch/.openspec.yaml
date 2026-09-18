@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-25-mission-ch
+mission: CH
+spec: SPEC-0091
+title: Long-Horizon Mission Archive & Replay Port
+ladder: 25
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-18"
