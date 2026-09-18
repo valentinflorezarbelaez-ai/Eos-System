@@ -61,6 +61,30 @@ export class AutonomousLoopEngine {
   }
 
   /**
+   * Asynchronous helper to compute SHA-256 hash of a file or string
+   * @param {string} contentOrPath
+   * @param {boolean} [isFile=false]
+   * @returns {Promise<string>}
+   */
+  async _sha256Async(contentOrPath, isFile = false) {
+    const hash = crypto.createHash('sha256');
+    if (isFile) {
+      try {
+        const buffer = await fs.promises.readFile(contentOrPath);
+        hash.update(buffer);
+        return hash.digest('hex');
+      } catch (err) {
+        if (err.code === 'ENOENT') {
+          return '0000000000000000000000000000000000000000000000000000000000000000';
+        }
+        throw err;
+      }
+    }
+    hash.update(contentOrPath);
+    return hash.digest('hex');
+  }
+
+  /**
    * Executes a single surgical verification pass on a mutated file or target
    * @param {string} targetFile
    * @param {object} [options]
@@ -249,12 +273,12 @@ export class AutonomousLoopEngine {
         clearTimeout(this.debounceTimers.get(normName));
       }
 
-      const timer = setTimeout(() => {
+      const timer = setTimeout(async () => {
         this.debounceTimers.delete(normName);
 
         try {
-          // Check SHA-256 content hash delta
-          const currentHash = this._sha256(fullPath, true);
+          // Check SHA-256 content hash delta asynchronously to unblock event loop
+          const currentHash = await this._sha256Async(fullPath, true);
           const previousHash = this.fileHashes.get(normName);
 
           if (previousHash === currentHash) {
