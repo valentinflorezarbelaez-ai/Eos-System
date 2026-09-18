@@ -153,6 +153,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-bx-autonomous-self-healing-port.test.js',
   'eos-by-spec-synthesis-compiler-port.test.js',
   'eos-bz-merkle-ledger-notarization-port.test.js',
+  'eos-ladder23-seam-pack.test.js',
 ]);
 
 /**
