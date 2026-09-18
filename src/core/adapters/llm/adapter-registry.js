@@ -5,6 +5,28 @@
  */
 
 import { GeminiAdapter } from './gemini-adapter.js';
+import { OpenRouterAdapter } from './openrouter-adapter.js';
+
+/**
+ * Matrix model id → adapter mapping (design D2).
+ * Registry ids do not match matrix ids; the router resolves via `resolveModel`.
+ * Keys are the EOS provider matrix ids; values name the registered adapter
+ * (`adapter.getName()`) and the provider-side model id.
+ */
+export const MODEL_ROUTING_MAP = Object.freeze({
+  'claude-3-5-sonnet': Object.freeze({
+    adapterKey: 'OPENROUTER',
+    model: 'anthropic/claude-3.5-sonnet'
+  }),
+  'gpt-4o': Object.freeze({
+    adapterKey: 'OPENROUTER',
+    model: 'openai/gpt-4o'
+  }),
+  'gemini-1-5-pro': Object.freeze({
+    adapterKey: 'GOOGLE_GEMINI',
+    model: 'gemini-1.5-pro'
+  })
+});
 
 export class LlmAdapterRegistry {
   constructor() {
@@ -13,6 +35,19 @@ export class LlmAdapterRegistry {
 
     // Register canonical defaults
     this.registerAdapter(new GeminiAdapter());
+    this.registerAdapter(new OpenRouterAdapter());
+  }
+
+  /**
+   * Resolve a matrix model id to {adapterKey, model}.
+   * @param {string|null|undefined} matrixId
+   * @returns {{ adapterKey: string, model: string } | null} null when unmapped
+   */
+  resolveModel(matrixId) {
+    if (matrixId == null || typeof matrixId !== 'string') return null;
+    const entry = MODEL_ROUTING_MAP[matrixId.trim()];
+    if (!entry) return null;
+    return { adapterKey: entry.adapterKey, model: entry.model };
   }
 
   /**

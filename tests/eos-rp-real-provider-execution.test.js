@@ -17,6 +17,17 @@ import {
   LlmSchemaValidationError
 } from '../src/core/ports/llm-port.js';
 import { OpenRouterAdapter } from '../src/core/adapters/llm/openrouter-adapter.js';
+import {
+  LlmAdapterRegistry,
+  MODEL_ROUTING_MAP
+} from '../src/core/adapters/llm/adapter-registry.js';
+import { GeminiAdapter } from '../src/core/adapters/llm/gemini-adapter.js';
+import {
+  createEnvGate,
+  DEFAULT_ALLOWLISTED_ENV_KEYS,
+  DEFAULT_ALLOWLISTED_ADAPTERS
+} from '../src/core/secrets/env-gate.js';
+import { createSecretRuntimeBroker } from '../src/core/secrets/secret-runtime-broker.js';
 
 const OPENROUTER_ENDPOINT = 'https://openrouter.ai/api/v1/chat/completions';
 
@@ -396,5 +407,122 @@ describe('OpenRouterAdapter (TRIANGULATE: credential precedence & redaction)', (
     const result = await adapter.infer(baseRequest());
 
     assert.equal('PRODUCTION_READY' in result, false);
+  });
+});
+
+describe('Law VI env-gate allowlist (provider key NAMES only)', () => {
+  test('DEFAULT_ALLOWLISTED_ENV_KEYS includes GEMINI_API_KEY and OPENROUTER_API_KEY', () => {
+    assert.ok(DEFAULT_ALLOWLISTED_ENV_KEYS.includes('GEMINI_API_KEY'));
+    assert.ok(DEFAULT_ALLOWLISTED_ENV_KEYS.includes('OPENROUTER_API_KEY'));
+  });
+
+  test('DEFAULT_ALLOWLISTED_ADAPTERS includes adapter-gemini and adapter-openrouter', () => {
+    assert.ok(DEFAULT_ALLOWLISTED_ADAPTERS.includes('adapter-gemini'));
+    assert.ok(DEFAULT_ALLOWLISTED_ADAPTERS.includes('adapter-openrouter'));
+  });
+
+  test('checkInject approves the OpenRouter env-key/adapter pair', () => {
+    const gate = createEnvGate();
+    const r = gate.checkInject('OPENROUTER_API_KEY', 'adapter-openrouter');
+    assert.equal(r.ok, true);
+    assert.equal(r.code, 'OK');
+  });
+
+  test('checkInject approves the Gemini env-key/adapter pair', () => {
+    const gate = createEnvGate();
+    const r = gate.checkInject('GEMINI_API_KEY', 'adapter-gemini');
+    assert.equal(r.ok, true);
+    assert.equal(r.code, 'OK');
+  });
+
+  test('broker inject delivers the secret to the adapter and never into the receipt', () => {
+    const broker = createSecretRuntimeBroker({ env: { OPENROUTER_API_KEY: FAKE_KEY } });
+    let received = null;
+    const adapter = {
+      receiveSecret(value, meta) {
+        received = { value, meta };
+      }
+    };
+
+    const r = broker.injectToAdapter('adapter-openrouter', 'OPENROUTER_API_KEY', adapter);
+
+    assert.equal(r.ok, true);
+    assert.equal(received.value, FAKE_KEY);
+    assert.equal(received.meta.envKey, 'OPENROUTER_API_KEY');
+    assert.equal(received.meta.adapterId, 'adapter-openrouter');
+    assert.equal(JSON.stringify(r.receipt).includes(FAKE_KEY), false);
+  });
+
+  test('custom allowlists stay isolated — defaults are additive, not inherited', () => {
+    const gate = createEnvGate({
+      allowlistedEnvKeys: ['CUSTOM_ENV_X'],
+      allowlistedAdapters: ['adapter-custom-1']
+    });
+    assert.equal(gate.checkInject('OPENROUTER_API_KEY', 'adapter-openrouter').ok, false);
+    assert.equal(gate.checkInject('CUSTOM_ENV_X', 'adapter-custom-1').ok, true);
+  });
+});
+
+describe('LlmAdapterRegistry model→adapter routing map', () => {
+  test('registry registers OpenRouterAdapter and resolves it by key', () => {
+    const registry = new LlmAdapterRegistry();
+
+    const openrouter = registry.getAdapter('OPENROUTER');
+    assert.ok(openrouter instanceof OpenRouterAdapter);
+    assert.equal(openrouter.getName(), 'OPENROUTER');
+  });
+
+  test('resolveModel maps claude-3-5-sonnet → OPENROUTER/anthropic/claude-3.5-sonnet', () => {
+    const registry = new LlmAdapterRegistry();
+    assert.deepEqual(registry.resolveModel('claude-3-5-sonnet'), {
+      adapterKey: 'OPENROUTER',
+      model: 'anthropic/claude-3.5-sonnet'
+    });
+  });
+
+  test('resolveModel maps gpt-4o → OPENROUTER/openai/gpt-4o', () => {
+    const registry = new LlmAdapterRegistry();
+    assert.deepEqual(registry.resolveModel('gpt-4o'), {
+      adapterKey: 'OPENROUTER',
+      model: 'openai/gpt-4o'
+    });
+  });
+
+  test('resolveModel maps gemini-1-5-pro → GOOGLE_GEMINI/gemini-1.5-pro (direct)', () => {
+    const registry = new LlmAdapterRegistry();
+    assert.deepEqual(registry.resolveModel('gemini-1-5-pro'), {
+      adapterKey: 'GOOGLE_GEMINI',
+      model: 'gemini-1.5-pro'
+    });
+  });
+
+  test('resolveModel returns null for unmapped matrix ids (router → ADAPTER_NOT_FOUND)', () => {
+    const registry = new LlmAdapterRegistry();
+    assert.equal(registry.resolveModel('unknown-model-xyz'), null);
+    assert.equal(registry.resolveModel(''), null);
+    assert.equal(registry.resolveModel(null), null);
+  });
+
+  test('MODEL_ROUTING_MAP is a frozen object with the three matrix ids', () => {
+    assert.ok(MODEL_ROUTING_MAP && typeof MODEL_ROUTING_MAP === 'object');
+    assert.deepEqual(Object.keys(MODEL_ROUTING_MAP).sort(), [
+      'claude-3-5-sonnet',
+      'gemini-1-5-pro',
+      'gpt-4o'
+    ]);
+    assert.ok(Object.isFrozen(MODEL_ROUTING_MAP));
+  });
+
+  test('getAdapter canonical aliases and prefix matching stay unchanged', () => {
+    const registry = new LlmAdapterRegistry();
+    assert.ok(registry.getAdapter('GOOGLE') instanceof GeminiAdapter);
+    assert.ok(registry.getAdapter('GOOGLE_GEMINI') instanceof GeminiAdapter);
+    assert.ok(registry.getAdapter('gemini-2.0-flash') instanceof GeminiAdapter);
+    assert.throws(() => registry.getAdapter(''), /ADAPTER_NOT_FOUND/);
+  });
+
+  test('src/core/index.js re-exports OpenRouterAdapter', async () => {
+    const core = await import('../src/core/index.js');
+    assert.ok(core.OpenRouterAdapter === OpenRouterAdapter);
   });
 });
