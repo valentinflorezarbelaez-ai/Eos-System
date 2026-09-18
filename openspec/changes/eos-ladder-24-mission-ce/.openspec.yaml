@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-24-mission-ce
+mission: CE
+spec: SPEC-0088
+title: Sovereign Operator Reality Console Port
+ladder: 24
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-18"
