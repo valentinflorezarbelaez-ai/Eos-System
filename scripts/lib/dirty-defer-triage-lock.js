@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-332 to live main after #332 Ladder 24 audit (prior tip 02e635e4f05691d3c16a228370ce20d89c1bb681; tip-331 lineage; Ladder 24 Audit #332 bdd54927171634c9d52c8bcc73e6a0c45354d110; L24 OPEN (Audit MEASURED · CB–CF pending); L17–L23 CLOSED retained)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-334 to live main after #334 Mission CB (prior tip bdd54927171634c9d52c8bcc73e6a0c45354d110; tip-333 lineage; Mission CB #334 0dbccfe507727a855a7518709619e5948b52b2ee; L24 OPEN (Audit + CB MEASURED · CC–CF pending); L17–L23 CLOSED retained)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== 'bdd54927171634c9d52c8bcc73e6a0c45354d110') {
+      if (!tip || tip[1] !== '0dbccfe507727a855a7518709619e5948b52b2ee') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-332 expected main_tip=bdd54927171634c9d52c8bcc73e6a0c45354d110 (post-#332 / Ladder 24 Audit MEASURED / L24 OPEN (Audit MEASURED · CB–CF pending; Sovereign Cross-Ladder Composition, Mission Economics & Fleet Operator Fabric); tip honesty restored; tip-332 / main@bdd5492; L17–L23 CLOSED retained; never reopen L23; do not start Mission CB; do not claim CB–CF MEASURED)',
+            'tip-refresh-post-334 expected main_tip=0dbccfe507727a855a7518709619e5948b52b2ee (post-#334 / Mission CB MEASURED / L24 OPEN (Audit + CB MEASURED · CC–CF pending; Sovereign Cross-Ladder Composition, Mission Economics & Fleet Operator Fabric); tip honesty restored; tip-334 / main@0dbccfe; L17–L23 CLOSED retained; never reopen L23; do not start Mission CC; do not claim CC–CF MEASURED)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-332 / main@bdd5492 (post-#332 / Ladder 24 Audit MEASURED / L24 OPEN; tip-332 / main@bdd5492; L17–L23 CLOSED retained; never reopen L23)',
+          path: 'freeze main_tip pinned to tip-refresh-post-334 / main@0dbccfe (post-#334 / Mission CB MEASURED / L24 OPEN; tip-334 / main@0dbccfe; L17–L23 CLOSED retained; never reopen L23)',
           status: 'VERIFIED',
           type
         });
