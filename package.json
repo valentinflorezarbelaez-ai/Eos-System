@@ -290,7 +290,9 @@
     "test:mission-bw": "node --test tests/eos-bw-sovereign-agentic-memory-port.test.js",
     "test:agentic-memory": "node --test tests/eos-bw-sovereign-agentic-memory-port.test.js",
     "test:mission-bx": "node --test tests/eos-bx-autonomous-self-healing-port.test.js",
-    "test:self-healing": "node --test tests/eos-bx-autonomous-self-healing-port.test.js"
+    "test:self-healing": "node --test tests/eos-bx-autonomous-self-healing-port.test.js",
+    "test:mission-by": "node --test tests/eos-by-spec-synthesis-compiler-port.test.js",
+    "test:spec-synthesis": "node --test tests/eos-by-spec-synthesis-compiler-port.test.js"
   },
   "keywords": [
     "eos",
