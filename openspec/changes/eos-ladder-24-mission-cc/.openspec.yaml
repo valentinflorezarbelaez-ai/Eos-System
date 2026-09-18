@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-24-mission-cc
+mission: CC
+spec: SPEC-0086
+title: Mission Economics & Portfolio Budget Governor Port
+ladder: 24
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-18"
