@@ -88,7 +88,7 @@
 - **Total tests written**: 19 new (34 → 53)
 - **Total tests passing**: 53/53
 - **Layers used**: Unit (19)
-- **Approval tests** (refactoring): None — no refactoring of existing behavior; legacy `enrutarMision`/`forzarFallo*` preserved byte-identical and covered by existing suites
+- **Approval tests** (refactoring): None — no refactoring of existing behavior; legacy `enrutarMision`/`forzarFallo*` preserved byte-identical (zero deleted lines). Coverage caveat (verify W2): at slice-2 time NO suite exercised the injection flags — grep of all test files found zero `forzarFallo` references. Dedicated coverage was added afterward by the C1 remediation (see the "Legacy enrutarMision injection-flags contract (R5-S1/C1)" describe block in `tests/eos-rp-real-provider-execution.test.js`).
 - **Pure functions created**: 5 (`llmErrorCode`, `bridgeError`, `extractPromptTerms`, `makeRedactor`, `failureEnvelope`)
 
 ## Deliverables (Slice 2)
@@ -181,3 +181,42 @@
 
 1. Review this slice (PR 3 against `feat/rpe/2-dispatch`) — closes the change.
 2. After merge/archive: `sdd-archive` syncs delta specs; full `eos-real-provider-execution` change complete (16/16 tasks).
+
+---
+
+## Remediation — Verify C1 (Injection flags coverage) + W2 (apply-progress claim)
+
+- Verdict: `gentle-ai.verify-result/v1` FAIL — 1 blocker (C1) + 1 doc warning (W2).
+- Scope: coverage remediation ONLY — no production code touched (`enrutarMision`, `forzarFallo*`, `enrutarMisionReal`, MCP schemas/tool catalog, `src/core/llm/*` byte-identical to the verified commit `020fd5a`).
+- Commit: `test(providers): cover injection-flags simulation contract (C1)` (single work unit).
+
+### C1 — R5-S1 "Injection flags preserved" now covered
+
+Five tests added to `tests/eos-rp-real-provider-execution.test.js` (new describe block "EOSProviderRouter legacy enrutarMision injection-flags contract (R5-S1/C1)"):
+
+| Test | What it pins |
+|---|---|
+| no flags → PRIMARY envelope | default simulation shape (`proveedorUtilizado` primary, `modo:'PRIMARY'`), zero network |
+| `forzarFalloPrimario=true` → FALLBACK envelope | deterministic simulated failure → `proveedorUtilizado` fallback, `modo:'FALLBACK'`, `mensaje` degradation note, zero network |
+| `forzarFalloFallback=true` alone → PRIMARY envelope | fallback flag only gates the catch (semantics precision), zero network — works with NO credentials wired |
+| both flags → rejects `FATAL_ROUTING_FAILURE` | dual-failure terminal path, zero network |
+| MCP `eos.provider.route` flag branch → simulation envelope | in-process `EosMcpServer(null, { providerRouter })` + `handleToolCall` with `forzarFalloPrimario`; credentials wired AND double would succeed, yet the branch returns the simulation envelope with ZERO fetch calls — proves the flag branch bypasses `enrutarMisionReal` entirely |
+
+Every test asserts `fetchImpl.calls.length === 0` — the hermetic simulation contract performs zero real dispatch (no network, no ECR, no registry). Per remediation brief, tests passed GREEN immediately against the preserved byte-identical contract — recorded as coverage evidence, NOT a RED cycle. Any RED here would have meant the preservation claim was wrong.
+
+### W2 — apply-progress overclaim corrected
+
+The slice-2 line "legacy `enrutarMision`/`forzarFallo*` preserved byte-identical and covered by existing suites" was inaccurate (no suite referenced `forzarFallo` at the time, grep-verified). Replaced with accurate wording: byte-identical preservation TRUE, coverage caveat explicit, and a pointer to the new C1 describe block.
+
+### Gate results (worktree `feature-eos-real-provider-execution`)
+
+| Command | Result |
+|---|---|
+| `node --test tests/eos-rp-real-provider-execution.test.js` | 58/58 pass (53 + 5 new) |
+| `npm run test:real-provider` (RP 58 + MCP 9 + GUARD 8 + SURFACE 5) | 80/80 pass |
+| `npm run test:core` | 20/20 pass |
+| `npm run verify:strict` | 914 checks / 0 failures — PASS |
+
+### Rollback boundary
+
+Reverting commit `test(providers): cover injection-flags simulation contract (C1)` removes only the five new tests + the two apply-progress edits (W2 fix + this record). No production file is part of the commit; re-verification can proceed immediately after revert with no code change.
