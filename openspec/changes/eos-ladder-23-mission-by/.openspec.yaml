@@ -1,0 +1,24 @@
+schema_version: "1.0.0"
+change_id: "eos-ladder-23-mission-by"
+title: "Mission BY: Autonomous EARS/BDD Spec Synthesizer & Verification Compiler Port"
+status: "APPROVED"
+author: "Valentin Florez & Senior Architect"
+created_at: "2026-09-15"
+spec: "SPEC-0082"
+ladder: 23
+mission: "BY"
+invariants:
+  production_ready: "NO"
+  fundacion_delta: 0
+  write_barrier: "FUNDACION_ALWAYS_DENY"
+  law_vi: "HELD"
+  slim_ceiling: 145
+artifacts:
+  - "src/core/sdd/spec-synthesis-compiler-port.js"
+  - "src/core/sdd/spec-synthesis-policy-gate.js"
+  - "src/core/sdd/spec-synthesis-receipt.js"
+  - "tests/eos-by-spec-synthesis-compiler-port.test.js"
+  - "scripts/patch-mission-by.mjs"
+  - "docs/adrs/ADR-0043-mission-by-spec-synthesis-compiler.md"
+  - "docs/evidence/EOS_MISSION_BY_SPEC_SYNTHESIS_EVD_2026-09-15.md"
+  - "docs/releases/EOS_MISSION_BY_SPEC_SYNTHESIS_2026-09-15.md"
