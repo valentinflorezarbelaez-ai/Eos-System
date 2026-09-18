@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-344 to live main after #344 Ladder 25 Audit (prior tip 4383dc9a07034c2ed77ed0614a02e94c2bbf5fd8; tip-343 lineage; Ladder 25 Audit #344 868490a0461e55842b53a761771e7bcdbbe6ab71; L25 OPEN (Audit MEASURED · CG–CK pending); L17–L24 CLOSED retained; NEVER reopen L24)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-346 to live main after #346 Mission CG (prior tip 868490a0461e55842b53a761771e7bcdbbe6ab71; tip-345 lineage; Mission CG #346 cbe1c525a405fb6236bf3855a46934dc835196f3; L25 OPEN (Audit + CG MEASURED · CH–CK pending); L17–L24 CLOSED retained; NEVER reopen L24)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '868490a0461e55842b53a761771e7bcdbbe6ab71') {
+      if (!tip || tip[1] !== 'cbe1c525a405fb6236bf3855a46934dc835196f3') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-344 expected main_tip=868490a0461e55842b53a761771e7bcdbbe6ab71 (post-#344 / Ladder 25 Audit MEASURED / L25 OPEN (Audit MEASURED · CG–CK pending; Sovereign External Tool Federation, Long-Horizon Mission Archive & Adversarial Verification Fabric); tip honesty restored; tip-344 / main@868490a; L17–L24 CLOSED retained; NEVER reopen L24; Do NOT start Mission CG; Do NOT claim CG–CK MEASURED)',
+            'tip-refresh-post-346 expected main_tip=cbe1c525a405fb6236bf3855a46934dc835196f3 (post-#346 / Mission CG MEASURED / L25 OPEN (Audit + CG MEASURED · CH–CK pending; Sovereign External Tool Federation, Long-Horizon Mission Archive & Adversarial Verification Fabric); tip honesty restored; tip-346 / main@cbe1c52; L17–L24 CLOSED retained; NEVER reopen L24; Do NOT start Mission CH; Do NOT claim CH–CK MEASURED)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-344 / main@868490a (post-#344 / Ladder 25 Audit MEASURED / L25 OPEN; tip-344 / main@868490a; L17–L24 CLOSED retained; NEVER reopen L24)',
+          path: 'freeze main_tip pinned to tip-refresh-post-346 / main@cbe1c52 (post-#346 / Mission CG MEASURED / L25 OPEN; tip-346 / main@cbe1c52; L17–L24 CLOSED retained; NEVER reopen L24)',
           status: 'VERIFIED',
           type
         });
