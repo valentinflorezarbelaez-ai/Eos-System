@@ -1,0 +1,24 @@
+schema: spec-driven
+created: 2026-09-18
+goal: Register EOS Maturity Ladder 25 Gap Audit (docs-only) after Ladder 24 closeout (Mission CF #342; CB–CF MEASURED + seam-pack; tip seal #343); propose ordered satellites CG/CH/CI/CJ/CK for Sovereign External Tool Federation, Long-Horizon Mission Archive & Adversarial Verification Fabric — no Mission CG implementation in this change. Never reopen L17–L24. Cite observed HEAD dc75b5f… and freeze pin 4383dc9….
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-25-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_25_AUDIT_2026-09-18.md
+  - docs/evidence/EOS_LADDER_25_AUDIT_EVIDENCE_2026-09-18.md
+  - openspec/changes/eos-ladder-25-maturity-audit
+non_goals:
+  - implementing Mission CG/CH/CI/CJ/CK
+  - re-implementing Mission CB/CC/CD/CE/CF (L24 closed; never reopen L24)
+  - re-implementing Mission BW/BX/BY/BZ/CA (L23 closed; never reopen L23)
+  - re-implementing Mission BR/BS/BT/BU/BV (L22 closed; never reopen L22)
+  - reopening L17–L21
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
+  - rewriting freeze/matrix tip pins in this package
+  - inventing tip SHA other than observed dc75b5ff490eb8195b09a4848b794989f5a9af45 / freeze 4383dc9a07034c2ed77ed0614a02e94c2bbf5fd8
