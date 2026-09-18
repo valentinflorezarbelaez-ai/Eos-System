@@ -298,7 +298,9 @@
     "test:ladder23-seam": "node --test tests/eos-ladder23-seam-pack.test.js",
     "test:ladder23-pack": "npm run test:mission-bw && npm run test:mission-bx && npm run test:mission-by && npm run test:mission-bz && npm run test:ladder23-seam",
     "test:mission-cb": "node --test tests/eos-cb-cross-ladder-composition-port.test.js",
-    "test:cross-ladder-composition": "node --test tests/eos-cb-cross-ladder-composition-port.test.js"
+    "test:cross-ladder-composition": "node --test tests/eos-cb-cross-ladder-composition-port.test.js",
+    "test:mission-cc": "node --test tests/eos-cc-mission-portfolio-budget-port.test.js",
+    "test:mission-portfolio-budget": "node --test tests/eos-cc-mission-portfolio-budget-port.test.js"
   },
   "keywords": [
     "eos",
