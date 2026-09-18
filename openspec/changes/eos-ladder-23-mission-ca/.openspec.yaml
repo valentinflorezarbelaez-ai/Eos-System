@@ -1,0 +1,23 @@
+schema: spec-driven
+created: 2026-09-18
+goal: Implement Ladder 23 CI Seam-Pack Consolidation & Closeout (SPEC-0084 / Mission CA) — unify BW–BZ into fail-closed CI seam-pack + formal closeout. Axis Sovereign Autonomous Synthesis, Distributed Invariant Consensus & Self-Reification Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. L17–L22 CLOSED never reopen. After CA, L23 CLOSED_FOR_LOCAL_GOVERNED_USE never reopen. NON-CLAIM Seam-pack ≠ GitHub Enterprise enforcement.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0084
+phase: 1
+affected_areas:
+  - tests/eos-ladder23-seam-pack.test.js
+  - scripts/test-runner.js
+  - package.json
+  - docs/releases/EOS_LADDER_23_CLOSEOUT_2026-09-18.md
+  - docs/evidence/EOS_MISSION_CA_LADDER23_SEAM_EVD_2026-09-18.md
+  - openspec/changes/eos-ladder-23-mission-ca
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - new product ports beyond seam/closeout
+  - GitHub Enterprise enforcement claims
+  - CloudAgent path
+  - reopening L17–L22
+  - tip-refresh (parent after merge)
+  - soft-allow soak / continue-on-error
