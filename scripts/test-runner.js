@@ -36,6 +36,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'mcp-tool-dispatcher.test.js',
   'eos-compute-worker-mission-h.test.js',
   'gemini-provider.test.js',
+  'eos-rp-real-provider-execution.test.js',
   'eos-compute-worker-mission-i.test.js',
   'eos-stitch-tool-bridge.test.js',
   'eos-browser-qa-runner.test.js',

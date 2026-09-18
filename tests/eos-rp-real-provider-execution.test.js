@@ -20,6 +20,7 @@ import {
 } from '../src/core/ports/llm-port.js';
 import { OpenRouterAdapter } from '../src/core/adapters/llm/openrouter-adapter.js';
 import { EOSProviderRouter } from '../src/core/provider-router.js';
+import { EosMcpServer } from '../src/mcp-server.js';
 import {
   LlmAdapterRegistry,
   MODEL_ROUTING_MAP
@@ -975,5 +976,86 @@ describe('EOSProviderRouter zero-network fail-closed (TRIANGULATE)', () => {
     assert.equal(e.status, 'NO_CREDENTIALS');
 
     assert.equal(fetchImpl.calls.length, 0, 'zero real network across every fail-closed path');
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// C1 coverage remediation (verify report): spec scenario R5-S1 "Injection flags
+// preserved" — the legacy simulation contract (`enrutarMision` + `forzarFallo*`)
+// is byte-identical to main and MUST stay untouched. These tests pin the
+// deterministic fault-injection envelopes and prove the branch never reaches the
+// real dispatch path (zero network, zero ECR, zero registry usage).
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe('EOSProviderRouter legacy enrutarMision injection-flags contract (R5-S1/C1)', () => {
+  test('no flags returns the deterministic PRIMARY simulation envelope with zero real dispatch', async () => {
+    const { router, fetchImpl } = makeRouter({ env: { OPENROUTER_API_KEY: FAKE_KEY } });
+
+    const result = await router.enrutarMision('ARCHITECTURE_DEEP');
+
+    assert.equal(result.estado, 'SUCCESS');
+    assert.equal(result.proveedorUtilizado, 'claude-3-5-sonnet');
+    assert.equal(result.modo, 'PRIMARY');
+    assert.equal(typeof result.timestamp, 'string');
+    assert.equal(fetchImpl.calls.length, 0, 'legacy simulation must never touch the network double');
+  });
+
+  test('forzarFalloPrimario=true forces the deterministic FALLBACK envelope and skips real dispatch', async () => {
+    const { router, fetchImpl } = makeRouter({ env: { OPENROUTER_API_KEY: FAKE_KEY } });
+
+    const result = await router.enrutarMision('ARCHITECTURE_DEEP', true);
+
+    assert.equal(result.estado, 'SUCCESS');
+    assert.equal(result.proveedorUtilizado, 'gpt-4o');
+    assert.equal(result.modo, 'FALLBACK');
+    assert.match(result.mensaje, /degradación limpia hacia gpt-4o/);
+    assert.equal(typeof result.timestamp, 'string');
+    assert.equal(fetchImpl.calls.length, 0, 'injected flag must keep the failure path hermetic');
+  });
+
+  test('forzarFalloFallback=true alone still returns the PRIMARY envelope (flag only gates the catch)', async () => {
+    const { router, fetchImpl } = makeRouter({ env: {} });
+
+    const result = await router.enrutarMision('ARCHITECTURE_DEEP', false, true);
+
+    assert.equal(result.estado, 'SUCCESS');
+    assert.equal(result.proveedorUtilizado, 'claude-3-5-sonnet');
+    assert.equal(result.modo, 'PRIMARY');
+    assert.equal(fetchImpl.calls.length, 0);
+  });
+
+  test('forzarFalloPrimario + forzarFalloFallback reject with FATAL_ROUTING_FAILURE (dual failure)', async () => {
+    const { router, fetchImpl } = makeRouter({ env: { OPENROUTER_API_KEY: FAKE_KEY } });
+
+    await assert.rejects(
+      () => router.enrutarMision('ARCHITECTURE_DEEP', true, true),
+      /FATAL_ROUTING_FAILURE/
+    );
+    assert.equal(fetchImpl.calls.length, 0, 'dual-failure throw must not touch the network double');
+  });
+
+  test('MCP eos.provider.route flag branch returns the simulation envelope and never reaches real dispatch', async () => {
+    const { router, fetchImpl } = makeRouter({ env: { OPENROUTER_API_KEY: FAKE_KEY } });
+    const server = new EosMcpServer(null, { providerRouter: router });
+    const env = {
+      EOS_MODE: 'read-write',
+      EOS_AUTONOMY_LEVEL: 'LEVEL_4',
+      EOS_ALLOW_EXTERNAL_SIDE_EFFECTS: 'false'
+    };
+
+    // Credentials ARE wired and the double would succeed — the flag branch must
+    // still short-circuit to the deterministic simulation contract (R5-S1).
+    const res = await server.handleToolCall('eos.provider.route', {
+      taskType: 'ARCHITECTURE_DEEP',
+      prompt: 'Design the auth boundary',
+      forzarFalloPrimario: true
+    }, env);
+
+    assert.equal(res.status, 'SUCCESS');
+    assert.equal(res.executed, true);
+    assert.equal(res.provider_route.estado, 'SUCCESS');
+    assert.equal(res.provider_route.proveedorUtilizado, 'gpt-4o');
+    assert.equal(res.provider_route.modo, 'FALLBACK');
+    assert.equal(fetchImpl.calls.length, 0, 'flag branch must bypass enrutarMisionReal entirely');
   });
 });

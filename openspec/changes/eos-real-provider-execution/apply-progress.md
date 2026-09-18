@@ -88,7 +88,7 @@
 - **Total tests written**: 19 new (34 → 53)
 - **Total tests passing**: 53/53
 - **Layers used**: Unit (19)
-- **Approval tests** (refactoring): None — no refactoring of existing behavior; legacy `enrutarMision`/`forzarFallo*` preserved byte-identical and covered by existing suites
+- **Approval tests** (refactoring): None — no refactoring of existing behavior; legacy `enrutarMision`/`forzarFallo*` preserved byte-identical (zero deleted lines). Coverage caveat (verify W2): at slice-2 time NO suite exercised the injection flags — grep of all test files found zero `forzarFallo` references. Dedicated coverage was added afterward by the C1 remediation (see the "Legacy enrutarMision injection-flags contract (R5-S1/C1)" describe block in `tests/eos-rp-real-provider-execution.test.js`).
 - **Pure functions created**: 5 (`llmErrorCode`, `bridgeError`, `extractPromptTerms`, `makeRedactor`, `failureEnvelope`)
 
 ## Deliverables (Slice 2)
@@ -112,3 +112,111 @@
 
 1. Review this slice (PR 2 against `feat/rpe/1-adapter-registry`).
 2. Slice 3 (PR 3): Phase 3 tasks 3.1–3.5 — MCP route/health rewiring, flips re-asserted, `test:real-provider` suite registration (tool count stays 80), full hermetic `npm test`.
+
+---
+
+## Slice 3 — MCP Tool Rewiring + Lock Flips + Hermetic CI (PR 3)
+
+- Branch: `feat/rpe/3-mcp`
+- Target: `feat/rpe/2-dispatch` (chain: PR 3 targets PR 2 branch)
+- Status: Phase 3 complete — 5/5 tasks done, 16/16 tasks total, slice boundary GREEN
+- Commits: code commit (mcp-server + flips + suite registration + MODEL_ROUTING doc), docs commit (tasks.md + apply-progress.md)
+
+## Outcome (Slice 3)
+
+| Task | Cycle | Evidence |
+|---|---|---|
+| 3.1 GREEN | constructor default wiring + `eos.provider.route` → `enrutarMisionReal` / `eos.provider.health` → `probeProviderHealth` with fail-closed envelopes | GREEN 17/17 MCP suites |
+| 3.2 RED+GREEN | MCP-04/GUARD-07 flips (no keys ⇒ NO_CREDENTIALS fail-closed, never simulated) + new MCP-09 double-driven real dispatch | RED 3 fail → GREEN 17/17 |
+| 3.3 GREEN | `test:real-provider` registered (package.json script + `SLIM_SUITE_EXCLUDES` opt-in entry) | `npm run test:real-provider` 75/75 |
+| 3.4 TRIANGULATE | full hermetic zero-network run | `test:real-provider` 75/75 · `npm test` 1268/1269 (1 pre-existing env failure) · `verify:strict` 914/0 |
+| 3.5 REFACTOR | `MODEL_ROUTING.md` openrouter row (Law VI doc-only); cleanup | `npm run test:core` 20/20 |
+
+## Verification (Slice 3 boundary)
+
+| Command | Result |
+|---|---|
+| `node --test tests/mcp-stdio-smoke.test.js tests/mcp-readonly-guard.test.js` | 17/17 pass (incl. flipped MCP-04, GUARD-07, new MCP-09) |
+| `npm run test:real-provider` (RP 53 + MCP 9 + GUARD 8 + SURFACE 5) | 75/75 pass |
+| `npm run test:core` | 20/20 pass |
+| `npm test` (full slim discovery) | 1268/1269 pass — sole failure `eos-worktree.test.js`: Windows MAX_PATH `git worktree add` from inside the deep `.worktrees\feature-eos-real-provider-execution` path ("Filename too long", git status 128). Pre-existing environment limitation, identical at base `ee0a332`; unrelated to this diff (touches only bin/eos-worktree.js + git mechanics). |
+| `npm run verify:strict` (pre-commit guard, code commit) | 914 checks / 0 failures — PASS |
+
+## TDD Cycle Evidence (Slice 3)
+
+| Task | Test File | Layer | Safety Net | RED | GREEN | TRIANGULATE | REFACTOR |
+|---|---|---|---|---|---|---|---|
+| 3.1 | `tests/mcp-stdio-smoke.test.js` + `tests/mcp-readonly-guard.test.js` | Unit | ✅ 14/14 MCP + 8/8 GUARD pre-flip | — | ✅ 17/17 | — | — |
+| 3.2 | `tests/mcp-stdio-smoke.test.js` + `tests/mcp-readonly-guard.test.js` | Unit | ✅ 14/14 + 8/8 | ✅ GUARD-07, MCP-04, MCP-09 fail (3) | ✅ 17/17 | — | — |
+| 3.3 | `tests/mcp-surface-slim.test.js` (+ GUARD-08) | Unit/Integration | ✅ tool count 80 locked | — | ✅ 75/75 via `test:real-provider` | — | — |
+| 3.4 | whole hermetic suite | System | ✅ 914 verify checks | — | — | ✅ `npm test` 1268/1269 | — |
+| 3.5 | — (docs) | — | ✅ test:core safety net | — | — | — | ✅ MODEL_ROUTING doc |
+
+### Test Summary (Slice 3)
+- **Total tests written**: 1 new (MCP-09); 2 flipped (MCP-04, GUARD-07)
+- **Total tests passing**: 75/75 targeted; 1268/1269 full slim; 20/20 test:core; 914/914 verify:strict
+- **Layers used**: Unit (smoke/guard/slim lock suites) + System (full slim run + strict verify)
+- **Approval tests** (refactoring): none — MCP tool schemas (963-973) and the enforced `EOSMCPSchemaValidator` allowlists untouched; legacy simulation `enrutarMision`/`forzarFallo*` preserved (Injection flags keep their deterministic path)
+- **Pure functions created**: none (handler wiring only)
+
+## Deliverables (Slice 3)
+
+- `src/mcp-server.js` — constructor default wiring `new EOSProviderRouter({ registry: new LlmAdapterRegistry(), secretBroker: createSecretRuntimeBroker(), ecrGate: createEcrBudgetGate() })` (all three injectable via `options`); `eos.provider.route`: missing taskType → fail-closed `{status:'ADAPTER_NOT_FOUND', code, executed:false, sideEffects:'NONE', PRODUCTION_READY:'NO'}`, explicit Injection flags → preserved simulation `enrutarMision` path, else `enrutarMisionReal(taskCategory, {messages:[{role:'user', content: prompt}]})` with SUCCESS receipt or full fail-closed spread; `eos.provider.health`: `probeProviderHealth(providerId || '')` with SUCCESS/Fail-closed normalization. Schemas and tool catalog byte-identical (80 tools).
+- `tests/mcp-stdio-smoke.test.js` — MCP-04 flipped to re-assert fail-closed-without-credentials (`NO_CREDENTIALS` + `code` + `PRODUCTION_READY:'NO'` for both route and health); new MCP-09 exercises the real dispatch path through injected doubles (fetch double + broker env `FAKE_KEY` + ECR gate) asserting exactly one network call, Bearer FAKE_KEY, PRIMARY receipt, success envelope.
+- `tests/mcp-readonly-guard.test.js` — GUARD-07 flipped: route with taskType at LEVEL_4 → `NO_CREDENTIALS` fail-closed.
+- `scripts/test-runner.js` — `eos-rp-real-provider-execution.test.js` added to `SLIM_SUITE_EXCLUDES` (opt-in convention; TR-01 ≤145 ceiling safe — count shrinks by 1).
+- `package.json` — `test:real-provider` script (RP + MCP smoke + GUARD + surface-slim).
+- `docs/model-routing/MODEL_ROUTING.md` — `openrouter` provider id + `OPENROUTER_API_KEY` row (document-only, Law VI; values never in repo).
+
+## Deviations & Notes (Slice 3)
+
+- **Enforced schema discovery**: the doc map `TOOL_INPUT_SCHEMAS` (line 973) allows `providerId`, but the ENFORCED `EOSMCPSchemaValidator` strictSchemas (security invariant, `additionalProperties:false`) allows only `provider` for `eos.provider.health` and `tipoTarea/forzarFalloPrimario/prompt/taskType/provider` for `eos.provider.route`. The handler reads `providerId || provider`; tests use the enforced contract param `provider` (schema untouched per task).
+- **`forzarFalloFallback` is not schema-legal** on the MCP surface (pre-existing invariant); the handler preserves it for direct-router consumers, and the Injection-flag path is reachable through `forzarFalloPrimario` (spec: Injection flags preserved).
+- **Success envelope sideEffects**: `_guarded` reports the declared `toolDef.sideEffects` (`READ_ONLY`) on success; fail-closed envelopes report `'NONE'` via the data spread (matches GUARD-06 pattern).
+- **`npm test` full-slim deviation**: `eos-worktree.test.js` fails only inside the nested worktree (Windows MAX_PATH, `git worktree add` status 128, "Filename too long" on deep `openspec/changes/...` paths). Proven environment-only: the suite exercises `bin/eos-worktree.js` git mechanics, untouched by this diff; baseline slice 2 used `test:core` + `verify:strict` as its gate for the same reason. Zero network on all provider paths confirmed by double spies (fail-closed paths never construct a request).
+- Test-run side effects (EVD-0060.json, EXECUTIVE_DOSSIER_PRJ-APP-FUERZA.md) regenerated during `npm test` by the PRJ-APP-FUERZA governance fixture were restored to HEAD — not part of this change.
+- No secrets in test code, commits, or receipts (Law VI guard clean; MCP-09 asserts Bearer FAKE_KEY only through the double).
+
+## Next Steps
+
+1. Review this slice (PR 3 against `feat/rpe/2-dispatch`) — closes the change.
+2. After merge/archive: `sdd-archive` syncs delta specs; full `eos-real-provider-execution` change complete (16/16 tasks).
+
+---
+
+## Remediation — Verify C1 (Injection flags coverage) + W2 (apply-progress claim)
+
+- Verdict: `gentle-ai.verify-result/v1` FAIL — 1 blocker (C1) + 1 doc warning (W2).
+- Scope: coverage remediation ONLY — no production code touched (`enrutarMision`, `forzarFallo*`, `enrutarMisionReal`, MCP schemas/tool catalog, `src/core/llm/*` byte-identical to the verified commit `020fd5a`).
+- Commit: `test(providers): cover injection-flags simulation contract (C1)` (single work unit).
+
+### C1 — R5-S1 "Injection flags preserved" now covered
+
+Five tests added to `tests/eos-rp-real-provider-execution.test.js` (new describe block "EOSProviderRouter legacy enrutarMision injection-flags contract (R5-S1/C1)"):
+
+| Test | What it pins |
+|---|---|
+| no flags → PRIMARY envelope | default simulation shape (`proveedorUtilizado` primary, `modo:'PRIMARY'`), zero network |
+| `forzarFalloPrimario=true` → FALLBACK envelope | deterministic simulated failure → `proveedorUtilizado` fallback, `modo:'FALLBACK'`, `mensaje` degradation note, zero network |
+| `forzarFalloFallback=true` alone → PRIMARY envelope | fallback flag only gates the catch (semantics precision), zero network — works with NO credentials wired |
+| both flags → rejects `FATAL_ROUTING_FAILURE` | dual-failure terminal path, zero network |
+| MCP `eos.provider.route` flag branch → simulation envelope | in-process `EosMcpServer(null, { providerRouter })` + `handleToolCall` with `forzarFalloPrimario`; credentials wired AND double would succeed, yet the branch returns the simulation envelope with ZERO fetch calls — proves the flag branch bypasses `enrutarMisionReal` entirely |
+
+Every test asserts `fetchImpl.calls.length === 0` — the hermetic simulation contract performs zero real dispatch (no network, no ECR, no registry). Per remediation brief, tests passed GREEN immediately against the preserved byte-identical contract — recorded as coverage evidence, NOT a RED cycle. Any RED here would have meant the preservation claim was wrong.
+
+### W2 — apply-progress overclaim corrected
+
+The slice-2 line "legacy `enrutarMision`/`forzarFallo*` preserved byte-identical and covered by existing suites" was inaccurate (no suite referenced `forzarFallo` at the time, grep-verified). Replaced with accurate wording: byte-identical preservation TRUE, coverage caveat explicit, and a pointer to the new C1 describe block.
+
+### Gate results (worktree `feature-eos-real-provider-execution`)
+
+| Command | Result |
+|---|---|
+| `node --test tests/eos-rp-real-provider-execution.test.js` | 58/58 pass (53 + 5 new) |
+| `npm run test:real-provider` (RP 58 + MCP 9 + GUARD 8 + SURFACE 5) | 80/80 pass |
+| `npm run test:core` | 20/20 pass |
+| `npm run verify:strict` | 914 checks / 0 failures — PASS |
+
+### Rollback boundary
+
+Reverting commit `test(providers): cover injection-flags simulation contract (C1)` removes only the five new tests + the two apply-progress edits (W2 fix + this record). No production file is part of the commit; re-verification can proceed immediately after revert with no code change.

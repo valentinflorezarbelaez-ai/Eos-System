@@ -144,15 +144,15 @@ test('GUARD-06: Permitted write tools succeed when mode is read-write and autono
   fs.rmSync(ledgerDir, { recursive: true, force: true });
 });
 
-test('GUARD-07: Provider tools stay NOT_CONFIGURED; discover is wired', async () => {
+test('GUARD-07: Provider tools fail closed without credentials; discover is wired', async () => {
   const server = new EosMcpServer();
 
   const res1 = await server.handleToolCall('eos.workspace.discover', {}, { EOS_MODE: 'read-only', EOS_AUTONOMY_LEVEL: 'LEVEL_0' });
   assert.equal(res1.status, 'SUCCESS');
   assert.equal(res1.executed, true);
 
-  const res2 = await server.handleToolCall('eos.provider.route', {}, { EOS_MODE: 'read-write', EOS_AUTONOMY_LEVEL: 'LEVEL_4' });
-  assert.equal(res2.status, 'NOT_CONFIGURED');
+  const res2 = await server.handleToolCall('eos.provider.route', { taskType: 'ARCHITECTURE_DEEP', prompt: 'x' }, { EOS_MODE: 'read-write', EOS_AUTONOMY_LEVEL: 'LEVEL_4' });
+  assert.equal(res2.status, 'NO_CREDENTIALS');
   assert.equal(res2.executed, false);
   assert.equal(res2.sideEffects, 'NONE');
 });
