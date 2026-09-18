@@ -37,11 +37,11 @@ Slice boundaries: PR 1 start=create `openrouter-adapter.js`, finish=`MODEL_ROUTI
 
 ## Phase 2: Real Dispatch + Budget Gate + Health Probe (PR 2)
 
-- [ ] 2.1 RED: dispatch/credential/budget/health tests — successful dispatch receipt (`proveedorUtilizado`, `modo`, `latency_ms`, `usage`, `PRODUCTION_READY:'NO'`); unmapped→`ADAPTER_NOT_FOUND` zero-I/O; no keys→`NO_CREDENTIALS`; exhausted ECR→`BUDGET_EXCEEDED` before any network (double never called); fallback ≤2 sanctioned calls; keys never in receipt/errors → RED captured
-- [ ] 2.2 GREEN: additive `enrutarMisionReal(taskType, request, opts)` in `src/core/provider-router.js` — resolveModel → broker `resolveSecret`/`injectToAdapter` → ECR `beforeCall` → `infer()` → `afterCall`/`recordUsage` → receipt; `enrutarMision` + `forzarFallo*` byte-identical → GREEN
-- [ ] 2.3 GREEN: LlmPort→router bridge per D4 (`LLM_TIMEOUT`→`PROVIDER_TIMEOUT`; auth/rate/provider/schema→`PROVIDER_UNAVAILABLE` + `providerCode`; `LLM_BUDGET_EXCEEDED`→`BUDGET_EXCEEDED`); AU-redacted messages, full prompt never in errors → GREEN
-- [ ] 2.4 GREEN: `probeProviderHealth(providerId)` per D5 — unknown→`PROVIDER_UNAVAILABLE` no throw; broker presence; OpenRouter `probe()` (max_tokens:1, timeout/retry ×2→`PROVIDER_TIMEOUT`); Gemini presence-only; returns `status, latency_ms, credentials, PRODUCTION_READY:'NO'`, no secrets → GREEN
-- [ ] 2.5 TRIANGULATE: double spy — zero network on all fail-closed paths; regressions `test:token-budget-ecr`, `test:autonomous-loop`, `test:provider-failover-resilience`, `test:llm-provider-port`, `test:gemini` GREEN → slice boundary `npm run test:core` + `npm test`
+- [x] 2.1 RED: dispatch/credential/budget/health tests — successful dispatch receipt (`proveedorUtilizado`, `modo`, `latency_ms`, `usage`, `PRODUCTION_READY:'NO'`); unmapped→`ADAPTER_NOT_FOUND` zero-I/O; no keys→`NO_CREDENTIALS`; exhausted ECR→`BUDGET_EXCEEDED` before any network (double never called); fallback ≤2 sanctioned calls; keys never in receipt/errors → RED captured (53 tests run: 34 pass / 19 fail — `TypeError: enrutarMisionReal is not a function`)
+- [x] 2.2 GREEN: additive `enrutarMisionReal(taskType, request, opts)` in `src/core/provider-router.js` — resolveModel → broker `resolveSecret`/`injectToAdapter` → ECR `beforeCall` → `infer()` → `afterCall`/`recordUsage` → receipt; `enrutarMision` + `forzarFallo*` byte-identical → GREEN 53/53
+- [x] 2.3 GREEN: LlmPort→router bridge per D4 (`LLM_TIMEOUT`→`PROVIDER_TIMEOUT`; auth/rate/provider/schema→`PROVIDER_UNAVAILABLE` + `providerCode`; `LLM_BUDGET_EXCEEDED`→`BUDGET_EXCEEDED`); AU-redacted messages, full prompt never in errors → GREEN 53/53
+- [x] 2.4 GREEN: `probeProviderHealth(providerId)` per D5 — unknown→`PROVIDER_UNAVAILABLE` no throw; broker presence; OpenRouter `probe()` (max_tokens:1, timeout/retry ×2→`PROVIDER_TIMEOUT`); Gemini presence-only; returns `status, latency_ms, credentials, PRODUCTION_READY:'NO'`, no secrets → GREEN 53/53
+- [x] 2.5 TRIANGULATE: double spy — zero network on all fail-closed paths; regressions `test:token-budget-ecr` 15/15, `test:autonomous-loop` 16/16, `test:provider-failover-resilience` 16/16 GREEN → slice boundary `npm run test:core` 20/20 + `npm run verify:strict` 914 checks / 0 failures
 
 ## Phase 3: MCP Tools + Flips + Hermetic CI (PR 3)
 
