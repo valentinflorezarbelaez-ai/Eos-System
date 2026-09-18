@@ -296,7 +296,9 @@
     "test:mission-bz": "node --test tests/eos-bz-merkle-ledger-notarization-port.test.js",
     "test:merkle-ledger": "node --test tests/eos-bz-merkle-ledger-notarization-port.test.js",
     "test:ladder23-seam": "node --test tests/eos-ladder23-seam-pack.test.js",
-    "test:ladder23-pack": "npm run test:mission-bw && npm run test:mission-bx && npm run test:mission-by && npm run test:mission-bz && npm run test:ladder23-seam"
+    "test:ladder23-pack": "npm run test:mission-bw && npm run test:mission-bx && npm run test:mission-by && npm run test:mission-bz && npm run test:ladder23-seam",
+    "test:mission-cb": "node --test tests/eos-cb-cross-ladder-composition-port.test.js",
+    "test:cross-ladder-composition": "node --test tests/eos-cb-cross-ladder-composition-port.test.js"
   },
   "keywords": [
     "eos",
