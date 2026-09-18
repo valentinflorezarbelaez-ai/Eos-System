@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-24-mission-cd
+mission: CD
+spec: SPEC-0087
+title: Fleet Project Registry & Governed Activation Port
+ladder: 24
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-18"
