@@ -45,8 +45,8 @@ Slice boundaries: PR 1 start=create `openrouter-adapter.js`, finish=`MODEL_ROUTI
 
 ## Phase 3: MCP Tools + Flips + Hermetic CI (PR 3)
 
-- [ ] 3.1 GREEN: constructor (line 1040) wires registry/broker/ECR; `eos.provider.route` handler (1731-1743) → `enrutarMisionReal` preserving `forzarFalloPrimario`; `eos.provider.health` (1754-1763) → `probeProviderHealth`; fail-closed `{status:<CODE>, code, executed:false, sideEffects:'NONE'}`; schemas (963-973) unchanged → GREEN
-- [ ] 3.2 RED+GREEN: flip `tests/mcp-stdio-smoke.test.js` (MCP-04) + `tests/mcp-readonly-guard.test.js` (GUARD-07) to re-assert fail-closed-without-credentials semantics (no keys ⇒ fail-closed, never simulated success; exercise real path with doubles — not string-swap) → RED then GREEN
-- [ ] 3.3 GREEN: register `test:real-provider` in `scripts/test-runner.js` + `package.json`; tool count stays 80 (GUARD-08 via `tests/mcp-surface-slim.test.js`), no new tools → GREEN
-- [ ] 3.4 TRIANGULATE: full hermetic zero-network run — `npm run test:real-provider` + `npm test` GREEN; `npm run verify:strict` gate green; `PRODUCTION_READY` stays `NO`
-- [ ] 3.5 REFACTOR: optional `docs/model-routing/MODEL_ROUTING.md` openrouter row (if diff allows); cleanup; final `npm run test:core` GREEN
+- [x] 3.1 GREEN: constructor (line 1040) wires registry/broker/ECR; `eos.provider.route` handler (1731-1743) → `enrutarMisionReal` preserving `forzarFalloPrimario`; `eos.provider.health` (1754-1763) → `probeProviderHealth`; fail-closed `{status:<CODE>, code, executed:false, sideEffects:'NONE'}`; schemas (963-973) unchanged → GREEN 17/17 MCP suites
+- [x] 3.2 RED+GREEN: flip `tests/mcp-stdio-smoke.test.js` (MCP-04) + `tests/mcp-readonly-guard.test.js` (GUARD-07) to re-assert fail-closed-without-credentials semantics (no keys ⇒ fail-closed, never simulated success; exercise real path with doubles — not string-swap; new MCP-09 double-driven success test) → RED 3 fail → GREEN 17/17
+- [x] 3.3 GREEN: register `test:real-provider` in `scripts/test-runner.js` (SLIM_SUITE_EXCLUDES opt-in entry for `eos-rp-real-provider-execution.test.js`) + `package.json`; tool count stays 80 (GUARD-08 via `tests/mcp-surface-slim.test.js`), no new tools → `npm run test:real-provider` 75/75 GREEN
+- [x] 3.4 TRIANGULATE: full hermetic zero-network run — `npm run test:real-provider` 75/75 + `npm test` 1268/1269 (1 pre-existing env failure: `eos-worktree.test.js` Windows MAX_PATH nested-worktree artifact; identical at base) ; `npm run verify:strict` 914 checks / 0 failures; `PRODUCTION_READY` stays `NO`
+- [x] 3.5 REFACTOR: `docs/model-routing/MODEL_ROUTING.md` openrouter row added (document-only env name, Law VI); cleanup; final `npm run test:core` 20/20 GREEN
