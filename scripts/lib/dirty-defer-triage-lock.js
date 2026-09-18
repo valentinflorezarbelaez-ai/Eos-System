@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-326 to live main after #326 Mission BY (prior tip dcaac8b5b52179b8fb1a402e1bfbeb4084df81c9; stale tip-309 pin e74d3fcb56995a63e1202f28175f67ac4f3959d3; Mission BY #326 3efd26231eaa8d77732051d2255031c9d66e0caa)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-328 to live main after #328 Mission BZ (prior tip 3efd26231eaa8d77732051d2255031c9d66e0caa; tip-327/552f035 lineage; Mission BZ #328 3a9a39bffdf57dff99f58a12b238f37642acd05b)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '3efd26231eaa8d77732051d2255031c9d66e0caa') {
+      if (!tip || tip[1] !== '3a9a39bffdf57dff99f58a12b238f37642acd05b') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-326 expected main_tip=3efd26231eaa8d77732051d2255031c9d66e0caa (post-#326 / Mission BY MEASURED / L22 CLOSED / L23 OPEN (Audit + BW+BX+BY MEASURED · BZ–CA pending); tip honesty restored; tip-326 / main@3efd262; L17–L22 CLOSED retained; L23 OPEN)',
+            'tip-refresh-post-328 expected main_tip=3a9a39bffdf57dff99f58a12b238f37642acd05b (post-#328 / Mission BZ MEASURED / L22 CLOSED / L23 OPEN (Audit + BW+BX+BY+BZ MEASURED · CA pending); tip honesty restored; tip-328 / main@3a9a39b; L17–L22 CLOSED retained; L23 OPEN)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-326 / main@3efd262 (post-#326 / Mission BY MEASURED / L22 CLOSED / L23 OPEN; tip-326 / main@3efd262; L17–L22 CLOSED retained; L23 OPEN)',
+          path: 'freeze main_tip pinned to tip-refresh-post-328 / main@3a9a39b (post-#328 / Mission BZ MEASURED / L22 CLOSED / L23 OPEN; tip-328 / main@3a9a39b; L17–L22 CLOSED retained; L23 OPEN)',
           status: 'VERIFIED',
           type
         });
