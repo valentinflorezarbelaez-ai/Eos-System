@@ -158,6 +158,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-cb-cross-ladder-composition-port.test.js',
 
   'eos-cc-mission-portfolio-budget-port.test.js',
+
+  'eos-cd-fleet-activation-port.test.js',
 ]);
 
 /**

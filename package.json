@@ -300,7 +300,9 @@
     "test:mission-cb": "node --test tests/eos-cb-cross-ladder-composition-port.test.js",
     "test:cross-ladder-composition": "node --test tests/eos-cb-cross-ladder-composition-port.test.js",
     "test:mission-cc": "node --test tests/eos-cc-mission-portfolio-budget-port.test.js",
-    "test:mission-portfolio-budget": "node --test tests/eos-cc-mission-portfolio-budget-port.test.js"
+    "test:mission-portfolio-budget": "node --test tests/eos-cc-mission-portfolio-budget-port.test.js",
+    "test:mission-cd": "node --test tests/eos-cd-fleet-activation-port.test.js",
+    "test:fleet-activation": "node --test tests/eos-cd-fleet-activation-port.test.js"
   },
   "keywords": [
     "eos",
