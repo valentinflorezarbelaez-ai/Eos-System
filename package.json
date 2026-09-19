@@ -328,7 +328,10 @@
     "test:ladder26-seam": "node --test tests/eos-ladder26-seam-pack.test.js",
     "test:ladder26-pack": "npm run test:mission-cl && npm run test:mission-cm && npm run test:mission-cn && npm run test:mission-co && npm run test:ladder26-seam",
     "test:doctor-hud-honesty": "node --test tests/eos-post-l26-b-doctor-hud-honesty.test.js",
-    "test:post-l26-b": "node --test tests/eos-post-l26-b-doctor-hud-honesty.test.js"
+    "test:post-l26-b": "node --test tests/eos-post-l26-b-doctor-hud-honesty.test.js",
+    "test:ci-surrogate": "node --test tests/eos-post-l26-c-local-ci-surrogate.test.js",
+    "ci:surrogate": "node scripts/ci-surrogate-cli.mjs",
+    "test:post-l26-c": "node --test tests/eos-post-l26-c-local-ci-surrogate.test.js"
   },
   "keywords": [
     "eos",
