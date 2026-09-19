@@ -1,0 +1,222 @@
+{
+  "schema": "eos.fundacion-delta0-gameday.fixture.v1",
+  "note": "Hermetic dry-run only — NO Fundacion writes",
+  "baseline": {
+    "freezeTip": "47cf1a79",
+    "ladder26Status": "CLOSED_FOR_LOCAL_GOVERNED_USE",
+    "tipSeal": "#366",
+    "machineId": "77c24295-69bc-4113-82ab-1d8f0359a5e7"
+  },
+  "observer": {
+    "name": "Valentin Florez",
+    "role": "game-day-observer",
+    "signedOff": true
+  },
+  "ports": {
+    "CL": {
+      "expected": {
+        "status": "MEASURED",
+        "fundacionDelta": 0,
+        "FUNDACION_ALWAYS_DENY": true,
+        "independentCheck": true,
+        "artifacts": [
+          {
+            "id": "cl-receipt-manifest",
+            "digest": "cl00000000000000000000000000000000000000000000000000000000000000",
+            "status": "MEASURED",
+            "revision": "47cf1a79"
+          },
+          {
+            "id": "CL-adr",
+            "digest": "adr-cl-digest",
+            "status": "PRESENT"
+          }
+        ]
+      },
+      "observed": {
+        "status": "MEASURED",
+        "fundacionDelta": 0,
+        "FUNDACION_ALWAYS_DENY": true,
+        "independentCheck": true,
+        "artifacts": [
+          {
+            "id": "cl-receipt-manifest",
+            "digest": "cl00000000000000000000000000000000000000000000000000000000000000",
+            "status": "MEASURED",
+            "revision": "47cf1a79"
+          },
+          {
+            "id": "CL-adr",
+            "digest": "adr-cl-digest",
+            "status": "PRESENT"
+          }
+        ]
+      }
+    },
+    "CM": {
+      "expected": {
+        "status": "MEASURED",
+        "fundacionDelta": 0,
+        "FUNDACION_ALWAYS_DENY": true,
+        "independentCheck": true,
+        "artifacts": [
+          {
+            "id": "cm-receipt-manifest",
+            "digest": "cm00000000000000000000000000000000000000000000000000000000000000",
+            "status": "MEASURED",
+            "revision": "47cf1a79"
+          },
+          {
+            "id": "CM-adr",
+            "digest": "adr-cm-digest",
+            "status": "PRESENT"
+          }
+        ]
+      },
+      "observed": {
+        "status": "MEASURED",
+        "fundacionDelta": 0,
+        "FUNDACION_ALWAYS_DENY": true,
+        "independentCheck": true,
+        "artifacts": [
+          {
+            "id": "cm-receipt-manifest",
+            "digest": "cm00000000000000000000000000000000000000000000000000000000000000",
+            "status": "MEASURED",
+            "revision": "47cf1a79"
+          },
+          {
+            "id": "CM-adr",
+            "digest": "adr-cm-digest",
+            "status": "PRESENT"
+          }
+        ]
+      }
+    },
+    "CN": {
+      "expected": {
+        "status": "MEASURED",
+        "fundacionDelta": 0,
+        "FUNDACION_ALWAYS_DENY": true,
+        "independentCheck": true,
+        "artifacts": [
+          {
+            "id": "cn-receipt-manifest",
+            "digest": "cn00000000000000000000000000000000000000000000000000000000000000",
+            "status": "MEASURED",
+            "revision": "47cf1a79"
+          },
+          {
+            "id": "CN-adr",
+            "digest": "adr-cn-digest",
+            "status": "PRESENT"
+          }
+        ]
+      },
+      "observed": {
+        "status": "MEASURED",
+        "fundacionDelta": 0,
+        "FUNDACION_ALWAYS_DENY": true,
+        "independentCheck": true,
+        "artifacts": [
+          {
+            "id": "cn-receipt-manifest",
+            "digest": "cn00000000000000000000000000000000000000000000000000000000000000",
+            "status": "MEASURED",
+            "revision": "47cf1a79"
+          },
+          {
+            "id": "CN-adr",
+            "digest": "adr-cn-digest",
+            "status": "PRESENT"
+          }
+        ]
+      }
+    },
+    "CO": {
+      "expected": {
+        "status": "MEASURED",
+        "fundacionDelta": 0,
+        "FUNDACION_ALWAYS_DENY": true,
+        "independentCheck": true,
+        "artifacts": [
+          {
+            "id": "co-receipt-manifest",
+            "digest": "co00000000000000000000000000000000000000000000000000000000000000",
+            "status": "MEASURED",
+            "revision": "47cf1a79"
+          },
+          {
+            "id": "CO-adr",
+            "digest": "adr-co-digest",
+            "status": "PRESENT"
+          }
+        ]
+      },
+      "observed": {
+        "status": "MEASURED",
+        "fundacionDelta": 0,
+        "FUNDACION_ALWAYS_DENY": true,
+        "independentCheck": true,
+        "artifacts": [
+          {
+            "id": "co-receipt-manifest",
+            "digest": "co00000000000000000000000000000000000000000000000000000000000000",
+            "status": "MEASURED",
+            "revision": "47cf1a79"
+          },
+          {
+            "id": "CO-adr",
+            "digest": "adr-co-digest",
+            "status": "PRESENT"
+          }
+        ]
+      }
+    },
+    "CP": {
+      "expected": {
+        "status": "CLOSED_FOR_LOCAL_GOVERNED_USE",
+        "fundacionDelta": 0,
+        "FUNDACION_ALWAYS_DENY": true,
+        "independentCheck": true,
+        "artifacts": [
+          {
+            "id": "cp-receipt-manifest",
+            "digest": "cp00000000000000000000000000000000000000000000000000000000000000",
+            "status": "CLOSED_FOR_LOCAL_GOVERNED_USE",
+            "revision": "47cf1a79"
+          },
+          {
+            "id": "CP-adr",
+            "digest": "adr-cp-digest",
+            "status": "PRESENT"
+          }
+        ]
+      },
+      "observed": {
+        "status": "CLOSED_FOR_LOCAL_GOVERNED_USE",
+        "fundacionDelta": 0,
+        "FUNDACION_ALWAYS_DENY": true,
+        "independentCheck": true,
+        "artifacts": [
+          {
+            "id": "cp-receipt-manifest",
+            "digest": "cp00000000000000000000000000000000000000000000000000000000000000",
+            "status": "CLOSED_FOR_LOCAL_GOVERNED_USE",
+            "revision": "47cf1a79"
+          },
+          {
+            "id": "CP-adr",
+            "digest": "adr-cp-digest",
+            "status": "PRESENT"
+          }
+        ]
+      }
+    }
+  },
+  "dirty": false,
+  "requireIndependentCheck": true,
+  "dryRunSimulateOnly": true,
+  "FUNDACION_ALWAYS_DENY": true,
+  "fundacionDelta": 0
+}

@@ -333,7 +333,9 @@
     "ci:surrogate": "node scripts/ci-surrogate-cli.mjs",
     "test:post-l26-c": "node --test tests/eos-post-l26-c-local-ci-surrogate.test.js",
     "test:specboot-friction": "node --test tests/eos-post-l26-e-specboot-friction.test.js",
-    "test:post-l26-e": "node --test tests/eos-post-l26-e-specboot-friction.test.js"
+    "test:post-l26-e": "node --test tests/eos-post-l26-e-specboot-friction.test.js",
+    "test:fundacion-gameday": "node --test tests/eos-post-l26-f-fundacion-gameday.test.js",
+    "test:post-l26-f": "node --test tests/eos-post-l26-f-fundacion-gameday.test.js"
   },
   "keywords": [
     "eos",
