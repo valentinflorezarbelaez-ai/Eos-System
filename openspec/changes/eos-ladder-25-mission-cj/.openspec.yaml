@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-25-mission-cj
+mission: CJ
+spec: SPEC-0093
+title: Continuous Adversarial Verification Port
+ladder: 25
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-18"
