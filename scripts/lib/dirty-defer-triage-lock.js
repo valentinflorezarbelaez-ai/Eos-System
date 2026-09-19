@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-362 to live main after #362 Mission CN (prior tip e6d2ecf7e22d201d516bffe94c1bb56c8da7b5bf; tip-361 lineage; Mission CN #362 49c19b35fca528a9efa7c88599561dc46abe7d09; L26 OPEN (Audit + CL + CM + CN MEASURED · CO–CP pending); L17–L25 CLOSED retained; NEVER reopen L24; NEVER reopen L25)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-365 to live main after #365 Mission CP (prior tip 49c19b35fca528a9efa7c88599561dc46abe7d09; tip-363 lineage; CO #364 7b0a943b74e6ade3f07ab2dc8b3fcb59c0faf3f9; Mission CP #365 47cf1a790c95f78a79e34830c4d6515d16dc67d0; Formal L26 CLOSED (CL+CM+CN+CO+CP MEASURED + seam-pack + closeout); L17–L25 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '49c19b35fca528a9efa7c88599561dc46abe7d09') {
+      if (!tip || tip[1] !== '47cf1a790c95f78a79e34830c4d6515d16dc67d0') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-362 expected main_tip=49c19b35fca528a9efa7c88599561dc46abe7d09 (post-#362 / Mission CN MEASURED / L26 OPEN (Audit + CL + CM + CN MEASURED · CO–CP pending; Sovereign Spec↔Code↔Evidence Traceability & Release Integrity Fabric); tip honesty restored; tip-362 / main@49c19b3; L17–L25 CLOSED retained; NEVER reopen L24; NEVER reopen L25; Do NOT start Mission CO; Do NOT claim CO–CP MEASURED)',
+            'tip-refresh-post-365 expected main_tip=47cf1a790c95f78a79e34830c4d6515d16dc67d0 (post-#365 / Mission CP MEASURED / Formal L26 CLOSED (CL+CM+CN+CO+CP MEASURED + seam-pack + closeout; Sovereign Spec↔Code↔Evidence Traceability & Release Integrity Fabric); tip honesty restored; tip-365 / main@47cf1a79; L17–L25 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; Do NOT open Ladder 27)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-362 / main@49c19b3 (post-#362 / Mission CN MEASURED / L26 OPEN; tip-362 / main@49c19b3; L17–L25 CLOSED retained; NEVER reopen L24; NEVER reopen L25)',
+          path: 'freeze main_tip pinned to tip-refresh-post-365 / main@47cf1a79 (post-#365 / Mission CP MEASURED / Formal L26 CLOSED; tip-365 / main@47cf1a79; L17–L25 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26)',
           status: 'VERIFIED',
           type
         });
