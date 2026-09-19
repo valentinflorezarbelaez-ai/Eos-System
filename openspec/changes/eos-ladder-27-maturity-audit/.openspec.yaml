@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-19
+goal: Register EOS Maturity Ladder 27 Gap Audit (docs-only) after Ladder 26 closeout (Mission CP #365; CL–CP MEASURED + seam-pack; tip-seal #366; post-L26 A–F #367–#373; tip-refresh #374); propose ordered satellites CQ/CR/CS/CT/CU for Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric — no Mission CQ implementation in this change; audit ≠ L27 OPEN until tip-refresh. Never reopen L17–L26. Cite freeze pin 64227127… and merge HEAD ~ 56cdfd08. Schemas AT_CEILING 35/35 — no new docs/schemas JSON.
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-27-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_27_AUDIT_2026-09-19.md
+  - docs/adrs/ADR-0068-ladder-27-maturity-gap-audit.md
+  - docs/evidence/EOS_LADDER_27_AUDIT_EVIDENCE_2026-09-19.md
+  - openspec/changes/eos-ladder-27-maturity-audit
+non_goals:
+  - implementing Mission CQ/CR/CS/CT/CU
+  - starting Mission CQ in this package
+  - claiming Ladder 27 OPEN without separate tip-refresh
+  - re-implementing Mission CL/CM/CN/CO/CP (L26 closed; never reopen L26)
+  - re-implementing Mission CG/CH/CI/CJ/CK (L25 closed; never reopen L25)
+  - re-implementing Mission CB/CC/CD/CE/CF (L24 closed; never reopen L24)
+  - reopening L17–L23
+  - executing complexity prune deletions from post-L26 A inventory
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
+  - rewriting freeze/matrix tip pins in this package
+  - adding docs/schemas/**/*.json (AT_CEILING 35/35)
+  - inventing tip SHA other than freeze 64227127748f84a26aac93b1b2f61712d92ee2cb / merge HEAD ~ 56cdfd08
