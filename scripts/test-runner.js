@@ -172,6 +172,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ci-hitl-escalation-federation-port.test.js',
 
   'eos-cj-adversarial-verification-port.test.js',
+
+  'eos-ladder25-seam-pack.test.js',
 ]);
 
 /**

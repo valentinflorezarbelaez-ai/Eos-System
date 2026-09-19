@@ -314,7 +314,9 @@
     "test:mission-ci": "node --test tests/eos-ci-hitl-escalation-federation-port.test.js",
     "test:hitl-escalation-federation": "node --test tests/eos-ci-hitl-escalation-federation-port.test.js",
     "test:mission-cj": "node --test tests/eos-cj-adversarial-verification-port.test.js",
-    "test:adversarial-verification": "node --test tests/eos-cj-adversarial-verification-port.test.js"
+    "test:adversarial-verification": "node --test tests/eos-cj-adversarial-verification-port.test.js",
+    "test:ladder25-seam": "node --test tests/eos-ladder25-seam-pack.test.js",
+    "test:ladder25-pack": "npm run test:mission-cg && npm run test:mission-ch && npm run test:mission-ci && npm run test:mission-cj && npm run test:ladder25-seam"
   },
   "keywords": [
     "eos",
