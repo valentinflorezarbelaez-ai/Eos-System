@@ -178,6 +178,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-cl-spec-code-traceability-port.test.js',
 
   'eos-cm-evidence-binding-port.test.js',
+
+  'eos-cn-artifact-attestation-port.test.js',
 ]);
 
 /**

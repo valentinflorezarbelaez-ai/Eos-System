@@ -320,7 +320,9 @@
     "test:mission-cl": "node --test tests/eos-cl-spec-code-traceability-port.test.js",
     "test:spec-code-traceability": "node --test tests/eos-cl-spec-code-traceability-port.test.js",
     "test:mission-cm": "node --test tests/eos-cm-evidence-binding-port.test.js",
-    "test:evidence-binding": "node --test tests/eos-cm-evidence-binding-port.test.js"
+    "test:evidence-binding": "node --test tests/eos-cm-evidence-binding-port.test.js",
+    "test:mission-cn": "node --test tests/eos-cn-artifact-attestation-port.test.js",
+    "test:artifact-attestation": "node --test tests/eos-cn-artifact-attestation-port.test.js"
   },
   "keywords": [
     "eos",
