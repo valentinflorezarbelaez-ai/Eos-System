@@ -331,7 +331,9 @@
     "test:post-l26-b": "node --test tests/eos-post-l26-b-doctor-hud-honesty.test.js",
     "test:ci-surrogate": "node --test tests/eos-post-l26-c-local-ci-surrogate.test.js",
     "ci:surrogate": "node scripts/ci-surrogate-cli.mjs",
-    "test:post-l26-c": "node --test tests/eos-post-l26-c-local-ci-surrogate.test.js"
+    "test:post-l26-c": "node --test tests/eos-post-l26-c-local-ci-surrogate.test.js",
+    "test:specboot-friction": "node --test tests/eos-post-l26-e-specboot-friction.test.js",
+    "test:post-l26-e": "node --test tests/eos-post-l26-e-specboot-friction.test.js"
   },
   "keywords": [
     "eos",

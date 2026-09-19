@@ -1,0 +1,17 @@
+{
+  "schema": "eos.specboot-friction-fixture.v1",
+  "sampleOnly": true,
+  "changeId": "eos-demo-change",
+  "step": "apply",
+  "primaryOwner": "Valentin Florez",
+  "owners": ["Valentin Florez"],
+  "changeTip": "4828087faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "headSha": "4828087faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "dirty": false,
+  "file_bodies": {
+    "docs/harness/SPECBOOT_CYCLE.md": "# SpecBoot cycle\n",
+    "openspec/changes/eos-demo-change/proposal.md": "# Proposal\n",
+    "openspec/changes/eos-demo-change/tasks.md": "- [ ] T1. do thing\n"
+  },
+  "non_claim": "Fixture only — not live SpecBoot ceremony evidence; PRODUCTION_READY=NO"
+}
