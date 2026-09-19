@@ -312,7 +312,9 @@
     "test:mission-ch": "node --test tests/eos-ch-mission-archive-replay-port.test.js",
     "test:mission-archive-replay": "node --test tests/eos-ch-mission-archive-replay-port.test.js",
     "test:mission-ci": "node --test tests/eos-ci-hitl-escalation-federation-port.test.js",
-    "test:hitl-escalation-federation": "node --test tests/eos-ci-hitl-escalation-federation-port.test.js"
+    "test:hitl-escalation-federation": "node --test tests/eos-ci-hitl-escalation-federation-port.test.js",
+    "test:mission-cj": "node --test tests/eos-cj-adversarial-verification-port.test.js",
+    "test:adversarial-verification": "node --test tests/eos-cj-adversarial-verification-port.test.js"
   },
   "keywords": [
     "eos",

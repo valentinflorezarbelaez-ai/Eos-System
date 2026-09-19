@@ -170,6 +170,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ch-mission-archive-replay-port.test.js',
 
   'eos-ci-hitl-escalation-federation-port.test.js',
+
+  'eos-cj-adversarial-verification-port.test.js',
 ]);
 
 /**
