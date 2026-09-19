@@ -188,6 +188,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-post-l26-b-doctor-hud-honesty.test.js',
 
   'eos-post-l26-c-local-ci-surrogate.test.js',
+
+  'eos-post-l26-e-specboot-friction.test.js',
 ]);
 
 /**
