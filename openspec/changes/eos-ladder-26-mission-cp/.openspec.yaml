@@ -1,0 +1,23 @@
+schema: spec-driven
+created: 2026-09-19
+goal: Implement Ladder 26 CI Seam-Pack Consolidation & Closeout (SPEC-0099 / Mission CP) — unify CL–CO into fail-closed CI seam-pack + formal closeout. Axis Sovereign Spec↔Code↔Evidence Traceability & Release Integrity Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. L17–L25 CLOSED never reopen. After CP, L26 CLOSED_FOR_LOCAL_GOVERNED_USE never reopen. NON-CLAIM Seam-pack ≠ GitHub Enterprise enforcement. NON-CLAIM CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. Assume CO MEASURED on tip 7b0a943b (freeze still 49c19b35 until tip-364). No freeze/matrix tip rewrite in this package.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0099
+phase: 1
+affected_areas:
+  - tests/eos-ladder26-seam-pack.test.js
+  - scripts/patch-mission-cp.mjs
+  - docs/releases/EOS_LADDER_26_CLOSEOUT_2026-09-19.md
+  - docs/evidence/EOS_MISSION_CP_LADDER26_SEAM_EVD_2026-09-19.md
+  - docs/adrs/ADR-0061-mission-cp-ladder26-seam-pack-closeout.md
+  - openspec/changes/eos-ladder-26-mission-cp
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - new product ports beyond seam/closeout
+  - GitHub Enterprise enforcement claims
+  - CloudAgent path
+  - reopening L17–L25
+  - tip-refresh / freeze-matrix rewrite (parent after merge / tip-364)
+  - soft-allow soak / continue-on-error

@@ -182,6 +182,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-cn-artifact-attestation-port.test.js',
 
   'eos-co-release-integrity-governor-port.test.js',
+
+  'eos-ladder26-seam-pack.test.js',
 ]);
 
 /**
