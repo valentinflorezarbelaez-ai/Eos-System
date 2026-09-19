@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-27-mission-cq
+mission: CQ
+spec: SPEC-0100
+title: Local CI Continuity Port
+ladder: 27
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-19"

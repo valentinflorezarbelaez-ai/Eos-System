@@ -192,6 +192,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-post-l26-e-specboot-friction.test.js',
 
   'eos-post-l26-f-fundacion-gameday.test.js',
+
+  'eos-cq-local-ci-continuity-port.test.js',
 ]);
 
 /**
