@@ -1,0 +1,27 @@
+schema: spec-driven
+created: 2026-09-19
+goal: Register EOS Maturity Ladder 26 Gap Audit (docs-only) after Ladder 25 closeout (Mission CK #354; CG–CK MEASURED + seam-pack; tip seal #355); propose ordered satellites CL/CM/CN/CO/CP for Sovereign Spec↔Code↔Evidence Traceability & Release Integrity Fabric — no Mission CL implementation in this change. Never reopen L17–L25. Cite observed HEAD 746c201… and freeze pin 576aafa….
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-26-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_26_AUDIT_2026-09-19.md
+  - docs/adrs/ADR-0055-ladder-26-maturity-gap-audit.md
+  - docs/evidence/EOS_LADDER_26_AUDIT_EVIDENCE_2026-09-19.md
+  - openspec/changes/eos-ladder-26-maturity-audit
+non_goals:
+  - implementing Mission CL/CM/CN/CO/CP
+  - starting Mission CL in this package
+  - re-implementing Mission CG/CH/CI/CJ/CK (L25 closed; never reopen L25)
+  - re-implementing Mission CB/CC/CD/CE/CF (L24 closed; never reopen L24)
+  - re-implementing Mission BW/BX/BY/BZ/CA (L23 closed; never reopen L23)
+  - re-implementing Mission BR/BS/BT/BU/BV (L22 closed; never reopen L22)
+  - reopening L17–L21
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
+  - rewriting freeze/matrix tip pins in this package
+  - inventing tip SHA other than observed 746c201435881f76d6460be02a1156d7fda89d85 / freeze 576aafa3affaf840b9ac63e1435a1822672d1d5c
