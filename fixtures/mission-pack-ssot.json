@@ -1,0 +1,32 @@
+{
+  "schema": "eos.mission-pack-identity.v1",
+  "description": "Hermetic SSOT fixture for Post-L26 C local CI surrogate tests. Not host live identity.",
+  "paths": [
+    "tests/eos-m1-strict-verify-cp-lock.test.js",
+    "tests/eos-m4-release-ssot-tip.test.js",
+    "tests/eos-m5-ci-gameday-seam-pack.test.js"
+  ],
+  "script_keys": [
+    "verify:strict",
+    "test:m1",
+    "test:m2",
+    "test:m3",
+    "test:m4",
+    "test:m5",
+    "ci"
+  ],
+  "file_bodies": {
+    "tests/eos-m1-strict-verify-cp-lock.test.js": "// fixture m1 SSOT v1\nexport const MISSION = 'm1';\n",
+    "tests/eos-m4-release-ssot-tip.test.js": "// fixture m4 SSOT v1\nexport const MISSION = 'm4';\n",
+    "tests/eos-m5-ci-gameday-seam-pack.test.js": "// fixture m5 SSOT v1\nexport const MISSION = 'm5';\n"
+  },
+  "scripts": {
+    "verify:strict": "node scripts/verify-eos.js --strict",
+    "test:m1": "node --test tests/eos-m1-strict-verify-cp-lock.test.js",
+    "test:m2": "node --test tests/pre-push-main-guard.test.js",
+    "test:m3": "node --test tests/eos-m3-hud-verify-surfaces.test.js",
+    "test:m4": "node --test tests/eos-m4-release-ssot-tip.test.js",
+    "test:m5": "node --test tests/eos-m5-ci-gameday-seam-pack.test.js",
+    "ci": "node scripts/ci/assert-gha-contract.js && node scripts/verify-eos.js --strict"
+  }
+}
