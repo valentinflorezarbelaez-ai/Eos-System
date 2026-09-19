@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-26-mission-co
+mission: CO
+spec: SPEC-0098
+title: Release Integrity & Progressive Honesty Governor Port
+ladder: 26
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-19"

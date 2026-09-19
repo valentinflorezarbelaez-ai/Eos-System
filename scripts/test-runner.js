@@ -180,6 +180,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-cm-evidence-binding-port.test.js',
 
   'eos-cn-artifact-attestation-port.test.js',
+
+  'eos-co-release-integrity-governor-port.test.js',
 ]);
 
 /**

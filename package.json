@@ -322,7 +322,9 @@
     "test:mission-cm": "node --test tests/eos-cm-evidence-binding-port.test.js",
     "test:evidence-binding": "node --test tests/eos-cm-evidence-binding-port.test.js",
     "test:mission-cn": "node --test tests/eos-cn-artifact-attestation-port.test.js",
-    "test:artifact-attestation": "node --test tests/eos-cn-artifact-attestation-port.test.js"
+    "test:artifact-attestation": "node --test tests/eos-cn-artifact-attestation-port.test.js",
+    "test:mission-co": "node --test tests/eos-co-release-integrity-governor-port.test.js",
+    "test:release-integrity": "node --test tests/eos-co-release-integrity-governor-port.test.js"
   },
   "keywords": [
     "eos",
