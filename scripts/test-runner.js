@@ -176,6 +176,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ladder25-seam-pack.test.js',
 
   'eos-cl-spec-code-traceability-port.test.js',
+
+  'eos-cm-evidence-binding-port.test.js',
 ]);
 
 /**

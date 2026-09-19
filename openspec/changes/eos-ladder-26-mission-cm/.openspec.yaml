@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-26-mission-cm
+mission: CM
+spec: SPEC-0096
+title: Evidence Binding & Claim Custody Port
+ladder: 26
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-19"
