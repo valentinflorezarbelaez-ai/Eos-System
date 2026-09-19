@@ -196,6 +196,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-cq-local-ci-continuity-port.test.js',
 
   'eos-cr-evidence-trail-port.test.js',
+
+  'eos-cs-specboot-continuity-port.test.js',
 ]);
 
 /**

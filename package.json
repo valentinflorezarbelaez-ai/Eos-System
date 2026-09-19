@@ -339,7 +339,9 @@
     "test:mission-cq": "node --test tests/eos-cq-local-ci-continuity-port.test.js",
     "test:local-ci-continuity": "node --test tests/eos-cq-local-ci-continuity-port.test.js",
     "test:mission-cr": "node --test tests/eos-cr-evidence-trail-port.test.js",
-    "test:evidence-trail": "node --test tests/eos-cr-evidence-trail-port.test.js"
+    "test:evidence-trail": "node --test tests/eos-cr-evidence-trail-port.test.js",
+    "test:mission-cs": "node --test tests/eos-cs-specboot-continuity-port.test.js",
+    "test:specboot-continuity": "node --test tests/eos-cs-specboot-continuity-port.test.js"
   },
   "keywords": [
     "eos",
