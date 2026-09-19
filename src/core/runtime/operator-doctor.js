@@ -18,6 +18,12 @@ import os from 'node:os';
 import path from 'node:path';
 import { RUNTIME_ENGINE_FILES } from './engine-surface.js';
 import { evaluatePurposeFulfillment } from './purpose-fulfillment.js';
+import {
+  attachHonestyToDoctorReport,
+  formatHonestyBlock,
+  HONESTY_PRODUCTION_READY,
+  FREEZE_GATE_REL
+} from '../observability/doctor-hud-honesty.js';
 
 function exists(p) {
   return fs.existsSync(p);
@@ -228,14 +234,46 @@ export function runOperatorDoctor(options = {}) {
   }
 
   const failed = checks.filter((c) => !c.ok).map((c) => c.id);
-  return {
+  const base = {
     ok: failed.length === 0,
     root,
     homedir_leak: leak,
     checks,
     failed,
-    nonClaims: [...DOCTOR_NON_CLAIMS]
+    nonClaims: [...DOCTOR_NON_CLAIMS],
+    PRODUCTION_READY: HONESTY_PRODUCTION_READY
   };
+
+  if (options.skipHonesty === true) return base;
+
+  let freezeText = options.freezeText;
+  if (freezeText == null) {
+    const freezeRel = options.freezeGatePath || FREEZE_GATE_REL;
+    const freezeAbs = path.join(root, freezeRel);
+    if (exists(freezeAbs)) {
+      try {
+        freezeText = fs.readFileSync(freezeAbs, 'utf8');
+      } catch {
+        freezeText = undefined;
+      }
+    }
+  }
+
+  return attachHonestyToDoctorReport(base, {
+    freezeRevision: options.freezeRevision,
+    sourceRevision: options.sourceRevision || options.liveHead,
+    lagCommits: options.lagCommits,
+    freezeText,
+    dirty: options.dirty,
+    dirtyPaths: options.dirtyPaths,
+    dirtySummary: options.dirtySummary,
+    frozen: options.frozen,
+    pendingPorts: options.pendingPorts,
+    closureEstablished: options.closureEstablished,
+    productionReadyEstablished: options.productionReadyEstablished === true,
+    evidenceComplete: options.evidenceComplete === true,
+    allowOptimisticWhenDirty: options.allowOptimisticWhenDirty
+  });
 }
 
 export function formatDoctorReport(report) {
@@ -252,9 +290,12 @@ export function formatDoctorReport(report) {
     ...report.checks.map((c) => `[${c.ok ? 'PASS' : 'FAIL'}] ${c.id} — ${c.detail}`),
     '',
     'NON-CLAIMS:',
-    ...nonClaims.map((n) => `  - ${n}`),
-    '================================================================================'
+    ...nonClaims.map((n) => `  - ${n}`)
   ];
+  if (report.honesty) {
+    lines.push('', formatHonestyBlock(report.honesty));
+  }
+  lines.push('================================================================================');
   return lines.join('\n');
 }
 

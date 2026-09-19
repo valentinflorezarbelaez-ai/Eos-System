@@ -184,6 +184,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-co-release-integrity-governor-port.test.js',
 
   'eos-ladder26-seam-pack.test.js',
+
+  'eos-post-l26-b-doctor-hud-honesty.test.js',
 ]);
 
 /**

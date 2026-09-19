@@ -8,6 +8,12 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import {
+  attachHonestyToHudSnapshot,
+  formatHonestyBlock,
+  HONESTY_PRODUCTION_READY,
+  FREEZE_GATE_REL as HONESTY_FREEZE_GATE_REL
+} from './doctor-hud-honesty.js';
 import { spawnSync, execFileSync } from 'node:child_process';
 import {
   getMissionOsCoherenceMap,
@@ -585,10 +591,23 @@ export function collectOperatorHud(options = {}) {
 
   const freeze_tip = observeFreezeTipVsHead(baseDir, {
     liveHead: options.liveHead || git.head_full || git.head_short || null,
-    execGit: options.execGit
+    execGit: options.execGit,
+    lagCommits: options.lagCommits
   });
 
-  return {
+  let freezeText = options.freezeText;
+  if (freezeText == null) {
+    try {
+      freezeText = fs.readFileSync(
+        path.join(baseDir, options.freezeGatePath || HONESTY_FREEZE_GATE_REL),
+        'utf8'
+      );
+    } catch {
+      freezeText = undefined;
+    }
+  }
+
+  const snapshot = {
     schema: HUD_SCHEMA,
     generated_at: options.now || new Date().toISOString(),
     git,
@@ -607,8 +626,38 @@ export function collectOperatorHud(options = {}) {
     evidence,
     file_claims,
     doctor,
-    defense
+    defense,
+    PRODUCTION_READY: HONESTY_PRODUCTION_READY
   };
+
+  if (options.skipHonesty === true) return snapshot;
+
+  const enriched = attachHonestyToHudSnapshot(snapshot, {
+    freezeRevision: options.freezeRevision,
+    sourceRevision: options.sourceRevision || options.liveHead || git.head_full || git.head_short,
+    lagCommits: options.lagCommits,
+    freezeText,
+    dirty: options.dirty,
+    dirtyPaths: options.dirtyPaths,
+    dirtySummary: options.dirtySummary,
+    frozen: options.frozen,
+    pendingPorts: options.pendingPorts,
+    closureEstablished: options.closureEstablished,
+    productionReadyEstablished: options.productionReadyEstablished === true,
+    evidenceComplete: options.evidenceComplete === true,
+    allowOptimisticWhenDirty: options.allowOptimisticWhenDirty
+  });
+  if (enriched.honesty?.revision && enriched.freeze_tip) {
+    enriched.freeze_tip = {
+      ...enriched.freeze_tip,
+      lag_commits: enriched.honesty.revision.lag_commits,
+      lag_measurable: enriched.honesty.revision.lag_measurable,
+      lag_label: enriched.honesty.revision.lag_label,
+      freeze_revision_short: enriched.honesty.revision.freeze_short,
+      source_revision_short: enriched.honesty.revision.source_short
+    };
+  }
+  return enriched;
 }
 
 function fmtSurface(surfaces) {
@@ -733,6 +782,10 @@ export function renderOperatorHud(snapshot) {
   lines.push('        NOT VERIFIED=missing | DATED_FILE_CLAIM=historical, not SSOT');
   lines.push('Honesty: unattributed historical test/check slogans are refused');
 
+  if (snapshot.honesty) {
+    lines.push(formatHonestyBlock(snapshot.honesty));
+  }
+  lines.push('NON-CLAIM: HUD honesty display ≠ L26 seal change / PRODUCTION_READY flip');
   const text = lines.join('\n');
   assertHudTextHonest(text);
   return text;
