@@ -1,0 +1,24 @@
+schema: spec-driven
+created: 2026-09-19
+goal: Implement Ladder 27 CI Seam-Pack Consolidation & Closeout (SPEC-0104 / Mission CU) — unify CQ–CT into fail-closed CI seam-pack + formal closeout. Axis Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. Schemas AT_CEILING. L17–L26 CLOSED never reopen. After CU, L27 CLOSED_FOR_LOCAL_GOVERNED_USE never reopen. NON-CLAIM Seam-pack ≠ GitHub Enterprise enforcement. NON-CLAIM CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. Assume CQ#377 CR#379 CS#380 CT#382 MEASURED (CT tip 1d675074). No freeze/matrix tip rewrite in this package.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0104
+phase: 1
+affected_areas:
+  - tests/eos-ladder27-seam-pack.test.js
+  - scripts/patch-mission-cu.mjs
+  - docs/releases/EOS_LADDER_27_CLOSEOUT_2026-09-19.md
+  - docs/evidence/EOS_MISSION_CU_LADDER27_SEAM_EVD_2026-09-19.md
+  - docs/adrs/ADR-0073-mission-cu-ladder27-seam-pack-closeout.md
+  - openspec/changes/eos-ladder-27-mission-cu
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - new product ports beyond seam/closeout
+  - GitHub Enterprise enforcement claims
+  - CloudAgent path
+  - reopening L17–L26
+  - tip-refresh / freeze-matrix rewrite (parent after merge)
+  - soft-allow soak / continue-on-error
+  - new docs/schemas JSON (AT_CEILING)
