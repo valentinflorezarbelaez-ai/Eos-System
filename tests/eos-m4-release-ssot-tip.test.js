@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#373 pinned tip: main@64227127 / 64227127748f84a26aac93b1b2f61712d92ee2cb (prior sealed freeze tip 47cf1a790c95f78a79e34830c4d6515d16dc67d0 Mission CP #365 / tip-seal #366; lineage #366 tip-seal L26 CLOSED → #367 backlog → #368 A → #369 B → #370 C → #371 D → #372 E → #373 F; #373 feat(fundacion): post-L26 F Fundacion Δ=0 game-day drill CL–CP (#373); tip honesty restored; Formal Ladder 26 CLOSED retained (CL+CM+CN+CO+CP MEASURED + seam-pack + closeout); Formal L25 CLOSED retained; L17-L24 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; Do NOT open Ladder 27; post-L26 perfection A–F MEASURED/landed as docs+gates without reopening L26; historical tip-365/362/360/358/356/354/352/350/348/346/344/342/340/338/336/334/332/330 needles OK) */
-const EXPECTED_TIP = '64227127748f84a26aac93b1b2f61712d92ee2cb';
+/** Tip refresh post-#375 pinned tip: main@8056ef70 / 8056ef7037b6a97765fce125398fba28fea14b0f (prior sealed freeze tip 64227127748f84a26aac93b1b2f61712d92ee2cb tip-refresh #374 / post-L26 F #373 / Formal L26 CLOSED; #375 docs(ladder): Ladder 27 maturity gap audit (Operator Continuity & Local CI / Evidence Ritual) (#375); tip honesty restored; Ladder 27 OPEN (Audit MEASURED · CQ–CU pending); Formal L26 CLOSED retained; L17-L25 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; Do NOT start Mission CQ; Do NOT claim CQ–CU MEASURED; historical tip-373/365/362/360/358/356 needles OK) */
+const EXPECTED_TIP = '8056ef7037b6a97765fce125398fba28fea14b0f';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-373 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-375 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-373 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-375 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -641,6 +641,24 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'tip-refresh-post-365',
     'Tip refresh post #366',
     'tip-refresh-post-373',
+    'Tip refresh post #373',
+    'tip-refresh-post-373',
+    'Tip refresh post #375',
+    'tip-refresh-post-375',
+    'Ladder 27 Maturity Audit',
+    'Ladder 27 OPEN',
+    'L27 OPEN',
+    'CQ–CU pending',
+    'Audit MEASURED · CQ–CU pending',
+    'Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric',
+    'SPEC-0100',
+    'SPEC-0101',
+    'SPEC-0102',
+    'SPEC-0103',
+    'SPEC-0104',
+    'Do NOT start Mission CQ',
+    'NEVER reopen L26',
+    'Formal L26 CLOSED retained',
     'Tip refresh post #373',
     'Tip seal #366',
     'post-L26 perfection',
@@ -1298,15 +1316,45 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(matrix, /Post-L26 A|Post-L26 F|post-L26 perfection/);
   assert.match(freeze, /Fundacion Δ=0 game-day|Fundacion Delta=0 game-day|game-day drill CL/);
   assert.match(matrix, /Fundacion Δ=0 game-day|Post-L26 F|game-day drill/);
-  // Tip honesty post-#373: Formal L26 CLOSED retained; current header must NOT claim L26 OPEN
+  // Tip honesty post-#375: L27 OPEN (Audit MEASURED · CQ–CU pending); Formal L26 CLOSED retained; NEVER reopen L26; Do NOT start Mission CQ
   assert.match(freezeHeader, /L26 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; CL\+CM\+CN\+CO\+CP MEASURED/);
   assert.match(matrixHeader, /L26 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; CL\+CM\+CN\+CO\+CP MEASURED/);
+  assert.match(freezeHeader, /L27 OPEN \(Audit MEASURED · CQ–CU pending/);
+  assert.match(matrixHeader, /L27 OPEN \(Audit MEASURED · CQ–CU pending/);
   assert.doesNotMatch(freezeHeader, /L26 OPEN(?!.*then)/);
   assert.doesNotMatch(matrixHeader, /L26 OPEN(?!.*then)/);
-  assert.match(freeze, /Do NOT open Ladder 27|Do not open Ladder 27/);
-  assert.match(matrix, /Do NOT open Ladder 27|Do not open Ladder 27/);
+  assert.doesNotMatch(freezeHeader, /Do NOT open Ladder 27(?! then)/);
+  assert.doesNotMatch(matrixHeader, /Do NOT open Ladder 27(?! then)/);
+  // Forbid claiming CQ–CU MEASURED as current; allow "Do NOT claim CQ–CU MEASURED"
+  assert.doesNotMatch(freezeHeader, /(?<!Do NOT claim )CQ–CU MEASURED/);
+  assert.doesNotMatch(matrixHeader, /(?<!Do NOT claim )CQ–CU MEASURED/);
+  assert.doesNotMatch(freezeHeader, /\|\s*CQ–CU MEASURED\s*\|/);
+  assert.doesNotMatch(matrixHeader, /\|\s*CQ–CU MEASURED\s*\|/);
   assert.match(freeze, /NEVER reopen L26|never reopen L26/);
   assert.match(matrix, /NEVER reopen L26|never reopen L26/);
+  assert.match(freeze, /Ladder 27 is \*\*OPEN\*\*|L27 OPEN \(Audit MEASURED · CQ–CU pending/);
+  assert.match(matrix, /Ladder 27 OPEN|L27 OPEN/);
+  assert.match(freeze, /tip-refresh-post-375|Tip refresh post #375|tip refresh post-#375/);
+  assert.match(matrix, /tip-refresh-post-375/);
+  assert.match(freeze, /CQ–CU pending/);
+  assert.match(matrix, /CQ–CU pending/);
+  assert.match(freeze, /Audit MEASURED · CQ–CU pending/);
+  assert.match(matrix, /Audit MEASURED · CQ–CU pending/);
+  assert.match(freeze, /SPEC-0100|Mission CQ/);
+  assert.match(matrix, /SPEC-0100|Mission CQ/);
+  assert.match(freeze, /SPEC-0104|Mission CU/);
+  assert.match(matrix, /SPEC-0104|Mission CU/);
+  assert.match(matrix, /\|\s*Ladder 27 Maturity Audit\s*\|/);
+  assert.match(matrix, /\|\s*Ladder 27 OPEN\s*\|/);
+  assert.match(matrix, /\|\s*L27 OPEN\s*\|/);
+  assert.match(matrix, /\|\s*Tip refresh post #375\s*\|/);
+  assert.ok(freeze.includes('Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric'), 'freeze missing L27 axis');
+  assert.ok(matrix.includes('Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric'), 'matrix missing L27 axis');
+  assert.match(freeze, /Do NOT start Mission CQ|Do not start Mission CQ/);
+  assert.match(matrix, /Do NOT start Mission CQ|Do not start Mission CQ/);
+  assert.match(freeze, /Formal L26 CLOSED|Ladder 26 is \*\*CLOSED\*\*|L26 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
+  assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
+  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
 
   assert.doesNotMatch(matrix, /\|\s*Merge to main\s*\|\s*FUTURE\s*\|\s*BLOCKED\s*\|/i);
 });
