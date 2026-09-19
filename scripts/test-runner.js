@@ -198,6 +198,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-cr-evidence-trail-port.test.js',
 
   'eos-cs-specboot-continuity-port.test.js',
+
+  'eos-ct-fundacion-delta0-continuity-port.test.js',
 ]);
 
 /**
