@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-26-mission-cn
+mission: CN
+spec: SPEC-0097
+title: Governed Artifact / SBOM Attestation Port
+ladder: 26
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-19"
