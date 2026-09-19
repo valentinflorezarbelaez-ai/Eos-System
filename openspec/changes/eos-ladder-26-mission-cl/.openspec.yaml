@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-26-mission-cl
+mission: CL
+spec: SPEC-0095
+title: Spec↔Code Traceability Graph Port
+ladder: 26
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-19"
