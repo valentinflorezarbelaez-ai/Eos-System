@@ -343,7 +343,10 @@
     "test:mission-cs": "node --test tests/eos-cs-specboot-continuity-port.test.js",
     "test:specboot-continuity": "node --test tests/eos-cs-specboot-continuity-port.test.js",
     "test:mission-ct": "node --test tests/eos-ct-fundacion-delta0-continuity-port.test.js",
-    "test:fundacion-delta0-continuity": "node --test tests/eos-ct-fundacion-delta0-continuity-port.test.js"
+    "test:fundacion-delta0-continuity": "node --test tests/eos-ct-fundacion-delta0-continuity-port.test.js",
+    "test:ladder27-seam": "node --test tests/eos-ladder27-seam-pack.test.js",
+    "test:mission-cu": "node --test tests/eos-ladder27-seam-pack.test.js",
+    "test:ladder27-pack": "npm run test:mission-cq && npm run test:mission-cr && npm run test:mission-cs && npm run test:mission-ct && npm run test:ladder27-seam"
   },
   "keywords": [
     "eos",

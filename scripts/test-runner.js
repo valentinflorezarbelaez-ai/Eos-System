@@ -200,6 +200,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-cs-specboot-continuity-port.test.js',
 
   'eos-ct-fundacion-delta0-continuity-port.test.js',
+
+  'eos-ladder27-seam-pack.test.js',
 ]);
 
 /**
