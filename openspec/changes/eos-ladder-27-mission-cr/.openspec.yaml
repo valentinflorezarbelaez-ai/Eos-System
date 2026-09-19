@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-27-mission-cr
+mission: CR
+spec: SPEC-0101
+title: Evidence Trail Ritual Binding Port
+ladder: 27
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-19"

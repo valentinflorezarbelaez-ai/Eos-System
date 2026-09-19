@@ -194,6 +194,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-post-l26-f-fundacion-gameday.test.js',
 
   'eos-cq-local-ci-continuity-port.test.js',
+
+  'eos-cr-evidence-trail-port.test.js',
 ]);
 
 /**

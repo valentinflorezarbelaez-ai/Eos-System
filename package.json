@@ -337,7 +337,9 @@
     "test:fundacion-gameday": "node --test tests/eos-post-l26-f-fundacion-gameday.test.js",
     "test:post-l26-f": "node --test tests/eos-post-l26-f-fundacion-gameday.test.js",
     "test:mission-cq": "node --test tests/eos-cq-local-ci-continuity-port.test.js",
-    "test:local-ci-continuity": "node --test tests/eos-cq-local-ci-continuity-port.test.js"
+    "test:local-ci-continuity": "node --test tests/eos-cq-local-ci-continuity-port.test.js",
+    "test:mission-cr": "node --test tests/eos-cr-evidence-trail-port.test.js",
+    "test:evidence-trail": "node --test tests/eos-cr-evidence-trail-port.test.js"
   },
   "keywords": [
     "eos",

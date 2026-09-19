@@ -1,0 +1,197 @@
+{
+  "kind": "eos-evidence-trail-cl-cm-cn",
+  "schemaVersion": "0.1.0-design",
+  "trailId": "EVD-TRAIL-SAMPLE-2026-09-19-CL-CM-CN",
+  "decision": "PASS",
+  "timestamp": "2026-09-19T00:08:30-05:00",
+  "sampleOnly": true,
+  "productionReady": "NO",
+  "fundacionDelta": 0,
+  "operator": {
+    "id": "valentin.florez",
+    "role": "owner",
+    "machineId": "77c24295-69bc-4113-82ab-1d8f0359a5e7"
+  },
+  "portIdentity": {
+    "ladder": 26,
+    "ladderStatus": "CLOSED_FOR_LOCAL_GOVERNED_USE",
+    "ports": [
+      {
+        "port": "CL",
+        "specId": "SPEC-0095",
+        "mission": "CL",
+        "receiptKind": "eos-spec-code-traceability-receipt",
+        "receiptPrefix": "CL-RCPT-",
+        "l26Status": "MEASURED",
+        "npmScript": "test:mission-cl"
+      },
+      {
+        "port": "CM",
+        "specId": "SPEC-0096",
+        "mission": "CM",
+        "receiptKind": "eos-evidence-binding-receipt",
+        "receiptPrefix": "CM-RCPT-",
+        "l26Status": "MEASURED",
+        "npmScript": "test:mission-cm"
+      },
+      {
+        "port": "CN",
+        "specId": "SPEC-0097",
+        "mission": "CN",
+        "receiptKind": "eos-artifact-attestation-receipt",
+        "receiptPrefix": "CN-RCPT-",
+        "l26Status": "MEASURED",
+        "npmScript": "test:mission-cn"
+      }
+    ]
+  },
+  "revisionFreezeIdentity": {
+    "freezeMainTip": "47cf1a790c95f78a79e34830c4d6515d16dc67d0",
+    "tipSealSha": "b7b844787cf4703c389751e8c1e0fa063870f5ad",
+    "tipSealPr": 366,
+    "headSha": null,
+    "headFreezeLag": "UNMEASURED",
+    "dirtyTree": false,
+    "hostPath": "C:\\Users\\valen\\Documents\\Eos system",
+    "note": "Hermetic sample: headSha null / UNMEASURED. Live host trail MUST fill real HEAD and fail closed if BEHIND|DIVERGED|UNMEASURED|dirty."
+  },
+  "links": [
+    {
+      "seq": 1,
+      "port": "CL",
+      "receiptId": "CL-RCPT-SAMPLE-0001",
+      "receiptHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "planId": "SAMPLE-CL-PLAN-SPEC-0095",
+      "decision": "PASS",
+      "timestamp": "2026-09-19T00:07:00-05:00",
+      "inputsDigest": "1111111111111111111111111111111111111111111111111111111111111111",
+      "outputsDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+      "prevLinkHash": null,
+      "crossPortRefs": {
+        "clLinkDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "cmClaimsDigest": null,
+        "priorReceiptHash": null
+      },
+      "explicitNonClaims": [
+        "≠ full LSP/IDE product",
+        "≠ GitHub code search",
+        "≠ GHE enforcement",
+        "PRODUCTION_READY=NO",
+        "Fundacion Δ=0"
+      ]
+    },
+    {
+      "seq": 2,
+      "port": "CM",
+      "receiptId": "CM-RCPT-SAMPLE-0001",
+      "receiptHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "planId": "SAMPLE-CM-PLAN-SPEC-0096",
+      "decision": "PASS",
+      "timestamp": "2026-09-19T00:07:30-05:00",
+      "inputsDigest": "3333333333333333333333333333333333333333333333333333333333333333",
+      "outputsDigest": "4444444444444444444444444444444444444444444444444444444444444444",
+      "prevLinkHash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "crossPortRefs": {
+        "clLinkDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "cmClaimsDigest": "4444444444444444444444444444444444444444444444444444444444444444",
+        "priorReceiptHash": null
+      },
+      "explicitNonClaims": [
+        "≠ WORM SaaS",
+        "≠ external audit product",
+        "≠ SIEM / data lake",
+        "≠ GHE enforcement",
+        "PRODUCTION_READY=NO",
+        "Fundacion Δ=0"
+      ]
+    },
+    {
+      "seq": 3,
+      "port": "CN",
+      "receiptId": "CN-RCPT-SAMPLE-0001",
+      "receiptHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "planId": "SAMPLE-CN-PLAN-SPEC-0097",
+      "decision": "PASS",
+      "timestamp": "2026-09-19T00:08:00-05:00",
+      "inputsDigest": "5555555555555555555555555555555555555555555555555555555555555555",
+      "outputsDigest": "6666666666666666666666666666666666666666666666666666666666666666",
+      "prevLinkHash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "crossPortRefs": {
+        "clLinkDigest": "2222222222222222222222222222222222222222222222222222222222222222",
+        "cmClaimsDigest": "4444444444444444444444444444444444444444444444444444444444444444",
+        "priorReceiptHash": null
+      },
+      "explicitNonClaims": [
+        "≠ commercial SBOM SaaS",
+        "≠ Sigstore product",
+        "≠ public package registry",
+        "≠ SLSA commercial",
+        "≠ GHE enforcement",
+        "PRODUCTION_READY=NO",
+        "Fundacion Δ=0"
+      ]
+    }
+  ],
+  "inputs": {
+    "clPlanRef": "fixtures/SAMPLE-CL-PLAN-SPEC-0095 (design placeholder)",
+    "cmPlanRef": "fixtures/SAMPLE-CM-PLAN-SPEC-0096 (design placeholder)",
+    "cnPlanRef": "fixtures/SAMPLE-CN-PLAN-SPEC-0097 (design placeholder)",
+    "evidencePaths": [
+      "docs/releases/EOS_POST_L26_D_EVIDENCE_TRAIL_DESIGN_2026-09-19.md",
+      "fixtures/evidence-trail-cl-cm-cn.sample.json"
+    ],
+    "fixtureMode": true
+  },
+  "outputs": {
+    "trailPath": null,
+    "summary": "Sample-only CL→CM→CN append-only linkage illustrating Workstream D ritual; not host-live custody.",
+    "linkCount": 3,
+    "verifyResult": {
+      "ok": true,
+      "note": "Illustrative PASS for well-formed sampleOnly document. Live verify MUST DENY if sampleOnly=true, headSha null/UNMEASURED, or placeholder digests used as custody."
+    }
+  },
+  "nonClaims": [
+    "sampleOnly=true — NOT a host-live evidence trail",
+    "No trail generated on host by package eos-post-l26-d-evidence-trail",
+    "No CL/CM/CN port state changed",
+    "Does not assert any pending port closed beyond already-MEASURED L26 seal facts",
+    "Does not include CO/CP in links[] (out of Workstream D scope)",
+    "eos evidence:trail is a design sketch only — NOT implemented",
+    "≠ WORM SaaS / ≠ external audit / ≠ SIEM / ≠ Sigstore / ≠ GHE",
+    "CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES",
+    "PRODUCTION_READY=NO",
+    "Fundacion Δ=0",
+    "Law VI held — no secrets in this body",
+    "L17–L26 never reopen; L27 not started"
+  ],
+  "appendOnly": {
+    "order": ["CL", "CM", "CN"],
+    "mutationPolicy": "append-only",
+    "rewriteForbidden": true,
+    "chainRule": "links[i].prevLinkHash must equal hash(links[i-1] seal body); links[0].prevLinkHash=null"
+  },
+  "security": {
+    "lawVI": "HELD",
+    "hashAlg": "sha256",
+    "network": "none",
+    "replayProtection": {
+      "trailIdUnique": true,
+      "sealHashDuplicateAsNewId": "DENY",
+      "inPlaceVerify": "ALLOW",
+      "mutateSealedLinks": "DENY"
+    }
+  },
+  "trailSealHash": null,
+  "failClosedSemantics": {
+    "missingLink": "DENY",
+    "dirtyTree": "DENY",
+    "mismatchedHash": "DENY",
+    "unverifiable": "DENY",
+    "orderViolation": "DENY",
+    "replay": "DENY",
+    "samplePresentedAsLive": "DENY",
+    "softFail": "FORBIDDEN"
+  },
+  "reasons": []
+}
