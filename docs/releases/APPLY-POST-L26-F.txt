@@ -1,0 +1,45 @@
+APPLY-POST-L26-F — Fundacion Δ=0 game-day drill (CL–CP)
+=======================================================
+
+NO Fundacion writes. NO PRODUCTION_READY flip. NO L26 seal change.
+L17–L26 remain CLOSED; do NOT open L27.
+NON-CLAIM: Successful game-day ≠ L26 seal ≠ PRODUCTION_READY=YES.
+Schemas AT_CEILING 35/35 — do NOT add docs/schemas/**/*.json.
+FUNDACION_ALWAYS_DENY — simulate manifests/observations only.
+
+machineId (for host verify): 77c24295-69bc-4113-82ab-1d8f0359a5e7
+Host path: C:\Users\valen\Documents\Eos system
+
+Hermetic freeze tip (OBSERVED box/backlog): 47cf1a79
+Tip-seal: #366
+Host live scan this run: prefer fixtures + host-apply
+
+1) Confirm L26 seal still closed on host (freeze header + tip-seal #366).
+2) CopyFromBox from /workspace/eos-post-l26-f-fundacion-gameday/ these paths:
+   - src/core/fundacion/fundacion-delta0-gameday.js              (NEW)
+   - tests/eos-post-l26-f-fundacion-gameday.test.js
+   - scripts/patch-post-l26-f.mjs
+   - fixtures/gameday-happy-cl-cp.json
+   - fixtures/gameday-mismatch-cl.json
+   - fixtures/gameday-write-attempt.json
+   - docs/adrs/ADR-0067-post-l26-fundacion-delta0-gameday.md
+   - docs/evidence/EOS_POST_L26_F_FUNDACION_GAMEDAY_EVD_2026-09-19.md
+   - docs/releases/EOS_POST_L26_F_FUNDACION_GAMEDAY_2026-09-19.md
+   - docs/releases/EOS_POST_L26_F_FUNDACION_GAMEDAY_RUN_SHEET_2026-09-19.md
+   - docs/templates/per-port-artifact-manifest.md
+   - docs/templates/retrospective-template.md
+3) On host: node scripts/patch-post-l26-f.mjs
+   → adds package.json scripts test:fundacion-gameday / test:post-l26-f
+   → adds SLIM_SUITE_EXCLUDES for the suite
+4) On host: node --test tests/eos-post-l26-f-fundacion-gameday.test.js
+5) Optional live dry-run (READ-ONLY observations; inject manifests):
+     import { runFundacionDelta0Gameday } from './src/core/fundacion/fundacion-delta0-gameday.js'
+     // Pass baseline + observer + per-port expected/observed
+     // Confirm: FUNDACION_ALWAYS_DENY, fundacion_delta=0 only if independent checks
+     // Confirm: writeAttempt → fail closed; dirty/pending/mismatch → block green
+6) Fill retrospective template WITHOUT reopening L17–L26.
+7) Commit/PR when ready. Keep PRODUCTION_READY=NO.
+   Do NOT treat game-day PASS as seal or readiness flip.
+   Do NOT write to Fundacion paths.
+
+If host seal evidence missing: HOLD / FAIL CLOSED.
