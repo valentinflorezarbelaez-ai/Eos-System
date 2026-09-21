@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-28-mission-cx
+mission: CX
+spec: SPEC-0107
+title: Billing-Blocked Local Verify Ritual Port
+ladder: 28
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-21"

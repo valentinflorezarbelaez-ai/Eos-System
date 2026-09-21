@@ -350,7 +350,9 @@
     "test:mission-cv": "node --test tests/eos-cv-hud-doctor-honesty-ritual-port.test.js",
     "test:hud-doctor-honesty-ritual": "node --test tests/eos-cv-hud-doctor-honesty-ritual-port.test.js",
     "test:mission-cw": "node --test tests/eos-cw-cross-port-continuity-orchestration-port.test.js",
-    "test:cross-port-continuity-orchestration": "node --test tests/eos-cw-cross-port-continuity-orchestration-port.test.js"
+    "test:cross-port-continuity-orchestration": "node --test tests/eos-cw-cross-port-continuity-orchestration-port.test.js",
+    "test:mission-cx": "node --test tests/eos-cx-billing-blocked-local-verify-ritual-port.test.js",
+    "test:billing-blocked-local-verify-ritual": "node --test tests/eos-cx-billing-blocked-local-verify-ritual-port.test.js"
   },
   "keywords": [
     "eos",
