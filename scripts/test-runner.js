@@ -202,6 +202,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ct-fundacion-delta0-continuity-port.test.js',
 
   'eos-ladder27-seam-pack.test.js',
+
+  'eos-cv-hud-doctor-honesty-ritual-port.test.js',
 ]);
 
 /**

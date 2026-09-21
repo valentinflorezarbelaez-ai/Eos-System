@@ -346,7 +346,9 @@
     "test:fundacion-delta0-continuity": "node --test tests/eos-ct-fundacion-delta0-continuity-port.test.js",
     "test:ladder27-seam": "node --test tests/eos-ladder27-seam-pack.test.js",
     "test:mission-cu": "node --test tests/eos-ladder27-seam-pack.test.js",
-    "test:ladder27-pack": "npm run test:mission-cq && npm run test:mission-cr && npm run test:mission-cs && npm run test:mission-ct && npm run test:ladder27-seam"
+    "test:ladder27-pack": "npm run test:mission-cq && npm run test:mission-cr && npm run test:mission-cs && npm run test:mission-ct && npm run test:ladder27-seam",
+    "test:mission-cv": "node --test tests/eos-cv-hud-doctor-honesty-ritual-port.test.js",
+    "test:hud-doctor-honesty-ritual": "node --test tests/eos-cv-hud-doctor-honesty-ritual-port.test.js"
   },
   "keywords": [
     "eos",

@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-28-mission-cv
+mission: CV
+spec: SPEC-0105
+title: HUD/Doctor Honesty Ritual Composition Port
+ladder: 28
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-19"
