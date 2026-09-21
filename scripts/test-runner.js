@@ -214,6 +214,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ladder28-seam-pack.test.js',
 
   'eos-da-control-plane-observability-aggregation-port.test.js',
+
+  'eos-db-doctor-ritual-automation-port.test.js',
 ]);
 
 /**
