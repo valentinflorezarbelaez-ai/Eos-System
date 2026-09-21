@@ -218,6 +218,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-db-doctor-ritual-automation-port.test.js',
 
   'eos-dc-evidence-economy-custody-ledger-port.test.js',
+
+  'eos-dd-local-ci-ritual-hardening-port.test.js',
 ]);
 
 /**

@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-29-mission-dd
+mission: DC
+spec: SPEC-0113
+title: Local CI Ritual Hardening Port
+ladder: 29
+adr: ADR-0085
+production_ready: NO
+fundacion_delta: 0
+freeze_soft_observe_pin: 4d8c6c59
