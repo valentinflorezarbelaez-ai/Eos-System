@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-29-mission-da
+mission: DA
+spec: SPEC-0110
+title: Control-Plane Observability Aggregation Port
+ladder: 29
+adr: ADR-0082
+production_ready: NO
+fundacion_delta: 0
+freeze_soft_observe_pin: 2d6ab2d2
