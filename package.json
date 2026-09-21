@@ -354,7 +354,10 @@
     "test:mission-cx": "node --test tests/eos-cx-billing-blocked-local-verify-ritual-port.test.js",
     "test:billing-blocked-local-verify-ritual": "node --test tests/eos-cx-billing-blocked-local-verify-ritual-port.test.js",
     "test:mission-cy": "node --test tests/eos-cy-mission-os-control-plane-honesty-port.test.js",
-    "test:mission-os-control-plane-honesty": "node --test tests/eos-cy-mission-os-control-plane-honesty-port.test.js"
+    "test:mission-os-control-plane-honesty": "node --test tests/eos-cy-mission-os-control-plane-honesty-port.test.js",
+    "test:ladder28-seam": "node --test tests/eos-ladder28-seam-pack.test.js",
+    "test:mission-cz": "node --test tests/eos-ladder28-seam-pack.test.js",
+    "test:ladder28-pack": "npm run test:mission-cv && npm run test:mission-cw && npm run test:mission-cx && npm run test:mission-cy && npm run test:ladder28-seam"
   },
   "keywords": [
     "eos",

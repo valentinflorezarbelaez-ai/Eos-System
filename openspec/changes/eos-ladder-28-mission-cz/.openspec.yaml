@@ -1,0 +1,24 @@
+schema: spec-driven
+created: 2026-09-21
+goal: Implement Ladder 28 CI Seam-Pack Consolidation & Closeout (SPEC-0109 / Mission CZ) — unify CV–CY into fail-closed CI seam-pack + formal closeout. Axis Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. Schemas AT_CEILING. L17–L27 CLOSED never reopen. After CZ tip-seal, L28 CLOSED_FOR_LOCAL_GOVERNED_USE never reopen. NON-CLAIM Seam-pack ≠ GitHub Enterprise enforcement. NON-CLAIM CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. NON-CLAIM ≠ reopen L27. Assume CV#390 CW#392 CX#394 CY#396 MEASURED (CY tip 900b14e4). No freeze/matrix tip rewrite in this package.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0109
+phase: 1
+affected_areas:
+  - tests/eos-ladder28-seam-pack.test.js
+  - scripts/patch-mission-cz.mjs
+  - docs/releases/EOS_LADDER_28_CLOSEOUT_2026-09-21.md
+  - docs/evidence/EOS_MISSION_CZ_LADDER28_SEAM_EVD_2026-09-21.md
+  - docs/adrs/ADR-0080-mission-cz-ladder28-seam-pack-closeout.md
+  - openspec/changes/eos-ladder-28-mission-cz
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - new product ports beyond seam/closeout
+  - GitHub Enterprise enforcement claims
+  - CloudAgent path
+  - reopening L17–L27
+  - tip-refresh / freeze-matrix rewrite (parent after merge)
+  - soft-allow soak / continue-on-error
+  - new docs/schemas JSON (AT_CEILING)
