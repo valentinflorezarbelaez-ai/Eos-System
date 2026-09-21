@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-open-post-401 to live main after #401 Ladder 29 Maturity Gap Audit (prior freeze tip 8602eeff8fab64436f8bb529ee1bf488ff9b2db4; tip-refresh post-#399 / Formal Ladder 28 CLOSED then; Do NOT open Ladder 29 then; Ladder 29 Audit #401 2d6ab2d293b0a174105aa244da9bc619d3a28db5; L29 OPEN (Audit MEASURED · DA–DE pending; Sovereign Observability & Evidence Economy Fabric); L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-403 to live main after #403 Mission DA (prior freeze tip 2d6ab2d293b0a174105aa244da9bc619d3a28db5; tip-open post-#401 / L29 OPEN (Audit MEASURED · DA–DE pending then); tip-open #402 @ b51d5934; Mission DA #403 daae7380d2d71ed49a139f6d97d60d4b22655e94; L29 OPEN (Audit MEASURED · DA MEASURED · DB–DE pending; Sovereign Observability & Evidence Economy Fabric); L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DB; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '2d6ab2d293b0a174105aa244da9bc619d3a28db5') {
+      if (!tip || tip[1] !== 'daae7380d2d71ed49a139f6d97d60d4b22655e94') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-open-post-401 expected main_tip=2d6ab2d293b0a174105aa244da9bc619d3a28db5 (post-#401 / Ladder 29 Audit MEASURED / L29 OPEN (Audit MEASURED · DA–DE pending; Sovereign Observability & Evidence Economy Fabric); Formal L28 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout; Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric); tip honesty restored; tip-401 / main@2d6ab2d2; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY)',
+            'tip-refresh-post-403 expected main_tip=daae7380d2d71ed49a139f6d97d60d4b22655e94 (post-#403 / Mission DA MEASURED / L29 OPEN (Audit MEASURED · DA MEASURED · DB–DE pending; Sovereign Observability & Evidence Economy Fabric); Formal L28 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout; Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric); tip honesty restored; tip-403 / main@daae7380; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DB; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-open-post-401 / main@2d6ab2d2 (post-#401 / Ladder 29 Audit MEASURED / L29 OPEN; Formal L28 CLOSED retained; Formal L27 CLOSED retained; tip-refresh-post-399 / main@8602eeff; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28)',
+          path: 'freeze main_tip pinned to tip-refresh-post-403 / main@daae7380 (post-#403 / Mission DA MEASURED / L29 OPEN; Formal L28 CLOSED retained; Formal L27 CLOSED retained; tip-open-post-401 / main@2d6ab2d2; tip-open #402 @ b51d5934; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28)',
           status: 'VERIFIED',
           type
         });
