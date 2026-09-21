@@ -1,0 +1,30 @@
+schema: spec-driven
+created: 2026-09-21
+goal: Register EOS Maturity Ladder 29 Gap Audit (docs-only) after Ladder 28 closeout (Mission CZ #398; CV–CZ MEASURED + seam-pack; tip-seal #399 pinning freeze to StartsWith 8602eeff; freeze Do NOT open Ladder 29); propose ordered satellites DA/DB/DC/DD/DE for Sovereign Observability & Evidence Economy Fabric — no Mission DA implementation in this change; audit ≠ L29 OPEN until tip-open. Never reopen L17–L28. Cite freeze pin StartsWith 8602eeff and prior CZ tip c48aa9f4…. Schemas AT_CEILING 35/35 — no new docs/schemas JSON. No prune deletes.
+routing: SDD
+explicit_sdd_request: true
+spec_id: LADDER-29-MATURITY-AUDIT
+phase: 0
+affected_areas:
+  - docs/releases/EOS_MATURITY_LADDER_29_AUDIT_2026-09-21.md
+  - docs/adrs/ADR-0081-ladder-29-maturity-gap-audit.md
+  - docs/evidence/EOS_LADDER_29_AUDIT_EVIDENCE_2026-09-21.md
+  - openspec/changes/eos-ladder-29-maturity-gap-audit
+non_goals:
+  - implementing Mission DA/DB/DC/DD/DE
+  - starting Mission DA in this package
+  - claiming Ladder 29 OPEN without separate tip-open
+  - rewriting freeze/matrix tip pins in this package
+  - re-implementing Mission CV/CW/CX/CY/CZ (L28 closed; never reopen L28)
+  - re-implementing Mission CQ/CR/CS/CT/CU (L27 closed; never reopen L27)
+  - re-implementing Mission CL/CM/CN/CO/CP (L26 closed; never reopen L26)
+  - reopening L17–L25
+  - reopening Mission AJ / L15 Evidence Economy as rewrite
+  - executing complexity prune deletions from inventory / #387 plan
+  - flipping PRODUCTION_READY
+  - Fundacion / App Fuerza writes
+  - Cursor CloudAgent
+  - raising TR-01
+  - committing API keys or provider secrets
+  - adding docs/schemas/**/*.json (AT_CEILING 35/35)
+  - inventing tip SHA other than freeze StartsWith 8602eeff / prior CZ c48aa9f43808e99d378e8f2bd05b360e7436c514
