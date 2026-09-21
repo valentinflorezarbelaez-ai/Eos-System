@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip seal post-#398 pinned tip: main@c48aa9f4 / c48aa9f43808e99d378e8f2bd05b360e7436c514 (prior freeze tip 900b14e403634fa4d6d7066c5caf4cd8013019b4 tip-refresh post-#396 / #397 / L28 OPEN (Audit MEASURED · CV MEASURED · CW MEASURED · CX MEASURED · CY MEASURED · CZ pending then); Formal L27 CLOSED retained; tip-refresh #397 @ 20e01112; #398 Merge pull request #398 Mission CZ (SPEC-0109) Ladder 28 seam-pack closeout; tip honesty restored; Formal Ladder 28 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained; L17-L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start next ladder satellites unless separately audited; Do NOT claim PRODUCTION_READY; historical tip-396/394/392/390/385/383/380/377/375/373/365 needles OK) */
-const EXPECTED_TIP = 'c48aa9f43808e99d378e8f2bd05b360e7436c514';
+/** Tip refresh post-#399 pinned tip: main@8602eeff / 8602eeff8fab64436f8bb529ee1bf488ff9b2db4 (prior freeze tip c48aa9f43808e99d378e8f2bd05b360e7436c514 CZ #398 / tip-seal package pin; Formal Ladder 28 CLOSED; #399 Merge pull request #399 tip-seal Formal Ladder 28 CLOSED; tip honesty restored; Formal Ladder 28 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained; L17-L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Ladder 29 satellites until L29 audit MEASURED; Do NOT claim PRODUCTION_READY; historical tip-seal-398/396/394/392/390/385/383/380/377/375/373/365 needles OK) */
+const EXPECTED_TIP = '8602eeff8fab64436f8bb529ee1bf488ff9b2db4';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-seal-post-398 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-399 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-seal-post-398 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-399 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -663,6 +663,9 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'Tip refresh post #396',
     'tip-seal-post-398',
     'Tip seal post #398',
+    'tip-refresh-post-399',
+    'Tip refresh post #399',
+    'Do NOT start Ladder 29 satellites until L29 audit MEASURED',
     'Ladder 28 CLOSED',
     'L28 CLOSED',
     'Mission CZ',
@@ -1391,7 +1394,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(matrix, /Post-L26 A|Post-L26 F|post-L26 perfection/);
   assert.match(freeze, /Fundacion Δ=0 game-day|Fundacion Delta=0 game-day|game-day drill CL/);
   assert.match(matrix, /Fundacion Δ=0 game-day|Post-L26 F|game-day drill/);
-  // Tip honesty post-#398: Formal L28 CLOSED (Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout); Formal L27 CLOSED retained; NEVER reopen L27; NEVER reopen L28; Do NOT claim PRODUCTION_READY
+  // Tip honesty post-#399: Formal L28 CLOSED retained (Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout); Formal L27 CLOSED retained; NEVER reopen L27; NEVER reopen L28; Do NOT start Ladder 29 satellites until L29 audit MEASURED; Do NOT claim PRODUCTION_READY
   assert.match(freezeHeader, /L26 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; CL\+CM\+CN\+CO\+CP MEASURED/);
   assert.match(matrixHeader, /L26 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; CL\+CM\+CN\+CO\+CP MEASURED/);
   assert.match(freezeHeader, /L27 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; CQ\+CR\+CS\+CT\+CU MEASURED/);
@@ -1487,6 +1490,10 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(matrix, /CZ MEASURED/);
   assert.match(freeze, /tip-seal-post-398|Tip seal post #398|tip honesty post-#398/);
   assert.match(matrix, /tip-seal-post-398/);
+  assert.match(freeze, /tip-refresh-post-399|Tip refresh post #399|tip honesty post-#399/);
+  assert.match(matrix, /tip-refresh-post-399/);
+  assert.match(freeze, /Do NOT start Ladder 29 satellites until L29 audit MEASURED/);
+  assert.match(matrix, /Do NOT start Ladder 29 satellites until L29 audit MEASURED/);
   assert.match(freeze, /Ladder 27 OPEN|L27 OPEN/);  // historical
   assert.match(matrix, /Ladder 27 OPEN|L27 OPEN/);
   assert.match(freeze, /tip-refresh-post-380|Tip refresh post #380|tip refresh post-#380/);
@@ -1605,6 +1612,8 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(matrix, /\|\s*Tip refresh post #394\s*\|/);
   assert.match(matrix, /\|\s*Tip refresh post #396\s*\|/);
   assert.match(matrix, /\|\s*Tip seal post #398\s*\|/);
+  assert.match(matrix, /\|\s*Tip refresh post #399\s*\|/);
+  assert.match(matrix, /\|\s*Do NOT start Ladder 29 satellites until L29 audit MEASURED\s*\|/);
   assert.match(matrix, /\|\s*Ladder 28 CLOSED\s*\|/);
   assert.match(matrix, /\|\s*L28 CLOSED\s*\|/);
   assert.match(matrix, /\|\s*Mission CZ\s*\|/);

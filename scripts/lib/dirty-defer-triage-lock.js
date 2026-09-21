@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-seal-post-398 to live main after #398 Mission CZ (prior freeze tip 900b14e403634fa4d6d7066c5caf4cd8013019b4; tip-refresh post-#396 / #397 / L28 OPEN (Audit MEASURED · CV MEASURED · CW MEASURED · CX MEASURED · CY MEASURED · CZ pending then); Formal L27 CLOSED retained (CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout); tip-refresh #397 @ 20e01112; Mission CZ #398 c48aa9f43808e99d378e8f2bd05b360e7436c514; Formal Ladder 28 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout); L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start next ladder satellites unless separately audited; Do NOT claim PRODUCTION_READY)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-399 to live main after #399 tip-seal Formal Ladder 28 CLOSED (prior freeze tip c48aa9f43808e99d378e8f2bd05b360e7436c514; CZ #398 / tip-seal package pin; Formal Ladder 28 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout); tip-seal #399 merge 8602eeff8fab64436f8bb529ee1bf488ff9b2db4; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Ladder 29 satellites until L29 audit MEASURED; Do NOT claim PRODUCTION_READY)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== 'c48aa9f43808e99d378e8f2bd05b360e7436c514') {
+      if (!tip || tip[1] !== '8602eeff8fab64436f8bb529ee1bf488ff9b2db4') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-seal-post-398 expected main_tip=c48aa9f43808e99d378e8f2bd05b360e7436c514 (post-#398 / Mission CZ MEASURED / Formal Ladder 28 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout; Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric); tip honesty restored; tip-398 / main@c48aa9f4; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start next ladder satellites unless separately audited; Do NOT claim PRODUCTION_READY)',
+            'tip-refresh-post-399 expected main_tip=8602eeff8fab64436f8bb529ee1bf488ff9b2db4 (post-#399 / tip-seal #399 merge / Formal Ladder 28 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout; Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric); tip honesty restored; tip-399 / main@8602eeff; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Ladder 29 satellites until L29 audit MEASURED; Do NOT claim PRODUCTION_READY)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-seal-post-398 / main@c48aa9f4 (post-#398 / Mission CZ MEASURED / Formal Ladder 28 CLOSED; Formal L27 CLOSED retained; tip-396/397 / main@900b14e4; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28)',
+          path: 'freeze main_tip pinned to tip-refresh-post-399 / main@8602eeff (post-#399 / tip-seal #399 merge / Formal Ladder 28 CLOSED retained; Formal L27 CLOSED retained; tip-seal-post-398 / main@c48aa9f4; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28)',
           status: 'VERIFIED',
           type
         });
