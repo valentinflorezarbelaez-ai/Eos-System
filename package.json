@@ -365,7 +365,10 @@
     "test:mission-dc": "node --test tests/eos-dc-evidence-economy-custody-ledger-port.test.js",
     "test:evidence-economy-custody-ledger": "node --test tests/eos-dc-evidence-economy-custody-ledger-port.test.js",
     "test:mission-dd": "node --test tests/eos-dd-local-ci-ritual-hardening-port.test.js",
-    "test:local-ci-ritual-hardening": "node --test tests/eos-dd-local-ci-ritual-hardening-port.test.js"
+    "test:local-ci-ritual-hardening": "node --test tests/eos-dd-local-ci-ritual-hardening-port.test.js",
+    "test:ladder29-seam": "node --test tests/eos-ladder29-seam-pack.test.js",
+    "test:mission-de": "node --test tests/eos-ladder29-seam-pack.test.js",
+    "test:ladder29-pack": "npm run test:mission-da && npm run test:mission-db && npm run test:mission-dc && npm run test:mission-dd && npm run test:ladder29-seam"
   },
   "keywords": [
     "eos",

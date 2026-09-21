@@ -220,6 +220,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-dc-evidence-economy-custody-ledger-port.test.js',
 
   'eos-dd-local-ci-ritual-hardening-port.test.js',
+
+  'eos-ladder29-seam-pack.test.js',
 ]);
 
 /**
