@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-405 to live main after #405 Mission DB (prior freeze tip daae7380d2d71ed49a139f6d97d60d4b22655e94; tip-refresh post-#403 / L29 OPEN (Audit MEASURED · DA MEASURED · DB–DE pending then); tip-refresh #404 @ 3ba8df99; Mission DB #405 22d80bcef55adbd79719c428d3d7083686f1f547; L29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC–DE pending; Sovereign Observability & Evidence Economy Fabric); L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DC; Do NOT claim DC–DE MEASURED; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-407 to live main after #407 Mission DC (prior freeze tip 22d80bcef55adbd79719c428d3d7083686f1f547; tip-refresh post-#405 / L29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC–DE pending then); tip-refresh #406 @ 0107b9b8; Mission DC #407 4d8c6c594fba94fc0c975dd7c13fb7d183a8aade; L29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending; Sovereign Observability & Evidence Economy Fabric); L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DD; Do NOT claim DD–DE MEASURED; Do NOT claim DC–DE MEASURED; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '22d80bcef55adbd79719c428d3d7083686f1f547') {
+      if (!tip || tip[1] !== '4d8c6c594fba94fc0c975dd7c13fb7d183a8aade') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-405 expected main_tip=22d80bcef55adbd79719c428d3d7083686f1f547 (post-#405 / Mission DB MEASURED / L29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC–DE pending; Sovereign Observability & Evidence Economy Fabric); Formal L28 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout; Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric); tip honesty restored; tip-405 / main@22d80bce; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DC; Do NOT claim DC–DE MEASURED; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY)',
+            'tip-refresh-post-407 expected main_tip=4d8c6c594fba94fc0c975dd7c13fb7d183a8aade (post-#407 / Mission DC MEASURED / L29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending; Sovereign Observability & Evidence Economy Fabric); Formal L28 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout; Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric); tip honesty restored; tip-407 / main@4d8c6c59; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DD; Do NOT claim DD–DE MEASURED; Do NOT claim DC–DE MEASURED; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-405 / main@22d80bce (post-#405 / Mission DB MEASURED / L29 OPEN; Formal L28 CLOSED retained; Formal L27 CLOSED retained; tip-refresh-post-403 / main@daae7380; tip-refresh #404 @ 3ba8df99; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28)',
+          path: 'freeze main_tip pinned to tip-refresh-post-407 / main@4d8c6c59 (post-#407 / Mission DC MEASURED / L29 OPEN; Formal L28 CLOSED retained; Formal L27 CLOSED retained; tip-refresh-post-405 / main@22d80bce; tip-refresh #406 @ 0107b9b8; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28)',
           status: 'VERIFIED',
           type
         });

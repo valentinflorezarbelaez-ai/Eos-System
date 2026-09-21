@@ -15,15 +15,15 @@ const TIP_LINE = /^main_tip:\s*([0-9a-f]{40})\b/m;
 const EVAL_TIP = /^evaluated_tip:\s*([0-9a-f]{40})\b/m;
 const FULL_SHA = /^[0-9a-f]{40}$/;
 
-/** Tip refresh post-#405 pinned tip: main@22d80bce / 22d80bcef55adbd79719c428d3d7083686f1f547 (prior freeze tip daae7380d2d71ed49a139f6d97d60d4b22655e94 tip-refresh post-#403 / L29 OPEN (Audit MEASURED · DA MEASURED · DB–DE pending then); tip-refresh #404 @ 3ba8df99 between DA and DB; #405 Merge PR #405 Mission DB Doctor Ritual Automation Port (SPEC-0111); tip honesty restored; Ladder 29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC–DE pending; Sovereign Observability & Evidence Economy Fabric); Formal Ladder 28 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained; L17-L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DC; Do NOT claim DC–DE MEASURED; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-403/tip-open-401/tip-refresh-399/seal-398/396/394/392/390/385/383/380/377/375/373/365 needles OK) */
-const EXPECTED_TIP = '22d80bcef55adbd79719c428d3d7083686f1f547';
+/** Tip refresh post-#407 pinned tip: main@4d8c6c59 / 4d8c6c594fba94fc0c975dd7c13fb7d183a8aade (prior freeze tip 22d80bcef55adbd79719c428d3d7083686f1f547 tip-refresh post-#405 / L29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC–DE pending then); tip-refresh #406 @ 0107b9b8 between DB and DC; #407 Merge PR #407 Mission DC Evidence Economy Custody Ledger Port (SPEC-0112); tip honesty restored; Ladder 29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending; Sovereign Observability & Evidence Economy Fabric); Formal Ladder 28 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained; L17-L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DD; Do NOT claim DD–DE MEASURED; Do NOT claim DC–DE MEASURED; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-405/403/tip-open-401/tip-refresh-399/seal-398/396/394/392/390/385/383/380/377/375/373/365 needles OK) */
+const EXPECTED_TIP = '4d8c6c594fba94fc0c975dd7c13fb7d183a8aade';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-405 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-407 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -40,7 +40,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-405 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-407 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -699,6 +699,15 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'Do NOT start Mission DC',
     'Do NOT claim DC–DE MEASURED',
     '3ba8df99',
+    'tip-refresh-post-407',
+    'Tip refresh post #407',
+    'Mission DC',
+    'DC MEASURED',
+    'DD–DE pending',
+    'Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending',
+    'Do NOT start Mission DD',
+    'Do NOT claim DD–DE MEASURED',
+    '0107b9b8',
     'Ladder 28 CLOSED',
     'L28 CLOSED',
     'Mission CZ',
@@ -1427,7 +1436,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(matrix, /Post-L26 A|Post-L26 F|post-L26 perfection/);
   assert.match(freeze, /Fundacion Δ=0 game-day|Fundacion Delta=0 game-day|game-day drill CL/);
   assert.match(matrix, /Fundacion Δ=0 game-day|Post-L26 F|game-day drill/);
-  // Tip honesty post-#405: L29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC–DE pending); Formal L28 CLOSED retained; Formal L27 CLOSED retained; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DC; Do NOT claim DC–DE MEASURED; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY
+  // Tip honesty post-#407: L29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending); Formal L28 CLOSED retained; Formal L27 CLOSED retained; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DD; Do NOT claim DD–DE MEASURED; Do NOT claim DC–DE MEASURED; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY
   assert.match(freezeHeader, /L26 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; CL\+CM\+CN\+CO\+CP MEASURED/);
   assert.match(matrixHeader, /L26 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; CL\+CM\+CN\+CO\+CP MEASURED/);
   assert.match(freezeHeader, /L27 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; CQ\+CR\+CS\+CT\+CU MEASURED/);
@@ -1513,7 +1522,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(matrix, /Ladder 27 CLOSED|L27 CLOSED/);
   assert.match(freeze, /Ladder 28 is \*\*CLOSED\*\*|L28 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; Audit \+ CV\+CW\+CX\+CY\+CZ MEASURED/);
   assert.match(matrix, /Ladder 28 CLOSED|L28 CLOSED/);
-  assert.match(freeze, /Ladder 29 is \*\*OPEN\*\*|L29 OPEN \(Audit MEASURED · DA MEASURED · DB MEASURED · DC–DE pending/);
+  assert.match(freeze, /Ladder 29 is \*\*OPEN\*\*|L29 OPEN \(Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending/);
   assert.match(matrix, /Ladder 29 OPEN|L29 OPEN/);
   assert.match(freeze, /Ladder 28 OPEN|L28 OPEN/);  // historical
   assert.match(matrix, /Ladder 28 OPEN|L28 OPEN/);
@@ -1563,6 +1572,18 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(matrix, /DB MEASURED/);
   assert.match(freeze, /3ba8df99/);
   assert.match(matrix, /3ba8df99/);
+  assert.match(freeze, /tip-refresh-post-407|Tip refresh post #407|tip honesty post-#407/);
+  assert.match(matrix, /tip-refresh-post-407/);
+  assert.match(freeze, /L29 OPEN \(Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending/);
+  assert.match(matrix, /L29 OPEN \(Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending/);
+  assert.match(freeze, /Do NOT start Mission DD/);
+  assert.match(matrix, /Do NOT start Mission DD/);
+  assert.match(freeze, /Do NOT claim DD–DE MEASURED/);
+  assert.match(matrix, /Do NOT claim DD–DE MEASURED/);
+  assert.match(freeze, /DC MEASURED/);
+  assert.match(matrix, /DC MEASURED/);
+  assert.match(freeze, /0107b9b8/);
+  assert.match(matrix, /0107b9b8/);
   assert.match(freeze, /Ladder 27 OPEN|L27 OPEN/);  // historical
   assert.match(matrix, /Ladder 27 OPEN|L27 OPEN/);
   assert.match(freeze, /tip-refresh-post-380|Tip refresh post #380|tip refresh post-#380/);
@@ -1705,6 +1726,13 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.match(matrix, /\|\s*Audit MEASURED · DA MEASURED · DB MEASURED · DC–DE pending\s*\|/);
   assert.match(matrix, /\|\s*Do NOT start Mission DC\s*\|/);
   assert.match(matrix, /\|\s*Do NOT claim DC–DE MEASURED\s*\|/);
+  assert.match(matrix, /\|\s*Tip refresh post #407\s*\|/);
+  assert.match(matrix, /\|\s*Mission DC\s*\|/);
+  assert.match(matrix, /\|\s*DC MEASURED\s*\|/);
+  assert.match(matrix, /\|\s*DD–DE pending\s*\|/);
+  assert.match(matrix, /\|\s*Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending\s*\|/);
+  assert.match(matrix, /\|\s*Do NOT start Mission DD\s*\|/);
+  assert.match(matrix, /\|\s*Do NOT claim DD–DE MEASURED\s*\|/);
   assert.match(matrix, /\|\s*Ladder 28 CLOSED\s*\|/);
   assert.match(matrix, /\|\s*L28 CLOSED\s*\|/);
   assert.match(matrix, /\|\s*Mission CZ\s*\|/);
