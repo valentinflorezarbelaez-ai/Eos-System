@@ -352,7 +352,9 @@
     "test:mission-cw": "node --test tests/eos-cw-cross-port-continuity-orchestration-port.test.js",
     "test:cross-port-continuity-orchestration": "node --test tests/eos-cw-cross-port-continuity-orchestration-port.test.js",
     "test:mission-cx": "node --test tests/eos-cx-billing-blocked-local-verify-ritual-port.test.js",
-    "test:billing-blocked-local-verify-ritual": "node --test tests/eos-cx-billing-blocked-local-verify-ritual-port.test.js"
+    "test:billing-blocked-local-verify-ritual": "node --test tests/eos-cx-billing-blocked-local-verify-ritual-port.test.js",
+    "test:mission-cy": "node --test tests/eos-cy-mission-os-control-plane-honesty-port.test.js",
+    "test:mission-os-control-plane-honesty": "node --test tests/eos-cy-mission-os-control-plane-honesty-port.test.js"
   },
   "keywords": [
     "eos",

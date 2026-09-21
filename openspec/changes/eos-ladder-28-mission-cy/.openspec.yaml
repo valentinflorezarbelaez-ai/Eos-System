@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-28-mission-cy
+mission: CY
+spec: SPEC-0108
+title: Mission OS / Control-Plane L0 Residual Honesty Port
+ladder: 28
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-21"
