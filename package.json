@@ -359,7 +359,9 @@
     "test:mission-cz": "node --test tests/eos-ladder28-seam-pack.test.js",
     "test:ladder28-pack": "npm run test:mission-cv && npm run test:mission-cw && npm run test:mission-cx && npm run test:mission-cy && npm run test:ladder28-seam",
     "test:mission-da": "node --test tests/eos-da-control-plane-observability-aggregation-port.test.js",
-    "test:control-plane-observability-aggregation": "node --test tests/eos-da-control-plane-observability-aggregation-port.test.js"
+    "test:control-plane-observability-aggregation": "node --test tests/eos-da-control-plane-observability-aggregation-port.test.js",
+    "test:mission-db": "node --test tests/eos-db-doctor-ritual-automation-port.test.js",
+    "test:doctor-ritual-automation": "node --test tests/eos-db-doctor-ritual-automation-port.test.js"
   },
   "keywords": [
     "eos",
