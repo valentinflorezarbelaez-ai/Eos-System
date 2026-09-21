@@ -363,7 +363,9 @@
     "test:mission-db": "node --test tests/eos-db-doctor-ritual-automation-port.test.js",
     "test:doctor-ritual-automation": "node --test tests/eos-db-doctor-ritual-automation-port.test.js",
     "test:mission-dc": "node --test tests/eos-dc-evidence-economy-custody-ledger-port.test.js",
-    "test:evidence-economy-custody-ledger": "node --test tests/eos-dc-evidence-economy-custody-ledger-port.test.js"
+    "test:evidence-economy-custody-ledger": "node --test tests/eos-dc-evidence-economy-custody-ledger-port.test.js",
+    "test:mission-dd": "node --test tests/eos-dd-local-ci-ritual-hardening-port.test.js",
+    "test:local-ci-ritual-hardening": "node --test tests/eos-dd-local-ci-ritual-hardening-port.test.js"
   },
   "keywords": [
     "eos",
