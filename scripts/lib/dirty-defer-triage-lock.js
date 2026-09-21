@@ -241,22 +241,22 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-385 to live main after #385 Ladder 28 Audit (prior freeze tip 58193bc80735c588f0aa09e2c136afa3980c4a51; CU #383 / tip-refresh #383 / tip-seal #384; Formal L27 CLOSED retained (CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout); Ladder 28 Audit #385 62d430fb9f53641809d8825ee9e676f13bc5b48c; L28 OPEN (Audit MEASURED · CV–CZ pending); L17–L27 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; Do NOT start Mission CV; Do NOT claim CV–CZ MEASURED)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-390 to live main after #390 Mission CV (prior freeze tip 62d430fb9f53641809d8825ee9e676f13bc5b48c; tip-refresh post-#385 / L28 Audit MEASURED; L28 was OPEN (Audit MEASURED · CV–CZ pending then); Formal L27 CLOSED retained (CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout); tip-open #386; prune #387; Mission CV #390 d86d7525d2a2d4c87c27230b5349b9745bad3c23; L28 OPEN (Audit MEASURED · CV MEASURED · CW–CZ pending); L17–L27 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; Do NOT start Mission CW; Do NOT claim CW–CZ MEASURED; Do NOT claim CV–CZ MEASURED)
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '62d430fb9f53641809d8825ee9e676f13bc5b48c') {
+      if (!tip || tip[1] !== 'd86d7525d2a2d4c87c27230b5349b9745bad3c23') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-385 expected main_tip=62d430fb9f53641809d8825ee9e676f13bc5b48c (post-#385 / Ladder 28 Audit MEASURED / L28 OPEN (Audit MEASURED · CV–CZ pending; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout; Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric); tip honesty restored; tip-385 / main@62d430fb; L17–L27 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; Do NOT start Mission CV; Do NOT claim CV–CZ MEASURED)',
+            'tip-refresh-post-390 expected main_tip=d86d7525d2a2d4c87c27230b5349b9745bad3c23 (post-#390 / Mission CV MEASURED / L28 OPEN (Audit MEASURED · CV MEASURED · CW–CZ pending; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout; Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric); tip honesty restored; tip-390 / main@d86d7525; L17–L27 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; Do NOT start Mission CW; Do NOT claim CW–CZ MEASURED; Do NOT claim CV–CZ MEASURED)',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-385 / main@62d430fb (post-#385 / Ladder 28 Audit MEASURED / L28 OPEN; Formal L27 CLOSED retained; tip-383 / main@58193bc8; L17–L27 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27)',
+          path: 'freeze main_tip pinned to tip-refresh-post-390 / main@d86d7525 (post-#390 / Mission CV MEASURED / L28 OPEN; Formal L27 CLOSED retained; tip-385 / main@62d430fb; L17–L27 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27)',
           status: 'VERIFIED',
           type
         });
