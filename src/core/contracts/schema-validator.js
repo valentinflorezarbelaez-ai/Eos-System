@@ -23,18 +23,26 @@ export class SchemaValidator {
 
   loadSchema(schemaFileName) {
     if (this._cache.has(schemaFileName)) return this._cache.get(schemaFileName);
+
+    // ⚡ Bolt Optimization: Use try/catch instead of fs.existsSync to avoid Time-of-Check to Time-of-Use (TOCTOU) and save 1-2 synchronous syscalls.
     let p = path.join(this.schemaRoot, schemaFileName);
-    if (!fs.existsSync(p)) {
+    let schemaRaw;
+    try {
+      schemaRaw = fs.readFileSync(p, 'utf8');
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
       const fallback = path.resolve(this.schemaRoot, '..', schemaFileName);
-      if (fs.existsSync(fallback)) {
-        p = fallback;
-      } else {
-        const err = new Error(`SCHEMA_NOT_FOUND: ${p}`);
-        err.code = 'SCHEMA_NOT_FOUND';
-        throw err;
+      try {
+        schemaRaw = fs.readFileSync(fallback, 'utf8');
+      } catch (fallbackErr) {
+        if (fallbackErr.code !== 'ENOENT') throw fallbackErr;
+        const notFoundErr = new Error(`SCHEMA_NOT_FOUND: ${p}`);
+        notFoundErr.code = 'SCHEMA_NOT_FOUND';
+        throw notFoundErr;
       }
     }
-    const schema = JSON.parse(fs.readFileSync(p, 'utf8'));
+
+    const schema = JSON.parse(schemaRaw);
     this._cache.set(schemaFileName, schema);
     return schema;
   }

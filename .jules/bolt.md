@@ -1,0 +1,3 @@
+## 2025-05-18 - [Time-of-Check to Time-of-Use (TOCTOU) & Synchronous Syscalls]
+**Learning:** Found frequent use of `fs.existsSync()` followed immediately by `fs.readFileSync()` on the main execution path. This represents a Time-of-Check to Time-of-Use (TOCTOU) race condition risk and also incurs two synchronous file system calls, which causes unnecessary blocking on the Node.js event loop during hot code paths (e.g. `SchemaValidator.loadSchema`).
+**Action:** When performing file operations asynchronously or synchronously, skip preliminary existence checks. Instead, wrap the read operation (e.g., `fs.readFileSync`) in a `try/catch` block and catch `ENOENT` to handle missing files. This solves the race condition and halves synchronous syscalls on cache misses.
