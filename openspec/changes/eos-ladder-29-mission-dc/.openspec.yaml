@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-29-mission-dc
+mission: DC
+spec: SPEC-0112
+title: Evidence Economy Custody Ledger Port
+ladder: 29
+adr: ADR-0084
+production_ready: NO
+fundacion_delta: 0
+freeze_soft_observe_pin: 22d80bce

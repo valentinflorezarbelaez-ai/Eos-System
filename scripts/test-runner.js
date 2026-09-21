@@ -216,6 +216,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-da-control-plane-observability-aggregation-port.test.js',
 
   'eos-db-doctor-ritual-automation-port.test.js',
+
+  'eos-dc-evidence-economy-custody-ledger-port.test.js',
 ]);
 
 /**

@@ -361,7 +361,9 @@
     "test:mission-da": "node --test tests/eos-da-control-plane-observability-aggregation-port.test.js",
     "test:control-plane-observability-aggregation": "node --test tests/eos-da-control-plane-observability-aggregation-port.test.js",
     "test:mission-db": "node --test tests/eos-db-doctor-ritual-automation-port.test.js",
-    "test:doctor-ritual-automation": "node --test tests/eos-db-doctor-ritual-automation-port.test.js"
+    "test:doctor-ritual-automation": "node --test tests/eos-db-doctor-ritual-automation-port.test.js",
+    "test:mission-dc": "node --test tests/eos-dc-evidence-economy-custody-ledger-port.test.js",
+    "test:evidence-economy-custody-ledger": "node --test tests/eos-dc-evidence-economy-custody-ledger-port.test.js"
   },
   "keywords": [
     "eos",
