@@ -348,7 +348,9 @@
     "test:mission-cu": "node --test tests/eos-ladder27-seam-pack.test.js",
     "test:ladder27-pack": "npm run test:mission-cq && npm run test:mission-cr && npm run test:mission-cs && npm run test:mission-ct && npm run test:ladder27-seam",
     "test:mission-cv": "node --test tests/eos-cv-hud-doctor-honesty-ritual-port.test.js",
-    "test:hud-doctor-honesty-ritual": "node --test tests/eos-cv-hud-doctor-honesty-ritual-port.test.js"
+    "test:hud-doctor-honesty-ritual": "node --test tests/eos-cv-hud-doctor-honesty-ritual-port.test.js",
+    "test:mission-cw": "node --test tests/eos-cw-cross-port-continuity-orchestration-port.test.js",
+    "test:cross-port-continuity-orchestration": "node --test tests/eos-cw-cross-port-continuity-orchestration-port.test.js"
   },
   "keywords": [
     "eos",

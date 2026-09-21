@@ -1,0 +1,10 @@
+schema: openspec/v1
+change: eos-ladder-28-mission-cw
+mission: CW
+spec: SPEC-0106
+title: Cross-Port Continuity Orchestration Port
+ladder: 28
+status: code-ready
+productionReady: "NO"
+fundacionDelta: 0
+date: "2026-09-21"
