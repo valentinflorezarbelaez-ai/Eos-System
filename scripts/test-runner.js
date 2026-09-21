@@ -210,6 +210,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-cx-billing-blocked-local-verify-ritual-port.test.js',
 
   'eos-cy-mission-os-control-plane-honesty-port.test.js',
+
+  'eos-ladder28-seam-pack.test.js',
 ]);
 
 /**
