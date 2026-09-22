@@ -1,0 +1,12 @@
+schema: openspec/v1
+change: eos-ladder-30-mission-df
+mission: DF
+spec: SPEC-0115
+title: Complexity Inventory Re-measure & Ceiling Hold Port
+ladder: 30
+adr: ADR-0088
+production_ready: NO
+fundacion_delta: 0
+freeze_soft_observe_pin: 36c99107
+freeze_soft_observe_pin_full: 36c99107dfc6696aa8e54533a6a67622f1437fc8
+schemas_at_ceiling: true
