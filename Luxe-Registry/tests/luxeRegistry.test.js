@@ -120,3 +120,30 @@ test('LuxeRegistry: REST API Server Integration & HTTP Isolation Intercept', asy
 
   server.close();
 });
+
+test('LuxeRegistry: CORS Security Headers Validated via ALLOWED_ORIGINS', async () => {
+  process.env.ALLOWED_ORIGINS = 'https://trusted.luxe-registry.com, http://localhost:3000';
+
+  const server = createLuxeServer();
+  await new Promise(resolve => server.listen(0, resolve));
+  const port = server.address().port;
+
+  const get = (urlPath, headers = {}) => new Promise((resolve, reject) => {
+    const req = http.request(`http://localhost:${port}${urlPath}`, { headers }, res => {
+      resolve({ status: res.statusCode, headers: res.headers });
+    });
+    req.on('error', reject);
+    req.end();
+  });
+
+  // Test valid origin
+  const validResp = await get('/api/health', { origin: 'https://trusted.luxe-registry.com' });
+  assert.equal(validResp.headers['access-control-allow-origin'], 'https://trusted.luxe-registry.com');
+  assert.equal(validResp.headers['vary'], 'Origin');
+
+  // Test invalid origin
+  const invalidResp = await get('/api/health', { origin: 'https://malicious-hacker.com' });
+  assert.equal(invalidResp.headers['access-control-allow-origin'], undefined);
+
+  server.close();
+});
