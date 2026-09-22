@@ -5,7 +5,7 @@
   "status": "RISK",
   "scope": "PRJ-APP-FUERZA / pipeline:audit",
   "source": "EOS ProjectPipelineRunner",
-  "timestamp": "2026-09-10T22:55:39.049Z",
+  "timestamp": "2026-09-22T04:26:25.306Z",
   "actor": "EOS ProjectPipelineRunner",
   "action": "orchestrate --project PRJ-APP-FUERZA --pipeline audit",
   "command": "node bin/eos-orchestrator.js run --project PRJ-APP-FUERZA --phase audit",
@@ -13,12 +13,12 @@
   "actual": "REMEDIATION_REQUIRED",
   "result": "FAIL",
   "confidence": "HIGH",
-  "sha256": "sha256-fa144d009b14d30b0014f32bf2532bfbf3928737726353ca35c63a3fee755f00",
-  "digest": "sha256-fa144d009b14d30b0014f32bf2532bfbf3928737726353ca35c63a3fee755f00",
+  "sha256": "sha256-c02761ac8c8750c573319136a4681070f8a8815a826d996c45d5403112b026e4",
+  "digest": "sha256-c02761ac8c8750c573319136a4681070f8a8815a826d996c45d5403112b026e4",
   "data": {
     "projectId": "PRJ-APP-FUERZA",
     "phase": "audit",
-    "registrationPath": "C:\\Users\\valen\\Documents\\Eos system\\docs\\projects\\registrations\\app-fuerza.json",
+    "registrationPath": "/app/docs/projects/registrations/app-fuerza.json",
     "technicalStatus": "VERIFIED",
     "auditors": {
       "status": "REMEDIATION_REQUIRED",
@@ -44,12 +44,12 @@
           "exitCode": 1
         }
       ],
-      "evidenceHash": "sha256-50d8ff6a5ffd5ac2f1eb0b290046b78db4223144ec7bdc8fcd708eca6d1bb3b4"
+      "evidenceHash": "sha256-2f8eff8c81601aae7c31380857859a69a56866aec374201c5d93c22fbc7943de"
     },
     "satelliteValidation": {
       "status": "DEGRADED_CONTROL_PLANE_PROXY",
       "mode": "CONTROL_PLANE_PROXY",
-      "reason": "Satellite commands skipped or unavailable; validated control-plane proxies",
+      "reason": "Satellite path unavailable; validated control-plane proxies",
       "proxyResults": [
         {
           "path": "src/app-fuerza/core/timers.js",
@@ -65,8 +65,8 @@
     "confirmedEvidence": {
       "status": "CONFIRMED",
       "evidenceId": "EVD-0007",
-      "path": "C:\\Users\\valen\\Documents\\Eos system\\docs\\evidence\\EVD-0007.json",
-      "sha256": "sha256-3fcd43e1919250a584e51419eab7ffee0fd5273cc6f2f48e50c68b23cecf28b0",
+      "path": "/app/docs/evidence/EVD-0007.json",
+      "sha256": "sha256-0c8a95ceef7d136b162da50f84d1aa4a63898d477e0be80439259f600e049b07",
       "recordedStatus": "VERIFIED",
       "result": "PASS"
     },
