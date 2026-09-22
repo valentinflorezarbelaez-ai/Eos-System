@@ -138,7 +138,6 @@ export class EOSOrchestrator {
    * @returns {Promise<object>}
    */
   async reconocerIntencion(promptUsuario, lineasBaseMemoria) {
-    console.log('🤖 J.A.R.V.I.S. [INTAKE] > Decodificando intención del usuario...');
 
     if (lineasBaseMemoria) {
       const driftCheck = this.driftDetector.detectarDesviaciones(lineasBaseMemoria);
