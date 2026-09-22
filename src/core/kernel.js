@@ -31,7 +31,6 @@ export class EOSKernel {
    * Inicializa el sistema operativo y verifica el entorno completo.
    */
   async boot() {
-    console.log('🛡️ [EOS KERNEL] > Iniciando secuencia de arranque de EOS...');
     
     // 1. Validar la Constitución (Doctrina LIDR / Agentes)
     this._validarConstitucion();
