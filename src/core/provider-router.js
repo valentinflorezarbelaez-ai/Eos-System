@@ -33,7 +33,6 @@ export class EOSProviderRouter {
       throw new Error(`🚨 ROUTER FAULT: Tipo de tarea desconocido o no indexado: ${tipoTarea}`);
     }
 
-    console.log(`📡 [EOS ROUTER] > Clasificando tarea [${tipoTarea}]. Proveedor objetivo: ${mapeo.primary}`);
 
     try {
       if (forzarFalloPrimario) {
