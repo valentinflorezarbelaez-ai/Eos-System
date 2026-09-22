@@ -27,7 +27,6 @@ export class EOSFDIROntology {
    * @returns {Promise<{ estado: 'NOMINAL' | 'SANED', totalReparaciones: number, reparaciones: Array<object> }>}
    */
   async auditarYSanarGrafo() {
-    console.log('⚖️ [EOS FDIR ONTOLOGY] > Iniciando escaneo forense de consistencia relacional...');
     const reparaciones = [];
 
     // Snapshot before mutate so insertion-order single-pass cannot skip reverse edges.
