@@ -224,6 +224,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ladder29-seam-pack.test.js',
 
   'eos-df-complexity-inventory-remeasure-port.test.js',
+
+  'eos-dg-po-l2-named-path-disposition-port.test.js',
 ]);
 
 /**
