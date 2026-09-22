@@ -518,18 +518,25 @@ export function createLlmProviderPort(options = {}) {
 
   async function health() {
     const entries = {};
-    for (const id of Object.keys(providers).sort()) {
-      const p = providers[id];
+    // Parallelize provider health checks to reduce latency
+    const sortedIds = Object.keys(providers).sort();
+    const healthPromises = sortedIds.map(async (id) => {
       try {
-        entries[id] = p.health ? await p.health() : { ok: true, provider: id };
+        const p = providers[id];
+        return { id, result: p.health ? await p.health() : { ok: true, provider: id } };
       } catch (err) {
-        entries[id] = {
+        return { id, result: {
           ok: false,
           provider: id,
           code: err.code || LLM_CODES.PROVIDER_UNAVAILABLE,
           message: sanitizeErrorMessage(err.message)
-        };
+        }};
       }
+    });
+
+    const results = await Promise.all(healthPromises);
+    for (const { id, result } of results) {
+      entries[id] = result;
     }
     return sanitizeLlmPayload({
       ok: true,
