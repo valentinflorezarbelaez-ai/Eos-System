@@ -133,14 +133,13 @@ export class MultimodalCreativeEngine {
       throw new RequireHumanApprovalException(`REQUIRE_HUMAN_APPROVAL: Estimated cost $${estimatedCostUsd} USD exceeds provisional limit $${this.provisionalBudgetCapUsd} USD`);
     }
 
-    const generatedArtifacts = [];
-    let totalActualCost = 0;
-
-    for (const cap of requiredCapabilities) {
-      const artifact = await this.executeCapabilityWithFallback(missionId, cap, cleanBrief, null, forceHighCost);
-      generatedArtifacts.push(artifact);
-      totalActualCost += artifact.cost_incurred_usd;
-    }
+    // Optimization: Run independent capability generators concurrently via Promise.all
+    // Expected impact: Reduces total latency by allowing parallel asynchronous execution (especially when capabilities involve I/O like calling external providers).
+    const artifactPromises = requiredCapabilities.map(cap =>
+      this.executeCapabilityWithFallback(missionId, cap, cleanBrief, null, forceHighCost)
+    );
+    const generatedArtifacts = await Promise.all(artifactPromises);
+    const totalActualCost = generatedArtifacts.reduce((sum, a) => sum + a.cost_incurred_usd, 0);
 
     // Multimodal Composite QA Evaluation
     const meanQA = generatedArtifacts.reduce((sum, a) => sum + a.quality_assessment.final_score, 0) / generatedArtifacts.length;
