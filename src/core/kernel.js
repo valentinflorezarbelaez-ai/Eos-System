@@ -74,7 +74,6 @@ export class EOSKernel {
     this.memoryGuard.validarPayloadLedger(registro);
 
     try {
-      console.log(`🧠 [EOS KERNEL] > Sincronizando con Engram MCP para la misión: ${idMision}`);
       const mcpPayload = {
         jsonrpc: '2.0',
         method: 'tools/call',
