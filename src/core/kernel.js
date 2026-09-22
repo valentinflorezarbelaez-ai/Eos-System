@@ -43,7 +43,6 @@ export class EOSKernel {
     this._ejecutarVerificacionEstricta();
 
     this.booted = true;
-    console.log('🚀 [EOS KERNEL] > Kernel operativo. Estado actual: VERIFIED (0 Fallos).');
     return {
       status: 'VERIFIED',
       booted: true,
