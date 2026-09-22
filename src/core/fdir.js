@@ -66,7 +66,6 @@ export class EOSFDIR {
         // Sobreescritura atómica para restaurar el plano de control
         fs.writeFileSync(archivoConfig.ruta, contenidoRespaldo, 'utf8');
 
-        console.log(`🔧 [EOS FDIR] > Archivo [${desviacion.archivoId}] restaurado con éxito a su estado canónico.`);
         reparacionesEjecutadas.push({
           archivoId: desviacion.archivoId,
           ruta: archivoConfig.ruta,
