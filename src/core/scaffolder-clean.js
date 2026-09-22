@@ -116,7 +116,6 @@ export class EOSScaffolderClean {
       ].join('\n');
       fs.writeFileSync(testPath, testContent, 'utf-8');
 
-      console.log(`🔧 [EOS SCAFFOLDER] > Tríada consolidada localmente para: ${cleanName}`);
 
       // 2. Sello telemétrico inmutable en el Ledger
       const metadataEmanacion = {
