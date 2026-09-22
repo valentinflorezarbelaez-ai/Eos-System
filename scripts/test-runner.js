@@ -222,6 +222,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-dd-local-ci-ritual-hardening-port.test.js',
 
   'eos-ladder29-seam-pack.test.js',
+
+  'eos-df-complexity-inventory-remeasure-port.test.js',
 ]);
 
 /**
