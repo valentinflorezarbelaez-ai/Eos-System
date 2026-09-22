@@ -57,8 +57,6 @@ export class EOSMissionOrchestrator {
       const lines = content.split('\n').map(l => l.trim()).filter(Boolean);
       if (lines.length === 0) return;
 
-      console.log(`👁️ [EOS STATE] > Hydrating control plane with ${lines.length} physical ledger nodes...`);
-
       for (const line of lines) {
         try {
           const node = JSON.parse(line);
