@@ -170,7 +170,6 @@ export class EOSOrchestrator {
    * @returns {{ autorizado: boolean, timestamp: string, mensaje: string }}
    */
   validarGateImplementacion(idMision, hashEvidenciaEsperado, evidenciaDocumento) {
-    console.log(`🛡️ [EOS GATEKEEPER] > Auditando compuerta de implementación para misión: ${idMision}`);
 
     const hashObtenido =
       evidenciaDocumento?.hashSha256 ||
