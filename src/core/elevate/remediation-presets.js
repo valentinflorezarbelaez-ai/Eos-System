@@ -68,7 +68,6 @@ export const RemediationPresets = {
           console.error('FAIL: Image without alt attribute found');
           process.exit(1);
         }
-        console.log('PASS: Image alt attributes verified');
         process.exit(0);
       `;
     }
