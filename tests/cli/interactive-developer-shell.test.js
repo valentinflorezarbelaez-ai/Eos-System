@@ -494,3 +494,28 @@ test('X17 run() alias + default doctor hermetic', async () => {
   assert.equal(doc.doctor.fundacionDelta, 0);
   assert.equal(doc.doctor.hermetic, true);
 });
+
+// ─── X18 formatHudLine edge cases ────────────────────────────────────────────
+test('X18 formatHudLine edge cases', async () => {
+  // Empty options (default fallbacks)
+  const emptyHud = formatHudLine();
+  assert.match(emptyHud, /IDLE/);
+  assert.match(emptyHud, /sess=—/);
+  assert.match(emptyHud, /id=—/);
+  assert.match(emptyHud, /change=—/);
+  assert.match(emptyHud, /ports=·····/);
+  assert.ok(!emptyHud.includes('fault='), 'should not contain fault');
+
+  // Disabling colors
+  const noColorHud = formatHudLine({ color: false, state: 'RUNNING' });
+  assert.match(noColorHud, /RUNNING/);
+  assert.ok(!noColorHud.includes('\u001b['), 'should not contain ANSI escape codes');
+
+  // Partial ports
+  const partialPortsHud = formatHudLine({ ports: { workerDaemon: true, remediation: true } });
+  assert.match(partialPortsHud, /ports=W··R·/);
+
+  // With lastFault
+  const faultHud = formatHudLine({ lastFault: 'TimeoutError', color: false });
+  assert.match(faultHud, /fault=TimeoutError/);
+});
