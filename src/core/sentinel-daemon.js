@@ -55,7 +55,6 @@ export class EOSSentinelDaemon {
     this._stopping = false;
     this.lineasBaseAutorizadas = lineasBase;
     this.estado = 'RUNNING';
-    console.log(`🛡️ [EOS SENTINEL] > Pulso autónomo iniciado. Latido configurado cada ${this.intervaloMs / 1000}s.`);
 
     this.handleInterval = setInterval(() => {
       void this._ejecutarLatidoConsciente();
