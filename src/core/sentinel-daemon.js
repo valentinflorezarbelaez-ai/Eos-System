@@ -72,7 +72,6 @@ export class EOSSentinelDaemon {
       this.handleInterval = null;
     }
     this.estado = 'STOPPED';
-    console.log('🛡️ [EOS SENTINEL] > Pulso replegado y detenido de forma segura.');
   }
 
   /**
