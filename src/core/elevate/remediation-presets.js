@@ -133,7 +133,6 @@ export const RemediationPresets = {
           console.error('FAIL: Blocking synchronous I/O still present');
           process.exit(1);
         }
-        console.log('PASS: Synchronous I/O converted to async');
         process.exit(0);
       `;
     }
