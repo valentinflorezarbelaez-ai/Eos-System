@@ -90,3 +90,29 @@ test('MultimodalCreative: REST API Server Integration & HTTP Dispatch Intercept'
 
   server.close();
 });
+
+test('MultimodalCreative: CORS restricts origins based on ALLOWED_ORIGINS', async () => {
+  process.env.ALLOWED_ORIGINS = 'http://trusted.com';
+  const server = createMultimodalServer();
+  await new Promise(resolve => server.listen(0, resolve));
+  const port = server.address().port;
+
+  const getWithOrigin = (origin) => new Promise((resolve, reject) => {
+    const req = http.request(`http://localhost:${port}/api/health`, {
+      method: 'GET',
+      headers: { 'Origin': origin }
+    }, res => {
+      resolve(res.headers['access-control-allow-origin']);
+    });
+    req.on('error', reject);
+    req.end();
+  });
+
+  const trustedCors = await getWithOrigin('http://trusted.com');
+  assert.equal(trustedCors, 'http://trusted.com');
+
+  const evilCors = await getWithOrigin('http://evil.com');
+  assert.equal(evilCors, undefined);
+
+  server.close();
+});

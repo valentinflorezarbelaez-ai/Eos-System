@@ -9,7 +9,11 @@ export function createMultimodalServer(engine = new MultimodalCreativeEngine()) 
     const method = req.method;
 
     res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [];
+    const origin = req.headers.origin;
+    if (origin && allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    }
 
     const readBody = () => new Promise((resolve, reject) => {
       let body = '';
