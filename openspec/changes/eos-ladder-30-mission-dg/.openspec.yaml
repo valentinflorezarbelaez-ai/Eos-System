@@ -1,0 +1,13 @@
+schema: openspec/v1
+change: eos-ladder-30-mission-dg
+mission: DG
+spec: SPEC-0116
+title: PO Level-2 Named-Path Disposition Gate Port
+ladder: 30
+adr: ADR-0089
+production_ready: NO
+fundacion_delta: 0
+freeze_soft_observe_pin: 31f811ca
+freeze_soft_observe_pin_full: 31f811caf7ff28cc25aa9ac87add0e45f4abf650
+schemas_at_ceiling: true
+gate_not_execution: true

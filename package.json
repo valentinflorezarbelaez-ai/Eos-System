@@ -370,7 +370,9 @@
     "test:mission-de": "node --test tests/eos-ladder29-seam-pack.test.js",
     "test:ladder29-pack": "npm run test:mission-da && npm run test:mission-db && npm run test:mission-dc && npm run test:mission-dd && npm run test:ladder29-seam",
     "test:mission-df": "node --test tests/eos-df-complexity-inventory-remeasure-port.test.js",
-    "test:complexity-inventory-remeasure": "node --test tests/eos-df-complexity-inventory-remeasure-port.test.js"
+    "test:complexity-inventory-remeasure": "node --test tests/eos-df-complexity-inventory-remeasure-port.test.js",
+    "test:mission-dg": "node --test tests/eos-dg-po-l2-named-path-disposition-port.test.js",
+    "test:po-l2-named-path-disposition": "node --test tests/eos-dg-po-l2-named-path-disposition-port.test.js"
   },
   "keywords": [
     "eos",
