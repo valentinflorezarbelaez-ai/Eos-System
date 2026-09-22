@@ -29,7 +29,6 @@ export class EOSProcessGovernor {
       throw new Error('🚨 PROCESS PANIC: El Gobernador se encuentra en estado de resguardo por anomalía previa.');
     }
 
-    console.log(`⚖️ [EOS GOVERNOR] > Iniciando proceso de alta fidelidad: ${idOperacion}`);
     const timestampInicio = Date.now();
 
     try {
