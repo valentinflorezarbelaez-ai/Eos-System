@@ -224,11 +224,17 @@ export class RelationalTraceabilityMatrix {
   _sha256(contentOrPath, isFile = false) {
     const hash = crypto.createHash('sha256');
     if (isFile) {
-      if (fs.existsSync(contentOrPath)) {
+      // PERF: Replacing TOCTOU (existsSync followed by readFileSync) with direct read and try/catch.
+      // This is measurably faster as it avoids an extra syscall to the filesystem.
+      try {
         hash.update(fs.readFileSync(contentOrPath));
         return hash.digest('hex');
+      } catch (err) {
+        if (err.code === 'ENOENT') {
+          return '0000000000000000000000000000000000000000000000000000000000000000';
+        }
+        throw err;
       }
-      return '0000000000000000000000000000000000000000000000000000000000000000';
     }
     hash.update(contentOrPath);
     return hash.digest('hex');
