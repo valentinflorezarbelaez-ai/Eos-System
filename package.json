@@ -401,7 +401,10 @@
     "test:mission-dr": "node --test tests/eos-dr-execution-loop-controller-port.test.js",
     "test:execution-loop-controller": "node --test tests/eos-dr-execution-loop-controller-port.test.js",
     "test:mission-ds": "node --test tests/eos-ds-data-contract-notary-port.test.js",
-    "test:data-contract-notary": "node --test tests/eos-ds-data-contract-notary-port.test.js"
+    "test:data-contract-notary": "node --test tests/eos-ds-data-contract-notary-port.test.js",
+    "test:ladder32-seam": "node --test tests/eos-ladder32-seam-pack.test.js",
+    "test:mission-dt": "node --test tests/eos-ladder32-seam-pack.test.js",
+    "test:ladder32-pack": "npm run test:mission-dp && npm run test:mission-dq && npm run test:mission-dr && npm run test:mission-ds && npm run test:ladder32-seam"
   },
   "keywords": [
     "eos",
