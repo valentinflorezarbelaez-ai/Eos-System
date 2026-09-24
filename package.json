@@ -380,7 +380,9 @@
     "test:post-disposition-integrity-hold": "node --test tests/eos-di-post-disposition-integrity-hold-port.test.js",
     "test:ladder30-seam": "node --test tests/eos-ladder30-seam-pack.test.js",
     "test:mission-dj": "node --test tests/eos-ladder30-seam-pack.test.js",
-    "test:ladder30-pack": "npm run test:mission-df && npm run test:mission-dg && npm run test:mission-dh && npm run test:mission-di && npm run test:ladder30-seam"
+    "test:ladder30-pack": "npm run test:mission-df && npm run test:mission-dg && npm run test:mission-dh && npm run test:mission-di && npm run test:ladder30-seam",
+    "test:mutation-harness": "node --test tests/specboot/mutation-audit-integration.test.js",
+    "gate:mutation-harness": "node scripts/ci/mutation-harness-gate.js"
   },
   "keywords": [
     "eos",
