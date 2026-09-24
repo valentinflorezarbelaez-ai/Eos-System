@@ -241,7 +241,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ladder30-seam-pack.test.js',
   'eos-ladder31-seam-pack.test.js',
   'eos-dp-vertical-slice-port.test.js',
-  'eos-dq-property-fuzzing-port.test.js'
+  'eos-dq-property-fuzzing-port.test.js',
+  'eos-dr-execution-loop-controller-port.test.js'
 ]);
 
 /**

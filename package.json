@@ -397,7 +397,9 @@
     "test:mission-dp": "node --test tests/eos-dp-vertical-slice-port.test.js",
     "test:vertical-slice": "node --test tests/eos-dp-vertical-slice-port.test.js",
     "test:mission-dq": "node --test tests/eos-dq-property-fuzzing-port.test.js",
-    "test:property-fuzzing": "node --test tests/eos-dq-property-fuzzing-port.test.js"
+    "test:property-fuzzing": "node --test tests/eos-dq-property-fuzzing-port.test.js",
+    "test:mission-dr": "node --test tests/eos-dr-execution-loop-controller-port.test.js",
+    "test:execution-loop-controller": "node --test tests/eos-dr-execution-loop-controller-port.test.js"
   },
   "keywords": [
     "eos",
