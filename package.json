@@ -386,7 +386,9 @@
     "test:mission-dk": "node --test tests/eos-dk-specboot-mutation-gatekeeper-port.test.js",
     "test:specboot-mutation-gatekeeper": "node --test tests/eos-dk-specboot-mutation-gatekeeper-port.test.js",
     "test:mission-dl": "node --test tests/eos-dl-adversarial-invariant-refuter-port.test.js",
-    "test:adversarial-invariant-refuter": "node --test tests/eos-dl-adversarial-invariant-refuter-port.test.js"
+    "test:adversarial-invariant-refuter": "node --test tests/eos-dl-adversarial-invariant-refuter-port.test.js",
+    "test:mission-dm": "node --test tests/eos-dm-hexagonal-boundary-isolation-port.test.js",
+    "test:hexagonal-boundary-isolation": "node --test tests/eos-dm-hexagonal-boundary-isolation-port.test.js"
   },
   "keywords": [
     "eos",

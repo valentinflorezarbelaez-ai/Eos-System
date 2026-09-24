@@ -1,0 +1,15 @@
+name: eos-ladder-31-mission-dm
+version: 1.0.0
+description: Hexagonal Architecture Boundary Isolation Port (SPEC-0123 / Mission DM)
+status: completed
+schema_version: 1
+author: EOS Autonomous Architecture Engine
+created_at: '2026-09-24T16:20:00-05:00'
+ladder: 31
+satellite: DM
+spec: SPEC-0123
+adr: ADR-0097
+freeze_observe_pin: f367a1cf
+production_ready: 'NO'
+fundacion_delta: 0
+schemas_at_ceiling: 35/35
