@@ -395,7 +395,9 @@
     "test:mission-do": "node --test tests/eos-ladder31-seam-pack.test.js",
     "test:ladder31-pack": "npm run test:mission-dk && npm run test:mission-dl && npm run test:mission-dm && npm run test:mission-dn && npm run test:ladder31-seam",
     "test:mission-dp": "node --test tests/eos-dp-vertical-slice-port.test.js",
-    "test:vertical-slice": "node --test tests/eos-dp-vertical-slice-port.test.js"
+    "test:vertical-slice": "node --test tests/eos-dp-vertical-slice-port.test.js",
+    "test:mission-dq": "node --test tests/eos-dq-property-fuzzing-port.test.js",
+    "test:property-fuzzing": "node --test tests/eos-dq-property-fuzzing-port.test.js"
   },
   "keywords": [
     "eos",
