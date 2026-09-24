@@ -233,6 +233,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
 
   'mutation-audit-integration.test.js',
   'eos-dk-specboot-mutation-gatekeeper-port.test.js',
+  'eos-dl-adversarial-invariant-refuter-port.test.js',
 
   'eos-rp-real-provider-execution.test.js',
   'eos-ladder30-seam-pack.test.js'

@@ -384,7 +384,9 @@
     "test:mutation-harness": "node --test tests/specboot/mutation-audit-integration.test.js",
     "gate:mutation-harness": "node scripts/ci/mutation-harness-gate.js",
     "test:mission-dk": "node --test tests/eos-dk-specboot-mutation-gatekeeper-port.test.js",
-    "test:specboot-mutation-gatekeeper": "node --test tests/eos-dk-specboot-mutation-gatekeeper-port.test.js"
+    "test:specboot-mutation-gatekeeper": "node --test tests/eos-dk-specboot-mutation-gatekeeper-port.test.js",
+    "test:mission-dl": "node --test tests/eos-dl-adversarial-invariant-refuter-port.test.js",
+    "test:adversarial-invariant-refuter": "node --test tests/eos-dl-adversarial-invariant-refuter-port.test.js"
   },
   "keywords": [
     "eos",
