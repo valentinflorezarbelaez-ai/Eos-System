@@ -399,7 +399,9 @@
     "test:mission-dq": "node --test tests/eos-dq-property-fuzzing-port.test.js",
     "test:property-fuzzing": "node --test tests/eos-dq-property-fuzzing-port.test.js",
     "test:mission-dr": "node --test tests/eos-dr-execution-loop-controller-port.test.js",
-    "test:execution-loop-controller": "node --test tests/eos-dr-execution-loop-controller-port.test.js"
+    "test:execution-loop-controller": "node --test tests/eos-dr-execution-loop-controller-port.test.js",
+    "test:mission-ds": "node --test tests/eos-ds-data-contract-notary-port.test.js",
+    "test:data-contract-notary": "node --test tests/eos-ds-data-contract-notary-port.test.js"
   },
   "keywords": [
     "eos",
