@@ -1,0 +1,13 @@
+schema: openspec/v1
+change: eos-ladder-30-mission-dh
+mission: DH
+spec: SPEC-0117
+title: Quarantine / Soft-Remove Execution Port
+ladder: 30
+adr: ADR-0090
+production_ready: NO
+fundacion_delta: 0
+freeze_soft_observe_pin: 06af7278
+freeze_soft_observe_pin_full: 06af7278d6bdf3b55c65a044bfb22ce93e6205cf
+schemas_at_ceiling: true
+soft_quarantine_only: true
