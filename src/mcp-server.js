@@ -1037,7 +1037,11 @@ class EosMcpServer {
     this.mediator = options.mediator || new EOSHarmonicMediator();
     this.intentCompiler = options.intentCompiler || new EOSIntentCompiler();
     this.sentinel = options.sentinel || new EOSSentinelDaemon({ rootPath: this.baseDir });
-    this.providerRouter = options.providerRouter || new EOSProviderRouter();
+    this.providerRouter = options.providerRouter || new EOSProviderRouter({
+      registry: options.llmRegistry,
+      secretBroker: options.secretBroker,
+      ecrGate: options.ecrGate
+    });
     this.knowledgeOntology = new EOSKnowledgeOntology();
     this.processGovernor = new EOSProcessGovernor();
     this.schemaValidator = new EOSMCPSchemaValidator();
@@ -1729,38 +1733,50 @@ switch (name) {
         });
 
       case 'eos.provider.route':
-        if (args && (args.tipoTarea || args.taskType)) {
-          return this._guarded(toolDef, env, async () => {
-            const taskCategory = args.tipoTarea || args.taskType;
-            const forzarFallo = args.forzarFalloPrimario || false;
-            const resultado = await this.providerRouter.enrutarMision(taskCategory, forzarFallo);
-            return {
-              status: 'SUCCESS',
-              executed: true,
-              provider_route: resultado
-            };
+        return this._guarded(toolDef, env, async () => {
+          const taskCategory = args?.tipoTarea || args?.taskType || 'ARCHITECTURE_DEEP';
+          const forzarFallo = args?.forzarFalloPrimario || false;
+          const forzarFalloFallback = args?.forzarFalloFallback || false;
+
+          const res = await this.providerRouter.enrutarMisionReal(taskCategory, args, {
+            forzarFalloPrimario: forzarFallo,
+            forzarFalloFallback: forzarFalloFallback
           });
-        }
-        return {
-          tool: name,
-          status: 'NOT_CONFIGURED',
-          executed: false,
-          sideEffects: 'NONE',
-          message:
-            'Provider routing is out of scope for local governed MVP (no network credentials). Use Cursor/local models outside EOS provider router.',
-          epistemic_class: 'NOT_VERIFIED'
-        };
+
+          if (!res.executed) {
+            return {
+              tool: name,
+              status: res.status || res.code || 'NO_CREDENTIALS',
+              code: res.code || res.status || 'NO_CREDENTIALS',
+              executed: false,
+              sideEffects: 'NONE',
+              message: res.error || 'Provider execution failed closed',
+              epistemic_class: 'NOT_VERIFIED'
+            };
+          }
+
+          return {
+            tool: name,
+            status: 'SUCCESS',
+            executed: true,
+            provider_route: res,
+            sideEffects: 'NONE'
+          };
+        });
 
       case 'eos.provider.health':
-        return {
-          tool: name,
-          status: 'NOT_CONFIGURED',
-          executed: false,
-          sideEffects: 'NONE',
-          message:
-            'Provider routing is out of scope for local governed MVP (no network credentials). Use Cursor/local models outside EOS provider router.',
-          epistemic_class: 'NOT_VERIFIED'
-        };
+        return this._guarded(toolDef, env, async () => {
+          const providerId = args?.provider || args?.providerId || 'OPENROUTER';
+          const healthRes = await this.providerRouter.probeProviderHealth(providerId);
+          return {
+            tool: name,
+            status: healthRes.status || healthRes.code || 'PROVIDER_UNAVAILABLE',
+            code: healthRes.code || healthRes.status || 'PROVIDER_UNAVAILABLE',
+            executed: healthRes.status === 'OK',
+            sideEffects: 'NONE',
+            health: healthRes
+          };
+        });
 
       case 'eos.sentinel.self_remember':
       case 'eos_sentinel_self_remember': {

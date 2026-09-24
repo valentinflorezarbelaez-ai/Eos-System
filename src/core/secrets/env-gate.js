@@ -34,7 +34,9 @@ export const DEFAULT_ALLOWLISTED_ENV_KEYS = Object.freeze([
   'EOS_PROVIDER_TOKEN_B',
   'EOS_PROVIDER_TOKEN_C',
   'EOS_LLM_ADAPTER_TOKEN',
-  'EOS_FAKE_PROVIDER_ENV'
+  'EOS_FAKE_PROVIDER_ENV',
+  'GEMINI_API_KEY',
+  'OPENROUTER_API_KEY'
 ]);
 
 /** Default allowlisted adapter IDs that may receive inject-only secrets. */
@@ -43,7 +45,9 @@ export const DEFAULT_ALLOWLISTED_ADAPTERS = Object.freeze([
   'adapter-provider-b',
   'adapter-provider-c',
   'adapter-llm-failover',
-  'adapter-hermetic-fake'
+  'adapter-hermetic-fake',
+  'adapter-gemini',
+  'adapter-openrouter'
 ]);
 
 /**
