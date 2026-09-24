@@ -229,6 +229,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
 
   'eos-dh-quarantine-execution-port.test.js',
 
+  'eos-di-post-disposition-integrity-hold-port.test.js',
+
   'mutation-audit-integration.test.js',
 
   'eos-rp-real-provider-execution.test.js'

@@ -375,7 +375,9 @@
     "test:mission-dg": "node --test tests/eos-dg-po-l2-named-path-disposition-port.test.js",
     "test:po-l2-named-path-disposition": "node --test tests/eos-dg-po-l2-named-path-disposition-port.test.js",
     "test:mission-dh": "node --test tests/eos-dh-quarantine-execution-port.test.js",
-    "test:quarantine-execution-port": "node --test tests/eos-dh-quarantine-execution-port.test.js"
+    "test:quarantine-execution-port": "node --test tests/eos-dh-quarantine-execution-port.test.js",
+    "test:mission-di": "node --test tests/eos-di-post-disposition-integrity-hold-port.test.js",
+    "test:post-disposition-integrity-hold": "node --test tests/eos-di-post-disposition-integrity-hold-port.test.js"
   },
   "keywords": [
     "eos",

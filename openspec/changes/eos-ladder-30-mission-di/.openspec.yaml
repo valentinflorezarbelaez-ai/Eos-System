@@ -1,0 +1,17 @@
+id: eos-ladder-30-mission-di
+name: "Mission DI: Post-Disposition Integrity & Docs SSOT Hold Ritual Port"
+version: 0.1.0
+status: in-progress
+created: 2026-09-24
+authors:
+  - "EOS Sovereign System"
+dependencies:
+  - eos-ladder-30-mission-dh
+spec_files:
+  - specs/mission-di-post-disposition-integrity-hold/spec.md
+tags:
+  - ladder-30
+  - composition
+  - integrity-hold
+  - docs-ssot
+  - layer-0
