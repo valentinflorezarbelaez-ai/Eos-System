@@ -233,7 +233,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
 
   'mutation-audit-integration.test.js',
 
-  'eos-rp-real-provider-execution.test.js'
+  'eos-rp-real-provider-execution.test.js',
+  'eos-ladder30-seam-pack.test.js'
 ]);
 
 /**

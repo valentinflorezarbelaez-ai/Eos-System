@@ -120,6 +120,34 @@ const AUTO_SEAL_PATTERNS = [
   /unattended\s+seal/i
 ];
 
+const RECEIPT_EXCLUSION_KEYS = new Set([
+  'dgReceipt',
+  'dhReceipt',
+  'receipt',
+  'priorReceipts',
+  'freezeObserve',
+  'nonClaimLabels',
+  'nonClaimNotes'
+]);
+
+function stripReceipts(val, depth = 0) {
+  if (val == null || depth > 5) return val;
+  if (Array.isArray(val)) return val.map((x) => stripReceipts(x, depth + 1));
+  if (typeof val === 'object') {
+    if (val.receiptId || val.receiptHash) return undefined;
+    const out = {};
+    for (const [k, v] of Object.entries(val)) {
+      if (RECEIPT_EXCLUSION_KEYS.has(k)) continue;
+      const stripped = stripReceipts(v, depth + 1);
+      if (stripped !== undefined) {
+        out[k] = stripped;
+      }
+    }
+    return out;
+  }
+  return val;
+}
+
 function matchesAny(value, patterns) {
   if (value == null) return false;
   const texts = [];
@@ -127,10 +155,13 @@ function matchesAny(value, patterns) {
     texts.push(value);
   } else if (typeof value === 'object') {
     try {
-      texts.push(JSON.stringify(value));
-      for (const k of Object.keys(value)) {
-        if (value[k] != null && typeof value[k] === 'string') {
-          texts.push(value[k]);
+      const stripped = stripReceipts(value);
+      if (stripped != null) {
+        texts.push(JSON.stringify(stripped));
+        for (const k of Object.keys(stripped)) {
+          if (stripped[k] != null && typeof stripped[k] === 'string') {
+            texts.push(stripped[k]);
+          }
         }
       }
     } catch {

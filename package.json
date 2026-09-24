@@ -377,7 +377,10 @@
     "test:mission-dh": "node --test tests/eos-dh-quarantine-execution-port.test.js",
     "test:quarantine-execution-port": "node --test tests/eos-dh-quarantine-execution-port.test.js",
     "test:mission-di": "node --test tests/eos-di-post-disposition-integrity-hold-port.test.js",
-    "test:post-disposition-integrity-hold": "node --test tests/eos-di-post-disposition-integrity-hold-port.test.js"
+    "test:post-disposition-integrity-hold": "node --test tests/eos-di-post-disposition-integrity-hold-port.test.js",
+    "test:ladder30-seam": "node --test tests/eos-ladder30-seam-pack.test.js",
+    "test:mission-dj": "node --test tests/eos-ladder30-seam-pack.test.js",
+    "test:ladder30-pack": "npm run test:mission-df && npm run test:mission-dg && npm run test:mission-dh && npm run test:mission-di && npm run test:ladder30-seam"
   },
   "keywords": [
     "eos",
