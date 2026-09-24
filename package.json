@@ -390,7 +390,10 @@
     "test:mission-dm": "node --test tests/eos-dm-hexagonal-boundary-isolation-port.test.js",
     "test:hexagonal-boundary-isolation": "node --test tests/eos-dm-hexagonal-boundary-isolation-port.test.js",
     "test:mission-dn": "node --test tests/eos-dn-sovereign-epistemic-ledger-port.test.js",
-    "test:sovereign-epistemic-ledger": "node --test tests/eos-dn-sovereign-epistemic-ledger-port.test.js"
+    "test:sovereign-epistemic-ledger": "node --test tests/eos-dn-sovereign-epistemic-ledger-port.test.js",
+    "test:ladder31-seam": "node --test tests/eos-ladder31-seam-pack.test.js",
+    "test:mission-do": "node --test tests/eos-ladder31-seam-pack.test.js",
+    "test:ladder31-pack": "npm run test:mission-dk && npm run test:mission-dl && npm run test:mission-dm && npm run test:mission-dn && npm run test:ladder31-seam"
   },
   "keywords": [
     "eos",

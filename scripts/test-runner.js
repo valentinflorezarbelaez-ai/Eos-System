@@ -238,7 +238,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-dn-sovereign-epistemic-ledger-port.test.js',
 
   'eos-rp-real-provider-execution.test.js',
-  'eos-ladder30-seam-pack.test.js'
+  'eos-ladder30-seam-pack.test.js',
+  'eos-ladder31-seam-pack.test.js'
 ]);
 
 /**
