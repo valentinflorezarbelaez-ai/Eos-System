@@ -232,6 +232,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-di-post-disposition-integrity-hold-port.test.js',
 
   'mutation-audit-integration.test.js',
+  'eos-dk-specboot-mutation-gatekeeper-port.test.js',
 
   'eos-rp-real-provider-execution.test.js',
   'eos-ladder30-seam-pack.test.js'

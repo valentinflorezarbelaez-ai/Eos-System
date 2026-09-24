@@ -382,7 +382,9 @@
     "test:mission-dj": "node --test tests/eos-ladder30-seam-pack.test.js",
     "test:ladder30-pack": "npm run test:mission-df && npm run test:mission-dg && npm run test:mission-dh && npm run test:mission-di && npm run test:ladder30-seam",
     "test:mutation-harness": "node --test tests/specboot/mutation-audit-integration.test.js",
-    "gate:mutation-harness": "node scripts/ci/mutation-harness-gate.js"
+    "gate:mutation-harness": "node scripts/ci/mutation-harness-gate.js",
+    "test:mission-dk": "node --test tests/eos-dk-specboot-mutation-gatekeeper-port.test.js",
+    "test:specboot-mutation-gatekeeper": "node --test tests/eos-dk-specboot-mutation-gatekeeper-port.test.js"
   },
   "keywords": [
     "eos",
