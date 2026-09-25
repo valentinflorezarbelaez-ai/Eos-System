@@ -1,0 +1,14 @@
+schema: spec-driven
+change_id: eos-ladder-33-mission-du
+title: Mission DU Sovereign Pure Domain Event Publisher Port (SPEC-0131)
+status: ready
+ladder: 33
+mission: DU
+spec: SPEC-0131
+adr: ADR-0107
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: b205ce8c
+never_reopen: [L30, L31, L32]
+l33: OPEN (Audit MEASURED · DU–DY pending)
