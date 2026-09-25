@@ -241,22 +241,23 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-seal-post-410 to live main after #410 Mission DE (prior freeze tip 4d8c6c594fba94fc0c975dd7c13fb7d183a8aade; tip-refresh post-#407 / L29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending then); tip-refresh #408 @ 0a6dbe65; DD #409 @ d57b6ddb; tip-refresh post-#409 superseded by DE landing before apply; Mission DE #410 31f811caf7ff28cc25aa9ac87add0e45f4abf650; Formal Ladder 29 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DA+DB+DC+DD+DE MEASURED + seam-pack + closeout); L17–L29 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; NEVER reopen L29; Do NOT start next ladder satellites unless separately audited; Do NOT claim PRODUCTION_READY)
+  // Tip honesty light: freeze main_tip pinned by tip-honesty-l30-l33 / tip-seal L30–L32 + tip-open L33 to live local HEAD after setlist drop = Ladder 33 maturity gap audit ADR-0106 (prior freeze tip 31f811caf7ff28cc25aa9ac87add0e45f4abf650; tip-refresh-post-415 / L30 OPEN (Audit + DF MEASURED · DG–DJ pending) then; intermediate origin/main 792e9c0a7008e944711426936cf739b0dbb50449 = DG #417 cited in branch_hygiene; honesty pack jumps 31f811ca → 761110ec documenting DG–DT + L30/L31/L32 closeouts + L33 audit; Formal L30 CLOSED (DF–DJ MEASURED + seam/closeout); Formal L31 CLOSED (DK–DO MEASURED + seam/closeout); Formal L32 CLOSED (DP–DT MEASURED + seam/closeout); L33 OPEN (Audit MEASURED · DU–DY pending); NEVER reopen L17–L32; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; Do NOT claim DU–DY MEASURED; Do NOT claim L33 CLOSED; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete) — dirty-defer retained)
+
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '31f811caf7ff28cc25aa9ac87add0e45f4abf650') {
+      if (!tip || tip[1] !== '761110ec0c807717421f5018370a7ca49d648d80') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-415 expected main_tip=31f811caf7ff28cc25aa9ac87add0e45f4abf650 (post-#410 / Mission DE MEASURED / Formal Ladder 29 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DA+DB+DC+DD+DE MEASURED + seam-pack + closeout; Sovereign Observability & Evidence Economy Fabric); Formal L28 CLOSED retained; Formal L27 CLOSED retained; tip honesty restored; tip-410 / main@2f52ee5e; L17–L29 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; NEVER reopen L29; Do NOT start next ladder satellites unless separately audited; Do NOT claim PRODUCTION_READY); Formal L28 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + CV+CW+CX+CY+CZ MEASURED + seam-pack + closeout; Sovereign Operator Control-Plane Composition & HUD/Doctor Ritual Fabric); Formal L27 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; CQ+CR+CS+CT+CU MEASURED + seam-pack + closeout; Sovereign Operator Continuity & Local CI / Evidence Ritual Fabric); tip honesty restored; tip-409 / main@d57b6ddb; L17–L28 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; Do NOT start Mission DE; Do NOT claim DE MEASURED; Do NOT claim DD–DE MEASURED; Do NOT claim DC–DE MEASURED; Do NOT claim DB–DE MEASURED; Do NOT claim DA–DE MEASURED; Do NOT claim L29 CLOSED; Do NOT claim PRODUCTION_READY)',
+            'tip-honesty-l30-l33 expected main_tip=761110ec0c807717421f5018370a7ca49d648d80 (tip-seal L30–L32 + tip-open L33 / Formal L30 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; DF–DJ MEASURED + seam/closeout); Formal L31 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; DK–DO MEASURED + seam/closeout); Formal L32 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; DP–DT MEASURED + seam/closeout); L33 OPEN (Audit MEASURED · DU–DY pending); NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; Do NOT claim DU–DY MEASURED; Do NOT claim L33 CLOSED; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete))',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-415 / main@31f811ca (post-#410 / Mission DE MEASURED / Formal Ladder 29 CLOSED; Formal L28 CLOSED retained; Formal L27 CLOSED retained; tip-refresh-post-407 / main@4d8c6c59; tip-refresh #408 @ 0a6dbe65; DD #409 @ d57b6ddb; L17–L29 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; NEVER reopen L29)',
+          path: 'freeze main_tip pinned to tip-honesty-l30-l33 / tip-seal L30–L32 + tip-open L33 / main@761110ec (Formal L30+L31+L32 CLOSED; L33 OPEN Audit MEASURED · DU–DY pending; NEVER reopen L30/L31/L32)',
           status: 'VERIFIED',
           type
         });
