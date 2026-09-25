@@ -3,7 +3,7 @@
 ```text
 document: RELEASE_CAPABILITY_MATRIX
 release_branch: main
-evaluated_tip: 037f95786724936aecf48bf3684b4dd5dc37e815
+evaluated_tip: 19b353d8fa07ece41df251d4eaeaa8778c13ed81
 dictamen: COMPLETE_FOR_LOCAL_GOVERNED_USE
 PRODUCTION_READY: NO
 main_subject: Merge pull request #410 from valentinflorezarbelaez-ai/grok/mission-de-ladder29-seam-pack-closeout
@@ -1607,6 +1607,13 @@ PRODUCTION_READY: NO
 | Do NOT claim DX–DY MEASURED | COMPLETE | MEASURED (tip-refresh post-450; Audit + DU + DV + DW MEASURED; DX–DY pending only) |
 | Do NOT claim L33 CLOSED | COMPLETE | MEASURED (tip-open L33 seal retained; L33 remains OPEN) |
 | Complexity prune deferred PO-gated | COMPLETE | MEASURED (inventory≠delete; dirty-defer retained) |
+| Tip-refresh post #465 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_465_2026-09-25.md; freeze+matrix to 19b353d8; tip-refresh-post-465; tip-post-465; Tip honesty post-#465; prior freeze tip 037f9578 (tip-refresh-post-463); L34 OPEN (Audit MEASURED · DZ MEASURED · EA MEASURED · EB MEASURED · EC–ED pending; Sovereign Process Orchestration, CQRS Projection & Dead-Letter Governance Fabric); EB MEASURED via #465 SPEC-0138 ADR-0115; Formal L30+L31+L32+L33 CLOSED retained; NEVER reopen L30/L31/L32/L33; Do NOT claim EC–ED MEASURED; Do NOT claim L34 CLOSED; Do NOT claim PRODUCTION_READY; PRODUCTION_READY=NO; Fundacion Delta=0; schemas AT_CEILING 35/35) |
+| tip-refresh-post-465 | COMPLETE | MEASURED (tip honesty post-#465; main@19b353d8; L34 OPEN retained; EB MEASURED · EC–ED pending; tip-refresh-post-463 tip-refresh baseline; NEVER reopen L33; Do NOT claim PRODUCTION_READY) |
+| tip-post-465 | COMPLETE | MEASURED (alias tip-refresh-post-465; Tip honesty post-#465) |
+| Tip honesty post-#465 | COMPLETE | MEASURED (tip-refresh after Mission EB #465; pin catch-up only) |
+| EB MEASURED | COMPLETE | MEASURED (#465; SPEC-0138; ADR-0115; Dead-Letter Quarantine Port; tip-refresh-post-465) |
+| Audit MEASURED · DZ MEASURED · EA MEASURED · EB MEASURED · EC–ED pending | COMPLETE | MEASURED (L34 OPEN status after tip-refresh-post-465; Audit #458 + DZ #461 + EA #463 MEASURED; EB MEASURED via #465; EC–ED pending only) |
+| Mission EB | COMPLETE | MEASURED (#465; SPEC-0138; ADR-0115; Dead-Letter Quarantine Port) |
 | Tip-refresh post #463 | COMPLETE | MEASURED (EOS_TIP_REFRESH_POST_463_2026-09-25.md; freeze+matrix to 037f9578; tip-refresh-post-463; tip-post-463; Tip honesty post-#463; prior freeze tip 1f2234cf (tip-refresh-post-461); L34 OPEN (Audit MEASURED · DZ MEASURED · EA MEASURED · EB–ED pending; Sovereign Process Orchestration, CQRS Projection & Dead-Letter Governance Fabric); EA MEASURED via #463 SPEC-0136 ADR-0113; Formal L30+L31+L32+L33 CLOSED retained; NEVER reopen L30/L31/L32/L33; Do NOT claim EB–ED MEASURED; Do NOT claim L34 CLOSED; Do NOT claim PRODUCTION_READY; PRODUCTION_READY=NO; Fundacion Delta=0; schemas AT_CEILING 35/35) |
 | tip-refresh-post-463 | COMPLETE | MEASURED (tip honesty post-#461; main@037f9578; L34 OPEN retained; EA MEASURED · EB–ED pending; tip-refresh-post-461 tip-refresh baseline; NEVER reopen L33; Do NOT claim PRODUCTION_READY) |
 | tip-post-463 | COMPLETE | MEASURED (alias tip-refresh-post-463; Tip honesty post-#463) |
