@@ -429,7 +429,9 @@
     "test:mission-ed": "node --test tests/eos-ed-ladder34-seam-pack.test.js",
     "test:ladder34-pack": "npm run test:mission-dz && npm run test:mission-ea && npm run test:mission-eb && npm run test:mission-ec && npm run test:ladder34-seam",
     "test:mission-ee": "node --test tests/eos-ee-temporal-deadline-ttl-port.test.js",
-    "test:temporal-deadline-ttl": "node --test tests/eos-ee-temporal-deadline-ttl-port.test.js"
+    "test:temporal-deadline-ttl": "node --test tests/eos-ee-temporal-deadline-ttl-port.test.js",
+    "test:mission-ef": "node --test tests/eos-ef-schedule-wake-deferred-port.test.js",
+    "test:schedule-wake-deferred": "node --test tests/eos-ef-schedule-wake-deferred-port.test.js"
   },
   "keywords": [
     "eos",
