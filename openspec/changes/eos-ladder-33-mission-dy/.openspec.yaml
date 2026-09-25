@@ -1,0 +1,27 @@
+schema: spec-driven
+created: 2026-09-25
+goal: Implement Ladder 33 CI Seam-Pack Consolidation & Closeout (SPEC-0135 / Mission DY) — unify DU–DX into fail-closed CI seam-pack + formal closeout. Axis Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. Schemas AT_CEILING. L30–L32 CLOSED never reopen. After DY tip-seal, L33 CLOSED_FOR_LOCAL_GOVERNED_USE never reopen. NON-CLAIM Seam-pack ≠ GitHub Enterprise enforcement. NON-CLAIM CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES. Soft-observe pin fe52fb3b (tip-refresh-post-452 / PR #452). No freeze/matrix tip rewrite. Tip-seal L33 CLOSED is SEPARATE after DY merge — NOT this package.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0135
+phase: 1
+affected_areas:
+  - tests/eos-ladder33-seam-pack.test.js
+  - src/core/composition/ladder33-seam-port.js
+  - src/core/composition/ladder33-seam-receipt.js
+  - src/core/composition/ladder33-seam-policy-gate.js
+  - scripts/patch-mission-dy.mjs
+  - docs/releases/EOS_LADDER_33_CLOSEOUT_2026-09-25.md
+  - docs/evidence/EOS_MISSION_DY_LADDER33_SEAM_EVD_2026-09-25.md
+  - docs/adrs/ADR-0111-mission-dy-ladder33-seam-pack-closeout.md
+  - openspec/changes/eos-ladder-33-mission-dy
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - overwriting DU/DV/DW/DX product ports
+  - GitHub Enterprise enforcement claims
+  - CloudAgent path
+  - reopening L30–L32
+  - tip-refresh / freeze-matrix rewrite / tip-seal L33 CLOSED (parent after merge)
+  - soft-allow soak / continue-on-error
+  - new docs/schemas JSON (AT_CEILING)
