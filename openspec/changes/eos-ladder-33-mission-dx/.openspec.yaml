@@ -1,0 +1,5 @@
+schema: spec-driven
+change_id: eos-ladder-33-mission-dx
+title: Mission DX Sovereign Circuit Breaker & Resilient Fallback Port (SPEC-0134)
+status: ready
+created: 2026-09-25

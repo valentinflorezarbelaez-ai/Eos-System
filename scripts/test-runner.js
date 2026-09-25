@@ -251,6 +251,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-dv-transactional-outbox-port.test.js',
 
   'eos-dw-idempotent-message-consumer-port.test.js',
+
+  'eos-dx-circuit-breaker-port.test.js',
 ]);
 
 /**
