@@ -37,20 +37,21 @@ const FULL_SHA = /^[0-9a-f]{40}$/;
 /** HIST tip-refresh-post-459 pinned tip: main@b382d29b / b382d29bee2494f21652f9207170d900c7179f4c (prior eb6134a42d6bff20bdbdd0c0a91297f808b2fe77 tip-open-post-458 / tip-open L34 / Tip open post-#458 / L34 OPEN (Audit MEASURED · DZ–ED pending; Sovereign Process Orchestration, CQRS Projection & Dead-Letter Governance Fabric); Formal L30+L31+L32+L33 CLOSED retained; NEVER reopen L33; Do NOT claim DZ–ED MEASURED; Do NOT claim L34 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-open-post-458 / tip-refresh-post-456 / tip-seal-post-455 needles OK) */
 /** HIST tip-open-post-458 pinned tip: main@eb6134a4 / eb6134a42d6bff20bdbdd0c0a91297f808b2fe77 (prior freeze tip 2b23f50454f2e8541f90a39aae7e6d067d320502 tip-refresh-post-456 / tip-post-456 / Tip honesty post-#456 / Formal Ladder 33 CLOSED retained; #458 Merge pull request #458 Ladder 34 Maturity Gap Audit; tip honesty restored; L34 OPEN (Audit MEASURED · DZ–ED pending; Sovereign Process Orchestration, CQRS Projection & Dead-Letter Governance Fabric); Formal L30+L31+L32+L33 CLOSED retained; NEVER reopen L33; Do NOT claim DZ–ED MEASURED; Do NOT claim L34 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-456 / tip-seal-post-455 needles OK) */
 /** HIST tip-refresh-post-456 was main@2b23f504 / 2b23f50454f2e8541f90a39aae7e6d067d320502 (prior 446bbe49f2fbf9e83604faf16e50b36b70cdb216 tip-seal-post-455 / tip-seal L33 CLOSED / Formal Ladder 33 CLOSED; Formal Ladder 33 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric); Formal L30+L31+L32 CLOSED retained; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; historical tip-seal-post-455 / tip-refresh-post-454 / tip-refresh-post-452 needles OK) */
-/** Tip-refresh post-#497 pinned tip: main@9fd2be07 / 9fd2be07e192694623d2c15c0a99d2800f1ffbdb (prior 933f32ae07fd3526b322cbd8ed389f66d8b298f1 tip-refresh-post-495 / tip-post-495 / Tip honesty post-#495 / L36 OPEN (Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; Do NOT claim EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-495 / tip-refresh-post-493 / tip-refresh-post-491 / tip-open-post-488 / tip-refresh-post-486 / tip-seal-post-485 needles OK) */
+/** Tip-refresh post-#499 pinned tip: main@9722b812 / 9722b8123b9ce303119b4e48eb9f9b56f1207b29 (prior 9fd2be07e192694623d2c15c0a99d2800f1ffbdb tip-refresh-post-497 / tip-post-497 / Tip honesty post-#497 / L36 OPEN (Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM MEASURED · EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; tip-seal SEPARATE; historical tip-refresh-post-497 / tip-refresh-post-495 / tip-refresh-post-493 / tip-refresh-post-491 / tip-open-post-488 / tip-refresh-post-486 / tip-seal-post-485 needles OK) */
+/** HIST tip-refresh-post-497 pinned tip: main@9fd2be07 / 9fd2be07e192694623d2c15c0a99d2800f1ffbdb (prior 933f32ae07fd3526b322cbd8ed389f66d8b298f1 tip-refresh-post-495 / tip-post-495 / Tip honesty post-#495 / L36 OPEN (Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; Do NOT claim EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-495 / tip-refresh-post-493 / tip-refresh-post-491 / tip-open-post-488 / tip-refresh-post-486 / tip-seal-post-485 needles OK) */
 /** HIST tip-refresh-post-495 pinned tip: main@933f32ae / 933f32ae07fd3526b322cbd8ed389f66d8b298f1 (prior 72697dd506284284e5cbbe3ebf2c68cef8fbf006 tip-refresh-post-493 / tip-post-493 / Tip honesty post-#493 / L36 OPEN (Audit MEASURED · EJ MEASURED · EK MEASURED · EL–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; Do NOT claim EM–EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-493 / tip-refresh-post-491 / tip-open-post-488 / tip-refresh-post-486 / tip-seal-post-485 needles OK) */
 /** HIST tip-refresh-post-493 pinned tip: main@72697dd5 / 72697dd506284284e5cbbe3ebf2c68cef8fbf006 (prior 5e5af28130d3e742ae5274fab9913453317c913b tip-refresh-post-491 / tip-post-491 / Tip honesty post-#491 / L36 OPEN (Audit MEASURED · EJ MEASURED · EK–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; Do NOT claim EL–EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-491 / tip-open-post-488 / tip-refresh-post-486 / tip-seal-post-485 needles OK) */
 /** HIST tip-refresh-post-491 pinned tip: main@5e5af281 / 5e5af28130d3e742ae5274fab9913453317c913b (prior d7490fee0e419fc58602f67b0051ca06e649595a tip-refresh-post-489 / tip-post-489 / Tip honesty post-#489 / L36 OPEN (Audit MEASURED · EJ–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; Do NOT claim EK–EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-489 / tip-open-post-488 / tip-refresh-post-486 / tip-seal-post-485 needles OK) */
 /** HIST tip-refresh-post-489 pinned tip: main@d7490fee / d7490fee0e419fc58602f67b0051ca06e649595a (prior 73276cbab1e750fc69f3aaf71353e12d517e00ed tip-open-post-488 / tip-open L36 / Tip open post-#488 / L36 OPEN (Audit MEASURED · EJ–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; Do NOT claim EJ–EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-open-post-488 / tip-refresh-post-486 / tip-seal-post-485 needles OK) */
 /** HIST tip-open-post-488 pinned tip: main@73276cba / 73276cbab1e750fc69f3aaf71353e12d517e00ed (prior freeze tip 0903b037d29393bce5cdf7c3b23933d9613a192a tip-refresh-post-486 / tip-post-486 / Tip honesty post-#486 / Formal Ladder 35 CLOSED retained; #488 Merge pull request #488 Ladder 36 Maturity Gap Audit; tip honesty restored; L36 OPEN (Audit MEASURED · EJ–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; Do NOT claim EJ–EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-486 / tip-seal-post-485 needles OK) */
-const EXPECTED_TIP = '9fd2be07e192694623d2c15c0a99d2800f1ffbdb';
+const EXPECTED_TIP = '9722b8123b9ce303119b4e48eb9f9b56f1207b29';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-497 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-499 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -66,8 +67,8 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   const evalTip = matrix.match(EVAL_TIP)?.[1];
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
-  assert.equal(evalTip, tip, 'evaluated_tip must equal tip-refresh-post-497 pinned tip');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-497 pinned tip');
+  assert.equal(evalTip, tip, 'evaluated_tip must equal tip-refresh-post-499 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-499 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -746,6 +747,11 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'tip-refresh-post-445',
     'tip-refresh-post-447',
     'tip-refresh-post-450',
+    'tip-refresh-post-499',
+    'tip-post-499',
+    'Tip honesty post-#499',
+    'EN MEASURED',
+    'Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM MEASURED · EN MEASURED',
     'tip-refresh-post-497',
     'tip-post-497',
     'Tip honesty post-#497',
@@ -2778,7 +2784,7 @@ test('tip-refresh-post-459: tip-post-459 / Tip honesty post-#459 needles + pin b
   assert.match(matrix, /1f2234cffdecd7e0810d7271c5e92adc9f8c75f3/);
   assert.match(freeze, /037f95786724936aecf48bf3684b4dd5dc37e815/);
   assert.match(matrix, /037f95786724936aecf48bf3684b4dd5dc37e815/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb'); // current tip-refresh-post-484 pin; historical b382d29b retained in freeze/matrix
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29'); // current tip-refresh-post-484 pin; historical b382d29b retained in freeze/matrix
 });
 
 test('tip-refresh-post-461: Formal L30+L31+L32+L33 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
@@ -2836,7 +2842,7 @@ test('tip-refresh-post-461: tip-post-461 / Tip honesty post-#461 needles + pin 1
   assert.match(matrix, /tip-open-post-458/);
   assert.match(freeze, /tip-refresh-post-456/);
   assert.match(matrix, /tip-refresh-post-456/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-463: Formal L30+L31+L32+L33 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
@@ -2896,7 +2902,7 @@ test('tip-refresh-post-463: tip-post-463 / Tip honesty post-#463 needles + pin 0
   assert.match(matrix, /tip-open-post-458/);
   assert.match(freeze, /tip-refresh-post-456/);
   assert.match(matrix, /tip-refresh-post-456/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-465: Formal L30+L31+L32+L33 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
@@ -2963,7 +2969,7 @@ test('tip-refresh-post-465: tip-post-465 / Tip honesty post-#465 needles + pin 1
   assert.match(matrix, /tip-open-post-458/);
   assert.match(freeze, /tip-refresh-post-456/);
   assert.match(matrix, /tip-refresh-post-456/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-467: Formal L30+L31+L32+L33 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
@@ -3028,7 +3034,7 @@ test('tip-refresh-post-467: tip-post-467 / Tip honesty post-#467 needles + pin 2
   assert.match(matrix, /tip-open-post-458/);
   assert.match(freeze, /tip-refresh-post-456/);
   assert.match(matrix, /tip-refresh-post-456/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-469: Formal L30+L31+L32+L33 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
@@ -3095,7 +3101,7 @@ test('tip-refresh-post-469: tip-post-469 / Tip honesty post-#469 needles + pin b
   assert.match(matrix, /tip-open-post-458/);
   assert.match(freeze, /tip-refresh-post-456/);
   assert.match(matrix, /tip-refresh-post-456/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 
@@ -3237,7 +3243,7 @@ test('tip-refresh-post-471: tip-post-471 / Tip honesty post-#471 needles + pin 1
   assert.match(matrix, /Complexity prune deferred PO-gated \(inventory≠delete\)|inventory≠delete/);
   assert.match(freeze, /Fundacion Δ=0|Fundacion Delta=0/);
   assert.match(matrix, /Fundacion Delta=0|Fundacion Δ=0/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-open-post-473: L35 OPEN honesty needles', () => {
@@ -3286,7 +3292,7 @@ test('tip-open-post-473: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reop
   assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/);
   assert.doesNotMatch(matrix, /PRODUCTION_READY:\s*YES/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 
@@ -3324,7 +3330,7 @@ test('tip-refresh-post-474: tip-post-474 / Tip honesty post-#474 needles + pin 9
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-476: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34', () => {
@@ -3389,7 +3395,7 @@ test('tip-refresh-post-476: tip-post-476 / Tip honesty post-#476 needles + pin 0
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-478: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34', () => {
@@ -3456,7 +3462,7 @@ test('tip-refresh-post-478: tip-post-478 / Tip honesty post-#478 needles + pin 7
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-480: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34', () => {
@@ -3533,7 +3539,7 @@ test('tip-refresh-post-480: tip-post-480 / Tip honesty post-#480 needles + pin f
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-482: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34', () => {
@@ -3620,7 +3626,7 @@ test('tip-refresh-post-482: tip-post-482 / Tip honesty post-#482 needles + pin b
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-484: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34', () => {
@@ -3717,7 +3723,7 @@ test('tip-refresh-post-484: tip-post-484 / Tip honesty post-#484 needles + pin 0
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 
@@ -3867,7 +3873,7 @@ test('tip-refresh-post-486: tip-post-486 / Tip honesty post-#486 needles + pin 0
   assert.match(matrix, /Complexity prune deferred PO-gated \(inventory≠delete\)|inventory≠delete/);
   assert.match(freeze, /Fundacion Δ=0|Fundacion Delta=0/);
   assert.match(matrix, /Fundacion Delta=0|Fundacion Δ=0/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-open-post-488: L36 OPEN honesty needles', () => {
@@ -3918,7 +3924,7 @@ test('tip-open-post-488: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEVER 
   assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/);
   assert.doesNotMatch(matrix, /PRODUCTION_READY:\s*YES/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-489: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34/L35', () => {
@@ -3954,7 +3960,7 @@ test('tip-refresh-post-489: tip-post-489 / Tip honesty post-#489 needles + pin d
   assert.match(matrix, /tip-open-post-488/);
   assert.match(freeze, /tip-refresh-post-486/);
   assert.match(matrix, /tip-refresh-post-486/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-491: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34/L35 + EJ MEASURED', () => {
@@ -3981,7 +3987,7 @@ test('tip-refresh-post-491: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEV
   assert.match(matrix, /d7490fee0e419fc58602f67b0051ca06e649595a/);
   assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-491: tip-post-491 / Tip honesty post-#491 needles + pin 5e5af281 + historical tip-refresh-post-489 retained', () => {
@@ -4000,7 +4006,7 @@ test('tip-refresh-post-491: tip-post-491 / Tip honesty post-#491 needles + pin 5
   assert.match(matrix, /\|\s*EJ MEASURED\s*\|/);
   assert.match(matrix, /\|\s*Audit MEASURED · EJ MEASURED · EK–EN pending\s*\|/);
   assert.match(matrix, /\|\s*Audit MEASURED · EJ–EN pending\s*\|/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-493: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34/L35 + EK MEASURED', () => {
@@ -4027,7 +4033,7 @@ test('tip-refresh-post-493: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEV
   assert.match(matrix, /5e5af28130d3e742ae5274fab9913453317c913b/);
   assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-493: tip-post-493 / Tip honesty post-#493 needles + pin 72697dd5 + historical tip-refresh-post-491 retained', () => {
@@ -4046,7 +4052,7 @@ test('tip-refresh-post-493: tip-post-493 / Tip honesty post-#493 needles + pin 7
   assert.match(matrix, /\|\s*EJ MEASURED\s*\|/);
   assert.match(matrix, /\|\s*Audit MEASURED · EJ MEASURED · EK MEASURED · EL–EN pending\s*\|/);
   assert.match(matrix, /\|\s*Audit MEASURED · EJ MEASURED · EK–EN pending\s*\|/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-495: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34/L35 + EL MEASURED', () => {
@@ -4073,7 +4079,7 @@ test('tip-refresh-post-495: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEV
   assert.match(matrix, /72697dd506284284e5cbbe3ebf2c68cef8fbf006/);
   assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-495: tip-post-495 / Tip honesty post-#495 needles + pin 933f32ae + historical tip-refresh-post-493 retained', () => {
@@ -4093,7 +4099,7 @@ test('tip-refresh-post-495: tip-post-495 / Tip honesty post-#495 needles + pin 9
   assert.match(matrix, /\|\s*EK MEASURED\s*\|/);
   assert.match(matrix, /\|\s*Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM–EN pending\s*\|/);
   assert.match(matrix, /\|\s*Audit MEASURED · EJ MEASURED · EK MEASURED · EL–EN pending\s*\|/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-497: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34/L35 + EM MEASURED', () => {
@@ -4122,7 +4128,7 @@ test('tip-refresh-post-497: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEV
   assert.match(matrix, /933f32ae07fd3526b322cbd8ed389f66d8b298f1/);
   assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
 
 test('tip-refresh-post-497: tip-post-497 / Tip honesty post-#497 needles + pin 9fd2be07 + historical tip-refresh-post-495 retained', () => {
@@ -4145,5 +4151,66 @@ test('tip-refresh-post-497: tip-post-497 / Tip honesty post-#497 needles + pin 9
   assert.match(matrix, /\|\s*EK MEASURED\s*\|/);
   assert.match(matrix, /\|\s*Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM MEASURED · EN pending\s*\|/);
   assert.match(matrix, /\|\s*Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM–EN pending\s*\|/);
-  assert.equal(EXPECTED_TIP, '9fd2be07e192694623d2c15c0a99d2800f1ffbdb');
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
+});
+
+test('tip-refresh-post-499: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34/L35 + EN MEASURED', () => {
+  const freeze = fs.readFileSync(FREEZE, 'utf8');
+  const matrix = fs.readFileSync(MATRIX, 'utf8');
+  assert.match(freeze, /tip-refresh-post-499|tip-post-499|Tip honesty post-#499/);
+  assert.match(matrix, /tip-refresh-post-499|tip-post-499|Tip honesty post-#499/);
+  assert.match(freeze, /Formal L30 CLOSED|NEVER reopen L30/);
+  assert.match(freeze, /Formal L31 CLOSED|NEVER reopen L31/);
+  assert.match(freeze, /Formal L32 CLOSED|NEVER reopen L32/);
+  assert.match(freeze, /Formal L33 CLOSED|NEVER reopen L33/);
+  assert.match(freeze, /Formal L34 CLOSED|NEVER reopen L34/);
+  assert.match(freeze, /Formal L35 CLOSED|NEVER reopen L35/);
+  assert.match(matrix, /Formal L35 CLOSED|NEVER reopen L35|Ladder 35 CLOSED/);
+  assert.match(freeze, /L36 OPEN \(Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM MEASURED · EN MEASURED/);
+  assert.match(matrix, /L36 OPEN \(Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM MEASURED · EN MEASURED/);
+  assert.match(freeze, /L36 OPEN \(Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM MEASURED · EN pending/);
+  assert.match(matrix, /L36 OPEN \(Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM MEASURED · EN pending/);
+  assert.match(freeze, /L36 OPEN \(Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM–EN pending/);
+  assert.match(matrix, /L36 OPEN \(Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM–EN pending/);
+  assert.match(freeze, /Do NOT claim L36 CLOSED/);
+  assert.match(matrix, /Do NOT claim L36 CLOSED/);
+  assert.match(freeze, /Do NOT claim EN MEASURED/);
+  assert.match(matrix, /Do NOT claim EN MEASURED/);
+  assert.match(freeze, /Do NOT claim EM–EN MEASURED/);
+  assert.match(matrix, /Do NOT claim EM–EN MEASURED/);
+  assert.match(freeze, /tip-seal Formal L36 CLOSED is SEPARATE|tip-seal Formal L36 CLOSED SEPARATE|tip-seal SEPARATE/);
+  assert.match(matrix, /tip-seal Formal L36 CLOSED SEPARATE|tip-seal SEPARATE|tip-seal pending SEPARATE/);
+  assert.match(freeze, /9722b8123b9ce303119b4e48eb9f9b56f1207b29/);
+  assert.match(matrix, /9722b8123b9ce303119b4e48eb9f9b56f1207b29/);
+  assert.match(freeze, /9fd2be07e192694623d2c15c0a99d2800f1ffbdb/);
+  assert.match(matrix, /9fd2be07e192694623d2c15c0a99d2800f1ffbdb/);
+  assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
+  assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/);
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
+});
+
+test('tip-refresh-post-499: tip-post-499 / Tip honesty post-#499 needles + pin 9722b812 + historical tip-refresh-post-497 retained', () => {
+  const freeze = fs.readFileSync(FREEZE, 'utf8');
+  const matrix = fs.readFileSync(MATRIX, 'utf8');
+  assert.match(freeze, /tip-refresh-post-499/);
+  assert.match(matrix, /tip-refresh-post-499/);
+  assert.match(freeze, /tip-post-499|Tip honesty post-#499/);
+  assert.match(matrix, /tip-post-499|Tip honesty post-#499/);
+  assert.match(freeze, /tip-refresh-post-497/);
+  assert.match(matrix, /tip-refresh-post-497/);
+  assert.match(freeze, /tip-refresh-post-495/);
+  assert.match(matrix, /tip-refresh-post-495/);
+  assert.match(freeze, /tip-refresh-post-493/);
+  assert.match(matrix, /tip-refresh-post-493/);
+  assert.match(freeze, /tip-open-post-488/);
+  assert.match(matrix, /tip-open-post-488/);
+  assert.match(freeze, /tip-refresh-post-486/);
+  assert.match(matrix, /tip-refresh-post-486/);
+  assert.match(matrix, /\|\s*EN MEASURED\s*\|/);
+  assert.match(matrix, /\|\s*EM MEASURED\s*\|/);
+  assert.match(matrix, /\|\s*EL MEASURED\s*\|/);
+  assert.match(matrix, /\|\s*EK MEASURED\s*\|/);
+  assert.match(matrix, /\|\s*Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM MEASURED · EN MEASURED\s*\|/);
+  assert.match(matrix, /\|\s*Audit MEASURED · EJ MEASURED · EK MEASURED · EL MEASURED · EM MEASURED · EN pending\s*\|/);
+  assert.equal(EXPECTED_TIP, '9722b8123b9ce303119b4e48eb9f9b56f1207b29');
 });
