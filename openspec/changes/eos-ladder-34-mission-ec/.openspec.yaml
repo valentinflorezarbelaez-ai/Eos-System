@@ -1,0 +1,14 @@
+schema: spec-driven
+change_id: eos-ladder-34-mission-ec
+title: Mission EC Domain Event Compatibility & Evolution Gate Port (SPEC-0139)
+status: ready
+ladder: 34
+mission: EC
+spec: SPEC-0139
+adr: ADR-0116
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: 19b353d8
+never_reopen: [L30, L31, L32, L33]
+l34: OPEN (Audit MEASURED · DZ MEASURED · EA MEASURED · EB MEASURED · EC–ED pending)
