@@ -1,0 +1,14 @@
+schema: spec-driven
+change_id: eos-ladder-34-mission-eb
+title: Mission EB Dead-Letter Quarantine & Poison-Message Governance Port (SPEC-0138)
+status: ready
+ladder: 34
+mission: EB
+spec: SPEC-0138
+adr: ADR-0115
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: 037f9578
+never_reopen: [L30, L31, L32, L33]
+l34: OPEN (Audit MEASURED · DZ MEASURED · EA MEASURED · EB–ED pending)
