@@ -2,7 +2,7 @@
  * @module ladder36-seam-receipt
  * SPEC-0150 / Mission EN — Ladder 36 CI Seam-Pack Consolidation & Closeout Receipt.
  * Pure Layer-0 sha256 via node:crypto. Never seal secrets.
- * Soft-observe pin: 9fd2be07 (EM merge PR #497 / commit 9fd2be07). Tip-seal SEPARATE.
+ * Soft-observe pin: 9fd2be07 (EM merge #497). Tip-seal SEPARATE.
  * PRODUCTION_READY: NO
  */
 import { createHash } from 'node:crypto';
@@ -138,6 +138,7 @@ export function verifyLadder36SeamReceipt(receipt) {
   if (!receipt.freezeObserve || receipt.freezeObserve.readOnly !== true) return false;
   if (!receipt.freezeObserve.tipSealSeparate) return false;
   if (!receipt.freezeObserve.l36AutoCloseRefused) return false;
+  if (!receipt.freezeObserve.l35ReopenRefused) return false;
   if (!receipt.freezeObserve.schemasAtCeiling) return false;
   return true;
 }

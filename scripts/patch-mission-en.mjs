@@ -7,7 +7,7 @@
  * Satellite scripts (test:mission-ej..em) and their SLIM excludes are assumed
  * already present from EJ–EM patchers. This patcher only adds seam/pack wiring.
  *
- * CRLF-safe (Mission AH/AI/…/EI Windows lesson).
+ * CRLF-safe (Mission AH/AI/…/EM Windows lesson).
  * PRODUCTION_READY: NO
  * SPEC-0150 — do NOT tip-refresh / freeze rewrite / tip-seal L36 CLOSED from this package.
  */

@@ -118,7 +118,7 @@ export async function softObserveElBulkhead() {
   };
 }
 
-export async function softObserveEmHonesty() {
+export async function softObserveEmCapacityHonesty() {
   const r = await softImportModule('capacity-honesty-attestation-port.js');
   if (!r.observed) return { observed: false };
   const gate = await softImportModule('capacity-honesty-attestation-policy-gate.js');
@@ -134,11 +134,11 @@ export async function softObserveEmHonesty() {
 function mockIntake(overrides = {}) {
   return {
     intakeId: 'intake-en-001',
-    workClass: 'standard',
-    maxConcurrent: 10,
-    maxQueueDepth: 50,
-    observedInflight: 2,
-    observedQueued: 5,
+    workClass: 'saga-step',
+    maxConcurrent: 4,
+    maxQueueDepth: 16,
+    observedInflight: 1,
+    observedQueued: 2,
     ...overrides
   };
 }
@@ -156,9 +156,9 @@ function mockLoad(overrides = {}) {
 function mockBulkhead(overrides = {}) {
   return {
     bulkheadId: 'bulkhead-en-001',
-    poolId: 'pool-alpha',
-    capacity: 20,
-    observedOccupancy: 5,
+    poolId: 'pool-saga-worker',
+    capacity: 8,
+    observedOccupancy: 3,
     crossBulkheadTouch: false,
     ...overrides
   };
@@ -189,7 +189,7 @@ export class Ladder36SeamPort {
     const ej = await softObserveEjAdmission();
     const ek = await softObserveEkBackpressure();
     const el = await softObserveElBulkhead();
-    const em = await softObserveEmHonesty();
+    const em = await softObserveEmCapacityHonesty();
     return { ej, ek, el, em };
   }
 
@@ -245,7 +245,10 @@ export class Ladder36SeamPort {
         planId: input.planId || 'plan-l36-en-em',
         changeId: 'eos-ladder-36-mission-em',
         ritualMode: 'ACTIVE',
-        attestation
+        attestation: {
+          ...attestation,
+          subjectReceiptId: satelliteReceipts.el || attestation.subjectReceiptId
+        }
       });
       if (em.ok && em.receipt?.receiptId) {
         prefixes.push(em.receipt.receiptId.slice(0, 8));

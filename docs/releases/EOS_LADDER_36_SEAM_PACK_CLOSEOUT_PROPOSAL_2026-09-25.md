@@ -6,21 +6,21 @@
 
 ## Axis
 
-Resource Isolation, Admission Control & Backpressure Fabric (Admission Quotas → Backpressure Load-Shed → Bulkhead Isolation → Capacity Honesty Attestation → Seam-Pack).
+Capacity Honesty & Admission Fabric (Admission Control → Backpressure Load-Shed → Resource Isolation Bulkhead → Capacity Honesty Attestation → Seam-Pack).
 
 ## Satellite chain (MEASURED)
 
 | Mission | Spec | Port | Receipt |
 | --- | --- | --- | --- |
-| EJ | SPEC-0146 | Sovereign Admission Control & Work-Intake Quotas | EJ-RCPT-* |
-| EK | SPEC-0147 | Backpressure & Load-Shed Governance | EK-RCPT-* |
-| EL | SPEC-0148 | Resource Isolation / Bulkhead Boundary | EL-RCPT-* |
-| EM | SPEC-0149 | Capacity Honesty & Admission Attestation | EM-RCPT-* |
+| EJ | SPEC-0146 | Admission Control Intake | EJ-RCPT-* |
+| EK | SPEC-0147 | Backpressure Load-Shed | EK-RCPT-* |
+| EL | SPEC-0148 | Resource Isolation Bulkhead | EL-RCPT-* |
+| EM | SPEC-0149 | Capacity Honesty Attestation | EM-RCPT-* |
 | EN | SPEC-0150 | CI Seam-Pack Consolidation | EN-RCPT-* |
 
 ## Soft-observe freeze pin
 
-`9fd2be07` / `9fd2be07e192694623d2c15c0a99d2800f1ffbdb` (EM merge PR #497 / commit `9fd2be07`). **Do NOT rewrite freeze tip pins** in this package.
+`9fd2be07` / `9fd2be07e192694623d2c15c0a99d2800f1ffbdb` (EM merge #497). **Do NOT rewrite freeze tip pins** in this package.
 
 ## NON-CLAIMs
 
@@ -33,7 +33,7 @@ Resource Isolation, Admission Control & Backpressure Fabric (Admission Quotas �
 - tip-seal-in-product claim refused
 - schema-json add refused — schemas AT_CEILING 35/35
 - PASS = hermetic EJ→EK→EL→EM seam chain verified ≠ tip-seal ≠ PRODUCTION_READY ≠ Formal L36 CLOSED
-- Hermetic only — ≠ live metrics / ≠ external OS monitors
+- Hermetic only — ≠ live metrics / ≠ OS monitors / ≠ network rate limiter
 
 ## Next (SEPARATE)
 

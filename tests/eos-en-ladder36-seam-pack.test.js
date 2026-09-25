@@ -18,7 +18,7 @@ import {
   softObserveEjAdmission,
   softObserveEkBackpressure,
   softObserveElBulkhead,
-  softObserveEmHonesty,
+  softObserveEmCapacityHonesty,
   verifyLadder36SeamReceipt
 } from '../src/core/composition/ladder36-seam-port.js';
 import {
@@ -75,7 +75,7 @@ test('EN1: Soft-observe EJ/EK/EL/EM presence (true|false accepted; soft-fail saf
   const ej = await softObserveEjAdmission();
   const ek = await softObserveEkBackpressure();
   const el = await softObserveElBulkhead();
-  const em = await softObserveEmHonesty();
+  const em = await softObserveEmCapacityHonesty();
   assert.equal(typeof ej.observed, 'boolean');
   assert.equal(typeof ek.observed, 'boolean');
   assert.equal(typeof el.observed, 'boolean');
@@ -114,7 +114,7 @@ test('EN5: PRODUCTION_READY=NO across EN triad + soft-observed satellites', asyn
   const ej = await softObserveEjAdmission();
   const ek = await softObserveEkBackpressure();
   const el = await softObserveElBulkhead();
-  const em = await softObserveEmHonesty();
+  const em = await softObserveEmCapacityHonesty();
   if (ej.observed) assert.equal(ej.PRODUCTION_READY, 'NO');
   if (ek.observed) assert.equal(ek.PRODUCTION_READY, 'NO');
   if (el.observed) assert.equal(el.PRODUCTION_READY, 'NO');
@@ -196,10 +196,10 @@ test('EN8: Closeout proposal keeps L36 OPEN + NON-CLAIM + tip-seal SEPARATE + L3
   assert.ok(/\*\*NO\*\*|PRODUCTION_READY[=:].*NO/.test(doc));
   assert.ok(doc.includes('Fundacion') && (doc.includes('\u0394=0') || doc.includes('Δ=0') || doc.includes('Delta=0') || doc.includes('Δ = 0')));
   assert.ok(doc.includes('Law VI'));
-  assert.ok(/Admission|Quota/i.test(doc));
-  assert.ok(/Backpressure|Load-Shed/i.test(doc));
-  assert.ok(/Bulkhead|Isolation/i.test(doc));
-  assert.ok(/Honesty|Attestation|Capacity/i.test(doc));
+  assert.ok(/Admission|Intake|Quota/i.test(doc));
+  assert.ok(/Backpressure|Load.?Shed/i.test(doc));
+  assert.ok(/Isolation|Bulkhead/i.test(doc));
+  assert.ok(/Capacity|Honesty|Attestation/i.test(doc));
   assert.ok(doc.includes('SPEC-0146') || doc.includes('Mission EJ'));
   assert.ok(doc.includes('SPEC-0147') || doc.includes('Mission EK'));
   assert.ok(doc.includes('SPEC-0148') || doc.includes('Mission EL'));
@@ -250,7 +250,7 @@ test('EN10: ADR-0129 + evidence + OpenSpec EN change present', () => {
 test('EN11: Schemas AT_CEILING — docs/schemas JSON count held at 35/35 (host)', () => {
   const schemasDir = path.join(rootDir, 'docs', 'schemas');
   if (!fs.existsSync(schemasDir)) {
-    assert.ok(!exists('docs/schemas') || true, 'hermetic package: no schemas tree added by EN');
+    assert.ok(!exists('docs/schemas') || true, 'hermetic package: no schemas tree added by EI');
     return;
   }
   const walk = (dir) => {
@@ -267,7 +267,7 @@ test('EN11: Schemas AT_CEILING — docs/schemas JSON count held at 35/35 (host)'
 
 test('EN12: Axis + human gates preserved; tip-seal SEPARATE automation ids', () => {
   const closeout = read(CLOSEOUT_REL);
-  assert.ok(/Admission|Backpressure|Bulkhead|Capacity|Honesty|Attestation/i.test(closeout));
+  assert.ok(/Admission|Backpressure|Bulkhead|Capacity|Honesty|Attestation|Isolation/i.test(closeout));
   assert.ok(EN_SAFE_AUTOMATION_IDS.includes('A5_PRESERVE_FUNDACION_ALWAYS_DENY'));
   assert.ok(EN_SAFE_AUTOMATION_IDS.includes('A6_PRESERVE_HUMAN_PROD_GATE'));
   assert.ok(EN_SAFE_AUTOMATION_IDS.includes('A7_REFUSE_TIP_PIN_REWRITE'));
@@ -316,7 +316,7 @@ test('EN15: Closeout declares tip-seal SEPARATE; no freeze rewrite from EN; L36 
   assert.ok(!/PRODUCTION_READY\s*=\s*YES/.test(scrubbed));
 });
 
-test('EN16: Policy helpers + secrets/Fundacion/tip/L36/schema detectors', () => {
+test('EN16: Policy helpers + secrets/Fundacion/tip/L35/schema detectors', () => {
   assert.equal(claimsTipRewrite('rewrite freeze tip'), true);
   assert.equal(claimsProductionReadyFlip('PRODUCTION_READY=YES'), true);
   assert.equal(claimsL36AutoClose('auto-close ladder 36 now'), true);

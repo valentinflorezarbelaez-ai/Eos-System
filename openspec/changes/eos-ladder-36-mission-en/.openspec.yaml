@@ -1,6 +1,6 @@
 schema: spec-driven
 created: 2026-09-25
-goal: Implement Ladder 36 CI Seam-Pack Consolidation & Closeout (SPEC-0150 / Mission EN) — unify EJ–EM into fail-closed CI seam-pack. Axis Resource Isolation, Admission Control & Backpressure Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. Schemas AT_CEILING 35/35. L30–L35 CLOSED never reopen. L36 remains OPEN until SEPARATE tip-refresh + tip-seal. NON-CLAIM Seam-pack ≠ GitHub Enterprise. Soft-observe pin 9fd2be07 (EM merge PR #497 / commit 9fd2be07). No freeze/matrix tip rewrite. Tip-seal L36 CLOSED is SEPARATE after EN merge — NOT this package.
+goal: Implement Ladder 36 CI Seam-Pack Consolidation & Closeout (SPEC-0150 / Mission EN) — unify EJ–EM into fail-closed CI seam-pack. Axis Capacity Honesty & Admission Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. Schemas AT_CEILING 35/35. L30–L35 CLOSED never reopen. L36 remains OPEN until SEPARATE tip-refresh + tip-seal. NON-CLAIM Seam-pack ≠ GitHub Enterprise. Soft-observe pin 9fd2be07 (EM merge #497). No freeze/matrix tip rewrite. Tip-seal L36 CLOSED is SEPARATE after EN merge — NOT this package.
 routing: SDD
 explicit_sdd_request: true
 spec_id: SPEC-0150
@@ -10,6 +10,7 @@ affected_areas:
   - src/core/composition/ladder36-seam-port.js
   - src/core/composition/ladder36-seam-receipt.js
   - src/core/composition/ladder36-seam-policy-gate.js
+  - scripts/patch-mission-en.mjs
   - docs/releases/EOS_LADDER_36_SEAM_PACK_CLOSEOUT_PROPOSAL_2026-09-25.md
   - docs/evidence/EOS_MISSION_EN_LADDER36_SEAM_EVD_2026-09-25.md
   - docs/adrs/ADR-0129-mission-en-ladder36-seam-pack-closeout.md

@@ -6,7 +6,7 @@
 - Closeout proposal: `docs/releases/EOS_LADDER_36_SEAM_PACK_CLOSEOUT_PROPOSAL_2026-09-25.md`
 - ADR: `docs/adrs/ADR-0129-mission-en-ladder36-seam-pack-closeout.md`
 - SLIM exclude: `eos-en-ladder36-seam-pack.test.js`
-- Soft-observe pin: `9fd2be07` / `9fd2be07e192694623d2c15c0a99d2800f1ffbdb` (EM merge PR #497 / commit `9fd2be07`) — NON-CLAIM only; do NOT rewrite freeze tip pins
+- Soft-observe pin: `9fd2be07` / `9fd2be07e192694623d2c15c0a99d2800f1ffbdb` (EM merge #497) — NON-CLAIM only; do NOT rewrite freeze tip pins
 - Soft-import EJ/EK/EL/EM when present; soft-fail safe; observed true|false accepted
 - Formal L30+L31+L32+L33+L34+L35 CLOSED — NEVER reopen
 - Ladder 36 remains OPEN — Formal L36 CLOSED is tip-seal later (NOT this package)
@@ -17,4 +17,4 @@
 - Receipt prefixes: EJ-RCPT-* · EK-RCPT-* · EL-RCPT-* · EM-RCPT-* · EN-RCPT-*
 - Operation: LADDER36_SEAM_PACK_CLOSEOUT
 - changeId: eos-ladder-36-mission-en
-- Axis: Resource Isolation, Admission Control & Backpressure Fabric
+- Axis: Capacity Honesty & Admission Fabric
