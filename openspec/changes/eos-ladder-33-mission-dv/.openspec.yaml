@@ -1,0 +1,5 @@
+schema: spec-driven
+change_id: eos-ladder-33-mission-dv
+title: Mission DV Transactional Resilient Outbox Pattern Port (SPEC-0132)
+status: ready
+created: 2026-09-25

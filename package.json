@@ -407,7 +407,9 @@
     "test:mission-dt": "node --test tests/eos-ladder32-seam-pack.test.js",
     "test:ladder32-pack": "npm run test:mission-dp && npm run test:mission-dq && npm run test:mission-dr && npm run test:mission-ds && npm run test:ladder32-seam",
     "test:mission-du": "node --test tests/eos-du-domain-event-publisher-port.test.js",
-    "test:domain-event-publisher": "node --test tests/eos-du-domain-event-publisher-port.test.js"
+    "test:domain-event-publisher": "node --test tests/eos-du-domain-event-publisher-port.test.js",
+    "test:mission-dv": "node --test tests/eos-dv-transactional-outbox-port.test.js",
+    "test:transactional-outbox": "node --test tests/eos-dv-transactional-outbox-port.test.js"
   },
   "keywords": [
     "eos",
