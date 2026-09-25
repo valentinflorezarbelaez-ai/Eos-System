@@ -247,6 +247,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ladder32-seam-pack.test.js',
 
   'eos-du-domain-event-publisher-port.test.js',
+
+  'eos-dv-transactional-outbox-port.test.js',
 ]);
 
 /**
