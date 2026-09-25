@@ -279,6 +279,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ej-admission-control-intake.test.js',
 
   'eos-ek-backpressure-load-shed.test.js',
+
+  'eos-el-resource-isolation-bulkhead.test.js',
 ]);
 
 /**

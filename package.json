@@ -442,7 +442,9 @@
     "test:mission-ej": "node --test tests/eos-ej-admission-control-intake.test.js",
     "test:admission-control-intake": "node --test tests/eos-ej-admission-control-intake.test.js",
     "test:mission-ek": "node --test tests/eos-ek-backpressure-load-shed.test.js",
-    "test:backpressure-load-shed": "node --test tests/eos-ek-backpressure-load-shed.test.js"
+    "test:backpressure-load-shed": "node --test tests/eos-ek-backpressure-load-shed.test.js",
+    "test:mission-el": "node --test tests/eos-el-resource-isolation-bulkhead.test.js",
+    "test:resource-isolation-bulkhead": "node --test tests/eos-el-resource-isolation-bulkhead.test.js"
   },
   "keywords": [
     "eos",
