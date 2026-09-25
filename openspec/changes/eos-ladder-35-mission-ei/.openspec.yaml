@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-25
+goal: Implement Ladder 35 CI Seam-Pack Consolidation & Closeout (SPEC-0145 / Mission EI) — unify EE–EH into fail-closed CI seam-pack. Axis Temporal Honesty & Deadline Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. Schemas AT_CEILING. L30–L34 CLOSED never reopen. L35 remains OPEN until SEPARATE tip-refresh + tip-seal. NON-CLAIM Seam-pack ≠ GitHub Enterprise. Soft-observe pin bdd53e30 (tip-refresh-post-482 / PR #483). No freeze/matrix tip rewrite. Tip-seal L35 CLOSED is SEPARATE after EI merge — NOT this package.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0145
+phase: 1
+affected_areas:
+  - tests/eos-ei-ladder35-seam-pack.test.js
+  - src/core/composition/ladder35-seam-port.js
+  - src/core/composition/ladder35-seam-receipt.js
+  - src/core/composition/ladder35-seam-policy-gate.js
+  - scripts/patch-mission-ei.mjs
+  - docs/releases/EOS_LADDER_35_SEAM_PACK_CLOSEOUT_PROPOSAL_2026-09-25.md
+  - docs/evidence/EOS_MISSION_EI_LADDER35_SEAM_EVD_2026-09-25.md
+  - docs/adrs/ADR-0123-mission-ei-ladder35-seam-pack-closeout.md
+  - openspec/changes/eos-ladder-35-mission-ei
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - overwriting EE/EF/EG/EH product ports
+  - GitHub Enterprise enforcement claims
+  - CloudAgent path
+  - reopening L30–L34
+  - tip-refresh / freeze-matrix rewrite / tip-seal L35 CLOSED (SEPARATE after merge)
+  - Formal L35 CLOSED claim in product PR
+  - schema-json add (AT_CEILING)
+  - soft-allow soak / continue-on-error
+  - live timers / cron / OS scheduler

@@ -273,6 +273,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-eg-process-timeout-compensation-port.test.js',
 
   'eos-eh-temporal-honesty-attestation-port.test.js',
+
+  'eos-ei-ladder35-seam-pack.test.js',
 ]);
 
 /**

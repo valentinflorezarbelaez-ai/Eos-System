@@ -435,7 +435,10 @@
     "test:mission-eg": "node --test tests/eos-eg-process-timeout-compensation-port.test.js",
     "test:process-timeout-compensation": "node --test tests/eos-eg-process-timeout-compensation-port.test.js",
     "test:mission-eh": "node --test tests/eos-eh-temporal-honesty-attestation-port.test.js",
-    "test:temporal-honesty-attestation": "node --test tests/eos-eh-temporal-honesty-attestation-port.test.js"
+    "test:temporal-honesty-attestation": "node --test tests/eos-eh-temporal-honesty-attestation-port.test.js",
+    "test:ladder35-seam": "node --test tests/eos-ei-ladder35-seam-pack.test.js",
+    "test:mission-ei": "node --test tests/eos-ei-ladder35-seam-pack.test.js",
+    "test:ladder35-pack": "npm run test:mission-ee && npm run test:mission-ef && npm run test:mission-eg && npm run test:mission-eh && npm run test:ladder35-seam"
   },
   "keywords": [
     "eos",
