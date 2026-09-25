@@ -440,7 +440,9 @@
     "test:mission-ei": "node --test tests/eos-ei-ladder35-seam-pack.test.js",
     "test:ladder35-pack": "npm run test:mission-ee && npm run test:mission-ef && npm run test:mission-eg && npm run test:mission-eh && npm run test:ladder35-seam",
     "test:mission-ej": "node --test tests/eos-ej-admission-control-intake.test.js",
-    "test:admission-control-intake": "node --test tests/eos-ej-admission-control-intake.test.js"
+    "test:admission-control-intake": "node --test tests/eos-ej-admission-control-intake.test.js",
+    "test:mission-ek": "node --test tests/eos-ek-backpressure-load-shed.test.js",
+    "test:backpressure-load-shed": "node --test tests/eos-ek-backpressure-load-shed.test.js"
   },
   "keywords": [
     "eos",
