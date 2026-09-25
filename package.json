@@ -409,7 +409,9 @@
     "test:mission-du": "node --test tests/eos-du-domain-event-publisher-port.test.js",
     "test:domain-event-publisher": "node --test tests/eos-du-domain-event-publisher-port.test.js",
     "test:mission-dv": "node --test tests/eos-dv-transactional-outbox-port.test.js",
-    "test:transactional-outbox": "node --test tests/eos-dv-transactional-outbox-port.test.js"
+    "test:transactional-outbox": "node --test tests/eos-dv-transactional-outbox-port.test.js",
+    "test:mission-dw": "node --test tests/eos-dw-idempotent-message-consumer-port.test.js",
+    "test:idempotent-message-consumer": "node --test tests/eos-dw-idempotent-message-consumer-port.test.js"
   },
   "keywords": [
     "eos",

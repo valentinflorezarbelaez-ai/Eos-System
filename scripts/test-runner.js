@@ -249,6 +249,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-du-domain-event-publisher-port.test.js',
 
   'eos-dv-transactional-outbox-port.test.js',
+
+  'eos-dw-idempotent-message-consumer-port.test.js',
 ]);
 
 /**
