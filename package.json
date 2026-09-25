@@ -453,7 +453,9 @@
     "test:mission-eo": "node --test tests/eos-eo-feature-flag-runtime-toggle.test.js",
     "test:feature-flag-runtime-toggle": "node --test tests/eos-eo-feature-flag-runtime-toggle.test.js",
     "test:mission-ep": "node --test tests/eos-ep-policy-pack-binding.test.js",
-    "test:policy-pack-binding": "node --test tests/eos-ep-policy-pack-binding.test.js"
+    "test:policy-pack-binding": "node --test tests/eos-ep-policy-pack-binding.test.js",
+    "test:mission-eq": "node --test tests/eos-eq-config-staged-activation.test.js",
+    "test:config-staged-activation": "node --test tests/eos-eq-config-staged-activation.test.js"
   },
   "keywords": [
     "eos",
