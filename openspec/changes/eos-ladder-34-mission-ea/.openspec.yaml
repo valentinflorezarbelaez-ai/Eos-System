@@ -1,0 +1,14 @@
+schema: spec-driven
+change_id: eos-ladder-34-mission-ea
+title: Mission EA CQRS Read-Model Projection Port (SPEC-0137)
+status: ready
+ladder: 34
+mission: EA
+spec: SPEC-0137
+adr: ADR-0114
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: 1f2234cf
+never_reopen: [L30, L31, L32, L33]
+l34: OPEN (Audit MEASURED · DZ MEASURED · EA–ED pending)

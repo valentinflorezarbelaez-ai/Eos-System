@@ -257,6 +257,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ladder33-seam-pack.test.js',
 
   'eos-dz-process-manager-saga-port.test.js',
+
+  'eos-ea-cqrs-read-model-projection-port.test.js',
 ]);
 
 /**

@@ -418,7 +418,9 @@
     "test:mission-dy": "node --test tests/eos-ladder33-seam-pack.test.js",
     "test:ladder33-pack": "npm run test:mission-du && npm run test:mission-dv && npm run test:mission-dw && npm run test:mission-dx && npm run test:ladder33-seam",
     "test:mission-dz": "node --test tests/eos-dz-process-manager-saga-port.test.js",
-    "test:process-manager-saga": "node --test tests/eos-dz-process-manager-saga-port.test.js"
+    "test:process-manager-saga": "node --test tests/eos-dz-process-manager-saga-port.test.js",
+    "test:mission-ea": "node --test tests/eos-ea-cqrs-read-model-projection-port.test.js",
+    "test:cqrs-read-model-projection": "node --test tests/eos-ea-cqrs-read-model-projection-port.test.js"
   },
   "keywords": [
     "eos",
