@@ -21,7 +21,7 @@ const FULL_SHA = /^[0-9a-f]{40}$/;
 /** HIST tip-seal-post-410 was main@2f52ee5e / 2f52ee5e752f5ab035b1fa29e1b7287f0ff3e1dc (prior freeze tip 4d8c6c594fba94fc0c975dd7c13fb7d183a8aade tip-refresh post-#407 / L29 OPEN (Audit MEASURED · DA MEASURED · DB MEASURED · DC MEASURED · DD–DE pending then); tip-refresh #408 @ 0a6dbe65; DD #409 @ d57b6ddb; tip-refresh post-#409 superseded by DE landing before apply; #410 Merge pull request #410 Mission DE (SPEC-0114) Ladder 29 seam-pack closeout; tip honesty restored; Formal Ladder 29 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DA+DB+DC+DD+DE MEASURED + seam-pack + closeout; Sovereign Observability & Evidence Economy Fabric); Formal L28 CLOSED retained; L17-L29 CLOSED retained; NEVER reopen L24; NEVER reopen L25; NEVER reopen L26; NEVER reopen L27; NEVER reopen L28; NEVER reopen L29; Do NOT start next ladder satellites unless separately audited; Do NOT claim PRODUCTION_READY; historical tip-409/407/405/403/tip-open-401 needles OK) */
 /** Tip refresh post-#450 pinned tip: main@d667c6b5 / d667c6b578d5c1b5ff9995101272e86dd039f5be (prior freeze tip b485ae0b2472ef8b6f7213fde82fc3ed05ead33d tip-refresh-post-447 / tip-post-447 / Tip honesty post-#447 then; tip-refresh-post-450 / tip-post-450 / Tip honesty post-#450; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; L33 OPEN (Audit + DU + DV + DW MEASURED · DX–DY pending); NEVER reopen L17–L32; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; Do NOT claim DX–DY MEASURED; Do NOT claim L33 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-447 / tip-refresh-post-445 / tip-refresh-post-442 / tip-honesty-l30-l33 / tip-refresh-415 / tip-open-413 needles OK) */
 /** Tip refresh post-#452 pinned tip: main@fe52fb3b / fe52fb3bbfa23aaedcca3efdaa53e1c16722a823 (prior freeze tip d667c6b578d5c1b5ff9995101272e86dd039f5be tip-refresh-post-450 / tip-post-450 / Tip honesty post-#450 then; tip-refresh-post-452 / tip-post-452 / Tip honesty post-#452; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; L33 OPEN (Audit + DU + DV + DW + DX MEASURED · DY pending); NEVER reopen L17–L32; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; Do NOT claim DY MEASURED; Do NOT claim L33 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-450 / tip-refresh-post-447 / tip-refresh-post-445 / tip-refresh-post-442 / tip-honesty-l30-l33 / tip-refresh-415 / tip-open-413 needles OK) */
-/** Tip refresh post-#454 pinned tip: main@446bbe49 / 446bbe49f2fbf9e83604faf16e50b36b70cdb216 (prior fe52fb3bbfa23aaedcca3efdaa53e1c16722a823 tip-refresh-post-452; L33 OPEN (Audit + DU + DV + DW + DX + DY MEASURED · tip-seal pending); Tip-seal SEPARATE; historical tip-refresh-post-452 needles OK) */
+/** Tip seal post-#455 pinned tip: main@446bbe49 / 446bbe49f2fbf9e83604faf16e50b36b70cdb216 (prior fe52fb3bbfa23aaedcca3efdaa53e1c16722a823 tip-refresh-post-452; tip-refresh-post-454 / L33 OPEN (Audit + DU + DV + DW + DX + DY MEASURED · tip-seal pending) then; Formal Ladder 33 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric); Formal L30+L31+L32 CLOSED retained; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-454 / tip-refresh-post-452 needles OK) */
 const EXPECTED_TIP = '446bbe49f2fbf9e83604faf16e50b36b70cdb216';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
@@ -29,7 +29,7 @@ test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-454 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-seal-post-455 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -46,7 +46,7 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
   assert.equal(evalTip, tip, 'evaluated_tip must equal freeze main_tip after tip refresh');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-454 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-seal-post-455 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -725,6 +725,18 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'tip-refresh-post-445',
     'tip-refresh-post-447',
     'tip-refresh-post-450',
+    'tip-seal-post-455',
+    'tip-seal L33',
+    'Tip seal post #455',
+    'Tip seal post-#455',
+    'Formal L33 CLOSED',
+    'Ladder 33 CLOSED',
+    'L33 CLOSED',
+    'NEVER reopen L33',
+    'Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout',
+    'Mission DY',
+    'DY MEASURED',
+    'Mission DY MEASURED',
     'tip-refresh-post-454',
     'tip-post-454',
     'Tip honesty post-#454',
@@ -1995,9 +2007,7 @@ test('tip-honesty-l30-l33: L33 OPEN (Audit MEASURED · DU–DY pending)', () => 
   assert.match(freeze, /Do NOT claim DU–DY MEASURED/);
   assert.match(matrix, /Do NOT claim DU–DY MEASURED/);
   assert.match(freeze, /Do NOT claim L33 CLOSED/);
-  assert.match(matrix, /Do NOT claim L33 CLOSED/);
-  assert.doesNotMatch(freeze, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
-  assert.doesNotMatch(matrix, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
+  assert.match(matrix, /Do NOT claim L33 CLOSED/);
 });
 
 test('tip-honesty-l30-l33: tip-seal / tip-open / tip-honesty needles + complexity prune dirty-defer', () => {
@@ -2048,9 +2058,7 @@ test('tip-refresh-post-442: L33 OPEN (Audit MEASURED · DU–DY pending) retaine
   assert.match(freeze, /Do NOT claim PRODUCTION_READY/);
   assert.match(matrix, /Do NOT claim PRODUCTION_READY/);
   assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.doesNotMatch(freeze, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
-  assert.doesNotMatch(matrix, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
+  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
 });
 
 test('tip-refresh-post-442: tip-post-442 / Tip honesty post-#442 needles + pin b205ce8c + historical tip-honesty retained', () => {
@@ -2103,9 +2111,7 @@ test('tip-refresh-post-445: L33 OPEN (Audit + DU MEASURED · DV–DY pending)', 
   assert.match(freeze, /Do NOT claim PRODUCTION_READY/);
   assert.match(matrix, /Do NOT claim PRODUCTION_READY/);
   assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.doesNotMatch(freeze, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
-  assert.doesNotMatch(matrix, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
+  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   // Historical tip-refresh-post-442 / tip-honesty L33 status needle retained
   assert.match(freeze, /L33 OPEN \(Audit MEASURED · DU–DY pending/);
   assert.match(matrix, /L33 OPEN \(Audit MEASURED · DU–DY pending/);
@@ -2163,9 +2169,7 @@ test('tip-refresh-post-447: L33 OPEN (Audit + DU + DV MEASURED · DW–DY pendin
   assert.match(freeze, /Do NOT claim PRODUCTION_READY/);
   assert.match(matrix, /Do NOT claim PRODUCTION_READY/);
   assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.doesNotMatch(freeze, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
-  assert.doesNotMatch(matrix, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
+  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   // Historical tip-refresh-post-445 L33 status needle retained
   assert.match(freeze, /L33 OPEN \(Audit \+ DU MEASURED · DV–DY pending/);
   assert.match(matrix, /L33 OPEN \(Audit \+ DU MEASURED · DV–DY pending/);
@@ -2228,9 +2232,7 @@ test('tip-refresh-post-450: L33 OPEN (Audit + DU + DV + DW MEASURED · DX–DY p
   assert.match(freeze, /Do NOT claim PRODUCTION_READY/);
   assert.match(matrix, /Do NOT claim PRODUCTION_READY/);
   assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.doesNotMatch(freeze, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
-  assert.doesNotMatch(matrix, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
+  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   // Historical tip-refresh-post-447 L33 status needle retained
   assert.match(freeze, /L33 OPEN \(Audit \+ DU \+ DV MEASURED · DW–DY pending/);
   assert.match(matrix, /L33 OPEN \(Audit \+ DU \+ DV MEASURED · DW–DY pending/);
@@ -2298,9 +2300,7 @@ test('tip-refresh-post-452: L33 OPEN (Audit + DU + DV + DW + DX MEASURED · DY p
   assert.match(freeze, /Do NOT claim PRODUCTION_READY/);
   assert.match(matrix, /Do NOT claim PRODUCTION_READY/);
   assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.doesNotMatch(freeze, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
-  assert.doesNotMatch(matrix, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
+  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   // Historical tip-refresh-post-450 L33 status needle retained
   assert.match(freeze, /L33 OPEN \(Audit \+ DU \+ DV \+ DW MEASURED · DX–DY pending/);
   assert.match(matrix, /L33 OPEN \(Audit \+ DU \+ DV \+ DW MEASURED · DX–DY pending/);
@@ -2370,9 +2370,7 @@ test('tip-refresh-post-454: L33 OPEN (Audit + DU + DV + DW + DX + DY MEASURED ·
   assert.match(freeze, /Do NOT claim PRODUCTION_READY/);
   assert.match(matrix, /Do NOT claim PRODUCTION_READY/);
   assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
-  assert.doesNotMatch(freeze, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
-  assert.doesNotMatch(matrix, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE/);
+  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   assert.match(freeze, /L33 OPEN \(Audit \+ DU \+ DV \+ DW \+ DX MEASURED · DY pending/);
   assert.match(matrix, /L33 OPEN \(Audit \+ DU \+ DV \+ DW \+ DX MEASURED · DY pending/);
   assert.match(freeze, /L33 OPEN \(Audit \+ DU \+ DV \+ DW MEASURED · DX–DY pending/);
@@ -2411,4 +2409,77 @@ test('tip-refresh-post-454: tip-post-454 / Tip honesty post-#454 needles + pin 4
   assert.match(freeze, /446bbe49f2fbf9e83604faf16e50b36b70cdb216/);
   assert.match(matrix, /446bbe49f2fbf9e83604faf16e50b36b70cdb216/);
   assert.match(freeze, /fe52fb3bbfa23aaedcca3efdaa53e1c16722a823|fe52fb3b/);
+});
+
+
+test('tip-seal-post-455: Formal L30+L31+L32 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
+  const freeze = fs.readFileSync(FREEZE, 'utf8');
+  const matrix = fs.readFileSync(MATRIX, 'utf8');
+  assert.match(freeze, /tip-seal-post-455|tip-seal L33|Tip seal post-#455|Tip seal post #455/);
+  assert.match(matrix, /tip-seal-post-455|tip-seal L33|Tip seal post-#455|Tip seal post #455/);
+  assert.match(freeze, /L30 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; DF–DJ MEASURED/);
+  assert.match(matrix, /L30 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; DF–DJ MEASURED|\|\s*L30 CLOSED\s*\|/);
+  assert.match(freeze, /L31 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; DK–DO MEASURED/);
+  assert.match(matrix, /L31 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; DK–DO MEASURED|\|\s*L31 CLOSED\s*\|/);
+  assert.match(freeze, /L32 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; DP–DT MEASURED/);
+  assert.match(matrix, /L32 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; DP–DT MEASURED|\|\s*L32 CLOSED\s*\|/);
+  assert.match(freeze, /NEVER reopen L30|never reopen L30/);
+  assert.match(matrix, /NEVER reopen L30|never reopen L30/);
+  assert.match(freeze, /NEVER reopen L31|never reopen L31/);
+  assert.match(matrix, /NEVER reopen L31|never reopen L31/);
+  assert.match(freeze, /NEVER reopen L32|never reopen L32/);
+  assert.match(matrix, /NEVER reopen L32|never reopen L32/);
+  assert.match(freeze, /NEVER reopen L33|never reopen L33/);
+  assert.match(matrix, /NEVER reopen L33|never reopen L33/);
+});
+
+test('tip-seal-post-455: Formal L33 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout)', () => {
+  const freeze = fs.readFileSync(FREEZE, 'utf8');
+  const matrix = fs.readFileSync(MATRIX, 'utf8');
+  assert.match(freeze, /Ladder 33 is \*\*CLOSED\*\*|L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; Audit \+ DU \+ DV \+ DW \+ DX \+ DY MEASURED/);
+  assert.match(matrix, /Ladder 33 CLOSED|L33 CLOSED/);
+  assert.match(freeze, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; Audit \+ DU \+ DV \+ DW \+ DX \+ DY MEASURED \+ seam-pack \+ closeout/);
+  assert.match(matrix, /L33 CLOSED \(CLOSED_FOR_LOCAL_GOVERNED_USE; Audit \+ DU \+ DV \+ DW \+ DX \+ DY MEASURED \+ seam-pack \+ closeout|\|\s*L33 CLOSED\s*\|/);
+  assert.match(freeze, /Audit \+ DU \+ DV \+ DW \+ DX \+ DY MEASURED \+ seam-pack \+ closeout/);
+  assert.match(matrix, /Audit \+ DU \+ DV \+ DW \+ DX \+ DY MEASURED \+ seam-pack \+ closeout/);
+  assert.match(freeze, /Formal L33 CLOSED|Formal Ladder 33 CLOSED/);
+  assert.match(matrix, /Formal L33 CLOSED|Ladder 33 CLOSED/);
+  assert.match(freeze, /Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric/);
+  assert.match(matrix, /Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric/);
+  assert.match(freeze, /DY MEASURED/);
+  assert.match(matrix, /DY MEASURED/);
+  assert.match(freeze, /Mission DY/);
+  assert.match(matrix, /Mission DY/);
+  // Historical OPEN statuses retained (incl. tip-refresh-post-454)
+  assert.match(freeze, /L33 OPEN \(Audit \+ DU \+ DV \+ DW \+ DX \+ DY MEASURED · tip-seal pending/);
+  assert.match(matrix, /L33 OPEN \(Audit \+ DU \+ DV \+ DW \+ DX \+ DY MEASURED · tip-seal pending/);
+  assert.match(freeze, /L33 OPEN \(Audit \+ DU \+ DV \+ DW \+ DX MEASURED · DY pending/);
+  assert.match(matrix, /L33 OPEN \(Audit \+ DU \+ DV \+ DW \+ DX MEASURED · DY pending/);
+  assert.match(freeze, /L33 OPEN \(Audit MEASURED · DU–DY pending/);
+  assert.match(matrix, /L33 OPEN \(Audit MEASURED · DU–DY pending/);
+  assert.match(freeze, /Do NOT claim L33 CLOSED/); // historical
+  assert.match(matrix, /Do NOT claim L33 CLOSED/);
+});
+
+test('tip-seal-post-455: NON-CLAIM PRODUCTION_READY + tip-seal needles + pin 446bbe49 retained', () => {
+  const freeze = fs.readFileSync(FREEZE, 'utf8');
+  const matrix = fs.readFileSync(MATRIX, 'utf8');
+  assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
+  assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
+  assert.match(freeze, /Do NOT claim PRODUCTION_READY/);
+  assert.match(matrix, /Do NOT claim PRODUCTION_READY/);
+  assert.match(freeze, /CLOSED_FOR_LOCAL_GOVERNED_USE ≠ PRODUCTION_READY=YES|CLOSED_FOR_LOCAL_GOVERNED_USE != PRODUCTION_READY/);
+  assert.match(freeze, /tip-seal-post-455/);
+  assert.match(matrix, /tip-seal-post-455/);
+  assert.match(freeze, /tip-seal L33|Tip seal post-#455|Tip seal post #455|Formal L33 CLOSED/);
+  assert.match(matrix, /\|\s*Tip seal post #455\s*\||\|\s*tip-seal-post-455\s*\||\|\s*Formal L33 CLOSED\s*\||\|\s*Ladder 33 CLOSED\s*\||\|\s*L33 CLOSED\s*\|/);
+  assert.match(matrix, /\|\s*NEVER reopen L33\s*\|/);
+  assert.match(matrix, /\|\s*Mission DY\s*\|/);
+  assert.match(matrix, /\|\s*DY MEASURED\s*\|/);
+  assert.match(freeze, /446bbe49f2fbf9e83604faf16e50b36b70cdb216/);
+  assert.match(matrix, /446bbe49f2fbf9e83604faf16e50b36b70cdb216/);
+  assert.match(freeze, /tip-refresh-post-454/);
+  assert.match(matrix, /tip-refresh-post-454/);
+  assert.match(freeze, /Fundacion Δ=0|Fundacion Delta=0/);
+  assert.match(matrix, /Fundacion Delta=0|Fundacion Δ=0/);
 });
