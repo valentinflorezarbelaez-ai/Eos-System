@@ -289,6 +289,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-eo-feature-flag-runtime-toggle.test.js',
 
   'eos-ep-policy-pack-binding.test.js',
+
+  'eos-eq-config-staged-activation.test.js',
 ]);
 
 /**
