@@ -444,7 +444,9 @@
     "test:mission-ek": "node --test tests/eos-ek-backpressure-load-shed.test.js",
     "test:backpressure-load-shed": "node --test tests/eos-ek-backpressure-load-shed.test.js",
     "test:mission-el": "node --test tests/eos-el-resource-isolation-bulkhead.test.js",
-    "test:resource-isolation-bulkhead": "node --test tests/eos-el-resource-isolation-bulkhead.test.js"
+    "test:resource-isolation-bulkhead": "node --test tests/eos-el-resource-isolation-bulkhead.test.js",
+    "test:mission-em": "node --test tests/eos-em-capacity-honesty-attestation.test.js",
+    "test:capacity-honesty-attestation": "node --test tests/eos-em-capacity-honesty-attestation.test.js"
   },
   "keywords": [
     "eos",
