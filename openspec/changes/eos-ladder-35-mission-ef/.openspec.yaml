@@ -1,0 +1,14 @@
+schema: spec-driven
+change_id: eos-ladder-35-mission-ef
+title: Mission EF Schedule Wake & Deferred Trigger Port (SPEC-0142)
+status: ready
+ladder: 35
+mission: EF
+spec: SPEC-0142
+adr: ADR-0120
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: 0a286ad8
+never_reopen: [L30, L31, L32, L33, L34]
+l35: OPEN (Audit MEASURED · EE MEASURED · EF–EI pending)
