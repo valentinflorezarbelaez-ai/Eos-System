@@ -416,7 +416,9 @@
     "test:circuit-breaker": "node --test tests/eos-dx-circuit-breaker-port.test.js",
     "test:ladder33-seam": "node --test tests/eos-ladder33-seam-pack.test.js",
     "test:mission-dy": "node --test tests/eos-ladder33-seam-pack.test.js",
-    "test:ladder33-pack": "npm run test:mission-du && npm run test:mission-dv && npm run test:mission-dw && npm run test:mission-dx && npm run test:ladder33-seam"
+    "test:ladder33-pack": "npm run test:mission-du && npm run test:mission-dv && npm run test:mission-dw && npm run test:mission-dx && npm run test:ladder33-seam",
+    "test:mission-dz": "node --test tests/eos-dz-process-manager-saga-port.test.js",
+    "test:process-manager-saga": "node --test tests/eos-dz-process-manager-saga-port.test.js"
   },
   "keywords": [
     "eos",

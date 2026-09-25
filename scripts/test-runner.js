@@ -255,6 +255,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-dx-circuit-breaker-port.test.js',
 
   'eos-ladder33-seam-pack.test.js',
+
+  'eos-dz-process-manager-saga-port.test.js',
 ]);
 
 /**

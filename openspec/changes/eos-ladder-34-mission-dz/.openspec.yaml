@@ -1,0 +1,14 @@
+schema: spec-driven
+change_id: eos-ladder-34-mission-dz
+title: Mission DZ Sovereign Process Manager / Saga Orchestration Port (SPEC-0136)
+status: ready
+ladder: 34
+mission: DZ
+spec: SPEC-0136
+adr: ADR-0113
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: b382d29b
+never_reopen: [L30, L31, L32, L33]
+l34: OPEN (Audit MEASURED · DZ–ED pending)
