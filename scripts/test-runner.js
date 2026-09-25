@@ -261,6 +261,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ea-cqrs-read-model-projection-port.test.js',
 
   'eos-eb-dead-letter-quarantine-port.test.js',
+
+  'eos-ec-domain-event-compatibility-port.test.js',
 ]);
 
 /**

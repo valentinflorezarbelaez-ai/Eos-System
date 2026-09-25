@@ -422,7 +422,9 @@
     "test:mission-ea": "node --test tests/eos-ea-cqrs-read-model-projection-port.test.js",
     "test:cqrs-read-model-projection": "node --test tests/eos-ea-cqrs-read-model-projection-port.test.js",
     "test:mission-eb": "node --test tests/eos-eb-dead-letter-quarantine-port.test.js",
-    "test:dead-letter-quarantine": "node --test tests/eos-eb-dead-letter-quarantine-port.test.js"
+    "test:dead-letter-quarantine": "node --test tests/eos-eb-dead-letter-quarantine-port.test.js",
+    "test:mission-ec": "node --test tests/eos-ec-domain-event-compatibility-port.test.js",
+    "test:domain-event-compatibility": "node --test tests/eos-ec-domain-event-compatibility-port.test.js"
   },
   "keywords": [
     "eos",
