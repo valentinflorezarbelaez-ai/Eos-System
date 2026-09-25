@@ -1,0 +1,14 @@
+schema: spec-driven
+change_id: eos-ladder-35-mission-ee
+title: Mission EE Temporal Deadline & TTL Governance Port (SPEC-0141)
+status: ready
+ladder: 35
+mission: EE
+spec: SPEC-0141
+adr: ADR-0119
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: 9600063c
+never_reopen: [L30, L31, L32, L33, L34]
+l35: OPEN (Audit MEASURED · EE–EI pending)

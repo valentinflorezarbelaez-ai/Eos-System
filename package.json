@@ -427,7 +427,9 @@
     "test:domain-event-compatibility": "node --test tests/eos-ec-domain-event-compatibility-port.test.js",
     "test:ladder34-seam": "node --test tests/eos-ed-ladder34-seam-pack.test.js",
     "test:mission-ed": "node --test tests/eos-ed-ladder34-seam-pack.test.js",
-    "test:ladder34-pack": "npm run test:mission-dz && npm run test:mission-ea && npm run test:mission-eb && npm run test:mission-ec && npm run test:ladder34-seam"
+    "test:ladder34-pack": "npm run test:mission-dz && npm run test:mission-ea && npm run test:mission-eb && npm run test:mission-ec && npm run test:ladder34-seam",
+    "test:mission-ee": "node --test tests/eos-ee-temporal-deadline-ttl-port.test.js",
+    "test:temporal-deadline-ttl": "node --test tests/eos-ee-temporal-deadline-ttl-port.test.js"
   },
   "keywords": [
     "eos",
