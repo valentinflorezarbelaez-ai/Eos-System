@@ -241,23 +241,23 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-450 / tip-post-450 / Tip honesty post-#450 to PR #450 Mission DW merge tip = mission-dw-idempotent-message-consumer-port (prior freeze tip b485ae0b2472ef8b6f7213fde82fc3ed05ead33d; tip-refresh-post-447 / tip-post-447 / Tip honesty post-#447 then; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; L33 OPEN (Audit + DU + DV + DW MEASURED · DX–DY pending); NEVER reopen L17–L32; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; Do NOT claim DX–DY MEASURED; Do NOT claim L33 CLOSED; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete) — dirty-defer retained)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-452 / tip-post-452 / Tip honesty post-#452 to PR #452 Mission DX merge tip = mission-dx-circuit-breaker-port (prior freeze tip d667c6b578d5c1b5ff9995101272e86dd039f5be; tip-refresh-post-450 / tip-post-450 / Tip honesty post-#450 then; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; L33 OPEN (Audit + DU + DV + DW + DX MEASURED · DY pending); NEVER reopen L17–L32; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; Do NOT claim DY MEASURED; Do NOT claim L33 CLOSED; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete) — dirty-defer retained)
 
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== 'd667c6b578d5c1b5ff9995101272e86dd039f5be') {
+      if (!tip || tip[1] !== 'fe52fb3bbfa23aaedcca3efdaa53e1c16722a823') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-450 expected main_tip=d667c6b578d5c1b5ff9995101272e86dd039f5be (tip-post-450 / Tip honesty post-#450 / Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; L33 OPEN (Audit + DU + DV + DW MEASURED · DX–DY pending); NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; Do NOT claim DX–DY MEASURED; Do NOT claim L33 CLOSED; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete))',
+            'tip-refresh-post-452 expected main_tip=fe52fb3bbfa23aaedcca3efdaa53e1c16722a823 (tip-post-452 / Tip honesty post-#452 / Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; L33 OPEN (Audit + DU + DV + DW + DX MEASURED · DY pending); NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; Do NOT claim DY MEASURED; Do NOT claim L33 CLOSED; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete))',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-450 / tip-post-450 / Tip honesty post-#450 / main@d667c6b5 (Formal L30+L31+L32 CLOSED retained; L33 OPEN Audit + DU + DV + DW MEASURED · DX–DY pending; NEVER reopen L30/L31/L32)',
+          path: 'freeze main_tip pinned to tip-refresh-post-452 / tip-post-452 / Tip honesty post-#452 / main@fe52fb3b (Formal L30+L31+L32 CLOSED retained; L33 OPEN Audit + DU + DV + DW + DX MEASURED · DY pending; NEVER reopen L30/L31/L32)',
           status: 'VERIFIED',
           type
         });
