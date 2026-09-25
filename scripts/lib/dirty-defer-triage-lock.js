@@ -241,23 +241,23 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-seal-post-455 / tip-seal L33 CLOSED / Tip seal post-#455 / Formal L33 CLOSED to PR #454 Mission DY merge tip = mission-dy-ladder33-seam (prior freeze tip fe52fb3bbfa23aaedcca3efdaa53e1c16722a823; tip-refresh-post-454 / tip-post-454 / Tip honesty post-#454 then; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; Formal L33 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout); NEVER reopen L17–L32; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete) — dirty-defer retained)
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-456 / tip-post-456 / Tip honesty post-#456 to tip-seal #456 merge tip = tip/seal-post-455-l33-closed (prior freeze tip 446bbe49f2fbf9e83604faf16e50b36b70cdb216; tip-seal-post-455 / tip-seal L33 CLOSED / Tip seal post-#455 / Formal L33 CLOSED then; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; Formal L33 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout); NEVER reopen L17–L32; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete) — dirty-defer retained)
 
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '446bbe49f2fbf9e83604faf16e50b36b70cdb216') {
+      if (!tip || tip[1] !== '2b23f50454f2e8541f90a39aae7e6d067d320502') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-seal-post-455 expected main_tip=446bbe49f2fbf9e83604faf16e50b36b70cdb216 (tip-seal L33 / Tip seal post-#455 / Formal L33 CLOSED (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric); Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete))',
+            'tip-refresh-post-456 expected main_tip=2b23f50454f2e8541f90a39aae7e6d067d320502 (tip-refresh-post-456 / tip-post-456 / Tip honesty post-#456 / Formal L33 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric); tip-seal-post-455 sealed baseline; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete))',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-seal-post-455 / tip-seal L33 / Tip seal post-#455 / Formal L33 CLOSED / main@446bbe49 (Formal L30+L31+L32 CLOSED retained; Formal L33 CLOSED CLOSED_FOR_LOCAL_GOVERNED_USE Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; NEVER reopen L30/L31/L32/L33)',
+          path: 'freeze main_tip pinned to tip-refresh-post-456 / tip-post-456 / Tip honesty post-#456 / Formal L33 CLOSED retained / main@2b23f504 (Formal L30+L31+L32 CLOSED retained; Formal L33 CLOSED retained CLOSED_FOR_LOCAL_GOVERNED_USE Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; tip-seal-post-455 sealed baseline; NEVER reopen L30/L31/L32/L33)',
           status: 'VERIFIED',
           type
         });
