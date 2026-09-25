@@ -1,0 +1,14 @@
+schema: spec-driven
+change_id: eos-ladder-36-mission-ek
+title: Mission EK Backpressure & Load-Shed Governance Port (SPEC-0147)
+status: ready
+ladder: 36
+mission: EK
+spec: SPEC-0147
+adr: ADR-0126
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: 5e5af281
+never_reopen: [L30, L31, L32, L33, L34, L35]
+l36: OPEN (Audit MEASURED · EJ MEASURED · EK this satellite · EL–EN pending)
