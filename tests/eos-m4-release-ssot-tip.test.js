@@ -37,15 +37,16 @@ const FULL_SHA = /^[0-9a-f]{40}$/;
 /** HIST tip-refresh-post-459 pinned tip: main@b382d29b / b382d29bee2494f21652f9207170d900c7179f4c (prior eb6134a42d6bff20bdbdd0c0a91297f808b2fe77 tip-open-post-458 / tip-open L34 / Tip open post-#458 / L34 OPEN (Audit MEASURED · DZ–ED pending; Sovereign Process Orchestration, CQRS Projection & Dead-Letter Governance Fabric); Formal L30+L31+L32+L33 CLOSED retained; NEVER reopen L33; Do NOT claim DZ–ED MEASURED; Do NOT claim L34 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-open-post-458 / tip-refresh-post-456 / tip-seal-post-455 needles OK) */
 /** HIST tip-open-post-458 pinned tip: main@eb6134a4 / eb6134a42d6bff20bdbdd0c0a91297f808b2fe77 (prior freeze tip 2b23f50454f2e8541f90a39aae7e6d067d320502 tip-refresh-post-456 / tip-post-456 / Tip honesty post-#456 / Formal Ladder 33 CLOSED retained; #458 Merge pull request #458 Ladder 34 Maturity Gap Audit; tip honesty restored; L34 OPEN (Audit MEASURED · DZ–ED pending; Sovereign Process Orchestration, CQRS Projection & Dead-Letter Governance Fabric); Formal L30+L31+L32+L33 CLOSED retained; NEVER reopen L33; Do NOT claim DZ–ED MEASURED; Do NOT claim L34 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-456 / tip-seal-post-455 needles OK) */
 /** HIST tip-refresh-post-456 was main@2b23f504 / 2b23f50454f2e8541f90a39aae7e6d067d320502 (prior 446bbe49f2fbf9e83604faf16e50b36b70cdb216 tip-seal-post-455 / tip-seal L33 CLOSED / Formal Ladder 33 CLOSED; Formal Ladder 33 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric); Formal L30+L31+L32 CLOSED retained; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; historical tip-seal-post-455 / tip-refresh-post-454 / tip-refresh-post-452 needles OK) */
-/** Tip-open post-#488 pinned tip: main@73276cba / 73276cbab1e750fc69f3aaf71353e12d517e00ed (prior freeze tip 0903b037d29393bce5cdf7c3b23933d9613a192a tip-refresh-post-486 / tip-post-486 / Tip honesty post-#486 / Formal Ladder 35 CLOSED retained; #488 Merge pull request #488 Ladder 36 Maturity Gap Audit; tip honesty restored; L36 OPEN (Audit MEASURED · EJ–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; Do NOT claim EJ–EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-486 / tip-seal-post-485 needles OK) */
-const EXPECTED_TIP = '73276cbab1e750fc69f3aaf71353e12d517e00ed';
+/** Tip-refresh post-#489 pinned tip: main@d7490fee / d7490fee0e419fc58602f67b0051ca06e649595a (prior 73276cbab1e750fc69f3aaf71353e12d517e00ed tip-open-post-488 / tip-open L36 / Tip open post-#488 / L36 OPEN (Audit MEASURED · EJ–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; Do NOT claim EJ–EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-open-post-488 / tip-refresh-post-486 / tip-seal-post-485 needles OK) */
+/** HIST tip-open-post-488 pinned tip: main@73276cba / 73276cbab1e750fc69f3aaf71353e12d517e00ed (prior freeze tip 0903b037d29393bce5cdf7c3b23933d9613a192a tip-refresh-post-486 / tip-post-486 / Tip honesty post-#486 / Formal Ladder 35 CLOSED retained; #488 Merge pull request #488 Ladder 36 Maturity Gap Audit; tip honesty restored; L36 OPEN (Audit MEASURED · EJ–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L35; Do NOT claim EJ–EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; historical tip-refresh-post-486 / tip-seal-post-485 needles OK) */
+const EXPECTED_TIP = 'd7490fee0e419fc58602f67b0051ca06e649595a';
 
 test('M4/tip: freeze gate main_tip matches OBSERVED full-SHA pattern', () => {
   const text = fs.readFileSync(FREEZE, 'utf8');
   const m = text.match(TIP_LINE);
   assert.ok(m, 'freeze gate must declare main_tip: <40-hex> in header fence');
   assert.match(m[1], FULL_SHA);
-  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-open-post-488 pinned tip');
+  assert.equal(m[1], EXPECTED_TIP, 'freeze main_tip must equal tip-refresh-post-489 pinned tip');
   assert.match(text, /^dictamen:\s*COMPLETE_FOR_LOCAL_GOVERNED_USE\b/m);
   assert.match(text, /^PRODUCTION_READY:\s*NO\b/m);
   // Stale unmerged ROI narration must not remain as current header hygiene claim
@@ -61,8 +62,8 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
   const evalTip = matrix.match(EVAL_TIP)?.[1];
   assert.ok(tip, 'freeze main_tip missing');
   assert.ok(evalTip, 'matrix evaluated_tip missing');
-  assert.equal(evalTip, tip, 'evaluated_tip must equal tip-open-post-488 pinned tip');
-  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-open-post-488 pinned tip');
+  assert.equal(evalTip, tip, 'evaluated_tip must equal tip-refresh-post-489 pinned tip');
+  assert.equal(evalTip, EXPECTED_TIP, 'evaluated_tip must equal tip-refresh-post-489 pinned tip');
   assert.match(matrix, /PRODUCTION_READY:\s*NO/);
   assert.match(matrix, /COMPLETE_FOR_LOCAL_GOVERNED_USE/);
   // Evidence rows for closed surfaces (fail-closed presence checks)
@@ -741,6 +742,9 @@ test('M4/tip: capability matrix evaluated_tip equals freeze main_tip (SSOT)', ()
     'tip-refresh-post-445',
     'tip-refresh-post-447',
     'tip-refresh-post-450',
+    'tip-refresh-post-489',
+    'tip-post-489',
+    'Tip honesty post-#489',
     'tip-open-post-488',
     'tip-open L36',
     'Tip open post-#488',
@@ -2758,7 +2762,7 @@ test('tip-refresh-post-459: tip-post-459 / Tip honesty post-#459 needles + pin b
   assert.match(matrix, /1f2234cffdecd7e0810d7271c5e92adc9f8c75f3/);
   assert.match(freeze, /037f95786724936aecf48bf3684b4dd5dc37e815/);
   assert.match(matrix, /037f95786724936aecf48bf3684b4dd5dc37e815/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed'); // current tip-refresh-post-484 pin; historical b382d29b retained in freeze/matrix
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a'); // current tip-refresh-post-484 pin; historical b382d29b retained in freeze/matrix
 });
 
 test('tip-refresh-post-461: Formal L30+L31+L32+L33 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
@@ -2816,7 +2820,7 @@ test('tip-refresh-post-461: tip-post-461 / Tip honesty post-#461 needles + pin 1
   assert.match(matrix, /tip-open-post-458/);
   assert.match(freeze, /tip-refresh-post-456/);
   assert.match(matrix, /tip-refresh-post-456/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-refresh-post-463: Formal L30+L31+L32+L33 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
@@ -2876,7 +2880,7 @@ test('tip-refresh-post-463: tip-post-463 / Tip honesty post-#463 needles + pin 0
   assert.match(matrix, /tip-open-post-458/);
   assert.match(freeze, /tip-refresh-post-456/);
   assert.match(matrix, /tip-refresh-post-456/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-refresh-post-465: Formal L30+L31+L32+L33 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
@@ -2943,7 +2947,7 @@ test('tip-refresh-post-465: tip-post-465 / Tip honesty post-#465 needles + pin 1
   assert.match(matrix, /tip-open-post-458/);
   assert.match(freeze, /tip-refresh-post-456/);
   assert.match(matrix, /tip-refresh-post-456/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-refresh-post-467: Formal L30+L31+L32+L33 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
@@ -3008,7 +3012,7 @@ test('tip-refresh-post-467: tip-post-467 / Tip honesty post-#467 needles + pin 2
   assert.match(matrix, /tip-open-post-458/);
   assert.match(freeze, /tip-refresh-post-456/);
   assert.match(matrix, /tip-refresh-post-456/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-refresh-post-469: Formal L30+L31+L32+L33 CLOSED retained + NEVER reopen L30/L31/L32/L33', () => {
@@ -3075,7 +3079,7 @@ test('tip-refresh-post-469: tip-post-469 / Tip honesty post-#469 needles + pin b
   assert.match(matrix, /tip-open-post-458/);
   assert.match(freeze, /tip-refresh-post-456/);
   assert.match(matrix, /tip-refresh-post-456/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 
@@ -3217,7 +3221,7 @@ test('tip-refresh-post-471: tip-post-471 / Tip honesty post-#471 needles + pin 1
   assert.match(matrix, /Complexity prune deferred PO-gated \(inventory≠delete\)|inventory≠delete/);
   assert.match(freeze, /Fundacion Δ=0|Fundacion Delta=0/);
   assert.match(matrix, /Fundacion Delta=0|Fundacion Δ=0/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-open-post-473: L35 OPEN honesty needles', () => {
@@ -3266,7 +3270,7 @@ test('tip-open-post-473: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reop
   assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/);
   assert.doesNotMatch(matrix, /PRODUCTION_READY:\s*YES/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 
@@ -3304,7 +3308,7 @@ test('tip-refresh-post-474: tip-post-474 / Tip honesty post-#474 needles + pin 9
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-refresh-post-476: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34', () => {
@@ -3369,7 +3373,7 @@ test('tip-refresh-post-476: tip-post-476 / Tip honesty post-#476 needles + pin 0
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-refresh-post-478: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34', () => {
@@ -3436,7 +3440,7 @@ test('tip-refresh-post-478: tip-post-478 / Tip honesty post-#478 needles + pin 7
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-refresh-post-480: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34', () => {
@@ -3513,7 +3517,7 @@ test('tip-refresh-post-480: tip-post-480 / Tip honesty post-#480 needles + pin f
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-refresh-post-482: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34', () => {
@@ -3600,7 +3604,7 @@ test('tip-refresh-post-482: tip-post-482 / Tip honesty post-#482 needles + pin b
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-refresh-post-484: Formal L30+L31+L32+L33+L34 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34', () => {
@@ -3697,7 +3701,7 @@ test('tip-refresh-post-484: tip-post-484 / Tip honesty post-#484 needles + pin 0
   assert.match(matrix, /tip-open-post-473/);
   assert.match(freeze, /tip-refresh-post-471/);
   assert.match(matrix, /tip-refresh-post-471/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 
@@ -3847,7 +3851,7 @@ test('tip-refresh-post-486: tip-post-486 / Tip honesty post-#486 needles + pin 0
   assert.match(matrix, /Complexity prune deferred PO-gated \(inventory≠delete\)|inventory≠delete/);
   assert.match(freeze, /Fundacion Δ=0|Fundacion Delta=0/);
   assert.match(matrix, /Fundacion Delta=0|Fundacion Δ=0/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
 
 test('tip-open-post-488: L36 OPEN honesty needles', () => {
@@ -3898,5 +3902,41 @@ test('tip-open-post-488: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEVER 
   assert.match(matrix, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
   assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/);
   assert.doesNotMatch(matrix, /PRODUCTION_READY:\s*YES/);
-  assert.equal(EXPECTED_TIP, '73276cbab1e750fc69f3aaf71353e12d517e00ed');
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
+});
+
+test('tip-refresh-post-489: Formal L30+L31+L32+L33+L34+L35 CLOSED retained + NEVER reopen L30/L31/L32/L33/L34/L35', () => {
+  const freeze = fs.readFileSync(FREEZE, 'utf8');
+  const matrix = fs.readFileSync(MATRIX, 'utf8');
+  assert.match(freeze, /tip-refresh-post-489|tip-post-489|Tip honesty post-#489/);
+  assert.match(matrix, /tip-refresh-post-489|tip-post-489|Tip honesty post-#489/);
+  assert.match(freeze, /Formal L30 CLOSED|NEVER reopen L30/);
+  assert.match(freeze, /Formal L31 CLOSED|NEVER reopen L31/);
+  assert.match(freeze, /Formal L32 CLOSED|NEVER reopen L32/);
+  assert.match(freeze, /Formal L33 CLOSED|NEVER reopen L33/);
+  assert.match(freeze, /Formal L34 CLOSED|NEVER reopen L34/);
+  assert.match(freeze, /Formal L35 CLOSED|NEVER reopen L35/);
+  assert.match(matrix, /Formal L35 CLOSED|NEVER reopen L35|Ladder 35 CLOSED/);
+  assert.match(freeze, /L36 OPEN \(Audit MEASURED · EJ–EN pending/);
+  assert.match(matrix, /L36 OPEN \(Audit MEASURED · EJ–EN pending/);
+  assert.match(freeze, /d7490fee0e419fc58602f67b0051ca06e649595a/);
+  assert.match(matrix, /d7490fee0e419fc58602f67b0051ca06e649595a/);
+  assert.match(freeze, /73276cbab1e750fc69f3aaf71353e12d517e00ed/);
+  assert.match(matrix, /73276cbab1e750fc69f3aaf71353e12d517e00ed/);
+  assert.match(freeze, /PRODUCTION_READY:\s*NO|PRODUCTION_READY=NO/);
+  assert.doesNotMatch(freeze, /PRODUCTION_READY:\s*YES/);
+});
+
+test('tip-refresh-post-489: tip-post-489 / Tip honesty post-#489 needles + pin d7490fee + historical tip-open-post-488 retained', () => {
+  const freeze = fs.readFileSync(FREEZE, 'utf8');
+  const matrix = fs.readFileSync(MATRIX, 'utf8');
+  assert.match(freeze, /tip-refresh-post-489/);
+  assert.match(matrix, /tip-refresh-post-489/);
+  assert.match(freeze, /tip-post-489|Tip honesty post-#489/);
+  assert.match(matrix, /tip-post-489|Tip honesty post-#489/);
+  assert.match(freeze, /tip-open-post-488/);
+  assert.match(matrix, /tip-open-post-488/);
+  assert.match(freeze, /tip-refresh-post-486/);
+  assert.match(matrix, /tip-refresh-post-486/);
+  assert.equal(EXPECTED_TIP, 'd7490fee0e419fc58602f67b0051ca06e649595a');
 });
