@@ -244,7 +244,9 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-dq-property-fuzzing-port.test.js',
   'eos-dr-execution-loop-controller-port.test.js',
   'eos-ds-data-contract-notary-port.test.js',
-  'eos-ladder32-seam-pack.test.js'
+  'eos-ladder32-seam-pack.test.js',
+
+  'eos-du-domain-event-publisher-port.test.js',
 ]);
 
 /**

@@ -130,6 +130,7 @@
     "test:v4": "node --test tests/eos-v4-fdir-sentinel-adversarial.test.js",
     "test:v5": "node --test tests/eos-v5-builder-verifier-custody.test.js",
     "test:mission-b": "node --test tests/eos-mission-b-sensor-mutation-fortify.test.js",
+    "test:du": "node --test tests/eos-du-domain-event-publisher.test.js",
     "test:compute-worker": "node --test tests/runners/eos-compute-worker.test.js tests/runners/eos-compute-worker-fuzz.test.js tests/runners/eos-compute-worker-adversarial.test.js tests/runners/eos-compute-worker-mission-d.test.js",
     "test:c2": "node --test tests/eos-mission-c2-ci-compute-worker.test.js",
     "test:mcp-router": "node --test tests/mcp-capability-router.test.js",
@@ -404,7 +405,9 @@
     "test:data-contract-notary": "node --test tests/eos-ds-data-contract-notary-port.test.js",
     "test:ladder32-seam": "node --test tests/eos-ladder32-seam-pack.test.js",
     "test:mission-dt": "node --test tests/eos-ladder32-seam-pack.test.js",
-    "test:ladder32-pack": "npm run test:mission-dp && npm run test:mission-dq && npm run test:mission-dr && npm run test:mission-ds && npm run test:ladder32-seam"
+    "test:ladder32-pack": "npm run test:mission-dp && npm run test:mission-dq && npm run test:mission-dr && npm run test:mission-ds && npm run test:ladder32-seam",
+    "test:mission-du": "node --test tests/eos-du-domain-event-publisher-port.test.js",
+    "test:domain-event-publisher": "node --test tests/eos-du-domain-event-publisher-port.test.js"
   },
   "keywords": [
     "eos",
