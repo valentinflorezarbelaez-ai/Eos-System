@@ -431,7 +431,9 @@
     "test:mission-ee": "node --test tests/eos-ee-temporal-deadline-ttl-port.test.js",
     "test:temporal-deadline-ttl": "node --test tests/eos-ee-temporal-deadline-ttl-port.test.js",
     "test:mission-ef": "node --test tests/eos-ef-schedule-wake-deferred-port.test.js",
-    "test:schedule-wake-deferred": "node --test tests/eos-ef-schedule-wake-deferred-port.test.js"
+    "test:schedule-wake-deferred": "node --test tests/eos-ef-schedule-wake-deferred-port.test.js",
+    "test:mission-eg": "node --test tests/eos-eg-process-timeout-compensation-port.test.js",
+    "test:process-timeout-compensation": "node --test tests/eos-eg-process-timeout-compensation-port.test.js"
   },
   "keywords": [
     "eos",
