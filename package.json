@@ -446,7 +446,10 @@
     "test:mission-el": "node --test tests/eos-el-resource-isolation-bulkhead.test.js",
     "test:resource-isolation-bulkhead": "node --test tests/eos-el-resource-isolation-bulkhead.test.js",
     "test:mission-em": "node --test tests/eos-em-capacity-honesty-attestation.test.js",
-    "test:capacity-honesty-attestation": "node --test tests/eos-em-capacity-honesty-attestation.test.js"
+    "test:capacity-honesty-attestation": "node --test tests/eos-em-capacity-honesty-attestation.test.js",
+    "test:ladder36-seam": "node --test tests/eos-en-ladder36-seam-pack.test.js",
+    "test:mission-en": "node --test tests/eos-en-ladder36-seam-pack.test.js",
+    "test:ladder36-pack": "npm run test:mission-ej && npm run test:mission-ek && npm run test:mission-el && npm run test:mission-em && npm run test:ladder36-seam"
   },
   "keywords": [
     "eos",
