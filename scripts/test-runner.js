@@ -271,6 +271,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ef-schedule-wake-deferred-port.test.js',
 
   'eos-eg-process-timeout-compensation-port.test.js',
+
+  'eos-eh-temporal-honesty-attestation-port.test.js',
 ]);
 
 /**
