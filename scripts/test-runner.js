@@ -265,6 +265,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ec-domain-event-compatibility-port.test.js',
 
   'eos-ed-ladder34-seam-pack.test.js',
+
+  'eos-ee-temporal-deadline-ttl-port.test.js',
 ]);
 
 /**
