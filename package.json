@@ -420,7 +420,9 @@
     "test:mission-dz": "node --test tests/eos-dz-process-manager-saga-port.test.js",
     "test:process-manager-saga": "node --test tests/eos-dz-process-manager-saga-port.test.js",
     "test:mission-ea": "node --test tests/eos-ea-cqrs-read-model-projection-port.test.js",
-    "test:cqrs-read-model-projection": "node --test tests/eos-ea-cqrs-read-model-projection-port.test.js"
+    "test:cqrs-read-model-projection": "node --test tests/eos-ea-cqrs-read-model-projection-port.test.js",
+    "test:mission-eb": "node --test tests/eos-eb-dead-letter-quarantine-port.test.js",
+    "test:dead-letter-quarantine": "node --test tests/eos-eb-dead-letter-quarantine-port.test.js"
   },
   "keywords": [
     "eos",

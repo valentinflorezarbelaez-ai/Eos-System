@@ -259,6 +259,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-dz-process-manager-saga-port.test.js',
 
   'eos-ea-cqrs-read-model-projection-port.test.js',
+
+  'eos-eb-dead-letter-quarantine-port.test.js',
 ]);
 
 /**
