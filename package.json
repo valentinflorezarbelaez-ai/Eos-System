@@ -451,7 +451,9 @@
     "test:mission-en": "node --test tests/eos-en-ladder36-seam-pack.test.js",
     "test:ladder36-pack": "npm run test:mission-ej && npm run test:mission-ek && npm run test:mission-el && npm run test:mission-em && npm run test:ladder36-seam",
     "test:mission-eo": "node --test tests/eos-eo-feature-flag-runtime-toggle.test.js",
-    "test:feature-flag-runtime-toggle": "node --test tests/eos-eo-feature-flag-runtime-toggle.test.js"
+    "test:feature-flag-runtime-toggle": "node --test tests/eos-eo-feature-flag-runtime-toggle.test.js",
+    "test:mission-ep": "node --test tests/eos-ep-policy-pack-binding.test.js",
+    "test:policy-pack-binding": "node --test tests/eos-ep-policy-pack-binding.test.js"
   },
   "keywords": [
     "eos",

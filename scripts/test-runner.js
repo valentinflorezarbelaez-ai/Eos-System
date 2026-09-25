@@ -287,6 +287,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-en-ladder36-seam-pack.test.js',
 
   'eos-eo-feature-flag-runtime-toggle.test.js',
+
+  'eos-ep-policy-pack-binding.test.js',
 ]);
 
 /**
