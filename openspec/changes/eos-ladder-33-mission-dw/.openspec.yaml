@@ -1,0 +1,5 @@
+schema: spec-driven
+change_id: eos-ladder-33-mission-dw
+title: Mission DW Autonomous Idempotent Message Consumer Port (SPEC-0133)
+status: ready
+created: 2026-09-25
