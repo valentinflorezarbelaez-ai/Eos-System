@@ -283,6 +283,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-el-resource-isolation-bulkhead.test.js',
 
   'eos-em-capacity-honesty-attestation.test.js',
+
+  'eos-en-ladder36-seam-pack.test.js',
 ]);
 
 /**
