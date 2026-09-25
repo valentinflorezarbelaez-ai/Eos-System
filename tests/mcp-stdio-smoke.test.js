@@ -45,11 +45,11 @@ test('MCP-03: tools/call eos.context.compile compiles context cleanly', async ()
   assert.ok(res.receipt.sha256);
 });
 
-test('MCP-04: Provider tools remain honestly NOT_CONFIGURED (no fake wiring)', async () => {
+test('MCP-04: Provider tools fail closed without credentials (NO_CREDENTIALS)', async () => {
   const server = new EosMcpServer();
   const res = await server.handleToolCall('eos.provider.route', { prompt: 'x' });
 
-  assert.equal(res.status, 'NOT_CONFIGURED');
+  assert.equal(res.status, 'NO_CREDENTIALS');
   assert.equal(res.executed, false);
   assert.equal(res.sideEffects, 'NONE');
 });

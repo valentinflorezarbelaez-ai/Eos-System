@@ -1,0 +1,17 @@
+id: eos-ladder-30-mission-dj
+name: "Mission DJ: Ladder 30 CI Seam-Pack Consolidation & Closeout"
+version: 0.1.0
+status: in-progress
+created: 2026-09-24
+authors:
+  - "EOS Sovereign System"
+dependencies:
+  - eos-ladder-30-mission-di
+spec_files:
+  - specs/mission-dj-ladder-30-seam-pack/spec.md
+tags:
+  - ladder-30
+  - seam-pack
+  - consolidation
+  - closeout
+  - governance

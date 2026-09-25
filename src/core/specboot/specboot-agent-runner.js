@@ -25,6 +25,7 @@ import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { sealEvd } from '../sdd/evd-seal-path.js';
+import { MutationTestingHarness } from '../sdd/mutation-testing-harness.js';
 
 /** @type {'NO'} */
 export const SPECBOOT_AGENT_RUNNER_PRODUCTION_READY = 'NO';
@@ -46,7 +47,8 @@ export const SPECBOOT_CODES = Object.freeze({
   SPECBOOT_VERIFY_REQUIRES_EVIDENCE: 'SPECBOOT_VERIFY_REQUIRES_EVIDENCE',
   SPECBOOT_PHASE_DENIED: 'SPECBOOT_PHASE_DENIED',
   SPECBOOT_DEPENDENCY: 'SPECBOOT_DEPENDENCY',
-  SPECBOOT_ARCHIVE_DENIED: 'SPECBOOT_ARCHIVE_DENIED'
+  SPECBOOT_ARCHIVE_DENIED: 'SPECBOOT_ARCHIVE_DENIED',
+  SPECBOOT_MUTATION_AUDIT_FAILED: 'SPECBOOT_MUTATION_AUDIT_FAILED'
 });
 
 /**
@@ -543,6 +545,28 @@ export function createSpecbootAgentRunner(opts = {}) {
         );
       }
       verified.push({ id: r.id, sha256: r.sha256 || recomputed, ok: true });
+    }
+
+    // Mutation Audit (S14): mathematically validate test resilience on target files
+    const targetFiles = Array.isArray(ctx.targetFiles) ? ctx.targetFiles : [];
+    if (targetFiles.length > 0 || ctx.mutationAudit === true) {
+      const harness = new MutationTestingHarness({
+        worktreePath: ctx.worktreePath || rootDir
+      });
+      for (const tf of targetFiles) {
+        const fullP = path.resolve(ctx.worktreePath || rootDir, tf);
+        if (fs.existsSync(fullP)) {
+          const report = harness.evaluateResilience(tf, ctx.testCommand);
+          if (report.survivedMutants > 0) {
+            lastFault = SPECBOOT_CODES.SPECBOOT_MUTATION_AUDIT_FAILED;
+            statusLabel = 'FAILED';
+            throw new SpecbootAgentRunnerError(
+              `SPECBOOT_MUTATION_AUDIT_FAILED: ${report.survivedMutants} mutant(s) survived in ${tf} (score: ${report.mutationScore}%): ${JSON.stringify(report.survivors)}`,
+              SPECBOOT_CODES.SPECBOOT_MUTATION_AUDIT_FAILED
+            );
+          }
+        }
+      }
     }
 
     return {

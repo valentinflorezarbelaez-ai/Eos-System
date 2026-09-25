@@ -226,6 +226,25 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-df-complexity-inventory-remeasure-port.test.js',
 
   'eos-dg-po-l2-named-path-disposition-port.test.js',
+
+  'eos-dh-quarantine-execution-port.test.js',
+
+  'eos-di-post-disposition-integrity-hold-port.test.js',
+
+  'mutation-audit-integration.test.js',
+  'eos-dk-specboot-mutation-gatekeeper-port.test.js',
+  'eos-dl-adversarial-invariant-refuter-port.test.js',
+  'eos-dm-hexagonal-boundary-isolation-port.test.js',
+  'eos-dn-sovereign-epistemic-ledger-port.test.js',
+
+  'eos-rp-real-provider-execution.test.js',
+  'eos-ladder30-seam-pack.test.js',
+  'eos-ladder31-seam-pack.test.js',
+  'eos-dp-vertical-slice-port.test.js',
+  'eos-dq-property-fuzzing-port.test.js',
+  'eos-dr-execution-loop-controller-port.test.js',
+  'eos-ds-data-contract-notary-port.test.js',
+  'eos-ladder32-seam-pack.test.js'
 ]);
 
 /**
