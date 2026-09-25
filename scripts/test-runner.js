@@ -275,6 +275,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-eh-temporal-honesty-attestation-port.test.js',
 
   'eos-ei-ladder35-seam-pack.test.js',
+
+  'eos-ej-admission-control-intake.test.js',
 ]);
 
 /**
