@@ -253,6 +253,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-dw-idempotent-message-consumer-port.test.js',
 
   'eos-dx-circuit-breaker-port.test.js',
+
+  'eos-ladder33-seam-pack.test.js',
 ]);
 
 /**
