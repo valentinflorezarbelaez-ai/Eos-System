@@ -449,7 +449,9 @@
     "test:capacity-honesty-attestation": "node --test tests/eos-em-capacity-honesty-attestation.test.js",
     "test:ladder36-seam": "node --test tests/eos-en-ladder36-seam-pack.test.js",
     "test:mission-en": "node --test tests/eos-en-ladder36-seam-pack.test.js",
-    "test:ladder36-pack": "npm run test:mission-ej && npm run test:mission-ek && npm run test:mission-el && npm run test:mission-em && npm run test:ladder36-seam"
+    "test:ladder36-pack": "npm run test:mission-ej && npm run test:mission-ek && npm run test:mission-el && npm run test:mission-em && npm run test:ladder36-seam",
+    "test:mission-eo": "node --test tests/eos-eo-feature-flag-runtime-toggle.test.js",
+    "test:feature-flag-runtime-toggle": "node --test tests/eos-eo-feature-flag-runtime-toggle.test.js"
   },
   "keywords": [
     "eos",
