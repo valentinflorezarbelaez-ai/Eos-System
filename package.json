@@ -455,7 +455,9 @@
     "test:mission-ep": "node --test tests/eos-ep-policy-pack-binding.test.js",
     "test:policy-pack-binding": "node --test tests/eos-ep-policy-pack-binding.test.js",
     "test:mission-eq": "node --test tests/eos-eq-config-staged-activation.test.js",
-    "test:config-staged-activation": "node --test tests/eos-eq-config-staged-activation.test.js"
+    "test:config-staged-activation": "node --test tests/eos-eq-config-staged-activation.test.js",
+    "test:mission-er": "node --test tests/eos-er-config-honesty-attestation.test.js",
+    "test:config-honesty-attestation": "node --test tests/eos-er-config-honesty-attestation.test.js"
   },
   "keywords": [
     "eos",
