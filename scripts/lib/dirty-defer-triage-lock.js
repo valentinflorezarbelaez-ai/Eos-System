@@ -241,23 +241,23 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-489 / tip-post-489 / Tip honesty post-#489 to tip-open #489 merge tip (prior freeze tip 73276cbab1e750fc69f3aaf71353e12d517e00ed; tip-open-post-488 / tip-open L36 / Tip open post-#488 / L36 OPEN (Audit MEASURED · EJ–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; Formal L33 CLOSED retained; Formal L34 CLOSED retained; Formal L35 CLOSED retained; NEVER reopen L17–L35; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; NEVER reopen L34; NEVER reopen L35; Do NOT claim EJ–EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete) — dirty-defer retained)))
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-491 / tip-post-491 / Tip honesty post-#491 to Mission EJ #491 merge tip (prior freeze tip d7490fee0e419fc58602f67b0051ca06e649595a; tip-refresh-post-489 / tip-post-489 / Tip honesty post-#489 / L36 OPEN (Audit MEASURED · EJ–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric) then; prior tip was tip-open #489 / tip-refresh-post-489 merge tip (prior freeze tip 73276cbab1e750fc69f3aaf71353e12d517e00ed; tip-open-post-488 / tip-open L36 / Tip open post-#488 / L36 OPEN (Audit MEASURED · EJ–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric); Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; Formal L33 CLOSED retained; Formal L34 CLOSED retained; Formal L35 CLOSED retained; NEVER reopen L17–L35; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; NEVER reopen L34; NEVER reopen L35; Do NOT claim EJ–EN MEASURED; Do NOT claim L36 CLOSED; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete) — dirty-defer retained)))
 
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== 'd7490fee0e419fc58602f67b0051ca06e649595a') {
+      if (!tip || tip[1] !== '5e5af28130d3e742ae5274fab9913453317c913b') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-489 expected main_tip=d7490fee0e419fc58602f67b0051ca06e649595a (tip-refresh-post-456 / tip-post-456 / Tip honesty post-#456 / Formal L33 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric); tip-seal-post-455 sealed baseline; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete))',
+            'tip-refresh-post-491 expected main_tip=5e5af28130d3e742ae5274fab9913453317c913b (tip-refresh-post-456 / tip-post-456 / Tip honesty post-#456 / Formal L33 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric); tip-seal-post-455 sealed baseline; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete))',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-489 / tip-post-489 / Tip honesty post-#489 / L36 OPEN (Audit MEASURED · EJ–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric) / Formal L35 CLOSED retained / main@d7490fee (Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L30/L31/L32/L33/L34/L35; prior tip-open-post-488 tip-open baseline @ 73276cba)',
+          path: 'freeze main_tip pinned to tip-refresh-post-491 / tip-post-491 / Tip honesty post-#491 / L36 OPEN (Audit MEASURED · EJ MEASURED · EK–EN pending; Sovereign Resource Isolation, Admission Control & Backpressure Governance Fabric) / Formal L35 CLOSED retained / main@5e5af281 (Formal L30+L31+L32+L33+L34+L35 CLOSED retained; NEVER reopen L30/L31/L32/L33/L34/L35; prior tip-open-post-488 tip-open baseline @ 73276cba)',
           status: 'VERIFIED',
           type
         });
