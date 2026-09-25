@@ -411,7 +411,9 @@
     "test:mission-dv": "node --test tests/eos-dv-transactional-outbox-port.test.js",
     "test:transactional-outbox": "node --test tests/eos-dv-transactional-outbox-port.test.js",
     "test:mission-dw": "node --test tests/eos-dw-idempotent-message-consumer-port.test.js",
-    "test:idempotent-message-consumer": "node --test tests/eos-dw-idempotent-message-consumer-port.test.js"
+    "test:idempotent-message-consumer": "node --test tests/eos-dw-idempotent-message-consumer-port.test.js",
+    "test:mission-dx": "node --test tests/eos-dx-circuit-breaker-port.test.js",
+    "test:circuit-breaker": "node --test tests/eos-dx-circuit-breaker-port.test.js"
   },
   "keywords": [
     "eos",
