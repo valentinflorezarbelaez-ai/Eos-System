@@ -263,6 +263,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-eb-dead-letter-quarantine-port.test.js',
 
   'eos-ec-domain-event-compatibility-port.test.js',
+
+  'eos-ed-ladder34-seam-pack.test.js',
 ]);
 
 /**
