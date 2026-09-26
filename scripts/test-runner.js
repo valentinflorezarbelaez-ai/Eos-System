@@ -293,6 +293,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-eq-config-staged-activation.test.js',
 
   'eos-er-config-honesty-attestation.test.js',
+
+  'eos-es-ladder37-seam-pack.test.js',
 ]);
 
 /**

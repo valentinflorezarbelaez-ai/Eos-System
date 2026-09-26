@@ -1,0 +1,3 @@
+# Proposal — Mission ES / SPEC-0155
+
+Ladder 37 seam-pack consolidation + closeout satellite. Unify EO/EP/EQ/ER into fail-closed `test:ladder37-seam` / `test:ladder37-pack` / `test:mission-es` with ES-RCPT-* seal. Ladder 37 remains OPEN — tip-seal SEPARATE after ES merge + tip-refresh. PRODUCTION_READY=NO. Fundacion Δ=0. Schemas AT_CEILING 35/35. Never reopen L30–L36. Soft-import satellites when present (observed true|false). NON-CLAIM: Seam-pack ≠ GHE; tip-seal L37 CLOSED ≠ this package; Formal L37 CLOSED ≠ this package. Soft-observe pin `22289f5d`. Distinct from EN L36 seam and EI L35 seam.
