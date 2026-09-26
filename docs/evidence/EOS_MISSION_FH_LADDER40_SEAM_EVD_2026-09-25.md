@@ -1,0 +1,21 @@
+# Evidence — Mission FH / Ladder 40 Seam-Pack (SPEC-0170) — 2026-09-25
+
+- Seam suite: `tests/eos-fh-ladder40-seam-pack.test.js` (FH1–FH17)
+- Thin triad (fail-closed): `ladder40-seam-{port,receipt,policy-gate}.js` — FH-RCPT-* seal only; does NOT overwrite FD/FE/FF/FG product modules
+- Scripts (via patcher): `test:ladder40-seam`, `test:mission-fh`, `test:ladder40-pack` (FD+FE+FF+FG+seam)
+- Closeout proposal: `docs/releases/EOS_LADDER_40_SEAM_PACK_CLOSEOUT_PROPOSAL_2026-09-25.md`
+- ADR: `docs/adrs/ADR-0153-mission-fh-ladder-40-ci-seam-pack-closeout.md`
+- SLIM exclude: `eos-fh-ladder40-seam-pack.test.js`
+- Soft-observe pin: `1376ac54` / `1376ac546764a8a4df7ed85677241ae8e98abe54` (FG merge #557) — NON-CLAIM only; do NOT rewrite freeze tip pins
+- Soft-import FD/FE/FF/FG when present; soft-fail safe; observed true|false accepted
+- Formal L30+L31+L32+L33+L34+L35+L36+L37+L38+L39 CLOSED — NEVER reopen
+- Ladder 40 remains OPEN — Formal L40 CLOSED is tip-seal later (NOT this package)
+- PRODUCTION_READY=NO · Fundacion Δ=0 · Law VI · Antigravity-first · schemas AT_CEILING 35/35
+- NON-CLAIM: Seam-pack ≠ GitHub Enterprise enforcement
+- NON-CLAIM: tip-seal L40 CLOSED is SEPARATE after FH merge + tip-refresh (NOT this package)
+- NON-CLAIM: tip-seal-in-product claim refused · schema-json add refused · AU secrets runtime reopen refused
+- NON-CLAIM: Distinct from FC L39 seam / EX L38 seam / ES L37 seam / EN L36 seam / EI L35 seam / AU secrets runtime
+- Receipt prefixes: FD-RCPT-* · FE-RCPT-* · FF-RCPT-* · FG-RCPT-* · FH-RCPT-*
+- Operation: LADDER40_SEAM_PACK_CLOSEOUT
+- changeId: eos-ladder-40-mission-fh
+- Axis: Sovereign Outbound Delivery & Callback Authenticity Governance Fabric (ADR-0148)

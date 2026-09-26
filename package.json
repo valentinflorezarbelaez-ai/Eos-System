@@ -490,7 +490,10 @@
     "test:mission-ff": "node --test tests/eos-ff-outbound-delivery-quarantine-retry-deny.test.js",
     "test:outbound-delivery-quarantine-retry-deny": "node --test tests/eos-ff-outbound-delivery-quarantine-retry-deny.test.js",
     "test:mission-fg": "node --test tests/eos-fg-outbound-delivery-honesty-attestation.test.js",
-    "test:outbound-delivery-honesty-attestation": "node --test tests/eos-fg-outbound-delivery-honesty-attestation.test.js"
+    "test:outbound-delivery-honesty-attestation": "node --test tests/eos-fg-outbound-delivery-honesty-attestation.test.js",
+    "test:ladder40-seam": "node --test tests/eos-fh-ladder40-seam-pack.test.js",
+    "test:mission-fh": "node --test tests/eos-fh-ladder40-seam-pack.test.js",
+    "test:ladder40-pack": "npm run test:mission-fd && npm run test:mission-fe && npm run test:mission-ff && npm run test:mission-fg && npm run test:ladder40-seam"
   },
   "keywords": [
     "eos",
