@@ -241,23 +241,23 @@ export function auditDirtyDeferTriageLock(rootDir, options = {}) {
     }
   }
 
-  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-512 / tip-post-512 / Tip honesty post-#512 to ER #512 merge tip (prior freeze tip 7ee4bd4963ad1e3f42b165079383c45a31c0811c; tip-refresh-post-510 / tip-post-510 / Tip honesty post-#510 / L37 OPEN (Audit MEASURED · EO MEASURED · EP MEASURED · EQ MEASURED · ER–ES pending; Sovereign Configuration, Feature-Flag & Policy-Pack Governance Fabric); Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; Formal L33 CLOSED retained; Formal L34 CLOSED retained; Formal L35 CLOSED retained; Formal L36 CLOSED retained; L37 OPEN (Audit MEASURED · EO MEASURED · EP MEASURED · EQ MEASURED · ER MEASURED · ES pending; Sovereign Configuration, Feature-Flag & Policy-Pack Governance Fabric); NEVER reopen L17–L36; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; NEVER reopen L34; NEVER reopen L35; NEVER reopen L36; Do NOT claim ES MEASURED; Do NOT claim L37 CLOSED; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete) — dirty-defer retained)))
+  // Tip honesty light: freeze main_tip pinned by tip-refresh-post-514 / tip-post-514 / Tip honesty post-#514 to ES #514 merge tip (prior freeze tip 22289f5dec7b4e374408ca4d1bd26574da40a2c1; tip-refresh-post-512 / tip-post-510 / Tip honesty post-#510 / L37 OPEN (Audit MEASURED · EO MEASURED · EP MEASURED · EQ MEASURED · ER–ES pending; Sovereign Configuration, Feature-Flag & Policy-Pack Governance Fabric); Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; Formal L33 CLOSED retained; Formal L34 CLOSED retained; Formal L35 CLOSED retained; Formal L36 CLOSED retained; L37 OPEN (Audit MEASURED · EO MEASURED · EP MEASURED · EQ MEASURED · ER MEASURED · ES MEASURED; Sovereign Configuration, Feature-Flag & Policy-Pack Governance Fabric); NEVER reopen L17–L36; NEVER reopen L29; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; NEVER reopen L34; NEVER reopen L35; NEVER reopen L36; Do NOT claim L37 CLOSED; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete) — dirty-defer retained)))
 
   if (options.skipTipCheck !== true) {
     const freezePath = path.join(rootDir, 'docs/releases/EOS_FREEZE_GATE_STATUS.md');
     if (fs.existsSync(freezePath)) {
       const freeze = options.freezeText || fs.readFileSync(freezePath, 'utf8');
       const tip = freeze.match(/^main_tip:\s*([0-9a-f]{40})\b/m);
-      if (!tip || tip[1] !== '22289f5dec7b4e374408ca4d1bd26574da40a2c1') {
+      if (!tip || tip[1] !== '6b1d482f0a6a45a0b4c2142ccc81b7daf8b48e69') {
         failures.push({
           path: 'docs/releases/EOS_FREEZE_GATE_STATUS.md',
           message:
-            'tip-refresh-post-512 expected main_tip=22289f5dec7b4e374408ca4d1bd26574da40a2c1 (tip-refresh-post-456 / tip-post-456 / Tip honesty post-#456 / Formal L33 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric); tip-seal-post-455 sealed baseline; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete))',
+            'tip-refresh-post-514 expected main_tip=6b1d482f0a6a45a0b4c2142ccc81b7daf8b48e69 (tip-refresh-post-456 / tip-post-456 / Tip honesty post-#456 / Formal L33 CLOSED retained (CLOSED_FOR_LOCAL_GOVERNED_USE; Audit + DU + DV + DW + DX + DY MEASURED + seam-pack + closeout; Sovereign Domain Event-Driven Architecture & Resilient Outbox Messaging Fabric); tip-seal-post-455 sealed baseline; Formal L30 CLOSED retained; Formal L31 CLOSED retained; Formal L32 CLOSED retained; NEVER reopen L30; NEVER reopen L31; NEVER reopen L32; NEVER reopen L33; Do NOT claim PRODUCTION_READY; Complexity prune deferred PO-gated (inventory≠delete))',
           type
         });
       } else {
         checks.push({
-          path: 'freeze main_tip pinned to tip-refresh-post-512 / tip-post-512 / Tip honesty post-#512 / L37 OPEN (Audit MEASURED · EO MEASURED · EP MEASURED · EQ MEASURED · ER MEASURED · ES pending; Sovereign Configuration, Feature-Flag & Policy-Pack Governance Fabric) / Formal L36 CLOSED retained / main@22289f5d (Formal L30+L31+L32+L33+L34+L35+L36 CLOSED retained; NEVER reopen L30/L31/L32/L33/L34/L35/L36; prior tip-refresh-post-510 tip-refresh baseline @ 7ee4bd49)',
+          path: 'freeze main_tip pinned to tip-refresh-post-514 / tip-post-514 / Tip honesty post-#514 / L37 OPEN (Audit MEASURED · EO MEASURED · EP MEASURED · EQ MEASURED · ER MEASURED · ES MEASURED; Sovereign Configuration, Feature-Flag & Policy-Pack Governance Fabric) / Formal L36 CLOSED retained / main@6b1d482f (Formal L30+L31+L32+L33+L34+L35+L36 CLOSED retained; NEVER reopen L30/L31/L32/L33/L34/L35/L36; prior tip-refresh-post-512 tip-refresh baseline @ 22289f5d)',
           status: 'VERIFIED',
           type
         });
