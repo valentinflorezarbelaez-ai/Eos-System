@@ -1,0 +1,6 @@
+## 2024-05-18 - fs.existsSync is a TOCTOU anti-pattern that blocks the event loop
+**Learning:** The codebase has explicitly noted that fs.existsSync is an anti-pattern. While looking at scripts/verify-eos.js, I found extensive usage of synchronous fs calls, but since it is a script, maybe it's fine. However, in src/core/ci/local-ci-surrogate.js and src/cli/mission-cli.js and src/core/composition/ladder38-seam-port.js there are also sync fs calls.
+**Action:** Re-evaluate and replace with async or try-catch fs.promises where necessary.
+## 2026-09-26 - Eliminating TOCTOU and Event Loop Blocking in dynamic module imports
+**Learning:** In `src/core/composition/ladder38-seam-port.js`, using synchronous `fs.existsSync` inside module resolution paths blocked the Node.js event loop and caused Time-Of-Check to Time-Of-Use (TOCTOU) issues. Since the resolved paths were fed into asynchronous dynamic `import()` statements wrapped in `try/catch`, the existence check was redundant.
+**Action:** Avoid `fs.existsSync` before dynamic `import()`. Instead, generate all candidate module URLs and attempt to import them sequentially, relying on the native `import()` error handling to gracefully skip missing modules without synchronous disk I/O penalties.
