@@ -9,8 +9,6 @@
 import { pathToFileURL } from 'node:url';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import fs from 'node:fs';
-
 import {
   EX_PRODUCTION_READY,
   sha256Canonical,
@@ -42,10 +40,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 function candidateUrls(fileName, siblingDirs) {
   const urls = [];
   const local = path.join(__dirname, fileName);
-  if (fs.existsSync(local)) urls.push(pathToFileURL(local).href);
+
+  // ⚡ Bolt: Performance optimization
+  // Generating candidate URLs blindly instead of using synchronous fs.existsSync.
+  // This unblocks the Node.js event loop by eliminating synchronous I/O,
+  // relies on async import() error handling, and avoids a TOCTOU race condition.
+  urls.push(pathToFileURL(local).href);
   for (const dir of siblingDirs) {
     const p = path.join(dir, fileName);
-    if (fs.existsSync(p)) urls.push(pathToFileURL(p).href);
+    urls.push(pathToFileURL(p).href);
   }
   return urls;
 }
