@@ -1,0 +1,15 @@
+schema: spec-driven
+change_id: eos-ladder-39-mission-ey
+title: Mission EY External Event Ingress Registry & Binding Port (SPEC-0161)
+status: ready
+ladder: 39
+mission: EY
+spec: SPEC-0161
+adr: ADR-0143
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: "987702da"
+never_reopen: [L30, L31, L32, L33, L34, L35, L36, L37, L38]
+l39: OPEN (Audit MEASURED · EY this satellite · EZ–FC pending)
+law_vi: held (never seal webhook secrets / HMAC keys; opaque ingressId / sourceId / digests only)
