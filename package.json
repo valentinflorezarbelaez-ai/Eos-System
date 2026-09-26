@@ -484,7 +484,9 @@
     "test:mission-fc": "node --test tests/eos-fc-ladder39-seam-pack.test.js",
     "test:ladder39-pack": "npm run test:mission-ey && npm run test:mission-ez && npm run test:mission-fa && npm run test:mission-fb && npm run test:ladder39-seam",
     "test:mission-fd": "node --test tests/eos-fd-outbound-delivery-callback-registry.test.js",
-    "test:outbound-delivery-callback-registry": "node --test tests/eos-fd-outbound-delivery-callback-registry.test.js"
+    "test:outbound-delivery-callback-registry": "node --test tests/eos-fd-outbound-delivery-callback-registry.test.js",
+    "test:mission-fe": "node --test tests/eos-fe-outbound-callback-authenticity.test.js",
+    "test:outbound-callback-authenticity": "node --test tests/eos-fe-outbound-callback-authenticity.test.js"
   },
   "keywords": [
     "eos",
