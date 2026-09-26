@@ -1,0 +1,15 @@
+schema: spec-driven
+change_id: eos-ladder-40-mission-fe
+title: Mission FE Outbound Callback Authenticity / Signature-Sign Governance Port (SPEC-0167)
+status: ready
+ladder: 40
+mission: FE
+spec: SPEC-0167
+adr: ADR-0150
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: "7b47bf8b"
+never_reopen: [L30, L31, L32, L33, L34, L35, L36, L37, L38, L39]
+l40: OPEN (Audit MEASURED · FD MEASURED · FE this satellite · FF–FH pending)
+law_vi: held (never seal callback secrets / HMAC keys / webhook secrets / signing keys; opaque handleId / targetId / deliveryId / digests only)
