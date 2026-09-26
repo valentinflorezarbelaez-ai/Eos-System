@@ -299,6 +299,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-et-credential-handle-registry.test.js',
 
   'eos-eu-secret-zero-leak-deny.test.js',
+
+  'eos-ev-credential-handle-lifecycle.test.js',
 ]);
 
 /**

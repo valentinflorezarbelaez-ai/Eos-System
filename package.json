@@ -464,7 +464,9 @@
     "test:mission-et": "node --test tests/eos-et-credential-handle-registry.test.js",
     "test:credential-handle-registry": "node --test tests/eos-et-credential-handle-registry.test.js",
     "test:mission-eu": "node --test tests/eos-eu-secret-zero-leak-deny.test.js",
-    "test:secret-zero-leak-deny": "node --test tests/eos-eu-secret-zero-leak-deny.test.js"
+    "test:secret-zero-leak-deny": "node --test tests/eos-eu-secret-zero-leak-deny.test.js",
+    "test:mission-ev": "node --test tests/eos-ev-credential-handle-lifecycle.test.js",
+    "test:credential-handle-lifecycle": "node --test tests/eos-ev-credential-handle-lifecycle.test.js"
   },
   "keywords": [
     "eos",
