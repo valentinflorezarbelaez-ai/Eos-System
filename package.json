@@ -473,7 +473,9 @@
     "test:mission-ex": "node --test tests/eos-ex-ladder38-seam-pack.test.js",
     "test:ladder38-pack": "npm run test:mission-et && npm run test:mission-eu && npm run test:mission-ev && npm run test:mission-ew && npm run test:ladder38-seam",
     "test:mission-ey": "node --test tests/eos-ey-external-event-ingress-registry.test.js",
-    "test:external-event-ingress-registry": "node --test tests/eos-ey-external-event-ingress-registry.test.js"
+    "test:external-event-ingress-registry": "node --test tests/eos-ey-external-event-ingress-registry.test.js",
+    "test:mission-ez": "node --test tests/eos-ez-webhook-authenticity.test.js",
+    "test:webhook-authenticity": "node --test tests/eos-ez-webhook-authenticity.test.js"
   },
   "keywords": [
     "eos",
