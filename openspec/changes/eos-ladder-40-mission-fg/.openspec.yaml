@@ -1,0 +1,15 @@
+schema: spec-driven
+change_id: eos-ladder-40-mission-fg
+title: Mission FG Outbound Delivery Honesty & Receipt Attestation Port (SPEC-0169)
+status: ready
+ladder: 40
+mission: FG
+spec: SPEC-0169
+adr: ADR-0152
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: "a7c7df8f"
+never_reopen: [L30, L31, L32, L33, L34, L35, L36, L37, L38, L39]
+l40: OPEN (Audit MEASURED · FD MEASURED · FE MEASURED · FF MEASURED · FG this satellite · FH pending)
+law_vi: held (never seal callback secrets / HMAC keys / raw payloads; opaque deliveryId / targetId / authenticityRef / digests / stage only)
