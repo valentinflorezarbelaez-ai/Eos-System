@@ -303,6 +303,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ev-credential-handle-lifecycle.test.js',
 
   'eos-ew-credential-honesty-attestation.test.js',
+
+  'eos-ex-ladder38-seam-pack.test.js',
 ]);
 
 /**

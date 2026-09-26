@@ -1,0 +1,3 @@
+# Proposal — Mission EX / SPEC-0160
+
+Ladder 38 seam-pack consolidation + closeout satellite. Unify ET/EU/EV/EW into fail-closed `test:ladder38-seam` / `test:ladder38-pack` / `test:mission-ex` with EX-RCPT-* seal. Ladder 38 remains OPEN — tip-seal SEPARATE after EX merge + tip-refresh. PRODUCTION_READY=NO. Fundacion Δ=0. Schemas AT_CEILING 35/35. Never reopen L30–L37. Soft-import satellites when present (observed true|false). NON-CLAIM: Seam-pack ≠ GHE; tip-seal L38 CLOSED ≠ this package; Formal L38 CLOSED ≠ this package; AU secrets runtime reopen refused. Soft-observe pin `b09467a2`. Distinct from ES L37 seam / EN L36 / EI L35 / AU secrets runtime.
