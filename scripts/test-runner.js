@@ -323,6 +323,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ff-outbound-delivery-quarantine-retry-deny.test.js',
 
   'eos-fg-outbound-delivery-honesty-attestation.test.js',
+
+  'eos-fh-ladder40-seam-pack.test.js',
 ]);
 
 /**

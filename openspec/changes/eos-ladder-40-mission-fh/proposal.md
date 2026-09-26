@@ -1,0 +1,3 @@
+# Proposal — Mission FH / SPEC-0170
+
+Ladder 40 seam-pack consolidation + closeout satellite. Unify FD/FE/FF/FG into fail-closed `test:ladder40-seam` / `test:ladder40-pack` / `test:mission-fh` with FH-RCPT-* seal. Ladder 40 remains OPEN — tip-seal SEPARATE after FH merge + tip-refresh. PRODUCTION_READY=NO. Fundacion Δ=0. Schemas AT_CEILING 35/35. Never reopen L30–L39. Soft-import satellites when present (observed true|false). NON-CLAIM: Seam-pack ≠ GHE; tip-seal L40 CLOSED ≠ this package; Formal L40 CLOSED ≠ this package; AU secrets runtime reopen refused. Soft-observe pin `1376ac54`. Distinct from FC L39 seam / EX L38 / ES L37 / EN L36 / EI L35 / AU secrets runtime. Symmetric to Mission FC (SPEC-0165).
