@@ -313,6 +313,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-fa-ingress-quarantine-replay-deny.test.js',
 
   'eos-fb-ingress-honesty-attestation.test.js',
+
+  'eos-fc-ladder39-seam-pack.test.js',
 ]);
 
 /**

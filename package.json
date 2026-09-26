@@ -479,7 +479,10 @@
     "test:mission-fa": "node --test tests/eos-fa-ingress-quarantine-replay-deny.test.js",
     "test:ingress-quarantine-replay-deny": "node --test tests/eos-fa-ingress-quarantine-replay-deny.test.js",
     "test:mission-fb": "node --test tests/eos-fb-ingress-honesty-attestation.test.js",
-    "test:ingress-honesty-attestation": "node --test tests/eos-fb-ingress-honesty-attestation.test.js"
+    "test:ingress-honesty-attestation": "node --test tests/eos-fb-ingress-honesty-attestation.test.js",
+    "test:ladder39-seam": "node --test tests/eos-fc-ladder39-seam-pack.test.js",
+    "test:mission-fc": "node --test tests/eos-fc-ladder39-seam-pack.test.js",
+    "test:ladder39-pack": "npm run test:mission-ey && npm run test:mission-ez && npm run test:mission-fa && npm run test:mission-fb && npm run test:ladder39-seam"
   },
   "keywords": [
     "eos",
