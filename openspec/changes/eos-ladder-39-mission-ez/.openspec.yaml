@@ -1,0 +1,15 @@
+schema: spec-driven
+change_id: eos-ladder-39-mission-ez
+title: Mission EZ Webhook Authenticity / Signature-Verify Governance Port (SPEC-0162)
+status: ready
+ladder: 39
+mission: EZ
+spec: SPEC-0162
+adr: ADR-0144
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: "cc9161f9"
+never_reopen: [L30, L31, L32, L33, L34, L35, L36, L37, L38]
+l39: OPEN (Audit MEASURED · EZ this satellite · FA–FC pending)
+law_vi: held (never seal webhook secrets / HMAC keys; opaque handleId / sourceId / digests only)
