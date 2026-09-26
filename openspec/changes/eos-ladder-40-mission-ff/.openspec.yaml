@@ -1,0 +1,15 @@
+schema: spec-driven
+change_id: eos-ladder-40-mission-ff
+title: Mission FF Outbound Delivery Quarantine / Retry-Deny & Ordering Governance Port (SPEC-0168)
+status: ready
+ladder: 39
+mission: FA
+spec: SPEC-0168
+adr: ADR-0151
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: "1079bddf"
+never_reopen: [L30, L31, L32, L33, L34, L35, L36, L37, L38]
+l39: OPEN (Audit MEASURED · FD MEASURED · FE MEASURED · FF this satellite · FG–FH pending)
+law_vi: held (never seal callback secrets / HMAC keys / raw payloads; opaque deliveryId / targetId / digests / stage only)

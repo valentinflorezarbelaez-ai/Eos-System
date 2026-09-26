@@ -486,7 +486,9 @@
     "test:mission-fd": "node --test tests/eos-fd-outbound-delivery-callback-registry.test.js",
     "test:outbound-delivery-callback-registry": "node --test tests/eos-fd-outbound-delivery-callback-registry.test.js",
     "test:mission-fe": "node --test tests/eos-fe-outbound-callback-authenticity.test.js",
-    "test:outbound-callback-authenticity": "node --test tests/eos-fe-outbound-callback-authenticity.test.js"
+    "test:outbound-callback-authenticity": "node --test tests/eos-fe-outbound-callback-authenticity.test.js",
+    "test:mission-ff": "node --test tests/eos-ff-outbound-delivery-quarantine-retry-deny.test.js",
+    "test:outbound-delivery-quarantine-retry-deny": "node --test tests/eos-ff-outbound-delivery-quarantine-retry-deny.test.js"
   },
   "keywords": [
     "eos",

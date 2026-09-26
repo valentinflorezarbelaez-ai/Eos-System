@@ -319,6 +319,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-fd-outbound-delivery-callback-registry.test.js',
 
   'eos-fe-outbound-callback-authenticity.test.js',
+
+  'eos-ff-outbound-delivery-quarantine-retry-deny.test.js',
 ]);
 
 /**
