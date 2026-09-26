@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-25
+goal: Implement Ladder 37 CI Seam-Pack Consolidation & Closeout (SPEC-0155 / Mission ES) — unify EO–ER into fail-closed CI seam-pack. Axis Sovereign Configuration, Feature-Flag & Policy-Pack Governance Fabric. PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. Schemas AT_CEILING 35/35. L30–L36 CLOSED never reopen. L37 remains OPEN until SEPARATE tip-refresh + tip-seal. NON-CLAIM Seam-pack ≠ GitHub Enterprise. Soft-observe pin 22289f5d (ER merge #512). No freeze/matrix tip rewrite. Tip-seal L37 CLOSED is SEPARATE after ES merge — NOT this package. Distinct from EN L36 seam and EI L35 seam.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0155
+phase: 1
+affected_areas:
+  - tests/eos-es-ladder37-seam-pack.test.js
+  - src/core/composition/ladder37-seam-port.js
+  - src/core/composition/ladder37-seam-receipt.js
+  - src/core/composition/ladder37-seam-policy-gate.js
+  - scripts/patch-mission-es.mjs
+  - docs/releases/EOS_LADDER_37_SEAM_PACK_CLOSEOUT_PROPOSAL_2026-09-25.md
+  - docs/evidence/EOS_MISSION_ES_LADDER37_SEAM_EVD_2026-09-25.md
+  - docs/adrs/ADR-0135-mission-es-ladder37-seam-pack-closeout.md
+  - openspec/changes/eos-ladder-37-mission-es
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - overwriting EO/EP/EQ/ER product ports
+  - GitHub Enterprise enforcement claims
+  - CloudAgent path
+  - reopening L30–L36
+  - tip-refresh / freeze-matrix rewrite / tip-seal L37 CLOSED (SEPARATE after merge)
+  - Formal L37 CLOSED claim in product PR
+  - schema-json add (AT_CEILING 35/35)
+  - soft-allow soak / continue-on-error
+  - live flag store / remote config SDK
