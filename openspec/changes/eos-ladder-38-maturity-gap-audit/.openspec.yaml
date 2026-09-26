@@ -1,0 +1,15 @@
+name: eos-ladder-38-maturity-gap-audit
+version: 1.0.0
+description: Ladder 38 Maturity Gap Audit — Sovereign Credential-Handle & Secret-Zero Governance Fabric
+status: completed
+schema_version: 1
+author: EOS Autonomous Architecture Engine
+created_at: '2026-09-25T19:30:00-05:00'
+ladder: 38
+satellite: AUDIT
+spec: LADDER-38-MATURITY-AUDIT
+adr: ADR-0136
+freeze_observe_pin: 6868856c
+production_ready: 'NO'
+fundacion_delta: 0
+schemas_at_ceiling: 35/35
