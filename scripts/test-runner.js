@@ -297,6 +297,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-es-ladder37-seam-pack.test.js',
 
   'eos-et-credential-handle-registry.test.js',
+
+  'eos-eu-secret-zero-leak-deny.test.js',
 ]);
 
 /**
