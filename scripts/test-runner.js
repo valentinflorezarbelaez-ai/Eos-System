@@ -311,6 +311,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-ez-webhook-authenticity.test.js',
 
   'eos-fa-ingress-quarantine-replay-deny.test.js',
+
+  'eos-fb-ingress-honesty-attestation.test.js',
 ]);
 
 /**
