@@ -468,7 +468,10 @@
     "test:mission-ev": "node --test tests/eos-ev-credential-handle-lifecycle.test.js",
     "test:credential-handle-lifecycle": "node --test tests/eos-ev-credential-handle-lifecycle.test.js",
     "test:mission-ew": "node --test tests/eos-ew-credential-honesty-attestation.test.js",
-    "test:credential-honesty-attestation": "node --test tests/eos-ew-credential-honesty-attestation.test.js"
+    "test:credential-honesty-attestation": "node --test tests/eos-ew-credential-honesty-attestation.test.js",
+    "test:ladder38-seam": "node --test tests/eos-ex-ladder38-seam-pack.test.js",
+    "test:mission-ex": "node --test tests/eos-ex-ladder38-seam-pack.test.js",
+    "test:ladder38-pack": "npm run test:mission-et && npm run test:mission-eu && npm run test:mission-ev && npm run test:mission-ew && npm run test:ladder38-seam"
   },
   "keywords": [
     "eos",

@@ -1,0 +1,21 @@
+# Evidence — Mission EX / Ladder 38 Seam-Pack (SPEC-0160) — 2026-09-25
+
+- Seam suite: `tests/eos-ex-ladder38-seam-pack.test.js` (EX1–EX17)
+- Thin triad (fail-closed): `ladder38-seam-{port,receipt,policy-gate}.js` — EX-RCPT-* seal only; does NOT overwrite ET/EU/EV/EW product modules
+- Scripts (via patcher): `test:ladder38-seam`, `test:mission-ex`, `test:ladder38-pack` (ET+EU+EV+EW+seam)
+- Closeout proposal: `docs/releases/EOS_LADDER_38_SEAM_PACK_CLOSEOUT_PROPOSAL_2026-09-25.md`
+- ADR: `docs/adrs/ADR-0141-mission-ex-ladder38-seam-pack-closeout.md`
+- SLIM exclude: `eos-ex-ladder38-seam-pack.test.js`
+- Soft-observe pin: `b09467a2` / `b09467a2163286d81d14ab893839dfe091c588b8` (EW merge #527) — NON-CLAIM only; do NOT rewrite freeze tip pins
+- Soft-import ET/EU/EV/EW when present; soft-fail safe; observed true|false accepted
+- Formal L30+L31+L32+L33+L34+L35+L36+L37 CLOSED — NEVER reopen
+- Ladder 38 remains OPEN — Formal L38 CLOSED is tip-seal later (NOT this package)
+- PRODUCTION_READY=NO · Fundacion Δ=0 · Law VI · Antigravity-first · schemas AT_CEILING 35/35
+- NON-CLAIM: Seam-pack ≠ GitHub Enterprise enforcement
+- NON-CLAIM: tip-seal L38 CLOSED is SEPARATE after EX merge + tip-refresh (NOT this package)
+- NON-CLAIM: tip-seal-in-product claim refused · schema-json add refused · AU secrets runtime reopen refused
+- NON-CLAIM: Distinct from ES L37 seam / EN L36 seam / EI L35 seam / AU secrets runtime
+- Receipt prefixes: ET-RCPT-* · EU-RCPT-* · EV-RCPT-* · EW-RCPT-* · EX-RCPT-*
+- Operation: LADDER38_SEAM_PACK_CLOSEOUT
+- changeId: eos-ladder-38-mission-ex
+- Axis: Sovereign Credential-Handle & Secret-Zero Governance Fabric
