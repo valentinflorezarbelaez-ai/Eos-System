@@ -325,6 +325,8 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-fg-outbound-delivery-honesty-attestation.test.js',
 
   'eos-fh-ladder40-seam-pack.test.js',
+
+  'eos-fi-bidirectional-delivery-correlation-registry.test.js',
 ]);
 
 /**
