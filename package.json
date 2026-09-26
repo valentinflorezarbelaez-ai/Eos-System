@@ -475,7 +475,9 @@
     "test:mission-ey": "node --test tests/eos-ey-external-event-ingress-registry.test.js",
     "test:external-event-ingress-registry": "node --test tests/eos-ey-external-event-ingress-registry.test.js",
     "test:mission-ez": "node --test tests/eos-ez-webhook-authenticity.test.js",
-    "test:webhook-authenticity": "node --test tests/eos-ez-webhook-authenticity.test.js"
+    "test:webhook-authenticity": "node --test tests/eos-ez-webhook-authenticity.test.js",
+    "test:mission-fa": "node --test tests/eos-fa-ingress-quarantine-replay-deny.test.js",
+    "test:ingress-quarantine-replay-deny": "node --test tests/eos-fa-ingress-quarantine-replay-deny.test.js"
   },
   "keywords": [
     "eos",
