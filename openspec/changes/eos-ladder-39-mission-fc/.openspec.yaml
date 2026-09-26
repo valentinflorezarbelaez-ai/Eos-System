@@ -1,0 +1,29 @@
+schema: spec-driven
+created: 2026-09-25
+goal: Implement Ladder 39 CI Seam-Pack Consolidation & Closeout (SPEC-0165 / Mission FC) — unify EY–FB into fail-closed CI seam-pack. Axis Sovereign External Event Ingress & Webhook Authenticity Governance Fabric (ADR-0142). PRODUCTION_READY=NO. Fundacion Δ=0 ALWAYS_DENY. Antigravity-first. Law VI held. Schemas AT_CEILING 35/35. L30–L38 CLOSED never reopen. L39 remains OPEN until SEPARATE tip-refresh + tip-seal. NON-CLAIM Seam-pack ≠ GitHub Enterprise. Soft-observe pin d1041230 (FB merge #542). No freeze/matrix tip rewrite. Tip-seal L39 CLOSED is SEPARATE after FC merge — NOT this package. Distinct from EX L38 seam / ES L37 / EN L36 / EI L35 / AU secrets runtime.
+routing: SDD
+explicit_sdd_request: true
+spec_id: SPEC-0165
+phase: 1
+affected_areas:
+  - tests/eos-fc-ladder39-seam-pack.test.js
+  - src/core/composition/ladder39-seam-port.js
+  - src/core/composition/ladder39-seam-receipt.js
+  - src/core/composition/ladder39-seam-policy-gate.js
+  - scripts/patch-mission-fc.mjs
+  - docs/releases/EOS_LADDER_39_SEAM_PACK_CLOSEOUT_PROPOSAL_2026-09-25.md
+  - docs/evidence/EOS_MISSION_FC_LADDER39_SEAM_EVD_2026-09-25.md
+  - docs/adrs/ADR-0147-mission-fc-ladder39-seam-pack.md
+  - openspec/changes/eos-ladder-39-mission-fc
+non_goals:
+  - flipping PRODUCTION_READY
+  - real Fundacion / Documents/Fundacion writes
+  - overwriting EY/EZ/FA/FB product ports
+  - GitHub Enterprise enforcement claims
+  - CloudAgent path
+  - reopening L30–L38
+  - tip-refresh / freeze-matrix rewrite / tip-seal L39 CLOSED (SEPARATE after merge)
+  - Formal L39 CLOSED claim in product PR
+  - schema-json add (AT_CEILING 35/35)
+  - soft-allow soak / continue-on-error
+  - live secret store / remote vault / AU secrets runtime reopen

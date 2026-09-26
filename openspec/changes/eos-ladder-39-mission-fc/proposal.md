@@ -1,0 +1,3 @@
+# Proposal — Mission FC / SPEC-0165
+
+Ladder 39 seam-pack consolidation + closeout satellite. Unify EY/EZ/FA/FB into fail-closed `test:ladder39-seam` / `test:ladder39-pack` / `test:mission-fc` with FC-RCPT-* seal. Ladder 39 remains OPEN — tip-seal SEPARATE after FC merge + tip-refresh. PRODUCTION_READY=NO. Fundacion Δ=0. Schemas AT_CEILING 35/35. Never reopen L30–L38. Soft-import satellites when present (observed true|false). NON-CLAIM: Seam-pack ≠ GHE; tip-seal L39 CLOSED ≠ this package; Formal L39 CLOSED ≠ this package; AU secrets runtime reopen refused. Soft-observe pin `d1041230`. Distinct from EX L38 seam / ES L37 / EN L36 / EI L35 / AU secrets runtime.

@@ -1,0 +1,21 @@
+# Evidence — Mission FC / Ladder 39 Seam-Pack (SPEC-0165) — 2026-09-25
+
+- Seam suite: `tests/eos-fc-ladder39-seam-pack.test.js` (FC1–FC17)
+- Thin triad (fail-closed): `ladder39-seam-{port,receipt,policy-gate}.js` — FC-RCPT-* seal only; does NOT overwrite EY/EZ/FA/FB product modules
+- Scripts (via patcher): `test:ladder39-seam`, `test:mission-fc`, `test:ladder39-pack` (EY+EZ+FA+FB+seam)
+- Closeout proposal: `docs/releases/EOS_LADDER_39_SEAM_PACK_CLOSEOUT_PROPOSAL_2026-09-25.md`
+- ADR: `docs/adrs/ADR-0147-mission-fc-ladder39-seam-pack.md`
+- SLIM exclude: `eos-fc-ladder39-seam-pack.test.js`
+- Soft-observe pin: `d1041230` / `d1041230300465e6516e8d78725bebadb93fcaa2` (FB merge #542) — NON-CLAIM only; do NOT rewrite freeze tip pins
+- Soft-import EY/EZ/FA/FB when present; soft-fail safe; observed true|false accepted
+- Formal L30+L31+L32+L33+L34+L35+L36+L37+L38 CLOSED — NEVER reopen
+- Ladder 39 remains OPEN — Formal L39 CLOSED is tip-seal later (NOT this package)
+- PRODUCTION_READY=NO · Fundacion Δ=0 · Law VI · Antigravity-first · schemas AT_CEILING 35/35
+- NON-CLAIM: Seam-pack ≠ GitHub Enterprise enforcement
+- NON-CLAIM: tip-seal L39 CLOSED is SEPARATE after FC merge + tip-refresh (NOT this package)
+- NON-CLAIM: tip-seal-in-product claim refused · schema-json add refused · AU secrets runtime reopen refused
+- NON-CLAIM: Distinct from EX L38 seam / ES L37 seam / EN L36 seam / EI L35 seam / AU secrets runtime
+- Receipt prefixes: EY-RCPT-* · EZ-RCPT-* · FA-RCPT-* · FB-RCPT-* · FC-RCPT-*
+- Operation: LADDER39_SEAM_PACK_CLOSEOUT
+- changeId: eos-ladder-39-mission-fc
+- Axis: Sovereign External Event Ingress & Webhook Authenticity Governance Fabric (ADR-0142)
