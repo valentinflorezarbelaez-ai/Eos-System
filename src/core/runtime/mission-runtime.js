@@ -74,6 +74,22 @@ export class MissionRuntime {
     return path.join(this.missionsRoot, missionId);
   }
 
+  /**
+   * Helper to safely read a JSON file, avoiding TOCTOU conditions by relying on try/catch instead of existsSync.
+   * @param {string} filePath
+   * @param {any} fallback
+   * @returns {any}
+   */
+  _readJsonIfExists(filePath, fallback) {
+    try {
+      const data = fs.readFileSync(filePath, 'utf8');
+      return JSON.parse(data);
+    } catch (err) {
+      if (err.code === 'ENOENT') return fallback;
+      throw err;
+    }
+  }
+
   /** @private Q5: mission artifact write via Write Barrier envelope (not EVD). */
   _governedMissionWrite(missionDir, targetPath, content, label) {
     return writeMissionArtifactFile({
@@ -86,9 +102,7 @@ export class MissionRuntime {
 
   _updateManifestFile(missionDir, relPath, contentStr) {
     const manifestFile = path.join(missionDir, 'integrity-manifest.json');
-    const manifest = fs.existsSync(manifestFile)
-      ? JSON.parse(fs.readFileSync(manifestFile, 'utf8'))
-      : { mission_id: path.basename(missionDir), files: {} };
+    const manifest = this._readJsonIfExists(manifestFile, { mission_id: path.basename(missionDir), files: {} });
 
     manifest.files[relPath] = calculateSha256(contentStr);
     manifest.updated_at = new Date().toISOString();
@@ -103,8 +117,14 @@ export class MissionRuntime {
   /** Keep integrity-manifest in lockstep after ATS rewrites mission-package.json. */
   _syncPackageManifest(missionDir) {
     const pkgFile = path.join(missionDir, 'mission-package.json');
-    if (!fs.existsSync(pkgFile)) return;
-    this._updateManifestFile(missionDir, 'mission-package.json', fs.readFileSync(pkgFile, 'utf8'));
+    let content;
+    try {
+      content = fs.readFileSync(pkgFile, 'utf8');
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+      return;
+    }
+    this._updateManifestFile(missionDir, 'mission-package.json', content);
   }
 
   _nonceStorePath(missionDir) {
@@ -113,11 +133,11 @@ export class MissionRuntime {
 
   _loadConsumedNonces(missionDir) {
     const p = this._nonceStorePath(missionDir);
-    if (!fs.existsSync(p)) return [];
+    let parsed;
     try {
-      const parsed = JSON.parse(fs.readFileSync(p, 'utf8'));
-      return Array.isArray(parsed.nonces) ? parsed.nonces : [];
-    } catch {
+      parsed = JSON.parse(fs.readFileSync(p, 'utf8'));
+      return Array.isArray(parsed?.nonces) ? parsed.nonces : [];
+    } catch (err) {
       return [];
     }
   }
@@ -533,9 +553,7 @@ export class MissionRuntime {
     let hitlReceipt = ctx.hitlReceipt || null;
     if (!hitlReceipt) {
       const receiptPath = path.join(missionDir, 'hitl', 'direction-approval.json');
-      if (fs.existsSync(receiptPath)) {
-        hitlReceipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
-      }
+      hitlReceipt = this._readJsonIfExists(receiptPath, null);
     }
     if (!hitlReceipt) {
       if (ctx.requireExternalHitl || this.allowLocalDirectorReceipt === false) {
@@ -591,9 +609,7 @@ export class MissionRuntime {
 
     const direction = JSON.parse(fs.readFileSync(path.join(missionDir, 'direction.json'), 'utf8'));
     const profile = JSON.parse(fs.readFileSync(path.join(missionDir, 'project-profile.json'), 'utf8'));
-    const plan = fs.existsSync(path.join(missionDir, 'plan.json'))
-      ? JSON.parse(fs.readFileSync(path.join(missionDir, 'plan.json'), 'utf8'))
-      : { tasks: [] };
+    const plan = this._readJsonIfExists(path.join(missionDir, 'plan.json'), { tasks: [] });
 
     const pkg = JSON.parse(fs.readFileSync(path.join(missionDir, 'mission-package.json'), 'utf8'));
     const { jsonPackage, markdownPrompt, manifestHash } = this.packageGenerator.generatePackage({
@@ -650,9 +666,7 @@ export class MissionRuntime {
     }
 
     const direction = JSON.parse(fs.readFileSync(path.join(missionDir, 'direction.json'), 'utf8'));
-    const plan = fs.existsSync(path.join(missionDir, 'plan.json'))
-      ? JSON.parse(fs.readFileSync(path.join(missionDir, 'plan.json'), 'utf8'))
-      : { tasks: [] };
+    const plan = this._readJsonIfExists(path.join(missionDir, 'plan.json'), { tasks: [] });
 
     const ledger = new HashChainedLedger({ baseDir: path.join(missionDir, 'ledger') });
     const events = ledger.getEvents(missionId);
@@ -716,7 +730,7 @@ export class MissionRuntime {
     const chainCheck = ledger.verifyChainIntegrity(missionId);
 
     const manifestFile = path.join(missionDir, 'integrity-manifest.json');
-    const manifest = fs.existsSync(manifestFile) ? JSON.parse(fs.readFileSync(manifestFile, 'utf8')) : { files: {} };
+    const manifest = this._readJsonIfExists(manifestFile, { files: {} });
 
     let manifestValid = true;
     const discrepancies = [];
@@ -736,7 +750,7 @@ export class MissionRuntime {
     }
 
     const pkgFile = path.join(missionDir, 'mission-package.json');
-    const pkg = fs.existsSync(pkgFile) ? JSON.parse(fs.readFileSync(pkgFile, 'utf8')) : {};
+    const pkg = this._readJsonIfExists(pkgFile, {});
     const tddReceipts = this._loadTddReceipts(missionDir, options.tddReceipts);
     const tddDir = path.join(missionDir, 'evidence', 'tdd');
     const applyClaimed = options.applyClaimedComplete === true || fs.existsSync(tddDir);
@@ -931,7 +945,7 @@ export class MissionRuntime {
 
     // Load selection record if available
     const selectionFile = path.join(missionDir, 'selections', `SEL-${taskId}.json`);
-    const selectionRecord = fs.existsSync(selectionFile) ? JSON.parse(fs.readFileSync(selectionFile, 'utf8')) : {};
+    const selectionRecord = this._readJsonIfExists(selectionFile, {});
 
     // 8-Dimensional Multi-Agent Supervision Evaluation
     const supervision = this.supervisionEngine.evaluateSubmission(taskContract, selectionRecord, returnPkg, []);
