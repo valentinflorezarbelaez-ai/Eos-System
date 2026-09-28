@@ -219,8 +219,12 @@ export class AuthorityTruthSource {
   _persistSnapshotAndPackage(missionId, snapshot, meta = {}) {
     const snapshotPath = this._snapshotPath(missionId);
     const packagePath = this._packagePath(missionId);
-    const prevSnapshot = fs.existsSync(snapshotPath) ? fs.readFileSync(snapshotPath) : null;
-    const prevPackage = fs.existsSync(packagePath) ? fs.readFileSync(packagePath) : null;
+
+    let prevSnapshot = null;
+    try { prevSnapshot = fs.readFileSync(snapshotPath); } catch (e) { if (e.code !== 'ENOENT') throw e; }
+
+    let prevPackage = null;
+    try { prevPackage = fs.readFileSync(packagePath); } catch (e) { if (e.code !== 'ENOENT') throw e; }
 
     const snapshotStr = JSON.stringify(snapshot, null, 2);
 

@@ -716,7 +716,12 @@ export class MissionRuntime {
     const chainCheck = ledger.verifyChainIntegrity(missionId);
 
     const manifestFile = path.join(missionDir, 'integrity-manifest.json');
-    const manifest = fs.existsSync(manifestFile) ? JSON.parse(fs.readFileSync(manifestFile, 'utf8')) : { files: {} };
+    let manifest = { files: {} };
+    try {
+      manifest = JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+    }
 
     let manifestValid = true;
     const discrepancies = [];
@@ -736,7 +741,12 @@ export class MissionRuntime {
     }
 
     const pkgFile = path.join(missionDir, 'mission-package.json');
-    const pkg = fs.existsSync(pkgFile) ? JSON.parse(fs.readFileSync(pkgFile, 'utf8')) : {};
+    let pkg = {};
+    try {
+      pkg = JSON.parse(fs.readFileSync(pkgFile, 'utf8'));
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+    }
     const tddReceipts = this._loadTddReceipts(missionDir, options.tddReceipts);
     const tddDir = path.join(missionDir, 'evidence', 'tdd');
     const applyClaimed = options.applyClaimedComplete === true || fs.existsSync(tddDir);
@@ -931,7 +941,12 @@ export class MissionRuntime {
 
     // Load selection record if available
     const selectionFile = path.join(missionDir, 'selections', `SEL-${taskId}.json`);
-    const selectionRecord = fs.existsSync(selectionFile) ? JSON.parse(fs.readFileSync(selectionFile, 'utf8')) : {};
+    let selectionRecord = {};
+    try {
+      selectionRecord = JSON.parse(fs.readFileSync(selectionFile, 'utf8'));
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+    }
 
     // 8-Dimensional Multi-Agent Supervision Evaluation
     const supervision = this.supervisionEngine.evaluateSubmission(taskContract, selectionRecord, returnPkg, []);
