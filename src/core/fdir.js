@@ -27,7 +27,6 @@ export class EOSFDIR {
    * @returns {Promise<{ estado: 'NOMINAL' | 'RECOVERED', mensaje: string, reparaciones: Array<object> }>}
    */
   async ejecutarCicloRecuperacion(lineasBaseAutorizadas = {}) {
-    console.log('🛡️ [EOS FDIR] > Iniciando ciclo de auditoría activa e inmunidad...');
 
     // 1. Detectar fallos (Fault Detection)
     const estadoDrift = this.detector.detectarDesviaciones(lineasBaseAutorizadas);
