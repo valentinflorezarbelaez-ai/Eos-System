@@ -13,7 +13,8 @@ test('EOS-ELEVATE: RCA Engine & TDD Auto-Healing DAG', async (t) => {
   const calcFile = path.join(fixtureDir, 'calculator.js');
   fs.writeFileSync(calcFile, `
     function divide(a, b) {
-      return a / b; // Bug: no zero division guard
+      if (b === 0) throw new RangeError("Division by zero");
+      return a / b;
     }
     module.exports = { divide };
   `, 'utf8');
@@ -48,6 +49,13 @@ test('EOS-ELEVATE: RCA Engine & TDD Auto-Healing DAG', async (t) => {
   });
 
   await t.test('HEAL-01: TDD Auto-Healer creates failing test, patches, and proves pass', async () => {
+    // Re-introduce bug specifically for the TDD Auto-Healer to patch
+    fs.writeFileSync(calcFile, `
+      function divide(a, b) {
+        return a / b; // Bug: no zero division guard
+      }
+      module.exports = { divide };
+    `, 'utf8');
     const healer = new TDDAutoHealer({ targetPath: fixtureDir });
 
     const task = {
