@@ -495,7 +495,9 @@
     "test:mission-fh": "node --test tests/eos-fh-ladder40-seam-pack.test.js",
     "test:ladder40-pack": "npm run test:mission-fd && npm run test:mission-fe && npm run test:mission-ff && npm run test:mission-fg && npm run test:ladder40-seam",
     "test:mission-fi": "node --test tests/eos-fi-bidirectional-delivery-correlation-registry.test.js",
-    "test:bidirectional-delivery-correlation-registry": "node --test tests/eos-fi-bidirectional-delivery-correlation-registry.test.js"
+    "test:bidirectional-delivery-correlation-registry": "node --test tests/eos-fi-bidirectional-delivery-correlation-registry.test.js",
+    "test:mission-fj": "node --test tests/eos-fj-round-trip-request-reply-integrity.test.js",
+    "test:round-trip-request-reply-integrity": "node --test tests/eos-fj-round-trip-request-reply-integrity.test.js"
   },
   "keywords": [
     "eos",
