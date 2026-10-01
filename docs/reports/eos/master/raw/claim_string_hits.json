@@ -1,0 +1,108 @@
+{
+  "collected_at": "2026-09-01T02:16:34.556Z",
+  "method": "literal string search in first-party text",
+  "strings": {
+    "726/726": {
+      "files": []
+    },
+    "615/615": {
+      "files": []
+    },
+    "663 / 663": {
+      "files": [
+        "EOS-MISSION-CONTROL/CURRENT_STATE.json"
+      ]
+    },
+    "663/663": {
+      "files": []
+    },
+    "608 / 608": {
+      "files": [
+        "scripts/cli/eos.js"
+      ]
+    },
+    "608/608": {
+      "files": []
+    },
+    "472/472": {
+      "files": [
+        "docs/architecture/EOS_MASTER_ROADMAP_NEXT_90_PERCENT.md",
+        "docs/audits/EOS_DETAILED_STATUS_REPORT_2026_08_14.md",
+        "docs/audits/EOS_FINAL_VERIFIER_V1_3_0_INDEPENDENT_AUDIT.md",
+        "docs/audits/EOS_ISOLATION_INVARIANT_REGRESSION_AND_GOVERNANCE_CLOSURE.md",
+        "docs/audits/EOS_PHASE_II_LEVEL_2_INDEPENDENT_AUDIT.md",
+        "docs/audits/EOS_VERIFIER_EVOLUTION_AUDIT_V2.md",
+        "docs/audits/INDEPENDENT_L3_ENTRY_AUDIT.md",
+        "docs/audits/L3_ENTRY_AUDIT.md",
+        "docs/audits/PRODUCTION_READINESS_EVIDENCE_PACKAGE.md",
+        "docs/governance/LEVEL_3_ENTRY_CRITERIA.md",
+        "docs/intelligence/user/FUNDACION_VALUE_BASELINE.md",
+        "docs/intelligence/user/VAL_EXPERIMENT_002_INSTITUTIONAL_TRUST.md",
+        "docs/workflows/MASTER_EXECUTION_BRIEF.md",
+        "tests/level3/audits/final-verifier-v1-3-audit.js"
+      ]
+    },
+    "471 / 471": {
+      "files": [
+        "EOS-MISSION-CONTROL/CURRENT_STATE.json",
+        "docs/audits/CANARY_MISSION_001_REPORT.md",
+        "docs/audits/CANARY_REAL_001_TECHNICAL_VALIDATION_AUDIT.md",
+        "docs/evidence/EVD-CANARY-REAL-001.json",
+        "docs/missions/CANARY_REAL_001/CANARY_REAL_001_COMPLETION_REPORT.md"
+      ]
+    },
+    "471/471": {
+      "files": [
+        "docs/audits/PHASE_P_MASTER_FALSIFICATION_AUDIT.md"
+      ]
+    },
+    "308/308": {
+      "files": []
+    },
+    "287/287": {
+      "files": [
+        "docs/architecture/EOS_MASTER_ROADMAP_NEXT_90_PERCENT.md",
+        "docs/audits/EOS_DETAILED_STATUS_REPORT_2026_08_14.md",
+        "docs/audits/EOS_ISOLATION_INVARIANT_REGRESSION_AND_GOVERNANCE_CLOSURE.md",
+        "docs/workflows/MASTER_EXECUTION_BRIEF.md"
+      ]
+    },
+    "20/20": {
+      "files": [
+        "EOS-MISSION-CONTROL/CURRENT_MISSION.json",
+        "docs/audits/EOS_RESTRICTED_AUTONOMY_OPERATIONS_AUDIT.md",
+        "docs/releases/EOS_CONTINUOUS_EXECUTION_CHECKPOINT.md",
+        "docs/releases/EOS_FREEZE_GATE_STATUS.md",
+        "docs/releases/RELEASE_CAPABILITY_MATRIX.md",
+        "scripts/engine/restricted-autonomy-operations.js"
+      ]
+    },
+    "PRODUCTION_READY": {
+      "files": [
+        ".agents/AGENTS.md",
+        "CONSTITUTION.md",
+        "EOS-MISSION-CONTROL/CURRENT_MISSION.json",
+        "docs/audits/EOS_PHASE_33_AUTONOMOUS_REMEDIATION.md",
+        "docs/audits/EOS_PHASE_34_POST_REMEDIATION_REVALIDATION.md",
+        "docs/audits/EOS_PHASE_35_EXP_035_001_SONRISA_NOVA.md",
+        "docs/audits/EOS_PHASE_36_EXP_036_001_FLOWDESK.md",
+        "docs/audits/EOS_PHASE_38_EXP_038_001_SELF_HOSTING.md",
+        "docs/audits/EOS_PHASE_II_LUXE_REGISTRY_COMPLETION_AUDIT.md",
+        "docs/audits/EOS_PHASE_II_MULTIMODAL_CREATIVE_COMPLETION_AUDIT.md",
+        "docs/audits/EOS_STEP_1_IMPLEMENTATION_AUDIT.md",
+        "docs/core/CANONICAL_DOMAIN_MODEL.md",
+        "docs/core/CONSTITUTION.md",
+        "docs/core/EOS_CORE_MATURATION_STRATEGY.md",
+        "docs/evidence/EVD-0033.json",
+        "docs/evidence/EVD-0034.json",
+        "docs/evidence/EVD-0035.json",
+        "docs/intake/eos_core/STEP_3_READ_GOVERNANCE_ENGINE_DIAGNOSIS.md",
+        "docs/projects/registry.json",
+        "docs/releases/EOS_FREEZE_GATE_STATUS.md",
+        "docs/releases/RELEASE_CAPABILITY_MATRIX.md",
+        "scripts/engine/autonomous-architect-advisor.js",
+        "tests/autonomous-architect-advisor.test.js"
+      ]
+    }
+  }
+}

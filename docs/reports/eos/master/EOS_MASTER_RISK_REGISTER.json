@@ -1,0 +1,176 @@
+{
+  "generated_at_utc": "2026-09-01T02:18:00Z",
+  "report_id": "EOS-MSR-2026-09-01-001",
+  "items": [
+    {
+      "id": "R-P0-01",
+      "sev": "P0",
+      "title": "Stale/contradictory system-health pass counts used as live telemetry",
+      "class": "CONTRADICTED",
+      "source": "CURRENT_STATE.json 663/663; scripts/cli/eos.js fallback 608/608; freeze 20/20; static 777 calls; 726/726 and 615/615 absent",
+      "impact": "Operators may treat invented or stale counts as current truth"
+    },
+    {
+      "id": "R-P0-02",
+      "sev": "P0",
+      "title": "Security remediations cite modules that do not exist",
+      "class": "CONTRADICTED",
+      "source": "docs/evidence/EOS_STEP_9_SECURITY_MATRIX.json \u2192 src/core/synthesisEngine.js, executionOrchestrator.js",
+      "impact": "Security posture cannot be the claimed 16/16 blocked attacks against those modules"
+    },
+    {
+      "id": "R-P0-03",
+      "sev": "P0",
+      "title": "npm test not executed; mutation risk in suite",
+      "class": "NOT_RUN",
+      "source": "10 test files mention write APIs; MissionRuntime persists .missions",
+      "impact": "No current pass/fail for product tests on this HEAD"
+    },
+    {
+      "id": "R-P1-01",
+      "sev": "P1",
+      "title": "Dual kernel copies (src/core vs scripts/engine)",
+      "class": "OBSERVED",
+      "source": "duplicate_module_basenames.json count=3",
+      "impact": "Which FSM/HITL is authoritative is not mechanically enforced across both planes"
+    },
+    {
+      "id": "R-P1-02",
+      "sev": "P1",
+      "title": "MCP CONNECTED claims vs this environment",
+      "class": "CONTRADICTED",
+      "source": "ACTIVE_TOOLS.json vs .cursor/mcp.json Windows engram.exe path",
+      "impact": "Tooling assumed available is not observed here"
+    },
+    {
+      "id": "R-P1-03",
+      "sev": "P1",
+      "title": "Freeze documents pin stale main SHA",
+      "class": "CONTRADICTED",
+      "source": "EOS_FREEZE_GATE_STATUS.md main=78b28d6; HEAD=24b6968",
+      "impact": "Release paperwork does not describe current tip"
+    },
+    {
+      "id": "R-P1-04",
+      "sev": "P1",
+      "title": "PRJ-FUNDACION empty; GAP-002 still UNKNOWN",
+      "class": "OBSERVED",
+      "source": "Fundacion/ empty; MASTER_UNKNOWN_REGISTER.json",
+      "impact": "Value-plane experiment remains blocked; \u0394=0 is vacuously true for an empty tree"
+    },
+    {
+      "id": "R-P1-05",
+      "sev": "P1",
+      "title": "CLI constructor creates .missions as side effect",
+      "class": "OBSERVED",
+      "source": "mission-runtime.js mkdirSync",
+      "impact": "Even --help is not a pure read; undocumented mutation surface"
+    },
+    {
+      "id": "R-P2-01",
+      "sev": "P2",
+      "title": "Registry paths are Windows absolute and invalid on this VM",
+      "class": "OBSERVED",
+      "source": "docs/projects/registry.json",
+      "impact": "Automation that follows registry paths will fail or target nothing"
+    },
+    {
+      "id": "R-P2-02",
+      "sev": "P2",
+      "title": "Budget/usage telemetry not reproduced",
+      "class": "REPORTED",
+      "source": "EOS-MISSION-CONTROL/BUDGET.json",
+      "impact": "Cost/token claims cannot be used as measured ops data"
+    },
+    {
+      "id": "R-P2-03",
+      "sev": "P2",
+      "title": "RISK.json freezes scripts/engine/core which does not exist",
+      "class": "CONTRADICTED",
+      "source": "EOS-MISSION-CONTROL/RISK.json",
+      "impact": "Core-freeze invariant has no matching directory"
+    },
+    {
+      "id": "R-P2-04",
+      "sev": "P2",
+      "title": "Historical PRODUCTION_READY verdicts inside EVD-0033/34/35",
+      "class": "REPORTED",
+      "source": "docs/evidence",
+      "impact": "Lab/canary verdicts can be misread as system-wide production ready"
+    },
+    {
+      "id": "R-P2-05",
+      "sev": "P2",
+      "title": "Heuristic secret-like assignments in tests/engines",
+      "class": "OBSERVED",
+      "source": "raw/secrets_heuristic.json 10 files",
+      "impact": "Needs human review; not confirmed live secrets"
+    },
+    {
+      "id": "R-P3-01",
+      "sev": "P3",
+      "title": "Docs dominate inventory (651/1046 files)",
+      "class": "MEASURED",
+      "source": "product_baseline_inventory.json",
+      "impact": "High documentation surface increases stale-claim risk"
+    },
+    {
+      "id": "R-P3-02",
+      "sev": "P3",
+      "title": "No lockfile under L0 policy",
+      "class": "OBSERVED",
+      "source": "DEPENDENCY_POLICY_L0.md",
+      "impact": "Acceptable for builtins-only; blocks any future npm dep without policy change"
+    },
+    {
+      "id": "R-P3-03",
+      "sev": "P3",
+      "title": "sqlite artifacts in EOS-Lab",
+      "class": "OBSERVED",
+      "source": "inventory .db .db-wal .db-shm",
+      "impact": "Binary state in tree; reproducibility of lab DBs unknown"
+    }
+  ],
+  "do_not_build": [
+    {
+      "item": "Production deploy / public hosting",
+      "reason": "PRODUCTION_READY=NO; no network/prod capability verified",
+      "class": "NOT_READY"
+    },
+    {
+      "item": "Unattended LEVEL_3+ autonomy on real client targets",
+      "reason": "HITL/ATS not exercised this audit; Fundacion barrier exists",
+      "class": "NOT_READY"
+    },
+    {
+      "item": "Infer GAP-002 legal/banking data",
+      "reason": "Explicit constitutional unknown",
+      "class": "BLOCKED"
+    },
+    {
+      "item": "Treat verify:strict 471 as test coverage or runtime health",
+      "reason": "Path/JSON existence only",
+      "class": "INFERRED"
+    },
+    {
+      "item": "npm install / add dependencies without L1/L2 policy",
+      "reason": "DEPENDENCY_POLICY_L0",
+      "class": "REPORTED"
+    },
+    {
+      "item": "Merge or claim freeze paperwork still equals HEAD",
+      "reason": "78b28d6 \u2260 24b6968",
+      "class": "CONTRADICTED"
+    },
+    {
+      "item": "Operate claimed CONNECTED third-party MCPs from this Linux VM as if live",
+      "reason": "Not observed; Windows engram path",
+      "class": "NOT_OBSERVED"
+    },
+    {
+      "item": "Cite 726/726 or 615/615 as current facts",
+      "reason": "Strings absent in tree; previous-memory only",
+      "class": "CONTRADICTED"
+    }
+  ]
+}

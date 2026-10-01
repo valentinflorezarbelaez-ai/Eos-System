@@ -1,0 +1,5677 @@
+[
+  {
+    "from": "EOS-Lab/Canary-Alpha/src/components/BatchParamMigrationConsole.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/src/components/ConfigPayloadImporter.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/src/components/ContactSupportDispatcher.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/src/components/CsvTabularDataUploader.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/src/components/DiagnosticReporter.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/src/components/WebhookPayloadDispatcher.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/batch-param-migration-console.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/batch-param-migration-console.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/batch-param-migration-console.test.js",
+    "spec": "../src/components/BatchParamMigrationConsole.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/config-payload-importer.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/config-payload-importer.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/config-payload-importer.test.js",
+    "spec": "../src/components/ConfigPayloadImporter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/contact-support-dispatcher.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/contact-support-dispatcher.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/contact-support-dispatcher.test.js",
+    "spec": "../src/components/ContactSupportDispatcher.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/csv-tabular-data-uploader.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/csv-tabular-data-uploader.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/csv-tabular-data-uploader.test.js",
+    "spec": "../src/components/CsvTabularDataUploader.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/diagnostic-reporter.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/diagnostic-reporter.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/diagnostic-reporter.test.js",
+    "spec": "../src/components/DiagnosticReporter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/webhook-payload-dispatcher.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/webhook-payload-dispatcher.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Canary-Alpha/tests/webhook-payload-dispatcher.test.js",
+    "spec": "../src/components/WebhookPayloadDispatcher.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/db/database.ts",
+    "spec": "node:sqlite",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/index.ts",
+    "spec": "hono",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/index.ts",
+    "spec": "@hono/node-server",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/index.ts",
+    "spec": "hono/cookie",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/index.ts",
+    "spec": "zod",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/index.ts",
+    "spec": "./db/database.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/index.ts",
+    "spec": "./services/leadService.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/index.ts",
+    "spec": "./services/authService.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/index.ts",
+    "spec": "./views/dashboard.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/index.ts",
+    "spec": "./views/login.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/services/authService.ts",
+    "spec": "node:sqlite",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/services/authService.ts",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/services/leadService.ts",
+    "spec": "node:sqlite",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/services/leadService.ts",
+    "spec": "crypto",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/views/dashboard.ts",
+    "spec": "../services/leadService.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/views/dashboard.ts",
+    "spec": "./layout.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/src/views/login.ts",
+    "spec": "./layout.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/concurrency/concurrency.test.ts",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/concurrency/concurrency.test.ts",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/concurrency/concurrency.test.ts",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/concurrency/concurrency.test.ts",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/concurrency/concurrency.test.ts",
+    "spec": "../../src/db/database.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/concurrency/concurrency.test.ts",
+    "spec": "../../src/services/leadService.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/concurrency/concurrency.test.ts",
+    "spec": "../../src/services/authService.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/unit/leadService.test.ts",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/unit/leadService.test.ts",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/unit/leadService.test.ts",
+    "spec": "../../src/db/database.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/unit/leadService.test.ts",
+    "spec": "../../src/services/leadService.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/tests/unit/leadService.test.ts",
+    "spec": "../../src/services/authService.js",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/FlowDesk/vitest.config.ts",
+    "spec": "vitest/config",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Sonrisa-Nova/.astro/content.d.ts",
+    "spec": "astro/runtime/server/index.js",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Sonrisa-Nova/.astro/content.d.ts",
+    "spec": "astro",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Sonrisa-Nova/.astro/content.d.ts",
+    "spec": "astro/zod",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Sonrisa-Nova/.astro/content.d.ts",
+    "spec": "astro/loaders",
+    "kind": "package"
+  },
+  {
+    "from": "EOS-Lab/Sonrisa-Nova/.astro/content.d.ts",
+    "spec": "./../src/content.config.mjs",
+    "kind": "relative"
+  },
+  {
+    "from": "EOS-Lab/Sonrisa-Nova/astro.config.mjs",
+    "spec": "astro/config",
+    "kind": "package"
+  },
+  {
+    "from": "Luxe-Registry/src/server.js",
+    "spec": "node:http",
+    "kind": "package"
+  },
+  {
+    "from": "Luxe-Registry/src/server.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "Luxe-Registry/src/server.js",
+    "spec": "./domain/registryEngine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "Luxe-Registry/tests/luxeRegistry.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "Luxe-Registry/tests/luxeRegistry.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "Luxe-Registry/tests/luxeRegistry.test.js",
+    "spec": "node:http",
+    "kind": "package"
+  },
+  {
+    "from": "Luxe-Registry/tests/luxeRegistry.test.js",
+    "spec": "../src/domain/registryEngine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "Luxe-Registry/tests/luxeRegistry.test.js",
+    "spec": "../src/server.js",
+    "kind": "relative"
+  },
+  {
+    "from": "Multimodal-Creative-Suite/src/domain/creativeEngine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "Multimodal-Creative-Suite/src/server.js",
+    "spec": "node:http",
+    "kind": "package"
+  },
+  {
+    "from": "Multimodal-Creative-Suite/src/server.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "Multimodal-Creative-Suite/src/server.js",
+    "spec": "./domain/creativeEngine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "Multimodal-Creative-Suite/tests/multimodalCreative.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "Multimodal-Creative-Suite/tests/multimodalCreative.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "Multimodal-Creative-Suite/tests/multimodalCreative.test.js",
+    "spec": "node:http",
+    "kind": "package"
+  },
+  {
+    "from": "Multimodal-Creative-Suite/tests/multimodalCreative.test.js",
+    "spec": "../src/domain/creativeEngine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "Multimodal-Creative-Suite/tests/multimodalCreative.test.js",
+    "spec": "../src/server.js",
+    "kind": "relative"
+  },
+  {
+    "from": "bin/eos.js",
+    "spec": "../src/cli/mission-cli.js",
+    "kind": "relative"
+  },
+  {
+    "from": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+    "spec": "node:child_process",
+    "kind": "package"
+  },
+  {
+    "from": "docs/reports/eos/master/raw/_collect_inventory.mjs",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/adapters/mock-code-adapter.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/adapters/mock-code-adapter.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "../engine/cursor-command-center-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "../engine/autonomy-graduation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "../engine/mcp-provisioning-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "../engine/autonomous-continuous-learning-loop.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "../engine/polyglot-language-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "../engine/real-provider-adapter-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "../engine/accessibility-validator-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/cli/eos.js",
+    "spec": "../engine/seo-validator-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/accessibility-validator-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/adaptive-adversary-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/adaptive-adversary-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/adaptive-adversary-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/adversarial-laboratory-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/adversarial-laboratory-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/adversarial-laboratory-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-architect-advisor.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-architect-advisor.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-architect-advisor.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-continuous-learning-loop.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-continuous-learning-loop.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-continuous-learning-loop.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-continuous-learning-loop.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-ecosystem-manager-v1.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-ecosystem-manager-v1.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-ecosystem-manager-v1.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-ecosystem-manager.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-ecosystem-manager.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-ecosystem-manager.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-factory.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-factory.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-factory.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-factory.js",
+    "spec": "./autonomous-engineering-mission-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-factory.js",
+    "spec": "./strategy-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-factory.js",
+    "spec": "./strategy-simulator.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-factory.js",
+    "spec": "./strategy-selection-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-factory.js",
+    "spec": "./capability-intelligence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-factory.js",
+    "spec": "./autonomous-execution-runtime.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-mission-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-mission-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-mission-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-mission-engine.js",
+    "spec": "./autonomous-execution-runtime.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-mission-engine.js",
+    "spec": "./capability-intelligence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-operating-loop.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-operating-loop.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-operating-loop.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-operating-loop.js",
+    "spec": "./autonomous-engineering-factory.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-engineering-operating-loop.js",
+    "spec": "./autonomous-self-evolution-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-execution-runtime.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-execution-runtime.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-execution-runtime.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-execution-runtime.js",
+    "spec": "../adapters/mock-code-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-execution-runtime.js",
+    "spec": "../adapters/mock-research-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-execution-runtime.js",
+    "spec": "../adapters/mock-test-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-execution-runtime.js",
+    "spec": "../adapters/mock-browser-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/autonomous-failsafe-harness.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-self-evolution-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-self-evolution-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomous-self-evolution-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomy-graduation-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomy-graduation-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomy-graduation-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/autonomy-graduation-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/blind-strategy-evaluation-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/blind-strategy-evaluation-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/blind-strategy-evaluation-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/blind-strategy-evaluation-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/blind-strategy-evaluation-engine.js",
+    "spec": "./composition-policy-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/blind-strategy-evaluation-engine.js",
+    "spec": "./independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-f001-predictive-transfer-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-f001-predictive-transfer-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-f001-predictive-transfer-harness.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-f001-predictive-transfer-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-f001-predictive-transfer-harness.js",
+    "spec": "./independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-f001-predictive-transfer-harness.js",
+    "spec": "./autonomy-graduation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-f001-predictive-transfer-harness.js",
+    "spec": "./effort-budget-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-i001-composition-executor.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-i001-composition-executor.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-i001-composition-executor.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-i001-composition-executor.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-i001-composition-executor.js",
+    "spec": "./independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-i001-composition-executor.js",
+    "spec": "./autonomy-graduation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-i001-composition-executor.js",
+    "spec": "./effort-budget-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-j001-composite-replication-executor.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-j001-composite-replication-executor.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-j001-composite-replication-executor.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-j001-composite-replication-executor.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-j001-composite-replication-executor.js",
+    "spec": "./independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-j001-composite-replication-executor.js",
+    "spec": "./autonomy-graduation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-j001-composite-replication-executor.js",
+    "spec": "./effort-budget-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-m002-replication-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-m002-replication-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-m002-replication-harness.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-m002-replication-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-m002-replication-harness.js",
+    "spec": "./independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-m002-replication-harness.js",
+    "spec": "./autonomy-graduation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-m002-replication-harness.js",
+    "spec": "./effort-budget-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-m003-replication-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-m003-replication-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-m003-replication-harness.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-m003-replication-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-m003-replication-harness.js",
+    "spec": "./independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-m003-replication-harness.js",
+    "spec": "./autonomy-graduation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-m003-replication-harness.js",
+    "spec": "./effort-budget-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-mission-executor.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-mission-executor.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-mission-executor.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-mission-executor.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-mission-executor.js",
+    "spec": "./independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-mission-executor.js",
+    "spec": "./autonomy-graduation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-mission-executor.js",
+    "spec": "./effort-budget-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-real-001-cohort-server.js",
+    "spec": "node:http",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-real-001-cohort-server.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-real-001-cohort-server.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-real-001-cohort-server.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-real-001-cohort-server.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-real-001-cohort-server.js",
+    "spec": "./independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/canary-triangulation-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-triangulation-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-triangulation-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-triangulation-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-tunnel-supervisor.js",
+    "spec": "node:child_process",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-tunnel-supervisor.js",
+    "spec": "node:https",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-tunnel-supervisor.js",
+    "spec": "node:http",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-tunnel-supervisor.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-tunnel-supervisor.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/canary-tunnel-supervisor.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/capability-intelligence-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/capability-intelligence-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/capability-intelligence-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/causal-replication-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/causal-replication-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/causal-replication-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/causal-replication-harness.js",
+    "spec": "./learning-validity-causality-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/client-triangulation-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/client-triangulation-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/client-triangulation-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/client-triangulation-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/closed-loop-learning-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/closed-loop-learning-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/closed-loop-learning-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/closed-loop-learning-engine.js",
+    "spec": "./strategy-meta-optimization-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/closed-loop-learning-engine.js",
+    "spec": "./experience-learning-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/closed-loop-learning-engine.js",
+    "spec": "./autonomous-ecosystem-manager-v1.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/cognitive-execution-fabric.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cognitive-execution-fabric.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cognitive-execution-fabric.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cognitive-execution-fabric.js",
+    "spec": "./graph-intelligence-plane.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/cognitive-fabric-evaluation-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cognitive-fabric-evaluation-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cognitive-fabric-evaluation-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cognitive-fabric-evaluation-harness.js",
+    "spec": "./cognitive-execution-fabric.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/cognitive-fabric-evaluation-harness.js",
+    "spec": "./graph-intelligence-plane.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/cognitive-fabric-generalization-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cognitive-fabric-generalization-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cognitive-fabric-generalization-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cognitive-fabric-generalization-harness.js",
+    "spec": "./cognitive-execution-fabric.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/cognitive-fabric-generalization-harness.js",
+    "spec": "./graph-intelligence-plane.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/composition-policy-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/composition-policy-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/composition-policy-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/composition-policy-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/context-compiler.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/context-compiler.js",
+    "spec": "./authority-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/contextual-learning-boundary-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/contextual-learning-boundary-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/contextual-learning-boundary-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/continuous-change-operations.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/continuous-change-operations.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/continuous-change-operations.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/continuous-change-operations.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cross-project-transfer-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cross-project-transfer-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cross-project-transfer-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cross-project-transfer-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cursor-command-center-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cursor-command-center-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cursor-command-center-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/cursor-command-center-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/dynamic-replanning-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/dynamic-replanning-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/dynamic-replanning-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/effort-budget-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/effort-budget-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/effort-budget-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/elite-platform-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/elite-platform-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/elite-platform-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/elite-platform-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/epistemic-evidence-engine.js",
+    "spec": "../../src/core/sdd/epistemic-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/executive-arbitration-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/executive-arbitration-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/executive-arbitration-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/executive-generalization-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/executive-generalization-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/executive-generalization-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/executive-generalization-harness.js",
+    "spec": "./executive-orchestrator-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/executive-orchestrator-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/executive-orchestrator-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/executive-orchestrator-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/executive-orchestrator-engine.js",
+    "spec": "./tool-discovery-ranking-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/executive-orchestrator-engine.js",
+    "spec": "./parallel-work-graph-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/executive-orchestrator-engine.js",
+    "spec": "./effort-budget-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/executive-orchestrator-engine.js",
+    "spec": "./experience-learning-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/executive-orchestrator-engine.js",
+    "spec": "./dynamic-replanning-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/executive-orchestrator-engine.js",
+    "spec": "./executive-arbitration-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/experience-learning-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/experience-learning-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/experience-learning-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/external-product-factory-pilot.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/external-product-factory-pilot.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/external-product-factory-pilot.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/external-product-factory-pilot.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/frontier-evaluation-farm.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/frontier-evaluation-farm.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/frontier-evaluation-farm.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/frontier-realism-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/frontier-realism-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/frontier-realism-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/graph-intelligence-plane.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/graph-intelligence-plane.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/graph-intelligence-plane.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/hitl-gatekeeper.js",
+    "spec": "../../src/core/sdd/hitl-gatekeeper.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/independent-canary-reviewer.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/independent-canary-reviewer.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/independent-canary-reviewer.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/independent-canary-reviewer.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/independent-canary-reviewer.js",
+    "spec": "./independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/independent-telemetry-sink.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/independent-telemetry-sink.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/independent-telemetry-sink.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/independent-telemetry-sink.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/independent-verification-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/independent-verification-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/independent-verification-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/learning-robustness-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/learning-robustness-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/learning-robustness-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/learning-robustness-harness.js",
+    "spec": "./contextual-learning-boundary-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/learning-validity-causality-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/learning-validity-causality-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/learning-validity-causality-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/long-run-independent-operation.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/long-run-independent-operation.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/long-run-independent-operation.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/long-run-independent-operation.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/long-run-stability-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/long-run-stability-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/long-run-stability-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-chaos-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-chaos-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-chaos-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-chaos-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-evidence-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-evidence-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-evidence-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-evidence-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-real-operation.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-real-operation.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-real-operation.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/longitudinal-real-operation.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/master-falsification-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/master-falsification-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/master-falsification-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/master-falsification-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/master-package-consistency-auditor.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/master-package-consistency-auditor.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/master-package-consistency-auditor.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/mcp-provisioning-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/mcp-provisioning-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/mcp-provisioning-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/memory-integrity-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/memory-integrity-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/memory-integrity-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/mission-control-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/mission-control-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/mission-control-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/mission-ledger.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/mission-ledger.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/mission-ledger.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/multi-bkm-composition-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/multi-bkm-composition-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/multi-bkm-composition-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/multi-bkm-composition-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/operationalization-program.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/operationalization-program.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/operationalization-program.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/operationalization-program.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/parallel-work-graph-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/parallel-work-graph-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/parallel-work-graph-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/playwright-mcp-benchmark.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/playwright-mcp-benchmark.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/playwright-mcp-benchmark.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/prediction-calibration-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/prediction-calibration-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/prediction-calibration-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/prediction-calibration-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/product-decision-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/product-decision-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/product-decision-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/product-factory-scale-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/product-factory-scale-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/product-factory-scale-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/product-factory-scale-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/production-readiness-review.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/production-readiness-review.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/production-readiness-review.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/production-readiness-review.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/production-readiness-review.js",
+    "spec": "./release-decision-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/project-bootstrap-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/project-bootstrap-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/project-bootstrap-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-client-pilot-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-client-pilot-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-client-pilot-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-client-pilot-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-client-replication-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-client-replication-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-client-replication-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-client-replication-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-operational-campaign-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-operational-campaign-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-operational-campaign-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-operational-campaign-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-project-discovery-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-project-discovery-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-project-discovery-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-provider-adapter-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-world-autonomy-pilot.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-world-autonomy-pilot.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-world-autonomy-pilot.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-world-validation-program.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-world-validation-program.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-world-validation-program.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/real-world-validation-program.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/release-decision-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/release-decision-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/release-decision-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/restricted-autonomy-operations.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/restricted-autonomy-operations.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/restricted-autonomy-operations.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/restricted-autonomy-operations.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/sdd-fsm-engine.js",
+    "spec": "../../src/core/sdd/sdd-fsm-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/self-hosting-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/self-hosting-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/self-hosting-harness.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/self-hosting-harness.js",
+    "spec": "node:child_process",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/self-hosting-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/seo-validator-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/simulate-strategies.js",
+    "spec": "./strategy-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/simulate-strategies.js",
+    "spec": "./strategy-simulator.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/simulate-strategies.js",
+    "spec": "./strategy-selection-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/spec-driven-product-loop.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/spec-driven-product-loop.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/spec-driven-product-loop.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/spec-driven-product-loop.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/strategy-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/strategy-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/strategy-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/strategy-meta-optimization-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/strategy-meta-optimization-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/strategy-meta-optimization-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/strategy-selection-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/strategy-selection-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/strategy-selection-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/sustained-operation-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/sustained-operation-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/sustained-operation-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/system-wide-integrity-audit.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/system-wide-integrity-audit.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/system-wide-integrity-audit.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/tool-discovery-ranking-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/tool-discovery-ranking-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/tool-discovery-ranking-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/transfer-and-unlearning-harness.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/transfer-and-unlearning-harness.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/transfer-and-unlearning-harness.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/transfer-and-unlearning-harness.js",
+    "spec": "./memory-integrity-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/transfer-and-unlearning-harness.js",
+    "spec": "./executive-orchestrator-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/val-exp-002-dry-run-simulator.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/val-exp-002-dry-run-simulator.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/val-exp-002-dry-run-simulator.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/val-exp-002-dry-run-simulator.js",
+    "spec": "./value-instrumentation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "scripts/engine/value-instrumentation-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/value-instrumentation-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/engine/value-instrumentation-engine.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/verify-eos.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/verify-eos.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "scripts/verify-eos.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "src/cli/mission-cli.js",
+    "spec": "../core/runtime/mission-runtime.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/cli/mission-cli.js",
+    "spec": "../core/tutor/tutor-maestro.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/cli/mission-cli.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/adapters/cursor-mission-package.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/adapters/cursor-mission-package.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/adapters/cursor-mission-package.js",
+    "spec": "../sdd/epistemic-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/adapters/cursor-return-ingestion-engine.js",
+    "spec": "../sdd/epistemic-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/authority/authority-truth-source.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/authority/authority-truth-source.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/authority/authority-truth-source.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/authority/authority-truth-source.js",
+    "spec": "../sdd/sdd-fsm-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/authority/authority-truth-source.js",
+    "spec": "../sdd/epistemic-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/authority/authority-truth-source.js",
+    "spec": "../sdd/hitl-gatekeeper.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/contracts/schema-validator.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/contracts/schema-validator.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/contracts/schema-validator.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/discovery/governed-technical-selection-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/discovery/operational-capability-receipt-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/discovery/operational-capability-receipt-engine.js",
+    "spec": "../sdd/epistemic-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/discovery/universal-technical-discovery-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/discovery/universal-technical-discovery-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/discovery/universal-technical-discovery-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/economics/token-economics-audit-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/governance/integration-gatekeeper.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/governance/integration-gatekeeper.js",
+    "spec": "../sdd/epistemic-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/mcp/mcp-mission-bridge.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/mcp/mcp-mission-bridge.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/mcp/mcp-mission-bridge.js",
+    "spec": "node:child_process",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/mcp/mcp-mission-bridge.js",
+    "spec": "../runtime/mission-runtime.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/mcp/mcp-mission-bridge.js",
+    "spec": "../governance/integration-gatekeeper.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/mcp/mcp-mission-bridge.js",
+    "spec": "../contracts/schema-validator.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/mcp/mcp-mission-bridge.js",
+    "spec": "../rules/canonical-rules-index.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/observability/executive-mission-reporter.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/roles/role-skill-registry-engine.js",
+    "spec": "../sdd/epistemic-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/rules/canonical-rules-index.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/rules/canonical-rules-index.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/rules/canonical-rules-index.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../discovery/universal-technical-discovery-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../discovery/governed-technical-selection-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../adapters/cursor-mission-package.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../adapters/cursor-return-ingestion-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../roles/role-skill-registry-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../supervision/multi-agent-supervision-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../sdd/epistemic-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../observability/executive-mission-reporter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../authority/authority-truth-source.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../sdd/hitl-gatekeeper.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../governance/integration-gatekeeper.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../contracts/schema-validator.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../rules/canonical-rules-index.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/runtime/mission-runtime.js",
+    "spec": "../sdd/sdd-fsm-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/sandbox/worktree-mutation-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/sandbox/worktree-mutation-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/sandbox/worktree-mutation-engine.js",
+    "spec": "node:child_process",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/sandbox/worktree-mutation-engine.js",
+    "spec": "../sdd/epistemic-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/core/sdd/epistemic-evidence-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/sdd/epistemic-evidence-engine.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/sdd/epistemic-evidence-engine.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/sdd/hitl-gatekeeper.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/sdd/sdd-fsm-engine.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "src/core/supervision/multi-agent-supervision-engine.js",
+    "spec": "../sdd/epistemic-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/mcp-server.js",
+    "spec": "node:readline",
+    "kind": "package"
+  },
+  {
+    "from": "src/mcp-server.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "src/mcp-server.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "src/mcp-server.js",
+    "spec": "../scripts/engine/context-compiler.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/mcp-server.js",
+    "spec": "../scripts/engine/mission-ledger.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/mcp-server.js",
+    "spec": "../scripts/engine/authority-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "src/mcp-server.js",
+    "spec": "./core/mcp/mcp-mission-bridge.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/accessibility-validator.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/accessibility-validator.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/accessibility-validator.test.js",
+    "spec": "../scripts/engine/accessibility-validator-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/adapter-architecture.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adapter-architecture.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adapter-architecture.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adapter-architecture.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adapter-architecture.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adapter-architecture.test.js",
+    "spec": "../scripts/adapters/mock-code-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/adapter-architecture.test.js",
+    "spec": "../scripts/adapters/mock-research-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/adapter-architecture.test.js",
+    "spec": "../scripts/adapters/mock-test-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/adapter-architecture.test.js",
+    "spec": "../scripts/adapters/mock-browser-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/adaptive-adversary.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adaptive-adversary.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adaptive-adversary.test.js",
+    "spec": "../scripts/engine/adaptive-adversary-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/adversarial-chaos.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adversarial-chaos.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adversarial-chaos.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adversarial-chaos.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adversarial-chaos.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adversarial-chaos.test.js",
+    "spec": "../scripts/engine/adversarial-laboratory-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/adversarial-tool-selection.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adversarial-tool-selection.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/adversarial-tool-selection.test.js",
+    "spec": "../scripts/engine/tool-discovery-ranking-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/authority-adapter.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/authority-adapter.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/authority-adapter.test.js",
+    "spec": "../scripts/engine/authority-adapter.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/authority-truth-source.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/authority-truth-source.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/authority-truth-source.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/authority-truth-source.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/authority-truth-source.test.js",
+    "spec": "node:os",
+    "kind": "package"
+  },
+  {
+    "from": "tests/authority-truth-source.test.js",
+    "spec": "../src/core/authority/authority-truth-source.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/authority-truth-source.test.js",
+    "spec": "../src/core/sdd/sdd-fsm-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/authority-truth-source.test.js",
+    "spec": "../src/core/runtime/mission-runtime.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/autonomous-architect-advisor.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomous-architect-advisor.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomous-architect-advisor.test.js",
+    "spec": "../scripts/engine/autonomous-architect-advisor.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/autonomous-continuous-learning.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomous-continuous-learning.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomous-continuous-learning.test.js",
+    "spec": "../scripts/engine/autonomous-continuous-learning-loop.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/autonomous-ecosystem-manager-v1.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomous-ecosystem-manager-v1.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomous-ecosystem-manager-v1.test.js",
+    "spec": "../scripts/engine/autonomous-ecosystem-manager-v1.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/autonomous-ecosystem-manager.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomous-ecosystem-manager.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomous-ecosystem-manager.test.js",
+    "spec": "../scripts/engine/autonomous-ecosystem-manager.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/autonomous-failsafe-harness.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomous-failsafe-harness.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomous-failsafe-harness.test.js",
+    "spec": "../scripts/engine/autonomous-failsafe-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/autonomy-graduation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomy-graduation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/autonomy-graduation.test.js",
+    "spec": "../scripts/engine/autonomy-graduation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-f001-predictive-transfer.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-f001-predictive-transfer.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-f001-predictive-transfer.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-f001-predictive-transfer.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-f001-predictive-transfer.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-f001-predictive-transfer.test.js",
+    "spec": "../scripts/engine/canary-f001-predictive-transfer-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-i001-composition-experiment.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-i001-composition-experiment.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-i001-composition-experiment.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-i001-composition-experiment.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-i001-composition-experiment.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-i001-composition-experiment.test.js",
+    "spec": "../scripts/engine/canary-i001-composition-executor.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-independent-review.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-independent-review.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-independent-review.test.js",
+    "spec": "../scripts/engine/independent-canary-reviewer.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-j001-composite-replication.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-j001-composite-replication.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-j001-composite-replication.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-j001-composite-replication.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-j001-composite-replication.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-j001-composite-replication.test.js",
+    "spec": "../scripts/engine/canary-j001-composite-replication-executor.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-m002-replication.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-m002-replication.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-m002-replication.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-m002-replication.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-m002-replication.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-m002-replication.test.js",
+    "spec": "../scripts/engine/canary-m002-replication-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-m003-replication.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-m003-replication.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-m003-replication.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-m003-replication.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-m003-replication.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-m003-replication.test.js",
+    "spec": "../scripts/engine/canary-m003-replication-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-mission-001.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-mission-001.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-mission-001.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-mission-001.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-mission-001.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-mission-001.test.js",
+    "spec": "../scripts/engine/canary-mission-executor.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-b-validation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-b-validation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-b-validation.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-b-validation.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-b-validation.test.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-b-validation.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-b-validation.test.js",
+    "spec": "../scripts/engine/autonomy-graduation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-b-validation.test.js",
+    "spec": "../scripts/engine/effort-budget-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-b-validation.test.js",
+    "spec": "../scripts/engine/independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-b-validation.test.js",
+    "spec": "../scripts/engine/autonomous-execution-runtime.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-g-calibration-governance.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-g-calibration-governance.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-g-calibration-governance.test.js",
+    "spec": "../scripts/engine/prediction-calibration-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-h-composition-readiness.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-h-composition-readiness.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-h-composition-readiness.test.js",
+    "spec": "../scripts/engine/multi-bkm-composition-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-k-composition-policy.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-k-composition-policy.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-k-composition-policy.test.js",
+    "spec": "../scripts/engine/composition-policy-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-l-blind-evaluation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-l-blind-evaluation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-l-blind-evaluation.test.js",
+    "spec": "../scripts/engine/blind-strategy-evaluation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-m-cross-project.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-m-cross-project.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-m-cross-project.test.js",
+    "spec": "../scripts/engine/cross-project-transfer-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-m-cross-project.test.js",
+    "spec": "EOS-Lab/Canary-Alpha/src/secrets.env",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-n-longitudinal-chaos.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-n-longitudinal-chaos.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-n-longitudinal-chaos.test.js",
+    "spec": "../scripts/engine/longitudinal-chaos-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-p-master-falsification.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-p-master-falsification.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-p-master-falsification.test.js",
+    "spec": "../scripts/engine/master-falsification-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-phase-q-autonomy-graduation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-q-autonomy-graduation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-phase-q-autonomy-graduation.test.js",
+    "spec": "../scripts/engine/autonomy-graduation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-browser-qa.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-browser-qa.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-browser-qa.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-browser-qa.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-browser-qa.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-browser-qa.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/StepQualificationForm.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-browser-qa.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/WhatsAppPayloadDispatcher.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-browser-qa.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/LiveQuoteCalculator.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-browser-qa.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/HeroConversionHeader.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-browser-qa.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/TrustProofSection.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-cohort-server.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-cohort-server.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-cohort-server.test.js",
+    "spec": "node:http",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-cohort-server.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-cohort-server.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-cohort-server.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-cohort-server.test.js",
+    "spec": "../scripts/engine/canary-real-001-cohort-server.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/StepQualificationForm.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/WhatsAppPayloadDispatcher.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/LiveQuoteCalculator.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/HeroConversionHeader.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/TrustProofSection.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-comprehensive-qa.test.js",
+    "spec": "../scripts/engine/accessibility-validator-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-telemetry-protocol.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-telemetry-protocol.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-telemetry-protocol.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-telemetry-protocol.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-telemetry-protocol.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001-telemetry-protocol.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/TelemetryEngine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001-telemetry-protocol.test.js",
+    "spec": "../scripts/engine/independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-real-001.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/StepQualificationForm.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/WhatsAppPayloadDispatcher.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/LiveQuoteCalculator.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/HeroConversionHeader.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-real-001.test.js",
+    "spec": "../EOS-Lab/Canary-Real-001/src/components/TrustProofSection.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/canary-triangulation-phase-e.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-triangulation-phase-e.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/canary-triangulation-phase-e.test.js",
+    "spec": "../scripts/engine/canary-triangulation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/capability-intelligence.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/capability-intelligence.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/capability-intelligence.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/capability-intelligence.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/capability-intelligence.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/capability-intelligence.test.js",
+    "spec": "../scripts/engine/capability-intelligence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/causal-replication-e2e.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/causal-replication-e2e.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/causal-replication-e2e.test.js",
+    "spec": "../scripts/engine/causal-replication-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/client-triangulation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/client-triangulation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/client-triangulation.test.js",
+    "spec": "../scripts/engine/client-triangulation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/closed-loop-meta-learning.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/closed-loop-meta-learning.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/closed-loop-meta-learning.test.js",
+    "spec": "../scripts/engine/closed-loop-learning-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/cognitive-execution-fabric.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cognitive-execution-fabric.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cognitive-execution-fabric.test.js",
+    "spec": "../scripts/engine/cognitive-execution-fabric.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/cognitive-execution-fabric.test.js",
+    "spec": "../scripts/engine/graph-intelligence-plane.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/cognitive-fabric-evaluation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cognitive-fabric-evaluation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cognitive-fabric-evaluation.test.js",
+    "spec": "../scripts/engine/cognitive-fabric-evaluation-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/cognitive-fabric-generalization.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cognitive-fabric-generalization.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cognitive-fabric-generalization.test.js",
+    "spec": "../scripts/engine/cognitive-fabric-generalization-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/context-compiler.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/context-compiler.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/context-compiler.test.js",
+    "spec": "node:crypto",
+    "kind": "package"
+  },
+  {
+    "from": "tests/context-compiler.test.js",
+    "spec": "../scripts/engine/context-compiler.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/contextual-learning-boundary.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/contextual-learning-boundary.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/contextual-learning-boundary.test.js",
+    "spec": "../scripts/engine/contextual-learning-boundary-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/continuous-change-operations.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/continuous-change-operations.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/continuous-change-operations.test.js",
+    "spec": "../scripts/engine/continuous-change-operations.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/contradiction-resolution.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/contradiction-resolution.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/contradiction-resolution.test.js",
+    "spec": "../scripts/engine/executive-arbitration-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/control-plane-hardening.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/control-plane-hardening.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/control-plane-hardening.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/control-plane-hardening.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/control-plane-hardening.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cursor-cli-harness.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cursor-cli-harness.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cursor-cli-harness.test.js",
+    "spec": "../scripts/cli/eos.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/cursor-command-center.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cursor-command-center.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/cursor-command-center.test.js",
+    "spec": "../scripts/engine/cursor-command-center-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/dynamic-replanning.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/dynamic-replanning.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/dynamic-replanning.test.js",
+    "spec": "../scripts/engine/experience-learning-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/dynamic-replanning.test.js",
+    "spec": "../scripts/engine/dynamic-replanning-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/effort-budget-engine.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/effort-budget-engine.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/effort-budget-engine.test.js",
+    "spec": "../scripts/engine/effort-budget-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/elite-platform.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/elite-platform.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/elite-platform.test.js",
+    "spec": "../scripts/engine/elite-platform-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-e2e-local-fixture.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-e2e-local-fixture.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-e2e-local-fixture.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-e2e-local-fixture.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-e2e-local-fixture.test.js",
+    "spec": "node:os",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-e2e-local-fixture.test.js",
+    "spec": "../src/core/runtime/mission-runtime.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-e2e-local-fixture.test.js",
+    "spec": "../src/core/authority/authority-truth-source.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-e2e-local-fixture.test.js",
+    "spec": "../src/core/sdd/sdd-fsm-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-e2e-local-fixture.test.js",
+    "spec": "../src/core/tutor/tutor-maestro.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-local-contracts.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-local-contracts.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-local-contracts.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-local-contracts.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-local-contracts.test.js",
+    "spec": "node:os",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-local-contracts.test.js",
+    "spec": "../src/core/contracts/schema-validator.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-local-contracts.test.js",
+    "spec": "../src/core/rules/canonical-rules-index.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-local-contracts.test.js",
+    "spec": "../src/core/runtime/mission-runtime.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-local-contracts.test.js",
+    "spec": "../src/core/sdd/hitl-gatekeeper.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-local-contracts.test.js",
+    "spec": "../src/core/sdd/sdd-fsm-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-negative-governance.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-negative-governance.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-negative-governance.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-negative-governance.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-negative-governance.test.js",
+    "spec": "node:os",
+    "kind": "package"
+  },
+  {
+    "from": "tests/eos-negative-governance.test.js",
+    "spec": "../src/core/authority/authority-truth-source.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-negative-governance.test.js",
+    "spec": "../src/core/sdd/sdd-fsm-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-negative-governance.test.js",
+    "spec": "../src/core/runtime/mission-runtime.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/eos-negative-governance.test.js",
+    "spec": "../src/core/governance/integration-gatekeeper.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/epistemic-uncertainty.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/epistemic-uncertainty.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/epistemic-uncertainty.test.js",
+    "spec": "../scripts/engine/executive-arbitration-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/execution-runtime.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/execution-runtime.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/execution-runtime.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/execution-runtime.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/execution-runtime.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/execution-runtime.test.js",
+    "spec": "../scripts/engine/autonomous-execution-runtime.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/executive-arbitration.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/executive-arbitration.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/executive-arbitration.test.js",
+    "spec": "../scripts/engine/executive-arbitration-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/executive-generalization.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/executive-generalization.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/executive-generalization.test.js",
+    "spec": "../scripts/engine/executive-generalization-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/executive-orchestrator-e2e.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/executive-orchestrator-e2e.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/executive-orchestrator-e2e.test.js",
+    "spec": "../scripts/engine/executive-orchestrator-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/experience-learning.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/experience-learning.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/experience-learning.test.js",
+    "spec": "../scripts/engine/experience-learning-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/external-product-factory-pilot.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/external-product-factory-pilot.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/external-product-factory-pilot.test.js",
+    "spec": "../scripts/engine/external-product-factory-pilot.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/factory-governance.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/factory-governance.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/factory-governance.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/factory-governance.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/factory-governance.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/factory-proving.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/factory-proving.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/factory-proving.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/factory-proving.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/factory-proving.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/factory-proving.test.js",
+    "spec": "../scripts/engine/autonomous-engineering-factory.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/fixtures/level3-sandbox/pilot/src/index.js",
+    "spec": "./utils/math.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/frontier-evaluation-farm.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/frontier-evaluation-farm.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/frontier-evaluation-farm.test.js",
+    "spec": "../scripts/engine/frontier-evaluation-farm.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/frontier-realism.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/frontier-realism.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/frontier-realism.test.js",
+    "spec": "../scripts/engine/frontier-realism-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/gap002-provenance-readiness.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/gap002-provenance-readiness.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/gap002-provenance-readiness.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/gap002-provenance-readiness.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/gap002-provenance-readiness.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/graph-intelligence-plane.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/graph-intelligence-plane.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/graph-intelligence-plane.test.js",
+    "spec": "../scripts/engine/graph-intelligence-plane.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/independent-telemetry-sink.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/independent-telemetry-sink.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/independent-telemetry-sink.test.js",
+    "spec": "../scripts/engine/independent-telemetry-sink.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/independent-validation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/independent-validation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/independent-validation.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/independent-validation.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/independent-validation.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/independent-validation.test.js",
+    "spec": "../scripts/engine/independent-verification-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/intelligence.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/intelligence.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/intelligence.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/intelligence.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/intelligence.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/learning-robustness-e2e.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/learning-robustness-e2e.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/learning-robustness-e2e.test.js",
+    "spec": "../scripts/engine/learning-robustness-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/learning-validity-causality.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/learning-validity-causality.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/learning-validity-causality.test.js",
+    "spec": "../scripts/engine/learning-validity-causality-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/audits/final-verifier-v1-3-audit.js",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/audits/final-verifier-v1-3-audit.js",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/audits/final-verifier-v1-3-audit.js",
+    "spec": "crypto",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/audits/final-verifier-v1-3-audit.js",
+    "spec": "child_process",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/audits/final-verifier-v1-3-audit.js",
+    "spec": "../common/verifier-integrity.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/common/baseline.js",
+    "spec": "crypto",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/baseline.js",
+    "spec": "./tree-hash.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/common/baseline.js",
+    "spec": "./verifier-integrity.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/common/canonical-path.js",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/canonical-path.js",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/canonical-path.test.js",
+    "spec": "./canonical-path.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/common/canonical-path.test.js",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/evidence-recorder.js",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/evidence-recorder.js",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/sandbox.js",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/sandbox.js",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/sandbox.js",
+    "spec": "./tree-hash.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/common/tree-hash.js",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/tree-hash.js",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/tree-hash.js",
+    "spec": "crypto",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/verifier-integrity.js",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/common/verifier-integrity.js",
+    "spec": "crypto",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/ec-007-rollback/rollback-suite.js",
+    "spec": "../common/sandbox.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/ec-007-rollback/rollback-suite.js",
+    "spec": "../common/baseline.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/ec-007-rollback/rollback-suite.js",
+    "spec": "../common/tree-hash.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/ec-008-adversarial/adversarial-suite.js",
+    "spec": "../common/sandbox.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/ec-008-adversarial/adversarial-suite.js",
+    "spec": "../common/baseline.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/ec-008-adversarial/adversarial-suite.js",
+    "spec": "../common/tree-hash.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/ec-008-adversarial/adversarial-suite.js",
+    "spec": "../common/verifier-integrity.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/ec-009-observability/observability-suite.js",
+    "spec": "../common/sandbox.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/ec-009-observability/observability-suite.js",
+    "spec": "../common/tree-hash.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "crypto",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "child_process",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "../common/tree-hash.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "../common/verifier-integrity.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "../common/evidence-recorder.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "./modules/dom.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "./modules/theme.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "./modules/clipboard.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "../../src/js/modules/clipboard.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "../../src/js/modules/theme.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/fundacion/fundacion-l3-runner.js",
+    "spec": "../../src/js/modules/dom.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/multi-fixture/multi-fixture-runner.js",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/multi-fixture/multi-fixture-runner.js",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/multi-fixture/multi-fixture-runner.js",
+    "spec": "../common/sandbox.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/multi-fixture/multi-fixture-runner.js",
+    "spec": "../common/baseline.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/multi-fixture/multi-fixture-runner.js",
+    "spec": "../common/tree-hash.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/multi-fixture/multi-fixture-runner.js",
+    "spec": "../common/verifier-integrity.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/multi-fixture/multi-fixture-runner.js",
+    "spec": "../common/evidence-recorder.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/multi-fixture/multi-fixture-runner.js",
+    "spec": "../common/canonical-path.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/multi-fixture/multi-fixture-runner.js",
+    "spec": "../common/canonical-path.test.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/pilot/pilot-runner.js",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/pilot/pilot-runner.js",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/pilot/pilot-runner.js",
+    "spec": "crypto",
+    "kind": "package"
+  },
+  {
+    "from": "tests/level3/pilot/pilot-runner.js",
+    "spec": "../common/sandbox.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/pilot/pilot-runner.js",
+    "spec": "../common/baseline.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/pilot/pilot-runner.js",
+    "spec": "../common/tree-hash.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/pilot/pilot-runner.js",
+    "spec": "../common/verifier-integrity.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/pilot/pilot-runner.js",
+    "spec": "../common/evidence-recorder.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/pilot/pilot-runner.js",
+    "spec": "./utils/math.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/run-all-l3-suites.js",
+    "spec": "./ec-007-rollback/rollback-suite.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/run-all-l3-suites.js",
+    "spec": "./ec-008-adversarial/adversarial-suite.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/run-all-l3-suites.js",
+    "spec": "./ec-009-observability/observability-suite.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/run-all-l3-suites.js",
+    "spec": "./common/evidence-recorder.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/level3/run-all-l3-suites.js",
+    "spec": "./common/verifier-integrity.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/long-run-independent-operation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/long-run-independent-operation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/long-run-independent-operation.test.js",
+    "spec": "../scripts/engine/long-run-independent-operation.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/long-run-stability-500.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/long-run-stability-500.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/long-run-stability-500.test.js",
+    "spec": "../scripts/engine/long-run-stability-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/long-run-stability.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/long-run-stability.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/long-run-stability.test.js",
+    "spec": "../scripts/engine/long-run-stability-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/longitudinal-evidence.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/longitudinal-evidence.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/longitudinal-evidence.test.js",
+    "spec": "../scripts/engine/longitudinal-evidence-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/longitudinal-real-operation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/longitudinal-real-operation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/longitudinal-real-operation.test.js",
+    "spec": "../scripts/engine/longitudinal-real-operation.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/master-package-consistency.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/master-package-consistency.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/master-package-consistency.test.js",
+    "spec": "../scripts/engine/master-package-consistency-auditor.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/mcp-mission-bridge.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-mission-bridge.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-mission-bridge.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-mission-bridge.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-mission-bridge.test.js",
+    "spec": "node:os",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-mission-bridge.test.js",
+    "spec": "../src/mcp-server.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/mcp-mission-bridge.test.js",
+    "spec": "../src/core/mcp/mcp-mission-bridge.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/mcp-provisioning.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-provisioning.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-provisioning.test.js",
+    "spec": "../scripts/engine/mcp-provisioning-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/mcp-readonly-guard.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-readonly-guard.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-readonly-guard.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-readonly-guard.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-readonly-guard.test.js",
+    "spec": "../src/mcp-server.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/mcp-readonly-guard.test.js",
+    "spec": "../scripts/engine/mission-ledger.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/mcp-stdio-smoke.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-stdio-smoke.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mcp-stdio-smoke.test.js",
+    "spec": "../src/mcp-server.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/memory-integrity.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/memory-integrity.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/memory-integrity.test.js",
+    "spec": "../scripts/engine/memory-integrity-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/mission-control.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-control.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-control.test.js",
+    "spec": "../scripts/engine/mission-control-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/mission-engine.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-engine.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-engine.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-engine.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-engine.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-engine.test.js",
+    "spec": "../scripts/engine/autonomous-engineering-mission-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/mission-ledger.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-ledger.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-ledger.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-ledger.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/mission-ledger.test.js",
+    "spec": "../scripts/engine/mission-ledger.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/multi-project-factory-e2e.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/multi-project-factory-e2e.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/multi-project-factory-e2e.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/multi-project-factory-e2e.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/multi-project-factory-e2e.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/multi-project-factory-e2e.test.js",
+    "spec": "../scripts/engine/project-bootstrap-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/operating-loop.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/operating-loop.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/operating-loop.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/operating-loop.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/operating-loop.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/operating-loop.test.js",
+    "spec": "../scripts/engine/autonomous-engineering-operating-loop.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/operationalization-program.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/operationalization-program.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/operationalization-program.test.js",
+    "spec": "../scripts/engine/operationalization-program.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/parallel-work-graph.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/parallel-work-graph.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/parallel-work-graph.test.js",
+    "spec": "../scripts/engine/parallel-work-graph-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/playwright-mcp-benchmark.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/playwright-mcp-benchmark.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/playwright-mcp-benchmark.test.js",
+    "spec": "../scripts/engine/playwright-mcp-benchmark.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/polyglot-language-harness.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/polyglot-language-harness.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/polyglot-language-harness.test.js",
+    "spec": "../scripts/engine/polyglot-language-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/polyglot-rust-wasm-integration.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/polyglot-rust-wasm-integration.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/polyglot-rust-wasm-integration.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/polyglot-rust-wasm-integration.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/polyglot-rust-wasm-integration.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/polyglot-rust-wasm-integration.test.js",
+    "spec": "../scripts/engine/polyglot-language-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/product-decision-engine.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/product-decision-engine.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/product-decision-engine.test.js",
+    "spec": "../scripts/engine/product-decision-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/product-factory-scale.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/product-factory-scale.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/product-factory-scale.test.js",
+    "spec": "../scripts/engine/product-factory-scale-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/production-readiness-review.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/production-readiness-review.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/production-readiness-review.test.js",
+    "spec": "../scripts/engine/production-readiness-review.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/project-bootstrap.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/project-bootstrap.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/project-bootstrap.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/project-bootstrap.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/project-bootstrap.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/project-bootstrap.test.js",
+    "spec": "../scripts/engine/project-bootstrap-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/real-client-pilot.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-client-pilot.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-client-pilot.test.js",
+    "spec": "../scripts/engine/real-client-pilot-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/real-client-replication.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-client-replication.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-client-replication.test.js",
+    "spec": "../scripts/engine/real-client-replication-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/real-operational-campaign.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-operational-campaign.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-operational-campaign.test.js",
+    "spec": "../scripts/engine/real-operational-campaign-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/real-project-discovery.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-project-discovery.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-project-discovery.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-project-discovery.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-project-discovery.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-project-discovery.test.js",
+    "spec": "../scripts/engine/real-project-discovery-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/real-provider-adapter.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-provider-adapter.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-provider-adapter.test.js",
+    "spec": "../scripts/engine/real-provider-adapter-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/real-world-autonomy-pilot.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-world-autonomy-pilot.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-world-autonomy-pilot.test.js",
+    "spec": "../scripts/engine/real-world-autonomy-pilot.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/real-world-validation-program.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-world-validation-program.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/real-world-validation-program.test.js",
+    "spec": "../scripts/engine/real-world-validation-program.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/release-governance.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/release-governance.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/release-governance.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/release-governance.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/release-governance.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/release-governance.test.js",
+    "spec": "../scripts/engine/production-readiness-review.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/release-governance.test.js",
+    "spec": "../scripts/engine/release-decision-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/restricted-autonomy-operations.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/restricted-autonomy-operations.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/restricted-autonomy-operations.test.js",
+    "spec": "../scripts/engine/restricted-autonomy-operations.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/schemas-p01.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/schemas-p01.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/schemas-p01.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/schemas-p01.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/self-evolution.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/self-evolution.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/self-evolution.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/self-evolution.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/self-evolution.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/self-evolution.test.js",
+    "spec": "../scripts/engine/autonomous-self-evolution-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/seo-validator.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/seo-validator.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/seo-validator.test.js",
+    "spec": "../scripts/engine/seo-validator-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/spec-driven-product-loop.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/spec-driven-product-loop.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/spec-driven-product-loop.test.js",
+    "spec": "../scripts/engine/spec-driven-product-loop.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/strategy-engine.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/strategy-engine.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/strategy-engine.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/strategy-engine.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/strategy-engine.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/strategy-engine.test.js",
+    "spec": "../scripts/engine/strategy-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/strategy-engine.test.js",
+    "spec": "../scripts/engine/strategy-simulator.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/strategy-engine.test.js",
+    "spec": "../scripts/engine/strategy-selection-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/strategy-meta-optimization.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/strategy-meta-optimization.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/strategy-meta-optimization.test.js",
+    "spec": "../scripts/engine/strategy-meta-optimization-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/sustained-operation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/sustained-operation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/sustained-operation.test.js",
+    "spec": "../scripts/engine/sustained-operation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/system-integrity-audit.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/system-integrity-audit.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/system-integrity-audit.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/system-integrity-audit.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/system-integrity-audit.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/system-integrity-audit.test.js",
+    "spec": "../scripts/engine/system-wide-integrity-audit.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/tool-discovery-ranking.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/tool-discovery-ranking.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/tool-discovery-ranking.test.js",
+    "spec": "../scripts/engine/tool-discovery-ranking-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/tool-privilege-escalation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/tool-privilege-escalation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/transfer-and-unlearning.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/transfer-and-unlearning.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/transfer-and-unlearning.test.js",
+    "spec": "../scripts/engine/transfer-and-unlearning-harness.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/val-exp-002-dry-run.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/val-exp-002-dry-run.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/val-exp-002-dry-run.test.js",
+    "spec": "node:fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/val-exp-002-dry-run.test.js",
+    "spec": "node:path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/val-exp-002-dry-run.test.js",
+    "spec": "node:url",
+    "kind": "package"
+  },
+  {
+    "from": "tests/val-exp-002-dry-run.test.js",
+    "spec": "../scripts/engine/val-exp-002-dry-run-simulator.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/value-instrumentation.test.js",
+    "spec": "node:test",
+    "kind": "package"
+  },
+  {
+    "from": "tests/value-instrumentation.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  },
+  {
+    "from": "tests/value-instrumentation.test.js",
+    "spec": "../scripts/engine/value-instrumentation-engine.js",
+    "kind": "relative"
+  },
+  {
+    "from": "tests/verifier-authorization-aware.test.js",
+    "spec": "fs",
+    "kind": "package"
+  },
+  {
+    "from": "tests/verifier-authorization-aware.test.js",
+    "spec": "path",
+    "kind": "package"
+  },
+  {
+    "from": "tests/verifier-authorization-aware.test.js",
+    "spec": "node:assert/strict",
+    "kind": "package"
+  }
+]

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="650" viewBox="0 0 720 650" role="img" aria-label="Graph 29 — ordinal visual mapping only (0–5)">
+  <rect width="720" height="650" fill="#f7f5f0"/>
+  <text x="28" y="32" font-family="Georgia, serif" font-size="16" fill="#1c1b18">Graph 29 — ordinal visual mapping only (0–5)</text>
+  <text x="28" y="52" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Architecture coherence</text>
+<rect x="28" y="58" width="216" height="8" fill="#445046"/>
+<text x="252" y="62" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="70" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Documented vs actual</text>
+<rect x="28" y="76" width="0" height="8" fill="#445046"/>
+<text x="36" y="80" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">0</text>
+<text x="28" y="88" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Entrypoints</text>
+<rect x="28" y="94" width="216" height="8" fill="#445046"/>
+<text x="252" y="98" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="106" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">MissionRuntime</text>
+<rect x="28" y="112" width="288" height="8" fill="#445046"/>
+<text x="324" y="116" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">4</text>
+<text x="28" y="124" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">FSM</text>
+<rect x="28" y="130" width="288" height="8" fill="#445046"/>
+<text x="324" y="134" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">4</text>
+<text x="28" y="142" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Authority / HITL</text>
+<rect x="28" y="148" width="288" height="8" fill="#445046"/>
+<text x="324" y="152" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">4</text>
+<text x="28" y="160" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Tools / MCP</text>
+<rect x="28" y="166" width="216" height="8" fill="#445046"/>
+<text x="252" y="170" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="178" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Governance matrix</text>
+<rect x="28" y="184" width="216" height="8" fill="#445046"/>
+<text x="252" y="188" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="196" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Security matrix</text>
+<rect x="28" y="202" width="0" height="8" fill="#445046"/>
+<text x="36" y="206" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">0</text>
+<text x="28" y="214" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Bypass resistance</text>
+<rect x="28" y="220" width="72" height="8" fill="#445046"/>
+<text x="108" y="224" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">1</text>
+<text x="28" y="232" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Evidence system</text>
+<rect x="28" y="238" width="216" height="8" fill="#445046"/>
+<text x="252" y="242" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="250" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Testing inventory</text>
+<rect x="28" y="256" width="360" height="8" fill="#445046"/>
+<text x="396" y="260" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">5</text>
+<text x="28" y="268" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Testing execution</text>
+<rect x="28" y="274" width="72" height="8" fill="#445046"/>
+<text x="108" y="278" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">1</text>
+<text x="28" y="286" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">V&V</text>
+<rect x="28" y="292" width="216" height="8" fill="#445046"/>
+<text x="252" y="296" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="304" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Reproducibility</text>
+<rect x="28" y="310" width="216" height="8" fill="#445046"/>
+<text x="252" y="314" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="322" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Git health</text>
+<rect x="28" y="328" width="288" height="8" fill="#445046"/>
+<text x="324" y="332" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">4</text>
+<text x="28" y="340" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Code health</text>
+<rect x="28" y="346" width="216" height="8" fill="#445046"/>
+<text x="252" y="350" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="358" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Dependency health</text>
+<rect x="28" y="364" width="288" height="8" fill="#445046"/>
+<text x="324" y="368" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">4</text>
+<text x="28" y="376" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Agents</text>
+<rect x="28" y="382" width="144" height="8" fill="#445046"/>
+<text x="180" y="386" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">2</text>
+<text x="28" y="394" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Knowledge plane</text>
+<rect x="28" y="400" width="144" height="8" fill="#445046"/>
+<text x="180" y="404" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">2</text>
+<text x="28" y="412" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Ops maturity</text>
+<rect x="28" y="418" width="216" height="8" fill="#445046"/>
+<text x="252" y="422" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="430" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Performance</text>
+<rect x="28" y="436" width="72" height="8" fill="#445046"/>
+<text x="108" y="440" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">1</text>
+<text x="28" y="448" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Complexity</text>
+<rect x="28" y="454" width="360" height="8" fill="#445046"/>
+<text x="396" y="458" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">5</text>
+<text x="28" y="466" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Fitness functions</text>
+<rect x="28" y="472" width="144" height="8" fill="#445046"/>
+<text x="180" y="476" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">2</text>
+<text x="28" y="484" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Projects</text>
+<rect x="28" y="490" width="216" height="8" fill="#445046"/>
+<text x="252" y="494" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="502" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">History</text>
+<rect x="28" y="508" width="360" height="8" fill="#445046"/>
+<text x="396" y="512" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">5</text>
+<text x="28" y="520" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Risk management</text>
+<rect x="28" y="526" width="216" height="8" fill="#445046"/>
+<text x="252" y="530" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+<text x="28" y="538" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Production readiness</text>
+<rect x="28" y="544" width="0" height="8" fill="#445046"/>
+<text x="36" y="548" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">0</text>
+<text x="28" y="556" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#2b2a26">Epistemic honesty</text>
+<rect x="28" y="562" width="216" height="8" fill="#445046"/>
+<text x="252" y="566" font-family="ui-monospace,monospace" font-size="11" fill="#1c1b18">3</text>
+  <line x1="24" y1="602" x2="696" y2="602" stroke="#c9c4b8"/>
+  <text x="28" y="622" font-family="ui-monospace, monospace" font-size="10" fill="#5c584e">NOT a completeness % · mapping VERIFIED/MEASURED=5 … CONTRADICTED/NOT_READY=0 · see §42 · inventing a single score is forbidden</text>
+</svg>

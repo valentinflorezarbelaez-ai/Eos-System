@@ -1,0 +1,135 @@
+{
+  "collected_at": "2026-09-01T02:15:02.615Z",
+  "root": "/workspace",
+  "file_count": 1047,
+  "total_bytes": 4031346,
+  "by_class": {
+    "agents-dot": {
+      "files": 10,
+      "bytes": 13862
+    },
+    "cursor": {
+      "files": 3,
+      "bytes": 3203
+    },
+    "root-other": {
+      "files": 8,
+      "bytes": 22705
+    },
+    "eos-lab": {
+      "files": 64,
+      "bytes": 625146
+    },
+    "mission-control": {
+      "files": 9,
+      "bytes": 7661
+    },
+    "luxe-registry": {
+      "files": 4,
+      "bytes": 18303
+    },
+    "multimodal": {
+      "files": 4,
+      "bytes": 17015
+    },
+    "bin": {
+      "files": 1,
+      "bytes": 557
+    },
+    "docs": {
+      "files": 652,
+      "bytes": 1938242
+    },
+    "scripts": {
+      "files": 107,
+      "bytes": 613812
+    },
+    "src": {
+      "files": 22,
+      "bytes": 243380
+    },
+    "tests": {
+      "files": 163,
+      "bytes": 527460
+    }
+  },
+  "by_ext": {
+    ".md": {
+      "files": 338,
+      "bytes": 1396800
+    },
+    ".json": {
+      "files": 372,
+      "bytes": 843274
+    },
+    ".mdc": {
+      "files": 1,
+      "bytes": 1207
+    },
+    ".cursorrules": {
+      "files": 1,
+      "bytes": 2976
+    },
+    ".editorconfig": {
+      "files": 1,
+      "bytes": 254
+    },
+    ".gitignore": {
+      "files": 1,
+      "bytes": 643
+    },
+    ".js": {
+      "files": 292,
+      "bytes": 1480525
+    },
+    ".html": {
+      "files": 2,
+      "bytes": 16395
+    },
+    ".css": {
+      "files": 3,
+      "bytes": 12633
+    },
+    ".db": {
+      "files": 2,
+      "bytes": 45056
+    },
+    ".db-shm": {
+      "files": 1,
+      "bytes": 32768
+    },
+    ".db-wal": {
+      "files": 1,
+      "bytes": 115392
+    },
+    ".ts": {
+      "files": 12,
+      "bytes": 39680
+    },
+    ".toml": {
+      "files": 1,
+      "bytes": 277
+    },
+    ".rs": {
+      "files": 1,
+      "bytes": 1814
+    },
+    ".mjs": {
+      "files": 4,
+      "bytes": 7471
+    },
+    ".astro": {
+      "files": 13,
+      "bytes": 34181
+    },
+    ".jsonl": {
+      "files": 1,
+      "bytes": 0
+    }
+  },
+  "skip": [
+    ".git",
+    "node_modules",
+    ".missions"
+  ]
+}

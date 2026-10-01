@@ -1,0 +1,14 @@
+{
+  "collected_at": "2026-09-01T02:16:34.556Z",
+  "status": "PASS",
+  "timestamp_in_output": "2026-09-01T02:15:34.168Z",
+  "check_count": 471,
+  "by_type": {
+    "existence": 276,
+    "json-validity": 187,
+    "frontmatter": 8
+  },
+  "by_status": {
+    "VERIFIED": 471
+  }
+}

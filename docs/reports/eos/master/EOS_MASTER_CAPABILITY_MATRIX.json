@@ -1,0 +1,135 @@
+{
+  "generated_at_utc": "2026-09-01T02:18:00Z",
+  "report_id": "EOS-MSR-2026-09-01-001",
+  "rule": "code existence \u2260 operational capability",
+  "items": [
+    {
+      "id": "CAP-CLI-MISSION",
+      "name": "Mission CLI (bin/eos.js \u2192 MissionCLI)",
+      "status": "OBSERVED",
+      "operational": "UNKNOWN",
+      "evidence": "src/cli/mission-cli.js, bin/eos.js",
+      "note": "Constructor mkdir .missions; --help NOT_RUN"
+    },
+    {
+      "id": "CAP-MISSION-RUNTIME",
+      "name": "MissionRuntime lifecycle",
+      "status": "OBSERVED",
+      "operational": "NOT_RUN",
+      "evidence": "src/core/runtime/mission-runtime.js",
+      "note": "15 methods parsed; no .missions on disk"
+    },
+    {
+      "id": "CAP-ATS",
+      "name": "AuthorityTruthSource commitTransition",
+      "status": "OBSERVED",
+      "operational": "NOT_RUN",
+      "evidence": "src/core/authority/authority-truth-source.js"
+    },
+    {
+      "id": "CAP-FSM",
+      "name": "SDD FSM TransitionEnforcer",
+      "status": "OBSERVED",
+      "operational": "NOT_RUN",
+      "evidence": "src/core/sdd/sdd-fsm-engine.js import succeeded"
+    },
+    {
+      "id": "CAP-HITL",
+      "name": "HitlGatekeeper receipts",
+      "status": "OBSERVED",
+      "operational": "NOT_RUN",
+      "evidence": "src/core/sdd/hitl-gatekeeper.js"
+    },
+    {
+      "id": "CAP-IG",
+      "name": "IntegrationGatekeeper / FDIR",
+      "status": "OBSERVED",
+      "operational": "NOT_RUN",
+      "evidence": "src/core/governance/integration-gatekeeper.js"
+    },
+    {
+      "id": "CAP-MCP-LOCAL",
+      "name": "eos-local MCP server",
+      "status": "OBSERVED",
+      "operational": "NOT_RUN",
+      "evidence": "src/mcp-server.js + .cursor/mcp.json"
+    },
+    {
+      "id": "CAP-MCP-EXTERNAL",
+      "name": "Engram/Playwright/Figma/Slack MCP",
+      "status": "REPORTED",
+      "operational": "NOT_OBSERVED",
+      "evidence": "ACTIVE_TOOLS.json CONNECTED vs this Linux VM"
+    },
+    {
+      "id": "CAP-VERIFY-STRICT",
+      "name": "verify-eos --strict path/JSON gate",
+      "status": "VERIFIED",
+      "operational": "MEASURED",
+      "evidence": "471/471 exit 0 at 2026-09-01T02:15:34Z"
+    },
+    {
+      "id": "CAP-NPM-TEST",
+      "name": "npm test suite",
+      "status": "NOT_RUN",
+      "operational": "UNKNOWN",
+      "evidence": "mutation risk"
+    },
+    {
+      "id": "CAP-LEGACY-FACTORY",
+      "name": "scripts/engine autonomous factory",
+      "status": "OBSERVED",
+      "operational": "NOT_RUN",
+      "evidence": "107 script js files"
+    },
+    {
+      "id": "CAP-FUNDACION",
+      "name": "PRJ-FUNDACION product site",
+      "status": "NOT_READY",
+      "operational": "NOT_OBSERVED",
+      "evidence": "Fundacion/ empty; Windows path absent"
+    },
+    {
+      "id": "CAP-LUXE",
+      "name": "Luxe-Registry in-repo tree",
+      "status": "OBSERVED",
+      "operational": "UNKNOWN",
+      "evidence": "4 files; registry claims PRODUCTION_READY_WITHIN_TESTED_SCOPE"
+    },
+    {
+      "id": "CAP-MULTIMODAL",
+      "name": "Multimodal-Creative-Suite in-repo tree",
+      "status": "OBSERVED",
+      "operational": "UNKNOWN",
+      "evidence": "4 files"
+    },
+    {
+      "id": "CAP-CANARY-LAB",
+      "name": "EOS-Lab canaries",
+      "status": "OBSERVED",
+      "operational": "NOT_RUN",
+      "evidence": "64 files including .db"
+    },
+    {
+      "id": "CAP-COVERAGE",
+      "name": "Test coverage measurement",
+      "status": "NOT_RUN",
+      "operational": "UNKNOWN",
+      "evidence": "no coverage/"
+    },
+    {
+      "id": "CAP-PERF",
+      "name": "Runtime performance telemetry",
+      "status": "NOT_RUN",
+      "operational": "UNKNOWN",
+      "evidence": "BUDGET.json is REPORTED"
+    },
+    {
+      "id": "CAP-PROD-DEPLOY",
+      "name": "Production deploy / network / credentials",
+      "status": "NOT_READY",
+      "operational": "BLOCKED",
+      "evidence": "RELEASE_CAPABILITY_MATRIX FUTURE/BLOCKED"
+    }
+  ]
+}

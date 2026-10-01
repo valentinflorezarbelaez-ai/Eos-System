@@ -1,0 +1,510 @@
+{
+  "collected_at": "2026-09-01T02:16:34.556Z",
+  "count": 84,
+  "files": [
+    {
+      "path": "docs/evidence/EC-007-EVIDENCE.json",
+      "bytes": 1589,
+      "verdict": "VERIFIED",
+      "key_count": 11
+    },
+    {
+      "path": "docs/evidence/EC-008-EVIDENCE.json",
+      "bytes": 2599,
+      "verdict": "VERIFIED",
+      "key_count": 11
+    },
+    {
+      "path": "docs/evidence/EC-009-EVIDENCE.json",
+      "bytes": 2280,
+      "verdict": "VERIFIED",
+      "key_count": 11
+    },
+    {
+      "path": "docs/evidence/EOS_STEP_10_EMPIRICAL_BASELINE.json",
+      "bytes": 14131,
+      "verdict": null,
+      "key_count": 9
+    },
+    {
+      "path": "docs/evidence/EOS_STEP_11_SELF_HOSTING.json",
+      "bytes": 932,
+      "verdict": null,
+      "key_count": 9
+    },
+    {
+      "path": "docs/evidence/EOS_STEP_9_SECURITY_MATRIX.json",
+      "bytes": 2431,
+      "verdict": null,
+      "key_count": 12
+    },
+    {
+      "path": "docs/evidence/EVD-0001.json",
+      "bytes": 1461,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0002.json",
+      "bytes": 1306,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0003.json",
+      "bytes": 1450,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0004.json",
+      "bytes": 1413,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0005.json",
+      "bytes": 2144,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0006.json",
+      "bytes": 2035,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0007.json",
+      "bytes": 2010,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0008.json",
+      "bytes": 2108,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0009.json",
+      "bytes": 2314,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0010.json",
+      "bytes": 3065,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0011.json",
+      "bytes": 2602,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0012.json",
+      "bytes": 2532,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0013.json",
+      "bytes": 2625,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0014.json",
+      "bytes": 2750,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0015.json",
+      "bytes": 2804,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0016.json",
+      "bytes": 3616,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0017.json",
+      "bytes": 2653,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0018.json",
+      "bytes": 3009,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0019.json",
+      "bytes": 2862,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0020.json",
+      "bytes": 3306,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0021.json",
+      "bytes": 3500,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0022.json",
+      "bytes": 3154,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0023.json",
+      "bytes": 3622,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0024.json",
+      "bytes": 2845,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0025.json",
+      "bytes": 2983,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0026.json",
+      "bytes": 2318,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0027.json",
+      "bytes": 2185,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0028.json",
+      "bytes": 2525,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0029.json",
+      "bytes": 2272,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0030.json",
+      "bytes": 2008,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0031.json",
+      "bytes": 1960,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0032.json",
+      "bytes": 2430,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-0033.json",
+      "bytes": 1005,
+      "verdict": "PRODUCTION_READY",
+      "key_count": 10
+    },
+    {
+      "path": "docs/evidence/EVD-0034.json",
+      "bytes": 1178,
+      "verdict": "PRODUCTION_READY",
+      "key_count": 10
+    },
+    {
+      "path": "docs/evidence/EVD-0035.json",
+      "bytes": 2205,
+      "verdict": "PRODUCTION_READY_WITHIN_TESTED_SCOPE",
+      "key_count": 12
+    },
+    {
+      "path": "docs/evidence/EVD-0038-FAIL-TEST.json",
+      "bytes": 511,
+      "verdict": null,
+      "key_count": 11
+    },
+    {
+      "path": "docs/evidence/EVD-0038-PASS-TEST.json",
+      "bytes": 518,
+      "verdict": null,
+      "key_count": 11
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-F001-EVIDENCE.json",
+      "bytes": 1365,
+      "verdict": null,
+      "key_count": 12
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-I001-COMPOSITION.json",
+      "bytes": 1529,
+      "verdict": null,
+      "key_count": 13
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-J001-COMPOSITION-REPLICATION.json",
+      "bytes": 2046,
+      "verdict": null,
+      "key_count": 13
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-M001-EVIDENCE.json",
+      "bytes": 1148,
+      "verdict": null,
+      "key_count": 11
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-M001-INDEPENDENT-REVIEW.json",
+      "bytes": 1766,
+      "verdict": null,
+      "key_count": 8
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-M002-EVIDENCE.json",
+      "bytes": 1479,
+      "verdict": null,
+      "key_count": 13
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-M002-INDEPENDENT-REVIEW.json",
+      "bytes": 939,
+      "verdict": null,
+      "key_count": 8
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-M003-EVIDENCE.json",
+      "bytes": 1884,
+      "verdict": null,
+      "key_count": 13
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-M003-INDEPENDENT-REVIEW.json",
+      "bytes": 866,
+      "verdict": null,
+      "key_count": 8
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-REAL-001.json",
+      "bytes": 3292,
+      "verdict": null,
+      "key_count": 12
+    },
+    {
+      "path": "docs/evidence/EVD-CANARY-TRIANGULATION-001.json",
+      "bytes": 935,
+      "verdict": null,
+      "key_count": 6
+    },
+    {
+      "path": "docs/evidence/EVD-CURSOR-COMMAND-CENTER.json",
+      "bytes": 1315,
+      "verdict": null,
+      "key_count": 6
+    },
+    {
+      "path": "docs/evidence/EVD-FUNDACION-DISCOVERY-001.json",
+      "bytes": 1713,
+      "verdict": "VERIFIED",
+      "key_count": 22
+    },
+    {
+      "path": "docs/evidence/EVD-FUNDACION-LEVEL2-001.json",
+      "bytes": 4061,
+      "verdict": "NOT VERIFIED",
+      "key_count": 23
+    },
+    {
+      "path": "docs/evidence/EVD-FUNDACION-LEVEL2-002.json",
+      "bytes": 3930,
+      "verdict": "VERIFIED",
+      "key_count": 25
+    },
+    {
+      "path": "docs/evidence/EVD-L3-FUNDACION-DISCOVERY-001.json",
+      "bytes": 968,
+      "verdict": "VERIFIED",
+      "key_count": 11
+    },
+    {
+      "path": "docs/evidence/EVD-L3-FUNDACION-PILOT-001.json",
+      "bytes": 3321,
+      "verdict": "VERIFIED",
+      "key_count": 15
+    },
+    {
+      "path": "docs/evidence/EVD-L3-MULTIFIX-001.json",
+      "bytes": 1554,
+      "verdict": "NOT VERIFIED",
+      "key_count": 13
+    },
+    {
+      "path": "docs/evidence/EVD-L3-MULTIFIX-002.json",
+      "bytes": 1638,
+      "verdict": "VERIFIED",
+      "key_count": 15
+    },
+    {
+      "path": "docs/evidence/EVD-L3-MULTIFIX-A-002.json",
+      "bytes": 887,
+      "verdict": "VERIFIED",
+      "key_count": 9
+    },
+    {
+      "path": "docs/evidence/EVD-L3-MULTIFIX-A.json",
+      "bytes": 883,
+      "verdict": "VERIFIED",
+      "key_count": 9
+    },
+    {
+      "path": "docs/evidence/EVD-L3-MULTIFIX-B-002.json",
+      "bytes": 903,
+      "verdict": "VERIFIED",
+      "key_count": 9
+    },
+    {
+      "path": "docs/evidence/EVD-L3-MULTIFIX-B.json",
+      "bytes": 899,
+      "verdict": "VERIFIED",
+      "key_count": 9
+    },
+    {
+      "path": "docs/evidence/EVD-L3-MULTIFIX-C-002.json",
+      "bytes": 948,
+      "verdict": "VERIFIED",
+      "key_count": 9
+    },
+    {
+      "path": "docs/evidence/EVD-L3-MULTIFIX-C.json",
+      "bytes": 897,
+      "verdict": "NOT VERIFIED",
+      "key_count": 9
+    },
+    {
+      "path": "docs/evidence/EVD-L3-PILOT-001.json",
+      "bytes": 1344,
+      "verdict": "VERIFIED",
+      "key_count": 13
+    },
+    {
+      "path": "docs/evidence/EVD-LUXE-0001.json",
+      "bytes": 2905,
+      "verdict": null,
+      "key_count": 9
+    },
+    {
+      "path": "docs/evidence/EVD-MC-0001.json",
+      "bytes": 2630,
+      "verdict": null,
+      "key_count": 9
+    },
+    {
+      "path": "docs/evidence/EVD-OOB-FAIL-SIM-FAIL-01.json",
+      "bytes": 633,
+      "verdict": null,
+      "key_count": 8
+    },
+    {
+      "path": "docs/evidence/EVD-PHASE-G-KNOWLEDGE-GOVERNANCE.json",
+      "bytes": 1739,
+      "verdict": null,
+      "key_count": 6
+    },
+    {
+      "path": "docs/evidence/EVD-PHASE-H-COMPOSITION-READINESS.json",
+      "bytes": 1557,
+      "verdict": null,
+      "key_count": 6
+    },
+    {
+      "path": "docs/evidence/EVD-PHASE-K-COMPOSITION-POLICY.json",
+      "bytes": 1436,
+      "verdict": null,
+      "key_count": 6
+    },
+    {
+      "path": "docs/evidence/EVD-PHASE-L-BLIND-GENERALIZATION.json",
+      "bytes": 1176,
+      "verdict": null,
+      "key_count": 8
+    },
+    {
+      "path": "docs/evidence/EVD-PHASE-M-CROSS-PROJECT.json",
+      "bytes": 1384,
+      "verdict": null,
+      "key_count": 10
+    },
+    {
+      "path": "docs/evidence/EVD-PHASE-N-LONGITUDINAL-CHAOS.json",
+      "bytes": 1233,
+      "verdict": null,
+      "key_count": 8
+    },
+    {
+      "path": "docs/evidence/EVD-PHASE-P-MASTER-AUDIT.json",
+      "bytes": 817,
+      "verdict": null,
+      "key_count": 7
+    },
+    {
+      "path": "docs/evidence/EVD-PHASE-Q-AUTONOMY-GRADUATION.json",
+      "bytes": 737,
+      "verdict": null,
+      "key_count": 7
+    },
+    {
+      "path": "docs/evidence/L3-ENTRY-EXECUTABLE-EVIDENCE.json",
+      "bytes": 1100,
+      "verdict": "VERIFIED",
+      "key_count": 12
+    },
+    {
+      "path": "docs/evidence/VAL_EVD_001_FUNDACION_USER_PILOT.json",
+      "bytes": 2050,
+      "verdict": "VERIFIED",
+      "key_count": 12
+    },
+    {
+      "path": "docs/evidence/raw_telemetry/active_tunnel.json",
+      "bytes": 121,
+      "verdict": "ONLINE",
+      "key_count": 3
+    },
+    {
+      "path": "docs/evidence/schema.json",
+      "bytes": 1773,
+      "verdict": null,
+      "key_count": 5
+    }
+  ]
+}

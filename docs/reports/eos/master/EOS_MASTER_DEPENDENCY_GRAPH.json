@@ -1,0 +1,123 @@
+{
+  "generated_at_utc": "2026-09-01T02:18:00Z",
+  "method": "static import regex + package.json field inspection",
+  "classification": "MEASURED",
+  "nodes": [
+    {
+      "id": "bin/eos.js",
+      "layer": "entrypoint"
+    },
+    {
+      "id": "src/cli/mission-cli.js",
+      "layer": "cli"
+    },
+    {
+      "id": "src/core/runtime/mission-runtime.js",
+      "layer": "kernel"
+    },
+    {
+      "id": "src/core/authority/authority-truth-source.js",
+      "layer": "kernel"
+    },
+    {
+      "id": "src/core/sdd/sdd-fsm-engine.js",
+      "layer": "kernel"
+    },
+    {
+      "id": "src/core/sdd/hitl-gatekeeper.js",
+      "layer": "kernel"
+    },
+    {
+      "id": "src/core/governance/integration-gatekeeper.js",
+      "layer": "kernel"
+    },
+    {
+      "id": "src/mcp-server.js",
+      "layer": "mcp"
+    },
+    {
+      "id": "src/core/mcp/mcp-mission-bridge.js",
+      "layer": "mcp"
+    },
+    {
+      "id": "scripts/cli/eos.js",
+      "layer": "legacy-cli"
+    },
+    {
+      "id": "scripts/engine/*",
+      "layer": "legacy-factory"
+    },
+    {
+      "id": "scripts/verify-eos.js",
+      "layer": "gate"
+    },
+    {
+      "id": "node:builtins",
+      "layer": "runtime"
+    }
+  ],
+  "edges": [
+    {
+      "from": "bin/eos.js",
+      "to": "src/cli/mission-cli.js"
+    },
+    {
+      "from": "src/cli/mission-cli.js",
+      "to": "src/core/runtime/mission-runtime.js"
+    },
+    {
+      "from": "src/core/runtime/mission-runtime.js",
+      "to": "src/core/authority/authority-truth-source.js"
+    },
+    {
+      "from": "src/core/runtime/mission-runtime.js",
+      "to": "src/core/sdd/sdd-fsm-engine.js"
+    },
+    {
+      "from": "src/core/runtime/mission-runtime.js",
+      "to": "src/core/sdd/hitl-gatekeeper.js"
+    },
+    {
+      "from": "src/mcp-server.js",
+      "to": "src/core/mcp/mcp-mission-bridge.js"
+    },
+    {
+      "from": "src/core/mcp/mcp-mission-bridge.js",
+      "to": "src/core/runtime/mission-runtime.js"
+    },
+    {
+      "from": "scripts/cli/eos.js",
+      "to": "scripts/engine/*"
+    },
+    {
+      "from": "npm run verify:strict",
+      "to": "scripts/verify-eos.js"
+    }
+  ],
+  "package_specs": {
+    "node:crypto": 67,
+    "node:test": 131,
+    "node:assert": 132,
+    "node:sqlite": 3,
+    "hono": 2,
+    "@hono/node-server": 1,
+    "zod": 1,
+    "crypto": 7,
+    "fs": 11,
+    "path": 11,
+    "vitest": 1,
+    "astro": 5,
+    "node:http": 7,
+    "node:url": 126,
+    "node:fs": 143,
+    "node:path": 143,
+    "node:child_process": 5,
+    "node:https": 1,
+    "node:readline": 1,
+    "node:os": 5,
+    "EOS-Lab": 1,
+    "child_process": 2
+  },
+  "npm_dependencies_field": null,
+  "note": "Graph is static. Duplicate kernel files in scripts/engine are not shown as imports of src/core."
+}

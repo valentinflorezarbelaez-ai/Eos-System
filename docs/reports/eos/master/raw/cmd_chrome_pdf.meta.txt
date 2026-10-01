@@ -1,0 +1,8 @@
+command=google-chrome --headless --disable-gpu --no-sandbox --hide-scrollbars --print-to-pdf=/workspace/docs/reports/eos/master/EOS_MASTER_SYSTEM_REPORT.pdf --no-pdf-header-footer file:///workspace/docs/reports/eos/master/EOS_MASTER_SYSTEM_REPORT.html
+started_utc=2026-09-01T02:22:37Z
+exit_code=0
+duration_ms=UNKNOWN_CHROME_STAYED_OPEN_AFTER_WRITE
+pdf_bytes=735640
+pdf_pages_count_key=28
+classification=MEASURED
+note=Chrome wrote PDF then lingered on GCM/dbus errors; file is complete. Page count from PDF /Count 28.

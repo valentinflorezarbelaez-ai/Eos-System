@@ -1,0 +1,6 @@
+timestamp_utc=2026-09-01T02:15:34Z
+command=node scripts/verify-eos.js --strict --json
+exit_code=0
+duration_ms=32
+started_utc=2026-09-01T02:15:34Z
+human_exit=0 human_duration_ms=29 started=2026-09-01T02:15:34Z

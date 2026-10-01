@@ -1,0 +1,123 @@
+{
+  "collected_at": "2026-09-01T02:17:03.300Z",
+  "method": "walk workspace excluding .git node_modules .missions docs/reports",
+  "classification": "MEASURED",
+  "file_count": 1046,
+  "total_bytes": 4024024,
+  "by_class": {
+    "agents-dot": {
+      "files": 10,
+      "bytes": 13862
+    },
+    "cursor": {
+      "files": 3,
+      "bytes": 3203
+    },
+    "root-other": {
+      "files": 8,
+      "bytes": 22705
+    },
+    "eos-lab": {
+      "files": 64,
+      "bytes": 625146
+    },
+    "mission-control": {
+      "files": 9,
+      "bytes": 7661
+    },
+    "luxe-registry": {
+      "files": 4,
+      "bytes": 18303
+    },
+    "multimodal": {
+      "files": 4,
+      "bytes": 17015
+    },
+    "bin": {
+      "files": 1,
+      "bytes": 557
+    },
+    "docs": {
+      "files": 651,
+      "bytes": 1930920
+    },
+    "scripts": {
+      "files": 107,
+      "bytes": 613812
+    },
+    "src": {
+      "files": 22,
+      "bytes": 243380
+    },
+    "tests": {
+      "files": 163,
+      "bytes": 527460
+    }
+  },
+  "by_ext": {
+    ".md": {
+      "files": 338,
+      "bytes": 1396800
+    },
+    ".json": {
+      "files": 372,
+      "bytes": 843274
+    },
+    ".mdc": {
+      "files": 1,
+      "bytes": 1207
+    },
+    "(noext)": {
+      "files": 3,
+      "bytes": 3873
+    },
+    ".js": {
+      "files": 292,
+      "bytes": 1480525
+    },
+    ".html": {
+      "files": 2,
+      "bytes": 16395
+    },
+    ".css": {
+      "files": 3,
+      "bytes": 12633
+    },
+    ".db": {
+      "files": 2,
+      "bytes": 45056
+    },
+    ".db-shm": {
+      "files": 1,
+      "bytes": 32768
+    },
+    ".db-wal": {
+      "files": 1,
+      "bytes": 115392
+    },
+    ".ts": {
+      "files": 12,
+      "bytes": 39680
+    },
+    ".toml": {
+      "files": 1,
+      "bytes": 277
+    },
+    ".rs": {
+      "files": 1,
+      "bytes": 1814
+    },
+    ".mjs": {
+      "files": 3,
+      "bytes": 149
+    },
+    ".astro": {
+      "files": 13,
+      "bytes": 34181
+    },
+    ".jsonl": {
+      "files": 1,
+      "bytes": 0
+    }
+  }
+}

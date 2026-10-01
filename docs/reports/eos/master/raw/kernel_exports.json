@@ -1,0 +1,241 @@
+{
+  "collected_at": "2026-09-01T02:16:34.556Z",
+  "method": "ESM import of pure modules (no MissionRuntime / MCP server constructors)",
+  "classification": "OBSERVED",
+  "SDD_STATES": {
+    "VISION_INTAKE": "VISION_INTAKE",
+    "MISSION_FORMULATION": "MISSION_FORMULATION",
+    "HUMAN_DIRECTION_GATE": "HUMAN_DIRECTION_GATE",
+    "DISCOVER": "DISCOVER",
+    "DEFINE": "DEFINE",
+    "PLAN": "PLAN",
+    "DELEGATE": "DELEGATE",
+    "SUPERVISE": "SUPERVISE",
+    "VERIFY": "VERIFY",
+    "REVIEW": "REVIEW",
+    "HUMAN_RELEASE_GATE": "HUMAN_RELEASE_GATE",
+    "OPERATE_AND_LEARN": "OPERATE_AND_LEARN",
+    "PAUSED": "PAUSED",
+    "BLOCKED": "BLOCKED",
+    "FAILED": "FAILED",
+    "CANCELLED": "CANCELLED",
+    "COMPLETED": "COMPLETED"
+  },
+  "AUTHORITY_RANKS": {
+    "LEVEL_0": 0,
+    "LEVEL_1": 1,
+    "LEVEL_2": 2,
+    "LEVEL_3": 3,
+    "LEVEL_4": 4
+  },
+  "CANONICAL_TRANSITIONS_COUNT": 16,
+  "CANONICAL_TRANSITIONS": [
+    {
+      "from": "VISION_INTAKE",
+      "event": "mission.formulate",
+      "to": "MISSION_FORMULATION",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": [
+        "vision"
+      ]
+    },
+    {
+      "from": "MISSION_FORMULATION",
+      "event": "mission.propose_direction",
+      "to": "HUMAN_DIRECTION_GATE",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": [
+        "mission_package",
+        "contract"
+      ]
+    },
+    {
+      "from": "HUMAN_DIRECTION_GATE",
+      "event": "human.approve_direction",
+      "to": "DISCOVER",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": true,
+      "requiredGate": "HUMAN_DIRECTION_GATE",
+      "requiredArtifacts": []
+    },
+    {
+      "from": "DISCOVER",
+      "event": "discovery.complete",
+      "to": "DEFINE",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": [
+        "repository_inventory"
+      ]
+    },
+    {
+      "from": "DEFINE",
+      "event": "definition.complete",
+      "to": "PLAN",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": [
+        "technical_spec",
+        "acceptance_criteria"
+      ]
+    },
+    {
+      "from": "PLAN",
+      "event": "plan.approve",
+      "to": "DELEGATE",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": [
+        "implementation_plan",
+        "task_graph"
+      ]
+    },
+    {
+      "from": "DELEGATE",
+      "event": "task.assign",
+      "to": "SUPERVISE",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": []
+    },
+    {
+      "from": "SUPERVISE",
+      "event": "task.complete",
+      "to": "VERIFY",
+      "minAuthority": "LEVEL_1",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": []
+    },
+    {
+      "from": "SUPERVISE",
+      "event": "task.blocked",
+      "to": "BLOCKED",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": []
+    },
+    {
+      "from": "VERIFY",
+      "event": "verification.complete",
+      "to": "REVIEW",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": []
+    },
+    {
+      "from": "REVIEW",
+      "event": "review.accept",
+      "to": "HUMAN_RELEASE_GATE",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": []
+    },
+    {
+      "from": "REVIEW",
+      "event": "review.reject",
+      "to": "PLAN",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": []
+    },
+    {
+      "from": "HUMAN_RELEASE_GATE",
+      "event": "human.approve_release",
+      "to": "OPERATE_AND_LEARN",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": true,
+      "requiredGate": "HUMAN_RELEASE_GATE",
+      "requiredArtifacts": []
+    },
+    {
+      "from": "HUMAN_RELEASE_GATE",
+      "event": "human.reject_release",
+      "to": "PAUSED",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": []
+    },
+    {
+      "from": "OPERATE_AND_LEARN",
+      "event": "mission.close",
+      "to": "COMPLETED",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": []
+    },
+    {
+      "from": "VISION_INTAKE",
+      "event": "runtime.plan_mission",
+      "to": "PLAN",
+      "minAuthority": "LEVEL_0",
+      "requiresHitlReceipt": false,
+      "requiredGate": null,
+      "requiredArtifacts": [
+        "direction",
+        "project_profile"
+      ]
+    }
+  ],
+  "AUTONOMY_MODES": {
+    "READ_ONLY_AUTONOMOUS": "READ_ONLY_AUTONOMOUS",
+    "LOCAL_BOUNDED_AUTONOMY": "LOCAL_BOUNDED_AUTONOMY",
+    "STAGED_AUTONOMY": "STAGED_AUTONOMY",
+    "PRODUCTION_SUPERVISED": "PRODUCTION_SUPERVISED"
+  },
+  "DECISION_CLASSES": {
+    "DELEGATED_ROUTINE": "delegated_routine",
+    "APPROVAL_REQUIRED": "approval_required",
+    "HUMAN_ONLY": "human_only"
+  },
+  "HUMAN_ONLY_ACTIONS": [
+    "HUMAN_DIRECTION_GATE",
+    "HUMAN_RELEASE_GATE",
+    "human.approve_direction",
+    "human.approve_release",
+    "scope.expand",
+    "surface.modify_protected",
+    "environment.production_release",
+    "credentials.access",
+    "external.message_publish",
+    "constitution.exception"
+  ],
+  "APPROVAL_REQUIRED_ACTIONS": [
+    "budget.extend",
+    "architecture.major_tradeoff",
+    "task_graph.restructure"
+  ],
+  "INTEGRATION_STATES": {
+    "DESIGNED": "DESIGNED",
+    "CONTRACT_REVIEW": "CONTRACT_REVIEW",
+    "PROVIDER_APPROVED": "PROVIDER_APPROVED",
+    "CREDENTIALS_STAGED": "CREDENTIALS_STAGED",
+    "SANDBOX_READY": "SANDBOX_READY",
+    "HITL_EXECUTION_APPROVED": "HITL_EXECUTION_APPROVED",
+    "CANARY_RUNNING": "CANARY_RUNNING",
+    "CANARY_VERIFIED": "CANARY_VERIFIED",
+    "REVOKED_OR_CLOSED": "REVOKED_OR_CLOSED"
+  },
+  "FORBIDDEN_SSRF_HOSTS": [
+    "127.0.0.1",
+    "localhost",
+    "::1",
+    "0.0.0.0",
+    "169.254.169.254",
+    "metadata.google.internal"
+  ]
+}

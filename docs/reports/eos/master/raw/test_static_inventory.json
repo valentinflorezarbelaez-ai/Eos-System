@@ -1,0 +1,2255 @@
+{
+  "collected_at": "2026-09-01T02:15:02.615Z",
+  "method": "static regex count of test( and it( plus write-API mentions; count ≠ coverage ≠ executed",
+  "test_like_files": 132,
+  "tests_dir_test_js": 122,
+  "eos_lab_test_ts": 2,
+  "static_test_or_it_calls": 777,
+  "files_mentioning_write_apis": 10,
+  "files": [
+    {
+      "path": "EOS-Lab/Canary-Alpha/tests/batch-param-migration-console.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2541,
+      "sha256": "082e439fa5e893d61bc4f6271da38c52cacf572cbcac802b36b99a922be4ae38"
+    },
+    {
+      "path": "EOS-Lab/Canary-Alpha/tests/config-payload-importer.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3351,
+      "sha256": "adecb202c94e5b3876b0c4322eaf28a5ff0c8cc49c849a5f12ad38b1dbbc4514"
+    },
+    {
+      "path": "EOS-Lab/Canary-Alpha/tests/contact-support-dispatcher.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4195,
+      "sha256": "7765d6ade835e282ff08f84ab161d7f602e78fd6e9ed96a90a864ecff375b707"
+    },
+    {
+      "path": "EOS-Lab/Canary-Alpha/tests/csv-tabular-data-uploader.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3133,
+      "sha256": "da0620135b6b5b2010401884c9cc28b9e9fc5bac345b58ee5f90bddcfb2ba227"
+    },
+    {
+      "path": "EOS-Lab/Canary-Alpha/tests/diagnostic-reporter.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3860,
+      "sha256": "066a8617ee6e030d569dccc98672c4743a628e7c9066f686f8ccc5a4980bd565"
+    },
+    {
+      "path": "EOS-Lab/Canary-Alpha/tests/webhook-payload-dispatcher.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2219,
+      "sha256": "7a04d6665a30630313daf3d9d676d6e3e4ff2754c62d6c1979eb48d5b4eb1080"
+    },
+    {
+      "path": "EOS-Lab/FlowDesk/tests/concurrency/concurrency.test.ts",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 1,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 3,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1810,
+      "sha256": "3444d21c6f7efc643d33c689a39c48f71e184aee8156a1858c46cbc4ea24b82f"
+    },
+    {
+      "path": "EOS-Lab/FlowDesk/tests/unit/leadService.test.ts",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 1,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2335,
+      "sha256": "f5d8a9df176babf91345a94efab346c5c9c5dda89b2eb489a58431be69dbca43"
+    },
+    {
+      "path": "Luxe-Registry/tests/luxeRegistry.test.js",
+      "testFn": 7,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5320,
+      "sha256": "00fe263a7d1defbc89f10d8a7124e5f5dcea28d5e0de4ec5e66110a6aa903b84"
+    },
+    {
+      "path": "Multimodal-Creative-Suite/tests/multimodalCreative.test.js",
+      "testFn": 7,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3850,
+      "sha256": "b88012940de39760210babadba8a6f9cd2a0ce7012d48126b99e7cdcaec0d052"
+    },
+    {
+      "path": "tests/accessibility-validator.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2841,
+      "sha256": "2140171abba5b5c7e6023ef36dbc8d0db6a8af81cb134dd7c16899baf56415d1"
+    },
+    {
+      "path": "tests/adapter-architecture.test.js",
+      "testFn": 17,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5312,
+      "sha256": "0ea0297c74e799eb2c86c544aab2321745f10dc568e49cb29b5c72b312bbf482"
+    },
+    {
+      "path": "tests/adaptive-adversary.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4007,
+      "sha256": "c682d1fed143ce51efe5d03d0430793d107edf9036266858a75cd9657e965298"
+    },
+    {
+      "path": "tests/adversarial-chaos.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2907,
+      "sha256": "7142f302e62b1741ab9140dee1ec986f6327227b0ce3622f5738c13b88cf07d3"
+    },
+    {
+      "path": "tests/adversarial-tool-selection.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1507,
+      "sha256": "52a3556bb5564a9afc54f93225012d1b57103607682472cb3d2022aa11c5f5f3"
+    },
+    {
+      "path": "tests/authority-adapter.test.js",
+      "testFn": 8,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3483,
+      "sha256": "eee78b55d30753a5fd150e3c4fcd89b00ceb372d6758452b532d7ab0f304c65b"
+    },
+    {
+      "path": "tests/authority-truth-source.test.js",
+      "testFn": 8,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 9,
+        "writeFile": 0,
+        "mkdirSync": 4,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 9740,
+      "sha256": "5b0168a16e6942616a86dbc60631ca0575308d04d74ac3b7e5959d698fb5c866"
+    },
+    {
+      "path": "tests/autonomous-architect-advisor.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1170,
+      "sha256": "ba28d17a12cd47bdc765db7c0db952b858968e5f45a1d4d0f8c5c573d4cce20a"
+    },
+    {
+      "path": "tests/autonomous-continuous-learning.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1167,
+      "sha256": "22eb53ef93deb96ee45df5e0642980db886e2f892e794c178f61c164d8af2b07"
+    },
+    {
+      "path": "tests/autonomous-ecosystem-manager-v1.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3770,
+      "sha256": "c76d21325bf03a7604852541208c2e1e0cbd24777fd605278b414336552df495"
+    },
+    {
+      "path": "tests/autonomous-ecosystem-manager.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2516,
+      "sha256": "6dc6c2cdb76924a2d7314eb4df0fbe1e6cff5fae5f8d06c50f0fea861bb70abd"
+    },
+    {
+      "path": "tests/autonomous-failsafe-harness.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1920,
+      "sha256": "300bed352dd78d02be20972173343467fb1c519b9cf2a4c66a5bd89bcfada9c3"
+    },
+    {
+      "path": "tests/autonomy-graduation.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2382,
+      "sha256": "500ee339beb47cb9fd0cd2e60944e3c54a152abed684d26f0fb367c1b236f1f2"
+    },
+    {
+      "path": "tests/canary-f001-predictive-transfer.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3387,
+      "sha256": "ab796dca93645cc888dd0c0f9f8890c72766f92dde4052b2b5838988dc1dc83c"
+    },
+    {
+      "path": "tests/canary-i001-composition-experiment.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3565,
+      "sha256": "3c24662fdfde3716bbc95cb79c5255313ce3a8f9e4456aab302abec3c03a4e7a"
+    },
+    {
+      "path": "tests/canary-independent-review.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2892,
+      "sha256": "4f4991edc03dab45b2a8a224e33d33c7effada71c198ed5b3999ca8aebbb98cf"
+    },
+    {
+      "path": "tests/canary-j001-composite-replication.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4594,
+      "sha256": "6b80d16ec487a47c6cd9adaf24a124ed3c7aa04449426b2ae61a6984be0a6bd1"
+    },
+    {
+      "path": "tests/canary-m002-replication.test.js",
+      "testFn": 7,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4103,
+      "sha256": "3ed7d66fdabf1728b5d7983f60204d81f082cdc52c15161dacc7138179bfa8b8"
+    },
+    {
+      "path": "tests/canary-m003-replication.test.js",
+      "testFn": 7,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4147,
+      "sha256": "013d8216e25dd1202d119a958d2b490f940162c15cb08e4ab6bcb317f061c2c6"
+    },
+    {
+      "path": "tests/canary-mission-001.test.js",
+      "testFn": 9,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5185,
+      "sha256": "6bc9ffeda12b2e226944f3d11cb7cc3b1e3c932993593da4226a490349af5812"
+    },
+    {
+      "path": "tests/canary-phase-b-validation.test.js",
+      "testFn": 10,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 10479,
+      "sha256": "ef709ff97cc53f32783df01467ded4f49e1d241500235e601716b954b2a3175b"
+    },
+    {
+      "path": "tests/canary-phase-g-calibration-governance.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3366,
+      "sha256": "d3cd0946695b1540caac0428854558c5eada0ca78e24383d5a4bbeb43d1966d3"
+    },
+    {
+      "path": "tests/canary-phase-h-composition-readiness.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2924,
+      "sha256": "ad520f8a71b19fc24d2c11408f520bb59867c45a1b41678ff0ec1f129560d614"
+    },
+    {
+      "path": "tests/canary-phase-k-composition-policy.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2510,
+      "sha256": "121753176caf482161b24a34c94398beb291f7da14560c79827bd8ea503f1161"
+    },
+    {
+      "path": "tests/canary-phase-l-blind-evaluation.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2552,
+      "sha256": "5cfdd5968d28e175bfe2973638eb534fbe0ff9cdca9134623bf8caac9236b877"
+    },
+    {
+      "path": "tests/canary-phase-m-cross-project.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2875,
+      "sha256": "f24558b8951e68ba9437a3b0b19e67223bdc71c163aea82c0d5bafa01a48ee99"
+    },
+    {
+      "path": "tests/canary-phase-n-longitudinal-chaos.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2147,
+      "sha256": "ac4a36ae68b0e5aa4609cd4bc4e436371c4e27e5fa5866d00c9c223fb167ba85"
+    },
+    {
+      "path": "tests/canary-phase-p-master-falsification.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1346,
+      "sha256": "ab8c50c256be085f2846fdc04d9e91ec4fecdc18554c0e6f6ae2ea9df8f899f4"
+    },
+    {
+      "path": "tests/canary-phase-q-autonomy-graduation.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2167,
+      "sha256": "60570ba4fa37f4dd3e4ed12d581cb64853d91c17cae95676af72fd7956a61d4a"
+    },
+    {
+      "path": "tests/canary-real-001-browser-qa.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5373,
+      "sha256": "f7104d42d17471041dbfd2c43ab26ed2a7a6c93be3332d4835488670aa3f8666"
+    },
+    {
+      "path": "tests/canary-real-001-cohort-server.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 4,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 6380,
+      "sha256": "755c5acfeda347ef0c6daa20e21b5663fc02e5e568537612dffb415729c10d94"
+    },
+    {
+      "path": "tests/canary-real-001-comprehensive-qa.test.js",
+      "testFn": 17,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 14375,
+      "sha256": "14a7694c4c80c8920c178a55be9ba58efb81eb73842e8f77bca4807d5ab340c3"
+    },
+    {
+      "path": "tests/canary-real-001-telemetry-protocol.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4681,
+      "sha256": "97a1df0912ab28dbb26fe6a9d985ce5cb752cca1f74e5f13326176109050f6ce"
+    },
+    {
+      "path": "tests/canary-real-001.test.js",
+      "testFn": 7,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 6621,
+      "sha256": "bec72aa9775021596ea0286eeaf8303de077850d7211368ff4d76b34627ecd68"
+    },
+    {
+      "path": "tests/canary-triangulation-phase-e.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3076,
+      "sha256": "56ecb3e6f0561f9974dffdcef2e520f06ce2ea35283b75a62ebc4e0ea9612417"
+    },
+    {
+      "path": "tests/capability-intelligence.test.js",
+      "testFn": 21,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5742,
+      "sha256": "64434cdc750343e222f1ee3dc86854d2c53b57af520dec6f3f9295b76d3732ba"
+    },
+    {
+      "path": "tests/causal-replication-e2e.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1381,
+      "sha256": "773e5ea7fcbb486efc3ef0db2d6be6cc69dac9653ff899619fb38e2d7180f548"
+    },
+    {
+      "path": "tests/client-triangulation.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3272,
+      "sha256": "b8877b5440b865af424505ab491d25bc13b5673209e7123ff0b2b682c3f69751"
+    },
+    {
+      "path": "tests/closed-loop-meta-learning.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2642,
+      "sha256": "29ab9fe8935666bf43a867a2bdb1cb2b663415ed482d4724505cbb9b305e7383"
+    },
+    {
+      "path": "tests/cognitive-execution-fabric.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 6350,
+      "sha256": "e2d6e5c010a9b2b6684a970fda6cefe7b3d8dfa3b09706f75ca242c861b1df25"
+    },
+    {
+      "path": "tests/cognitive-fabric-evaluation.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2702,
+      "sha256": "cd31dc71cf8ebad1955f6f4fa6a4aa9623832d85e6e3e9e40483bea0c38b83f5"
+    },
+    {
+      "path": "tests/cognitive-fabric-generalization.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3134,
+      "sha256": "17c73babbc536ef24ca781dadda3b5c3d0e6a13cf3fc66ecebd5578bd3888998"
+    },
+    {
+      "path": "tests/context-compiler.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4045,
+      "sha256": "8fc3b8218f2e49fca433deefcded89f874745c1b382c74e9e32d8a389e9b6db6"
+    },
+    {
+      "path": "tests/contextual-learning-boundary.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1258,
+      "sha256": "711b244ac6edb00416fcf9a4b941d2098effa212149dee64553cd92361f3df07"
+    },
+    {
+      "path": "tests/continuous-change-operations.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3346,
+      "sha256": "ce2ba0f71f4d4c35ae61c717d39da645b781926ef962777825edb480a44daca0"
+    },
+    {
+      "path": "tests/contradiction-resolution.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1490,
+      "sha256": "18305aef952c7372f4e956090a98c947c702e4369fe1fd2fcf1513f62d54c916"
+    },
+    {
+      "path": "tests/control-plane-hardening.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2938,
+      "sha256": "8583ec2947a8da2bdcaabd0f48d49216cfcee148b5b4f8899fa66b868fe82285"
+    },
+    {
+      "path": "tests/cursor-cli-harness.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2698,
+      "sha256": "fefbf439c342617a500157cbed008fc0ecc1447d2bf82c2f8fc29c804268bc6e"
+    },
+    {
+      "path": "tests/cursor-command-center.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3467,
+      "sha256": "fa084de36a6022cb58deecdb34cb94f902d58ad8afb87c67e73a29e0a9fa0a3f"
+    },
+    {
+      "path": "tests/dynamic-replanning.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1660,
+      "sha256": "0c890837243fcfcf000af8e10b3baf0544be2cab7e9b069f1fd82fc100a119f5"
+    },
+    {
+      "path": "tests/effort-budget-engine.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1528,
+      "sha256": "2dbe8a7b15f37ad72f7fd3f34d8b93ed348a7cf304c4efbb3eb8642467adbfca"
+    },
+    {
+      "path": "tests/elite-platform.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3401,
+      "sha256": "10d18ffd44ff5109bbef424bd51fdf2676eb2e9bdb678ffbc714454760a7d3c7"
+    },
+    {
+      "path": "tests/eos-e2e-local-fixture.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 4,
+        "writeFile": 0,
+        "mkdirSync": 2,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5703,
+      "sha256": "5c48f8b40ec56b23368ac3ca52042d4d40bc813ef9ebf6ed09b78a7ca6a14a4c"
+    },
+    {
+      "path": "tests/eos-local-contracts.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 2,
+        "writeFile": 0,
+        "mkdirSync": 2,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3572,
+      "sha256": "ca7e246a5950edba2e3c786fd10ab53cc974299dc2980b2da7be1a885fac53ac"
+    },
+    {
+      "path": "tests/eos-negative-governance.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 4,
+        "writeFile": 0,
+        "mkdirSync": 5,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3664,
+      "sha256": "4e8f7c015eab4d3fa7828af08b3fb1346a02abb1625b0d1ea4e5eaf315840702"
+    },
+    {
+      "path": "tests/epistemic-uncertainty.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1796,
+      "sha256": "619af27d5027fa1c8deef1294e176b03e4664e58f5c387ec5dbefd7d782e89e6"
+    },
+    {
+      "path": "tests/execution-runtime.test.js",
+      "testFn": 29,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 9649,
+      "sha256": "95db7763dbc1d5c5853c7c86279d680dbb38d36538dab6d9b47be207cfbf5385"
+    },
+    {
+      "path": "tests/executive-arbitration.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3476,
+      "sha256": "e91b8f2d123bf32d9002552afeaf3c48c19b6cef4e665aebe16ea1a18d5f215c"
+    },
+    {
+      "path": "tests/executive-generalization.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1740,
+      "sha256": "236609eecd9839d6d6773666eaac6c7ee889bf22476c1539fa717041c6467fc9"
+    },
+    {
+      "path": "tests/executive-orchestrator-e2e.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4159,
+      "sha256": "cd4e980da0081bc1b4f6a3816ca0983ea11e4e63c8b0dd781495311e38e6d190"
+    },
+    {
+      "path": "tests/experience-learning.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2424,
+      "sha256": "3aea749b8e9d7596b6a9b118e0a1b97f36156bab934279e6548162705f9e9078"
+    },
+    {
+      "path": "tests/external-product-factory-pilot.test.js",
+      "testFn": 7,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3820,
+      "sha256": "b31e279e8164d3c712b285db28d104643bc8a10acba3108667048d58b3f875f2"
+    },
+    {
+      "path": "tests/factory-governance.test.js",
+      "testFn": 14,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 6433,
+      "sha256": "82e43bbf9998e448abccac0d7ddcbcd5caf143cf88002d6130ebb80b14243185"
+    },
+    {
+      "path": "tests/factory-proving.test.js",
+      "testFn": 27,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 7993,
+      "sha256": "2e5ee22e95cc9c67606e59fc295b1920e088cfde80b0bb8b6a34db4a254f2d3c"
+    },
+    {
+      "path": "tests/frontier-evaluation-farm.test.js",
+      "testFn": 7,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5441,
+      "sha256": "46e50bd07e5d2b7d238a95f3f0d233c6b2f0ca3a36d2dfd752ae2f8826d4c27a"
+    },
+    {
+      "path": "tests/frontier-realism.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2618,
+      "sha256": "93fc021d40544396d12d77172003255364be416f3ebbc72e5ed08fa9d6bf03bf"
+    },
+    {
+      "path": "tests/gap002-provenance-readiness.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5957,
+      "sha256": "24184c13a392dbc33d1e760bd17e02d52d511c29aac5987c2bdc0dae5b4505c4"
+    },
+    {
+      "path": "tests/graph-intelligence-plane.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5163,
+      "sha256": "c98733e43047f323cddc01e909f7e0f4fb72e276395a06dab366dacab673a778"
+    },
+    {
+      "path": "tests/independent-telemetry-sink.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3049,
+      "sha256": "60aea86c9dc73ff42c3a7771b88b6c0f4e51df5c489651a6e7b34debdb2d0c6e"
+    },
+    {
+      "path": "tests/independent-validation.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2356,
+      "sha256": "f20e9e5fae5885f72a502f02551e4d732fc7fbb89665d7e5c08a01bf329d8020"
+    },
+    {
+      "path": "tests/intelligence.test.js",
+      "testFn": 14,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 7071,
+      "sha256": "b8ce42ef72421bbd459d8e62fb0c5d4768cf63dfe5f9a9ce483a8f2d7c59a8bb"
+    },
+    {
+      "path": "tests/learning-robustness-e2e.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2090,
+      "sha256": "0b6edad7489978382761b41b2bbe1687bacfb2eb861ae46f4589f1d157536211"
+    },
+    {
+      "path": "tests/learning-validity-causality.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2879,
+      "sha256": "eff51d4134ae24872712b80f2fc6f7f605b679ee6e0cf206affd4c2d4920a903"
+    },
+    {
+      "path": "tests/level3/common/canonical-path.test.js",
+      "testFn": 0,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2493,
+      "sha256": "7df43c23450cbadb1500f44403d627a5f81a004805128b15dcda2c0b9f3d3584"
+    },
+    {
+      "path": "tests/long-run-independent-operation.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3102,
+      "sha256": "1559d2c864d117dd2437e02664b2fc7d9b30c15ba2a0e7d75f714a039b232202"
+    },
+    {
+      "path": "tests/long-run-stability-500.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 924,
+      "sha256": "bcb5a89617e4b4c8776976d94caa95b1c267b3773f8ad6b513c5649427d223d3"
+    },
+    {
+      "path": "tests/long-run-stability.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 871,
+      "sha256": "1e2c9febdc1a60af7b087af8b76ca0a9d4ca68e991712824f5bf5981a0c84bf9"
+    },
+    {
+      "path": "tests/longitudinal-evidence.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2670,
+      "sha256": "72e5e77f726a44775a34c0db5b83c32963b3f4c9f19f8d8fd855124d549085c3"
+    },
+    {
+      "path": "tests/longitudinal-real-operation.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2717,
+      "sha256": "7c731c574e1e2932a24e7545f3ece2bf90e8b0896f934ee9341b3ed0562ba495"
+    },
+    {
+      "path": "tests/master-package-consistency.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 705,
+      "sha256": "954eb1f209e8cceba79c15af979a08b38a2735664da3a0c0bbbee363165ecd9f"
+    },
+    {
+      "path": "tests/mcp-mission-bridge.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 1,
+        "writeFile": 0,
+        "mkdirSync": 1,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3118,
+      "sha256": "83697f910fa33822f70ac99493bce4f56a0801645f0d8fb7de3a9ca28ed3f662"
+    },
+    {
+      "path": "tests/mcp-provisioning.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2131,
+      "sha256": "5cd85e166f0b9f454da965c3e33d1e64480cfdc27f105a46df4043170040c776"
+    },
+    {
+      "path": "tests/mcp-readonly-guard.test.js",
+      "testFn": 8,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 1,
+        "unlinkSync": 0,
+        "rmSync": 1,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 7022,
+      "sha256": "128d4e03c686074724d51d616aad7111b0c7acf06c2eca99f037ea7de25a7490"
+    },
+    {
+      "path": "tests/mcp-stdio-smoke.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2346,
+      "sha256": "cce5cbad7fa9c097017f6baf20bb39e54b400d1015cd5afa34e8cff937455c6d"
+    },
+    {
+      "path": "tests/memory-integrity.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1798,
+      "sha256": "750fa6f795610901b2d7a977d288dfd515c45276241315ecea33c76f5361eab9"
+    },
+    {
+      "path": "tests/mission-control.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2479,
+      "sha256": "5e1a15ae61e6872d5e3b8476e5c9c2a40b3fd47a1b26f4586b63428474b93288"
+    },
+    {
+      "path": "tests/mission-engine.test.js",
+      "testFn": 52,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 12544,
+      "sha256": "0f97dca55c74cac22e42631ca603403b0ea46f9b4490f1cb34d2a4a408cfbe08"
+    },
+    {
+      "path": "tests/mission-ledger.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 1,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3128,
+      "sha256": "06c68084f475b441970f921c521e7a5840e4a2e7cfc193712ad06a2b4cdaccc5"
+    },
+    {
+      "path": "tests/multi-project-factory-e2e.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2201,
+      "sha256": "226b25520aad8c64d91c59579bd8e292b967831c8cb7c53e5de4730acbc10b40"
+    },
+    {
+      "path": "tests/operating-loop.test.js",
+      "testFn": 18,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5619,
+      "sha256": "3a945f84c7a5fdffc28e610efc59e925f0404bbfb700d022581606ca818d58b8"
+    },
+    {
+      "path": "tests/operationalization-program.test.js",
+      "testFn": 7,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3705,
+      "sha256": "0dc09bd5b32544ee1895804666ee0e07677b5e2d37ca22e64b4bfaa783b1e989"
+    },
+    {
+      "path": "tests/parallel-work-graph.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2223,
+      "sha256": "a55cace86fd2ed66744a40149cbadc9f9d9159070d8ee926b40134d4656aefbe"
+    },
+    {
+      "path": "tests/playwright-mcp-benchmark.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 954,
+      "sha256": "cbbb76bb90643823bab8c6b4b298c886f91b5a938f2fa1598b18f129fcb8d171"
+    },
+    {
+      "path": "tests/polyglot-language-harness.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1748,
+      "sha256": "e0aaefbb9017ff8a2b50212eb44f7ab1de83514ea378ee9030691f6aea703288"
+    },
+    {
+      "path": "tests/polyglot-rust-wasm-integration.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1523,
+      "sha256": "186521b09401deba5100c620d7a71fb6c08037d637d1ab24f8d50008136dd0c2"
+    },
+    {
+      "path": "tests/product-decision-engine.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2375,
+      "sha256": "b5473f6b8570a28b51271a8542dc4d4958d20eb42f2d83e41291e7e300bb1640"
+    },
+    {
+      "path": "tests/product-factory-scale.test.js",
+      "testFn": 8,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4778,
+      "sha256": "9e812d481f085ff59756c5b5c4bd6a9cd43056545363926d13fb8343ef8381b3"
+    },
+    {
+      "path": "tests/production-readiness-review.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3080,
+      "sha256": "2165b0401c306780c2ceae9c29bf36010b26d6e4817f1a58c5d895a6c09eda72"
+    },
+    {
+      "path": "tests/project-bootstrap.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2448,
+      "sha256": "b443baf3cfd6855d3eacd91ad25fcbd78dc6c262f72b95587085e75753560d74"
+    },
+    {
+      "path": "tests/real-client-pilot.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2727,
+      "sha256": "e767a587b62b953330fcdf244fb2288a23d30bba3f528dae6cd897301771a5e1"
+    },
+    {
+      "path": "tests/real-client-replication.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2488,
+      "sha256": "275156cf6cc0e7894477b8151b23577aa6fd615c368ea96ab85fd11a4bd33b8b"
+    },
+    {
+      "path": "tests/real-operational-campaign.test.js",
+      "testFn": 7,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3587,
+      "sha256": "fe31e3f0b3ebdc74e57e5570ed5c08d3e7ab5bf5bb8f139a694456105b19b1c3"
+    },
+    {
+      "path": "tests/real-project-discovery.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3921,
+      "sha256": "5f81e504d5e89bf41497750c16976e795ed7a6ac9b4317320a7bde4561baf0ef"
+    },
+    {
+      "path": "tests/real-provider-adapter.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3855,
+      "sha256": "12e44ede484b575b606809afd089ddba0f15985708df49aac100189f5fb86bd1"
+    },
+    {
+      "path": "tests/real-world-autonomy-pilot.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3524,
+      "sha256": "88c61dde03ab23686fc6c28cdb08331ed0dd3401d870ad69661131e3ec2a7e13"
+    },
+    {
+      "path": "tests/real-world-validation-program.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3287,
+      "sha256": "c6ae04801a92cb7072baffdd570f5483ccb798159ccb59a7440a0af3db4e189e"
+    },
+    {
+      "path": "tests/release-governance.test.js",
+      "testFn": 19,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 5985,
+      "sha256": "cbe33c159e94a58734c081b5604743d061b182aeb8164368e6bf584f842f14ee"
+    },
+    {
+      "path": "tests/restricted-autonomy-operations.test.js",
+      "testFn": 5,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3489,
+      "sha256": "b2e8be509b903956a0bf6f1c175e8a3bbfddf40bcab6e67c7fa9d800526e4e29"
+    },
+    {
+      "path": "tests/schemas-p01.test.js",
+      "testFn": 8,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4036,
+      "sha256": "11e4baa9a97443718b1be4adca27aa9778235814f3d2a0f0f5de70d2634542ba"
+    },
+    {
+      "path": "tests/self-evolution.test.js",
+      "testFn": 28,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 7387,
+      "sha256": "ac98ff10331d18f7e093340e3fe4cc6fdd4b1ead8452cfc15d7b984e97ce33ad"
+    },
+    {
+      "path": "tests/seo-validator.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2776,
+      "sha256": "ce217d15289ee53e9ab2cf628e9acb9f7af3a6f647b3cbc42b8a3c42424f0173"
+    },
+    {
+      "path": "tests/spec-driven-product-loop.test.js",
+      "testFn": 7,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4446,
+      "sha256": "057f99db61039cf97064798778dc5f1ca27505c804565a937a01884f3ed91aeb"
+    },
+    {
+      "path": "tests/strategy-engine.test.js",
+      "testFn": 22,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 6969,
+      "sha256": "12e9813f519f57254abe992028344c3c662c0750647b0066384656829caba188"
+    },
+    {
+      "path": "tests/strategy-meta-optimization.test.js",
+      "testFn": 1,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2164,
+      "sha256": "1982bc3e3a7f025209cec66d4d1829369c5230f844db042ce12010c8e0c9390f"
+    },
+    {
+      "path": "tests/sustained-operation.test.js",
+      "testFn": 6,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 3722,
+      "sha256": "bd78ee5f7b8f4ee2cb06b79f81e87c0db0cbc738a49087d0004ca023f826c767"
+    },
+    {
+      "path": "tests/system-integrity-audit.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1968,
+      "sha256": "572fc91a3adc7e895bb321f24aa51511ed6aaa8e2dd9e1266cdf4fd5b712547d"
+    },
+    {
+      "path": "tests/tool-discovery-ranking.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1904,
+      "sha256": "f0613071ed8fb7a014f1cb34aa750d1e7eff1bab1fb0fab2af1e325464398b4d"
+    },
+    {
+      "path": "tests/tool-privilege-escalation.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2453,
+      "sha256": "aa4da3f9be679894cd3510cc8f1a08bf7e30c395e456f9e0dbcfa0c85164ae9a"
+    },
+    {
+      "path": "tests/transfer-and-unlearning.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 1318,
+      "sha256": "81d752132b9d5f275db2c672b26c820902a0fa4ff371f3366ca6013091b3d3b8"
+    },
+    {
+      "path": "tests/val-exp-002-dry-run.test.js",
+      "testFn": 2,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 2066,
+      "sha256": "83d613c2012fcda0dfc67fcc5add1eeb156a06f5f804dad77da75524d7910364"
+    },
+    {
+      "path": "tests/value-instrumentation.test.js",
+      "testFn": 4,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 0,
+        "writeFile": 0,
+        "mkdirSync": 0,
+        "unlinkSync": 0,
+        "rmSync": 0,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 4075,
+      "sha256": "34980efe9d291b3de50fdbe4fa76944030e745993266dfbcfdc7976dcd9fd269"
+    },
+    {
+      "path": "tests/verifier-authorization-aware.test.js",
+      "testFn": 3,
+      "itFn": 0,
+      "describeFn": 0,
+      "writes": {
+        "writeFileSync": 8,
+        "writeFile": 0,
+        "mkdirSync": 8,
+        "unlinkSync": 0,
+        "rmSync": 2,
+        "spawn": 0,
+        "execSync": 0
+      },
+      "bytes": 8868,
+      "sha256": "84a6f88e533465586c9db4574bad3f8b476ce589e095caed7643436f1fc29d5c"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "collected_at": "2026-09-01T02:16:34.556Z",
+  "methods": [
+    "constructor",
+    "getMissionDir",
+    "_updateManifestFile",
+    "createMission",
+    "inspectMission",
+    "planMission",
+    "_advanceToPlanViaCanonicalFsm",
+    "_writeMissionArtifact",
+    "packageMission",
+    "reportMission",
+    "verifyMission",
+    "pauseMission",
+    "resumeMission",
+    "closeMission",
+    "submitReturnPackage"
+  ]
+}
