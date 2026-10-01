@@ -131,6 +131,7 @@ export function assertGithubActionsContract(rootDir) {
       try {
         assertContains(yaml, 'scripts/verify-eos.js --strict', 'CI verify');
         assertContains(yaml, 'npm test', 'CI tests');
+        assertContains(yaml, 'npm run test:full', 'CI full suite incl. SLIM_SUITE_EXCLUDES');
         assertContains(yaml, 'evaluate:release', 'CI release engine');
         assertContains(yaml, 'verify:independent', 'CI independent harness');
         assertContains(yaml, 'audit:system', 'CI system audit');

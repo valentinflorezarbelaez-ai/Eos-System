@@ -334,9 +334,10 @@ export const SLIM_SUITE_EXCLUDES = new Set([
  * Honors SLIM_SUITE_EXCLUDES (opt-in suites stay available via dedicated npm scripts).
  * @param {string} dir Directory to scan
  * @param {string} suffix File suffix to match (default: .test.js)
+ * @param {{ includeExcluded?: boolean }} [options] includeExcluded: also return SLIM_SUITE_EXCLUDES suites (`--full`)
  * @returns {string[]} Relative or absolute paths to matching test files
  */
-export function discoverTestFiles(dir, suffix = '.test.js') {
+export function discoverTestFiles(dir, suffix = '.test.js', { includeExcluded = false } = {}) {
   if (!fs.existsSync(dir)) return [];
   const results = [];
 
@@ -350,7 +351,7 @@ export function discoverTestFiles(dir, suffix = '.test.js') {
           walk(fullPath);
         }
       } else if (entry.isFile() && entry.name.endsWith(suffix)) {
-        if (SLIM_SUITE_EXCLUDES.has(entry.name)) continue;
+        if (!includeExcluded && SLIM_SUITE_EXCLUDES.has(entry.name)) continue;
         results.push(fullPath);
       }
     }
@@ -366,11 +367,14 @@ export function discoverTestFiles(dir, suffix = '.test.js') {
 export async function run() {
   const args = process.argv.slice(2);
   let filterPattern = null;
+  let includeExcluded = false;
   const nodeTestFlags = [];
 
   // Parse args
   for (const arg of args) {
-    if (arg.startsWith('--')) {
+    if (arg === '--full') {
+      includeExcluded = true;
+    } else if (arg.startsWith('--')) {
       nodeTestFlags.push(arg);
     } else if (!filterPattern) {
       filterPattern = arg;
@@ -379,7 +383,7 @@ export async function run() {
     }
   }
 
-  let testFiles = discoverTestFiles(testsDir);
+  let testFiles = discoverTestFiles(testsDir, '.test.js', { includeExcluded });
 
   if (filterPattern) {
     const normalizedFilter = filterPattern.replace(/\\/g, '/').toLowerCase();

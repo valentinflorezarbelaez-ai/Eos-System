@@ -15,6 +15,7 @@
   },
   "scripts": {
     "test": "node scripts/test-runner.js",
+    "test:full": "node scripts/test-runner.js --full",
     "ci": "node scripts/ci/assert-gha-contract.js && node scripts/verify-eos.js --strict",
     "ci:contract": "node scripts/ci/assert-gha-contract.js",
     "test:core": "node --test tests/authority-truth-source.test.js tests/eos-negative-governance.test.js tests/eos-e2e-local-fixture.test.js tests/eos-local-contracts.test.js",

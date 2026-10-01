@@ -86,6 +86,8 @@ jobs:
           node-version: '22'
       - name: Run control-plane tests (L0 builtins only)
         run: npm test
+      - name: Run full suite incl. SLIM_SUITE_EXCLUDES satellites
+        run: npm run test:full
       - name: Discard ephemeral test writes
         if: always()
         run: git checkout -- EOS-MISSION-CONTROL/ACTIVE_TOOLS.json

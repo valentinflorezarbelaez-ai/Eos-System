@@ -68,4 +68,29 @@ describe('EOS Test Runner: Discovery and Filtering', () => {
       'mission-b must not appear in default slim discovery'
     );
   });
+
+  it('TR-06: every SLIM_SUITE_EXCLUDES entry resolves to a test file on disk', () => {
+    const testsDir = path.resolve(process.cwd(), 'tests');
+    const onDisk = new Set(
+      discoverTestFiles(testsDir, '.test.js', { includeExcluded: true }).map((f) => path.basename(f))
+    );
+    const stale = [...SLIM_SUITE_EXCLUDES].filter((name) => !onDisk.has(name));
+    assert.deepEqual(stale, [], `Stale SLIM_SUITE_EXCLUDES entries: ${stale.join(', ')}`);
+  });
+
+  it('TR-07: includeExcluded discovery is the slim set plus every excluded suite', () => {
+    const testsDir = path.resolve(process.cwd(), 'tests');
+    const slim = discoverTestFiles(testsDir);
+    const full = discoverTestFiles(testsDir, '.test.js', { includeExcluded: true });
+    const excluded = full.filter((f) => SLIM_SUITE_EXCLUDES.has(path.basename(f)));
+    assert.deepEqual(full.filter((f) => !SLIM_SUITE_EXCLUDES.has(path.basename(f))), slim);
+    assert.equal(excluded.length, SLIM_SUITE_EXCLUDES.size);
+  });
+
+  it('TR-08: test:full runs the full discovery and CI invokes it', () => {
+    const pkg = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), 'package.json'), 'utf8'));
+    assert.equal(pkg.scripts['test:full'], 'node scripts/test-runner.js --full');
+    const ci = fs.readFileSync(path.resolve(process.cwd(), '.github/workflows/ci.yml'), 'utf8');
+    assert.ok(ci.includes('npm run test:full'), 'ci.yml must run npm run test:full');
+  });
 });
