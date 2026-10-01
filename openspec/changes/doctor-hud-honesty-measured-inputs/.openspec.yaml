@@ -1,0 +1,19 @@
+schema: spec-driven
+created: 2026-10-01
+goal: Make the Doctor/HUD honesty surface report only measured inputs (live HEAD, working-tree dirtiness) and stop the pending-port parser from matching lowercase prose such as "was pending".
+routing: SDD
+explicit_sdd_request: true
+status: PROPOSED_AWAITING_HUMAN_L2_AUTHORIZATION
+risk_tier: CRITICAL
+risk_reason: Touches Core kernel product code under src/core/ (frozen surface per .cursor/rules/00-eos-operating-system.mdc); human must authorize the exact change before /apply.
+affected_areas:
+  - src/core/observability/doctor-hud-honesty.js
+  - src/core/runtime/operator-doctor.js
+  - src/core/observability/operator-hud.js
+  - tests/eos-post-l26-b-doctor-hud-honesty.test.js
+non_goals:
+  - Fundacion writes
+  - new root npm dependencies
+  - flipping PRODUCTION_READY
+  - reopening L17-L41 or editing docs/releases/EOS_FREEZE_GATE_STATUS.md
+  - changing verify:strict check count
