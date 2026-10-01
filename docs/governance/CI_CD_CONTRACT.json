@@ -49,6 +49,7 @@
       "jobs": [
         "verify",
         "test",
+        "full-suite",
         "syntax",
         "governance-gates",
         "seam-pack"

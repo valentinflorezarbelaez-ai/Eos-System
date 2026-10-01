@@ -38,6 +38,8 @@ jobs:
         run: node scripts/ci/assert-gha-contract.js
       - name: Strict workspace verification
         run: node scripts/verify-eos.js --strict
+      - name: Ladder 14-21 satellite suites
+        run: |
           npm run test:llm-provider-port
           npm run test:token-budget-ecr
           npm run test:autonomous-loop
@@ -89,6 +91,31 @@ jobs:
       - name: Discard ephemeral test writes
         if: always()
         run: git checkout -- EOS-MISSION-CONTROL/ACTIVE_TOOLS.json
+      - name: Fundacion freeze (delta 0)
+        run: |
+          git diff --exit-code -- Fundacion
+          extra="$(git ls-files --others --exclude-standard -- Fundacion || true)"
+          test -z "$extra"
+
+  full-suite:
+    name: Full test corpus (slim + opt-in suites)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Run every suite under tests/ (L0 builtins only)
+        run: npm run test:full
+      - name: Discard ephemeral test writes
+        if: always()
+        run: |
+          git checkout -- EOS-MISSION-CONTROL/ACTIVE_TOOLS.json
+          git checkout -- docs/evidence/EVD-0060.json
+          git checkout -- docs/reports/executive/EXECUTIVE_DOSSIER_PRJ-APP-FUERZA.md
       - name: Fundacion freeze (delta 0)
         run: |
           git diff --exit-code -- Fundacion
