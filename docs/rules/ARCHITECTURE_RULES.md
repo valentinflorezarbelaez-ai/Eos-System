@@ -5,7 +5,10 @@
 - **Zero Third-Party Dependencies**: No `npm install` packages allowed in the core execution path.
 - **Clean Clone Guarantee**: Code compiles and passes all unit tests on a fresh machine with 0 external network calls.
 
-## 2. 9-Subagent Topology (agent-teams-lite L0)
+## 2. 9-Subagent Topology (EOS L0)
+
+> Attribution: this topology is an EOS construct. It was originally inspired by the upstream `agent-teams-lite` layout, which is now **archived and deprecated** in favour of `gentle-ai`, so it must not be cited as a live design source. See [ADR-0019](../architecture/adrs/ADR-0019-gentleman-ecosystem-integration-registry.md) and `docs/governance/GENTLEMAN_ECOSYSTEM_REGISTRY.json`.
+
 1. **Agente Intake (RDD):** Redacts `docs/intake/` and validates human PO authority.
 2. **Agente Spec (SDD):** Crystallizes EARS contracts and BDD Gherkin in `docs/specs/`.
 3. **Agente Architect:** Builds acyclic DAGs (`docs/tasks/`) and enforces scope rules.

@@ -4,6 +4,7 @@
 * **Date:** 2026-09-04
 * **Author:** EOS Control Plane (conscious adoption; not a Constitution amendment)
 * **Supersedes:** none (interprets existing SDD claims; does not replace PAT-0001 or the 21-step pipeline)
+* **Amended by:** [ADR-0019](./ADR-0019-gentleman-ecosystem-integration-registry.md) — §4 expands RDD as Receipt-Driven Development (upstream canon, matching `CONSTITUTION.md` Article I §2) and adds the 4R review-depth ladder. The body below is kept byte-stable as an accepted record; read §4 through ADR-0019.
 * **Does not amend:** `CONSTITUTION.md` / `docs/core/CONSTITUTION.md` (PO approval required for any Constitution mutation)
 
 ## Context

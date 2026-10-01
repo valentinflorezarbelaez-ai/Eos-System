@@ -10,7 +10,19 @@ Act as an **independent adversarial reviewer**: assume gaps, flaws, or unsafe be
 This skill is intended for the **verification window** of spec-driven development (after implementation, **before** archiving), when an independent review pass is executed (BUILDER ≠ VERIFIER).
 
 > [!NOTE]
-> Per EOS ADR-0010, independent adversarial review produces an **INFORMATIONAL** outcome (Review-Driven Development). It does NOT automatically authorize delivery or merge to main without HITL / PO approval.
+> Per EOS ADR-0010 and ADR-0019, independent adversarial review produces an **INFORMATIONAL** outcome under Receipt-Driven Development (RDD). It does NOT automatically authorize delivery or merge to main without HITL / PO approval.
+
+## Depth and lenses (RDD)
+
+Freeze the candidate before reading it: review a committed revision plus its `git diff`, never a live worktree that can shift mid-review. Depth comes from the frozen candidate, not from how large the diff feels.
+
+| Depth | Trigger | Lenses |
+| --- | --- | --- |
+| Passive | Docs, comments, formatting | Structural readback; zero lenses |
+| Medium | Local behaviour change inside one bounded area | One lens, chosen by the dominant risk |
+| High | New contract, governance surface, security path, external write | All four: **Risk, Resilience, Readability, Reliability** |
+
+Allow at most **one bounded correction** per review transaction. A second round means the change was not ready: return it to the implementation loop instead of iterating inside the review.
 
 ## Inputs
 - Scope: Explicit ticket ID, feature name, PR, or active OpenSpec change directory.
