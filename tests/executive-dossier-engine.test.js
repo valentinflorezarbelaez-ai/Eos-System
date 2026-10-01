@@ -1,6 +1,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { ExecutiveDossierEngine } from '../src/core/reporting/executive-dossier-engine.js';
 
@@ -59,11 +60,20 @@ describe('EOS ExecutiveDossierEngine', () => {
   });
 
   test('compileProjectDossier with save=true generates markdown file on disk', () => {
-    const res = engine.compileProjectDossier('PRJ-APP-FUERZA', { save: true });
-    assert.ok(res.savedPath);
-    assert.ok(fs.existsSync(res.savedPath));
-    const content = fs.readFileSync(res.savedPath, 'utf8');
-    assert.ok(content.includes('PRJ-APP-FUERZA'));
-    assert.ok(content.includes('Storage Layer: LocalStorage vs IndexedDB'));
+    // Hermetic: never overwrite the tracked docs/reports/executive/*.md during npm test.
+    const tmpReportsDir = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-dossier-'));
+    const savingEngine = new ExecutiveDossierEngine({ controlPlaneRoot: process.cwd() });
+    savingEngine.reportsDir = tmpReportsDir;
+    try {
+      const res = savingEngine.compileProjectDossier('PRJ-APP-FUERZA', { save: true });
+      assert.ok(res.savedPath);
+      assert.ok(res.savedPath.startsWith(tmpReportsDir));
+      assert.ok(fs.existsSync(res.savedPath));
+      const content = fs.readFileSync(res.savedPath, 'utf8');
+      assert.ok(content.includes('PRJ-APP-FUERZA'));
+      assert.ok(content.includes('Storage Layer: LocalStorage vs IndexedDB'));
+    } finally {
+      fs.rmSync(tmpReportsDir, { recursive: true, force: true });
+    }
   });
 });

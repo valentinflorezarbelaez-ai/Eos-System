@@ -26,14 +26,27 @@ describe('EOS native operator MCP tools (v0.6)', () => {
 
   test('eos_audit_project runs audit phase for registered project', async () => {
     const server = new EosMcpServer();
-    const res = await server.handleToolCall('eos_audit_project', {
-      projectId: 'PRJ-APP-FUERZA',
-      phase: 'audit'
-    });
-    assert.equal(res.status, 'SUCCESS');
-    assert.equal(res.audit_project.projectId, 'PRJ-APP-FUERZA');
-    assert.equal(res.audit_project.phase, 'audit');
-    assert.ok(res.audit_project.sha256.startsWith('sha256-'));
+    // The audit phase re-seals the canonical PRJ-APP-FUERZA receipt (EVD-0060) in place.
+    // Snapshot and restore it so `npm test` never leaves tracked evidence dirty.
+    const evidencePath = path.join(server.baseDir, 'docs', 'evidence', 'EVD-0060.json');
+    const original = fs.existsSync(evidencePath) ? fs.readFileSync(evidencePath) : null;
+    try {
+      const res = await server.handleToolCall('eos_audit_project', {
+        projectId: 'PRJ-APP-FUERZA',
+        phase: 'audit'
+      });
+      assert.equal(res.status, 'SUCCESS');
+      assert.equal(res.audit_project.projectId, 'PRJ-APP-FUERZA');
+      assert.equal(res.audit_project.phase, 'audit');
+      assert.ok(res.audit_project.sha256.startsWith('sha256-'));
+      assert.equal(path.resolve(res.audit_project.evidencePath), evidencePath);
+    } finally {
+      if (original) {
+        fs.writeFileSync(evidencePath, original);
+      } else {
+        fs.rmSync(evidencePath, { force: true });
+      }
+    }
   });
 
   test('eos_log_evidence seals SHA-256 receipt under docs/evidence', async () => {
