@@ -4,6 +4,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assertGithubActionsContract, loadCicdContract, readWorkflow } from '../scripts/ci/assert-gha-contract.js';
+import {
+  auditCiSuiteReachabilityLock,
+  findFoldedRunSteps,
+  findBrokenScriptReferences,
+  collectTestSuites,
+  collectScriptCoverage
+} from '../scripts/lib/ci-suite-reachability-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -122,4 +129,63 @@ test('GHA-008: CI workflow includes seam-pack GameDay / ROI pack', () => {
   assert.match(yaml, /test:u2/);
   assert.match(yaml, /test:compute-worker/);
   assert.match(yaml, /test:c2/);
+});
+
+test('GHA-009: every test suite is executed by a declared gate (no unreachable suites)', () => {
+  const audit = auditCiSuiteReachabilityLock(rootDir);
+  assert.deepEqual(audit.unreachable, []);
+  assert.deepEqual(audit.failures, []);
+  assert.ok(audit.checks.length > 0);
+});
+
+test('GHA-010: CI workflow runs the full corpus via test:full', () => {
+  const yaml = readWorkflow(rootDir, '.github/workflows/ci.yml');
+  assert.match(yaml, /^  full-suite:/m);
+  assert.match(yaml, /npm run test:full/);
+  const pkg = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf8'));
+  assert.match(pkg.scripts['test:full'], /test-runner\.js --full/);
+  const contract = loadCicdContract(rootDir);
+  assert.ok(contract.workflows.ci.jobs.includes('full-suite'));
+});
+
+test('GHA-011: folded run: scalars are rejected (commands become arguments, not steps)', () => {
+  const folded = [
+    'jobs:',
+    '  verify:',
+    '    steps:',
+    '      - name: Strict workspace verification',
+    '        run: node scripts/verify-eos.js --strict',
+    '          npm run test:mission-bi',
+    ''
+  ].join('\n');
+  const offenders = findFoldedRunSteps(folded);
+  assert.equal(offenders.length, 1);
+  assert.equal(offenders[0].folded, 'npm run test:mission-bi');
+
+  const blockScalar = [
+    'jobs:',
+    '  verify:',
+    '    steps:',
+    '      - name: Satellite suites',
+    '        run: |',
+    '          npm run test:mission-bi',
+    '          npm run test:mission-bj',
+    ''
+  ].join('\n');
+  assert.deepEqual(findFoldedRunSteps(blockScalar), []);
+
+  for (const rel of ['.github/workflows/ci.yml', '.github/workflows/cd-release-gate.yml']) {
+    assert.deepEqual(findFoldedRunSteps(readWorkflow(rootDir, rel)), [], `${rel} must not fold run: commands`);
+  }
+});
+
+test('GHA-012: package.json test scripts reference existing suites', () => {
+  assert.deepEqual(findBrokenScriptReferences(rootDir), []);
+  const suites = collectTestSuites(rootDir);
+  assert.ok(suites.length >= 300, `expected the full corpus to be discovered, got ${suites.length}`);
+  const coverage = collectScriptCoverage({ full: 'node scripts/test-runner.js --full' }, ['full']);
+  assert.equal(coverage.fullCorpus, true);
+  const slim = collectScriptCoverage({ test: 'node scripts/test-runner.js' }, ['test']);
+  assert.equal(slim.fullCorpus, false);
+  assert.equal(slim.slimCorpus, true);
 });

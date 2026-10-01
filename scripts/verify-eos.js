@@ -28,6 +28,7 @@ import { auditKeepPoPruneHoldLock, KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS } from './l
 import { auditComplexityCeilingHoldLock, COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS } from './lib/complexity-ceiling-hold-lock.js';
 import { auditAgyWorkstationLock, AGY_WORKSTATION_REQUIRED_PATHS } from './lib/agy-workstation-lock.js';
 import { auditDirtyDeferTriageLock, DIRTY_DEFER_TRIAGE_REQUIRED_PATHS } from './lib/dirty-defer-triage-lock.js';
+import { auditCiSuiteReachabilityLock } from './lib/ci-suite-reachability-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -1433,6 +1434,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/dirty-defer-triage-lock.js',
         message: 'Dirty DEFER triage lock audit failed: ' + err.message,
         type: 'dirty-defer-triage-lock'
+      });
+    }
+
+    // 3g20. CI suite reachability (no unreachable suite, no dangling script ref, no folded run:)
+    try {
+      const suiteReachability = auditCiSuiteReachabilityLock(rootDir);
+      for (const c of suiteReachability.checks) {
+        report.checks.push(c);
+      }
+      for (const f of suiteReachability.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/ci-suite-reachability-lock.js',
+        message: 'CI suite reachability lock audit failed: ' + err.message,
+        type: 'ci-suite-reachability-lock'
       });
     }
 
