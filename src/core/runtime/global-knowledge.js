@@ -18,9 +18,9 @@ export function globalKnowledgePath(baseDir) {
  */
 export function loadGlobalKnowledge(baseDir, opts = {}) {
   const file = globalKnowledgePath(baseDir);
-  if (!fs.existsSync(file)) return [];
   let doc;
   try {
+    // Optimization: avoid TOCTOU anti-pattern by removing existsSync prior to read
     doc = JSON.parse(fs.readFileSync(file, 'utf8'));
   } catch {
     return [];
