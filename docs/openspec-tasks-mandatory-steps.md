@@ -39,7 +39,7 @@ All implementation task DAGs (`tasks.md`) MUST include these steps in sequential
 ### Step N+1: Run Unit Tests & Invariant Verification
 1. **Prepare Environment**: Verify clean working tree and service dependencies.
 2. **Execute Targeted Tests**: Run isolated test suites for affected modules (`node --test <file>`).
-3. **Execute Full Verification**: Run project verification (`npm run verify` / `npm run verify:strict`).
+3. **Execute Full Verification**: Run project verification (`npm run verify` / `npm run verify:strict`) **and** the full test corpus (`npm run test:full` — every suite under `tests/`, including the opt-in suites `npm test` skips). `npm test` alone covers the slim suite only.
 4. **Produce Verification Artifact**: Capture command logs and exit codes in `docs/evidence/` or `specs/<change>/reports/`.
 5. **Mark Task Complete**: Only mark complete `[x]` after verified exit code 0.
 
@@ -63,7 +63,7 @@ All implementation task DAGs (`tasks.md`) MUST include these steps in sequential
 
 Before marking any OpenSpec change complete or moving to `/verify` / `/archive`:
 - [ ] Feature branch was created and work was isolated.
-- [ ] 100% of unit and integration tests passed via autonomous agent execution.
+- [ ] 100% of unit and integration tests passed via autonomous agent execution (`npm run test:full`, not only `npm test`).
 - [ ] Manual endpoint tests (curl) executed by the agent with clean state cleanup.
 - [ ] E2E browser tests executed by the agent if user-facing features changed.
 - [ ] Verification report generated under `docs/evidence/` or `specs/<change>/reports/`.
