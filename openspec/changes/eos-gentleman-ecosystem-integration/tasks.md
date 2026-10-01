@@ -13,7 +13,7 @@
 - [x] `docs/governance/GENTLEMAN_ECOSYSTEM_REGISTRY.json` — 10 components, vocabulary, notices, non-claims
 - [x] `scripts/lib/gentleman-ecosystem-lock.js` — seven invariant families, L0 built-ins, read-only
 - [x] Wire block 3g21 into `scripts/verify-eos.js`
-- [x] `tests/gentleman-ecosystem-integration.test.js` — 20 tests including two temp-dir negative fixtures
+- [x] `tests/gentleman-ecosystem-integration.test.js` — 22 tests including three temp-dir negative fixtures
 - [x] Register the suite in `SLIM_SUITE_EXCLUDES` (TR-01 ceiling held at 145)
 
 ## Remediate the findings
@@ -38,10 +38,10 @@
 ## Verify (self-executed, recorded)
 
 - [x] `node scripts/lib/gentleman-ecosystem-lock.js` audit → 14 checks / 0 failures / 10 components
-- [x] `node --test tests/gentleman-ecosystem-integration.test.js` → 20 pass / 0 fail
+- [x] `node --test tests/gentleman-ecosystem-integration.test.js` → 22 pass / 0 fail
 - [x] `npm run verify:strict` → 937 checks / 0 failures (was 923)
 - [x] `npm test` → 145 suites, TR-01 ceiling unchanged
-- [x] `npm run test:full` → 321 suites / 0 fail
+- [x] `npm run test:full` → 321 suites / 4221 tests / 0 fail
 - [x] `node scripts/ci/assert-gha-contract.js` → VERIFIED
 - [x] `git diff --exit-code -- Fundacion` → Δ=0
 - [ ] PR review + merge — no `PRODUCTION_READY` flip; GHA stays BILLING_BLOCKED; upstream status remains a point-in-time observation

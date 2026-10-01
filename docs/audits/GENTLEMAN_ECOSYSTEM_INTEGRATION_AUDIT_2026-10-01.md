@@ -118,11 +118,13 @@ Every item above was expressible only in prose, which is why four weeks produced
 | --- | --- | --- |
 | `npm run verify:strict` | `Checks Passed: 923` / `Failures: 0` | `Checks Passed: 937` / `Failures: 0` |
 | Ecosystem lock | did not exist | `checks=14` / `failures=0` / `components=10` |
+| Ecosystem suite | did not exist | 22 tests, 3 negative fixtures, 0 failures |
 | Governed files carrying a superseded RDD expansion | 2 | 0 outside declared exemptions |
 | `mem_*` tools documented in `engram.mdc` | 3 of 16 | 11 named, all 16 reachable by intent |
 | Review depth levels available to `/adversarial-review` | 0 | 3 |
 | Registered upstream components with license and status | 0 | 10 |
-| `npm run test:full` | 320 suites, 4201 tests, 0 failures | 321 suites, 4227 tests, 0 failures |
+| `npm run test:full` | 320 suites, 4201 tests, 0 failures | 321 suites, 4221 tests, 0 failures (14 pre-existing skips) |
+| `npm test` (slim) | 145 suites, 1456 tests, 0 failures | unchanged — TR-01 ceiling held |
 
 ## Residual risk
 

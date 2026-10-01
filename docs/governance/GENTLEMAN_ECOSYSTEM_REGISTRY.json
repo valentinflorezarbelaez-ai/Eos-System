@@ -99,10 +99,14 @@
         "docs/architecture/adrs/ADR-0019-gentleman-ecosystem-integration-registry.md",
         ".cursor/rules/gentleman-ecosystem-bridge.mdc"
       ],
-      "requiredMarkers": [
-        "Organic Driven Development",
-        "Receipt-Driven Development"
-      ]
+      "requiredMarkers": [],
+      "surfaceMarkers": {
+        ".cursor/rules/gentleman-ecosystem-bridge.mdc": [
+          "Organic Driven Development",
+          "Receipt-Driven Development",
+          "Risk, Resilience, Readability, Reliability"
+        ]
+      }
     },
     {
       "id": "engram",
@@ -121,11 +125,18 @@
         ".cursor/rules/engram.mdc",
         "docs/architecture/adrs/ADR-0016-engram-local-ssot-contract.md"
       ],
-      "requiredMarkers": [
-        "mem_search",
-        "mem_session_summary",
-        "mem_current_project"
-      ]
+      "requiredMarkers": [],
+      "surfaceMarkers": {
+        ".cursor/mcp.json": [
+          "\"engram\""
+        ],
+        ".cursor/rules/engram.mdc": [
+          "mem_current_project",
+          "mem_search",
+          "mem_session_summary",
+          "topic_key"
+        ]
+      }
     },
     {
       "id": "gentleman-guardian-angel",

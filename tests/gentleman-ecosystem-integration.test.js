@@ -207,6 +207,43 @@ describe('GEN-005 surfaces carry real content', () => {
           `${component.id} marker ${marker} missing from its surfaces`
         );
       }
+      for (const [surface, markers] of Object.entries(component.surfaceMarkers || {})) {
+        assert.ok(component.eosSurfaces.includes(surface), `${component.id} pins ${surface} without declaring it`);
+        for (const marker of markers) {
+          assert.ok(markerPresentIn(rootDir, [surface], marker), `${component.id}: ${surface} must contain ${marker}`);
+        }
+      }
+    }
+  });
+
+  test('the Engram MCP server stays declared in the surface that wires it', () => {
+    const engram = readGentlemanEcosystemRegistry(rootDir).components.find((c) => c.id === 'engram');
+    assert.equal(engram.eosStance, 'ADOPT');
+    assert.ok(engram.surfaceMarkers['.cursor/mcp.json'].includes('"engram"'));
+    assert.match(fs.readFileSync(path.join(rootDir, '.cursor/mcp.json'), 'utf8'), /"engram"/);
+  });
+
+  test('the lock rejects a surface marker that lost its content', () => {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-gentleman-marker-'));
+    try {
+      const extra = ['.cursor/mcp.json', '.agents/skills/adversarial-review/SKILL.md'];
+      for (const rel of [...GENTLEMAN_ECOSYSTEM_REQUIRED_PATHS, ...extra]) {
+        const dest = path.join(tmp, rel);
+        fs.mkdirSync(path.dirname(dest), { recursive: true });
+        fs.copyFileSync(path.join(rootDir, rel), dest);
+      }
+      assert.ok(
+        !auditGentlemanEcosystemLock(tmp).failures.some((f) => f.message.includes('absent from this surface')),
+        'fixture should start clean'
+      );
+
+      fs.writeFileSync(path.join(tmp, '.cursor/mcp.json'), '{"mcpServers":{}}\n');
+      assert.ok(
+        auditGentlemanEcosystemLock(tmp).failures.some((f) => f.message.includes('absent from this surface')),
+        'expected the dropped MCP server entry to fail the lock'
+      );
+    } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
     }
   });
 

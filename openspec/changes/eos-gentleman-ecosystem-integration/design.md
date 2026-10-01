@@ -23,7 +23,7 @@ docs/governance/GENTLEMAN_ECOSYSTEM_REGISTRY.json   SSOT: components, vocabulary
 | 3 | `ARCHIVED`/`DEPRECATED` upstream cannot hold `ADOPT`/`ADAPT` | F-04: a dead project cited as a live design source |
 | 4 | `vendored: true` requires a resolved SPDX license | F-08: copying from an unlicensed upstream |
 | 5 | Canonical expansion attested where taught; superseded expansion absent outside declared exemptions; each exemption carries a marker pointing at the amending record | F-01: two expansions of one acronym coexisting silently |
-| 6 | `requiredMarkers` resolve inside the component's own surfaces | An `ADOPT` stance asserted by an empty file |
+| 6 | `requiredMarkers` resolve inside the component's own surfaces; `surfaceMarkers` pin a marker to one named surface | An `ADOPT` stance asserted by an empty file, or an external runtime dependency that quietly loses the entry that wires it up |
 | 7 | `notices.nonEndorsement` / `trademarks` / `vendoring` present and non-empty | F-07: trademark use with no attribution |
 
 ## Key decisions

@@ -24,7 +24,7 @@ Every one of those is a prose claim that decayed because nothing could fail.
 - `.cursor/rules/engram.mdc` is rewritten into a real memory protocol: tools by intent, six-step protocol, observation shape, stable `topic_key`, compaction ordering, and three hard limits.
 - `.agents/skills/adversarial-review/SKILL.md` corrects the RDD expansion and gains the depth ladder with the one-bounded-correction limit.
 - `docs/rules/ARCHITECTURE_RULES.md` §2 is retitled to EOS with an explicit note that the archived upstream is not a live source.
-- `tests/gentleman-ecosystem-integration.test.js` (new, 20 tests) is registered in `SLIM_SUITE_EXCLUDES` because slim discovery sits at the TR-01 ceiling, and stays reachable through `npm run test:full`.
+- `tests/gentleman-ecosystem-integration.test.js` (new, 22 tests) is registered in `SLIM_SUITE_EXCLUDES` because slim discovery sits at the TR-01 ceiling, and stays reachable through `npm run test:full`.
 - `docs/audits/GENTLEMAN_ECOSYSTEM_INTEGRATION_AUDIT_2026-10-01.md` (new) records the nine findings with their measurement commands.
 
 ## What does not change

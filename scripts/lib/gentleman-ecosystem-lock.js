@@ -23,6 +23,8 @@
  *      pointing at the amending decision record.
  *   6. REQUIRED MARKERS — a component's declared markers must actually appear in one of
  *      its surfaces, so an ADOPT or ADAPT stance cannot be asserted by an empty file.
+ *      surfaceMarkers binds a marker to one named surface, which is how an external
+ *      runtime dependency stays pinned to the file that actually wires it up.
  *   7. ATTRIBUTION NOTICES — the non-endorsement notice, trademark notices and the
  *      no-vendoring statement must be present and non-empty.
  *
@@ -340,6 +342,26 @@ export function auditGentlemanEcosystemLock(rootDir) {
           message: `marker "${marker}" absent from every declared surface`,
           type
         });
+      }
+    }
+
+    for (const [surface, markers] of Object.entries(component.surfaceMarkers || {})) {
+      if (!surfaces.includes(surface)) {
+        failures.push({
+          path: `${GENTLEMAN_ECOSYSTEM_REGISTRY} components[${label}].surfaceMarkers`,
+          message: `"${surface}" is not one of the component's declared eosSurfaces`,
+          type
+        });
+        continue;
+      }
+      for (const marker of markers) {
+        if (!markerPresentIn(rootDir, [surface], marker)) {
+          failures.push({
+            path: surface,
+            message: `required marker "${marker}" for component ${label} is absent from this surface`,
+            type
+          });
+        }
       }
     }
   }
