@@ -1,0 +1,8 @@
+schema: spec-driven
+change_id: eos-full-suite-coverage-test-hygiene
+title: Full-suite CI coverage for SLIM_SUITE_EXCLUDES + test hygiene + BI7 regression fix
+status: ready
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35 (no new schema JSON)
+law_vi: held (detection regex unchanged in behavior; no secrets added)
