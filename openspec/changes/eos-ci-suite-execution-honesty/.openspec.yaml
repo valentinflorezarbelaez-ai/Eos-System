@@ -1,0 +1,17 @@
+schema: spec-driven
+change_id: eos-ci-suite-execution-honesty
+title: CI Suite Execution Honesty (run what the gates claim to run)
+status: ready
+scope: harness
+adr: ADR-0160
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+github_actions: BILLING_BLOCKED (local gates only; PASS != GHA green)
+law_vi: held (provider prefix composed at runtime; no secrets sealed)
+never_reopen: [L30, L31, L32, L33, L34, L35, L36, L37, L38, L39, L40]
+evidence:
+  verify_strict: 923 checks / 0 failures (was 913)
+  test_slim: 1452 pass / 0 fail (145 suites)
+  test_full: 4201 tests / 0 fail (320 suites, ~12s; was 1 fail)
+  unreachable_suites: 0 (was 123)
