@@ -418,3 +418,74 @@ test('B/package: honesty module + doctor + HUD + docs exist', () => {
     assert.ok(fs.existsSync(path.join(PKG, rel)), `missing ${rel}`);
   }
 });
+
+// ─── Display hygiene (pending-port summarization) ───────────────────────────
+// Token & Context Hygiene: human display truncates long pending-port lists
+// (default 10); data model + --json keep the full array.
+
+function makeHygienePorts(n) {
+  return Array.from({ length: n }, (_, i) => `P${String(i).padStart(2, '0')} pending`);
+}
+
+test('B/hygiene: summarizePendingPorts truncates long lists with count + --json hint', async () => {
+  const h = await loadHonesty();
+  assert.equal(h.PENDING_PORT_DISPLAY_LIMIT, 10);
+  assert.equal(h.summarizePendingPorts([]), 'none');
+  assert.equal(h.summarizePendingPorts(['AA pending', 'BB pending'], 10), 'AA pending, BB pending');
+  const ports = makeHygienePorts(25);
+  const summary = h.summarizePendingPorts(ports, 10);
+  assert.match(summary, /25 ports \(showing 10\)/);
+  assert.match(summary, /--json for full list/);
+  assert.ok(summary.length < ports.join(', ').length, 'summary must be shorter than full dump');
+});
+
+test('B/hygiene: surface keeps full array while block/check/reason truncate', async () => {
+  const h = await loadHonesty();
+  const ports = makeHygienePorts(25);
+  const surface = h.buildHonestySurface({
+    freezeRevision: FREEZE_TIP,
+    sourceRevision: FREEZE_TIP,
+    dirty: false,
+    pendingPorts: ports,
+    pendingPortDisplayLimit: 5,
+    surface: 'fixture'
+  });
+  assert.equal(surface.pending_ports.length, 25);
+  assert.equal(surface.pending_port_total, 25);
+  assert.match(surface.optimistic.reason, /pending-port: 25 ports \(showing 5\)/);
+  assert.match(surface.non_claim_chips.join('\n'), /pending-port visible \(25 ports \(showing 5\)/);
+  const block = h.formatHonestyBlock(surface);
+  assert.match(block, /pending_ports=25 ports \(showing 5\)/);
+  assert.match(block, /total 25; full list in --json/);
+  const custom = h.formatHonestyBlock(
+    h.buildHonestySurface({
+      freezeRevision: FREEZE_TIP,
+      sourceRevision: FREEZE_TIP,
+      dirty: false,
+      pendingPorts: makeHygienePorts(12),
+      surface: 'fixture'
+    }),
+    { pendingPortDisplayLimit: 3 }
+  );
+  assert.match(custom, /12 ports \(showing 3\)/);
+});
+
+test('B/hygiene: doctor pending check truncates detail but JSON keeps full list', async () => {
+  const h = await loadHonesty();
+  const ports = makeHygienePorts(30);
+  const enriched = h.attachHonestyToDoctorReport(
+    { ok: true, root: '/tmp', checks: [], failed: [] },
+    {
+      freezeRevision: FREEZE_TIP,
+      sourceRevision: FREEZE_TIP,
+      dirty: false,
+      pendingPorts: ports,
+      pendingPortDisplayLimit: 10
+    }
+  );
+  assert.equal(enriched.honesty.pending_ports.length, 30);
+  const check = enriched.checks.find((c) => c.id === 'HONESTY_PENDING_PORT');
+  assert.ok(check);
+  assert.match(check.detail, /30 ports \(showing 10\)/);
+  assert.ok(check.detail.length < ports.join(', ').length);
+});

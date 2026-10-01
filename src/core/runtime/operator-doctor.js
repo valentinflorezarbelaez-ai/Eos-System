@@ -269,6 +269,7 @@ export function runOperatorDoctor(options = {}) {
     dirtySummary: options.dirtySummary,
     frozen: options.frozen,
     pendingPorts: options.pendingPorts,
+    pendingPortDisplayLimit: options.pendingPortDisplayLimit,
     closureEstablished: options.closureEstablished,
     productionReadyEstablished: options.productionReadyEstablished === true,
     evidenceComplete: options.evidenceComplete === true,
@@ -310,23 +311,28 @@ export function runOperatorDoctorCli(argv = [], options = {}) {
   let root = options.root || process.cwd();
   let json = false;
   let help = false;
+  let pendingPortDisplayLimit;
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];
     if (a === '--help' || a === '-h') help = true;
     else if (a === '--json') json = true;
-    else if (a === '--root' && argv[i + 1]) {
+    else if (a === '--honesty-limit' && argv[i + 1]) {
+      const n = Number(argv[i + 1]);
+      if (Number.isFinite(n) && n > 0) pendingPortDisplayLimit = Math.floor(n);
+      i += 1;
+    } else if (a === '--root' && argv[i + 1]) {
       root = path.resolve(argv[i + 1]);
       i += 1;
     }
   }
   if (help) {
     return {
-      output: 'eos-doctor read-only local check. Flags: --root --json --help\nNON-CLAIM: doctor ≠ verify:strict.\n',
+      output: 'eos-doctor read-only local check. Flags: --root --json --honesty-limit N --help\nNON-CLAIM: doctor ≠ verify:strict. Display truncates pending-port lists (default 10); --json keeps full list.\n',
       exitCode: 0,
       report: null
     };
   }
-  const report = runOperatorDoctor({ root });
+  const report = runOperatorDoctor({ root, pendingPortDisplayLimit });
   const output = json
     ? `${JSON.stringify(report, null, 2)}\n`
     : `${formatDoctorReport(report)}\n`;

@@ -23,6 +23,25 @@ export const TIP_SHA_FLEX_RE = /^[0-9a-f]{7,40}$/i;
 
 export const MAIN_TIP_LINE_RE = /^main_tip:\s*([0-9a-f]{7,40})\b/im;
 
+/** Default display cap for pending-port lists (Token & Context Hygiene: summarize, full list stays in --json). */
+export const PENDING_PORT_DISPLAY_LIMIT = 10;
+
+/**
+ * Summarize a pending-port list for human-readable display.
+ * Data model keeps the full array; only display is truncated.
+ * @param {string[]} ports
+ * @param {number} [limit]
+ * @returns {string}
+ */
+export function summarizePendingPorts(ports, limit = PENDING_PORT_DISPLAY_LIMIT) {
+  const list = Array.isArray(ports) ? ports.map(String) : [];
+  if (list.length === 0) return 'none';
+  const n = Number.isFinite(Number(limit)) && Number(limit) > 0 ? Math.floor(Number(limit)) : PENDING_PORT_DISPLAY_LIMIT;
+  if (list.length <= n) return list.join(', ');
+  const shown = list.slice(0, n).join(', ');
+  return `${list.length} ports (showing ${n}): ${shown} +${list.length - n} more — see --json for full list`;
+}
+
 /** Pending-port needles in freeze/matrix narratives (visibility only). */
 export const PENDING_PORT_RE =
   /\b([A-Z]{1,3}(?:\s*[–—-]\s*[A-Z]{1,3})?)\s+pending\b/gi;
@@ -203,8 +222,9 @@ export function collectNonClaimChips(input = {}) {
   }
   const ports = Array.isArray(input.pendingPorts) ? input.pendingPorts : [];
   if (ports.length > 0) {
+    const limit = input.pendingPortDisplayLimit ?? PENDING_PORT_DISPLAY_LIMIT;
     chips.push(
-      `NON-CLAIM chip: pending-port visible (${ports.join(', ')}) — not closed by honesty surface`
+      `NON-CLAIM chip: pending-port visible (${summarizePendingPorts(ports, limit)}) — not closed by honesty surface`
     );
   }
   if (Array.isArray(input.extraChips)) {
@@ -252,6 +272,7 @@ export function buildHonestySurface(input = {}) {
     dirty: dirty.dirty,
     revisionMatch: revision.match,
     pendingPorts,
+    pendingPortDisplayLimit: input.pendingPortDisplayLimit,
     extraChips: input.extraChips
   });
 
@@ -272,7 +293,10 @@ export function buildHonestySurface(input = {}) {
     const reasons = [];
     if (dirty.dirty) reasons.push(dirty.reason || 'dirty');
     if (!revision.match) reasons.push(revision.lag_label);
-    if (pendingPorts.length) reasons.push(`pending-port: ${pendingPorts.join(', ')}`);
+    if (pendingPorts.length) {
+      const limit = input.pendingPortDisplayLimit ?? PENDING_PORT_DISPLAY_LIMIT;
+      reasons.push(`pending-port: ${summarizePendingPorts(pendingPorts, limit)}`);
+    }
     optimistic.result = 'DEFERRED';
     optimistic.reason = reasons.filter(Boolean).join(' | ') || 'honesty gate deferred';
   } else {
@@ -289,6 +313,8 @@ export function buildHonestySurface(input = {}) {
     dirty,
     frozen,
     pending_ports: pendingPorts,
+    pending_port_display_limit: input.pendingPortDisplayLimit ?? PENDING_PORT_DISPLAY_LIMIT,
+    pending_port_total: pendingPorts.length,
     optimistic,
     non_claim_chips: chips,
     generated_note:
@@ -303,10 +329,12 @@ export function formatNonClaimChips(chips = []) {
   return ['NON-CLAIM chips:', ...chips.map((c) => `  [chip] ${c}`)].join('\n');
 }
 
-export function formatHonestyBlock(surface) {
+export function formatHonestyBlock(surface, options = {}) {
   const rev = surface.revision || {};
   const dirty = surface.dirty || {};
   const opt = surface.optimistic || {};
+  const limit = options.pendingPortDisplayLimit ?? surface.pending_port_display_limit ?? PENDING_PORT_DISPLAY_LIMIT;
+  const ports = Array.isArray(surface.pending_ports) ? surface.pending_ports : [];
   const lines = [
     '------------------------------------------------------------',
     'HONESTY     post-L26 Workstream B',
@@ -315,7 +343,7 @@ export function formatHonestyBlock(surface) {
     `             dirty=${dirty.dirty ? 'YES' : 'NO'}  deferred=${dirty.deferred ? 'YES' : 'NO'}  blocked=${dirty.blocked ? 'YES' : 'NO'}`,
     dirty.reason ? `             dirty_reason: ${dirty.reason}` : null,
     `             frozen_observed=${surface.frozen ? 'YES' : 'NO'}`,
-    `             pending_ports=${(surface.pending_ports || []).length ? surface.pending_ports.join(', ') : 'none'}`,
+    `             pending_ports=${summarizePendingPorts(ports, limit)}${ports.length > limit ? ` (total ${ports.length}; full list in --json)` : ''}`,
     `             optimistic=${opt.result || 'n/a'}  ${opt.reason || ''}`,
     `             PRODUCTION_READY=${surface.PRODUCTION_READY || 'NO'} (never flipped by honesty)`,
     formatNonClaimChips(surface.non_claim_chips || []),
@@ -348,7 +376,7 @@ export function attachHonestyToDoctorReport(report = {}, honestyInput = {}) {
     detail:
       honesty.pending_ports.length === 0
         ? 'no pending ports visible'
-        : `pending: ${honesty.pending_ports.join(', ')}`
+        : `pending: ${summarizePendingPorts(honesty.pending_ports, honesty.pending_port_display_limit ?? PENDING_PORT_DISPLAY_LIMIT)}`
   });
 
   return {
@@ -380,6 +408,7 @@ export function attachHonestyToHudSnapshot(snapshot = {}, honestyInput = {}) {
     dirtySummary: honestyInput.dirtySummary,
     frozen: honestyInput.frozen,
     pendingPorts: honestyInput.pendingPorts,
+    pendingPortDisplayLimit: honestyInput.pendingPortDisplayLimit,
     closureEstablished: honestyInput.closureEstablished,
     productionReadyEstablished: honestyInput.productionReadyEstablished,
     evidenceComplete: honestyInput.evidenceComplete,
@@ -395,6 +424,8 @@ export function attachHonestyToHudSnapshot(snapshot = {}, honestyInput = {}) {
 export default {
   HONESTY_SCHEMA,
   HONESTY_PRODUCTION_READY,
+  PENDING_PORT_DISPLAY_LIMIT,
+  summarizePendingPorts,
   buildHonestySurface,
   measureRevisionLag,
   evaluateDirtyState,
