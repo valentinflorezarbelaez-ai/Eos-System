@@ -16,5 +16,5 @@ evidence:
   verify_strict: 937 checks / 0 failures (was 923)
   ecosystem_lock: 14 checks / 0 failures / 10 components
   test_slim: 145 suites / 1456 tests / 0 fail (unchanged; TR-01 ceiling held)
-  test_full: 321 suites / 4221 tests / 0 fail (was 320 / 4201)
+  test_full: 321 suites / 4223 tests / 0 fail (was 320 / 4201)
   new_suite: tests/gentleman-ecosystem-integration.test.js 22 pass / 0 fail

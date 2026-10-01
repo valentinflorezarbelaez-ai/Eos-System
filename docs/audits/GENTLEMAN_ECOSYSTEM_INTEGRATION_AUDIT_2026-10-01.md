@@ -123,7 +123,7 @@ Every item above was expressible only in prose, which is why four weeks produced
 | `mem_*` tools documented in `engram.mdc` | 3 of 16 | 11 named, all 16 reachable by intent |
 | Review depth levels available to `/adversarial-review` | 0 | 3 |
 | Registered upstream components with license and status | 0 | 10 |
-| `npm run test:full` | 320 suites, 4201 tests, 0 failures | 321 suites, 4221 tests, 0 failures (14 pre-existing skips) |
+| `npm run test:full` | 320 suites, 4201 tests, 0 failures | 321 suites, 4223 tests, 0 failures (14 pre-existing skips) |
 | `npm test` (slim) | 145 suites, 1456 tests, 0 failures | unchanged — TR-01 ceiling held |
 
 ## Residual risk

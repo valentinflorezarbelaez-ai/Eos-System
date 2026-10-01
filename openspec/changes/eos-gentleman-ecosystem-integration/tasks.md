@@ -41,7 +41,7 @@
 - [x] `node --test tests/gentleman-ecosystem-integration.test.js` → 22 pass / 0 fail
 - [x] `npm run verify:strict` → 937 checks / 0 failures (was 923)
 - [x] `npm test` → 145 suites, TR-01 ceiling unchanged
-- [x] `npm run test:full` → 321 suites / 4221 tests / 0 fail
+- [x] `npm run test:full` → 321 suites / 4223 tests / 0 fail
 - [x] `node scripts/ci/assert-gha-contract.js` → VERIFIED
 - [x] `git diff --exit-code -- Fundacion` → Δ=0
 - [ ] PR review + merge — no `PRODUCTION_READY` flip; GHA stays BILLING_BLOCKED; upstream status remains a point-in-time observation
