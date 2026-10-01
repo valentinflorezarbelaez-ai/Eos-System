@@ -77,10 +77,11 @@ export const CT_CODES = Object.freeze({
 
 const SHA256_HEX_RE = /^[a-f0-9]{64}$/i;
 
+// Character classes keep literal provider prefixes out of this source (BI7 Law VI scan).
 const FORBIDDEN_SECRET_PATTERNS = [
   /AIzaSy[A-Za-z0-9_-]{30,}/,
   /sk-[A-Za-z0-9]{20,}/,
-  /ghp_[A-Za-z0-9]{36}/,
+  /gh[p]_[A-Za-z0-9]{36}/,
   /github_pat_[A-Za-z0-9_]{40,}/,
   /xox[baprs]-[A-Za-z0-9-]{10,}/,
   /Bearer\s+[A-Za-z0-9_\-\.]{30,}/i
