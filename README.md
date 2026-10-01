@@ -5,11 +5,13 @@
   <img src="https://img.shields.io/badge/Node.js-Pure_Layer--0_Built--ins-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js L0" />
   <img src="https://img.shields.io/badge/Runtime_Dependencies-0_External_NPM-blue?style=for-the-badge" alt="Zero Dependencies" />
   <img src="https://img.shields.io/badge/Specification-IEEE_830_EARS_%2B_BDD-blueviolet?style=for-the-badge" alt="EARS / BDD" />
-  <img src="https://img.shields.io/badge/Verification-914%2F914_Strict_Checks-brightgreen?style=for-the-badge" alt="Verify Strict" />
-  <img src="https://img.shields.io/badge/Test_Suite-1268_Passing-success?style=for-the-badge" alt="1268 Tests Passing" />
+  <img src="https://img.shields.io/badge/Verification-913%2F913_Strict_Checks-brightgreen?style=for-the-badge" alt="Verify Strict" />
+  <img src="https://img.shields.io/badge/Test_Suite-1452_Passing-success?style=for-the-badge" alt="1452 Tests Passing" />
   <img src="https://img.shields.io/badge/Consensus-NASA_IV%26V_Anti--Self--Certification-red?style=for-the-badge" alt="NASA IV&V" />
   <img src="https://img.shields.io/badge/Security-Law_VI_Zero_Plain_Secrets-orange?style=for-the-badge" alt="Law VI" />
 </p>
+
+<p align="center"><sub>Check and test counts are snapshots measured at <code>main@8903b578</code>. The live source of truth is the output of <code>npm run verify:strict</code> and <code>npm test</code> (or <code>npm run eos:hud</code>), never this README.</sub></p>
 
 ---
 
@@ -114,7 +116,7 @@ Each generated dossier provides:
 4. **Epistemic Classification:** Honest demarcation between `VERIFIED`, `ASSUMPTION`, and `RISK`.
 5. **Cryptographic Proof:** SHA-256 seal of the dossier content, guaranteeing zero retroactive tampering.
 
-Sample generated dossiers are stored in [`docs/reports/executive/`](file:///c:/Users/valen/Documents/Eos%20system/docs/reports/executive/).
+Sample generated dossiers are stored in [`docs/reports/executive/`](docs/reports/executive/).
 
 ---
 
@@ -172,10 +174,10 @@ EOS rejects false claims and speculative optimism. All claims must adhere to the
 EOS validates its own integrity through strict, deterministic automated suites:
 
 ```bash
-# Execute strict invariant verification (914/914 checks across schemas, policies, and locks)
+# Execute strict invariant verification (913/913 checks at main@8903b578; trust this run's output)
 npm run verify:strict
 
-# Execute complete test suite (1268/1268 tests passing)
+# Execute complete test suite (1452/1452 tests at main@8903b578; trust this run's output)
 npm test
 
 # Run sovereign agentic memory port tests (Mission BW / SPEC-0080)
@@ -192,11 +194,11 @@ node bin/eos-doctor.js
 
 ## 9. Architecture & Governance Specifications
 
-- [The EOS Constitution](file:///c:/Users/valen/Documents/Eos%20system/CONSTITUTION.md) — Supreme operational commandments and governance doctrine.
-- [Workspace Agent Operating Protocol](file:///c:/Users/valen/Documents/Eos%20system/.agents/AGENTS.md) — Standard operating procedures for AI coding copilots.
-- [Dependency Policy L0](file:///c:/Users/valen/Documents/Eos%20system/DEPENDENCY_POLICY_L0.md) — Layer-0 purity requirements and zero-dependency doctrine.
-- [Architectural Decision Records (ADRs)](file:///c:/Users/valen/Documents/Eos%20system/docs/adrs/) — Version-controlled architectural choices and rejected alternatives.
-- [Executive Dossiers & Reports](file:///c:/Users/valen/Documents/Eos%20system/docs/reports/executive/) — Automated executive briefings and fleet health summaries.
+- [The EOS Constitution](CONSTITUTION.md) — Supreme operational commandments and governance doctrine.
+- [Workspace Agent Operating Protocol](.agents/AGENTS.md) — Standard operating procedures for AI coding copilots.
+- [Dependency Policy L0](DEPENDENCY_POLICY_L0.md) — Layer-0 purity requirements and zero-dependency doctrine.
+- [Architectural Decision Records (ADRs)](docs/adrs/) — Version-controlled architectural choices and rejected alternatives.
+- [Executive Dossiers & Reports](docs/reports/executive/) — Automated executive briefings and fleet health summaries.
 
 ---
 
