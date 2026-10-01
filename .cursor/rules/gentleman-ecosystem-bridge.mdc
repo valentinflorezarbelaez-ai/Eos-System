@@ -1,0 +1,68 @@
+---
+description: "Gentleman Programming + LIDR Academy ecosystem bridge: ODD routing, RDD receipts, 4R review depth, Engram memory, and the refused imports"
+alwaysApply: true
+---
+
+# Gentleman + LIDR Ecosystem Bridge
+
+Registry (SSOT): [`docs/governance/GENTLEMAN_ECOSYSTEM_REGISTRY.json`](../../docs/governance/GENTLEMAN_ECOSYSTEM_REGISTRY.json)
+Decision: [`ADR-0019`](../../docs/architecture/adrs/ADR-0019-gentleman-ecosystem-integration-registry.md) amends [`ADR-0010`](../../docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md)
+Gate: `scripts/lib/gentleman-ecosystem-lock.js` (fail-closed in `npm run verify:strict`)
+
+EOS is an independent project. This bridge implies **no endorsement, sponsorship, or official affiliation** with Gentleman Programming or LIDR Academy. Gentle AI and Engram are trademarks of Alan Buscaglia; upstream MIT licensing covers code only. **No upstream file body is vendored into this repository** — concepts are mapped, bodies stay upstream.
+
+## 1. Vocabulary (do not drift)
+
+| Acronym | Canonical expansion | Meaning in EOS |
+| --- | --- | --- |
+| **ODD** | Organic Driven Development | Default everyday workflow: smallest honest route |
+| **SDD** | Spec-Driven Development | OpenSpec ceremony, entered on purpose (ADR-0010 §2) |
+| **RDD** | Receipt-Driven Development | Truth from frozen artifacts, never from narration (`CONSTITUTION.md` Article I §2) |
+| **4R** | Risk, Resilience, Readability, Reliability | The four review lenses, applied only at high depth |
+
+`RDD` is **Receipt**-Driven Development. The earlier reading in ADR-0010 §4 is superseded by ADR-0019; the ADR body stays byte-stable as an accepted record.
+
+## 2. ODD routing — the smallest honest route
+
+Run ODD on every request. Size alone never escalates ceremony; ambiguity and blast radius do.
+
+1. **Stay read-only until a change is authorised.** Investigation, explanation, and audit never edit files.
+2. **Explore before editing**, so nothing is implemented on top of a false assumption.
+3. **Route by understanding, not by line count.** One to three well-understood files: work directly. Four or more, or unfamiliar ground: send one focused explorer first.
+4. **Substantial authorised work gets one recoverable document.** In EOS that document is the OpenSpec change directory under `openspec/changes/<change-id>/`, not an ad-hoc scratch file.
+5. **Implement task by task**, keeping progress current so a cold session can resume without rebuilding the plan.
+6. **Close with observed evidence** — recorded command output, never a claim of success.
+
+SDD is a branch inside ODD that you enter deliberately (explicit request, accepted proposal, new contract or subsystem, external write). It is never the default for a one-line fix. `NO_BUILD` stays a valid outcome.
+
+## 3. RDD — depth comes from the frozen candidate
+
+Freeze what is under review **before** reading it, so the evidence belongs to the exact revision you are about to rely on and not to whatever the worktree looked like a moment later. In EOS the frozen candidate is a committed revision plus `git diff` output and the sealed receipt under `docs/evidence/`.
+
+| Depth | Trigger | Required review work |
+| --- | --- | --- |
+| Passive | Docs, comments, formatting | Structural readback; zero lenses |
+| Medium | Local behaviour change inside one bounded area | One focused lens, chosen from the 4R by the dominant risk |
+| High | New contract, governance surface, security path, external write | All four lenses: Risk, Resilience, Readability, Reliability |
+
+At most **one bounded correction** per review transaction; a second round means the change was not ready and goes back to ODD. Review outcome is **INFORMATIONAL**: it never authorises merge, release, or an external write. Those stay human-owned under `CONSTITUTION.md` Article II–III.
+
+## 4. Engram memory — context, never evidence
+
+Protocol and tool surface live in [`engram.mdc`](./engram.mdc). Two hard rules:
+
+- Memory is **working context**. A sealed receipt under `docs/evidence/` is the only evidence of record (`ADR-0016`).
+- Never write a secret, token, or credential into memory (Law VI). Store opaque handles and digests only.
+
+## 5. Refused and watched imports
+
+| Upstream | Stance | Why |
+| --- | --- | --- |
+| `gentle-ai` binary as an in-repo installer | REFUSE | No foreign installer in an L0 repository; operators may run it on their own machine |
+| `gga` pre-commit hook installation | ADAPT, not installed | `AGENTS.md` stays the reviewable standard; a hook that calls an external provider in the commit path is an unreviewed network dependency |
+| `agent-teams-lite` | REFUSE | Upstream archived and deprecated; must not be cited as a live design source |
+| `gentleman-architecture-agents` (Scope Rule) | REFUSE | No upstream license declared, and Scope Rule is frontend placement — NON-core here (ADR-0010 §4.3) |
+| `Gentleman.Dots` | REFUSE | Workstation configuration is out of scope for a control plane |
+| `gentle-shell`, `manual-SDD` | WATCH | Pi runtime / unlicensed reference; revisit only through a new decision record |
+
+Before adding, citing, or vendoring any upstream component, update the registry first. The lock fails closed on a surface that does not exist, on a stance attached to an archived upstream, and on superseded vocabulary anywhere in the governed tree.

@@ -1,6 +1,46 @@
 ---
+description: "Engram persistent memory protocol: tool surface by intent, durable observation shape, stable topic keys, compaction handoff"
 alwaysApply: true
 ---
 
-You have access to Engram persistent memory (mem_save, mem_search, mem_context).
-Save proactively after significant work. After context resets, call mem_context to recover state.
+# Engram Memory Protocol
+
+External MCP server declared in [`.cursor/mcp.json`](../mcp.json). Stance and attribution: [`gentleman-ecosystem-bridge.mdc`](./gentleman-ecosystem-bridge.mdc). Contract: [`ADR-0016`](../../docs/architecture/adrs/ADR-0016-engram-local-ssot-contract.md).
+
+Treat Engram as **curated project memory, not a transcript sink**.
+
+## Tools by intent
+
+| Intent | Start with |
+| --- | --- |
+| Confirm the resolved project, recover recent work | `mem_current_project`, `mem_context` |
+| Find prior knowledge before repeating it | `mem_search` |
+| Inspect a candidate in enough detail | `mem_timeline`, `mem_get_observation` |
+| Save or refine durable knowledge | `mem_save`, `mem_update`, `mem_suggest_topic_key` |
+| Preserve the operator's request verbatim | `mem_save_prompt` |
+| Hand off or close a session | `mem_session_summary`, `mem_session_start`, `mem_session_end` |
+| Audit stale knowledge or store health | `mem_review`, `mem_judge`, `mem_compare`, `mem_doctor` |
+
+## Protocol
+
+1. **Orient before writing.** `mem_current_project` to confirm the resolved project, then `mem_context` and `mem_search` to recover relevant history.
+2. **Search before repeating.** Search results are previews, not the complete record; retrieve progressively before relying on one.
+3. **Save deliberately.** Completed bug fixes, decisions, discoveries, configuration changes, patterns, and durable operator constraints. Never raw tool output or every conversational turn.
+4. **Keep evolving topics stable.** Reuse one `topic_key` such as `architecture/auth-model` to update a topic instead of creating competing memories.
+5. **Leave a handoff.** Before the session ends, `mem_session_summary` with goal, instructions, discoveries, work accomplished, next steps, and relevant files.
+6. **Recover after compaction.** Persist the compacted handoff with `mem_session_summary` **first**, then call `mem_context` before continuing.
+
+A durable observation is structured, with a short searchable title:
+
+```markdown
+**What**: Composed the provider prefix at runtime in the continuity policy gate.
+**Why**: The literal pattern tripped the Law VI MODULE_DIR CLEAN scan.
+**Where**: src/core/continuity/fundacion-delta0-continuity-policy-gate.js
+**Learned**: Secret-pattern detectors must not embed their own forbidden literals.
+```
+
+## Hard limits
+
+- **Memory is not evidence.** Sealed receipts under `docs/evidence/` are the only evidence of record. A memory observation never satisfies an evidence gate.
+- **Law VI.** Never save a secret, token, credential, or raw provider key. Opaque handles and digests only.
+- **Memory is not authority.** A recalled decision does not raise autonomy or authorise a write; `CONSTITUTION.md` Article II–III still governs.
