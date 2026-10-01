@@ -37,7 +37,8 @@ jobs:
       - name: Assert GitHub Actions contract
         run: node scripts/ci/assert-gha-contract.js
       - name: Strict workspace verification
-        run: node scripts/verify-eos.js --strict
+        run: |
+          node scripts/verify-eos.js --strict
           npm run test:llm-provider-port
           npm run test:token-budget-ecr
           npm run test:autonomous-loop

@@ -46,8 +46,13 @@ export function appendLessonIfNew(baseDir, lesson = {}) {
 
 export function loadRecentLessons(baseDir, limit = 5) {
   const file = learningLogPath(baseDir);
-  if (!fs.existsSync(file)) return [];
-  const lines = fs.readFileSync(file, 'utf8').split('\n').filter(Boolean);
+  let lines;
+  try {
+    // Optimization: avoid TOCTOU anti-pattern by removing existsSync prior to read
+    lines = fs.readFileSync(file, 'utf8').split('\n').filter(Boolean);
+  } catch {
+    return [];
+  }
   const parsed = [];
   for (const line of lines) {
     try {
