@@ -1,21 +1,21 @@
 /**
  * @module round-trip-request-reply-integrity-port
- * SPEC-0172 / Mission FJ — Bidirectional Delivery Correlation Registry & Binding Port.
+ * SPEC-0172 / Mission FJ — Round-Trip / Request-Reply Integrity Governance Port.
  * Pure Layer-0 Node.js (node:crypto). Never seal secrets (Law VI).
  *
  * Ladder 41 axis: Sovereign Bidirectional Delivery Integrity & Correlation Governance Fabric.
- * Soft-observes opaque L39 ingress refs + L40 outbound refs and joins them into a
+ * Soft-observes opaque FI correlationId + L39 ingress refs + L40 outbound refs and verifies
  * round-trip request-reply integrity — without reopening L39/L40 or elevating FI.
  * This port seals hermetic round-trip request-reply integrity receipts:
- *   - Validates roundTrip (correlationId + ingressId/sourceId L39 + targetId/deliveryId L40
- *     + integrityClass + desiredVerdict INTACT|BROKEN|HOLD;
+ *   - Validates roundTrip (correlationId FI + requestId/replyId + ingressId/sourceId L39
+ *     + targetId/deliveryId L40 + integrityClass + desiredVerdict INTACT|BROKEN|HOLD;
  *     optional observedVerdict injected hermetically; authorized must be true)
  *   - Emits cryptographically verifiable FJ-RCPT-* receipts with integrityDigest
- *     (sha256 of opaque ingressRef+outboundRef metadata only — never secret bytes)
- *   - Maintains verifiable audit trail of binding PASS / unauthorized DENY / HOLD seals
+ *     (sha256 of opaque round-trip metadata only — never secret bytes)
+ *   - Maintains verifiable audit trail of integrity PASS / unauthorized DENY / HOLD seals
  *   - Fail-closed DENY when hermetic claim invalid/unauthorized OR secret-looking fields present
- *   - PASS seals hermetic binding receipt only — NOT a live HTTP egress,
- *     NOT wall-clock authority, NOT tip-refresh authority, NOT EY/FD/FJ/Canary ports
+ *   - PASS seals hermetic integrity receipt only — NOT a live HTTP egress,
+ *     NOT wall-clock authority, NOT tip-refresh authority, NOT EY/FD/FI/FK/Canary ports
  *   - Explicitly refuses tip-refresh, PRODUCTION_READY flip, L30–L40 reopen,
  *     L41 auto-close, schema-json add
  *
@@ -219,7 +219,7 @@ export class RoundTripRequestReplyIntegrityPort {
       decision: 'PASS',
       code: FJ_CODES.OK,
       reason:
-        'Hermetic round-trip-request-reply-integrity governance receipt sealed (≠ EY/FD/FJ/Canary ≠ live HTTP egress ≠ tip-refresh ≠ PRODUCTION_READY).',
+        'Hermetic round-trip-request-reply-integrity governance receipt sealed (≠ EY/FD/FI/FK/Canary ≠ live HTTP egress ≠ tip-refresh ≠ PRODUCTION_READY).',
       receipt: passReceipt
     };
   }

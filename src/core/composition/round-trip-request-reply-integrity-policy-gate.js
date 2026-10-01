@@ -1,6 +1,6 @@
 /**
  * @module round-trip-request-reply-integrity-policy-gate
- * SPEC-0172 / Mission FJ — Policy Gate for Bidirectional Delivery Correlation Registry & Binding Port.
+ * SPEC-0172 / Mission FJ — Policy Gate for Round-Trip / Request-Reply Integrity Governance Port.
  * Pure Layer-0 Node.js (node:crypto). Never seal secrets (Law VI).
  *
  * Invariants:
@@ -10,13 +10,14 @@
  *           synthetic tokens in tests must be clearly fake and never appear in seal body
  *   Freeze soft-observe: pin 78141c3d (do NOT rewrite tip pins)
  *   RoundTrip:
- *     - Requires correlationId + ingressId + sourceId (L39) + targetId + deliveryId (L40) + integrityClass + desiredVerdict (INTACT|BROKEN|HOLD)
- *     - Optional observedVerdict (hermetic injected handle state)
+ *     - Requires correlationId (FI) + requestId + replyId + ingressId + sourceId (L39)
+ *       + targetId + deliveryId (L40) + integrityClass + desiredVerdict (INTACT|BROKEN|HOLD)
+ *     - Optional observedVerdict (hermetic injected integrity state)
  *     - authorized must be true for PASS; fail-closed DENY when unauthorized
- *   Inject observedVerdict only — no live HTTP egresss, no wall-clock authority,
- *     no tip-refresh authority, no raw correlation payload secret / correlation secret material
- *   Distinct from ET credential-handle, L33 domain-event outbound, EU secret-zero leak-deny, EW credential honesty
- *   Distinct from EZ webhook authenticity (outbound ≠ outbound registry)
+ *   Inject observedVerdict only — no live HTTP egress, no wall-clock authority,
+ *     no tip-refresh authority, no raw request/reply payload secret material
+ *   Distinct from FI correlation registry, EY ingress, FD outbound, FK quarantine
+ *   Distinct from Canary/Fundacion delivery
  *   Refuse PRODUCTION_READY flip
  *   Refuse L30–L40 reopen
  *   Refuse L41 auto-close (FK–FM pending)
