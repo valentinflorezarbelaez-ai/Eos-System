@@ -24,7 +24,14 @@ describe('EOS native operator MCP tools (v0.6)', () => {
     assert.equal(res.doctor.ok, true);
   });
 
-  test('eos_audit_project runs audit phase for registered project', async () => {
+  test('eos_audit_project runs audit phase for registered project', async (t) => {
+    const sealedEvidence = path.join(process.cwd(), 'docs', 'evidence', 'EVD-0060.json');
+    const original = fs.existsSync(sealedEvidence) ? fs.readFileSync(sealedEvidence) : null;
+    t.after(() => {
+      if (original) fs.writeFileSync(sealedEvidence, original);
+      else fs.rmSync(sealedEvidence, { force: true });
+    });
+
     const server = new EosMcpServer();
     const res = await server.handleToolCall('eos_audit_project', {
       projectId: 'PRJ-APP-FUERZA',
