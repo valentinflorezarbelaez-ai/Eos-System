@@ -1,0 +1,20 @@
+schema: spec-driven
+change_id: eos-gentleman-ecosystem-integration
+title: Gentleman + LIDR Ecosystem Integration Registry (stances, vocabulary, attribution)
+status: ready
+scope: governance
+adr: ADR-0019
+amends: ADR-0010
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35 (registry lives in docs/governance/, not docs/schemas/)
+github_actions: BILLING_BLOCKED (local gates only; PASS != GHA green)
+law_vi: held (no secrets; upstream references are public URLs only)
+vendoring: none (every component declares vendored: false)
+never_reopen: [L30, L31, L32, L33, L34, L35, L36, L37, L38, L39, L40]
+evidence:
+  verify_strict: 937 checks / 0 failures (was 923)
+  ecosystem_lock: 14 checks / 0 failures / 10 components
+  test_slim: 145 suites unchanged (TR-01 ceiling held)
+  test_full: 321 suites / 0 fail (was 320)
+  new_suite: tests/gentleman-ecosystem-integration.test.js 20 pass / 0 fail
