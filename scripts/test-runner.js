@@ -25,6 +25,7 @@ const testsDir = path.join(rootDir, 'tests');
  * default suite stays lean without silently weakening opt-in coverage.
  */
 export const SLIM_SUITE_EXCLUDES = new Set([
+  'gentleman-ecosystem-integration.test.js',
   'eos-compute-worker-fuzz.test.js',
   'eos-compute-worker-adversarial.test.js',
   'eos-compute-worker-mission-d.test.js',

@@ -29,6 +29,7 @@ import { auditComplexityCeilingHoldLock, COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS 
 import { auditAgyWorkstationLock, AGY_WORKSTATION_REQUIRED_PATHS } from './lib/agy-workstation-lock.js';
 import { auditDirtyDeferTriageLock, DIRTY_DEFER_TRIAGE_REQUIRED_PATHS } from './lib/dirty-defer-triage-lock.js';
 import { auditCiSuiteReachabilityLock } from './lib/ci-suite-reachability-lock.js';
+import { auditGentlemanEcosystemLock } from './lib/gentleman-ecosystem-lock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -1451,6 +1452,23 @@ function verifyWorkspace() {
         path: 'scripts/lib/ci-suite-reachability-lock.js',
         message: 'CI suite reachability lock audit failed: ' + err.message,
         type: 'ci-suite-reachability-lock'
+      });
+    }
+
+    // 3g21. Gentleman + LIDR ecosystem integration (registry, stances, vocabulary, attribution)
+    try {
+      const ecosystem = auditGentlemanEcosystemLock(rootDir);
+      for (const c of ecosystem.checks) {
+        report.checks.push(c);
+      }
+      for (const f of ecosystem.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/gentleman-ecosystem-lock.js',
+        message: 'Gentleman ecosystem lock audit failed: ' + err.message,
+        type: 'gentleman-ecosystem-lock'
       });
     }
 

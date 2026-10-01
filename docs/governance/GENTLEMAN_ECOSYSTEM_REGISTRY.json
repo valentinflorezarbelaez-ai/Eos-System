@@ -1,0 +1,278 @@
+{
+  "id": "GENTLEMAN_ECOSYSTEM_REGISTRY",
+  "title": "Gentleman Programming + LIDR Academy ecosystem integration registry",
+  "version": "1.0.0",
+  "observedAt": "2026-10-01",
+  "productionReady": "NO",
+  "authority": "docs/architecture/adrs/ADR-0019-gentleman-ecosystem-integration-registry.md",
+  "amends": "docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md",
+  "gate": "scripts/lib/gentleman-ecosystem-lock.js (fail-closed in verify:strict)",
+  "provenance": {
+    "upstreamStatusCommand": "gh api repos/<owner>/<repo> --jq '[.full_name, (.license.spdx_id // \"NOASSERTION\"), (if .archived then \"ARCHIVED\" else \"ACTIVE\" end)] | @tsv'",
+    "licenseSource": "github-api-spdx",
+    "note": "upstreamStatus and license are point-in-time observations recorded at observedAt. They are not continuously synchronised; re-run the command above before relying on them."
+  },
+  "notices": {
+    "nonEndorsement": "EOS is an independent project. Integration with the Gentleman Programming and LIDR Academy ecosystems does not imply endorsement, sponsorship, or official affiliation. Upstream MIT licensing covers code only and does not grant the right to imply endorsement or official affiliation.",
+    "trademarks": [
+      "Gentle AI and Engram names and logos are trademarks of Alan Buscaglia; the upstream MIT license does not cover those marks.",
+      "gentle-pi name and logo are trademarks of Alan Buscaglia."
+    ],
+    "vendoring": "No upstream file bodies are copied into this repository. Every component below declares vendored: false. Concepts are mapped onto EOS surfaces with attribution; bodies stay upstream."
+  },
+  "stances": {
+    "ADOPT": "EOS consumes the upstream artifact at runtime as an external dependency (never vendored, never installed by EOS).",
+    "ADAPT": "EOS maps the upstream concept onto its own governed surfaces; no upstream body is imported.",
+    "REFUSE": "EOS explicitly declines the import and records why, so a future agent cannot re-import it silently.",
+    "WATCH": "Observed, deliberately not integrated yet; revisit requires a new decision record."
+  },
+  "vocabulary": [
+    {
+      "acronym": "RDD",
+      "expansion": "Receipt-Driven Development",
+      "definition": "The candidate change is frozen before anything reads it, review depth is derived from the frozen candidate rather than model judgement, at most one bounded correction is allowed, and the outcome is informational. Delivery stays human-owned.",
+      "upstream": "https://github.com/Gentleman-Programming/gentle-ai#rdd--check-finished-work-at-the-right-depth",
+      "forbiddenExpansions": [
+        "Review-Driven Development"
+      ],
+      "attestedIn": [
+        "CONSTITUTION.md",
+        ".cursor/rules/gentleman-ecosystem-bridge.mdc",
+        ".agents/skills/adversarial-review/SKILL.md"
+      ],
+      "exemptPaths": [
+        {
+          "path": "docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md",
+          "reason": "Accepted decision record kept byte-stable; its superseded expansion is annotated by the Amended by header.",
+          "requiresMarker": "ADR-0019"
+        },
+        {
+          "path": "docs/audits/GENTLEMAN_ECOSYSTEM_INTEGRATION_AUDIT_2026-10-01.md",
+          "reason": "Audit report quotes the drifted expansion as the finding under remediation.",
+          "requiresMarker": "ADR-0019"
+        },
+        {
+          "path": "docs/governance/GENTLEMAN_ECOSYSTEM_REGISTRY.json",
+          "reason": "This registry declares the forbidden expansion so the lock can search for it.",
+          "requiresMarker": "ADR-0019"
+        }
+      ]
+    },
+    {
+      "acronym": "ODD",
+      "expansion": "Organic Driven Development",
+      "definition": "Default everyday workflow: stay read-only until a change is authorised, explore before editing, keep understood work lightweight, give substantial authorised work one recoverable feature document, implement task by task, and close with observed evidence. Diff size alone never escalates ceremony.",
+      "upstream": "https://github.com/Gentleman-Programming/gentle-ai#odd--keep-small-work-small",
+      "forbiddenExpansions": [],
+      "attestedIn": [
+        ".cursor/rules/gentleman-ecosystem-bridge.mdc"
+      ],
+      "exemptPaths": []
+    },
+    {
+      "acronym": "4R",
+      "expansion": "Risk, Resilience, Readability, Reliability",
+      "definition": "Upstream canonical review lens set applied only at high depth. Passive depth gets a structural readback with zero lenses; medium depth gets one focused lens; high depth gets all four.",
+      "upstream": "https://github.com/Gentleman-Programming/gentle-ai#rdd--check-finished-work-at-the-right-depth",
+      "forbiddenExpansions": [],
+      "attestedIn": [
+        ".cursor/rules/gentleman-ecosystem-bridge.mdc",
+        ".agents/skills/adversarial-review/SKILL.md"
+      ],
+      "exemptPaths": []
+    }
+  ],
+  "components": [
+    {
+      "id": "gentle-ai",
+      "name": "Gentle-AI",
+      "owner": "Gentleman-Programming",
+      "upstream": "https://github.com/Gentleman-Programming/gentle-ai",
+      "role": "Ecosystem configurator that writes persona, skills, workflow and MCP entries into the native configuration of agents that are already installed.",
+      "license": "MIT",
+      "upstreamStatus": "ACTIVE",
+      "eosStance": "ADAPT",
+      "vendored": false,
+      "installedByEos": false,
+      "rationale": "EOS adapts the discipline (ODD routing, RDD receipts, deterministic next-step states) onto its own governed surfaces. The Go binary is refused as an in-repo installer by ADR-0010; operators may run it on their own machine, outside this repository.",
+      "eosSurfaces": [
+        "docs/architecture/adrs/ADR-0019-gentleman-ecosystem-integration-registry.md",
+        ".cursor/rules/gentleman-ecosystem-bridge.mdc"
+      ],
+      "requiredMarkers": [
+        "Organic Driven Development",
+        "Receipt-Driven Development"
+      ]
+    },
+    {
+      "id": "engram",
+      "name": "Engram",
+      "owner": "Gentleman-Programming",
+      "upstream": "https://github.com/Gentleman-Programming/engram",
+      "role": "Agent-agnostic persistent memory: one Go binary over SQLite with FTS5, exposed through CLI, HTTP API, MCP and a TUI.",
+      "license": "MIT",
+      "upstreamStatus": "ACTIVE",
+      "eosStance": "ADOPT",
+      "vendored": false,
+      "installedByEos": false,
+      "rationale": "Consumed as an external MCP server already declared in .cursor/mcp.json. Memory is working context, never evidence: sealed receipts stay under docs/evidence/ per ADR-0016.",
+      "eosSurfaces": [
+        ".cursor/mcp.json",
+        ".cursor/rules/engram.mdc",
+        "docs/architecture/adrs/ADR-0016-engram-local-ssot-contract.md"
+      ],
+      "requiredMarkers": [
+        "mem_search",
+        "mem_session_summary",
+        "mem_current_project"
+      ]
+    },
+    {
+      "id": "gentleman-guardian-angel",
+      "name": "Gentleman Guardian Angel (gga)",
+      "owner": "Gentleman-Programming",
+      "upstream": "https://github.com/Gentleman-Programming/gentleman-guardian-angel",
+      "role": "Provider-agnostic pre-commit AI review that validates staged files against the repository AGENTS.md.",
+      "license": "MIT",
+      "upstreamStatus": "ACTIVE",
+      "eosStance": "ADAPT",
+      "vendored": false,
+      "installedByEos": false,
+      "rationale": "Its contract (AGENTS.md is the reviewable standard) is honoured because EOS already keeps AGENTS.md as the agent entrypoint. EOS does not install the git hook: a hook that calls an external provider is an unreviewed network dependency in the commit path, and review outcomes stay informational under ADR-0010.",
+      "eosSurfaces": [
+        "AGENTS.md",
+        ".cursor/rules/gentleman-ecosystem-bridge.mdc"
+      ],
+      "requiredMarkers": []
+    },
+    {
+      "id": "gentleman-skills",
+      "name": "Gentleman-Skills",
+      "owner": "Gentleman-Programming",
+      "upstream": "https://github.com/Gentleman-Programming/Gentleman-Skills",
+      "role": "Community and curated AI agent skill library distributed as one directory per skill, each holding a SKILL.md.",
+      "license": "MIT",
+      "upstreamStatus": "ACTIVE",
+      "eosStance": "ADAPT",
+      "vendored": false,
+      "installedByEos": false,
+      "rationale": "EOS adopts the portable layout (<skill-name>/SKILL.md) that .agents/skills/ already uses, so an operator can drop upstream skills into ~/.cursor/skills/ without conflicting with EOS skills. No upstream skill body is copied into this repository; RSC-0014 previously implied otherwise.",
+      "eosSurfaces": [
+        ".agents/skills",
+        ".cursor/rules/gentleman-ecosystem-bridge.mdc"
+      ],
+      "requiredMarkers": []
+    },
+    {
+      "id": "gentle-shell",
+      "name": "Gentle Shell",
+      "owner": "Gentleman-Programming",
+      "upstream": "https://github.com/Gentleman-Programming/gentle-shell",
+      "role": "Pi-native coding-agent harness bundling ODD, optional SDD/OpenSpec, subagents, TDD evidence and review guardrails.",
+      "license": "MIT",
+      "upstreamStatus": "ACTIVE",
+      "eosStance": "WATCH",
+      "vendored": false,
+      "installedByEos": false,
+      "rationale": "Requires the Pi runtime, which this control plane does not run. Adopting a second harness would fork harness authority away from bin/eos.js. Revisit only through a new decision record.",
+      "eosSurfaces": [
+        "docs/architecture/adrs/ADR-0019-gentleman-ecosystem-integration-registry.md"
+      ],
+      "requiredMarkers": []
+    },
+    {
+      "id": "gentleman-architecture-agents",
+      "name": "Gentleman architecture agents (Scope Rule)",
+      "owner": "Gentleman-Programming",
+      "upstream": "https://github.com/Gentleman-Programming/gentleman-architecture-agents",
+      "role": "Agent definitions that enforce the Scope Rule placement pattern for Angular, Next.js and Astro.",
+      "license": "NOASSERTION",
+      "upstreamStatus": "ACTIVE",
+      "eosStance": "REFUSE",
+      "vendored": false,
+      "installedByEos": false,
+      "rationale": "Two independent reasons. The repository declares no license, so no body may be vendored. And the Scope Rule is frontend placement guidance, already classified NON-core for this L0 mission control plane by ADR-0010 section 4.3.",
+      "eosSurfaces": [
+        "docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md"
+      ],
+      "requiredMarkers": []
+    },
+    {
+      "id": "gentleman-dots",
+      "name": "Gentleman.Dots",
+      "owner": "Gentleman-Programming",
+      "upstream": "https://github.com/Gentleman-Programming/Gentleman.Dots",
+      "role": "Personal editor and terminal environment configuration (LazyVim, tmux, shell).",
+      "license": "Apache-2.0",
+      "upstreamStatus": "ACTIVE",
+      "eosStance": "REFUSE",
+      "vendored": false,
+      "installedByEos": false,
+      "rationale": "Developer workstation configuration is out of scope for a control plane. ADR-0010 already refuses theme and UI kit imports.",
+      "eosSurfaces": [
+        "docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md"
+      ],
+      "requiredMarkers": []
+    },
+    {
+      "id": "agent-teams-lite",
+      "name": "Agent Teams Lite",
+      "owner": "Gentleman-Programming",
+      "upstream": "https://github.com/Gentleman-Programming/agent-teams-lite",
+      "role": "Former orchestrator plus nine specialised subagents distributed as shell scripts and Markdown.",
+      "license": "MIT",
+      "upstreamStatus": "ARCHIVED",
+      "eosStance": "REFUSE",
+      "vendored": false,
+      "installedByEos": false,
+      "rationale": "Upstream is archived and explicitly deprecated in favour of gentle-ai, so it must not be cited as a live design source. The EOS nine-role topology in docs/rules/ARCHITECTURE_RULES.md is an EOS construct and is attributed as such.",
+      "eosSurfaces": [
+        "docs/rules/ARCHITECTURE_RULES.md"
+      ],
+      "requiredMarkers": []
+    },
+    {
+      "id": "lidr-specboot",
+      "name": "LIDR SpecBoot",
+      "owner": "LIDR-academy",
+      "upstream": "https://github.com/LIDR-academy/lidr-specboot",
+      "role": "Portable development rules, standards and AI agent configurations importable into any project.",
+      "license": "MIT",
+      "upstreamStatus": "ACTIVE",
+      "eosStance": "ADAPT",
+      "vendored": false,
+      "installedByEos": false,
+      "rationale": "The SpecBoot ceremony vocabulary is already mapped onto the EOS pipeline by ADR-0010 and the operator map in docs/harness/SPECBOOT_CYCLE.md. Slash-command names stay operator vocabulary and never replace bin/eos.js.",
+      "eosSurfaces": [
+        "docs/architecture/adrs/ADR-0010-lidr-specboot-gentleman-discipline-bridge.md",
+        "docs/harness/SPECBOOT_CYCLE.md",
+        "ai-specs/skills"
+      ],
+      "requiredMarkers": []
+    },
+    {
+      "id": "lidr-manual-sdd",
+      "name": "LIDR manual-SDD",
+      "owner": "LIDR-academy",
+      "upstream": "https://github.com/LIDR-academy/manual-SDD",
+      "role": "Spec-Driven Development manual used in the AI4Devs curriculum.",
+      "license": "NOASSERTION",
+      "upstreamStatus": "ACTIVE",
+      "eosStance": "WATCH",
+      "vendored": false,
+      "installedByEos": false,
+      "rationale": "Reference reading only. The repository declares no license, so no content may be vendored or paraphrased into EOS specs as if it were an EOS standard.",
+      "eosSurfaces": [
+        "docs/architecture/adrs/ADR-0019-gentleman-ecosystem-integration-registry.md"
+      ],
+      "requiredMarkers": []
+    }
+  ],
+  "nonClaims": [
+    "Registry != runtime integration. This file records stances and surfaces; it does not install, execute, or vendor any upstream component.",
+    "Point-in-time observation. license and upstreamStatus were read once at observedAt and are not continuously synchronised.",
+    "No endorsement. Presence in this registry does not imply the upstream maintainers reviewed, approved, or support this integration.",
+    "Memory != evidence. Engram observations are working context; sealed receipts under docs/evidence/ remain the only evidence of record.",
+    "Review != delivery authority. RDD and 4R outcomes stay INFORMATIONAL under ADR-0010; merge, release and external writes remain human-owned."
+  ]
+}
