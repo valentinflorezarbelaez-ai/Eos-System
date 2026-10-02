@@ -12,13 +12,13 @@
 
 The agent is formally authorized under EOS Law IV to modify the following specific files within `C:\Users\valen\Documents\agencia de representacion de jugadores - ptg`:
 
-1. `index.html`: Prerender semantic player cards in `#roster-grid`, update manifesto copy.
-2. `dossiers/ficha-darlinson-murillo.html`: Decouple base64 blobs, add `@media print` scout layout.
-3. `dossiers/ficha-emanuel-duque.html`: Decouple base64 blobs, add `@media print` scout layout.
-4. `dossiers/ficha-samuel-martinez.html`: Decouple base64 blobs, add `@media print` scout layout.
-5. `dossiers/ficha-samuel-quiceno.html`: Harmonize layout, add `@media print` scout layout.
-6. `css/components/player-dossier.css`: Add print styles and scout sheet formatting.
-7. `js/main.js`: Ensure hydration respects prerendered cards without duplicate insertion.
+1. `index.html`: Prerender semantic player cards in `#roster-grid`, update manifesto copy, search bar, enhanced Schema.org JSON-LD.
+2. `dossiers/*.html`: Decouple base64 blobs, add `@media print` scout layout.
+3. `css/components/player-dossier.css`, `css/layout.css`: Add print styles, scout sheet formatting, and search styles.
+4. `js/main.js`: Ensure hydration respects prerendered cards, add deep linking, search, and resilience.
+5. `js/i18n.js`: Bilingual translations for search, announcements, and scout tools.
+6. `sw.js` & `manifest.webmanifest`: Offline stadium caching and PWA resilience.
+7. `data/announcements.json`: Board and corporate updates architecture.
 
 ---
 
