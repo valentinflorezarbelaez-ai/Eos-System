@@ -89,11 +89,17 @@ export class EosMemory {
    * @returns {Promise<Object[]>}
    */
   async loadRecords() {
-    if (!fsSync.existsSync(this.storagePath)) {
-      return [];
+    let content;
+    try {
+      // ⚡ Bolt optimization: Avoid TOCTOU existsSync and rely on native try/catch ENOENT
+      content = await fs.readFile(this.storagePath, 'utf8');
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        return [];
+      }
+      throw err;
     }
 
-    const content = await fs.readFile(this.storagePath, 'utf8');
     const lines = content.split('\n').filter(l => l.trim().length > 0);
     const validRecords = [];
     this.quarantinedCount = 0;
