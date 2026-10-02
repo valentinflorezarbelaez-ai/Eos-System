@@ -1,0 +1,29 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0074",
+  "claim": "Zero-data offline exercise video guard and neuro-strength cache-first PWA for ATP-STRENGTH",
+  "status": "VERIFIED",
+  "scope": "PRJ-ATP-STRENGTH / offline-guard-pwa",
+  "source": "EOS Autonomous Engineering Pipeline",
+  "timestamp": "2026-10-01T22:47:30.000Z",
+  "actor": "Antigravity Senior Architect",
+  "action": "Implemented ExerciseVideoModal zero-data click-to-load guard with offline fallback, upgraded neuro-strength-v7 cache-first PWA, and verified vitest suite",
+  "command": "npm test",
+  "expected": "Exit code 0, 137/137 passing tests, immutable cache headers for static assets, and instant fallback to 3D Biomechanical Blueprint when offline",
+  "actual": "Command exited with code 0. 137 passed in 736ms. Deployed to production at https://atp-strength.vercel.app with commit bf32a12.",
+  "result": "PASS",
+  "artifacts": [
+    "atp-strength-frontend/src/app/components/ExerciseVideoModal.tsx",
+    "atp-strength-frontend/public/sw.js",
+    "atp-strength-frontend/next.config.ts"
+  ],
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "win32",
+    "framework": "Next.js 15.1.3",
+    "branch": "main"
+  },
+  "confidence": "HIGH",
+  "related_project": "PRJ-ATP-STRENGTH",
+  "sha256": "sha256-bf32a12-atp-strength-neuro-strength-v7"
+}

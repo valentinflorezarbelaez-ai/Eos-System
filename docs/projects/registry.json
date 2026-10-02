@@ -410,6 +410,60 @@
       "autonomy_level": "SUPERVISED",
       "created_at": "2026-09-07T16:20:00Z",
       "updated_at": "2026-09-07T16:20:00Z"
+    },
+    {
+      "$schema": "../schema.json",
+      "project_id": "PRJ-BIBLIOTECA-GNOSTICA",
+      "name": "Biblioteca Gnóstica Universal",
+      "description": "Ultra-Fast Offline-First Digital Gnostic Library and Metaphysical Study Suite featuring instant native book reader, editorial typography (EB Garamond), zero-data caching, astronomical deep-space imagery (JWST), and sacred ambient audio.",
+      "path": "C:\\Users\\valen\\Biblioteca-gnostica",
+      "repository": "https://github.com/valentinflorezarbelaez-ai/Biblioteca-gnostica.git",
+      "branch": "main",
+      "project_type": "WEB_APP",
+      "lifecycle_status": "VALIDATION",
+      "technical_status": "VERIFIED",
+      "business_status": "REGISTERED_DEVELOPMENT",
+      "stack": [
+        "Next.js 16.2.11 (Turbopack)",
+        "React 19.2.4",
+        "Tailwind CSS v4",
+        "TypeScript 5",
+        "Lucide React",
+        "PWA Service Worker"
+      ],
+      "documentation": [
+        "docs/projects/registrations/biblioteca-gnostica.json",
+        "docs/projects/registrations/biblioteca-gnostica/DECISION_RECORD.md",
+        "docs/projects/registrations/biblioteca-gnostica/IMPLEMENTATION_AUTHORIZATION.md",
+        "docs/intake/biblioteca-gnostica/PROJECT_CONTEXT.md",
+        "docs/audits/biblioteca-gnostica/AUDIT_REPORT.md",
+        "docs/specs/biblioteca-gnostica/SPEC-0001-native-offline-reader.md",
+        "docs/evidence/EVD-0073.json"
+      ],
+      "constraints": [
+        "External Project Write Barrier Active (LEVEL 2 Authorized for Native Offline Reader)",
+        "Strict Offline-First capability (LocalStorage reader state, Cache-First PWA)",
+        "Near-zero mobile data consumption (< 150 KB per book vs 30 MB PDF)",
+        "WCAG 2.1 AA accessibility & editorial typography standard",
+        "Dual-mode reading (Native Offline Reader + Official AGEAC/VOPUS Iframe)"
+      ],
+      "risks": [
+        "External iframes to vopus.org/ageac.org break when disconnected (mitigated by Native Reader fallback)",
+        "Uncompressed PDFs in public/pdfs total 111.8 MB (isolated from precache)"
+      ],
+      "assumptions": [
+        "Modern mobile browser supports Service Worker Cache API and LocalStorage",
+        "Reading progress is persisted locally per book ID"
+      ],
+      "owner": "Biblioteca Gnóstica Leadership / EOS Control Plane",
+      "intake_status": "COMPLETE",
+      "specification_status": "APPROVED",
+      "implementation_status": "COMPLETE",
+      "validation_status": "PASSED",
+      "release_status": "PRODUCTION",
+      "autonomy_level": "LEVEL_2_CONTROLLED_WRITE",
+      "created_at": "2026-10-01T22:30:00Z",
+      "updated_at": "2026-10-01T22:48:00Z"
     }
   ]
 }
