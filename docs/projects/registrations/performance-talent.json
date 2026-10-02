@@ -3,23 +3,29 @@
   "project_id": "PRJ-PERFORMANCE-TALENT",
   "name": "Performance Talent Group",
   "description": "High-authority digital platform and talent acquisition hub for Performance Talent Group, connecting top-tier executive and specialized talent with market-leading organizations.",
-  "path": "C:\\Users\\valen\\Documents\\Performance-Talent-Group",
-  "repository": "local",
+  "path": "C:\\Users\\valen\\Documents\\agencia de representacion de jugadores - ptg",
+  "repository": "https://github.com/valentinflorezarbelaez-ai/Performance-Talent-Group.git",
   "branch": "main",
   "project_type": "WEBSITE",
-  "lifecycle_status": "INTAKE",
-  "technical_status": "NOT VERIFIED",
-  "business_status": "AWAITING_CLIENT_PACKAGE",
+  "lifecycle_status": "IMPLEMENTATION",
+  "technical_status": "AUTHORIZED_LEVEL_2",
+  "business_status": "AUTHORIZED",
   "stack": [
     "HTML5",
-    "Tailwind CSS",
-    "JavaScript",
-    "Vite"
+    "CSS3 Custom Tokens",
+    "Vanilla JavaScript ES Modules",
+    "JSON Roster Data",
+    "Vercel"
   ],
   "documentation": [
     "docs/projects/registrations/performance-talent.json",
+    "docs/projects/registrations/performance-talent/DECISION_RECORD.md",
+    "docs/projects/registrations/performance-talent/IMPLEMENTATION_AUTHORIZATION.md",
     "docs/intake/performance-talent/PROJECT_CONTEXT.md",
-    "docs/intake/performance-talent/INTAKE_CHECKLIST.md"
+    "docs/intake/performance-talent/INTAKE_CHECKLIST.md",
+    "docs/audits/performance-talent/AUDIT_REPORT.md",
+    "docs/specs/performance-talent/SPEC-0001-scout-first-platform.md",
+    "docs/evidence/EVD-0075.json"
   ],
   "constraints": [
     "External Project Write Barrier Active (READ ONLY until Level 2 Authorization)",
@@ -37,12 +43,12 @@
     "Primary conversion goal is lead submission (talent inquiry & employer talent request)"
   ],
   "owner": "Performance Talent Group Leadership / EOS Control Plane",
-  "intake_status": "IN_PROGRESS",
-  "specification_status": "NOT_STARTED",
-  "implementation_status": "NOT_STARTED",
-  "validation_status": "NOT_STARTED",
-  "release_status": "NOT_STARTED",
-  "autonomy_level": "SUPERVISED",
+  "intake_status": "COMPLETE",
+  "specification_status": "APPROVED",
+  "implementation_status": "IN_PROGRESS",
+  "validation_status": "IN_PROGRESS",
+  "release_status": "DEPLOYED",
+  "autonomy_level": "LEVEL_2_AUTHORIZED",
   "created_at": "2026-09-07T16:20:00Z",
-  "updated_at": "2026-09-07T16:20:00Z"
+  "updated_at": "2026-09-30T05:47:00Z"
 }
