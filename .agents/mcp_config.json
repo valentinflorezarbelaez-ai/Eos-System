@@ -8,7 +8,8 @@
       "env": {
         "EOS_MODE": "read-only",
         "EOS_AUTONOMY_LEVEL": "LEVEL_0",
-        "EOS_ALLOW_EXTERNAL_SIDE_EFFECTS": "false"
+        "EOS_ALLOW_EXTERNAL_SIDE_EFFECTS": "false",
+        "EOS_API_KEY": "${EOS_API_KEY}"
       }
     },
     "engram": {

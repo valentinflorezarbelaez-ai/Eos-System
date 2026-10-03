@@ -33,6 +33,10 @@ purpose: use Mission OS from Cursor via MCP
 | --- | --- |
 | `eos.provider.route` / `health` | `NOT_CONFIGURED` (no network providers in local MVP) |
 
+## API key (stdio and HTTP)
+
+Editors pass `EOS_API_KEY` in the environment. Other local programs use `node src/mcp-server.js --http` and `Authorization: Bearer`. Missing or wrong key: no tool execution (HTTP 401). The gateway lists only `eos.doctor`, `eos.mission.status`, and `eos.authority.check`. Snippets and the issue command: `docs/mcp/EOS_MCP_API_KEY_GATEWAY.md`. Use the placeholder `YOUR_KEY` in docs. Do not commit a real key.
+
 ## Reload
 
 After pulling this change, reload MCP servers in Cursor (Command Palette → MCP: Restart / reload window) so `eos-local` picks up `src/mcp-server.js` v1.3.

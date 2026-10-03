@@ -24,3 +24,7 @@ Local absolute binary OK untracked; never commit absolute paths.
 ## Drift
 
 Check mode fails on hand-edited eos-local/engram; re-sync from SSOT.
+
+## API key gateway
+
+`eos-local` checks `EOS_API_KEY` before `tools/call` (stdio) and `Authorization: Bearer` before HTTP `POST /mcp`. The tracked env value is `${EOS_API_KEY}`, not a secret. Issue and client snippets: `docs/mcp/EOS_MCP_API_KEY_GATEWAY.md`. External tools on that gateway: `eos.doctor`, `eos.mission.status`, `eos.authority.check`.

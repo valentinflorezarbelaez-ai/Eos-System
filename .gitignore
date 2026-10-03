@@ -59,6 +59,9 @@ temp/
 # EOS Mission OS local runtime state (created by MissionRuntime under baseDir)
 .missions/
 
+# MCP API key hash. The issue command prints the secret once; this file stores scrypt only.
+.eos/mcp-api-key.json
+
 # Operator HUD live snapshots (not sealed evidence)
 .eos/
 

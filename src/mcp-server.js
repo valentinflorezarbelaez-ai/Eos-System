@@ -47,6 +47,10 @@ import { runOperatorDoctor } from './core/runtime/operator-doctor.js';
 import { ProjectPipelineRunner } from './core/runtime/project-pipeline-runner.js';
 import { pruneToolsByPhase, resolveToolPhase } from './core/mcp/tool-pruner.js';
 import { execSync } from 'node:child_process';
+import readline from 'node:readline';
+import { resolveApiKeyStorePath } from './mcp/api-key-gate.js';
+import { handleStdioLine } from './mcp/readonly-gateway.js';
+import { startHttpGateway } from './mcp/http-gateway.js';
 import { EosMemory } from './core/memory.js';
 
 
@@ -2699,71 +2703,26 @@ switch (name) {
       output: process.stdout,
       terminal: false
     });
+    const storePath = resolveApiKeyStorePath(this.baseDir, process.env);
 
     rl.on('line', async (line) => {
       if (!line.trim()) return;
-
       try {
-        const request = JSON.parse(line);
-        const { id, method, params } = request;
-
-        if (method === 'initialize') {
-          const response = {
-            jsonrpc: '2.0',
-            id,
-            result: {
-              protocolVersion: '2024-11-05',
-              capabilities: { tools: {} },
-              serverInfo: { name: 'eos-mission-os', version: '1.4.0' }
-            }
-          };
-          process.stdout.write(JSON.stringify(response) + '\n');
-        } else if (method === 'tools/list') {
-          const response = {
-            jsonrpc: '2.0',
-            id,
-            result: {
-              tools: listTools().map((t) => ({
-                name: t.name,
-                description: t.description,
-                inputSchema: TOOL_INPUT_SCHEMAS[t.name] || {
-                  type: 'object',
-                  properties: {},
-                  additionalProperties: true
-                }
-              }))
-            }
-          };
-          process.stdout.write(JSON.stringify(response) + '\n');
-        } else if (method === 'tools/call') {
-          const result = await this.handleToolCall(params.name, params.arguments || {});
-          const response = {
-            jsonrpc: '2.0',
-            id,
-            result: {
-              content: [{ type: 'text', text: JSON.stringify(result, null, 2) }]
-            }
-          };
-          process.stdout.write(JSON.stringify(response) + '\n');
-        } else if (method === 'notifications/initialized' || (method && method.startsWith('notifications/'))) {
-          // MCP client notifications don't require a response.
-        } else {
-          const response = {
-            jsonrpc: '2.0',
-            id,
-            error: { code: -32601, message: `Method '${method}' not found` }
-          };
+        const response = await handleStdioLine({
+          line,
+          env: process.env,
+          storePath,
+          invokeTool: (name, args) => this.handleToolCall(name, args, process.env)
+        });
+        if (response) {
           process.stdout.write(JSON.stringify(response) + '\n');
         }
-      } catch (err) {
-        let parsedId = null;
-        try { parsedId = JSON.parse(line).id; } catch { /* keep null */ }
-        const errorResponse = {
+      } catch {
+        process.stdout.write(JSON.stringify({
           jsonrpc: '2.0',
-          id: parsedId,
-          error: { code: -32700, message: 'Parse error', data: err.message }
-        };
-        process.stdout.write(JSON.stringify(errorResponse) + '\n');
+          id: null,
+          error: { code: -32603, message: 'INTERNAL_ERROR' }
+        }) + '\n');
       }
     });
   }
@@ -2773,5 +2732,16 @@ export { EosMcpServer, CANONICAL_TOOLS, listTools, normalizeToolName, resolveCon
 
 if (process.argv[1] && process.argv[1].endsWith('mcp-server.js')) {
   const server = new EosMcpServer();
-  server.start();
+  if (process.argv.includes('--http')) {
+    const portFlag = process.argv.indexOf('--port');
+    const port = portFlag !== -1 ? Number(process.argv[portFlag + 1]) : undefined;
+    startHttpGateway({
+      invokeTool: (name, args) => server.handleToolCall(name, args, process.env),
+      storePath: resolveApiKeyStorePath(server.baseDir, process.env),
+      env: process.env,
+      port: Number.isInteger(port) ? port : undefined
+    });
+  } else {
+    server.start();
+  }
 }

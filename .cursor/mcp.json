@@ -9,7 +9,8 @@
         "EOS_MODE": "read-write",
         "EOS_AUTONOMY_LEVEL": "LEVEL_1",
         "EOS_ALLOW_EXTERNAL_SIDE_EFFECTS": "false",
-        "EOS_SCOPE": "LOCAL_GOVERNED_MVP"
+        "EOS_SCOPE": "LOCAL_GOVERNED_MVP",
+        "EOS_API_KEY": "${EOS_API_KEY}"
       }
     },
     "engram": {

@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated": "2026-09-08",
+  "updated": "2026-10-03",
   "description": "EOS MCP SSOT. Generated consumers via scripts/mcp-ssot-sync.js.",
   "engramFallbackNote": "Use engram on PATH in tracked files; local absolute fallback OK untracked.",
   "profiles": {
@@ -9,7 +9,8 @@
       "env": {
         "EOS_MODE": "read-only",
         "EOS_AUTONOMY_LEVEL": "LEVEL_0",
-        "EOS_ALLOW_EXTERNAL_SIDE_EFFECTS": "false"
+        "EOS_ALLOW_EXTERNAL_SIDE_EFFECTS": "false",
+        "EOS_API_KEY": "${EOS_API_KEY}"
       }
     },
     "L1_LOCAL_GOVERNED": {
@@ -18,7 +19,8 @@
         "EOS_MODE": "read-write",
         "EOS_AUTONOMY_LEVEL": "LEVEL_1",
         "EOS_ALLOW_EXTERNAL_SIDE_EFFECTS": "false",
-        "EOS_SCOPE": "LOCAL_GOVERNED_MVP"
+        "EOS_SCOPE": "LOCAL_GOVERNED_MVP",
+        "EOS_API_KEY": "${EOS_API_KEY}"
       }
     }
   },
