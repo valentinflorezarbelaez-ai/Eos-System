@@ -1,0 +1,6 @@
+schema: spec-driven
+created: 2026-10-03
+goal: Separate specification for a Performance Talent Group Instagram pipeline. No public EOS homepage content and no kernel code.
+affected_areas:
+  - openspec
+  - docs/intake/performance-talent

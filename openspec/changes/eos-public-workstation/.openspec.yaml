@@ -1,0 +1,7 @@
+schema: spec-driven
+created: 2026-10-03
+goal: Public EOS site, multi-IDE contract, and a non-kernel engineering shield with a documented promotion gate.
+affected_areas:
+  - site
+  - src/shield
+  - docs/releases
