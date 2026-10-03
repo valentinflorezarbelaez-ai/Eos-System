@@ -27,6 +27,18 @@
   },
   "rewrites": [
     {
+      "source": "/favicon.svg",
+      "destination": { "service": "eos-site" }
+    },
+    {
+      "source": "/favicon-32.png",
+      "destination": { "service": "eos-site" }
+    },
+    {
+      "source": "/apple-touch-icon.png",
+      "destination": { "service": "eos-site" }
+    },
+    {
       "source": "/styles.css",
       "destination": { "service": "eos-site" }
     },
