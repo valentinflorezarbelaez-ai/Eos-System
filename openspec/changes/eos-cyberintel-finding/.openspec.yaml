@@ -1,0 +1,8 @@
+schema: spec-driven
+created: 2026-10-03
+goal: Record a defensive intelligence finding outside the kernel, and state secret-handling and untrusted-input boundaries on the doctor CLI.
+affected_areas:
+  - openspec/changes/eos-cyberintel-finding
+  - src/shield
+  - bin/eos-doctor.js
+  - tests
