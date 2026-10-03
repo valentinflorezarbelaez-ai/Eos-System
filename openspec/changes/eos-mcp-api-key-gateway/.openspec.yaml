@@ -1,0 +1,9 @@
+schema: spec-driven
+created: 2026-10-03
+goal: Authenticate the existing eos-local MCP server with a local API key on stdio and HTTP, and expose only a few real read-only tools.
+affected_areas:
+  - src/mcp
+  - src/mcp-server.js
+  - scripts/eos-mcp-api-key.js
+  - config/mcp
+  - docs/mcp
