@@ -24,7 +24,9 @@
 
 ## 4. Verify
 
-- [ ] `node --test tests/mcp-api-key-gateway.test.js` exit code recorded.
-- [ ] `node scripts/verify-eos.js --strict` exit code recorded. Pre-existing failures called out if any.
-- [ ] No writes under `Fundacion/`, `CONSTITUTION.md`, `docs/core/CONSTITUTION.md`, or `DEPENDENCY_POLICY_L0.md`.
-- [ ] `site/` spiritual copy left unchanged.
+- [x] `node --test tests/mcp-api-key-gateway.test.js` — 12 pass, 0 fail, exit 0. Before the modules existed the same file exited 1 (`ERR_MODULE_NOT_FOUND`).
+- [x] `node scripts/verify-eos.js --strict` — exit 0. Log contains 832 `[VERIFIED]` lines and no failed checks.
+- [x] Live process: HTTP missing and wrong bearer returned 401; matching bearer ran `eos.doctor` (`executed: true`, `VERDICT: PASS`). stdio without a key returned `UNAUTHORIZED` and no result.
+- [x] Aikido `aikido_full_scan` asked for sign-in. No scan result. Not treated as a pass.
+- [x] No writes under `Fundacion/`, `CONSTITUTION.md`, `docs/core/CONSTITUTION.md`, or `DEPENDENCY_POLICY_L0.md`.
+- [x] `site/` spiritual copy left unchanged.
