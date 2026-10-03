@@ -7,17 +7,17 @@
 
 ## 2. Failing test
 
-- [ ] `tests/eos-cyberintel-finding.test.js` fails because `src/shield/intelligence-finding.js` is absent.
-- Evidence command: `node --test tests/eos-cyberintel-finding.test.js`
+- [x] `tests/eos-cyberintel-finding.test.js` fails because `src/shield/intelligence-finding.js` is absent.
+- Evidence command: `node --test tests/eos-cyberintel-finding.test.js` — exit 1, `ERR_MODULE_NOT_FOUND`.
 
 ## 3. Smallest check
 
-- [ ] `recordIntelligenceFinding` and `formatDoctorBoundaryBlock` match the spec.
-- [ ] `bin/eos-doctor.js` prints the boundary on `--help` and leaves `--json` as kernel JSON.
-- [ ] `src/core/runtime/operator-doctor.js` is not edited.
-- Evidence command: same test file, exit 0.
+- [x] `recordIntelligenceFinding` and `formatDoctorBoundaryBlock` match the spec.
+- [x] `bin/eos-doctor.js` prints the boundary on `--help` and leaves `--json` as kernel JSON.
+- [x] `src/core/runtime/operator-doctor.js` is not edited.
+- Evidence command: same test file, 7 pass, 0 fail, exit 0.
 
 ## 4. Verify
 
-- [ ] `node --check` on the new module and `bin/eos-doctor.js`.
-- [ ] Do not add a package dependency. Do not edit `site/`, `Fundacion/`, constitution files, `DEPENDENCY_POLICY_L0.md`, or `src/core/`.
+- [x] `node --check` on the new module and `bin/eos-doctor.js` — exit 0.
+- [x] Do not add a package dependency. Do not edit `site/`, `Fundacion/`, constitution files, `DEPENDENCY_POLICY_L0.md`, or `src/core/`.
