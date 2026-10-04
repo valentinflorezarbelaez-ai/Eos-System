@@ -295,12 +295,15 @@ export class ExecutiveDossierEngine {
     const files = fs.readdirSync(dir);
     let problemStatement = null;
     const contextPath = path.join(dir, 'PROJECT_CONTEXT.md');
-    if (fs.existsSync(contextPath)) {
+    try {
+      // PERF: Avoid TOCTOU and save an I/O stat call by removing fs.existsSync
       const content = fs.readFileSync(contextPath, 'utf8');
       const lines = content.split('\n').filter((l) => l.trim() && !l.startsWith('#'));
       if (lines.length > 0) {
         problemStatement = lines[0].replace(/^>\s*/, '').trim();
       }
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
     }
     return {
       exists: true,
