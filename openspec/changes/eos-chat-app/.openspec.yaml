@@ -1,0 +1,9 @@
+schema: spec-driven
+created: 2026-10-04
+goal: Add a local chat on the existing public site that calls the eos-local HTTP gateway for three read-only tools.
+affected_areas:
+  - site
+  - src/mcp/http-gateway.js
+  - tests/eos-chat-client.test.js
+  - vercel.json
+  - docs/mcp/EOS_MCP_API_KEY_GATEWAY.md
