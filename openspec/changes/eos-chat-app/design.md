@@ -36,6 +36,8 @@ Default endpoint: `http://127.0.0.1:8787/mcp`. The key field is `type="password"
 
 `OPTIONS /mcp` returns 204 with `access-control-allow-origin` set to the request `Origin` (or `*` when absent), and `access-control-allow-headers` includes `authorization` and `content-type`. `POST` responses carry the same allow-origin header. This does not skip the bearer check and does not change the default bind `127.0.0.1`.
 
+Documented in `docs/mcp/EOS_MCP_API_KEY_GATEWAY.md`.
+
 ## Landing copy
 
 Spanish, same register as the rest of the page. It states both transports: stdio plus `EOS_API_KEY` for Cursor and any MCP client; HTTP bearer for any other program, including this chat. It names the three tools that this slice calls. It does not claim parity with other products.

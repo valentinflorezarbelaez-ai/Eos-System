@@ -303,8 +303,87 @@ code {
   color: var(--parchment-dim);
 }
 
+.chat {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 0.85rem;
+  max-width: 42rem;
+}
+
+.chat-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.chat label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.chat input,
+.chat textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--parchment);
+  background: var(--night);
+  border: 1px solid var(--gold-deep);
+  padding: 0.65rem 0.75rem;
+}
+
+.chat textarea {
+  resize: vertical;
+  min-height: 5.5rem;
+}
+
+.chat-log {
+  min-height: 8rem;
+  max-height: 18rem;
+  overflow: auto;
+  border: 1px solid var(--line);
+  background: var(--night);
+  padding: 0.8rem 0.9rem;
+}
+
+.chat-line {
+  margin: 0 0 0.75rem;
+  max-width: none;
+}
+
+.chat-person {
+  color: var(--gold);
+}
+
+.chat-eos {
+  color: var(--parchment);
+}
+
+.chat-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chat button {
+  font: inherit;
+  color: var(--night);
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 0.45rem 0.75rem;
+}
+
+.chat button[type='button'] {
+  color: var(--parchment);
+  background: transparent;
+  border-color: var(--gold-deep);
+}
+
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 3px;
 }

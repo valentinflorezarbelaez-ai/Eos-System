@@ -62,3 +62,9 @@ curl -sS -X POST http://127.0.0.1:8787/mcp \
 ```
 
 A missing or wrong bearer is HTTP 401 and `{ "error": "UNAUTHORIZED" }`. The tool is not called.
+
+`OPTIONS /mcp` returns 204 and allows the `authorization` and `content-type` headers, so a page on another local port can call this process. The default bind stays `127.0.0.1`. The bearer check is unchanged.
+
+## Browser chat
+
+`site/index.html` section `#conector` is an HTTP client of this gateway. The person pastes the key into the page. The page does not write it to disk, to the repository, or to browser storage. The chat calls only `eos.doctor`, `eos.mission.status`, and `eos.authority.check`. Any other tool name is refused in the page before `fetch`.

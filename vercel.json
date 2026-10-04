@@ -47,6 +47,14 @@
       "destination": { "service": "eos-site" }
     },
     {
+      "source": "/chat.js",
+      "destination": { "service": "eos-site" }
+    },
+    {
+      "source": "/chat-client.js",
+      "destination": { "service": "eos-site" }
+    },
+    {
       "source": "/index.html",
       "destination": { "service": "eos-site" }
     },

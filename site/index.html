@@ -29,6 +29,7 @@
         <a href="#conductores">Conductores</a>
         <a href="#compuertas">Compuertas</a>
         <a href="#promocion">Promoción</a>
+        <a href="#conector">Conector</a>
       </nav>
     </header>
 
@@ -207,6 +208,55 @@
           El detalle está en <code>docs/releases/VERIFY_FAILS_BLOCK_PROMOTION.md</code>.
         </p>
       </section>
+
+      <section id="conector" class="band band-raised" aria-labelledby="conector-titulo">
+        <p class="index">07</p>
+        <h2 id="conector-titulo">El conector ya tiene dos caminos</h2>
+        <p>
+          Cursor y cualquier cliente MCP usan stdio. El proceso es
+          <code>node src/mcp-server.js</code> y la clave va en la variable
+          <code>EOS_API_KEY</code>. Esa variable no se escribe en el repositorio.
+        </p>
+        <p>
+          Cualquier otro programa usa HTTP. El mismo proceso, con
+          <code>--http</code>, escucha en <code>127.0.0.1:8787</code> y pide
+          <code>Authorization: Bearer</code>. Esta página es ese otro programa.
+        </p>
+        <p>
+          Lo implementado es este chat. Pega una clave local, que se queda en
+          la pestaña, y pide tres lecturas que ya existían:
+          <code>eos.doctor</code>, <code>eos.mission.status</code> y
+          <code>eos.authority.check</code>. Otra herramienta, incluida una de
+          escritura, se rechaza antes de salir del navegador.
+        </p>
+        <p>
+          Claude Code, Codex, Gemini, Antigravity, Gentle AI y Engram son
+          otros productos. Esta página no los implementa.
+        </p>
+        <form id="chat-form" class="chat">
+          <div class="chat-field">
+            <label for="chat-endpoint">Puerta HTTP</label>
+            <input id="chat-endpoint" name="endpoint" type="url" value="http://127.0.0.1:8787/mcp" autocomplete="off" spellcheck="false">
+          </div>
+          <div class="chat-field">
+            <label for="chat-key">Clave local</label>
+            <input id="chat-key" name="key" type="password" autocomplete="off" spellcheck="false">
+          </div>
+          <p class="note">La clave no se escribe en el repositorio ni en el almacenamiento del navegador. Al recargar, se va.</p>
+          <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-relevant="additions" tabindex="0"></div>
+          <div class="chat-field">
+            <label for="chat-message">Mensaje</label>
+            <textarea id="chat-message" name="message" rows="3"></textarea>
+          </div>
+          <div class="chat-actions">
+            <button type="button" data-fill="doctor">Doctor</button>
+            <button type="button" data-fill="estado de la misión">Estado de la misión</button>
+            <button type="button" data-fill="autoridad requiredLevel=LEVEL_2 grantedLevel=LEVEL_2">Autoridad</button>
+            <button type="submit">Enviar</button>
+          </div>
+        </form>
+      </section>
+
     </main>
 
     <footer class="colophon">
@@ -227,5 +277,6 @@
       <p class="fine">© <span id="year">2026</span> Valentín Flórez. Borrador público del plano de control.</p>
     </footer>
     <script src="main.js"></script>
+    <script type="module" src="chat.js"></script>
   </body>
 </html>

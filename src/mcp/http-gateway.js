@@ -10,12 +10,25 @@ function bearerToken(header) {
   return match ? match[1] : '';
 }
 
-function sendJson(res, status, body) {
+function corsHeaders(req) {
+  const origin = req.headers.origin;
+  const allowOrigin = typeof origin === 'string' && origin.length > 0 ? origin : '*';
+  return {
+    'access-control-allow-origin': allowOrigin,
+    vary: 'origin',
+    'access-control-allow-methods': 'POST, OPTIONS',
+    'access-control-allow-headers': 'authorization, content-type',
+    'access-control-max-age': '600'
+  };
+}
+
+function sendJson(req, res, status, body) {
   const payload = JSON.stringify(body);
   res.writeHead(status, {
     'content-type': 'application/json; charset=utf-8',
     'cache-control': 'no-store',
-    'content-length': Buffer.byteLength(payload)
+    'content-length': Buffer.byteLength(payload),
+    ...corsHeaders(req)
   });
   res.end(payload);
 }
@@ -38,8 +51,13 @@ async function readBody(req) {
 export function createHttpGateway({ invokeTool, storePath, env = {} }) {
   return http.createServer(async (req, res) => {
     const pathname = (req.url || '/').split('?')[0];
+    if (req.method === 'OPTIONS' && pathname === '/mcp') {
+      res.writeHead(204, corsHeaders(req));
+      res.end();
+      return;
+    }
     if (req.method !== 'POST' || pathname !== '/mcp') {
-      sendJson(res, 404, { error: 'NOT_FOUND' });
+      sendJson(req, res, 404, { error: 'NOT_FOUND' });
       return;
     }
 
@@ -47,7 +65,7 @@ export function createHttpGateway({ invokeTool, storePath, env = {} }) {
     try {
       raw = await readBody(req);
     } catch {
-      sendJson(res, 400, { error: 'BAD_REQUEST' });
+      sendJson(req, res, 400, { error: 'BAD_REQUEST' });
       return;
     }
 
@@ -56,7 +74,7 @@ export function createHttpGateway({ invokeTool, storePath, env = {} }) {
       storePath
     });
     if (!auth.ok) {
-      sendJson(res, 401, { error: 'UNAUTHORIZED' });
+      sendJson(req, res, 401, { error: 'UNAUTHORIZED' });
       return;
     }
 
@@ -64,7 +82,7 @@ export function createHttpGateway({ invokeTool, storePath, env = {} }) {
     try {
       request = JSON.parse(raw);
     } catch {
-      sendJson(res, 400, { error: 'BAD_REQUEST' });
+      sendJson(req, res, 400, { error: 'BAD_REQUEST' });
       return;
     }
 
@@ -77,12 +95,12 @@ export function createHttpGateway({ invokeTool, storePath, env = {} }) {
         authenticated: true
       });
       if (!response) {
-        sendJson(res, 202, { ok: true });
+        sendJson(req, res, 202, { ok: true });
         return;
       }
-      sendJson(res, 200, response);
+      sendJson(req, res, 200, response);
     } catch {
-      sendJson(res, 500, { error: 'INTERNAL_ERROR' });
+      sendJson(req, res, 500, { error: 'INTERNAL_ERROR' });
     }
   });
 }
