@@ -29,7 +29,13 @@ export class TDDAutoHealer {
    */
   async executeTask(task) {
     const targetFilePath = path.join(this.targetPath, task.file);
-    if (!fs.existsSync(targetFilePath)) {
+    let originalContent;
+
+    try {
+      // PERF: Avoid TOCTOU and save an I/O stat call by removing fs.existsSync
+      originalContent = fs.readFileSync(targetFilePath, 'utf8');
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
       return {
         status: 'FAILED',
         falsified: false,
@@ -38,7 +44,6 @@ export class TDDAutoHealer {
       };
     }
 
-    const originalContent = fs.readFileSync(targetFilePath, 'utf8');
     const tempTestFile = path.join(this.targetPath, `temp_elevate_test_${Date.now()}.cjs`);
 
     try {

@@ -23,18 +23,29 @@ export class SchemaValidator {
 
   loadSchema(schemaFileName) {
     if (this._cache.has(schemaFileName)) return this._cache.get(schemaFileName);
+
+    let schemaStr;
     let p = path.join(this.schemaRoot, schemaFileName);
-    if (!fs.existsSync(p)) {
+
+    try {
+      // PERF: Replace fs.existsSync with direct read/catch to avoid TOCTOU and save an I/O stat call
+      schemaStr = fs.readFileSync(p, 'utf8');
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+
       const fallback = path.resolve(this.schemaRoot, '..', schemaFileName);
-      if (fs.existsSync(fallback)) {
-        p = fallback;
-      } else {
-        const err = new Error(`SCHEMA_NOT_FOUND: ${p}`);
-        err.code = 'SCHEMA_NOT_FOUND';
-        throw err;
+      try {
+        schemaStr = fs.readFileSync(fallback, 'utf8');
+      } catch (fallbackErr) {
+        if (fallbackErr.code !== 'ENOENT') throw fallbackErr;
+
+        const notFoundErr = new Error(`SCHEMA_NOT_FOUND: ${p}`);
+        notFoundErr.code = 'SCHEMA_NOT_FOUND';
+        throw notFoundErr;
       }
     }
-    const schema = JSON.parse(fs.readFileSync(p, 'utf8'));
+
+    const schema = JSON.parse(schemaStr);
     this._cache.set(schemaFileName, schema);
     return schema;
   }

@@ -224,11 +224,14 @@ export class RelationalTraceabilityMatrix {
   _sha256(contentOrPath, isFile = false) {
     const hash = crypto.createHash('sha256');
     if (isFile) {
-      if (fs.existsSync(contentOrPath)) {
+      try {
+        // PERF: Avoid TOCTOU and save an I/O stat call by removing fs.existsSync
         hash.update(fs.readFileSync(contentOrPath));
         return hash.digest('hex');
+      } catch (err) {
+        if (err.code !== 'ENOENT') throw err;
+        return '0000000000000000000000000000000000000000000000000000000000000000';
       }
-      return '0000000000000000000000000000000000000000000000000000000000000000';
     }
     hash.update(contentOrPath);
     return hash.digest('hex');
