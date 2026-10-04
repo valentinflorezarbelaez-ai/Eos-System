@@ -22,6 +22,6 @@
 ## 4. Verify
 
 - [x] `node --test tests/eos-chat-client.test.js` exits 0 after the client exists. Before `site/chat-client.js` existed, the same file exited 1 (`ERR_MODULE_NOT_FOUND`).
-- [ ] `node scripts/verify-eos.js --strict` exit code recorded.
-- [ ] No writes under `Fundacion/`, `CONSTITUTION.md`, `docs/core/CONSTITUTION.md`, `DEPENDENCY_POLICY_L0.md`, or `src/core/`.
-- [ ] No `vercel --prod`. A 402 on preview creation stops the deploy attempt.
+- [x] `node scripts/verify-eos.js --strict` exit 0. Summary: `Checks Passed: 913 | Failures: 0`.
+- [x] No writes under `Fundacion/`, `CONSTITUTION.md`, `docs/core/CONSTITUTION.md`, `DEPENDENCY_POLICY_L0.md`, or `src/core/`.
+- [x] No `vercel --prod`. No preview was created. The free-tier quota was already reported as HTTP 402 until 2026-10-04 04:53 UTC, so this slice did not call Vercel.
