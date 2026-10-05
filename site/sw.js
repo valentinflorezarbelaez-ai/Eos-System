@@ -1,4 +1,4 @@
-const CACHE = 'eos-page-v1';
+const CACHE = 'eos-page-v2';
 
 const SHELL = [
   '/',
@@ -13,7 +13,9 @@ const SHELL = [
   '/apple-touch-icon.png',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
-  '/icons/icon-maskable-512.png'
+  '/icons/icon-maskable-512.png',
+  '/portraits/cristo.png',
+  '/portraits/retrato.png'
 ];
 
 self.addEventListener('install', (event) => {
