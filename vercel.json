@@ -4,25 +4,6 @@
     "eos-site": {
       "root": "site/",
       "outputDirectory": "."
-    },
-    "flowdesk": {
-      "root": "EOS-Lab/FlowDesk/",
-      "framework": "hono",
-      "entrypoint": "src/index.ts"
-    },
-    "sonrisa-nova": {
-      "root": "EOS-Lab/Sonrisa-Nova/",
-      "framework": "astro"
-    },
-    "luxe-registry": {
-      "root": "Luxe-Registry/",
-      "framework": "node",
-      "entrypoint": "src/server.js"
-    },
-    "multimodal-creative-suite": {
-      "root": "Multimodal-Creative-Suite/",
-      "framework": "node",
-      "entrypoint": "src/server.js"
     }
   },
   "rewrites": [
