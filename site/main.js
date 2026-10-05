@@ -23,3 +23,54 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
   });
 }
+
+const installButton = document.querySelector('#install-app');
+const installNote = document.querySelector('#install-note');
+let deferredInstall = null;
+
+function isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true;
+}
+
+function isIos() {
+  const ua = window.navigator.userAgent || '';
+  const classic = /iPad|iPhone|iPod/.test(ua);
+  const iPadOs = window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1;
+  return classic || iPadOs;
+}
+
+function hideInstall() {
+  if (installButton) installButton.hidden = true;
+  if (installNote) installNote.hidden = true;
+}
+
+if (isStandalone()) hideInstall();
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredInstall = event;
+  if (installButton) installButton.hidden = false;
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredInstall = null;
+  hideInstall();
+});
+
+if (installButton) {
+  installButton.addEventListener('click', async () => {
+    if (deferredInstall) {
+      const prompt = deferredInstall;
+      deferredInstall = null;
+      prompt.prompt();
+      const choice = await prompt.userChoice;
+      if (choice && choice.outcome === 'accepted') hideInstall();
+      return;
+    }
+    if (!isIos() || isStandalone() || !installNote) return;
+    const open = installNote.hidden;
+    installNote.hidden = !open;
+    installButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+}

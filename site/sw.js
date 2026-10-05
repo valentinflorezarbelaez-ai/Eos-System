@@ -1,4 +1,4 @@
-const CACHE = 'eos-page-v2';
+const CACHE = 'eos-page-v3';
 
 const SHELL = [
   '/',
@@ -15,7 +15,10 @@ const SHELL = [
   '/icons/icon-512.png',
   '/icons/icon-maskable-512.png',
   '/portraits/cristo.png',
-  '/portraits/retrato.png'
+  '/portraits/retrato.png',
+  '/logos/pear.png',
+  '/logos/aider.png',
+  '/logos/manus.png'
 ];
 
 self.addEventListener('install', (event) => {
