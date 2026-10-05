@@ -36,6 +36,26 @@
       "destination": { "service": "eos-site" }
     },
     {
+      "source": "/manifest.webmanifest",
+      "destination": { "service": "eos-site" }
+    },
+    {
+      "source": "/sw.js",
+      "destination": { "service": "eos-site" }
+    },
+    {
+      "source": "/icons/icon-192.png",
+      "destination": { "service": "eos-site" }
+    },
+    {
+      "source": "/icons/icon-512.png",
+      "destination": { "service": "eos-site" }
+    },
+    {
+      "source": "/icons/icon-maskable-512.png",
+      "destination": { "service": "eos-site" }
+    },
+    {
       "source": "/index.html",
       "destination": { "service": "eos-site" }
     },

@@ -8,21 +8,22 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="EOS">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <a class="skip" href="#contenido">Saltar al contenido</a>
-    <header class="mast">
-      <a class="wordmark" href="#contenido">
-        <svg class="seal seal-mark" viewBox="0 0 64 64" aria-hidden="true">
-          <circle cx="32" cy="32" r="15" fill="none" stroke="currentColor" stroke-width="1.25"></circle>
-          <circle cx="32" cy="32" r="1.7" fill="currentColor"></circle>
-          <path d="M32 7.5v7.5M14.2 51.2l6.2-3.6M49.8 51.2l-6.2-3.6" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"></path>
-        </svg>
-        <span>EOS</span>
-      </a>
+    <header class="bar">
+      <a class="wordmark" href="#contenido">EOS</a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menú</button>
       <nav id="nav" class="nav" aria-label="Secciones">
+        <a href="#que-es">Qué es</a>
         <a href="#doctrina">Doctrina</a>
         <a href="#factores">Factores</a>
         <a href="#sintesis">Síntesis</a>
@@ -35,72 +36,83 @@
 
     <main id="contenido">
       <section class="hero" aria-labelledby="titulo">
-        <p class="eyebrow">Gnosis samaeliana · Engineering Operating System</p>
-        <h1 id="titulo">Conocer por experiencia. Verificar por evidencia.</h1>
-        <p class="lede">
-          EOS es el sistema operativo de ingeniería de Valentín Flórez.
-          Esta página lo lee desde la Gnosis samaeliana: conocimiento vivido,
-          no creencia ciega. Un IDE o un agente puede conducir el trabajo.
-          Ninguno es el Ser, y ninguno sustituye la especificación, las pruebas
-          ni la aprobación humana.
-        </p>
-        <dl class="status">
-          <div>
-            <dt>Autonomía</dt>
-            <dd>LEVEL_2 supervisada</dd>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1 id="titulo">Conocer por experiencia. Verificar por evidencia.</h1>
+            <p class="lede">
+              EOS es el sistema operativo de ingeniería de Valentín Flórez.
+              Esta página lo lee desde la Gnosis samaeliana: conocimiento vivido,
+              no creencia ciega.
+            </p>
+            <p class="lede">
+              Un IDE o un agente puede conducir el trabajo.
+              Ninguno es el Ser, y ninguno sustituye la especificación, las pruebas
+              ni la aprobación humana.
+            </p>
+            <div class="actions">
+              <a class="btn" href="#compuertas">Ver las compuertas</a>
+              <a class="btn btn-ghost" href="#conector">Abrir el conector</a>
+            </div>
           </div>
-          <div>
-            <dt>PRODUCTION_READY</dt>
-            <dd>No está declarado</dd>
-          </div>
-          <div>
-            <dt>Fundación</dt>
-            <dd>Congelada, Δ = 0</dd>
-          </div>
-        </dl>
-      </section>
+          <div class="sample-wrap">
+            <pre class="sample"><code><span class="sample-strong"># EOS</span>
 
-      <section id="doctrina" class="band" aria-labelledby="doctrina-titulo">
-        <div class="band-copy">
-          <div>
-            <p class="index">01</p>
-            <h2 id="doctrina-titulo">El yo no es uno</h2>
-            <figure class="seal-block">
-              <svg class="seal seal-large" viewBox="0 0 64 64" aria-hidden="true">
-                <circle cx="32" cy="32" r="15" fill="none" stroke="currentColor" stroke-width="1.25"></circle>
-                <circle cx="32" cy="32" r="1.7" fill="currentColor"></circle>
-                <path d="M32 7.5v7.5M14.2 51.2l6.2-3.6M49.8 51.2l-6.2-3.6" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"></path>
-              </svg>
-              <figcaption>Sello original de esta página. El centro queda quieto. Tres trazos no lo tocan.</figcaption>
-            </figure>
-          </div>
-          <div>
-            <p>
-              La doctrina nombra una pluralidad del ego. No hay un solo «yo»
-              dueño de la casa: hay muchos, y cada uno quiere el centro.
-              La muerte del «yo» es dejar de identificarse con esa multitud.
-              Esta página lo dice. No enseña un método.
-            </p>
-            <p>
-              El Cristo íntimo, el Ser, no es la personalidad ni la herramienta.
-              La autoobservación es ver el pensamiento mecánico sin sentarlo
-              en el trono. En EOS, el modelo, el agente y el apuro de decir
-              «listo» son yoes de ocasión. La autoridad no vive en ellos.
-            </p>
-            <p>
-              Autoobservarse, aquí, es una pregunta concreta: ¿de dónde sale
-              la afirmación, hay fuente, hay prueba, hay una persona que
-              aprueba? El código, los commits y las especificaciones quedan
-              en inglés profesional. La interfaz habla el idioma de quien opera.
-            </p>
+<span class="sample-strong">## Compuertas</span>
+- Especificación antes del cambio
+- Pruebas que pueden fallar
+- Aprobación humana
+
+<span class="sample-strong">## Estado</span>
+- Autonomía: LEVEL_2 supervisada
+- PRODUCTION_READY: no está declarado
+- Fundación: congelada, Δ = 0</code></pre>
           </div>
         </div>
       </section>
 
-      <section id="factores" class="band band-raised" aria-labelledby="factores-titulo">
-        <p class="index">02</p>
+      <section id="que-es" class="section" aria-labelledby="que-es-titulo">
+        <h2 id="que-es-titulo">Qué es y qué no es</h2>
+        <div class="split">
+          <article class="card">
+            <h3>Qué es</h3>
+            <p>Un plano de control local. La evidencia es un comando, un test o un log. Si no se ejecutó, no se declara.</p>
+            <p>Tres compuertas reales: especificación, pruebas y aprobación humana. La autonomía es LEVEL_2 supervisada.</p>
+          </article>
+          <article class="card">
+            <h3>Qué no es</h3>
+            <p>No declara PRODUCTION_READY. No publica métricas de uso, de clientes ni de disponibilidad. No fusiona sola ni empuja a <code>main</code>.</p>
+            <p>No sustituye a la persona que aprueba. Fundación permanece congelada, Δ = 0.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="doctrina" class="section" aria-labelledby="doctrina-titulo">
+        <h2 id="doctrina-titulo">El yo no es uno</h2>
+        <div class="prose">
+          <p>
+            La doctrina nombra una pluralidad del ego. No hay un solo «yo»
+            dueño de la casa: hay muchos, y cada uno quiere el centro.
+            La muerte del «yo» es dejar de identificarse con esa multitud.
+            Esta página lo dice. No enseña un método.
+          </p>
+          <p>
+            El Cristo íntimo, el Ser, no es la personalidad ni la herramienta.
+            La autoobservación es ver el pensamiento mecánico sin sentarlo
+            en el trono. En EOS, el modelo, el agente y el apuro de decir
+            «listo» son yoes de ocasión. La autoridad no vive en ellos.
+          </p>
+          <p>
+            Autoobservarse, aquí, es una pregunta concreta: ¿de dónde sale
+            la afirmación, hay fuente, hay prueba, hay una persona que
+            aprueba? El código, los commits y las especificaciones quedan
+            en inglés profesional. La interfaz habla el idioma de quien opera.
+          </p>
+        </div>
+      </section>
+
+      <section id="factores" class="section" aria-labelledby="factores-titulo">
         <h2 id="factores-titulo">Tres factores</h2>
-        <p class="lede">
+        <p class="center muted">
           Morir. Nacer. Sacrificarse por la humanidad. Se nombran.
           No se convierten en un manual.
         </p>
@@ -120,37 +132,35 @@
         </ol>
       </section>
 
-      <section id="sintesis" class="band" aria-labelledby="sintesis-titulo">
-        <p class="index">03</p>
+      <section id="sintesis" class="section" aria-labelledby="sintesis-titulo">
         <h2 id="sintesis-titulo">Ciencia, arte, filosofía, mística</h2>
-        <p>
+        <p class="center muted">
           La Gnosis samaeliana se presenta como síntesis de esas cuatro.
           EOS toma ese mapa sin mentir sobre lo que cada palabra significa aquí.
         </p>
-        <div class="gates">
-          <article>
+        <div class="cards cards-four">
+          <article class="card">
             <h3>Ciencia</h3>
             <p>Evidencia. Un comando, un test, un log. Si no se ejecutó, no se declara.</p>
           </article>
-          <article>
+          <article class="card">
             <h3>Arte</h3>
             <p>Oficio. Código que se puede leer, revisar y sostener después del cambio.</p>
           </article>
-          <article>
+          <article class="card">
             <h3>Filosofía</h3>
             <p>Especificación. Qué se pidió, con criterios, antes de un cambio que no sea trivial.</p>
           </article>
-          <article>
+          <article class="card">
             <h3>Mística</h3>
             <p>Gnosis: conocimiento vivido. No reemplaza a las otras tres y no se finge con una métrica.</p>
           </article>
         </div>
       </section>
 
-      <section id="conductores" class="band" aria-labelledby="conductores-titulo">
-        <p class="index">04</p>
+      <section id="conductores" class="section" aria-labelledby="conductores-titulo">
         <h2 id="conductores-titulo">Cualquier conductor. El mismo contrato.</h2>
-        <p>
+        <p class="center muted">
           EOS no pertenece a un IDE. Estos productos pueden conducirlo.
           Ninguno queda por encima del contrato. Las marcas de esta lista
           son teselas originales, no los logotipos oficiales.
@@ -170,69 +180,70 @@
         </ul>
       </section>
 
-      <section id="compuertas" class="band band-raised" aria-labelledby="compuertas-titulo">
-        <p class="index">05</p>
+      <section id="compuertas" class="section" aria-labelledby="compuertas-titulo">
         <h2 id="compuertas-titulo">Tres compuertas reales</h2>
-        <div class="gates gates-three">
-          <article>
+        <div class="cards cards-three">
+          <article class="card">
             <h3>Especificación</h3>
             <p>Sin contrato aprobado no hay feature de producto. Un arreglo local y acotado no finge una ceremonia.</p>
           </article>
-          <article>
+          <article class="card">
             <h3>Pruebas</h3>
             <p>Un comportamiento nuevo entra con un test que falla. El escudo de este corte vive fuera del kernel y se prueba con Node.</p>
           </article>
-          <article>
+          <article class="card">
             <h3>Aprobación humana</h3>
             <p>La autonomía LEVEL_2 no fusiona sola, no empuja a <code>main</code> y no repara producción sin una persona. Fundación permanece congelada, Δ = 0.</p>
           </article>
         </div>
       </section>
 
-      <section id="promocion" class="band" aria-labelledby="promocion-titulo">
-        <p class="index">06</p>
+      <section id="promocion" class="section" aria-labelledby="promocion-titulo">
         <h2 id="promocion-titulo">Si <code>verify:strict</code> falla, no hay promoción</h2>
-        <p>
-          En <code>.github/workflows/ci.yml</code> el job <code>verify</code> ejecuta
-          <code>node scripts/verify-eos.js --strict</code>. El job <code>test</code> ejecuta
-          <code>npm test</code>. Esos pasos no llevan <code>continue-on-error</code>.
-          Si el proceso sale distinto de cero, el check queda rojo.
-        </p>
-        <p>
-          El workflow de release gate no despliega: registra
-          <code>production_deploy: false</code>. Un check verde no declara
-          PRODUCTION_READY. La protección de ramas en GitHub, fuera de este
-          archivo, queda sin verificar desde aquí.
-        </p>
-        <p class="note">
-          El detalle está en <code>docs/releases/VERIFY_FAILS_BLOCK_PROMOTION.md</code>.
-        </p>
+        <div class="prose">
+          <p>
+            En <code>.github/workflows/ci.yml</code> el job <code>verify</code> ejecuta
+            <code>node scripts/verify-eos.js --strict</code>. El job <code>test</code> ejecuta
+            <code>npm test</code>. Esos pasos no llevan <code>continue-on-error</code>.
+            Si el proceso sale distinto de cero, el check queda rojo.
+          </p>
+          <p>
+            El workflow de release gate no despliega: registra
+            <code>production_deploy: false</code>. Un check verde no declara
+            PRODUCTION_READY. La protección de ramas en GitHub, fuera de este
+            archivo, queda sin verificar desde aquí.
+          </p>
+          <p class="note">
+            El detalle está en <code>docs/releases/VERIFY_FAILS_BLOCK_PROMOTION.md</code>.
+          </p>
+        </div>
       </section>
 
-      <section id="conector" class="band band-raised" aria-labelledby="conector-titulo">
-        <p class="index">07</p>
+      <section id="conector" class="section" aria-labelledby="conector-titulo">
         <h2 id="conector-titulo">El conector ya tiene dos caminos</h2>
-        <p>
-          Cursor y cualquier cliente MCP usan stdio. El proceso es
-          <code>node src/mcp-server.js</code> y la clave va en la variable
-          <code>EOS_API_KEY</code>. Esa variable no se escribe en el repositorio.
-        </p>
-        <p>
-          Cualquier otro programa usa HTTP. El mismo proceso, con
-          <code>--http</code>, escucha en <code>127.0.0.1:8787</code> y pide
-          <code>Authorization: Bearer</code>. Esta página es ese otro programa.
-        </p>
-        <p>
-          Lo implementado es este chat. Pega una clave local, que se queda en
-          la pestaña, y pide tres lecturas que ya existían:
-          <code>eos.doctor</code>, <code>eos.mission.status</code> y
-          <code>eos.authority.check</code>. Otra herramienta, incluida una de
-          escritura, se rechaza antes de salir del navegador.
-        </p>
-        <p>
-          Claude Code, Codex, Gemini, Antigravity, Gentle AI y Engram son
-          otros productos. Esta página no los implementa.
-        </p>
+        <div class="prose">
+          <p>
+            Cursor y cualquier cliente MCP usan stdio. El proceso es
+            <code>node src/mcp-server.js</code> y la clave va en la variable
+            <code>EOS_API_KEY</code>. Esa variable no se escribe en el repositorio.
+          </p>
+          <p>
+            Cualquier otro programa usa HTTP. El mismo proceso, con
+            <code>--http</code>, escucha en <code>127.0.0.1:8787</code> y pide
+            <code>Authorization: Bearer</code>. Esta página es ese otro programa.
+          </p>
+          <p>
+            Lo implementado es este chat. Pega una clave local, que se queda en
+            la pestaña, y pide tres lecturas que ya existían:
+            <code>eos.doctor</code>, <code>eos.mission.status</code> y
+            <code>eos.authority.check</code>. Otra herramienta, incluida una de
+            escritura, se rechaza antes de salir del navegador.
+          </p>
+          <p>
+            Claude Code, Codex, Gemini, Antigravity, Gentle AI y Engram son
+            otros productos. Esta página no los implementa.
+          </p>
+        </div>
         <form id="chat-form" class="chat">
           <div class="chat-field">
             <label for="chat-endpoint">Puerta HTTP</label>
@@ -256,7 +267,6 @@
           </div>
         </form>
       </section>
-
     </main>
 
     <footer class="colophon">
