@@ -1,0 +1,92 @@
+{
+  "document_id": "RSC-0021-fazt-model-harness-orchestrator-digest",
+  "date": "2026-10-05",
+  "status": "DIGEST_OPERATIONAL",
+  "decision": "ADAPT",
+  "constitution_delta": 0,
+  "verification_status": "NOT VERIFIED",
+  "subtitles_downloaded": false,
+  "note": "Knowledge pin only. Not a subsystem, engine, or permission-bypass mode. Spoken lines are an English page reading, not a subtitle file. NOT VERIFIED name strings are not facts.",
+  "source": {
+    "kind": "three_public_watch_pages",
+    "canonical_urls": [
+      "https://www.youtube.com/watch?v=FK-Yh16MQLo",
+      "https://www.youtube.com/watch?v=Hr693AAnCV0",
+      "https://www.youtube.com/watch?v=3TgAwef00nc"
+    ],
+    "channels": [
+      "https://www.youtube.com/@FaztCode",
+      "https://www.youtube.com/@FaztTech"
+    ],
+    "sibling_article_not_audio": "https://fazt.dev/contenido/3-conceptos-ia-modelos-harnesses-orquestadores",
+    "third_party_quote_not_fazt_description": "https://raphamoura.dev/en/blog/o-direito-de-nao-ler-o-codigo/"
+  },
+  "page_metadata": [
+    {
+      "url": "https://www.youtube.com/watch?v=FK-Yh16MQLo",
+      "title": "Modelos, Harnesses y Orquestadores: el mapa real de la IA",
+      "channel": "Fazt Code",
+      "publishDate": "2026-09-07",
+      "duration": "2:03",
+      "duration_anchor": "videoDetails lengthSeconds 123"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=Hr693AAnCV0",
+      "title": "Así desarrollo con varios agentes a la par (Herdr + Claude Code)",
+      "channel": "Fazt Code",
+      "publishDate": "2026-10-03",
+      "duration": "39:00",
+      "duration_anchor": "channel badge 39:00"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=3TgAwef00nc",
+      "title": "No revises el código de la IA… usa esta estrategia en su lugar",
+      "channel": "Fazt",
+      "publishDate": "2026-07-31",
+      "duration": "11:35",
+      "duration_anchor": "search duration label"
+    }
+  ],
+  "not_verified_name_strings": [
+    "Fable 5.1",
+    "GPT Astra",
+    "Grow 4.6",
+    "Orca, Herder, Cmax, Tracer",
+    "Opus 3.5",
+    "extra high",
+    "Ultra Code",
+    "Clean Bive",
+    "SpecIt",
+    "mutation testing as a Fazt on-camera line"
+  ],
+  "maps_to_eos": [
+    "TOOL_FILTER_MODEL_HARNESS_ORCHESTRATOR",
+    "SPEC_PLUS_TDD",
+    "WORKTREE_ISOLATION",
+    "HITL",
+    "EVIDENCE_OVER_CLAIMS"
+  ],
+  "forbidden": [
+    "New orchestrator product for a single project",
+    "Permission bypass as EOS policy",
+    "Adopting the do-not-read-the-code headline",
+    "Calling a same-agent rewritten test VERIFIED",
+    "PRODUCTION READY from a local demo",
+    "Mutating CONSTITUTION.md, Fundacion/, or src/core/ from this pin",
+    "Promoting NOT VERIFIED name strings to facts"
+  ],
+  "existing_rules_cited": [
+    ".cursor/rules/01-eos-engineering-doctrine.mdc",
+    ".cursor/rules/02-eos-evidence-and-epistemics.mdc",
+    ".cursor/rules/04-eos-security-and-authority.mdc",
+    ".cursor/rules/05-eos-agentic-engineering.mdc",
+    ".cursor/rules/06-eos-testing-and-verification.mdc",
+    ".cursor/rules/08-eos-git-and-release.mdc",
+    ".cursor/rules/engineering-conscious-playbook.mdc",
+    ".cursor/rules/gentleman-book-rsc-0016.mdc",
+    ".cursor/rules/harness-engineering-standard.mdc",
+    "docs/harness/WORKTREE_ISOLATION_POLICY.md",
+    "docs/harness/LOOP_ENGINEERING_4Q.md"
+  ],
+  "pin_ids": ["GK-FZ-01", "GK-FZ-02", "GK-FZ-03", "GK-FZ-04", "GK-FZ-05"]
+}

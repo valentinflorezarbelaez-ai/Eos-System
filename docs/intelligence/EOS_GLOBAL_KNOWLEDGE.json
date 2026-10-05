@@ -2,7 +2,7 @@
   "document_id": "EOS_GLOBAL_KNOWLEDGE",
   "schema_version": "1.0.0",
   "status": "ACTIVE",
-  "updated": "2026-08-26",
+  "updated": "2026-10-05",
   "purpose": "Pinned operational knowledge injected into every CURSOR_PROMPT. Not constitution. Company form still wins on stack.",
   "constitution_delta": 0,
   "entries": [
@@ -61,6 +61,41 @@
       "title": "Evidence over claims",
       "positive": true,
       "text": "Command or receipt before MEASURED/VERIFIED. Protected surfaces Δ=0. Lessons append-only; constitution immutable via learning."
+    },
+    {
+      "id": "GK-FZ-01",
+      "source": "RSC-0021",
+      "title": "Model, harness, orchestrator filter",
+      "positive": true,
+      "text": "Model is what you pay for; do not memorize model names. A harness is the rules, tools, and sensors around that model. Add an orchestrator only when several sessions would actually collide. A single project does not get a new orchestrator."
+    },
+    {
+      "id": "GK-FZ-02",
+      "source": "RSC-0021",
+      "title": "Plan, short skills, worktrees",
+      "positive": true,
+      "text": "Plan before code. Keep skills as short guides, not one skill per detail. One git worktree per parallel feature; delete it after merge. Two agents must not edit the same files. main is the reviewed line; dev is the day's work, still under feature-branch and PR review."
+    },
+    {
+      "id": "GK-FZ-03",
+      "source": "RSC-0021",
+      "title": "Sensors, HITL, no permission bypass",
+      "positive": true,
+      "text": "Playwright or a browser check is a sensor after the change, not proof the plan was right. Cross-session approval stays HITL; the agent does not authorize itself. Do not adopt permission bypass. Level 2, frozen surfaces, and the write barrier stay in force."
+    },
+    {
+      "id": "GK-FZ-04",
+      "source": "RSC-0021",
+      "title": "Do not adopt the do-not-read headline",
+      "positive": true,
+      "text": "Do not adopt the headline that says not to read agent code. Spec and TDD stay together. A test the same agent can rewrite is not evidence and must not be called VERIFIED. Acceptance checks and human review of the diff remain the sensor."
+    },
+    {
+      "id": "GK-FZ-05",
+      "source": "RSC-0021",
+      "title": "Stateful map, no local production claim",
+      "positive": true,
+      "text": "For stateful systems, flags, or data, still look at the map when tests pass. Do not expand the change into the kernel, Fundacion, or the constitution. Do not mark PRODUCTION READY from a local demo."
     }
   ]
 }

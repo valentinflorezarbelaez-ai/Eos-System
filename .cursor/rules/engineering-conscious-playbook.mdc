@@ -17,10 +17,21 @@ Valentín estudia [Fazt](https://www.youtube.com/@FaztTech) / [Fazt Code](https:
 
 | Fuente | Qué aporta de verdad | Qué no hacer |
 |--------|----------------------|--------------|
-| Fazt | El software **vive después del deploy**: Linux, redes, Docker, CI/CD, cloud, costos, logs, secretos. Programar no basta. | Perseguir un framework nuevo cada mes. |
+| Fazt | El software **vive después del deploy**: Linux, redes, Docker, CI/CD, cloud, costos, logs, secretos. Programar no basta. Filtro de herramientas (RSC-0021): modelo = lo que pagas; harness = reglas, herramientas y sensores; orquestador solo si varias sesiones de verdad se estorban. | Perseguir un framework nuevo cada mes. No sumar un orquestador a un solo proyecto. No copiar el bypass de permisos ni el titular de no leer el código. |
 | Gentleman | **SDD** DAG: proposal → (specs ∥ design) → tasks → apply → verify → archive + gatekeeper. Humano dirige; orquestador ejecuta; subagentes especializan. Specs antes de code; TDD RED→GREEN. Scope Rule solo si el front del repo lo admite. Agilidad ≠ ceremonias. Trust = artefactos (RSC-0016 libro). | Pedir “hacé la feature” sin contrato. Imponer React/Claude. Copiar el libro verbatim. |
 | midudev | Oficio fullstack/front: HTML/CSS/JS, React/Next cuando el repo lo pide, Git/PR, tests. Código que se puede enseñar y revisar. | Copiar un clon de Twitter en el repo del cliente. |
 | LIDR | IA y arquitectura **en producción**: RAG, agentes, guardrails, monitorización. | Meter un LLM en el monolito sin frontera de secretos. |
+
+## Nota RSC-0021 (huecos; el resto ya está en otras reglas)
+
+Digest: `docs/intelligence/research/RSC-0021-fazt-model-harness-orchestrator-digest.md`. Pin: `GK-FZ-01`…`GK-FZ-05` en `docs/intelligence/EOS_GLOBAL_KNOWLEDGE.json` (`loadGlobalKnowledge`). Nombres de modelos u orquestadores marcados NOT VERIFIED en ese digest no se tratan como hechos.
+
+Spec + TDD, HITL, barrera de escritura, Level 2, worktree y “no edites el test para forzar el verde” ya están en `01-eos-engineering-doctrine.mdc`, `04-eos-security-and-authority.mdc`, `05-eos-agentic-engineering.mdc`, `06-eos-testing-and-verification.mdc` y `docs/harness/WORKTREE_ISOLATION_POLICY.md`. Aquí solo lo que esas reglas no dicen:
+
+- `main` es lo revisado; `dev` es el trabajo del día. Sigue mandando `08-eos-git-and-release.mdc` (rama de feature, PR, sin push directo a `main`).
+- Playwright o un chequeo de navegador es un sensor después del cambio, no la prueba de que el plan era el correcto.
+- Un test que el mismo agente puede reescribir no es evidencia y no se llama VERIFIED. Quedan el chequeo de aceptación y la revisión humana del diff.
+- Si hay estado, flags o datos, mira el mapa aunque los tests pasen. No abras el cambio hacia kernel, Fundación o la constitución, y no marques PRODUCTION READY por un demo local.
 
 ## Cómo se usa en un ticket real
 
