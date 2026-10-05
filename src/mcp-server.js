@@ -6,6 +6,7 @@
  */
 
 import fs from 'node:fs';
+import readline from 'node:readline';
 import { sealEvd } from './core/sdd/evd-seal-path.js';
 import { EvidenceCustody } from './core/sdd/evidence-custody.js';
 import os from 'node:os';
@@ -2771,7 +2772,14 @@ switch (name) {
 
 export { EosMcpServer, CANONICAL_TOOLS, listTools, normalizeToolName, resolveControlPlaneRoot };
 
+function routeMcpLogsToStderr() {
+  // Core modules log with console.log during boot. MCP stdio requires stdout to stay JSON-RPC.
+  console.log = (...args) => console.error(...args);
+  console.info = (...args) => console.error(...args);
+}
+
 if (process.argv[1] && process.argv[1].endsWith('mcp-server.js')) {
+  routeMcpLogsToStderr();
   const server = new EosMcpServer();
   server.start();
 }

@@ -13,6 +13,7 @@ Canonical: config/mcp/eos-mcp.ssot.json
 - L1_LOCAL_GOVERNED -> .cursor/mcp.json and .windsurf/mcp.json
 - Rebuild eos-local + engram from SSOT; extras from extraServers
 - Relative src/mcp-server.js; engram on PATH in tracked files
+- Cursor consumer only: eosLocalTransport type stdio and args `${workspaceFolder}/src/mcp-server.js` (Cursor variable, not a machine path)
 - .windsurf is gitignored but generated
 - Check mode: gitignored consumers may be ABSENT_OK (CI/checkout); tracked consumers must exist
 - If a gitignored consumer is present locally, check still fails on DRIFT

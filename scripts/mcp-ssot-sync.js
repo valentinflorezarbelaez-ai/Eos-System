@@ -29,7 +29,7 @@ export function loadSsot(ssotPath) {
   return JSON.parse(raw);
 }
 
-export function buildEosLocal(ssot, profileName) {
+export function buildEosLocal(ssot, profileName, transport = null) {
   const profile = ssot.profiles?.[profileName];
   if (!profile?.env) {
     throw new Error(`Unknown or invalid profile: ${profileName}`);
@@ -38,11 +38,16 @@ export function buildEosLocal(ssot, profileName) {
   if (!core?.command || !Array.isArray(core.args)) {
     throw new Error('SSOT coreServers.eos-local must define command and args');
   }
-  return {
+  const args = Array.isArray(transport?.args) ? [...transport.args] : [...core.args];
+  const server = {
     command: core.command,
-    args: [...core.args],
+    args,
     env: { ...profile.env },
   };
+  if (transport?.type) {
+    return { type: transport.type, ...server };
+  }
+  return server;
 }
 
 export function buildEngram(ssot) {
@@ -63,7 +68,7 @@ export function buildConsumerDocument(ssot, consumerSpec) {
     throw new Error('Consumer spec requires profile');
   }
   const mcpServers = {};
-  mcpServers['eos-local'] = buildEosLocal(ssot, consumerSpec.profile);
+  mcpServers['eos-local'] = buildEosLocal(ssot, consumerSpec.profile, consumerSpec.eosLocalTransport || null);
   mcpServers.engram = buildEngram(ssot);
   const extras = consumerSpec.extraServers || {};
   for (const [name, cfg] of Object.entries(extras)) {

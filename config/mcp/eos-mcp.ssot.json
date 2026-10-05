@@ -138,6 +138,12 @@
     ".cursor/mcp.json": {
       "profile": "L1_LOCAL_GOVERNED",
       "gitignored": false,
+      "eosLocalTransport": {
+        "type": "stdio",
+        "args": [
+          "${workspaceFolder}/src/mcp-server.js"
+        ]
+      },
       "extraServers": {
         "playwright": {
           "command": "npx",

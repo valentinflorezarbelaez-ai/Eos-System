@@ -1,9 +1,10 @@
 {
   "mcpServers": {
     "eos-local": {
+      "type": "stdio",
       "command": "node",
       "args": [
-        "src/mcp-server.js"
+        "${workspaceFolder}/src/mcp-server.js"
       ],
       "env": {
         "EOS_MODE": "read-write",

@@ -156,6 +156,29 @@ test("MCP-SSOT-05: check still fails on drift for present gitignored consumer", 
   assert.equal(windsurf.status, "DRIFT");
 });
 
+test("MCP-SSOT-07: Cursor eos-local uses stdio and workspaceFolder, other consumers stay relative", async () => {
+  const { runSync } = await loadSync();
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "eos-mcp-ssot-"));
+  const ssotPath = writeMinimalSsot(root);
+  const ssot = JSON.parse(fs.readFileSync(ssotPath, "utf8"));
+  ssot.consumers[".cursor/mcp.json"].eosLocalTransport = {
+    type: "stdio",
+    args: ["${workspaceFolder}/src/mcp-server.js"],
+  };
+  fs.writeFileSync(ssotPath, JSON.stringify(ssot, null, 2) + "\n");
+  runSync({ root, ssotPath, check: false });
+  const cursor = JSON.parse(fs.readFileSync(path.join(root, ".cursor/mcp.json"), "utf8"));
+  const agents = JSON.parse(fs.readFileSync(path.join(root, ".agents/mcp_config.json"), "utf8"));
+  assert.equal(cursor.mcpServers["eos-local"].type, "stdio");
+  assert.equal(cursor.mcpServers["eos-local"].command, "node");
+  assert.deepEqual(cursor.mcpServers["eos-local"].args, ["${workspaceFolder}/src/mcp-server.js"]);
+  assert.equal(Object.hasOwn(agents.mcpServers["eos-local"], "type"), false);
+  assert.deepEqual(agents.mcpServers["eos-local"].args, ["src/mcp-server.js"]);
+  const serialized = JSON.stringify(cursor);
+  assert.equal(serialized.includes("/Users/"), false);
+  assert.equal(serialized.includes("C:\\\\"), false);
+});
+
 test("MCP-SSOT-06: check still fails when tracked consumer is missing", async () => {
   const { runSync } = await loadSync();
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "eos-mcp-ssot-"));
