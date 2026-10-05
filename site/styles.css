@@ -97,6 +97,18 @@ body {
   font-size: 1.05rem;
 }
 
+.bar-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.65rem;
+  margin-left: auto;
+}
+
+.bar-github {
+  padding: 0.4rem 0.85rem;
+}
+
 .nav-toggle {
   font: inherit;
   font-size: 0.875rem;
