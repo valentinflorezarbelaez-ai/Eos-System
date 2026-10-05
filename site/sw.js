@@ -1,4 +1,4 @@
-const CACHE = 'eos-page-v3';
+const CACHE = 'eos-page-v4';
 
 const SHELL = [
   '/',
