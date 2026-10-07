@@ -34,7 +34,20 @@ await withWriteScope({ roots: ['src', 'tests'] }, async () => {
 | `assertWritable(path)` | Throws `WriteBarrierDeniedError` |
 | `installWriteBarrierHooks()` | Patches `fs` write surfaces to call `assertWritable` |
 | `checkWritePathPolicy(path)` | SSOT/Fundacion policy without ALS (IDE `governance-gate`) |
-| `barrierCheck({ path })` | MCP `eos.workspace.barrier_check` compatible verdict |
+| `barrierCheck({ path })` | MCP `eos.workspace.barrier_check` — **fail-closed** (requires SSOT + active scope) |
+
+## MCP `barrierCheck` contract (blocking)
+
+| Condition | Verdict |
+|---|---|
+| Empty path | `allowed: false`, `EMPTY_PATH` |
+| Protected / Fundacion surface | `allowed: false`, `PROTECTED_SURFACE` |
+| SSOT missing or invalid | `allowed: false`, `SSOT_CONFIG_MISSING` |
+| No active ALS write scope | `allowed: false`, `NO_ACTIVE_SCOPE` |
+| Outside allowlist under scope | `allowed: false`, `OUTSIDE_ALLOWLIST` |
+| Inside allowlist under active scope | `allowed: true`, `OK` |
+
+There is **no** legacy allow path for MCP temp sandboxes. Callers must treat `allowed: false` as a hard abort before any disk mutation.
 
 ## SSOT roots source
 

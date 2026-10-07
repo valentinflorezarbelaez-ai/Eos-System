@@ -7,6 +7,7 @@
  * (c) Fundacion path fails even with open scope
  * (d) write inside allowlist with scope succeeds
  * (e) fail-closed if hook/misconfig
+ * (f) barrierCheck MCP surface is fail-closed (no legacy allow)
  */
 import { describe, it, before, after, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
@@ -24,6 +25,7 @@ import {
   getActiveWriteScope,
   loadSsotRoots,
   resolveRepoRoot,
+  barrierCheck,
   WriteBarrierDeniedError
 } from '../src/core/write-barrier/index.js';
 
@@ -166,6 +168,63 @@ describe('Phase 4 Write Barrier sandbox', () => {
     assert.equal(fs.existsSync(target), false);
 
     uninstallWriteBarrierHooks();
+    fs.rmSync(brokenRoot, { recursive: true, force: true });
+  });
+
+  it('(f) barrierCheck is fail-closed at MCP boundary', async () => {
+    // Empty path
+    const empty = barrierCheck({ path: '', repoRoot: tempRoot });
+    assert.equal(empty.allowed, false);
+    assert.equal(empty.reason, 'EMPTY_PATH');
+
+    // Fundacion always denied with MCP-compatible reason
+    const fundacion = barrierCheck({
+      path: path.join(tempRoot, 'Fundacion', 'probe.md'),
+      repoRoot: tempRoot
+    });
+    assert.equal(fundacion.allowed, false);
+    assert.equal(fundacion.reason, 'PROTECTED_SURFACE');
+
+    // No ALS scope → deny (removed advisory allowlist pass)
+    const noScope = barrierCheck({
+      path: path.join(tempRoot, 'src', 'ok.txt'),
+      repoRoot: tempRoot
+    });
+    assert.equal(noScope.allowed, false);
+    assert.equal(noScope.reason, 'NO_ACTIVE_SCOPE');
+    assert.equal(noScope.scope_active, false);
+
+    // Active scope + inside allowlist → allow
+    await withWriteScope({ repoRoot: tempRoot, roots: ['src'] }, async () => {
+      const ok = barrierCheck({
+        path: path.join(tempRoot, 'src', 'ok.txt'),
+        repoRoot: tempRoot
+      });
+      assert.equal(ok.allowed, true);
+      assert.equal(ok.reason, 'OK');
+      assert.equal(ok.scope_active, true);
+    });
+
+    // Active scope + outside allowlist → deny
+    await withWriteScope({ repoRoot: tempRoot, roots: ['src'] }, async () => {
+      const outside = barrierCheck({
+        path: path.join(tempRoot, 'outside-allow', 'x.txt'),
+        repoRoot: tempRoot
+      });
+      assert.equal(outside.allowed, false);
+      assert.match(String(outside.reason), /OUTSIDE_ALLOWLIST/i);
+    });
+
+    // Missing SSOT → deny (no legacy allow)
+    const brokenRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-wb-barrier-'));
+    fs.mkdirSync(path.join(brokenRoot, 'src'), { recursive: true });
+    fs.writeFileSync(path.join(brokenRoot, 'src', 'a.txt'), 'a\n', 'utf8');
+    const missingSsot = barrierCheck({
+      path: path.join(brokenRoot, 'src', 'a.txt'),
+      repoRoot: brokenRoot
+    });
+    assert.equal(missingSsot.allowed, false);
+    assert.match(String(missingSsot.reason), /SSOT_CONFIG_MISSING|MISCONFIG/i);
     fs.rmSync(brokenRoot, { recursive: true, force: true });
   });
 

@@ -141,7 +141,7 @@ export function assertWritable(targetPath, options = {}) {
 }
 
 /**
- * Legacy protected roots used when SSOT is absent (temp MCP sandboxes / L8).
+ * Protected roots used when SSOT is absent (still fail-closed; never used to allow).
  * @param {string} repoRoot
  * @returns {string[]}
  */
@@ -160,15 +160,46 @@ function legacyProtectedRoots(repoRoot) {
 }
 
 /**
- * MCP / L8-compatible barrier check.
+ * MCP / L8-compatible barrier check — fail-closed at the MCP boundary.
+ *
+ * Contract:
+ * - EMPTY_PATH / PROTECTED_SURFACE / SSOT_CONFIG_* / NO_ACTIVE_SCOPE / OUTSIDE_ALLOWLIST → deny
+ * - Active ALS scope + path inside allowlist → allow
+ * - No legacy allow when SSOT or scope is missing
+ *
  * @param {object} args
  */
 export function barrierCheck(args = {}) {
   const rawPath = args.path || args.target || '';
-  const repoRoot = args.repoRoot
-    ? resolveRepoRoot(args.repoRoot, { explicit: true })
-    : resolveRepoRoot(process.cwd());
-  const resolved = rawPath ? realpathSafe(rawPath, repoRoot) : '';
+
+  let repoRoot;
+  try {
+    repoRoot = args.repoRoot
+      ? resolveRepoRoot(args.repoRoot, { explicit: true })
+      : resolveRepoRoot(process.cwd());
+  } catch (err) {
+    return {
+      path: String(rawPath || ''),
+      allowed: false,
+      protected_roots: [],
+      reason: `MISCONFIG:${err.message}`,
+      scope_active: Boolean(getActiveWriteScope()),
+      epistemic_class: 'MEASURED'
+    };
+  }
+
+  if (!rawPath) {
+    return {
+      path: '',
+      allowed: false,
+      protected_roots: [],
+      reason: 'EMPTY_PATH',
+      scope_active: Boolean(getActiveWriteScope()),
+      epistemic_class: 'MEASURED'
+    };
+  }
+
+  const resolved = realpathSafe(rawPath, repoRoot);
 
   let ssot = null;
   let denyRoots = [];
@@ -194,39 +225,42 @@ export function barrierCheck(args = {}) {
     };
   }
 
-  const scope = getActiveWriteScope();
-  if (scope) {
-    const scoped = authorizeWrite(rawPath, { repoRoot, requireScope: true });
+  // Fail-closed: missing/invalid SSOT never allows (removed legacy allow path).
+  if (!ssot) {
     return {
-      path: scoped.path || resolved,
-      allowed: scoped.allowed,
+      path: resolved || path.resolve(String(rawPath || '')),
+      allowed: false,
       protected_roots: denyRoots,
-      reason: scoped.allowed ? 'OK' : scoped.reason,
-      scope_active: true,
+      reason: 'SSOT_CONFIG_MISSING',
+      scope_active: Boolean(getActiveWriteScope()),
       epistemic_class: 'MEASURED'
     };
   }
 
-  // No ALS scope: if SSOT present, enforce allowlist membership; else legacy allow
-  // (protected surfaces already handled above) for MCP temp sandboxes.
-  if (!ssot) {
+  // Fail-closed: MCP write surface requires an active ALS write scope.
+  const scope = getActiveWriteScope();
+  if (!scope) {
     return {
       path: resolved || path.resolve(String(rawPath || '')),
-      allowed: true,
+      allowed: false,
       protected_roots: denyRoots,
-      reason: 'OK',
+      reason: 'NO_ACTIVE_SCOPE',
       scope_active: false,
       epistemic_class: 'MEASURED'
     };
   }
 
-  const policy = checkWritePathPolicy(rawPath, { repoRoot });
+  const scoped = authorizeWrite(rawPath, { repoRoot, requireScope: true });
+  let reason = scoped.reason;
+  if (!scoped.allowed && /FUNDACION|ALWAYS_DENY|PROTECTED/i.test(String(reason))) {
+    reason = 'PROTECTED_SURFACE';
+  }
   return {
-    path: policy.path || resolved,
-    allowed: policy.allowed,
+    path: scoped.path || resolved,
+    allowed: scoped.allowed,
     protected_roots: denyRoots,
-    reason: policy.allowed ? 'OK' : policy.reason,
-    scope_active: false,
+    reason: scoped.allowed ? 'OK' : reason,
+    scope_active: true,
     epistemic_class: 'MEASURED'
   };
 }
