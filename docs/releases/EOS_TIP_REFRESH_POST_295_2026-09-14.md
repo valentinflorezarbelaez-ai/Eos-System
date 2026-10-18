@@ -1,4 +1,4 @@
-﻿# Tip refresh post-#295 — 2026-09-14
+# Tip refresh post-#295 — 2026-09-14
 
 ## Purpose
 

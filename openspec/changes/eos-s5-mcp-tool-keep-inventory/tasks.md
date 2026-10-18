@@ -1,4 +1,4 @@
-﻿# Tasks — eos-s5-mcp-tool-keep-inventory
+# Tasks — eos-s5-mcp-tool-keep-inventory
 
 ## Step 0: Branch
 

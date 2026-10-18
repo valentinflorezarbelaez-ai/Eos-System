@@ -1,4 +1,4 @@
-﻿# ROI2 — scripts/engine prune (quarantine)
+# ROI2 — scripts/engine prune (quarantine)
 
 **Date:** 2026-09-08 (America/Bogota)  
 **Branch:** `cursor/roi2-engine-prune`  

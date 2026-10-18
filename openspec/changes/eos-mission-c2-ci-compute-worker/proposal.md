@@ -1,4 +1,4 @@
-﻿# Proposal — Mission C2: CI seam-pack compute-worker
+# Proposal — Mission C2: CI seam-pack compute-worker
 
 ## Why
 

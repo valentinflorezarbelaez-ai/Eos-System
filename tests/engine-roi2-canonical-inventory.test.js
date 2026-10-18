@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ROI2 engine prune — locks the canonical scripts/engine keep set.
  * Evidence: archive/quarantine/engine-roi2/INVENTORY.json
  */

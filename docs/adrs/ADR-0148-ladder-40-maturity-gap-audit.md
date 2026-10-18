@@ -1,4 +1,4 @@
-﻿# ADR-0148 — Ladder 40 Maturity Gap Audit
+# ADR-0148 — Ladder 40 Maturity Gap Audit
 
 - **Status:** Proposed — local governed (Ladder 40 Audit; docs-only)
 - **Date:** 2026-09-25 (America/Bogota)

@@ -1,4 +1,4 @@
-﻿# Proposal — EOS T4 Mission OS / EVD observe pack
+# Proposal — EOS T4 Mission OS / EVD observe pack
 
 ## Why
 

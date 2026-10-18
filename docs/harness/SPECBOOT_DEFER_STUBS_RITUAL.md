@@ -1,4 +1,4 @@
-﻿# SpecBoot DEFER stubs ritual (Ladder 9 U7 / K7)
+# SpecBoot DEFER stubs ritual (Ladder 9 U7 / K7)
 
 **Status:** ACTIVE local governed ritual
 **PRODUCTION_READY:** NO

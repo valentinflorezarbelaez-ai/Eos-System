@@ -1,4 +1,4 @@
-﻿# Design — Ladder 40 Maturity Gap Audit
+# Design — Ladder 40 Maturity Gap Audit
 
 ## 1. Architecture Overview
 

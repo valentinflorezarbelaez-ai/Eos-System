@@ -1,4 +1,4 @@
-﻿# Tasks — Ladder 40 Maturity Gap Audit
+# Tasks — Ladder 40 Maturity Gap Audit
 
 - [x] Conduct technical reconnaissance on outbound / callback / egress / delivery-authenticity composition gaps after formal L39 close
 - [x] Evaluate residual themes (Supply-chain/SBOM, HITL/two-key deepen, LLM tool-call, Archive/DR, re-proposed L38/L39, Canary/Fundacion-alone, schema-compat deepen, mission-economy deepen, forensic deepen, notarization deepen, sandbox deepen, SLO deepen, Multi-tenant, Outbound delivery/callback authenticity) and select strongest measured axis

@@ -1,4 +1,4 @@
-﻿# Tasks — eos-tip-refresh-post-specboot
+# Tasks — eos-tip-refresh-post-specboot
 
 ## Step 0: Branch
 

@@ -1,4 +1,4 @@
-﻿# Spec delta — tip-refresh-post-specboot
+# Spec delta — tip-refresh-post-specboot
 
 ## Requirement
 

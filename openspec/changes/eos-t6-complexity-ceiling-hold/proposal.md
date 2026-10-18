@@ -1,4 +1,4 @@
-﻿# Proposal — EOS T6 Complexity ceiling hold / named prune gate
+# Proposal — EOS T6 Complexity ceiling hold / named prune gate
 
 ## Why
 

@@ -1,4 +1,4 @@
-﻿# Tasks — eos-u3-doctor-fusion-light-t4-t8
+# Tasks — eos-u3-doctor-fusion-light-t4-t8
 
 ## Step 0: Branch
 

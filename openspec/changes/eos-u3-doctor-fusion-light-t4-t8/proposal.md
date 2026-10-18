@@ -1,4 +1,4 @@
-﻿# Proposal — EOS U3 Doctor / fusion-light T4–T8 surfaces
+# Proposal — EOS U3 Doctor / fusion-light T4–T8 surfaces
 
 ## Why
 

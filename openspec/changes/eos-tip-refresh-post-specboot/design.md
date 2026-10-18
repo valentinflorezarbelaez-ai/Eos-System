@@ -1,4 +1,4 @@
-﻿# Design — tip refresh post SpecBoot
+# Design — tip refresh post SpecBoot
 
 ## Approach
 

@@ -1,4 +1,4 @@
-﻿# EOS Maturity Ladder 2 Audit - 2026-09-08
+# EOS Maturity Ladder 2 Audit - 2026-09-08
 
 **Branch:** cursor/eos-maturity-ladder-2-audit
 **Audit base tip:** 94eaeda44817859e5b23f065dbe8ec98a986d2da (94eaeda)

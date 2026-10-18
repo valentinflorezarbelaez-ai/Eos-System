@@ -1,4 +1,4 @@
-﻿# EOS R3 Doctor / fusion-light superficies Ladder5 - 2026-09-09
+# EOS R3 Doctor / fusion-light superficies Ladder5 - 2026-09-09
 
 **Branch:** cursor/eos-r3-doctor-fusion-light-l5-surfaces
 **Base main tip:** 92463e288ef1671f3840c87d0018e2782eb0f1e2 (R2 #69 merged)

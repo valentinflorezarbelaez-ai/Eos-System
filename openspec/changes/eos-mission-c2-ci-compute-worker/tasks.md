@@ -1,4 +1,4 @@
-﻿# Tasks — eos-mission-c2-ci-compute-worker
+# Tasks — eos-mission-c2-ci-compute-worker
 
 ## Step 0: Branch
 

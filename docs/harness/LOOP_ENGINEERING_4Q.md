@@ -1,4 +1,4 @@
-﻿# EOS Loop Engineering — 4Q Guides/Sensors Matrix
+# EOS Loop Engineering — 4Q Guides/Sensors Matrix
 
 **SSOT path:** `docs/harness/LOOP_ENGINEERING_4Q.md`  
 **ADR:** [`docs/architecture/adrs/ADR-0017-loop-engineering-4q.md`](../architecture/adrs/ADR-0017-loop-engineering-4q.md)  

@@ -1,4 +1,4 @@
-﻿# Design — S5 MCP/tool KEEP inventory
+# Design — S5 MCP/tool KEEP inventory
 
 ## Approach
 

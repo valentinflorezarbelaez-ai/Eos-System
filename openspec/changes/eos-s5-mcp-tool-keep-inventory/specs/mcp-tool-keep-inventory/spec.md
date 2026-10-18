@@ -1,4 +1,4 @@
-﻿# Spec delta — mcp-tool-keep-inventory
+# Spec delta — mcp-tool-keep-inventory
 
 ## Requirement
 

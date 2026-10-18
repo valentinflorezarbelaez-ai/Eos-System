@@ -1,4 +1,4 @@
-﻿schema: spec-driven
+schema: spec-driven
 created: 2026-09-11
 goal: Mission C2 — wire npm run test:compute-worker (unit+fuzz+adversarial) into CI seam-pack fail-closed; optional test:u2; TDD test:c2 lock excluded from slim to hold TR-01 ≤145; Fundacion Delta=0; PRODUCTION_READY=NO; Antigravity-first NO CloudAgent; push only NO PR.
 routing: SDD

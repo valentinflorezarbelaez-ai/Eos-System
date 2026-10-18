@@ -1,4 +1,4 @@
-﻿# Design — T6 Complexity ceiling hold / named prune gate
+# Design — T6 Complexity ceiling hold / named prune gate
 
 ## Decision
 

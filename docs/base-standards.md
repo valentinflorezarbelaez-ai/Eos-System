@@ -1,4 +1,4 @@
-﻿# EOS base standards (SSOT index)
+# EOS base standards (SSOT index)
 
 This file is the LIDR Specboot **base-standards** index for the EOS Control Plane. It does not invent new policy. It points at the documents that already govern the repo.
 

@@ -1,4 +1,4 @@
-﻿# EOS Maturity Ladder 9 Audit - 2026-09-09
+# EOS Maturity Ladder 9 Audit - 2026-09-09
 
 **Branch:** cursor/eos-l9-audit
 **Audit base tip:** abdf07ece5c3f117ffb30008870c4e63704cd667 (abdf07e)

@@ -1,4 +1,4 @@
-﻿# EOS Gemini & Antigravity Configuration
+# EOS Gemini & Antigravity Configuration
 
 Thin IDE entrypoint for Gemini and Antigravity agents. Do **not** duplicate policy here.
 

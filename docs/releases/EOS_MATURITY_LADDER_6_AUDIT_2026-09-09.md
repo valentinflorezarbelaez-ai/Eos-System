@@ -1,4 +1,4 @@
-﻿# EOS Maturity Ladder 6 Audit - 2026-09-09
+# EOS Maturity Ladder 6 Audit - 2026-09-09
 
 **Branch:** cursor/eos-ladder6-audit
 **Audit base tip:** 7c82d43adc2e57db606fcf831016052b11aa19f5 (7c82d43)

@@ -1,4 +1,4 @@
-﻿# SpecBoot DEFER stubs index (U7 IGNORE)
+# SpecBoot DEFER stubs index (U7 IGNORE)
 
 **Status:** ACTIVE index pointer — **not** the forbidden SpecBoot checklist paths
 **PRODUCTION_READY:** NO

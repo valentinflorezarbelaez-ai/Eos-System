@@ -1,4 +1,4 @@
-﻿# EOS SpecBoot Cycle — Antigravity-First Operator SSOT
+# EOS SpecBoot Cycle — Antigravity-First Operator SSOT
 
 **SSOT path:** `docs/harness/SPECBOOT_CYCLE.md`  
 **Date:** 2026-09-09  

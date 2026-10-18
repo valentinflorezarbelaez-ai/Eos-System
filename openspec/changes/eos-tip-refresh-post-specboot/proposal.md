@@ -1,4 +1,4 @@
-﻿# Proposal — EOS tip refresh post SpecBoot / AGY
+# Proposal — EOS tip refresh post SpecBoot / AGY
 
 ## Why
 

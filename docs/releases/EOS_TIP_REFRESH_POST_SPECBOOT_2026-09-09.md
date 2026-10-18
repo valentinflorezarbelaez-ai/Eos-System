@@ -1,4 +1,4 @@
-﻿# EOS Tip refresh post SpecBoot / AGY - 2026-09-09
+# EOS Tip refresh post SpecBoot / AGY - 2026-09-09
 
 **Branch:** cursor/eos-tip-refresh-post-specboot
 **Base / tip fijado:** b785f014e2403964bb3fe36325c220a965295083 (b785f01; SpecBoot/AGY #79 merged)

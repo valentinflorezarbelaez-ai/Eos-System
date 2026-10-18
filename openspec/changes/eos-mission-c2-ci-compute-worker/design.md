@@ -1,4 +1,4 @@
-﻿# Design — eos-mission-c2-ci-compute-worker (minimal)
+# Design — eos-mission-c2-ci-compute-worker (minimal)
 
 ## Pattern
 

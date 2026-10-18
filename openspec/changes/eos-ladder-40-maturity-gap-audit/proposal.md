@@ -1,4 +1,4 @@
-﻿# Proposal — Ladder 40 Maturity Gap Audit
+# Proposal — Ladder 40 Maturity Gap Audit
 
 ## 1. Problem Statement
 

@@ -1,4 +1,4 @@
-﻿# Proposal — EOS S5 MCP/tool KEEP inventory
+# Proposal — EOS S5 MCP/tool KEEP inventory
 
 ## Why
 

@@ -1,4 +1,4 @@
-﻿# EOS U7 SpecBoot DEFER stubs - 2026-09-09
+# EOS U7 SpecBoot DEFER stubs - 2026-09-09
 
 **Branch:** cursor/eos-u7-specboot-defer-stubs
 **Base tip:** c8d79c100dca4fa3319492262546949b1c86056a (U6 #97 merged on main) — rebased onto origin/main

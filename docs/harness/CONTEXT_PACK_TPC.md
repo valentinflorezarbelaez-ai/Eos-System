@@ -1,4 +1,4 @@
-﻿# EOS Context Pack — TPC Index (Tool / Prompt / Context)
+# EOS Context Pack — TPC Index (Tool / Prompt / Context)
 
 **SSOT path:** `docs/harness/CONTEXT_PACK_TPC.md`  
 **Ladder:** 7 / **Step:** S2 (K2)  

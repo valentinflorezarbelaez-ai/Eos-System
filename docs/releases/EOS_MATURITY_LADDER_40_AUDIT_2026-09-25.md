@@ -1,4 +1,4 @@
-﻿# EOS Maturity Ladder 40 Audit — 2026-09-25
+# EOS Maturity Ladder 40 Audit — 2026-09-25
 
 **Mission:** Ladder 40 Maturity Gap Audit (LADDER-40-MATURITY-AUDIT)  
 **Subject:** Sovereign Outbound Delivery & Callback Authenticity Governance Fabric  
