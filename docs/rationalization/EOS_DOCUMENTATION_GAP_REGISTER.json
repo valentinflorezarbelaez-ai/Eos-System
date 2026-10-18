@@ -20,7 +20,7 @@
       "id": "DOC-GAP-003",
       "topic": "Authority Check Monotonic Arithmetic",
       "issue": "Lack of explicit matrix showing rank evaluation between A0, A1, A2, A3, A4.",
-      "remediation": "Documented in EOS_GOVERNANCE_ENFORCEMENT_MATRIX.md."
+      "remediation": "Documented in docs/mcp/EOS_MCP_GOVERNANCE_PATH_MATRIX.md."
     },
     {
       "id": "DOC-GAP-004",

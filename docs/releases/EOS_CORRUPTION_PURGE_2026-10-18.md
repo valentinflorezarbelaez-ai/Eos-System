@@ -31,7 +31,26 @@ closure, or `PRODUCTION_READY`. It is a storage hygiene fix.
 
 ---
 
-## 3. Verification
+## 4. Duplicate artifacts removed (SSOT de-duplication)
+
+| Removed duplicate | Canonical copy retained |
+| --- | --- |
+| `docs/rationalization/EOS_SIMULATION_REGISTER.json` | `docs/mcp/EOS_MCP_DEAD_OR_ORPHAN_REGISTER.json` |
+| `docs/rationalization/EOS_GOVERNANCE_ENFORCEMENT_MATRIX.md` | `docs/mcp/EOS_MCP_GOVERNANCE_PATH_MATRIX.md` |
+| `docs/rationalization/EOS_DUPLICATION_REGISTER.json` | `docs/mcp/EOS_MCP_REDUNDANCY_REGISTER.json` |
+| `docs/rationalization/EOS_DO_NOT_BUILD_REGISTER.md` | `docs/mcp/EOS_MCP_DO_NOT_BUILD_REGISTER.md` |
+| `openspec/changes/eos-ladder-21-mission-bq/spec.md` | `openspec/changes/eos-ladder-21-mission-bq/specs/mission-bq-ladder21-closeout-seam-pack/spec.md` |
+
+All removed files were byte-identical duplicates. Canonical copies are referenced by
+locks, tests, or ADRs; the duplicates had no live references. The only textual
+reference (`EOS_DOCUMENTATION_GAP_REGISTER.json`) was repointed to the canonical path.
+
+**Non-action:** `.agents` ↔ `ai-specs` skill mirrors, OpenSpec spec deltas, evidence
+receipts, and per-project fixture templates were left intact (intentional mirrors).
+
+---
+
+## 5. Verification
 
 ```text
 node --check (1,369 JS/MJS/CJS)      → 0 syntax failures
