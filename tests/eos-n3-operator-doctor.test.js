@@ -6,10 +6,23 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   runOperatorDoctor,
+  runOperatorDoctorCli,
   formatDoctorReport,
   POST_FUSION_CRITICAL_PATHS,
   DOCTOR_WIRING_PATHS
 } from '../src/core/runtime/operator-doctor.js';
+import {
+  attachHonestyToDoctorReport,
+  extractPendingPorts,
+  observeGitState,
+  observeRevisionLag,
+  summarizePendingPorts
+} from '../src/core/observability/doctor-hud-honesty.js';
+import {
+  collectOperatorHud,
+  renderOperatorHud,
+  HUD_EPISTEMIC
+} from '../src/core/observability/operator-hud.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -215,3 +228,247 @@ describe('N3 operator doctor wire + fusion checks', () => {
     assert.match(text, /eos-doctor/);
   });
 });
+
+// ─── Honesty integrity (verdict, git truth, lag topology, bounds) ───────────
+
+const FREEZE_TIP = '47cf1a790c95f78a79e34830c4d6515d16dc67d0';
+const HEAD_AHEAD = '8c7cfd632cbfa5bc88a400bb2ebe1bfcb05435dc';
+const FREEZE_SHORT7 = FREEZE_TIP.slice(0, 7);
+const HEAD_SHORT7 = HEAD_AHEAD.slice(0, 7);
+
+function freezeFence({ tip = FREEZE_TIP, pending = '' } = {}) {
+  return [
+    '```',
+    `main_tip: ${tip}`,
+    'PRODUCTION_READY: NO',
+    'dictamen: CLOSED_FOR_LOCAL_GOVERNED_USE',
+    pending ? `Audit note: ${pending}` : '',
+    '```'
+  ].join('\n');
+}
+
+function gitDouble(handlers) {
+  return (args) => {
+    const key = args.join(' ');
+    if (Object.prototype.hasOwnProperty.call(handlers, key)) {
+      const value = handlers[key];
+      if (value instanceof Error) throw value;
+      return value;
+    }
+    throw new Error(`unexpected git call: ${key}`);
+  };
+}
+
+function seedIntegrityFreeze(root, { pending = '' } = {}) {
+  fs.mkdirSync(path.join(root, 'docs', 'releases'), { recursive: true });
+  fs.writeFileSync(
+    path.join(root, 'docs', 'releases', 'EOS_FREEZE_GATE_STATUS.md'),
+    freezeFence({ tip: FREEZE_TIP, pending })
+  );
+}
+
+describe('N3 honesty integrity', () => {
+  it('observes HEAD + dirty through injectable git', () => {
+    const execGit = gitDouble({
+      'rev-parse HEAD': HEAD_AHEAD,
+      'status --porcelain': ' M src/a.js\n?? docs/b.md\n'
+    });
+    const state = observeGitState('/tmp/fixture', { execGit });
+
+    assert.equal(state.epistemic, 'OBSERVED');
+    assert.equal(state.source_revision, HEAD_AHEAD);
+    assert.equal(state.dirty, true);
+    assert.equal(state.dirty_measured, true);
+    assert.deepEqual(state.dirty_paths, ['src/a.js', 'docs/b.md']);
+    assert.deepEqual(state.errors, []);
+  });
+
+  it('never claims clean when git is unavailable', () => {
+    const state = observeGitState('/tmp/fixture', {
+      execGit: () => {
+        throw new Error('git unavailable');
+      }
+    });
+
+    assert.equal(state.epistemic, 'NOT_VERIFIED');
+    assert.equal(state.source_revision, null);
+    assert.equal(state.dirty_measured, false);
+    assert.equal(state.dirty, false);
+    assert.equal(state.errors.length, 2);
+  });
+
+  it('measures ahead/behind lag and refuses shallow topology', () => {
+    const ahead = observeRevisionLag('/tmp/fixture', {
+      freezeRevision: FREEZE_TIP,
+      sourceRevision: HEAD_AHEAD,
+      execGit: gitDouble({
+        [`merge-base --is-ancestor ${FREEZE_TIP} ${HEAD_AHEAD}`]: '',
+        [`rev-list --count ${FREEZE_TIP}..${HEAD_AHEAD}`]: '3'
+      })
+    });
+    assert.equal(ahead, 3);
+
+    const behind = observeRevisionLag('/tmp/fixture', {
+      freezeRevision: FREEZE_TIP,
+      sourceRevision: HEAD_AHEAD,
+      execGit: gitDouble({
+        [`merge-base --is-ancestor ${FREEZE_TIP} ${HEAD_AHEAD}`]: new Error('not ancestor'),
+        [`merge-base --is-ancestor ${HEAD_AHEAD} ${FREEZE_TIP}`]: '',
+        [`rev-list --count ${HEAD_AHEAD}..${FREEZE_TIP}`]: '2'
+      })
+    });
+    assert.equal(behind, -2);
+
+    const shallow = observeRevisionLag('/tmp/fixture', {
+      freezeRevision: FREEZE_TIP,
+      sourceRevision: HEAD_AHEAD,
+      execGit: gitDouble({
+        [`merge-base --is-ancestor ${FREEZE_TIP} ${HEAD_AHEAD}`]: new Error('not ancestor'),
+        [`merge-base --is-ancestor ${HEAD_AHEAD} ${FREEZE_TIP}`]: new Error('not ancestor'),
+        'rev-parse --is-shallow-repository': 'true'
+      })
+    });
+    assert.equal(shallow, null);
+  });
+
+  it('ignores prose pending ports and bounds display output', () => {
+    const ports = extractPendingPorts(
+      'FI–FM pending; was pending; ER pending; lowercase pending stays prose'
+    );
+    assert.deepEqual(ports, ['FI–FM pending', 'ER pending']);
+    assert.doesNotMatch(ports.join(' '), /was pending/);
+
+    const many = Array.from({ length: 20 }, (_, i) => `P${i} pending`);
+    const summary = summarizePendingPorts(many, 5);
+    assert.match(summary, /P0 pending/);
+    assert.match(summary, /\+15 more/);
+    assert.doesNotMatch(summary, /P19 pending/);
+  });
+
+  it('keeps observed findings out of the operational verdict', () => {
+    const enriched = attachHonestyToDoctorReport(
+      { ok: true, checks: [{ id: 'BIN_EOS', ok: true }], failed: [] },
+      {
+        freezeRevision: FREEZE_TIP,
+        sourceRevision: null,
+        dirty: false,
+        pendingPorts: ['ZZ pending']
+      }
+    );
+
+    assert.equal(enriched.ok, true, 'operational verdict stays PASS');
+    assert.deepEqual(enriched.failed, []);
+    assert.equal(enriched.honesty_ok, false);
+    assert.ok(enriched.honesty_failed.includes('HONESTY_REVISION'));
+    assert.ok(enriched.honesty_failed.includes('HONESTY_PENDING_PORT'));
+    for (const id of ['HONESTY_REVISION', 'HONESTY_DIRTY', 'HONESTY_PENDING_PORT']) {
+      const row = enriched.checks.find((c) => c.id === id);
+      assert.ok(row, `missing ${id}`);
+      assert.equal(row.gate, false, `${id} must not gate doctor verdict`);
+    }
+
+    const text = formatDoctorReport(enriched);
+    assert.match(text, /\[OBSERVED\] HONESTY_REVISION/);
+    assert.match(text, /\[OBSERVED\] HONESTY_PENDING_PORT/);
+    assert.doesNotMatch(text, /\[FAIL\] HONESTY_/);
+
+    const broken = attachHonestyToDoctorReport(
+      { ok: false, checks: [{ id: 'FUSION_CP', ok: false }], failed: ['FUSION_CP'] },
+      { freezeRevision: FREEZE_TIP, sourceRevision: FREEZE_TIP, dirty: false }
+    );
+    assert.equal(broken.ok, false);
+    assert.deepEqual(broken.failed, ['FUSION_CP']);
+    assert.match(formatDoctorReport(broken), /\[FAIL\] FUSION_CP/);
+  });
+
+  it('wires measured HEAD, lag and dirty state into runOperatorDoctor', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-n3-honesty-doctor-'));
+    try {
+      seedIntegrityFreeze(root, { pending: 'ZZ pending' });
+      const execGit = gitDouble({
+        'rev-parse HEAD': HEAD_AHEAD,
+        'status --porcelain': ' M src/core/runtime/operator-doctor.js\n',
+        [`merge-base --is-ancestor ${FREEZE_TIP} ${HEAD_AHEAD}`]: '',
+        [`rev-list --count ${FREEZE_TIP}..${HEAD_AHEAD}`]: '2'
+      });
+      const report = runOperatorDoctor({
+        root,
+        skipPurpose: true,
+        skipMcpFile: true,
+        skipRuntimeEngines: true,
+        skipDoctorWiring: true,
+        execGit
+      });
+
+      assert.equal(report.honesty.revision.source_revision, HEAD_AHEAD);
+      assert.equal(report.honesty.revision.lag_commits, 2);
+      assert.equal(report.honesty.revision.lag_measurable, true);
+      assert.equal(report.honesty.dirty.dirty, true);
+      assert.equal(report.honesty.dirty.measured, true);
+      assert.deepEqual(report.honesty.dirty.dirty_paths, [
+        'src/core/runtime/operator-doctor.js'
+      ]);
+      assert.ok(report.honesty_failed.includes('HONESTY_DIRTY'));
+      assert.ok(report.failed.every((id) => !id.startsWith('HONESTY_')));
+      assert.equal(report.PRODUCTION_READY, 'NO');
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('passes observation options through the CLI and emits resolved truth', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-n3-honesty-cli-'));
+    try {
+      seedIntegrityFreeze(root);
+      const execGit = gitDouble({
+        'rev-parse HEAD': HEAD_AHEAD,
+        'status --porcelain': '',
+        [`merge-base --is-ancestor ${FREEZE_TIP} ${HEAD_AHEAD}`]: '',
+        [`rev-list --count ${FREEZE_TIP}..${HEAD_AHEAD}`]: '4'
+      });
+      const res = runOperatorDoctorCli(['--json'], {
+        root,
+        skipPurpose: true,
+        skipMcpFile: true,
+        skipRuntimeEngines: true,
+        skipDoctorWiring: true,
+        execGit
+      });
+      const parsed = JSON.parse(res.output);
+      assert.equal(parsed.honesty.revision.source_revision, HEAD_AHEAD);
+      assert.equal(parsed.honesty.revision.lag_commits, 4);
+      assert.equal(parsed.honesty.dirty.dirty, false);
+      assert.equal(parsed.honesty.dirty.measured, true);
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('exposes freeze/source short revisions on the HUD freeze_tip', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-n3-honesty-hud-'));
+    try {
+      seedIntegrityFreeze(root);
+      const snapshot = collectOperatorHud({
+        baseDir: root,
+        skipVerify: true,
+        gitIdentity: {
+          head_short: HEAD_SHORT7,
+          head_full: HEAD_AHEAD,
+          branch: 'main'
+        },
+        dirty: false,
+        lagCommits: 4
+      });
+
+      assert.equal(snapshot.git.epistemic, HUD_EPISTEMIC.VERIFIED);
+      assert.equal(snapshot.freeze_tip.lag_commits, 4);
+      assert.equal(snapshot.freeze_tip.freeze_revision_short, FREEZE_SHORT7);
+      assert.equal(snapshot.freeze_tip.source_revision_short, HEAD_SHORT7);
+      assert.equal(snapshot.PRODUCTION_READY, 'NO');
+      assert.match(renderOperatorHud(snapshot), /HONESTY/);
+    } finally {
+      fs.rmSync(root, { recursive: true, force: true });
+    }
+  });
+});
+

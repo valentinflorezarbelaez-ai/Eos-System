@@ -21,6 +21,9 @@ import { evaluatePurposeFulfillment } from './purpose-fulfillment.js';
 import {
   attachHonestyToDoctorReport,
   formatHonestyBlock,
+  observeGitState,
+  observeRevisionLag,
+  parseFreezeMainTip,
   HONESTY_PRODUCTION_READY,
   FREEZE_GATE_REL
 } from '../observability/doctor-hud-honesty.js';
@@ -259,14 +262,33 @@ export function runOperatorDoctor(options = {}) {
     }
   }
 
-  return attachHonestyToDoctorReport(base, {
-    freezeRevision: options.freezeRevision,
+  const gitState = observeGitState(root, {
     sourceRevision: options.sourceRevision || options.liveHead,
-    lagCommits: options.lagCommits,
-    freezeText,
     dirty: options.dirty,
     dirtyPaths: options.dirtyPaths,
     dirtySummary: options.dirtySummary,
+    execGit: options.execGit
+  });
+  const freezeRevision =
+    options.freezeRevision || parseFreezeMainTip(freezeText);
+  const lagCommits =
+    options.lagCommits !== undefined && options.lagCommits !== null
+      ? options.lagCommits
+      : observeRevisionLag(root, {
+          freezeRevision,
+          sourceRevision: gitState.source_revision,
+          execGit: options.execGit
+        });
+
+  return attachHonestyToDoctorReport(base, {
+    freezeRevision,
+    sourceRevision: gitState.source_revision,
+    lagCommits,
+    freezeText,
+    dirty: gitState.dirty,
+    dirtyMeasured: gitState.dirty_measured,
+    dirtyPaths: gitState.dirty_paths,
+    dirtySummary: gitState.dirty_summary || options.dirtySummary,
     frozen: options.frozen,
     pendingPorts: options.pendingPorts,
     closureEstablished: options.closureEstablished,
@@ -287,7 +309,10 @@ export function formatDoctorReport(report) {
     `VERDICT: ${report.ok ? 'PASS' : 'FAIL'}`,
     'NON-CLAIM: doctor ≠ verify:strict (presence/light OBSERVED only)',
     '',
-    ...report.checks.map((c) => `[${c.ok ? 'PASS' : 'FAIL'}] ${c.id} — ${c.detail}`),
+    ...report.checks.map((c) => {
+      const status = c.ok ? 'PASS' : c.gate === false ? 'OBSERVED' : 'FAIL';
+      return `[${status}] ${c.id} — ${c.detail}`;
+    }),
     '',
     'NON-CLAIMS:',
     ...nonClaims.map((n) => `  - ${n}`)
@@ -326,7 +351,7 @@ export function runOperatorDoctorCli(argv = [], options = {}) {
       report: null
     };
   }
-  const report = runOperatorDoctor({ root });
+  const report = runOperatorDoctor({ ...options, root });
   const output = json
     ? `${JSON.stringify(report, null, 2)}\n`
     : `${formatDoctorReport(report)}\n`;

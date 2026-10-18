@@ -11,6 +11,9 @@ import path from 'node:path';
 import {
   attachHonestyToHudSnapshot,
   formatHonestyBlock,
+  observeGitState,
+  observeRevisionLag,
+  parseFreezeMainTip,
   HONESTY_PRODUCTION_READY,
   FREEZE_GATE_REL as HONESTY_FREEZE_GATE_REL
 } from './doctor-hud-honesty.js';
@@ -589,12 +592,6 @@ export function collectOperatorHud(options = {}) {
   const doctor = observeDoctorWiring(baseDir);
   const defense = observeDefenseWiring(baseDir);
 
-  const freeze_tip = observeFreezeTipVsHead(baseDir, {
-    liveHead: options.liveHead || git.head_full || git.head_short || null,
-    execGit: options.execGit,
-    lagCommits: options.lagCommits
-  });
-
   let freezeText = options.freezeText;
   if (freezeText == null) {
     try {
@@ -606,6 +603,34 @@ export function collectOperatorHud(options = {}) {
       freezeText = undefined;
     }
   }
+
+  const gitState = observeGitState(baseDir, {
+    sourceRevision:
+      options.sourceRevision ||
+      options.liveHead ||
+      git.head_full ||
+      git.head_short,
+    dirty: options.dirty,
+    dirtyPaths: options.dirtyPaths,
+    dirtySummary: options.dirtySummary,
+    execGit: options.execGit
+  });
+  const freezeRevision =
+    options.freezeRevision || parseFreezeMainTip(freezeText);
+  const lagCommits =
+    options.lagCommits !== undefined && options.lagCommits !== null
+      ? options.lagCommits
+      : observeRevisionLag(baseDir, {
+          freezeRevision,
+          sourceRevision: gitState.source_revision,
+          execGit: options.execGit
+        });
+
+  const freeze_tip = observeFreezeTipVsHead(baseDir, {
+    liveHead: options.liveHead || git.head_full || git.head_short || null,
+    execGit: options.execGit,
+    lagCommits
+  });
 
   const snapshot = {
     schema: HUD_SCHEMA,
@@ -633,13 +658,14 @@ export function collectOperatorHud(options = {}) {
   if (options.skipHonesty === true) return snapshot;
 
   const enriched = attachHonestyToHudSnapshot(snapshot, {
-    freezeRevision: options.freezeRevision,
-    sourceRevision: options.sourceRevision || options.liveHead || git.head_full || git.head_short,
-    lagCommits: options.lagCommits,
+    freezeRevision,
+    sourceRevision: gitState.source_revision,
+    lagCommits,
     freezeText,
-    dirty: options.dirty,
-    dirtyPaths: options.dirtyPaths,
-    dirtySummary: options.dirtySummary,
+    dirty: gitState.dirty,
+    dirtyMeasured: gitState.dirty_measured,
+    dirtyPaths: gitState.dirty_paths,
+    dirtySummary: gitState.dirty_summary || options.dirtySummary,
     frozen: options.frozen,
     pendingPorts: options.pendingPorts,
     closureEstablished: options.closureEstablished,
@@ -653,8 +679,8 @@ export function collectOperatorHud(options = {}) {
       lag_commits: enriched.honesty.revision.lag_commits,
       lag_measurable: enriched.honesty.revision.lag_measurable,
       lag_label: enriched.honesty.revision.lag_label,
-      freeze_revision_short: enriched.honesty.revision.freeze_short,
-      source_revision_short: enriched.honesty.revision.source_short
+      freeze_revision_short: enriched.honesty.revision.freeze_revision_short,
+      source_revision_short: enriched.honesty.revision.source_revision_short
     };
   }
   return enriched;

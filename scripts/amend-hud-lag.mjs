@@ -40,8 +40,8 @@ const rep = `  const enriched = attachHonestyToHudSnapshot(snapshot, {
       lag_commits: enriched.honesty.revision.lag_commits,
       lag_measurable: enriched.honesty.revision.lag_measurable,
       lag_label: enriched.honesty.revision.lag_label,
-      freeze_revision_short: enriched.honesty.revision.freeze_short,
-      source_revision_short: enriched.honesty.revision.source_short
+      freeze_revision_short: enriched.honesty.revision.freeze_revision_short,
+      source_revision_short: enriched.honesty.revision.source_revision_short
     };
   }
   return enriched;
