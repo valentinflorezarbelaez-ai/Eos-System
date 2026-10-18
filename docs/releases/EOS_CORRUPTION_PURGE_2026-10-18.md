@@ -1,7 +1,7 @@
-# EOS Corruption Purge — Encoding & Line Endings (2026-10-18)
+# EOS Corruption Purge — Encoding, Duplicates & Test Isolation (2026-10-18)
 
 **Status:** EXECUTED
-**Scope:** Text encoding and line-ending corruption only
+**Scope:** Encoding corruption, duplicate SSOT copies, and repo-mutating tests
 **PRODUCTION_READY:** NO
 **Fundacion:** Δ=0 (untouched)
 
@@ -31,7 +31,7 @@ closure, or `PRODUCTION_READY`. It is a storage hygiene fix.
 
 ---
 
-## 4. Duplicate artifacts removed (SSOT de-duplication)
+## 3. Duplicate artifacts removed (SSOT de-duplication)
 
 | Removed duplicate | Canonical copy retained |
 | --- | --- |
@@ -47,6 +47,20 @@ reference (`EOS_DOCUMENTATION_GAP_REGISTER.json`) was repointed to the canonical
 
 **Non-action:** `.agents` ↔ `ai-specs` skill mirrors, OpenSpec spec deltas, evidence
 receipts, and per-project fixture templates were left intact (intentional mirrors).
+
+---
+
+## 4. Test isolation fix (stops repository mutation)
+
+Two tests were writing into tracked control-plane paths instead of isolated fixtures:
+
+| Test | Mutation before | Fix |
+| --- | --- | --- |
+| `tests/executive-dossier-engine.test.js` | `save: true` wrote `docs/reports/executive/EXECUTIVE_DOSSIER_PRJ-APP-FUERZA.md` in the real repo. | Uses a temporary `reportsDir` and removes it in `finally`. |
+| `tests/mcp-native-operator-tools.test.js` | `eos_audit_project` ran the audit pipeline against the real root and overwrote `docs/evidence/EVD-0060.json`. | Builds a temporary control-plane fixture and injects `baseDir` into `EosMcpServer`. |
+
+The two contaminated files were restored to their pre-churn content. After the fix,
+the full suite leaves `git status` clean.
 
 ---
 

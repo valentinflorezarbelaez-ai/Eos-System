@@ -1,6 +1,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { ExecutiveDossierEngine } from '../src/core/reporting/executive-dossier-engine.js';
 
@@ -59,11 +60,19 @@ describe('EOS ExecutiveDossierEngine', () => {
   });
 
   test('compileProjectDossier with save=true generates markdown file on disk', () => {
-    const res = engine.compileProjectDossier('PRJ-APP-FUERZA', { save: true });
-    assert.ok(res.savedPath);
-    assert.ok(fs.existsSync(res.savedPath));
-    const content = fs.readFileSync(res.savedPath, 'utf8');
-    assert.ok(content.includes('PRJ-APP-FUERZA'));
-    assert.ok(content.includes('Storage Layer: LocalStorage vs IndexedDB'));
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'eos-dossier-save-'));
+    const isolated = new ExecutiveDossierEngine({ controlPlaneRoot: process.cwd() });
+    isolated.reportsDir = tmp;
+    try {
+      const res = isolated.compileProjectDossier('PRJ-APP-FUERZA', { save: true });
+      assert.ok(res.savedPath);
+      assert.equal(path.dirname(res.savedPath), tmp);
+      assert.ok(fs.existsSync(res.savedPath));
+      const content = fs.readFileSync(res.savedPath, 'utf8');
+      assert.ok(content.includes('PRJ-APP-FUERZA'));
+      assert.ok(content.includes('Storage Layer: LocalStorage vs IndexedDB'));
+    } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
+    }
   });
 });
