@@ -5,8 +5,8 @@
   <img src="https://img.shields.io/badge/Node.js-Pure_Layer--0_Built--ins-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js L0" />
   <img src="https://img.shields.io/badge/Runtime_Dependencies-0_External_NPM-blue?style=for-the-badge" alt="Zero Dependencies" />
   <img src="https://img.shields.io/badge/Specification-IEEE_830_EARS_%2B_BDD-blueviolet?style=for-the-badge" alt="EARS / BDD" />
-  <img src="https://img.shields.io/badge/Verification-914%2F914_Strict_Checks-brightgreen?style=for-the-badge" alt="Verify Strict" />
-  <img src="https://img.shields.io/badge/Test_Suite-1268_Passing-success?style=for-the-badge" alt="1268 Tests Passing" />
+  <img src="https://img.shields.io/badge/Verification-913%2F913_Strict_Checks-brightgreen?style=for-the-badge" alt="Verify Strict" />
+  <img src="https://img.shields.io/badge/Test_Suite-1460_Passing-success?style=for-the-badge" alt="1460 Tests Passing" />
   <img src="https://img.shields.io/badge/Consensus-NASA_IV%26V_Anti--Self--Certification-red?style=for-the-badge" alt="NASA IV&V" />
   <img src="https://img.shields.io/badge/Security-Law_VI_Zero_Plain_Secrets-orange?style=for-the-badge" alt="Law VI" />
 </p>
@@ -172,10 +172,10 @@ EOS rejects false claims and speculative optimism. All claims must adhere to the
 EOS validates its own integrity through strict, deterministic automated suites:
 
 ```bash
-# Execute strict invariant verification (914/914 checks across schemas, policies, and locks)
+# Execute strict invariant verification (913/913 checks across schemas, policies, and locks)
 npm run verify:strict
 
-# Execute complete test suite (1268/1268 tests passing)
+# Execute complete test suite (1460/1460 tests passing)
 npm test
 
 # Run sovereign agentic memory port tests (Mission BW / SPEC-0080)
