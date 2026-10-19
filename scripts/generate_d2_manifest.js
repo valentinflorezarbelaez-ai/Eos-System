@@ -18,32 +18,6 @@ const candidateGroups = [
     proposed_dest: '.eos/quarantine/20260820/pilots/fundacion/'
   },
   {
-    id: 'PILOT-02-LUXE-REGISTRY',
-    prefix: 'Luxe-Registry',
-    type: 'pilot',
-    name: 'Luxe Registry Pilot Architecture & Contracts',
-    ownership: 'Luxe Registry Project / External Pilot',
-    purpose: 'Multi-tenant luxury registry spec and data model exploration',
-    data_classification: 'Synthetic schemas',
-    evidence_value: 'Proves schema transferability across diverse domains',
-    risk: 'low',
-    decision: 'ARCHIVE_PILOT',
-    proposed_dest: '.eos/quarantine/20260820/pilots/luxe-registry/'
-  },
-  {
-    id: 'PILOT-03-MULTIMODAL',
-    prefix: 'Multimodal-Creative-Suite',
-    type: 'pilot',
-    name: 'Multimodal Creative Suite Mock Sandbox',
-    ownership: 'Creative Suite Pilot Team',
-    purpose: 'Exploration of multimodal generation and asset pipelines',
-    data_classification: 'No sensitive data / Mock templates',
-    evidence_value: 'Early experimentation with media pipelines',
-    risk: 'low',
-    decision: 'ARCHIVE_PILOT',
-    proposed_dest: '.eos/quarantine/20260820/pilots/multimodal-creative-suite/'
-  },
-  {
     id: 'PILOT-04-EOS-LAB',
     prefix: 'EOS-Lab',
     type: 'pilot',

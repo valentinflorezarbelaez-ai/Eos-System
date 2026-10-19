@@ -31,8 +31,9 @@
       "dependencies": [],
       "evidence_required": "Clean test pass under npm run test:lab when FlowDesk is scheduled for active development.",
       "owner": "LAB_ENGINEER",
-      "status": "OPEN",
-      "next_action": "Keep isolated under npm run test:lab; non-blocking for EOS Core or Canary.",
+      "status": "CLOSED",
+      "resolution": "FlowDesk retired 2026-10-18; see docs/releases/EOS_PROJECT_RETIREMENT_2026-10-18.md.",
+      "next_action": "No action; FlowDesk is no longer an active EOS-Lab project.",
       "blocking": false
     },
     {

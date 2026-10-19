@@ -5,8 +5,6 @@ import { execSync } from 'node:child_process';
 
 const candidateGroups = [
   { id: 'PILOT-01-FUNDACION', prefix: 'Fundacion', type: 'pilot', name: 'Fundacion Alexander Renovations UI & Models' },
-  { id: 'PILOT-02-LUXE-REGISTRY', prefix: 'Luxe-Registry', type: 'pilot', name: 'Luxe Registry Pilot Architecture & Contracts' },
-  { id: 'PILOT-03-MULTIMODAL', prefix: 'Multimodal-Creative-Suite', type: 'pilot', name: 'Multimodal Creative Suite Mock Sandbox' },
   { id: 'PILOT-04-EOS-LAB', prefix: 'EOS-Lab', type: 'pilot', name: 'EOS Lab Sandbox & Andes Retreat Prototype' },
   { id: 'AUDIT-01-ROOT-REPORTS', prefix: 'ROOT_AUDITS', type: 'audit', name: 'Root Level Phase P0/P1 Dated Audit Verdicts' },
   { id: 'AUDIT-02-ALEXANDER-AUDITS', prefix: 'audit/alexander-', type: 'audit', name: 'Alexander Discovery & Definition Legacy Audits' },
