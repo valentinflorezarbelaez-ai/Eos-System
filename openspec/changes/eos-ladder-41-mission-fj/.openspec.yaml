@@ -1,0 +1,8 @@
+schema: openspec.change.v1
+title: Mission FJ Round-Trip Request-Reply Integrity Governance Port (SPEC-0172)
+status: PROPOSED
+ladder: 41
+spec: SPEC-0172
+adr: ADR-0156
+author: EOS Autonomy Agent
+date: '2026-09-25'
