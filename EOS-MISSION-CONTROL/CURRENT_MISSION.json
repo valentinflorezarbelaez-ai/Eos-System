@@ -5,8 +5,8 @@
   "title": "EOS v0.6.0 Unified Pipeline, First-Principles Simplifier & Harness Hardening",
   "status": "LOCAL_GOVERNED_VERIFIED",
   "current_stage": "STAGE_HARDENING_VERIFIED",
-  "active_branch": "main",
-  "updated_at": "2026-09-10T23:07:00.000Z",
+  "active_branch": "cline/vznrcqrq",
+  "updated_at": "2026-10-18T00:00:00.000Z",
   "dictamen": {
     "COMPLETE_FOR_LOCAL_GOVERNED_USE": "YES",
     "OPERATIONALLY_COMPLETE_WITHIN_VERIFIED_SCOPE": "YES",
@@ -18,7 +18,9 @@
     "app_fuerza": "VERIFIED_EVD_0060"
   },
   "evidence": {
-    "strict_verifier": "914/914 PASS (0 failures)",
+    "strict_verifier": "913/913 PASS (0 failures)",
+    "default_tests": "1460/1460 PASS (0 failures)",
+    "coverage_baseline": "lines 73.57% · branches 66.97% · functions 72.62%",
     "doctor": "VERDICT: PASS · HOMEDIR_LEAK: NO",
     "pre_commit_guard": "ACTIVE_DETERMINISTIC",
     "satellite_evidence": "docs/evidence/EVD-0060.json",
