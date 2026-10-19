@@ -38,7 +38,6 @@
 
 import {
   FJ_PRODUCTION_READY,
-  sha256Canonical,
   computeRoundTripDigest,
   verifyRoundTripIntegrity,
   buildRoundTripIntegrityGovernanceReceipt,
@@ -87,32 +86,32 @@ export class RoundTripIntegrityGovernancePort {
         status = 'ROUND_TRIP_SECRET_MATERIAL_REFUSED';
       }
 
+      const deniedRoundTrip = input.roundTrip
+        ? {
+            correlationId: input.roundTrip.correlationId,
+            roundTripId: input.roundTrip.roundTripId,
+            requestRef: input.roundTrip.requestRef,
+            replyRef: input.roundTrip.replyRef,
+            requestDigest: input.roundTrip.requestDigest,
+            echoedRequestDigest: input.roundTrip.echoedRequestDigest,
+            replyDigest: input.roundTrip.replyDigest,
+            roundTripClass: input.roundTrip.roundTripClass,
+            integrityClass: input.roundTrip.integrityClass,
+            desiredIntegrity: input.roundTrip.desiredIntegrity,
+            observedIntegrity: input.roundTrip.observedIntegrity,
+            authorized: input.roundTrip.authorized,
+            evaluated: false,
+            status
+          }
+        : null;
+
       const deniedReceipt = buildRoundTripIntegrityGovernanceReceipt({
         planId: input.planId || 'plan-denied',
         changeId: input.changeId || 'eos-ladder-41-mission-fj',
         decision: 'DENY',
         ritualMode: input.ritualMode || 'ACTIVE',
-        roundTrip: input.roundTrip
-          ? {
-              correlationId: input.roundTrip.correlationId,
-              roundTripId: input.roundTrip.roundTripId,
-              requestRef: input.roundTrip.requestRef,
-              replyRef: input.roundTrip.replyRef,
-              requestDigest: input.roundTrip.requestDigest,
-              echoedRequestDigest: input.roundTrip.echoedRequestDigest,
-              replyDigest: input.roundTrip.replyDigest,
-              roundTripClass: input.roundTrip.roundTripClass,
-              integrityClass: input.roundTrip.integrityClass,
-              desiredIntegrity: input.roundTrip.desiredIntegrity,
-              observedIntegrity: input.roundTrip.observedIntegrity,
-              authorized: input.roundTrip.authorized,
-              evaluated: false,
-              status
-            }
-          : null,
-        roundTripDigest: sha256Canonical(
-          JSON.stringify({ planId: input.planId, denied: true, code: gateRes.code })
-        ),
+        roundTrip: deniedRoundTrip,
+        roundTripDigest: computeRoundTripDigest(deniedRoundTrip || {}),
         prevReceiptHash:
           this.trail.length > 0 ? this.trail[this.trail.length - 1].receiptHash : '0'.repeat(64)
       });
@@ -127,30 +126,32 @@ export class RoundTripIntegrityGovernancePort {
     }
 
     if (input.ritualMode === 'HOLD' || gateRes.decision === 'HOLD') {
+      const heldRoundTrip = input.roundTrip
+        ? {
+            correlationId: input.roundTrip.correlationId,
+            roundTripId: input.roundTrip.roundTripId,
+            requestRef: input.roundTrip.requestRef,
+            replyRef: input.roundTrip.replyRef,
+            requestDigest: input.roundTrip.requestDigest,
+            echoedRequestDigest: input.roundTrip.echoedRequestDigest,
+            replyDigest: input.roundTrip.replyDigest,
+            roundTripClass: input.roundTrip.roundTripClass,
+            integrityClass: input.roundTrip.integrityClass,
+            desiredIntegrity: input.roundTrip.desiredIntegrity,
+            observedIntegrity: input.roundTrip.observedIntegrity,
+            authorized: input.roundTrip.authorized,
+            evaluated: false,
+            status: 'HELD'
+          }
+        : null;
+
       const holdReceipt = buildRoundTripIntegrityGovernanceReceipt({
         planId: input.planId,
         changeId: input.changeId,
         decision: 'HOLD',
         ritualMode: 'HOLD',
-        roundTrip: input.roundTrip
-          ? {
-              correlationId: input.roundTrip.correlationId,
-              roundTripId: input.roundTrip.roundTripId,
-              requestRef: input.roundTrip.requestRef,
-              replyRef: input.roundTrip.replyRef,
-              requestDigest: input.roundTrip.requestDigest,
-              echoedRequestDigest: input.roundTrip.echoedRequestDigest,
-              replyDigest: input.roundTrip.replyDigest,
-              roundTripClass: input.roundTrip.roundTripClass,
-              integrityClass: input.roundTrip.integrityClass,
-              desiredIntegrity: input.roundTrip.desiredIntegrity,
-              observedIntegrity: input.roundTrip.observedIntegrity,
-              authorized: input.roundTrip.authorized,
-              evaluated: false,
-              status: 'HELD'
-            }
-          : null,
-        roundTripDigest: sha256Canonical(JSON.stringify({ planId: input.planId, mode: 'HOLD' })),
+        roundTrip: heldRoundTrip,
+        roundTripDigest: computeRoundTripDigest(heldRoundTrip || {}),
         prevReceiptHash:
           this.trail.length > 0 ? this.trail[this.trail.length - 1].receiptHash : '0'.repeat(64)
       });
@@ -194,7 +195,6 @@ export class RoundTripIntegrityGovernancePort {
     };
 
     const roundTripDigest = computeRoundTripDigest(sealedRoundTrip);
-
 
     const passReceipt = buildRoundTripIntegrityGovernanceReceipt({
       planId: input.planId,
@@ -252,19 +252,23 @@ export class RoundTripIntegrityGovernancePort {
     const base = verifyRoundTripIntegrityGovernanceReceipt(receipt);
     if (!base.ok) return base;
 
-    if (receipt.decision !== 'PASS') {
-      return { ok: true };
-    }
-
     const rt = receipt.roundTrip || {};
     const expected = computeRoundTripDigest(rt);
     if (receipt.roundTripDigest !== expected) {
       return { ok: false, reason: 'roundTripDigest mismatch' };
     }
 
+    if (receipt.decision !== 'PASS') {
+      return { ok: true };
+    }
+
     const integrity = verifyRoundTripIntegrity(rt);
     if (!integrity.ok) {
       return { ok: false, reason: integrity.reason || 'round-trip integrity mismatch' };
+    }
+
+    if (receipt.integrityDigest !== integrity.integrityDigest) {
+      return { ok: false, reason: 'integrityDigest mismatch' };
     }
 
     return { ok: true };
@@ -278,7 +282,7 @@ export class RoundTripIntegrityGovernancePort {
     let prevHash = '0'.repeat(64);
     for (let i = 0; i < this.trail.length; i++) {
       const receipt = this.trail[i];
-      const validRes = verifyRoundTripIntegrityGovernanceReceipt(receipt);
+      const validRes = this.verifyRoundTrip(receipt);
       if (!validRes.ok) {
         return { ok: false, verifiedCount: i, error: `Invalid receipt at ${i}: ${validRes.reason}` };
       }

@@ -12,7 +12,7 @@ FI is registry/binding only. FK mismatch quarantine is the next satellite — FJ
   - `round-trip-integrity-governance-receipt.js` — sealed `FJ-RCPT-*` + freeze soft-observe `78141c3d` + `integrityHold` (`roundTripSecretMaterialRefused` / `roundTripSecretZeroHeld`)
   - `round-trip-integrity-governance-policy-gate.js` — fail-closed govern preconditions + Law VI round-trip/secret-field refusal
   - `round-trip-integrity-governance-port.js` — facade (`govern`, `verifyRoundTrip`, `verifyTrail`)
-- Hermetic tests `tests/eos-fj-round-trip-integrity-governance.test.js` (FJ1–FJ20)
+- Hermetic tests `tests/eos-fj-round-trip-integrity-governance.test.js` (FJ1–FJ23)
 - `package.json` scripts `test:mission-fj`, `test:round-trip-integrity`, `test:ladder41-pack`
 - OpenSpec change, ADR-0156
 

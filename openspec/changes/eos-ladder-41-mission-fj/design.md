@@ -12,6 +12,8 @@ Pure Layer-0 triad under `src/core/composition/`:
 
 `MATCH` ⇔ `requestDigest === echoedRequestDigest` (reply leg echoed the request leg intact). `replyDigest` is correlated as opaque metadata. All three are 64-char sha256 hex — raw payload bytes are refused. A `MISMATCH` desired state is refused in ACTIVE mode; quarantine/deny-on-mismatch is Mission FK (next).
 
+`roundTripDigest` covers the opaque refs, sha256 digests, integrity states, `authorized`, and sealed `status`, so PASS / DENY / HOLD round-trip metadata is tamper-evident across the whole trail. PASS sealing throws if integrity is not verified; `verifyRoundTrip` re-checks the canonical seal, digest linkage, integrity match, and `integrityDigest`.
+
 ## Distinction from FI / FK / EY / FD / Canary
 
 | Surface | Role vs FJ |

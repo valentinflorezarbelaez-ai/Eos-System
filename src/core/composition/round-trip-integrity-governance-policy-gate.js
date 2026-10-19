@@ -34,6 +34,7 @@ import {
   FJ_PRODUCTION_READY,
   FJ_FREEZE_PIN_SHORT,
   FJ_INTEGRITY_STATES,
+  FJ_RITUAL_MODES,
   isValidDigestHex,
   verifyRoundTripIntegrity
 } from './round-trip-integrity-governance-receipt.js';
@@ -86,6 +87,7 @@ export const FJ_CODES = Object.freeze({
   HOLD: 'HOLD',
   MISSING_PLAN_ID: 'MISSING_PLAN_ID',
   MISSING_CHANGE_ID: 'MISSING_CHANGE_ID',
+  INVALID_RITUAL_MODE: 'INVALID_RITUAL_MODE',
   MISSING_ROUND_TRIP: 'MISSING_ROUND_TRIP',
   INVALID_ROUND_TRIP: 'INVALID_ROUND_TRIP',
   MISSING_CORRELATION_ID: 'MISSING_CORRELATION_ID',
@@ -271,6 +273,19 @@ export class RoundTripIntegrityGovernancePolicyGate {
         decision: 'DENY',
         code: FJ_CODES.MISSING_CHANGE_ID,
         reason: 'Missing changeId in input'
+      };
+    }
+
+    if (
+      plan.ritualMode !== undefined &&
+      plan.ritualMode !== null &&
+      !FJ_RITUAL_MODES.includes(plan.ritualMode)
+    ) {
+      return {
+        ok: false,
+        decision: 'DENY',
+        code: FJ_CODES.INVALID_RITUAL_MODE,
+        reason: 'ritualMode must be one of ACTIVE|HOLD|DRY_RUN when provided'
       };
     }
 
@@ -589,6 +604,15 @@ export class RoundTripIntegrityGovernancePolicyGate {
       };
     }
 
+    if (rt.desiredIntegrity === 'HOLD') {
+      return {
+        ok: true,
+        decision: 'HOLD',
+        code: FJ_CODES.HOLD,
+        reason: 'Plan requests integrity HOLD: zero mutations allowed; no PASS seal.'
+      };
+    }
+
     if (rt.authorized !== true) {
       return {
         ok: false,
@@ -620,15 +644,6 @@ export class RoundTripIntegrityGovernancePolicyGate {
         code: FJ_CODES.ROUND_TRIP_MISMATCH_REFUSED,
         reason:
           'Round-trip integrity MISMATCH is refused in ACTIVE mode (fail-closed). Quarantine/deny on mismatch is Mission FK (next satellite).'
-      };
-    }
-
-    if (rt.desiredIntegrity === 'HOLD') {
-      return {
-        ok: true,
-        decision: 'HOLD',
-        code: FJ_CODES.HOLD,
-        reason: 'Plan requests integrity HOLD: zero mutations allowed; no PASS seal.'
       };
     }
 

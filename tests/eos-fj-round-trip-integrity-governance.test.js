@@ -767,5 +767,128 @@ describe('Mission FJ — Round-Trip / Request-Reply Integrity Governance Port (S
     };
     assert.equal(port.verifyRoundTrip(mismatched).ok, false);
   });
+
+  it('FJ21: rejects invalid ritualMode and allows integrity HOLD without authorization', () => {
+    const gate = new RoundTripIntegrityGovernancePolicyGate();
+
+    const badMode = gate.evaluatePreconditions(makePlan({ ritualMode: 'BOGUS' }));
+    assert.equal(badMode.ok, false);
+    assert.equal(badMode.decision, 'DENY');
+    assert.equal(badMode.code, FJ_CODES.INVALID_RITUAL_MODE);
+
+    const holdUnauthorized = gate.evaluatePreconditions(
+      makePlan({
+        roundTrip: makeMockRoundTrip({
+          desiredIntegrity: 'HOLD',
+          observedIntegrity: 'HOLD',
+          authorized: false
+        })
+      })
+    );
+    assert.equal(holdUnauthorized.ok, true);
+    assert.equal(holdUnauthorized.decision, 'HOLD');
+    assert.equal(holdUnauthorized.code, FJ_CODES.HOLD);
+  });
+
+  it('FJ22: verifyTrail detects roundTripDigest / integrityDigest tampering and validates DENY/HOLD linkage', async () => {
+    const port = new RoundTripIntegrityGovernancePort();
+    await port.govern(makePlan({ planId: 'plan-fj-seal-01' }));
+
+    const sealed = port.trail[0];
+    const linkageTamper = {
+      ...sealed,
+      roundTrip: { ...sealed.roundTrip, requestRef: 'swapped-after-seal' }
+    };
+    const linkageRes = port.verifyRoundTrip(linkageTamper);
+    assert.equal(linkageRes.ok, false);
+    assert.equal(linkageRes.reason, 'roundTripDigest mismatch');
+
+    const integrityTamper = { ...sealed, integrityDigest: 'a'.repeat(64) };
+    const integrityRes = port.verifyRoundTrip(integrityTamper);
+    assert.equal(integrityRes.ok, false);
+    assert.equal(integrityRes.reason, 'integrityDigest mismatch');
+
+    port.trail[0] = linkageTamper;
+    assert.equal(port.verifyTrail().ok, false);
+
+    const denyPort = new RoundTripIntegrityGovernancePort();
+    const denyRes = await denyPort.govern(
+      makePlan({
+        planId: 'plan-fj-deny-link',
+        roundTrip: makeMockRoundTrip({ authorized: false })
+      })
+    );
+    assert.equal(denyPort.verifyRoundTrip(denyRes.receipt).ok, true);
+    assert.equal(denyPort.verifyTrail().ok, true);
+
+    const denyTamper = {
+      ...denyRes.receipt,
+      roundTrip: { ...denyRes.receipt.roundTrip, status: 'ROUND_TRIP_VERIFIED' }
+    };
+    assert.equal(denyPort.verifyRoundTrip(denyTamper).ok, false);
+
+    const holdPort = new RoundTripIntegrityGovernancePort();
+    const holdRes = await holdPort.govern({
+      planId: 'plan-fj-hold-link',
+      changeId: 'eos-ladder-41-mission-fj',
+      ritualMode: 'HOLD'
+    });
+    assert.equal(holdPort.verifyRoundTrip(holdRes.receipt).ok, true);
+    assert.equal(holdPort.verifyTrail().ok, true);
+  });
+
+  it('FJ23: PASS sealing refuses unverified round-trip integrity', () => {
+    assert.throws(
+      () =>
+        buildRoundTripIntegrityGovernanceReceipt({
+          planId: 'plan-fj-unverified',
+          changeId: 'eos-ladder-41-mission-fj',
+          decision: 'PASS'
+        }),
+      /round-trip integrity not verified/
+    );
+
+    assert.throws(
+      () =>
+        buildRoundTripIntegrityGovernanceReceipt({
+          planId: 'plan-fj-unverified',
+          changeId: 'eos-ladder-41-mission-fj',
+          decision: 'PASS',
+          roundTrip: makeMockRoundTrip({ echoedRequestDigest: digestOf('not-the-request') })
+        }),
+      /round-trip integrity not verified/
+    );
+
+    const denyReceipt = buildRoundTripIntegrityGovernanceReceipt({
+      planId: 'plan-fj-deny-weaker',
+      changeId: 'eos-ladder-41-mission-fj',
+      decision: 'DENY',
+      roundTrip: makeMockRoundTrip({ echoedRequestDigest: digestOf('not-the-request') })
+    });
+    assert.equal(denyReceipt.decision, 'DENY');
+    assert.equal(verifyRoundTripIntegrityGovernanceReceipt(denyReceipt).ok, true);
+
+    assert.throws(
+      () =>
+        buildRoundTripIntegrityGovernanceReceipt({
+          planId: 'plan-fj-bad-digest',
+          changeId: 'eos-ladder-41-mission-fj',
+          decision: 'DENY',
+          roundTripDigest: 'not-a-sha256-digest'
+        }),
+      /roundTripDigest must be a 64-char sha256 hex digest/
+    );
+
+    assert.throws(
+      () =>
+        buildRoundTripIntegrityGovernanceReceipt({
+          planId: 'plan-fj-bad-integrity-digest',
+          changeId: 'eos-ladder-41-mission-fj',
+          decision: 'DENY',
+          integrityDigest: 'not-a-sha256-digest'
+        }),
+      /integrityDigest must be a 64-char sha256 hex digest/
+    );
+  });
 });
 

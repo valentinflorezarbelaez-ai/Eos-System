@@ -27,7 +27,7 @@ Law VI is absolute — refuse raw round-trip / request / reply secret material a
 6. Fail-closed `DENY` + code `ROUND_TRIP_UNAUTHORIZED` when unauthorized; `INVALID_ROUND_TRIP_CLAIM` when hermetic observedIntegrity mismatches desiredIntegrity; `SECRET_FIELD_FORBIDDEN` / `SECRET_LEAK_FORBIDDEN` / `RAW_ROUND_TRIP_SECRET_MATERIAL_FORBIDDEN` under Law VI.
 7. Refuse live HTTP egress, wall-clock authority, tip-refresh authority, FI/FK/EY/FD/Canary elevate-as-port, tip-refresh, PRODUCTION_READY flip, L30–L40 reopen, L41 auto-close, schema-json add, Fundacion writes, GHE, mass prune.
 8. Soft-observe freeze pinShort `78141c3d` only — do **not** rewrite freeze/matrix/m4 tip.
-9. Hermetic tests FJ1–FJ20; OpenSpec `eos-ladder-41-mission-fj`.
+9. Hermetic tests FJ1–FJ23; OpenSpec `eos-ladder-41-mission-fj`.
 
 ## Alternatives Considered AND REJECTED
 

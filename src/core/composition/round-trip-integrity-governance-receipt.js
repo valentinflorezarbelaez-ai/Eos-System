@@ -150,7 +150,7 @@ export function isValidDigestHex(value) {
 
 /**
  * Digests opaque round-trip correlation metadata only — never secret bytes (Law VI).
- * @param {{ correlationId?: string, roundTripId?: string, requestRef?: string, replyRef?: string, requestDigest?: string, echoedRequestDigest?: string, replyDigest?: string, roundTripClass?: string, integrityClass?: string, desiredIntegrity?: string, observedIntegrity?: string }} meta
+ * @param {{ correlationId?: string, roundTripId?: string, requestRef?: string, replyRef?: string, requestDigest?: string, echoedRequestDigest?: string, replyDigest?: string, roundTripClass?: string, integrityClass?: string, desiredIntegrity?: string, observedIntegrity?: string, authorized?: boolean, status?: string }} meta
  */
 export function computeRoundTripDigest(meta = {}) {
   const opaqueOnly = {
@@ -164,7 +164,9 @@ export function computeRoundTripDigest(meta = {}) {
     roundTripClass: meta.roundTripClass || null,
     integrityClass: meta.integrityClass || null,
     desiredIntegrity: meta.desiredIntegrity || null,
-    observedIntegrity: meta.observedIntegrity ?? null
+    observedIntegrity: meta.observedIntegrity ?? null,
+    authorized: meta.authorized ?? null,
+    status: meta.status || null
   };
   return sha256Canonical(JSON.stringify(opaqueOnly));
 }
@@ -299,6 +301,13 @@ export function canonicalRoundTripIntegrityGovernanceSealBody(receipt) {
  * @returns {object}
  */
 export function buildRoundTripIntegrityGovernanceReceipt(input = {}) {
+  if (input.roundTripDigest !== undefined && !isValidDigestHex(input.roundTripDigest)) {
+    throw new Error('roundTripDigest must be a 64-char sha256 hex digest');
+  }
+  if (input.integrityDigest !== undefined && !isValidDigestHex(input.integrityDigest)) {
+    throw new Error('integrityDigest must be a 64-char sha256 hex digest');
+  }
+
   _receiptSeq += 1;
   const seqStr = String(_receiptSeq).padStart(4, '0');
   const receiptId = input.receiptId || `FJ-RCPT-${seqStr}`;
@@ -310,6 +319,10 @@ export function buildRoundTripIntegrityGovernanceReceipt(input = {}) {
   const roundTrip = input.roundTrip || null;
 
   const integrity = roundTrip ? verifyRoundTripIntegrity(roundTrip) : { ok: false };
+
+  if (decision === 'PASS' && (!roundTrip || !integrity.ok)) {
+    throw new Error('Cannot seal PASS receipt: round-trip integrity not verified');
+  }
 
   const roundTripDigest =
     input.roundTripDigest || computeRoundTripDigest(roundTrip || {});
