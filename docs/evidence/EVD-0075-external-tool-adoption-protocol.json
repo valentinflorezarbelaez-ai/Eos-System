@@ -1,0 +1,30 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0075",
+  "claim": "A single reusable procedure now governs the adoption of external capabilities that EOS or its directed agents would operate, closing the gap between the existing write barrier (where EOS writes) and the missing gate (what EOS operates), and both pending candidates (ego lite, Jev) are classified and dispositioned under it.",
+  "status": "VERIFIED",
+  "scope": "Procedural documentation only. Adds one harness document and one strict-verification registration. No policy authority, no dependency, no registry mutation, no installation, no execution of any external capability.",
+  "source": "Authorized by AGENTS.md section 5, docs/policies/EOS-SUPERVISED-AUTONOMY-POLICY.md and CMP-0002/RSC-0021 evidence",
+  "timestamp": "2026-10-20T18:35:00Z",
+  "actor": "EOS agent (Cline)",
+  "action": "Authored docs/harness/EXTERNAL_TOOL_ADOPTION_PROTOCOL.md (11 sections: trigger conditions, R0-R4 blast-radius classes, P0 preconditions, P0-P4 phase ladder, threat model, metrics, decision output, two filled instances) and registered it in strict verification.",
+  "command": "npm run verify:strict",
+  "expected": "'Checks Passed: 926 | Failures: 0', exit 0 (previous verified state 924; delta +2 for the two new required paths: the protocol and this evidence record).",
+  "actual": "'Checks Passed: 926 | Failures: 0', exit 0, on a clean final-state run. node --check on scripts/verify-eos.js passes.",
+  "confidence": "HIGH",
+  "artifacts": [
+    "docs/harness/EXTERNAL_TOOL_ADOPTION_PROTOCOL.md",
+    "scripts/verify-eos.js"
+  ],
+  "environment": {
+    "branch": "cline/b03j7g4c",
+    "l0_purity": "NODE_BUILTINS_ONLY preserved"
+  },
+  "risks": [
+    "A procedure that is not enforced by an automated gate can be skipped; enforcement would require a policy-engine rule, which is a PO decision."
+  ],
+  "limitations": [
+    "No phase of the ladder has been executed for either instance; both remain at P0.",
+    "The protocol is generic by design and does not encode every domain-specific threat."
+  ]
+}

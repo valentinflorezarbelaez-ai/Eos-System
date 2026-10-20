@@ -1,0 +1,32 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0074",
+  "claim": "The ego lite / ego-browser claims were verified against the primary source (repository README and vendor pricing page) rather than the secondary summaries supplied in the request, the three material inaccuracies in those summaries were corrected, and the tool was recorded as CMP-0002 with disposition OBSERVE/DEFER without adding it to the tool registry, the MCP catalog or the browser-qa skill.",
+  "status": "VERIFIED",
+  "scope": "External source verification and comparative documentation only. No installation, no execution, no registry mutation, no dependency, no change to the browser-qa skill or the MCP catalog.",
+  "source": "SRC-0081 (github.com/citrolabs/ego-lite), README.es.md, lite.ego.app/es/enterprise",
+  "timestamp": "2026-10-20T18:15:00Z",
+  "actor": "EOS agent (Cline)",
+  "action": "Fetched the primary repository and pricing pages; extracted verifiable facts; corrected secondary-summary errors; wrote CMP-0002 and appended SRC-0081; registered CMP-0002 in strict verification.",
+  "command": "npm run verify:strict",
+  "expected": "Strict verification passes with zero failures and the check count increases by the number of newly registered paths (three: CMP-0002 existence, EVD-0074 existence, CMP-0002 JSON validity); the new JSON documents parse.",
+  "actual": "Final state: 'Checks Passed: 924 | Failures: 0', exit 0 (previous verified state was 921 after EVD-0073; delta +3 = CMP-0002 required path, CMP-0002 JSON-integrity validation, EVD-0074 required path). Both new/edited JSON documents parse; node --check on scripts/verify-eos.js passes.",
+  "confidence": "HIGH",
+  "artifacts": [
+    "docs/intelligence/comparisons/CMP-0002-agent-browser-automation-options.json",
+    "docs/intelligence/sources/SOURCES.json"
+  ],
+  "environment": {
+    "branch": "cline/b03j7g4c",
+    "l0_purity": "NODE_BUILTINS_ONLY preserved",
+    "network_egress": "NONE from repository code; source retrieval was external research"
+  },
+  "risks": [
+    "The vendor benchmark remains the only performance evidence available; it was authored and graded by the vendor.",
+    "If ego lite were ever adopted, agent actions would run under the Product Owner's real authenticated sessions, which requires per-action authorization under AGENTS section 5."
+  ],
+  "limitations": [
+    "Only macOS and Windows are supported; Linux is on the vendor roadmap and was not tested.",
+    "The browser binary is a separate proprietary download; only the repository is MIT."
+  ]
+}

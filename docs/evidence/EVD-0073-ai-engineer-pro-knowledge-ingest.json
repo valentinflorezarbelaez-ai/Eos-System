@@ -1,0 +1,36 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0073",
+  "claim": "The AI Engineer profile, competency model, dated market signals and typed-decision-model knowledge are captured in governed EOS artifacts (docs/knowledge/AI_ENGINEER_PRO_PROFILE.md, RSC-0021, PAT-0005, ANT-0004, SRC-0074..SRC-0080) without introducing a dependency, a kernel change or an L0 purity violation, and without regressing strict verification.",
+  "status": "VERIFIED",
+  "scope": "Knowledge ingestion only: four new artifacts, seven appended source records, and registration of the new artifacts in the strict verification required-path set. No runtime code, no root dependency, no network call, no kernel surface, no external project write.",
+  "source": "LIDR AI Engineer PRO workshop material (SRC-0074) + SRC-0075..SRC-0080",
+  "timestamp": "2026-10-20T17:45:00Z",
+  "actor": "EOS agent (Cline)",
+  "action": "Created knowledge, research, pattern and anti-pattern artifacts; appended sources; registered paths in verify-eos.js; ran strict verification and targeted tests.",
+  "command": "npm run verify:strict && node --test tests/intelligence.test.js",
+  "expected": "Strict verification passes with zero failures and a check count strictly greater than the 913-check baseline recorded before the change; targeted intelligence tests pass; all new JSON parses and source identifiers are unique.",
+  "actual": "Baseline before change (same branch, clean tree): 'Checks Passed: 913 | Failures: 0', exit 0. Post-change: 'Checks Passed: 921 | Failures: 0', exit 0 (delta +8 = 5 new required paths + 3 new JSON-integrity validations), and 'node --test tests/intelligence.test.js' reported 14 tests, 14 pass, 0 fail. All five touched JSON documents parse; SOURCES.json holds 80 records with zero duplicate source identifiers.",
+  "confidence": "HIGH",
+  "artifacts": [
+    "docs/knowledge/AI_ENGINEER_PRO_PROFILE.md",
+    "docs/intelligence/research/RSC-0021-ai-engineer-profile-and-typed-decision-models.json",
+    "docs/intelligence/patterns/PAT-0005-typed-decision-contracts.json",
+    "docs/intelligence/anti-patterns/ANT-0004-llm-for-every-decision.json",
+    "docs/intelligence/sources/SOURCES.json"
+  ],
+  "environment": {
+    "branch": "cline/b03j7g4c",
+    "base_branch": "main",
+    "runtime": "node native",
+    "l0_purity": "NODE_BUILTINS_ONLY preserved",
+    "network_egress": "NONE from repository code (source retrieval was external research, not a runtime dependency)"
+  },
+  "risks": [
+    "Market and vendor figures are second-hand and time-sensitive; they are recorded as PARTIALLY VERIFIED and must be re-measured before any decision relies on them."
+  ],
+  "limitations": [
+    "The workshop video was not transcribed.",
+    "No local measurement of decision-classification performance exists; the pattern remains OBSERVED."
+  ]
+}
