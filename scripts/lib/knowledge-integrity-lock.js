@@ -31,16 +31,14 @@ export const LEGACY_DANGLING_REFS = Object.freeze(['PAT-0004']);
 /**
  * Frozen (file::id) pairs where a citation disagrees with the canonical record.
  * Scoped to the file on purpose: a per-id register would let a future
- * mis-citation of the same id slip through. Each entry is a decision waiting on
- * a human. Adding an entry is a regression.
+ * mis-citation of the same id slip through.
  *
- * All four live in RSC-0001, which numbers patterns under its own scheme.
+ * EMPTY as of EVD-0078: the three RSC-0001 mis-citations were demoted to prose
+ * (the descriptive text was preserved, the false ids were removed), and the
+ * three non-canonical id fields were normalised. A non-empty entry here is a
+ * regression that must be justified in review.
  */
-export const LEGACY_ID_CONFLICTS = Object.freeze([
-  'docs/intelligence/research/RSC-0001-gentleman-engram-study.json::PAT-0001',
-  'docs/intelligence/research/RSC-0001-gentleman-engram-study.json::PAT-0002',
-  'docs/intelligence/research/RSC-0001-gentleman-engram-study.json::PAT-0003'
-]);
+export const LEGACY_ID_CONFLICTS = Object.freeze([]);
 
 export const COLLECTIONS = Object.freeze([
   Object.freeze({ dir: 'research', prefix: 'RSC', id_field: 'research_id' }),

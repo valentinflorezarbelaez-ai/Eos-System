@@ -1,0 +1,35 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0078",
+  "claim": "Knowledge graph debt is reduced to a single documented item: the two PAT-0004 citations, which cannot be resolved without human arbitration because two records assert incompatible definitions for the same id. Every other frozen entry was retired by correcting the corpus, not by widening the allowlist.",
+  "status": "VERIFIED",
+  "scope": "Three identifier normalisations (RSC-0014, RSC-0015, RSC-0016), one citation correction in RSC-0001 (false ids demoted to prose with the descriptive text preserved), the conflict register emptied, and two guard tests that make any future growth of either register fail loudly.",
+  "source": "EVD-0077 (8 warnings); canonical registry docs/intelligence/patterns and docs/intelligence/anti-patterns",
+  "timestamp": "2026-10-20T19:45:00Z",
+  "actor": "EOS agent (Cline)",
+  "action": "Corrected three non-canonical id fields, demoted three provably wrong pattern citations in RSC-0001 to prose, emptied LEGACY_ID_CONFLICTS, and added regression guards on both allowlists.",
+  "command": "node --test tests/knowledge-integrity.test.js && npm run verify:strict",
+  "expected": "'Checks Passed: 946 | Failures: 0', exit 0, 'Warnings (non-blocking): 2', 21/21 unit tests passing (previous state: 945 checks, 8 warnings, 19 tests; delta +1 = this evidence record).",
+  "actual": "'Checks Passed: 946 | Failures: 0', exit 0, 'Warnings (non-blocking): 2' - exactly the two PAT-0004 citations, in RSC-0002 and RSC-0013. Unit tests 21 pass, 0 fail, including the two new guards that fail if either allowlist grows.",
+  "confidence": "HIGH",
+  "artifacts": [
+    "docs/intelligence/research/RSC-0001-gentleman-engram-study.json",
+    "docs/intelligence/research/RSC-0014-gentleman-ecosystem-benchmark.json",
+    "docs/intelligence/research/RSC-0015-agentic-engineering-gap-analysis.json",
+    "docs/intelligence/research/RSC-0016-gentleman-programming-book-digest.json",
+    "scripts/lib/knowledge-integrity-lock.js",
+    "tests/knowledge-integrity.test.js"
+  ],
+  "environment": {
+    "branch": "cline/b03j7g4c",
+    "l0_purity": "NODE_BUILTINS_ONLY preserved"
+  },
+  "risks": [
+    "Editing a legacy research record (RSC-0001) is a judgement call: the change removes demonstrably false identifiers while preserving every descriptive word, and it is visible in the diff for review.",
+    "The guard tests hard-code the expected register size, so a deliberate future change requires updating the guard in the same commit, with justification."
+  ],
+  "limitations": [
+    "PAT-0004 remains unresolved by design: RSC-0002 defines it as 'Thin Orchestrator & Bounded Subagent Delegation' and RSC-0013 as 'Hypothesis-Driven Chaos Experimentation'. Ids were reused for two distinct concepts and no record exists for either.",
+    "RSC-0016 still declares a document_id alongside the new canonical research_id; the duplicate is tolerated, not removed, to avoid touching the digest's own scheme."
+  ]
+}

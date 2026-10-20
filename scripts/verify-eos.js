@@ -374,6 +374,7 @@ const REQUIRED_PATHS = [
   'docs/evidence/EVD-0075-external-tool-adoption-protocol.json',
   'docs/evidence/EVD-0076-knowledge-integrity-ratchet.json',
   'docs/evidence/EVD-0077-knowledge-debt-reduction.json',
+  'docs/evidence/EVD-0078-knowledge-debt-closure.json',
   'docs/evidence/EVD-0001.json',
   'docs/evidence/EVD-0002.json',
   'docs/evidence/EVD-0003.json',

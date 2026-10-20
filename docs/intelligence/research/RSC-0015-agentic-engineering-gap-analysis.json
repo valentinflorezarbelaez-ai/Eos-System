@@ -1,5 +1,6 @@
 {
   "$schema": "./schema.json",
+  "research_id": "RSC-0015",
   "id": "RSC-0015",
   "title": "Agentic Engineering Ecosystem Gap Analysis & EOS Memory Contract",
   "version": "1.0.0",

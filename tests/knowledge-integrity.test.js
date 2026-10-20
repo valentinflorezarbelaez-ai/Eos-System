@@ -168,6 +168,22 @@ test('extractRefs keeps identifiers and drops prose', () => {
   );
 });
 
+test('the conflict register is empty and must stay empty', () => {
+  assert.equal(
+    LEGACY_ID_CONFLICTS.length,
+    0,
+    `LEGACY_ID_CONFLICTS grew to ${LEGACY_ID_CONFLICTS.length}. A new entry is a regression: fix the citation, do not freeze it.`
+  );
+});
+
+test('the dangling register holds exactly the one unresolved id', () => {
+  assert.deepEqual(
+    [...LEGACY_DANGLING_REFS],
+    ['PAT-0004'],
+    'PAT-0004 is the only debt allowed to remain frozen; anything else means the corpus regressed.'
+  );
+});
+
 test('the live knowledge graph satisfies the lock', () => {
   const res = auditKnowledgeIntegrity(rootDir);
   assert.deepEqual(res.failures, [], `unexpected integrity failures: ${JSON.stringify(res.failures)}`);

@@ -19,9 +19,9 @@
     "Topic keys enable non-destructive upserts for evolving architecture decisions."
   ],
   "patterns": [
-    "PAT-0001: Persistent Dual-Layer Memory (Transient Chat + Immutable Evidence Log)",
-    "PAT-0002: Structured Session Closing Protocol",
-    "PAT-0003: Non-Destructive Topic Upsert Key"
+    "Persistent Dual-Layer Memory (Transient Chat + Immutable Evidence Log) [described concept; no canonical pattern record exists]",
+    "Structured Session Closing Protocol [described concept; no canonical pattern record exists]",
+    "Non-Destructive Topic Upsert Key [described concept; no canonical pattern record exists]"
   ],
   "contradictions": [
     "Engram assumes memory saving is purely internal and non-blocking, whereas strict governance requiring explicit sign-off must block execution until human authorization is recorded."

@@ -1,5 +1,6 @@
 {
   "$schema": "./schema.json",
+  "research_id": "RSC-0014",
   "id": "RSC-0014",
   "title": "Gentleman-Programming External Engineering Ecosystem Benchmark",
   "version": "1.0.0",
