@@ -1,0 +1,54 @@
+{
+  "$schema": "./schema.json",
+  "research_id": "RSC-0021",
+  "question": "What defines the AI Engineer role versus ML Engineer and Data Scientist, which competencies does it require, what explains its demand growth, and do typed decision models (System One / Jev) constitute a reusable primitive for agent architectures?",
+  "scope": "Role boundary and competency model for AI Engineering; dated market signals (October 2026); LLM evolution as a chain of removed bottlenecks; typed decision classification as a replacement for generative calls on discrete decisions",
+  "sources": ["SRC-0074", "SRC-0075", "SRC-0076", "SRC-0077", "SRC-0078", "SRC-0079", "SRC-0080"],
+  "claims": [
+    "An AI Engineer is a software engineer whose building material is third-party pre-trained models; the deliverable is a product with an SLA, and correctness is proven by evals rather than by authoring speed.",
+    "The role boundary is defined by the unit of work: Data Scientists investigate, ML Engineers train and serve their own models, AI Engineers integrate foundation models into products and almost never train models.",
+    "Roughly half of postings titled 'AI Engineer' describe ML Engineer work, so titles are not evidence of the underlying role.",
+    "In October 2026 live postings, AI Engineer median advertised pay ($216k, n=155) trails ML Engineer ($238k, n=276) while AI Engineer demand is reported as the fastest-growing US job category.",
+    "Demand is not uniformly saturated: the generic layer (prompt usage, course certificates) is saturated while the engineering-judgement layer (evals, guardrails, cost and latency control) remains thin.",
+    "The LLM timeline is best read as a chain of removed bottlenecks: embeddings made semantics computable, the 2017 Transformer made scale parallel, instruction tuning made models usable, tool calling made them operational, and reasoning models traded latency and cost for accuracy.",
+    "A System One model is discriminative and non-generative: it maps a state plus typed questions to typed values with calibrated probabilities, cannot emit prose, and cannot make type errors by construction.",
+    "Because a System One model evaluates all questions against one state in parallel and produces no output tokens, decision-shaped work is claimed to be 40-200x faster and 40-400x cheaper than a frontier LLM call.",
+    "Decision classification belongs outside the token stream: model routing, tool-call guardrails, triage and any branch currently implemented by prompting for JSON."
+  ],
+  "evidence": [
+    "SRC-0074: LIDR AI Engineer PRO workshop material page retrieved (video-first; agenda and framing confirmed, transcript unavailable).",
+    "SRC-0078: Measured October 2026 dataset - 643 AI Engineer live postings (median $216k, p25-p75 $183k-$265k, 155 with published pay) versus 659 ML Engineer postings (median $238k, p25-p75 $198k-$276k, 276 with published pay).",
+    "SRC-0078: Most requested AI Engineer skills counted from postings - AI agents 314, machine learning 250, RAG 244, AI safety 183, AI research 168; tools - Python 259, PyTorch 157, LangChain 138, AWS 103, Hugging Face 99.",
+    "SRC-0075: Vendor announcement of Jev early access on 2026-09-15 with RLCD training, parallel sampling, $0.042 per MTok input, free output tokens, and 70-500 ms end-to-end latency.",
+    "SRC-0076: Independent framework vendor integration documenting the question primitives (choice, score, noul) and the routing and tool-call-guardrail middleware patterns.",
+    "SRC-0077: Tertiary record confirming release date, $40M seed led by DCVC, discriminative nature, and reuse of the vendor's own benchmark disclosures."
+  ],
+  "observations": [
+    "The reusable EOS-relevant insight is not the vendor: it is the categorisation test 'does this step need generation or only classification?', which is universal and dependency-free.",
+    "EOS already performs decision routing and token budgeting deterministically; typed decision classification is the external formalisation of a shape EOS arrived at natively.",
+    "Metrics that matter for this class of substitution are p95 latency, cost per decision, and calibration error - none of which EOS currently measures for its own routing.",
+    "Vendor benchmark workflows were authored by the vendor's own model-capabilities team, so multipliers are directional evidence, not measured truth.",
+    "The labour-market numbers are advertised ranges on US-centric postings with a small published-range subset; they are not transferable compensation benchmarks."
+  ],
+  "patterns": [
+    "PAT-0005: Typed Decision Contracts"
+  ],
+  "contradictions": [
+    "Demand narrative versus pay data: the role is described as fastest-growing while its median advertised pay sits below ML Engineer in the same October 2026 measurement. Both can hold because growth is measured in posting volume and pay in title-matched ranges, but the narrative should not be quoted as a pay argument.",
+    "Vendor performance multipliers versus independence: TypeSafe publishes 40-200x speedups and simultaneously discloses self-authored benchmark workflows. Recorded as PARTIALLY VERIFIED rather than resolved."
+  ],
+  "limitations": [
+    "The workshop video was not transcribed; competency and curriculum claims come from the public landing page.",
+    "McKinsey and LinkedIn demand statistics reached this record second-hand through SRC-0079 and were not retrieved directly.",
+    "No local measurement of any decision-classification model exists in this repository.",
+    "Salary figures use advertised posting ranges in USD and do not transfer to Spain or LATAM compensation bands.",
+    "Jev internals are undisclosed; architecture commentary in SRC-0077 is explicitly speculative."
+  ],
+  "confidence": "MEDIUM",
+  "maturity": "EMERGING",
+  "adoption_level": "OBSERVE",
+  "strategic_value": "MEDIUM",
+  "eos_relevance": "HIGH",
+  "recommendation": "Capture the knowledge as reference (docs/knowledge/AI_ENGINEER_PRO_PROFILE.md) and formalize the two durable abstractions: PAT-0005 typed decision contracts and ANT-0004 LLM-for-every-decision. Do NOT add a network dependency, a model SDK, or a kernel change. L0 stays NODE_BUILTINS_ONLY. Any future pilot must be an adapter behind an existing seam, gated by our own eval numbers for p95 latency, cost per decision and calibration error, and must not regress the strict verification baseline.",
+  "verification_status": "PARTIALLY VERIFIED"
+}

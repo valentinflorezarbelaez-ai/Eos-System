@@ -1,0 +1,30 @@
+{
+  "$schema": "./schema.json",
+  "antipattern_id": "ANT-0004",
+  "name": "LLM for Every Decision",
+  "problem": "Every discrete decision inside an agent loop or control plane is resolved by a generative model call, so structural branches that need one of a few known answers are treated as open-ended language tasks: the model is asked to emit a category, the caller parses a string, and the loop pays full completion latency and token cost per branch.",
+  "symptoms": [
+    "A prompt that ends with 'respond only with one of: A, B, C' followed by string matching on the response",
+    "try/catch around JSON.parse as the primary error-handling strategy for model output",
+    "Agent loops where wall-clock time scales linearly with the number of decisions taken",
+    "Identical inputs producing different branches across runs, with no recorded explanation",
+    "Token spend dominated by output tokens that exist only to be discarded after parsing",
+    "Confidence is unknown: a branch is either taken or not, with no notion of 'the model was unsure'"
+  ],
+  "consequences": [
+    "Latency floor of seconds per decision, which caps how much automation fits in one request",
+    "Cost per decision tied to generated output length rather than to decision complexity",
+    "Silent nondeterminism: the same state can take different branches, so decisions are not reproducible and not unit-testable",
+    "Hallucinated categories and malformed output become a runtime failure mode instead of an impossible state",
+    "No calibrated confidence, so uncertain cases are indistinguishable from confident ones and cannot escalate",
+    "Context bloat from loading full instructions per decision, raising cost further"
+  ],
+  "root_cause": "The generative model is treated as the only available source of judgement. Because it can do everything, it is used for everything, and the distinction between 'needs generation' and 'needs classification' is never drawn. Adopting a model before inventorying the decisions inside the loop makes this the default shape.",
+  "mitigation": "Enumerate the decisions the loop takes and classify each as generative (needs synthesis, judgement, open-ended reasoning) or discriminative (needs one of a known answer set). Route the discriminative ones through a typed decision contract with calibrated confidence (PAT-0005), keep generation for the generative ones, and define an escalation threshold so low-confidence decisions go to a model or a human. Measure p95 latency, cost per decision and error rate before and after; adopt nothing without the baseline.",
+  "evidence": [
+    "RSC-0021: Categorisation test 'does this step need generation or only classification?' derived from the System One model class analysis",
+    "PAT-0005: Typed Decision Contracts as the corresponding counter-pattern",
+    "SRC-0076: Documents the pre-existing pattern of harnesses shipping a separate classifier step for dangerous actions, i.e. production harnesses already avoid this anti-pattern internally"
+  ],
+  "status": "ACTIVE_RISK"
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "./schema.json",
+  "pattern_id": "PAT-0005",
+  "name": "Typed Decision Contracts",
+  "problem": "Agent loops route every discrete decision through a generative model call, paying full completion latency and token cost for what is a classification, and receiving an untyped string that may fail to parse, drift from schema, or hallucinate a category that does not exist.",
+  "context": "Multi-agent orchestration, control planes and harnesses where a bounded set of decisions must be taken repeatedly against structured program state: which model to route to, whether a pending tool call is safe, how to triage an incoming request, whether a task is complete.",
+  "forces": [
+    "Accuracy versus latency and cost per decision",
+    "Flexibility of free-form generation versus the determinism software needs",
+    "Expressiveness of natural language versus type safety at the integration boundary",
+    "Centralisation of intelligence in one large model versus specialisation of each step"
+  ],
+  "mechanism": "Model a decision as a typed question against a declared state, evaluated outside the token stream: enumerate the allowed answers in advance (choice, ordered score, or boolean), return a calibrated probability per answer plus a confidence score, and let deterministic code apply thresholds. The decision surface becomes a function signature instead of a prompt, so invalid answers are unrepresentable and low confidence is an explicit, handleable state rather than a silent guess.",
+  "implementation_shape": "A pure decision seam behind an existing interface: input is a validated state record plus a question set with declared types; output is a typed decision record with probabilities and confidence. Callers branch on thresholds, never on parsed prose. The evaluator may be a classifier, a rules table, or a small model - the contract is what stays stable. Adding questions against the same state must not multiply round-trips.",
+  "benefits": [
+    "Type errors and schema drift become impossible rather than improbable",
+    "Confidence is first-class, so the low-confidence path can escalate to a generative model or a human instead of failing silently",
+    "Decision latency drops from seconds to hundreds of milliseconds, which changes what can be automated per request",
+    "Cost per decision decouples from output length, removing the dominant term in agent-loop economics",
+    "Deterministic testing: the same state yields the same typed answer, so decisions become unit-testable"
+  ],
+  "tradeoffs": [
+    "Requires enumerating the decision space in advance; genuinely open-ended judgement still needs a generative model",
+    "Introduces a second model class and therefore a second failure surface and a second provider relationship",
+    "Calibration must be measured, not assumed; an uncalibrated probability is a confident guess",
+    "Question design becomes the new prompt engineering, with its own evaluation burden"
+  ],
+  "risks": [
+    "Treating a decision model as a general replacement for reasoning and silently losing capability",
+    "Vendor lock-in at a point in the architecture that was previously provider-agnostic",
+    "Threshold tuning without recorded eval numbers, producing confident wrong automation",
+    "Over-classification: forcing a rich judgement into a small answer set and discarding information the caller needed"
+  ],
+  "anti_patterns": [
+    "ANT-0004: LLM for Every Decision",
+    "Prompting a model for JSON and wrapping the parse in try/catch as the error strategy",
+    "Adopting the model class before the decision inventory exists"
+  ],
+  "adoption_conditions": [
+    "A written inventory of decisions currently resolved by generation, each with its allowed answer set",
+    "Measured baseline: p95 latency, cost per decision and error rate of the current generative path",
+    "A calibration metric defined before adoption, not after",
+    "The evaluator reachable only through an existing seam; no new root dependency and no network requirement in L0 paths",
+    "An escalation path to a generative model or a human whenever confidence falls below threshold"
+  ],
+  "evidence": [
+    "SRC-0075: Vendor report of 70-500 ms end-to-end latency and $0.042 per MTok input with free output tokens for a discriminative decision model class, against 3-329 s and $0.20-$10 per MTok input for frontier generative models.",
+    "SRC-0076: Independent framework integration implementing model routing and pre-execution tool-call guardrails on top of typed decisions, reporting up to 200x faster and 400x cheaper classification.",
+    "SRC-0077: Tertiary corroboration of the discriminative, typed-output, calibrated-probability design and of the vendor's own disclosure that benchmark workflows were self-authored.",
+    "NOT LOCALLY VALIDATED: no measurement of this pattern exists inside EOS. Recorded as external evidence only."
+  ],
+  "organizations_using_it": [
+    "TypeSafe AI (as vendor)",
+    "LangChain (harness middleware)",
+    "Browserbase",
+    "Closed-source coding harnesses (pre-existing built-in action classifiers)"
+  ],
+  "maturity": "EMERGING",
+  "confidence": "MEDIUM",
+  "eos_relevance": "HIGH",
+  "status": "OBSERVED"
+}
