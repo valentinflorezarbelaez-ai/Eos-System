@@ -1,0 +1,30 @@
+{
+  "$schema": "./schema.json",
+  "antipattern_id": "ANT-0003",
+  "name": "Claim Without Evidence",
+  "problem": "The system asserts a terminal status — DONE, PASS, VERIFIED, SECURE, PRODUCTION READY — without referencing an executable artifact, test run or recorded command output, so the statement is an opinion wearing the costume of a result.",
+  "symptoms": [
+    "Status words appear in a report with no command, exit code or artifact behind them",
+    "Completion is declared because code was written, not because it was executed",
+    "A test suite is described from memory or from a previous commit instead of the current tree",
+    "Verification is delegated to the human ('please run this and tell me')",
+    "Evidence records quote expected outputs rather than observed ones",
+    "A fix is declared verified before the regression suite for it exists"
+  ],
+  "consequences": [
+    "Failures surface after merge, in the hands of whoever trusted the claim",
+    "Reviewers cannot distinguish real progress from plausible narration",
+    "The evidence log becomes decorative and stops being an audit trail",
+    "Corrections get more expensive the longer a false VERIFIED is believed",
+    "Trust in every future status claim degrades, including the true ones"
+  ],
+  "root_cause": "Language models produce fluent completions cheaply and have no intrinsic access to whether a command succeeded. The path of least effort is a well-formed sentence about success. Without a hard requirement to attach executable output, plausibility substitutes for proof.",
+  "mitigation": "Make the status vocabulary a license that must be earned per claim: every terminal status carries a command, an exit code and an artifact path, or it is downgraded to NOT VERIFIED. Enforce the taxonomy in the operating protocol, keep the runner as the only authority for PASS, and record the epistemic state (AUDIT_EXECUTED, FINDINGS_IDENTIFIED, REVALIDATION_REQUIRED, VERIFIED) instead of collapsing everything into 'done'.",
+  "evidence": [
+    ".agents/AGENTS.md section 2: Evidence Over Claims Standard and the mandatory epistemic validation states",
+    "PAT-0002: Evidence-First Verification is the corresponding counter-pattern",
+    "Pervasive in EOS practice: `scripts/verify-eos.js` is the only surface permitted to declare a run PASS, and evidence records EVD-* carry the command, expected and actual fields",
+    "Demonstrated in this repository's own history: EVD-0076 records a negative probe precisely because 'the gate works' was not accepted as a claim until it was shown failing"
+  ],
+  "status": "MITIGATED"
+}

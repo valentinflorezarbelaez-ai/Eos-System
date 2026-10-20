@@ -6,8 +6,10 @@ import {
   auditKnowledgeIntegrity,
   evaluateIntegrity,
   extractRefs,
+  normalizeTitle,
   resolveDeclaredId,
-  LEGACY_DANGLING_REFS
+  LEGACY_DANGLING_REFS,
+  LEGACY_ID_CONFLICTS
 } from '../scripts/lib/knowledge-integrity-lock.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -18,11 +20,12 @@ function build(overrides = {}) {
     source_ids: ['SRC-0001', 'SRC-0002'],
     collections: {
       RSC: [{ file: 'docs/intelligence/research/RSC-0001-alpha.json', id_field: 'research_id', record: { research_id: 'RSC-0001', sources: ['SRC-0001'], patterns: ['PAT-0001: Thing'] } }],
-      PAT: [{ file: 'docs/intelligence/patterns/PAT-0001-thing.json', id_field: 'pattern_id', record: { pattern_id: 'PAT-0001', anti_patterns: ['ANT-0001: Other thing'] } }],
-      ANT: [{ file: 'docs/intelligence/anti-patterns/ANT-0001-other.json', id_field: 'antipattern_id', record: { antipattern_id: 'ANT-0001' } }],
+      PAT: [{ file: 'docs/intelligence/patterns/PAT-0001-thing.json', id_field: 'pattern_id', record: { pattern_id: 'PAT-0001', name: 'Thing', anti_patterns: ['ANT-0001: Other thing'] } }],
+      ANT: [{ file: 'docs/intelligence/anti-patterns/ANT-0001-other.json', id_field: 'antipattern_id', record: { antipattern_id: 'ANT-0001', name: 'Other Thing' } }],
       CMP: [{ file: 'docs/intelligence/comparisons/CMP-0001-matrix.json', id_field: 'comparison_id', record: { comparison_id: 'CMP-0001', sources: ['SRC-0002'] } }]
     },
-    legacy_allowlist: LEGACY_DANGLING_REFS,
+    legacy_allowlist: ['PAT-0098'],
+    conflict_allowlist: [],
     ...overrides
   };
 }
@@ -83,10 +86,50 @@ test('new dangling pattern reference fails closed', () => {
 
 test('frozen legacy gap warns instead of failing', () => {
   const input = build();
-  input.collections.RSC[0].record.patterns = ['PAT-0003: Local-First Control Plane'];
+  input.collections.RSC[0].record.patterns = ['PAT-0098: Some Legacy Pattern'];
   const res = evaluateIntegrity(input);
   assert.equal(res.ok, true);
-  assert.ok(res.warnings.some((w) => /PAT-0003 .*frozen legacy gap/.test(w.message)));
+  assert.ok(res.warnings.some((w) => /PAT-0098 .*frozen legacy gap/.test(w.message)));
+});
+
+test('a citation whose title disagrees with the record fails closed', () => {
+  const input = build();
+  input.collections.RSC[0].record.patterns = ['PAT-0001: Something Else Entirely'];
+  const res = evaluateIntegrity(input);
+  assert.equal(res.ok, false);
+  assert.ok(res.failures.some((f) => /cited as 'Something Else Entirely'/.test(f.message)));
+});
+
+test('a frozen file::id conflict warns instead of failing', () => {
+  const input = build({
+    conflict_allowlist: ['docs/intelligence/research/RSC-0001-alpha.json::PAT-0001']
+  });
+  input.collections.RSC[0].record.patterns = ['PAT-0001: A Different Concept'];
+  const res = evaluateIntegrity(input);
+  assert.equal(res.ok, true);
+  assert.ok(res.warnings.some((w) => /frozen id conflict/.test(w.message)));
+});
+
+test('a frozen conflict in another file does not excuse this one', () => {
+  const input = build({
+    conflict_allowlist: ['docs/intelligence/research/RSC-9999-other.json::PAT-0001']
+  });
+  input.collections.RSC[0].record.patterns = ['PAT-0001: A Different Concept'];
+  const res = evaluateIntegrity(input);
+  assert.equal(res.ok, false);
+});
+
+test('parenthetical suffixes do not count as a title conflict', () => {
+  const input = build();
+  input.collections.PAT[0].record.name = 'Thing (TNG)';
+  const res = evaluateIntegrity(input);
+  assert.equal(res.ok, true);
+  assert.deepEqual(res.failures, []);
+});
+
+test('normalizeTitle strips parentheticals and punctuation', () => {
+  assert.equal(normalizeTitle('Spec-Driven Development (SDD)'), normalizeTitle('Spec-Driven Development'));
+  assert.equal(normalizeTitle('Claim-Without-Evidence'), 'claim without evidence');
 });
 
 test('prose inside anti_patterns is not treated as a reference', () => {

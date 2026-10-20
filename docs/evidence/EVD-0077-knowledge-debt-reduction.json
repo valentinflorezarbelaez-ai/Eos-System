@@ -1,0 +1,36 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0077",
+  "claim": "The frozen knowledge debt was reduced from 18 warnings to 8 by authoring the two patterns the corpus actually attests (PAT-0003 Local-First Control Plane, ANT-0003 Claim Without Evidence) and by extending the lock to detect a stronger defect class: an id cited under a title that disagrees with the record carrying it.",
+  "status": "VERIFIED",
+  "scope": "Two new knowledge records grounded in existing citations, one lock extension (title consistency), a scoped conflict register, and context-pack discoverability. No legacy record was rewritten; no pattern was invented to satisfy a reference check.",
+  "source": "The 18 warnings reported by EVD-0076; attested citations in RSC-0001..RSC-0013; AGENTS.md section 2 for ANT-0003",
+  "timestamp": "2026-10-20T19:20:00Z",
+  "actor": "EOS agent (Cline)",
+  "action": "Authored PAT-0003 and ANT-0003 from corpus attestation, added title/citation consistency detection plus a file-scoped conflict register to knowledge-integrity-lock.js, registered the new records in strict verification, and added the harness protocol and knowledge doc to the Context Pack TPC index.",
+  "command": "node --test tests/knowledge-integrity.test.js && npm run verify:strict",
+  "expected": "'Checks Passed: 945 | Failures: 0', exit 0 (previous verified state 939; delta +6 = 3 required paths from the lock, 2 JSON-integrity validations, 1 evidence record), 'Warnings (non-blocking): 8', and 19/19 unit tests passing.",
+  "actual": "'Checks Passed: 945 | Failures: 0', exit 0, 'Warnings (non-blocking): 8' all typed knowledge-integrity (3 identifier drift + 3 frozen id conflict + 2 frozen dangling); unit tests 19 pass, 0 fail. Warning count fell from 18 to 8 with zero regressions.",
+  "confidence": "HIGH",
+  "artifacts": [
+    "docs/intelligence/patterns/PAT-0003-local-first-control-plane.json",
+    "docs/intelligence/anti-patterns/ANT-0003-claim-without-evidence.json",
+    "scripts/lib/knowledge-integrity-lock.js",
+    "tests/knowledge-integrity.test.js",
+    "docs/harness/CONTEXT_PACK_TPC.md",
+    "scripts/verify-eos.js"
+  ],
+  "environment": {
+    "branch": "cline/b03j7g4c",
+    "l0_purity": "NODE_BUILTINS_ONLY preserved"
+  },
+  "risks": [
+    "The title check can produce false positives on legitimate renames; it is deliberately strict and drift must be fixed at the citation, not tolerated in the lock.",
+    "PAT-0004 remains unresolved and frozen: two records cite it under different titles and no record exists. Arbitration between 'Thin Orchestrator & Bounded Subagent Delegation' (RSC-0002) and 'Hypothesis-Driven Chaos Experimentation' (RSC-0013) belongs to a human."
+  ],
+  "limitations": [
+    "PAT-0003 and ANT-0003 are consolidations from cited records plus locally enforced policy, not new empirical research; both carry explicit evidence and known conflicts.",
+    "RSC-0001 numbers patterns under its own scheme, so three of its citations disagree with the canonical registry. Frozen per file, not per id, so a future mis-citation elsewhere still fails.",
+    "Three records still declare a non-canonical id field and remain warnings by design."
+  ]
+}

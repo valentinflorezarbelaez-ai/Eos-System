@@ -39,6 +39,7 @@ Surfaces that define **what tools** the agent may use and how writes/verify are 
 | `src/core/write-barrier/` | Write-barrier implementation |
 | [`scripts/verify-eos.js`](../../scripts/verify-eos.js) | Primary verify surface (`npm run verify:strict`) |
 | [`docs/architecture/TOOL_AGNOSTIC_ARCHITECTURE.md`](../architecture/TOOL_AGNOSTIC_ARCHITECTURE.md) | Tool-agnostic architecture |
+| [`docs/harness/EXTERNAL_TOOL_ADOPTION_PROTOCOL.md`](EXTERNAL_TOOL_ADOPTION_PROTOCOL.md) | **Gate** before operating any external capability: R0–R4 blast radius, P0 preconditions, P0–P4 ladder |
 
 ---
 
@@ -84,6 +85,8 @@ Surfaces that define **what project/architecture context** must stay aligned.
 | [`.cursor/rules/engram.mdc`](../../.cursor/rules/engram.mdc) | Engram memory / compaction discipline |
 | [`.cursor/rules/context-engineering-standards.mdc`](../../.cursor/rules/context-engineering-standards.mdc) | Context suite + no-contamination |
 | `docs/intake/**/PROJECT_CONTEXT.md` | Per-intake project context (when present) |
+| [`docs/knowledge/AI_ENGINEER_PRO_PROFILE.md`](../knowledge/AI_ENGINEER_PRO_PROFILE.md) | AI Engineer role model, LLM timeline, typed decision contracts (OBSERVE) |
+| [`docs/intelligence/KNOWLEDGE_GRAPH_MODEL.md`](../intelligence/KNOWLEDGE_GRAPH_MODEL.md) | Source→research→pattern→capability chain; integrity enforced by `knowledge-integrity-lock` |
 | This file | TPC map + lifecycle policy (index only) |
 
 ---

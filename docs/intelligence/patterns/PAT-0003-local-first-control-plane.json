@@ -1,0 +1,56 @@
+{
+  "$schema": "./schema.json",
+  "pattern_id": "PAT-0003",
+  "name": "Local-First Control Plane",
+  "problem": "A control plane that delegates its own decisions to hosted services becomes unable to govern itself when the network, the vendor or the billing relationship fails; verification, policy and audit stop being properties of the repository and become properties of somebody else's uptime.",
+  "context": "Engineering control planes, governance layers and verification runners that must remain auditable in constrained, offline, air-gapped or regulated environments, and that must not change behaviour silently because a third party shipped an update.",
+  "forces": [
+    "Reach and integration convenience versus sovereignty over the decision surface",
+    "Determinism and reproducibility versus always-current hosted capability",
+    "Scale of hosted infrastructure versus auditability of a local artifact",
+    "Cost per operation versus cost of losing the ability to verify at all",
+    "Speed of adoption versus reversibility of the dependency"
+  ],
+  "mechanism": "Keep decisions, enforcement and evidence local and inspectable: policy as versioned files in the repository, verification as a local runner over the real filesystem, and the dependency floor as language/runtime built-ins. Any external capability is placed behind an explicit adapter seam, never at the root, so it can be removed without touching the decision logic. Network access becomes a declared, auditable boundary rather than an ambient assumption.",
+  "implementation_shape": "EOS: `DEPENDENCY_POLICY_L0.md` fixes the floor at NODE_BUILTINS_ONLY with zero root dependencies; `scripts/verify-eos.js` runs the entire strict verification (939 checks at the current tip) offline against local files; `docs/` holds the SSOT; external tools are reachable only through documented adapters; locks such as `scripts/lib/knowledge-integrity-lock.js` are pure `node:fs`/`node:path`.",
+  "benefits": [
+    "Verification runs offline, deterministically, on a fresh clone, with no credential",
+    "Governance survives vendor churn, outages and pricing changes",
+    "Every decision is diffable and reviewable in the same history as the code it governs",
+    "Removal of an external capability is a revert, not a migration"
+  ],
+  "tradeoffs": [
+    "Foregoes convenient hosted capabilities that would take minutes to wire",
+    "Requires hand-rolling what ecosystem packages would provide",
+    "Local runner cost grows with the check count and must itself be managed",
+    "Slower adoption of genuinely better external tools"
+  ],
+  "risks": [
+    "Local-first can harden into local-only and reject capabilities that are safe behind an adapter",
+    "Hand-rolled replacements can be less correct than reviewed upstream libraries",
+    "The check count can become a complexity budget of its own, encouraging noise over signal"
+  ],
+  "anti_patterns": [
+    "ANT-0001: Premature External Implementation",
+    "ANT-0002: Tool-First Blind Copying",
+    "Making the control plane depend on a hosted service for its own policy evaluation"
+  ],
+  "adoption_conditions": [
+    "Root dependency count is zero and enforced, not aspirational",
+    "The full verification suite passes with the network disabled",
+    "Every external capability sits behind an adapter seam with a documented removal path"
+  ],
+  "evidence": [
+    "Attested as the EOS operating pattern by RSC-0003, RSC-0004, RSC-0005, RSC-0006, RSC-0007, RSC-0008, RSC-0009, RSC-0010, RSC-0011, RSC-0012 and RSC-0013.",
+    "Implemented and enforced: `DEPENDENCY_POLICY_L0.md` (NODE_BUILTINS_ONLY, no root dependencies) plus `scripts/verify-eos.js` under `--strict`.",
+    "Locally observed: strict verification completes offline on a shallow clone; see EVD-0073 through EVD-0077.",
+    "CONFLICT RECORDED: RSC-0001 cites PAT-0003 under a different title ('Non-Destructive Topic Upsert Key'). Eleven records attest this name; the single outlier is treated as a mis-numbered citation in the source record, not as an alias. Resolution belongs to a reviewed change of RSC-0001."
+  ],
+  "organizations_using_it": [
+    "EOS Control Plane"
+  ],
+  "maturity": "MATURE",
+  "confidence": "HIGH",
+  "eos_relevance": "CRITICAL",
+  "status": "ADOPTED"
+}

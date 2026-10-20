@@ -24,8 +24,23 @@ export const SOURCES_FILE = 'docs/intelligence/sources/SOURCES.json';
 /**
  * Frozen pre-existing dangling references. Removing an entry is allowed once a
  * matching file exists; adding one is a regression and must not happen.
+ * PAT-0003 and ANT-0003 were authored in EVD-0077 and are no longer dangling.
  */
-export const LEGACY_DANGLING_REFS = Object.freeze(['PAT-0003', 'PAT-0004', 'ANT-0003']);
+export const LEGACY_DANGLING_REFS = Object.freeze(['PAT-0004']);
+
+/**
+ * Frozen (file::id) pairs where a citation disagrees with the canonical record.
+ * Scoped to the file on purpose: a per-id register would let a future
+ * mis-citation of the same id slip through. Each entry is a decision waiting on
+ * a human. Adding an entry is a regression.
+ *
+ * All four live in RSC-0001, which numbers patterns under its own scheme.
+ */
+export const LEGACY_ID_CONFLICTS = Object.freeze([
+  'docs/intelligence/research/RSC-0001-gentleman-engram-study.json::PAT-0001',
+  'docs/intelligence/research/RSC-0001-gentleman-engram-study.json::PAT-0002',
+  'docs/intelligence/research/RSC-0001-gentleman-engram-study.json::PAT-0003'
+]);
 
 export const COLLECTIONS = Object.freeze([
   Object.freeze({ dir: 'research', prefix: 'RSC', id_field: 'research_id' }),
@@ -43,6 +58,9 @@ export const KNOWLEDGE_INTEGRITY_REQUIRED_PATHS = Object.freeze([
   'docs/intelligence/sources/schema.json',
   'docs/intelligence/KNOWLEDGE_GRAPH_MODEL.md',
   'docs/intelligence/research/RSC-0021-ai-engineer-profile-and-typed-decision-models.json',
+  'docs/intelligence/patterns/PAT-0001-spec-driven-development.json',
+  'docs/intelligence/patterns/PAT-0003-local-first-control-plane.json',
+  'docs/intelligence/anti-patterns/ANT-0003-claim-without-evidence.json',
   'docs/intelligence/patterns/PAT-0005-typed-decision-contracts.json',
   'docs/intelligence/anti-patterns/ANT-0004-llm-for-every-decision.json',
   'docs/intelligence/comparisons/CMP-0002-agent-browser-automation-options.json',
@@ -62,6 +80,29 @@ export function extractRefs(values, { splitOnColon = true } = {}) {
     if (ID_PATTERN.test(candidate)) out.push(candidate);
   }
   return out;
+}
+
+/** Extract `{ id, title }` pairs so the cited label can be compared to the record. */
+export function extractRefsWithTitles(values) {
+  const out = [];
+  for (const raw of Array.isArray(values) ? values : []) {
+    if (typeof raw !== 'string') continue;
+    const idx = raw.indexOf(':');
+    const head = (idx === -1 ? raw : raw.slice(0, idx)).trim();
+    if (!ID_PATTERN.test(head)) continue;
+    const title = idx === -1 ? '' : raw.slice(idx + 1).trim();
+    out.push({ id: head, title });
+  }
+  return out;
+}
+
+/** Lowercase, drop parentheticals and punctuation, collapse whitespace. */
+export function normalizeTitle(value) {
+  return String(value || '')
+    .replace(/\([^)]*\)/g, ' ')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
 }
 
 
@@ -91,7 +132,7 @@ export function resolveDeclaredId(record, idField) {
  * @param {string[]} [input.legacy_allowlist]
  */
 export function evaluateIntegrity(input) {
-  const { source_ids = [], collections = {}, legacy_allowlist = [] } = input;
+  const { source_ids = [], collections = {}, legacy_allowlist = [], conflict_allowlist = [] } = input;
   const checks = [];
   const failures = [];
   const warnings = [];
@@ -152,21 +193,35 @@ export function evaluateIntegrity(input) {
     }
   }
 
-  // 6. Cross-record references (patterns, anti-patterns) must resolve, unless frozen.
-  const patternIds = new Set((collections.PAT || []).map((e) => e.record?.pattern_id).filter(Boolean));
-  const antiIds = new Set((collections.ANT || []).map((e) => e.record?.antipattern_id).filter(Boolean));
+  // 6. Cross-record references must resolve, and the cited title must agree with
+  // the record that carries the id. A reused id is corruption, not a typo.
+  const patternNames = new Map((collections.PAT || []).map((e) => [e.record?.pattern_id, e.record?.name]).filter(([id]) => Boolean(id)));
+  const antiNames = new Map((collections.ANT || []).map((e) => [e.record?.antipattern_id, e.record?.name]).filter(([id]) => Boolean(id)));
+  const conflictIds = new Set(conflict_allowlist);
 
   const refChecks = [
-    { entries: collections.RSC || [], field: 'patterns', target: patternIds, label: 'pattern' },
-    { entries: collections.PAT || [], field: 'anti_patterns', target: antiIds, label: 'anti-pattern' }
+    { entries: collections.RSC || [], field: 'patterns', target: patternNames, label: 'pattern' },
+    { entries: collections.PAT || [], field: 'anti_patterns', target: antiNames, label: 'anti-pattern' }
   ];
 
   for (const { entries, field, target, label } of refChecks) {
     for (const entry of entries) {
-      for (const ref of extractRefs(entry.record?.[field])) {
-        if (target.has(ref)) continue;
-        const payload = { path: entry.file, message: `Dangling ${label} reference ${ref}`, type: 'knowledge-integrity' };
-        if (legacy.has(ref)) warnings.push({ ...payload, message: `${payload.message} (frozen legacy gap)` });
+      for (const { id: ref, title } of extractRefsWithTitles(entry.record?.[field])) {
+        if (!target.has(ref)) {
+          const payload = { path: entry.file, message: `Dangling ${label} reference ${ref}`, type: 'knowledge-integrity' };
+          if (legacy.has(ref)) warnings.push({ ...payload, message: `${payload.message} (frozen legacy gap)` });
+          else failures.push(payload);
+          continue;
+        }
+        if (!title) continue;
+        const declared = target.get(ref);
+        if (normalizeTitle(title) === normalizeTitle(declared)) continue;
+        const payload = {
+          path: entry.file,
+          message: `Id ${ref} cited as '${title}' but ${label} record is named '${declared}'`,
+          type: 'knowledge-integrity'
+        };
+        if (conflictIds.has(`${entry.file}::${ref}`)) warnings.push({ ...payload, message: `${payload.message} (frozen id conflict)` });
         else failures.push(payload);
       }
     }
@@ -228,7 +283,8 @@ export function auditKnowledgeIntegrity(rootDir, options = {}) {
   const result = evaluateIntegrity({
     source_ids: sourceIds,
     collections,
-    legacy_allowlist: options.legacyAllowlist || LEGACY_DANGLING_REFS
+    legacy_allowlist: options.legacyAllowlist || LEGACY_DANGLING_REFS,
+    conflict_allowlist: options.conflictAllowlist || LEGACY_ID_CONFLICTS
   });
 
   return {
