@@ -1,0 +1,33 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0076",
+  "claim": "The knowledge graph in docs/intelligence is now governed by an executable referential-integrity ratchet that fails closed on new dangling references, identity defects and duplicate identifiers, while surfacing pre-existing gaps as non-blocking warnings, and the gate was proven to bite against a real on-disk violation.",
+  "status": "VERIFIED",
+  "scope": "One new lock module (pure Node builtins, no dependency), one new test file, and the wiring of both into strict verification. No change to any knowledge record, no rewrite of legacy history, no network, no schema addition under docs/schemas (complexity budget untouched).",
+  "source": "docs/harness/EXTERNAL_TOOL_ADOPTION_PROTOCOL.md hand-off; EVD-0075 risk 'a procedure with no automated enforcement can be skipped'",
+  "timestamp": "2026-10-20T18:55:00Z",
+  "actor": "EOS agent (Cline)",
+  "action": "Authored scripts/lib/knowledge-integrity-lock.js and tests/knowledge-integrity.test.js, registered both in REQUIRED_PATHS via KNOWLEDGE_INTEGRITY_REQUIRED_PATHS, added the audit call to verify-eos.js with warning surfacing, and executed a live negative probe.",
+  "command": "node --test tests/knowledge-integrity.test.js && npm run verify:strict",
+  "expected": "'Checks Passed: 939 | Failures: 0', exit 0 (previous verified state 926; delta +13 = 10 new required paths from the lock plus 2 audit checks plus this evidence record), 'Warnings (non-blocking): 18', and 14/14 unit tests passing.",
+  "actual": "'Checks Passed: 939 | Failures: 0', exit 0, 'Warnings (non-blocking): 18' all typed knowledge-integrity; unit tests 14 pass, 0 fail. Negative probe: a temporary record citing SRC-9999 and PAT-9999 produced exactly two failures ('Dangling source reference SRC-9999', 'Dangling pattern reference PAT-9999') and ok=false; after removal ok=true and no residue remained in the working tree.",
+  "confidence": "HIGH",
+  "artifacts": [
+    "scripts/lib/knowledge-integrity-lock.js",
+    "tests/knowledge-integrity.test.js",
+    "scripts/verify-eos.js",
+    "docs/evidence/EVD-0076-knowledge-integrity-ratchet.json"
+  ],
+  "environment": {
+    "branch": "cline/b03j7g4c",
+    "l0_purity": "NODE_BUILTINS_ONLY preserved (node:fs, node:path only)"
+  },
+  "risks": [
+    "The ratchet proves references and identity, not truth: a record citing a real source can still be wrong, which is why verification_status, confidence and known_bias remain mandatory fields.",
+    "The frozen legacy allowlist (PAT-0003, PAT-0004, ANT-0003) is a debt register; if it grows, the gate loses meaning. Growth must be treated as a regression."
+  ],
+  "limitations": [
+    "Identifier dialects differ across records (research_id, id, document_id); the lock tolerates them and reports drift as a warning rather than normalizing the corpus.",
+    "Three legacy records were found with a non-canonical id field and 15 with dangling pattern references; all are reported, none were rewritten in this change."
+  ]
+}

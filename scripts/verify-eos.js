@@ -19,6 +19,7 @@ import { auditP6InventoryLock, P6_INVENTORY_REQUIRED_PATHS } from './lib/p6-inve
 import { auditComplexityBudgetLock, COMPLEXITY_BUDGET_REQUIRED_PATHS } from './lib/complexity-budget-lock.js';
 import { auditDeferredWritersLock, DEFERRED_WRITERS_REQUIRED_PATHS } from './lib/deferred-writers-lock.js';
 import { auditContextPackLock, CONTEXT_PACK_REQUIRED_PATHS } from './lib/context-pack-lock.js';
+import { auditKnowledgeIntegrity, KNOWLEDGE_INTEGRITY_REQUIRED_PATHS } from './lib/knowledge-integrity-lock.js';
 import { auditLoopEngineeringLock, LOOP_ENGINEERING_REQUIRED_PATHS } from './lib/loop-engineering-lock.js';
 import { auditWorktreePolicyLock, WORKTREE_POLICY_REQUIRED_PATHS } from './lib/worktree-policy-lock.js';
 import { auditSpecbootCycleLock, SPECBOOT_CYCLE_REQUIRED_PATHS } from './lib/specboot-cycle-lock.js';
@@ -371,6 +372,7 @@ const REQUIRED_PATHS = [
   'docs/evidence/EVD-0073-ai-engineer-pro-knowledge-ingest.json',
   'docs/evidence/EVD-0074-ego-lite-source-verification.json',
   'docs/evidence/EVD-0075-external-tool-adoption-protocol.json',
+  'docs/evidence/EVD-0076-knowledge-integrity-ratchet.json',
   'docs/evidence/EVD-0001.json',
   'docs/evidence/EVD-0002.json',
   'docs/evidence/EVD-0003.json',
@@ -494,7 +496,8 @@ const REQUIRED_PATHS = [
   ...KEEP_PO_PRUNE_HOLD_REQUIRED_PATHS,
   ...COMPLEXITY_CEILING_HOLD_REQUIRED_PATHS,
   ...AGY_WORKSTATION_REQUIRED_PATHS,
-  ...DIRTY_DEFER_TRIAGE_REQUIRED_PATHS
+  ...DIRTY_DEFER_TRIAGE_REQUIRED_PATHS,
+  ...KNOWLEDGE_INTEGRITY_REQUIRED_PATHS
 ];
 
 const REQUIRED_EVIDENCE_STATUSES = [
@@ -1293,6 +1296,28 @@ function verifyWorkspace() {
       });
     }
 
+    // 3g10b. K1 Knowledge graph referential integrity ratchet.
+    // Fails closed on NEW dangling references or identity defects; the frozen
+    // legacy gaps in LEGACY_DANGLING_REFS are surfaced as warnings, not failures.
+    try {
+      const knowledgeIntegrity = auditKnowledgeIntegrity(rootDir);
+      for (const c of knowledgeIntegrity.checks) {
+        report.checks.push(c);
+      }
+      for (const w of knowledgeIntegrity.warnings || []) {
+        report.warnings.push(w);
+      }
+      for (const f of knowledgeIntegrity.failures) {
+        report.failures.push(f);
+      }
+    } catch (err) {
+      report.failures.push({
+        path: 'scripts/lib/knowledge-integrity-lock.js',
+        message: 'Knowledge integrity lock audit failed: ' + err.message,
+        type: 'knowledge-integrity'
+      });
+    }
+
         // 3g11. S3 Loop Engineering 4Q matrix verify lock (existence + section needles; policy != autonomy)
     try {
       const loopEng = auditLoopEngineeringLock(rootDir);
@@ -1504,6 +1529,18 @@ function verifyWorkspace() {
     }
 
     console.log('\n----------------------------------------------------');
+    if (report.warnings.length > 0) {
+      console.log(`Warnings (non-blocking): ${report.warnings.length}`);
+      const byType = report.warnings.reduce((acc, w) => {
+        const key = w.type || 'general';
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {});
+      for (const [type, count] of Object.entries(byType)) {
+        console.log(`  [WARN] ${type}: ${count}`);
+      }
+      console.log('');
+    }
     console.log(`Checks Passed: ${report.checks.length} | Failures: ${report.failures.length}`);
     console.log('----------------------------------------------------');
     console.log(`STATUS: ${report.status === 'PASS' ? 'VERIFIED — All checks passed cleanly.' : 'UNVERIFIED — Failures detected.'}\n`);
