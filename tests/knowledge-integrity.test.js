@@ -7,6 +7,7 @@ import {
   evaluateIntegrity,
   extractRefs,
   normalizeTitle,
+  parseFreeRef,
   resolveDeclaredId,
   LEGACY_DANGLING_REFS,
   LEGACY_ID_CONFLICTS
@@ -182,6 +183,63 @@ test('the dangling register holds exactly the one unresolved id', () => {
     ['PAT-0004'],
     'PAT-0004 is the only debt allowed to remain frozen; anything else means the corpus regressed.'
   );
+});
+
+test('a decision targeting an unknown capability fails closed', () => {
+  const input = build({
+    collections: {
+      ...build().collections,
+      CAP: [{ file: 'docs/intelligence/capabilities/CAP-0001-memory.json', id_field: 'capability_id', record: { capability_id: 'CAP-0001', name: 'Memory', source_pattern: 'Engram Protocol' } }],
+      'DEC-INT': [{ file: 'docs/intelligence/decisions/DEC-INT-0001-adopt.json', id_field: 'decision_id', record: { decision_id: 'DEC-INT-0001', capability_id: 'CAP-0042' } }]
+    }
+  });
+  const res = evaluateIntegrity(input);
+  assert.equal(res.ok, false);
+  assert.ok(res.failures.some((f) => /Decision targets unknown capability CAP-0042/.test(f.message)));
+});
+
+test('a decision targeting a real capability passes', () => {
+  const input = build({
+    collections: {
+      ...build().collections,
+      CAP: [{ file: 'docs/intelligence/capabilities/CAP-0001-memory.json', id_field: 'capability_id', record: { capability_id: 'CAP-0001', name: 'Memory', source_pattern: 'Engram Protocol' } }],
+      'DEC-INT': [{ file: 'docs/intelligence/decisions/DEC-INT-0001-adopt.json', id_field: 'decision_id', record: { decision_id: 'DEC-INT-0001', capability_id: 'CAP-0001' } }]
+    }
+  });
+  const res = evaluateIntegrity(input);
+  assert.deepEqual(res.failures, []);
+  assert.equal(res.ok, true);
+});
+
+test('a capability whose provenance cites a missing pattern fails closed', () => {
+  const input = build({
+    collections: {
+      ...build().collections,
+      CAP: [{ file: 'docs/intelligence/capabilities/CAP-0001-memory.json', id_field: 'capability_id', record: { capability_id: 'CAP-0001', name: 'Memory', source_pattern: 'PAT-0077 / Engram Protocol' } }]
+    }
+  });
+  const res = evaluateIntegrity(input);
+  assert.equal(res.ok, false);
+  assert.ok(res.failures.some((f) => /Dangling pattern reference PAT-0077/.test(f.message)));
+});
+
+test('hyphenated collection ids do not break filename agreement', () => {
+  const input = build({
+    collections: {
+      ...build().collections,
+      'DEC-INT': [{ file: 'docs/intelligence/decisions/DEC-INT-0009-other.json', id_field: 'decision_id', record: { decision_id: 'DEC-INT-0009' } }]
+    }
+  });
+  const res = evaluateIntegrity(input);
+  assert.deepEqual(res.failures, []);
+});
+
+test('parseFreeRef handles slash, colon and bare forms', () => {
+  assert.deepEqual(parseFreeRef('PAT-0001 / Engram Protocol'), { id: 'PAT-0001', title: 'Engram Protocol' });
+  assert.deepEqual(parseFreeRef('PAT-0001: Thing'), { id: 'PAT-0001', title: 'Thing' });
+  assert.deepEqual(parseFreeRef('PAT-0001'), { id: 'PAT-0001', title: '' });
+  assert.equal(parseFreeRef('no id here'), null);
+  assert.equal(parseFreeRef(undefined), null);
 });
 
 test('the live knowledge graph satisfies the lock', () => {

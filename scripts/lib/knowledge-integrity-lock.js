@@ -41,10 +41,12 @@ export const LEGACY_DANGLING_REFS = Object.freeze(['PAT-0004']);
 export const LEGACY_ID_CONFLICTS = Object.freeze([]);
 
 export const COLLECTIONS = Object.freeze([
-  Object.freeze({ dir: 'research', prefix: 'RSC', id_field: 'research_id' }),
-  Object.freeze({ dir: 'patterns', prefix: 'PAT', id_field: 'pattern_id' }),
-  Object.freeze({ dir: 'anti-patterns', prefix: 'ANT', id_field: 'antipattern_id' }),
-  Object.freeze({ dir: 'comparisons', prefix: 'CMP', id_field: 'comparison_id' })
+  Object.freeze({ dir: 'research', prefix: 'RSC', id_field: 'research_id', id_pattern: '^[A-Z]{3}-\\d{4}$', stem_pattern: '^[A-Z]{3}-\\d{4}' }),
+  Object.freeze({ dir: 'patterns', prefix: 'PAT', id_field: 'pattern_id', id_pattern: '^[A-Z]{3}-\\d{4}$', stem_pattern: '^[A-Z]{3}-\\d{4}' }),
+  Object.freeze({ dir: 'anti-patterns', prefix: 'ANT', id_field: 'antipattern_id', id_pattern: '^[A-Z]{3}-\\d{4}$', stem_pattern: '^[A-Z]{3}-\\d{4}' }),
+  Object.freeze({ dir: 'comparisons', prefix: 'CMP', id_field: 'comparison_id', id_pattern: '^[A-Z]{3}-\\d{4}$', stem_pattern: '^[A-Z]{3}-\\d{4}' }),
+  Object.freeze({ dir: 'capabilities', prefix: 'CAP', id_field: 'capability_id', id_pattern: '^[A-Z]{3}-\\d{4}$', stem_pattern: '^[A-Z]{3}-\\d{4}' }),
+  Object.freeze({ dir: 'decisions', prefix: 'DEC-INT', id_field: 'decision_id', id_pattern: '^DEC-INT-\\d{4}$', stem_pattern: '^DEC-INT-\\d{4}' })
 ]);
 
 export const KNOWLEDGE_INTEGRITY_LOCK_FILE = 'scripts/lib/knowledge-integrity-lock.js';
@@ -62,6 +64,8 @@ export const KNOWLEDGE_INTEGRITY_REQUIRED_PATHS = Object.freeze([
   'docs/intelligence/patterns/PAT-0005-typed-decision-contracts.json',
   'docs/intelligence/anti-patterns/ANT-0004-llm-for-every-decision.json',
   'docs/intelligence/comparisons/CMP-0002-agent-browser-automation-options.json',
+  'docs/intelligence/capabilities/CAP-0001-persistent-engineering-memory.json',
+  'docs/intelligence/decisions/DEC-INT-0001-adopt-engram-memory-protocol.json',
   'docs/harness/EXTERNAL_TOOL_ADOPTION_PROTOCOL.md'
 ]);
 
@@ -92,6 +96,14 @@ export function extractRefsWithTitles(values) {
     out.push({ id: head, title });
   }
   return out;
+}
+
+/** Parse `PAT-0001 / Some Title`, `PAT-0001: Title` or a bare id. */
+export function parseFreeRef(value) {
+  if (typeof value !== 'string') return null;
+  const match = value.match(/^\s*([A-Z]{3}-\d{4})\s*(?:[:/]\s*(.+))?$/);
+  if (!match) return null;
+  return { id: match[1], title: (match[2] || '').trim() };
 }
 
 /** Lowercase, drop parentheticals and punctuation, collapse whitespace. */
@@ -150,16 +162,21 @@ export function evaluateIntegrity(input) {
   }
 
   const allIds = new Set();
-  for (const entries of Object.values(collections)) {
+  const metaByPrefix = new Map(COLLECTIONS.map((c) => [c.prefix, c]));
+
+  for (const [prefix, entries] of Object.entries(collections)) {
+    const meta = metaByPrefix.get(prefix) || {};
     const seen = new Set();
     for (const entry of entries) {
       const { file, id_field: idField, record } = entry;
       const resolved = resolveDeclaredId(record, idField);
       const declared = resolved.id;
-      const fromFilename = file.split('/').pop().slice(0, 8);
+      const stemPattern = entry.stem_pattern || meta.stem_pattern || '^[A-Z]{3}-\\d{4}';
+      const stem = (file.split('/').pop().match(new RegExp(stemPattern)) || [''])[0];
+      const idPattern = entry.id_pattern ? new RegExp(entry.id_pattern) : (meta.id_pattern ? new RegExp(meta.id_pattern) : ID_PATTERN);
 
       // 2. Declared id must exist and be well formed.
-      if (typeof declared !== 'string' || !ID_PATTERN.test(declared)) {
+      if (typeof declared !== 'string' || !idPattern.test(declared)) {
         failures.push({ path: file, message: `${file}: missing or malformed ${idField}`, type: 'knowledge-integrity' });
         continue;
       }
@@ -172,8 +189,8 @@ export function evaluateIntegrity(input) {
         });
       }
       // 3. Declared id must agree with the filename.
-      if (declared !== fromFilename) {
-        failures.push({ path: file, message: `id ${declared} does not match filename prefix ${fromFilename}`, type: 'knowledge-integrity' });
+      if (declared !== stem) {
+        failures.push({ path: file, message: `id ${declared} does not match filename prefix ${stem}`, type: 'knowledge-integrity' });
       }
       // 4. Ids must be unique across the whole graph.
       if (seen.has(declared) || allIds.has(declared)) {
@@ -195,7 +212,27 @@ export function evaluateIntegrity(input) {
   // the record that carries the id. A reused id is corruption, not a typo.
   const patternNames = new Map((collections.PAT || []).map((e) => [e.record?.pattern_id, e.record?.name]).filter(([id]) => Boolean(id)));
   const antiNames = new Map((collections.ANT || []).map((e) => [e.record?.antipattern_id, e.record?.name]).filter(([id]) => Boolean(id)));
+  const capabilityNames = new Map((collections.CAP || []).map((e) => [e.record?.capability_id, e.record?.name]).filter(([id]) => Boolean(id)));
   const conflictIds = new Set(conflict_allowlist);
+
+  const recordRef = (file, ref, title, target, label) => {
+    if (!target.has(ref)) {
+      const payload = { path: file, message: `Dangling ${label} reference ${ref}`, type: 'knowledge-integrity' };
+      if (legacy.has(ref)) warnings.push({ ...payload, message: `${payload.message} (frozen legacy gap)` });
+      else failures.push(payload);
+      return;
+    }
+    if (!title) return;
+    const declared = target.get(ref);
+    if (normalizeTitle(title) === normalizeTitle(declared)) return;
+    const payload = {
+      path: file,
+      message: `Id ${ref} cited as '${title}' but ${label} record is named '${declared}'`,
+      type: 'knowledge-integrity'
+    };
+    if (conflictIds.has(`${file}::${ref}`)) warnings.push({ ...payload, message: `${payload.message} (frozen id conflict)` });
+    else failures.push(payload);
+  };
 
   const refChecks = [
     { entries: collections.RSC || [], field: 'patterns', target: patternNames, label: 'pattern' },
@@ -205,23 +242,23 @@ export function evaluateIntegrity(input) {
   for (const { entries, field, target, label } of refChecks) {
     for (const entry of entries) {
       for (const { id: ref, title } of extractRefsWithTitles(entry.record?.[field])) {
-        if (!target.has(ref)) {
-          const payload = { path: entry.file, message: `Dangling ${label} reference ${ref}`, type: 'knowledge-integrity' };
-          if (legacy.has(ref)) warnings.push({ ...payload, message: `${payload.message} (frozen legacy gap)` });
-          else failures.push(payload);
-          continue;
-        }
-        if (!title) continue;
-        const declared = target.get(ref);
-        if (normalizeTitle(title) === normalizeTitle(declared)) continue;
-        const payload = {
-          path: entry.file,
-          message: `Id ${ref} cited as '${title}' but ${label} record is named '${declared}'`,
-          type: 'knowledge-integrity'
-        };
-        if (conflictIds.has(`${entry.file}::${ref}`)) warnings.push({ ...payload, message: `${payload.message} (frozen id conflict)` });
-        else failures.push(payload);
+        recordRef(entry.file, ref, title, target, label);
       }
+    }
+  }
+
+  // 7. Capability provenance must resolve, and a decision must target a real
+  // capability. Without this the graph terminates in unreachable nodes.
+  for (const entry of collections.CAP || []) {
+    const parsed = parseFreeRef(entry.record?.source_pattern);
+    if (parsed) recordRef(entry.file, parsed.id, parsed.title, patternNames, 'pattern');
+  }
+
+  for (const entry of collections['DEC-INT'] || []) {
+    const capId = entry.record?.capability_id;
+    if (typeof capId !== 'string' || !capId) continue;
+    if (!capabilityNames.has(capId)) {
+      failures.push({ path: entry.file, message: `Decision targets unknown capability ${capId}`, type: 'knowledge-integrity' });
     }
   }
 
@@ -261,7 +298,7 @@ export function auditKnowledgeIntegrity(rootDir, options = {}) {
   }
 
   const collections = {};
-  for (const { dir, prefix, id_field: idField } of COLLECTIONS) {
+  for (const { dir, prefix, id_field: idField, id_pattern: idPattern, stem_pattern: stemPattern } of COLLECTIONS) {
     const abs = path.join(rootDir, INTELLIGENCE_ROOT, dir);
     const entries = [];
     if (fs.existsSync(abs)) {
@@ -269,7 +306,13 @@ export function auditKnowledgeIntegrity(rootDir, options = {}) {
         if (!file.endsWith('.json') || !file.startsWith(prefix)) continue;
         const rel = `${INTELLIGENCE_ROOT}/${dir}/${file}`;
         try {
-          entries.push({ file: rel, id_field: idField, record: JSON.parse(fs.readFileSync(path.join(abs, file), 'utf8')) });
+          entries.push({
+            file: rel,
+            id_field: idField,
+            id_pattern: idPattern,
+            stem_pattern: stemPattern,
+            record: JSON.parse(fs.readFileSync(path.join(abs, file), 'utf8'))
+          });
         } catch (err) {
           failures.push({ path: rel, message: `Unparseable record: ${err.message}`, type: 'knowledge-integrity' });
         }

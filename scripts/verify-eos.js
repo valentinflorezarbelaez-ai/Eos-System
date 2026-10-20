@@ -380,6 +380,7 @@ const REQUIRED_PATHS = [...new Set([
   'docs/evidence/EVD-0077-knowledge-debt-reduction.json',
   'docs/evidence/EVD-0078-knowledge-debt-closure.json',
   'docs/evidence/EVD-0079-adversarial-self-review.json',
+  'docs/evidence/EVD-0080-graph-coverage-completion.json',
   'docs/evidence/EVD-0001.json',
   'docs/evidence/EVD-0002.json',
   'docs/evidence/EVD-0003.json',

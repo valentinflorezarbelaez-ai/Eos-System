@@ -1,0 +1,37 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0080",
+  "claim": "The integrity lock now covers the full knowledge graph modelled in KNOWLEDGE_GRAPH_MODEL.md, including capabilities and decisions, and extending it exposed a third false citation plus a design defect in the lock's own API that the tests caught.",
+  "status": "VERIFIED",
+  "scope": "Two new validated collections (CAP, DEC-INT), a provenance check on capability source_pattern, a referential check on decision capability_id, one corpus correction (CAP-0001), and a robustness refactor so identifier patterns are derived from COLLECTIONS rather than trusted from the caller.",
+  "source": "docs/intelligence/KNOWLEDGE_GRAPH_MODEL.md node list; EVD-0079 review follow-up",
+  "timestamp": "2026-10-20T20:45:00Z",
+  "actor": "EOS agent (Cline)",
+  "action": "Added CAP and DEC-INT to COLLECTIONS with per-collection id and stem patterns, added section 7 (provenance + capability target checks), corrected CAP-0001's false pattern citation, and made evaluateIntegrity resolve patterns from the collection metadata.",
+  "command": "node --test tests/knowledge-integrity.test.js && npm run verify:strict",
+  "expected": "'Checks Passed: 866 | Failures: 0', exit 0, 2 warnings, 26/26 tests.",
+  "actual": "'Checks Passed: 866 | Failures: 0' with this record registered (865 before), 0 failures, 2 warnings, tests 26 pass 0 fail. The two newly registered paths did not raise the count because they were already in the deduplicated REQUIRED_PATHS set, which is the dedupe behaving correctly rather than double-counting.",
+  "confidence": "HIGH",
+  "artifacts": [
+    "scripts/lib/knowledge-integrity-lock.js",
+    "tests/knowledge-integrity.test.js",
+    "docs/intelligence/capabilities/CAP-0001-persistent-engineering-memory.json"
+  ],
+  "environment": {
+    "branch": "cline/b03j7g4c",
+    "l0_purity": "NODE_BUILTINS_ONLY preserved"
+  },
+  "risks": [
+    "Coverage now includes nodes that previously could dangle silently; future capability or decision records must cite real ids or the build fails.",
+    "Source and evidence references remain prose-heavy by design and are still not structurally validated."
+  ],
+  "limitations": [
+    "EVD-* references inside records are mostly free text ('EVD-0001 through EVD-0009') and are deliberately not parsed; validating them would require normalising every record's evidence array.",
+    "The lock validates identity and references, never truth: a record that passes may still be wrong."
+  ],
+  "review_findings": [
+    "NEW DEFECT FOUND (fixed): CAP-0001 declared its provenance as 'PAT-0001 / Engram Protocol', but PAT-0001 is Spec-Driven Development. Third instance of the same mis-numbering pattern, now demoted to prose like RSC-0001.",
+    "OWN DESIGN DEFECT (fixed): evaluateIntegrity trusted the caller to supply id_pattern/stem_pattern. The unit tests written for the new collections failed immediately, proving the API was fragile. Patterns are now derived from COLLECTIONS, so a fixture and the real corpus behave identically.",
+    "PROOF OF THE DEDUPE (observed): adding two already-registered paths changed the check count by zero, confirming the earlier 73-duplicate finding and that the corrected metric no longer inflates."
+  ]
+}
