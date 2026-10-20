@@ -122,7 +122,7 @@ The recurring pattern: every ~18 months the binding constraint moves from *can t
 
 ## 7. Typed decision models (Jev / "System One")
 
-**Provenance.** Jev is the first public model of **TypeSafe AI** (San Francisco, founded 2024 by Diogo Almeida, formerly OpenAI research behind ChatGPT), released in limited early access on **2026-09-15** alongside a **$40M** seed round led by DCVC (SRC-0075, SRC-0077). TypeSafe calls the class **System One models**, after Kahneman's fast/intuitive mode; the name *Jev* references William Stanley Jevons and the Jevons paradox — cheaper intelligence expanding total demand rather than reducing it.
+**Provenance.** Jev is the first public model of **TypeSafe AI** (San Francisco, founded 2024 by Diogo Almeida, formerly OpenAI research behind ChatGPT), released in limited early access on **2026-09-15** alongside a **$40M** seed round led by DCVC (SRC-0077, which cites Forbes; the vendor post SRC-0075 announces the release but not the round). TypeSafe calls the class **System One models**, after Kahneman's fast/intuitive mode; the name *Jev* references William Stanley Jevons and the Jevons paradox — cheaper intelligence expanding total demand rather than reducing it.
 
 **Mechanism.** A **discriminative**, non-generative model. It consumes a *state* plus a set of *questions*, and returns **typed values with calibrated probabilities**. Three question primitives: `choice` (probability per option), `score` (ordered level, continuous score), `noul` (yes/no, probability that the statement holds). Multiple questions about the same state are evaluated **in parallel in a single call**.
 

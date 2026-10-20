@@ -1,0 +1,40 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0079",
+  "claim": "An adversarial self-review found six defects in the work delivered by EVD-0073..EVD-0078, including one that invalidated the headline metric: the strict check count was inflated by duplicate existence checks, so the reported progression 913 -> 946 overstated both endpoints. All six are fixed; the corrected progression is 840 -> 864 distinct checks.",
+  "status": "VERIFIED",
+  "scope": "Self-review of the evidence records and code introduced in this branch, plus the pre-existing duplication in verify-eos.js. No new capability. Metric correction, attribution corrections, and two reviewability fixes.",
+  "source": "Logs from /tmp/baseline-verify.log (main) and the post-change runs; canonical type counts derived by deduplication of the real output",
+  "timestamp": "2026-10-20T20:15:00Z",
+  "actor": "EOS agent (Cline)",
+  "action": "Deduplicated REQUIRED_PATHS, corrected two attributions, fixed a wrong path in a failure message, made warnings individually readable, removed dead destructuring, and derived the true check counts from the logs.",
+  "command": "npm run verify:strict && node --test tests/knowledge-integrity.test.js",
+  "expected": "'Checks Passed: 865 | Failures: 0', exit 0, 'Warnings (non-blocking): 2' printed with their individual messages, and 21/21 tests passing.",
+  "actual": "'Checks Passed: 864 | Failures: 0' before this record was registered (865 with it), 0 failures, and the two surviving warnings are now printed as individual lines instead of a bare count. Tests 21/21.",
+  "confidence": "HIGH",
+  "artifacts": [
+    "scripts/verify-eos.js",
+    "scripts/lib/knowledge-integrity-lock.js",
+    "docs/knowledge/AI_ENGINEER_PRO_PROFILE.md",
+    "docs/intelligence/comparisons/CMP-0002-agent-browser-automation-options.json"
+  ],
+  "environment": {
+    "branch": "cline/b03j7g4c",
+    "l0_purity": "NODE_BUILTINS_ONLY preserved"
+  },
+  "risks": [
+    "Deduplicating lowered the headline number. A lower number from a stricter measure is not a regression, but it must be read against the corrected baseline, not against 913."
+  ],
+  "limitations": [
+    "The corrected baseline of 840 is derived by counting duplicate existence checks in the main-branch log (555 existence lines, 482 distinct, 73 duplicates) and subtracting them from 913; it was not re-measured by deduplicating main and re-running.",
+    "Duplicate checks in other categories may remain inside individual lock modules; only the shared REQUIRED_PATHS list was deduplicated."
+  ],
+  "review_findings": [
+    "D1 METRIC DEFECT (fixed): existence checks were duplicated 73 times on main, so 913 and 946 both overstated their guarantee count. Corrected: 840 -> 864.",
+    "D2 ATTRIBUTION (fixed): the $40M DCVC round was credited to SRC-0075, which announces the release but not the round. Now credited to SRC-0077 only.",
+    "D3 OVERSTATEMENT (fixed): CMP-0002 called chrome-devtools MCP the 'EOS current' seam; the evidence only shows it as a documented option in docs/openspec-tasks-mandatory-steps.md. Relabelled.",
+    "D4 WRONG PATH (fixed): a lock failure reported docs/intelligence/RSC, a directory that does not exist, instead of the offending file.",
+    "D5 HIDDEN DEBT (fixed): verify printed only warning counts, so tolerated debt was invisible in CI output. Individual messages are now printed, capped at ten.",
+    "D6 DEAD CODE (fixed): an unused destructured binding left over from the title-check refactor."
+  ]
+}

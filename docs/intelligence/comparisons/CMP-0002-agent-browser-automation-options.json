@@ -31,7 +31,7 @@
       "Credential blast radius": "CRITICAL — agent acts with the human's real authenticated sessions across the whole machine",
       "L0 purity fit": "NONE — external binary plus network; cannot be a root dependency"
     },
-    "chrome-devtools MCP (EOS current)": {
+    "chrome-devtools MCP (EOS-documented option)": {
       "Works with any agent CLI": "Yes, through MCP",
       "Reuses real browser sessions": "Partially — depends on attached profile",
       "Isolation between human and agent": "Weak — attached DevTools session competes for control",

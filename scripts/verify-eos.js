@@ -46,7 +46,11 @@ if (unknownArgs.length > 0) {
   process.exit(2);
 }
 
-const REQUIRED_PATHS = [
+// Deduplicated: several locks list overlapping paths, so the raw spread produced
+// duplicate existence checks and an inflated check count (73 duplicate paths at
+// the time of EVD-0079). A count is only useful if each unit is a distinct
+// guarantee, so duplicates are collapsed here rather than counted twice.
+const REQUIRED_PATHS = [...new Set([
   '.git',
   '.gitignore',
   '.editorconfig',
@@ -375,6 +379,7 @@ const REQUIRED_PATHS = [
   'docs/evidence/EVD-0076-knowledge-integrity-ratchet.json',
   'docs/evidence/EVD-0077-knowledge-debt-reduction.json',
   'docs/evidence/EVD-0078-knowledge-debt-closure.json',
+  'docs/evidence/EVD-0079-adversarial-self-review.json',
   'docs/evidence/EVD-0001.json',
   'docs/evidence/EVD-0002.json',
   'docs/evidence/EVD-0003.json',
@@ -500,7 +505,7 @@ const REQUIRED_PATHS = [
   ...AGY_WORKSTATION_REQUIRED_PATHS,
   ...DIRTY_DEFER_TRIAGE_REQUIRED_PATHS,
   ...KNOWLEDGE_INTEGRITY_REQUIRED_PATHS
-];
+])];
 
 const REQUIRED_EVIDENCE_STATUSES = [
   'VERIFIED',
@@ -1542,6 +1547,15 @@ function verifyWorkspace() {
       }, {});
       for (const [type, count] of Object.entries(byType)) {
         console.log(`  [WARN] ${type}: ${count}`);
+      }
+      // Debt must be readable without re-running the audit: a count alone hides
+      // what is actually being tolerated.
+      const shown = report.warnings.slice(0, 10);
+      for (const w of shown) {
+        console.log(`    - ${w.path}: ${w.message}`);
+      }
+      if (report.warnings.length > shown.length) {
+        console.log(`    ... and ${report.warnings.length - shown.length} more`);
       }
       console.log('');
     }

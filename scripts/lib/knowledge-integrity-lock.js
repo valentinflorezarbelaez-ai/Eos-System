@@ -150,7 +150,7 @@ export function evaluateIntegrity(input) {
   }
 
   const allIds = new Set();
-  for (const [prefix, entries] of Object.entries(collections)) {
+  for (const entries of Object.values(collections)) {
     const seen = new Set();
     for (const entry of entries) {
       const { file, id_field: idField, record } = entry;
@@ -160,7 +160,7 @@ export function evaluateIntegrity(input) {
 
       // 2. Declared id must exist and be well formed.
       if (typeof declared !== 'string' || !ID_PATTERN.test(declared)) {
-        failures.push({ path: `${INTELLIGENCE_ROOT}/${prefix}`, message: `${file}: missing or malformed ${idField}`, type: 'knowledge-integrity' });
+        failures.push({ path: file, message: `${file}: missing or malformed ${idField}`, type: 'knowledge-integrity' });
         continue;
       }
       // 2b. Non-canonical id field is drift, not breakage: warn and keep going.
