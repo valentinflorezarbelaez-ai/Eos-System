@@ -1,0 +1,80 @@
+{
+  "comparison_id": "CMP-0002",
+  "title": "Agent Browser Automation Options (2026-10)",
+  "updated_at": "2026-10-20T18:10:00Z",
+  "schema_status": "NO_COMPARISON_SCHEMA_DEFINED — this directory has no schema.json; shape mirrors CMP-0001. Not registered as a governed schema.",
+  "sources": ["SRC-0081"],
+  "dimensions": [
+    "Works with any agent CLI",
+    "Reuses real browser sessions",
+    "Isolation between human and agent",
+    "Integration surface",
+    "Platform support",
+    "Openness",
+    "Cost",
+    "Data locality",
+    "Benchmark independence",
+    "Credential blast radius",
+    "L0 purity fit"
+  ],
+  "options": {
+    "ego lite (ego-browser skill)": {
+      "Works with any agent CLI": "Yes — Claude Code, Codex, Cursor, Gemini CLI, custom",
+      "Reuses real browser sessions": "Yes — one-click import of Chrome bookmarks, extensions, cookies, active sessions",
+      "Isolation between human and agent": "Yes — separate 'Space' per agent inside one browser; human keeps mouse and tabs",
+      "Integration surface": "CLI skill exposing in-page JS tools (snapshot, fill, click, wait, navigate, capture); NOT MCP",
+      "Platform support": "macOS and Windows; Linux on roadmap",
+      "Openness": "Repo MIT; the browser binary itself is a separate free download, NOT open source",
+      "Cost": "Free for personal use; custom enterprise pricing with response SLA",
+      "Data locality": "Local, no account, no email; user supplies own model API key",
+      "Benchmark independence": "Vendor-authored (Real-World Bench, 31 tasks, same agent pi + gpt-5.6-sol, 47-63% faster) — self-reported",
+      "Credential blast radius": "CRITICAL — agent acts with the human's real authenticated sessions across the whole machine",
+      "L0 purity fit": "NONE — external binary plus network; cannot be a root dependency"
+    },
+    "chrome-devtools MCP (EOS current)": {
+      "Works with any agent CLI": "Yes, through MCP",
+      "Reuses real browser sessions": "Partially — depends on attached profile",
+      "Isolation between human and agent": "Weak — attached DevTools session competes for control",
+      "Integration surface": "MCP (already the EOS seam)",
+      "Platform support": "Cross-platform",
+      "Openness": "Open",
+      "Cost": "Free",
+      "Data locality": "Local",
+      "Benchmark independence": "N/A",
+      "Credential blast radius": "HIGH",
+      "L0 purity fit": "Adapter behind existing MCP seam"
+    },
+    "Playwright / playwright-cli": {
+      "Works with any agent CLI": "Yes, via CLI or MCP wrapper",
+      "Reuses real browser sessions": "No — separate browser context, storage state must be exported",
+      "Isolation between human and agent": "Good (separate context) but requires a second browser",
+      "Integration surface": "CLI / library / MCP wrapper",
+      "Platform support": "Cross-platform",
+      "Openness": "Open source",
+      "Cost": "Free",
+      "Data locality": "Local",
+      "Benchmark independence": "N/A",
+      "Credential blast radius": "MEDIUM — isolated context, explicit storage state",
+      "L0 purity fit": "External dependency, adapter only"
+    },
+    "Cloud browser (Browserbase / Browser Use)": {
+      "Works with any agent CLI": "Yes, via API",
+      "Reuses real browser sessions": "No",
+      "Isolation between human and agent": "Full (remote)",
+      "Integration surface": "API / SDK",
+      "Platform support": "N/A",
+      "Openness": "Proprietary",
+      "Cost": "Paid",
+      "Data locality": "NO — page content leaves the machine",
+      "Benchmark independence": "Vendor-authored",
+      "Credential blast radius": "HIGH — remote execution",
+      "L0 purity fit": "NONE — network egress; conflicts with GATE-13 containment"
+    }
+  },
+  "eos_recommendation": "OBSERVE / DEFER. The transferable mechanism is the compact page snapshot (~200-400 tokens per page instead of raw HTML), which is directly relevant to the Token & Context Hygiene Protocol section 8; the tool itself is not adoptable now. Reasons: (1) L0 purity forbids an external binary as a root dependency; (2) it is a CLI skill, not MCP, so it does not fit the existing adapter seam without a new adapter; (3) acting with the PO's real authenticated sessions raises the blast radius to CRITICAL and requires per-action PO authorization under AGENTS section 5, not blanket autonomy; (4) the benchmark is vendor-authored. Do NOT add to docs/tools/REGISTRY.json: that registry requires a provider_id, capability identifiers and evidence, and the interface_type enum has no entry for a browser CLI skill.",
+  "non_claims": [
+    "This record does not authorize installation or execution of ego lite inside EOS.",
+    "This record does not modify the browser-qa skill, the MCP catalog, or any tool registry.",
+    "No local benchmark of any option was executed; all performance figures are external."
+  ]
+}
