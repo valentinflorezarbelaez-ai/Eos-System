@@ -8,6 +8,7 @@ description = "High-performance Rust WASM AST token sanitizer and lexer for EOS"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+serde = { version = "1", features = ["derive"] }
 wasm-bindgen = "0.2"
 
 [dev-dependencies]
