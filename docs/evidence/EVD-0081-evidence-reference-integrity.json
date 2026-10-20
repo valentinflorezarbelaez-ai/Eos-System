@@ -1,0 +1,36 @@
+{
+  "$schema": "./schema.json",
+  "id": "EVD-0081",
+  "claim": "The last link of the knowledge graph is now enforced: every EVD-* cited by a knowledge record must exist as an artifact in docs/evidence. Auditing that same rule across the whole repository found a pre-existing hole that this change deliberately does not paper over: EVD-0036 is cited by specs, ADRs, intake documents and a security matrix, and no such evidence artifact exists.",
+  "status": "VERIFIED",
+  "scope": "Evidence-reference validation inside docs/intelligence (fail closed, zero debt), plus a measured out-of-scope finding recorded rather than fixed. No evidence artifact was created: fabricating evidence is the one thing this system must never do.",
+  "source": "EVD-0080 follow-up; repo-wide scan of 1855 documents",
+  "timestamp": "2026-10-20T21:10:00Z",
+  "actor": "EOS agent (Cline)",
+  "action": "Added section 8 to the lock: collect existing EVD ids from docs/evidence, scan every knowledge record for cited EVD tokens, fail closed on missing ones, and emit a positive check when clean. Added two unit tests.",
+  "command": "node --test tests/knowledge-integrity.test.js && npm run verify:strict",
+  "expected": "'Checks Passed: 868 | Failures: 0', exit 0, 2 warnings, 28/28 tests (previous state 866 with no evidence rule; delta +2 = the new positive check and this record).",
+  "actual": "'Checks Passed: 868 | Failures: 0', exit 0, 2 warnings, tests 28 pass 0 fail. The live audit reports 3 checks including 'evidence references vs docs/evidence (67 artifacts)'.",
+  "confidence": "HIGH",
+  "artifacts": [
+    "scripts/lib/knowledge-integrity-lock.js",
+    "tests/knowledge-integrity.test.js",
+    "docs/evidence/EVD-0081-evidence-reference-integrity.json"
+  ],
+  "environment": {
+    "branch": "cline/b03j7g4c",
+    "l0_purity": "NODE_BUILTINS_ONLY preserved"
+  },
+  "risks": [
+    "The rule only guards the knowledge graph. Outside docs/intelligence there are still unguarded evidence citations, and the one found is a real defect that a human must resolve.",
+    "Creating EVD-0036 to make the gap disappear would manufacture an audit trail for work that has no recorded execution. That option is rejected explicitly."
+  ],
+  "limitations": [
+    "Repo-wide scan measured 425 EVD mentions, 403 resolvable, 3 unresolvable ids: EVD-0036 (real dangling reference), EVD-1787 and EVD-9999 (range and placeholder notation in KNOWLEDGE_GRAPH_MODEL.md and the rationalization JSONs, not references). Gating the whole repository would need that distinction encoded, which is why the check is scoped to knowledge records for now.",
+    "EVD-0036's citations live in docs/specs, docs/architecture/adrs, docs/intake and docs/evidence/EOS_STEP_9_SECURITY_MATRIX.json; resolving them means either authoring the missing record from real execution or correcting eight documents, and both are human decisions."
+  ],
+  "review_findings": [
+    "OUT-OF-SCOPE DEFECT (recorded, not fixed): EVD-0036 is cited as evidence in at least eight documents and no artifact exists. This is the strongest form of the anti-pattern ANT-0003 covers, committed by the repository itself.",
+    "SCOPE DECISION: EVD-1787 and EVD-9999 are notation (id ranges and placeholders), not references. Treating them as defects would produce false positives and train reviewers to ignore the gate."
+  ]
+}

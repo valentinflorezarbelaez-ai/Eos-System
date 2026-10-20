@@ -20,6 +20,7 @@ import path from 'node:path';
 
 export const INTELLIGENCE_ROOT = 'docs/intelligence';
 export const SOURCES_FILE = 'docs/intelligence/sources/SOURCES.json';
+export const EVIDENCE_DIR = 'docs/evidence';
 
 /**
  * Frozen pre-existing dangling references. Removing an entry is allowed once a
@@ -142,7 +143,13 @@ export function resolveDeclaredId(record, idField) {
  * @param {string[]} [input.legacy_allowlist]
  */
 export function evaluateIntegrity(input) {
-  const { source_ids = [], collections = {}, legacy_allowlist = [], conflict_allowlist = [] } = input;
+  const {
+    source_ids = [],
+    collections = {},
+    legacy_allowlist = [],
+    conflict_allowlist = [],
+    evidence_ids = null
+  } = input;
   const checks = [];
   const failures = [];
   const warnings = [];
@@ -262,11 +269,46 @@ export function evaluateIntegrity(input) {
     }
   }
 
+  // 8. Evidence cited by a knowledge record must exist. Evidence is the only node
+  // that cannot be synthesised: a dangling EVD means somebody asserted a result
+  // that has no artifact. Checked only when the caller supplies the id set, so
+  // fixtures stay isolated from the filesystem.
+  if (Array.isArray(evidence_ids)) {
+    const knownEvidence = new Set(evidence_ids);
+    const before = failures.length;
+    for (const entries of Object.values(collections)) {
+      for (const entry of entries) {
+        const haystack = JSON.stringify(entry.record || {});
+        for (const match of haystack.matchAll(/EVD-\d{4}/g)) {
+          if (!knownEvidence.has(match[0])) {
+            failures.push({ path: entry.file, message: `Dangling evidence reference ${match[0]}`, type: 'knowledge-integrity' });
+          }
+        }
+      }
+    }
+    if (failures.length === before) {
+      checks.push({ path: `evidence references vs ${EVIDENCE_DIR} (${knownEvidence.size} artifacts)`, status: 'VERIFIED', type: 'knowledge-integrity' });
+    }
+  }
+
   if (failures.length === 0) {
     checks.push({ path: 'docs/intelligence knowledge graph referential integrity', status: 'VERIFIED', type: 'knowledge-integrity' });
   }
 
   return { ok: failures.length === 0, checks, failures, warnings };
+}
+
+/** Collect the numeric evidence identifiers that exist on disk. */
+export function readEvidenceIds(rootDir) {
+  const dir = path.join(rootDir, EVIDENCE_DIR);
+  if (!fs.existsSync(dir)) return [];
+  const ids = [];
+  for (const file of fs.readdirSync(dir)) {
+    if (!file.endsWith('.json')) continue;
+    const match = file.match(/^EVD-\d{4}/);
+    if (match) ids.push(match[0]);
+  }
+  return ids;
 }
 
 /** Read the graph from disk and evaluate it. */
@@ -325,7 +367,8 @@ export function auditKnowledgeIntegrity(rootDir, options = {}) {
     source_ids: sourceIds,
     collections,
     legacy_allowlist: options.legacyAllowlist || LEGACY_DANGLING_REFS,
-    conflict_allowlist: options.conflictAllowlist || LEGACY_ID_CONFLICTS
+    conflict_allowlist: options.conflictAllowlist || LEGACY_ID_CONFLICTS,
+    evidence_ids: options.evidenceIds || readEvidenceIds(rootDir)
   });
 
   return {

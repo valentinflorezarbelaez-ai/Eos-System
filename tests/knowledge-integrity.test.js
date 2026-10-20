@@ -242,6 +242,24 @@ test('parseFreeRef handles slash, colon and bare forms', () => {
   assert.equal(parseFreeRef(undefined), null);
 });
 
+test('a knowledge record citing evidence that does not exist fails closed', () => {
+  const input = build({ evidence_ids: ['EVD-0001'] });
+  input.collections.RSC[0].record.evidence = ['EVD-0001 confirms it', 'EVD-0777 does not exist'];
+  const res = evaluateIntegrity(input);
+  assert.equal(res.ok, false);
+  assert.ok(res.failures.some((f) => /Dangling evidence reference EVD-0777/.test(f.message)));
+});
+
+test('existing evidence references pass, and the check is skipped without an id set', () => {
+  const withIds = build({ evidence_ids: ['EVD-0001'] });
+  withIds.collections.RSC[0].record.evidence = ['EVD-0001 confirms it'];
+  assert.deepEqual(evaluateIntegrity(withIds).failures, []);
+
+  const withoutIds = build();
+  withoutIds.collections.RSC[0].record.evidence = ['EVD-0777 whatever'];
+  assert.deepEqual(evaluateIntegrity(withoutIds).failures, []);
+});
+
 test('the live knowledge graph satisfies the lock', () => {
   const res = auditKnowledgeIntegrity(rootDir);
   assert.deepEqual(res.failures, [], `unexpected integrity failures: ${JSON.stringify(res.failures)}`);
