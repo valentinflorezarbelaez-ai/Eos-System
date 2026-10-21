@@ -1,21 +1,21 @@
-# ADR-0157 — Mission FK Bidirectional Mismatch Quarantine / Deny Governance Port (PROPOSED / DRAFT)
+# ADR-0157 — Mission FK Bidirectional Mismatch Quarantine / Deny Governance Port
 
-- **Status:** Proposed — **DRAFT / NOT ACCEPTED** (docs-only; blocked on PR #577 merge + tip-refresh post-FJ + explicit PO authorization)
+- **Status:** Accepted — local governed (Ladder 41 / Mission FK; PO authorized 2026-09-25 post-#577 merge)
 - **Date:** 2026-09-25 (America/Bogota)
-- **Deciders:** Pending Product Owner authorization (EOS local governed use)
+- **Deciders:** Product Owner authorization (EOS local governed use)
 - **Spec:** SPEC-0173
 - **Prior ADRs:** ADR-0156 (Mission FJ round-trip integrity), ADR-0155 (Mission FI correlation registry), ADR-0154 (Ladder 41 Maturity Gap Audit)
 
 ## Context
 
-Ladder 41 is **OPEN** (Audit MEASURED · FI MEASURED #566 · FJ implemented in PR #577 · FK–FM pending). Formal L30–L40 remain **CLOSED** — **NEVER reopen**. FI seals the bidirectional correlation binding; FJ verifies request/reply integrity and returns a verdict. There is **no** Layer-0 surface that converts a detected mismatch into a fail-closed quarantine/deny decision across the correlated opaque refs.
+Ladder 41 is **OPEN** (Audit MEASURED · FI MEASURED #566 · FJ MEASURED #577 · FK this satellite · FL–FM pending). Formal L30–L40 remain **CLOSED** — **NEVER reopen**. FI seals the bidirectional correlation binding; FJ verifies request/reply integrity and returns a verdict. There is **no** Layer-0 surface that converts a detected mismatch into a fail-closed quarantine/deny decision across the correlated opaque refs.
 
-This ADR is a **proposal only**. It does not authorize runtime code, does not rewrite freeze pins, and does not claim FK MEASURED. The post-FJ freeze pin is unknown until PR #577 merges and tip-refresh post-FJ is sealed.
+This ADR authorizes FK runtime after PR #577 merged (`038a9a4`) and tip-refresh post-FJ was sealed. It does not rewrite freeze pins and does not claim FK MEASURED by itself.
 
-## Proposed Decision (pending authorization)
+## Decision
 
 1. Add Layer-0 triad under `src/core/composition/`:
-   - `bidirectional-mismatch-quarantine-deny-receipt.js` — sealed `FK-RCPT-*` + freeze soft-observe `<post-FJ pin>` + `quarantineHold` (`mismatchSecretMaterialRefused` / `mismatchSecretZeroHeld`)
+   - `bidirectional-mismatch-quarantine-deny-receipt.js` — sealed `FK-RCPT-*` + freeze soft-observe `038a9a4` + `quarantineHold` (`mismatchSecretMaterialRefused` / `mismatchSecretZeroHeld`)
    - `bidirectional-mismatch-quarantine-deny-policy-gate.js` — fail-closed quarantine/deny preconditions + Law VI mismatch/secret-field refusal
    - `bidirectional-mismatch-quarantine-deny-port.js` — facade (`govern`, `verifyTrail`)
 2. Operation name: `BIDIRECTIONAL_MISMATCH_QUARANTINE_DENY`.
@@ -40,7 +40,7 @@ This ADR is a **proposal only**. It does not authorize runtime code, does not re
 
 - Positive: L41 gains a fail-closed mismatch quarantine/deny decision surface with verifiable `FK-RCPT-*` receipts; FL can attest on top without sealing secrets.
 - Invariants Preserved: `PRODUCTION_READY=NO`, `Fundacion Δ=0`, Law VI, Law VII, L30–L40 CLOSED, L41 OPEN, schemas AT_CEILING 35/35.
-- Non-claims: DRAFT ≠ FK MEASURED ≠ L41 CLOSED ≠ PRODUCTION_READY.
+- Non-claims: FK package ≠ L41 CLOSED ≠ PRODUCTION_READY.
 
 ## Links
 

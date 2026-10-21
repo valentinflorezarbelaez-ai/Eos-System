@@ -1,12 +1,12 @@
-# Proposal — Mission FK Bidirectional Mismatch Quarantine / Deny Governance Port (SPEC-0173) — DRAFT
+# Proposal — Mission FK Bidirectional Mismatch Quarantine / Deny Governance Port (SPEC-0173)
 
-**Status:** DRAFT · docs-only · **BLOCKED on PR #577 merge + tip-refresh post-FJ**. No runtime code in this package.
+**Status:** READY · authorized · post-#577 merge (`038a9a4`) + tip-refresh post-FJ.
 
 ## Why
 
-After L41 OPEN + Audit MEASURED (ADR-0154) + FI MEASURED (#566 / ADR-0155) + FJ implemented (PR #577 / ADR-0156), Ladder 41 needs its third satellite: a Layer-0 port that turns a detected bidirectional mismatch into a fail-closed quarantine/deny decision — consuming the opaque FI correlation binding and the FJ round-trip verdict, without live HTTP egress, wall-clock authority, tip-refresh authority, sealing secrets/payloads, flipping PRODUCTION_READY, rewriting tip pins, reopening FI/FJ/L30–L40, auto-closing L41, or network writes. FL (bidirectional honesty attestation) is the next satellite; FK is quarantine/deny only.
+After L41 OPEN + Audit MEASURED (ADR-0154) + FI MEASURED (#566 / ADR-0155) + FJ MEASURED (#577 / ADR-0156), Ladder 41 needs its third satellite: a Layer-0 port that turns a detected bidirectional mismatch into a fail-closed quarantine/deny decision — consuming the opaque FI correlation binding and the FJ round-trip verdict, without live HTTP egress, wall-clock authority, tip-refresh authority, sealing secrets/payloads, flipping PRODUCTION_READY, rewriting tip pins, reopening FI/FJ/L30–L40, auto-closing L41, or network writes. FL (bidirectional honesty attestation) is the next satellite; FK is quarantine/deny only.
 
-## What changes (when authorized)
+## What changes
 
 - New Layer-0 modules under `src/core/composition/`:
   - `bidirectional-mismatch-quarantine-deny-receipt.js` — sealed `FK-RCPT-*` + freeze soft-observe `<post-FJ tip>` + `quarantineHold` (`mismatchSecretMaterialRefused` / `mismatchSecretZeroHeld`)
@@ -26,10 +26,10 @@ After L41 OPEN + Audit MEASURED (ADR-0154) + FI MEASURED (#566 / ADR-0155) + FJ 
 | PRODUCTION_READY | NO |
 | Fundacion Δ | 0 ALWAYS_DENY |
 | L30–L40 | CLOSED — NEVER reopen |
-| L41 | OPEN (Audit MEASURED · FI MEASURED · FJ implemented (PR #577) · FK draft · FL–FM pending) |
+| L41 | OPEN (Audit MEASURED · FI MEASURED · FJ MEASURED (#577) · FK this satellite · FL–FM pending) |
 | Axis | Sovereign Bidirectional Delivery Integrity & Correlation Governance Fabric |
-| Freeze pin | **PENDING** — fill only after PR #577 merge + tip-refresh post-FJ |
+| Freeze pin | `038a9a4` (post-#577 merge; soft-observe only) |
 | Ceiling | schemas AT_CEILING 35/35 |
 | Law VI | held — opaque refs + verdicts + sha256 digests only; never quarantine raw payloads or secrets |
 | PASS | fail-closed mismatch quarantine/deny ≠ tip-refresh ≠ PRODUCTION_READY ≠ FI/FJ/FL/Canary |
-| Authorization | Docs-only draft; runtime FK requires separate explicit PO authorization after #577 merge |
+| Authorization | PO authorized 2026-09-25 (post-#577 merge) for FK runtime implementation |
