@@ -184,6 +184,9 @@ npm run test:mission-bw
 # Run round-trip / request-reply integrity port tests (Mission FJ / SPEC-0172)
 npm run test:mission-fj
 
+# Run bidirectional mismatch quarantine / deny port tests (Mission FK / SPEC-0173)
+npm run test:mission-fk
+
 # Run autonomous self-healing sentinel tests (Mission BX / SPEC-0081)
 npm run test:mission-bx
 

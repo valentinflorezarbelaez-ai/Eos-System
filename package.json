@@ -497,6 +497,8 @@
     "test:mission-fi": "node --test tests/eos-fi-bidirectional-delivery-correlation-registry.test.js",
     "test:mission-fj": "node --test tests/eos-fj-round-trip-request-reply-integrity.test.js",
     "test:round-trip-request-reply-integrity": "node --test tests/eos-fj-round-trip-request-reply-integrity.test.js",
+    "test:mission-fk": "node --test tests/eos-fk-bidirectional-mismatch-quarantine-deny.test.js",
+    "test:bidirectional-mismatch-quarantine-deny": "node --test tests/eos-fk-bidirectional-mismatch-quarantine-deny.test.js",
 
     "test:bidirectional-delivery-correlation-registry": "node --test tests/eos-fi-bidirectional-delivery-correlation-registry.test.js"
   },

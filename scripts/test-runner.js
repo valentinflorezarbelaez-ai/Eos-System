@@ -328,6 +328,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
 
   'eos-fi-bidirectional-delivery-correlation-registry.test.js',
   'eos-fj-round-trip-request-reply-integrity.test.js',
+  'eos-fk-bidirectional-mismatch-quarantine-deny.test.js',
 
 ]);
 

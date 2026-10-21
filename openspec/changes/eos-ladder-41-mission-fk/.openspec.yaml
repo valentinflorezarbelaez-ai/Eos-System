@@ -1,0 +1,18 @@
+schema: spec-driven
+change_id: eos-ladder-41-mission-fk
+title: Mission FK Bidirectional Mismatch Quarantine / Deny Governance Port (SPEC-0173)
+status: ready
+blocked_on: none (PR #577 merged @ 038a9a4 + tip-refresh post-#577)
+ladder: 41
+mission: FK
+spec: SPEC-0173
+adr: ADR-0157
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: "038a9a4"
+never_reopen: [L30, L31, L32, L33, L34, L35, L36, L37, L38, L39, L40]
+l41: OPEN (Audit MEASURED · FI MEASURED · FJ MEASURED · FK this satellite · FL–FM pending)
+law_vi: held (never seal or quarantine request/reply secrets / raw payloads; opaque correlationId / bindingId / requestId / replyId / requestDigest / replyDigest / verdicts only)
+authorization: PO authorized 2026-09-25 (post-#577 merge) for FK runtime implementation
+
