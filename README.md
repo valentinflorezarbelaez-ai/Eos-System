@@ -181,6 +181,9 @@ npm test
 # Run sovereign agentic memory port tests (Mission BW / SPEC-0080)
 npm run test:mission-bw
 
+# Run round-trip / request-reply integrity port tests (Mission FJ / SPEC-0172)
+npm run test:mission-fj
+
 # Run autonomous self-healing sentinel tests (Mission BX / SPEC-0081)
 npm run test:mission-bx
 
