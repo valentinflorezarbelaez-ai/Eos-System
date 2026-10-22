@@ -187,6 +187,9 @@ npm run test:mission-fj
 # Run bidirectional mismatch quarantine / deny port tests (Mission FK / SPEC-0173)
 npm run test:mission-fk
 
+# Run bidirectional delivery honesty & integrity attestation port tests (Mission FL / SPEC-0174)
+npm run test:mission-fl
+
 # Run autonomous self-healing sentinel tests (Mission BX / SPEC-0081)
 npm run test:mission-bx
 

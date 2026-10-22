@@ -499,6 +499,8 @@
     "test:round-trip-request-reply-integrity": "node --test tests/eos-fj-round-trip-request-reply-integrity.test.js",
     "test:mission-fk": "node --test tests/eos-fk-bidirectional-mismatch-quarantine-deny.test.js",
     "test:bidirectional-mismatch-quarantine-deny": "node --test tests/eos-fk-bidirectional-mismatch-quarantine-deny.test.js",
+    "test:mission-fl": "node --test tests/eos-fl-bidirectional-delivery-honesty-attestation.test.js",
+    "test:bidirectional-delivery-honesty-attestation": "node --test tests/eos-fl-bidirectional-delivery-honesty-attestation.test.js",
 
     "test:bidirectional-delivery-correlation-registry": "node --test tests/eos-fi-bidirectional-delivery-correlation-registry.test.js"
   },
