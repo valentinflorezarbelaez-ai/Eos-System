@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Runtime_Dependencies-0_External_NPM-blue?style=for-the-badge" alt="Zero Dependencies" />
   <img src="https://img.shields.io/badge/Specification-IEEE_830_EARS_%2B_BDD-blueviolet?style=for-the-badge" alt="EARS / BDD" />
   <img src="https://img.shields.io/badge/Verification-913%2F913_Strict_Checks-brightgreen?style=for-the-badge" alt="Verify Strict" />
-  <img src="https://img.shields.io/badge/Test_Suite-1454_Passing-success?style=for-the-badge" alt="1454 Tests Passing" />
+  <img src="https://img.shields.io/badge/Test_Suite-1455_Passing-success?style=for-the-badge" alt="1455 Tests Passing" />
   <img src="https://img.shields.io/badge/Consensus-NASA_IV%26V_Anti--Self--Certification-red?style=for-the-badge" alt="NASA IV&V" />
   <img src="https://img.shields.io/badge/Security-Law_VI_Zero_Plain_Secrets-orange?style=for-the-badge" alt="Law VI" />
 </p>
@@ -175,7 +175,7 @@ EOS validates its own integrity through strict, deterministic automated suites:
 # Execute strict invariant verification (913/913 checks across schemas, policies, and locks)
 npm run verify:strict
 
-# Execute complete test suite (1454/1454 tests passing)
+# Execute complete test suite (1455/1455 tests passing)
 npm test
 
 # Run sovereign agentic memory port tests (Mission BW / SPEC-0080)

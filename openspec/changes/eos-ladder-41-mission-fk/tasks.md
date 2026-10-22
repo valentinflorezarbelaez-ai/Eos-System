@@ -22,7 +22,8 @@
 - [x] Port `bidirectional-mismatch-quarantine-deny-port.js` (`govern`, `verifyTrail`)
 - [x] Hermetic tests FK1–FK17 (17/17 pass); `npm run test:mission-fk`; slim-exclude to hold TR-01 ≤ 145
 - [x] Host apply + `verify:strict` + full `npm test` (913/0; 1454/0)
-- [ ] PR + merge; tip-refresh post-FK is SEPARATE
+- [x] PR + merge (#578 `e1a17e9b`); tip-refresh post-FK is SEPARATE
+- [x] Tip-refresh post-#578 (`e1a17e9b`) — pin catch-up only; L41 OPEN retained; FL–FM pending
 
 ## Envelope
 
