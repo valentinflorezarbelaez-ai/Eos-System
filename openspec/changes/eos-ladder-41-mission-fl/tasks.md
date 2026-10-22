@@ -23,7 +23,8 @@
 - [x] Port `bidirectional-delivery-honesty-attestation-port.js` (`govern`, `verifyTrail`)
 - [x] Hermetic tests FL1–FL17 (17/17 pass); `npm run test:mission-fl`; slim-exclude to hold TR-01 ≤ 145
 - [x] Host apply + `verify:strict` + full `npm test`
-- [ ] PR + merge; tip-refresh post-FL is SEPARATE
+- [x] PR + merge (#581 `f5948926`); tip-refresh post-FL is SEPARATE
+- [x] Tip-refresh post-#581 (`f5948926`) — pin catch-up only; L41 OPEN retained; FM pending
 
 ## Envelope
 
