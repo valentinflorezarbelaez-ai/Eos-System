@@ -1,0 +1,19 @@
+schema: spec-driven
+change_id: eos-ladder-41-mission-fm
+title: Mission FM Ladder 41 CI Seam-Pack Consolidation & Closeout (SPEC-0175)
+status: proposed
+blocked_on: none (FL MEASURED via #581 @ f5948926 + tip-refresh post-#581 @ fa153c33)
+ladder: 41
+mission: FM
+spec: SPEC-0175
+adr: ADR-0159
+production_ready: NO
+fundacion_delta: 0
+schemas: AT_CEILING 35/35
+freeze_soft_observe: "f5948926"
+observed_tip_at_authoring: "fa153c33"
+never_reopen: [L30, L31, L32, L33, L34, L35, L36, L37, L38, L39, L40]
+l41: OPEN (Audit MEASURED · FI MEASURED · FJ MEASURED · FK MEASURED · FL MEASURED · FM this satellite) — tip-seal L41 CLOSED is SEPARATE
+law_vi: held (never seal secrets or raw payloads; opaque refs + seamDigest only)
+non_claim: seam-pack != tip-seal != Formal L41 CLOSED != PRODUCTION_READY != GHE
+authorization: PO authorized 2026-10-22 to open the FM specification (docs-first)
