@@ -7163,3 +7163,16 @@ test('tip-refresh-post-584: FM MEASURED + all L41 satellites MEASURED + pin catc
   assert.match(matrix, /\|\s*FM MEASURED\s*\|/);
   assert.equal(EXPECTED_TIP, 'a4f9709a536c2d4729981241cffa8e69c18635bd');
 });
+
+test('tip-seal-l41: Formal Ladder 41 CLOSED_FOR_LOCAL_GOVERNED_USE + NEVER reopen L41', () => {
+  const freeze = fs.readFileSync(FREEZE, 'utf8');
+  const matrix = fs.readFileSync(MATRIX, 'utf8');
+  assert.match(freeze, /tip-seal-l41/);
+  assert.match(freeze, /Formal Ladder 41 is CLOSED/);
+  assert.match(freeze, /NEVER reopen L41/);
+  assert.match(freeze, /CLOSED_FOR_LOCAL_GOVERNED_USE/);
+  assert.match(matrix, /\|\s*Ladder 41 CLOSED\s*\|/);
+  assert.match(matrix, /\|\s*L41 CLOSED_FOR_LOCAL_GOVERNED_USE\s*\|/);
+  // tip-seal does NOT tip-refresh: the pin keeps pointing at the sealed product merge.
+  assert.equal(EXPECTED_TIP, 'a4f9709a536c2d4729981241cffa8e69c18635bd');
+});

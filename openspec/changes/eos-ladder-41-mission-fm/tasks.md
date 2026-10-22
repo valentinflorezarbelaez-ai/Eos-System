@@ -30,7 +30,7 @@
 
 ## Step 3: SEPARATE (not this package)
 
-- [ ] Tip-seal Formal Ladder 41 CLOSED (`CLOSED_FOR_LOCAL_GOVERNED_USE`) — never in the FM product package
+- [x] Tip-seal Formal Ladder 41 CLOSED (`CLOSED_FOR_LOCAL_GOVERNED_USE`) — landed as tip-seal-l41 (never in the FM product package)
 
 ## Envelope
 
