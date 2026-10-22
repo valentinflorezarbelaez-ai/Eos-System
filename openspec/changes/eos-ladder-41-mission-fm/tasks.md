@@ -25,7 +25,8 @@
 - [x] Hermetic suite FM1–FM17; `npm run test:mission-fm`; slim-exclude to hold TR-01 ≤ 145
 - [x] Wiring: `test:ladder41-seam`, `test:mission-fm`, `test:ladder41-pack`
 - [x] Host apply + `verify:strict` + full `npm test` (913/0 · FM 17/17)
-- [ ] PR + merge; tip-refresh post-FM is SEPARATE
+- [x] PR + merge (#584 `a4f9709a`); tip-refresh post-FM is SEPARATE
+- [x] Tip-refresh post-#584 (`a4f9709a`) — pin catch-up only; L41 OPEN with all satellites MEASURED; tip-seal pending
 
 ## Step 3: SEPARATE (not this package)
 
