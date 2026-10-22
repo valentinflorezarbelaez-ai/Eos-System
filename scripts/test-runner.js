@@ -330,6 +330,7 @@ export const SLIM_SUITE_EXCLUDES = new Set([
   'eos-fj-round-trip-request-reply-integrity.test.js',
   'eos-fk-bidirectional-mismatch-quarantine-deny.test.js',
   'eos-fl-bidirectional-delivery-honesty-attestation.test.js',
+  'eos-fm-ladder41-seam-pack.test.js',
 
 ]);
 

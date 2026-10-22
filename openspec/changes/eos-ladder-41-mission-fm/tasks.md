@@ -15,16 +15,16 @@
 - [x] `observed_tip_at_authoring: fa153c33` documented
 - [x] Proposal / design / spec delta written; NON-CLAIMs kept
 - [x] ADR-0159 drafted
-- [ ] PO review of the spec delta + ADR-0159
+- [x] PO review of the spec delta + ADR-0159 (APPROVED 2026-10-22)
 
 ## Step 2: Runtime (after spec review)
 
-- [ ] Receipt `ladder41-seam-receipt.js` (`FM-RCPT-*`, `seamDigest`, Law VI)
-- [ ] Policy gate `ladder41-seam-policy-gate.js` (tip-seal-in-product refuse + L41 auto-close without human gate + L30–L40 gates)
-- [ ] Port `ladder41-seam-port.js` (`Ladder41SeamPort.seam`, `verifyTrail`, `softObserveFi/Fj/Fk/Fl`)
-- [ ] Hermetic suite FM1–FM17; `npm run test:mission-fm`; slim-exclude to hold TR-01 ≤ 145
-- [ ] Wiring: `test:ladder41-seam`, `test:mission-fm`, `test:ladder41-pack`
-- [ ] Host apply + `verify:strict` + full `npm test`
+- [x] Receipt `ladder41-seam-receipt.js` (`FM-RCPT-*`, `seamDigest`, Law VI)
+- [x] Policy gate `ladder41-seam-policy-gate.js` (tip-seal-in-product refuse + L41 auto-close without human gate + L30–L40 gates)
+- [x] Port `ladder41-seam-port.js` (`Ladder41SeamPort.seam`, `verifyTrail`, `softObserveFi/Fj/Fk/Fl`)
+- [x] Hermetic suite FM1–FM17; `npm run test:mission-fm`; slim-exclude to hold TR-01 ≤ 145
+- [x] Wiring: `test:ladder41-seam`, `test:mission-fm`, `test:ladder41-pack`
+- [x] Host apply + `verify:strict` + full `npm test` (913/0 · FM 17/17)
 - [ ] PR + merge; tip-refresh post-FM is SEPARATE
 
 ## Step 3: SEPARATE (not this package)
