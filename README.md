@@ -190,6 +190,12 @@ npm run test:mission-fk
 # Run bidirectional delivery honesty & integrity attestation port tests (Mission FL / SPEC-0174)
 npm run test:mission-fl
 
+# Run Ladder 41 seam-pack consolidation & closeout tests (Mission FM / SPEC-0175)
+npm run test:mission-fm
+
+# Run the full Ladder 41 chain FI -> FJ -> FK -> FL -> FM
+npm run test:ladder41-pack
+
 # Run autonomous self-healing sentinel tests (Mission BX / SPEC-0081)
 npm run test:mission-bx
 

@@ -1,6 +1,6 @@
 # ADR-0159 — Mission FM Ladder 41 CI Seam-Pack Consolidation & Closeout
 
-- **Status:** Proposed — pending PO review of the spec delta (Ladder 41 / Mission FM)
+- **Status:** Accepted — local governed (Ladder 41 / Mission FM; PO authorized 2026-10-22; runtime MEASURED 17/17 FM1–FM17)
 - **Date:** 2026-10-22 (America/Bogota)
 - **Deciders:** Product Owner authorization (EOS local governed use)
 - **Spec:** SPEC-0175
