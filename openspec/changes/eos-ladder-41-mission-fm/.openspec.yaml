@@ -1,7 +1,7 @@
 schema: spec-driven
 change_id: eos-ladder-41-mission-fm
 title: Mission FM Ladder 41 CI Seam-Pack Consolidation & Closeout (SPEC-0175)
-status: ready
+status: proposed
 blocked_on: none (FL MEASURED via #581 @ f5948926 + tip-refresh post-#581 @ fa153c33)
 ladder: 41
 mission: FM
