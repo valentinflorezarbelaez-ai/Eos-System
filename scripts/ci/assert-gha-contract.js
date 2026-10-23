@@ -48,6 +48,38 @@ function assertPinnedAction(yaml, name, sha) {
   }
 }
 
+/**
+ * Detect `run:` plain scalars folded over an indented continuation.
+ *
+ * A plain scalar folds, so every deeper-indented line is concatenated onto the
+ * first command's argv: none of the declared commands execute while the step
+ * still satisfies the substring assertions (failing only at runtime, e.g.
+ * `Invalid arguments`). Block scalars (`run: |`, `run: >`, `run: |-`, `run: >2`)
+ * are literal and therefore exempt. A deeper-indented comment is not a
+ * continuation — YAML strips it — so it must not be reported.
+ *
+ * @param {string} yaml Raw workflow text.
+ * @returns {string[]} Findings; empty when every run scalar is safe.
+ */
+export function findFoldedRunScalars(yaml) {
+  const findings = [];
+  const lines = yaml.split(/\r?\n/);
+  for (let i = 0; i < lines.length; i += 1) {
+    // Both spellings fold: `      run: x` and `      - run: x`.
+    const runScalar = /^(\s*)(?:-\s+)?run:\s*([^\s|>].*)$/.exec(lines[i]);
+    if (!runScalar) continue;
+    const next = lines[i + 1] || '';
+    if (!next.trim() || /^\s*#/.test(next)) continue;
+    if (next.search(/\S/) > runScalar[0].indexOf('run:')) {
+      findings.push(
+        `run scalar at line ${i + 1} is folded over an indented continuation; ` +
+          'use a block scalar (run: |) so each command executes'
+      );
+    }
+  }
+  return findings;
+}
+
 export function assertGithubActionsContract(rootDir) {
   const contract = loadCicdContract(rootDir);
   const failures = [];
@@ -127,22 +159,10 @@ export function assertGithubActionsContract(rootDir) {
       failures.push(`${workflow.path} must assert Fundacion freeze`);
     }
 
-    // Fail-closed structural guard: substring assertions are blind to YAML
-    // scalar folding. A `run:` plain scalar folded over an indented
-    // continuation concatenates every declared command onto the first
-    // command's argv, so none of them execute while the step still "passes"
-    // the assertions above (failing only at runtime, e.g. `Invalid arguments`).
-    const lines = yaml.split(/\r?\n/);
-    for (let i = 0; i < lines.length; i += 1) {
-      const runScalar = /^(\s*)run:\s*([^\s|>].*)$/.exec(lines[i]);
-      if (!runScalar) continue;
-      const next = lines[i + 1] || '';
-      if (next.trim() && next.search(/\S/) > runScalar[1].length) {
-        failures.push(
-          `${workflow.path}: run scalar at line ${i + 1} is folded over an indented ` +
-            'continuation; use a block scalar (run: |) so each command executes'
-        );
-      }
+    // Fail-closed structural guard: the substring assertions above and below
+    // are blind to YAML scalar folding (see findFoldedRunScalars).
+    for (const finding of findFoldedRunScalars(yaml)) {
+      failures.push(`${workflow.path}: ${finding}`);
     }
 
     if (key === 'ci') {

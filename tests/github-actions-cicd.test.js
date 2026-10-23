@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { assertGithubActionsContract, loadCicdContract, readWorkflow } from '../scripts/ci/assert-gha-contract.js';
+import { assertGithubActionsContract, findFoldedRunScalars, loadCicdContract, readWorkflow } from '../scripts/ci/assert-gha-contract.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -122,4 +122,28 @@ test('GHA-008: CI workflow includes seam-pack GameDay / ROI pack', () => {
   assert.match(yaml, /test:u2/);
   assert.match(yaml, /test:compute-worker/);
   assert.match(yaml, /test:c2/);
+});
+
+test('GHA-009: folded run-scalar detector is fail-closed and false-positive free', () => {
+  const step = (body) => ['      - name: Strict workspace verification', ...body].join('\n');
+
+  // P0 regression: the historical defect declared 28 suites on a folded plain
+  // scalar, so every command was concatenated onto the first command's argv.
+  const folded = step(['        run: node scripts/verify-eos.js --strict', '          npm run test:llm-provider-port']);
+  const findings = findFoldedRunScalars(folded);
+  assert.equal(findings.length, 1);
+  assert.match(findings[0], /use a block scalar/);
+
+  // The same defect under the equivalent list-item spelling must be caught too.
+  const listItem = ['      - run: node scripts/verify-eos.js --strict', '          npm run test:llm-provider-port'].join('\n');
+  assert.equal(findFoldedRunScalars(listItem).length, 1);
+
+  // Legitimate forms must not be reported: block scalars, comments, siblings.
+  assert.deepEqual(findFoldedRunScalars(step(['        run: |', '          npm test'])), []);
+  assert.deepEqual(findFoldedRunScalars(step(['        run: >', '          npm test'])), []);
+  assert.deepEqual(findFoldedRunScalars(step(['        run: node scripts/ci/assert-gha-contract.js', '          # note'])), []);
+  assert.deepEqual(findFoldedRunScalars(step(['        run: npm test', '      - name: Next'])), []);
+
+  // The shipped workflow must stay fold-free: re-folding it fails here first.
+  assert.deepEqual(findFoldedRunScalars(readWorkflow(rootDir, '.github/workflows/ci.yml')), []);
 });
