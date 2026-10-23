@@ -1,6 +1,6 @@
 # Spec — Ladder 42 Maturity Gap Audit
 
-**PRODUCTION_READY:** NO · **Ladder ceiling:** 41 CLOSED · **Next free ordinals:** SPEC-0176 / ADR-0160
+**PRODUCTION_READY:** NO · **Ladder ceiling:** 41 CLOSED · **Next free ordinals:** SPEC-0176 / ADR-0161
 
 ## Requirement: Axis selection is evidence-based
 
