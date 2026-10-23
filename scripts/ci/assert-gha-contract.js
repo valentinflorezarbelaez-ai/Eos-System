@@ -127,6 +127,24 @@ export function assertGithubActionsContract(rootDir) {
       failures.push(`${workflow.path} must assert Fundacion freeze`);
     }
 
+    // Fail-closed structural guard: substring assertions are blind to YAML
+    // scalar folding. A `run:` plain scalar folded over an indented
+    // continuation concatenates every declared command onto the first
+    // command's argv, so none of them execute while the step still "passes"
+    // the assertions above (failing only at runtime, e.g. `Invalid arguments`).
+    const lines = yaml.split(/\r?\n/);
+    for (let i = 0; i < lines.length; i += 1) {
+      const runScalar = /^(\s*)run:\s*([^\s|>].*)$/.exec(lines[i]);
+      if (!runScalar) continue;
+      const next = lines[i + 1] || '';
+      if (next.trim() && next.search(/\S/) > runScalar[1].length) {
+        failures.push(
+          `${workflow.path}: run scalar at line ${i + 1} is folded over an indented ` +
+            'continuation; use a block scalar (run: |) so each command executes'
+        );
+      }
+    }
+
     if (key === 'ci') {
       try {
         assertContains(yaml, 'scripts/verify-eos.js --strict', 'CI verify');
