@@ -7,11 +7,11 @@
 - [x] Measure family coverage across `src/core` (14 families)
 - [x] Draft ADR-0160 with axis selection + rejected alternatives
 - [x] Draft proposal / design / envelope
-- [ ] **PO ratification of ADR-0160** (axis A vs axis B vs both)
+- [x] **PO ratification of ADR-0160** → **Axis A** ratified 2026-10-22 (Axis B deferred, not rejected)
 
 ## Step 2: After ratification (NOT this change)
 
-- [ ] Mark ADR-0160 Accepted with ratification date
+- [x] Mark ADR-0160 Accepted with ratification date (by this PR)
 - [ ] Order L42 satellites and assign ordinals from SPEC-0176 / ADR-0161
 - [ ] Open L42 formally (tip-open) as a SEPARATE act
 - [ ] First satellite spec (docs-only) before any runtime

@@ -1,6 +1,6 @@
 # Proposal — Ladder 42 Maturity Gap Audit (axis selection, docs-only)
 
-**Status:** Proposed · pending PO ratification of ADR-0160.
+**Status:** Accepted · ADR-0160 ratified (Axis A, 2026-10-22). L42 is NOT opened — tip-open is a SEPARATE act.
 
 ## Why
 

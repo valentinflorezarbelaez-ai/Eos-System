@@ -1,6 +1,6 @@
 # ADR-0160 — Ladder 42 Maturity Gap Audit (Axis Selection)
 
-- **Status:** Proposed — pending Product Owner ratification
+- **Status:** Accepted — ratified by the Product Owner (2026-10-22, America/Bogota)
 - **Date:** 2026-10-22 (America/Bogota)
 - **Deciders:** Product Owner (ratification) · proposed by agent under Ley III evidence-first discipline
 - **Prior ADRs:** ADR-0159 (Mission FM / L41 closeout), ADR-0154 (Ladder 41 maturity gap audit)
@@ -39,9 +39,11 @@ Module mentions (`grep -ril <family> src/core --include='*.js'`):
 | `hitl-threshold` | **0** | **not covered** |
 | `chargeback` / `marginal-cost` | **0** | **not covered** |
 
-## Decision (proposed)
+## Decision (ratified — Axis A)
 
 Adopt **Axis A — Agent Lifecycle, Identity & Rehearsal Governance** as Ladder 42.
+
+**Ratified** by the Product Owner on 2026-10-22 (America/Bogota). Axis B remains **deferred** (successor candidate), not rejected. Ratification does **not** open L42 — the tip-open is a SEPARATE act, and no satellite ordinal is consumed by this ADR.
 
 Rationale: it is the only measured zero-coverage family that is a **precondition** for the others. Quota and evaluation governance (Axis B) require an identified, cryptographically attested subject to attribute consumption to. Building B first would produce quotas without a titled subject.
 
