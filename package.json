@@ -7,9 +7,9 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "test": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
-    "verify:strict": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
-    "sentinel": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/run-sentinel.ps1"
+    "test": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
+    "verify:strict": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
+    "sentinel": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/run-sentinel.ps1"
   },
   "keywords": [
     "eos",
