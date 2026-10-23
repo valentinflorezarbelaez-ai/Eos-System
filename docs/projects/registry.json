@@ -1,0 +1,33 @@
+{
+  "system": "EOS-System",
+  "version": "2.0.0",
+  "registeredAt": "2026-10-23T09:48:00-05:00",
+  "status": "REGISTERED",
+  "root": "C:\\Users\\valen\\Eos-System-1",
+  "modules": [
+    {
+      "id": "core-domain",
+      "layer": "Domain",
+      "purity": "100%",
+      "dependencies": []
+    },
+    {
+      "id": "core-application",
+      "layer": "Application",
+      "purity": "High",
+      "dependencies": ["core-domain"]
+    },
+    {
+      "id": "infrastructure-adapters",
+      "layer": "Infrastructure",
+      "purity": "Adapter-Isolated",
+      "dependencies": ["core-domain", "core-application"]
+    },
+    {
+      "id": "sentinel-fdir",
+      "layer": "Monitoring & Recovery",
+      "purity": "High",
+      "dependencies": ["core-domain", "infrastructure-adapters"]
+    }
+  ]
+}

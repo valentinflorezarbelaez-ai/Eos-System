@@ -1,0 +1,27 @@
+{
+  "name": "eos-system",
+  "version": "2.0.0",
+  "description": "EOS Core System 2.0 - Clean Hexagonal Architecture with Dual-Track Execution Engine and Verifiable Evidence Ledger",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
+    "verify:strict": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
+    "sentinel": "pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/run-sentinel.ps1"
+  },
+  "keywords": [
+    "eos",
+    "hexagonal-architecture",
+    "zero-vibe-coding",
+    "spec-driven-development",
+    "epistemic-taxonomy",
+    "fdir"
+  ],
+  "author": "Valentin Florez & EOS Autonomous Architecture",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}
