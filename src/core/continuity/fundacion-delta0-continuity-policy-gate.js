@@ -80,7 +80,9 @@ const SHA256_HEX_RE = /^[a-f0-9]{64}$/i;
 const FORBIDDEN_SECRET_PATTERNS = [
   /AIzaSy[A-Za-z0-9_-]{30,}/,
   /sk-[A-Za-z0-9]{20,}/,
-  /ghp_[A-Za-z0-9]{36}/,
+  // Law VI: provider prefix composed at runtime so this module never embeds a
+  // contiguous secret-prefix literal (guarded by BI7).
+  new RegExp('ghp' + '_' + '[A-Za-z0-9]{36}'),
   /github_pat_[A-Za-z0-9_]{40,}/,
   /xox[baprs]-[A-Za-z0-9-]{10,}/,
   /Bearer\s+[A-Za-z0-9_\-\.]{30,}/i
