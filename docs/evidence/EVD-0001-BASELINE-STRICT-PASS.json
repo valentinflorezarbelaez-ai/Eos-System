@@ -1,9 +1,9 @@
 ﻿{
     "evidenceId":  "EVD-0001-BASELINE-STRICT-PASS",
-    "timestamp":  "2026-10-23T18:18:06Z",
+    "timestamp":  "2026-10-23T18:18:31Z",
     "epistemicState":  "VERIFIED",
     "exitCode":  0,
-    "executionDuration":  "601ms",
+    "executionDuration":  "758ms",
     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "testsSummary":  {
                          "totalTests":  46,
