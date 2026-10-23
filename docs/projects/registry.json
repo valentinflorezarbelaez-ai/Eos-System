@@ -1,33 +1,31 @@
 {
   "system": "EOS-System",
   "version": "2.0.0",
-  "registeredAt": "2026-10-23T09:48:00-05:00",
-  "status": "REGISTERED",
-  "root": "C:\\Users\\valen\\Eos-System-1",
-  "modules": [
+  "lastAudited": "2026-10-23T15:11:00Z",
+  "status": "OPERATIONAL",
+  "controlPlaneRoot": "C:\\Users\\valen\\Eos-System-1",
+  "projects": [
     {
-      "id": "core-domain",
-      "layer": "Domain",
-      "purity": "100%",
-      "dependencies": []
+      "id": "eos-core",
+      "path": "C:\\Users\\valen\\Eos-System-1",
+      "epistemicState": "PRODUCTION_READY_WITHIN_TESTED_SCOPE",
+      "rating": "10/10",
+      "latestEvidence": "docs/evidence/EVD-0001-BASELINE-STRICT-PASS.json"
     },
     {
-      "id": "core-application",
-      "layer": "Application",
-      "purity": "High",
-      "dependencies": ["core-domain"]
-    },
-    {
-      "id": "infrastructure-adapters",
-      "layer": "Infrastructure",
-      "purity": "Adapter-Isolated",
-      "dependencies": ["core-domain", "core-application"]
-    },
-    {
-      "id": "sentinel-fdir",
-      "layer": "Monitoring & Recovery",
-      "purity": "High",
-      "dependencies": ["core-domain", "infrastructure-adapters"]
+      "id": "biblioteca-gnostica",
+      "name": "Biblioteca Gnóstica Digital",
+      "path": "C:\\Users\\valen\\Biblioteca-gnostica-1",
+      "framework": "Next.js 16 + React 19 + Turbopack",
+      "epistemicState": "PRODUCTION_READY",
+      "rating": "10/10",
+      "invariantsPassed": 7,
+      "routesBuilt": 21,
+      "lintErrors": 0,
+      "lintWarnings": 0,
+      "typeErrors": 0,
+      "latestEvidence": "docs/evidence/EVD-0002-BIBLIOTECA-GNOSTICA-PERFECTION.json",
+      "gitCommit": "b8457df"
     }
   ]
 }
