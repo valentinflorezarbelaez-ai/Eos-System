@@ -1,8 +1,8 @@
 {
   "manifestVersion": "1.0.0",
   "keyId": "eos-root-ed25519-key-01",
-  "signedCommit": "a2c0f90e53e263875097f8961f2fba97d2152545",
-  "timestamp": "2026-10-24T02:17:11.602Z",
+  "signedCommit": "89c0c79a8fae3be143850ecb261ef4943e70828d",
+  "timestamp": "2026-10-24T02:25:29.848Z",
   "files": [
     {
       "relativePath": ".cursor/mcp.json",
@@ -66,7 +66,7 @@
     },
     {
       "relativePath": "docs/projects/registry.json",
-      "sha256": "3DD1F15084C837E8343E4F288943849F802CB88215977793D9C3CAE32A94B6EC",
+      "sha256": "D0DE77E9CE5D4ED59E3530B7834EA01862D067B22D94287BA910E58D7BF9D08F",
       "sizeBytes": 3217
     },
     {
@@ -210,5 +210,5 @@
       "sizeBytes": 864
     }
   ],
-  "signatureHex": "a7ce08162e92bfa4969ed288ee0e79ecd8c1cd4a9f7235f8b7abb4c8acee805a1e9e7cdd332218d77064022fffa803792dff960643ae85c631ebe671a9145e02"
+  "signatureHex": "c4592829819ba4dff41313888b4bfb4aeb6bd0dce9f7cdd4cb23163f4c3a74cf9304ab59377c0fb21402aa7ec8d868aa73b43dc6b57f77b6dddb0a7c01e54d01"
 }
