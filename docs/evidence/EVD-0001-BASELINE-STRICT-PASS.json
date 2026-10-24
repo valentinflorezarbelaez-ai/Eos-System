@@ -1,9 +1,9 @@
 ﻿{
     "evidenceId":  "EVD-0001-BASELINE-STRICT-PASS",
-    "timestamp":  "2026-10-24T02:07:05Z",
+    "timestamp":  "2026-10-24T02:17:18Z",
     "epistemicState":  "VERIFIED",
     "exitCode":  0,
-    "executionDuration":  "1072ms",
+    "executionDuration":  "658ms",
     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "testsSummary":  {
                          "totalTests":  47,
@@ -76,7 +76,7 @@
                       },
                       {
                           "relativePath":  ".eos/trust/baseline.signed.json",
-                          "sha256":  "25F306F2B0C2206FF6D272C3CC3BDFB505B40BCE0CC75F332FF288C0E47CB97C",
+                          "sha256":  "27DDBFB4732DD66892DE7B2E6BE3A1813A81EC57AACF10A64C121CA5D1E72D4A",
                           "sizeBytes":  7639
                       },
                       {
@@ -111,7 +111,7 @@
                       },
                       {
                           "relativePath":  "docs/projects/registry.json",
-                          "sha256":  "89A0E50605B2E3358AC8D4FE32777DF1905C8E0B39A75D90B2FF5316CC8ED50F",
+                          "sha256":  "3DD1F15084C837E8343E4F288943849F802CB88215977793D9C3CAE32A94B6EC",
                           "sizeBytes":  3217
                       },
                       {
