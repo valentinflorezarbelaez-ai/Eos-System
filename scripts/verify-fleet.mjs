@@ -8,12 +8,19 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as https from 'node:https';
 import { execSync } from 'node:child_process';
+import * as dns from 'node:dns';
+
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const workspaceRoot = path.resolve(__dirname, '..');
 const registryPath = path.join(workspaceRoot, 'docs', 'projects', 'registry.json');
+
+try {
+  dns.setDefaultResultOrder('ipv4first');
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch {}
 
 console.log('\n================================================================');
 console.log('       EOS SOVEREIGN FLEET MISSION CONTROL & HEALTH HUD         ');
@@ -33,27 +40,32 @@ console.log(`>>> Registered Projects in Fleet: ${projects.length}\n`);
 async function checkUrlHealth(url) {
   if (!url) return { status: 'LOCAL_ONLY', latencyMs: 0, ok: true };
   const start = Date.now();
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 6000);
-    const res = await fetch(url, {
-      headers: { 'User-Agent': 'EOS-Fleet-Guardian/2.1' },
-      signal: controller.signal
-    });
-    clearTimeout(timeout);
-    const latencyMs = Date.now() - start;
-    const isOk = res.status >= 200 && res.status < 400;
-    return {
-      status: isOk ? `ONLINE (${res.status})` : `HTTP_${res.status}`,
-      latencyMs,
-      ok: isOk
-    };
-  } catch (err) {
-    return {
-      status: `ERROR: ${err.message.substring(0, 16)}`,
-      latencyMs: Date.now() - start,
-      ok: false
-    };
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 7000);
+      const res = await fetch(url, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) EOS-Fleet/2.1' },
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+      const latencyMs = Date.now() - start;
+      const isOk = res.status >= 200 && res.status < 400;
+      return {
+        status: isOk ? `ONLINE (${res.status})` : `HTTP_${res.status}`,
+        latencyMs,
+        ok: isOk
+      };
+    } catch (err) {
+      if (attempt === 1) {
+        return {
+          status: `ERROR: ${err.message.substring(0, 16)}`,
+          latencyMs: Date.now() - start,
+          ok: false
+        };
+      }
+      await new Promise(r => setTimeout(r, 400));
+    }
   }
 }
 
