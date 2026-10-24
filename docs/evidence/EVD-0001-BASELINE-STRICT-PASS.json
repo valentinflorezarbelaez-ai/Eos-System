@@ -1,9 +1,9 @@
 ﻿{
     "evidenceId":  "EVD-0001-BASELINE-STRICT-PASS",
-    "timestamp":  "2026-10-24T00:44:47Z",
+    "timestamp":  "2026-10-24T01:00:47Z",
     "epistemicState":  "VERIFIED",
     "exitCode":  0,
-    "executionDuration":  "591ms",
+    "executionDuration":  "1516ms",
     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "testsSummary":  {
                          "totalTests":  47,
@@ -36,8 +36,8 @@
                       },
                       {
                           "relativePath":  "package.json",
-                          "sha256":  "D485AF3A33FA20600173F52CF8BD501811E679FC798B3C15D9F3AA546AC39521",
-                          "sizeBytes":  890
+                          "sha256":  "B5E4C1FBDFA2D37036224E33A68857935B02BD0524E3EF285B5AD803E41AED30",
+                          "sizeBytes":  1060
                       },
                       {
                           "relativePath":  "README.md",
@@ -76,8 +76,8 @@
                       },
                       {
                           "relativePath":  ".eos/trust/baseline.signed.json",
-                          "sha256":  "37B6181665E548609FD6FFB540C3166AF1D02CE5E848B1CF4360951236128A3F",
-                          "sizeBytes":  7467
+                          "sha256":  "40B13DE848CA0403BC9377209870E716F720B08EB11B422E24F46AFA10F18110",
+                          "sizeBytes":  7639
                       },
                       {
                           "relativePath":  ".eos/trust/root_privkey.pem",
@@ -143,6 +143,11 @@
                           "relativePath":  "scripts/verify-attestation.mjs",
                           "sha256":  "7286A2C2613471B40C582346E1F4635B2734F9D9BD9F20F0BF22911BC2F5D1C4",
                           "sizeBytes":  3722
+                      },
+                      {
+                          "relativePath":  "scripts/verify-fleet.mjs",
+                          "sha256":  "AA43A0AD8C14D61BED9B096A9EF12E277BD400596AD25F1F8FD2F78D45A353AF",
+                          "sizeBytes":  4484
                       },
                       {
                           "relativePath":  "scripts/verify-strict.ps1",

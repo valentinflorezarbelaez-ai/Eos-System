@@ -10,7 +10,8 @@
     "test": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "verify:strict": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "verify:attestation": "node ./scripts/verify-attestation.mjs",
-    "fleet:health": "node ./scripts/check-fleet-health.mjs",
+    "fleet": "node ./scripts/verify-fleet.mjs",
+    "fleet:verify": "node ./scripts/verify-fleet.mjs",
     "sentinel": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/run-sentinel.ps1"
   },
   "keywords": [

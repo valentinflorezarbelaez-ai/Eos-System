@@ -1,8 +1,8 @@
 {
   "manifestVersion": "1.0.0",
   "keyId": "eos-root-ed25519-key-01",
-  "signedCommit": "a27c3bd876420d7d3035d77ec9f25562ff7f8259",
-  "timestamp": "2026-10-24T00:48:39.518Z",
+  "signedCommit": "f5068acc3a09d4c84f21fe6a01d4e09f82457712",
+  "timestamp": "2026-10-24T01:00:37.439Z",
   "files": [
     {
       "relativePath": ".cursor/mcp.json",
@@ -96,18 +96,13 @@
     },
     {
       "relativePath": "package.json",
-      "sha256": "9B4D27FE204B1FA1317F69145D3B27EC080AA7BB88ED66B1101CDC2E9835E203",
-      "sizeBytes": 1018
+      "sha256": "B5E4C1FBDFA2D37036224E33A68857935B02BD0524E3EF285B5AD803E41AED30",
+      "sizeBytes": 1060
     },
     {
       "relativePath": "README.md",
       "sha256": "EB13CDCD5021F0A91939F3514EEC6237307EE9D02FA633E4ECDBA68FDB052A6A",
       "sizeBytes": 3615
-    },
-    {
-      "relativePath": "scripts/check-fleet-health.mjs",
-      "sha256": "41A36C5D93AF7450D4A309F319D2EB3D8FED0042CEF5D1EC57659427EC218EB9",
-      "sizeBytes": 4866
     },
     {
       "relativePath": "scripts/run-sentinel.ps1",
@@ -118,6 +113,11 @@
       "relativePath": "scripts/verify-attestation.mjs",
       "sha256": "7286A2C2613471B40C582346E1F4635B2734F9D9BD9F20F0BF22911BC2F5D1C4",
       "sizeBytes": 3722
+    },
+    {
+      "relativePath": "scripts/verify-fleet.mjs",
+      "sha256": "AA43A0AD8C14D61BED9B096A9EF12E277BD400596AD25F1F8FD2F78D45A353AF",
+      "sizeBytes": 4484
     },
     {
       "relativePath": "scripts/verify-strict.ps1",
@@ -210,5 +210,5 @@
       "sizeBytes": 864
     }
   ],
-  "signatureHex": "19ed8cd0b8ce45d64958a9c1254f479c72cb5d3b6fd807f772b62bed7c4441af4d89777968e74d626bc08e7eb224843540819295652f0a17b743d5bf0a1d6f0a"
+  "signatureHex": "43f26a7f38a7929c505ca9b2b5ed8ebd35fc36d03ab80ff324dda51ff885e76b5c5e4d8a97176dc1db013b23c41786d711c2741c40d41e36908dda58d3402503"
 }
