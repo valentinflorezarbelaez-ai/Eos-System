@@ -1,0 +1,23 @@
+---
+description: Gentle AI Stack, Engram Persistent Memory & Tooling
+globs: *
+alwaysApply: true
+---
+
+# GENTLE AI STACK & PERSISTENT MEMORY PROTOCOL
+
+When executing with MCP tools in Cursor:
+
+1. **Memory Continuity**:
+   - At the beginning of architectural sessions or when resuming context, call `mem_current_project` and `mem_context` to read past decisions and system constraints.
+2. **Proactive Memory Capture (`mem_save`)**:
+   - Save immediately (do not wait for prompt instructions) whenever:
+     - An architectural decision is finalized or an alternative is rejected.
+     - A bug or failure root cause is discovered and repaired.
+     - A project convention or invariant is established.
+3. **Task Closeout (`mem_session_summary`)**:
+   - Call `mem_session_summary` before ending major feature iterations.
+4. **Live Documentation Grounding (`context7`)**:
+   - Before writing or refactoring modern frameworks (Next.js 16, React 19, Tailwind, etc.), query `context7` to ensure zero hallucinated or deprecated APIs.
+5. **Complex Plan DAGs (`sequential-thinking`)**:
+   - Use `sequential-thinking` to validate topological dependencies before writing complex multi-module code.

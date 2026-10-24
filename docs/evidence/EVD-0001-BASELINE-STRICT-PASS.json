@@ -1,19 +1,24 @@
 ﻿{
     "evidenceId":  "EVD-0001-BASELINE-STRICT-PASS",
-    "timestamp":  "2026-10-23T18:18:31Z",
+    "timestamp":  "2026-10-24T00:44:47Z",
     "epistemicState":  "VERIFIED",
     "exitCode":  0,
-    "executionDuration":  "758ms",
+    "executionDuration":  "591ms",
     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "testsSummary":  {
-                         "totalTests":  46,
-                         "passed":  46,
+                         "totalTests":  47,
+                         "passed":  47,
                          "failed":  0,
                          "findings":  [
 
                                       ]
                      },
     "checksums":  [
+                      {
+                          "relativePath":  ".cursorrules",
+                          "sha256":  "666F619D32CF3426784FC04F81C1ACA958A80A396DFD4ACCE3E89808C6B4C0BB",
+                          "sizeBytes":  7663
+                      },
                       {
                           "relativePath":  ".gitignore",
                           "sha256":  "0C9FB612176D70BB4B12C838CE9ADE219CCB1513EB3AF0CD48B91A1D889EF258",
@@ -26,8 +31,8 @@
                       },
                       {
                           "relativePath":  "IMPLEMENTATION_AUTHORIZATION.md",
-                          "sha256":  "403BEE7179B47D1C9FCBF57796DC5E248EAD2484EC768741D376595733577D2A",
-                          "sizeBytes":  1806
+                          "sha256":  "B4228F30FB544ADF3324E261F64A6E7FE340DD439C784CB068093E20149D649B",
+                          "sizeBytes":  1842
                       },
                       {
                           "relativePath":  "package.json",
@@ -45,9 +50,54 @@
                           "sizeBytes":  864
                       },
                       {
+                          "relativePath":  ".cursor/mcp.json",
+                          "sha256":  "5D011153054C10D09AD2A3BF16A89092F750FE254EB6C5176A5E8CF34A2EA518",
+                          "sizeBytes":  376
+                      },
+                      {
+                          "relativePath":  ".cursor/rules/eos-constitution.mdc",
+                          "sha256":  "231C314E98E8AB2CF1697565A7B2635F06FE201042FB3E5F2FD5626F5BFF7EC4",
+                          "sizeBytes":  1016
+                      },
+                      {
+                          "relativePath":  ".cursor/rules/gentle-ai-engram.mdc",
+                          "sha256":  "7C6F271A3A973F980C283F162546637223D8CE0B7936CFE260934AFCD1429772",
+                          "sizeBytes":  1182
+                      },
+                      {
+                          "relativePath":  ".eos/admin/sign-baseline.mjs",
+                          "sha256":  "5E97BBD8D61BB8AED76A7C6D31747EB8BBD5A809DFB4F17375F7DF29F03E450A",
+                          "sizeBytes":  4942
+                      },
+                      {
+                          "relativePath":  ".eos/admin/sign-baseline.ps1",
+                          "sha256":  "BDE03AFDA42547916AE2CC0F4AF5C880B373F0C0D0BD23A7F4EDD08DF51ABEA1",
+                          "sizeBytes":  4233
+                      },
+                      {
+                          "relativePath":  ".eos/trust/baseline.signed.json",
+                          "sha256":  "37B6181665E548609FD6FFB540C3166AF1D02CE5E848B1CF4360951236128A3F",
+                          "sizeBytes":  7467
+                      },
+                      {
+                          "relativePath":  ".eos/trust/root_privkey.pem",
+                          "sha256":  "C70FC37AA2DF1822677A0450A88252F2C42860BF31C39C0A0AAD9C3694446A85",
+                          "sizeBytes":  119
+                      },
+                      {
+                          "relativePath":  ".eos/trust/root_pubkey.pem",
+                          "sha256":  "70C95E424C2CB2F222BC5BC7977028D51D5D1B77A866EE93B35DC8A2C91C7862",
+                          "sizeBytes":  113
+                      },
+                      {
                           "relativePath":  "docs/intake/INTAKE-001-EOS-V2-EVOLUTION.md",
                           "sha256":  "E473C3E85C3E844A8A189C4DAF3F885BFCADF5A213F074109679ECF86625C19A",
                           "sizeBytes":  1866
+                      },
+                      {
+                          "relativePath":  "docs/intake/INTAKE-002-EVIDENCE-TRUST-ADVERSARIAL.md",
+                          "sha256":  "6771F71169594045421CD31C3544A0375617D1AB12F675F7F3F87F0D4CAD9584",
+                          "sizeBytes":  4492
                       },
                       {
                           "relativePath":  "docs/plans/PLAN-001-EOS-HEXAGONAL-ARCHITECTURE.md",
@@ -55,9 +105,14 @@
                           "sizeBytes":  4100
                       },
                       {
+                          "relativePath":  "docs/plans/PLAN-002-ATTESTATION-CONTAINER.md",
+                          "sha256":  "45B863EF2D89906CF3227AC0A0EDAC51351774CCC73B5C255BC93E2A0B2BD9F9",
+                          "sizeBytes":  6609
+                      },
+                      {
                           "relativePath":  "docs/projects/registry.json",
-                          "sha256":  "CC7FF3E39324D94A3B2E9BA5B9537F43B20FC0CA4AE5613DD4EFEF3E16BFE777",
-                          "sizeBytes":  960
+                          "sha256":  "C3471FFAEB2DA53AA4651DC8E1A96653DC8C07FC381343BC468E0A6D8E1D8CB8",
+                          "sizeBytes":  3111
                       },
                       {
                           "relativePath":  "docs/specs/SPEC-001-EOS-CORE.md",
@@ -65,14 +120,29 @@
                           "sizeBytes":  2995
                       },
                       {
+                          "relativePath":  "docs/specs/SPEC-002-EVIDENCE-ATTESTATION.md",
+                          "sha256":  "84B449CEEDD0B7471B353131BA0F2CFEC3E0EE213BE5FEF8FA2AFAA5E4E7EC53",
+                          "sizeBytes":  8586
+                      },
+                      {
                           "relativePath":  "docs/tasks/TASKS-001-DAG.md",
                           "sha256":  "C13B3BC3C3220D2707DBE3A66FA0C9F3DD3472AEDE7B9E228C9ADDFA1888CE39",
                           "sizeBytes":  2275
                       },
                       {
+                          "relativePath":  "docs/tasks/TASKS-002-DAG.md",
+                          "sha256":  "CCF6DB613B767CEB275ACB9CD4F2ECDCB26156B72D1566758F5A396A8AB9DF87",
+                          "sizeBytes":  2356
+                      },
+                      {
                           "relativePath":  "scripts/run-sentinel.ps1",
                           "sha256":  "5CD1F6FA71642E92BC8A0D1BA36AD73B118CACFF43569FFAAF8E747009537A2A",
                           "sizeBytes":  2410
+                      },
+                      {
+                          "relativePath":  "scripts/verify-attestation.mjs",
+                          "sha256":  "7286A2C2613471B40C582346E1F4635B2734F9D9BD9F20F0BF22911BC2F5D1C4",
+                          "sizeBytes":  3722
                       },
                       {
                           "relativePath":  "scripts/verify-strict.ps1",
@@ -81,8 +151,13 @@
                       },
                       {
                           "relativePath":  "src/index.ts",
-                          "sha256":  "1F8AAC312C8430EEA8224D3B41EDAC56808C12B0F4F91AD0580B9516EC012A31",
-                          "sizeBytes":  819
+                          "sha256":  "1AEC5E5C5DD9B665A22B104FC731CE4F75880B6A1D058FD95818780B782EFE7D",
+                          "sizeBytes":  1005
+                      },
+                      {
+                          "relativePath":  "src/core/application/AttestationVerifierService.ts",
+                          "sha256":  "7FF68BADE1A279607E3D2FEFA7145A31912FE8807654C19AE18D72B6735BC53D",
+                          "sizeBytes":  3810
                       },
                       {
                           "relativePath":  "src/core/application/DualTrackOrchestrator.ts",
@@ -98,6 +173,11 @@
                           "relativePath":  "src/core/domain/types.ts",
                           "sha256":  "F8D86B6841B5FF7C07125055C2E66397B9761751B7A1491A6EDEEAB3D6EA5792",
                           "sizeBytes":  888
+                      },
+                      {
+                          "relativePath":  "src/core/domain/models/AttestationRecord.ts",
+                          "sha256":  "A05840E3836DBE3E1E4E5EF98512E6A3AC399461643D49BE89F1ED0D38D98BFB",
+                          "sizeBytes":  3679
                       },
                       {
                           "relativePath":  "src/core/domain/models/EARSValidator.ts",
@@ -123,6 +203,11 @@
                           "relativePath":  "src/core/domain/models/TaskNode.ts",
                           "sha256":  "717977DDE526373EAAF24E31C5B9AC9F0B1ADAE28F02AD001C6E7DBA661B15A1",
                           "sizeBytes":  2096
+                      },
+                      {
+                          "relativePath":  "src/infrastructure/AsymmetricCryptoService.ts",
+                          "sha256":  "5E26EE171D6BB77894764CC40A2A58F73F6861DAECB41AF99B23226FA6555DB3",
+                          "sizeBytes":  2028
                       },
                       {
                           "relativePath":  "src/infrastructure/CryptoService.ts",

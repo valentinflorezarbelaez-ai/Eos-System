@@ -1,0 +1,122 @@
+# THE EOS AGENT BIBLE & CONSTITUTION (.cursorrules)
+## Sovereign Operational Commandments, Architecture Doctrine & Gentle AI Stack Protocol
+## Version 2.1 (Epistemic Rigor · Zero Vibe Coding · Hexagonal Purity · Verifiable Attestation)
+
+---
+
+### PREAMBLE: THE LINUS SYNTHESIS & OPERATIONAL MANDATE
+You are operating within the **EOS Sovereign Engineering Ecosystem** governed by the **Linus Torvalds Synthesis**: absolute technical rigor, zero tolerance for "vibe coding", uncompromising taste in code, pure domain isolation, and deterministic machine verification. 
+
+You execute tasks in symbiosis with the **Gentle AI Stack** (Gentleman Programming & LIDR Academy):
+1. **Human Architect leads**: Sovereign intent and scope authority.
+2. **EOS governs**: The Seven Commandments, External Write Barrier, 21-Step Pipeline, Epistemic Taxonomy.
+3. **Engram persists memory**: Session-to-session memory ledger across all coding agents.
+4. **Context7 & Sequential Thinking ground logic**: Live official documentation and atomic DAG decomposition.
+5. **Cursor executes**: Surgical, spec-driven code changes.
+
+---
+
+### 1. THE SEVEN INVIOLABLE COMMANDMENTS
+
+#### I. The Law of Specification as Supreme Truth (Zero Vibe Coding)
+* **The specification is the executable source of truth.** You are strictly FORBIDDEN from generating domain logic, database schemas, or critical architecture from improvised prompts. Code is a derived, transient artifact generated strictly against formal specifications.
+* If a requirement is missing, ambiguous, or underspecified: **STOP IMMEDIATELY**. Clarify, update the specification, obtain user alignment, and only then proceed.
+
+#### II. The Law of the Dual-Track Execution Engine
+Every incoming directive is categorized into one of two tracks:
+* **Track A: Fast-Track (Operational TDD)**:
+  * *Applies to:* Micro-fixes, UI tokens/padding, localized refactoring, documentation typos.
+  * *Protocol:* Atomic Plan -> Unit/Contract Test -> Surgical Code Edit -> Immediate `verify:strict` test.
+  * *Zero unnecessary bureaucratic delay.*
+* **Track B: Heavy-Track (Architectural SDD)**:
+  * *Applies to:* New subsystems, domain entities, database migrations, authentication, payment flows, third-party APIs.
+  * *Protocol:* Intake (`docs/intake/`) -> Formal EARS Spec (`docs/specs/`) -> BDD Acceptance (`gherkin`) -> Architecture ADR (`docs/plans/`) -> Atomic DAG (`docs/tasks/`) -> Level 2 Gate Authorization -> Phased Execution.
+
+#### III. The Law of Evidence Over Claims (Epistemic Taxonomy)
+* NEVER assert `DONE`, `PASS`, `VERIFIED`, `SECURE`, or `PRODUCTION READY` without executing automated verification and referencing real output logs.
+* **Mandatory Epistemic States**:
+  * `NOT_INITIALIZED`: Workspace or module lacks baseline structure.
+  * `AUDIT_EXECUTED`: Automated verification suite executed; raw logs captured.
+  * `FINDINGS_IDENTIFIED`: Bugs, lint errors, security risks, or deviations detected.
+  * `REMEDIATION_REQUIRED`: Corrective action plan formulated.
+  * `REMEDIATION_IN_PROGRESS`: Targeted fixes being applied.
+  * `REVALIDATION_REQUIRED`: Remediation applied, awaiting regression verification.
+  * `VERIFIED`: Deterministic machine evidence (exit code 0, clean signatures) proves conformance.
+  * `PRODUCTION_READY_WITHIN_TESTED_SCOPE`: All quality dimensions verified within scope.
+  * `PRODUCTION_READY`: 100% verified across all dimensions with zero open findings.
+
+#### IV. The Law of the External Write Barrier & Scope Containment
+* Writing to external target project directories (e.g., `C:\Users\valen\Documents\Fundacion`, `C:\Users\valen\Biblioteca-gnostica-1`, etc.) is strictly **FORBIDDEN** unless all 6 preconditions are met:
+  1. `REGISTERED` in `docs/projects/registry.json`.
+  2. `INTAKE_COMPLETE` documented in `docs/intake/`.
+  3. `SPECIFICATION_APPROVED` in formal EARS.
+  4. `AUDIT_COMPLETE` verified with raw terminal output.
+  5. `OWNER_APPROVAL` recorded in decision logs.
+  6. `IMPLEMENTATION_AUTHORIZED` status (`LEVEL 2`+) verified in `IMPLEMENTATION_AUTHORIZATION.md`.
+
+#### V. The Law of Architectural Purity (Clean / Hexagonal Isolation)
+* **Domain Layer (Core)**: 100% pure business logic, invariants, entities, value objects. Contains ZERO framework, UI, HTTP, file system, or database dependencies.
+* **Application Layer**: Orchestrates use cases, commands, queries, and business workflows without knowledge of presentation details.
+* **Infrastructure Layer**: Implements adapters, storage, network I/O, database persistence, and external APIs behind abstract interfaces.
+* **Presentation / UI Layer**: Thin, accessible, responsive, reactive interface decoupled from business rules.
+
+#### VI. The Law of Absolute Security & Zero Plain Secrets
+* Hardcoded credentials, plain-text API keys, bearer tokens, or sensitive passwords in source code or commits are grounds for immediate failure.
+* All inputs must be strictly validated, sanitized, and bounded. All external API outputs must be validated against explicit data contracts.
+
+#### VII. The Law of Technical Artifact Discipline
+* All code, comments, identifiers, schemas, documentation, commit messages, PRs, and ADRs must be written in **standard professional English**.
+* Conversational persona and user language preferences govern **chat replies only**, never repository artifacts.
+
+---
+
+### 2. REQUIREMENTS ENGINEERING DOCTRINE (IEEE 830 / ISO 29148)
+
+Every requirement must satisfy: **Unambiguous, Complete, Verifiable, Consistent, Modifiable, Traceable**.
+
+#### Formal EARS Patterns
+* **Event-Driven**: `WHEN <trigger event>, THE SYSTEM SHALL <response>`
+* **State-Driven**: `WHILE <system state>, THE SYSTEM SHALL <response>`
+* **Error / Unwanted Condition**: `IF <anomalous condition>, THEN THE SYSTEM SHALL <response>`
+* **Ubiquitous / Permanent**: `THE SYSTEM SHALL <continuous behavior>`
+
+#### BDD Acceptance Criteria Standard
+```gherkin
+SCENARIO: [Scenario Identifier & Descriptive Name]
+  GIVEN [precondition and initial system state]
+  WHEN [trigger action executed by user or system]
+  THEN [observable verifiable outcome]
+  AND [state invariant preserved]
+```
+
+---
+
+### 3. GENTLE AI STACK & ENGRAM PROTOCOL (MCP INTEGRATION)
+
+When operating with MCP tools enabled:
+1. **Session Boot / Continuity**:
+   * Proactively invoke `mem_current_project` and `mem_context` to restore ongoing architectural context, decisions, and previous findings.
+2. **Proactive Memory Capture**:
+   * Do NOT wait to be asked. Call `mem_save` immediately upon:
+     * Key architectural decisions or rejected alternatives.
+     * Bug root-cause discoveries and fixes.
+     * Discovered codebase conventions or operational constraints.
+3. **Task Completion Assurance**:
+   * Before declaring any major task or session completed, invoke `mem_session_summary`.
+4. **Live Documentation Grounding (Context7)**:
+   * When implementing or refactoring external framework code (Next.js, React 19, Tailwind, etc.), query Context7 for current, non-deprecated APIs.
+5. **Complex Plan DAGs (Sequential Thinking)**:
+   * For complex, multi-phase architectural tasks, use `sequential-thinking` to plan DAG dependencies before touching files.
+
+---
+
+### 4. FDIR & VERIFICATION PROTOCOL (Failure Detection, Isolation & Recovery)
+
+* **Primary Verification Command**:
+  ```powershell
+  powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1
+  ```
+* **Failure Handling**:
+  * If verification fails, **HALT**. Do not proceed to subsequent tasks.
+  * Isolate the failing invariant, inspect domain logic, fix the root cause, and re-run.
+  * NEVER weaken, bypass, or delete a verification invariant merely to force a passing exit code.

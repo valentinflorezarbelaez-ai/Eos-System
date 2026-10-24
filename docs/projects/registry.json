@@ -1,12 +1,13 @@
 {
   "system": "EOS-System",
-  "version": "2.0.0",
-  "lastAudited": "2026-10-23T15:11:00Z",
+  "version": "2.1.0",
+  "lastAudited": "2026-10-23T19:15:00Z",
   "status": "OPERATIONAL",
   "controlPlaneRoot": "C:\\Users\\valen\\Eos-System-1",
   "projects": [
     {
       "id": "eos-core",
+      "name": "EOS Core System 2.1 (Control Plane)",
       "path": "C:\\Users\\valen\\Eos-System-1",
       "epistemicState": "PRODUCTION_READY_WITHIN_TESTED_SCOPE",
       "rating": "10/10",
@@ -16,6 +17,7 @@
       "id": "biblioteca-gnostica",
       "name": "Biblioteca Gnóstica Digital",
       "path": "C:\\Users\\valen\\Biblioteca-gnostica-1",
+      "url": "https://biblioteca-gnostica.vercel.app/",
       "framework": "Next.js 16 + React 19 + Turbopack",
       "epistemicState": "PRODUCTION_READY",
       "rating": "10/10",
@@ -26,6 +28,59 @@
       "typeErrors": 0,
       "latestEvidence": "docs/evidence/EVD-0002-BIBLIOTECA-GNOSTICA-PERFECTION.json",
       "gitCommit": "b8457df"
+    },
+    {
+      "id": "aberamentho-music",
+      "name": "Aberamentho / Pleroma Music",
+      "path": "C:\\Users\\valen\\Aberamentho-s-Pleroma-music",
+      "url": "https://aberamentosprelomamusic.vercel.app/",
+      "description": "GOD DJ Iniciático & Catedral Cósmica de Música Armónica",
+      "epistemicState": "AUDIT_REQUIRED",
+      "rating": "PENDING_AUDIT"
+    },
+    {
+      "id": "atp-strength",
+      "name": "ATP Strength",
+      "path": "C:\\Users\\valen\\ATP-STRENGTH-1",
+      "url": "https://atp-strength.vercel.app/",
+      "description": "Multi-Athlete Strength Training Engine",
+      "epistemicState": "AUDIT_REQUIRED",
+      "rating": "PENDING_AUDIT"
+    },
+    {
+      "id": "ptg-talent-group",
+      "name": "Performance Talent Group (PTG)",
+      "path": "C:\\Users\\valen\\Performance-Talent-Group-1",
+      "url": "https://ptg-performance-talent-group.vercel.app/",
+      "description": "Luxury Elite Talent & Football Dossier Portal",
+      "epistemicState": "AUDIT_REQUIRED",
+      "rating": "PENDING_AUDIT"
+    },
+    {
+      "id": "portafolio-valentin",
+      "name": "Portafolio Personal Valentín",
+      "path": "C:\\Users\\valen\\portafolio",
+      "url": "https://portafolio-valentin.vercel.app/",
+      "description": "Personal Engineering & Creator Portfolio",
+      "epistemicState": "AUDIT_REQUIRED",
+      "rating": "PENDING_AUDIT"
+    },
+    {
+      "id": "kegel-ham-sah",
+      "name": "Kegel Ham Sah",
+      "path": "C:\\Users\\valen\\Kegel-Ham-Sah-trasnmutacion-y-fortalecimiento-pelvico",
+      "url": "https://kegel-ham-sah-trasnmutacion-y-forta.vercel.app/",
+      "description": "Transmutación y Fortalecimiento Pélvico",
+      "epistemicState": "AUDIT_REQUIRED",
+      "rating": "PENDING_AUDIT"
+    },
+    {
+      "id": "donaciones-drab",
+      "name": "Portal de Donaciones (Fundación DRAB)",
+      "url": "https://donaciones-drab.vercel.app/",
+      "description": "Fundación DRAB Philanthropic Portal",
+      "epistemicState": "INTAKE_REQUIRED",
+      "rating": "PENDING_INTAKE"
     }
   ]
 }

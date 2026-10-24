@@ -1,0 +1,209 @@
+{
+  "manifestVersion": "1.0.0",
+  "keyId": "eos-root-ed25519-key-01",
+  "signedCommit": "db8cd922108f0a661c26334cabb16829278a4b77",
+  "timestamp": "2026-10-24T00:44:40.443Z",
+  "files": [
+    {
+      "relativePath": ".cursor/mcp.json",
+      "sha256": "5D011153054C10D09AD2A3BF16A89092F750FE254EB6C5176A5E8CF34A2EA518",
+      "sizeBytes": 376
+    },
+    {
+      "relativePath": ".cursor/rules/eos-constitution.mdc",
+      "sha256": "231C314E98E8AB2CF1697565A7B2635F06FE201042FB3E5F2FD5626F5BFF7EC4",
+      "sizeBytes": 1016
+    },
+    {
+      "relativePath": ".cursor/rules/gentle-ai-engram.mdc",
+      "sha256": "7C6F271A3A973F980C283F162546637223D8CE0B7936CFE260934AFCD1429772",
+      "sizeBytes": 1182
+    },
+    {
+      "relativePath": ".cursorrules",
+      "sha256": "666F619D32CF3426784FC04F81C1ACA958A80A396DFD4ACCE3E89808C6B4C0BB",
+      "sizeBytes": 7663
+    },
+    {
+      "relativePath": ".eos/admin/sign-baseline.mjs",
+      "sha256": "5E97BBD8D61BB8AED76A7C6D31747EB8BBD5A809DFB4F17375F7DF29F03E450A",
+      "sizeBytes": 4942
+    },
+    {
+      "relativePath": ".eos/admin/sign-baseline.ps1",
+      "sha256": "BDE03AFDA42547916AE2CC0F4AF5C880B373F0C0D0BD23A7F4EDD08DF51ABEA1",
+      "sizeBytes": 4233
+    },
+    {
+      "relativePath": ".gitignore",
+      "sha256": "0C9FB612176D70BB4B12C838CE9ADE219CCB1513EB3AF0CD48B91A1D889EF258",
+      "sizeBytes": 380
+    },
+    {
+      "relativePath": "CONSTITUTION.md",
+      "sha256": "67390FAD571D49E11C05A66C20602860CF59A6C68ECBDB926DFFAE99476B15DF",
+      "sizeBytes": 6852
+    },
+    {
+      "relativePath": "docs/intake/INTAKE-001-EOS-V2-EVOLUTION.md",
+      "sha256": "E473C3E85C3E844A8A189C4DAF3F885BFCADF5A213F074109679ECF86625C19A",
+      "sizeBytes": 1866
+    },
+    {
+      "relativePath": "docs/intake/INTAKE-002-EVIDENCE-TRUST-ADVERSARIAL.md",
+      "sha256": "6771F71169594045421CD31C3544A0375617D1AB12F675F7F3F87F0D4CAD9584",
+      "sizeBytes": 4492
+    },
+    {
+      "relativePath": "docs/plans/PLAN-001-EOS-HEXAGONAL-ARCHITECTURE.md",
+      "sha256": "E5D234740B768542E2C8E9B8833678CE5D819942EC6AAF82806401484C6302A1",
+      "sizeBytes": 4100
+    },
+    {
+      "relativePath": "docs/plans/PLAN-002-ATTESTATION-CONTAINER.md",
+      "sha256": "45B863EF2D89906CF3227AC0A0EDAC51351774CCC73B5C255BC93E2A0B2BD9F9",
+      "sizeBytes": 6609
+    },
+    {
+      "relativePath": "docs/projects/registry.json",
+      "sha256": "C3471FFAEB2DA53AA4651DC8E1A96653DC8C07FC381343BC468E0A6D8E1D8CB8",
+      "sizeBytes": 3111
+    },
+    {
+      "relativePath": "docs/specs/SPEC-001-EOS-CORE.md",
+      "sha256": "53438188A9176E50AA938EF17B5E879ACD1FED781B804F4C0FF94D84451623DF",
+      "sizeBytes": 2995
+    },
+    {
+      "relativePath": "docs/specs/SPEC-002-EVIDENCE-ATTESTATION.md",
+      "sha256": "84B449CEEDD0B7471B353131BA0F2CFEC3E0EE213BE5FEF8FA2AFAA5E4E7EC53",
+      "sizeBytes": 8586
+    },
+    {
+      "relativePath": "docs/tasks/TASKS-001-DAG.md",
+      "sha256": "C13B3BC3C3220D2707DBE3A66FA0C9F3DD3472AEDE7B9E228C9ADDFA1888CE39",
+      "sizeBytes": 2275
+    },
+    {
+      "relativePath": "docs/tasks/TASKS-002-DAG.md",
+      "sha256": "CCF6DB613B767CEB275ACB9CD4F2ECDCB26156B72D1566758F5A396A8AB9DF87",
+      "sizeBytes": 2356
+    },
+    {
+      "relativePath": "IMPLEMENTATION_AUTHORIZATION.md",
+      "sha256": "B4228F30FB544ADF3324E261F64A6E7FE340DD439C784CB068093E20149D649B",
+      "sizeBytes": 1842
+    },
+    {
+      "relativePath": "package.json",
+      "sha256": "D485AF3A33FA20600173F52CF8BD501811E679FC798B3C15D9F3AA546AC39521",
+      "sizeBytes": 890
+    },
+    {
+      "relativePath": "README.md",
+      "sha256": "EB13CDCD5021F0A91939F3514EEC6237307EE9D02FA633E4ECDBA68FDB052A6A",
+      "sizeBytes": 3615
+    },
+    {
+      "relativePath": "scripts/run-sentinel.ps1",
+      "sha256": "5CD1F6FA71642E92BC8A0D1BA36AD73B118CACFF43569FFAAF8E747009537A2A",
+      "sizeBytes": 2410
+    },
+    {
+      "relativePath": "scripts/verify-attestation.mjs",
+      "sha256": "7286A2C2613471B40C582346E1F4635B2734F9D9BD9F20F0BF22911BC2F5D1C4",
+      "sizeBytes": 3722
+    },
+    {
+      "relativePath": "scripts/verify-strict.ps1",
+      "sha256": "3C95679A363318D816E6F18BD79F3EBEC458800EBA06C77E440243D25DA435F0",
+      "sizeBytes": 11888
+    },
+    {
+      "relativePath": "src/core/application/AttestationVerifierService.ts",
+      "sha256": "7FF68BADE1A279607E3D2FEFA7145A31912FE8807654C19AE18D72B6735BC53D",
+      "sizeBytes": 3810
+    },
+    {
+      "relativePath": "src/core/application/DualTrackOrchestrator.ts",
+      "sha256": "F61559F670B6F5F17FDE3A15B2165B6FB2B389E12BD291E26C288F5062A30143",
+      "sizeBytes": 3567
+    },
+    {
+      "relativePath": "src/core/application/EvidenceRecorder.ts",
+      "sha256": "C675C37B3A2A5BE594939DA214D5993D4B30D5A04B26D8E60640353DFF0ED449",
+      "sizeBytes": 2384
+    },
+    {
+      "relativePath": "src/core/domain/models/AttestationRecord.ts",
+      "sha256": "A05840E3836DBE3E1E4E5EF98512E6A3AC399461643D49BE89F1ED0D38D98BFB",
+      "sizeBytes": 3679
+    },
+    {
+      "relativePath": "src/core/domain/models/EARSValidator.ts",
+      "sha256": "82B4A8A9B86984AC998EA2774C10D8C46DEAA1B66CE577B79BAF6B5E59A8AFE1",
+      "sizeBytes": 3886
+    },
+    {
+      "relativePath": "src/core/domain/models/EvidenceRecord.ts",
+      "sha256": "FC19467B585E2F82FB0B3B666A449DFD2B7DE6DABC5723E4E2973E69A098CCBD",
+      "sizeBytes": 2035
+    },
+    {
+      "relativePath": "src/core/domain/models/OntologyGraph.ts",
+      "sha256": "9F2271B7E67D5B62E4100BA044AE9405E5456EA4C63794F07E186BEF4BAF04FC",
+      "sizeBytes": 2261
+    },
+    {
+      "relativePath": "src/core/domain/models/Requirement.ts",
+      "sha256": "D33752BBE5A8EA0E5EB6F940DE8CD2CF9CB3280BE1D296A33916740B6B0F2DC9",
+      "sizeBytes": 2727
+    },
+    {
+      "relativePath": "src/core/domain/models/TaskNode.ts",
+      "sha256": "717977DDE526373EAAF24E31C5B9AC9F0B1ADAE28F02AD001C6E7DBA661B15A1",
+      "sizeBytes": 2096
+    },
+    {
+      "relativePath": "src/core/domain/types.ts",
+      "sha256": "F8D86B6841B5FF7C07125055C2E66397B9761751B7A1491A6EDEEAB3D6EA5792",
+      "sizeBytes": 888
+    },
+    {
+      "relativePath": "src/index.ts",
+      "sha256": "1AEC5E5C5DD9B665A22B104FC731CE4F75880B6A1D058FD95818780B782EFE7D",
+      "sizeBytes": 1005
+    },
+    {
+      "relativePath": "src/infrastructure/AsymmetricCryptoService.ts",
+      "sha256": "5E26EE171D6BB77894764CC40A2A58F73F6861DAECB41AF99B23226FA6555DB3",
+      "sizeBytes": 2028
+    },
+    {
+      "relativePath": "src/infrastructure/CryptoService.ts",
+      "sha256": "9C6F5DCF481194E5A2BF626A4AC0A6263B8F72030F3B6BC0B97BACB3B2C057E8",
+      "sizeBytes": 1136
+    },
+    {
+      "relativePath": "src/infrastructure/FileSystemAdapter.ts",
+      "sha256": "A36FFAA2DD14C22C9E47D6F3C054D32577A99CEA0EF874223C186ADDE92B64B7",
+      "sizeBytes": 1491
+    },
+    {
+      "relativePath": "src/sentinel/EOSFDIROntology.ts",
+      "sha256": "1D7AADC92639FD1966AA7493E3BA37CF66BE0ABC671BD8547D51DF10C07A3304",
+      "sizeBytes": 1313
+    },
+    {
+      "relativePath": "src/sentinel/EOSSentinelDaemon.ts",
+      "sha256": "EBE9C67171ABB3B5FE26307C1BAEB45377060F3FB26105EB0867FA8124A92678",
+      "sizeBytes": 1609
+    },
+    {
+      "relativePath": "tsconfig.json",
+      "sha256": "B2A666BDDE363317BDC0D38A478674CE6CACE2CAEE2B44F7F9DCFFA296FE5B55",
+      "sizeBytes": 864
+    }
+  ],
+  "signatureHex": "f699351eab29bc85b137c08c60cc84edbe4fe71394dd279d0d3a90769833d4f90a5d69ba964cd8b7bd9c2a09548d5af8af261058ada79dbdbb5b7bfebc858603"
+}

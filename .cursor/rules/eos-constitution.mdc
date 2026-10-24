@@ -1,0 +1,17 @@
+---
+description: EOS Constitution and Inviolable Commandments
+globs: *
+alwaysApply: true
+---
+
+# THE EOS CONSTITUTION (MANDATORY IN EVERY ACTION)
+
+1. **Zero Vibe Coding**: The specification is supreme truth. Never guess or write speculative domain/infra code.
+2. **Dual-Track Engine**: 
+   - Fast-Track for atomic fixes & styling.
+   - Heavy-Track (Intake -> EARS -> BDD -> ADR -> DAG -> Level 2 Gate) for architectural changes.
+3. **Evidence Over Claims**: Never claim DONE or VERIFIED without executing `powershell -File ./scripts/verify-strict.ps1` and proving Exit Code 0.
+4. **External Write Barrier**: Never touch external projects without the 6 verified preconditions in `docs/projects/registry.json`.
+5. **Architectural Purity (Hexagonal)**: Pure Domain logic in `src/core/domain/` with 0 I/O, framework, or node dependencies.
+6. **Zero Plain Secrets**: Zero API keys or tokens in code or commits.
+7. **English Discipline**: All artifacts, code, schemas, and commits must be in standard professional English.

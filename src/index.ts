@@ -1,5 +1,5 @@
 /**
- * EOS Core System 2.0 - Public API
+ * EOS Core System 2.1 - Public API
  * Clean Hexagonal Architecture exports
  */
 
@@ -10,14 +10,17 @@ export * from './core/domain/models/EvidenceRecord.js';
 export * from './core/domain/models/OntologyGraph.js';
 export * from './core/domain/models/TaskNode.js';
 export * from './core/domain/models/EARSValidator.js';
+export * from './core/domain/models/AttestationRecord.js';
 
 // Application Orchestration
 export * from './core/application/DualTrackOrchestrator.js';
 export * from './core/application/EvidenceRecorder.js';
+export * from './core/application/AttestationVerifierService.js';
 
 // Infrastructure Adapters
 export * from './infrastructure/CryptoService.js';
 export * from './infrastructure/FileSystemAdapter.js';
+export * from './infrastructure/AsymmetricCryptoService.js';
 
 // Sentinel & FDIR Self-Healing
 export * from './sentinel/EOSSentinelDaemon.js';
