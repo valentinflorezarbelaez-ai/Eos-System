@@ -34,9 +34,10 @@
       "name": "Aberamentho / Pleroma Music",
       "path": "C:\\Users\\valen\\Aberamentho-s-Pleroma-music",
       "url": "https://aberamentosprelomamusic.vercel.app/",
-      "description": "GOD DJ Iniciático & Catedral Cósmica de Música Armónica",
-      "epistemicState": "AUDIT_REQUIRED",
-      "rating": "PENDING_AUDIT"
+      "description": "GOD DJ 10/10 PRO Iniciático & Catedral Cósmica de Música Armónica",
+      "epistemicState": "PRODUCTION_READY",
+      "rating": "10/10",
+      "gitCommit": "c622541"
     },
     {
       "id": "atp-strength",
@@ -44,8 +45,9 @@
       "path": "C:\\Users\\valen\\ATP-STRENGTH-1",
       "url": "https://atp-strength.vercel.app/",
       "description": "Multi-Athlete Strength Training Engine",
-      "epistemicState": "AUDIT_REQUIRED",
-      "rating": "PENDING_AUDIT"
+      "epistemicState": "PRODUCTION_READY",
+      "rating": "10/10",
+      "gitCommit": "95675e0"
     },
     {
       "id": "ptg-talent-group",
@@ -53,8 +55,9 @@
       "path": "C:\\Users\\valen\\Performance-Talent-Group-1",
       "url": "https://ptg-performance-talent-group.vercel.app/",
       "description": "Luxury Elite Talent & Football Dossier Portal",
-      "epistemicState": "AUDIT_REQUIRED",
-      "rating": "PENDING_AUDIT"
+      "epistemicState": "PRODUCTION_READY",
+      "rating": "10/10",
+      "gitCommit": "2dd7037"
     },
     {
       "id": "portafolio-valentin",
@@ -62,8 +65,9 @@
       "path": "C:\\Users\\valen\\portafolio",
       "url": "https://portafolio-valentin.vercel.app/",
       "description": "Personal Engineering & Creator Portfolio",
-      "epistemicState": "AUDIT_REQUIRED",
-      "rating": "PENDING_AUDIT"
+      "epistemicState": "PRODUCTION_READY",
+      "rating": "10/10",
+      "gitCommit": "b26e6d5"
     },
     {
       "id": "kegel-ham-sah",
