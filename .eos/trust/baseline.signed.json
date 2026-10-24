@@ -1,8 +1,8 @@
 {
   "manifestVersion": "1.0.0",
   "keyId": "eos-root-ed25519-key-01",
-  "signedCommit": "f5068acc3a09d4c84f21fe6a01d4e09f82457712",
-  "timestamp": "2026-10-24T01:00:37.439Z",
+  "signedCommit": "290923a97743bdd3f2fdc2f3883b72192ec26ca4",
+  "timestamp": "2026-10-24T02:01:24.550Z",
   "files": [
     {
       "relativePath": ".cursor/mcp.json",
@@ -66,8 +66,8 @@
     },
     {
       "relativePath": "docs/projects/registry.json",
-      "sha256": "C3471FFAEB2DA53AA4651DC8E1A96653DC8C07FC381343BC468E0A6D8E1D8CB8",
-      "sizeBytes": 3111
+      "sha256": "89A0E50605B2E3358AC8D4FE32777DF1905C8E0B39A75D90B2FF5316CC8ED50F",
+      "sizeBytes": 3217
     },
     {
       "relativePath": "docs/specs/SPEC-001-EOS-CORE.md",
@@ -116,8 +116,8 @@
     },
     {
       "relativePath": "scripts/verify-fleet.mjs",
-      "sha256": "AA43A0AD8C14D61BED9B096A9EF12E277BD400596AD25F1F8FD2F78D45A353AF",
-      "sizeBytes": 4484
+      "sha256": "8B27294E445134BEBC77D11FBD541D04E951B025C3FCBE70E34BBEEFCCE8824E",
+      "sizeBytes": 4846
     },
     {
       "relativePath": "scripts/verify-strict.ps1",
@@ -210,5 +210,5 @@
       "sizeBytes": 864
     }
   ],
-  "signatureHex": "43f26a7f38a7929c505ca9b2b5ed8ebd35fc36d03ab80ff324dda51ff885e76b5c5e4d8a97176dc1db013b23c41786d711c2741c40d41e36908dda58d3402503"
+  "signatureHex": "68d4261d7c559c924ae2b2c448fce8d292b7703bd083c27c02cbee1eafc5825e196a4371594254de55076115b2902a548b60afc761a6977b077582b9474c870e"
 }

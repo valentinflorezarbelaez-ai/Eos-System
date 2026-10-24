@@ -1,9 +1,9 @@
 ﻿{
     "evidenceId":  "EVD-0001-BASELINE-STRICT-PASS",
-    "timestamp":  "2026-10-24T01:00:47Z",
+    "timestamp":  "2026-10-24T02:01:25Z",
     "epistemicState":  "VERIFIED",
     "exitCode":  0,
-    "executionDuration":  "1516ms",
+    "executionDuration":  "382ms",
     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "testsSummary":  {
                          "totalTests":  47,
@@ -76,7 +76,7 @@
                       },
                       {
                           "relativePath":  ".eos/trust/baseline.signed.json",
-                          "sha256":  "40B13DE848CA0403BC9377209870E716F720B08EB11B422E24F46AFA10F18110",
+                          "sha256":  "25F306F2B0C2206FF6D272C3CC3BDFB505B40BCE0CC75F332FF288C0E47CB97C",
                           "sizeBytes":  7639
                       },
                       {
@@ -111,8 +111,8 @@
                       },
                       {
                           "relativePath":  "docs/projects/registry.json",
-                          "sha256":  "C3471FFAEB2DA53AA4651DC8E1A96653DC8C07FC381343BC468E0A6D8E1D8CB8",
-                          "sizeBytes":  3111
+                          "sha256":  "89A0E50605B2E3358AC8D4FE32777DF1905C8E0B39A75D90B2FF5316CC8ED50F",
+                          "sizeBytes":  3217
                       },
                       {
                           "relativePath":  "docs/specs/SPEC-001-EOS-CORE.md",
@@ -146,8 +146,8 @@
                       },
                       {
                           "relativePath":  "scripts/verify-fleet.mjs",
-                          "sha256":  "AA43A0AD8C14D61BED9B096A9EF12E277BD400596AD25F1F8FD2F78D45A353AF",
-                          "sizeBytes":  4484
+                          "sha256":  "8B27294E445134BEBC77D11FBD541D04E951B025C3FCBE70E34BBEEFCCE8824E",
+                          "sizeBytes":  4846
                       },
                       {
                           "relativePath":  "scripts/verify-strict.ps1",
