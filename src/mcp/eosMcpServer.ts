@@ -120,6 +120,21 @@ import {
   EosUniversalProjectAdapter
 } from "../core/eosUniversalProjectAdapter.ts";
 
+import {
+  detectPolyglotPlan
+} from "../core/eosPolyglotAdapter.ts";
+
+import {
+  executeSpotifySmartShuffle,
+  EosBitemporalLedger,
+  verifyBackwardCompatibility,
+  type TrackNode
+} from "../core/eosSpotifyNubankEngine.ts";
+
+import {
+  EosGlobalEdgeArbiter
+} from "../core/eosGlobalEdgeArbiter.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -270,7 +285,7 @@ export class EosMcpServer {
                     type: "object",
                     properties: {
                       rawPrompt: { type: "string", description: "Natural language instruction or feature request" },
-                      targetModel: { type: "string", enum: ["claude", "openai", "gemini", "deepseek", "llama", "universal"], description: "Target model architecture (default: universal)" },
+                      targetModel: { type: "string", enum: ["grok", "claude", "openai", "gemini", "deepseek", "llama", "universal"], description: "Target model architecture (default: universal)" },
                       strictLevel: { type: "string", enum: ["standard", "hardened", "sovereign"], description: "Scaffolding rigor (default: hardened)" }
                     },
                     required: ["rawPrompt"]
@@ -610,6 +625,78 @@ export class EosMcpServer {
                       targetPath: { type: "string", description: "Path to project root" },
                       owner: { type: "string", description: "Owner squad name" },
                       applyToDisk: { type: "boolean", description: "Write files to disk" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_polyglot_bridge",
+                  description: "Detects Go, Rust, Clojure (Nubank), Node.js, Python, or Flutter projects and synthesizes deterministic Soundcheck verification plans.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      targetPath: { type: "string", description: "Target repository root directory (default: current workspace)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_bitemporal_ledger",
+                  description: "Commits or queries immutable bitemporal facts with idempotency-key deduplication and Datomic-style time-travel (Nubank banking standard).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["commit", "query_as_of", "get_root"], description: "Ledger operation" },
+                      idempotencyKey: { type: "string", description: "Unique deduplication key" },
+                      entityId: { type: "string", description: "Target entity ID" },
+                      payload: { type: "object", description: "Fact data payload" },
+                      asOfTxTime: { type: "number", description: "Timestamp for historical time-travel query" }
+                    },
+                    required: ["action"]
+                  }
+                },
+                {
+                  name: "eos_spotify_shuffle",
+                  description: "Executes Spotify deterministic Smart Shuffle with jittered proportional spacing and Camelot harmonic routing in < 100 µs.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      tracks: {
+                        type: "array",
+                        description: "List of track nodes with id, artistId, bpm, camelotKey",
+                        items: {
+                          type: "object",
+                          properties: {
+                            id: { type: "string" },
+                            artistId: { type: "string" },
+                            bpm: { type: "number" },
+                            camelotKey: { type: "string" }
+                          },
+                          required: ["id", "artistId", "bpm", "camelotKey"]
+                        }
+                      },
+                      seed: { type: "number", description: "Deterministic PRNG seed" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_global_edge_route",
+                  description: "Resolves optimal Anycast route, Haversine distance, and fiber RTT across the 8 Apex Global POPs (Stockholm, Bogotá, São Paulo, Virginia, Silicon Valley, London, Frankfurt, Tokyo).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      city: { type: "string", description: "Well-known city name (e.g. bogota, stockholm, tokyo, london, siliconvalley)" },
+                      latitude: { type: "number", description: "Client latitude coordinate" },
+                      longitude: { type: "number", description: "Client longitude coordinate" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_global_edge_benchmark",
+                  description: "Executes Google Jeff Dean Hedged Requests benchmark modeling p99 tail-latency cancellation across global edge nodes.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      samples: { type: "number", description: "Number of request simulations (default: 1000)" },
+                      p95ThresholdMs: { type: "number", description: "P95 delay threshold before hedged request (default: 28.0)" }
                     }
                   }
                 }
@@ -1022,6 +1109,59 @@ export class EosMcpServer {
         const target = path.resolve(String(args.targetPath || this.projectRoot));
         const adapter = new EosUniversalProjectAdapter(target);
         return adapter.elevate(target, { dryRun: !Boolean(args.applyToDisk) });
+      }
+
+      case "eos_polyglot_bridge": {
+        const target = path.resolve(String(args.targetPath || this.projectRoot));
+        return detectPolyglotPlan(target);
+      }
+
+      case "eos_bitemporal_ledger": {
+        const ledger = new EosBitemporalLedger();
+        const action = String(args.action || "get_root");
+        if (action === "commit") {
+          const key = String(args.idempotencyKey || `tx-${Date.now()}`);
+          const entity = String(args.entityId || "entity-default");
+          const payload = args.payload || { amount: 100, currency: "USD" };
+          const fact = ledger.commitFact(key, entity, payload);
+          return { status: "COMMITTED", fact, merkleRoot: ledger.getMerkleRoot() };
+        }
+        if (action === "query_as_of") {
+          const asOf = Number(args.asOfTxTime) || Date.now();
+          return { asOf, facts: ledger.queryAsOf(asOf) };
+        }
+        return { status: "ONLINE", merkleRoot: ledger.getMerkleRoot() };
+      }
+
+      case "eos_spotify_shuffle": {
+        const tracks: TrackNode[] = Array.isArray(args.tracks) && args.tracks.length > 0
+          ? args.tracks
+          : [
+              { id: "spotify:track:001", artistId: "Armin van Buuren", bpm: 132, camelotKey: "8A" },
+              { id: "spotify:track:002", artistId: "Armin van Buuren", bpm: 134, camelotKey: "8A" },
+              { id: "spotify:track:003", artistId: "Paul Oakenfold", bpm: 130, camelotKey: "9A" },
+              { id: "spotify:track:004", artistId: "Paul Oakenfold", bpm: 132, camelotKey: "9A" },
+              { id: "spotify:track:005", artistId: "Ferry Corsten", bpm: 130, camelotKey: "8B" }
+            ];
+        const seed = Number(args.seed) || 42108;
+        return executeSpotifySmartShuffle(tracks, seed);
+      }
+
+      case "eos_global_edge_route": {
+        const arbiter = new EosGlobalEdgeArbiter("mcp-arbiter");
+        if (args.city && typeof args.city === "string") {
+          return arbiter.resolveByCity(args.city);
+        }
+        const lat = Number(args.latitude) || 4.7110;
+        const lon = Number(args.longitude) || -74.0721;
+        return arbiter.findOptimalRoute(lat, lon);
+      }
+
+      case "eos_global_edge_benchmark": {
+        const arbiter = new EosGlobalEdgeArbiter("mcp-arbiter");
+        const samples = Number(args.samples) || 1000;
+        const p95 = Number(args.p95ThresholdMs) || 28.0;
+        return arbiter.simulateHedgedRequests(samples, p95);
       }
 
       default:

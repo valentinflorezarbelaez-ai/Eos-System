@@ -21,3 +21,4 @@
   - Spotify & Nubank FinOps Dual-Engine Go/Rust Architecture (v25.1.0): Distroless containerization, 0 B/op idempotency store, and data race detection gates (CHANGE-010).
   - Spotify Gapless DJ Automix Engine & Real-Time Acoustic Feature Store (v26.0.0): 3-band Linkwitz-Riley crossover, bass clash prevention, Camelot harmonic cost, and 8D continuous taste tracking with EWMA decay (CHANGE-011).
   - Universal Polyglot Repository Adapter (v27.0.0): Multi-language fingerprinting (TypeScript, Go, Rust, Python, Flutter, C/C++, Java), 5-pillar architectural health evaluation (0-100), and automated Golden Path synthesis across any software project (CHANGE-012).
+  - Global Edge Anycast Latency Arbiter & Speed Mesh (v28.0.0): 8 Apex Global POPs, Haversine geodesic distance, Jeff Dean Hedged Requests tail-latency truncation (> 60% p99 reduction), Kulkarni Hybrid Logical Clocks (HLC), and zero-allocation Edge Cache (< 20µs) (CHANGE-013).

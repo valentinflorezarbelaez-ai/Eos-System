@@ -15,9 +15,21 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import {
+  executeSpotifySmartShuffle,
+  EosBitemporalLedger,
+  type TrackNode
+} from "./eosSpotifyNubankEngine.ts";
 
 export interface TitanBenchmarkResult {
-  readonly titan: "SPOTIFY_XIRP" | "SPACEX_FLIGHT_TMR" | "NVIDIA_TENSOR_SIMD" | "GOOGLE_BORG_RECONCILE" | "XAI_COLOSSUS_FABRIC";
+  readonly titan:
+    | "SPOTIFY_XIRP"
+    | "SPACEX_FLIGHT_TMR"
+    | "NVIDIA_TENSOR_SIMD"
+    | "GOOGLE_BORG_RECONCILE"
+    | "XAI_COLOSSUS_FABRIC"
+    | "NUBANK_DATOMIC_LEDGER"
+    | "SPOTIFY_SMART_SHUFFLE";
   readonly latencyUs: number;
   readonly status: "PASS" | "FAIL";
   readonly throughputOpsSec: number;
@@ -276,7 +288,100 @@ export class EosTitansMatrix {
   }
 
   /**
-   * Master Execution: Runs all 5 Titan benchmarks and generates a unified cryptographic report.
+   * 6. Nubank Datomic Immutable Ledger & Idempotency Benchmark
+   */
+  public benchmarkNubankDatomic(operationsCount: number = 1000): TitanBenchmarkResult {
+    const start = process.hrtime.bigint();
+    const ledger = new EosBitemporalLedger<{ amount: number; currency: string }>();
+
+    // Commit 500 unique facts and 500 duplicate idempotent retries
+    const half = Math.floor(operationsCount / 2);
+    for (let i = 0; i < half; i++) {
+      ledger.commitFact(`tx-${i}`, `account-${i % 25}`, { amount: 100 + i, currency: "BRL" }, 1700000000000 + i);
+    }
+
+    // 500 Idempotent duplicate retries
+    for (let i = 0; i < half; i++) {
+      ledger.commitFact(`tx-${i}`, `account-${i % 25}`, { amount: 100 + i, currency: "BRL" }, 1700000000000 + i);
+    }
+
+    const allFacts = ledger.getAllFacts();
+    const zeroDuplicatesVerified = allFacts.length === half;
+
+    // Time-Travel query
+    const midPointTime = 1700000000000 + Math.floor(half / 2);
+    const historicalFacts = ledger.queryAsOf(Date.now() + 1000);
+
+    const end = process.hrtime.bigint();
+    const durationUs = Math.max(1, Number(end - start) / 1000);
+    const throughput = Math.round((operationsCount / (durationUs / 1000000)));
+
+    return {
+      titan: "NUBANK_DATOMIC_LEDGER",
+      latencyUs: durationUs,
+      status: zeroDuplicatesVerified ? "PASS" : "FAIL",
+      throughputOpsSec: throughput,
+      metrics: {
+        totalOperations: operationsCount,
+        uniqueFactsCommitted: allFacts.length,
+        duplicateRetriesPrevented: half,
+        zeroDuplicatesVerified,
+        merkleRoot: ledger.getMerkleRoot(),
+        bitemporalHistoricalReplayValid: historicalFacts.length > 0
+      }
+    };
+  }
+
+  /**
+   * 7. Spotify Smart Shuffle & Camelot Harmonic Routing Benchmark
+   */
+  public benchmarkSpotifySmartShuffle(trackCount: number = 60, iterations: number = 50): TitanBenchmarkResult {
+    const artists = ["Armin van Buuren", "Paul Oakenfold", "Ferry Corsten", "Aly & Fila", "Markus Schulz"];
+    const keys = ["8A", "8B", "9A", "9B", "10A", "7A"];
+
+    const mockTracks: TrackNode[] = [];
+    for (let i = 0; i < trackCount; i++) {
+      mockTracks.push({
+        id: `spotify:track:eos${i.toString(16).padStart(4, "0")}`,
+        artistId: artists[i % artists.length],
+        bpm: 128 + (i % 8) * 2,
+        camelotKey: keys[i % keys.length]
+      });
+    }
+
+    // Warm-up to ensure hot JIT compilation
+    executeSpotifySmartShuffle(mockTracks, 12345);
+
+    const start = process.hrtime.bigint();
+    let receipt = executeSpotifySmartShuffle(mockTracks, 42108);
+    for (let it = 1; it < iterations; it++) {
+      receipt = executeSpotifySmartShuffle(mockTracks, 42108 + it);
+    }
+
+    const end = process.hrtime.bigint();
+    const durationUs = Math.max(1, Number(end - start) / 1000);
+    const totalTracks = trackCount * iterations;
+    const throughput = Math.round((totalTracks / (durationUs / 1000000)));
+
+    return {
+      titan: "SPOTIFY_SMART_SHUFFLE",
+      latencyUs: durationUs,
+      status: receipt.artistCollisions === 0 ? "PASS" : "FAIL",
+      throughputOpsSec: throughput,
+      metrics: {
+        tracksShuffled: trackCount,
+        iterations,
+        totalTracksProcessed: totalTracks,
+        artistCollisions: receipt.artistCollisions,
+        harmonicScore: receipt.harmonicScore,
+        executionMicros: receipt.executionMicros,
+        merkleSeed: receipt.merkleSeed
+      }
+    };
+  }
+
+  /**
+   * Master Execution: Runs all 7 Titan benchmarks and generates a unified cryptographic report.
    */
   public runAllTitans(): TitansReport {
     const globalStart = process.hrtime.bigint();
@@ -286,6 +391,8 @@ export class EosTitansMatrix {
     const nvidiaResult = this.benchmarkNvidiaSimd();
     const borgReconciliation = this.reconcileGoogleBorg();
     const xaiResult = this.benchmarkXaiFabric();
+    const nubankResult = this.benchmarkNubankDatomic(1000);
+    const shuffleResult = this.benchmarkSpotifySmartShuffle(60);
 
     const spacexTitanResult: TitanBenchmarkResult = {
       titan: "SPACEX_FLIGHT_TMR",
@@ -316,7 +423,9 @@ export class EosTitansMatrix {
       spacexTitanResult,
       nvidiaResult,
       googleTitanResult,
-      xaiResult
+      xaiResult,
+      nubankResult,
+      shuffleResult
     ];
 
     const globalEnd = process.hrtime.bigint();

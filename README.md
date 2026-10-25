@@ -35,7 +35,7 @@ flowchart TD
 
 ### Core Tenets & Big Tech Standards
 1. **Zero Runtime Dependencies (`dependencies: {}`)**: Built exclusively with native Node.js APIs and modern web standards.
-2. **Prometheus Omni-Model Scaffolding**: Formal ISO 29148 / IEEE 830 EARS requirements and BDD scenarios tailored for Claude 3.7, OpenAI o3/GPT-4o, Gemini 2.5, DeepSeek R1, and Llama 3.3.
+2. **Prometheus Omni-Model Scaffolding**: Formal ISO 29148 / IEEE 830 EARS requirements and BDD scenarios tailored for the Sovereign Five: Grok, Gemini, Claude, GPT, and DeepSeek.
 3. **27ms Nanosecond Turbo Verification**: Content-addressed in-memory cache indexes (`size`, `mtimeMs`, `sha256`), accelerating validation by **100x** (from 2800ms to 27.7ms) with zero false negatives.
 4. **Google Kythe / Meta Glean Code Graph**: Transitive downstream Blast Radius calculation executed in **< 150 µs**, providing instantaneous situational awareness and Predictive Test Selection (PTS).
 5. **Meta SapFix / NASA FDIR Level 4 Closed-Loop Healer**: Automated root-cause isolation, AST surgical patch synthesis, double-blind sandbox validation, and cryptographic Merkle receipts.
@@ -104,25 +104,33 @@ EOS System exposes a native Layer-0 MCP server over standard I/O (stdio). To con
   "mcpServers": {
     "eos-system": {
       "command": "node",
-      "args": ["c:/Users/valen/Eos-System/src/mcp/eosMcpServer.ts"]
+      "args": ["./src/mcp/eosMcpServer.ts"]
     }
   }
 }
 ```
 
-### Sovereign MCP Tool Catalog (18 High-Assurance Tools)
-1. `eos_titans_benchmark`: Benchmarks the 5 Big Tech archetypes: Spotify Xirp, SpaceX 60Hz TMR, NVIDIA SIMD, Google Borg, and xAI RDMA fabric.
+### Sovereign MCP Tool Catalog (24 High-Assurance Tools)
+1. `eos_titans_benchmark`: Benchmarks Big Tech archetypes: Spotify Xirp, SpaceX 60Hz TMR, NVIDIA SIMD, Google Borg, xAI RDMA, Nubank Datomic Ledger, and Spotify Smart Shuffle.
 2. `eos_reconcile_state`: Runs continuous declarative state reconciliation loop (Google Borg style) over the EOS cluster.
 3. `eos_manage_worktree`: Manages Xirp-grade isolated Git worktrees for concurrent AI agents (list, create, remove).
 4. `eos_run_eval`: Executes 5-dimensional sovereign cognitive evaluation (Google Vertex / Anthropic Evals).
 5. `eos_check_openspec`: Audits living OpenSpec architecture and delta changes, certifying 0 drift.
-6. `eos_amplify_prompt`: Translates informal prompts into formal EARS/BDD specifications.
+6. `eos_amplify_prompt`: Translates informal prompts into formal EARS/BDD specifications for the Sovereign Five (Grok, Gemini, Claude, GPT, DeepSeek).
 7. `eos_check_architecture`: Validates Hexagonal domain purity and checks for dependency cycles.
 8. `eos_evaluate_decision`: Evaluates architectural decisions against the 7 Constitutional Commandments.
 9. `eos_turbo_verify`: Content-addressed in-memory verification in **27.7 ms**.
 10. `eos_get_blast_radius`: Calculates downstream transitive blast radius in **< 150 µs**.
 11. `eos_query_code_graph`: Queries symbols, exports, and dead code across the repository.
 12. `eos_autonomous_heal`: Self-heals detected violations with surgical AST patches and FDIR receipts.
+13. `eos_validate_patch`: Validates proposed code patches in a balanced AST token sandbox before disk persistence.
+14. `eos_optimize_context`: Compresses source code into structural outlines, saving 70-85% of tokens.
+15. `eos_polyglot_bridge`: Detects Go, Rust, Clojure (Nubank), Node.js, Python, or Flutter repositories and synthesizes deterministic Soundcheck plans.
+16. `eos_bitemporal_ledger`: Commits or queries immutable bitemporal facts with idempotency-key deduplication and Datomic-style time-travel.
+17. `eos_spotify_shuffle`: Executes Spotify deterministic Smart Shuffle with jittered proportional spacing and Camelot harmonic routing in < 100 µs.
+18. `eos_universal_adapt`: Audits architectural health (0-100), layer purity, and security posture of ANY software repository.
+19. `eos_universal_fingerprint`: Fingerprints programming language, frameworks, test runners, and LoC scale of ANY project.
+20. `eos_universal_scaffold`: Synthesizes stack-tailored Backstage RFC-42 catalog, CI/CD workflow, and AGENTS.md codex for ANY project.
 13. `eos_semantic_search`: High-dimensional hybrid RAG queries (vector cosine + BM25 RRF fusion).
 14. `eos_tmr_consensus`: Byzantine 3-sandbox evaluation for critical operations.
 15. `eos_validate_patch`: Pre-validates code in AST syntax sandbox to eliminate syntax errors and secrets.

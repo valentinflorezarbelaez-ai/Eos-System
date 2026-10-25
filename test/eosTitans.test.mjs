@@ -74,11 +74,32 @@ describe("EOS Sovereign Titans Matrix Suite (Spotify, SpaceX, NVIDIA, Google, xA
     });
   });
 
-  describe("Suite 6: Unified Titans Master Benchmark & Merkle Receipt", () => {
-    it("executes all 5 Titans concurrently and emits cryptographic seal", () => {
+  describe("Suite 6: Nubank Datomic Ledger & Spotify Smart Shuffle Titans", () => {
+    it("benchmarks Nubank Datomic immutable ledger and verifies zero duplicate mutations", () => {
+      const res = matrix.benchmarkNubankDatomic(1000);
+      assert.equal(res.titan, "NUBANK_DATOMIC_LEDGER");
+      assert.equal(res.status, "PASS");
+      assert.equal(res.metrics.zeroDuplicatesVerified, true);
+      assert.equal(res.metrics.duplicateRetriesPrevented, 500);
+      assert.ok(res.throughputOpsSec > 50000);
+      assert.ok(res.latencyUs > 0);
+    });
+
+    it("benchmarks Spotify Smart Shuffle and verifies zero consecutive artist collisions", () => {
+      const res = matrix.benchmarkSpotifySmartShuffle(60);
+      assert.equal(res.titan, "SPOTIFY_SMART_SHUFFLE");
+      assert.equal(res.status, "PASS");
+      assert.equal(res.metrics.artistCollisions, 0);
+      assert.ok(res.metrics.harmonicScore > 0);
+      assert.ok(res.throughputOpsSec > 10000);
+    });
+  });
+
+  describe("Suite 7: Unified Titans Master Benchmark & Merkle Receipt", () => {
+    it("executes all 7 Titans concurrently and emits cryptographic seal", () => {
       const report = matrix.runAllTitans();
       assert.equal(report.overallStatus, "APEX_PERFECTION");
-      assert.equal(report.results.length, 5);
+      assert.equal(report.results.length, 7);
       assert.ok(typeof report.sha256Proof === "string" && report.sha256Proof.length === 64);
       assert.ok(report.totalDurationUs > 0);
     });

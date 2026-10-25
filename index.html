@@ -411,6 +411,9 @@ EXIT CODE       : 0</pre>
             <button type="button" role="tab" id="tab-nexus-spotify" aria-selected="false" aria-controls="panel-nexus-spotify" class="tier1-tab-btn" data-nexus="spotify">
               🎧 Spotify Studio (DSP / LUFS / BaRT / Mesh)
             </button>
+            <button type="button" role="tab" id="tab-nexus-edge" aria-selected="false" aria-controls="panel-nexus-edge" class="tier1-tab-btn" data-nexus="edge">
+              🌐 Anycast Edge &amp; Hedged Speed (8 Global POPs / Jeff Dean)
+            </button>
           </div>
 
           <div class="tier1-nexus-body">
@@ -767,6 +770,80 @@ ESTADO EPISTÉMICO    : PRODUCTION_READY | MTTR: 1.8 ms | SALUD DEL SISTEMA: 100
 • Apollo/Hermes    : 3-State Circuit Breaker | 5000 tokens/s Token Bucket | FNV-1a 32-bit Topic Partitioning
 • BaRT Bandits     : Thompson Sampling Beta/Gamma distribution | Exploración vs. Explotación convergente en &lt; 500 episodios
 • Golden Path      : Backstage RFC-42 | 4/4 repositorios de flota soberana auditados y alineados</pre>
+              </div>
+            </div>
+
+            <!-- PANEL 7: GLOBAL ANYCAST EDGE ARBITER & HEDGED REQUESTS -->
+            <div class="tier1-panel" id="panel-nexus-edge" role="tabpanel" aria-labelledby="tab-nexus-edge">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+                <div>
+                  <h3 style="font-family: var(--font-space); font-size: 1.15rem; color: var(--cyan);">
+                    Árbitro Anycast Global &amp; Peticiones Especulativas (Google Jeff Dean Tail-at-Scale)
+                  </h3>
+                  <p style="font-size: 0.82rem; color: var(--text-muted);">
+                    Enrutamiento geodésico Haversine a los 8 POPs Globales de EOS con truncamiento de latencia de cola p99 y Relojes Lógicos Híbridos (HLC).
+                  </p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                  <select id="select-edge-city" class="sanctum-input" style="padding: 0.4rem 0.6rem; font-size: 0.78rem; width: auto;">
+                    <option value="bogota">Bogotá (Sovereign Command)</option>
+                    <option value="stockholm">Estocolmo (Spotify Audio Mesh)</option>
+                    <option value="saopaulo">São Paulo (Nubank Core LATAM)</option>
+                    <option value="virginia">Ashburn, Virginia (US-East Backbone)</option>
+                    <option value="siliconvalley">Silicon Valley (AI Spine)</option>
+                    <option value="london">Londres (Atlantic Bridge)</option>
+                    <option value="frankfurt">Fráncfort (EU GDPR Vault)</option>
+                    <option value="tokyo">Tokio (APAC High-Speed Edge)</option>
+                  </select>
+                  <button type="button" class="btn btn--secondary" id="btn-run-edge-route" style="padding: 0.4rem 0.8rem; font-size: 0.78rem;">
+                    🌍 Resolver Anycast
+                  </button>
+                  <button type="button" class="btn btn--gold" id="btn-run-hedged-bench" style="padding: 0.4rem 0.8rem; font-size: 0.78rem;">
+                    ⚡ Simular Hedged Requests (Jeff Dean)
+                  </button>
+                </div>
+              </div>
+
+              <div class="tier1-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                <div style="background: rgba(14, 26, 53, 0.5); border: 1px solid var(--line-subtle); border-radius: var(--radius-sm); padding: 0.9rem;">
+                  <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">POP Primario Seleccionado</div>
+                  <div id="edge-pop-primary" style="font-family: var(--font-space); font-size: 1.1rem; color: var(--cyan); font-weight: 700; margin-top: 0.25rem;">
+                    [BOG-01] Bogotá Sovereign Command
+                  </div>
+                  <div id="edge-pop-primary-details" style="font-size: 0.78rem; color: var(--text-dim); margin-top: 0.35rem;">
+                    Distancia Geodésica: 0 km | RTT Fibra: 2.1 ms
+                  </div>
+                </div>
+                <div style="background: rgba(14, 26, 53, 0.5); border: 1px solid var(--line-subtle); border-radius: var(--radius-sm); padding: 0.9rem;">
+                  <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Truncamiento de Cola P99</div>
+                  <div id="edge-hedged-reduction" style="font-family: var(--font-space); font-size: 1.1rem; color: var(--gold); font-weight: 700; margin-top: 0.25rem;">
+                    70.2% Reducción
+                  </div>
+                  <div id="edge-hedged-details" style="font-size: 0.78rem; color: var(--text-dim); margin-top: 0.35rem;">
+                    P99 Base: 179.7 ms ➔ Hedged: 53.6 ms (&lt; 7% Peticiones Extra)
+                  </div>
+                </div>
+                <div style="background: rgba(14, 26, 53, 0.5); border: 1px solid var(--line-subtle); border-radius: var(--radius-sm); padding: 0.9rem;">
+                  <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Reloj Lógico Híbrido (HLC)</div>
+                  <div id="edge-hlc-stamp" style="font-family: var(--font-mono); font-size: 0.85rem; color: #1ed760; font-weight: 600; margin-top: 0.25rem;">
+                    hlc:1792966800000-0:eos-edge
+                  </div>
+                  <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 0.35rem;">
+                    Causalidad estricta sin bloqueos distribuidos
+                  </div>
+                </div>
+              </div>
+
+              <div style="background: rgba(4, 9, 24, 0.95); border: 1px solid var(--line-subtle); border-radius: var(--radius-sm); padding: 1rem; font-family: var(--font-mono); font-size: 0.76rem; max-height: 280px; overflow-y: auto;">
+                <div style="color: var(--cyan); margin-bottom: 0.5rem; font-weight: 700;">
+                  [TELEMETRÍA EN VIVO · GLOBAL ANYCAST EDGE MESH v28.0]
+                </div>
+                <pre id="edge-output-log" style="margin: 0; white-space: pre-wrap; color: var(--text-light); line-height: 1.5;">🌐 EOS GLOBAL EDGE ARBITER v28.0 INICIALIZADO:
+• Topología : 8 Apex POPs (Estocolmo, Bogotá, São Paulo, Virginia, Silicon Valley, Londres, Fráncfort, Tokio)
+• Física    : Geodésica Haversine (R=6371km) + Velocidad de luz en fibra óptica (200,000 km/s)
+• Jeff Dean : Hedged Requests &amp; Tail Cancellation activa (recorta hasta 80% de la latencia de cola)
+• Monotonía : Hybrid Logical Clock (HLC) con ordenamiento causal estricto sin Spanner TrueTime
+• Caché L0  : In-Memory Zero-Allocation LRU Edge Cache (&lt; 15 µs de recuperación)</pre>
               </div>
             </div>
           </div>
@@ -2994,6 +3071,6 @@ Sello      : sha256:jarvis_monad_nous_alpha_omega_108 (EXIT CODE: 0)</pre>
     </div>
   </dialog>
 
-  <script src="/js/eos.js?v=12.0" integrity="sha384-xqoZn67lkdfqUSLesi7O9S4m5bskLw9R5jUJuMMxZYWIg7nK+GmhPN6u+xka4/DN" crossorigin="anonymous" defer></script>
+  <script src="/js/eos.js?v=12.0" integrity="sha384-VmAjOaFgZylePlg6Ucm0x4Cf3lE2v4TLp61mG61ocyIF/2ce0lMHEZs5eslKS7zE" crossorigin="anonymous" defer></script>
 </body>
 </html>

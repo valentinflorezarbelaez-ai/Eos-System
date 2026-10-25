@@ -90,6 +90,7 @@
 * **FR-036 (State-Driven AST Remediation Diff Synthesis & Sandbox Pre-Validation)**: MIENTRAS existan anomalías diagnosticadas, EL SISTEMA sintetizará parches correctivos mínimos y los validará en el sandbox AST (`eosPatchValidator`) y la tubería turbo (`runTurboPipeline`) antes de proponer o aplicar cualquier mutación.
 * **FR-037 (Ubiquitous Cryptographic Healing Attestation & Merkle Ledger)**: EL SISTEMA registrará cada auto-reparación en un recibo criptográfico sellado con SHA-256 (`docs/evidence/HEAL-XXXX.json`), certificando la transición epistémica a `VERIFIED`.
 * **FR-038 (Ubiquitous Autonomous Healer CLI & MCP Integration)**: EL SISTEMA expondrá `eos_autonomous_heal` en `src/mcp/eosMcpServer.ts` y el comando `eos heal` en `bin/eos.mjs`.
+* **FR-050 (Ubiquitous & Event-Driven Arbitraje Anycast Global & Malla de Latencia)**: EL SISTEMA (`src/core/eosGlobalEdgeArbiter.ts`, `eos_global_edge_route` y `eos edge`) mantendrá la topología de los 8 Puntos de Presencia Globales (Estocolmo, Bogotá, São Paulo, Virginia, Silicon Valley, Londres, Fráncfort y Tokio), computará distancias geodésicas Haversine y retardos de fibra óptica en nanosegundos/microsegundos, ejecutará Peticiones Especulativas (Hedged Requests al estilo Jeff Dean) para truncar la latencia de cola p99, sellará eventos con Relojes Lógicos Híbridos (HLC) monótonos y operará una caché Edge en memoria sin asignaciones de heap (< 15 µs).
 
 ---
 
@@ -335,6 +336,12 @@ ESCENARIO: [BDD-049 Adaptador Políglota Universal de Repositorios (SPEC-019)]
   DADO cualquier repositorio o proyecto de software en cualquier lenguaje o framework (TypeScript, Go, Rust, Python, Flutter, C/C++, Java)
   CUANDO se invoca EosUniversalProjectAdapter ("eos adapt <ruta>" o la herramienta MCP "eos_universal_adapt")
   ENTONCES extrae la huella de arquetipo, linters, ejecutores de pruebas y contenedores, calcula el Índice de Salud Arquitectónica (0-100) en 5 pilares, y sintetiza manifiestos Golden Path Backstage RFC-42, flujos de trabajo de CI/CD para GitHub Actions, ganchos pre-commit y codex de agentes IA (AGENTS.md) ajustados al stack exacto con 0 dependencias externas.
+
+ESCENARIO: [BDD-050 Arbitro Anycast Global de Latencia y Peticiones Especulativas (SPEC-020)]
+  DADO las coordenadas geográficas de un cliente o identificador regional y la topología de los 8 POPs Globales de EOS
+  CUANDO se invoca EosGlobalEdgeArbiter ("eos edge route" o la herramienta MCP "eos_global_edge_route")
+  ENTONCES calcula la distancia geodésica mediante la fórmula de Haversine y el retardo RTT de fibra óptica, clasifica los POPs en orden de cercanía física, ejecuta peticiones especulativas (Hedged Requests) reduciendo la latencia de cola p99 en más de un 60%, sella las mutaciones con un Reloj Lógico Híbrido (HLC) monótono y entrega respuestas cacheadas en menos de 20 microsegundos con 0 dependencias externas.
+
 
 
 

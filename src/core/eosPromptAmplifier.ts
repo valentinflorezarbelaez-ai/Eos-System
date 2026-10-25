@@ -10,7 +10,75 @@
  * Zero external runtime dependencies.
  */
 
-export type ModelFamily = "claude" | "openai" | "gemini" | "deepseek" | "llama" | "universal";
+export type ModelFamily = "grok" | "claude" | "openai" | "gemini" | "deepseek" | "llama" | "universal";
+
+export type SovereignModelId = "grok" | "gemini" | "claude" | "gpt" | "deepseek";
+
+export interface ModelRoutingProfile {
+  readonly id: SovereignModelId;
+  readonly provider: "xAI" | "Google" | "Anthropic" | "OpenAI" | "DeepSeek";
+  readonly primaryRole: string;
+  readonly finOpsTier: "ULTRA_LOW_COST" | "BALANCED_HIGH_CONTEXT" | "FRONTIER_SURGICAL";
+  readonly systemConstraintInjection: string;
+}
+
+export const SOVEREIGN_FIVE_MATRIX: Readonly<Record<SovereignModelId, ModelRoutingProfile>> = Object.freeze({
+  grok: {
+    id: "grok",
+    provider: "xAI",
+    primaryRole: "Low-Level Systems, Reverse Engineering & Real-Time Telemetry",
+    finOpsTier: "FRONTIER_SURGICAL",
+    systemConstraintInjection: "ENFORCE: xAI Colossus grade concurrency, zero-copy memory layout, and brutal technical precision."
+  },
+  gemini: {
+    id: "gemini",
+    provider: "Google",
+    primaryRole: "Full-Repo Semantic Graph Context & Antigravity Orchestration",
+    finOpsTier: "BALANCED_HIGH_CONTEXT",
+    systemConstraintInjection: "ENFORCE: Cross-repository Blast Radius (<150µs) awareness and Google Borg declarative reconciliation."
+  },
+  claude: {
+    id: "claude",
+    provider: "Anthropic",
+    primaryRole: "AST Surgical Code Synthesis & Spotify Honk/Xirp Execution",
+    finOpsTier: "FRONTIER_SURGICAL",
+    systemConstraintInjection: "ENFORCE: Layer-0 Hexagonal purity, 0 runtime dependencies, and strict EARS/BDD test-first implementation."
+  },
+  gpt: {
+    id: "gpt",
+    provider: "OpenAI",
+    primaryRole: "Constitutional Bayesian Judge & Formal Specification Verification",
+    finOpsTier: "FRONTIER_SURGICAL",
+    systemConstraintInjection: "ENFORCE: ISO 29148 EARS formalization, TLA+ safety/liveness invariants, and zero ambiguity."
+  },
+  deepseek: {
+    id: "deepseek",
+    provider: "DeepSeek",
+    primaryRole: "FinOps Token Optimization, Algorithmic Complexity & Bulk Verification",
+    finOpsTier: "ULTRA_LOW_COST",
+    systemConstraintInjection: "ENFORCE: Minimum Big-O time/space complexity, deterministic mathematical proof, and token economy."
+  }
+});
+
+/**
+ * Automatically selects the optimal model from the Sovereign Five matrix based on prompt intent.
+ */
+export function selectOptimalSovereignModel(directive: string): ModelRoutingProfile {
+  const d = directive.toLowerCase();
+  if (d.includes("optimiz") || d.includes("math") || d.includes("cost") || d.includes("benchmark") || d.includes("finops")) {
+    return SOVEREIGN_FIVE_MATRIX.deepseek;
+  }
+  if (d.includes("reverse") || d.includes("kernel") || d.includes("simd") || d.includes("rdma") || d.includes("concurrency")) {
+    return SOVEREIGN_FIVE_MATRIX.grok;
+  }
+  if (d.includes("graph") || d.includes("blast") || d.includes("fleet") || d.includes("repo") || d.includes("antigravity")) {
+    return SOVEREIGN_FIVE_MATRIX.gemini;
+  }
+  if (d.includes("judge") || d.includes("spec") || d.includes("ears") || d.includes("architecture") || d.includes("constitution")) {
+    return SOVEREIGN_FIVE_MATRIX.gpt;
+  }
+  return SOVEREIGN_FIVE_MATRIX.claude;
+}
 
 export type StrictnessLevel = "standard" | "hardened" | "sovereign";
 
@@ -228,6 +296,21 @@ export function buildModelScaffold(family: ModelFamily, strictLevel: StrictnessL
         antiHallucinationRules: [
           "Reject informal vibe assumptions; test each hypothesis against formal logic.",
           "Confirm zero memory leaks in hot loops and buffer allocations."
+        ]
+      };
+
+    case "grok":
+      return {
+        family: "grok",
+        thinkingStrategy: "Low-Level Concurrency, SIMD/RDMA Systems, Reverse Engineering & Real-Time Telemetry",
+        scaffoldingDirectives: [
+          "ENFORCE: xAI Colossus grade concurrency, zero-copy memory layout, and brutal technical precision.",
+          "Prioritize bare-metal efficiency, lockless data structures, and predictable execution latency.",
+          "Demand bit-exact deterministic reproducibility and zero ungrounded claims."
+        ],
+        antiHallucinationRules: [
+          "Reject theoretical speculation; require verifiable benchmark telemetry.",
+          "Verify memory alignment and cache-line boundaries (64-byte alignment)."
         ]
       };
 

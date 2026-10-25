@@ -133,7 +133,9 @@ const testFiles = [
   "test/eosApolloHermesMesh.test.mjs",
   "test/eosGaplessMixEngine.test.mjs",
   "test/eosAcousticFeatureStore.test.mjs",
-  "test/eosUniversalProjectAdapter.test.mjs"
+  "test/eosUniversalProjectAdapter.test.mjs",
+  "test/eosGlobalEdgeArbiter.test.mjs",
+  "test/eosSpotifyNubankDualEngine.test.mjs"
 ];
 
 for (const testFile of testFiles) {
