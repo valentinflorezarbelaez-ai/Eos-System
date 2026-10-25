@@ -120,10 +120,20 @@ export function validatePatch(
       errors.push(`[AST Syntax Error] ${msg}`);
     }
   } else if (ext === ".ts" || ext === ".tsx") {
-    const tmpFile = path.join(os.tmpdir(), `eos_val_${crypto.randomUUID()}${ext}`);
+    const valDir = path.join(os.tmpdir(), "eos_ts_validation_sandbox");
+    if (!fs.existsSync(valDir)) {
+      try {
+        fs.mkdirSync(valDir, { recursive: true });
+        fs.writeFileSync(path.join(valDir, "package.json"), JSON.stringify({ type: "module" }));
+      } catch {
+        // Fallback if unable to write to sandbox dir
+      }
+    }
+    const tmpFile = path.join(valDir, `eos_val_${crypto.randomUUID()}${ext}`);
     try {
       fs.writeFileSync(tmpFile, proposedContent, "utf8");
       execFileSync(process.execPath, ["--check", tmpFile], {
+        cwd: valDir,
         stdio: ["pipe", "pipe", "pipe"],
         timeout: 2000
       });
