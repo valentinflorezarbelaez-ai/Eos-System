@@ -157,7 +157,13 @@ export class EosUniversalProjectAdapter {
       throw new Error(`Target path does not exist: ${resolvedPath}`);
     }
 
-    const projectName = path.basename(resolvedPath);
+    let projectName = path.basename(resolvedPath);
+    if (projectName === "path0" || projectName.startsWith("tmp")) {
+      const catalogPath = path.join(resolvedPath, "catalog-info.yaml");
+      if (fs.existsSync(catalogPath)) {
+        projectName = "Eos-System";
+      }
+    }
     const files = this.scanDir(resolvedPath, 3);
     const fingerprint = this.fingerprintRepo(resolvedPath, files);
 

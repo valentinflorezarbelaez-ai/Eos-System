@@ -139,13 +139,17 @@ const testFiles = [
 for (const testFile of testFiles) {
   console.log(`[STAGE 4 RUNNER] Executing ${testFile}...`);
   try {
-    execFileSync(process.execPath, ["--test", path.join(root, testFile)], {
+    const out = execFileSync(process.execPath, ["--test", path.join(root, testFile)], {
       cwd: root,
-      stdio: "inherit"
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"]
     });
+    console.log(out);
   } catch (err) {
-    console.error(`\n❌ [STAGE 4 CRITICAL FAILURE] Test suite failed: ${testFile}`);
-    console.error(err);
+    console.log(`\n❌ [STAGE 4 CRITICAL FAILURE] Test suite failed: ${testFile}`);
+    if (err.stdout) console.log("[TEST STDOUT]:\n" + err.stdout.toString());
+    if (err.stderr) console.log("[TEST STDERR]:\n" + err.stderr.toString());
+    console.log("[ERROR MESSAGE]: " + err.message);
     process.exit(1);
   }
 }
