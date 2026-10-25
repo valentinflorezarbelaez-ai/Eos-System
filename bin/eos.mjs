@@ -815,12 +815,12 @@ switch (command) {
     const elevator = new EosFleetElevator(root);
     console.log(`[EOS FLEET ELEVATOR] Elevando repositorios de la flota al Golden Path RFC-42 (Dry Run: ${dryRun})...\n`);
     const report = elevator.elevateFleet({ dryRun });
-    console.log(`Repositorios Totales   : ${report.totalRepos}`);
-    console.log(`Repositorios Elevados  : ${report.elevatedRepos}`);
-    console.log(`Índice Golden Path     : ${report.goldenPathIndex.toFixed(1)}%`);
-    console.log(`Sello SHA-256          : ${report.sha256Seal}\n`);
-    report.details.forEach((d) => {
-      console.log(`  ↳ [${d.status}] ${d.projectId} (Score: ${d.score}/100) -> ${d.actions.join("; ") || "Conforme"}`);
+    console.log(`Repositorios Totales   : ${report.totalProjects}`);
+    console.log(`Repositorios Elevados  : ${report.elevatedProjects}`);
+    console.log(`Índice Golden Path     : ${report.fleetGoldenPathScore.toFixed(1)}%`);
+    console.log(`Sello SHA-256          : ${report.sha256Proof}\n`);
+    report.projects.forEach((d) => {
+      console.log(`  ↳ [${d.catalogInfoStatus}] ${d.id} (Score: ${d.goldenPathScore}/100) -> ${d.recommendations.join("; ") || "Conforme"}`);
     });
     console.log(`\n[PASS] Elevación de flota completada con éxito.`);
     break;
