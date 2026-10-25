@@ -139,6 +139,11 @@ console.log("[PASS] 5/6 Interactive Control Plane, EosSolarSanctum, EosNanosecon
 assert.ok(fs.existsSync(path.join(root, "sw.js")), "Missing sw.js");
 assert.ok(fs.existsSync(path.join(root, "favicon.svg")), "Missing favicon.svg");
 assert.ok(fs.existsSync(path.join(root, "assets/eos-system.png")), "Missing assets/eos-system.png");
+const vercelConfig = JSON.parse(fs.readFileSync(path.join(root, "vercel.json"), "utf8"));
+const globalHeaders = vercelConfig.headers.find((h) => h.source === "/(.*)");
+assert.ok(globalHeaders, "Missing global header configuration in vercel.json");
+const hasCsp = globalHeaders.headers.some((kv) => kv.key === "Content-Security-Policy");
+assert.ok(hasCsp, "Missing Content-Security-Policy in vercel.json");
 assert.ok(html.includes('type="speculationrules"'), "Missing <script type=\"speculationrules\"> for instant navigation");
 assert.ok(html.includes('rel="preload"'), "Missing <link rel=\"preload\"> critical asset hints");
 assert.ok(html.includes('fetchpriority="high"'), "Missing fetchpriority=\"high\" on above-the-fold brand emblem");
