@@ -84,6 +84,10 @@ import {
   EosTitansMatrix
 } from "../core/eosTitansMatrix.ts";
 
+import {
+  EosSpotifyCodex
+} from "../core/eosSpotifyCodex.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -107,17 +111,21 @@ export class EosMcpServer {
   private readonly projectRoot: string;
 
   constructor(projectRoot?: string) {
+    const currentDir = typeof __dirname !== "undefined"
+      ? __dirname
+      : path.dirname(fileURLToPath(import.meta.url));
+    const repoCandidate = path.resolve(currentDir, "../../");
+
     if (projectRoot && fs.existsSync(path.join(projectRoot, "package.json"))) {
       this.projectRoot = projectRoot;
     } else if (process.env.EOS_PROJECT_ROOT && fs.existsSync(path.join(process.env.EOS_PROJECT_ROOT, "package.json"))) {
       this.projectRoot = process.env.EOS_PROJECT_ROOT;
+    } else if (fs.existsSync(path.join(repoCandidate, "package.json"))) {
+      this.projectRoot = repoCandidate;
     } else if (fs.existsSync(path.join(process.cwd(), "package.json"))) {
       this.projectRoot = process.cwd();
     } else {
-      const currentDir = typeof __dirname !== "undefined"
-        ? __dirname
-        : path.dirname(fileURLToPath(import.meta.url));
-      this.projectRoot = path.resolve(currentDir, "../../");
+      this.projectRoot = repoCandidate;
     }
   }
 
@@ -351,6 +359,16 @@ export class EosMcpServer {
                   inputSchema: {
                     type: "object",
                     properties: {}
+                  }
+                },
+                {
+                  name: "eos_spotify_audit",
+                  description: "Audits any target project for Spotify-grade engineering excellence: Backstage RFC-42 Golden Path, ITU-R BS.1770 -14 LUFS Audio Normalization, and Acoustic Vector Recommendation contracts.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      targetPath: { type: "string", description: "Path to project root (default: current project)" }
+                    }
                   }
                 }
               ]
@@ -617,6 +635,12 @@ export class EosMcpServer {
       case "eos_reconcile_state": {
         const matrix = new EosTitansMatrix(this.projectRoot);
         return matrix.reconcileGoogleBorg();
+      }
+
+      case "eos_spotify_audit": {
+        const codex = new EosSpotifyCodex(this.projectRoot);
+        const targetPath = args.targetPath ? String(args.targetPath) : undefined;
+        return codex.auditUniversalProject(targetPath);
       }
 
       default:

@@ -543,6 +543,35 @@ switch (command) {
     break;
   }
 
+  case "spotify": {
+    printBanner();
+    const target = args[1] || root;
+    console.log(`[EOS SPOTIFY] Auditando proyecto universal contra estándares Spotify Golden Path...\n`);
+    const { EosSpotifyCodex } = await import("../src/core/eosSpotifyCodex.ts");
+    const codex = new EosSpotifyCodex(root);
+    const report = codex.auditUniversalProject(target);
+
+    console.log(`Proyecto Auditado     : ${report.projectPath}`);
+    console.log(`Cumplimiento Backstage: ${report.isBackstageCompliant ? "RFC-42 COMPLIANT (✔)" : "NO COMPATIBLE (✖)"}`);
+    console.log(`Puntaje Golden Path   : ${report.goldenPathScore}/100`);
+    console.log(`Descriptor Catálogo   : ${report.catalogInfoExists ? "catalog-info.yaml detectado" : "Faltante"}`);
+    if (report.catalogInfoDetails) {
+      console.log(`  ↳ Componente        : ${report.catalogInfoDetails.name} (${report.catalogInfoDetails.lifecycle})`);
+      console.log(`  ↳ Propietario       : ${report.catalogInfoDetails.owner}`);
+    }
+    console.log(`Archivos de Audio     : ${report.audioCompliance.audioAssetsDetected}`);
+    console.log(`Norma ITU-R BS.1770   : ${report.audioCompliance.loudnessStandardCompliant ? "Verificado (-14 LUFS)" : "Pendiente"}`);
+    console.log(`Sello Criptográfico   : ${report.sha256Proof.slice(0, 32)}...\n`);
+
+    if (report.recommendations.length > 0) {
+      console.log("=== RECOMENDACIONES DE MEJORA SPOTIFY ===");
+      report.recommendations.forEach((rec) => console.log(`  ! ${rec}`));
+    } else {
+      console.log("[PASS] Proyecto 100% alineado con la excelencia de ingeniería de Spotify (Exit Code 0).");
+    }
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -569,6 +598,7 @@ Uso Universal:
   eos spec [check|list]      Audita el sistema Living OpenSpec y previene deriva de Vibe Coding
   eos titan [xirp|spacex|..] Ejecuta los benchmarks de los Titanes (Spotify, SpaceX, NVIDIA, Google, xAI)
   eos reconcile              Reconcilia el estado declarativo estilo Google Borg sin deriva (0.00%)
+  eos spotify [path]         Audita cualquier proyecto contra estándares Spotify Golden Path y audio
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

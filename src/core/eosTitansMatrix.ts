@@ -209,7 +209,8 @@ export class EosTitansMatrix {
       "src/core/eosAutonomousHealer.ts",
       "src/core/eosWorktreeOrchestrator.ts",
       "src/core/eosCognitiveEval.ts",
-      "src/core/eosOpenSpecSync.ts"
+      "src/core/eosOpenSpecSync.ts",
+      "src/core/eosSpotifyCodex.ts"
     ];
 
     let actualCount = 0;

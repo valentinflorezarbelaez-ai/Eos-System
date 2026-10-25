@@ -70,3 +70,11 @@
   - [x] **TASK-025-B**: Calibrate PTG fleet paths and remote repository URLs in registry, dispatcher, and interactive UI.
   - [x] **TASK-025-C**: Filter AST template literal artifacts in `EosSemanticGraph` to eliminate false-positive orphan symbols.
   - [x] **TASK-025-D**: Re-verify 7/7 SecDevOps gates, seal cryptographic Merkle SBOM and deployment receipt (`exit 0`).
+- [x] **TASK-026**: Implement **Universal Project Perfection & Spotify Deep Architecture Codex (`v19.0`)**:
+  - [x] **TASK-026-A**: Implement `src/core/eosSpotifyCodex.ts` featuring ITU-R BS.1770 -14 LUFS loudness normalization, 8D acoustic vector cosine similarity, Camelot harmonic DJ mixing wheel, and universal Backstage RFC-42 project auditor.
+  - [x] **TASK-026-B**: Resolve deterministic MCP server `projectRoot` fallback anchoring to `fileURLToPath(import.meta.url)` to guarantee 100% precision across external hosts.
+  - [x] **TASK-026-C**: Calibrate Google Borg reconciliation timing threshold in `test/eosTitans.test.mjs` to eliminate NTFS I/O jitter during concurrent sweeps.
+  - [x] **TASK-026-D**: Expand Living OpenSpec with `SPEC-004-SPOTIFY-XIRP-ENGINE.md`, `SPEC-005-AUTONOMOUS-HEALER.md`, `SPEC-006-TITANS-MATRIX.md`, `SPEC-007-TURBO-SEMANTIC-GRAPH.md`, and delta `CHANGE-004-SPOTIFY-UNIVERSAL-CODEX.md`.
+  - [x] **TASK-026-E**: Expose `eos_spotify_audit` in `src/mcp/eosMcpServer.ts` and CLI command `eos spotify [path]` in `bin/eos.mjs`.
+  - [x] **TASK-026-F**: Implement comprehensive unit test suite `test/eosSpotify.test.mjs` asserting BDD-036 and BDD-037.
+  - [x] **TASK-026-G**: Integrate into 7-stage CI/CD SecDevOps gate (`scripts/verify-cicd-pipeline.mjs`), verify 0 errors (`exit 0`), and attest receipt.

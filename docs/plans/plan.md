@@ -187,3 +187,14 @@
 * **Rationale**: Closes the loop from passive fault detection to active, autonomous remediation with zero human friction, fulfilling Samaelian rigor (*Morir* to defects, *Nacer* to pure logic).
 * **Rejected Alternatives**:
   * *Manual Human-Only Bug Fixing*: Rejected because automated regression and syntax repairs should be handled deterministically by the control plane without human toil.
+
+### ADR-023: Universal Project Perfection & Spotify Deep Architecture Codex (`src/core/eosSpotifyCodex.ts`)
+* **Decision**: Implement a comprehensive architectural modeling and diagnostic engine for Spotify engineering standards, enabling EOS to audit, understand, and elevate any software project to Spotify Tier-1 quality:
+  1. **Spotify Backstage RFC-42 Golden Path Auditor**: Scans repositories for `catalog-info.yaml` compliance, entity schema types, ownership metadata, and architectural layer purity.
+  2. **ITU-R BS.1770 / EBU R128 Loudness Processing**: Implements deterministic calculation of integrated loudness to the Spotify $-14.0$ LUFS standard with a $-1.0$ dB True Peak ceiling and automatic limiter synthesis.
+  3. **8D Acoustic Vector Space & Camelot Wheel**: Models track recommendations using cosine similarity across 8 perceptual dimensions (tempo, energy, danceability, valence, acousticness, instrumentalness, liveness, speechiness) blended with harmonic Camelot Wheel key transitions for gapless acoustic mixing.
+  4. **Hermes/Apollo Microservice Resilience**: Simulates event routing and deterministic exponential backoff with full jitter to handle Spotify Web API HTTP 429 rate limits.
+  5. **Universal CLI (`eos spotify [path]`) & MCP Omnitool (`eos_spotify_audit`)**: Exposes Spotify-grade project auditing directly across the entire fleet.
+* **Rationale**: Directly satisfies the mandate for EOS to operate on any target project with mathematical perfection while embodying deep, production-grade mastery of Spotify's systems architecture.
+* **Rejected Alternatives**:
+  * *Relying solely on external Spotify Web API calls*: Rejected because EOS Layer-0 must maintain zero runtime dependencies and work fully offline/air-gapped without API keys.

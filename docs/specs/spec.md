@@ -286,5 +286,15 @@ ESCENARIO: [BDD-035 Reconciliación Declarativa de Estado y Catálogo Universal 
   CUANDO el reconciliador de estado compara el estado activo con el estado deseado mediante "eos reconcile" o /api/titans
   ENTONCES certifica 0 divergencias (Drift = 0.00%), emite el recibo de sincronización inmutable y verifica el cumplimiento de las 7 Leyes Inviolables.
 
+ESCENARIO: [BDD-036 Auditoría de Proyecto Universal y Spotify Golden Path (eos spotify)]
+  DADO cualquier repositorio o proyecto de software en el ecosistema (p. ej. Aberamentho, PTG, Portafolio)
+  CUANDO se invoca "eos spotify [ruta]" o la herramienta MCP "eos_spotify_audit"
+  ENTONCES EOS audita el cumplimiento de Backstage RFC-42 (catalog-info.yaml), pureza de capas Hexagonales L0, presencia de activos de audio, y emite un puntaje Golden Path (0-100) con recomendaciones accionables y sello SHA-256.
+
+ESCENARIO: [BDD-037 Procesamiento de Audio Spotify ITU-R BS.1770 y Recomendación Acústica 8D]
+  DADO un archivo de audio o vector de características sonoras
+  CUANDO el motor de audio de Spotify Codex calcula la normalización
+  ENTONCES ajusta la ganancia al estándar de -14.0 LUFS integrado con techo True Peak de -1.0 dBTP, evaluando transiciones armónicas con la Rueda de Camelot y similitud coseno en espacio vectorial de 8 dimensiones en tiempo submilisegundo.
+
 
 ```
