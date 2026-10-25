@@ -52,8 +52,8 @@
     {
       "id": "performance-talent-group",
       "name": "PTG — Performance Talent Group",
-      "localPath": "c:\\Users\\valen\\Performance-Talent-Group",
-      "remoteUrl": "",
+      "localPath": "c:\\Users\\valen\\Performance-Talent-Group-1",
+      "remoteUrl": "https://github.com/valentinflorezarbelaez-ai/Performance-Talent-Group.git",
       "productionUrl": "https://ptg-performance-talent-group.vercel.app",
       "type": "enterprise-operations",
       "status": "REGISTERED",
@@ -61,8 +61,8 @@
       "specification": "SPECIFICATION_APPROVED",
       "audit": "AUDIT_COMPLETE",
       "authorization": "LEVEL_2_AUTHORIZED",
-      "cicdGateScript": "scripts/verify-landing.mjs",
-      "autoShipScript": "npm run ship:sovereign"
+      "cicdGateScript": "scripts/smoke-test.ps1",
+      "autoShipScript": "git push origin main"
     }
   ]
 }

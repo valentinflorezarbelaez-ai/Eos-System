@@ -16,6 +16,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
+import { fileURLToPath } from "node:url";
 
 import {
   createDefaultEosKnowledgeStore,
@@ -105,8 +106,19 @@ export class EosMcpServer {
   private readonly knowledgeStore = createDefaultEosKnowledgeStore();
   private readonly projectRoot: string;
 
-  constructor(projectRoot: string = process.cwd()) {
-    this.projectRoot = projectRoot;
+  constructor(projectRoot?: string) {
+    if (projectRoot && fs.existsSync(path.join(projectRoot, "package.json"))) {
+      this.projectRoot = projectRoot;
+    } else if (process.env.EOS_PROJECT_ROOT && fs.existsSync(path.join(process.env.EOS_PROJECT_ROOT, "package.json"))) {
+      this.projectRoot = process.env.EOS_PROJECT_ROOT;
+    } else if (fs.existsSync(path.join(process.cwd(), "package.json"))) {
+      this.projectRoot = process.cwd();
+    } else {
+      const currentDir = typeof __dirname !== "undefined"
+        ? __dirname
+        : path.dirname(fileURLToPath(import.meta.url));
+      this.projectRoot = path.resolve(currentDir, "../../");
+    }
   }
 
   public handleRequest(req: JsonRpcRequest): JsonRpcResponse | null {

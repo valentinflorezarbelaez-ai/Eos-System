@@ -294,7 +294,7 @@ STATUS: CICD_7_STAGES_VERIFIED | FAIL_CLOSED_ARMED | AUTO_DEPLOY_READY | EXIT CO
   ├─ 01. EOS System Control Plane   : c:\\Users\\valen\\Eos-System                  │ 7/7 GATES PASSED │ 200 OK
   ├─ 02. Aberamentho Pleroma Music  : c:\\Users\\valen\\Aberamentho-s-Pleroma-music │ HOOKS INJECTED  │ GOLDEN_SEAL
   ├─ 03. Portafolio Valentín Flórez : c:\\Users\\valen\\portafolio                 │ HOOKS INJECTED  │ 200 OK
-  └─ 04. Performance Talent Group   : c:\\Users\\valen\\Performance-Talent-Group   │ REGISTERED L2   │ ENTERPRISE
+  └─ 04. Performance Talent Group   : c:\\Users\\valen\\Performance-Talent-Group-1 │ REGISTERED L2   │ ENTERPRISE
 
 [2] FEDERATED DEFENSE-IN-DEPTH TOPOLOGY:
   ├─ Pre-Commit / Pre-Push Hooks    : Active in all local fleet repositories via .githooks (git config core.hooksPath .githooks)
@@ -2612,7 +2612,7 @@ Sello SHA256 : ${seal.slice(0, 40)}...`;
         `  ▶ 01. EOS System Control Plane : c:\\Users\\valen\\Eos-System                │ 7/7 GATES PASSED │ 200 OK`,
         `  ▶ 02. Aberamentho Pleroma      : c:\\Users\\valen\\Aberamentho-s-Pleroma-music│ HOOKS INJECTED  │ GOLDEN_SEAL`,
         `  ▶ 03. Portafolio Valentín      : c:\\Users\\valen\\portafolio               │ HOOKS INJECTED  │ 200 OK`,
-        `  ▶ 04. Performance Talent Group : c:\\Users\\valen\\Performance-Talent-Group │ REGISTERED L2   │ ENTERPRISE`,
+        `  ▶ 04. Performance Talent Group : c:\\Users\\valen\\Performance-Talent-Group-1 │ REGISTERED L2   │ ENTERPRISE`,
         `${"─".repeat(78)}`,
         `VERDICT: ALL FLEET REPOSITORIES SYNCHRONIZED | EXIT CODE: 0`
       ].join("\n");
@@ -2630,7 +2630,7 @@ Sello SHA256 : ${seal.slice(0, 40)}...`;
         `  ├─ c:\\Users\\valen\\Eos-System                  (core.hooksPath = .githooks)`,
         `  ├─ c:\\Users\\valen\\Aberamentho-s-Pleroma-music (core.hooksPath = .githooks)`,
         `  ├─ c:\\Users\\valen\\portafolio                 (core.hooksPath = .githooks)`,
-        `  └─ c:\\Users\\valen\\Performance-Talent-Group   (core.hooksPath = .githooks)`,
+        `  └─ c:\\Users\\valen\\Performance-Talent-Group-1 (core.hooksPath = .githooks)`,
         ``,
         `Result: Whenever code is modified in ANY fleet repo, the local Git hooks will`,
         `automatically block any secret leak or untested commit before it leaves the machine!`,

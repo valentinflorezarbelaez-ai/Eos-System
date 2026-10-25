@@ -44,8 +44,8 @@ const FLEET_PROJECTS = [
   {
     id: "ptg",
     name: "PTG — Performance Talent Group",
-    path: "c:\\Users\\valen\\Performance-Talent-Group",
-    remote: "https://ptg-performance-talent-group.vercel.app",
+    path: "c:\\Users\\valen\\Performance-Talent-Group-1",
+    remote: "https://github.com/valentinflorezarbelaez-ai/Performance-Talent-Group.git",
     url: "https://ptg-performance-talent-group.vercel.app",
     cicdGates: "7/7 PASSED",
     status: "PRODUCTION_READY",

@@ -65,3 +65,8 @@
   - [x] **TASK-024-D**: Expose `eos_titans_benchmark` and `eos_reconcile_state` in `src/mcp/eosMcpServer.ts`, and CLI `eos titan` & `eos reconcile` in `bin/eos.mjs`.
   - [x] **TASK-024-E**: Implement test suite `test/eosTitans.test.mjs` asserting BDD-034 and BDD-035.
   - [x] **TASK-024-F**: Run full 7-stage SecDevOps verification suite, commit, push, and verify live CI/CD.
+- [x] **TASK-025**: Audit and seal **Sovereign Core (`v18.1.0`)**:
+  - [x] **TASK-025-A**: Resolve robust MCP server `projectRoot` fallback to eliminate silent 0-file scans and 0-project fleet detection.
+  - [x] **TASK-025-B**: Calibrate PTG fleet paths and remote repository URLs in registry, dispatcher, and interactive UI.
+  - [x] **TASK-025-C**: Filter AST template literal artifacts in `EosSemanticGraph` to eliminate false-positive orphan symbols.
+  - [x] **TASK-025-D**: Re-verify 7/7 SecDevOps gates, seal cryptographic Merkle SBOM and deployment receipt (`exit 0`).

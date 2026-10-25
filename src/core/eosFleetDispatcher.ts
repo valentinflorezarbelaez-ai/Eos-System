@@ -74,7 +74,7 @@ export const CANONICAL_FLEET_PROJECTS: readonly FleetProjectManifest[] = [
   {
     id: "ptg",
     name: "PTG — Performance Talent Group",
-    localPath: "c:\\Users\\valen\\Performance-Talent-Group",
+    localPath: "c:\\Users\\valen\\Performance-Talent-Group-1",
     remoteUrl: "https://github.com/valentinflorezarbelaez-ai/Performance-Talent-Group.git",
     productionUrl: "https://ptg-performance-talent-group.vercel.app",
     type: "enterprise-operations",

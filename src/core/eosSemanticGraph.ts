@@ -99,8 +99,10 @@ export function extractExports(sourceCode: string, relativePath: string): Export
     for (const pat of exportPatterns) {
       const match = pat.regex.exec(trimmed);
       if (match) {
+        const symbolName = match[1];
+        if (symbolName.startsWith("$") || trimmed.includes("${")) continue;
         symbols.push({
-          name: match[1],
+          name: symbolName,
           kind: pat.kind,
           filePath: relativePath,
           lineNumber: idx + 1
