@@ -177,6 +177,14 @@ execFileSync(process.execPath, ["--test", path.join(root, "test/eosApolloHermesM
   cwd: root,
   stdio: "pipe"
 });
+execFileSync(process.execPath, ["--test", path.join(root, "test/eosGaplessMixEngine.test.mjs")], {
+  cwd: root,
+  stdio: "pipe"
+});
+execFileSync(process.execPath, ["--test", path.join(root, "test/eosAcousticFeatureStore.test.mjs")], {
+  cwd: root,
+  stdio: "pipe"
+});
 console.log(`[PASS] Stage 4/7 — Static AST, Syntax, Unit & Chaos Gate (${jsFilesToCheck.length} JS/MJS modules + ${tsCoreFiles.length} L0 TS modules + node:test passed).`);
 
 // ---------------------------------------------------------------------------

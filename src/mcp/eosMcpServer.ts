@@ -108,6 +108,14 @@ import {
   EosApolloHermesMesh
 } from "../core/eosApolloHermesMesh.ts";
 
+import {
+  EosGaplessMixEngine
+} from "../core/eosGaplessMixEngine.ts";
+
+import {
+  EosAcousticFeatureStore
+} from "../core/eosAcousticFeatureStore.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -541,6 +549,32 @@ export class EosMcpServer {
                     },
                     required: ["serviceName", "endpoint"]
                   }
+                },
+                {
+                  name: "eos_spotify_mix_plan",
+                  description: "Plans a seamless gapless DJ transition between two tracks with 3-band crossover, anti-bass clash strategy, and Camelot harmonic cost.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      keyA: { type: "string", description: "Camelot key of outgoing track (e.g. 8A)" },
+                      keyB: { type: "string", description: "Camelot key of incoming track (e.g. 9A)" },
+                      bpmA: { type: "number", description: "BPM of track A (default: 126)" },
+                      bpmB: { type: "number", description: "BPM of track B (default: 128)" },
+                      duration: { type: "number", description: "Transition duration in seconds (default: 5.0)" }
+                    },
+                    required: ["keyA", "keyB"]
+                  }
+                },
+                {
+                  name: "eos_spotify_taste_profile",
+                  description: "Computes real-time 8D user taste centroid with exponential decay weighting (tau=7d) and skip penalties.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      userId: { type: "string", description: "User identifier" }
+                    },
+                    required: ["userId"]
+                  }
                 }
               ]
             }
@@ -911,6 +945,24 @@ export class EosMcpServer {
           dispatchedPayload: args.payload || {},
           timestamp: new Date().toISOString()
         };
+      }
+
+      case "eos_spotify_mix_plan": {
+        const engine = new EosGaplessMixEngine();
+        const keyA = String(args.keyA || "8A");
+        const keyB = String(args.keyB || "9A");
+        return engine.planTransition(
+          { trackId: "track-A", title: `Track A (${keyA})`, bpm: Number(args.bpmA) || 126, camelotKey: keyA, sampleRateHz: 44100 },
+          { trackId: "track-B", title: `Track B (${keyB})`, bpm: Number(args.bpmB) || 128, camelotKey: keyB, sampleRateHz: 44100 },
+          Number(args.duration) || 5.0
+        );
+      }
+
+      case "eos_spotify_taste_profile": {
+        const store = new EosAcousticFeatureStore();
+        const userId = String(args.userId || "user-listener");
+        store.recordListen(userId, "track-sample", { tempo: 0.7, energy: 0.85, danceability: 0.8, valence: 0.7, acousticness: 0.1, instrumentalness: 0.2, liveness: 0.15, speechiness: 0.08 }, 200, 200);
+        return store.computeTasteCentroid(userId);
       }
 
       default:

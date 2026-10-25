@@ -845,6 +845,63 @@ switch (command) {
     break;
   }
 
+  case "mix": {
+    printBanner();
+    const keyA = args[1] || "8A";
+    const keyB = args[2] || "9A";
+    const bpmA = Number(args[3]) || 126;
+    const bpmB = Number(args[4]) || 128;
+
+    const { EosGaplessMixEngine } = await import("../src/core/eosGaplessMixEngine.ts");
+    const engine = new EosGaplessMixEngine();
+
+    console.log(`[EOS DJ AUTOMIX ENGINE] Planificando transición armónica (${keyA} -> ${keyB})...\n`);
+    const plan = engine.planTransition(
+      { trackId: "track-A", title: `Track A (${keyA})`, bpm: bpmA, camelotKey: keyA, sampleRateHz: 44100 },
+      { trackId: "track-B", title: `Track B (${keyB})`, bpm: bpmB, camelotKey: keyB, sampleRateHz: 44100 },
+      5.0
+    );
+
+    console.log(`Track Saliente (A)     : ${plan.trackA.camelotKey} @ ${plan.trackA.bpm} BPM`);
+    console.log(`Track Entrante (B)     : ${plan.trackB.camelotKey} @ ${plan.trackB.bpm} BPM`);
+    console.log(`Tipo de Transición     : ${plan.transitionType}`);
+    console.log(`Costo Armónico         : ${plan.harmonicTransitionCost.toFixed(2)} (0.0=Perfecto, 1.0=Disonante)`);
+    console.log(`Delta de Tempo         : ${plan.tempoDeltaPercent}%`);
+    console.log(`Duración Crossfade     : ${plan.durationSeconds}s (${plan.durationSamples.toLocaleString()} muestras)`);
+    console.log(`Estrategia Recomendada : ${plan.recommendedStrategy}`);
+    console.log(`Sello SHA-256          : ${plan.sha256Proof}\n`);
+    console.log("[PASS] Plan de mezcla DJ generado con éxito.");
+    break;
+  }
+
+  case "features": {
+    printBanner();
+    const userId = args[1] || "user-spotify-listener";
+    const { EosAcousticFeatureStore } = await import("../src/core/eosAcousticFeatureStore.ts");
+    const store = new EosAcousticFeatureStore(7);
+
+    // Populate with representative user history
+    store.recordListen(userId, "track-1", { tempo: 0.7, energy: 0.85, danceability: 0.8, valence: 0.7, acousticness: 0.1, instrumentalness: 0.2, liveness: 0.15, speechiness: 0.08 }, 210, 210);
+    store.recordListen(userId, "track-2", { tempo: 0.75, energy: 0.9, danceability: 0.85, valence: 0.75, acousticness: 0.08, instrumentalness: 0.1, liveness: 0.2, speechiness: 0.05 }, 190, 200);
+
+    const profile = store.computeTasteCentroid(userId);
+    console.log(`[EOS ACOUSTIC FEATURE STORE] Perfil de gusto en tiempo real (${userId}):\n`);
+    console.log(`Total Escuchas         : ${profile.totalListens}`);
+    console.log(`Tasa de Omisión (Skip) : ${(profile.skipRate * 100).toFixed(1)}%`);
+    console.log(`Vector Centroide 8D:`);
+    console.log(`  • Tempo              : ${profile.centroid.tempo}`);
+    console.log(`  • Energía            : ${profile.centroid.energy}`);
+    console.log(`  • Bailabilidad       : ${profile.centroid.danceability}`);
+    console.log(`  • Positividad/Valence: ${profile.centroid.valence}`);
+    console.log(`  • Acústica           : ${profile.centroid.acousticness}`);
+    console.log(`  • Instrumental       : ${profile.centroid.instrumentalness}`);
+    console.log(`  • Vivo (Liveness)    : ${profile.centroid.liveness}`);
+    console.log(`  • Voz (Speechiness)  : ${profile.centroid.speechiness}`);
+    console.log(`\nSello Merkle SHA-256   : ${profile.sha256Proof}\n`);
+    console.log("[PASS] Centroide acústico calculado con éxito.");
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -879,6 +936,8 @@ Uso Universal:
   eos dsp [benchmark]        Benchmark de filtros Biquad y Limitador ITU-R BS.1770 (-1.0 dBTP)
   eos fleet:elevate [--dry]  Auditoría y elevación de toda la flota al Golden Path Backstage
   eos rpc [service]          Despacho RPC y bus pub/sub estilo Apollo/Hermes con Circuit Breakers
+  eos mix [keyA] [keyB]      Planificación y crossfader de mezcla DJ armónica sin choque de bajos
+  eos features [usuario]     Centroide de gustos acústicos 8D en tiempo real con decaimiento EWMA
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

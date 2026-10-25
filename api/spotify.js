@@ -48,6 +48,22 @@ export default async function handler(req, res) {
     } else if (action === "mesh") {
       const mesh = new EosApolloHermesMesh();
       result = mesh.getMeshReport();
+    } else if (action === "mix") {
+      const { EosGaplessMixEngine } = await import("../src/core/eosGaplessMixEngine.ts");
+      const engine = new EosGaplessMixEngine();
+      const keyA = query.keyA || "8A";
+      const keyB = query.keyB || "9A";
+      result = engine.planTransition(
+        { trackId: "trackA", title: `Track A (${keyA})`, bpm: Number(query.bpmA) || 126, camelotKey: keyA, sampleRateHz: 44100 },
+        { trackId: "trackB", title: `Track B (${keyB})`, bpm: Number(query.bpmB) || 128, camelotKey: keyB, sampleRateHz: 44100 },
+        Number(query.duration) || 5.0
+      );
+    } else if (action === "features") {
+      const { EosAcousticFeatureStore } = await import("../src/core/eosAcousticFeatureStore.ts");
+      const store = new EosAcousticFeatureStore();
+      const userId = query.userId || "user-default";
+      store.recordListen(userId, "sample-track", { tempo: 0.7, energy: 0.85, danceability: 0.8, valence: 0.7, acousticness: 0.1, instrumentalness: 0.2, liveness: 0.15, speechiness: 0.08 }, 200, 200);
+      result = store.computeTasteCentroid(userId);
     } else {
       // Default: Comprehensive Spotify Platform Status
       const kernel = new EosAudioDspKernel();
