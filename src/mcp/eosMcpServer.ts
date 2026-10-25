@@ -96,6 +96,18 @@ import {
   EosSpotifyAgenticFactory
 } from "../core/eosSpotifyAgenticFactory.ts";
 
+import {
+  EosAudioDspKernel
+} from "../core/eosAudioDspKernel.ts";
+
+import {
+  EosFleetElevator
+} from "../core/eosFleetElevator.ts";
+
+import {
+  EosApolloHermesMesh
+} from "../core/eosApolloHermesMesh.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -495,6 +507,40 @@ export class EosMcpServer {
                     },
                     required: ["serviceName", "squad"]
                   }
+                },
+                {
+                  name: "eos_audio_dsp_benchmark",
+                  description: "Executes Direct Form II Transposed Biquad filtering and ITU-R BS.1770 Lookahead True Peak limiter (-1.0 dBTP ceiling), returning real-time throughput metrics.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      frames: { type: "integer", description: "Audio frames per buffer (default: 65536)" },
+                      iterations: { type: "integer", description: "DSP iterations (default: 20)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_fleet_elevate",
+                  description: "Audits and elevates all fleet repositories in docs/projects/registry.json to Spotify Backstage RFC-42 Golden Path standards.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      dryRun: { type: "boolean", description: "Simulate elevation without modifying disk files" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_apollo_rpc",
+                  description: "Invokes an asynchronous Apollo/Hermes RPC request across microservices with Circuit Breaking, Token Bucket Rate Limiting, and W3C Tracing.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      serviceName: { type: "string", description: "Target service name" },
+                      endpoint: { type: "string", description: "Endpoint name" },
+                      payload: { type: "object", description: "RPC request payload" }
+                    },
+                    required: ["serviceName", "endpoint"]
+                  }
                 }
               ]
             }
@@ -838,6 +884,33 @@ export class EosMcpServer {
           Number(args.p99LatencyMs) || 100,
           Number(args.maxErrorRatePercent) || 0.1
         );
+      }
+
+      case "eos_audio_dsp_benchmark": {
+        const kernel = new EosAudioDspKernel();
+        return kernel.benchmarkDsp(Number(args.frames) || 65536, Number(args.iterations) || 20);
+      }
+
+      case "eos_fleet_elevate": {
+        const elevator = new EosFleetElevator(this.projectRoot);
+        return elevator.elevateFleet({ dryRun: Boolean(args.dryRun) });
+      }
+
+      case "eos_apollo_rpc": {
+        const mesh = new EosApolloHermesMesh();
+        const trace = mesh.generateTraceContext();
+        const cb = mesh.getCircuitBreaker(String(args.serviceName || "default-service"));
+        const partitionId = mesh.computePartition(`${args.serviceName}:${args.endpoint}`);
+        return {
+          serviceName: String(args.serviceName),
+          endpoint: String(args.endpoint),
+          success: cb.canExecute(),
+          circuitState: cb.getState(),
+          partitionId,
+          traceparent: trace.headerString,
+          dispatchedPayload: args.payload || {},
+          timestamp: new Date().toISOString()
+        };
       }
 
       default:

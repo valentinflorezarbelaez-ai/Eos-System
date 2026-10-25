@@ -53,8 +53,9 @@ describe("EOS Sovereign Spotify Agentic SDLC Factory Suite (Honk, Xirp, Fleetshi
       assert.ok(ctx.tags.includes("layer-0-sovereign"));
       assert.ok(ctx.registeredFleetProjects >= 3);
       assert.ok(ctx.adrCount >= 5);
-      assert.ok(ctx.agentsMd.includes("SPOTIFY XIRP CONTEXT MATRIX"));
-      assert.ok(ctx.claudeMd.includes("SPOTIFY HONK AGENT DIRECTIVES"));
+      assert.ok(ctx.agentsMd.includes("SPOTIFY & NUBANK DUAL-ENGINE CONTEXT MATRIX"));
+      assert.ok(ctx.agentsMd.includes("90 / 10 Architecture Doctrine"));
+      assert.ok(ctx.claudeMd.includes("SPOTIFY & NUBANK DUAL-ENGINE AGENT DIRECTIVES"));
       assert.ok(ctx.sha256Proof.length === 64);
     });
 
@@ -183,7 +184,7 @@ describe("EOS Sovereign Spotify Agentic SDLC Factory Suite (Honk, Xirp, Fleetshi
       assert.ok(res?.result?.content?.[0]?.text);
       const ctx = JSON.parse(res.result.content[0].text);
       assert.equal(ctx.serviceName, "eos-system-control-plane");
-      assert.ok(ctx.agentsMd.includes("SPOTIFY XIRP CONTEXT MATRIX"));
+      assert.ok(ctx.agentsMd.includes("SPOTIFY & NUBANK DUAL-ENGINE CONTEXT MATRIX"));
     });
   });
 });

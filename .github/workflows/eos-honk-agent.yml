@@ -47,6 +47,11 @@ jobs:
       - name: Synchronize Xirp Context & Backstage Catalogs
         run: node bin/eos.mjs xirp sync
 
+      - name: Verify Go Microservice Concurrency & Memory Benchmarks (FinOps Shift-Left)
+        run: |
+          cd templates/spotify-go-microservice
+          go test -v -race -bench=. -benchmem .
+
       - name: Execute Honk Autonomous Coding & Test Loop
         id: honk_run
         run: |

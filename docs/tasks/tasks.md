@@ -108,3 +108,24 @@
   - [x] **TASK-030-E**: Expand Living OpenSpec with `SPEC-012-SPOTIFY-AGENTIC-FACTORY.md` and delta `CHANGE-007-HONK-XIRP-FLEETSHIFT.md` (12 specs, 7 deltas).
   - [x] **TASK-030-F**: Implement comprehensive unit test suite `test/eosSpotifyFactory.test.mjs` asserting BDD-043, BDD-044, BDD-045, and MCP tool dispatch (10/10 tests passed).
   - [x] **TASK-030-G**: Run full 100-test suite across 57 suites, verify 7-stage CI/CD SecDevOps gate (`npm run verify:strict`), seal cryptographic Merkle SBOM, commit, and push (`exit 0`).
+- [x] **TASK-031**: Implement **Audio DSP Kernel & Fleet Golden Path Elevator (`v24.0`)**:
+  - [x] **TASK-031-A**: Implement `src/core/eosAudioDspKernel.ts` (Direct Form II Transposed Biquad IIR filters, ITU-R BS.1770 Lookahead True Peak Limiter with hyperbolic tangent soft saturation, and > 2M samples/sec benchmark).
+  - [x] **TASK-031-B**: Implement `src/core/eosFleetElevator.ts` (autonomous scan and RFC-42 Golden Path elevation across all registered fleet repositories).
+  - [x] **TASK-031-C**: Create unit test suites `test/eosAudioDsp.test.mjs` and `test/eosFleetElevator.test.mjs` (6/6 tests passed).
+  - [x] **TASK-031-D**: Create Living OpenSpec `SPEC-013-AUDIO-DSP-KERNEL.md`, `SPEC-014-FLEET-GOLDEN-PATH-ELEVATOR.md`, and delta `CHANGE-008-FLEET-ELEVATION-AND-DSP.md`.
+- [x] **TASK-032**: Implement **Spotify Apollo/Hermes RPC & Event Mesh + Interactive Studio (`v25.0`)**:
+  - [x] **TASK-032-A**: Implement `src/core/eosApolloHermesMesh.ts` (3-state Circuit Breaker, sliding error window, Token Bucket rate limiting, FNV-1a topic hashing, W3C Distributed Tracing `traceparent` propagation, and in-memory event bus).
+  - [x] **TASK-032-B**: Implement unit test suite `test/eosApolloHermesMesh.test.mjs` asserting BDD-046.
+  - [x] **TASK-032-C**: Expose CLI commands in `bin/eos.mjs` (`eos dsp`, `eos fleet:elevate`, `eos rpc`) and MCP tools in `src/mcp/eosMcpServer.ts` (`eos_audio_dsp_benchmark`, `eos_fleet_elevate`, `eos_apollo_rpc`).
+  - [x] **TASK-032-D**: Add npm test scripts to `package.json` and integrate tests into Stage 4 of `scripts/verify-cicd-pipeline.mjs`.
+  - [x] **TASK-032-E**: Mount interactive Spotify Codex Studio in `index.html`, `css/eos.css`, and `js/eos.js` featuring live LUFS meters, Camelot DJ wheel, and BaRT bandit visualizer.
+  - [x] **TASK-032-F**: Run full verification suite (`npm test`), verify 0 errors, commit, and push (`exit 0`).
+- [x] **TASK-033**: Implement **Spotify & Nubank Dual-Engine FinOps Architecture (`v26.0`)**:
+  - [x] **TASK-033-A**: Formulate the 90/10 Architecture Doctrine (90% Go for cloud microservices/APIs/FinOps, 10% Rust for low-level audio DSP kernels).
+  - [x] **TASK-033-B**: Build banking-grade idempotent request processor (`IdempotencyStore`) in `templates/spotify-go-microservice/main.go` delivering 0 B/op allocations at 45 ns/op.
+  - [x] **TASK-033-C**: Implement Distroless multi-stage containerization `templates/spotify-go-microservice/Dockerfile` (< 12MB static binary image, non-root user).
+  - [x] **TASK-033-D**: Implement memory allocation benchmarks (`BenchmarkRecommendEndpoint`, `BenchmarkIdempotencyStore`) and concurrent race condition tests in `main_test.go`.
+  - [x] **TASK-033-E**: Encode the 4 Fundamental Laws of Engineering & Perfection into `src/core/eosSpotifyAgenticFactory.ts`, updating `AGENTS.md` and `CLAUDE.md`.
+  - [x] **TASK-033-F**: Add FinOps and concurrency race testing steps to `.github/workflows/eos-honk-agent.yml`.
+  - [x] **TASK-033-G**: Formalize Living OpenSpec `SPEC-016-FINOPS-GO-NUBANK-SPOTIFY.md` and change delta `CHANGE-010-FINOPS-GO-FACTORY.md`.
+  - [x] **TASK-033-H**: Run 117-test suite across 69 suites, execute 7/7 SecDevOps gates (`npm run verify:strict`), seal Merkle receipt, commit, and push (`exit 0`).

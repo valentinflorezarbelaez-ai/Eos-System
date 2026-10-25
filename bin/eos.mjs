@@ -789,6 +789,62 @@ switch (command) {
     break;
   }
 
+  case "dsp": {
+    printBanner();
+    const { EosAudioDspKernel } = await import("../src/core/eosAudioDspKernel.ts");
+    const kernel = new EosAudioDspKernel();
+    console.log("[EOS AUDIO DSP] Ejecutando benchmark de filtrado Biquad Transpuesto & Limitador ITU-R BS.1770...\n");
+    const bench = kernel.benchmarkDsp(65536, 20);
+    console.log(`Frecuencia de Muestreo : ${bench.sampleRateHz} Hz`);
+    console.log(`Cuadros de Audio       : ${bench.bufferFrames}`);
+    console.log(`Muestras Totales       : ${bench.totalSamplesProcessed.toLocaleString()}`);
+    console.log(`Rendimiento            : ${bench.throughputSamplesSec.toLocaleString()} muestras/seg`);
+    console.log(`Factor de Velocidad    : ${bench.realTimeSpeedFactor}x Tiempo Real`);
+    console.log(`Pico Verdadero Salida  : ${bench.truePeakOutputDb} dBTP`);
+    console.log(`Limitador Activado     : ${bench.limiterClamped}`);
+    console.log(`Duración de Proceso    : ${bench.durationUs.toFixed(2)} µs`);
+    console.log(`Sello SHA-256          : ${bench.sha256Proof}\n`);
+    console.log("[PASS] Kernel DSP ejecutado con éxito.");
+    break;
+  }
+
+  case "fleet:elevate": {
+    printBanner();
+    const dryRun = args.includes("--dry") || args.includes("--dry-run");
+    const { EosFleetElevator } = await import("../src/core/eosFleetElevator.ts");
+    const elevator = new EosFleetElevator(root);
+    console.log(`[EOS FLEET ELEVATOR] Elevando repositorios de la flota al Golden Path RFC-42 (Dry Run: ${dryRun})...\n`);
+    const report = elevator.elevateFleet({ dryRun });
+    console.log(`Repositorios Totales   : ${report.totalRepos}`);
+    console.log(`Repositorios Elevados  : ${report.elevatedRepos}`);
+    console.log(`Índice Golden Path     : ${report.goldenPathIndex.toFixed(1)}%`);
+    console.log(`Sello SHA-256          : ${report.sha256Seal}\n`);
+    report.details.forEach((d) => {
+      console.log(`  ↳ [${d.status}] ${d.projectId} (Score: ${d.score}/100) -> ${d.actions.join("; ") || "Conforme"}`);
+    });
+    console.log(`\n[PASS] Elevación de flota completada con éxito.`);
+    break;
+  }
+
+  case "rpc": {
+    printBanner();
+    const { EosApolloHermesMesh } = await import("../src/core/eosApolloHermesMesh.ts");
+    const mesh = new EosApolloHermesMesh();
+    console.log("[EOS APOLLO/HERMES MESH] Despachando llamada RPC con Circuit Breaker y W3C Tracing...\n");
+    const res = await mesh.invokeRpc("audio-engine", "normalize-track", { trackId: "spotify:track:4cOdK2wGLETKBW3PvgPWqT", targetLufs: -14.0 }, async (p) => {
+      return { status: "NORMALIZED", targetLufs: p.targetLufs, ceilingDbTP: -1.0 };
+    });
+    console.log(`Servicio Destino       : ${res.serviceName}/${res.endpoint}`);
+    console.log(`Éxito de Llamada       : ${res.success}`);
+    console.log(`Estado Circuit Breaker : ${res.circuitState}`);
+    console.log(`Duración               : ${res.durationUs.toFixed(2)} µs`);
+    console.log(`Partición FNV-1a       : ${res.partitionId}`);
+    console.log(`W3C Traceparent        : ${res.traceContext.headerString}`);
+    console.log(`Datos de Retorno       : ${JSON.stringify(res.data)}\n`);
+    console.log("[PASS] RPC Apollo/Hermes ejecutado con éxito.");
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -820,6 +876,9 @@ Uso Universal:
   eos honk [directiva]       Bucle autónomo de codificación y self-healing estilo Spotify Honk
   eos xirp [sync|inspect]    Motor de contexto Xirp para eliminar alucinaciones vía Backstage RFC-42
   eos fleetshift [accion]    Migración y refactorización masiva de flotas de repositorios
+  eos dsp [benchmark]        Benchmark de filtros Biquad y Limitador ITU-R BS.1770 (-1.0 dBTP)
+  eos fleet:elevate [--dry]  Auditoría y elevación de toda la flota al Golden Path Backstage
+  eos rpc [service]          Despacho RPC y bus pub/sub estilo Apollo/Hermes con Circuit Breakers
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:
