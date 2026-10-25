@@ -42,3 +42,12 @@
 * **Rationale**: Enables EOS System to translate any natural-language directive from the Sovereign Architect into formal EARS/BDD specifications, hardware-sympathetic architecture, and zero-allocation low-level code, while continuously evolving `https://eos-system-ten.vercel.app/` in lockstep with EOS's capabilities.
 * **Rejected Alternatives**:
   * *Traditional Object-Oriented Heap-Heavy Code Generation*: Rejected for high-frequency hot paths because pointer-chasing across RAM (~100ns latency) and Garbage Collection pauses violate nanosecond determinism.
+
+### ADR-006: Sovereign Akashic Memory Engine (`src/core/eosAkashicMemory.ts` + `api/memory.js` + `#memoria-akashica`) Surpassing Engram & Gentle-AI
+* **Decision**: Implement EOS's native, zero-dependency **Akashic Memory & ODD/RDD Engine** (`src/core/eosAkashicMemory.ts`, serverless endpoint `api/memory.js`, and live interactive Control Plane vault `#memoria-akashica`) that encapsulates all 27 MCP operations of `Gentleman-Programming/engram` (`mem_save`, `mem_search`, `mem_context`, `mem_session_summary`, `mem_get_observation`, `mem_judge`, `mem_compare`, `mem_review`, `mem_doctor`, `mem_suggest_topic_key`, `mem_capture_passive`, etc.) plus `Gentleman-Programming/gentle-ai` (`ODD` proportional routing, `RDD` 4R frozen-candidate review, `CodeGraph`, `GGA`), elevated with:
+  1. **Cryptographic Merkle Chain (`SHA-256`)** per observation and relation verdict (preventing memory tampering).
+  2. **In-Memory Inverted FTS5 Index (`all` / `any` token matching) + L1 Cache SoA scoring** for sub-millisecond recall.
+  3. **Samaelian Esoteric Gnostic Christic Taxonomy**: **Átomo Maestro *Nous*** (Left Ventricle of the Heart), **Akashic Records of Nature**, **Three Factors Classification** (`MORIR`, `NACER`, `SACRIFICIO`), **10 Sephiroth Mapping**, and the **Anubic Tribunal of 42 Judges** for conflict resolution (`mem_judge` / `mem_compare`).
+* **Rationale**: Eliminates external memory lock-in by giving EOS its own sovereign, cryptographically attested memory core that operates both in serverless edge (`/api/memory`), Node L0 (`src/core/eosAkashicMemory.ts`), and browser (`#memoria-akashica` with `localStorage` + Obsidian/Merkle export).
+* **Rejected Alternatives**:
+  * *Depending Solely on External Unsigned SQLite Files*: Rejected because EOS requires cryptographic SHA-256 Merkle sealing on every observation, native browser + edge execution without binary installation friction, and Samaelian epistemic classification.

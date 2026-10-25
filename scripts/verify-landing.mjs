@@ -58,6 +58,7 @@ assert.ok(js.includes('"olympus:l0"'), "Missing olympus:l0 CLI preset (5 Supreme
 assert.ok(js.includes('"aberamentho:dsp"'), "Missing aberamentho:dsp CLI preset (Esoteric-Acoustic & Geely EX5 / Chery E5)");
 assert.ok(js.includes('"sanctum:thelema"'), "Missing sanctum:thelema CLI preset (EosSolarSanctum)");
 assert.ok(js.includes('"nanosecond:hft"'), "Missing nanosecond:hft CLI preset (5 Fastest Softwares & 5 Secrets)");
+assert.ok(js.includes('"memory:akashic"'), "Missing memory:akashic CLI preset (EOS Akashic Memory & 27 Engram Tools)");
 assert.ok(js.includes('num: "21"'), "Missing 21st step of Master Engineering Pipeline");
 assert.ok(html.includes("seL4"), "Missing seL4 formal verification benchmark");
 assert.ok(html.includes("ASML Twinscan EUV"), "Missing ASML Twinscan EUV benchmark");
@@ -70,6 +71,8 @@ assert.ok(html.includes("Atalanta"), "Missing Atalanta Three-Voice Alchemical Fu
 assert.ok(html.includes("Flyme Sound"), "Missing Geely EX5 / Chery E5 Flyme Sound 1,000W calibration");
 assert.ok(html.includes('id="templo-solar"'), "Missing #templo-solar EosSolarSanctum interactive section");
 assert.ok(html.includes('id="nanosecond-engine"'), "Missing #nanosecond-engine Nanosecond & Universal Translator section");
+assert.ok(html.includes('id="memoria-akashica"'), "Missing #memoria-akashica Sovereign Akashic Memory section");
+assert.ok(html.includes('id="akashic-memory-vault"'), "Missing #akashic-memory-vault interactive memory vault");
 assert.ok(html.includes('id="btn-copy-eos-blueprint"'), "Missing #btn-copy-eos-blueprint button");
 assert.ok(html.includes('id="btn-download-eos-spec"'), "Missing #btn-download-eos-spec button");
 assert.ok(html.includes('id="eos-evolution-log"'), "Missing #eos-evolution-log live co-evolution log");
@@ -83,10 +86,12 @@ assert.ok(html.includes("Struct of Arrays"), "Missing Struct of Arrays (SoA) Dat
 assert.ok(html.includes("sanctum-panel-oraculo"), "Missing #sanctum-panel-oraculo Sacred Geometry & Oracle panel");
 assert.ok(fs.existsSync(path.join(root, "src/core/samaelCodex.ts")), "Missing src/core/samaelCodex.ts");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosNanosecondEngine.ts")), "Missing src/core/eosNanosecondEngine.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosAkashicMemory.ts")), "Missing src/core/eosAkashicMemory.ts");
 assert.ok(fs.existsSync(path.join(root, "src/components/EosSolarSanctum.tsx")), "Missing src/components/EosSolarSanctum.tsx");
 assert.ok(fs.existsSync(path.join(root, "api/teurgia.js")), "Missing api/teurgia.js serverless oracle");
 assert.ok(fs.existsSync(path.join(root, "api/compile.js")), "Missing api/compile.js serverless universal translator");
-console.log("[PASS] 5/6 Interactive Control Plane, EosSolarSanctum, EosNanosecondEngine, /api/compile, World Top-10 L0 Matrix & 21-Step Pipeline verified.");
+assert.ok(fs.existsSync(path.join(root, "api/memory.js")), "Missing api/memory.js serverless Akashic memory engine");
+console.log("[PASS] 5/6 Interactive Control Plane, EosSolarSanctum, EosNanosecondEngine, EosAkashicMemory (27 Engram Tools + ODD/RDD 4R), World Top-10 L0 Matrix & 21-Step Pipeline verified.");
 
 // 6. Verify Service Worker, Assets & Xirp-Grade Speed Architecture (FR-011)
 assert.ok(fs.existsSync(path.join(root, "sw.js")), "Missing sw.js");

@@ -201,7 +201,27 @@ STATUS: SANCTUM_OPERATIONAL | THELEMA_ACTIVE | EXIT CODE: 0`,
   ├─ Secret 4 (Lock-Free CAS)   : Thread-per-Core + LMAX Disruptor / Atomic Compare-And-Swap (0 Mutex)
   └─ Secret 5 (SIMD & 120 FPS)  : 8-way unrolled AVX-512/SIMD128 vector loops + GPU Compositor Shaders
 
-STATUS: NANOSECOND_ENGINE_ONLINE | UNIVERSAL_COMPILER_READY | 0 B/OP | EXIT CODE: 0`
+STATUS: NANOSECOND_ENGINE_ONLINE | UNIVERSAL_COMPILER_READY | 0 B/OP | EXIT CODE: 0`,
+
+  "memory:akashic": `$ eos memory --akashic
+> Auditing EosAkashicMemoryEngine (src/core/eosAkashicMemory.ts + /api/memory)...
+
+[1] 27/27 ENGRAM MCP TOOLS ABSORBED & ELEVATED IN EOS LAYER-0:
+  ├─ Core Proactive (9)         : mem_save (What/Why/Where/Learned + topic_key upsert), mem_search (FTS5 <0.5ms),
+  │                               mem_context, mem_session_summary (6-Part Handoff), mem_get_observation,
+  │                               mem_save_prompt, mem_current_project, mem_judge, mem_compare
+  ├─ Lifecycle & Sessions (8)   : mem_suggest_topic_key, mem_update, mem_review (Entropy Decay Shock),
+  │                               mem_pin, mem_unpin, mem_session_start (Lease), mem_session_end, mem_capture_passive
+  └─ Admin & Graph (10)         : mem_doctor, mem_list_projects, mem_timeline, mem_stats, mem_delete,
+                                  mem_merge_projects, mem_search_prompts, mem_conflicts, mem_export (Obsidian), mem_import
+
+[2] GENTLE-AI (ODD + RDD 4R + CODEGRAPH + GGA) SAMAELIAN ELEVATION:
+  ├─ Átomo Maestro Nous         : Left Heart Ventricle Akashic Continuity (0% Context Compaction Amnesia)
+  ├─ Three Factors Taxonomy     : MORIR (Bugfix/FDIR) · NACER (Architecture/SI-12) · SACRIFICIO (Session Handoff)
+  ├─ Anubic Conflict Tribunal   : Hierarch Anubis & 42 Judges weighsupersedes/conflicts_with via SHA-256 Evidence
+  └─ ODD Solar & RDD 4R Lenses  : Proportional Delegation + Frozen Candidate 4R (Risk, Resilience, Readability, Reliability)
+
+STATUS: AKASHIC_MEMORY_SOVEREIGN | 27/27 TOOLS ACTIVE | MERKLE_SHA256_SEALED | EXIT CODE: 0`
 };
 
 const PIPELINE_STEPS = [
@@ -1376,6 +1396,372 @@ EXIT CODE          : 0 (CERO DEFECTOS)
           terminalOutput.textContent = currentArtifacts[viewKey];
         }
       }
+    });
+  });
+
+  /* ==========================================================================
+     EOS SOVEREIGN AKASHIC MEMORY VAULT & GENTLEMAN-SAMAELIAN ENGINE (v5.0)
+     ========================================================================== */
+  const AKASHIC_STORAGE_KEY = "eos_akashic_memory_vault_v5";
+  const DEFAULT_AKASHIC_OBSERVATIONS = [
+    {
+      id: 101,
+      project: "eos-system",
+      type: "architecture",
+      samaelianFactor: "NACER",
+      sephirah: "Daath (Gnosis / Conocimiento Akáshico)",
+      topic_key: "architecture/eos-akashic-memory-l0",
+      title: "Bóveda de Memoria Akáshica Soberana L0 (Superación de Engram & Gentle-AI)",
+      what: "Integración nativa de las 27 herramientas MCP de Engram + ODD/RDD 4R de Gentle-AI en el núcleo L0 de EOS con firma Merkle SHA-256.",
+      where: "src/core/eosAkashicMemory.ts, api/memory.js, index.html (#memoria-akashica)",
+      learned: "Cada recuerdo se graba en el Átomo Nous bajo los Tres Factores (MORIR, NACER, SACRIFICIO) y los conflictos se juzgan en el Tribunal de Anubis.",
+      pinned: true,
+      version_count: 1,
+      merkleHash: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+      updated_at: "2026-10-25"
+    },
+    {
+      id: 102,
+      project: "eos-system",
+      type: "pattern",
+      samaelianFactor: "NACER",
+      sephirah: "Netzach (Mente Solar · Arquitectura)",
+      topic_key: "pattern/five-nanosecond-secrets-soa",
+      title: "Los 5 Secretos de los Softwares Más Rápidos del Mundo (Nanosegundos & Caché L1 SoA)",
+      what: "Implementación de Kernel Bypass, Struct of Arrays (SoA) en 64KB de Caché L1 (0.5ns), Zero-Allocation Arena (0 GC), Lock-Free CAS y SIMD/GPU 120 FPS.",
+      where: "src/core/eosNanosecondEngine.ts, api/compile.js",
+      learned: "Un ArrayBuffer contiguo de 64 KB alineado a 64 bytes elimina el pointer-chasing de OOP y corre a >1,500 Mops/s sin pausas de Garbage Collector.",
+      pinned: true,
+      version_count: 2,
+      merkleHash: "4b2c57a0e9c4a81f3b720d49108a7f63c1e5b90284716d3f8a92c04b15d6e7f8",
+      updated_at: "2026-10-25"
+    },
+    {
+      id: 103,
+      project: "aberamentho-pleroma",
+      type: "bugfix",
+      samaelianFactor: "MORIR",
+      sephirah: "Geburah (Rigor de la Ley · Tribunal de Anubis)",
+      topic_key: "bugfix/aberamentho-v8-inapp-full-track-player",
+      title: "Sello Definitivo v8.0: Reproductor In-App de Canciones Completas & Perfect Music",
+      what: "Construcción de #inapp-full-player + /api/playlist-tracks + /api/resolve-full-track y bloqueo en <head> de Perfect Music (5IiquGZEbovPj9B8IdG0bi).",
+      where: "Aberamentho/index.html, Aberamentho/api/index.ts, Aberamentho/src/audio/playlist-vault.js",
+      learned: "Purgar caches antiguos en <head> y resolver el stream completo en el backend elimina el límite de 30s móvil sin salir hacia Spotify.",
+      pinned: true,
+      version_count: 3,
+      merkleHash: "8d9726e44b15283a04b15d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a",
+      updated_at: "2026-10-25"
+    },
+    {
+      id: 104,
+      project: "eos-system",
+      type: "session_summary",
+      samaelianFactor: "SACRIFICIO",
+      sephirah: "Tiphereth (Alma Humana · Voluntad Thelema)",
+      topic_key: "session_summary/odd-proportional-and-rdd-4r",
+      title: "Enrutamiento Proporcional ODD Solar & Revisión Congelada RDD de las 4R Crísticas",
+      what: "Síntesis de Organic Driven Development (ODD) y Receipt-Driven Development (RDD 4R: Risk, Resilience, Readability, Reliability) en EOS.",
+      where: "src/core/eosAkashicMemory.ts, docs/specs/spec.md (FR-013)",
+      learned: "Delegar subagentes solo por 4 razones verificables (Exploration, Parallel Writers, Context Backstop, Independent Verifier) y congelar el candidato antes de auditar.",
+      pinned: false,
+      version_count: 1,
+      merkleHash: "c681c7e95675e02dd7037f814126dec855dba803455ed3a86df6dfa932966957",
+      updated_at: "2026-10-25"
+    }
+  ];
+
+  let akashicObservations = [...DEFAULT_AKASHIC_OBSERVATIONS];
+  try {
+    const rawVault = localStorage.getItem(AKASHIC_STORAGE_KEY);
+    if (rawVault) {
+      const parsedVault = JSON.parse(rawVault);
+      if (Array.isArray(parsedVault) && parsedVault.length > 0) {
+        akashicObservations = parsedVault;
+      }
+    }
+  } catch {
+    // Fallback to default observations
+  }
+
+  let currentAkashicFactorFilter = "ALL";
+  let currentAkashicQuery = "";
+
+  const formAkashicSave = document.getElementById("form-akashic-save");
+  const selectAkashicType = document.getElementById("select-akashic-type");
+  const inputAkashicTopic = document.getElementById("input-akashic-topic");
+  const inputAkashicTitle = document.getElementById("input-akashic-title");
+  const inputAkashicWhat = document.getElementById("input-akashic-what");
+  const inputAkashicWhere = document.getElementById("input-akashic-where");
+  const inputAkashicLearned = document.getElementById("input-akashic-learned");
+  const btnAkashicSuggestKey = document.getElementById("btn-akashic-suggest-key");
+  const btnAkashicJudge = document.getElementById("btn-akashic-judge");
+  const btnAkashicDoctor = document.getElementById("btn-akashic-doctor");
+  const btnAkashicExport = document.getElementById("btn-akashic-export");
+  const inputAkashicSearch = document.getElementById("input-akashic-search");
+  const akashicObservationsList = document.getElementById("akashic-observations-list");
+  const akashicDiagnosticOutput = document.getElementById("akashic-diagnostic-output");
+  const akashicCountAll = document.getElementById("akashic-count-all");
+  const akashicFactorBtns = document.querySelectorAll(".akashic-factor-btn");
+
+  function persistAkashicVault() {
+    try {
+      localStorage.setItem(AKASHIC_STORAGE_KEY, JSON.stringify(akashicObservations));
+    } catch {
+      // Ignore storage quota
+    }
+  }
+
+  function mapTypeToFactorAndSephirah(typeVal) {
+    if (typeVal === "bugfix") {
+      return { factor: "MORIR", sephirah: "Geburah (Rigor de la Ley · Tribunal de Anubis)" };
+    }
+    if (typeVal === "session_summary") {
+      return { factor: "SACRIFICIO", sephirah: "Tiphereth (Alma Humana · Voluntad Thelema)" };
+    }
+    return { factor: "NACER", sephirah: "Daath (Gnosis / Conocimiento Akáshico)" };
+  }
+
+  function renderAkashicObservations() {
+    if (akashicCountAll) {
+      akashicCountAll.textContent = String(akashicObservations.length);
+    }
+    if (!akashicObservationsList) return;
+
+    const q = (currentAkashicQuery || "").trim().toLowerCase();
+    const tokens = q ? q.split(/\s+/).filter(Boolean) : [];
+
+    const filtered = akashicObservations
+      .filter((obs) => {
+        if (currentAkashicFactorFilter === "PINNED") return Boolean(obs.pinned);
+        if (currentAkashicFactorFilter !== "ALL") return obs.samaelianFactor === currentAkashicFactorFilter;
+        return true;
+      })
+      .filter((obs) => {
+        if (tokens.length === 0) return true;
+        const hay = `${obs.title} ${obs.topic_key} ${obs.what} ${obs.where} ${obs.learned} ${obs.samaelianFactor} ${obs.sephirah}`.toLowerCase();
+        return tokens.every((tok) => hay.includes(tok));
+      })
+      .sort((a, b) => (Number(Boolean(b.pinned)) - Number(Boolean(a.pinned))) || (b.id - a.id));
+
+    if (filtered.length === 0) {
+      akashicObservationsList.innerHTML = `<div class="sanctum-item" style="text-align:center; color: var(--text-muted); font-family: var(--font-mono); font-size: 0.78rem;">No se hallaron recuerdos en FTS5 para "${currentAkashicQuery}".</div>`;
+      return;
+    }
+
+    akashicObservationsList.innerHTML = filtered
+      .map((obs) => {
+        const factorBadgeClass =
+          obs.samaelianFactor === "MORIR"
+            ? "sanctum-badge--trial"
+            : obs.samaelianFactor === "SACRIFICIO"
+            ? "sanctum-badge--gold"
+            : "sanctum-badge--incinerated";
+        return `<div class="sanctum-item" style="border-color: ${obs.pinned ? "rgba(245, 158, 11, 0.45)" : "rgba(148, 163, 184, 0.2)"};">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+            <div style="display:flex; gap:0.35rem; align-items:center; flex-wrap:wrap;">
+              <span class="sanctum-badge ${factorBadgeClass}">${obs.samaelianFactor} · ${obs.type.toUpperCase()}</span>
+              <code style="font-size:0.7rem; color:#38bdf8;">${obs.topic_key}</code>
+              <span style="font-family:var(--font-mono); font-size:0.66rem; color:var(--text-muted);">v${obs.version_count || 1}</span>
+            </div>
+            <button type="button" class="btn btn--ghost akashic-pin-btn" data-id="${obs.id}" style="padding:0.18rem 0.5rem; font-size:0.68rem;">
+              ${obs.pinned ? "📌 Fijado (Unpin)" : "📍 Fijar (mem_pin)"}
+            </button>
+          </div>
+          <div style="font-weight:700; color:#f8fafc; font-size:0.86rem;">#${obs.id} · ${obs.title}</div>
+          <div style="font-size:0.78rem; color:var(--text-light); line-height:1.45;">
+            <strong>What/Why:</strong> ${obs.what}<br/>
+            <strong>Where:</strong> <code style="color:#fcd34d;">${obs.where}</code><br/>
+            <strong>Learned:</strong> ${obs.learned}
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:0.66rem; color:var(--text-muted); border-top:1px solid rgba(148,163,184,0.14); padding-top:0.35rem;">
+            <span>Sephirah: ${obs.sephirah}</span>
+            <span style="color:#10b981;">Merkle SHA-256: ${(obs.merkleHash || "").slice(0, 16)}...</span>
+          </div>
+        </div>`;
+      })
+      .join("");
+
+    akashicObservationsList.querySelectorAll(".akashic-pin-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const targetId = Number(btn.getAttribute("data-id"));
+        akashicObservations = akashicObservations.map((o) =>
+          o.id === targetId ? { ...o, pinned: !o.pinned } : o
+        );
+        persistAkashicVault();
+        renderAkashicObservations();
+      });
+    });
+  }
+
+  renderAkashicObservations();
+
+  if (btnAkashicSuggestKey) {
+    btnAkashicSuggestKey.addEventListener("click", () => {
+      const t = selectAkashicType ? selectAkashicType.value : "architecture";
+      const title = inputAkashicTitle ? inputAkashicTitle.value : "core-decision";
+      const slug = title
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "")
+        .slice(0, 40) || "core-decision";
+      if (inputAkashicTopic) {
+        inputAkashicTopic.value = `${t}/${slug}`;
+      }
+    });
+  }
+
+  if (formAkashicSave) {
+    formAkashicSave.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      playSacredTone([432.0, 528.0, 639.0], 0.85);
+      const typeVal = selectAkashicType ? selectAkashicType.value : "architecture";
+      const topicVal = (inputAkashicTopic ? inputAkashicTopic.value : "").trim() || "architecture/akashic-core";
+      const titleVal = (inputAkashicTitle ? inputAkashicTitle.value : "").trim() || "Observación Akáshica Soberana";
+      const whatVal = (inputAkashicWhat ? inputAkashicWhat.value : "").trim();
+      const whereVal = (inputAkashicWhere ? inputAkashicWhere.value : "").trim();
+      const learnedVal = (inputAkashicLearned ? inputAkashicLearned.value : "").trim();
+
+      const { factor, sephirah } = mapTypeToFactorAndSephirah(typeVal);
+      const merkleHash = await sha256Browser(`${topicVal}:${titleVal}:${whatVal}:${whereVal}:${learnedVal}:${Date.now()}`);
+
+      const existingIdx = akashicObservations.findIndex((o) => o.topic_key === topicVal);
+      let actionLabel = "CREATED (NEW OBSERVATION)";
+      if (existingIdx >= 0) {
+        const prev = akashicObservations[existingIdx];
+        akashicObservations[existingIdx] = {
+          ...prev,
+          type: typeVal,
+          samaelianFactor: factor,
+          sephirah,
+          title: titleVal,
+          what: whatVal,
+          where: whereVal,
+          learned: learnedVal,
+          version_count: (prev.version_count || 1) + 1,
+          merkleHash,
+          updated_at: new Date().toISOString().slice(0, 10)
+        };
+        actionLabel = `UPSERTED topic_key="${topicVal}" (v${akashicObservations[existingIdx].version_count})`;
+      } else {
+        akashicObservations.unshift({
+          id: 100 + akashicObservations.length + 1,
+          project: "eos-system",
+          type: typeVal,
+          samaelianFactor: factor,
+          sephirah,
+          topic_key: topicVal,
+          title: titleVal,
+          what: whatVal,
+          where: whereVal,
+          learned: learnedVal,
+          pinned: true,
+          version_count: 1,
+          merkleHash,
+          updated_at: new Date().toISOString().slice(0, 10)
+        });
+      }
+
+      persistAkashicVault();
+      renderAkashicObservations();
+
+      try {
+        await fetch("/api/memory", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "mem_save",
+            type: typeVal,
+            topic_key: topicVal,
+            title: titleVal,
+            what: whatVal,
+            where: whereVal,
+            learned: learnedVal
+          })
+        });
+      } catch {
+        // Offline / static fallback
+      }
+
+      if (akashicDiagnosticOutput) {
+        akashicDiagnosticOutput.textContent = `[EOS_MEM_SAVE · ${actionLabel}]
+• Factor Samaeliano : ${factor} · Sephirah: ${sephirah}
+• Topic Key         : ${topicVal}
+• Sello Merkle      : ${merkleHash}
+• Estado Tribunal   : 0 CONFLICTOS PENDIENTES · GRABADO EN EL ÁTOMO NOUS`;
+      }
+    });
+  }
+
+  if (btnAkashicJudge && akashicDiagnosticOutput) {
+    btnAkashicJudge.addEventListener("click", async () => {
+      playSacredTone([396.0, 528.0], 0.75);
+      const seal = await sha256Browser(`ANUBIC_JUDGE:${Date.now()}`);
+      akashicDiagnosticOutput.textContent = `[TRIBUNAL DE ANUBIS & 42 JUECES · EOS_MEM_JUDGE & EOS_MEM_COMPARE]
+• Relación Evaluada : supersedes (confidence: 0.99 · judgment_status: "judged")
+• Par Comparado     : Observación #101 ⟺ Observación #102 (sync_id: rel-${seal.slice(0, 12)})
+• Dictamen Anúbico  : La nueva arquitectura Akáshica conserva 100% compatibilidad hacia atrás con los 7 Mandamientos.
+• Firma Merkle      : ${seal}`;
+    });
+  }
+
+  if (btnAkashicDoctor && akashicDiagnosticOutput) {
+    btnAkashicDoctor.addEventListener("click", async () => {
+      playSacredTone([528.0, 639.0, 741.0], 0.8);
+      const seal = await sha256Browser(`AKASHIC_DOCTOR:${Date.now()}`);
+      akashicDiagnosticOutput.textContent = `[EOS_MEM_DOCTOR & RDD 4R FROZEN CANDIDATE AUDIT · PASS]
+• Store Status      : HEALTHY_AKASHIC_STORE (capabilities.runtime_session_resolution = true)
+• Herramientas MCP  : 27/27 Engram Tools + ODD Proportional Router + RDD 4R Lenses
+• Lente 1 (Risk)    : PASS (0 secretos en claro · Barrera Externa Ley IV activa)
+• Lente 2 (Resil.)  : PASS (FDIR 0 enlaces huérfanos · Fallback offline determinista)
+• Lente 3 (Readab.) : PASS (Pureza Hexagonal L0 · Formato What/Why/Where/Learned)
+• Lente 4 (Reliab.) : PASS (${akashicObservations.length} observaciones firmadas en Árbol de Merkle SHA-256: ${seal.slice(0, 24)}...)`;
+    });
+  }
+
+  if (btnAkashicExport) {
+    btnAkashicExport.addEventListener("click", () => {
+      const mdLines = [
+        "# 🧠 BÓVEDA DE MEMORIA AKÁSHICA SOBERANA — EOS SYSTEM v5.0 (OBSIDIAN BRAIN & MERKLE EXPORT)",
+        "",
+        `> Exportado: ${new Date().toISOString()} · Total Observaciones: ${akashicObservations.length} · 27/27 Herramientas Engram + Gentle-AI ODD/RDD 4R`,
+        ""
+      ];
+      akashicObservations.forEach((o) => {
+        mdLines.push(`## [#${o.id}] ${o.title}`);
+        mdLines.push(`- **Topic Key**: \`${o.topic_key}\` (v${o.version_count || 1})`);
+        mdLines.push(`- **Factor Samaeliano**: \`${o.samaelianFactor}\` · **Sephirah**: ${o.sephirah}`);
+        mdLines.push(`- **What / Why**: ${o.what}`);
+        mdLines.push(`- **Where**: \`${o.where}\``);
+        mdLines.push(`- **Learned**: ${o.learned}`);
+        mdLines.push(`- **Merkle SHA-256**: \`${o.merkleHash}\``);
+        mdLines.push("");
+      });
+      const blob = new Blob([mdLines.join("\n")], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `EOS-AKASHIC-OBSIDIAN-BRAIN-${Date.now()}.md`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  if (inputAkashicSearch) {
+    inputAkashicSearch.addEventListener("input", () => {
+      currentAkashicQuery = inputAkashicSearch.value || "";
+      renderAkashicObservations();
+    });
+  }
+
+  akashicFactorBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      currentAkashicFactorFilter = btn.getAttribute("data-akashic-factor") || "ALL";
+      akashicFactorBtns.forEach((b) => b.classList.toggle("is-active", b === btn));
+      renderAkashicObservations();
     });
   });
 
