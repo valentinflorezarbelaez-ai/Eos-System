@@ -10,6 +10,7 @@ const startTime = Date.now();
 
 console.log("======================================================================");
 console.log(" EOS SYSTEM v9.0 — 7-STAGE SOVEREIGN CI/CD & SECDEVOPS GATE (STRICT)  ");
+console.log(` [INFO] Node: ${process.version} | Platform: ${process.platform} | Arch: ${process.arch}`);
 console.log("======================================================================");
 
 // Helper to recursively list tracked project files
@@ -136,10 +137,17 @@ const testFiles = [
 ];
 
 for (const testFile of testFiles) {
-  execFileSync(process.execPath, ["--test", path.join(root, testFile)], {
-    cwd: root,
-    stdio: "inherit"
-  });
+  console.log(`[STAGE 4 RUNNER] Executing ${testFile}...`);
+  try {
+    execFileSync(process.execPath, ["--test", path.join(root, testFile)], {
+      cwd: root,
+      stdio: "inherit"
+    });
+  } catch (err) {
+    console.error(`\n❌ [STAGE 4 CRITICAL FAILURE] Test suite failed: ${testFile}`);
+    console.error(err);
+    process.exit(1);
+  }
 }
 console.log(`[PASS] Stage 4/7 — Static AST, Syntax, Unit & Chaos Gate (${jsFilesToCheck.length} JS/MJS modules + ${tsCoreFiles.length} L0 TS modules + node:test passed).`);
 

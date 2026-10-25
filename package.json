@@ -50,6 +50,9 @@
     "jarvis:daemon": "node scripts/eos-jarvis-daemon.mjs --loop",
     "mcp": "node src/mcp/eosMcpServer.ts"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "author": "Valentín Flórez Arbeláez",
   "license": "MIT"
 }
