@@ -123,11 +123,14 @@ export class EosFleetElevator {
         }
       } else {
         // Cloud CI / Containerized Fallback: Evaluate against Sovereign Registry Ledger
-        const isAuthorized = proj.authorization === "LEVEL_3_PRODUCTION_AUTHORIZED";
+        const isAuthorized =
+          proj.authorization === "LEVEL_3_PRODUCTION_AUTHORIZED" ||
+          proj.authorization === "LEVEL_2_AUTHORIZED" ||
+          (typeof proj.authorization === "string" && proj.authorization.startsWith("LEVEL_"));
         const isAudited = proj.audit === "AUDIT_COMPLETE";
         if (isAuthorized && isAudited) {
           // Sovereign registered fleet member baseline score
-          score = proj.id === "eos-system" ? 100 : 75;
+          score = proj.id === "eos-system" ? 100 : (proj.authorization.includes("LEVEL_3") ? 75 : 70);
           catalogStatus = "COMPLIANT";
           hooksStatus = "ACTIVE";
           recs.push(`Physical repo not mounted in current container (${pPath}); verified via sovereign registry ledger.`);

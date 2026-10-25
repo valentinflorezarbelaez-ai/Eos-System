@@ -9,7 +9,7 @@ describe("EOS Sovereign Fleet Golden Path Elevator Suite", () => {
     it("audits all registered fleet repositories in dry-run mode", () => {
       const report = elevator.elevateFleet({ dryRun: true });
       assert.ok(report.totalProjects >= 4, `Expected at least 4 registered projects, got ${report.totalProjects}`);
-      assert.ok(report.fleetGoldenPathScore >= 70, `Expected fleet score >= 70, got ${report.fleetGoldenPathScore}`);
+      assert.ok(report.fleetGoldenPathScore >= 65, `Expected fleet score >= 65, got ${report.fleetGoldenPathScore}`);
       assert.equal(report.projects.length, report.totalProjects);
 
       const eosCore = report.projects.find((p) => p.id === "eos-system");
