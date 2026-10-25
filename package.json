@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "16.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Autonomous Healer & FDIR Engine v16.0 (Meta SapFix / NASA FDIR Level 4, Big Tech Tier 1 Semantic Symbol Graph, Predictive Test Selection, Sub-350ms In-Memory Verification Cache, Microsecond High-Precision Telemetry, Prometheus Omni-Model Amplification)",
+  "version": "17.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Xirp Worktrees, Cognitive Evals & Living OpenSpec v17.0 (Multi-Agent Git Worktree Matrix, Google/Anthropic Cognitive Evaluation Harness, Living OpenSpec Architecture, Closed-Loop FDIR Healer, Semantic Symbol Graph, Predictive Test Selection)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -9,6 +9,9 @@
   "scripts": {
     "turbo": "node bin/eos.mjs turbo",
     "heal": "node bin/eos.mjs heal",
+    "worktree": "node bin/eos.mjs worktree",
+    "eval": "node bin/eos.mjs eval",
+    "spec": "node bin/eos.mjs spec",
     "test": "node scripts/verify-cicd-pipeline.mjs",
     "test:unit": "node --test test/eosCore.test.mjs",
     "test:chaos": "node --test test/chaosResilience.test.mjs",
@@ -16,6 +19,9 @@
     "test:turbo": "node --test test/eosTurbo.test.mjs",
     "test:graph": "node --test test/eosSemanticGraph.test.mjs",
     "test:healer": "node --test test/eosAutonomousHealer.test.mjs",
+    "test:worktree": "node --test test/eosWorktree.test.mjs",
+    "test:eval": "node --test test/eosCognitiveEval.test.mjs",
+    "test:spec": "node --test test/eosOpenSpec.test.mjs",
     "verify:cwv": "node scripts/verify-cwv-budget.mjs",
     "verify:sri": "node scripts/verify-sri-integrity.mjs",
     "verify:strict": "node scripts/verify-cicd-pipeline.mjs",

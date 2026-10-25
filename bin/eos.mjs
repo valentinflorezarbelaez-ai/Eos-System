@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v16.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v17.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -123,7 +123,19 @@ switch (command) {
         cwd: root,
         stdio: "inherit"
       });
-      console.log("\n[PASS] All Unit & Chaos suites completed successfully (Exit 0).");
+      execFileSync(process.execPath, ["--test", path.join(root, "test/eosWorktree.test.mjs")], {
+        cwd: root,
+        stdio: "inherit"
+      });
+      execFileSync(process.execPath, ["--test", path.join(root, "test/eosCognitiveEval.test.mjs")], {
+        cwd: root,
+        stdio: "inherit"
+      });
+      execFileSync(process.execPath, ["--test", path.join(root, "test/eosOpenSpec.test.mjs")], {
+        cwd: root,
+        stdio: "inherit"
+      });
+      console.log("\n[PASS] All Unit, Chaos, Worktree, Eval & OpenSpec suites completed successfully (Exit 0).");
     } catch (err) {
       process.exit(1);
     }
@@ -363,6 +375,105 @@ switch (command) {
     break;
   }
 
+  case "worktree": {
+    printBanner();
+    const subAction = (args[1] || "list").toLowerCase();
+    const { EosWorktreeOrchestrator } = await import("../src/core/eosWorktreeOrchestrator.ts");
+    const orchestrator = new EosWorktreeOrchestrator(root);
+
+    if (subAction === "list") {
+      const list = orchestrator.listWorktrees();
+      console.log("[EOS WORKTREE] Árboles de Trabajo Aislados (Estándar Xirp):\n");
+      list.forEach((w) => {
+        const flag = w.isMain ? "(PRINCIPAL)" : "(AGENTE)";
+        console.log(`  ● [${w.branch}] ${flag}`);
+        console.log(`    Ruta: ${w.path}`);
+        console.log(`    Commit: ${w.headCommit.slice(0, 10)}\n`);
+      });
+    } else if (subAction === "add" || subAction === "create") {
+      const branchName = args[2];
+      if (!branchName) {
+        console.log("Uso: eos worktree add <nombre-rama>");
+        process.exit(1);
+      }
+      console.log(`[EOS WORKTREE] Creando espacio de trabajo físico para agente en rama '${branchName}'...`);
+      const created = orchestrator.createWorktree(branchName);
+      console.log(`✔ Worktree creado en: ${created.path}`);
+      console.log(`✔ Rama aislada: ${created.branch} (Exit Code 0)`);
+    } else if (subAction === "remove" || subAction === "rm") {
+      const targetPath = args[2];
+      if (!targetPath) {
+        console.log("Uso: eos worktree remove <ruta-worktree>");
+        process.exit(1);
+      }
+      const res = orchestrator.removeWorktree(targetPath, { force: args.includes("--force") });
+      if (res.success) {
+        console.log(`✔ Worktree removido y podado atómicamente: ${res.removedPath}`);
+      } else {
+        console.log(`✖ Error removiendo worktree: ${res.error}`);
+        process.exit(1);
+      }
+    }
+    break;
+  }
+
+  case "eval": {
+    printBanner();
+    const target = args[1] || "src/core/eosPromptAmplifier.ts";
+    console.log(`[EOS EVAL] Evaluando Calidad Cognitiva de: ${target} (Google/Anthropic Standard)...\n`);
+    const { EosCognitiveEval } = await import("../src/core/eosCognitiveEval.ts");
+    const evaluator = new EosCognitiveEval();
+    const fullPath = path.resolve(root, target);
+    const result = fs.existsSync(fullPath)
+      ? evaluator.evaluate(fullPath)
+      : evaluator.evaluate(target, { isText: true });
+
+    console.log(`Puntaje Compuesto (CRI) : ${result.compositeScore} / 100`);
+    console.log(`Veredicto Epistémico    : [${result.verdict}]`);
+    console.log(`Líneas Analizadas       : ${result.totalLinesScanned}`);
+    console.log(`Tiempo de Evaluación    : ${result.durationUs.toFixed(2)} µs\n`);
+    console.log("=== DESGLOSE DE LAS 5 DIMENSIONES SOBERANAS ===");
+    const dims = result.dimensions;
+    console.log(`  1. Seguridad & Cero Secretos (30%) : ${dims.securityOwasp.score}/100 [${dims.securityOwasp.passed ? "PASS" : "FAIL"}]`);
+    console.log(`  2. Pureza Hexagonal Capa 0 (25%)   : ${dims.hexagonalPurity.score}/100 [${dims.hexagonalPurity.passed ? "PASS" : "FAIL"}]`);
+    console.log(`  3. Sintaxis AST & Tipado (20%)     : ${dims.astSyntax.score}/100 [${dims.astSyntax.passed ? "PASS" : "FAIL"}]`);
+    console.log(`  4. Conformidad EARS & BDD (15%)    : ${dims.earsBddConformance.score}/100 [${dims.earsBddConformance.passed ? "PASS" : "FAIL"}]`);
+    console.log(`  5. Índice Anti-Alucinación (10%)   : ${dims.hallucinationRisk.score}/100 [${dims.hallucinationRisk.passed ? "PASS" : "FAIL"}]`);
+    console.log(`\nSello Criptográfico Merkle : ${result.sha256Proof.slice(0, 32)}... (Exit Code 0)`);
+    break;
+  }
+
+  case "spec": {
+    printBanner();
+    const subAction = (args[1] || "check").toLowerCase();
+    const { EosOpenSpecSync } = await import("../src/core/eosOpenSpecSync.ts");
+    const synchronizer = new EosOpenSpecSync(root);
+
+    if (subAction === "list") {
+      const specs = synchronizer.listSpecs();
+      const changes = synchronizer.listChanges();
+      console.log(`[OPENSPEC] Especificaciones Base (${specs.length}):`);
+      specs.forEach((s) => console.log(`  ● [${s.id}] ${s.title}`));
+      console.log(`\n[OPENSPEC] Cambios Delta (${changes.length}):`);
+      changes.forEach((c) => console.log(`  ▲ [${c.id}] ${c.title} -> ${c.status} (${c.authorizationLevel})`));
+    } else {
+      console.log("[OPENSPEC] Auditando Consistencia de Especificaciones Vivientes y Deriva...\n");
+      const report = synchronizer.audit();
+      console.log(`Especificaciones Base   : ${report.totalSpecs}`);
+      console.log(`Cambios Delta Registrados: ${report.totalChanges}`);
+      console.log(`Enlaces Huérfanos       : ${report.orphanLinks.length}`);
+      console.log(`Faltas de Autorización  : ${report.missingAuthorizations.length}`);
+      if (report.valid) {
+        console.log(`\n[PASS] Sistema OpenSpec 100% armonizado sin deriva (Exit Code 0).`);
+      } else {
+        console.log(`\n[FAIL] Hallazgos detectados en OpenSpec:`);
+        report.orphanLinks.concat(report.missingAuthorizations).forEach((f) => console.log(`  ! ${f}`));
+        process.exit(1);
+      }
+    }
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -384,6 +495,9 @@ Uso Universal:
   eos blast <archivo>        Calcula el radio de impacto transitivo y pruebas predictivas (PTS)
   eos graph                  Muestra el grafo semántico, topología de módulos y código huérfano
   eos heal [archivo]         Ejecuta el bucle de auto-sanación FDIR (Meta SapFix) con recibo sellado
+  eos worktree [list|add|rm] Gestiona Git Worktrees aislados para agentes estilo Xirp
+  eos eval <archivo>         Ejecuta la evaluación cognitiva de 5 dimensiones (Google/Anthropic)
+  eos spec [check|list]      Audita el sistema Living OpenSpec y previene deriva de Vibe Coding
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

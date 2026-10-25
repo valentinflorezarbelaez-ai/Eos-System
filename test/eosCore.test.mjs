@@ -140,7 +140,7 @@ test("EOS MCP Native Server (Model Context Protocol) — JSON-RPC 2.0 Invariants
   });
   assert.equal(initRes.id, 1);
   assert.equal(initRes.result.serverInfo.name, "eos-system-mcp");
-  assert.equal(initRes.result.serverInfo.version, "16.0.0");
+  assert.equal(initRes.result.serverInfo.version, "17.0.0");
   assert.ok(initRes.result.capabilities.tools, "Must advertise tools capability");
 
   // 2. tools/list

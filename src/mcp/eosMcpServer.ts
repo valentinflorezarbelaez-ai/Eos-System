@@ -67,6 +67,18 @@ import {
   EosAutonomousHealer
 } from "../core/eosAutonomousHealer.ts";
 
+import {
+  EosWorktreeOrchestrator
+} from "../core/eosWorktreeOrchestrator.ts";
+
+import {
+  EosCognitiveEval
+} from "../core/eosCognitiveEval.ts";
+
+import {
+  EosOpenSpecSync
+} from "../core/eosOpenSpecSync.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -117,7 +129,7 @@ export class EosMcpServer {
               },
               serverInfo: {
                 name: "eos-system-mcp",
-                version: "16.0.0",
+                version: "17.0.0",
                 description: "EOS Sovereign Engineering Operating System MCP Interface"
               }
             }
@@ -268,6 +280,42 @@ export class EosMcpServer {
                     properties: {
                       targetFile: { type: "string", description: "Optional specific file to diagnose and heal" },
                       dryRun: { type: "boolean", description: "If true, simulates remediation without touching disk (default: false)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_manage_worktree",
+                  description: "Manages Xirp-grade isolated Git worktrees for concurrent AI agents. Supports actions: list, create, remove.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["list", "create", "remove"], description: "Action to perform" },
+                      branch: { type: "string", description: "Branch name for create action" },
+                      targetPath: { type: "string", description: "Target path for remove action" },
+                      force: { type: "boolean", description: "Force removal if modified" }
+                    },
+                    required: ["action"]
+                  }
+                },
+                {
+                  name: "eos_run_eval",
+                  description: "Executes 5-dimensional sovereign cognitive evaluation (Google Vertex / Anthropic Evals) over target file or code string.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      target: { type: "string", description: "File path or code to evaluate" },
+                      isText: { type: "boolean", description: "True if target is raw code string" }
+                    },
+                    required: ["target"]
+                  }
+                },
+                {
+                  name: "eos_check_openspec",
+                  description: "Audits living OpenSpec architecture and delta changes (openspec/specs/ & openspec/changes/), certifying 0 drift and Level 2+ authorization.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["audit", "list_specs", "list_changes"], description: "Action: audit (default), list_specs, or list_changes" }
                     }
                   }
                 }
@@ -494,6 +542,31 @@ export class EosMcpServer {
           targetFile: args.targetFile ? String(args.targetFile) : undefined,
           dryRun: Boolean(args.dryRun)
         });
+      }
+
+      case "eos_manage_worktree": {
+        const orchestrator = new EosWorktreeOrchestrator(this.projectRoot);
+        const action = String(args.action || "list");
+        if (action === "create") {
+          return orchestrator.createWorktree(String(args.branch || `agent-${Date.now()}`));
+        } else if (action === "remove") {
+          return orchestrator.removeWorktree(String(args.targetPath || ""), { force: Boolean(args.force) });
+        }
+        return orchestrator.listWorktrees();
+      }
+
+      case "eos_run_eval": {
+        const evaluator = new EosCognitiveEval();
+        const target = String(args.target || "");
+        return evaluator.evaluate(target, { isText: Boolean(args.isText) });
+      }
+
+      case "eos_check_openspec": {
+        const synchronizer = new EosOpenSpecSync(this.projectRoot);
+        const action = String(args.action || "audit");
+        if (action === "list_specs") return synchronizer.listSpecs();
+        if (action === "list_changes") return synchronizer.listChanges();
+        return synchronizer.audit();
       }
 
       default:

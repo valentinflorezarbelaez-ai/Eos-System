@@ -245,4 +245,35 @@ ESCENARIO: [BDD-027 Bucle FDIR y Certificación Criptográfica de Sanación]
   DADO que se ejecuta una auto-reparación exitosa sobre el código
   CUANDO el motor concluye la validación de no-regresión en la tubería turbo
   ENTONCES EOS genera el recibo criptográfico sellado docs/evidence/HEAL-XXXX.json con firma SHA-256, marca el estado epistémico como VERIFIED y registra la auditoría con código de salida 0.
+
+ESCENARIO: [BDD-028 Aislamiento Físico de Worktrees por Agente y Matriz Xirp (eos worktree)]
+  DADO que múltiples agentes de IA (Cursor, Antigravity, Claude, DeepSeek) necesitan operar en paralelo
+  CUANDO se invoca "eos worktree create <idTarea>" o la herramienta MCP "eos_manage_worktree" con acción "create"
+  ENTONCES EOS crea un Git Worktree físico aislado en .worktrees/<idTarea> con su propia rama independiente, sincroniza hooks de seguridad y evita colisiones de concurrencia en el working tree principal.
+
+ESCENARIO: [BDD-029 Monitoreo y Limpieza Atómica de Worktrees Huérfanos]
+  DADO que una tarea de desarrollo concluye o es descartada
+  CUANDO se invoca "eos worktree remove <idTarea>" o "eos worktree list"
+  ENTONCES EOS inspecciona el estado de los worktrees activos, audita que no existan mutaciones sin confirmar y remueve atómicamente el directorio podando los metadatos de Git sin residuos huérfanos.
+
+ESCENARIO: [BDD-030 Evaluación Cognitiva Soberana y Benchmarking de Modelos (eos eval)]
+  DADO un archivo de código fuente, componente o propuesta arquitectónica
+  CUANDO se invoca el comando CLI "eos eval <ruta>" o la herramienta MCP "eos_run_eval"
+  ENTONCES EOS evalúa 5 dimensiones cuantitativas (Índice de Alucinación, Cumplimiento EARS/BDD, Pureza Hexagonal, Seguridad/Zero Secrets y Tipado Sintáctico AST), calculando un Índice Compuesto de Madurez (0-100) y emitiendo un veredicto epistémico formal.
+
+ESCENARIO: [BDD-031 Recibo Criptográfico de Benchmark y Endpoint Serverless /api/eval]
+  DADO que la evaluación cognitiva concluye con éxito
+  CUANDO el evaluador emite el resultado
+  ENTONCES genera el recibo docs/evidence/EVAL-XXXX.json con hash SHA-256 inmutable y expone la telemetría a través del endpoint serverless /api/eval en menos de 5 milisegundos.
+
+ESCENARIO: [BDD-032 Arquitectura Living OpenSpec y Detección de Deriva (eos spec)]
+  DADO el estándar de especificaciones vivientes en openspec/specs/ y cambios delta en openspec/changes/
+  CUANDO se invoca "eos spec check" o la herramienta MCP "eos_check_openspec"
+  ENTONCES EOS verifica que toda mutación de código en el repositorio corresponda exactamente con una especificación viva y un cambio delta aprobado, bloqueando cualquier intento de Vibe Coding no autorizado.
+
+ESCENARIO: [BDD-033 Validación de Deltas Constitucionales y Nivel de Autorización]
+  DADO un cambio delta propuesto en openspec/changes/
+  CUANDO el sincronizador audita la propuesta
+  ENTONCES valida que contenga justificación formal, impacto en especificaciones base y registro de Nivel 2+ de Autorización en IMPLEMENTATION_AUTHORIZATION.md.
+
 ```
