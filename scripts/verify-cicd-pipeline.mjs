@@ -182,7 +182,8 @@ const apiEndpoints = [
   "api/health.js",
   "api/graph.js",
   "api/eval.js",
-  "api/spotify.js"
+  "api/spotify.js",
+  "api/mcp.js"
 ];
 
 for (const relApi of apiEndpoints) {
