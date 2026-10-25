@@ -170,6 +170,7 @@ const apiEndpoints = [
   "api/teurgia.js",
   "api/compile.js",
   "api/memory.js",
+  "api/bigtech.js",
   "api/kernel.js",
   "api/cicd.js",
   "api/fleet.js",
