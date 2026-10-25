@@ -10,6 +10,8 @@
 
 import { execFileSync } from "node:child_process";
 import crypto from "node:crypto";
+import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 
 export interface PatchValidationResult {
@@ -101,7 +103,7 @@ export function validatePatch(
       syntaxValid = false;
       errors.push(`[JSON Syntax Error] ${err.message}`);
     }
-  } else if (ext === ".js" || ext === ".mjs" || ext === ".ts") {
+  } else if (ext === ".js" || ext === ".mjs") {
     try {
       execFileSync(
         process.execPath,
@@ -116,6 +118,23 @@ export function validatePatch(
       syntaxValid = false;
       const msg = err.stderr ? err.stderr.toString().trim() : err.message;
       errors.push(`[AST Syntax Error] ${msg}`);
+    }
+  } else if (ext === ".ts" || ext === ".tsx") {
+    const tmpFile = path.join(os.tmpdir(), `eos_val_${crypto.randomUUID()}${ext}`);
+    try {
+      fs.writeFileSync(tmpFile, proposedContent, "utf8");
+      execFileSync(process.execPath, ["--check", tmpFile], {
+        stdio: ["pipe", "pipe", "pipe"],
+        timeout: 2000
+      });
+    } catch (err: any) {
+      syntaxValid = false;
+      const msg = err.stderr ? err.stderr.toString().trim() : err.message;
+      errors.push(`[AST TypeScript Syntax Error] ${msg}`);
+    } finally {
+      if (fs.existsSync(tmpFile)) {
+        try { fs.unlinkSync(tmpFile); } catch {}
+      }
     }
   } else if (ext === ".md" || ext === ".markdown") {
     // Check balanced code block fences

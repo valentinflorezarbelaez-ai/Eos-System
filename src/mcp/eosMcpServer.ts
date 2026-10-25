@@ -63,6 +63,10 @@ import {
   EosSemanticGraph
 } from "../core/eosSemanticGraph.ts";
 
+import {
+  EosAutonomousHealer
+} from "../core/eosAutonomousHealer.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -113,7 +117,7 @@ export class EosMcpServer {
               },
               serverInfo: {
                 name: "eos-system-mcp",
-                version: "15.0.0",
+                version: "16.0.0",
                 description: "EOS Sovereign Engineering Operating System MCP Interface"
               }
             }
@@ -254,6 +258,17 @@ export class EosMcpServer {
                   inputSchema: {
                     type: "object",
                     properties: {}
+                  }
+                },
+                {
+                  name: "eos_autonomous_heal",
+                  description: "Executes closed-loop FDIR autonomous healing (Meta SapFix / NASA FDIR), synthesizing and validating AST patches for detected code and invariant anomalies.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      targetFile: { type: "string", description: "Optional specific file to diagnose and heal" },
+                      dryRun: { type: "boolean", description: "If true, simulates remediation without touching disk (default: false)" }
+                    }
                   }
                 }
               ]
@@ -471,6 +486,14 @@ export class EosMcpServer {
       case "eos_query_code_graph": {
         const graph = new EosSemanticGraph(this.projectRoot);
         return graph.getSummary();
+      }
+
+      case "eos_autonomous_heal": {
+        const healer = new EosAutonomousHealer(this.projectRoot);
+        return healer.executeHealing({
+          targetFile: args.targetFile ? String(args.targetFile) : undefined,
+          dryRun: Boolean(args.dryRun)
+        });
       }
 
       default:

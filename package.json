@@ -1,19 +1,21 @@
 {
   "name": "eos-system-landing",
-  "version": "15.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Semantic Graph & Blast Radius Engine v15.0 (Big Tech Tier 1 Symbol Graph, Predictive Test Selection, Sub-350ms In-Memory Verification Cache, Microsecond High-Precision Telemetry, Prometheus Omni-Model Amplification, Clean Hexagonal Architecture Guard)",
+  "version": "16.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Autonomous Healer & FDIR Engine v16.0 (Meta SapFix / NASA FDIR Level 4, Big Tech Tier 1 Semantic Symbol Graph, Predictive Test Selection, Sub-350ms In-Memory Verification Cache, Microsecond High-Precision Telemetry, Prometheus Omni-Model Amplification)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
   },
   "scripts": {
     "turbo": "node bin/eos.mjs turbo",
+    "heal": "node bin/eos.mjs heal",
     "test": "node scripts/verify-cicd-pipeline.mjs",
     "test:unit": "node --test test/eosCore.test.mjs",
     "test:chaos": "node --test test/chaosResilience.test.mjs",
     "test:prometheus": "node --test test/eosPrometheus.test.mjs",
     "test:turbo": "node --test test/eosTurbo.test.mjs",
     "test:graph": "node --test test/eosSemanticGraph.test.mjs",
+    "test:healer": "node --test test/eosAutonomousHealer.test.mjs",
     "verify:cwv": "node scripts/verify-cwv-budget.mjs",
     "verify:sri": "node scripts/verify-sri-integrity.mjs",
     "verify:strict": "node scripts/verify-cicd-pipeline.mjs",

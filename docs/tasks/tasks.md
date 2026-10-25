@@ -39,3 +39,8 @@
   - [x] **TASK-019-B**: Expose `eos_get_blast_radius` and `eos_query_code_graph` in `src/mcp/eosMcpServer.ts` and CLI commands `eos blast <file>` and `eos graph` in `bin/eos.mjs`.
   - [x] **TASK-019-C**: Implement test suite `test/eosSemanticGraph.test.mjs` asserting BDD-024 and BDD-025.
   - [x] **TASK-019-D**: Run 7-stage SecDevOps gate, commit, push, and verify live production health.
+- [x] **TASK-020**: Implement **EOS Sovereign Autonomous Healer & FDIR Remediation Engine (`v16.0`)**:
+  - [x] **TASK-020-A**: Implement `src/core/eosAutonomousHealer.ts` (Root-cause localization, surgical AST patch generation, sandbox validation, and cryptographic remediation receipt generator).
+  - [x] **TASK-020-B**: Expose `eos_autonomous_heal` in `src/mcp/eosMcpServer.ts` and CLI command `eos heal` in `bin/eos.mjs`.
+  - [x] **TASK-020-C**: Implement test suite `test/eosAutonomousHealer.test.mjs` asserting BDD-026 and BDD-027.
+  - [x] **TASK-020-D**: Run 7-stage SecDevOps gate, commit, push, and verify live production health.

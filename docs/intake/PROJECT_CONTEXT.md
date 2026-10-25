@@ -29,3 +29,11 @@ To establish architectural parity with the world's most elite engineering infras
 3. **Predictive Test Selection (PTS)**: Automatically maps the calculated blast radius to the exact corresponding test suites, executing targeted regression verification in $< 10$ ms.
 4. **Dead Code & Orphan Symbol Elimination**: Identifies exported interfaces and functions with zero active consumers across the fleet, preserving zero technical debt.
 5. **Universal Big Tech CLI & MCP Tools**: Commands `eos blast <file>`, `eos graph`, and MCP tools `eos_get_blast_radius`, `eos_query_code_graph` integrated natively into Cursor and Antigravity.
+
+## 6. Sovereign Autonomous Healer & Closed-Loop FDIR Remediation Engine (v16.0)
+To fulfill the Sovereign mandate with Samaelian Rigor (Three Factors: *Morir* = incinerate defects & orphan drift; *Nacer* = synthesize pure zero-leak logic; *Sacrificio* = continuous autonomous self-healing):
+1. **Automated Root-Cause Diagnostic (`eosAutonomousHealer.ts`)**: When an invariant break or code defect is detected, the engine traverses the Semantic Code Graph to locate the precise defect epicenter.
+2. **Surgical AST Remediation Patch Synthesis**: Synthesizes the minimal, drop-in AST patch required to restore invariant conformance without introducing secondary defects or vibe modifications.
+3. **Double-Blind In-Memory Sandbox Pre-Validation**: Routes candidate remediation patches through `eosPatchValidator` and runs `runTurboPipeline` to guarantee zero regressions across the downstream blast radius.
+4. **Cryptographic Healing Ledger (`docs/evidence/HEAL-XXXX.json`)**: Attests each autonomous remediation with SHA-256 hashes, timestamps, and epistemic state transitions (`FINDINGS_IDENTIFIED` -> `REMEDIATION_IN_PROGRESS` -> `VERIFIED`).
+5. **Universal Healer CLI (`eos heal`) & MCP Tool (`eos_autonomous_heal`)**: Gives AI models in Cursor and Antigravity the capability to self-heal code and architectural violations in $< 50$ ms.

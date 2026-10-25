@@ -12,3 +12,4 @@
   - Prometheus Omni-Model Amplification Engine (v13.0): Metaprompting EARS/BDD scaffolding, Clean/Hexagonal Boundary Invariant Guard, Bayesian Cognitive Consensus Judge, and Universal CLI/MCP omni-tools.
   - EOS Turbo Engine & Nanosecond Precision Infrastructure (v14.0): Content-addressed in-memory verification cache, parallel multicore gate execution, microsecond telemetry, and sub-350ms instant feedback loop (`eos turbo`, `eos_turbo_verify`).
   - Big Tech Tier 1 Semantic Code Graph, Blast Radius & Predictive Test Selection (v15.0): Directed symbol/export graph indexer, transitive downstream impact calculator, predictive test selector (PTS), and orphan symbol detector (`eos blast`, `eos graph`, `eos_get_blast_radius`).
+  - Sovereign Autonomous Healer & Closed-Loop FDIR Remediation Engine (v16.0): Root-cause localization, surgical AST remediation synthesis, double-blind sandbox validation, and cryptographic healing attestation (`eos heal`, `eos_autonomous_heal`).

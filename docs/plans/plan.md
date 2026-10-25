@@ -176,3 +176,14 @@
 * **Rationale**: Emulates Big Tech Tier 1 infrastructure (Google, Meta, Palantir), providing AI agents and engineers with instant situational awareness of downstream impact before modifying code.
 * **Rejected Alternatives**:
   * *Blind Whole-Repository Full-Regression Runs*: Rejected because full regression suites scale linearly $\mathcal{O}(N)$ with repository size and waste CPU/token budgets.
+
+### ADR-022: Sovereign Autonomous Healer & Closed-Loop FDIR Remediation Engine (`src/core/eosAutonomousHealer.ts`)
+* **Decision**: Implement a cybernetic self-healing engine inspired by Meta SapFix, Palantir Apollo, and NASA FDIR Level 4:
+  1. **Root-Cause Localization**: Correlates static analysis findings and test failures directly with graph nodes via `EosSemanticGraph`.
+  2. **Surgical AST Remediation Patch Synthesis**: Generates targeted AST diffs addressing the root cause without modifying unrelated code.
+  3. **Sandbox Pre-Flight Validation**: Asserts that candidate patches pass `validatePatch` (no syntax errors, no secret leaks, no directory traversals) and `runTurboPipeline` (no regression in blast radius).
+  4. **Cryptographic Healing Ledger**: Issues immutable receipts (`docs/evidence/HEAL-XXXX.json`) recording the remediation hash, execution timestamp, and epistemic transitions.
+  5. **Universal CLI (`eos heal`) & MCP Tool (`eos_autonomous_heal`)**: Exposes autonomous repair capabilities directly to Cursor, Antigravity, and terminal workflows.
+* **Rationale**: Closes the loop from passive fault detection to active, autonomous remediation with zero human friction, fulfilling Samaelian rigor (*Morir* to defects, *Nacer* to pure logic).
+* **Rejected Alternatives**:
+  * *Manual Human-Only Bug Fixing*: Rejected because automated regression and syntax repairs should be handled deterministically by the control plane without human toil.

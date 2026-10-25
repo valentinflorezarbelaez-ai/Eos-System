@@ -86,6 +86,10 @@
 * **FR-032 (Event-Driven Blast Radius Impact Analysis)**: CUANDO se modifique o proponga un cambio sobre cualquier archivo o símbolo del proyecto, EL SISTEMA calculará el radio de impacto transitivo (Blast Radius), identificando todos los módulos dependientes aguas abajo y evaluando el riesgo de regresión en < 5 ms.
 * **FR-033 (State-Driven Predictive Test Selection & Dead Code Pruning)**: MIENTRAS se evalúe un cambio, EL SISTEMA mapeará el radio de impacto a las suites de prueba exactas que cubren los módulos afectados (PTS) y reportará símbolos exportados con cero consumidores activos (Dead Code).
 * **FR-034 (Ubiquitous Big Tech Tier 1 Omni-Tools)**: EL SISTEMA expondrá `eos_get_blast_radius` y `eos_query_code_graph` en `src/mcp/eosMcpServer.ts` y los comandos `eos blast <archivo>` y `eos graph` en `bin/eos.mjs`.
+* **FR-035 (Event-Driven Automated Diagnostic & Root-Cause Analysis)**: CUANDO se detecte una violación o hallazgo en las compuertas de seguridad, arquitectura o sintaxis, EL SISTEMA (`src/core/eosAutonomousHealer.ts`) ejecutará un diagnóstico causal automático mapeando la anomalía a través del grafo semántico para localizar la causa raíz en < 10 ms.
+* **FR-036 (State-Driven AST Remediation Diff Synthesis & Sandbox Pre-Validation)**: MIENTRAS existan anomalías diagnosticadas, EL SISTEMA sintetizará parches correctivos mínimos y los validará en el sandbox AST (`eosPatchValidator`) y la tubería turbo (`runTurboPipeline`) antes de proponer o aplicar cualquier mutación.
+* **FR-037 (Ubiquitous Cryptographic Healing Attestation & Merkle Ledger)**: EL SISTEMA registrará cada auto-reparación en un recibo criptográfico sellado con SHA-256 (`docs/evidence/HEAL-XXXX.json`), certificando la transición epistémica a `VERIFIED`.
+* **FR-038 (Ubiquitous Autonomous Healer CLI & MCP Integration)**: EL SISTEMA expondrá `eos_autonomous_heal` en `src/mcp/eosMcpServer.ts` y el comando `eos heal` en `bin/eos.mjs`.
 
 ---
 
@@ -231,4 +235,14 @@ ESCENARIO: [BDD-025 Selección Predictiva de Pruebas (PTS) y Detección de Códi
   DADO que se calcula el radio de impacto de una mutación en el sistema
   CUANDO se invoca "eos blast" o "eos graph"
   ENTONCES EOS mapea automáticamente los módulos afectados a las suites de prueba unitarias exactas que deben ejecutarse (PTS) e identifica símbolos y funciones exportadas con 0 consumidores activos en el repositorio.
+
+ESCENARIO: [BDD-026 Auto-Sanación Autónoma de Hallazgos y Síntesis de Parches AST (eos heal)]
+  DADO que el sistema detecta una anomalía de arquitectura, código huérfano, advertencia de seguridad o drift de formato
+  CUANDO se invoca el comando CLI "eos heal" o la herramienta MCP "eos_autonomous_heal"
+  ENTONCES EOS sintetiza de forma autónoma el parche AST mínimo correctivo, lo pre-valida en el sandbox en memoria y lo aplica sin intervención manual ni efectos secundarios indeseados.
+
+ESCENARIO: [BDD-027 Bucle FDIR y Certificación Criptográfica de Sanación]
+  DADO que se ejecuta una auto-reparación exitosa sobre el código
+  CUANDO el motor concluye la validación de no-regresión en la tubería turbo
+  ENTONCES EOS genera el recibo criptográfico sellado docs/evidence/HEAL-XXXX.json con firma SHA-256, marca el estado epistémico como VERIFIED y registra la auditoría con código de salida 0.
 ```

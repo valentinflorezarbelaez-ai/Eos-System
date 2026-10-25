@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v15.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v16.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -116,6 +116,10 @@ switch (command) {
         stdio: "inherit"
       });
       execFileSync(process.execPath, ["--test", path.join(root, "test/eosSemanticGraph.test.mjs")], {
+        cwd: root,
+        stdio: "inherit"
+      });
+      execFileSync(process.execPath, ["--test", path.join(root, "test/eosAutonomousHealer.test.mjs")], {
         cwd: root,
         stdio: "inherit"
       });
@@ -327,6 +331,38 @@ switch (command) {
     break;
   }
 
+  case "heal":
+  case "fix": {
+    printBanner();
+    console.log("[EOS HEAL] Disparando Bucle FDIR de Auto-Sanación Autónoma (Meta SapFix)...\n");
+    const targetFile = args[1];
+    const dryRun = args.includes("--dry-run");
+
+    const { EosAutonomousHealer } = await import("../src/core/eosAutonomousHealer.ts");
+    const healer = new EosAutonomousHealer(root);
+    const report = healer.executeHealing({ targetFile, dryRun });
+
+    console.log(`Estado Epistémico    : ${report.epistemicState}`);
+    console.log(`Archivos Remediados  : ${report.remediatedCount}`);
+    console.log(`Modo de Ejecución    : ${dryRun ? "SIMULACIÓN (DRY-RUN)" : "APLICACIÓN EN VIVO"}`);
+    console.log(`Tiempo de Ejecución  : ${report.durationMs} ms\n`);
+
+    if (report.candidates.length > 0) {
+      console.log("Remediaciones Sintetizadas y Validadas:");
+      report.candidates.forEach((c) => {
+        console.log(`  ✔ [${c.action}] en ${c.targetPath} (Riesgo: ${c.blastRadiusRisk}, Sandbox: ${c.sandboxValid ? "PASS" : "FAIL"})`);
+      });
+    } else {
+      console.log("[INFO] No se detectaron anomalías requeridas de reparación. Código 100% puro.");
+    }
+
+    if (report.receiptPath) {
+      console.log(`\nRecibo Criptográfico : ${report.receiptPath} (${report.receiptSha256?.slice(0, 24)}...)`);
+    }
+    console.log(`\n[PASS] Bucle de Auto-Sanación completado (Exit Code 0).`);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -347,6 +383,7 @@ Uso Universal:
   eos judge <escenario>      Aplica el tribunal de decisión Bayesiano con los 7 Mandamientos
   eos blast <archivo>        Calcula el radio de impacto transitivo y pruebas predictivas (PTS)
   eos graph                  Muestra el grafo semántico, topología de módulos y código huérfano
+  eos heal [archivo]         Ejecuta el bucle de auto-sanación FDIR (Meta SapFix) con recibo sellado
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

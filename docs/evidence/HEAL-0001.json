@@ -1,0 +1,14 @@
+{
+  "epistemicState": "VERIFIED",
+  "timestamp": "2026-10-25T16:52:03.074Z",
+  "remediatedFilesCount": 1,
+  "remediations": [
+    {
+      "file": "test/_sandbox/anomalousFile.ts",
+      "action": "NORMALIZE_LINE_ENDINGS",
+      "blastRadiusRisk": "LOW",
+      "sandboxValid": true
+    }
+  ],
+  "merkleSbomRoot": "sha256:bec1ebeac08b46dfcbc4ebad179e6dd757833aa20e5d3d1ca063f78bc5074320"
+}
