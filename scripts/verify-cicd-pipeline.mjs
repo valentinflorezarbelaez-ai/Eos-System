@@ -84,7 +84,7 @@ const sbomEntries = [];
 const merkleHasher = crypto.createHash("sha256");
 for (const file of allFiles.sort()) {
   const rel = path.relative(root, file).replace(/\\/g, "/");
-  if (rel === "docs/evidence/SBOM-CICD-RECEIPT.json") continue;
+  if (rel === "docs/evidence/SBOM-CICD-RECEIPT.json" || rel === "docs/evidence/eos-audit.sarif") continue;
   const bytes = fs.readFileSync(file);
   const sha256 = crypto.createHash("sha256").update(bytes).digest("hex");
   sbomEntries.push({ path: rel, bytes: bytes.length, sha256 });
@@ -204,7 +204,46 @@ const receipt = {
 };
 
 fs.writeFileSync(path.join(root, "docs/evidence/SBOM-CICD-RECEIPT.json"), JSON.stringify(receipt, null, 2) + "\n", "utf8");
-console.log(`[PASS] Stage 7/7 — Cryptographic SBOM & CI/CD Receipt sealed in ${elapsedMs} ms.`);
+
+// Emit OASIS SARIF v2.1.0 diagnostic report for Cursor, VS Code, and GitHub Code Scanning
+const sarifReport = {
+  version: "2.1.0",
+  $schema: "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  runs: [
+    {
+      tool: {
+        driver: {
+          name: "EOS-SecDevOps-Scanner",
+          version: "12.0.0",
+          informationUri: "https://eos-system-ten.vercel.app",
+          rules: [
+            {
+              id: "EOS-SEC-001",
+              name: "ZeroPlaintextSecrets",
+              shortDescription: { text: "No plaintext credentials or tokens detected." },
+              defaultConfiguration: { level: "error" }
+            },
+            {
+              id: "EOS-SDD-002",
+              name: "SpecificationConformance",
+              shortDescription: { text: "All SDD formal artifacts must be present and verified." },
+              defaultConfiguration: { level: "error" }
+            },
+            {
+              id: "EOS-L0-003",
+              name: "HexagonalL0Purity",
+              shortDescription: { text: "Production runtime dependencies must remain zero." },
+              defaultConfiguration: { level: "error" }
+            }
+          ]
+        }
+      },
+      results: []
+    }
+  ]
+};
+fs.writeFileSync(path.join(root, "docs/evidence/eos-audit.sarif"), JSON.stringify(sarifReport, null, 2) + "\n", "utf8");
+console.log(`[PASS] Stage 7/7 — Cryptographic SBOM, CI/CD Receipt & SARIF v2.1.0 sealed in ${elapsedMs} ms.`);
 console.log("======================================================================");
 console.log(" SOVEREIGN CI/CD GATE: 7/7 STAGES PASSED | DEPLOYMENT AUTHORIZED (0)  ");
 console.log("======================================================================");

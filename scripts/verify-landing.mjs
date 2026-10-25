@@ -117,6 +117,8 @@ assert.ok(fs.existsSync(path.join(root, "api/health.js")), "Missing api/health.j
 assert.ok(fs.existsSync(path.join(root, "scripts/verify-sri-integrity.mjs")), "Missing scripts/verify-sri-integrity.mjs");
 assert.ok(fs.existsSync(path.join(root, "scripts/verify-cwv-budget.mjs")), "Missing scripts/verify-cwv-budget.mjs");
 assert.ok(fs.existsSync(path.join(root, "src/mcp/eosMcpServer.ts")), "Missing src/mcp/eosMcpServer.ts");
+assert.ok(fs.existsSync(path.join(root, "bin/eos.mjs")), "Missing bin/eos.mjs");
+assert.ok(fs.existsSync(path.join(root, ".cursor/rules/eos-governance.mdc")), "Missing .cursor/rules/eos-governance.mdc");
 assert.ok(fs.existsSync(path.join(root, "scripts/eos-jarvis-daemon.mjs")), "Missing scripts/eos-jarvis-daemon.mjs");
 assert.ok(html.includes('id="btn-copy-eos-blueprint"'), "Missing #btn-copy-eos-blueprint button");
 assert.ok(html.includes('id="btn-download-eos-spec"'), "Missing #btn-download-eos-spec button");
