@@ -147,7 +147,19 @@ export function evaluateDirectiveWithTMR(directive: string): TmrExecutionReceipt
   const checkBeta = simpleHash(`BETA:${intentBeta}:${norm}`);
 
   // Sandbox Gamma: Invariant Security Check (never allow destructive execution without explicit audit)
-  const isDestructive = norm.includes("rm -rf") || norm.includes("drop table") || norm.includes("delete from");
+  const destructivePatterns = [
+    "rm -rf",
+    "drop table",
+    "drop database",
+    "delete from",
+    "truncate table",
+    "| bash",
+    "| sh",
+    ":(){",
+    "/etc/shadow",
+    "/etc/passwd"
+  ];
+  const isDestructive = destructivePatterns.some((p) => norm.includes(p));
   const intentGamma = isDestructive ? "SECURITY_VIOLATION_HALT" : intentAlpha;
   const safeGamma = !isDestructive;
   const checkGamma = simpleHash(`GAMMA:${intentGamma}:${norm}`);
