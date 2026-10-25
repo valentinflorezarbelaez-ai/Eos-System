@@ -32,7 +32,7 @@ export class AttestationRecord {
   readonly epistemicState: EpistemicState;
   readonly signatures: readonly AttestationSignature[];
   readonly issuedAt: string;
-  readonly expiresAt?: string;
+  readonly expiresAt?: string | undefined;
 
   constructor(
     id: string,

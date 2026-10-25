@@ -1,7 +1,5 @@
 import {
   OntologyGraph,
-  OntologyNode,
-  OntologyEdge,
   OrphanFinding
 } from '../core/domain/models/OntologyGraph.js';
 

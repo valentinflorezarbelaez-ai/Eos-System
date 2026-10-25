@@ -26,6 +26,7 @@
   "author": "Valentin Florez & EOS Autonomous Architecture",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^26.6.5",
     "typescript": "^5.7.0"
   }
 }

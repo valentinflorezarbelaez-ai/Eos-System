@@ -11,11 +11,14 @@ export * from './core/domain/models/OntologyGraph.js';
 export * from './core/domain/models/TaskNode.js';
 export * from './core/domain/models/EARSValidator.js';
 export * from './core/domain/models/AttestationRecord.js';
+export * from './core/domain/models/AgentRoleMatrix.js';
 
 // Application Orchestration
 export * from './core/application/DualTrackOrchestrator.js';
 export * from './core/application/EvidenceRecorder.js';
 export * from './core/application/AttestationVerifierService.js';
+export * from './core/application/UniversalDevelopmentEngine.js';
+export * from './core/application/CodeScaffolderService.js';
 
 // Infrastructure Adapters
 export * from './infrastructure/CryptoService.js';
