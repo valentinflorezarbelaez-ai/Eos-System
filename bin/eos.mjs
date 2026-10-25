@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v13.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v14.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -49,6 +49,34 @@ switch (command) {
       });
     } catch (err) {
       process.exit(1);
+    }
+    break;
+  }
+
+  case "turbo":
+  case "fast": {
+    printBanner();
+    console.log("[EOS TURBO] Disparando Tubería de Verificación Ultrarrápida en Memoria...\n");
+    const { runTurboPipeline } = await import("../src/core/eosTurboEngine.ts");
+    const result = runTurboPipeline(root);
+
+    console.log(`Estado Epistémico    : ${result.epistemicState}`);
+    console.log(`Tiempo Total         : ${result.totalDurationMs} ms (${result.totalDurationUs} µs)`);
+    console.log(`Archivos Analizados  : ${result.totalFilesChecked} (${result.cacheHits} en caché, ${result.freshScans} frescos)`);
+    console.log(`Merkle SBOM Root     : ${result.sbomMerkleRoot.slice(0, 32)}...\n`);
+    console.log("=== TELEMETRÍA DE ALTA PRECISIÓN POR ADUANA ===");
+    result.stages.forEach((s) => {
+      const icon = s.status === "PASS" ? "✔" : "✖";
+      console.log(`  ${icon} [${s.stageId}] ${s.name}: ${s.durationMs} ms (${s.durationUs} µs)`);
+      console.log(`    ↳ ${s.details}`);
+    });
+
+    if (result.violations.length > 0) {
+      console.log("\n[HALLAZGOS DETECTADOS]");
+      result.violations.forEach((v) => console.log(`  ! ${v}`));
+      process.exit(1);
+    } else {
+      console.log(`\n[PASS] Verificación Turbo 100% exitosa en ${result.totalDurationMs} ms (Exit Code 0).`);
     }
     break;
   }
@@ -80,6 +108,10 @@ switch (command) {
         stdio: "inherit"
       });
       execFileSync(process.execPath, ["--test", path.join(root, "test/eosPrometheus.test.mjs")], {
+        cwd: root,
+        stdio: "inherit"
+      });
+      execFileSync(process.execPath, ["--test", path.join(root, "test/eosTurbo.test.mjs")], {
         cwd: root,
         stdio: "inherit"
       });
@@ -245,6 +277,7 @@ switch (command) {
     printBanner();
     console.log(`
 Uso Universal:
+  eos turbo                  Verificación ultrarrápida en memoria con telemetría en microsegundos (<350ms)
   eos verify                 Ejecuta las 7 aduanas de seguridad SecDevOps (fail-closed)
   eos audit                  Audita en paralelo todos los repositorios de la flota
   eos test                   Ejecuta las pruebas unitarias y de caos (node:test)

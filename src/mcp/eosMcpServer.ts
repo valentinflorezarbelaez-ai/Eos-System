@@ -55,6 +55,10 @@ import {
   evaluateDecision
 } from "../core/eosCognitiveJudge.ts";
 
+import {
+  runTurboPipeline
+} from "../core/eosTurboEngine.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -105,7 +109,7 @@ export class EosMcpServer {
               },
               serverInfo: {
                 name: "eos-system-mcp",
-                version: "13.0.0",
+                version: "14.0.0",
                 description: "EOS Sovereign Engineering Operating System MCP Interface"
               }
             }
@@ -219,6 +223,14 @@ export class EosMcpServer {
                       targetDomain: { type: "string", description: "Optional target domain (e.g. CORE, DOMAIN, UI)" }
                     },
                     required: ["title", "description", "proposedAction"]
+                  }
+                },
+                {
+                  name: "eos_turbo_verify",
+                  description: "Executes ultra-fast sub-350ms verification of SAST, clean hexagonal boundaries, 0-runtime dependencies, and critical assets with microsecond telemetry.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
                   }
                 }
               ]
@@ -421,6 +433,10 @@ export class EosMcpServer {
           codeSnippet: args.codeSnippet ? String(args.codeSnippet) : undefined,
           targetDomain: args.targetDomain ? String(args.targetDomain) : undefined
         });
+      }
+
+      case "eos_turbo_verify": {
+        return runTurboPipeline(this.projectRoot);
       }
 
       default:

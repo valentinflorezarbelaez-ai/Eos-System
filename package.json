@@ -1,16 +1,18 @@
 {
   "name": "eos-system-landing",
-  "version": "13.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Prometheus Omni-Model Engine v13.0 (Autonomous Cognitive Nexus, Metaprompting EARS/BDD Scaffolding, Hexagonal Architecture Boundary Guard, Bayesian Cognitive Judge, Neural Vector Core L0, TMR Byzantine Consensus, Voice Telemetry, Federated Fleet CI/CD SecDevOps, 7-Stage Fail-Closed Gate, Omega Post-Quantum, Linux Ring-0)",
+  "version": "14.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Turbo Engine v14.0 (Sub-350ms In-Memory Verification Cache, Microsecond High-Precision Telemetry, Prometheus Omni-Model Amplification, Clean Hexagonal Architecture Guard, Bayesian Cognitive Judge, Neural Vector Core L0, TMR Byzantine Consensus)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
   },
   "scripts": {
+    "turbo": "node bin/eos.mjs turbo",
     "test": "node scripts/verify-cicd-pipeline.mjs",
     "test:unit": "node --test test/eosCore.test.mjs",
     "test:chaos": "node --test test/chaosResilience.test.mjs",
     "test:prometheus": "node --test test/eosPrometheus.test.mjs",
+    "test:turbo": "node --test test/eosTurbo.test.mjs",
     "verify:cwv": "node scripts/verify-cwv-budget.mjs",
     "verify:sri": "node scripts/verify-sri-integrity.mjs",
     "verify:strict": "node scripts/verify-cicd-pipeline.mjs",

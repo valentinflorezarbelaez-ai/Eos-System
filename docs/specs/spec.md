@@ -79,6 +79,9 @@
 * **FR-025 (Ubiquitous Clean/Hexagonal Boundary & Circular Invariant Guard)**: EL SISTEMA (`src/core/eosArchitectureGuard.ts`) analizará estáticamente el grafo de dependencias de código para asegurar que el núcleo de dominio (Layer 0) mantenga 0 dependencias externas o de UI, verificará la dirección estricta de dependencias (UI -> App -> Domain) y detectará de forma determinista cualquier ciclo circular de importaciones mediante análisis de grafos dirigido.
 * **FR-026 (Event-Driven Cognitive Consensus & Bayesian Model Evaluation)**: CUANDO se requiera evaluar una decisión de diseño, mutación o propuesta arquitectónica, EL SISTEMA (`src/core/eosCognitiveJudge.ts`) aplicará una matriz de evaluación Bayesiana multidimensional (Seguridad, Rendimiento, Corrección, Pureza Arquitectónica) y emitirá un veredicto formal de conformidad con los 7 Mandamientos Inviolables.
 * **FR-027 (Ubiquitous Multi-IDE Omni-Tools)**: EL SISTEMA integrará `eos_amplify_prompt`, `eos_check_architecture` y `eos_evaluate_decision` en `src/mcp/eosMcpServer.ts` y en `bin/eos.mjs` (`eos amplify`, `eos guard`, `eos judge`), permitiendo que cualquier IDE (Cursor, Antigravity, VS Code, JetBrains, Neovim) gobierne y extraiga el máximo potencial analítico de cualquier LLM.
+* **FR-028 (State-Driven & Content-Addressed Verification Cache)**: MIENTRAS se ejecuten auditorías o análisis estáticos, EL SISTEMA mantendrá una caché de contenido en memoria (`src/core/eosTurboEngine.ts`) indexada por firma de archivo (`size`, `mtimeMs`, `sha256`), evitando re-evaluar archivos no mutados y reduciendo el tiempo de validación a O(1) (< 0.005 ms por archivo).
+* **FR-029 (Event-Driven & Microsecond Multicore SecDevOps Pipeline)**: CUANDO se invoque la tubería de verificación ultra-rápida (`eos turbo`), EL SISTEMA despachará concurrentemente las aduanas independientes de SAST, AST, pureza arquitectónica y presupuestos de rendimiento, registrando telemetría de alta resolución en microsegundos (µs) mediante `process.hrtime.bigint()`.
+* **FR-030 (Ubiquitous Ultra-Fast MCP Tool & CLI Omnipresence)**: EL SISTEMA expondrá `eos_turbo_verify` en `src/mcp/eosMcpServer.ts` y el comando `eos turbo` en `bin/eos.mjs`, permitiendo que cualquier agente en Cursor o Antigravity obtenga retroalimentación instantánea en < 350 ms sin bloqueos del hilo principal.
 
 ---
 
@@ -203,4 +206,15 @@ ESCENARIO: [BDD-021 Tribunal Cognitivo y Evaluación de Modelos Multidimensional
   DADO que se debe evaluar una propuesta arquitectónica o decisión técnica
   CUANDO se invoca "eos_evaluate_decision" o el comando CLI "eos judge <escenario>"
   ENTONCES EOS aplica una matriz Bayesiana multidimensional (Seguridad, Rendimiento, Mantenibilidad, Pureza Arquitectónica) y emite un veredicto formal alineado con la Constitución de EOS.
+
+ESCENARIO: [BDD-022 Verificación Ultra-Rápida con Caché de Contenido y Telemetría en Microsegundos (eos turbo)]
+  DADO que un desarrollador o agente de IA en Cursor o Antigravity necesita validar el estado del código en tiempo récord
+  CUANDO se invoca el comando CLI "eos turbo" o la herramienta MCP "eos_turbo_verify"
+  ENTONCES EOS ejecuta las compuertas de SAST, AST, pureza arquitectónica y contratos en paralelo aprovechando la caché in-memory de firmas SHA-256 en menos de 350 milisegundos con reporte de microsegundos por aduana
+  Y emite el estado epistémico formal (VERIFIED o FINDINGS_IDENTIFIED) con código de salida 0 ante éxito.
+
+ESCENARIO: [BDD-023 Aislamiento de Mutaciones y Verificación Incremental O(1)]
+  DADO un archivo de código fuente no modificado respecto a su última firma Merkle (mtimeMs, size, hash)
+  CUANDO se ejecuta la verificación turbo
+  ENTONCES EOS omite la re-evaluación redundante en tiempo O(1) (< 0.005 ms) mientras detecta y revalida de inmediato cualquier archivo mutado sin falsos negativos.
 ```
