@@ -29,6 +29,8 @@
     "test:spec": "node --test test/eosOpenSpec.test.mjs",
     "test:titans": "node --test test/eosTitans.test.mjs",
     "test:spotify": "node --test test/eosSpotify.test.mjs",
+    "test:go": "node --test test/eosGoAccelerator.test.mjs",
+    "build:go": "go build -o bin/eos-spotify.exe src/native/eos_spotify_engine.go",
     "verify:cwv": "node scripts/verify-cwv-budget.mjs",
     "verify:sri": "node scripts/verify-sri-integrity.mjs",
     "verify:strict": "node scripts/verify-cicd-pipeline.mjs",

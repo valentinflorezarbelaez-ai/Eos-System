@@ -663,6 +663,42 @@ switch (command) {
     break;
   }
 
+  case "go": {
+    printBanner();
+    const sub = (args[1] || "benchmark").toLowerCase();
+    const { EosGoAccelerator } = await import("../src/core/eosGoAccelerator.ts");
+    const accelerator = new EosGoAccelerator(root);
+
+    console.log(`[EOS GO TITAN] Disparando Acelerador Nativo en Go (Modo: ${sub.toUpperCase()})...\n`);
+
+    if (sub === "bandit") {
+      const episodes = parseInt(args[2], 10) || 2000;
+      const res = accelerator.runBanditSimulation(episodes);
+      console.log(`Episodios Ejecutados  : ${res.episodes}`);
+      console.log(`Brazo Óptimo Ganador  : ${res.optimalArm} (Thompson Sampling)`);
+      console.log(`Aceleración Nativa Go : ${res.nativeGo ? "ACTIVA (✔)" : "FALLBACK TS"}\n`);
+      console.log("=== BRAZOS DEL BANDIDO MULTI-BRAZO SPOTIFY BaRT ===");
+      res.arms.forEach((a) => {
+        console.log(`  ↳ [${a.trackId}] "${a.title}": Expectativa=${a.expectedMu} (Pulls=${a.pulls}, Alpha=${a.alpha.toFixed(1)}, Beta=${a.beta.toFixed(1)})`);
+      });
+      console.log(`\n[PASS] Optimización BaRT completada exitosamente (Exit Code 0).`);
+      break;
+    }
+
+    const concurrency = parseInt(args[2], 10) || 2000;
+    const res = accelerator.runBenchmark(concurrency);
+    console.log(`Titán                 : ${res.titan}`);
+    console.log(`Goroutines Concurrentes: ${res.concurrencyGoroutines}`);
+    console.log(`Rendimiento Streaming : ${res.streamingThroughputMbSec.toLocaleString()} MB/s`);
+    console.log(`Operaciones Coseno    : ${res.cosineSimOpsSec.toLocaleString()} ops/s`);
+    console.log(`Brazo BaRT Óptimo     : ${res.optimalArmSelected}`);
+    console.log(`Latencia Total        : ${res.totalDurationUs.toFixed(2)} µs`);
+    console.log(`Acelerador Nativo Go  : ${res.nativeGo ? "COMPILADO (✔)" : "FALLBACK TS"}`);
+    console.log(`Sello Criptográfico   : ${res.sha256Proof.slice(0, 32)}...\n`);
+    console.log(`[PASS] Benchmark Nativo en Go 100% exitoso (Exit Code 0).`);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":

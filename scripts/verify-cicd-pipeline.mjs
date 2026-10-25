@@ -16,7 +16,15 @@ console.log("===================================================================
 function listRepoFiles(dir, acc = []) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
-    if (entry.name === ".git" || entry.name === ".vercel" || entry.name === "node_modules") continue;
+    if (
+      entry.name === ".git" ||
+      entry.name === ".vercel" ||
+      entry.name === "node_modules" ||
+      entry.name === "_sandbox" ||
+      entry.name.startsWith(".worktree")
+    ) {
+      continue;
+    }
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       listRepoFiles(full, acc);
@@ -83,6 +91,7 @@ assert.equal(
 const sbomEntries = [];
 const merkleHasher = crypto.createHash("sha256");
 for (const file of allFiles.sort()) {
+  if (!fs.existsSync(file)) continue;
   const rel = path.relative(root, file).replace(/\\/g, "/");
   if (rel === "docs/evidence/SBOM-CICD-RECEIPT.json" || rel === "docs/evidence/eos-audit.sarif") continue;
   const bytes = fs.readFileSync(file);
@@ -145,6 +154,10 @@ execFileSync(process.execPath, ["--test", path.join(root, "test/eosTitans.test.m
   stdio: "pipe"
 });
 execFileSync(process.execPath, ["--test", path.join(root, "test/eosSpotify.test.mjs")], {
+  cwd: root,
+  stdio: "pipe"
+});
+execFileSync(process.execPath, ["--test", path.join(root, "test/eosGoAccelerator.test.mjs")], {
   cwd: root,
   stdio: "pipe"
 });

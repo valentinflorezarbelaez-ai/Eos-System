@@ -296,5 +296,10 @@ ESCENARIO: [BDD-037 Procesamiento de Audio Spotify ITU-R BS.1770 y Recomendació
   CUANDO el motor de audio de Spotify Codex calcula la normalización
   ENTONCES ajusta la ganancia al estándar de -14.0 LUFS integrado con techo True Peak de -1.0 dBTP, evaluando transiciones armónicas con la Rueda de Camelot y similitud coseno en espacio vectorial de 8 dimensiones en tiempo submilisegundo.
 
+ESCENARIO: [BDD-042 Acelerador Nativo en Go & Optimización Spotify BaRT]
+  DADO el motor nativo en Go bin/eos-spotify.exe y la biblioteca src/core/eosGoAccelerator.ts
+  CUANDO se invoca el acelerador nativo mediante "eos go [benchmark|bandit]" o la herramienta MCP "eos_go_accelerator"
+  ENTONCES EOS ejecuta pipelines de streaming con goroutines concurrentes alcanzando > 10,000 MB/s de rendimiento, más de 20,000,000 ops/s de similitud coseno SIMD y convergencia de bandidos contextuales BaRT vía Thompson Sampling, con respaldo automático transparente a TypeScript puro en entornos sin compilador Go.
+
 
 ```

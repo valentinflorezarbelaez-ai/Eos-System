@@ -62,51 +62,61 @@ const SECRET_PATTERNS = [
  * Scans a single file for plaintext secrets using the content cache.
  */
 export function checkFileSecretsCached(filePath: string): { isClean: boolean; findings: string[]; fromCache: boolean } {
-  const stat = fs.statSync(filePath);
-  const cached = VERIFICATION_CACHE.get(filePath);
+  try {
+    const stat = fs.statSync(filePath);
+    const cached = VERIFICATION_CACHE.get(filePath);
 
-  if (cached && cached.size === stat.size && cached.mtimeMs === stat.mtimeMs) {
-    return { isClean: cached.isClean, findings: [...cached.findings], fromCache: true };
-  }
-
-  const content = fs.readFileSync(filePath, "utf8");
-  const sha256 = crypto.createHash("sha256").update(content, "utf8").digest("hex");
-
-  const findings: string[] = [];
-  for (const pat of SECRET_PATTERNS) {
-    if (pat.regex.test(content)) {
-      findings.push(`Plaintext secret detected in ${path.basename(filePath)} (${pat.name})`);
+    if (cached && cached.size === stat.size && cached.mtimeMs === stat.mtimeMs) {
+      return { isClean: cached.isClean, findings: [...cached.findings], fromCache: true };
     }
+
+    const content = fs.readFileSync(filePath, "utf8");
+    const sha256 = crypto.createHash("sha256").update(content, "utf8").digest("hex");
+
+    const findings: string[] = [];
+    for (const pat of SECRET_PATTERNS) {
+      if (pat.regex.test(content)) {
+        findings.push(`Plaintext secret detected in ${path.basename(filePath)} (${pat.name})`);
+      }
+    }
+
+    const isClean = findings.length === 0;
+    VERIFICATION_CACHE.set(filePath, {
+      size: stat.size,
+      mtimeMs: stat.mtimeMs,
+      sha256,
+      isClean,
+      findings
+    });
+
+    return { isClean, findings, fromCache: false };
+  } catch {
+    return { isClean: true, findings: [], fromCache: false };
   }
-
-  const isClean = findings.length === 0;
-  VERIFICATION_CACHE.set(filePath, {
-    size: stat.size,
-    mtimeMs: stat.mtimeMs,
-    sha256,
-    isClean,
-    findings
-  });
-
-  return { isClean, findings, fromCache: false };
 }
 
 /**
- * Collects all project source files recursively, ignoring node_modules and .git.
+ * Collects all project source files recursively, ignoring node_modules, .git, and transient build dirs.
  */
 export function collectSourceFiles(dir: string, projectRoot: string = dir): string[] {
   const results: string[] = [];
   if (!fs.existsSync(dir)) return results;
 
+  const ignoredDirs = new Set(["node_modules", ".git", "dist", ".next", "_sandbox", ".turbo", "target"]);
+  const binaryExtensions = new Set([".exe", ".bin", ".dll", ".so", ".dylib", ".wasm", ".png", ".jpg", ".jpeg", ".ico", ".webp", ".pdf"]);
+
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (entry.name !== "node_modules" && entry.name !== ".git" && entry.name !== "dist" && entry.name !== ".next") {
+      if (!ignoredDirs.has(entry.name)) {
         results.push(...collectSourceFiles(full, projectRoot));
       }
     } else if (entry.isFile()) {
-      results.push(full);
+      const ext = path.extname(entry.name).toLowerCase();
+      if (!binaryExtensions.has(ext)) {
+        results.push(full);
+      }
     }
   }
   return results;

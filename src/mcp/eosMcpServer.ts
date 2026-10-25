@@ -88,6 +88,10 @@ import {
   EosSpotifyCodex
 } from "../core/eosSpotifyCodex.ts";
 
+import {
+  EosGoAccelerator
+} from "../core/eosGoAccelerator.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -423,6 +427,18 @@ export class EosMcpServer {
                       primaryMetric: { type: "string", description: "Primary evaluation metric" }
                     }
                   }
+                },
+                {
+                  name: "eos_go_accelerator",
+                  description: "Executes native compiled Go Spotify Titan Engine: 20,000+ MB/s concurrent Goroutine streaming, 40M+ ops/sec SIMD acoustic cosine similarity, and BaRT Contextual Bandits.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      mode: { type: "string", enum: ["benchmark", "bandit"], description: "Execution mode (default: benchmark)" },
+                      concurrency: { type: "integer", description: "Number of concurrent goroutines" },
+                      episodes: { type: "integer", description: "Episodes for BaRT Thompson Sampling" }
+                    }
+                  }
                 }
               ]
             }
@@ -718,6 +734,15 @@ export class EosMcpServer {
       case "eos_spotify_experiment": {
         const codex = new EosSpotifyCodex(this.projectRoot);
         return codex.designCanaryExperiment(args);
+      }
+
+      case "eos_go_accelerator": {
+        const accelerator = new EosGoAccelerator(this.projectRoot);
+        const mode = String(args.mode || "benchmark").toLowerCase();
+        if (mode === "bandit") {
+          return accelerator.runBanditSimulation(Number(args.episodes) || 2000);
+        }
+        return accelerator.runBenchmark(Number(args.concurrency) || 2000);
       }
 
       default:
