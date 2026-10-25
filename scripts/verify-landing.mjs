@@ -70,6 +70,11 @@ assert.ok(html.includes("Atalanta"), "Missing Atalanta Three-Voice Alchemical Fu
 assert.ok(html.includes("Flyme Sound"), "Missing Geely EX5 / Chery E5 Flyme Sound 1,000W calibration");
 assert.ok(html.includes('id="templo-solar"'), "Missing #templo-solar EosSolarSanctum interactive section");
 assert.ok(html.includes('id="nanosecond-engine"'), "Missing #nanosecond-engine Nanosecond & Universal Translator section");
+assert.ok(html.includes('id="btn-copy-eos-blueprint"'), "Missing #btn-copy-eos-blueprint button");
+assert.ok(html.includes('id="btn-download-eos-spec"'), "Missing #btn-download-eos-spec button");
+assert.ok(html.includes('id="eos-evolution-log"'), "Missing #eos-evolution-log live co-evolution log");
+assert.ok(html.includes("5IiquGZEbovPj9B8IdG0bi"), "Missing canonical Perfect Music ID 5IiquGZEbovPj9B8IdG0bi in Aberamentho v8.0 seal");
+assert.ok(html.includes("/api/playlist-tracks"), "Missing /api/playlist-tracks In-App Full-Track Player reference");
 assert.ok(html.includes("Citadel"), "Missing Citadel HFT <100ns benchmark");
 assert.ok(html.includes("kdb+"), "Missing kdb+ L1/L2 Cache benchmark");
 assert.ok(html.includes("Zed"), "Missing Zed 120 FPS GPUI benchmark");

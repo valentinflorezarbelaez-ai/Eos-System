@@ -29,10 +29,10 @@
   <!-- Typography & Critical Asset Preload -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" href="/css/eos.css" as="style" />
-  <link rel="preload" href="/js/eos.js" as="script" />
+  <link rel="preload" href="/css/eos.css?v=4.0" as="style" />
+  <link rel="preload" href="/js/eos.js?v=4.0" as="script" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/eos.css" />
+  <link rel="stylesheet" href="/css/eos.css?v=4.0" />
 
   <!-- Xirp-Grade Speculative Prerendering (0ms Instant Navigation) -->
   <script type="speculationrules">
@@ -106,7 +106,7 @@
             EOS SYSTEM
             <span class="brand__badge">L0 SOVEREIGN</span>
           </span>
-          <span class="brand__sub">Engineering Operating System · v2.4</span>
+          <span class="brand__sub">Engineering Operating System · v4.0 Supreme</span>
         </div>
       </a>
 
@@ -247,10 +247,57 @@
             <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="nanosecond:hft">
               9. eos nanosecond --hft
             </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="dualtrack:orchestrator">
+              10. eos dual-track
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="attestation:chain">
+              11. eos attestation --chain
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="develop:universal">
+              12. eos develop &lt;prompt&gt;
+            </button>
+          </div>
+          <!-- Terminal Live Prompt Bar & Universal Development Engine Lab -->
+          <div class="terminal-prompt-bar" role="search" aria-label="Laboratorio de Desarrollo Universal">
+            <div class="prompt-input-group">
+              <span class="prompt-prefix">eos&nbsp;develop&nbsp;&quot;</span>
+              <input 
+                type="text" 
+                id="eos-custom-prompt-input" 
+                class="prompt-input" 
+                placeholder="Escribe aquí CUALQUIER directriz o requerimiento de desarrollo..." 
+                value="Crear módulo de pagos con Stripe y webhooks idempotentes"
+                aria-label="Instrucción de desarrollo para EOS" 
+              />
+              <span class="prompt-suffix">&quot;</span>
+            </div>
+            <button type="button" id="eos-run-pipeline-btn" class="prompt-run-btn" title="Ejecutar tubería autónoma de 21 pasos">
+              ⚡ EJECUTAR 21 PASOS
+            </button>
           </div>
 
+          <!-- Quick Presets -->
+          <div class="prompt-presets-bar">
+            <span class="presets-label">⚡ Presets de Inspiración:</span>
+            <button type="button" class="preset-chip" data-preset="Crear módulo de pagos con Stripe y webhooks idempotentes">💳 Stripe Pay</button>
+            <button type="button" class="preset-chip" data-preset="Motor de síntesis granular de audio Hi-Fi a 60 FPS con Web Audio API">🎵 Audio DSP 60FPS</button>
+            <button type="button" class="preset-chip" data-preset="Autenticación biométrica WebAuthn Passkeys con Zero-Knowledge">🔐 Passkeys WebAuthn</button>
+            <button type="button" class="preset-chip" data-preset="Smart Contract ERC-4337 Account Abstraction con Paymaster">🌐 ERC-4337 Web3</button>
+            <button type="button" class="preset-chip" data-preset="Microservicio de matching algorítmico ultrarrápido en Go L0">⚡ Microservicio Go</button>
+          </div>
+
+          <!-- Artifact Sub-tabs: Log | EARS Spec | Domain Entity | Use Case | Unit Test -->
+          <div class="terminal-artifact-tabs" id="terminal-artifact-tabs" role="tablist" aria-label="Vistas del artefacto">
+            <button type="button" class="artifact-tab is-active" data-view="pipeline-log">📋 Pipeline Log (21 Pasos)</button>
+            <button type="button" class="artifact-tab" data-view="ears-spec">📐 Requisito EARS &amp; BDD</button>
+            <button type="button" class="artifact-tab" data-view="code-entity">📦 Entidad Dominio L0 (.ts)</button>
+            <button type="button" class="artifact-tab" data-view="code-usecase">⚙️ Caso de Uso (.ts)</button>
+            <button type="button" class="artifact-tab" data-view="code-test">🧪 Test Determinista (.ts)</button>
+          </div>
+
+
           <pre class="terminal-body" id="terminal-output" aria-live="polite">$ npm run verify:strict
-&gt; eos-system@2.4.0 verify:strict
+&gt; eos-system@2.5.0 verify:strict
 &gt; Executing 19-Point Deterministic Invariant &amp; Epistemic Gate Suite...
 
 [PASS] LAW-I   Specification SSOT (docs/specs/spec.md EARS + BDD) ....... 100% CONFORMANT
@@ -843,34 +890,66 @@ Dictamen        : «Al León de la Ley se le combate con la Balanza». Realiza l
                 </div>
               </div>
 
-              <!-- Columna Derecha: Salida Compilada por EOS (EARS + 5 Secretos + Código Zero-Alloc) -->
+              <!-- Columna Derecha: Salida Compilada por EOS (Paquete SDD 6 Partes + 5 Secretos + Código Zero-Alloc) -->
               <div class="sanctum-box" style="border-color: rgba(56, 189, 248, 0.38);">
-                <div>
-                  <span class="arch-card__tag">PASO 2 · SALIDA DETERMINISTA DEL COMPILADOR EOS (EARS + 5 SECRETOS + CÓDIGO)</span>
-                  <h3 class="arch-card__title" style="margin-top: 0.5rem;">Blueprint Técnico Traducido &amp; Código Zero-Allocation / SIMD</h3>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap;">
+                  <div>
+                    <span class="arch-card__tag">PASO 2 · PAQUETE SDD DE 6 PARTES COMPILADO POR EOS (EARS + BDD + DAG + CÓDIGO)</span>
+                    <h3 class="arch-card__title" style="margin-top: 0.5rem;">Blueprint Técnico Traducido &amp; Código Zero-Allocation / SIMD</h3>
+                  </div>
+                  <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
+                    <button type="button" id="btn-copy-eos-blueprint" class="btn btn--ghost" style="padding: 0.35rem 0.7rem; font-size: 0.72rem;">
+                      📋 Copiar Blueprint SDD
+                    </button>
+                    <button type="button" id="btn-download-eos-spec" class="btn btn--gold" style="padding: 0.35rem 0.7rem; font-size: 0.72rem;">
+                      💾 Descargar Paquete (.md)
+                    </button>
+                  </div>
                 </div>
-                <pre id="eos-compiler-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.92); border: 1px solid rgba(56, 189, 248, 0.3); font-family: var(--font-mono); font-size: 0.76rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 460px; overflow-y: auto;" aria-live="polite">[EOS UNIVERSAL COMPILER · READY]
+                <pre id="eos-compiler-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.92); border: 1px solid rgba(56, 189, 248, 0.3); font-family: var(--font-mono); font-size: 0.76rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 430px; overflow-y: auto;" aria-live="polite">[EOS UNIVERSAL COMPILER v4.0 · READY · 6-PART SDD PACKAGE]
 Instrucción : Crear interfaz a 120 FPS estilo Zed y motor de transacciones de millones de ops/seg sin pausas de Garbage Collector
 Perfil      : Zed GPUI Architecture (Rust / WebGPU · 120 FPS Constantes · &lt; 8 ms INP)
 
-1. ESPECIFICACIÓN FORMAL EARS (LEY I &amp; II):
+1. INTAKE &amp; CLASIFICACIÓN DUAL-TRACK:
+  • Track Asignado : HEAVY_TRACK (Level 2 Constitutional Gate Verified)
+  • Dominio L0     : Pure Hexagonal Core (0 External NPM Runtime Dependencies)
+
+2. ESPECIFICACIÓN FORMAL EARS &amp; BDD (LEY I &amp; II):
   • FR-EOS-01 (Ubiquitous): EL SISTEMA ejecutará la carga sobre un Struct of Arrays (SoA) contiguo de 64 KB en Caché L1 con 0 asignaciones en el Heap.
   • FR-EOS-02 (Event-Driven): CUANDO ocurra un evento, EL SISTEMA despachará por cola circular Lock-Free (CAS atómico) y pintará en GPU en &lt; 8 ms (120 FPS).
+  • BDD: DADO un Arena de 64 KB en L1, CUANDO corre la carga, ENTONCES logra &gt; 1,500 Mops/s con 0 ms de Garbage Collector.
 
-2. APLICACIÓN DE LOS 5 SECRETOS DE NANOSEGUNDOS:
+3. APLICACIÓN DE LOS 5 SECRETOS DE NANOSEGUNDOS:
   • [1] Kernel Bypass : Mapeo Zero-Copy (mmap / SharedArrayBuffer) sin serialización intermedia.
   • [2] Caché L1 SoA  : Vectores contiguos alineados a 64 bytes (0 Pointer Chasing · 0.5 ns L1 Hit).
   • [3] Zero-Alloc    : Arena Allocator fijo reiniciado en O(1) por frame (0 Garbage Collector).
   • [4] Lock-Free CAS : Cola circular atómica SPSC (Compare-And-Swap sin Mutex).
   • [5] SIMD &amp; GPU    : Bucle vectorial desenrollado x8 (AVX-512 / SIMD128) + Shaders GPU a 120 FPS.
 
-3. CÓDIGO FUENTE GENERADO (ZERO-ALLOCATION / SOA / SIMD):
+4. GRAFO DE TAREAS ATÓMICAS (DAG DE EJECUCIÓN):
+  • [TASK-01] Reservar Arena SoA de 64 KB alineada a 64B ➔ [TASK-02] Implementar anillo SPSC Lock-Free CAS ➔ [TASK-03] Compilar bucle SIMD x8 ➔ [TASK-04] Sellar recibo EVD SHA-256.
+
+5. CÓDIGO FUENTE GENERADO (ZERO-ALLOCATION / SOA / SIMD):
 #[repr(C, align(64))] // Alineación exacta a línea de Caché L1 (64 bytes)
 pub struct GlyphSoABatch {
     pub x_pos: [f32; 1024],      // Contiguo en L1 (0 Pointer Chasing)
     pub y_pos: [f32; 1024],
     pub color_rgba: [u32; 1024],
 }</pre>
+                <!-- Bitácora de Evolución Continua de EOS en Vivo -->
+                <div style="margin-top: 0.75rem; padding: 0.75rem 0.9rem; border-radius: var(--radius-sm); background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(245, 158, 11, 0.3);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                    <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24; font-weight: 700;">
+                      📜 BITÁCORA VIVA DE CO-EVOLUCIÓN DE EOS (SINCRONIZADA EN TIEMPO REAL)
+                    </span>
+                    <span id="eos-evolution-counter" style="font-family: var(--font-mono); font-size: 0.68rem; color: #38bdf8;">
+                      Directivas compiladas: 1
+                    </span>
+                  </div>
+                  <div id="eos-evolution-log" style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); max-height: 92px; overflow-y: auto; line-height: 1.45;">
+                    <div>• [v4.0 SUPREME] Motor Universal de Traducción Técnica + 5 Secretos de Nanosegundos + Aberamentho v8.0 In-App Full-Track Player sellados.</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1043,18 +1122,18 @@ pub struct GlyphSoABatch {
             <p class="arch-card__desc">
               Contra la Ley de la Entropía, <code>automix-brain.js</code> ejecuta planificación sin <em>jitter</em> (precisión de reloj de hardware <code>AudioContext.currentTime</code>) aplicando el <strong>Primer Shock Consciente en <code>MI-FA</code></strong> durante el <em>Breakdown</em> (<code>FILTER_WASHOUT</code> de 32 compases) y el <strong>Segundo Shock en <code>SI-DO</code></strong> en el microsegundo exacto del <em>Drop</em> (<code>PRO_BASS_SWAP</code> en Compás 1), elevando el <strong>Hidrógeno <code>SI-12</code></strong> con análisis FFT cromático offline para archivos MP3/WAV locales.
             </p>
-            <div class="arch-card__meta">Mix Unitotal: 8 Playlists Sagradas + 43 Leyendas</div>
+            <div class="arch-card__meta">Mix Unitotal: 8 Playlists Sagradas + 49 Leyendas + In-App Full-Track Player v8.0</div>
           </article>
 
           <article class="arch-card arch-card--gold">
-            <span class="arch-card__tag arch-card__tag--emerald">3. CABINA GEELY EX5 / CHERY E5 MAX</span>
-            <h3 class="arch-card__title">Flyme Sound (1,000W · 16 Parlantes Hi-Fi)</h3>
+            <span class="arch-card__tag arch-card__tag--emerald">3. CABINA GEELY EX5 / CHERY E5 + IN-APP FULL PLAYER</span>
+            <h3 class="arch-card__title">Flyme Sound (1,000W · 16 Parlantes) &amp; Canciones Completas In-App</h3>
             <p class="arch-card__desc">
-              <strong>• Filtros Hardware Activos:</strong> Filtro Subsónico a <code>22Hz</code> (protección de subwoofer de maletero), Corte de Medios a <code>280Hz</code> (transición limpia entre 4 woofers y 5 mid-range) y Suavizado Anti-Fatiga a <code>3.8kHz</code>.<br />
-              <strong>• Pantalla Central 15.4":</strong> Modo <em>Estudio de Referencia (Respuesta Plana)</em> y Ecualizador Nativo en <code>0 dB</code>.<br />
+              <strong>• Reproductor Nativo In-App v8.0:</strong> Reproduce el 100% de las canciones completas de las 8 Playlists (incluyendo <em>Perfect Music</em> <code>5IiquGZEbovPj9B8IdG0bi</code>) dentro de la misma app (<code>/api/playlist-tracks</code> + <code>/api/resolve-full-track</code> + Radio 24/7) sin el límite de 30s de Spotify móvil y sin salir de Aberamentho.<br />
+              <strong>• Filtros Hardware Activos:</strong> Subsónico a <code>22Hz</code>, Corte de Medios a <code>280Hz</code> y Suavizado Anti-Fatiga a <code>3.8kHz</code>.<br />
               <strong>• DJ GOD Automix:</strong> Auto-Gain RMS Activo, Ventana de <code>32 Compases</code> y <em>Bass Swap Pro en Compás 1</em>.
             </p>
-            <div class="arch-card__meta">Estado: GOLDEN_SEAL_LOCKED · Δ = 0 Regresiones</div>
+            <div class="arch-card__meta">Estado: GOLDEN_SEAL_LOCKED v8.0 · Δ = 0 Regresiones</div>
           </article>
         </div>
 
@@ -1292,15 +1371,15 @@ pub struct GlyphSoABatch {
             </div>
           </article>
 
-          <!-- Aberamentho (Now Officially Sealed 10/10) -->
+          <!-- Aberamentho (Now Officially Sealed 10/10 v8.0) -->
           <article class="fleet-card" data-fleet-tier="sealed">
             <div class="fleet-card__top">
-              <span class="arch-card__tag arch-card__tag--emerald">GOLDEN SEAL LOCKED · 10/10</span>
-              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24;">★ 8 PLAYLISTS + AUTOMIX DSP</span>
+              <span class="arch-card__tag arch-card__tag--emerald">GOLDEN SEAL LOCKED · v8.0 (10/10)</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24;">★ IN-APP FULL PLAYER + 8 PLAYLISTS</span>
             </div>
             <h3 class="arch-card__title">Aberamentho / Pleroma Music Engine</h3>
             <p class="arch-card__desc">
-              Motor DSP de mezcla armónica en Python/Librosa/Numba y consola DJ GOD 10/10 PRO con Web Audio API, Rueda Camelot 1A–12B, <strong>8 Playlists Oficiales de Spotify</strong> (<em>Definitive, Perfect Music, Amnesia, Baladas Americanas, Épica, Música de Verdad, Trance Relajación y Solar</em>), Panteón de 43 Leyendas y calibración acústica automotriz.
+              Motor DSP de mezcla armónica y consola DJ GOD 10/10 PRO con <strong>Reproductor Nativo In-App de Canciones Completas (<code>/api/playlist-tracks</code> + <code>/api/resolve-full-track</code> + Radio Trance 24/7 sin límite de 30s ni salir a Spotify)</strong>, <strong>8 Playlists Oficiales de Spotify</strong> (con <em>Perfect Music</em> <code>5IiquGZEbovPj9B8IdG0bi</code> sellada), Panteón de 49 Leyendas y calibración acústica Geely EX5 / Chery E5.
             </p>
             <div class="fleet-card__links">
               <a class="btn btn--primary" href="https://aberamentosprelomamusic.vercel.app" target="_blank" rel="noopener noreferrer">Abrir en Producción →</a>
@@ -1437,6 +1516,6 @@ pub struct GlyphSoABatch {
     </div>
   </footer>
 
-  <script src="/js/eos.js" defer></script>
+  <script src="/js/eos.js?v=4.0" defer></script>
 </body>
 </html>

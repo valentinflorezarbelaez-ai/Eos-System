@@ -1,4 +1,4 @@
-const CACHE_NAME = "eos-system-control-plane-v4-nanosecond-hft";
+const CACHE_NAME = 'eos-system-control-plane-v8-0-supreme-evolution';
 const PRECACHE_URLS = [
   "/",
   "/index.html",

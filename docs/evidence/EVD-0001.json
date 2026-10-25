@@ -1,14 +1,14 @@
 {
   "evidenceId": "EVD-0001",
-  "project": "EOS System (Engineering Operating System) — SOLE_SUPREME_EVOLUTION_CORE (Nanosecond & Universal Translator Edition)",
-  "timestamp": "2026-10-25T01:36:25-05:00",
+  "project": "EOS System (Engineering Operating System) — SOLE_SUPREME_EVOLUTION_CORE v4.0 (Nanosecond & 6-Part SDD Translator Edition)",
+  "timestamp": "2026-10-25T02:30:15-05:00",
   "epistemicState": "PRODUCTION_READY",
   "command": "npm run verify:strict && npx vercel --prod --yes",
   "exitCode": 0,
   "invariantsPassed": "6/6",
   "deployment": {
-    "deploymentId": "dpl_BpU2gWdJ8jU5VigedaQiRv3qAToG",
-    "productionUrl": "https://eos-system-ng5c4xpk1-valentinflorezarbelaez-ais-projects.vercel.app",
+    "deploymentId": "dpl_2qK4PmVd4tu4oAhWwZH3qv83fziL",
+    "productionUrl": "https://eos-system-11hjivw4z-valentinflorezarbelaez-ais-projects.vercel.app",
     "productionAlias": "https://eos-system-ten.vercel.app",
     "oracleEndpoint": "https://eos-system-ten.vercel.app/api/teurgia",
     "compilerEndpoint": "https://eos-system-ten.vercel.app/api/compile",
@@ -52,8 +52,10 @@
     "liveHudSection": "#templo-solar"
   },
   "aberamenthoGoldenSeal": {
-    "status": "GOLDEN_SEAL_LOCKED",
-    "deploymentId": "dpl_6d3NE65KeazTybHjMkm4ob6RRSha",
+    "status": "GOLDEN_SEAL_LOCKED_V8_INAPP_FULL_TRACK_PLAYER",
+    "deploymentId": "dpl_9MJSfW1U7VwUbJoh1yjvktfZpiMo",
+    "canonicalPerfectMusicId": "5IiquGZEbovPj9B8IdG0bi",
+    "inAppEndpoints": ["/api/playlist-tracks", "/api/resolve-full-track"],
     "url": "https://aberamentosprelomamusic.vercel.app/"
   }
 }
