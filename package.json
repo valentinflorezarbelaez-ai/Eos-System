@@ -16,7 +16,8 @@
     "fleet:ship": "node scripts/fleet-autonomous-cicd.mjs --ship",
     "fleet:hooks": "node scripts/install-fleet-cicd-hooks.mjs",
     "jarvis": "node scripts/eos-jarvis-daemon.mjs",
-    "jarvis:daemon": "node scripts/eos-jarvis-daemon.mjs --loop"
+    "jarvis:daemon": "node scripts/eos-jarvis-daemon.mjs --loop",
+    "mcp": "node src/mcp/eosMcpServer.ts"
   },
   "author": "Valentín Flórez Arbeláez",
   "license": "MIT"

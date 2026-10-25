@@ -126,3 +126,81 @@ test("EOS SRE & CNCF Health Endpoint (/api/health) — Observability Invariants"
   assert.ok(payload.sliReport.availabilitySloTarget === "99.99%", "SLI availability target must be 99.99%");
   assert.ok(headers.traceparent.startsWith("00-"), "W3C traceparent header must be set");
 });
+
+test("EOS MCP Native Server (Model Context Protocol) — JSON-RPC 2.0 Invariants", async () => {
+  const { EosMcpServer } = await import("../src/mcp/eosMcpServer.ts");
+  const server = new EosMcpServer();
+
+  // 1. initialize
+  const initRes = server.handleRequest({
+    jsonrpc: "2.0",
+    id: 1,
+    method: "initialize",
+    params: {}
+  });
+  assert.equal(initRes.id, 1);
+  assert.equal(initRes.result.serverInfo.name, "eos-system-mcp");
+  assert.equal(initRes.result.serverInfo.version, "12.0.0");
+  assert.ok(initRes.result.capabilities.tools, "Must advertise tools capability");
+
+  // 2. tools/list
+  const listRes = server.handleRequest({
+    jsonrpc: "2.0",
+    id: 2,
+    method: "tools/list",
+    params: {}
+  });
+  assert.equal(listRes.id, 2);
+  const toolNames = listRes.result.tools.map((t) => t.name);
+  assert.ok(toolNames.includes("eos_semantic_search"), "Must expose eos_semantic_search");
+  assert.ok(toolNames.includes("eos_tmr_consensus"), "Must expose eos_tmr_consensus");
+  assert.ok(toolNames.includes("eos_audit_fleet"), "Must expose eos_audit_fleet");
+  assert.ok(toolNames.includes("eos_health_check"), "Must expose eos_health_check");
+
+  // 3. tools/call -> eos_semantic_search
+  const callSearchRes = server.handleRequest({
+    jsonrpc: "2.0",
+    id: 3,
+    method: "tools/call",
+    params: {
+      name: "eos_semantic_search",
+      arguments: { query: "seguridad y secretos", topK: 2 }
+    }
+  });
+  assert.equal(callSearchRes.id, 3);
+  const searchParsed = JSON.parse(callSearchRes.result.content[0].text);
+  assert.ok(searchParsed.matchCount > 0, "Must return semantic matches");
+
+  // 4. tools/call -> eos_tmr_consensus
+  const callTmrRes = server.handleRequest({
+    jsonrpc: "2.0",
+    id: 4,
+    method: "tools/call",
+    params: {
+      name: "eos_tmr_consensus",
+      arguments: { directive: "audita la flota" }
+    }
+  });
+  assert.equal(callTmrRes.id, 4);
+  const tmrParsed = JSON.parse(callTmrRes.result.content[0].text);
+  assert.equal(tmrParsed.consensusAchieved, true, "Safe directive must achieve TMR consensus");
+  assert.equal(tmrParsed.sandboxes.length, 3, "TMR must contain 3 sandboxes");
+
+  // 5. resources/list and resources/read
+  const resList = server.handleRequest({
+    jsonrpc: "2.0",
+    id: 5,
+    method: "resources/list",
+    params: {}
+  });
+  assert.ok(resList.result.resources.length >= 2, "Must list sovereign resources");
+
+  // 6. Unknown method error handling
+  const errRes = server.handleRequest({
+    jsonrpc: "2.0",
+    id: 6,
+    method: "nonexistent_method",
+    params: {}
+  });
+  assert.equal(errRes.error.code, -32601, "Must return standard JSON-RPC Method not found code");
+});

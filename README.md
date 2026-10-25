@@ -58,6 +58,7 @@ EOS System is an autonomous, deterministic control plane for AI-assisted softwar
 | `npm run fleet:verify` | Audits git cleanliness, secrets, and live URLs across all fleet repos | ~2.5s |
 | `npm run fleet:ship` | Automatically tests, commits, pushes, and releases the fleet | ~4.0s |
 | `npm run fleet:hooks` | Injects fail-closed `pre-commit` and `pre-push` hooks into local repos | < 50ms |
+| `npm run mcp` | Starts native Layer-0 Model Context Protocol (MCP) server over stdio | Continuous |
 
 ---
 
@@ -93,6 +94,29 @@ All serverless endpoints are deployed to Vercel Edge with zero-cache control and
 - **OWASP Top 10 & Zero-Secrets**: Scanner inspects all source files for private keys, AWS tokens, GitHub PATs, and OpenAI/Stripe keys.
 - **Fail-Closed Git Hooks**: Commits or pushes containing unverified code or broken syntax are blocked at workstation level.
 - **Content Security & Sandbox Defense**: Sandboxed execution barriers disallow unapproved mutations (`rm -rf`, destructive queries, unregistered writes).
+
+---
+
+## 6. Model Context Protocol (MCP) Integration (Cursor & Antigravity)
+
+EOS System provides a native Layer-0 MCP server over standard I/O (stdio). To connect EOS sovereign tools into **Cursor**, **Antigravity**, **Claude Code**, or **Gemini CLI**, add the following entry to your MCP configuration (e.g., `.cursor/mcp.json` or `claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "eos-system": {
+      "command": "node",
+      "args": ["c:/Users/valen/Eos-System/src/mcp/eosMcpServer.ts"]
+    }
+  }
+}
+```
+
+### Available Sovereign MCP Tools
+- `eos_semantic_search`: High-dimensional vector space queries using cosine similarity.
+- `eos_tmr_consensus`: Byzantine 3-sandbox evaluation for critical operations.
+- `eos_audit_fleet`: Cross-repository health and git status checks.
+- `eos_health_check`: CNCF / Google SRE observability telemetry.
 
 ---
 
