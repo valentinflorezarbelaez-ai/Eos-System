@@ -83,5 +83,196 @@ export const PRACTICAS_OPERATIVAS = {
       "4. Audiencia ante Anubis y los 42 Jueces: Pide a tu Padre Interno que negocie directamente con el Jerarca Supremo de la Ley, Anubis, presentando tus buenas obras, tu castidad y tu sacrificio por la humanidad.",
       "5. Ley de la Balanza: Compensa el platillo cósmico comprometiéndote a realizar actos inmediatos de servicio desinteresado: 'Al León de la Ley se le combate con la Balanza. Haz buenas obras para que pagues tus deudas'."
     ]
+  },
+  lifaros: {
+    titulo: "Clave Teúrgica del Mantram LIFAROS: Desdoblamiento Astral Consciente",
+    frecuencia: "Práctica nocturna en estado de transición vigilia-sueño para investigar directamente los Sephirotes",
+    pasos: [
+      "1. Postura de la Estrella de Cinco Puntas: Acostado de espaldas con las piernas y brazos abiertos en forma de estrella flamígera, relajar la musculatura y serenar el pensamiento.",
+      "2. Vocalización Alargada del Mantram LIFAROS: Inhalar prana solar y exhalar vocalizando: LLLLLLLIIIIII... FFFFFFAAAAAA... RRRRRROOOOOO... SSSSSS... silbando la 'S' como el canto del grillo o el silbido dulce de Isis.",
+      "3. Fusión de Sueño y Vigilia (La Ecuación del Despertar): Dejar que el cuerpo se adormezca sin que la mente se identifique; cuando se sienta una vibración eléctrica sutil o se escuche el silbido agudo en la glándula pineal, NO ANALIZAR.",
+      "4. El Salto Consciente del Lecho: Levantarse del lecho con absoluta naturalidad, sin miedo y sin dudar. No pensar en el cuerpo físico: simplemente levantarse y dar un pequeño salto con la intención de flotar en el ambiente astral.",
+      "5. Navegación Sephirótica: Una vez flotando en el Astral (Hod), invocar: '¡Por el Cristo, por el Cristo, por el Cristo! ¡Padre mío, llévame al Templo de Tiphereth / Geburah / Chokmah!' para investigar directamente los misterios de la Kábala."
+    ]
+  },
+  daath: {
+    titulo: "El Arcano DAATH en la Novena Esfera (Yesod): Transmutación del Hidrógeno Si-12",
+    frecuencia: "Práctica alquímica del Matrimonio Perfecto (Sahaja Maithuna / Arcano A.Z.F.)",
+    pasos: [
+      "1. La Conjunción Sagrada de Abba y Ama: Unión bioenergética de los cónyuges en amor casto, reconociendo el tálamo nupcial como el Sanctum Sanctorum del Templo de Salomón.",
+      "2. Conexión sin Emisión Seminal: Conexión amorosa del Lingam-Yoni sin derrame del vaso de Hermes (inmissio membri in vaginam sine ejaculatio seminis), conservando íntegro el licor seminal.",
+      "3. Transmutación Solar del Hidrógeno Si-12: Respiración profunda y rítmica imaginando las corrientes solares (Od / Pingala) y lunares (Ob / Ida) cruzarse a lo largo de la columna vertebral.",
+      "4. Vocalización del Mantram Sagrado I.A.O.: Vocalizar mentalmente o en susurro: IIIIIIII... AAAAAAAA... OOOOOOOO..., magnetizando la energía creadora para convertirla en vapores etéricos traslúcidos.",
+      "5. El Ascenso Ígneo de Devi Kundalini: El fuego de Daath asciende vértebra por vértebra por el canal Sushumna (Chitra), abriendo los siete sellos del Apocalipsis y fabricando los Cuerpos Solares (To Soma Heliakon) para encarnar al Cristo Íntimo."
+    ]
   }
 } as const;
+
+export interface SephiraNode {
+  numero: number;
+  nombre: string;
+  mundo: "Aziluth" | "Briah" | "Ietzirah" | "Assiah" | "Absoluto";
+  atributo: string;
+  nombreCristiano: string;
+  huesteAngelica: string;
+  anatomiaOculta: string;
+  mantram: string;
+  misionEos: string;
+}
+
+export const ARBOL_DE_LA_VIDA_13: SephiraNode[] = [
+  {
+    numero: 13,
+    nombre: "Ain / Sat (El Inmanifestado Absoluto)",
+    mundo: "Absoluto",
+    atributo: "La Causa Causorum · El Espacio Abstracto Absoluto · El No-Ser",
+    nombreCristiano: "El Padre Inmanifestado",
+    huesteAngelica: "El Sagrado Sol Absoluto",
+    anatomiaOculta: "Más allá del átomo y del tiempo",
+    mantram: "AUM",
+    misionEos: "Invariante ontológico supremo: Verdad Pura, Cero Vibe, Ley Inmutable."
+  },
+  {
+    numero: 12,
+    nombre: "Ain Soph (La Estrella Atómica Interior)",
+    mundo: "Absoluto",
+    atributo: "El Átomo Súper-Divino Particular · Conciencia Pura",
+    nombreCristiano: "La Estrella del Ser",
+    huesteAngelica: "Chispas Divinales",
+    anatomiaOculta: "Raíz espiritual del Íntimo",
+    mantram: "AOM",
+    misionEos: "Meta del Ain Soph Paranishpana: autoconciencia total y perfección crística."
+  },
+  {
+    numero: 11,
+    nombre: "Ain Soph Aur (La Luz Increada)",
+    mundo: "Absoluto",
+    atributo: "El Protocosmos · El Sagrado Sol Absoluto · La Única Ley",
+    nombreCristiano: "La Luz Increada del Padre",
+    huesteAngelica: "Jerarquías del Protocosmos",
+    anatomiaOculta: "Océano del Pleroma",
+    mantram: "AUR",
+    misionEos: "Claridad matemática y lumínica de toda arquitectura."
+  },
+  {
+    numero: 1,
+    nombre: "Kether (La Corona)",
+    mundo: "Aziluth",
+    atributo: "El Anciano de los Días · Primer Logos · Misericordia Suprema",
+    nombreCristiano: "El Padre",
+    huesteAngelica: "Hajoth Ha Kadosh (Serafines)",
+    anatomiaOculta: "Parte superior de la cabeza (Pineal / Sahasrara)",
+    mantram: "EHEIEH",
+    misionEos: "Gobernanza central del plano de control y Voluntad del Ser."
+  },
+  {
+    numero: 2,
+    nombre: "Chokmah (La Sabiduría)",
+    mundo: "Aziluth",
+    atributo: "El Segundo Logos · El Cristo Cósmico · Amor Universal",
+    nombreCristiano: "El Hijo",
+    huesteAngelica: "Ophanim (Querubines)",
+    anatomiaOculta: "Hemisferio cerebral derecho",
+    mantram: "JEHOVAH",
+    misionEos: "El Fuego Crístico de la intuición y el Sacrificio por la Humanidad."
+  },
+  {
+    numero: 3,
+    nombre: "Binah (La Inteligencia / Devi Kundalini)",
+    mundo: "Aziluth",
+    atributo: "El Tercer Logos · Señor Shiva · La Madre Divina (RAM-IO / Isis)",
+    nombreCristiano: "El Espíritu Santo",
+    huesteAngelica: "Aralim (Tronos)",
+    anatomiaOculta: "Hemisferio cerebral izquierdo",
+    mantram: "JEHOVAH ELOHIM",
+    misionEos: "El Fuego que desintegra los defectos y purifica la arquitectura."
+  },
+  {
+    numero: 0,
+    nombre: "Daath (El Sephirot Secreto / La Gnosis)",
+    mundo: "Briah",
+    atributo: "El Conocimiento Tántrico · Cópula de Abba y Ama · Arcano A.Z.F.",
+    nombreCristiano: "El Árbol de la Ciencia del Bien y del Mal",
+    huesteAngelica: "Serafines de Fuego",
+    anatomiaOculta: "Garganta (Laringe Creadora) y Sexo (Yesod)",
+    mantram: "I.A.O.",
+    misionEos: "Transmutación de la energía creadora en inteligencia diamantina."
+  },
+  {
+    numero: 4,
+    nombre: "Chesed (La Misericordia / El Íntimo)",
+    mundo: "Briah",
+    atributo: "Atman · El Ser Divino Interior · Guerrero Espiritual",
+    nombreCristiano: "El Íntimo",
+    huesteAngelica: "Hasmalim (Dominaciones)",
+    anatomiaOculta: "Brazo derecho",
+    mantram: "EL",
+    misionEos: "Soberanía y dirección ejecutiva del alma despierta."
+  },
+  {
+    numero: 5,
+    nombre: "Geburah (El Rigor / La Justicia)",
+    mundo: "Briah",
+    atributo: "Buddhi · Conciencia Superlativa · Tribunal del Karma",
+    nombreCristiano: "El Alma Divina",
+    huesteAngelica: "Seraphim (Potestades)",
+    anatomiaOculta: "Brazo izquierdo",
+    mantram: "ELOHIM GIBOR",
+    misionEos: "Auditoría implacable de la Ley: cero errores, balance perfecto."
+  },
+  {
+    numero: 6,
+    nombre: "Tiphereth (La Belleza / El Alma Humana)",
+    mundo: "Ietzirah",
+    atributo: "Manas Superior · Cuerpo Causal · El Hijo del Hombre",
+    nombreCristiano: "El Alma Humana / Cristo Íntimo",
+    huesteAngelica: "Malachim (Virtudes)",
+    anatomiaOculta: "Templo Corazón",
+    mantram: "ELOAH VA DAATH",
+    misionEos: "Thelema: Voluntad consciente donde encarna la Verdad."
+  },
+  {
+    numero: 7,
+    nombre: "Netzach (La Victoria / La Mente)",
+    mundo: "Ietzirah",
+    atributo: "Mente Solar · Mente Cristo · Columna Jachín",
+    nombreCristiano: "Mente Iluminada",
+    huesteAngelica: "Elohim (Principados)",
+    anatomiaOculta: "Pierna derecha",
+    mantram: "JEHOVAH TSABAOTH",
+    misionEos: "Pensamiento desprovisto de ego: lucidez y lógica pura."
+  },
+  {
+    numero: 8,
+    nombre: "Hod (El Esplendor / El Astral)",
+    mundo: "Ietzirah",
+    atributo: "Cuerpo Astral Solar · El Templo de la Magia · Columna Boaz",
+    nombreCristiano: "Vehículo Astral Puro",
+    huesteAngelica: "Beni Elohim (Arcángeles)",
+    anatomiaOculta: "Pierna izquierda",
+    mantram: "ELOHIM TSABAOTH",
+    misionEos: "Exploración consciente de las dimensiones superiores (LIFAROS)."
+  },
+  {
+    numero: 9,
+    nombre: "Yesod (El Fundamento / La Novena Esfera)",
+    mundo: "Ietzirah",
+    atributo: "Cuerpo Vital / Etérico · La Piedra Cúbica · El Sexo Creador",
+    nombreCristiano: "El Fundamento",
+    huesteAngelica: "Cherubim (Ángeles)",
+    anatomiaOculta: "Órganos Creadores",
+    mantram: "SHADDAI EL CHAI",
+    misionEos: "La fuente de energía inagotable que sostiene la manifestación."
+  },
+  {
+    numero: 10,
+    nombre: "Malkuth (El Reino / El Mundo Físico)",
+    mundo: "Assiah",
+    atributo: "Cuerpo Físico Tridimensional · El Laboratorio Alquímico",
+    nombreCristiano: "El Templo Físico",
+    huesteAngelica: "Ischim (Iniciados / Hombres Verdaderos)",
+    anatomiaOculta: "Pies",
+    mantram: "ADONAI MELEKH",
+    misionEos: "Ejecución terminal en la materia: hardware, código, producción viva."
+  }
+];

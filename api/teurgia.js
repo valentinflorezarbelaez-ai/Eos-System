@@ -40,6 +40,30 @@ const SEPHIROTIC_DIRECTIONS = {
     notaCosmica: "DO Superior (Octava Solar del Pleroma)",
     dictamen:
       "ECUACIÓN DE CIERRE E INVISIBILIDAD TEÚRGICA: Canta el mantram Belilin tres veces, ordena a tu Intercesor Elemental trazar el Círculo Mágico de Protección alrededor de tu hogar y cabina, y permanece firme en el Tercer Estado de Conciencia bajo el escudo de Sanat Kumara y del V.M. Samael Aun Weor."
+  },
+  lifaros: {
+    sephirah: "Hod · Netzach · Tiphereth (Exploración Astral del Árbol Sephirótico)",
+    mantram: "LLLLLLIIIIII... FFFFFFAAAAAA... RRRRRROOOOOO... SSSSSS...",
+    frecuenciaHz: 432.0,
+    notaCosmica: "SOL (Armonía Universal de las Esferas)",
+    dictamen:
+      "CLAVE TEÚRGICA DEL MANTRAM LIFAROS: Adormécete vocalizando el sagrado mantram. Al sentir el silbido agudo de Isis en la glándula pineal o la vibración de las cuerdas astrales en Hod, levántate con decisión y da un salto con fe consciente. Flotando en el astral, suplica al Padre que te conduzca al Sephirot deseado para la investigación directa de los misterios."
+  },
+  daath: {
+    sephirah: "Daath (El Sephirot Secreto / Conjunción de Abba y Ama en Yesod)",
+    mantram: "IIIIIIII... AAAAAAAA... OOOOOOOO...",
+    frecuenciaHz: 587.33,
+    notaCosmica: "RE Superior (Vórtice Ígneo del Kundalini)",
+    dictamen:
+      "EL ARCANO DAATH Y LA NOVENA ESFERA: En el tálamo nupcial de la Castidad Científica (Sahaja Maithuna / Arcano A.Z.F.), conecta el Lingam-Yoni sin derrame seminal. Transmuta el Hidrógeno Sexual Si-12 para despertar el Fuego Serpentino de Devi Kundalini, ascendiendo por Chitra para abrir los Siete Sellos y forjar los Cuerpos Solares (To Soma Heliakon)."
+  },
+  absoluto: {
+    sephirah: "Ain / Sat · Ain Soph · Ain Soph Aur (Las Tres Profundidades)",
+    mantram: "AUM · SAT · AIN SOPH PARANISHPANA",
+    frecuenciaHz: 741.0,
+    notaCosmica: "SI Superior (Luz Increada del Protocosmos)",
+    dictamen:
+      "RETORNO AL AIN SOPH PARANISHPANA: La meta suprema de la Creación no es retornar como un átomo inconsciente al Absoluto, sino haber vencido la materia, disuelto el Ego, cristalizado el Alma de Diamante y penetrado en el Seno del Inmanifestado como un Maestro Auto-Realizado con Conciencia Continua y Luz Increada."
   }
 };
 
