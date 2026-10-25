@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "10.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Deterministic Control Plane v10.0 (Federated Fleet Autonomous CI/CD SecDevOps, 7-Stage Fail-Closed Gate, Omega Post-Quantum, Linux Ring-0, Big Tech 10/10, Akashic Memory & Nanoseconds)",
+  "version": "11.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign JARVIS Monad v11.0 (Autonomous Cognitive Nexus, Voice Telemetry, Arc-Reactor HUD, Federated Fleet CI/CD SecDevOps, 7-Stage Fail-Closed Gate, Omega Post-Quantum, Linux Ring-0)",
   "type": "module",
   "scripts": {
     "test": "node scripts/verify-cicd-pipeline.mjs",
@@ -10,7 +10,9 @@
     "ship:sovereign": "node scripts/ship-sovereign.mjs",
     "fleet:verify": "node scripts/fleet-autonomous-cicd.mjs",
     "fleet:ship": "node scripts/fleet-autonomous-cicd.mjs --ship",
-    "fleet:hooks": "node scripts/install-fleet-cicd-hooks.mjs"
+    "fleet:hooks": "node scripts/install-fleet-cicd-hooks.mjs",
+    "jarvis": "node scripts/eos-jarvis-daemon.mjs",
+    "jarvis:daemon": "node scripts/eos-jarvis-daemon.mjs --loop"
   },
   "author": "Valentín Flórez Arbeláez",
   "license": "MIT"

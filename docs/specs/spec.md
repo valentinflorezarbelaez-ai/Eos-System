@@ -71,6 +71,11 @@
   1. **Instalación y Propagación Federada de Git Hooks**: EL SISTEMA inyectará automáticamente los hooks `.githooks/pre-commit` y `.githooks/pre-push` en todos los repositorios locales de la flota (`Aberamentho-s-Pleroma-music`, `portafolio`, etc.) para que ninguna mejora en ningún proyecto pueda comitearse o pushearse sin pasar las 7 aduanas de seguridad (SAST, 0 secretos, SDD, AST, WCAG).
   2. **Monitoreo y Despacho Autónomo Multi-Repositorio**: El despachador autónomo (`npm run fleet:ship` o `eos fleet --dispatch`) detectará automáticamente qué proyectos de la flota tienen cambios no comiteados o pendientes de push, ejecutará sus pruebas y compuertas locales, realizará el commit y push firmado, activará su despliegue en Vercel y sondeará que su URL de producción responda `HTTP 200 OK`.
   3. **Registro Criptográfico Centralizado en EOS**: La telemetría en vivo de toda la flota se publicará en el endpoint `/api/fleet` y en la sección `#fleet-cicd-orchestrator` de EOS System con estado epistémico consolidado.
+* **FR-019 (Ubiquitous & Autonomous Cognitive Loop)**: EL SISTEMA operará como **EOS JARVIS Sovereign Monad (`v11.0` — `src/core/eosJarvisMonad.ts`, `api/jarvis.js`, `scripts/eos-jarvis-daemon.mjs` y `#eos-jarvis-nexus`)**, el núcleo de Inteligencia Artificial Autónoma y Asistente Cognitivo Supremo para toda la ingeniería, arquitectura, seguridad y despliegue del ecosistema:
+  1. **Motor de Voz y Telemetría Neuro-Acústica (Web Speech API + Sintetizador Formántico Belilin)**: JARVIS escucha instrucciones por voz en tiempo real, procesa lenguaje natural con el Átomo Maestro *Nous*, y responde por voz sintetizada en el navegador y con transcripción determinista en la consola.
+  2. **Intérprete de Metas y Despachador Autónomo (Goal-Oriented Autonomous Agent)**: JARVIS traduce directivas de alto nivel del usuario ("JARVIS, audita la flota", "JARVIS, verifica la seguridad", "JARVIS, activa el protocolo Belilin", "JARVIS, despacha a producción") en un DAG atómico de ejecución, dispara las compuertas de seguridad correspondientes y emite recibos verificados.
+  3. **Reactor Holográfico & HUD de Estados Cognitivos (`#eos-jarvis-nexus`)**: Interfaz visual reactiva que refleja en tiempo real el pulso de la mente consciente de EOS (`IDLE`, `LISTENING`, `ANALYZING_Nous`, `SECURING_GATES`, `HEALING_FDIR`, `DEPLOYING_FLEET`), con botones de activación por voz y chips de acción inmediata.
+  4. **Daemon Centinela Autónomo 24/7 (`scripts/eos-jarvis-daemon.mjs`)**: Proceso en segundo plano que vigila el estado de la máquina, detecta cambios en repositorios, repara enlaces huérfanos con FDIR y mantiene la armonía operativa del ecosistema.
 
 ---
 
@@ -154,4 +159,10 @@ ESCENARIO: [BDD-013 Orquestación Autónoma CI/CD SecDevOps de Toda la Flota Sob
   CUANDO el Arquitecto Soberano ejecuta "npm run fleet:ship", "npm run fleet:verify" o interactúa con el Orquestador de Flota (#fleet-cicd-orchestrator)
   ENTONCES EOS escanea todos los repositorios locales, inyecta las aduanas SecDevOps en sus .git/hooks, ejecuta la suite de verificación en cada proyecto modificado, comitea, pushea a sus respectivos remotos de GitHub, y sondea en vivo cada URL de producción
   Y el endpoint serverless /api/fleet reporta el estado 100% verificado y la salud de los 9 proyectos de la flota.
+
+ESCENARIO: [BDD-014 Operación Cognitiva Autónoma JARVIS (Voz, Metas, Reactor Arc y Daemon 24/7)]
+  DADO que el Arquitecto Soberano interactúa con el Núcleo JARVIS (#eos-jarvis-nexus), ejecuta "npm run jarvis" o la pestaña CLI "eos jarvis --monad"
+  CUANDO emite una directriz verbal o escrita ("JARVIS, audita la flota", "JARVIS, ejecuta nanosegundos", "JARVIS, despliega todo a producción")
+  ENTONCES JARVIS reconoce la intención, vocaliza la confirmación de la orden, ejecuta el plan atómico correspondiente contra las aduanas de seguridad, actualiza el estado holográfico del Reactor Arc y emite el informe de ejecución con código de salida 0
+  Y el endpoint serverless /api/jarvis responde con el contrato cognitivo, transcripción y dictamen en tiempo real.
 ```

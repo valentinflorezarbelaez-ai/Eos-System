@@ -64,6 +64,7 @@ assert.ok(js.includes('"kernel:linux"'), "Missing kernel:linux CLI preset (Linux
 assert.ok(js.includes('"omega:quantum"'), "Missing omega:quantum CLI preset (Omega Singularity v8.0 PQC + ZK-STARK + BFT)");
 assert.ok(js.includes('"cicd:pipeline"'), "Missing cicd:pipeline CLI preset (7-Stage Sovereign CI/CD SecDevOps Gate)");
 assert.ok(js.includes('"fleet:dispatch"'), "Missing fleet:dispatch CLI preset (Federated Fleet Autonomous CI/CD Dispatcher)");
+assert.ok(js.includes('"jarvis:monad"'), "Missing jarvis:monad CLI preset (EOS JARVIS Sovereign Monad)");
 assert.ok(js.includes('num: "21"'), "Missing 21st step of Master Engineering Pipeline");
 assert.ok(html.includes("seL4"), "Missing seL4 formal verification benchmark");
 assert.ok(html.includes("ASML Twinscan EUV"), "Missing ASML Twinscan EUV benchmark");
@@ -104,6 +105,10 @@ assert.ok(fs.existsSync(path.join(root, "api/fleet.js")), "Missing api/fleet.js 
 assert.ok(fs.existsSync(path.join(root, "scripts/install-fleet-cicd-hooks.mjs")), "Missing scripts/install-fleet-cicd-hooks.mjs");
 assert.ok(fs.existsSync(path.join(root, "scripts/fleet-autonomous-cicd.mjs")), "Missing scripts/fleet-autonomous-cicd.mjs");
 assert.ok(html.includes('id="fleet-cicd-orchestrator"'), "Missing #fleet-cicd-orchestrator interactive fleet orchestrator");
+assert.ok(html.includes('id="eos-jarvis-nexus"'), "Missing #eos-jarvis-nexus JARVIS Sovereign Monad section");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosJarvisMonad.ts")), "Missing src/core/eosJarvisMonad.ts");
+assert.ok(fs.existsSync(path.join(root, "api/jarvis.js")), "Missing api/jarvis.js serverless JARVIS endpoint");
+assert.ok(fs.existsSync(path.join(root, "scripts/eos-jarvis-daemon.mjs")), "Missing scripts/eos-jarvis-daemon.mjs");
 assert.ok(html.includes('id="btn-copy-eos-blueprint"'), "Missing #btn-copy-eos-blueprint button");
 assert.ok(html.includes('id="btn-download-eos-spec"'), "Missing #btn-download-eos-spec button");
 assert.ok(html.includes('id="eos-evolution-log"'), "Missing #eos-evolution-log live co-evolution log");

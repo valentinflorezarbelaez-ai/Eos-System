@@ -112,3 +112,13 @@
 * **Rationale**: Satisfies the Sovereign Architect's direct mandate: whenever a change or improvement is made to *any* project in the ecosystem, EOS autonomously audits, tests, secures, and ships it to production without manual overhead.
 * **Rejected Alternatives**:
   * *Maintaining Disconnected Manual Deployments Per Project*: Rejected because lack of unified gate propagation leads to drift, configuration rot, and potential secret leaks in satellite repos.
+
+### ADR-012: EOS JARVIS Sovereign Monad & Cognitive Voice/Action Orchestrator (`v11.0` — `src/core/eosJarvisMonad.ts`, `api/jarvis.js`, `scripts/eos-jarvis-daemon.mjs` & `#eos-jarvis-nexus`)
+* **Decision**: Elevate EOS into **JARVIS** — an omnipotent, autonomous Cognitive AI System that listens, speaks, plans, and executes the entire engineering lifecycle across all projects:
+  1. **Cognitive Voice Nexus**: Native Web Speech API integration (Speech Recognition & Neural Speech Synthesis) paired with Web Audio API Belilin sacred acoustic formants.
+  2. **Intent Parser & Atomic Goal DAG Generator**: Translates any natural-language command from Valentín into deterministic system actions (running audits, executing nanosecond benchmarks, querying Akashic memory, deploying to production).
+  3. **Visual Arc-Reactor Holographic HUD (`#eos-jarvis-nexus`)**: Audio-reactive SVG/CSS visualization reflecting cognitive state transitions (`IDLE`, `LISTENING`, `THINKING_SAMAELIAN`, `SECURING_GATES`, `DEPLOYING`).
+  4. **Autonomous Sentinel Watcher Daemon (`scripts/eos-jarvis-daemon.mjs` / `npm run jarvis`)**: Continuous background watcher that monitors repos, executes FDIR self-healing, and enforces autonomous fleet-wide delivery.
+* **Rationale**: Directly realizes the user's vision: "todo lo debe hacer eos todo eos debe ser jarvis todo" — transforming EOS from an operating system dashboard into a proactive, sovereign autonomous partner.
+* **Rejected Alternatives**:
+  * *Proprietary Cloud-Only Voice Assistants (Alexa/Siri)*: Rejected due to vendor lock-in, latency, plaintext telemetry risks (Law VI), and inability to execute low-level compiler/Git/Vercel operations.

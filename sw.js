@@ -1,4 +1,4 @@
-const CACHE_NAME = 'eos-system-control-plane-v14-0-fleet-cicd';
+const CACHE_NAME = 'eos-system-control-plane-v15-0-jarvis-monad';
 const PRECACHE_URLS = [
   "/",
   "/index.html",
