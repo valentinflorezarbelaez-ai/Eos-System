@@ -65,6 +65,7 @@ All serverless endpoints are deployed to Vercel Edge with zero-cache control and
 | Endpoint | Subsystem | Query Parameters | Response Payload |
 |---|---|---|---|
 | `/api/jarvis` | JARVIS Autonomous Cognition | `?directive=...` | Cognitive DAG, TMR consensus, voice response, action command, Merkle digest. |
+| `/api/health` | CNCF & Google SRE Observability | None (supports W3C traceparent) | CNCF status UP, memory footprint, subsystem matrix, and SLI/SLO report. |
 | `/api/fleet` | Federated Fleet Dispatcher | `?action=audit` | Health status of all registered fleet repositories. |
 | `/api/cicd` | 7-Stage SecDevOps Gate | `?stage=all` | Stage breakdown, SBOM count, SAST pass confirmation. |
 | `/api/compile` | Nanosecond Compiler | `?code=...` | Micro-benchmark AST compilation and Struct-of-Arrays metrics. |

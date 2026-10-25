@@ -3,8 +3,8 @@
   "epistemicState": "VERIFIED",
   "stagesPassed": "7/7",
   "exitCode": 0,
-  "sbomMerkleRoot": "sha256:2e445af8db4d6bc35fa18c24495c7d41442514290787a90a8b585dfcaea5f15d",
-  "artifactCount": 51,
+  "sbomMerkleRoot": "sha256:9b11d3434cfbbfa1d2a3b080801cbb8f7cb5a21c008671ba02c23d78c8f928e5",
+  "artifactCount": 52,
   "serverlessEndpointsVerified": [
     "api/teurgia.js",
     "api/compile.js",
@@ -14,7 +14,8 @@
     "api/omega.js",
     "api/cicd.js",
     "api/fleet.js",
-    "api/jarvis.js"
+    "api/jarvis.js",
+    "api/health.js"
   ],
   "enforcedHooks": [
     ".githooks/pre-commit",

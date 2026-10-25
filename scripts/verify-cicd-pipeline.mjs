@@ -132,7 +132,8 @@ const apiEndpoints = [
   "api/omega.js",
   "api/cicd.js",
   "api/fleet.js",
-  "api/jarvis.js"
+  "api/jarvis.js",
+  "api/health.js"
 ];
 
 for (const relApi of apiEndpoints) {

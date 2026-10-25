@@ -96,3 +96,33 @@ test("EOS JARVIS Monad — Interpret Directive & Structured Thought Receipt", ()
   assert.equal(thought.dharmaConfidence, 0.999);
   assert.ok(thought.tmrConsensus, "Must include TMR receipt");
 });
+
+test("EOS SRE & CNCF Health Endpoint (/api/health) — Observability Invariants", async () => {
+  const healthMod = await import("../api/health.js");
+  assert.equal(typeof healthMod.default, "function", "Handler must be a function");
+
+  let statusCode = 200;
+  let payload = null;
+  const headers = {};
+
+  const req = {
+    method: "GET",
+    headers: { traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01" }
+  };
+  const res = {
+    setHeader(k, v) { headers[k] = v; },
+    status(c) { statusCode = c; return this; },
+    json(data) { payload = data; return this; }
+  };
+
+  healthMod.default(req, res);
+
+  assert.equal(statusCode, 200, "Health check must return HTTP 200");
+  assert.equal(payload.status, "UP", "Overall status must be UP");
+  assert.ok(payload.uptimeSeconds >= 0, "Uptime must be non-negative");
+  assert.ok(payload.telemetry && payload.telemetry.memory, "Telemetry must include memory stats");
+  assert.ok(payload.subsystems.jarvisSovereignMonad.status === "UP", "JARVIS subsystem must be UP");
+  assert.ok(payload.subsystems.neuralVectorCore.status === "UP", "Neural vector core subsystem must be UP");
+  assert.ok(payload.sliReport.availabilitySloTarget === "99.99%", "SLI availability target must be 99.99%");
+  assert.ok(headers.traceparent.startsWith("00-"), "W3C traceparent header must be set");
+});
