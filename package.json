@@ -1,0 +1,12 @@
+{
+  "name": "eos-system-landing",
+  "version": "2.4.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Deterministic Control Plane, Xirp Multi-Agent Worktree Architecture, MCP Context Graph & 21-Step Engineering Pipeline",
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/verify-landing.mjs",
+    "verify:strict": "node scripts/verify-landing.mjs"
+  },
+  "author": "Valentín Flórez Arbeláez",
+  "license": "MIT"
+}

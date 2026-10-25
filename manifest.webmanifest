@@ -1,0 +1,29 @@
+{
+  "name": "EOS System",
+  "short_name": "EOS System",
+  "description": "Engineering Operating System (EOS): Plano de Control Determinista, Arquitectura Hexagonal L0 (0-Deps), Orquestación Multi-Agente Xirp, Grafo MCP, Concurrencia en Go y Auditoría Criptográfica SHA-256.",
+  "start_url": "/",
+  "scope": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#040711",
+  "theme_color": "#040711",
+  "orientation": "any",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["developer", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/eos-system.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

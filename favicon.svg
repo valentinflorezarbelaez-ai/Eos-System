@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0f2847"/>
+      <stop offset="65%" stop-color="#060c1a"/>
+      <stop offset="100%" stop-color="#03060e"/>
+    </radialGradient>
+    <linearGradient id="cyanGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="solarCore" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bgGlow)"/>
+  <circle cx="256" cy="256" r="218" fill="none" stroke="url(#cyanGold)" stroke-width="4" stroke-opacity="0.45" stroke-dasharray="10 8"/>
+  <!-- Outer Hexagon (Hexagonal Architecture L0) -->
+  <polygon points="256,56 429,156 429,356 256,456 83,356 83,156" fill="rgba(56,189,248,0.05)" stroke="url(#cyanGold)" stroke-width="10" stroke-linejoin="round"/>
+  <!-- Inner Rotated Hexagon (Control Plane Gate) -->
+  <polygon points="256,104 388,180 388,332 256,408 124,332 124,180" fill="rgba(9,16,34,0.85)" stroke="#38bdf8" stroke-width="5" stroke-opacity="0.75"/>
+  <!-- Neural / Worktree Spokes -->
+  <g stroke="#38bdf8" stroke-width="3.5" stroke-opacity="0.65">
+    <line x1="256" y1="56" x2="256" y2="196"/>
+    <line x1="429" y1="156" x2="308" y2="226"/>
+    <line x1="429" y1="356" x2="308" y2="286"/>
+    <line x1="256" y1="456" x2="256" y2="316"/>
+    <line x1="83" y1="356" x2="204" y2="286"/>
+    <line x1="83" y1="156" x2="204" y2="226"/>
+  </g>
+  <!-- Outer Node Terminals -->
+  <g fill="#38bdf8">
+    <circle cx="256" cy="104" r="9"/>
+    <circle cx="388" cy="180" r="9"/>
+    <circle cx="388" cy="332" r="9"/>
+    <circle cx="256" cy="408" r="9"/>
+    <circle cx="124" cy="332" r="9"/>
+    <circle cx="124" cy="180" r="9"/>
+  </g>
+  <!-- Sovereign Core Seal -->
+  <circle cx="256" cy="256" r="64" fill="#050b18" stroke="url(#solarCore)" stroke-width="6"/>
+  <circle cx="256" cy="256" r="22" fill="url(#solarCore)"/>
+  <text x="256" y="492" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-weight="700" font-size="18" letter-spacing="6">EOS L0</text>
+</svg>

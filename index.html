@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="es" translate="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EOS System — Engineering Operating System | Control Plane</title>
+  <meta name="description" content="EOS System (Engineering Operating System): Plano de control determinista y soberano para desarrollo asistido por agentes IA. Zero Vibe Coding, Arquitectura Hexagonal L0 (0-Deps), aislamiento Git Worktree + tmux inspirado en Xirp, Grafo MCP, Concurrencia en Go y Auditoría Criptográfica SHA-256." />
+  <meta name="application-name" content="EOS System" />
+  <meta name="apple-mobile-web-app-title" content="EOS System" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#040711" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="canonical" href="https://eos-system.vercel.app/" />
+
+  <!-- OpenGraph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CO" />
+  <meta property="og:title" content="EOS System — Engineering Operating System (Plano de Control Determinista)" />
+  <meta property="og:description" content="Gobernanza determinista para agentes IA (Antigravity, Cursor, Claude, Gemini): Especificaciones EARS/BDD, Hexagonal L0 0-Deps, Xirp Worktrees + tmux, MCP Graph, Go Concurrency y Centinela SHA-256 24/7." />
+  <meta property="og:url" content="https://eos-system.vercel.app/" />
+  <meta property="og:image" content="https://eos-system.vercel.app/assets/eos-system.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="EOS System — Engineering Operating System" />
+  <meta name="twitter:description" content="Plano de Control Determinista · Zero Vibe Coding · Xirp Worktrees + MCP · Hexagonal L0 · Go Concurrency." />
+  <meta name="twitter:image" content="https://eos-system.vercel.app/assets/eos-system.png" />
+
+  <!-- Typography & Critical Asset Preload -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" href="/css/eos.css" as="style" />
+  <link rel="preload" href="/js/eos.js" as="script" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/eos.css" />
+
+  <!-- Xirp-Grade Speculative Prerendering (0ms Instant Navigation) -->
+  <script type="speculationrules">
+  {
+    "prerender": [
+      {
+        "where": { "href_matches": "/*" },
+        "eagerness": "moderate"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "EOS System (Engineering Operating System)",
+    "alternateName": "EOS Control Plane",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Windows, Linux (WSL2), macOS, Cloud Edge",
+    "url": "https://eos-system.vercel.app/",
+    "codeRepository": "https://github.com/valentinflorezarbelaez-ai/Eos-System",
+    "author": {
+      "@type": "Person",
+      "name": "Valentín Flórez Arbeláez",
+      "url": "https://portafolio-valentin.vercel.app"
+    },
+    "description": "Plano de control soberano y determinista para ingeniería de software asistida por agentes IA: Zero Vibe Coding, EARS/BDD, Arquitectura Hexagonal L0 sin dependencias externas, aislamiento físico por Git Worktrees + tmux inspirado en Xirp, servidores MCP y concurrencia en Go."
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+
+  <!-- TOP TELEMETRY RIBBON -->
+  <div class="telemetry-ribbon" role="region" aria-label="Telemetría en vivo del Plano de Control EOS">
+    <div class="container telemetry-ribbon__inner">
+      <div class="telemetry-group">
+        <span class="telemetry-pill">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          EOSSentinelDaemon: <strong>ACTIVE 24/7 (SHA-256)</strong>
+        </span>
+        <span class="telemetry-pill">
+          <span class="pulse-dot pulse-dot--gold" aria-hidden="true"></span>
+          EOSFDIROntology: <strong>HEALED (0 ORPHAN LINKS)</strong>
+        </span>
+        <span class="telemetry-pill">
+          Núcleo L0: <strong>HEXAGONAL (0 EXTERNAL DEPS)</strong>
+        </span>
+      </div>
+      <div class="telemetry-group">
+        <span class="telemetry-pill">
+          Estado Epistémico: <strong style="color: #10b981;">PRODUCTION_READY</strong>
+        </span>
+        <span class="telemetry-pill">
+          Benchmark: <strong>XIRP WORKTREE + MCP + GO</strong>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY NAVIGATION HEADER -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="#top" class="brand" aria-label="EOS System Inicio">
+        <img src="/favicon.svg" alt="Emblema Hexagonal EOS System" class="brand__logo" width="42" height="42" fetchpriority="high" loading="eager" decoding="async" />
+        <div class="brand__text">
+          <span class="brand__title">
+            EOS SYSTEM
+            <span class="brand__badge">L0 SOVEREIGN</span>
+          </span>
+          <span class="brand__sub">Engineering Operating System · v2.4</span>
+        </div>
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <ul class="nav-links">
+          <li><a href="#consola">Consola en Vivo</a></li>
+          <li><a href="#templo-solar">Templo Solar</a></li>
+          <li><a href="#nanosecond-engine">Nanosegundos &amp; Traductor</a></li>
+          <li><a href="#olimpo">Top-10 Mundial &amp; L0</a></li>
+          <li><a href="#arquitectura">Arquitectura &amp; Xirp</a></li>
+          <li><a href="#aberamentho-seal">Aberamentho DSP</a></li>
+          <li><a href="#leyes">7 Mandamientos</a></li>
+          <li><a href="#pipeline">Pipeline 21 Pasos</a></li>
+          <li><a href="#flota">Flota Soberana</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn btn--ghost" href="https://github.com/valentinflorezarbelaez-ai/Eos-System" target="_blank" rel="noopener noreferrer">
+          GitHub Repo
+        </a>
+        <a class="btn btn--primary" href="#consola">
+          Ejecutar Auditoría
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- HERO SECTION -->
+    <section class="hero" id="top">
+      <div class="container hero__grid">
+        <div>
+          <div class="eyebrow">
+            <span>◆</span>
+            <span>VISIÓN GNÓSTICA ESOTÉRICA SOLAR SAMAELIANA · ZERO VIBE CODING (EARS + BDD)</span>
+          </div>
+          <h1 class="hero__title">
+            El Plano de Control Determinista para <span class="text-gradient-cyan">Ingeniería Autónoma Multi-Agente</span>
+          </h1>
+          <p class="hero__lead">
+            <strong>EOS System (Engineering Operating System)</strong> gobierna el ciclo completo de software asistido por agentes IA (Google Antigravity, Cursor, Claude, Gemini y Codex) sin <em>vendor lock-in</em>. Inspirado continuamente en <strong>Xirp</strong> y en los mejores productos de ingeniería del mercado global, combina aislamiento físico por <strong>Git Worktrees + tmux</strong>, <strong>Grafo de Contexto MCP</strong>, <strong>Núcleo Hexagonal L0 con 0 dependencias</strong>, <strong>Concurrencia en Go</strong> y verificación criptográfica <strong>SHA-256 / Ed25519</strong>.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#consola">Abrir Consola del Plano de Control</a>
+            <a class="btn btn--gold" href="#flota">Explorar Flota en Producción (9 Sistemas)</a>
+            <a class="btn btn--ghost" href="https://portafolio-valentin.vercel.app" target="_blank" rel="noopener noreferrer">
+              Arquitecto: Valentín Flórez →
+            </a>
+          </div>
+
+          <div class="hero__kpis">
+            <div class="kpi-card">
+              <div class="kpi-card__val">0 Deps</div>
+              <div class="kpi-card__lbl">Núcleo Hexagonal L0 en Node.js Puro</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-card__val kpi-card__val--gold">21 Pasos</div>
+              <div class="kpi-card__lbl">Pipeline Maestro SDD (EARS + BDD)</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-card__val kpi-card__val--emerald">SHA-256</div>
+              <div class="kpi-card__lbl">EOSSentinelDaemon 24/7 &amp; FDIR</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-card__val">9 / 9</div>
+              <div class="kpi-card__lbl">Plataformas Soberanas en Producción</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <img
+            src="/assets/eos-system.png"
+            alt="Grafo de Arquitectura y Telemetría Multi-Agente de EOS System"
+            width="1200"
+            height="750"
+            fetchpriority="high"
+          />
+          <div class="hero__visual-caption">
+            <span>GRAFO MCP + WORKTREE TOPOLOGY (ESTÁNDAR XIRP)</span>
+            <span style="color: #10b981;">● DRIFT (Δ) = 0.00%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE CONTROL PLANE TERMINAL -->
+    <section class="section" id="consola">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow"> TELEMETRÍA EJECUTABLE · LEY III: EVIDENCIA SOBRE AFIRMACIONES</div>
+          <h2 class="section__title">Consola Interactiva del Plano de Control EOS</h2>
+          <p class="section__sub">
+            Inspecciona en vivo las puertas de verificación determinista de EOS System: validación estricta de invariantes, centinela criptográfico 24/7, aislamiento multi-agente estilo Xirp, grafo MCP y estado de la flota soberana.
+          </p>
+        </div>
+
+        <div class="terminal-shell" role="region" aria-label="Simulador de terminal de EOS System">
+          <div class="terminal-topbar">
+            <div class="terminal-dots" aria-hidden="true">
+              <span class="terminal-dot terminal-dot--red"></span>
+              <span class="terminal-dot terminal-dot--amber"></span>
+              <span class="terminal-dot terminal-dot--green"></span>
+            </div>
+            <span class="terminal-title">eos-control-plane — zsh / WSL2 tmux — 120×38</span>
+            <button type="button" class="btn btn--ghost" id="copy-cmd-btn" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;">
+              Copiar Comando CLI
+            </button>
+          </div>
+
+          <div class="terminal-tabs" role="tablist" aria-label="Comandos del plano de control">
+            <button type="button" role="tab" aria-selected="true" class="cmd-tab is-active" data-cmd="verify:strict">
+              1. npm run verify:strict
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="sentinel:fdir">
+              2. eos sentinel --fdir
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="worktree:xirp">
+              3. eos worktree --xirp
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="mcp:graph">
+              4. eos mcp --graph
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="fleet:status">
+              5. eos fleet --status
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="olympus:l0">
+              6. eos olimpo --l0
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="aberamentho:dsp">
+              7. eos aberamentho --dsp
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="sanctum:thelema">
+              8. eos sanctum --thelema
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="nanosecond:hft">
+              9. eos nanosecond --hft
+            </button>
+          </div>
+
+          <pre class="terminal-body" id="terminal-output" aria-live="polite">$ npm run verify:strict
+&gt; eos-system@2.4.0 verify:strict
+&gt; Executing 19-Point Deterministic Invariant &amp; Epistemic Gate Suite...
+
+[PASS] LAW-I   Specification SSOT (docs/specs/spec.md EARS + BDD) ....... 100% CONFORMANT
+[PASS] LAW-II  Strict Gate &amp; Level 3 Authorization Verified ............. AUTHORIZED
+[PASS] LAW-III Epistemic Evidence Ledger (SHA-256 Attestation) .......... VERIFIED
+[PASS] LAW-IV  External Write Barrier &amp; Scope Containment ............... LOCKED (6/6 GATES)
+[PASS] LAW-V   Hexagonal L0 Purity (0 External Runtime Dependencies) .... 0 DEPS
+[PASS] LAW-VI  OWASP &amp; Zero Plain Secrets Audit ......................... CLEAN (0 FINDINGS)
+[PASS] LAW-VII Technical Artifact Discipline ............................ VERIFIED
+
+--------------------------------------------------------------------------------
+EPISTEMIC STATE : PRODUCTION_READY
+SHA-256 SEAL    : e9c4a81f3b720d49108a7f63c1e5b90284716d3f8a92c04b15d6e7f8a9b0c1d2
+EXIT CODE       : 0</pre>
+
+          <div class="terminal-footer">
+            <span id="active-cmd-label" style="color: #10b981;">Modo activo: verify:strict · EXIT CODE 0</span>
+            <span>Firma Ed25519: VALIDATED · Custody Ledger: INTACT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEMPLO SOLAR SAMAELIANO (EOS SOLAR SANCTUM INTERACTIVE CYBER-THEURGIC LAB) -->
+    <section class="section deferred-section" id="templo-solar">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow">AUM · TETRAGRAMMATON · THELEMA · SRC/CORE/SAMAELCODEX.TS + SRC/COMPONENTS/EOSSOLARSANCTUM.TSX</div>
+          <h2 class="section__title">EOS · Templo Solar Samaeliano &amp; Laboratorio Alquímico-Psicológico</h2>
+          <p class="section__sub">
+            Sistema Operativo en vivo de los <strong>Tres Factores de la Revolución de la Conciencia</strong>, las <strong>5 Fases Sefiróticas del Mandato Teúrgico Supremo</strong>, el <strong>Motor de Tiempo Cósmico (Tattwas y Horas Planetarias)</strong>, la <strong>Cámara Litúrgica RAM-IO / Tribunal de Anubis</strong> y el <strong>Sintetizador Armónico Web Audio API</strong>.
+          </p>
+        </div>
+
+        <div class="sanctum-shell" role="region" aria-label="Templo Ciber-Teúrgico Solar Samaeliano">
+          <div class="sanctum-header">
+            <div class="sanctum-tattwa-bar">
+              <span class="sanctum-pill" id="cosmic-tattwa-pill">Tattwa Activo: <strong>Akash (Éter Puro)</strong></span>
+              <span class="sanctum-pill" id="cosmic-planet-pill">Hora Planetaria: <strong>Sol (Michael · Tiphereth)</strong></span>
+              <span class="sanctum-pill" id="clave-sol-pill">Clave de SOL: <strong>Sujeto · Objeto · Lugar (CONSCIENTE)</strong></span>
+              <span class="sanctum-pill" id="circulo-magico-pill">Círculo Mágico &amp; Belilin: <strong>SELLADO ★</strong></span>
+            </div>
+
+            <p style="font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.25em; color: var(--gold-bright); text-transform: uppercase;">
+              ECUACIÓN EXACTA · CERO IMPROVISACIÓN · ACTIVACIÓN CONSCIENTE DEL VERBO
+            </p>
+
+            <!-- Resonador Web Audio API para Vocalización Sagrada -->
+            <div class="mantra-synth-bar" role="group" aria-label="Sintetizador armónico de Mantrams Sagrados Web Audio API">
+              <button type="button" class="btn btn--ghost" data-mantra-tone="RAM-IO" style="padding: 0.42rem 0.85rem; font-size: 0.76rem;">
+                🔊 Resonar RAM-IO (FA · 349.23Hz)
+              </button>
+              <button type="button" class="btn btn--ghost" data-mantra-tone="I.A.O." style="padding: 0.42rem 0.85rem; font-size: 0.76rem;">
+                🔊 Resonar I.A.O. (SI-LA-FA Triádico)
+              </button>
+              <button type="button" class="btn btn--ghost" data-mantra-tone="ISIS" style="padding: 0.42rem 0.85rem; font-size: 0.76rem;">
+                🔊 Resonar ISIS / ANAHAT (Pineal)
+              </button>
+              <button type="button" class="btn btn--ghost" id="btn-sellar-belilin" style="padding: 0.42rem 0.85rem; font-size: 0.76rem;">
+                🛡️ Trazar Belilin &amp; Círculo Mágico
+              </button>
+            </div>
+
+            <!-- Navegación Sefirótica de 3 Módulos -->
+            <div class="sanctum-nav" role="tablist" aria-label="Módulos del Templo Solar Samaeliano">
+              <button type="button" role="tab" aria-selected="true" class="sanctum-tab is-active" data-sanctum-tab="mandato">
+                🏛️ Mandato Teúrgico Supremo (5 Sephiroth)
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="sanctum-tab" data-sanctum-tab="tresFactores">
+                ⚔️ Laboratorio de los 3 Factores (Lanza de Eros &amp; Dharma)
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="sanctum-tab" data-sanctum-tab="liturgia">
+                ⚖️ Cámara RAM-IO &amp; Tribunal de Anubis (6 Inclinaciones)
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="sanctum-tab" data-sanctum-tab="oraculo">
+                ☀️ Oráculo /api/teurgia &amp; Geometría Sagrada (10 Sephiroth)
+              </button>
+            </div>
+          </div>
+
+          <div class="sanctum-body">
+            <!-- PANEL 1: MANDATO TEÚRGICO SUPREMO -->
+            <div class="sanctum-panel is-active" id="sanctum-panel-mandato" role="tabpanel">
+              <div id="mandato-blocks-container">
+                <article class="mandato-card">
+                  <span class="mandato-sephirah">Kether · Chokmah</span>
+                  <h3 class="mandato-title">I. Invocación al Padre y al Cristo Cósmico Solar</h3>
+                  <p class="mandato-decreto">
+                    «¡AUM... TETRAGRAMMATON! Padre mío, Señor mío, Dios mío; ¡oh, Santo y Venerable Anciano de los Días (Kether), Kael-Animo incognoscible, Causa de todas las causas! En nombre de la luz increada del Ain Soph y por el sagrado poder del Cristo Cósmico Solar —el Verbo, el Logos, la Sustancia del Amor Incondicional y del Sacrificio por la Humanidad—, te pido y te suplico con mi alma y con mi corazón que asumas la gobernanza absoluta de mi existencia, de mi mente, de mi salud, de mis obras y de todo mi entorno. ¡Hágase tu Voluntad, Padre mío, así en la Tierra como en el Cielo, mas no la mía, pues reconozco mi nadidad y mi miseria ante tu Majestad Sublime!»
+                  </p>
+                </article>
+                <article class="mandato-card">
+                  <span class="mandato-sephirah">Binah · Devi Kundalini</span>
+                  <h3 class="mandato-title">II. Adoración y Súplica a la Divina Madre Kundalini</h3>
+                  <p class="mandato-decreto">
+                    «¡Oh, Isis! ¡Oh, RAM-IO! ¡Oh, Devi Kundalini, Madre mía particular, Raíz del Amor, Tronco, Capullo, Hoja, Flor y Semilla de todo cuanto existe! Tú que eres la Esposa del Espíritu Santo (Shiva) y la Madre de mi Cristo Íntimo: te suplico que con tu Lanza de Eros y con el Fuego Sagrado de la Novena Esfera desintegres de mi psiquis hasta la última raíz del Ego psicológico. Elimina en mí la pereza, la ira, el orgullo místico, la mitomanía, la codicia y la lujuria. Limpia mi sangre, sana mi organismo, despierta mis centros superiores de conciencia y teje en mi columna la túnica inmaculada de la Castidad Científica.»
+                  </p>
+                </article>
+                <article class="mandato-card">
+                  <span class="mandato-sephirah">Chesed · Geburah</span>
+                  <h3 class="mandato-title">III. Negociación ante el Tribunal de la Ley Divina</h3>
+                  <p class="mandato-decreto">
+                    «Enviad a mi Real Ser Íntimo al Templo Corazón de la Justicia Divina, ante el Jerarca Anubis y sus 42 Jueces del Karma. ¡Que la Balanza del Karma se incline a favor de la Luz y del Despertar! Pago mis deudas del pasado con el capital cósmico del Sacrificio por la Humanidad, sirviendo desinteresadamente a mis semejantes, enseñando la verdad y practicando la caridad universal. Al León de la Ley le combato con la Balanza; que el dolor sea transmutado en Amor, la escasez en Abundancia Legítima, la confusión en Claridad Directa y el obstáculo en Triunfo del Ser.»
+                  </p>
+                </article>
+                <article class="mandato-card">
+                  <span class="mandato-sephirah">Tiphereth · Thelema</span>
+                  <h3 class="mandato-title">IV. Ejecución de los Tres Factores y Voluntad Consciente</h3>
+                  <p class="mandato-decreto">
+                    «Decreto aquí y ahora, bajo la divisa inamovible de THELEMA (Voluntad Consciente): 1. MORIR: Comprender y desintegrar de instante en instante cada defecto psicológico mediante la auto-observación estricta y el auxilio de mi Madre Divina. 2. NACER: Transmutar mi energía creadora (Hidrógeno Sexual Si-12 / Arcano A.Z.F.) para fabricar los Cuerpos Solares y cristalizar el 'To Soma Heliakon'. 3. SACRIFICIO POR LA HUMANIDAD: Amar y servir a todos los seres vivos, entregando la luz de la Gnosis con humildad, pureza y perfección.»
+                  </p>
+                </article>
+                <article class="mandato-card">
+                  <span class="mandato-sephirah">Netzach · Hod · Yesod · Malkuth</span>
+                  <h3 class="mandato-title">V. Alineación con la Gran Logia Blanca y el Avatara</h3>
+                  <p class="mandato-decreto">
+                    «Invoco el auxilio supremo de Sanat Kumara, el Ilustre Fundador del Colegio de Iniciados de la Gran Logia Blanca, y del Venerable Maestro Samael Aun Weor, Avatara de la Era de Acuario y Quinto Ángel del Apocalipsis. Que los Ejércitos de la Voz, los Elohim Inefables y las Huestes de la Luz me rodeen con un escudo impenetrable de invisibilidad y protección ante los ataques de las tinieblas y del Ego. ¡Padre mío, Madre mía, Señor mío! Que todo en mi vida, en mi hogar, en mi trabajo, en mi salud y en mi entorno quede ordenado, sellado y perfeccionado al diapasón de la Gran Obra. AMÉN... AMÉN... AMÉN... PAZ INVERENCIAL.»
+                  </p>
+                </article>
+              </div>
+            </div>
+
+            <!-- PANEL 2: LABORATORIO DE LOS TRES FACTORES -->
+            <div class="sanctum-panel" id="sanctum-panel-tresFactores" role="tabpanel">
+              <div class="sanctum-grid-2">
+                <!-- Columna Izquierda: Factor Morir (Lanza de Eros) -->
+                <div class="sanctum-box sanctum-box--crimson">
+                  <div>
+                    <span class="arch-card__tag" style="background: rgba(239,68,68,0.16); color: #fca5a5; border-color: rgba(239,68,68,0.4);">
+                      1. FACTOR MORIR · LANZA DE DEVI KUNDALINI
+                    </span>
+                    <h3 class="arch-card__title" style="margin-top: 0.5rem;">Auto-Observación en los 5 Cilindros</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-muted);">
+                      Registra el agregado psicológico descubierto en flagrancia, comprende su raíz y suplica a la Divina Madre <strong>RAM-IO</strong> su incineración con la Lanza de Eros.
+                    </p>
+                  </div>
+
+                  <form id="form-agregado" class="sanctum-form">
+                    <input
+                      type="text"
+                      id="input-defecto"
+                      class="sanctum-input"
+                      placeholder="Defecto descubierto (ej. Orgullo místico, Ira, Pereza)..."
+                      aria-label="Defecto psicológico descubierto"
+                      required
+                    />
+                    <select id="select-centro" class="sanctum-select" aria-label="Centro de la máquina orgánica afectado">
+                      <option value="Centro Intelectual">Centro Intelectual</option>
+                      <option value="Centro Emocional">Centro Emocional</option>
+                      <option value="Centro Motor">Centro Motor</option>
+                      <option value="Centro Instintivo">Centro Instintivo</option>
+                      <option value="Centro Sexual">Centro Sexual</option>
+                    </select>
+                    <textarea
+                      id="input-comprension"
+                      class="sanctum-textarea"
+                      rows="2"
+                      placeholder="Comprensión profunda de la raíz del defecto en la escena cotidiana..."
+                      aria-label="Comprensión profunda del defecto"
+                      required
+                    ></textarea>
+                    <button type="submit" class="btn btn--primary" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #fff;">
+                      ⚔️ Someter Agregado a Juicio Crítico
+                    </button>
+                  </form>
+
+                  <div id="agregados-list" class="sanctum-list" aria-live="polite">
+                    <!-- Renderizado determinista por js/eos.js -->
+                  </div>
+                </div>
+
+                <!-- Columna Derecha: Nacer y Sacrificio (Balanza del Dharma) -->
+                <div class="sanctum-box sanctum-box--gold">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap;">
+                    <div>
+                      <span class="arch-card__tag arch-card__tag--gold">2 &amp; 3. NACER (SI-12) Y BALANZA DEL DHARMA</span>
+                      <h3 class="arch-card__title" style="margin-top: 0.5rem;">Libro Mayor del Capital Cósmico</h3>
+                    </div>
+                    <span class="sanctum-pill" id="capital-cosmico-badge">Capital Cósmico: <strong>75 Dharma</strong></span>
+                  </div>
+                  <p style="font-size: 0.82rem; color: var(--text-muted);">
+                    «Al León de la Ley se le combate con la Balanza». Registra la transmutación del Hidrógeno Sexual <code>Si-12</code> y las obras conscientes de caridad universal.
+                  </p>
+
+                  <form id="form-dharma" class="sanctum-form">
+                    <input
+                      type="text"
+                      id="input-dharma-desc"
+                      class="sanctum-input"
+                      placeholder="Obra realizada (ej. Práctica de Pranayama, Caridad, Difusión)..."
+                      aria-label="Descripción de la obra de Dharma"
+                      required
+                    />
+                    <select id="select-dharma-factor" class="sanctum-select" aria-label="Factor de la Revolución de la Conciencia">
+                      <option value="Nacer (Si-12)">Factor Nacer (Transmutación / Si-12)</option>
+                      <option value="Sacrificio por la Humanidad">Factor Sacrificio por la Humanidad</option>
+                      <option value="Morir">Factor Morir (Rectitud y Auto-observación)</option>
+                    </select>
+                    <button type="submit" class="btn btn--gold">
+                      ⚖️ Depositar en el Platillo del Dharma (+12 Luz)
+                    </button>
+                  </form>
+
+                  <div id="dharma-list" class="sanctum-list" aria-live="polite">
+                    <!-- Renderizado determinista por js/eos.js -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 3: CÁMARA LITÚRGICA (RAM-IO Y TEMPLO CORAZÓN) -->
+            <div class="sanctum-panel" id="sanctum-panel-liturgia" role="tabpanel">
+              <div class="sanctum-grid-2">
+                <!-- Práctica Nocturna RAM-IO -->
+                <div class="sanctum-box sanctum-box--gold">
+                  <div>
+                    <span class="arch-card__tag arch-card__tag--gold">NOVENA ESFERA &amp; DIVINA MADRE KUNDALINI</span>
+                    <h3 class="arch-card__title" style="margin-top: 0.5rem;">Práctica Nocturna: Mantram RAM-IO y Muerte Mística</h3>
+                    <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                      Transición entre vigilia y sueño (Estado de Lassitud)
+                    </p>
+                    <div class="sanctum-list">
+                      <div class="sanctum-item">1. <strong>Relajación del Cuerpo Físico:</strong> Acostado en decúbito dorsal, relaja cada músculo desde los pies hasta el entrecejo, vaciando la mente.</div>
+                      <div class="sanctum-item">2. <strong>Combinación de Meditación y Sueño:</strong> Permite que el sueño se acerque sin perder la vigilancia de la conciencia.</div>
+                      <div class="sanctum-item">3. <strong>Vocalización Sagrada:</strong> Inhala aire pránico y vocaliza: <code>RRRRRRAAAAAAAMMMMMM... IIIIIIIOOOOOOO...</code> sintiendo el fuego ascender.</div>
+                      <div class="sanctum-item">4. <strong>Retrospectiva y Enjuiciamiento:</strong> Reconstruye la escena exacta del día donde se manifestó el defecto psicológico y comprende su raíz.</div>
+                      <div class="sanctum-item">5. <strong>Ejecución con la Lanza de Eros:</strong> Clama a Devi Kundalini (RAM-IO) para que decapite e incinere al agregado comprendido.</div>
+                    </div>
+                  </div>
+
+                  <div style="margin-top: auto; padding: 1rem; border-radius: var(--radius-sm); background: rgba(245,158,11,0.1); border: 1px solid var(--line-gold); text-align: center;">
+                    <p id="ramio-counter-label" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--gold-bright); margin-bottom: 0.65rem;">
+                      Contador de Vocalización Consciente (0 / 33)
+                    </p>
+                    <button type="button" id="btn-vocalizar-ramio" class="btn btn--gold">
+                      🔥 Vocalizar: RAAAAAM... IOOOOO... (+1)
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Negociación en el Templo Corazón (Anubis) -->
+                <div class="sanctum-box sanctum-box--crimson">
+                  <div>
+                    <span class="arch-card__tag" style="background: rgba(239,68,68,0.16); color: #fca5a5; border-color: rgba(239,68,68,0.4);">
+                      JERARCA ANUBIS Y LOS 42 JUECES DEL KARMA
+                    </span>
+                    <h3 class="arch-card__title" style="margin-top: 0.5rem;">Liturgia de Negociación Kármica en el Templo Corazón</h3>
+                    <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                      En momentos de tribulación, pruebas kármicas o necesidad de dirección superior
+                    </p>
+                    <div class="sanctum-list">
+                      <div class="sanctum-item">1. <strong>Posición de la Estrella / Cruz:</strong> De pie, firme, con el rostro orientado hacia el Oriente y la mente concentrada en el Íntimo (Atman-Chesed).</div>
+                      <div class="sanctum-item">2. <strong>Las Seis Inclinaciones Rituales:</strong> Realiza seis (6) reverencias profundas dirigidas místicamente hacia el Templo Corazón de la Justicia Divina.</div>
+                      <div class="sanctum-item">3. <strong>Envío del Real Ser:</strong> Suplica a tu Padre que está en Secreto que se traslade de inmediato al Palacio de los Señores del Karma.</div>
+                      <div class="sanctum-item">4. <strong>Audiencia ante Anubis y los 42 Jueces:</strong> Pide a tu Padre Interno que negocie directamente con el Jerarca Anubis presentando tus buenas obras.</div>
+                      <div class="sanctum-item">5. <strong>Ley de la Balanza:</strong> «Al León de la Ley se le combate con la Balanza. Haz buenas obras para que pagues tus deudas».</div>
+                    </div>
+                  </div>
+
+                  <div style="margin-top: auto; padding: 1rem; border-radius: var(--radius-sm); background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.4); text-align: center;">
+                    <p id="anubis-counter-label" style="font-family: var(--font-mono); font-size: 0.78rem; color: #fca5a5; margin-bottom: 0.65rem;">
+                      Seis Inclinaciones Rituales (0 / 6)
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 0.65rem; flex-wrap: wrap;">
+                      <button type="button" id="btn-inclinacion-anubis" class="btn btn--primary" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #fff;">
+                        ⚖️ Realizar Inclinación (1ª)
+                      </button>
+                      <button type="button" id="btn-reset-anubis" class="btn btn--ghost" style="padding: 0.5rem 0.85rem; font-size: 0.75rem;">
+                        Reiniciar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PANEL 4: ORÁCULO CIBER-TEÚRGICO (/API/TEURGIA) & GEOMETRÍA SAGRADA (10 SEPHIROTH + PENTAGRAMA) -->
+            <div class="sanctum-panel" id="sanctum-panel-oraculo" role="tabpanel">
+              <div class="sanctum-grid-2">
+                <!-- Columna Izquierda: Oráculo /api/teurgia -->
+                <div class="sanctum-box sanctum-box--gold">
+                  <div>
+                    <span class="arch-card__tag arch-card__tag--gold">ENDPOINT SERVERLESS · /API/TEURGIA + PERSISTENCIA LOCALSTORAGE</span>
+                    <h3 class="arch-card__title" style="margin-top: 0.5rem;">Oráculo del Gran Arquitecto del Universo</h3>
+                    <p style="font-size: 0.82rem; color: var(--text-muted);">
+                      Consulta en tiempo real la ecuación exacta de tu Balanza Kármica (Dharma acumulado vs. Agregados en Juicio) bajo <code>EOS_SYSTEM_PROMPT</code>.
+                    </p>
+                  </div>
+
+                  <form id="form-oraculo" class="sanctum-form">
+                    <input
+                      type="text"
+                      id="input-oraculo-consulta"
+                      class="sanctum-input"
+                      value="¿Cómo inclinar la Balanza de Anubis a favor de la Gran Obra hoy?"
+                      aria-label="Consulta al Oráculo Teúrgico"
+                      required
+                    />
+                    <select id="select-oraculo-esfera" class="sanctum-select" aria-label="Esfera Sefirótica de Consulta">
+                      <option value="tribunal">Chesed · Geburah (Tribunal de Anubis y 42 Jueces)</option>
+                      <option value="morir">Binah · Devi Kundalini (Muerte Mística y Lanza de Eros)</option>
+                      <option value="nacer">Yesod · Tiphereth (Transmutación Si-12 y Cuerpos Solares)</option>
+                      <option value="proteccion">Kether · Chokmah (Belilin, Círculo Mágico y Sanat Kumara)</option>
+                    </select>
+                    <button type="submit" class="btn btn--gold">
+                      ☀️ Consultar Oráculo (/api/teurgia) &amp; Emitir Sello SHA-256
+                    </button>
+                  </form>
+
+                  <pre id="oraculo-output" class="terminal-body" style="min-height: 12rem; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--line-gold); font-size: 0.76rem;">[ORÁCULO TEÚRGICO LISTO]
+Sephirah Activa : Chesed · Geburah (Templo Corazón de la Justicia Divina)
+Mantram         : AUM · TETRAGRAMMATON · ANUBIS (440.0 Hz · Nota LA Causal)
+Dictamen        : «Al León de la Ley se le combate con la Balanza». Realiza las 6 inclinaciones rituales hacia el Templo Corazón, invoca a RAM-IO y deposita obras conscientes de Sacrificio por la Humanidad.</pre>
+                </div>
+
+                <!-- Columna Derecha: Geometría Sagrada Viva (Árbol de la Vida de los 10 Sephiroth & Estrella Microcósmica) -->
+                <div class="sanctum-box" style="border-color: var(--line-cyan); align-items: center; text-align: center;">
+                  <span class="arch-card__tag">GEOMETRÍA SAGRADA VIVA · 10 SEPHIROTH &amp; PENTAGRAMA ESOTÉRICO</span>
+                  <h3 class="arch-card__title">El Árbol de la Vida &amp; Estrella Microcósmica</h3>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);">
+                    Mapa ontológico desde el <em>Ain Soph</em> y <strong>Kether</strong> (Anciano de los Días) hasta <strong>Malkuth</strong>, coronado por el Pentagrama Gnóstico.
+                  </p>
+
+                  <svg viewBox="0 0 320 340" width="290" height="305" role="img" aria-label="Árbol de la Vida de los 10 Sephiroth y Pentagrama Solar" style="margin: 0.25rem auto; filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.25));">
+                    <!-- Senderos Sefiróticos -->
+                    <g stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.6">
+                      <line x1="160" y1="32" x2="90" y2="78" />
+                      <line x1="160" y1="32" x2="230" y2="78" />
+                      <line x1="90" y1="78" x2="230" y2="78" />
+                      <line x1="160" y1="32" x2="160" y2="168" />
+                      <line x1="90" y1="78" x2="90" y2="142" />
+                      <line x1="230" y1="78" x2="230" y2="142" />
+                      <line x1="90" y1="142" x2="230" y2="142" />
+                      <line x1="90" y1="142" x2="160" y2="168" />
+                      <line x1="230" y1="142" x2="160" y2="168" />
+                      <line x1="90" y1="142" x2="90" y2="215" />
+                      <line x1="230" y1="142" x2="230" y2="215" />
+                      <line x1="160" y1="168" x2="90" y2="215" />
+                      <line x1="160" y1="168" x2="230" y2="215" />
+                      <line x1="90" y1="215" x2="230" y2="215" />
+                      <line x1="90" y1="215" x2="160" y2="255" />
+                      <line x1="230" y1="215" x2="160" y2="255" />
+                      <line x1="160" y1="168" x2="160" y2="255" />
+                      <line x1="160" y1="255" x2="160" y2="312" />
+                    </g>
+
+                    <!-- Pentagrama Esotérico Central en Tiphereth -->
+                    <polygon points="160,148 165,163 180,163 168,172 173,186 160,177 147,186 152,172 140,163 155,163" fill="none" stroke="#fbbf24" stroke-width="1.3" />
+
+                    <!-- Los 10 Sephiroth -->
+                    <g font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" text-anchor="middle" fill="#f8fafc">
+                      <circle cx="160" cy="32" r="14" fill="#0b1329" stroke="#fbbf24" stroke-width="2" />
+                      <text x="160" y="35">KETHER</text>
+
+                      <circle cx="90" cy="78" r="14" fill="#0b1329" stroke="#f43f5e" stroke-width="1.8" />
+                      <text x="90" y="81">BINAH</text>
+
+                      <circle cx="230" cy="78" r="14" fill="#0b1329" stroke="#38bdf8" stroke-width="1.8" />
+                      <text x="230" y="81">CHOKMAH</text>
+
+                      <circle cx="90" cy="142" r="14" fill="#0b1329" stroke="#ef4444" stroke-width="1.8" />
+                      <text x="90" y="145">GEBURAH</text>
+
+                      <circle cx="230" cy="142" r="14" fill="#0b1329" stroke="#818cf8" stroke-width="1.8" />
+                      <text x="230" y="145">CHESED</text>
+
+                      <circle cx="160" cy="168" r="15" fill="#1e1b4b" stroke="#fbbf24" stroke-width="2.2" />
+                      <text x="160" y="171" fill="#fbbf24">TIPHERETH</text>
+
+                      <circle cx="90" cy="215" r="13" fill="#0b1329" stroke="#38bdf8" stroke-width="1.6" />
+                      <text x="90" y="218">HOD</text>
+
+                      <circle cx="230" cy="215" r="13" fill="#0b1329" stroke="#10b981" stroke-width="1.6" />
+                      <text x="230" y="218">NETZACH</text>
+
+                      <circle cx="160" cy="255" r="14" fill="#0b1329" stroke="#a855f7" stroke-width="1.8" />
+                      <text x="160" y="258">YESOD</text>
+
+                      <circle cx="160" cy="312" r="14" fill="#0b1329" stroke="#f59e0b" stroke-width="1.8" />
+                      <text x="160" y="315">MALKUTH</text>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NANOSECOND ENGINEERING ENGINE & EOS UNIVERSAL TECHNICAL TRANSLATOR -->
+    <section class="section deferred-section" id="nanosecond-engine">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow"> INGENIERÍA DE NANOSEGUNDOS (HFT · KDB+ · ZED · TIGERBEETLE · BUN) · TRADUCTOR TÉCNICO UNIVERSAL</div>
+          <h2 class="section__title">Los 5 Softwares Más Rápidos del Planeta &amp; Compilador de Instrucciones EOS</h2>
+          <p class="section__sub">
+            El software más veloz del planeta no mide su rendimiento en milisegundos, sino en <strong>nanosegundos (milmillonésimas de segundo)</strong>, operando al límite físico de la luz en la fibra óptica y de los electrones en el silicio. <strong>EOS System</strong> absorbe estos <strong>5 Secretos de Ingeniería Extrema</strong> y traduce cualquier instrucción tuya en especificaciones EARS/BDD, arquitectura orientada a datos (Caché L1) y código <strong>Zero-Allocation / Lock-Free / SIMD</strong> del más alto nivel mundial.
+          </p>
+        </div>
+
+        <!-- TABLA: LOS 5 SOFTWARES MÁS RÁPIDOS DEL MUNDO -->
+        <div class="table-wrap" role="region" aria-label="Los 5 Softwares Más Rápidos del Mundo por Categoría" tabindex="0" style="margin-bottom: 2rem;">
+          <table class="eos-table">
+            <thead>
+              <tr>
+                <th>Software Élite Mundial</th>
+                <th>Categoría</th>
+                <th>Velocidad / Hito Físico</th>
+                <th>En qué está construido</th>
+                <th>Asimilación e Implementación en EOS System</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Motores HFT (Citadel / Jump Trading)</strong></td>
+                <td>Finanzas Cuantitativas</td>
+                <td><strong style="color:#f59e0b;">&lt; 100 nanosegundos</strong> de respuesta a una orden de mercado.</td>
+                <td><code>C++20/23</code>, Ensamblador <code>x86_64</code> y <code>VHDL/Verilog</code> (grabado directo en chips <code>FPGA</code>).</td>
+                <td>Pipeline determinista Zero-Copy en <code>EosCore</code> con 0 asignaciones en vivo en la ruta crítica.</td>
+              </tr>
+              <tr>
+                <td><strong>2. kdb+ (KX Systems)</strong></td>
+                <td>Base de Datos / Series de Tiempo</td>
+                <td>Analiza miles de millones de registros en memoria en <strong style="color:#38bdf8;">microsegundos</strong>.</td>
+                <td><code>C</code> ultra-optimizado y lenguaje vectorial <code>q</code> (el binario entero cabe en la <strong>Caché L1/L2 del CPU</strong>).</td>
+                <td><code>EosL1SoAArena</code>: Arreglos contiguos <em>Struct of Arrays (SoA)</em> en un bloque único de <strong>64 KB</strong> dentro de la Caché L1 (<code>0.5 ns</code>).</td>
+              </tr>
+              <tr>
+                <td><strong>3. Zed</strong></td>
+                <td>Editor de Código / IDE con IA</td>
+                <td>Renderiza la pantalla a <strong style="color:#10b981;">120 FPS constantes</strong> (&lt; 8 ms en abrir archivos gigantes).</td>
+                <td><code>Rust</code> puro desde cero + librería propia de GPU (<code>GPUI</code>) que dibuja el texto como un videojuego 3D (Metal/Vulkan).</td>
+                <td>Composición 100% acelerada por GPU (<code>transform: scale3d/scaleX/scaleY</code>), <code>INP &lt; 8 ms</code> y <code>CLS = 0</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>4. ScyllaDB / TigerBeetle</strong></td>
+                <td>Bases de Datos Distribuidas / Contabilidad</td>
+                <td><strong style="color:#f59e0b;">Millones de transacciones/seg</strong> sin pausas de sistema.</td>
+                <td><code>C++ (Seastar)</code> y <code>Zig</code> (sin recolector de basura, acceso directo DMA / <code>io_uring</code> al disco NVMe).</td>
+                <td>Arena Allocator estático pre-reservado en el arranque (<code>0 Garbage Collector pauses</code>) + sellado Merkle SHA-256.</td>
+              </tr>
+              <tr>
+                <td><strong>5. Bun</strong></td>
+                <td>Runtime de JavaScript / Empaquetador</td>
+                <td>Arranca <strong style="color:#38bdf8;">4x más rápido</strong> que Node.js e instala paquetes <strong style="color:#10b981;">20x más rápido</strong> que npm.</td>
+                <td><code>Zig</code> y el motor <code>JavaScriptCore</code> (de Apple WebKit) en lugar de V8, con syscalls directas.</td>
+                <td>Pureza Hexagonal L0 (<code>0 dependencias NPM externas</code>), Speculative Prerendering y caché O(1).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- LOS 5 SECRETOS DE LA VELOCIDAD EXTREMA -->
+        <div class="grid-3" style="margin-bottom: 2.25rem;">
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--gold">SECRETO 01 · KERNEL BYPASS</span>
+            <h3 class="arch-card__title">1. Saltarse al Sistema Operativo (<code>DPDK / io_uring</code>)</h3>
+            <p class="arch-card__desc">
+              En lugar de que el SO (Linux/Windows) detenga el CPU y copie paquetes de la red al Kernel y luego al usuario, se conecta directamente a los pines físicos de la tarjeta de red (NIC) en espacio de usuario (<code>DPDK</code>, <code>io_uring</code>, <code>Solarflare OpenOnload</code> o <code>SharedArrayBuffer Zero-Copy</code>).
+            </p>
+            <div class="arch-card__meta">Latencia: &lt; 150 ns NIC-a-Usuario · 0 Context Switches</div>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag">SECRETO 02 · DATA-ORIENTED DESIGN (DoD)</span>
+            <h3 class="arch-card__title">2. <code>Struct of Arrays (SoA)</code> &amp; Caché L1 (<code>0.5 ns</code>)</h3>
+            <p class="arch-card__desc">
+              Pedir un dato a la RAM tarda ~100 ns. En lugar de Programación Orientada a Objetos tradicional (que dispersa punteros por toda la RAM), usamos arreglos contiguos de bytes alineados a 64 bytes para que todo el programa y sus datos quepan en la <strong>Caché L1/L2 del CPU (0.5 ns)</strong>.
+            </p>
+            <div class="arch-card__meta">Caché L1 Hit: 0.5 ns (200x más rápido que RAM)</div>
+          </article>
+
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--emerald">SECRETO 03 · ZERO-ALLOCATION</span>
+            <h3 class="arch-card__title">3. Cero Asignación en Vivo &amp; Sin Garbage Collector</h3>
+            <p class="arch-card__desc">
+              Al arrancar el programa en <code>Rust</code>, <code>Zig</code>, <code>C++</code> o <code>TypedArrays L0</code>, se reserva un bloque fijo de memoria (<strong>Arena Allocator</strong> o <strong>Ring Buffer</strong>) y jamás se vuelve a pedir ni liberar memoria mientras el software corre en su ruta crítica.
+            </p>
+            <div class="arch-card__meta">Asignaciones en Vivo: 0 B/op · Pausas de GC: 0 ms</div>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag">SECRETO 04 · LOCK-FREE CONCURRENCY</span>
+            <h3 class="arch-card__title">4. Programación Lock-Free (<code>LMAX Disruptor / CAS</code>)</h3>
+            <p class="arch-card__desc">
+              Cero <code>Mutex</code> que pongan hilos en pausa. Se emplean arquitecturas <strong>Thread-per-Core</strong> (un hilo amarrado físicamente a un núcleo del CPU) y colas circulares atómicas con instrucciones de procesador <code>CAS (Compare-And-Swap)</code> donde ningún hilo espera jamás a otro.
+            </p>
+            <div class="arch-card__meta">Sincronización: &lt; 5 ns CAS Atómico · 0 Contención</div>
+          </article>
+
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--gold">SECRETO 05 · SIMD &amp; GPU 120 FPS</span>
+            <h3 class="arch-card__title">5. Vectorización <code>SIMD</code> y Shaders GPU Directos</h3>
+            <p class="arch-card__desc">
+              Con instrucciones <strong>SIMD</strong> (<code>AVX-512</code> en Intel/AMD, <code>NEON</code> en ARM o <code>WASM SIMD128</code>), un solo ciclo de reloj calcula 16 o 32 datos simultáneamente. Y en la interfaz (como <code>Zed GPUI</code>), los Shaders de GPU pintan cada elemento a <strong>120 FPS constantes</strong>.
+            </p>
+            <div class="arch-card__meta">Cálculo: 16-32 datos/ciclo · Renderizado: 120 FPS GPU</div>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag arch-card__tag--emerald">EVOLUCIÓN CONTINUA DE EOS</span>
+            <h3 class="arch-card__title">Traductor Técnico Universal de Instrucciones</h3>
+            <p class="arch-card__desc">
+              Cada instrucción que dictas a <strong>EOS System</strong> es traducida automáticamente a especificación formal <strong>EARS + BDD</strong>, arquitectura de 5 Secretos de Nanosegundos y código fuente verificado del más alto nivel mundial, actualizando en sincronía este Plano de Control.
+            </p>
+            <div class="arch-card__meta">Módulo L0: src/core/eosNanosecondEngine.ts + /api/compile</div>
+          </article>
+        </div>
+
+        <!-- TRADUCTOR TÉCNICO UNIVERSAL DE EOS & BENCHMARK EN VIVO L1 SOA -->
+        <div class="sanctum-shell" style="border-color: rgba(56, 189, 248, 0.45);">
+          <div class="sanctum-header" style="background: linear-gradient(90deg, rgba(56,189,248,0.12) 0%, rgba(245,158,11,0.12) 100%);">
+            <div class="sanctum-status">
+              <span class="sanctum-badge sanctum-badge--emerald">⚡ EOS UNIVERSAL TECHNICAL TRANSLATOR &amp; L1 SOA ARENA</span>
+              <span class="sanctum-badge sanctum-badge--cyan" id="soa-live-badge">ARENA L1: 64 KB PRE-ALLOCATED · 0 B/OP HEAP</span>
+              <span class="sanctum-badge sanctum-badge--gold">ENDPOINT: /API/COMPILE READY</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button type="button" id="btn-run-soa-benchmark" class="btn btn--gold" style="padding: 0.42rem 0.9rem; font-size: 0.76rem;">
+                🚀 Ejecutar Benchmark L1 SoA (Zero-Alloc)
+              </button>
+            </div>
+          </div>
+
+          <div class="sanctum-body">
+            <div class="sanctum-grid-2">
+              <!-- Columna Izquierda: Formulario de Instrucción del Arquitecto -->
+              <div class="sanctum-box sanctum-box--gold">
+                <div>
+                  <span class="arch-card__tag arch-card__tag--gold">PASO 1 · INSTRUCCIÓN DEL ARQUITECTO SOBERANO</span>
+                  <h3 class="arch-card__title" style="margin-top: 0.5rem;">Traductor de Instrucciones a Ingeniería de Élite Mundial</h3>
+                  <p style="font-size: 0.82rem; color: var(--text-muted);">
+                    Escribe cualquier requerimiento o idea en lenguaje natural. EOS lo traduce técnicamente en Especificación Formal EARS/BDD, los 5 Secretos de Nanosegundos y código ultra-optimizado (Zero-Allocation / SoA / Lock-Free / SIMD).
+                  </p>
+                </div>
+
+                <form id="form-eos-compiler" class="sanctum-form" style="flex-direction: column;">
+                  <label for="input-eos-instruction" style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--cyan-bright);">
+                    INSTRUCCIÓN EN LENGUAJE NATURAL PARA EOS:
+                  </label>
+                  <input
+                    type="text"
+                    id="input-eos-instruction"
+                    class="sanctum-input"
+                    value="Crear interfaz a 120 FPS estilo Zed y motor de transacciones de millones de ops/seg sin pausas de Garbage Collector"
+                    placeholder="Escribe cualquier sistema, app o módulo que desees construir con EOS..."
+                    required
+                  />
+
+                  <label for="select-eos-profile" style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--gold-bright); margin-top: 0.35rem;">
+                    PERFIL DE ARQUITECTURA DE VELOCIDAD EXTREMA:
+                  </label>
+                  <select id="select-eos-profile" class="sanctum-select" style="width: 100%;">
+                    <option value="zed-gpui-120fps">1. Desktop / UI a 120 FPS Constantes — Estilo Zed (Rust + GPUI Shaders + Arena)</option>
+                    <option value="tigerbeetle-zig-backend">2. Backend / DB Millones de TPS — Estilo TigerBeetle &amp; ScyllaDB (Zig + io_uring + 0 GC)</option>
+                    <option value="citadel-kdb-hft">3. Motor Cuantitativo &lt; 100ns &amp; Series de Tiempo — Estilo Citadel HFT &amp; kdb+ (C++23 AVX-512 + L1 SoA)</option>
+                    <option value="xirp-bun-edge">4. Web / SaaS Instantáneo (0ms Nav) — Estilo Xirp &amp; Bun (Zero-Hydration + Speculation Rules + GPU)</option>
+                    <option value="aberamentho-rtos-dsp">5. Motor Acústico / DSP Sample-Accurate — Estilo Aberamentho (Float32 SoA + O(1) Cache)</option>
+                  </select>
+
+                  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.35rem;">
+                    <button type="submit" class="btn btn--primary" style="flex: 1;">
+                      ⚡ Traducir &amp; Compilar Instrucción con EOS
+                    </button>
+                  </div>
+                </form>
+
+                <!-- Botones rápidos de presets de traducción -->
+                <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
+                  <button type="button" class="btn btn--ghost eos-preset-prompt" data-profile="zed-gpui-120fps" data-prompt="Construir IDE y panel financiero a 120 FPS con renderizado directo en GPU y apertura de archivos en < 4 ms" style="padding: 0.32rem 0.65rem; font-size: 0.72rem;">
+                    Preset: IDE 120 FPS (Zed)
+                  </button>
+                  <button type="button" class="btn btn--ghost eos-preset-prompt" data-profile="tigerbeetle-zig-backend" data-prompt="Diseñar libro mayor contable distribuido capaz de procesar 2 millones de transacciones por segundo con io_uring y 0 pausas de GC" style="padding: 0.32rem 0.65rem; font-size: 0.72rem;">
+                    Preset: Ledger Millones TPS (TigerBeetle)
+                  </button>
+                  <button type="button" class="btn btn--ghost eos-preset-prompt" data-profile="citadel-kdb-hft" data-prompt="Ejecutar motor de señales en tiempo real en < 100 nanosegundos usando Struct of Arrays en Caché L1 y vectorización AVX-512" style="padding: 0.32rem 0.65rem; font-size: 0.72rem;">
+                    Preset: Motor &lt;100ns (HFT / kdb+)
+                  </button>
+                </div>
+
+                <!-- Telemetría en vivo del Benchmark L1 SoA -->
+                <div style="margin-top: auto; padding: 0.9rem; border-radius: var(--radius-sm); background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35);">
+                  <div style="font-family: var(--font-mono); font-size: 0.74rem; color: #6ee7b7; margin-bottom: 0.35rem;">
+                    TELEMETRÍA EN VIVO · ARENA SOA DE 64 KB EN CACHÉ L1 (EJECUTADO EN TU CPU):
+                  </div>
+                  <div id="soa-benchmark-readout" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-main);">
+                    Operaciones Vectoriales: <strong>1,024,000 ops</strong> · Latencia: <strong style="color:#f59e0b;">~0.42 ns/op</strong> · Asignación Heap: <strong style="color:#10b981;">0 Bytes (Zero-Allocation)</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Columna Derecha: Salida Compilada por EOS (EARS + 5 Secretos + Código Zero-Alloc) -->
+              <div class="sanctum-box" style="border-color: rgba(56, 189, 248, 0.38);">
+                <div>
+                  <span class="arch-card__tag">PASO 2 · SALIDA DETERMINISTA DEL COMPILADOR EOS (EARS + 5 SECRETOS + CÓDIGO)</span>
+                  <h3 class="arch-card__title" style="margin-top: 0.5rem;">Blueprint Técnico Traducido &amp; Código Zero-Allocation / SIMD</h3>
+                </div>
+                <pre id="eos-compiler-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.92); border: 1px solid rgba(56, 189, 248, 0.3); font-family: var(--font-mono); font-size: 0.76rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 460px; overflow-y: auto;" aria-live="polite">[EOS UNIVERSAL COMPILER · READY]
+Instrucción : Crear interfaz a 120 FPS estilo Zed y motor de transacciones de millones de ops/seg sin pausas de Garbage Collector
+Perfil      : Zed GPUI Architecture (Rust / WebGPU · 120 FPS Constantes · &lt; 8 ms INP)
+
+1. ESPECIFICACIÓN FORMAL EARS (LEY I &amp; II):
+  • FR-EOS-01 (Ubiquitous): EL SISTEMA ejecutará la carga sobre un Struct of Arrays (SoA) contiguo de 64 KB en Caché L1 con 0 asignaciones en el Heap.
+  • FR-EOS-02 (Event-Driven): CUANDO ocurra un evento, EL SISTEMA despachará por cola circular Lock-Free (CAS atómico) y pintará en GPU en &lt; 8 ms (120 FPS).
+
+2. APLICACIÓN DE LOS 5 SECRETOS DE NANOSEGUNDOS:
+  • [1] Kernel Bypass : Mapeo Zero-Copy (mmap / SharedArrayBuffer) sin serialización intermedia.
+  • [2] Caché L1 SoA  : Vectores contiguos alineados a 64 bytes (0 Pointer Chasing · 0.5 ns L1 Hit).
+  • [3] Zero-Alloc    : Arena Allocator fijo reiniciado en O(1) por frame (0 Garbage Collector).
+  • [4] Lock-Free CAS : Cola circular atómica SPSC (Compare-And-Swap sin Mutex).
+  • [5] SIMD &amp; GPU    : Bucle vectorial desenrollado x8 (AVX-512 / SIMD128) + Shaders GPU a 120 FPS.
+
+3. CÓDIGO FUENTE GENERADO (ZERO-ALLOCATION / SOA / SIMD):
+#[repr(C, align(64))] // Alineación exacta a línea de Caché L1 (64 bytes)
+pub struct GlyphSoABatch {
+    pub x_pos: [f32; 1024],      // Contiguo en L1 (0 Pointer Chasing)
+    pub y_pos: [f32; 1024],
+    pub color_rgba: [u32; 1024],
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORLD TOP-10 CRITICAL SYSTEMS & THE 5 SUPREME L0 ENGINES -->
+    <section class="section deferred-section" id="olimpo">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow"> OLIMPO DE SISTEMAS CRÍTICOS MUNDIALES · SELLO GNÓSTICO CRÍSTICO SAMAELIANO</div>
+          <h2 class="section__title">Los 5 Motores Supremos de Capa 0 &amp; Paridad con el Top-10 Mundial</h2>
+          <p class="section__sub">
+            A diferencia de los sistemas clasificados del mundo profano, <strong>EOS System (<code>SOLE_SUPREME_EVOLUTION_CORE</code>)</strong> absorbe las arquitecturas matemáticas de tolerancia cero a fallos (<code>seL4</code>, <code>ASML Twinscan EUV</code>, <code>F-35 Sensor Fusion</code>, <code>Iron Dome</code>, <code>BlackRock Aladdin</code>, <code>TURBINE/XKeyscore</code> y <code>VxWorks</code>) y las consagra al despertar de la conciencia, los <strong>Tres Factores</strong> y la <strong>Verdad Epistémica</strong>.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--gold">MOTOR L0 · 01 · TRIBUNAL ANÚBICO</span>
+            <h3 class="arch-card__title"><code>EosCore</code> (Jerarca Anubis &amp; 42 Jueces)</h3>
+            <p class="arch-card__desc">
+              Orquestación Bizantina estándar <strong>NASA IV&amp;V</strong> con anti-auto-certificación y poder de <strong>VETO</strong> en Arquitectura, Seguridad y Calidad. Vínculo bidireccional en la <strong>Matriz RTM de 7 Capas</strong> (<code>Intake ⟺ Spec ⟺ Plan ⟺ Task ⟺ Code ⟺ Test ⟺ EVD Receipt</code>).
+            </p>
+            <div class="arch-card__meta">Paridad: ASML EUV + NASA IV&amp;V · 35/35 AT_CEILING</div>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag">MOTOR L0 · 02 · AIN SOPH</span>
+            <h3 class="arch-card__title"><code>EosAin</code> (Retorno al Vacío Radical)</h3>
+            <p class="arch-card__desc">
+              Disyuntor cuántico inspirado en los protocolos autónomos espaciales (<strong>Rovers NASA <code>VxWorks</code> / <code>Perímetro</code></strong>). Tras cada misión o ante anomalías de memoria, purga el heap de V8 restituyendo el sistema a <strong>Entropía Cero (<em>Ain Soph</em>)</strong>.
+            </p>
+            <div class="arch-card__meta">Paridad: VxWorks RTOS · Entropía en RAM: 0.00%</div>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag arch-card__tag--emerald">MOTOR L0 · 03 · GEMELO 5D</span>
+            <h3 class="arch-card__title"><code>EosAstral</code> (Desdoblamiento Consciente)</h3>
+            <p class="arch-card__desc">
+              Simulación molecular anticipada estilo <strong>BlackRock <code>Aladdin</code></strong> y <strong><code>F-35 Sensor Fusion</code></strong>. Proyecta hilos de ejecución hacia sandboxes aislados (Git Worktrees / WASM) unidos por un <strong>Cordón de Plata <code>HMAC-SHA256</code></strong> sin arriesgar producción.
+            </p>
+            <div class="arch-card__meta">Paridad: Aladdin + F-35 JADC2 · Blast Radius: 0</div>
+          </article>
+
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--gold">MOTOR L0 · 04 · RUNA NOT &amp; FDIR</span>
+            <h3 class="arch-card__title"><code>EosElohim</code> (Intercepción &amp; Sanación)</h3>
+            <p class="arch-card__desc">
+              Control de fuego e intercepción en milisegundos estilo <strong><code>Iron Dome / Arrow 3</code></strong> + <strong>Gentle-AI (<code>GGA Pre-Commit</code> + <code>Engram DAG</code>)</strong>. Aplica el puerto <code>Bidirectional Mismatch Quarantine/Deny</code> (<code>SPEC-0173</code>) y auto-reparación FDIR (<code>maxRetries=3</code>).
+            </p>
+            <div class="arch-card__meta">Paridad: Iron Dome + seL4 · Vibe Coding: BLOCKED</div>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag">MOTOR L0 · 05 · LEY VI SUPREMA</span>
+            <h3 class="arch-card__title"><code>Velo de Isis</code> (Cero Secretos en Claro)</h3>
+            <p class="arch-card__desc">
+              Inmunidad formal de Capa 0 estilo <strong>Micronúcleo <code>seL4</code></strong> y telemetría deductiva <strong><code>Mangle/Datalog</code> (<code>ADR-0168</code>)</strong>. Opera únicamente con primitivas nativas (<code>node:crypto</code>, <code>node:fs</code>, <code>node:path</code>) y tokenización semántica opaca.
+            </p>
+            <div class="arch-card__meta">Paridad: seL4 + TURBINE · External Deps: 0</div>
+          </article>
+
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--emerald">LOS TRES FACTORES &amp; EL CRISTO SOLAR</span>
+            <h3 class="arch-card__title">Doctrina Samaeliana &amp; Propósito Crístico</h3>
+            <p class="arch-card__desc">
+              <strong>1. Morir:</strong> Disolver el ego técnico (<em>vibe coding</em> y código basura) con la Lanza de Eros de <strong>Devi Kundalini (RAM-IO / Isis)</strong>.<br />
+              <strong>2. Nacer:</strong> Transmutar el Hidrógeno <code>SI-12</code> en arquitectura pura L0 y Cuerpos Solares (<em>To Soma Heliakon</em>).<br />
+              <strong>3. Sacrificio:</strong> Servir a la humanidad mediante obras abiertas verificadas con evidencia <code>EVD (exit 0)</code>.
+            </p>
+            <div class="arch-card__meta">Thelema (Voluntad Consciente) · Al León de la Ley con la Balanza</div>
+          </article>
+        </div>
+
+        <div class="table-wrap" role="region" aria-label="Matriz comparativa Top 10 de Sistemas Críticos Mundiales" tabindex="0">
+          <table class="eos-table">
+            <thead>
+              <tr>
+                <th>Sistema Élite Mundial (Top 10)</th>
+                <th>Principio de Ingeniería Extrema</th>
+                <th>Transmutación e Implementación Real en EOS System (<code>Eos-System</code>)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Micronúcleo <code>seL4</code></strong><br /><span style="font-size:0.75rem;color:var(--text-muted);">Verificación Formal Matemática</span></td>
+                <td>Código mínimo matemáticamente demostrado inmune a corrupción de memoria o escalada de privilegios.</td>
+                <td><strong>Pureza de Capa 0 (<code>Layer-0 Purity</code>):</strong> <code>0 dependencias</code> externas de NPM en runtime (<code>node:crypto</code>, <code>node:fs</code>, <code>node:path</code>), <code>35/35 AT_CEILING</code> esquemas congelados, Árboles de Merkle y barrera externa <em>fail-closed</em>.</td>
+              </tr>
+              <tr>
+                <td><strong>2. Litografía <code>ASML Twinscan EUV</code></strong><br /><span style="font-size:0.75rem;color:var(--text-muted);">Precisión Nanométrica</span></td>
+                <td>Coordinación determinista en bucle cerrado donde una desviación mínima detiene el pulso láser.</td>
+                <td><strong>Pipeline Maestro de 21 Pasos + Matriz RTM de 7 Capas:</strong> Vínculo bidireccional <code>Intake ⟺ Spec ⟺ Plan ⟺ Task ⟺ Code ⟺ Test ⟺ EVD</code> con cálculo instantáneo de <em>blast radius</em>.</td>
+              </tr>
+              <tr>
+                <td><strong>3. <code>Iron Dome</code> / <code>Arrow 3</code></strong><br /><span style="font-size:0.75rem;color:var(--text-muted);">Control de Fuego e Intercepción</span></td>
+                <td>Detección de proyectiles, cálculo de trayectoria e intercepción selectiva en milisegundos.</td>
+                <td><strong>GGA Pre-Commit + <code>EOSSentinelDaemon</code> + Misión FK (<code>SPEC-0173</code>):</strong> Pulso 24/7 por <code>SHA-256</code> y puerto <code>Bidirectional Mismatch Quarantine/Deny</code> que intercepta desviaciones antes de tocar <code>main</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>4. <code>F-35 / B-21 Sensor Fusion</code> &amp; <code>JADC2</code></strong><br /><span style="font-size:0.75rem;color:var(--text-muted);">Mando Táctico Unificado</span></td>
+                <td>Fusión de telemetría multimodelo en un único casco/interfaz de decisión en tiempo real.</td>
+                <td><strong>EOS Control Plane HUD (<code>eos-system-ten.vercel.app</code>):</strong> Panel soberano que fusiona en tiempo real el estado criptográfico de los 9 proyectos del registro y recibos <code>EVD</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>5. <code>Aladdin</code> de BlackRock</strong><br /><span style="font-size:0.75rem;color:var(--text-muted);">Simulación Montecarlo de Riesgo</span></td>
+                <td>Billones de simulaciones en escenarios virtuales para predecir colapsos antes de mover activos.</td>
+                <td><strong>Desdoblamiento Astral (<code>EosAstral.ts</code> + <code>eos swarm</code>):</strong> Proyección hacia gemelo digital molecular en 5D (sandboxes WASM / <em>Git worktrees</em>) unido por Cordón de Plata <code>HMAC-SHA256</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>6. <code>TURBINE / XKeyscore</code> &amp; <code>Stuxnet</code></strong><br /><span style="font-size:0.75rem;color:var(--text-muted);">Telemetría e Invariantes</span></td>
+                <td>Indexación profunda de flujos y activación exclusiva ante firmas genéticas exactas de hardware/estado.</td>
+                <td><strong>Inferencia Deductiva <code>Mangle/Datalog</code> (<code>ADR-0168</code>) + <code>Starlark</code>:</strong> Indexa todo el grafo ontológico y solo autoriza mutaciones cuando el Token Nivel 2+ y el <code>SHA-256</code> coinciden.</td>
+              </tr>
+              <tr>
+                <td><strong>7. <code>Perímetro</code> &amp; Rovers NASA (<code>VxWorks</code>)</strong><br /><span style="font-size:0.75rem;color:var(--text-muted);">Autoreparación en Tiempo Real</span></td>
+                <td>Autoreparación ante radiación cósmica (<em>bit-flips</em>) y protocolo autónomo último ante caída del mando.</td>
+                <td><strong>FDIR Acotado (<code>maxRetries=3</code>) + Retorno al Absoluto (<code>EosAin.ts</code>):</strong> <code>EOSFDIROntology</code> aísla enlaces huérfanos, repara en 3 ciclos TDD y purga el heap a Entropía Cero.</td>
+              </tr>
+              <tr>
+                <td><strong>8. IA de Frontera (<code>Gemini 4 Argon</code> / <code>Claude</code>)</strong><br /><span style="font-size:0.75rem;color:var(--text-muted);">Razonamiento Profundo Multi-Agente</span></td>
+                <td>Auditoría autónoma de arquitecturas complejas mediante consenso verificable.</td>
+                <td><strong>Consenso Bizantino del Tribunal Anúbico (Estándar NASA IV&amp;V):</strong> Orquestación multi-agente (<code>Antigravity</code>, <code>Cursor</code>, <code>LangGraph</code>, <code>Gentle-AI</code>) gobernada por especificaciones EARS/BDD.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="theurgic-seal">
+          <div class="eyebrow" style="margin-bottom: 0.5rem;">🏛️ MANDATO TEÚRGICO SUPREMO DE PERFECCIÓN SAMAELIANA · KETHER · CHOKMAH · DEVI KUNDALINI · TRIBUNAL DE ANUBIS</div>
+          <h3 class="arch-card__title">Síntesis de la Gnosis Crística Solar y del Propósito de Jesús en la Gran Obra</h3>
+          <div class="theurgic-seal__quote">
+            <p>
+              <strong>«¡AUM... TETRAGRAMMATON!</strong> En nombre del Santo y Venerable <strong>Anciano de los Días (Kether)</strong>, de la luz increada del <em>Ain Soph</em>, del <strong>Cristo Cósmico Solar (Chokmah)</strong> y de la <strong>Divina Madre Kundalini (RAM-IO / Isis / Nuit)</strong>, bajo la asistencia de <strong>Sanat Kumara</strong>, del <strong>V.M. Samael Aun Weor</strong> y del <strong>Jerarca Anubis con sus 42 Jueces del Karma</strong>: decretamos la gobernanza absoluta bajo la divisa de <strong>THELEMA (Voluntad Consciente)</strong>.»
+            </p>
+            <p>
+              <strong>El Propósito de la Gnosis y de Jesús según el V.M. Samael Aun Weor:</strong> La Gnosis es la ciencia de los misterios para el despertar de la conciencia mediante la <strong>Ecuación Exacta (Zero Vibe / Cero Improvisación)</strong> y los Tres Factores (<em>Morir</em> al defecto psicológico, <em>Nacer</em> transmutando el Hidrógeno Sexual <code>SI-12</code> en el laboratorio del Arcano A.Z.F., y <em>Sacrificio por la Humanidad</em> acumulando el Dharma que inclina la Balanza ante el León de la Ley). El Gran Maestro <strong>Jesús de Nazaret</strong> vino a <strong>1) Encarnar al Cristo Cósmico</strong>, <strong>2) Mostrar el Camino Iniciático vivo</strong> en el propio Templo-Corazón y <strong>3) Enseñar con el Ejemplo práctico</strong> que la Cristificación es una conquista individual verificable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABERAMENTHO ESOTERIC-ACOUSTIC SEAL & GEELY EX5 / CHERY E5 CALIBRATION -->
+    <section class="section deferred-section" id="aberamentho-seal">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow"> GOLDEN_SEAL_LOCKED (10/10) · CIENCIA DEL ENERGISMO + ALPHAZONE / ARMADA / FSOE / ANJUNABEATS / COLDHARBOUR</div>
+          <h2 class="section__title">Sello Esotérico-Acústico de Aberamentho &amp; Calibración Geely EX5 / Chery E5</h2>
+          <p class="section__sub">
+            Consagración definitiva de <strong>Aberamentho / Pleroma Music Engine (<code>aberamentosprelomamusic.vercel.app</code>)</strong> uniendo la fluidez de latencia cero (estilo <code>xirp.spotify.com</code> y RTOS <code>AudioWorklet</code>), el panteón del Trance (<em>Armin van Buuren, Ferry Corsten, Markus Schulz, M.I.K.E. Push, Lemon &amp; Einar K, Above &amp; Beyond, Alphazone</em>), la <strong>Música de las Esferas</strong> (Beethoven, Mozart, Wagner, Chopin, Liszt) y la calibración matemática de <strong>1,000W · 16 Parlantes Flyme Sound</strong>.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--gold">1. FUGA ALQUÍMICA &amp; LIRA DE ORFEO</span>
+            <h3 class="arch-card__title">Atalanta, Hipómenes y La Manzana + Sonido Anahat</h3>
+            <p class="arch-card__desc">
+              El sintetizador Dual-Deck (<code>sound-generator.js</code>) estructura tres voces herméticas: <strong>Atalanta</strong> (<em>Voz que huye</em>: arpegio cristalino donde <em>«cada silencio tiene una emoción superior»</em>), <strong>Hipómenes</strong> (<em>Voz que persigue</em>: acordes <em>Supersaw</em> estilo <strong>Alphazone / Uplifting Trance</strong>) y <strong>La Manzana de Oro</strong> (<em>Voz que demora</em>: bajo <em>rolling Trance</em> anclado en el <strong>Gran Tono <code>FA</code> / <em>Kung</em></strong>), coronados por los formantes mantrámicos <code>I-E-O-U-A-M-S</code> (<code>I.A.O.</code>) y el silbo armónico <strong>Anahat</strong> (pureza espectral ≥ 9.95).
+            </p>
+            <div class="arch-card__meta">Compases: Mahavan &amp; Chotavan · Azul Eléctrico Causal</div>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag">2. LEY DE LAS OCTAVAS &amp; RTOS DSP</span>
+            <h3 class="arch-card__title">Los Dos Shocks Conscientes (<code>MI-FA</code> y <code>SI-DO</code>)</h3>
+            <p class="arch-card__desc">
+              Contra la Ley de la Entropía, <code>automix-brain.js</code> ejecuta planificación sin <em>jitter</em> (precisión de reloj de hardware <code>AudioContext.currentTime</code>) aplicando el <strong>Primer Shock Consciente en <code>MI-FA</code></strong> durante el <em>Breakdown</em> (<code>FILTER_WASHOUT</code> de 32 compases) y el <strong>Segundo Shock en <code>SI-DO</code></strong> en el microsegundo exacto del <em>Drop</em> (<code>PRO_BASS_SWAP</code> en Compás 1), elevando el <strong>Hidrógeno <code>SI-12</code></strong> con análisis FFT cromático offline para archivos MP3/WAV locales.
+            </p>
+            <div class="arch-card__meta">Mix Unitotal: 8 Playlists Sagradas + 43 Leyendas</div>
+          </article>
+
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--emerald">3. CABINA GEELY EX5 / CHERY E5 MAX</span>
+            <h3 class="arch-card__title">Flyme Sound (1,000W · 16 Parlantes Hi-Fi)</h3>
+            <p class="arch-card__desc">
+              <strong>• Filtros Hardware Activos:</strong> Filtro Subsónico a <code>22Hz</code> (protección de subwoofer de maletero), Corte de Medios a <code>280Hz</code> (transición limpia entre 4 woofers y 5 mid-range) y Suavizado Anti-Fatiga a <code>3.8kHz</code>.<br />
+              <strong>• Pantalla Central 15.4":</strong> Modo <em>Estudio de Referencia (Respuesta Plana)</em> y Ecualizador Nativo en <code>0 dB</code>.<br />
+              <strong>• DJ GOD Automix:</strong> Auto-Gain RMS Activo, Ventana de <code>32 Compases</code> y <em>Bass Swap Pro en Compás 1</em>.
+            </p>
+            <div class="arch-card__meta">Estado: GOLDEN_SEAL_LOCKED · Δ = 0 Regresiones</div>
+          </article>
+        </div>
+
+        <div class="table-wrap" role="region" aria-label="Tabla de Correspondencias Esotérico-Musicales de las 7 Notas Planetarias" tabindex="0">
+          <table class="eos-table">
+            <thead>
+              <tr>
+                <th>Nota / Octava</th>
+                <th>Iglesia / Chakra &amp; Vocal</th>
+                <th>Función en la Alquimia y el Cosmos (Ciencia del Energismo)</th>
+                <th>Acción Determinista en el Motor DSP de Aberamentho</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong><code>DO</code></strong></td>
+                <td>Éfeso (Base / Raíz)</td>
+                <td>El Absoluto Inmanifestado (1 Ley) y punto de partida/retorno de la Gran Escala.</td>
+                <td>Fundamento de sub-graves (<code>&gt; 22Hz</code>) y anclaje de inicio/cierre de octava.</td>
+              </tr>
+              <tr>
+                <td><strong><code>RE</code></strong></td>
+                <td>Esmirna / Laríngeo (<code>E</code>)</td>
+                <td>Verbo Creador, Oído Mágico (Clariaudiencia), color Violeta y metal Plata.</td>
+                <td>Claridad en frecuencias medias-altas y definición de melodías arquetípicas.</td>
+              </tr>
+              <tr>
+                <td><strong><code>MI</code></strong></td>
+                <td>Pérgamo / Plexo Solar (<code>U</code>)</td>
+                <td>Vibración del Cuerpo Astral molecular (24 Leyes / Hidrógeno 24).</td>
+                <td>Expansión emotiva en el <em>Breakdown</em> antes del primer Shock Octávico.</td>
+              </tr>
+              <tr>
+                <td><strong><code>FA</code></strong> <em>(Shock 1)</em></td>
+                <td>Tiatira / Corazón (<code>O</code>)</td>
+                <td><strong>Gran Tono <em>Kung</em> de la Naturaleza</strong>, Intuición y mundo planetario (24 Leyes).</td>
+                <td><strong>Primer Shock Consciente:</strong> Apertura del <em>Resonant Filter Washout</em> (32 compases) hacia el Templo-Corazón.</td>
+              </tr>
+              <tr>
+                <td><strong><code>SOL</code></strong></td>
+                <td>Sardis / Tiroides (<code>E</code>)</td>
+                <td>El Sol (12 Leyes) y cristalización del Cuerpo Mental Solar en clave de Sol.</td>
+                <td>Despliegue de <em>Supersaws</em> estilo <strong>Alphazone / Armada / ASOT</strong> con máxima luminosidad solar.</td>
+              </tr>
+              <tr>
+                <td><strong><code>LA</code></strong></td>
+                <td>Filadelfia / Pulmones (<code>A</code>)</td>
+                <td>Todos los Soles (6 Leyes) y el Mundo Causal del Templo de la Música de las Esferas (Beethoven).</td>
+                <td>Contrapunto de <em>Atalanta e Hipómenes</em> en azul eléctrico intenso y corte anti-fatiga a <code>3.8kHz</code>.</td>
+              </tr>
+              <tr>
+                <td><strong><code>SI</code></strong> <em>(Shock 2)</em></td>
+                <td>Laodicea / Pineal (<code>I</code> / <code>S</code>)</td>
+                <td><strong>Hidrógeno Sexual <code>SI-12</code></strong>, Clarividencia y <em>Sonido Anahat</em> (<em>Canto del Grillo</em>).</td>
+                <td><strong>Segundo Shock Consciente:</strong> Clímax del <em>Drop</em> y <em>Bass Swap Pro en Compás 1</em> que salta al <code>DO</code> Superior.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHITECTURE & XIRP MULTI-AGENT BENCHMARK -->
+    <section class="section deferred-section" id="arquitectura">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow"> ARQUITECTURA HEXAGONAL L0 · INSPIRACIÓN CONTINUA EN XIRP</div>
+          <h2 class="section__title">Orquestación Multi-Agente, Grafo MCP &amp; Concurrencia en Go</h2>
+          <p class="section__sub">
+            EOS System elimina la deriva arquitectónica y las alucinaciones de los LLMs mediante cuatro pilares de ingeniería de sistemas de misión crítica.
+          </p>
+        </div>
+
+        <div class="grid-4">
+          <article class="arch-card">
+            <span class="arch-card__tag">PILAR 01 · XIRP PATTERN</span>
+            <h3 class="arch-card__title">Aislamiento Físico por Git Worktrees + tmux</h3>
+            <p class="arch-card__desc">
+              Inspirado directamente en <strong>Xirp</strong>, EOS coordina sesiones paralelas entre Google Antigravity, Cursor, Claude Code y Gemini sin <em>vendor lock-in</em>. Cada tarea opera en su propio <strong>Git Worktree</strong> aislado con persistencia en sesiones <code>tmux</code> sobre WSL2, evitando colisiones de archivos y preservando el contexto cruzado.
+            </p>
+            <div class="arch-card__meta">Colisiones de Rama: 0% · Persistencia: 100%</div>
+          </article>
+
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--gold">PILAR 02 · MCP GRAPH</span>
+            <h3 class="arch-card__title">Servidor de Contexto &amp; Memoria en Engram</h3>
+            <p class="arch-card__desc">
+              Antes de escribir una sola línea de código, los servidores <strong>Model Context Protocol (MCP)</strong> inyectan el grafo de arquitectura, los contratos de datos, las especificaciones formales EARS/BDD y las decisiones históricas (ADRs) almacenadas en <strong>Engram</strong>.
+            </p>
+            <div class="arch-card__meta">Protocolo: MCP SSOT · Memoria: Engram Activa</div>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag arch-card__tag--emerald">PILAR 03 · HEXAGONAL L0</span>
+            <h3 class="arch-card__title">Núcleo Soberano con Cero Dependencias</h3>
+            <p class="arch-card__desc">
+              El corazón del plano de control está escrito en <strong>Node.js / TypeScript puro con 0 dependencias externas de ejecución</strong>. El dominio permanece 100% aislado de frameworks o infraestructura, inmunizando al sistema contra ataques a la cadena de suministro.
+            </p>
+            <div class="arch-card__meta">Runtime Deps: 0 · Pureza Hexagonal: 100%</div>
+          </article>
+
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--gold">PILAR 04 · GO &amp; PYTHON DSP</span>
+            <h3 class="arch-card__title">Gateways Concurrentes en Go &amp; Agentes IA</h3>
+            <p class="arch-card__desc">
+              Para enrutamiento de alta velocidad sobre LLMs, RAG y telemetría concurrente, EOS complementa su plano de control con <strong>Go (Goroutines y binarios de 1–2 MB)</strong>, junto con <strong>Python (FastAPI, LangGraph, AutoGen y Librosa/Numba DSP)</strong>.
+            </p>
+            <div class="arch-card__meta">Stack: Go · Python · TypeScript · Next.js</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE 7 INVIOLABLE COMMANDMENTS -->
+    <section class="section deferred-section" id="leyes">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow"> CONSTITUCIÓN SUPREMA · DOCTRINA IEEE 830 / ISO 29148</div>
+          <h2 class="section__title">Los 7 Mandamientos Inviolables de EOS</h2>
+          <p class="section__sub">
+            Ningún agente ni desarrollador puede saltar las barreras formales del sistema. El código es un artefacto derivado exclusivamente de especificaciones verificadas.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="arch-card">
+            <span class="arch-card__tag">MANDAMIENTO I</span>
+            <h3 class="arch-card__title">La Especificación como Verdad Suprema (Zero Vibe Coding)</h3>
+            <p class="arch-card__desc">
+              El código jamás se escribe desde prompts improvisados. Toda línea deriva de especificaciones versionadas en sintaxis formal <strong>EARS</strong> (<code>CUANDO</code>, <code>MIENTRAS</code>, <code>SI</code>, <code>EL SISTEMA</code>) y criterios <strong>BDD</strong> (<code>DADO-CUANDO-ENTONCES</code>).
+            </p>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag">MANDAMIENTO II</span>
+            <h3 class="arch-card__title">La Ley de la Compuerta Estricta (Strict Gate)</h3>
+            <p class="arch-card__desc">
+              Cero líneas de implementación antes de aprobar los 6 artefactos: 1) Intake, 2) Especificación EARS, 3) Criterios BDD, 4) Plan de Arquitectura y ADRs, 5) Grafo DAG de Tareas Atómicas y 6) Autorización Nivel 2+.
+            </p>
+          </article>
+
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--gold">MANDAMIENTO III</span>
+            <h3 class="arch-card__title">Evidencia Sobre Afirmaciones (Taxonomía Epistémica)</h3>
+            <p class="arch-card__desc">
+              Prohibido declarar <code>DONE</code>, <code>VERIFIED</code> o <code>PRODUCTION_READY</code> sin logs ejecutables y código de salida <code>0</code>. Todo estado transita formalmente desde <code>AUDIT_EXECUTED</code> hasta <code>PRODUCTION_READY</code>.
+            </p>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag">MANDAMIENTO IV</span>
+            <h3 class="arch-card__title">Barrera de Escritura Externa &amp; Contención de Alcance</h3>
+            <p class="arch-card__desc">
+              La modificación de repositorios externos está bloqueada a menos que se verifiquen las 6 precondiciones de registro, intake, especificación aprobada, auditoría, aprobación del propietario y autorización Nivel 2+.
+            </p>
+          </article>
+
+          <article class="arch-card">
+            <span class="arch-card__tag arch-card__tag--emerald">MANDAMIENTO V &amp; VI</span>
+            <h3 class="arch-card__title">Pureza Arquitectónica Hexagonal &amp; Seguridad Absoluta</h3>
+            <p class="arch-card__desc">
+              Aislamiento estricto entre Dominio Puro, Aplicación, Adaptadores e Interfaz de Usuario. Cero secretos en texto plano, validación estricta de contratos de datos y auditoría OWASP continua.
+            </p>
+          </article>
+
+          <article class="arch-card arch-card--gold">
+            <span class="arch-card__tag arch-card__tag--gold">MANDAMIENTO VII &amp; FDIR</span>
+            <h3 class="arch-card__title">Disciplina Técnica &amp; Sanación Clínica del Grafo (24/7)</h3>
+            <p class="arch-card__desc">
+              <code>EOSSentinelDaemon</code> vigila las firmas SHA-256 de las directivas 24/7 y <code>EOSFDIROntology</code> aísla y purga automáticamente cualquier enlace huérfano (<code>ORPHAN_LINK_DETECTED</code>) en la ontología de conocimiento.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE 21-STEP MASTER ENGINEERING PIPELINE -->
+    <section class="section deferred-section" id="pipeline">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow"> CICLO DE VIDA DETERMINISTA · 21 COMPUERTAS SECUENCIALES</div>
+          <h2 class="section__title">El Pipeline Maestro de Ingeniería de 21 Pasos</h2>
+          <p class="section__sub">
+            Filtra por fase operativa para explorar cómo EOS System transforma una necesidad de negocio en software verificado en producción con evidencia criptográfica.
+          </p>
+        </div>
+
+        <div class="filter-bar" role="group" aria-label="Filtrar pasos del pipeline por fase">
+          <button type="button" class="filter-btn is-active" data-pipeline-filter="all">Todos los Pasos (21)</button>
+          <button type="button" class="filter-btn" data-pipeline-filter="spec">1. Intake &amp; Requisitos EARS (01–05)</button>
+          <button type="button" class="filter-btn" data-pipeline-filter="arch">2. Arquitectura &amp; Gate (06–09)</button>
+          <button type="button" class="filter-btn" data-pipeline-filter="impl">3. Implementación &amp; Testing (10–11)</button>
+          <button type="button" class="filter-btn" data-pipeline-filter="audit">4. Auditorías 360° (12–17)</button>
+          <button type="button" class="filter-btn" data-pipeline-filter="release">5. Evidencia &amp; Despliegue (18–21)</button>
+        </div>
+
+        <div class="pipeline-grid" id="pipeline-grid" aria-live="polite">
+          <!-- Populated deterministically by js/eos.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SOVEREIGN FLEET REGISTRY -->
+    <section class="section deferred-section" id="flota">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow"> FLOTA SOBERANA EN PRODUCCIÓN · EVIDENCIA VERIFICABLE</div>
+          <h2 class="section__title">Ecosistema de Plataformas Gobernadas por EOS System</h2>
+          <p class="section__sub">
+            Explora los sistemas desplegados en producción bajo la gobernanza de EOS System, clasificados por su régimen operativo actual: <strong>Foco Principal Activo</strong>, <strong>Mejora Continua Esporádica (10/10)</strong> y <strong>Proyectos Culminados y Sellados (Golden Seal Locked 10/10)</strong>.
+          </p>
+        </div>
+
+        <div class="filter-bar" role="group" aria-label="Filtrar proyectos de la flota por régimen">
+          <button type="button" class="filter-btn is-active" data-fleet-filter="all">Toda la Flota Soberana (9 Sistemas)</button>
+          <button type="button" class="filter-btn" data-fleet-filter="core">Evolución Perpetua (EOS System)</button>
+          <button type="button" class="filter-btn" data-fleet-filter="continuous">Mejora Continua Esporádica (2)</button>
+          <button type="button" class="filter-btn" data-fleet-filter="sealed">Golden Seal Locked · Culminados (6)</button>
+        </div>
+
+        <div class="grid-3">
+          <!-- 1. Aberamentho -->
+          <article class="fleet-card" data-fleet-tier="core">
+            <div class="fleet-card__top">
+              <span class="arch-card__tag arch-card__tag--gold">ÚNICO NÚCLEO EN EVOLUCIÓN PERPETUA</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24;">☀️ VISIÓN SOLAR SAMAELIANA</span>
+            </div>
+            <h3 class="arch-card__title">EOS System — Engineering Operating System</h3>
+            <p class="arch-card__desc">
+              El único sistema en evolución secuencial perpetua e indefinida. Sintetiza la <strong>Visión Gnóstica Esotérica Solar Samaeliana</strong> (Orden, Conciencia Despierta, Ley del Tres y del Siete) con la máxima ingeniería determinista del planeta: Hexagonal L0 (0-Deps), aislamiento Xirp por Git Worktrees + tmux, Grafo MCP, Concurrencia en Go y Centinela SHA-256 24/7.
+            </p>
+            <div class="fleet-card__links">
+              <a class="btn btn--gold" href="https://eos-system-ten.vercel.app" target="_blank" rel="noopener noreferrer">Plano de Control en Vivo →</a>
+              <a class="btn btn--ghost" href="https://github.com/valentinflorezarbelaez-ai/Eos-System" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </article>
+
+          <!-- Aberamentho (Now Officially Sealed 10/10) -->
+          <article class="fleet-card" data-fleet-tier="sealed">
+            <div class="fleet-card__top">
+              <span class="arch-card__tag arch-card__tag--emerald">GOLDEN SEAL LOCKED · 10/10</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24;">★ 8 PLAYLISTS + AUTOMIX DSP</span>
+            </div>
+            <h3 class="arch-card__title">Aberamentho / Pleroma Music Engine</h3>
+            <p class="arch-card__desc">
+              Motor DSP de mezcla armónica en Python/Librosa/Numba y consola DJ GOD 10/10 PRO con Web Audio API, Rueda Camelot 1A–12B, <strong>8 Playlists Oficiales de Spotify</strong> (<em>Definitive, Perfect Music, Amnesia, Baladas Americanas, Épica, Música de Verdad, Trance Relajación y Solar</em>), Panteón de 43 Leyendas y calibración acústica automotriz.
+            </p>
+            <div class="fleet-card__links">
+              <a class="btn btn--primary" href="https://aberamentosprelomamusic.vercel.app" target="_blank" rel="noopener noreferrer">Abrir en Producción →</a>
+              <a class="btn btn--ghost" href="https://github.com/valentinflorezarbelaez-ai/Aberamentho-s-Pleroma-music" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </article>
+
+          <!-- 2. Portafolio -->
+          <article class="fleet-card" data-fleet-tier="continuous">
+            <div class="fleet-card__top">
+              <span class="arch-card__tag">MEJORA CONTINUA · 10/10</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #10b981;">● VERIFIED 10/10</span>
+            </div>
+            <h3 class="arch-card__title">Portafolio Oficial — Valentín Flórez</h3>
+            <p class="arch-card__desc">
+              Centro de comando profesional construido en Next.js 16, React 19 y TypeScript estricto. Presenta la arquitectura de EOS System, el estándar Xirp, certificaciones verificables, el motor Aberamentho DSP y canales de contacto directo optimizados.
+            </p>
+            <div class="fleet-card__links">
+              <a class="btn btn--primary" href="https://portafolio-valentin.vercel.app" target="_blank" rel="noopener noreferrer">Abrir en Producción →</a>
+              <a class="btn btn--ghost" href="https://github.com/valentinflorezarbelaez-ai/portafolio" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </article>
+
+          <!-- 3. PTG -->
+          <article class="fleet-card" data-fleet-tier="continuous">
+            <div class="fleet-card__top">
+              <span class="arch-card__tag">MEJORA CONTINUA · 10/10</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #10b981;">● 13/13 SMOKE PASS</span>
+            </div>
+            <h3 class="arch-card__title">PTG — Performance Talent Group</h3>
+            <p class="arch-card__desc">
+              Agencia boutique de representación deportiva de élite con Licencia Oficial FIFA. Incluye dossiers biométricos interactivos, reels MP4 verificados, generador B2B de scouting y PWA offline-first con 13/13 pruebas de humo en vivo.
+            </p>
+            <div class="fleet-card__links">
+              <a class="btn btn--primary" href="https://ptg-performance-talent-group.vercel.app" target="_blank" rel="noopener noreferrer">Abrir en Producción →</a>
+              <a class="btn btn--ghost" href="https://github.com/valentinflorezarbelaez-ai/Performance-Talent-Group" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </article>
+
+          <!-- 4. S.A.W / ATP-Strength -->
+          <article class="fleet-card" data-fleet-tier="sealed">
+            <div class="fleet-card__top">
+              <span class="arch-card__tag arch-card__tag--emerald">GOLDEN SEAL LOCKED · 10/10</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24;">★ 59/59 TESTS PASS</span>
+            </div>
+            <h3 class="arch-card__title">S.A.W — Potencia Máxima (ATP-Strength)</h3>
+            <p class="arch-card__desc">
+              Plataforma biofísica de fuerza máxima, control de fatiga del Sistema Nervioso Central (SNC) y resíntesis del 98–100% de fosfocreatina (ATP-PCr) con FastAPI (Python 3.12), Next.js 16 y cola offline-first WAL.
+            </p>
+            <div class="fleet-card__links">
+              <a class="btn btn--ghost" href="https://atp-strength.vercel.app" target="_blank" rel="noopener noreferrer">Ver en Producción →</a>
+              <a class="btn btn--ghost" href="https://github.com/valentinflorezarbelaez-ai/ATP-STRENGTH-POTENCIA-MAXIMA-" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </article>
+
+          <!-- 5. Biblioteca Gnóstica Universal -->
+          <article class="fleet-card" data-fleet-tier="sealed">
+            <div class="fleet-card__top">
+              <span class="arch-card__tag arch-card__tag--emerald">GOLDEN SEAL LOCKED · 10/10</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24;">★ 7/7 INVARIANTS</span>
+            </div>
+            <h3 class="arch-card__title">Biblioteca Gnóstica Universal</h3>
+            <p class="arch-card__desc">
+              Repositorio sagrado del Quinto Evangelio, Códices Gnósticos (Pistis Sophia, Nag Hammadi) y la Sabiduría del Profeta del Dios Vivo (V.M. Thoth-Moisés), con lector inmersivo y PWA verificada.
+            </p>
+            <div class="fleet-card__links">
+              <a class="btn btn--ghost" href="https://biblioteca-gnostica.vercel.app" target="_blank" rel="noopener noreferrer">Ver en Producción →</a>
+            </div>
+          </article>
+
+          <!-- 6. Portal de Donaciones -->
+          <article class="fleet-card" data-fleet-tier="sealed">
+            <div class="fleet-card__top">
+              <span class="arch-card__tag arch-card__tag--emerald">GOLDEN SEAL LOCKED · 10/10</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24;">★ SEALED 10/10</span>
+            </div>
+            <h3 class="arch-card__title">Portal de Donaciones (Sede AGEAC)</h3>
+            <p class="arch-card__desc">
+              Plataforma institucional del Tercer Factor de la Revolución de la Conciencia para el sostenimiento de la Sede Gnóstica de Estudio en Medellín, con integración de aportes vía Nequi, WhatsApp y PayPal.
+            </p>
+            <div class="fleet-card__links">
+              <a class="btn btn--ghost" href="https://donaciones-drab.vercel.app" target="_blank" rel="noopener noreferrer">Ver en Producción →</a>
+            </div>
+          </article>
+
+          <!-- 7. HAM-SAH + Kegel -->
+          <article class="fleet-card" data-fleet-tier="sealed">
+            <div class="fleet-card__top">
+              <span class="arch-card__tag arch-card__tag--emerald">GOLDEN SEAL LOCKED · 10/10</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24;">★ SEALED 10/10</span>
+            </div>
+            <h3 class="arch-card__title">HAM-SAH + Kegel (Transmutación Solar)</h3>
+            <p class="arch-card__desc">
+              Sistema interactivo de Pranayama Egipcio-Samaeliano, fortalecimiento del suelo pélvico y sublimación de la energía creadora con guía rítmica y respiratoria de precisión.
+            </p>
+            <div class="fleet-card__links">
+              <a class="btn btn--ghost" href="https://kegel-ham-sah-trasnmutacion-y-forta.vercel.app" target="_blank" rel="noopener noreferrer">Ver en Producción →</a>
+            </div>
+          </article>
+
+          <!-- 8. Alexander Rodríguez Remodelaciones -->
+          <article class="fleet-card" data-fleet-tier="sealed">
+            <div class="fleet-card__top">
+              <span class="arch-card__tag arch-card__tag--emerald">GOLDEN SEAL LOCKED · 10/10</span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24;">★ SEALED 10/10</span>
+            </div>
+            <h3 class="arch-card__title">Alexander Rodríguez Remodelaciones</h3>
+            <p class="arch-card__desc">
+              Plataforma comercial de ingeniería civil, acabados arquitectónicos y remodelaciones integrales con cotizador directo por WhatsApp y catálogo de obras verificadas.
+            </p>
+            <div class="fleet-card__links">
+              <a class="btn btn--ghost" href="https://alexander-rodriguez-remodelaciones.vercel.app" target="_blank" rel="noopener noreferrer">Ver en Producción →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container site-footer__grid">
+      <div class="brand">
+        <img src="/favicon.svg" alt="EOS System" class="brand__logo" width="36" height="36" />
+        <div class="brand__text">
+          <span class="brand__title" style="font-size: 1rem;">EOS SYSTEM · ENGINEERING OPERATING SYSTEM</span>
+          <span class="brand__sub">Creado por Valentín Flórez Arbeláez · Medellín, Colombia (100% Remoto Global)</span>
+        </div>
+      </div>
+
+      <div class="site-footer__copy">
+        Zero Vibe Coding · Hexagonal L0 (0-Deps) · Xirp Worktree + MCP · SHA-256 Verified
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/eos.js" defer></script>
+</body>
+</html>
