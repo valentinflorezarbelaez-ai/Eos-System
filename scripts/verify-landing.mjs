@@ -108,6 +108,8 @@ assert.ok(html.includes('id="fleet-cicd-orchestrator"'), "Missing #fleet-cicd-or
 assert.ok(html.includes('id="eos-jarvis-nexus"'), "Missing #eos-jarvis-nexus JARVIS Sovereign Monad section");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosJarvisMonad.ts")), "Missing src/core/eosJarvisMonad.ts");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosNeuralVectorCore.ts")), "Missing src/core/eosNeuralVectorCore.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosPatchValidator.ts")), "Missing src/core/eosPatchValidator.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosContextOptimizer.ts")), "Missing src/core/eosContextOptimizer.ts");
 assert.ok(fs.existsSync(path.join(root, "test/eosCore.test.mjs")), "Missing test/eosCore.test.mjs");
 assert.ok(fs.existsSync(path.join(root, "test/chaosResilience.test.mjs")), "Missing test/chaosResilience.test.mjs");
 assert.ok(fs.existsSync(path.join(root, "README.md")), "Missing README.md");

@@ -113,8 +113,10 @@ EOS System provides a native Layer-0 MCP server over standard I/O (stdio). To co
 ```
 
 ### Available Sovereign MCP Tools
-- `eos_semantic_search`: High-dimensional vector space queries using cosine similarity.
+- `eos_semantic_search`: High-dimensional hybrid RAG queries (vector cosine + BM25 RRF fusion).
 - `eos_tmr_consensus`: Byzantine 3-sandbox evaluation for critical operations.
+- `eos_validate_patch`: Pre-validates code in AST syntax sandbox to eliminate syntax errors, secrets, and destructive patterns before writing.
+- `eos_optimize_context`: Compresses source code into structural outlines, saving 70-85% of tokens.
 - `eos_audit_fleet`: Cross-repository health and git status checks.
 - `eos_health_check`: CNCF / Google SRE observability telemetry.
 

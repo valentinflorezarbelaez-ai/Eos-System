@@ -125,6 +125,31 @@ switch (command) {
     break;
   }
 
+  case "optimize": {
+    printBanner();
+    const targetFile = args[1];
+    if (!targetFile) {
+      console.log("Uso: eos optimize <ruta-del-archivo>");
+      process.exit(1);
+    }
+    const fullPath = path.resolve(root, targetFile);
+    if (!fs.existsSync(fullPath)) {
+      console.log(`Error: Archivo no encontrado: ${targetFile}`);
+      process.exit(1);
+    }
+    const content = fs.readFileSync(fullPath, "utf8");
+    const { compressSourceContext } = await import("../src/core/eosContextOptimizer.ts");
+    const res = compressSourceContext(content, targetFile);
+    console.log(`\nArchivo Comprimido : ${res.filePath}`);
+    console.log(`Tokens Originales  : ~${res.originalTokensEstimate}`);
+    console.log(`Tokens Comprimidos : ~${res.compressedTokensEstimate}`);
+    console.log(`Ahorro de Tokens   : ${res.tokenSavingsPercent}%`);
+    console.log(`Símbolos Extraídos : ${res.symbolsFound.join(", ") || "Ninguno"}`);
+    console.log("\n--- ESQUEMA DE CONTEXTO ESTRUCTURAL ---");
+    console.log(res.compressedOutline);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":

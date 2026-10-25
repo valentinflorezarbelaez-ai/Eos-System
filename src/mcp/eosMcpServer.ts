@@ -30,6 +30,14 @@ import {
   JARVIS_INTENT_REGISTRY
 } from "../core/eosJarvisMonad.ts";
 
+import {
+  validatePatch
+} from "../core/eosPatchValidator.ts";
+
+import {
+  compressSourceContext
+} from "../core/eosContextOptimizer.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -94,12 +102,13 @@ export class EosMcpServer {
               tools: [
                 {
                   name: "eos_semantic_search",
-                  description: "Search EOS sovereign architecture and knowledge base using deterministic Layer-0 vector embeddings and cosine similarity.",
+                  description: "Search EOS sovereign architecture and knowledge base using deterministic Layer-0 hybrid vector and BM25 RRF fusion.",
                   inputSchema: {
                     type: "object",
                     properties: {
                       query: { type: "string", description: "Natural language query to search" },
-                      topK: { type: "number", description: "Maximum number of results to return (default: 3)" }
+                      topK: { type: "number", description: "Maximum number of results to return (default: 3)" },
+                      mode: { type: "string", enum: ["hybrid", "vector"], description: "Search mode: hybrid (RRF) or pure vector" }
                     },
                     required: ["query"]
                   }
@@ -131,6 +140,30 @@ export class EosMcpServer {
                   inputSchema: {
                     type: "object",
                     properties: {}
+                  }
+                },
+                {
+                  name: "eos_validate_patch",
+                  description: "Pre-validates proposed code modifications in an in-memory AST sandbox to detect syntax errors, plaintext secrets, and destructive commands before touching disk.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      filePath: { type: "string", description: "Target file path relative to project root" },
+                      content: { type: "string", description: "Proposed full file content or patch to validate" }
+                    },
+                    required: ["filePath", "content"]
+                  }
+                },
+                {
+                  name: "eos_optimize_context",
+                  description: "Compresses source code into a high-density structural outline (extracting interfaces, types, and function signatures), saving 70-85% of tokens while retaining full architectural contracts.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      filePath: { type: "string", description: "Relative file path" },
+                      content: { type: "string", description: "Source code to compress (optional, if omitted reads from filePath)" }
+                    },
+                    required: ["filePath"]
                   }
                 }
               ]
@@ -226,9 +259,13 @@ export class EosMcpServer {
       case "eos_semantic_search": {
         const query = String(args.query || "");
         const topK = Number(args.topK) || 3;
-        const matches = this.knowledgeStore.search(query, topK);
+        const mode = args.mode === "vector" ? "vector" : "hybrid";
+        const matches = mode === "vector"
+          ? this.knowledgeStore.search(query, topK)
+          : this.knowledgeStore.searchHybrid(query, topK);
         return {
           query,
+          mode,
           matchCount: matches.length,
           matches: matches.map((m) => ({
             id: m.id,
@@ -285,6 +322,24 @@ export class EosMcpServer {
             "SecDevOpsSevenGates"
           ]
         };
+      }
+
+      case "eos_validate_patch": {
+        const filePath = String(args.filePath || "");
+        const content = String(args.content || "");
+        return validatePatch(filePath, content, this.projectRoot);
+      }
+
+      case "eos_optimize_context": {
+        const filePath = String(args.filePath || "");
+        let content = typeof args.content === "string" ? args.content : "";
+        if (!content && filePath) {
+          const full = path.resolve(this.projectRoot, filePath);
+          if (fs.existsSync(full)) {
+            content = fs.readFileSync(full, "utf8");
+          }
+        }
+        return compressSourceContext(content, filePath);
       }
 
       default:

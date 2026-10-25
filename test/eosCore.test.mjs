@@ -204,3 +204,88 @@ test("EOS MCP Native Server (Model Context Protocol) — JSON-RPC 2.0 Invariants
   });
   assert.equal(errRes.error.code, -32601, "Must return standard JSON-RPC Method not found code");
 });
+
+test("EOS Sovereign Patch Validator — Pre-Write AST, Secret & Boundary Verification", async () => {
+  const { validatePatch } = await import("../src/core/eosPatchValidator.ts");
+
+  // 1. Clean valid patch
+  const cleanCode = 'export function sum(a, b) { return a + b; }\n';
+  const cleanRes = validatePatch("src/utils.js", cleanCode);
+  assert.equal(cleanRes.valid, true, "Clean code must be valid");
+  assert.equal(cleanRes.syntaxValid, true);
+  assert.equal(cleanRes.secretsFound, false);
+  assert.equal(cleanRes.destructiveCommandsFound, false);
+
+  // 2. Syntax error in JS
+  const brokenCode = 'function broken() { const x = ; }';
+  const brokenRes = validatePatch("src/broken.js", brokenCode);
+  assert.equal(brokenRes.valid, false, "Broken code must be flagged as invalid");
+  assert.equal(brokenRes.syntaxValid, false);
+  assert.ok(brokenRes.errors.some((e) => e.includes("Syntax Error")));
+
+  // 3. Secret leak detection
+  const syntheticToken = ["sk", "live", "abcdef1234567890abcdef"].join("-");
+  const leakCode = `const apiKey = "${syntheticToken}";`;
+  const leakRes = validatePatch("src/config.js", leakCode);
+  assert.equal(leakRes.valid, false, "Secret leak must be flagged as invalid");
+  assert.equal(leakRes.secretsFound, true);
+
+  // 4. Destructive command detection
+  const destructCode = 'child_process.execSync("rm -rf /");';
+  const destructRes = validatePatch("src/clean.js", destructCode);
+  assert.equal(destructRes.valid, false, "Destructive code must be flagged as invalid");
+  assert.equal(destructRes.destructiveCommandsFound, true);
+
+  // 5. Path traversal protection
+  const traversalRes = validatePatch("../../../outside.js", "console.log('escape');");
+  assert.equal(traversalRes.valid, false, "Path traversal must be flagged as invalid");
+  assert.equal(traversalRes.pathTraversalsFound, true);
+});
+
+test("EOS Context Optimizer — Token Reduction & Structural Outline Extraction", async () => {
+  const { compressSourceContext } = await import("../src/core/eosContextOptimizer.ts");
+
+  const sampleSource = `
+/**
+ * Sample domain service for mathematical calculations.
+ */
+export class MathEngine {
+  private cache: Map<string, number> = new Map();
+
+  /** Computes factorial */
+  public factorial(n: number): number {
+    let res = 1;
+    for (let i = 2; i <= n; i++) {
+      res *= i;
+    }
+    return res;
+  }
+}
+
+export function computeStats(values: number[]): { mean: number } {
+  const sum = values.reduce((a, b) => a + b, 0);
+  return { mean: sum / values.length };
+}
+`;
+
+  const compressed = compressSourceContext(sampleSource, "src/math.ts");
+
+  assert.equal(compressed.filePath, "src/math.ts");
+  assert.ok(compressed.symbolsFound.includes("MathEngine"), "Must extract MathEngine class");
+  assert.ok(compressed.symbolsFound.includes("computeStats"), "Must extract computeStats function");
+  assert.ok(compressed.tokenSavingsPercent > 10, "Must achieve positive token savings");
+  assert.ok(compressed.compressedOutline.includes("MathEngine"), "Outline must contain class declaration");
+});
+
+test("EOS Hybrid RAG Search (Vector Cosine + Lexical BM25 RRF Fusion)", async () => {
+  const { createDefaultEosKnowledgeStore } = await import("../src/core/eosNeuralVectorCore.ts");
+  const store = createDefaultEosKnowledgeStore();
+
+  const hybridMatches = store.searchHybrid("auditoría de repositorios git y secretos", 2);
+  assert.ok(hybridMatches.length > 0, "Hybrid search must return results");
+  assert.ok(hybridMatches[0].score > 0, "RRF score must be positive");
+  assert.ok(
+    hybridMatches[0].id === "DOC-FLEET-AUDIT" || hybridMatches[0].id === "DOC-SECURITY-SAST",
+    `Top hybrid match should match fleet audit or security, got: ${hybridMatches[0].id}`
+  );
+});

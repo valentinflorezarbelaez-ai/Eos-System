@@ -134,6 +134,75 @@ export class EosNeuralVectorStore<T = Record<string, unknown>> {
     return results.slice(0, Math.max(1, topK));
   }
 
+  /**
+   * Hybrid RAG Retrieval using Reciprocal Rank Fusion (RRF).
+   * Combines dense vector cosine similarity with sparse lexical exact-match ranking.
+   */
+  public searchHybrid(
+    query: string,
+    topK: number = 3,
+    kRrf: number = 60
+  ): Array<VectorSearchResult<T>> {
+    const queryTokens = tokenize(query);
+    if (queryTokens.length === 0) return [];
+    const queryVector = computeTermFrequency(queryTokens);
+
+    // 1. Vector Cosine Ranking
+    const vectorScored: Array<{ id: string; score: number }> = [];
+    for (const doc of this.documents.values()) {
+      const score = cosineSimilarity(queryVector, doc.vector);
+      if (score > 0) {
+        vectorScored.push({ id: doc.id, score });
+      }
+    }
+    vectorScored.sort((a, b) => b.score - a.score);
+
+    // 2. Lexical Exact-Token Ranking
+    const lexicalScored: Array<{ id: string; score: number }> = [];
+    const lowerQuery = query.toLowerCase();
+    for (const doc of this.documents.values()) {
+      let matchCount = 0;
+      const lowerDoc = doc.text.toLowerCase();
+      for (const tok of queryTokens) {
+        if (lowerDoc.includes(tok)) matchCount++;
+      }
+      if (lowerDoc.includes(lowerQuery)) matchCount += 3; // Boost exact phrase
+      if (matchCount > 0) {
+        lexicalScored.push({ id: doc.id, score: matchCount });
+      }
+    }
+    lexicalScored.sort((a, b) => b.score - a.score);
+
+    // 3. Reciprocal Rank Fusion (RRF)
+    const rrfScores = new Map<string, number>();
+
+    vectorScored.forEach((item, rank) => {
+      const prev = rrfScores.get(item.id) || 0;
+      rrfScores.set(item.id, prev + 1 / (kRrf + rank + 1));
+    });
+
+    lexicalScored.forEach((item, rank) => {
+      const prev = rrfScores.get(item.id) || 0;
+      rrfScores.set(item.id, prev + 1 / (kRrf + rank + 1));
+    });
+
+    const results: Array<VectorSearchResult<T>> = [];
+    for (const [id, rrfScore] of rrfScores.entries()) {
+      const doc = this.documents.get(id);
+      if (doc) {
+        results.push({
+          id: doc.id,
+          score: Number(rrfScore.toFixed(6)),
+          text: doc.text,
+          metadata: doc.metadata
+        });
+      }
+    }
+
+    results.sort((a, b) => b.score - a.score);
+    return results.slice(0, Math.max(1, topK));
+  }
+
   public size(): number {
     return this.documents.size;
   }
