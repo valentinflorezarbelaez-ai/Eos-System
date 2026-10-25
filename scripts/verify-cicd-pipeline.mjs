@@ -164,23 +164,19 @@ assert.ok(Number(cssSizeKb) < 120, `CSS bundle exceeded budget: ${cssSizeKb} KB`
 console.log(`[PASS] Stage 5/7 — WCAG 2.1 AA, SEO & Performance Budget Gate (JS: ${jsSizeKb} KB, CSS: ${cssSizeKb} KB).`);
 
 // ---------------------------------------------------------------------------
-// STAGE 6: IN-PROCESS SMOKE TESTS OF ALL 15 SERVERLESS API ENDPOINTS (/api/*)
+// STAGE 6: IN-PROCESS SMOKE TESTS OF ALL 11 SERVERLESS API ENDPOINTS (/api/*)
 // ---------------------------------------------------------------------------
 const apiEndpoints = [
   "api/teurgia.js",
   "api/compile.js",
   "api/memory.js",
-  "api/bigtech.js",
   "api/kernel.js",
-  "api/omega.js",
   "api/cicd.js",
   "api/fleet.js",
   "api/jarvis.js",
   "api/health.js",
   "api/graph.js",
-  "api/amplify.js",
   "api/eval.js",
-  "api/titans.js",
   "api/spotify.js"
 ];
 
@@ -191,7 +187,11 @@ for (const relApi of apiEndpoints) {
 
   let capturedStatus = 200;
   let capturedBody = null;
-  const mockReq = { method: "GET", query: {}, body: {} };
+  const mockReq = {
+    method: "GET",
+    query: {},
+    body: {}
+  };
   const mockRes = {
     statusCode: 200,
     headers: {},
@@ -220,7 +220,34 @@ for (const relApi of apiEndpoints) {
   assert.equal(capturedStatus, 200, `[STAGE 6 FAIL] ${relApi} returned HTTP ${capturedStatus}`);
   assert.ok(capturedBody && typeof capturedBody === "object", `[STAGE 6 FAIL] ${relApi} did not return valid JSON object`);
 }
-console.log(`[PASS] Stage 6/7 — In-Process Serverless API Smoke Gate (${apiEndpoints.length}/${apiEndpoints.length} endpoints returned 200 OK).`);
+
+// Verify Edge rewrite consolidated modes
+const consolidatedModes = [
+  { file: "api/compile.js", query: { mode: "amplify", prompt: "Test prompt amplification" }, desc: "compile?mode=amplify" },
+  { file: "api/eval.js", query: { mode: "titans", titan: "all" }, desc: "eval?mode=titans" },
+  { file: "api/kernel.js", query: { mode: "omega" }, desc: "kernel?mode=omega" }
+];
+
+for (const cm of consolidatedModes) {
+  const modUrl = pathToFileURL(path.join(root, cm.file)).href;
+  const mod = await import(modUrl);
+  let capturedStatus = 200;
+  let capturedBody = null;
+  const mockReq = { method: "GET", query: cm.query, body: {} };
+  const mockRes = {
+    statusCode: 200,
+    headers: {},
+    setHeader(k, v) { this.headers[k] = v; },
+    status(code) { this.statusCode = code; capturedStatus = code; return this; },
+    json(payload) { capturedBody = payload; return this; },
+    end() { return this; }
+  };
+  await mod.default(mockReq, mockRes);
+  assert.equal(capturedStatus, 200, `[STAGE 6 FAIL] Consolidated mode ${cm.desc} returned HTTP ${capturedStatus}`);
+  assert.ok(capturedBody && typeof capturedBody === "object", `[STAGE 6 FAIL] Consolidated mode ${cm.desc} did not return valid JSON`);
+}
+
+console.log(`[PASS] Stage 6/7 — In-Process Serverless API Smoke Gate (${apiEndpoints.length}/${apiEndpoints.length} endpoints + 3 Edge rewrites returned 200 OK).`);
 
 // ---------------------------------------------------------------------------
 // STAGE 7: CRYPTOGRAPHIC SBOM & CI/CD ATTESTATION RECEIPT

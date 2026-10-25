@@ -91,7 +91,7 @@ assert.ok(fs.existsSync(path.join(root, "api/kernel.js")), "Missing api/kernel.j
 assert.ok(html.includes('id="omega-singularity"'), "Missing #omega-singularity Omega v8.0 section");
 assert.ok(html.includes('id="omega-singularity-lab"'), "Missing #omega-singularity-lab interactive PQC/ZK-STARK/BFT/Time-Travel lab");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosOmegaSingularity.ts")), "Missing src/core/eosOmegaSingularity.ts");
-assert.ok(fs.existsSync(path.join(root, "api/omega.js")), "Missing api/omega.js serverless Omega Singularity endpoint");
+assert.ok(fs.existsSync(path.join(root, "api/kernel.js")), "Missing api/kernel.js serverless Linux Kernel & Omega endpoint");
 assert.ok(html.includes('id="cicd-secdevops"'), "Missing #cicd-secdevops Sovereign CI/CD v9.0 section");
 assert.ok(html.includes('id="cicd-pipeline-lab"'), "Missing #cicd-pipeline-lab interactive 7-stage CI/CD lab");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosCicdPipeline.ts")), "Missing src/core/eosCicdPipeline.ts");
@@ -131,15 +131,14 @@ assert.ok(fs.existsSync(path.join(root, "test/eosOpenSpec.test.mjs")), "Missing 
 assert.ok(fs.existsSync(path.join(root, "test/eosTitans.test.mjs")), "Missing test/eosTitans.test.mjs");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosTitansMatrix.ts")), "Missing src/core/eosTitansMatrix.ts");
 assert.ok(fs.existsSync(path.join(root, "catalog-info.yaml")), "Missing catalog-info.yaml Backstage descriptor");
-assert.ok(fs.existsSync(path.join(root, "api/eval.js")), "Missing api/eval.js serverless cognitive eval endpoint");
-assert.ok(fs.existsSync(path.join(root, "api/titans.js")), "Missing api/titans.js serverless titans endpoint");
+assert.ok(fs.existsSync(path.join(root, "api/eval.js")), "Missing api/eval.js serverless cognitive eval & titans endpoint");
 assert.ok(fs.existsSync(path.join(root, "openspec/specs/SPEC-001-CONSTITUTION.md")), "Missing openspec/specs/SPEC-001-CONSTITUTION.md");
 assert.ok(fs.existsSync(path.join(root, "README.md")), "Missing README.md");
 assert.ok(html.includes('id="jarvis-webgl-canvas"'), "Missing #jarvis-webgl-canvas 3D WebGL HUD");
 assert.ok(fs.existsSync(path.join(root, "api/jarvis.js")), "Missing api/jarvis.js serverless JARVIS endpoint");
 assert.ok(fs.existsSync(path.join(root, "api/health.js")), "Missing api/health.js serverless CNCF health endpoint");
 assert.ok(fs.existsSync(path.join(root, "api/graph.js")), "Missing api/graph.js serverless semantic graph endpoint");
-assert.ok(fs.existsSync(path.join(root, "api/amplify.js")), "Missing api/amplify.js serverless prompt amplifier endpoint");
+assert.ok(fs.existsSync(path.join(root, "api/compile.js")), "Missing api/compile.js serverless prompt amplifier & compiler endpoint");
 assert.ok(html.includes('id="tier1-control-nexus"'), "Missing #tier1-control-nexus Tier 1 section");
 assert.ok(html.includes('id="panel-nexus-blast"'), "Missing #panel-nexus-blast");
 assert.ok(html.includes('id="panel-nexus-prometheus"'), "Missing #panel-nexus-prometheus");
