@@ -370,6 +370,59 @@ export class EosMcpServer {
                       targetPath: { type: "string", description: "Path to project root (default: current project)" }
                     }
                   }
+                },
+                {
+                  name: "eos_spotify_scaffold",
+                  description: "Scaffolds a compliant Spotify Backstage RFC-42 descriptor (catalog-info.yaml) on any target project, immediately unlocking Golden Path conformance.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      targetPath: { type: "string", description: "Path to project root (default: current project)" },
+                      name: { type: "string", description: "Component name" },
+                      owner: { type: "string", description: "Component owner" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_spotify_standup",
+                  description: "Generates an asynchronous daily standup update formatted for Spotify Slack/Jira (Yesterday, Today, Blockers, PR links, and timezone handoff for Stockholm/London/NYC).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      author: { type: "string", description: "Author name and role" },
+                      squadName: { type: "string", description: "Squad name" },
+                      yesterdayTasks: { type: "array", items: { type: "string" }, description: "Tasks completed yesterday" },
+                      todayTasks: { type: "array", items: { type: "string" }, description: "Planned deep work for today" },
+                      blockers: { type: "array", items: { type: "string" }, description: "Blockers or external dependencies" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_spotify_postmortem",
+                  description: "Synthesizes a certified Spotify SRE Blameless Post-Mortem including 5 Whys Root Cause Analysis, incident timeline, systemic fixes, and cryptographic seal.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      incidentId: { type: "string", description: "Incident ID (e.g. INC-SPOTIFY-104)" },
+                      title: { type: "string", description: "Incident title" },
+                      severity: { type: "string", description: "Severity level (e.g. SEV-1, SEV-2, SEV-3)" },
+                      durationMinutes: { type: "number", description: "Incident duration in minutes" },
+                      rootCause: { type: "string", description: "Root cause summary" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_spotify_experiment",
+                  description: "Designs a Spotify-grade A/B testing Canary progressive rollout specification with guardrail metrics and automated fail-closed kill-switch.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      experimentKey: { type: "string", description: "Feature flag experiment key" },
+                      featureName: { type: "string", description: "Feature name" },
+                      hypothesis: { type: "string", description: "Measurable hypothesis statement" },
+                      primaryMetric: { type: "string", description: "Primary evaluation metric" }
+                    }
+                  }
                 }
               ]
             }
@@ -641,6 +694,30 @@ export class EosMcpServer {
         const codex = new EosSpotifyCodex(this.projectRoot);
         const targetPath = args.targetPath ? String(args.targetPath) : undefined;
         return codex.auditUniversalProject(targetPath);
+      }
+
+      case "eos_spotify_scaffold": {
+        const codex = new EosSpotifyCodex(this.projectRoot);
+        const targetPath = args.targetPath ? String(args.targetPath) : undefined;
+        return codex.scaffoldBackstageCatalog(targetPath, {
+          name: args.name ? String(args.name) : undefined,
+          owner: args.owner ? String(args.owner) : undefined
+        });
+      }
+
+      case "eos_spotify_standup": {
+        const codex = new EosSpotifyCodex(this.projectRoot);
+        return codex.generateAsyncStandup(args);
+      }
+
+      case "eos_spotify_postmortem": {
+        const codex = new EosSpotifyCodex(this.projectRoot);
+        return codex.synthesizeBlamelessPostMortem(args);
+      }
+
+      case "eos_spotify_experiment": {
+        const codex = new EosSpotifyCodex(this.projectRoot);
+        return codex.designCanaryExperiment(args);
       }
 
       default:

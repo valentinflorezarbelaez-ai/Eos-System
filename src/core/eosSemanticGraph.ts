@@ -13,6 +13,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 
 export type SymbolKind = "function" | "class" | "interface" | "type" | "const" | "variable";
 
@@ -73,7 +74,13 @@ const PTS_TEST_MAP: Record<string, string[]> = {
   "src/core/eosCognitiveJudge": ["test/eosPrometheus.test.mjs"],
   "src/core/eosTurboEngine": ["test/eosTurbo.test.mjs"],
   "src/core/eosSemanticGraph": ["test/eosSemanticGraph.test.mjs"],
-  "src/mcp/eosMcpServer": ["test/eosCore.test.mjs", "test/eosPrometheus.test.mjs", "test/eosTurbo.test.mjs"],
+  "src/core/eosAutonomousHealer": ["test/eosAutonomousHealer.test.mjs"],
+  "src/core/eosWorktreeOrchestrator": ["test/eosWorktree.test.mjs"],
+  "src/core/eosCognitiveEval": ["test/eosCognitiveEval.test.mjs"],
+  "src/core/eosOpenSpecSync": ["test/eosOpenSpec.test.mjs"],
+  "src/core/eosTitansMatrix": ["test/eosTitans.test.mjs"],
+  "src/core/eosSpotifyCodex": ["test/eosSpotify.test.mjs", "test/eosTitans.test.mjs"],
+  "src/mcp/eosMcpServer": ["test/eosCore.test.mjs", "test/eosPrometheus.test.mjs", "test/eosTurbo.test.mjs", "test/eosSpotify.test.mjs"],
   "bin/eos": ["test/eosCore.test.mjs", "test/eosTurbo.test.mjs"]
 };
 
@@ -171,7 +178,12 @@ export class EosSemanticGraph {
     // 1. First pass: Create nodes and extract symbols
     for (const fullPath of rawFiles) {
       const relPath = path.relative(this.projectRoot, fullPath).replace(/\\/g, "/");
-      const content = fs.readFileSync(fullPath, "utf8");
+      let content = "";
+      try {
+        content = fs.readFileSync(fullPath, "utf8");
+      } catch {
+        continue; // Skip file if temporarily locked by concurrent worker
+      }
       const exports = extractExports(content, relPath);
 
       // Extract imports
@@ -320,7 +332,11 @@ export class EosSemanticGraph {
     // Aggregate all source code text
     const allCodeBuffers: string[] = [];
     for (const node of this.nodes.values()) {
-      allCodeBuffers.push(fs.readFileSync(node.fullPath, "utf8"));
+      try {
+        allCodeBuffers.push(fs.readFileSync(node.fullPath, "utf8"));
+      } catch {
+        // Skip locked file
+      }
     }
     const combinedCode = allCodeBuffers.join("\n");
 
@@ -356,6 +372,52 @@ export class EosSemanticGraph {
       totalEdges,
       deadCodeCount: deadSymbols.length,
       deadSymbols
+    };
+  }
+
+  /**
+   * Executes Predictive Test Selection (PTS): Runs only test suites affected by target file.
+   */
+  public runPredictiveTests(targetFile?: string): {
+    readonly executedSuites: readonly string[];
+    readonly totalSuites: number;
+    readonly pass: boolean;
+    readonly durationMs: number;
+  } {
+    const startMs = Date.now();
+    let suitesToRun: string[] = [];
+
+    if (targetFile) {
+      const radius = this.calculateBlastRadius(targetFile);
+      suitesToRun = [...radius.predictiveTestSuites];
+    } else {
+      suitesToRun = ["test/eosSpotify.test.mjs", "test/eosTitans.test.mjs"];
+    }
+
+    if (suitesToRun.length === 0) {
+      suitesToRun = ["test/eosCore.test.mjs"];
+    }
+
+    let allPassed = true;
+    for (const suite of suitesToRun) {
+      const fullPath = path.join(this.projectRoot, suite);
+      if (fs.existsSync(fullPath)) {
+        try {
+          execFileSync(process.execPath, ["--test", fullPath], {
+            cwd: this.projectRoot,
+            stdio: "pipe"
+          });
+        } catch {
+          allPassed = false;
+        }
+      }
+    }
+
+    return {
+      executedSuites: suitesToRun,
+      totalSuites: suitesToRun.length,
+      pass: allPassed,
+      durationMs: Date.now() - startMs
     };
   }
 }

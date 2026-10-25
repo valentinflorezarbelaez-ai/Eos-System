@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "18.1.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Titans Matrix v18.1 (Spotify Xirp Backstage RFC-42, SpaceX 60Hz TMR Flight Computer, NVIDIA TensorRT SIMD Arena, Google Borg Reconciler, xAI Colossus Inter-Agent Fabric, Living OpenSpec Architecture, Closed-Loop FDIR Healer)",
+  "version": "19.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Titans Matrix v19.0 (Spotify Aligned Autonomy & Backstage Golden Path RFC-42, SpaceX 60Hz TMR Flight Computer, NVIDIA TensorRT SIMD Arena, Google Borg Reconciler, xAI Colossus Inter-Agent Fabric, Living OpenSpec Architecture, Closed-Loop FDIR Healer)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -15,7 +15,9 @@
     "titans": "node bin/eos.mjs titan",
     "reconcile": "node bin/eos.mjs reconcile",
     "spotify": "node bin/eos.mjs spotify",
+    "pts": "node bin/eos.mjs pts",
     "test": "node scripts/verify-cicd-pipeline.mjs",
+    "test:pts": "node bin/eos.mjs pts",
     "test:unit": "node --test test/eosCore.test.mjs",
     "test:chaos": "node --test test/chaosResilience.test.mjs",
     "test:prometheus": "node --test test/eosPrometheus.test.mjs",

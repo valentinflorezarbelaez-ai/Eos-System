@@ -155,4 +155,113 @@ describe("EOS Sovereign Spotify Codex & Universal Project Engine Suite", () => {
       assert.ok(backoff >= 0 && backoff <= 800);
     });
   });
+
+  describe("Suite 6: Chunked Audio Streaming & Lockless Ring Buffer Pipeline", () => {
+    it("streams 512KB audio chunks with 0% buffer underrun risk", () => {
+      const report = codex.simulateAudioStreamingPipeline(8);
+      assert.equal(report.chunkSizeKb, 512);
+      assert.equal(report.totalChunksProcessed, 8);
+      assert.equal(report.totalBytesStreamed, 8 * 512 * 1024);
+      assert.equal(report.bufferUnderrunRisk, 0.0);
+      assert.equal(report.prefetchHorizonChunks, 3);
+      assert.equal(report.locklessRingBufferVerified, true);
+      assert.ok(report.throughputMbSec > 50); // Blazingly fast memory throughput
+    });
+  });
+
+  describe("Suite 7: Mathematical Gapless Equal-Power Crossfade Curve", () => {
+    it("verifies sin^2(t) + cos^2(t) = 1.0000 across all crossfade steps", () => {
+      const steps = codex.calculateGaplessEqualPowerCrossfade(20);
+      assert.equal(steps.length, 21);
+      for (const s of steps) {
+        assert.ok(Math.abs(s.totalPower - 1.0) < 0.005, `Power deviation at t=${s.t}: ${s.totalPower}`);
+      }
+    });
+  });
+
+  describe("Suite 8: Spotify Aligned Autonomy & Async Daily Standup (BDD-038)", () => {
+    it("generates a complete Squad Manifest adhering to the Spotify Model", () => {
+      const manifest = codex.generateSquadManifest({
+        squadName: "Search & Audio Intelligence Squad",
+        tribe: "Search & Discovery Tribe",
+        chapter: "Backend (Java/Python/Go)"
+      });
+      assert.equal(manifest.squadName, "Search & Audio Intelligence Squad");
+      assert.equal(manifest.tribe, "Search & Discovery Tribe");
+      assert.equal(manifest.chapter, "Backend (Java/Python/Go)");
+      assert.ok(manifest.guilds.includes("AI Guild"));
+      assert.ok(manifest.timezoneOverlap.localTimezone.includes("Bogota"));
+      assert.ok(manifest.timezoneOverlap.targetHubs.some(h => h.includes("Stockholm")));
+    });
+
+    it("synthesizes an asynchronous standup formatted for global Spotify squads", () => {
+      const standup = codex.generateAsyncStandup({
+        author: "Valentín Flórez Arbeláez",
+        squadName: "Audio Playback Squad",
+        yesterdayTasks: ["Implemented zero-copy ring buffer", "Verified 7/7 SecDevOps gates"],
+        todayTasks: ["Deploy Canary rollout for 1% listeners", "Review PR #42 in GitHub"],
+        blockers: ["None"]
+      });
+      assert.equal(standup.author, "Valentín Flórez Arbeláez");
+      assert.equal(standup.squad, "Audio Playback Squad");
+      assert.equal(standup.yesterday.length, 2);
+      assert.equal(standup.today.length, 2);
+      assert.equal(standup.blockers[0], "None");
+      assert.ok(standup.markdown.includes("Spotify Async Daily Standup"));
+      assert.ok(standup.markdown.includes("Asynchronous Timezone Handoff"));
+    });
+  });
+
+  describe("Suite 9: Spotify Blameless Post-Mortem Synthesis (BDD-039)", () => {
+    it("generates certified blameless post-mortem with 5 Whys and zero personal blame", () => {
+      const postMortem = codex.synthesizeBlamelessPostMortem({
+        incidentId: "INC-SPOTIFY-902",
+        title: "Latency Degradation in Playback Token Validator",
+        severity: "SEV-2 (Degraded Experience)",
+        durationMinutes: 18
+      });
+      assert.equal(postMortem.incidentId, "INC-SPOTIFY-902");
+      assert.equal(postMortem.severity, "SEV-2 (Degraded Experience)");
+      assert.equal(postMortem.durationMinutes, 18);
+      assert.equal(postMortem.fiveWhys.length, 5);
+      assert.ok(postMortem.actionItems.length >= 3);
+      assert.ok(postMortem.actionItems.every(a => ["P0", "P1", "P2"].includes(a.priority)));
+      assert.ok(postMortem.markdown.includes("Zero Blame"));
+      assert.equal(postMortem.sha256Proof.length, 64);
+    });
+  });
+
+  describe("Suite 10: Spotify Canary Progressive Rollout & A/B Experimentation (BDD-040)", () => {
+    it("designs a multi-stage progressive rollout with automated kill-switch", () => {
+      const spec = codex.designCanaryExperiment({
+        experimentKey: "exp_gapless_crossfade_v1",
+        featureName: "Equal-Power Gapless Transition",
+        hypothesis: "Equal-power crossfading reduces user track skip rates by 6.8% on mobile."
+      });
+      assert.equal(spec.experimentKey, "exp_gapless_crossfade_v1");
+      assert.equal(spec.rolloutStages.length, 5);
+      assert.equal(spec.rolloutStages[1].trafficPercentage, 1.0); // 1% Canary stage
+      assert.ok(spec.guardrails.some(g => g.autoRevert === true)); // Automated fail-closed
+      assert.ok(spec.killSwitchFlag.includes("kill_switch_active"));
+      assert.ok(spec.markdown.includes("Emergency Kill-Switch"));
+    });
+  });
+
+  describe("Suite 11: Spotify Backstage Golden Path Scaffolder (BDD-041)", () => {
+    it("scaffolds complete Backstage RFC-42 package including TechDocs and Runbook", () => {
+      const pkg = codex.scaffoldGoldenPath({
+        serviceName: "audio-stream-normalizer",
+        serviceType: "backend-microservice",
+        ownerSquad: "squad:playback-core"
+      });
+      assert.equal(pkg.serviceName, "audio-stream-normalizer");
+      assert.ok(pkg.files["catalog-info.yaml"]);
+      assert.ok(pkg.files["catalog-info.yaml"].includes("apiVersion: backstage.io/v1alpha1"));
+      assert.ok(pkg.files["catalog-info.yaml"].includes("kind: Component"));
+      assert.ok(pkg.files["mkdocs.yml"]);
+      assert.ok(pkg.files["docs/index.md"]);
+      assert.ok(pkg.files["RUNBOOK.md"]);
+      assert.ok(pkg.files["RUNBOOK.md"].includes("Service-Level Objectives (SLO)"));
+    });
+  });
 });

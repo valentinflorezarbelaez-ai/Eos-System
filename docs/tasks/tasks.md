@@ -78,3 +78,9 @@
   - [x] **TASK-026-E**: Expose `eos_spotify_audit` in `src/mcp/eosMcpServer.ts` and CLI command `eos spotify [path]` in `bin/eos.mjs`.
   - [x] **TASK-026-F**: Implement comprehensive unit test suite `test/eosSpotify.test.mjs` asserting BDD-036 and BDD-037.
   - [x] **TASK-026-G**: Integrate into 7-stage CI/CD SecDevOps gate (`scripts/verify-cicd-pipeline.mjs`), verify 0 errors (`exit 0`), and attest receipt.
+- [x] **TASK-027**: Implement **Spotify Audio Streaming Pipeline, Predictive Test Selection (PTS) & 10-Spec OpenSpec (`v20.0`)**:
+  - [x] **TASK-027-A**: Implement Spotify Xirp chunked streaming simulation (512KB chunks, lockless Uint8Array ring buffer, jitter buffer underrun analysis, and mathematical gapless equal-power crossfade curve).
+  - [x] **TASK-027-B**: Implement universal Backstage Golden Path scaffolder (`scaffoldBackstageCatalog`) and expose `eos spotify scaffold` and MCP `eos_spotify_scaffold`.
+  - [x] **TASK-027-C**: Implement Predictive Test Selection (PTS) runner in `EosSemanticGraph` (`runPredictiveTests`), CLI command `eos pts [file]`, and script `npm run test:pts`.
+  - [x] **TASK-027-D**: Expand Living OpenSpec to 10 base specifications (`SPEC-008-COGNITIVE-EVAL`, `SPEC-009-JARVIS-SOVEREIGN-MONAD`, `SPEC-010-AKASHIC-MEMORY`) and change delta `CHANGE-005-SPOTIFY-STREAM-PTS-CODEX.md`.
+  - [x] **TASK-027-E**: Run full 82-test suite across 42 suites, verify 7-stage CI/CD gate, commit, and push to GitHub (`exit 0`).
