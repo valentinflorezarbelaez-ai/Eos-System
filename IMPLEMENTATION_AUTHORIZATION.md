@@ -72,3 +72,23 @@
 8. Rectify misattributed artist likenesses and ensure honest Spotify/Cabina demarcation.
 9. Execute deterministic verification suite and verify exit code 0.
 
+---
+
+## IMPLEMENTATION AUTHORIZATION: LEVEL 2+
+* **Authorization ID:** `AUTH-2026-10-25-SYNC-005`
+* **Target Projects:** `C:\Users\valen\portafolio`, `c:\Users\valen\Eos-System-1`
+* **Status:** `AUTHORIZED`
+* **Timestamp:** 2026-10-25T01:19:00Z
+* **Mandate:** Continuous Co-Evolution of EOS & Public Landing Page (Portafolio).
+* **Preconditions Checked:**
+  - `INTAKE-005` created and verified.
+  - `SPEC-005` formalized in EARS and BDD.
+  - `PLAN-005` and ADRs approved.
+  - `TASKS-005` atomic DAG decomposed.
+* **Authorized Scope:**
+  - Update `C:\Users\valen\portafolio\src\data\portfolio.ts` with Aberamentho 10/10 and EOS 2.1 state.
+  - Implement `scripts/sync-landing-page.mjs` in `Eos-System-1`.
+  - Typecheck and build verification of landing page.
+  - Git commit and push to production on Vercel.
+
+
