@@ -59,6 +59,7 @@ assert.ok(js.includes('"aberamentho:dsp"'), "Missing aberamentho:dsp CLI preset 
 assert.ok(js.includes('"sanctum:thelema"'), "Missing sanctum:thelema CLI preset (EosSolarSanctum)");
 assert.ok(js.includes('"nanosecond:hft"'), "Missing nanosecond:hft CLI preset (5 Fastest Softwares & 5 Secrets)");
 assert.ok(js.includes('"memory:akashic"'), "Missing memory:akashic CLI preset (EOS Akashic Memory & 27 Engram Tools)");
+assert.ok(js.includes('"bigtech:tla"'), "Missing bigtech:tla CLI preset (Big Tech 10/10 & TLA+ Formal Verifier)");
 assert.ok(js.includes('num: "21"'), "Missing 21st step of Master Engineering Pipeline");
 assert.ok(html.includes("seL4"), "Missing seL4 formal verification benchmark");
 assert.ok(html.includes("ASML Twinscan EUV"), "Missing ASML Twinscan EUV benchmark");
@@ -73,6 +74,11 @@ assert.ok(html.includes('id="templo-solar"'), "Missing #templo-solar EosSolarSan
 assert.ok(html.includes('id="nanosecond-engine"'), "Missing #nanosecond-engine Nanosecond & Universal Translator section");
 assert.ok(html.includes('id="memoria-akashica"'), "Missing #memoria-akashica Sovereign Akashic Memory section");
 assert.ok(html.includes('id="akashic-memory-vault"'), "Missing #akashic-memory-vault interactive memory vault");
+assert.ok(html.includes('id="bigtech-pantheon"'), "Missing #bigtech-pantheon Big Tech 10/10 & TLA+ section");
+assert.ok(html.includes('id="eos-cmdk-dialog"'), "Missing #eos-cmdk-dialog Omniscient Command Palette");
+assert.ok(html.includes('closedby="any"'), "Missing closedby=\"any\" declarative light-dismiss attribute");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosBigTechPantheon.ts")), "Missing src/core/eosBigTechPantheon.ts");
+assert.ok(fs.existsSync(path.join(root, "api/bigtech.js")), "Missing api/bigtech.js serverless Big Tech TLA+ endpoint");
 assert.ok(html.includes('id="btn-copy-eos-blueprint"'), "Missing #btn-copy-eos-blueprint button");
 assert.ok(html.includes('id="btn-download-eos-spec"'), "Missing #btn-download-eos-spec button");
 assert.ok(html.includes('id="eos-evolution-log"'), "Missing #eos-evolution-log live co-evolution log");

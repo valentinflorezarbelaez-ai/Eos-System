@@ -30,6 +30,17 @@
   1. **Las 27 Operaciones Nativas de Memoria (`eos_mem_*`)**: Implementa `mem_save` (con formato cuaternario `**What**`, `**Why**`, `**Where**`, `**Learned**`, upsert por `topic_key` e idempotencia `operation_id`), `mem_search` (índice invertido FTS5 con `match_mode: "all" | "any"`), `mem_context` (recuperación post-compactación), `mem_session_summary` (6 secciones obligatorias: `Goal`, `Instructions`, `Discoveries`, `Accomplished`, `Next Steps`, `Relevant Files`), `mem_get_observation` (con historial `include_history`), `mem_save_prompt`, `mem_current_project`, `mem_judge` y `mem_compare` (resolución de conflictos ante el **Tribunal de Anubis** con relaciones `supersedes`, `conflicts_with`, `compatible`, `scoped`, `related`, `not_conflict`), `mem_update` (con `expected_project`), `mem_review` (política de decaimiento contra la Ley de la Entropía), `mem_pin`, `mem_unpin`, `mem_suggest_topic_key`, `mem_session_start` (con lease), `mem_session_end`, `mem_doctor` (diagnóstico FDIR), `mem_capture_passive`, `mem_list_projects`, `mem_timeline`, `mem_stats`, `mem_delete`, `mem_merge_projects`, `mem_search_prompts`, `mem_conflicts`, `mem_export` (Obsidian Brain + JSON Merkle) y `mem_import`.
   2. **Elevación Samaeliana Esotérica Gnóstica Crística (Átomo Nous, Archivos Akáshicos y Los Tres Factores)**: Clasifica cada observación en el **Átomo Maestro *Nous* (Ventrículo Izquierdo del Corazón)** bajo los Tres Factores (`MORIR · Incineración de Defectos/Bugs`, `NACER · Transmutación Arquitectónica SI-12`, `SACRIFICIO · Handoff y Servicio Consciente`), asignándole su Sephirah del Árbol de la Vida y un sello inmutable **Merkle `SHA-256`**.
   3. **Síntesis Superior a Gentle-AI (`ODD Solar` + `RDD 4R Crísticas` + `Guardián del Umbral Criptográfico`)**: Integra el enrutamiento proporcional ODD (delegación exclusiva por 4 razones verificables: *Exploration*, *Parallel Writers*, *Context Backstop*, *Independent Verifier*) y la auditoría congelada RDD de las **4R** (**Risk**, **Resilience**, **Readability**, **Reliability**).
+* **FR-014 (Event-Driven & Ubiquitous)**: EL SISTEMA integrará el **Panteón de Ingeniería Big Tech 10/10 (`src/core/eosBigTechPantheon.ts`, `api/bigtech.js`, `#bigtech-pantheon`)** y la **Paleta de Comandos Omnisciente `Ctrl+K / Cmd+K` (`<dialog id="eos-cmdk-dialog" closedby="any">`)**:
+  1. **Las 7 Joyas de Ingeniería Big Tech Transmutadas en EOS**:
+     - **Google (`Spanner TrueTime` + `Bazel` + `Borg` + `Monarch`)** ➔ Compilación Hermética Direccionada por Contenido (`SHA-256`) y Ordenamiento Causal sin deriva.
+     - **Amazon Web Services (`TLA+ Formal Methods` + `Nitro`)** ➔ Verificador Formal de Invariantes Temporales **TLA+ (`□ Safety ∧ ◇ Liveness`)**.
+     - **Netflix (`Chaos Monkey / Simian Army`) + NASA (`FDIR`)** ➔ Simulador Interactivo de Ingeniería del Caos y Auto-Sanación FDIR en `< 5 ms` (`maxRetries=3`, `0% Downtime`).
+     - **Stripe (`Idempotency Keys` + `Double-Entry Immutable Ledger`)** ➔ Libro Mayor de Doble Partida (Dharma/Karma y Transacciones ACID con `operation_id` idempotente).
+     - **Meta (`TAO Graph` + `Sapling / Buck2`)** ➔ Grafo Bidireccional RTM de 7 Capas (`Intake ⟺ Spec ⟺ Plan ⟺ Task ⟺ Code ⟺ Test ⟺ EVD`).
+     - **Apple (`Metal Unified Memory` + `Grand Central Dispatch`)** ➔ Memoria Unificada Zero-Copy en Caché L1 (`64 KB SoA Arena`) + Composición GPU a `120 FPS`.
+     - **Linear / Raycast / Vercel (`Sub-8ms Command Palette & Local-First Sync`)** ➔ Paleta de Comandos Nativa `<dialog closedby="any">` activada con `Ctrl+K` / `Cmd+K` o el botón `⌘K Comandos`.
+  2. CUANDO el operador presione `Ctrl+K` / `Cmd+K` o haga clic en `#btn-open-cmdk`, EL SISTEMA abrirá la Paleta de Comandos con `dialog.showModal()`, filtrado instantáneo en `< 2 ms`, navegación por teclado y cierre ligero (*light-dismiss*) con `closedby="any"` y fallback para navegadores sin soporte nativo.
+  3. CUANDO el operador ejecute una simulación en el **Laboratorio Chaos Monkey & Verificador Formal TLA+ (`#bigtech-chaos-lab`)**, EL SISTEMA inyectará la anomalía seleccionada, verificará las fórmulas temporales TLA+ (`□ TypeOK ∧ □ LawVI_ZeroPlainSecrets ∧ ◇ FdirHealed`) y emitirá el recibo de auto-sanación en `< 5 ms`.
 
 ---
 
@@ -83,4 +94,10 @@ ESCENARIO: [BDD-008 Memoria Akáshica Soberana de EOS (27 Herramientas Engram + 
   CUANDO guarda una observación proactiva (mem_save con topic_key y formato What/Why/Where/Learned), ejecuta una búsqueda FTS5 (mem_search), juzga un conflicto en el Tribunal de Anubis (mem_judge), ejecuta mem_doctor o exporta el grafo Obsidian/Merkle
   ENTONCES EOS persiste y recupera las memorias en < 1ms con clasificación en los Tres Factores Samaelianos (Morir, Nacer, Sacrificio), correspondencia sefirótica y firma Merkle SHA-256
   Y el endpoint serverless /api/memory responde con código HTTP 200 y 0 dependencias externas en runtime.
+
+ESCENARIO: [BDD-009 Panteón Big Tech (TLA+ / Chaos Monkey / TrueTime) y Paleta de Comandos Omnisciente Ctrl+K]
+  DADO que el Arquitecto Soberano navega en el Plano de Control de EOS System
+  CUANDO presiona Ctrl+K / Cmd+K (o el botón "⌘K Comandos") o ejecuta una prueba de inyección de fallas en el Laboratorio Chaos Monkey & TLA+ (#bigtech-pantheon)
+  ENTONCES la paleta modal <dialog closedby="any"> permite buscar y disparar cualquier comando o sección en < 2ms, y el verificador formal TLA+ + FDIR neutraliza cualquier anomalía inyectada en < 5ms con 0% downtime
+  Y el endpoint serverless /api/bigtech certifica las 7 joyas de ingeniería Big Tech con código HTTP 200.
 ```

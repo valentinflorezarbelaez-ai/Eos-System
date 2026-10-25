@@ -1256,3 +1256,93 @@ body {
   border-color: rgba(212, 175, 55, 0.4);
   font-weight: 600;
 }
+
+/* ==========================================================================
+   NATIVE <DIALOG CLOSEDBY="ANY"> OMNISCIENT COMMAND PALETTE (⌘K / Ctrl+K)
+   ========================================================================== */
+.cmdk-dialog {
+  width: min(680px, 92vw);
+  max-height: 82vh;
+  margin: auto;
+  padding: 0;
+  border: 1px solid rgba(56, 189, 248, 0.55);
+  border-radius: var(--radius-lg);
+  background: rgba(4, 9, 22, 0.98);
+  color: var(--text-white);
+  box-shadow: 0 25px 70px -10px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.25);
+}
+
+.cmdk-dialog::backdrop {
+  background-color: rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.cmdk-dialog__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.25rem;
+}
+
+.cmdk-dialog__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cmdk-dialog__badge {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  letter-spacing: 0.05em;
+}
+
+.cmdk-dialog__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.cmdk-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.68rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: var(--text-white);
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 0.14s ease, border-color 0.14s ease, background-color 0.14s ease;
+}
+
+.cmdk-item:hover,
+.cmdk-item:focus-visible {
+  border-color: var(--cyan);
+  background: rgba(56, 189, 248, 0.12);
+  transform: translate3d(2px, 0, 0);
+  outline: none;
+}
+
+.cmdk-Dialog__footer,
+.cmdk-dialog__footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--line-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}

@@ -51,3 +51,9 @@
 * **Rationale**: Eliminates external memory lock-in by giving EOS its own sovereign, cryptographically attested memory core that operates both in serverless edge (`/api/memory`), Node L0 (`src/core/eosAkashicMemory.ts`), and browser (`#memoria-akashica` with `localStorage` + Obsidian/Merkle export).
 * **Rejected Alternatives**:
   * *Depending Solely on External Unsigned SQLite Files*: Rejected because EOS requires cryptographic SHA-256 Merkle sealing on every observation, native browser + edge execution without binary installation friction, and Samaelian epistemic classification.
+
+### ADR-007: Big Tech 7-Crown-Jewels Synthesis (`src/core/eosBigTechPantheon.ts` + `api/bigtech.js` + `#bigtech-pantheon`) & Native `<dialog closedby="any">` Command Palette (`Ctrl+K`)
+* **Decision**: Integrate the 7 Crown Jewels of Big Tech (`Google Spanner TrueTime & Bazel Hermetic Graph`, `AWS TLA+ Formal Temporal Verification`, `Netflix Chaos Monkey + NASA FDIR`, `Stripe Idempotent Double-Entry Ledger`, `Meta TAO/Buck2 7-Layer RTM Graph`, `Apple Metal Unified L1 Zero-Copy Memory`, and `Linear/Raycast Sub-8ms Command Palette`) alongside a native HTML `<dialog id="eos-cmdk-dialog" closedby="any">` Command Palette (`Ctrl+K` / `Cmd+K`) with progressive fallback per `modern-web-guidance: light-dismiss-a-dialog`.
+* **Rationale**: Combines formal mathematical verification (TLA+), active fault-injection resilience (Chaos Engineering), content-addressable hermetic determinism (Bazel), and sub-2ms keyboard-first operator ergonomics (`⌘K`) with zero external dependencies.
+* **Rejected Alternatives**:
+  * *Custom Non-Semantic `<div>` Modal Overlay*: Rejected in favor of native `<dialog closedby="any">` + `showModal()` for top-layer rendering, built-in focus trapping, `Esc` handling, and declarative light-dismiss.
