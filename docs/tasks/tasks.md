@@ -84,3 +84,11 @@
   - [x] **TASK-027-C**: Implement Predictive Test Selection (PTS) runner in `EosSemanticGraph` (`runPredictiveTests`), CLI command `eos pts [file]`, and script `npm run test:pts`.
   - [x] **TASK-027-D**: Expand Living OpenSpec to 10 base specifications (`SPEC-008-COGNITIVE-EVAL`, `SPEC-009-JARVIS-SOVEREIGN-MONAD`, `SPEC-010-AKASHIC-MEMORY`) and change delta `CHANGE-005-SPOTIFY-STREAM-PTS-CODEX.md`.
   - [x] **TASK-027-E**: Run full 82-test suite across 42 suites, verify 7-stage CI/CD gate, commit, and push to GitHub (`exit 0`).
+- [x] **TASK-028**: Implement **Spotify Remote Aligned Autonomy, Blameless Post-Mortem & Canary Rollout Codex (`v21.0`)**:
+  - [x] **TASK-028-A**: Implement Spotify Squad/Tribe/Chapter/Guild topology generator and Timezone overlap engine (Colombia GMT-5 to Stockholm CET/London GMT/NYC EST).
+  - [x] **TASK-028-B**: Implement Spotify Asynchronous Standup generator (`generateAsyncStandup`), CLI `eos spotify standup`, and MCP `eos_spotify_standup`.
+  - [x] **TASK-028-C**: Implement Spotify Blameless Post-Mortem synthesizer (`synthesizeBlamelessPostMortem`) with 5 Whys, systemic root cause, timeline, and P0-P2 action items.
+  - [x] **TASK-028-D**: Implement Spotify Canary Progressive Rollout & A/B Experimentation engine (`designCanaryExperiment`) with guardrail metrics and automated kill-switch.
+  - [x] **TASK-028-E**: Implement Spotify Backstage Golden Path full scaffolder (`scaffoldGoldenPath`) with `catalog-info.yaml`, `mkdocs.yml`, `docs/index.md`, and on-call `RUNBOOK.md`.
+  - [x] **TASK-028-F**: Implement comprehensive unit test suites in `test/eosSpotify.test.mjs` asserting BDD-038, BDD-039, BDD-040, and BDD-041 (15/15 tests passed).
+  - [x] **TASK-028-G**: Run full 87-test suite across 47 suites, verify 7-stage CI/CD SecDevOps gate (`npm run verify:strict`), commit, and push (`exit 0`).

@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "19.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Titans Matrix v19.0 (Spotify Aligned Autonomy & Backstage Golden Path RFC-42, SpaceX 60Hz TMR Flight Computer, NVIDIA TensorRT SIMD Arena, Google Borg Reconciler, xAI Colossus Inter-Agent Fabric, Living OpenSpec Architecture, Closed-Loop FDIR Healer)",
+  "version": "21.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Titans Matrix v21.0 (Spotify Aligned Autonomy, Blameless Post-Mortems, Backstage Golden Paths RFC-42, SpaceX 60Hz TMR Flight Computer, NVIDIA TensorRT SIMD Arena, Google Borg Reconciler, xAI Colossus Inter-Agent Fabric, Living OpenSpec Architecture, Closed-Loop FDIR Healer)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
