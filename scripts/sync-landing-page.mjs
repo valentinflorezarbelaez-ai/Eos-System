@@ -140,7 +140,7 @@ if (eosStart !== -1 && eosEnd !== -1) {
     ],
     metrics: ["EOS Core 2.1", "Dual-Track Engine", "Sentinel Daemon 24/7", "FDIR Self-Healing"],
     technologies: ["Node.js (0 Deps)", "TypeScript Strict", "Go (Goroutines)", "Model Context Protocol (MCP)", "SHA-256 Cryptography", "Graph Ontology"],
-    liveUrl: "https://github.com/valentinflorezarbelaez-ai/Eos-System",
+    liveUrl: "https://eos-system-ten.vercel.app/",
     githubUrl: "https://github.com/valentinflorezarbelaez-ai/Eos-System",
   },
   {
@@ -151,6 +151,18 @@ if (eosStart !== -1 && eosEnd !== -1) {
 
 fs.writeFileSync(portfolioDataPath, content, 'utf-8');
 console.log(`[PASS] Successfully synchronized telemetry and descriptions into: ${portfolioDataPath}`);
+
+// Also trigger elevate-portal-web
+try {
+  const elevateScript = path.join(controlPlaneRoot, 'scripts', 'elevate-portal-web.mjs');
+  if (fs.existsSync(elevateScript)) {
+    const { execSync } = await import('node:child_process');
+    execSync(`node "${elevateScript}"`, { stdio: 'inherit' });
+  }
+} catch (e) {
+  console.log('[WARN] Portal elevation notice:', e.message);
+}
+
 console.log('================================================================');
 console.log(' [SUCCESS] EOS & LANDING PAGE CONTINUOUS SYNCHRONIZATION COMPLETE');
 console.log('================================================================\n');

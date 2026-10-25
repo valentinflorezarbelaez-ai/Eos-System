@@ -1,9 +1,9 @@
 ﻿{
     "evidenceId":  "EVD-0001-BASELINE-STRICT-PASS",
-    "timestamp":  "2026-10-25T06:26:12Z",
+    "timestamp":  "2026-10-25T06:56:17Z",
     "epistemicState":  "VERIFIED",
     "exitCode":  0,
-    "executionDuration":  "1909ms",
+    "executionDuration":  "1343ms",
     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "testsSummary":  {
                          "totalTests":  47,
@@ -31,13 +31,13 @@
                       },
                       {
                           "relativePath":  "IMPLEMENTATION_AUTHORIZATION.md",
-                          "sha256":  "BA389B8E4B7A2C2F3357E994970C71ED912CD99D318378BF7CCC1228240E4104",
-                          "sizeBytes":  4738
+                          "sha256":  "C706B8417CCBB6E2D9453CE0F7063F25717FF9E17DF608E416F4A84EEB88E7C5",
+                          "sizeBytes":  5692
                       },
                       {
                           "relativePath":  "package.json",
-                          "sha256":  "461D040D8DE1C6A08543849AA11F92506AD362BF7A2CE3A029609CAB22320AE7",
-                          "sizeBytes":  1090
+                          "sha256":  "5830099A8266CE577EF7CF48DF26AE1896719F0CD1D4DE84E1109828D8811749",
+                          "sizeBytes":  1132
                       },
                       {
                           "relativePath":  "README.md",
@@ -115,6 +115,11 @@
                           "sizeBytes":  2519
                       },
                       {
+                          "relativePath":  "docs/intake/INTAKE-006-EOS-CORE-CLI-AND-LIVE-PORTAL.md",
+                          "sha256":  "A7979E89AB632F857B5334B20D87936F1DC12026D6E40D2A8786CE96ADA1B0E3",
+                          "sizeBytes":  1438
+                      },
+                      {
                           "relativePath":  "docs/plans/PLAN-001-EOS-HEXAGONAL-ARCHITECTURE.md",
                           "sha256":  "019801E1A3C8D765A22725406B32CF21D5DF10E13912812AAE4FECF31B424440",
                           "sizeBytes":  4164
@@ -133,6 +138,11 @@
                           "relativePath":  "docs/plans/PLAN-005-EOS-LANDING-CONTINUOUS-SYNC.md",
                           "sha256":  "4AB9B87820AD1AEB72E6353AC1BD62488536814B963A58DAD3C2D3D78CF1A2AC",
                           "sizeBytes":  2091
+                      },
+                      {
+                          "relativePath":  "docs/plans/PLAN-006-EOS-CORE-CLI-AND-LIVE-PORTAL.md",
+                          "sha256":  "B56D281C6F905018397478322225BB79BF309A7DF3993FCE94D039A7FC292809",
+                          "sizeBytes":  1857
                       },
                       {
                           "relativePath":  "docs/projects/registry.json",
@@ -165,6 +175,11 @@
                           "sizeBytes":  2352
                       },
                       {
+                          "relativePath":  "docs/specs/SPEC-006-EOS-CORE-CLI-AND-LIVE-PORTAL.md",
+                          "sha256":  "EF8B821AE85AFFC5E16011D0C798562CE8156430659FF20E8648FC0272B3B603",
+                          "sizeBytes":  2262
+                      },
+                      {
                           "relativePath":  "docs/tasks/TASKS-001-DAG.md",
                           "sha256":  "8E904E6CF8FEE18EEA367A764569ECD598EEF623914F3259A2CDAC8AC93730F0",
                           "sizeBytes":  2317
@@ -185,6 +200,11 @@
                           "sizeBytes":  1652
                       },
                       {
+                          "relativePath":  "docs/tasks/TASKS-006-DAG.md",
+                          "sha256":  "E863E5D42A7E7C711C4E9F8E168491F780558A472635E0CE7B3EE6EA228C0077",
+                          "sizeBytes":  1573
+                      },
+                      {
                           "relativePath":  "scripts/apply-aberamentho-perfection.ps1",
                           "sha256":  "E92BFD82D1038E33DB725F184ACAD75703487215C7D772A8ADF117E44B145582",
                           "sizeBytes":  16054
@@ -195,9 +215,29 @@
                           "sizeBytes":  22772
                       },
                       {
+                          "relativePath":  "scripts/bump-portal-version.mjs",
+                          "sha256":  "36D2D501757397068EE84FED8137FCABB6AB29F1FD6BBD40B754AACA4B20FC06",
+                          "sizeBytes":  1457
+                      },
+                      {
                           "relativePath":  "scripts/check-syntax.ps1",
                           "sha256":  "679F7BBABD724C2B3DA7C9EAF85E1F0574E09CA101401E9393A7175DDF7525CE",
                           "sizeBytes":  472
+                      },
+                      {
+                          "relativePath":  "scripts/deploy-portal.mjs",
+                          "sha256":  "3072197625E01DD8D3195A2E749F065E87E245D12661E74A5F89E5070A53232D",
+                          "sizeBytes":  618
+                      },
+                      {
+                          "relativePath":  "scripts/elevate-portal-web.mjs",
+                          "sha256":  "B76BF4C00C76CDFBE02238F2D260FD95DF811AB347A984A124C8A2983A585663",
+                          "sizeBytes":  4627
+                      },
+                      {
+                          "relativePath":  "scripts/eos-cli.mjs",
+                          "sha256":  "2A662218E96069261F5E0BC0A5E5986C96BD2D9F58C77DABA166305412AAC810",
+                          "sizeBytes":  8218
                       },
                       {
                           "relativePath":  "scripts/generate-emblems.ps1",
@@ -216,8 +256,8 @@
                       },
                       {
                           "relativePath":  "scripts/sync-landing-page.mjs",
-                          "sha256":  "C84DF58F6FB498DC39198EB85E417C5FE9B61645303CFA317C6F036380650603",
-                          "sizeBytes":  11684
+                          "sha256":  "C7222499CDE534262B8206DD93B8D133DE46684FA4D2CCE7FDD46B0C7DCCA34E",
+                          "sizeBytes":  12039
                       },
                       {
                           "relativePath":  "scripts/update-portfolio-ui.mjs",
