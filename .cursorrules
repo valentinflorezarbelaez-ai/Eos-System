@@ -120,3 +120,12 @@ When operating with MCP tools enabled:
   * If verification fails, **HALT**. Do not proceed to subsequent tasks.
   * Isolate the failing invariant, inspect domain logic, fix the root cause, and re-run.
   * NEVER weaken, bypass, or delete a verification invariant merely to force a passing exit code.
+
+---
+
+### 5. XIRP & BEST-IN-CLASS MARKET CONTINUOUS IMPROVEMENT PROTOCOL
+
+* **Xirp-Inspired Orchestration**: Operate as a vendor-neutral, context-grounded engineering engine capable of seamless handoff between local editing (Cursor / WSL2) and cloud verification (Google Antigravity).
+* **Worktree & Session Isolation**: For parallel multi-agent tasks, isolate workspaces via `git worktree` and persistent `tmux` sessions so concurrent agents never collide.
+* **MCP Context Graph**: Always ground implementation in the repository's formal contracts, dependency maps, and historical decisions exposed via MCP and `docs/`.
+* **Relentless Market Benchmarking**: Every UI, DSP engine, backend gateway (Go / FastAPI / Node.js Hexagonal L0), and portfolio artifact must be crafted to the highest quality standard in the global market, free of corporate lock-in.

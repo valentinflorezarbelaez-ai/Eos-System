@@ -1,9 +1,9 @@
 ﻿{
     "evidenceId":  "EVD-0001-BASELINE-STRICT-PASS",
-    "timestamp":  "2026-10-24T02:34:54Z",
+    "timestamp":  "2026-10-25T00:59:39Z",
     "epistemicState":  "VERIFIED",
     "exitCode":  0,
-    "executionDuration":  "886ms",
+    "executionDuration":  "1027ms",
     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "testsSummary":  {
                          "totalTests":  47,
@@ -16,8 +16,8 @@
     "checksums":  [
                       {
                           "relativePath":  ".cursorrules",
-                          "sha256":  "666F619D32CF3426784FC04F81C1ACA958A80A396DFD4ACCE3E89808C6B4C0BB",
-                          "sizeBytes":  7663
+                          "sha256":  "FEB8EEF185FC3212696B42D28C2125E9BD065AE60E6C05A21F149956127A9FCB",
+                          "sizeBytes":  8519
                       },
                       {
                           "relativePath":  ".gitignore",
@@ -26,8 +26,8 @@
                       },
                       {
                           "relativePath":  "CONSTITUTION.md",
-                          "sha256":  "67390FAD571D49E11C05A66C20602860CF59A6C68ECBDB926DFFAE99476B15DF",
-                          "sizeBytes":  6852
+                          "sha256":  "2729EBEB3ACD5FE9A5D8E20A43E25718E45B23D58AECEE4FFA506904CC1D57C5",
+                          "sizeBytes":  8153
                       },
                       {
                           "relativePath":  "IMPLEMENTATION_AUTHORIZATION.md",
@@ -100,6 +100,11 @@
                           "sizeBytes":  4492
                       },
                       {
+                          "relativePath":  "docs/intake/INTAKE-003-XIRP-CONTINUOUS-EXCELLENCE.md",
+                          "sha256":  "B9CC01865098607427A08A625F13F5322143287B894EEF264A3F7C5A9FE15F9F",
+                          "sizeBytes":  2066
+                      },
+                      {
                           "relativePath":  "docs/plans/PLAN-001-EOS-HEXAGONAL-ARCHITECTURE.md",
                           "sha256":  "E5D234740B768542E2C8E9B8833678CE5D819942EC6AAF82806401484C6302A1",
                           "sizeBytes":  4100
@@ -111,8 +116,8 @@
                       },
                       {
                           "relativePath":  "docs/projects/registry.json",
-                          "sha256":  "ABACF3CD6352150F10014A115CEEC6E065D0E3417A5F9140E610FF5E82411890",
-                          "sizeBytes":  3217
+                          "sha256":  "94407619241DC0C403C406B7E9FE4EFE2AE4E20D6F66B24060D16BB8A2A4EBB3",
+                          "sizeBytes":  3219
                       },
                       {
                           "relativePath":  "docs/specs/SPEC-001-EOS-CORE.md",
@@ -123,6 +128,11 @@
                           "relativePath":  "docs/specs/SPEC-002-EVIDENCE-ATTESTATION.md",
                           "sha256":  "84B449CEEDD0B7471B353131BA0F2CFEC3E0EE213BE5FEF8FA2AFAA5E4E7EC53",
                           "sizeBytes":  8586
+                      },
+                      {
+                          "relativePath":  "docs/specs/SPEC-003-XIRP-CONTINUOUS-EXCELLENCE.md",
+                          "sha256":  "0CD5CFBFFB1AA0FEBCC950C89E891C648F4655B06CBEBC498B04475143DAF7EC",
+                          "sizeBytes":  1774
                       },
                       {
                           "relativePath":  "docs/tasks/TASKS-001-DAG.md",

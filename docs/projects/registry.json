@@ -1,7 +1,7 @@
 {
   "system": "EOS-System",
   "version": "2.1.0",
-  "lastAudited": "2026-10-23T19:15:00Z",
+  "lastAudited": "2026-10-25T00:59:00Z",
   "status": "OPERATIONAL",
   "controlPlaneRoot": "C:\\Users\\valen\\Eos-System-1",
   "projects": [
@@ -37,7 +37,7 @@
       "description": "GOD DJ 10/10 PRO Iniciático & Catedral Cósmica de Música Armónica",
       "epistemicState": "PRODUCTION_READY",
       "rating": "10/10",
-      "gitCommit": "c622541"
+      "gitCommit": "0b8c954"
     },
     {
       "id": "atp-strength",
@@ -63,11 +63,11 @@
       "id": "portafolio-valentin",
       "name": "Portafolio Personal Valentín",
       "path": "C:\\Users\\valen\\portafolio",
-      "url": "https://portafolio-valentin.vercel.app/",
+      "url": "https://portafolio-ecru-xi-97.vercel.app/",
       "description": "Personal Engineering & Creator Portfolio",
       "epistemicState": "PRODUCTION_READY",
       "rating": "10/10",
-      "gitCommit": "05c232f"
+      "gitCommit": "adce68c"
     },
     {
       "id": "kegel-ham-sah",

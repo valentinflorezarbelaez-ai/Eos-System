@@ -99,3 +99,14 @@ SCENARIO: [Identifier and Name]
 * **The 24/7 Pulse (`EOSSentinelDaemon`)**: Maintains continuous periodic integrity checks across system files, calculating SHA-256 signatures to detect illegal mutations or unapproved drift.
 * **Graph Healing (`EOSFDIROntology`)**: Serves as the clinical firewall over the knowledge graph. Upon detecting any orphan relation (`ORPHAN_LINK_DETECTED`), it isolates and purges the invalid node, re-establishing consistency based on the verified evidence ledger.
 * **Defensive Termination**: If a unit test or verification check fails, halt execution immediately. Do not modify tests merely to make them pass. Diagnose, isolate root cause, repair, and re-verify.
+
+---
+
+## 5. THE XIRP & BEST-IN-CLASS MARKET CONTINUOUS EVOLUTION DOCTRINE
+
+EOS System continuously evolves by drawing architectural inspiration from **Xirp** and the highest-caliber engineering products in the global market:
+1. **Vendor-Neutral Multi-Agent Orchestration**: Seamlessly coordinate concurrent sessions across Cursor, Google Antigravity, Claude, Gemini, and Codex without provider lock-in.
+2. **Cross-Agent Context Handoff**: Preserve full architectural state and specification lineage when transitioning tasks between local execution (WSL2 / Cursor) and cloud validation (Google Antigravity).
+3. **Architectural Context Graph via MCP**: Expose service catalogs, API contracts, domain boundaries, and historical resolutions through Model Context Protocol (MCP) servers and Engram memory so agents never guess or hallucinate.
+4. **Physical Execution Isolation (`Git Worktrees` + `tmux`)**: Isolate parallel agentic streams in dedicated Git worktrees and persistent `tmux` sessions, supplemented by high-concurrency Go gateways (`Goroutines`) and strict hexagonal purity.
+5. **Best-in-Class Market Quality**: Every governed product must match or exceed the UX, performance, reliability, and determinism of the finest commercial products in its category, maintaining sovereign independence.
