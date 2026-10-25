@@ -137,6 +137,10 @@ console.log("[PASS] 5/6 Interactive Control Plane, EosSolarSanctum, EosNanosecon
 
 // 6. Verify Service Worker, Assets & Xirp-Grade Speed Architecture (FR-011)
 assert.ok(fs.existsSync(path.join(root, "sw.js")), "Missing sw.js");
+const swContent = fs.readFileSync(path.join(root, "sw.js"), "utf8");
+assert.ok(swContent.includes("STATIC_CACHE"), "Missing STATIC_CACHE in sw.js");
+assert.ok(swContent.includes("API_CACHE"), "Missing API_CACHE in sw.js");
+assert.ok(swContent.includes("OFFLINE_STANDALONE_MODE"), "Missing OFFLINE_STANDALONE_MODE in sw.js");
 assert.ok(fs.existsSync(path.join(root, "favicon.svg")), "Missing favicon.svg");
 assert.ok(fs.existsSync(path.join(root, "assets/eos-system.png")), "Missing assets/eos-system.png");
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(root, "vercel.json"), "utf8"));
