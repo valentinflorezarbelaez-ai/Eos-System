@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v12.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v13.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }

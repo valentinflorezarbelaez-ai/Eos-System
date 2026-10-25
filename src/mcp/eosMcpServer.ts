@@ -105,7 +105,7 @@ export class EosMcpServer {
               },
               serverInfo: {
                 name: "eos-system-mcp",
-                version: "12.0.0",
+                version: "13.0.0",
                 description: "EOS Sovereign Engineering Operating System MCP Interface"
               }
             }
