@@ -51,6 +51,14 @@
      - **6. `cgroups v2` + `Namespaces` + `Seccomp-BPF`:** Aislamiento estricto de recursos y lista blanca de llamadas al sistema para cada subagente y Git Worktree.
      - **7. Filosofía de Linus Torvalds (`"Good Taste in Code"` + `"Never Break Userspace"` + `Git Content-Addressable Merkle DAG`):** Eliminación de casos especiales (`if` redundantes) mediante diseño de estructuras de datos sin ramificaciones (*branchless good taste*) y estabilidad absoluta de ABI (`0` regresiones).
   2. CUANDO el operador interactúe con el **Laboratorio en Vivo del Kernel EOS (`#linux-kernel-lab`)**, EL SISTEMA permitirá inspeccionar los nodos virtuales `/proc/eos/*` y `/sys/kernel/*`, ejecutar el verificador estático `eBPF` + planificador `EEVDF` y correr un benchmark real `RCU Lockless Read-Copy-Update` en el navegador y vía `/api/kernel`.
+* **FR-016 (Event-Driven & Ubiquitous)**: EL SISTEMA integrará la **Singularidad Soberana Omega (`v8.0` — `src/core/eosOmegaSingularity.ts`, `api/omega.js` y `#omega-singularity`)** con las 7 fronteras supremas de la computación post-cuántica y distribuida:
+  1. **Criptografía Post-Cuántica Soberana (NIST FIPS 203 / 204 / 205: `ML-KEM-1024 / Kyber`, `ML-DSA-87 / Dilithium-5`, `SLH-DSA / SPHINCS+`)**: Sellado híbrido reticular (*Module-LWE*) + hash sin estado inmune al algoritmo cuántico de Shor (**El Sello Diamantino de la Mónada**).
+  2. **Pruebas de Conocimiento Cero Transparentes (`ZK-STARKs` — *Zero-Knowledge Scalable Transparent Arguments of Knowledge*)**: Demostración polinómica FRI sin *trusted setup* de que un artefacto cumple el 100% de las 7 Leyes de EOS sin revelar secretos propietarios ni código privado (**El Velo de Isis Criptográfico**).
+  3. **Consenso Tolerante a Fallas Bizantinas (`HotStuff / Raft BFT Quorum 3f+1`)**: Quórum criptográfico entre 4 Auditores Soberanos independientes (`architecture-auditor`, `security-auditor`, `quality-auditor`, `evidence-auditor`) que neutraliza cualquier alucinación o nodo bizantino antes de hacer commit (**El Concilio Solar de los Cosmocrátores**).
+  4. **Depuración en el Tiempo Determinista (`Time-Travel Debugging / Mozilla rr & FoundationDB DST`)**: Registro determinista de semillas, relojes lógicos y transiciones de estado con rebobinado exacto (`⏪ Step Back` / `⏩ Step Forward`) a nivel de nanosegundo (**Retrocognición Akáshica Consciente**).
+  5. **Superoptimización de Compilador por Saturación de Igualdad (`E-Graphs / MLIR`)**: Reescritura algebraica de grafos de equivalencia para encontrar el programa matemáticamente óptimo de menor costo de ciclos de CPU.
+  6. **Ejecución Basada en Capacidades (`WebAssembly SIMD-128 + WASI Capability Sandbox`)**: Cero autoridad ambiental (*Zero Ambient Authority*); ningún módulo puede acceder a red, disco o reloj sin un descriptor de capacidad explícito.
+  7. **Radar en Vivo de la Flota Soberana (`Live 9-System Sovereign Fleet Health Matrix`)**: Telemetría y auditoría de latencia, estado epistémico y compatibilidad ABI de los 9 sistemas en producción desde `#omega-singularity-lab` y `/api/omega`.
 
 ---
 
@@ -116,4 +124,10 @@ ESCENARIO: [BDD-010 Perfección Nivel Kernel de Linux (RCU Lockless, eBPF Verifi
   CUANDO inspecciona un nodo del sistema de archivos virtual (/proc/eos/version, /proc/eos/rcu_stats, /proc/eos/eevdf_sched, /sys/kernel/ebpf_verifier) o ejecuta el Benchmark RCU Lockless + Verificador eBPF
   ENTONCES EOS verifica el programa bajo el estándar de "Buen Gusto" de Linus Torvalds (0 casos especiales, 0 bucles infinitos, ABI estable "Never Break Userspace"), ejecuta lecturas RCU sin bloqueos en nanosegundos
   Y el endpoint serverless /api/kernel responde con código HTTP 200 y firma SHA-256.
+
+ESCENARIO: [BDD-011 Singularidad Omega Post-Cuántica, ZK-STARK, Consenso Bizantino 3f+1, Time-Travel Debugging y Radar de Flota Soberana]
+  DADO que el Arquitecto Soberano accede a la sección de Singularidad Soberana Omega (#omega-singularity) o ejecuta el comando "eos omega --quantum" en la terminal
+  CUANDO genera un sello Post-Cuántico (ML-DSA-87 Dilithium + ZK-STARK FRI), ejecuta una votación de Consenso Bizantino 3f+1, rebobina la línea de tiempo determinista (Time-Travel Debugger) o ejecuta el Radar de Salud de los 9 Sistemas de la Flota Soberana
+  ENTONCES EOS emite la prueba criptográfica post-cuántica y ZK-STARK sin trusted setup, certifica el quórum BFT sin alucinaciones, restaura cualquier época histórica en 0 ms de deriva
+  Y el endpoint serverless /api/omega responde con código HTTP 200 y 0 dependencias externas.
 ```

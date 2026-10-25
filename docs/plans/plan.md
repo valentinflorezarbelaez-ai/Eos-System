@@ -70,3 +70,16 @@
 * **Rationale**: The Linux Kernel is the gold standard of reliability, scalability, and low-level elegance on Earth; embedding its exact architectural primitives into EOS elevates the Control Plane to Ring-0 systems perfection.
 * **Rejected Alternatives**:
   * *Coarse-Grained Reader-Writer Locks (`rwlock`)*: Rejected in favor of `RCU` because reader locks cause cache-line bouncing across CPU cores.
+
+### ADR-009: The Omega Singularity (`v8.0` — Post-Quantum FIPS 203/204/205, ZK-STARKs, Byzantine Consensus `3f+1`, Deterministic Time-Travel Replay & Live 9-System Fleet Radar)
+* **Decision**: Implement `src/core/eosOmegaSingularity.ts`, serverless endpoint `api/omega.js`, and interactive Control Plane section `#omega-singularity` integrating:
+  1. **NIST Post-Quantum Cryptography (`ML-KEM-1024`, `ML-DSA-87 / Dilithium-5`, `SLH-DSA / SPHINCS+`)** for quantum-resistant artifact sealing.
+  2. **Transparent Zero-Knowledge Proofs (`ZK-STARK` FRI Polynomial Commitment)** to prove Law I–VII compliance without revealing proprietary source code.
+  3. **Byzantine Fault-Tolerant (`BFT 3f+1`) Multi-Auditor Quorum** to eliminate single-agent hallucination or Byzantine drift.
+  4. **Deterministic Time-Travel Debugging (`Mozilla rr` / `FoundationDB DST`)** for nanosecond-exact state replay and karmic retrocognition.
+  5. **E-Graph Equality Saturation Superoptimization (`MLIR` / `Souper`)** & **`WASI` Capability-Based Sandbox**.
+  6. **Live 9-System Sovereign Fleet Health Matrix** inside `#omega-singularity-lab`.
+* **Rationale**: Future-proofs EOS against quantum cryptanalysis (Shor's/Grover's algorithms), multi-agent Byzantine faults, and non-deterministic heisenbugs while providing a unified real-time command radar across all 9 Sovereign Fleet repositories.
+* **Rejected Alternatives**:
+  * *Legacy RSA-2048 / ECDSA P-256 Only*: Rejected because Shor's algorithm on fault-tolerant quantum computers breaks integer factorization and discrete logarithms in polynomial time.
+  * *ZK-SNARKs Requiring Trusted Setup Ceremony*: Rejected in favor of **ZK-STARKs** (transparent hash/polynomial commitments with zero toxic waste and post-quantum security).

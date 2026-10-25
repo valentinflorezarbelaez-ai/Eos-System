@@ -1,4 +1,4 @@
-const CACHE_NAME = 'eos-system-control-plane-v11-0-linux-ring0';
+const CACHE_NAME = 'eos-system-control-plane-v12-0-omega-singularity';
 const PRECACHE_URLS = [
   "/",
   "/index.html",

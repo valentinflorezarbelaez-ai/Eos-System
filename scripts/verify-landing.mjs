@@ -61,6 +61,7 @@ assert.ok(js.includes('"nanosecond:hft"'), "Missing nanosecond:hft CLI preset (5
 assert.ok(js.includes('"memory:akashic"'), "Missing memory:akashic CLI preset (EOS Akashic Memory & 27 Engram Tools)");
 assert.ok(js.includes('"bigtech:tla"'), "Missing bigtech:tla CLI preset (Big Tech 10/10 & TLA+ Formal Verifier)");
 assert.ok(js.includes('"kernel:linux"'), "Missing kernel:linux CLI preset (Linux Kernel Ring-0 Monolithic Modular Core)");
+assert.ok(js.includes('"omega:quantum"'), "Missing omega:quantum CLI preset (Omega Singularity v8.0 PQC + ZK-STARK + BFT)");
 assert.ok(js.includes('num: "21"'), "Missing 21st step of Master Engineering Pipeline");
 assert.ok(html.includes("seL4"), "Missing seL4 formal verification benchmark");
 assert.ok(html.includes("ASML Twinscan EUV"), "Missing ASML Twinscan EUV benchmark");
@@ -84,6 +85,10 @@ assert.ok(html.includes('id="linux-kernel-core"'), "Missing #linux-kernel-core L
 assert.ok(html.includes('id="linux-kernel-lab"'), "Missing #linux-kernel-lab interactive VFS & RCU laboratory");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosLinuxKernelCore.ts")), "Missing src/core/eosLinuxKernelCore.ts");
 assert.ok(fs.existsSync(path.join(root, "api/kernel.js")), "Missing api/kernel.js serverless Linux Kernel Ring-0 endpoint");
+assert.ok(html.includes('id="omega-singularity"'), "Missing #omega-singularity Omega v8.0 section");
+assert.ok(html.includes('id="omega-singularity-lab"'), "Missing #omega-singularity-lab interactive PQC/ZK-STARK/BFT/Time-Travel lab");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosOmegaSingularity.ts")), "Missing src/core/eosOmegaSingularity.ts");
+assert.ok(fs.existsSync(path.join(root, "api/omega.js")), "Missing api/omega.js serverless Omega Singularity endpoint");
 assert.ok(html.includes('id="btn-copy-eos-blueprint"'), "Missing #btn-copy-eos-blueprint button");
 assert.ok(html.includes('id="btn-download-eos-spec"'), "Missing #btn-download-eos-spec button");
 assert.ok(html.includes('id="eos-evolution-log"'), "Missing #eos-evolution-log live co-evolution log");
