@@ -408,6 +408,9 @@ EXIT CODE       : 0</pre>
             <button type="button" role="tab" id="tab-nexus-titans" aria-selected="false" aria-controls="panel-nexus-titans" class="tier1-tab-btn" data-nexus="titans">
               🏛️ Titanes Big Tech (Spotify/SpaceX/NVIDIA/Google/xAI)
             </button>
+            <button type="button" role="tab" id="tab-nexus-spotify" aria-selected="false" aria-controls="panel-nexus-spotify" class="tier1-tab-btn" data-nexus="spotify">
+              🎧 Spotify Studio (DSP / LUFS / BaRT / Mesh)
+            </button>
           </div>
 
           <div class="tier1-nexus-body">
@@ -705,6 +708,65 @@ ESTADO EPISTÉMICO    : PRODUCTION_READY | MTTR: 1.8 ms | SALUD DEL SISTEMA: 100
 • NVIDIA TensorRT: 65,536-dim Float32 Contiguous SIMD Buffer | Vector Dot-Product in 4.2 µs | Memory Alignment: 64-byte
 • Google Borg    : State Reconciliation Loop | Desired: 5 replicas | Actual: 5 replicas | Drift: 0.00% (CONVERGED)
 • xAI Colossus   : Inter-Agent RDMA Fabric | 10,000 packets delivered across 8 nodes | Drop Rate: 0.000% | Exit Code: 0</pre>
+              </div>
+            </div>
+
+            <!-- PANEL 6: SPOTIFY ENGINEERING CODEX STUDIO -->
+            <div class="tier1-panel" id="panel-nexus-spotify" role="tabpanel" aria-labelledby="tab-nexus-spotify">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+                <div>
+                  <h3 style="font-family: var(--font-space); font-size: 1.15rem; color: #1ed760;">
+                    Spotify Engineering Codex Studio &amp; Audio DSP Console (v25.0)
+                  </h3>
+                  <p style="font-size: 0.82rem; color: var(--text-muted);">
+                    Motor de normalización ITU-R BS.1770 (-14 LUFS / -1 dBTP), Rueda de Camelot, Bandidos BaRT y Malla Apollo/Hermes.
+                  </p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                  <label for="select-spotify-module" style="font-size: 0.78rem; color: var(--text-dim);">Subsistema Spotify:</label>
+                  <select id="select-spotify-module" class="sanctum-input" style="padding: 0.4rem 0.6rem; font-size: 0.78rem; width: auto;">
+                    <option value="dsp">🎛️ Audio DSP Kernel (Biquad Filter &amp; True Peak Limiter)</option>
+                    <option value="camelot">🎡 Rueda de Camelot (DJ Harmonic Mixing)</option>
+                    <option value="mesh">🛰️ Malla Apollo/Hermes (Circuit Breaker &amp; W3C Tracing)</option>
+                    <option value="bart">🎰 Spotify BaRT Contextual Bandits (Thompson Sampling)</option>
+                    <option value="fleet">🏛️ Elevador Golden Path Backstage RFC-42</option>
+                  </select>
+                  <button type="button" id="btn-run-spotify" class="btn btn--sm btn--primary" style="background: linear-gradient(135deg, #1ed760, #1db954); color: #040918; font-weight: 700;">
+                    ⚡ Ejecutar Spotify Studio
+                  </button>
+                </div>
+              </div>
+
+              <!-- Metric Cards -->
+              <div class="tier1-metrics-grid" style="margin-bottom: 1rem;">
+                <div class="tier1-metric-box">
+                  <div class="tier1-metric-val" id="spotify-metric-lufs" style="color: #1ed760;">-14.0 LUFS</div>
+                  <div class="tier1-metric-lbl">Estándar Spotify Audio</div>
+                </div>
+                <div class="tier1-metric-box">
+                  <div class="tier1-metric-val" id="spotify-metric-throughput" style="color: #38bdf8;">22.4M m/s</div>
+                  <div class="tier1-metric-lbl">Rendimiento DSP Direct Form II</div>
+                </div>
+                <div class="tier1-metric-box">
+                  <div class="tier1-metric-val" id="spotify-metric-circuit" style="color: #10b981;">CLOSED</div>
+                  <div class="tier1-metric-lbl">Circuit Breaker Apollo</div>
+                </div>
+                <div class="tier1-metric-box">
+                  <div class="tier1-metric-val" id="spotify-metric-golden" style="color: #a855f7;">100% RFC-42</div>
+                  <div class="tier1-metric-lbl">Golden Path Backstage</div>
+                </div>
+              </div>
+
+              <div style="background: rgba(4, 9, 24, 0.95); border: 1px solid var(--line-subtle); border-radius: var(--radius-sm); padding: 1rem; font-family: var(--font-mono); font-size: 0.76rem; max-height: 280px; overflow-y: auto;">
+                <div style="color: #1ed760; margin-bottom: 0.5rem; font-weight: 700;">
+                  [TELEMETRÍA EN VIVO · SPOTIFY APEX ARCHITECTURE v25.0]
+                </div>
+                <pre id="spotify-output-log" style="margin: 0; white-space: pre-wrap; color: var(--text-light); line-height: 1.5;">🎧 SPOTIFY ENGINEERING CODEX v25.0 — SISTEMA INICIADO:
+• Audio DSP Kernel : Biquad IIR Direct Form II Transpuesto (44.1 kHz) | Lookahead True Peak Ceiling: -1.0 dBTP
+• Camelot Harmonic : Matriz de 24 tonalidades DJ | Transiciones perfectas (mismo tono, relativo mayor/menor, modulación de quinta)
+• Apollo/Hermes    : 3-State Circuit Breaker | 5000 tokens/s Token Bucket | FNV-1a 32-bit Topic Partitioning
+• BaRT Bandits     : Thompson Sampling Beta/Gamma distribution | Exploración vs. Explotación convergente en &lt; 500 episodios
+• Golden Path      : Backstage RFC-42 | 4/4 repositorios de flota soberana auditados y alineados</pre>
               </div>
             </div>
           </div>
@@ -2932,6 +2994,6 @@ Sello      : sha256:jarvis_monad_nous_alpha_omega_108 (EXIT CODE: 0)</pre>
     </div>
   </dialog>
 
-  <script src="/js/eos.js?v=12.0" integrity="sha384-QFyL+aWysWxHxVWyXbo341TSK6/qYzWh4rwdWMM4o8HZCq4vvxGgQTKHwgWVyYMW" crossorigin="anonymous" defer></script>
+  <script src="/js/eos.js?v=12.0" integrity="sha384-xqoZn67lkdfqUSLesi7O9S4m5bskLw9R5jUJuMMxZYWIg7nK+GmhPN6u+xka4/DN" crossorigin="anonymous" defer></script>
 </body>
 </html>

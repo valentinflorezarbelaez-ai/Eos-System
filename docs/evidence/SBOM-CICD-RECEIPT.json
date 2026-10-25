@@ -3,8 +3,8 @@
   "epistemicState": "VERIFIED",
   "stagesPassed": "7/7",
   "exitCode": 0,
-  "sbomMerkleRoot": "sha256:cbe73e0dbbca7102d6d4c53de0d9df1a869e51c61d06b0c6b0859da69bcc7a36",
-  "artifactCount": 136,
+  "sbomMerkleRoot": "sha256:fde3fb7d74e4a8096f5c6c1c0bc26a364220ef2a12b97aafe727f59c26741073",
+  "artifactCount": 137,
   "serverlessEndpointsVerified": [
     "api/teurgia.js",
     "api/compile.js",
@@ -19,7 +19,8 @@
     "api/graph.js",
     "api/amplify.js",
     "api/eval.js",
-    "api/titans.js"
+    "api/titans.js",
+    "api/spotify.js"
   ],
   "enforcedHooks": [
     ".githooks/pre-commit",
