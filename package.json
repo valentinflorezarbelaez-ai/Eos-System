@@ -48,6 +48,7 @@
     "fleet:hooks": "node scripts/install-fleet-cicd-hooks.mjs",
     "jarvis": "node scripts/eos-jarvis-daemon.mjs",
     "jarvis:daemon": "node scripts/eos-jarvis-daemon.mjs --loop",
+    "loc": "node scripts/count-loc.mjs",
     "mcp": "node src/mcp/eosMcpServer.ts"
   },
   "engines": {

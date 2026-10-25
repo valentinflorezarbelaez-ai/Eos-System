@@ -1,6 +1,6 @@
 // api/mcp.js
-// EOS System — MCP over Streamable HTTP (Vercel Serverless)
-// Implements the Model Context Protocol JSON-RPC 2.0 over HTTP POST
+// EOS System — MCP over Streamable HTTP & SSE (Vercel Serverless)
+// Implements Model Context Protocol JSON-RPC 2.0 (spec 2024-11-05)
 // Zero external dependencies.
 
 import crypto from "node:crypto";
@@ -217,53 +217,78 @@ function handleToolCall(id, params) {
     jsonrpc: "2.0",
     id,
     result: {
-      content: [{ type: "text", text: content }]
+      content: [{ type: "text", text: content }],
+      isError: false
     }
   };
 }
 
 export default async function handler(req, res) {
-  // CORS headers
+  // Universal CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, mcp-session-id");
+  res.setHeader("Access-Control-Expose-Headers", "*");
 
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
 
-  // GET = SSE endpoint for MCP (return server info)
+  // GET: Support SSE handshake or JSON status
   if (req.method === "GET") {
+    const accept = (req.headers && req.headers.accept) || "";
+    if (accept.includes("text/event-stream")) {
+      res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
+      res.setHeader("Cache-Control", "no-cache, no-transform");
+      res.setHeader("Connection", "keep-alive");
+      res.write("event: endpoint\ndata: /api/mcp\n\n");
+      return res.end();
+    }
+
     return res.status(200).json({
       name: SERVER_INFO.name,
       version: SERVER_INFO.version,
       protocol: "mcp",
       protocolVersion: "2024-11-05",
-      status: "ready"
+      status: "ready",
+      toolsCount: TOOLS.length
     });
   }
 
-  // POST = JSON-RPC 2.0 request handler
+  // POST: JSON-RPC 2.0
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
-  let body;
-  try {
-    body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-  } catch {
+  let body = req.body;
+  if (typeof body === "string") {
+    try {
+      body = JSON.parse(body);
+    } catch {
+      return res.status(400).json({
+        jsonrpc: "2.0",
+        id: null,
+        error: { code: -32700, message: "Parse error: Invalid JSON" }
+      });
+    }
+  }
+
+  if (!body || typeof body !== "object") {
     return res.status(400).json({
       jsonrpc: "2.0",
       id: null,
-      error: { code: -32700, message: "Parse error: Invalid JSON" }
+      error: { code: -32600, message: "Invalid Request: body must be a JSON object" }
     });
   }
 
   const { id, method, params } = body;
 
-  // Handle notifications (no id)
-  if (method === "notifications/initialized") {
-    return res.status(200).end();
+  // Handle JSON-RPC notifications (no id)
+  if (typeof id === "undefined" || id === null) {
+    if (method === "notifications/initialized") {
+      return res.status(200).json({});
+    }
+    return res.status(200).json({});
   }
 
   let response;
@@ -272,11 +297,20 @@ export default async function handler(req, res) {
     case "initialize":
       response = handleInitialize(id);
       break;
+    case "ping":
+      response = { jsonrpc: "2.0", id, result: {} };
+      break;
     case "tools/list":
       response = handleToolsList(id);
       break;
     case "tools/call":
       response = handleToolCall(id, params);
+      break;
+    case "prompts/list":
+      response = { jsonrpc: "2.0", id, result: { prompts: [] } };
+      break;
+    case "resources/list":
+      response = { jsonrpc: "2.0", id, result: { resources: [] } };
       break;
     default:
       response = {

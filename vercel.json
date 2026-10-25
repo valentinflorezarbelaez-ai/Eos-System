@@ -8,8 +8,7 @@
     { "source": "/api/titans", "destination": "/api/eval?mode=titans" },
     { "source": "/api/bigtech", "destination": "/api/kernel?module=bigtech" },
     { "source": "/api/omega", "destination": "/api/memory?mode=omega" },
-    { "source": "/api/mcp", "destination": "/api/jarvis?mode=mcp" },
-    { "source": "/mcp", "destination": "/api/jarvis?mode=mcp" }
+    { "source": "/mcp", "destination": "/api/mcp" }
   ],
   "headers": [
     {

@@ -9,7 +9,7 @@
 - **Tribe**: `Core-Experience`
 - **Lifecycle Tier**: `production`
 - **Registered Fleet Repositories**: 4
-- **Active Formal Architectural Specs (OpenSpec)**: 23
+- **Active Formal Architectural Specs (OpenSpec)**: 22
 
 ## 2. The 90 / 10 Architecture Doctrine
 - **90% in Go (The Nervous System)**: High-concurrency microservices, idempotent event processors, CNCF health probes, FinOps distroless containers (< 12MB), and business APIs.
