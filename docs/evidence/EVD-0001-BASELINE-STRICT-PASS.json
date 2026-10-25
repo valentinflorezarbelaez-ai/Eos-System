@@ -1,9 +1,9 @@
 ﻿{
     "evidenceId":  "EVD-0001-BASELINE-STRICT-PASS",
-    "timestamp":  "2026-10-25T01:28:08Z",
+    "timestamp":  "2026-10-25T05:51:14Z",
     "epistemicState":  "VERIFIED",
     "exitCode":  0,
-    "executionDuration":  "869ms",
+    "executionDuration":  "1670ms",
     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "testsSummary":  {
                          "totalTests":  47,
@@ -31,8 +31,8 @@
                       },
                       {
                           "relativePath":  "IMPLEMENTATION_AUTHORIZATION.md",
-                          "sha256":  "B4228F30FB544ADF3324E261F64A6E7FE340DD439C784CB068093E20149D649B",
-                          "sizeBytes":  1842
+                          "sha256":  "7101276CEB5D64357175C4ACE6184269F5CD3C789BFD1A205E401BFDF6465AB1",
+                          "sizeBytes":  3836
                       },
                       {
                           "relativePath":  "package.json",
@@ -90,6 +90,11 @@
                           "sizeBytes":  113
                       },
                       {
+                          "relativePath":  "docs/audits/AUDIT-004-ABERAMENTHO-LIVE.md",
+                          "sha256":  "2D8B918570DA610D1C80D331E73C2CF67E0311EEBC0FF226CB5745219E1917CF",
+                          "sizeBytes":  7335
+                      },
+                      {
                           "relativePath":  "docs/intake/INTAKE-001-EOS-V2-EVOLUTION.md",
                           "sha256":  "E473C3E85C3E844A8A189C4DAF3F885BFCADF5A213F074109679ECF86625C19A",
                           "sizeBytes":  1866
@@ -115,9 +120,14 @@
                           "sizeBytes":  6609
                       },
                       {
+                          "relativePath":  "docs/plans/PLAN-004-ABERAMENTHO-PERFECTION.md",
+                          "sha256":  "CCBAED70F9CD1B72A64B6771A68C8CAB1FB35F3FF721D2EF9951C591D0A1FECE",
+                          "sizeBytes":  3046
+                      },
+                      {
                           "relativePath":  "docs/projects/registry.json",
-                          "sha256":  "236D419A9BCA0E3B7E5FD5DFABDF8D8EBA2434C017D7040466048AF04CE177EB",
-                          "sizeBytes":  3387
+                          "sha256":  "923AE3222F5BAD10E6A3AB77773A942F7551DDC3A5373BFE99E1CCAC9DC92722",
+                          "sizeBytes":  3678
                       },
                       {
                           "relativePath":  "docs/specs/SPEC-001-EOS-CORE.md",
@@ -135,6 +145,11 @@
                           "sizeBytes":  1774
                       },
                       {
+                          "relativePath":  "docs/specs/SPEC-004-ABERAMENTHO-ENGINE-INTEGRITY.md",
+                          "sha256":  "AB054FCA7FD2AC841F772541CCB54C903B220D67F4A04C249871BC25376C1DE5",
+                          "sizeBytes":  4028
+                      },
+                      {
                           "relativePath":  "docs/tasks/TASKS-001-DAG.md",
                           "sha256":  "C13B3BC3C3220D2707DBE3A66FA0C9F3DD3472AEDE7B9E228C9ADDFA1888CE39",
                           "sizeBytes":  2275
@@ -143,6 +158,26 @@
                           "relativePath":  "docs/tasks/TASKS-002-DAG.md",
                           "sha256":  "CCF6DB613B767CEB275ACB9CD4F2ECDCB26156B72D1566758F5A396A8AB9DF87",
                           "sizeBytes":  2356
+                      },
+                      {
+                          "relativePath":  "docs/tasks/TASKS-004-DAG.md",
+                          "sha256":  "3829A4DE77D0F5652EE9DF3ADDD4E86CD4B2AC84C0862EC5AEB40FC78D0628A3",
+                          "sizeBytes":  1910
+                      },
+                      {
+                          "relativePath":  "scripts/apply-aberamentho-perfection.ps1",
+                          "sha256":  "09DA8686C8CD30F199275E0056BCEE630D2CFCEBCCC1292C86FD350BE0033113",
+                          "sizeBytes":  15686
+                      },
+                      {
+                          "relativePath":  "scripts/generate-emblems.ps1",
+                          "sha256":  "DEF5A07BC7AEA0FED96933146CC6C07D54B96979550B851EDA5D56ED057FCF25",
+                          "sizeBytes":  3358
+                      },
+                      {
+                          "relativePath":  "scripts/patch-deck-controller.ps1",
+                          "sha256":  "84205B7C7E748BA85381A25C79E5B06BEEF6ACE73D971F974DD139D68C4042E9",
+                          "sizeBytes":  954
                       },
                       {
                           "relativePath":  "scripts/run-sentinel.ps1",
