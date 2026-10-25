@@ -63,6 +63,7 @@ assert.ok(js.includes('"bigtech:tla"'), "Missing bigtech:tla CLI preset (Big Tec
 assert.ok(js.includes('"kernel:linux"'), "Missing kernel:linux CLI preset (Linux Kernel Ring-0 Monolithic Modular Core)");
 assert.ok(js.includes('"omega:quantum"'), "Missing omega:quantum CLI preset (Omega Singularity v8.0 PQC + ZK-STARK + BFT)");
 assert.ok(js.includes('"cicd:pipeline"'), "Missing cicd:pipeline CLI preset (7-Stage Sovereign CI/CD SecDevOps Gate)");
+assert.ok(js.includes('"fleet:dispatch"'), "Missing fleet:dispatch CLI preset (Federated Fleet Autonomous CI/CD Dispatcher)");
 assert.ok(js.includes('num: "21"'), "Missing 21st step of Master Engineering Pipeline");
 assert.ok(html.includes("seL4"), "Missing seL4 formal verification benchmark");
 assert.ok(html.includes("ASML Twinscan EUV"), "Missing ASML Twinscan EUV benchmark");
@@ -97,6 +98,12 @@ assert.ok(fs.existsSync(path.join(root, "api/cicd.js")), "Missing api/cicd.js se
 assert.ok(fs.existsSync(path.join(root, ".github/workflows/eos-sovereign-cicd.yml")), "Missing .github/workflows/eos-sovereign-cicd.yml");
 assert.ok(fs.existsSync(path.join(root, ".githooks/pre-commit")), "Missing .githooks/pre-commit");
 assert.ok(fs.existsSync(path.join(root, ".githooks/pre-push")), "Missing .githooks/pre-push");
+assert.ok(fs.existsSync(path.join(root, "docs/projects/registry.json")), "Missing docs/projects/registry.json (Law IV Registry)");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosFleetDispatcher.ts")), "Missing src/core/eosFleetDispatcher.ts");
+assert.ok(fs.existsSync(path.join(root, "api/fleet.js")), "Missing api/fleet.js serverless fleet dispatcher endpoint");
+assert.ok(fs.existsSync(path.join(root, "scripts/install-fleet-cicd-hooks.mjs")), "Missing scripts/install-fleet-cicd-hooks.mjs");
+assert.ok(fs.existsSync(path.join(root, "scripts/fleet-autonomous-cicd.mjs")), "Missing scripts/fleet-autonomous-cicd.mjs");
+assert.ok(html.includes('id="fleet-cicd-orchestrator"'), "Missing #fleet-cicd-orchestrator interactive fleet orchestrator");
 assert.ok(html.includes('id="btn-copy-eos-blueprint"'), "Missing #btn-copy-eos-blueprint button");
 assert.ok(html.includes('id="btn-download-eos-spec"'), "Missing #btn-download-eos-spec button");
 assert.ok(html.includes('id="eos-evolution-log"'), "Missing #eos-evolution-log live co-evolution log");

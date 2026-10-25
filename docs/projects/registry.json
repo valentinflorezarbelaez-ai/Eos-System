@@ -1,0 +1,68 @@
+{
+  "version": "10.0.0-sovereign-fleet-registry",
+  "updatedAt": "2026-10-25T09:46:00-05:00",
+  "masterOrchestrator": "EOS System (c:\\Users\\valen\\Eos-System)",
+  "complianceStandard": "EOS_CONSTITUTION_LAW_IV_EXTERNAL_WRITE_BARRIER",
+  "projects": [
+    {
+      "id": "eos-system",
+      "name": "EOS System (Control Plane Core)",
+      "localPath": "c:\\Users\\valen\\Eos-System",
+      "remoteUrl": "https://github.com/valentinflorezarbelaez-ai/Eos-System.git",
+      "productionUrl": "https://eos-system-ten.vercel.app",
+      "type": "control-plane-monolith",
+      "status": "REGISTERED",
+      "intake": "INTAKE_COMPLETE",
+      "specification": "SPECIFICATION_APPROVED",
+      "audit": "AUDIT_COMPLETE",
+      "authorization": "LEVEL_3_PRODUCTION_AUTHORIZED",
+      "cicdGateScript": "scripts/verify-cicd-pipeline.mjs",
+      "autoShipScript": "scripts/ship-sovereign.mjs"
+    },
+    {
+      "id": "aberamentho",
+      "name": "Aberamentho Pleroma Music",
+      "localPath": "c:\\Users\\valen\\Aberamentho-s-Pleroma-music",
+      "remoteUrl": "https://github.com/valentinflorezarbelaez-ai/Aberamentho-s-Pleroma-music.git",
+      "productionUrl": "https://aberamentosprelomamusic.vercel.app",
+      "type": "sacred-acoustic-app",
+      "status": "REGISTERED",
+      "intake": "INTAKE_COMPLETE",
+      "specification": "SPECIFICATION_APPROVED",
+      "audit": "AUDIT_COMPLETE",
+      "authorization": "LEVEL_3_PRODUCTION_AUTHORIZED",
+      "cicdGateScript": "scripts/verify-landing.mjs",
+      "autoShipScript": "npm run ship:sovereign"
+    },
+    {
+      "id": "portafolio",
+      "name": "Portafolio Oficial — Valentín Flórez",
+      "localPath": "c:\\Users\\valen\\portafolio",
+      "remoteUrl": "https://github.com/valentinflorezarbelaez-ai/portafolio.git",
+      "productionUrl": "https://portafolio-valentin.vercel.app",
+      "type": "executive-showcase",
+      "status": "REGISTERED",
+      "intake": "INTAKE_COMPLETE",
+      "specification": "SPECIFICATION_APPROVED",
+      "audit": "AUDIT_COMPLETE",
+      "authorization": "LEVEL_3_PRODUCTION_AUTHORIZED",
+      "cicdGateScript": "scripts/verify-landing.mjs",
+      "autoShipScript": "npm run ship:sovereign"
+    },
+    {
+      "id": "performance-talent-group",
+      "name": "PTG — Performance Talent Group",
+      "localPath": "c:\\Users\\valen\\Performance-Talent-Group",
+      "remoteUrl": "",
+      "productionUrl": "https://ptg-performance-talent-group.vercel.app",
+      "type": "enterprise-operations",
+      "status": "REGISTERED",
+      "intake": "INTAKE_COMPLETE",
+      "specification": "SPECIFICATION_APPROVED",
+      "audit": "AUDIT_COMPLETE",
+      "authorization": "LEVEL_2_AUTHORIZED",
+      "cicdGateScript": "scripts/verify-landing.mjs",
+      "autoShipScript": "npm run ship:sovereign"
+    }
+  ]
+}

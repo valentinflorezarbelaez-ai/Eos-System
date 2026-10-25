@@ -67,6 +67,10 @@
   5. **Aduana 5 — Auditoría de Calidad, Accesibilidad (`WCAG 2.1 AA`), SEO & Presupuesto de Rendimiento (`Modern Web Guidance`)**: Validación de semántica HTML5, `aria-live`, `<dialog closedby="any">`, `content-visibility: auto` + `contain-intrinsic-size` y `Speculation Rules`.
   6. **Aduana 6 — Pruebas de Humo en Proceso de Todos los Endpoints Serverless (`/api/*`)**: Invocación automatizada en memoria de `/api/teurgia`, `/api/compile`, `/api/memory`, `/api/bigtech`, `/api/kernel`, `/api/omega` y `/api/cicd` exigiendo código `HTTP 200` y contrato JSON válido.
   7. **Aduana 7 — Despliegue Continuo Zero-Downtime & Verificación Post-Deploy en Vivo**: Sincronización automática con GitHub Actions y Vercel Production seguida de verificación `HTTP 200 OK` en vivo; SI cualquiera de las 7 aduanas falla (`exitCode !== 0`), ENTONCES EL SISTEMA aborta el commit/push/deploy de forma inmediata (*Fail-Closed*).
+* **FR-018 (Event-Driven & Ubiquitous)**: CUANDO se modifique o mejore cualquier proyecto perteneciente a la Flota Soberana (registrado en `docs/projects/registry.json`), EL SISTEMA **orquestará de forma autónoma el pipeline CI/CD SecDevOps federado (`v10.0` — `src/core/eosFleetDispatcher.ts`, `api/fleet.js`, `scripts/fleet-autonomous-cicd.mjs`, `scripts/install-fleet-cicd-hooks.mjs` y `#fleet-cicd-orchestrator`)**:
+  1. **Instalación y Propagación Federada de Git Hooks**: EL SISTEMA inyectará automáticamente los hooks `.githooks/pre-commit` y `.githooks/pre-push` en todos los repositorios locales de la flota (`Aberamentho-s-Pleroma-music`, `portafolio`, etc.) para que ninguna mejora en ningún proyecto pueda comitearse o pushearse sin pasar las 7 aduanas de seguridad (SAST, 0 secretos, SDD, AST, WCAG).
+  2. **Monitoreo y Despacho Autónomo Multi-Repositorio**: El despachador autónomo (`npm run fleet:ship` o `eos fleet --dispatch`) detectará automáticamente qué proyectos de la flota tienen cambios no comiteados o pendientes de push, ejecutará sus pruebas y compuertas locales, realizará el commit y push firmado, activará su despliegue en Vercel y sondeará que su URL de producción responda `HTTP 200 OK`.
+  3. **Registro Criptográfico Centralizado en EOS**: La telemetría en vivo de toda la flota se publicará en el endpoint `/api/fleet` y en la sección `#fleet-cicd-orchestrator` de EOS System con estado epistémico consolidado.
 
 ---
 
@@ -144,4 +148,10 @@ ESCENARIO: [BDD-012 Tubería Autónoma CI/CD SecDevOps de 7 Aduanas (Pre-Commit,
   CUANDO se ejecuta "npm run verify:strict", un commit/push protegido por .githooks o el simulador interactivo de las 7 Aduanas (#cicd-pipeline-lab)
   ENTONCES el motor ejecuta secuencialmente el Escáner SAST/Secretos, la Compuerta SDD, la Auditoría SLSA/SBOM SHA-256, la Validación Estática AST (node --check), la Auditoría WCAG/CWV, las Pruebas de Humo Serverless (7 endpoints /api/*) y el Despliegue Continuo Verificado
   Y bloquea cualquier integración si existe 1 sola vulnerabilidad o desviación (Fail-Closed, Exit Code 0 requerido).
+
+ESCENARIO: [BDD-013 Orquestación Autónoma CI/CD SecDevOps de Toda la Flota Soberana (v10.0)]
+  DADO que existen múltiples proyectos soberanos registrados en docs/projects/registry.json (EOS System, Aberamentho, Portafolio, etc.)
+  CUANDO el Arquitecto Soberano ejecuta "npm run fleet:ship", "npm run fleet:verify" o interactúa con el Orquestador de Flota (#fleet-cicd-orchestrator)
+  ENTONCES EOS escanea todos los repositorios locales, inyecta las aduanas SecDevOps en sus .git/hooks, ejecuta la suite de verificación en cada proyecto modificado, comitea, pushea a sus respectivos remotos de GitHub, y sondea en vivo cada URL de producción
+  Y el endpoint serverless /api/fleet reporta el estado 100% verificado y la salud de los 9 proyectos de la flota.
 ```

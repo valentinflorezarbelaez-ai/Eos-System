@@ -115,7 +115,7 @@ assert.ok(Number(cssSizeKb) < 120, `CSS bundle exceeded budget: ${cssSizeKb} KB`
 console.log(`[PASS] Stage 5/7 — WCAG 2.1 AA, SEO & Performance Budget Gate (JS: ${jsSizeKb} KB, CSS: ${cssSizeKb} KB).`);
 
 // ---------------------------------------------------------------------------
-// STAGE 6: IN-PROCESS SMOKE TESTS OF ALL 7 SERVERLESS API ENDPOINTS (/api/*)
+// STAGE 6: IN-PROCESS SMOKE TESTS OF ALL 8 SERVERLESS API ENDPOINTS (/api/*)
 // ---------------------------------------------------------------------------
 const apiEndpoints = [
   "api/teurgia.js",
@@ -124,7 +124,8 @@ const apiEndpoints = [
   "api/bigtech.js",
   "api/kernel.js",
   "api/omega.js",
-  "api/cicd.js"
+  "api/cicd.js",
+  "api/fleet.js"
 ];
 
 for (const relApi of apiEndpoints) {

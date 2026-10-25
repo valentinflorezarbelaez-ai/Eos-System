@@ -102,3 +102,13 @@
 * **Rationale**: Guarantees that every single change is automatically audited for security, quality, architecture, accessibility, performance, and API contract compliance before it can ever be integrated or deployed.
 * **Rejected Alternatives**:
   * *Manual Ad-Hoc Deployments Without Pre-Deployment Security Gates*: Rejected because human or agent oversight without automated fail-closed gates violates Law II, Law III, and Law VI.
+
+### ADR-011: Sovereign Fleet Autonomous CI/CD Dispatcher & Hook Propagator (`v10.0` — `docs/projects/registry.json`, `src/core/eosFleetDispatcher.ts`, `api/fleet.js`, `scripts/fleet-autonomous-cicd.mjs`, `scripts/install-fleet-cicd-hooks.mjs` & `#fleet-cicd-orchestrator`)
+* **Decision**: Expand EOS from a single-project CI/CD engine into the **Federated Master CI/CD & SecDevOps Orchestrator for all repositories in the Sovereign Fleet**:
+  1. **Canonical Fleet Registry (`docs/projects/registry.json`)**: Formally registers each fleet repository (`EOS System`, `Aberamentho Pleroma Music`, `Portafolio Valentín Flórez`, `PTG`, etc.) with local path, GitHub remote, Vercel production URL, and verification state per Law IV.
+  2. **Federated Hook Propagator (`scripts/install-fleet-cicd-hooks.mjs`)**: Injects and activates identical 7-stage pre-commit and pre-push Git hooks into every local fleet project, guaranteeing zero secrets and zero broken invariants across all repositories on the workstation.
+  3. **Autonomous Fleet Dispatcher (`scripts/fleet-autonomous-cicd.mjs` / `npm run fleet:ship`)**: Scans all fleet projects, detects modifications or unpushed commits, executes their respective test suites, commits, pushes to origin, triggers production builds, and asserts live `HTTP 200 OK` health.
+  4. **Live Fleet Control HUD & API (`#fleet-cicd-orchestrator` + `api/fleet.js`)**: Real-time multi-repo CI/CD telemetry directly inside the EOS Control Plane.
+* **Rationale**: Satisfies the Sovereign Architect's direct mandate: whenever a change or improvement is made to *any* project in the ecosystem, EOS autonomously audits, tests, secures, and ships it to production without manual overhead.
+* **Rejected Alternatives**:
+  * *Maintaining Disconnected Manual Deployments Per Project*: Rejected because lack of unified gate propagation leads to drift, configuration rot, and potential secret leaks in satellite repos.
