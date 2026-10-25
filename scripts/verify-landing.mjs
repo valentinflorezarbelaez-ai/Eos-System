@@ -110,8 +110,12 @@ assert.ok(fs.existsSync(path.join(root, "src/core/eosJarvisMonad.ts")), "Missing
 assert.ok(fs.existsSync(path.join(root, "src/core/eosNeuralVectorCore.ts")), "Missing src/core/eosNeuralVectorCore.ts");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosPatchValidator.ts")), "Missing src/core/eosPatchValidator.ts");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosContextOptimizer.ts")), "Missing src/core/eosContextOptimizer.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosPromptAmplifier.ts")), "Missing src/core/eosPromptAmplifier.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosArchitectureGuard.ts")), "Missing src/core/eosArchitectureGuard.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosCognitiveJudge.ts")), "Missing src/core/eosCognitiveJudge.ts");
 assert.ok(fs.existsSync(path.join(root, "test/eosCore.test.mjs")), "Missing test/eosCore.test.mjs");
 assert.ok(fs.existsSync(path.join(root, "test/chaosResilience.test.mjs")), "Missing test/chaosResilience.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "test/eosPrometheus.test.mjs")), "Missing test/eosPrometheus.test.mjs");
 assert.ok(fs.existsSync(path.join(root, "README.md")), "Missing README.md");
 assert.ok(html.includes('id="jarvis-webgl-canvas"'), "Missing #jarvis-webgl-canvas 3D WebGL HUD");
 assert.ok(fs.existsSync(path.join(root, "api/jarvis.js")), "Missing api/jarvis.js serverless JARVIS endpoint");

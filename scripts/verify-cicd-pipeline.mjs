@@ -103,12 +103,16 @@ for (const jsFile of jsFilesToCheck) {
 const tsCoreFiles = fs.readdirSync(path.join(root, "src/core")).filter((f) => f.endsWith(".ts"));
 assert.ok(tsCoreFiles.length >= 6, "Expected at least 6 Layer-0 TypeScript core modules in src/core/");
 
-// Execute formal native unit test suite and chaos resilience suite (node:test)
+// Execute formal native unit test suite, chaos resilience suite, and prometheus omni-model suite (node:test)
 execFileSync(process.execPath, ["--test", path.join(root, "test/eosCore.test.mjs")], {
   cwd: root,
   stdio: "pipe"
 });
 execFileSync(process.execPath, ["--test", path.join(root, "test/chaosResilience.test.mjs")], {
+  cwd: root,
+  stdio: "pipe"
+});
+execFileSync(process.execPath, ["--test", path.join(root, "test/eosPrometheus.test.mjs")], {
   cwd: root,
   stdio: "pipe"
 });

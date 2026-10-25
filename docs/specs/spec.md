@@ -71,11 +71,14 @@
   1. **Instalación y Propagación Federada de Git Hooks**: EL SISTEMA inyectará automáticamente los hooks `.githooks/pre-commit` y `.githooks/pre-push` en todos los repositorios locales de la flota (`Aberamentho-s-Pleroma-music`, `portafolio`, etc.) para que ninguna mejora en ningún proyecto pueda comitearse o pushearse sin pasar las 7 aduanas de seguridad (SAST, 0 secretos, SDD, AST, WCAG).
   2. **Monitoreo y Despacho Autónomo Multi-Repositorio**: El despachador autónomo (`npm run fleet:ship` o `eos fleet --dispatch`) detectará automáticamente qué proyectos de la flota tienen cambios no comiteados o pendientes de push, ejecutará sus pruebas y compuertas locales, realizará el commit y push firmado, activará su despliegue en Vercel y sondeará que su URL de producción responda `HTTP 200 OK`.
   3. **Registro Criptográfico Centralizado en EOS**: La telemetría en vivo de toda la flota se publicará en el endpoint `/api/fleet` y en la sección `#fleet-cicd-orchestrator` de EOS System con estado epistémico consolidado.
-* **FR-019 (Ubiquitous & Autonomous Cognitive Loop)**: EL SISTEMA operará como **EOS JARVIS Sovereign Monad (`v11.0` — `src/core/eosJarvisMonad.ts`, `api/jarvis.js`, `scripts/eos-jarvis-daemon.mjs` y `#eos-jarvis-nexus`)**, el núcleo de Inteligencia Artificial Autónoma y Asistente Cognitivo Supremo para toda la ingeniería, arquitectura, seguridad y despliegue del ecosistema:
-  1. **Motor de Voz y Telemetría Neuro-Acústica (Web Speech API + Sintetizador Formántico Belilin)**: JARVIS escucha instrucciones por voz en tiempo real, procesa lenguaje natural con el Átomo Maestro *Nous*, y responde por voz sintetizada en el navegador y con transcripción determinista en la consola.
-  2. **Intérprete de Metas y Despachador Autónomo (Goal-Oriented Autonomous Agent)**: JARVIS traduce directivas de alto nivel del usuario ("JARVIS, audita la flota", "JARVIS, verifica la seguridad", "JARVIS, activa el protocolo Belilin", "JARVIS, despacha a producción") en un DAG atómico de ejecución, dispara las compuertas de seguridad correspondientes y emite recibos verificados.
-  3. **Reactor Holográfico & HUD de Estados Cognitivos (`#eos-jarvis-nexus`)**: Interfaz visual reactiva que refleja en tiempo real el pulso de la mente consciente de EOS (`IDLE`, `LISTENING`, `ANALYZING_Nous`, `SECURING_GATES`, `HEALING_FDIR`, `DEPLOYING_FLEET`), con botones de activación por voz y chips de acción inmediata.
-  4. **Daemon Centinela Autónomo 24/7 (`scripts/eos-jarvis-daemon.mjs`)**: Proceso en segundo plano que vigila el estado de la máquina, detecta cambios en repositorios, repara enlaces huérfanos con FDIR y mantiene la armonía operativa del ecosistema.
+* **FR-020 (Ubiquitous & Universal Model Context Protocol)**: EL SISTEMA expondrá un servidor nativo MCP sobre stdio (`src/mcp/eosMcpServer.ts`) con herramientas soberanas (`eos_semantic_search`, `eos_tmr_consensus`, `eos_audit_fleet`, `eos_health_check`, `eos_validate_patch`, `eos_optimize_context`) sin librerías externas de runtime.
+* **FR-021 (Ubiquitous & Multi-IDE Universal CLI)**: EL SISTEMA proveerá un punto de entrada CLI universal (`bin/eos.mjs`) ejecutable en cualquier terminal de Windows, Linux o macOS, ofreciendo comandos unificados (`verify`, `audit`, `test`, `mcp`, `jarvis`, `health`, `optimize`, `amplify`, `guard`, `judge`).
+* **FR-022 (Event-Driven & In-Memory AST Sandbox)**: CUANDO se proponga una mutación o parche de código, EL SISTEMA ejecutará `validatePatch` en `src/core/eosPatchValidator.ts` para verificar sintaxis AST, escaneo de secretos y ausencia de patrones destructivos antes de tocar el sistema de archivos.
+* **FR-023 (State-Driven & High-Density Context Compression)**: MIENTRAS un modelo inteligente requiera el contexto de un archivo de código fuente, EL SISTEMA extraerá un esquema estructural en `src/core/eosContextOptimizer.ts`, podando implementaciones internas de funciones y preservando contratos, tipos y docstrings, reduciendo tokens entre 70% y 85%.
+* **FR-024 (Event-Driven Metaprompting & EARS Formal Scaffolding)**: CUANDO cualquier usuario o agente ingrese una directiva informal en lenguaje natural, EL SISTEMA (`src/core/eosPromptAmplifier.ts`) sintetizará determinísticamente una especificación formal en sintaxis EARS (Event-Driven, State-Driven, Error/Unwanted Condition, Ubiquitous), criterios BDD GIVEN-WHEN-THEN, invariantes de frontera arquitectónica y andamiajes de razonamiento paso a paso (CoT/ToT) adaptados a la clase de modelo destino (Claude, GPT-4.5/o1/o3, Gemini 2.0, DeepSeek-R1, Llama 3.3).
+* **FR-025 (Ubiquitous Clean/Hexagonal Boundary & Circular Invariant Guard)**: EL SISTEMA (`src/core/eosArchitectureGuard.ts`) analizará estáticamente el grafo de dependencias de código para asegurar que el núcleo de dominio (Layer 0) mantenga 0 dependencias externas o de UI, verificará la dirección estricta de dependencias (UI -> App -> Domain) y detectará de forma determinista cualquier ciclo circular de importaciones mediante análisis de grafos dirigido.
+* **FR-026 (Event-Driven Cognitive Consensus & Bayesian Model Evaluation)**: CUANDO se requiera evaluar una decisión de diseño, mutación o propuesta arquitectónica, EL SISTEMA (`src/core/eosCognitiveJudge.ts`) aplicará una matriz de evaluación Bayesiana multidimensional (Seguridad, Rendimiento, Corrección, Pureza Arquitectónica) y emitirá un veredicto formal de conformidad con los 7 Mandamientos Inviolables.
+* **FR-027 (Ubiquitous Multi-IDE Omni-Tools)**: EL SISTEMA integrará `eos_amplify_prompt`, `eos_check_architecture` y `eos_evaluate_decision` en `src/mcp/eosMcpServer.ts` y en `bin/eos.mjs` (`eos amplify`, `eos guard`, `eos judge`), permitiendo que cualquier IDE (Cursor, Antigravity, VS Code, JetBrains, Neovim) gobierne y extraiga el máximo potencial analítico de cualquier LLM.
 
 ---
 
@@ -165,4 +168,39 @@ ESCENARIO: [BDD-014 Operación Cognitiva Autónoma JARVIS (Voz, Metas, Reactor A
   CUANDO emite una directriz verbal o escrita ("JARVIS, audita la flota", "JARVIS, ejecuta nanosegundos", "JARVIS, despliega todo a producción")
   ENTONCES JARVIS reconoce la intención, vocaliza la confirmación de la orden, ejecuta el plan atómico correspondiente contra las aduanas de seguridad, actualiza el estado holográfico del Reactor Arc y emite el informe de ejecución con código de salida 0
   Y el endpoint serverless /api/jarvis responde con el contrato cognitivo, transcripción y dictamen en tiempo real.
+
+ESCENARIO: [BDD-015 Servidor Nativo Model Context Protocol (MCP) e Integración con IDEs]
+  DADO que un asistente de IA (Cursor, Antigravity, Claude, Copilot) se conecta vía MCP sobre stdio
+  CUANDO envía una solicitud JSON-RPC 2.0 para listar o llamar herramientas ("eos_semantic_search", "eos_tmr_consensus", "eos_audit_fleet", "eos_health_check")
+  ENTONCES EOS MCP responde con código conforme al estándar MCP 2024-11-05 y ejecuta las operaciones soberanas con 0 dependencias externas.
+
+ESCENARIO: [BDD-016 Interfaz CLI Universal de Línea de Comandos (bin/eos.mjs)]
+  DADO que un desarrollador o pipeline invoca el comando universal "eos" en la terminal
+  CUANDO se pasa un subcomando como "verify", "audit", "test", "jarvis", "health", "optimize", "amplify", "guard" o "judge"
+  ENTONCES la herramienta ejecuta la tarea requerida con banners soberanos e informes deterministas con exit code 0 ante éxito y 1 ante fallo.
+
+ESCENARIO: [BDD-017 Validación Pre-Mutación en Sandbox AST (eos_validate_patch)]
+  DADO que un modelo de IA genera un parche o nuevo código fuente
+  CUANDO se invoca "eos_validate_patch"
+  ENTONCES EOS compila en memoria la sintaxis TypeScript/JavaScript, detecta credenciales en texto claro, valida escapes de directorio y bloquea patrones destructivos antes de escribir en disco.
+
+ESCENARIO: [BDD-018 Compresión Estructural de Contexto de Alta Densidad (eos_optimize_context)]
+  DADO que se requiere alimentar un modelo de lenguaje con un archivo de código voluminoso
+  CUANDO se invoca "eos_optimize_context" o "eos optimize <archivo>"
+  ENTONCES el analizador extrae un esquema limpio de exportaciones, interfaces, tipos y firmas eliminando implementaciones internas y reduciendo el consumo de tokens entre 70% y 85%.
+
+ESCENARIO: [BDD-019 Amplificación de Prompts y Andamiaje Formal EARS/BDD (eos_amplify_prompt)]
+  DADO que un usuario o agente ingresa una directiva informal ("crear un sistema de autenticación", "optimizar la base de datos")
+  CUANDO se invoca "eos_amplify_prompt" o el comando CLI "eos amplify <prompt>"
+  ENTONCES EOS traduce la directiva a requerimientos EARS, criterios BDD, invariantes arquitectónicos no negociables y andamiaje cognitivo adaptado al modelo (Claude, GPT-4.5/o1/o3, Gemini 2.0, DeepSeek-R1) garantizando Cero Vibe Coding.
+
+ESCENARIO: [BDD-020 Guardián Invariante de Fronteras Limpias/Hexagonales y Detección de Ciclos (eos_check_architecture)]
+  DADO un proyecto de software con capas Hexagonales (Dominio, Aplicación, Infraestructura, UI)
+  CUANDO se invoca "eos_check_architecture" o el comando CLI "eos guard [ruta]"
+  ENTONCES EOS verifica la pureza del dominio (0 dependencias externas/UI en el núcleo), valida la dirección de dependencias (UI -> App -> Domain) y detecta ciclos de importaciones circulares en el grafo de módulos.
+
+ESCENARIO: [BDD-021 Tribunal Cognitivo y Evaluación de Modelos Multidimensional (eos_evaluate_decision)]
+  DADO que se debe evaluar una propuesta arquitectónica o decisión técnica
+  CUANDO se invoca "eos_evaluate_decision" o el comando CLI "eos judge <escenario>"
+  ENTONCES EOS aplica una matriz Bayesiana multidimensional (Seguridad, Rendimiento, Mantenibilidad, Pureza Arquitectónica) y emite un veredicto formal alineado con la Constitución de EOS.
 ```

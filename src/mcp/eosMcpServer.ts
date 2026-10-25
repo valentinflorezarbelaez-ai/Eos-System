@@ -38,6 +38,23 @@ import {
   compressSourceContext
 } from "../core/eosContextOptimizer.ts";
 
+import {
+  amplifyPrompt
+} from "../core/eosPromptAmplifier.ts";
+
+import type {
+  ModelFamily,
+  StrictnessLevel
+} from "../core/eosPromptAmplifier.ts";
+
+import {
+  scanArchitecture
+} from "../core/eosArchitectureGuard.ts";
+
+import {
+  evaluateDecision
+} from "../core/eosCognitiveJudge.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -164,6 +181,44 @@ export class EosMcpServer {
                       content: { type: "string", description: "Source code to compress (optional, if omitted reads from filePath)" }
                     },
                     required: ["filePath"]
+                  }
+                },
+                {
+                  name: "eos_amplify_prompt",
+                  description: "Amplifies an informal prompt into a zero-vibe ISO 29148 EARS specification, BDD acceptance scenarios, boundary invariants, and model-specific cognitive scaffolding.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      rawPrompt: { type: "string", description: "Natural language instruction or feature request" },
+                      targetModel: { type: "string", enum: ["claude", "openai", "gemini", "deepseek", "llama", "universal"], description: "Target model architecture (default: universal)" },
+                      strictLevel: { type: "string", enum: ["standard", "hardened", "sovereign"], description: "Scaffolding rigor (default: hardened)" }
+                    },
+                    required: ["rawPrompt"]
+                  }
+                },
+                {
+                  name: "eos_check_architecture",
+                  description: "Statically analyzes Clean/Hexagonal boundaries, domain purity (0 framework/UI imports in core), and detects circular import dependency cycles.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      targetDir: { type: "string", description: "Directory to scan relative to project root (default: 'src')" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_evaluate_decision",
+                  description: "Evaluates an architectural or implementation choice against the 7 Inviolable Commandments using a multi-dimensional Bayesian matrix.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      title: { type: "string", description: "Scenario or decision title" },
+                      description: { type: "string", description: "Detailed description of the problem context" },
+                      proposedAction: { type: "string", description: "The action or design proposed" },
+                      codeSnippet: { type: "string", description: "Optional code snippet to analyze" },
+                      targetDomain: { type: "string", description: "Optional target domain (e.g. CORE, DOMAIN, UI)" }
+                    },
+                    required: ["title", "description", "proposedAction"]
                   }
                 }
               ]
@@ -340,6 +395,32 @@ export class EosMcpServer {
           }
         }
         return compressSourceContext(content, filePath);
+      }
+
+      case "eos_amplify_prompt": {
+        const rawPrompt = String(args.rawPrompt || "");
+        const targetModel = (args.targetModel || "universal") as ModelFamily;
+        const strictLevel = (args.strictLevel || "hardened") as StrictnessLevel;
+        return amplifyPrompt({
+          rawPrompt,
+          targetModel,
+          strictLevel
+        });
+      }
+
+      case "eos_check_architecture": {
+        const targetDir = args.targetDir ? path.resolve(this.projectRoot, String(args.targetDir)) : path.resolve(this.projectRoot, "src");
+        return scanArchitecture(targetDir, this.projectRoot);
+      }
+
+      case "eos_evaluate_decision": {
+        return evaluateDecision({
+          title: String(args.title || "Architectural Evaluation"),
+          description: String(args.description || ""),
+          proposedAction: String(args.proposedAction || ""),
+          codeSnippet: args.codeSnippet ? String(args.codeSnippet) : undefined,
+          targetDomain: args.targetDomain ? String(args.targetDomain) : undefined
+        });
       }
 
       default:

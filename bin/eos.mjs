@@ -79,6 +79,10 @@ switch (command) {
         cwd: root,
         stdio: "inherit"
       });
+      execFileSync(process.execPath, ["--test", path.join(root, "test/eosPrometheus.test.mjs")], {
+        cwd: root,
+        stdio: "inherit"
+      });
       console.log("\n[PASS] All Unit & Chaos suites completed successfully (Exit 0).");
     } catch (err) {
       process.exit(1);
@@ -150,6 +154,90 @@ switch (command) {
     break;
   }
 
+  case "amplify": {
+    printBanner();
+    const rawPrompt = args.slice(1).join(" ");
+    if (!rawPrompt) {
+      console.log("Uso: eos amplify <directiva-o-prompt>");
+      process.exit(1);
+    }
+    const { amplifyPrompt } = await import("../src/core/eosPromptAmplifier.ts");
+    const result = amplifyPrompt({ rawPrompt, strictLevel: "sovereign" });
+    console.log(`\nDirectiva Original   : "${result.originalPrompt}"`);
+    console.log(`Dominio Detectado    : ${result.detectedDomain}`);
+    console.log(`Estrategia Cognitiva : ${result.modelScaffold.thinkingStrategy}\n`);
+    console.log("=== ESPECIFICACIÓN EARS (ISO 29148 / IEEE 830) ===");
+    result.earsRequirements.forEach((req) => {
+      console.log(`[${req.id}] ${req.type}: ${req.syntax}`);
+    });
+    console.log("\n=== CRITERIOS DE ACEPTACIÓN (BDD GIVEN-WHEN-THEN) ===");
+    result.bddScenarios.forEach((sc) => {
+      console.log(`Scenario: ${sc.title}`);
+      console.log(`  GIVEN ${sc.given}`);
+      console.log(`  WHEN ${sc.when}`);
+      console.log(`  THEN ${sc.then}`);
+      sc.and.forEach((a) => console.log(`  AND ${a}`));
+    });
+    console.log("\n=== CONTRATO ANTI-ALUCINACIÓN ===");
+    result.modelScaffold.antiHallucinationRules.forEach((rule) => console.log(`  ! ${rule}`));
+    break;
+  }
+
+  case "guard": {
+    printBanner();
+    const targetDir = args[1] ? path.resolve(root, args[1]) : path.resolve(root, "src");
+    console.log(`[EOS GUARD] Escaneando arquitectura Hexagonal en: ${targetDir}\n`);
+    const { scanArchitecture } = await import("../src/core/eosArchitectureGuard.ts");
+    const report = scanArchitecture(targetDir, root);
+
+    console.log(`Archivos Analizados  : ${report.scannedFilesCount}`);
+    console.log(`Distribución Capas   : DOMAIN=${report.layersDistribution.DOMAIN}, APP=${report.layersDistribution.APPLICATION}, INFRA=${report.layersDistribution.INFRASTRUCTURE}, UI=${report.layersDistribution.PRESENTATION}`);
+    console.log(`Pureza Arquitectónica: ${report.architecturePurityScore}%`);
+    console.log(`Ciclos Circulares    : ${report.circularDependencies.length}`);
+    console.log(`Total Violaciones    : ${report.totalViolations}`);
+
+    if (report.violations.length > 0) {
+      console.log("\n[HALLAZGOS IDENTIFICADOS]");
+      report.violations.forEach((v) => {
+        console.log(`  - [${v.rule}] en ${v.file}: ${v.details}`);
+      });
+      process.exit(1);
+    } else {
+      console.log("\n[PASS] Arquitectura 100% limpia. 0 dependencias circulares. Dominio L0 puro.");
+    }
+    break;
+  }
+
+  case "judge": {
+    printBanner();
+    const scenarioDesc = args.slice(1).join(" ") || "Propuesta de refactorización de módulo";
+    const { evaluateDecision } = await import("../src/core/eosCognitiveJudge.ts");
+    const verdict = evaluateDecision({
+      title: "Evaluación Soberana de Propuesta",
+      description: scenarioDesc,
+      proposedAction: scenarioDesc,
+      targetDomain: "CORE"
+    });
+
+    console.log(`\nEscenario            : ${verdict.scenarioTitle}`);
+    console.log(`Dictamen             : ${verdict.approved ? "APROBADO [PASS]" : "RECHAZADO [FAIL]"}`);
+    console.log(`Puntaje Bayesiano    : ${verdict.overallScore}/100`);
+    console.log(`Estado Epistémico    : ${verdict.epistemicState}`);
+    console.log("\nDesglose por Dimensión:");
+    console.log(`  - Seguridad         : ${verdict.dimensionScores.security}/100`);
+    console.log(`  - Pureza Hexagonal  : ${verdict.dimensionScores.architecturalPurity}/100`);
+    console.log(`  - Corrección (Spec) : ${verdict.dimensionScores.correctness}/100`);
+    console.log(`  - Rendimiento       : ${verdict.dimensionScores.performance}/100`);
+
+    if (verdict.requiredRemediations.length > 0) {
+      console.log("\nRemediaciones Requeridas:");
+      verdict.requiredRemediations.forEach((r) => console.log(`  ! ${r}`));
+    }
+    console.log(`\nVeredicto: ${verdict.verdictRationale}`);
+    if (!verdict.approved) process.exit(1);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -163,6 +251,10 @@ Uso Universal:
   eos mcp                    Inicia el servidor Model Context Protocol sobre stdio
   eos jarvis [directiva]     Ejecuta una directiva cognitiva JARVIS en terminal
   eos health                 Muestra la telemetría en vivo del sistema (CNCF / SRE)
+  eos optimize <archivo>     Comprime el archivo extrayendo su esquema estructural (70-85% tokens)
+  eos amplify <prompt>       Amplifica un prompt informal a especificación formal EARS y BDD
+  eos guard [directorio]     Audita pureza Hexagonal, capas L0 y detecta ciclos circulares
+  eos judge <escenario>      Aplica el tribunal de decisión Bayesiano con los 7 Mandamientos
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

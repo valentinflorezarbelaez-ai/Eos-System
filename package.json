@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "12.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign JARVIS Monad v12.0 (Autonomous Cognitive Nexus, 3D WebGL Particle HUD, Neural Vector Core L0, TMR Byzantine Consensus, Voice Telemetry, Federated Fleet CI/CD SecDevOps, 7-Stage Fail-Closed Gate, Omega Post-Quantum, Linux Ring-0)",
+  "version": "13.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Prometheus Omni-Model Engine v13.0 (Autonomous Cognitive Nexus, Metaprompting EARS/BDD Scaffolding, Hexagonal Architecture Boundary Guard, Bayesian Cognitive Judge, Neural Vector Core L0, TMR Byzantine Consensus, Voice Telemetry, Federated Fleet CI/CD SecDevOps, 7-Stage Fail-Closed Gate, Omega Post-Quantum, Linux Ring-0)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -10,6 +10,7 @@
     "test": "node scripts/verify-cicd-pipeline.mjs",
     "test:unit": "node --test test/eosCore.test.mjs",
     "test:chaos": "node --test test/chaosResilience.test.mjs",
+    "test:prometheus": "node --test test/eosPrometheus.test.mjs",
     "verify:cwv": "node scripts/verify-cwv-budget.mjs",
     "verify:sri": "node scripts/verify-sri-integrity.mjs",
     "verify:strict": "node scripts/verify-cicd-pipeline.mjs",
