@@ -149,7 +149,7 @@ assert.ok(Number(cssSizeKb) < 120, `CSS bundle exceeded budget: ${cssSizeKb} KB`
 console.log(`[PASS] Stage 5/7 — WCAG 2.1 AA, SEO & Performance Budget Gate (JS: ${jsSizeKb} KB, CSS: ${cssSizeKb} KB).`);
 
 // ---------------------------------------------------------------------------
-// STAGE 6: IN-PROCESS SMOKE TESTS OF ALL 9 SERVERLESS API ENDPOINTS (/api/*)
+// STAGE 6: IN-PROCESS SMOKE TESTS OF ALL 12 SERVERLESS API ENDPOINTS (/api/*)
 // ---------------------------------------------------------------------------
 const apiEndpoints = [
   "api/teurgia.js",
@@ -161,7 +161,9 @@ const apiEndpoints = [
   "api/cicd.js",
   "api/fleet.js",
   "api/jarvis.js",
-  "api/health.js"
+  "api/health.js",
+  "api/graph.js",
+  "api/amplify.js"
 ];
 
 for (const relApi of apiEndpoints) {
@@ -200,7 +202,7 @@ for (const relApi of apiEndpoints) {
   assert.equal(capturedStatus, 200, `[STAGE 6 FAIL] ${relApi} returned HTTP ${capturedStatus}`);
   assert.ok(capturedBody && typeof capturedBody === "object", `[STAGE 6 FAIL] ${relApi} did not return valid JSON object`);
 }
-console.log(`[PASS] Stage 6/7 — In-Process Serverless API Smoke Gate (${apiEndpoints.length}/7 endpoints returned 200 OK).`);
+console.log(`[PASS] Stage 6/7 — In-Process Serverless API Smoke Gate (${apiEndpoints.length}/${apiEndpoints.length} endpoints returned 200 OK).`);
 
 // ---------------------------------------------------------------------------
 // STAGE 7: CRYPTOGRAPHIC SBOM & CI/CD ATTESTATION RECEIPT
