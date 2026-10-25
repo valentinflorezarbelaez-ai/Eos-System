@@ -902,6 +902,62 @@ switch (command) {
     break;
   }
 
+  case "fingerprint": {
+    printBanner();
+    const target = args[1] || root;
+    const { EosUniversalProjectAdapter } = await import("../src/core/eosUniversalProjectAdapter.ts");
+    const adapter = new EosUniversalProjectAdapter(target);
+    const report = adapter.audit(target);
+    const fp = report.fingerprint;
+
+    console.log(`[EOS POLYGLOT FINGERPRINT] Huella Arquitectónica (${report.projectName}):\n`);
+    console.log(`Lenguaje Principal     : ${fp.primaryLanguage}`);
+    console.log(`Gestor de Paquetes     : ${fp.packageManager}`);
+    console.log(`Framework de Pruebas   : ${fp.testFramework}`);
+    console.log(`Linter / Formateo      : ${fp.linter || "No configurado"}`);
+    console.log(`Contenedorización      : ${fp.containerization}`);
+    console.log(`Tubería CI/CD          : ${fp.ciCd}`);
+    console.log(`Catálogo Backstage     : ${fp.hasBackstageDescriptor ? "Sí (RFC-42)" : "No"}`);
+    console.log(`Codex de Agentes IA    : ${fp.hasAgentScaffolding ? "Sí (AGENTS.md / CLAUDE.md)" : "No"}`);
+    console.log(`Total Archivos Código  : ${fp.totalSourceFiles}\n`);
+    console.log("[PASS] Huella arquitectónica extraída con éxito.");
+    break;
+  }
+
+  case "adapt": {
+    printBanner();
+    const target = args[1] || root;
+    const doScaffold = args.includes("--scaffold") || args.includes("--elevate");
+    const { EosUniversalProjectAdapter } = await import("../src/core/eosUniversalProjectAdapter.ts");
+    const adapter = new EosUniversalProjectAdapter(target);
+    const report = adapter.audit(target);
+
+    console.log(`[EOS UNIVERSAL ADAPTER] Auditoría de Madurez de Proyecto (${report.projectName}):\n`);
+    console.log(`Lenguaje / Stack       : ${report.fingerprint.primaryLanguage} (${report.fingerprint.packageManager})`);
+    console.log(`Índice de Salud        : ${report.healthIndex}/100 [${report.tier}]`);
+    console.log(`Sello Merkle SHA-256   : ${report.sha256MerkleReceipt}\n`);
+
+    console.log("=== PILARES ARQUITECTÓNICOS ===");
+    for (const [key, p] of Object.entries(report.pillars)) {
+      console.log(`  • [${p.status}] ${p.name || key}: ${p.score}/${p.maxScore}`);
+      p.findings.forEach((f) => console.log(`      ↳ ${f}`));
+    }
+
+    if (report.recommendations.length > 0) {
+      console.log("\n=== RECOMENDACIONES DE ELEVACIÓN ===");
+      report.recommendations.forEach((r) => console.log(`  ⚡ ${r}`));
+    }
+
+    if (doScaffold) {
+      console.log("\n[EOS GOLDEN PATH] Aplicando elevación y scaffolding universal de producción...");
+      const res = adapter.elevate(target, { dryRun: false });
+      console.log(`  Archivos creados/actualizados: ${res.appliedActions.join(", ") || "Ninguno"}`);
+    }
+
+    console.log(`\n[PASS] Auditoría universal de proyecto completada con éxito.`);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -938,6 +994,8 @@ Uso Universal:
   eos rpc [service]          Despacho RPC y bus pub/sub estilo Apollo/Hermes con Circuit Breakers
   eos mix [keyA] [keyB]      Planificación y crossfader de mezcla DJ armónica sin choque de bajos
   eos features [usuario]     Centroide de gustos acústicos 8D en tiempo real con decaimiento EWMA
+  eos fingerprint [ruta]     Extrae la huella de lenguaje, stack, herramientas y escala de cualquier repo
+  eos adapt [ruta] [--scaffold] Diagnostica madurez (0-100) y eleva cualquier repo al Golden Path
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

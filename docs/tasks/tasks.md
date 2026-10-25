@@ -137,3 +137,9 @@
   - [x] **TASK-034-E**: Expand serverless API `/api/spotify` with `action=mix` and `action=features` handlers.
   - [x] **TASK-034-F**: Formalize Living OpenSpec `SPEC-017-GAPLESS-DJ-CROSSFADER.md`, `SPEC-018-ACOUSTIC-FEATURE-STORE.md`, and change delta `CHANGE-011-GAPLESS-DJ-AND-FEATURE-STORE.md`.
   - [x] **TASK-034-G**: Run full 131-test suite across 72 suites, execute 7/7 SecDevOps gates (`npm run verify:strict`), seal Merkle receipt, commit, and push (`exit 0`).
+- [x] **TASK-035**: Implement **Universal Polyglot Repository Adapter (`v27.0`)**:
+  - [x] **TASK-035-A**: Implement `src/core/eosUniversalProjectAdapter.ts` (polyglot fingerprinting across 20+ stacks, 5-Pillar Architectural Health Index 0-100, stack-tailored Backstage RFC-42, GitHub Actions CI workflows, pre-commit secret scanners, and AGENTS.md codex synthesis).
+  - [x] **TASK-035-B**: Implement unit test suite `test/eosUniversalProjectAdapter.test.mjs` asserting BDD-049 across TypeScript, Go, Rust, and empty project mock sandboxes (6/6 tests passed).
+  - [x] **TASK-035-C**: Expose CLI commands `eos adapt` and `eos fingerprint` in `bin/eos.mjs`, and MCP tools `eos_universal_adapt`, `eos_universal_fingerprint`, and `eos_universal_scaffold` in `src/mcp/eosMcpServer.ts`.
+  - [x] **TASK-035-D**: Formalize Living OpenSpec `SPEC-019-UNIVERSAL-POLYGLOT-ADAPTER.md` and change delta `CHANGE-012-UNIVERSAL-POLYGLOT-ADAPTER.md`.
+  - [x] **TASK-035-E**: Run full 137-test suite across 76 suites, execute 7/7 SecDevOps gates (`npm run verify:strict`), seal Merkle receipt, commit, and push (`exit 0`).

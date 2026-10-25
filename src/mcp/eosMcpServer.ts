@@ -116,6 +116,10 @@ import {
   EosAcousticFeatureStore
 } from "../core/eosAcousticFeatureStore.ts";
 
+import {
+  EosUniversalProjectAdapter
+} from "../core/eosUniversalProjectAdapter.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -575,6 +579,39 @@ export class EosMcpServer {
                     },
                     required: ["userId"]
                   }
+                },
+                {
+                  name: "eos_universal_adapt",
+                  description: "Audits architectural health (0-100), layer purity, test coverage, and security posture of ANY software project.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      targetPath: { type: "string", description: "Path to project root (default: current project)" },
+                      scaffold: { type: "boolean", description: "Apply Golden Path manifests to disk (default: false)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_universal_fingerprint",
+                  description: "Fingerprints programming language, frameworks, test runners, linters, containers, and LoC scale of ANY project.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      targetPath: { type: "string", description: "Path to project root (default: current project)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_universal_scaffold",
+                  description: "Synthesizes stack-tailored Backstage RFC-42 catalog, CI/CD workflow, git hooks, and AGENTS.md codex for ANY project.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      targetPath: { type: "string", description: "Path to project root" },
+                      owner: { type: "string", description: "Owner squad name" },
+                      applyToDisk: { type: "boolean", description: "Write files to disk" }
+                    }
+                  }
                 }
               ]
             }
@@ -963,6 +1000,28 @@ export class EosMcpServer {
         const userId = String(args.userId || "user-listener");
         store.recordListen(userId, "track-sample", { tempo: 0.7, energy: 0.85, danceability: 0.8, valence: 0.7, acousticness: 0.1, instrumentalness: 0.2, liveness: 0.15, speechiness: 0.08 }, 200, 200);
         return store.computeTasteCentroid(userId);
+      }
+
+      case "eos_universal_adapt": {
+        const target = path.resolve(String(args.targetPath || this.projectRoot));
+        const adapter = new EosUniversalProjectAdapter(target);
+        const report = adapter.audit(target);
+        if (args.scaffold) {
+          adapter.elevate(target, { dryRun: false });
+        }
+        return report;
+      }
+
+      case "eos_universal_fingerprint": {
+        const target = path.resolve(String(args.targetPath || this.projectRoot));
+        const adapter = new EosUniversalProjectAdapter(target);
+        return adapter.audit(target).fingerprint;
+      }
+
+      case "eos_universal_scaffold": {
+        const target = path.resolve(String(args.targetPath || this.projectRoot));
+        const adapter = new EosUniversalProjectAdapter(target);
+        return adapter.elevate(target, { dryRun: !Boolean(args.applyToDisk) });
       }
 
       default:

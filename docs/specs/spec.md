@@ -331,6 +331,12 @@ ESCENARIO: [BDD-048 Feature Store Acústico en Tiempo Real & Decaimiento EWMA (S
   CUANDO se consulta el centroide de preferencias acústicas en EosAcousticFeatureStore
   ENTONCES calcula el vector de 8 dimensiones en Float32Array aplicando decaimiento exponencial con vida media configurable (tau = 7 días), penaliza inmediatamente las omisiones tempranas (< 30s) y garantiza corrección temporal Point-in-Time sin fugas de datos históricos.
 
+ESCENARIO: [BDD-049 Adaptador Políglota Universal de Repositorios (SPEC-019)]
+  DADO cualquier repositorio o proyecto de software en cualquier lenguaje o framework (TypeScript, Go, Rust, Python, Flutter, C/C++, Java)
+  CUANDO se invoca EosUniversalProjectAdapter ("eos adapt <ruta>" o la herramienta MCP "eos_universal_adapt")
+  ENTONCES extrae la huella de arquetipo, linters, ejecutores de pruebas y contenedores, calcula el Índice de Salud Arquitectónica (0-100) en 5 pilares, y sintetiza manifiestos Golden Path Backstage RFC-42, flujos de trabajo de CI/CD para GitHub Actions, ganchos pre-commit y codex de agentes IA (AGENTS.md) ajustados al stack exacto con 0 dependencias externas.
+
+
 
 
 

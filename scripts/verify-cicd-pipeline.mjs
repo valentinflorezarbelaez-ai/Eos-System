@@ -113,78 +113,34 @@ const tsCoreFiles = fs.readdirSync(path.join(root, "src/core")).filter((f) => f.
 assert.ok(tsCoreFiles.length >= 6, "Expected at least 6 Layer-0 TypeScript core modules in src/core/");
 
 // Execute formal native unit test suite, chaos resilience suite, and prometheus omni-model suite (node:test)
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosCore.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/chaosResilience.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosPrometheus.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosTurbo.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosSemanticGraph.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosAutonomousHealer.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosWorktree.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosCognitiveEval.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosOpenSpec.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosTitans.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosSpotify.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosGoAccelerator.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosAudioDsp.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosFleetElevator.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosSpotifyFactory.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosApolloHermesMesh.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosGaplessMixEngine.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
-execFileSync(process.execPath, ["--test", path.join(root, "test/eosAcousticFeatureStore.test.mjs")], {
-  cwd: root,
-  stdio: "pipe"
-});
+const testFiles = [
+  "test/eosCore.test.mjs",
+  "test/chaosResilience.test.mjs",
+  "test/eosPrometheus.test.mjs",
+  "test/eosTurbo.test.mjs",
+  "test/eosSemanticGraph.test.mjs",
+  "test/eosAutonomousHealer.test.mjs",
+  "test/eosWorktree.test.mjs",
+  "test/eosCognitiveEval.test.mjs",
+  "test/eosOpenSpec.test.mjs",
+  "test/eosTitans.test.mjs",
+  "test/eosSpotify.test.mjs",
+  "test/eosGoAccelerator.test.mjs",
+  "test/eosAudioDsp.test.mjs",
+  "test/eosFleetElevator.test.mjs",
+  "test/eosSpotifyFactory.test.mjs",
+  "test/eosApolloHermesMesh.test.mjs",
+  "test/eosGaplessMixEngine.test.mjs",
+  "test/eosAcousticFeatureStore.test.mjs",
+  "test/eosUniversalProjectAdapter.test.mjs"
+];
+
+for (const testFile of testFiles) {
+  execFileSync(process.execPath, ["--test", path.join(root, testFile)], {
+    cwd: root,
+    stdio: "inherit"
+  });
+}
 console.log(`[PASS] Stage 4/7 — Static AST, Syntax, Unit & Chaos Gate (${jsFilesToCheck.length} JS/MJS modules + ${tsCoreFiles.length} L0 TS modules + node:test passed).`);
 
 // ---------------------------------------------------------------------------

@@ -20,3 +20,4 @@
   - Spotify Apollo / Hermes High-Performance RPC Mesh & Interactive Codex Studio (v25.0.0): 3-state Circuit Breaker, sliding error window, Token Bucket rate limiting, FNV-1a topic hashing, W3C Distributed Tracing, and live interactive Spotify Codex Studio (CHANGE-009).
   - Spotify & Nubank FinOps Dual-Engine Go/Rust Architecture (v25.1.0): Distroless containerization, 0 B/op idempotency store, and data race detection gates (CHANGE-010).
   - Spotify Gapless DJ Automix Engine & Real-Time Acoustic Feature Store (v26.0.0): 3-band Linkwitz-Riley crossover, bass clash prevention, Camelot harmonic cost, and 8D continuous taste tracking with EWMA decay (CHANGE-011).
+  - Universal Polyglot Repository Adapter (v27.0.0): Multi-language fingerprinting (TypeScript, Go, Rust, Python, Flutter, C/C++, Java), 5-pillar architectural health evaluation (0-100), and automated Golden Path synthesis across any software project (CHANGE-012).

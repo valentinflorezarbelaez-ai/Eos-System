@@ -243,3 +243,12 @@
 * **Rationale**: Provides microsecond-level feature retrieval for recommendation systems with zero external database dependencies.
 * **Rejected Alternatives**:
   * *Storing all raw historical vectors indefinitely in memory*: Rejected to prevent memory bloat and stale preference bias.
+
+### ADR-030: Universal Polyglot Repository Adapter & Golden Path Scaffolding (`src/core/eosUniversalProjectAdapter.ts`)
+* **Decision**: Implement a universal multi-stack repository intelligence engine capable of fingerprinting, diagnosing, and elevating any software project of any language or complexity:
+  1. Auto-detects 20+ software archetypes across TypeScript, Go, Rust, Python, Flutter, C/C++, Java, Docker, and Kubernetes.
+  2. Evaluates a 5-Pillar Architectural Health Index (0-100) assessing Layer Purity, Test Automation, Secret Security, CI/CD Gateways, and AI Agent Context.
+  3. Synthesizes stack-tailored Backstage RFC-42 descriptors (`catalog-info.yaml`), GitHub Actions CI workflows (`.github/workflows/ci.yml`), pre-commit secret scanners, and AI agent context files (`AGENTS.md`).
+* **Rationale**: Directly operationalizes the sovereign mandate for EOS System to operate on ANY external target project with mathematical perfection, zero vibe coding, and complete architectural purity.
+* **Rejected Alternatives**:
+  * *Invoking external CLIs (SonarQube, Snyk, Semgrep)*: Rejected to preserve Layer-0 zero-dependency portability and instant (< 50ms) execution time.
