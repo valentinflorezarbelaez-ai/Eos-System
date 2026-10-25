@@ -2704,4 +2704,124 @@ Sello SHA256 : ${seal.slice(0, 40)}...`;
     });
   });
 
+  // ---------------------------------------------------------------------------
+  // 21. JARVIS 3D WEBGL QUANTUM CORE HUD (Layer-0 Pure WebGL, 0-Deps)
+  // ---------------------------------------------------------------------------
+  function initJarvis3DQuantumCore() {
+    const canvas = document.getElementById("jarvis-webgl-canvas");
+    const fallbackSvg = document.getElementById("jarvis-fallback-svg");
+    if (!canvas) return;
+
+    const gl = canvas.getContext("webgl", { alpha: true, antialias: true }) || canvas.getContext("experimental-webgl");
+    if (!gl) return;
+
+    if (fallbackSvg) {
+      fallbackSvg.style.opacity = "0.25";
+    }
+
+    const vsSource = `
+      attribute vec3 aPos;
+      attribute vec3 aColor;
+      uniform mat4 uMat;
+      uniform float uTime;
+      varying vec3 vCol;
+      void main() {
+        vCol = aColor;
+        vec3 p = aPos;
+        float angle = uTime * 0.8;
+        float s = sin(angle);
+        float c = cos(angle);
+        vec3 rot;
+        rot.x = p.x * c - p.z * s;
+        rot.y = p.y * c + (p.x * s) * 0.5;
+        rot.z = p.x * s + p.z * c;
+        gl_Position = uMat * vec4(rot, 1.0);
+        gl_PointSize = 2.4;
+      }
+    `;
+
+    const fsSource = `
+      precision mediump float;
+      varying vec3 vCol;
+      void main() {
+        vec2 pt = gl_PointCoord - vec2(0.5);
+        if (dot(pt, pt) > 0.25) discard;
+        gl_FragColor = vec4(vCol, 0.9);
+      }
+    `;
+
+    function createShader(type, src) {
+      const sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      return sh;
+    }
+
+    const prg = gl.createProgram();
+    gl.attachShader(prg, createShader(gl.VERTEX_SHADER, vsSource));
+    gl.attachShader(prg, createShader(gl.FRAGMENT_SHADER, fsSource));
+    gl.linkProgram(prg);
+    gl.useProgram(prg);
+
+    const vertices = [];
+    const colors = [];
+    const totalParticles = 450;
+
+    for (let i = 0; i < totalParticles; i++) {
+      const theta = (i / totalParticles) * Math.PI * 2 * 6;
+      const radius = 0.2 + (i % 3) * 0.25 + Math.random() * 0.05;
+      const z = (Math.random() - 0.5) * 0.35;
+      vertices.push(Math.cos(theta) * radius, Math.sin(theta) * radius, z);
+
+      if (i % 3 === 0) {
+        colors.push(0.22, 0.74, 0.97);
+      } else if (i % 3 === 1) {
+        colors.push(0.96, 0.62, 0.07);
+      } else {
+        colors.push(0.06, 0.72, 0.51);
+      }
+    }
+
+    const posBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    const aPos = gl.getAttribLocation(prg, "aPos");
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);
+
+    const colBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, colBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+    const aColor = gl.getAttribLocation(prg, "aColor");
+    gl.enableVertexAttribArray(aColor);
+    gl.vertexAttribPointer(aColor, 3, gl.FLOAT, false, 0, 0);
+
+    const uMat = gl.getUniformLocation(prg, "uMat");
+    const uTime = gl.getUniformLocation(prg, "uTime");
+
+    const projMat = new Float32Array([
+      1.2, 0, 0, 0,
+      0, 1.2, 0, 0,
+      0, 0, 0.5, 0.5,
+      0, 0, 0, 1
+    ]);
+    gl.uniformMatrix4fv(uMat, false, projMat);
+
+    const startTime = performance.now();
+    const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function render(now) {
+      if (!prefersReducedMotion) {
+        const elapsed = (now - startTime) * 0.001;
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.uniform1f(uTime, elapsed);
+        gl.drawArrays(gl.POINTS, 0, totalParticles);
+        requestAnimationFrame(render);
+      }
+    }
+    requestAnimationFrame(render);
+  }
+
+  initJarvis3DQuantumCore();
 });

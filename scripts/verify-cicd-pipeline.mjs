@@ -98,7 +98,13 @@ for (const jsFile of jsFilesToCheck) {
 }
 const tsCoreFiles = fs.readdirSync(path.join(root, "src/core")).filter((f) => f.endsWith(".ts"));
 assert.ok(tsCoreFiles.length >= 6, "Expected at least 6 Layer-0 TypeScript core modules in src/core/");
-console.log(`[PASS] Stage 4/7 — Static AST & Bytecode Gate (${jsFilesToCheck.length} JS/MJS modules + ${tsCoreFiles.length} L0 TS modules verified).`);
+
+// Execute formal native unit test suite (node:test)
+execFileSync(process.execPath, ["--test", path.join(root, "test/eosCore.test.mjs")], {
+  cwd: root,
+  stdio: "pipe"
+});
+console.log(`[PASS] Stage 4/7 — Static AST, Syntax & Unit Test Gate (${jsFilesToCheck.length} JS/MJS modules + ${tsCoreFiles.length} L0 TS modules + node:test passed).`);
 
 // ---------------------------------------------------------------------------
 // STAGE 5: WCAG 2.1 AA ACCESSIBILITY, SEO & PERFORMANCE BUDGET GATE

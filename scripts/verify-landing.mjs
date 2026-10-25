@@ -107,6 +107,10 @@ assert.ok(fs.existsSync(path.join(root, "scripts/fleet-autonomous-cicd.mjs")), "
 assert.ok(html.includes('id="fleet-cicd-orchestrator"'), "Missing #fleet-cicd-orchestrator interactive fleet orchestrator");
 assert.ok(html.includes('id="eos-jarvis-nexus"'), "Missing #eos-jarvis-nexus JARVIS Sovereign Monad section");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosJarvisMonad.ts")), "Missing src/core/eosJarvisMonad.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosNeuralVectorCore.ts")), "Missing src/core/eosNeuralVectorCore.ts");
+assert.ok(fs.existsSync(path.join(root, "test/eosCore.test.mjs")), "Missing test/eosCore.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "README.md")), "Missing README.md");
+assert.ok(html.includes('id="jarvis-webgl-canvas"'), "Missing #jarvis-webgl-canvas 3D WebGL HUD");
 assert.ok(fs.existsSync(path.join(root, "api/jarvis.js")), "Missing api/jarvis.js serverless JARVIS endpoint");
 assert.ok(fs.existsSync(path.join(root, "scripts/eos-jarvis-daemon.mjs")), "Missing scripts/eos-jarvis-daemon.mjs");
 assert.ok(html.includes('id="btn-copy-eos-blueprint"'), "Missing #btn-copy-eos-blueprint button");
