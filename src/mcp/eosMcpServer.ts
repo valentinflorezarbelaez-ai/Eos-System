@@ -92,6 +92,10 @@ import {
   EosGoAccelerator
 } from "../core/eosGoAccelerator.ts";
 
+import {
+  EosSpotifyAgenticFactory
+} from "../core/eosSpotifyAgenticFactory.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -439,6 +443,58 @@ export class EosMcpServer {
                       episodes: { type: "integer", description: "Episodes for BaRT Thompson Sampling" }
                     }
                   }
+                },
+                {
+                  name: "eos_spotify_honk_dispatch",
+                  description: "Dispatches the Spotify Honk Autonomous Background Agent: worktree isolation, zero-touch coding, automated test/heal loops, and PR synthesis.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      taskName: { type: "string", description: "Task title / objective" },
+                      stack: { type: "string", enum: ["rust", "go", "node", "java"], description: "Target technology stack" },
+                      specDescription: { type: "string", description: "Formal EARS specification description" },
+                      dryRun: { type: "boolean", description: "Simulate without persisting changes" }
+                    },
+                    required: ["taskName", "specDescription"]
+                  }
+                },
+                {
+                  name: "eos_spotify_xirp_context",
+                  description: "Assembles Spotify Xirp architecture context from Backstage catalogs, OpenSpec ADRs, and repo topologies to prevent agent hallucination.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      syncFiles: { type: "boolean", description: "Whether to sync AGENTS.md and CLAUDE.md to disk" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_spotify_fleetshift_batch",
+                  description: "Executes Spotify Fleetshift mass refactoring, dependency upgrades, or RFC-42 Backstage conformance across all registered fleet projects.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      migrationId: { type: "string", description: "Identifier for the migration batch" },
+                      action: { type: "string", enum: ["apply_backstage_rfc42", "enforce_strict_sre", "upgrade_dependencies"], description: "Migration action" },
+                      targetFleet: { type: "array", items: { type: "string" }, description: "Optional project IDs to target" },
+                      dryRun: { type: "boolean", description: "Simulate without modifying files" }
+                    },
+                    required: ["migrationId", "action"]
+                  }
+                },
+                {
+                  name: "eos_spotify_canary_manifest",
+                  description: "Generates production Kubernetes Flagger and Argo Rollouts canary manifests with automated fail-closed Prometheus metric guardrails.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      serviceName: { type: "string", description: "Target microservice name" },
+                      squad: { type: "string", description: "Owner squad name" },
+                      p99LatencyMs: { type: "number", description: "P99 latency threshold in ms (default: 100)" },
+                      maxErrorRatePercent: { type: "number", description: "Max error rate percentage (default: 0.1)" }
+                    },
+                    required: ["serviceName", "squad"]
+                  }
                 }
               ]
             }
@@ -743,6 +799,45 @@ export class EosMcpServer {
           return accelerator.runBanditSimulation(Number(args.episodes) || 2000);
         }
         return accelerator.runBenchmark(Number(args.concurrency) || 2000);
+      }
+
+      case "eos_spotify_honk_dispatch": {
+        const factory = new EosSpotifyAgenticFactory(this.projectRoot);
+        return factory.dispatchHonk({
+          taskName: String(args.taskName || "Autonomous task"),
+          stack: args.stack,
+          specDescription: String(args.specDescription || ""),
+          dryRun: Boolean(args.dryRun)
+        });
+      }
+
+      case "eos_spotify_xirp_context": {
+        const factory = new EosSpotifyAgenticFactory(this.projectRoot);
+        if (args.syncFiles) {
+          return factory.syncXirpContextFiles();
+        }
+        return factory.compileXirpContext();
+      }
+
+      case "eos_spotify_fleetshift_batch": {
+        const factory = new EosSpotifyAgenticFactory(this.projectRoot);
+        return factory.executeFleetshift({
+          migrationId: String(args.migrationId || `FS-${Date.now()}`),
+          description: `Fleetshift migration batch`,
+          action: args.action || "apply_backstage_rfc42",
+          targetFleet: Array.isArray(args.targetFleet) ? args.targetFleet : undefined,
+          dryRun: Boolean(args.dryRun)
+        });
+      }
+
+      case "eos_spotify_canary_manifest": {
+        const factory = new EosSpotifyAgenticFactory(this.projectRoot);
+        return factory.generateProgressiveCanary(
+          String(args.serviceName || "spotify-service"),
+          String(args.squad || "Audio-Platform"),
+          Number(args.p99LatencyMs) || 100,
+          Number(args.maxErrorRatePercent) || 0.1
+        );
       }
 
       default:

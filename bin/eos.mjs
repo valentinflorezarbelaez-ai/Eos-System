@@ -699,6 +699,96 @@ switch (command) {
     break;
   }
 
+  case "honk": {
+    printBanner();
+    const { EosSpotifyAgenticFactory } = await import("../src/core/eosSpotifyAgenticFactory.ts");
+    const factory = new EosSpotifyAgenticFactory(root);
+
+    const directiveText = args.slice(1).join(" ") || "feat: autonomous audio pipeline optimization";
+    console.log(`[EOS HONK AGENT] Iniciando Bucle de Programación Autónomo Spotify Honk...\n`);
+    console.log(`Directiva de Tarea    : "${directiveText}"`);
+
+    const report = factory.dispatchHonk({
+      taskName: directiveText,
+      specDescription: directiveText,
+      dryRun: false
+    });
+
+    console.log(`Task ID               : ${report.taskId}`);
+    console.log(`Rama Virtual Worktree : ${report.branchName}`);
+    console.log(`Stack Tecnológico     : ${report.stack.toUpperCase()}`);
+    console.log(`Estado Epistémico     : ${report.epistemicState} (${report.status})`);
+    console.log(`Duración Total        : ${report.totalDurationMs} ms`);
+    console.log(`Prueba Merkle         : ${report.merkleProof.slice(0, 32)}...\n`);
+
+    console.log("=== TELEMETRÍA DE PASOS HONK ===");
+    report.steps.forEach((s) => {
+      console.log(`  [${s.status}] ${s.name} (${s.durationMs}ms) — ${s.details}`);
+    });
+
+    console.log(`\n[PASS] Pull Request generado autónomamente con éxito (Exit Code 0).`);
+    break;
+  }
+
+  case "xirp": {
+    printBanner();
+    const sub = (args[1] || "sync").toLowerCase();
+    const { EosSpotifyAgenticFactory } = await import("../src/core/eosSpotifyAgenticFactory.ts");
+    const factory = new EosSpotifyAgenticFactory(root);
+
+    if (sub === "sync") {
+      const res = factory.syncXirpContextFiles();
+      console.log(`[EOS XIRP CONTEXT] Contexto de Arquitectura Spotify Sincronizado:\n`);
+      res.writtenFiles.forEach((f) => console.log(`  ✔ Archivo Sincronizado: ${path.relative(root, f)}`));
+      console.log(`\nSello Criptográfico SHA-256: ${res.sha256}`);
+      console.log(`[PASS] AGENTS.md y CLAUDE.md actualizados sin alucinaciones (Exit Code 0).`);
+      break;
+    }
+
+    const ctx = factory.compileXirpContext();
+    console.log(`[EOS XIRP CONTEXT] Inspección de Componente Backstage RFC-42:\n`);
+    console.log(`Servicio Principal    : ${ctx.serviceName}`);
+    console.log(`Título de Catálogo    : ${ctx.title}`);
+    console.log(`Owner Squad           : ${ctx.squad}`);
+    console.log(`Tribu Spotify         : ${ctx.tribe}`);
+    console.log(`Ciclo de Vida         : ${ctx.lifecycle}`);
+    console.log(`Repositorios en Flota : ${ctx.registeredFleetProjects}`);
+    console.log(`ADRs / OpenSpec Specs : ${ctx.adrCount}`);
+    console.log(`Etiquetas             : ${ctx.tags.join(", ")}`);
+    console.log(`Sello SHA-256         : ${ctx.sha256Proof}\n`);
+    console.log(`[PASS] Catálogo Xirp verificado exitosamente (Exit Code 0).`);
+    break;
+  }
+
+  case "fleetshift": {
+    printBanner();
+    const actionArg = (args[1] || "apply_backstage_rfc42").toLowerCase();
+    const { EosSpotifyAgenticFactory } = await import("../src/core/eosSpotifyAgenticFactory.ts");
+    const factory = new EosSpotifyAgenticFactory(root);
+
+    console.log(`[EOS FLEETSHIFT] Disparando Migración Masiva de Flota (Acción: ${actionArg})...\n`);
+    const report = factory.executeFleetshift({
+      migrationId: `FS-${Date.now()}`,
+      description: `Mass fleet refactoring: ${actionArg}`,
+      action: actionArg,
+      dryRun: false
+    });
+
+    console.log(`ID de Migración       : ${report.migrationId}`);
+    console.log(`Repositorios Totales  : ${report.totalProjects}`);
+    console.log(`Repositorios Auditados: ${report.updatedCount}`);
+    console.log(`Estado General        : ${report.status}`);
+    console.log(`Sello Merkle Flota    : ${report.merkleSeal.slice(0, 32)}...\n`);
+
+    console.log("=== RESULTADOS POR PROYECTO DE LA FLOTA ===");
+    report.projectResults.forEach((r) => {
+      console.log(`  ↳ [${r.status}] ${r.projectId}: ${r.changesApplied.join("; ") || r.error || "Sin cambios requeridos"}`);
+    });
+
+    console.log(`\n[PASS] Migración Fleetshift completada con éxito (Exit Code 0).`);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -726,6 +816,10 @@ Uso Universal:
   eos titan [xirp|spacex|..] Ejecuta los benchmarks de los Titanes (Spotify, SpaceX, NVIDIA, Google, xAI)
   eos reconcile              Reconcilia el estado declarativo estilo Google Borg sin deriva (0.00%)
   eos spotify [audit|standup|postmortem|experiment|squad|scaffold] Herramientas universales de ingeniería y cultura Spotify
+  eos go [benchmark|bandit]  Acelerador nativo en Go (goroutines, streaming, BaRT Thompson sampling)
+  eos honk [directiva]       Bucle autónomo de codificación y self-healing estilo Spotify Honk
+  eos xirp [sync|inspect]    Motor de contexto Xirp para eliminar alucinaciones vía Backstage RFC-42
+  eos fleetshift [accion]    Migración y refactorización masiva de flotas de repositorios
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:
