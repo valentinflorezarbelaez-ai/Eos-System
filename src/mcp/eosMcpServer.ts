@@ -139,6 +139,10 @@ import {
   EosSamaelIbmNvidiaCore
 } from "../core/eosSamaelIbmNvidiaCore.ts";
 
+import {
+  EosDisruptorRingEngine
+} from "../core/eosDisruptorRingEngine.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -713,6 +717,17 @@ export class EosMcpServer {
                       goal: { type: "string", description: "Task goal to drive through the conscious octave" }
                     }
                   }
+                },
+                {
+                  name: "eos_disruptor_benchmark",
+                  description: "Executes the LMAX Disruptor lock-free circular ring buffer throughput benchmark (> 10M events/sec, 0 B/op) and zero-copy 64-byte structural byte scanner.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      events: { type: "number", description: "Number of events to publish through the ring buffer (default: 500,000)" },
+                      payloadBytes: { type: "number", description: "Payload size for structural delimiter scanning (default: 1,048,576)" }
+                    }
+                  }
                 }
               ]
             }
@@ -1182,6 +1197,13 @@ export class EosMcpServer {
         const core = new EosSamaelIbmNvidiaCore();
         const goal = String(args.goal || "EOS Universal Sovereign Elevation");
         return core.runApexSynthesis(goal);
+      }
+
+      case "eos_disruptor_benchmark": {
+        const engine = new EosDisruptorRingEngine();
+        const events = Number(args.events) || 500_000;
+        const bytes = Number(args.payloadBytes) || 1_048_576;
+        return engine.runMasterSpeedBenchmark(events, bytes);
       }
 
       default:

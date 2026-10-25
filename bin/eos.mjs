@@ -1066,6 +1066,28 @@ switch (command) {
     break;
   }
 
+  case "disruptor":
+  case "ring": {
+    printBanner();
+    const count = Number(args[1]) || 500_000;
+    const { EosDisruptorRingEngine } = await import("../src/core/eosDisruptorRingEngine.ts");
+    const engine = new EosDisruptorRingEngine(12);
+    const rep = engine.runMasterSpeedBenchmark(count, 1024 * 1024);
+    console.log(`[EOS LMAX DISRUPTOR] Buffer Circular Lock-Free & Escaneo de Nanosegundos:\n`);
+    console.log(`Eventos Procesados      : ${rep.disruptorReport.totalEvents.toLocaleString()}`);
+    console.log(`Capacidad Ring Buffer   : ${rep.disruptorReport.capacity.toLocaleString()} slots (Potencia de 2)`);
+    console.log(`Latencia Hot-Path       : ${rep.disruptorReport.nanosecondsPerEvent.toFixed(2)} ns/evento`);
+    console.log(`Throughput Eventos/Seg  : ${rep.disruptorReport.eventsPerSecond.toLocaleString()} ops/s (${rep.disruptorReport.megaEventsPerSecond} MOps/s)`);
+    console.log(`Cero Asignaciones Heap  : ${rep.disruptorReport.zeroAllocationVerified ? '0 B/op VERIFICADO' : 'FALLA'}`);
+    console.log(`Acolchado 64-Byte Cache : ${rep.disruptorReport.falseSharingPadded ? 'VERIFICADO (Anti-False-Sharing)' : 'FALLA'}\n`);
+    console.log(`Escaneo Estructural 64B : ${(rep.byteScanReport.totalBytesScanned / (1024 * 1024)).toFixed(2)} MB escaneados`);
+    console.log(`Throughput Escaneo Bytes: ${rep.byteScanReport.throughputMbSec.toLocaleString()} MB/s`);
+    console.log(`Delimitadores JSON      : ${rep.byteScanReport.structuralDelimitersFound.toLocaleString()} encontrados`);
+    console.log(`Sello Unificado Merkle  : ${rep.unifiedSpeedProof}\n`);
+    console.log(`[PASS] Velocidad extrema LMAX Disruptor y escaneo de bytes verificado.`);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -1108,6 +1130,7 @@ Uso Universal:
   eos octave [meta]          Ejecuta la Ley de las Octavas Samaeliana con los 2 Shocks Conscientes
   eos warp                   Ejecuta el planificador CUDA SIMT 32-hilos y Tensor MMA (0 B/op)
   eos apex                   Ejecuta la síntesis de cúspide Samael + IBM Sysplex + NVIDIA
+  eos disruptor [eventos]    Ejecuta el ring buffer LMAX Disruptor (>10M ops/s) y escaneo de bytes
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

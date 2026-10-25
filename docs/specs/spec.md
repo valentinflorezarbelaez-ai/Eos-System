@@ -92,6 +92,7 @@
 * **FR-038 (Ubiquitous Autonomous Healer CLI & MCP Integration)**: EL SISTEMA expondrá `eos_autonomous_heal` en `src/mcp/eosMcpServer.ts` y el comando `eos heal` en `bin/eos.mjs`.
 * **FR-050 (Ubiquitous & Event-Driven Arbitraje Anycast Global & Malla de Latencia)**: EL SISTEMA (`src/core/eosGlobalEdgeArbiter.ts`, `eos_global_edge_route` y `eos edge`) mantendrá la topología de los 8 Puntos de Presencia Globales (Estocolmo, Bogotá, São Paulo, Virginia, Silicon Valley, Londres, Fráncfort y Tokio), computará distancias geodésicas Haversine y retardos de fibra óptica en nanosegundos/microsegundos, ejecutará Peticiones Especulativas (Hedged Requests al estilo Jeff Dean) para truncar la latencia de cola p99, sellará eventos con Relojes Lógicos Híbridos (HLC) monótonos y operará una caché Edge en memoria sin asignaciones de heap (< 15 µs).
 * **FR-051 (Ubiquitous & Event-Driven Síntesis Samaeliana · IBM Sysplex 99.99999% & NVIDIA Warp)**: EL SISTEMA (`src/core/eosSamaelIbmNvidiaCore.ts`, `eos_samael_ibm_nvidia` y `eos titan ibm/nvidia`) gobernará la Ley Cósmica de las Octavas (DO-SI) inyectando Dos Shocks Conscientes (MI-FA y SI-DO) contra la entropía, orquestará transacciones atómicas distribuidas XA de Dos Fases (2PC) con tolerancia a fallos IBM Parallel Sysplex Seven-Nines (99.99999% / ≤ 3.15s downtime anual), y ejecutará un planificador SIMT CUDA de 32 hilos por Warp con intercambio lock-free de registros (`warpShuffle`) y multiplicación matricial GEMM en ArrayBuffer contiguo con 0 asignaciones de memoria (`0 B/op`).
+* **FR-052 (Ubiquitous & Event-Driven LMAX Disruptor Ring Buffer & Optimización de Nanosegundos)**: EL SISTEMA (`src/core/eosDisruptorRingEngine.ts`, `eos_disruptor_benchmark` y `eos disruptor`) mantendrá un buffer circular lock-free de potencia de dos ($2^N$) con enmascaramiento binario directo de índices (`seq & (cap - 1)`), secuencias alineadas a líneas de caché de 64 bytes para erradicar el falso intercambio (*false sharing*), rendimiento superior a 10,000,000 eventos/segundo con latencia hot-path inferior a 100 ns y escaneo estructural zero-copy de bytes a más de 1,500 MB/s con cero asignaciones en el heap (`0 B/op`).
 
 ---
 
@@ -347,6 +348,12 @@ ESCENARIO: [BDD-051 Síntesis Samaeliana · IBM Sysplex Seven-Nines & NVIDIA War
   DADO un flujo distribuido de tareas críticas bajo la Ley de las Octavas
   CUANDO se procesa a través de EosSamaelIbmNvidiaCore
   ENTONCES inyecta el Shock 1 Consciente en el intervalo MI-FA (auto-observación crítica de AST y secretos) y el Shock 2 en SI-DO (transmutación alquímica Si-12 y sellado criptográfico Nous), ejecuta transacciones XA de Dos Fases (2PC) con fiabilidad de siete nueves (99.99999% Sysplex), y despacha hilos sobre un planificador CUDA Warp SIMT de 32 hilos con intercambio lock-free de registros y multiplicación matricial GEMM en ArrayBuffer contiguo con 0 asignaciones de memoria (0 B/op).
+
+ESCENARIO: [BDD-052 LMAX Disruptor Ring Buffer & Escaneo de Nanosegundos (SPEC-022)]
+  DADO un flujo continuo de eventos de telemetría y mensajes de microservicios
+  CUANDO se publica y consume a través de EosDisruptorRingEngine
+  ENTONCES procesa eventos sobre un buffer circular de potencia de dos ($2^N$) con enmascaramiento binario, secuencias acolchadas a 64 bytes para evitar falso intercambio, alcanza un rendimiento superior a 10,000,000 eventos/segundo con latencia hot-path inferior a 100 ns, escanea bloques de 64 bytes de carga estructural a más de 1,500 MB/s y garantiza 0 asignaciones de memoria en el heap (0 B/op) con 0 dependencias externas.
+
 
 
 
