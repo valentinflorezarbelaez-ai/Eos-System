@@ -60,6 +60,7 @@ assert.ok(js.includes('"sanctum:thelema"'), "Missing sanctum:thelema CLI preset 
 assert.ok(js.includes('"nanosecond:hft"'), "Missing nanosecond:hft CLI preset (5 Fastest Softwares & 5 Secrets)");
 assert.ok(js.includes('"memory:akashic"'), "Missing memory:akashic CLI preset (EOS Akashic Memory & 27 Engram Tools)");
 assert.ok(js.includes('"bigtech:tla"'), "Missing bigtech:tla CLI preset (Big Tech 10/10 & TLA+ Formal Verifier)");
+assert.ok(js.includes('"kernel:linux"'), "Missing kernel:linux CLI preset (Linux Kernel Ring-0 Monolithic Modular Core)");
 assert.ok(js.includes('num: "21"'), "Missing 21st step of Master Engineering Pipeline");
 assert.ok(html.includes("seL4"), "Missing seL4 formal verification benchmark");
 assert.ok(html.includes("ASML Twinscan EUV"), "Missing ASML Twinscan EUV benchmark");
@@ -79,6 +80,10 @@ assert.ok(html.includes('id="eos-cmdk-dialog"'), "Missing #eos-cmdk-dialog Omnis
 assert.ok(html.includes('closedby="any"'), "Missing closedby=\"any\" declarative light-dismiss attribute");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosBigTechPantheon.ts")), "Missing src/core/eosBigTechPantheon.ts");
 assert.ok(fs.existsSync(path.join(root, "api/bigtech.js")), "Missing api/bigtech.js serverless Big Tech TLA+ endpoint");
+assert.ok(html.includes('id="linux-kernel-core"'), "Missing #linux-kernel-core Linux Kernel Ring-0 section");
+assert.ok(html.includes('id="linux-kernel-lab"'), "Missing #linux-kernel-lab interactive VFS & RCU laboratory");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosLinuxKernelCore.ts")), "Missing src/core/eosLinuxKernelCore.ts");
+assert.ok(fs.existsSync(path.join(root, "api/kernel.js")), "Missing api/kernel.js serverless Linux Kernel Ring-0 endpoint");
 assert.ok(html.includes('id="btn-copy-eos-blueprint"'), "Missing #btn-copy-eos-blueprint button");
 assert.ok(html.includes('id="btn-download-eos-spec"'), "Missing #btn-download-eos-spec button");
 assert.ok(html.includes('id="eos-evolution-log"'), "Missing #eos-evolution-log live co-evolution log");

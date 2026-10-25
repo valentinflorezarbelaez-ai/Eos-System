@@ -57,3 +57,16 @@
 * **Rationale**: Combines formal mathematical verification (TLA+), active fault-injection resilience (Chaos Engineering), content-addressable hermetic determinism (Bazel), and sub-2ms keyboard-first operator ergonomics (`⌘K`) with zero external dependencies.
 * **Rejected Alternatives**:
   * *Custom Non-Semantic `<div>` Modal Overlay*: Rejected in favor of native `<dialog closedby="any">` + `showModal()` for top-layer rendering, built-in focus trapping, `Esc` handling, and declarative light-dismiss.
+
+### ADR-008: Linux Kernel (`v6.x PREEMPT_RT`) Ring-0 Architecture in EOS (`src/core/eosLinuxKernelCore.ts` + `api/kernel.js` + `#linux-kernel-core`)
+* **Decision**: Codify and implement the 7 foundational subsystems of the Linux Kernel inside EOS System:
+  1. **RCU (Read-Copy-Update)** for zero-contention lockless reads and atomic pointer publication (`rcu_assign_pointer` + `synchronize_rcu`).
+  2. **eBPF Static Verifier** for compile-time/pre-execution verification of bounded loops, valid memory access, and Constitutional Law conformance.
+  3. **EEVDF (`Earliest Eligible Virtual Deadline First`) + `PREEMPT_RT` Scheduler** for deterministic virtual-deadline task dispatch.
+  4. **SLUB (`kmem_cache`) 64-Byte Cache-Line Allocator** over the L1 SoA Arena (`0%` fragmentation).
+  5. **VFS (`/proc/eos/*`, `/sys/kernel/eos/*`, `/dev/anubis`)** virtual filesystem introspection.
+  6. **`cgroups v2` + `Namespaces` + `Seccomp-BPF`** subagent syscall/resource isolation.
+  7. **Linus Torvalds's `"Good Taste"` (Branchless Data Structures) & `"Never Break Userspace"` ABI Invariant**.
+* **Rationale**: The Linux Kernel is the gold standard of reliability, scalability, and low-level elegance on Earth; embedding its exact architectural primitives into EOS elevates the Control Plane to Ring-0 systems perfection.
+* **Rejected Alternatives**:
+  * *Coarse-Grained Reader-Writer Locks (`rwlock`)*: Rejected in favor of `RCU` because reader locks cause cache-line bouncing across CPU cores.

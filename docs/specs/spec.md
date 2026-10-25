@@ -41,6 +41,16 @@
      - **Linear / Raycast / Vercel (`Sub-8ms Command Palette & Local-First Sync`)** ➔ Paleta de Comandos Nativa `<dialog closedby="any">` activada con `Ctrl+K` / `Cmd+K` o el botón `⌘K Comandos`.
   2. CUANDO el operador presione `Ctrl+K` / `Cmd+K` o haga clic en `#btn-open-cmdk`, EL SISTEMA abrirá la Paleta de Comandos con `dialog.showModal()`, filtrado instantáneo en `< 2 ms`, navegación por teclado y cierre ligero (*light-dismiss*) con `closedby="any"` y fallback para navegadores sin soporte nativo.
   3. CUANDO el operador ejecute una simulación en el **Laboratorio Chaos Monkey & Verificador Formal TLA+ (`#bigtech-chaos-lab`)**, EL SISTEMA inyectará la anomalía seleccionada, verificará las fórmulas temporales TLA+ (`□ TypeOK ∧ □ LawVI_ZeroPlainSecrets ∧ ◇ FdirHealed`) y emitirá el recibo de auto-sanación en `< 5 ms`.
+* **FR-015 (Event-Driven & Ubiquitous)**: EL SISTEMA integrará la arquitectura del **Kernel de Linux (`v6.x PREEMPT_RT`) en el Núcleo Soberano de EOS (`src/core/eosLinuxKernelCore.ts`, `api/kernel.js` y `#linux-kernel-core`)**:
+  1. **Los 7 Pilares Inmortales del Kernel de Linux Transmutados en EOS**:
+     - **1. `RCU` (Read-Copy-Update — Sincronización Lockless):** Lecturas concurrentes en `0 ns` de contención sin bloqueos (`rcu_read_lock` / `rcu_dereference`) y actualización atómica de punteros con periodo de gracia (`synchronize_rcu`).
+     - **2. `eBPF` (Extended Berkeley Packet Filter & Static Verifier):** Verificador estático en anillo 0 que demuestra matemáticamente terminación (0 bucles infinitos), límites de memoria seguros y cumplimiento de las 7 Leyes antes de ejecutar cualquier instrucción.
+     - **3. `EEVDF` (Earliest Eligible Virtual Deadline First Scheduler + `PREEMPT_RT`):** Planificador determinista por fecha límite virtual (`vruntime` + `latency-nice`) con preempción en tiempo real estilo SpaceX Falcon 9 Linux.
+     - **4. `SLUB Allocator` + `Buddy System`:** Cachés de objetos pre-alineados a líneas de caché de `64 bytes` (`kmem_cache`) con `0%` fragmentación de memoria.
+     - **5. `VFS` (Virtual File System — `/proc/eos`, `/sys/kernel/eos`, `/dev/anubis`):** Todo subsistema de EOS se expone como un descriptor de archivo uniforme inspeccionable en vivo (`open`, `read`, `write`, `ioctl`).
+     - **6. `cgroups v2` + `Namespaces` + `Seccomp-BPF`:** Aislamiento estricto de recursos y lista blanca de llamadas al sistema para cada subagente y Git Worktree.
+     - **7. Filosofía de Linus Torvalds (`"Good Taste in Code"` + `"Never Break Userspace"` + `Git Content-Addressable Merkle DAG`):** Eliminación de casos especiales (`if` redundantes) mediante diseño de estructuras de datos sin ramificaciones (*branchless good taste*) y estabilidad absoluta de ABI (`0` regresiones).
+  2. CUANDO el operador interactúe con el **Laboratorio en Vivo del Kernel EOS (`#linux-kernel-lab`)**, EL SISTEMA permitirá inspeccionar los nodos virtuales `/proc/eos/*` y `/sys/kernel/*`, ejecutar el verificador estático `eBPF` + planificador `EEVDF` y correr un benchmark real `RCU Lockless Read-Copy-Update` en el navegador y vía `/api/kernel`.
 
 ---
 
@@ -100,4 +110,10 @@ ESCENARIO: [BDD-009 Panteón Big Tech (TLA+ / Chaos Monkey / TrueTime) y Paleta 
   CUANDO presiona Ctrl+K / Cmd+K (o el botón "⌘K Comandos") o ejecuta una prueba de inyección de fallas en el Laboratorio Chaos Monkey & TLA+ (#bigtech-pantheon)
   ENTONCES la paleta modal <dialog closedby="any"> permite buscar y disparar cualquier comando o sección en < 2ms, y el verificador formal TLA+ + FDIR neutraliza cualquier anomalía inyectada en < 5ms con 0% downtime
   Y el endpoint serverless /api/bigtech certifica las 7 joyas de ingeniería Big Tech con código HTTP 200.
+
+ESCENARIO: [BDD-010 Perfección Nivel Kernel de Linux (RCU Lockless, eBPF Verifier, EEVDF PREEMPT_RT y VFS /proc/eos)]
+  DADO que el Arquitecto Soberano accede a la sección de Arquitectura Kernel de Linux (#linux-kernel-core) o ejecuta el comando "eos kernel --linux" en la terminal
+  CUANDO inspecciona un nodo del sistema de archivos virtual (/proc/eos/version, /proc/eos/rcu_stats, /proc/eos/eevdf_sched, /sys/kernel/ebpf_verifier) o ejecuta el Benchmark RCU Lockless + Verificador eBPF
+  ENTONCES EOS verifica el programa bajo el estándar de "Buen Gusto" de Linus Torvalds (0 casos especiales, 0 bucles infinitos, ABI estable "Never Break Userspace"), ejecuta lecturas RCU sin bloqueos en nanosegundos
+  Y el endpoint serverless /api/kernel responde con código HTTP 200 y firma SHA-256.
 ```
