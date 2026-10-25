@@ -1,9 +1,9 @@
 ﻿{
     "evidenceId":  "EVD-0001-BASELINE-STRICT-PASS",
-    "timestamp":  "2026-10-25T05:51:14Z",
+    "timestamp":  "2026-10-25T06:04:32Z",
     "epistemicState":  "VERIFIED",
     "exitCode":  0,
-    "executionDuration":  "1670ms",
+    "executionDuration":  "1358ms",
     "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/verify-strict.ps1",
     "testsSummary":  {
                          "totalTests":  47,
@@ -126,7 +126,7 @@
                       },
                       {
                           "relativePath":  "docs/projects/registry.json",
-                          "sha256":  "923AE3222F5BAD10E6A3AB77773A942F7551DDC3A5373BFE99E1CCAC9DC92722",
+                          "sha256":  "A96C55AEA58AF85DB5B5E778C798844313BA06352C8DC13482EE301183B8F236",
                           "sizeBytes":  3678
                       },
                       {
@@ -168,6 +168,16 @@
                           "relativePath":  "scripts/apply-aberamentho-perfection.ps1",
                           "sha256":  "09DA8686C8CD30F199275E0056BCEE630D2CFCEBCCC1292C86FD350BE0033113",
                           "sizeBytes":  15686
+                      },
+                      {
+                          "relativePath":  "scripts/apply-god-tier-features.ps1",
+                          "sha256":  "A8065870F8752BF0DF80CC897596C5F96F1B10835495AEBCEDDE4C1290088F0D",
+                          "sizeBytes":  22207
+                      },
+                      {
+                          "relativePath":  "scripts/check-syntax.ps1",
+                          "sha256":  "409B0353D41B441BE6DFF811D54D4CE99C94B99608CD2C9EF5E0F1C033A19FCA",
+                          "sizeBytes":  460
                       },
                       {
                           "relativePath":  "scripts/generate-emblems.ps1",
