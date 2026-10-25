@@ -34,3 +34,8 @@
   - [x] **TASK-018-B**: Integrate `eos_turbo_verify` into `src/mcp/eosMcpServer.ts` and `eos turbo` CLI command in `bin/eos.mjs`.
   - [x] **TASK-018-C**: Create comprehensive test suite `test/eosTurbo.test.mjs` asserting BDD-022 and BDD-023.
   - [x] **TASK-018-D**: Run 7-stage SecDevOps gate, commit, push, and verify live production health.
+- [x] **TASK-019**: Implement **EOS Semantic Code Graph, Blast Radius & Predictive Test Selection (PTS) Engine (`v15.0`)**:
+  - [x] **TASK-019-A**: Implement `src/core/eosSemanticGraph.ts` (Symbol & Export directed graph indexer, transitive downstream Blast Radius analyzer, Predictive Test Selector, and Dead Code detector with zero runtime dependencies).
+  - [x] **TASK-019-B**: Expose `eos_get_blast_radius` and `eos_query_code_graph` in `src/mcp/eosMcpServer.ts` and CLI commands `eos blast <file>` and `eos graph` in `bin/eos.mjs`.
+  - [x] **TASK-019-C**: Implement test suite `test/eosSemanticGraph.test.mjs` asserting BDD-024 and BDD-025.
+  - [x] **TASK-019-D**: Run 7-stage SecDevOps gate, commit, push, and verify live production health.

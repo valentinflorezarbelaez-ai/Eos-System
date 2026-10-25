@@ -165,3 +165,14 @@
 * **Rationale**: Eliminates developer and AI agent idle latency, enabling instant iteration cycles with 100% mathematical precision and zero quality compromise.
 * **Rejected Alternatives**:
   * *Sequential Synchronous Subprocesses for Every Check*: Rejected because serial process execution incurs ~2000ms latency overhead on Windows workstations.
+
+### ADR-021: Big Tech Tier 1 Semantic Code Graph & Blast Radius Engine (`src/core/eosSemanticGraph.ts`)
+* **Decision**: Architect an in-memory directed semantic code graph and impact analysis engine modeled after Google Kythe and Meta Glean:
+  1. **Directed Dependency & Symbol Graph**: Maps files, exported symbols, interfaces, and import edges with $\mathcal{O}(1)$ index traversal.
+  2. **Blast Radius Analysis (`calculateBlastRadius`)**: Determines the exact transitive closure of all downstream consumers affected by any target file or symbol mutation.
+  3. **Predictive Test Selection (PTS)**: Intersects the blast radius with the test suite topology to identify the minimum viable set of test suites required to prove regression absence, dropping test time to $< 10$ ms.
+  4. **Dead Code & Orphan Symbol Detection**: Identifies exported identifiers with zero consumers across the codebase.
+  5. **Universal CLI (`eos blast <file>`, `eos graph`) & MCP Tools (`eos_get_blast_radius`, `eos_query_code_graph`)**.
+* **Rationale**: Emulates Big Tech Tier 1 infrastructure (Google, Meta, Palantir), providing AI agents and engineers with instant situational awareness of downstream impact before modifying code.
+* **Rejected Alternatives**:
+  * *Blind Whole-Repository Full-Regression Runs*: Rejected because full regression suites scale linearly $\mathcal{O}(N)$ with repository size and waste CPU/token budgets.

@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v14.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v15.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -112,6 +112,10 @@ switch (command) {
         stdio: "inherit"
       });
       execFileSync(process.execPath, ["--test", path.join(root, "test/eosTurbo.test.mjs")], {
+        cwd: root,
+        stdio: "inherit"
+      });
+      execFileSync(process.execPath, ["--test", path.join(root, "test/eosSemanticGraph.test.mjs")], {
         cwd: root,
         stdio: "inherit"
       });
@@ -270,6 +274,59 @@ switch (command) {
     break;
   }
 
+  case "blast": {
+    printBanner();
+    const targetFile = args[1];
+    if (!targetFile) {
+      console.log("Uso: eos blast <archivo>");
+      process.exit(1);
+    }
+    const { EosSemanticGraph } = await import("../src/core/eosSemanticGraph.ts");
+    const graph = new EosSemanticGraph(root);
+    const report = graph.calculateBlastRadius(targetFile);
+
+    console.log(`\nArchivo Objetivo      : ${report.targetFile}`);
+    console.log(`Nivel de Riesgo       : [${report.riskLevel}]`);
+    console.log(`Consumidores Directos : ${report.directConsumers.length}`);
+    console.log(`Impacto Transitivo    : ${report.totalImpactedFiles} archivos (${report.impactPercentage}% del proyecto)`);
+    console.log(`Tiempo de Cálculo     : ${report.durationUs} µs\n`);
+
+    if (report.directConsumers.length > 0) {
+      console.log("Consumidores Directos:");
+      report.directConsumers.forEach((c) => console.log(`  ↳ ${c}`));
+    }
+    if (report.transitiveConsumers.length > 0) {
+      console.log("\nCierre Transitivo Completo (Blast Radius):");
+      report.transitiveConsumers.forEach((c) => console.log(`  * ${c}`));
+    }
+    if (report.predictiveTestSuites.length > 0) {
+      console.log("\n[PTS] Selección Predictiva de Pruebas Requeridas:");
+      report.predictiveTestSuites.forEach((t) => console.log(`  ✔ node --test ${t}`));
+    }
+    break;
+  }
+
+  case "graph": {
+    printBanner();
+    console.log("[EOS GRAPH] Construyendo Grafo Semántico Big Tech Tier 1...\n");
+    const { EosSemanticGraph } = await import("../src/core/eosSemanticGraph.ts");
+    const graph = new EosSemanticGraph(root);
+    const summary = graph.getSummary();
+
+    console.log(`Nodos de Archivo      : ${summary.totalFiles}`);
+    console.log(`Símbolos Exportados   : ${summary.totalExports}`);
+    console.log(`Aristas de Dependencia: ${summary.totalEdges}`);
+    console.log(`Código Huérfano       : ${summary.deadCodeCount} símbolos con 0 consumidores`);
+
+    if (summary.deadSymbols.length > 0) {
+      console.log("\nSímbolos con 0 Consumidores (Dead Code):");
+      summary.deadSymbols.slice(0, 10).forEach((s) => {
+        console.log(`  - [${s.kind}] ${s.name} en ${s.filePath}:${s.lineNumber}`);
+      });
+    }
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -288,6 +345,8 @@ Uso Universal:
   eos amplify <prompt>       Amplifica un prompt informal a especificación formal EARS y BDD
   eos guard [directorio]     Audita pureza Hexagonal, capas L0 y detecta ciclos circulares
   eos judge <escenario>      Aplica el tribunal de decisión Bayesiano con los 7 Mandamientos
+  eos blast <archivo>        Calcula el radio de impacto transitivo y pruebas predictivas (PTS)
+  eos graph                  Muestra el grafo semántico, topología de módulos y código huérfano
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

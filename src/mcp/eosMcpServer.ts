@@ -59,6 +59,10 @@ import {
   runTurboPipeline
 } from "../core/eosTurboEngine.ts";
 
+import {
+  EosSemanticGraph
+} from "../core/eosSemanticGraph.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -109,7 +113,7 @@ export class EosMcpServer {
               },
               serverInfo: {
                 name: "eos-system-mcp",
-                version: "14.0.0",
+                version: "15.0.0",
                 description: "EOS Sovereign Engineering Operating System MCP Interface"
               }
             }
@@ -228,6 +232,25 @@ export class EosMcpServer {
                 {
                   name: "eos_turbo_verify",
                   description: "Executes ultra-fast sub-350ms verification of SAST, clean hexagonal boundaries, 0-runtime dependencies, and critical assets with microsecond telemetry.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
+                  }
+                },
+                {
+                  name: "eos_get_blast_radius",
+                  description: "Calculates the transitive downstream blast radius and affected callers for any proposed file modification, with Predictive Test Selection (PTS).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      filePath: { type: "string", description: "Target source file path to analyze" }
+                    },
+                    required: ["filePath"]
+                  }
+                },
+                {
+                  name: "eos_query_code_graph",
+                  description: "Queries the Big Tech Tier 1 directed semantic code graph, returning module topology, symbols, and dead code report.",
                   inputSchema: {
                     type: "object",
                     properties: {}
@@ -437,6 +460,17 @@ export class EosMcpServer {
 
       case "eos_turbo_verify": {
         return runTurboPipeline(this.projectRoot);
+      }
+
+      case "eos_get_blast_radius": {
+        const filePath = String(args.filePath || "");
+        const graph = new EosSemanticGraph(this.projectRoot);
+        return graph.calculateBlastRadius(filePath);
+      }
+
+      case "eos_query_code_graph": {
+        const graph = new EosSemanticGraph(this.projectRoot);
+        return graph.getSummary();
       }
 
       default:
