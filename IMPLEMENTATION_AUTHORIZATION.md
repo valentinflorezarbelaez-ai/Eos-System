@@ -18,3 +18,5 @@
   - Spotify & Nubank Dual-Engine FinOps Architecture (v24.0.0): 90/10 Go/Rust architecture, Distroless containerization (< 12MB), zero-allocation memory benchmarks, `-race` condition concurrency gates, and banking-grade idempotent event processing.
   - Audio DSP Kernel & Fleet Golden Path Elevator (v24.1.0): Direct Form II Transposed Biquad filters, ITU-R BS.1770 Lookahead True Peak limiter, and automated Backstage RFC-42 fleet elevation (CHANGE-008).
   - Spotify Apollo / Hermes High-Performance RPC Mesh & Interactive Codex Studio (v25.0.0): 3-state Circuit Breaker, sliding error window, Token Bucket rate limiting, FNV-1a topic hashing, W3C Distributed Tracing, and live interactive Spotify Codex Studio (CHANGE-009).
+  - Spotify & Nubank FinOps Dual-Engine Go/Rust Architecture (v25.1.0): Distroless containerization, 0 B/op idempotency store, and data race detection gates (CHANGE-010).
+  - Spotify Gapless DJ Automix Engine & Real-Time Acoustic Feature Store (v26.0.0): 3-band Linkwitz-Riley crossover, bass clash prevention, Camelot harmonic cost, and 8D continuous taste tracking with EWMA decay (CHANGE-011).

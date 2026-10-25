@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "25.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Titans Matrix v25.0 (Spotify Apollo/Hermes Mesh, Audio DSP Kernel, Fleet Golden Path Elevator, Honk Agentic Factory, Go Titan Accelerator, SpaceX 60Hz TMR, NVIDIA SIMD, Google Borg Reconciler, xAI RDMA Fabric, Living OpenSpec, FDIR Healer)",
+  "version": "26.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Titans Matrix v26.0 (Spotify Gapless DJ Mix Engine, Acoustic Feature Store, Apollo/Hermes Mesh, Audio DSP Kernel, Fleet Golden Path Elevator, Honk Agentic Factory, Go Titan Accelerator, SpaceX 60Hz TMR, NVIDIA SIMD, Google Borg Reconciler, xAI RDMA Fabric, Living OpenSpec, FDIR Healer)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -34,6 +34,8 @@
     "test:fleet:elevator": "node --test test/eosFleetElevator.test.mjs",
     "test:apollo": "node --test test/eosApolloHermesMesh.test.mjs",
     "test:spotify:factory": "node --test test/eosSpotifyFactory.test.mjs",
+    "test:mix": "node --test test/eosGaplessMixEngine.test.mjs",
+    "test:features": "node --test test/eosAcousticFeatureStore.test.mjs",
     "build:go": "go build -o bin/eos-spotify.exe src/native/eos_spotify_engine.go",
     "verify:cwv": "node scripts/verify-cwv-budget.mjs",
     "verify:sri": "node scripts/verify-sri-integrity.mjs",

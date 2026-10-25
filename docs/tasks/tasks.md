@@ -129,3 +129,11 @@
   - [x] **TASK-033-F**: Add FinOps and concurrency race testing steps to `.github/workflows/eos-honk-agent.yml`.
   - [x] **TASK-033-G**: Formalize Living OpenSpec `SPEC-016-FINOPS-GO-NUBANK-SPOTIFY.md` and change delta `CHANGE-010-FINOPS-GO-FACTORY.md`.
   - [x] **TASK-033-H**: Run 117-test suite across 69 suites, execute 7/7 SecDevOps gates (`npm run verify:strict`), seal Merkle receipt, commit, and push (`exit 0`).
+- [x] **TASK-034**: Implement **Spotify Gapless DJ Automix Engine & Real-Time Acoustic Feature Store (`v26.0`)**:
+  - [x] **TASK-034-A**: Implement `src/core/eosGaplessMixEngine.ts` (3-band Linkwitz-Riley crossover at 250Hz and 4kHz, equal-power $\cos^2+\sin^2$ crossfade with 0ms bass clash staggering, Camelot harmonic transition cost function, and True Peak lookahead limiting).
+  - [x] **TASK-034-B**: Implement `src/core/eosAcousticFeatureStore.ts` (8D acoustic vector continuous tracking, exponential decay moving average with 7-day half-life, skip-penalty dynamics, and Point-in-Time correctness).
+  - [x] **TASK-034-C**: Implement comprehensive unit test suites `test/eosGaplessMixEngine.test.mjs` and `test/eosAcousticFeatureStore.test.mjs` (11/11 tests passed).
+  - [x] **TASK-034-D**: Expose CLI commands `eos mix` and `eos features` in `bin/eos.mjs`, and MCP tools `eos_spotify_mix_plan` and `eos_spotify_taste_profile` in `src/mcp/eosMcpServer.ts`.
+  - [x] **TASK-034-E**: Expand serverless API `/api/spotify` with `action=mix` and `action=features` handlers.
+  - [x] **TASK-034-F**: Formalize Living OpenSpec `SPEC-017-GAPLESS-DJ-CROSSFADER.md`, `SPEC-018-ACOUSTIC-FEATURE-STORE.md`, and change delta `CHANGE-011-GAPLESS-DJ-AND-FEATURE-STORE.md`.
+  - [x] **TASK-034-G**: Run full 131-test suite across 72 suites, execute 7/7 SecDevOps gates (`npm run verify:strict`), seal Merkle receipt, commit, and push (`exit 0`).

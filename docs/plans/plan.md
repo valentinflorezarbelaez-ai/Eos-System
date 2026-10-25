@@ -225,3 +225,21 @@
 * **Rationale**: Replicates Spotify's carrier-grade distributed systems patterns within EOS with 0 runtime dependencies, providing fault tolerance for all inter-service operations.
 * **Rejected Alternatives**:
   * *Kafka / RabbitMQ sidecar containers*: Rejected for the sovereign Layer-0 control plane to ensure instantaneous cold starts (< 5ms) and air-gapped execution.
+
+### ADR-028: Gapless DJ Automix & 3-Band Staggered Crossfader (`src/core/eosGaplessMixEngine.ts`)
+* **Decision**: Implement a pure Layer-0 3-band frequency crossover (Linkwitz-Riley 2nd order at 250 Hz and 4 kHz) with staggered equal-power bass blending:
+  1. Low-frequency band of outgoing track attenuates completely before incoming track bass enters, eliminating phase cancellation (0ms bass overlap).
+  2. Equal-power curve ($\cos^2 + \sin^2 \equiv 1.0$) on Mid and High frequencies maintains uniform acoustic loudness.
+  3. Camelot distance cost function determines optimal playlist transition sequencing.
+* **Rationale**: Replicates Spotify DJ / Automix acoustic quality without phase distortion, distortion or clipping.
+* **Rejected Alternatives**:
+  * *Simple linear time-domain crossfading*: Rejected because simple linear volume fades cause a $-3\text{ dB}$ volume drop at the midpoint and severe sub-bass frequency clashing.
+
+### ADR-029: Real-Time Acoustic Feature Store & Point-in-Time Correctness (`src/core/eosAcousticFeatureStore.ts`)
+* **Decision**: Implement an in-memory feature store for 8D continuous acoustic taste tracking modeled after Spotify Scio and Feast:
+  1. Exponential decay weighting ($\lambda = \ln(2)/\tau$, default $\tau = 7\text{ days}$) gives recent listening history precedence over stale preferences.
+  2. Skip penalties dynamically push the user centroid away from skipped acoustic spaces.
+  3. Point-in-Time correctness guarantees strict temporal isolation for model evaluations.
+* **Rationale**: Provides microsecond-level feature retrieval for recommendation systems with zero external database dependencies.
+* **Rejected Alternatives**:
+  * *Storing all raw historical vectors indefinitely in memory*: Rejected to prevent memory bloat and stale preference bias.

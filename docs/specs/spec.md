@@ -321,6 +321,17 @@ ESCENARIO: [BDD-046 Malla RPC Asíncrona y Event Mesh Apollo / Hermes (SPEC-015)
   CUANDO se transmiten peticiones RPC y eventos pub/sub a través de EosApolloHermesMesh
   ENTONCES gestiona Circuit Breakers de 3 estados (CLOSED, OPEN, HALF_OPEN) con retroceso exponencial, token bucket rate limiting, particionamiento FNV-1a y propagación determinista de encabezados de trazabilidad distribuida W3C (traceparent) con 0 dependencias externas.
 
+ESCENARIO: [BDD-047 Motor de Mezcla DJ Gapless & Crossover de 3 Bandas (SPEC-017)]
+  DADO dos pistas musicales en formato PCM Float32Array con diferentes tonalidades Camelot y BPMs
+  CUANDO se procesa la transición a través de EosGaplessMixEngine
+  ENTONCES calcula el costo de transición armónica en la Rueda de Camelot, separa la señal en 3 bandas de frecuencia (Linkwitz-Riley Low < 250Hz, Mid 250Hz-4kHz, High > 4kHz) y ejecuta un fundido de igual potencia escalonado en el bajo, eliminando la interferencia destructiva de fases (0ms de choque de graves) y limitando la salida al techo True Peak de -1.0 dBTP.
+
+ESCENARIO: [BDD-048 Feature Store Acústico en Tiempo Real & Decaimiento EWMA (SPEC-018)]
+  DADO un flujo continuo de eventos de escucha y omisión de usuarios
+  CUANDO se consulta el centroide de preferencias acústicas en EosAcousticFeatureStore
+  ENTONCES calcula el vector de 8 dimensiones en Float32Array aplicando decaimiento exponencial con vida media configurable (tau = 7 días), penaliza inmediatamente las omisiones tempranas (< 30s) y garantiza corrección temporal Point-in-Time sin fugas de datos históricos.
+
+
 
 
 ```
