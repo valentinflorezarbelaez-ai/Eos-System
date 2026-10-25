@@ -402,11 +402,25 @@ export class EosSpotifyAgenticFactory {
       let status: "SUCCESS" | "SKIPPED" | "FAILED" = "SUCCESS";
       let error: string | undefined;
 
+      let effectivePath = path.resolve(proj.localPath);
+      if (
+        proj.id === "eos-system" ||
+        path.basename(effectivePath).toLowerCase() === path.basename(this.projectRoot).toLowerCase() ||
+        (proj.id === "eos-system" && fs.existsSync(path.join(this.projectRoot, "catalog-info.yaml")))
+      ) {
+        effectivePath = this.projectRoot;
+      } else if (!fs.existsSync(effectivePath)) {
+        const sibling = path.resolve(this.projectRoot, "..", path.basename(proj.localPath));
+        if (fs.existsSync(sibling)) {
+          effectivePath = sibling;
+        }
+      }
+
       try {
-        if (!fs.existsSync(proj.localPath)) {
+        if (!fs.existsSync(effectivePath)) {
           projectResults.push({
             projectId: proj.id,
-            localPath: proj.localPath,
+            localPath: effectivePath,
             status: "SKIPPED",
             changesApplied: [],
             error: "Directory not found on host filesystem"
@@ -416,7 +430,7 @@ export class EosSpotifyAgenticFactory {
 
         switch (directive.action) {
           case "apply_backstage_rfc42": {
-            const catPath = path.join(proj.localPath, "catalog-info.yaml");
+            const catPath = path.join(effectivePath, "catalog-info.yaml");
             if (!fs.existsSync(catPath) && !directive.dryRun) {
               const defaultCatalog = `apiVersion: backstage.io/v1alpha1\nkind: Component\nmetadata:\n  name: ${proj.id}\n  title: ${proj.name}\nspec:\n  type: service\n  lifecycle: production\n  owner: user:valentin-florez-arbelaez\n`;
               fs.writeFileSync(catPath, defaultCatalog, "utf8");
@@ -428,11 +442,11 @@ export class EosSpotifyAgenticFactory {
           }
 
           case "enforce_strict_sre": {
-            const indexHtml = path.join(proj.localPath, "index.html");
+            const indexHtml = path.join(effectivePath, "index.html");
             if (fs.existsSync(indexHtml)) {
               changes.push("Audited HTML5 semantic tags, CSP headers, and SEO anchors");
             }
-            const robotsTxt = path.join(proj.localPath, "robots.txt");
+            const robotsTxt = path.join(effectivePath, "robots.txt");
             if (fs.existsSync(robotsTxt)) {
               changes.push("Verified robots.txt crawl directives");
             }

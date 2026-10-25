@@ -138,20 +138,10 @@ const testFiles = [
 
 for (const testFile of testFiles) {
   console.log(`[STAGE 4 RUNNER] Executing ${testFile}...`);
-  try {
-    const out = execFileSync(process.execPath, ["--test", path.join(root, testFile)], {
-      cwd: root,
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"]
-    });
-    console.log(out);
-  } catch (err) {
-    console.log(`\n❌ [STAGE 4 CRITICAL FAILURE] Test suite failed: ${testFile}`);
-    if (err.stdout) console.log("[TEST STDOUT]:\n" + err.stdout.toString());
-    if (err.stderr) console.log("[TEST STDERR]:\n" + err.stderr.toString());
-    console.log("[ERROR MESSAGE]: " + err.message);
-    process.exit(1);
-  }
+  execFileSync(process.execPath, ["--test", path.join(root, testFile)], {
+    cwd: root,
+    stdio: "inherit"
+  });
 }
 console.log(`[PASS] Stage 4/7 — Static AST, Syntax, Unit & Chaos Gate (${jsFilesToCheck.length} JS/MJS modules + ${tsCoreFiles.length} L0 TS modules + node:test passed).`);
 
