@@ -135,7 +135,8 @@ const testFiles = [
   "test/eosAcousticFeatureStore.test.mjs",
   "test/eosUniversalProjectAdapter.test.mjs",
   "test/eosGlobalEdgeArbiter.test.mjs",
-  "test/eosSpotifyNubankDualEngine.test.mjs"
+  "test/eosSpotifyNubankDualEngine.test.mjs",
+  "test/eosSamaelIbmNvidiaCore.test.mjs"
 ];
 
 for (const testFile of testFiles) {

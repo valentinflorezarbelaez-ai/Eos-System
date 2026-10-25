@@ -135,6 +135,10 @@ import {
   EosGlobalEdgeArbiter
 } from "../core/eosGlobalEdgeArbiter.ts";
 
+import {
+  EosSamaelIbmNvidiaCore
+} from "../core/eosSamaelIbmNvidiaCore.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -699,6 +703,16 @@ export class EosMcpServer {
                       p95ThresholdMs: { type: "number", description: "P95 delay threshold before hedged request (default: 28.0)" }
                     }
                   }
+                },
+                {
+                  name: "eos_samael_ibm_nvidia",
+                  description: "Executes the Apex Cyber-Theurgic Synthesis uniting Samaelian Law of Octaves (2 conscious shocks), IBM Parallel Sysplex 99.99999% Seven-Nines 2PC, and NVIDIA CUDA 32-thread SIMT warp tensor engine.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      goal: { type: "string", description: "Task goal to drive through the conscious octave" }
+                    }
+                  }
                 }
               ]
             }
@@ -1162,6 +1176,12 @@ export class EosMcpServer {
         const samples = Number(args.samples) || 1000;
         const p95 = Number(args.p95ThresholdMs) || 28.0;
         return arbiter.simulateHedgedRequests(samples, p95);
+      }
+
+      case "eos_samael_ibm_nvidia": {
+        const core = new EosSamaelIbmNvidiaCore();
+        const goal = String(args.goal || "EOS Universal Sovereign Elevation");
+        return core.runApexSynthesis(goal);
       }
 
       default:

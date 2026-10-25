@@ -91,6 +91,7 @@
 * **FR-037 (Ubiquitous Cryptographic Healing Attestation & Merkle Ledger)**: EL SISTEMA registrará cada auto-reparación en un recibo criptográfico sellado con SHA-256 (`docs/evidence/HEAL-XXXX.json`), certificando la transición epistémica a `VERIFIED`.
 * **FR-038 (Ubiquitous Autonomous Healer CLI & MCP Integration)**: EL SISTEMA expondrá `eos_autonomous_heal` en `src/mcp/eosMcpServer.ts` y el comando `eos heal` en `bin/eos.mjs`.
 * **FR-050 (Ubiquitous & Event-Driven Arbitraje Anycast Global & Malla de Latencia)**: EL SISTEMA (`src/core/eosGlobalEdgeArbiter.ts`, `eos_global_edge_route` y `eos edge`) mantendrá la topología de los 8 Puntos de Presencia Globales (Estocolmo, Bogotá, São Paulo, Virginia, Silicon Valley, Londres, Fráncfort y Tokio), computará distancias geodésicas Haversine y retardos de fibra óptica en nanosegundos/microsegundos, ejecutará Peticiones Especulativas (Hedged Requests al estilo Jeff Dean) para truncar la latencia de cola p99, sellará eventos con Relojes Lógicos Híbridos (HLC) monótonos y operará una caché Edge en memoria sin asignaciones de heap (< 15 µs).
+* **FR-051 (Ubiquitous & Event-Driven Síntesis Samaeliana · IBM Sysplex 99.99999% & NVIDIA Warp)**: EL SISTEMA (`src/core/eosSamaelIbmNvidiaCore.ts`, `eos_samael_ibm_nvidia` y `eos titan ibm/nvidia`) gobernará la Ley Cósmica de las Octavas (DO-SI) inyectando Dos Shocks Conscientes (MI-FA y SI-DO) contra la entropía, orquestará transacciones atómicas distribuidas XA de Dos Fases (2PC) con tolerancia a fallos IBM Parallel Sysplex Seven-Nines (99.99999% / ≤ 3.15s downtime anual), y ejecutará un planificador SIMT CUDA de 32 hilos por Warp con intercambio lock-free de registros (`warpShuffle`) y multiplicación matricial GEMM en ArrayBuffer contiguo con 0 asignaciones de memoria (`0 B/op`).
 
 ---
 
@@ -341,6 +342,12 @@ ESCENARIO: [BDD-050 Arbitro Anycast Global de Latencia y Peticiones Especulativa
   DADO las coordenadas geográficas de un cliente o identificador regional y la topología de los 8 POPs Globales de EOS
   CUANDO se invoca EosGlobalEdgeArbiter ("eos edge route" o la herramienta MCP "eos_global_edge_route")
   ENTONCES calcula la distancia geodésica mediante la fórmula de Haversine y el retardo RTT de fibra óptica, clasifica los POPs en orden de cercanía física, ejecuta peticiones especulativas (Hedged Requests) reduciendo la latencia de cola p99 en más de un 60%, sella las mutaciones con un Reloj Lógico Híbrido (HLC) monótono y entrega respuestas cacheadas en menos de 20 microsegundos con 0 dependencias externas.
+
+ESCENARIO: [BDD-051 Síntesis Samaeliana · IBM Sysplex Seven-Nines & NVIDIA Warp SIMT (SPEC-021)]
+  DADO un flujo distribuido de tareas críticas bajo la Ley de las Octavas
+  CUANDO se procesa a través de EosSamaelIbmNvidiaCore
+  ENTONCES inyecta el Shock 1 Consciente en el intervalo MI-FA (auto-observación crítica de AST y secretos) y el Shock 2 en SI-DO (transmutación alquímica Si-12 y sellado criptográfico Nous), ejecuta transacciones XA de Dos Fases (2PC) con fiabilidad de siete nueves (99.99999% Sysplex), y despacha hilos sobre un planificador CUDA Warp SIMT de 32 hilos con intercambio lock-free de registros y multiplicación matricial GEMM en ArrayBuffer contiguo con 0 asignaciones de memoria (0 B/op).
+
 
 
 

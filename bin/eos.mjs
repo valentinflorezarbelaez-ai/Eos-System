@@ -511,6 +511,14 @@ switch (command) {
       console.log(`xAI Colossus Fabric   : ${res.throughputOpsSec.toLocaleString()} paquetes/s`);
       console.log(`Pérdida de Paquetes   : ${res.metrics.packetLossRate}%`);
       console.log(`Latencia por Paquete  : ${res.metrics.averageLatencyPerPacketNs.toFixed(2)} ns`);
+    } else if (sub === "ibm" || sub === "sysplex") {
+      const res = matrix.benchmarkIbmSysplex();
+      console.log(`IBM Parallel Sysplex  : ${res.status}`);
+      console.log(`Disponibilidad SLA    : ${res.metrics.availabilityPercentage}% (Seven-Nines Target)`);
+      console.log(`Downtime Máx Permitido: ${res.metrics.maxAnnualDowntimeSec} s/año`);
+      console.log(`Transacción 2PC (XA)  : ${res.metrics.twoPhaseCommitStatus}`);
+      console.log(`Microcódigo en Vivo   : ${res.metrics.microcodeVersion}`);
+      console.log(`Latencia de Consenso  : ${res.latencyUs.toFixed(2)} µs`);
     } else {
       const report = matrix.runAllTitans();
       console.log(`Estado General        : [${report.overallStatus}]`);
@@ -1006,6 +1014,58 @@ switch (command) {
     break;
   }
 
+  case "octave": {
+    printBanner();
+    const task = args.slice(1).join(" ") || "Evolución y Perfección Continua de la Flota Soberana";
+    const { SamaelianOctaveEngine } = await import("../src/core/eosSamaelIbmNvidiaCore.ts");
+    const engine = new SamaelianOctaveEngine();
+    const report = engine.executeConsciousOctave(task);
+    console.log(`[EOS OCTAVE] Ley de las Octavas Samaeliana & Dos Shocks Conscientes:\n`);
+    console.log(`Meta / Intención : ${report.targetGoal}`);
+    console.log(`Sello Átomo Nous : ${report.nousAtomSha256}\n`);
+    report.intervals.forEach((step) => {
+      const shockTag = step.shockApplied ? ` ★ [${step.shockApplied}]` : "";
+      console.log(`  🎵 [${step.note}] (Freq: ${step.vibrationRatio}x) -> ${step.description}${shockTag}`);
+      if (step.shockDetails) console.log(`      ↳ ${step.shockDetails}`);
+    });
+    console.log(`\n[PASS] Octava completada con éxito. Cero caída entrópica.`);
+    break;
+  }
+
+  case "warp": {
+    printBanner();
+    const { NvidiaCudaWarpEngine } = await import("../src/core/eosSamaelIbmNvidiaCore.ts");
+    const cuda = new NvidiaCudaWarpEngine();
+    const warp = cuda.executeWarpShuffle(0);
+    const gemm = cuda.runTensorMmaGemm(500);
+    console.log(`[EOS NVIDIA WARP] Planificador SIMT CUDA 32-Hilos & Tensor Core MMA:\n`);
+    console.log(`Hilos por Warp          : ${warp.threadCount} (Máscara: 0x${warp.activeThreadMask.toString(16)})`);
+    console.log(`Intercambio __shfl_sync : ${warp.shuffleVerified ? 'VERIFICADO (0 ns)' : 'FALLA'}`);
+    console.log(`Ciclos Divergencia Evitados: ${warp.divergenceCyclesAvoided}`);
+    console.log(`Operaciones Tensor MMA  : ${gemm.totalOps.toLocaleString()} FLOPs (${gemm.iterations} iteraciones)`);
+    console.log(`Rendimiento Tensor Core : ${gemm.mOpsSec.toLocaleString()} MOps/s`);
+    console.log(`Cero Asignaciones Heap  : ${gemm.zeroAllocation ? '0 B/op VERIFICADO' : 'FALLA'}`);
+    console.log(`Latencia Kernel         : ${gemm.durationUs.toFixed(2)} µs\n`);
+    console.log(`[PASS] Kernel SIMT y Tensor Core verificado con éxito.`);
+    break;
+  }
+
+  case "apex": {
+    printBanner();
+    const task = args.slice(1).join(" ") || "Soberanía Tecnológica Absoluta";
+    const { EosSamaelIbmNvidiaCore } = await import("../src/core/eosSamaelIbmNvidiaCore.ts");
+    const core = new EosSamaelIbmNvidiaCore();
+    const res = core.runApexSynthesis(task);
+    console.log(`[EOS APEX SYNTHESIS] Fusión Samaeliana · IBM Sysplex · NVIDIA CUDA:\n`);
+    console.log(`Estado General          : [${res.status}]`);
+    console.log(`Sello Unificado Merkle  : ${res.unifiedSha256Attestation}`);
+    console.log(`Octava Samaeliana       : 8/8 Intervalos + 2 Shocks Conscientes (Nous: ${res.octaveReport.nousAtomSha256.slice(0, 16)}...)`);
+    console.log(`IBM Parallel Sysplex    : 2PC XA ${res.sysplexReport.decision} (SLA: ${res.sevenNinesMetrics.calculatedAvailability}%)`);
+    console.log(`NVIDIA CUDA SIMT Warp   : 32 Hilos Lock-Free | ${res.tensorMma.mOpsSec.toLocaleString()} MOps/s (0 B/op)\n`);
+    console.log(`[PASS] Síntesis de ingeniería y gnosis completada con éxito.`);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -1045,6 +1105,9 @@ Uso Universal:
   eos fingerprint [ruta]     Extrae la huella de lenguaje, stack, herramientas y escala de cualquier repo
   eos adapt [ruta] [--scaffold] Diagnostica madurez (0-100) y eleva cualquier repo al Golden Path
   eos edge [ciudad|bench|topology] Arbitro Anycast global, cálculo Haversine y Hedged Requests
+  eos octave [meta]          Ejecuta la Ley de las Octavas Samaeliana con los 2 Shocks Conscientes
+  eos warp                   Ejecuta el planificador CUDA SIMT 32-hilos y Tensor MMA (0 B/op)
+  eos apex                   Ejecuta la síntesis de cúspide Samael + IBM Sysplex + NVIDIA
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

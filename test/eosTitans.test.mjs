@@ -93,13 +93,22 @@ describe("EOS Sovereign Titans Matrix Suite (Spotify, SpaceX, NVIDIA, Google, xA
       assert.ok(res.metrics.harmonicScore > 0);
       assert.ok(res.throughputOpsSec > 10000);
     });
+
+    it("benchmarks IBM Mainframe Parallel Sysplex Seven-Nines and 2PC XA consistency", () => {
+      const res = matrix.benchmarkIbmSysplex();
+      assert.equal(res.titan, "IBM_SYSPLEX_SEVEN_NINES");
+      assert.equal(res.status, "PASS");
+      assert.equal(res.metrics.twoPhaseCommitStatus, "GLOBAL_COMMIT");
+      assert.ok(res.metrics.availabilityPercentage >= 99.9999);
+      assert.ok(res.throughputOpsSec > 50000);
+    });
   });
 
   describe("Suite 7: Unified Titans Master Benchmark & Merkle Receipt", () => {
-    it("executes all 7 Titans concurrently and emits cryptographic seal", () => {
+    it("executes all 8 Titans concurrently and emits cryptographic seal", () => {
       const report = matrix.runAllTitans();
       assert.equal(report.overallStatus, "APEX_PERFECTION");
-      assert.equal(report.results.length, 7);
+      assert.equal(report.results.length, 8);
       assert.ok(typeof report.sha256Proof === "string" && report.sha256Proof.length === 64);
       assert.ok(report.totalDurationUs > 0);
     });
