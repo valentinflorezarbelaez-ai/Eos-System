@@ -1,0 +1,10 @@
+# Auto-detect text files and normalize line endings to LF (deterministic cross-platform)
+* text=auto eol=lf
+
+# Explicit binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff2 binary

@@ -47,9 +47,12 @@ EOS System is an autonomous, deterministic control plane for AI-assisted softwar
 
 | Command | Action / Subsystem | Execution Time |
 |---|---|---|
-| `npm run test` | Full pipeline: unit tests + 7-stage CI/CD gate | ~1.1s |
+| `npm run test` | Full pipeline: unit tests + 7-stage CI/CD gate | ~1.5s |
 | `npm run test:unit` | Executes native `node:test` suite in `test/eosCore.test.mjs` | < 150ms |
-| `npm run verify:strict` | Executes all 7 fail-closed gates (SAST, SDD, SBOM, AST, Smoke) | ~1.0s |
+| `npm run test:chaos` | Executes 10k burst and fuzzing suite in `test/chaosResilience.test.mjs` | < 200ms |
+| `npm run verify:cwv` | Core Web Vitals (LCP, CLS, INP) & WCAG 2.1 AA 100/100 audit | < 50ms |
+| `npm run verify:sri` | Subresource Integrity (SRI) SHA-384 cryptographic check | < 50ms |
+| `npm run verify:strict` | Executes all 7 fail-closed gates (SAST, SDD, SBOM, AST, Smoke) | ~1.5s |
 | `npm run jarvis` | Dispatches single-shot autonomous cognitive diagnosis | < 100ms |
 | `npm run jarvis:daemon` | Runs 24/7 background sentinel daemon with file watching | Continuous |
 | `npm run fleet:verify` | Audits git cleanliness, secrets, and live URLs across all fleet repos | ~2.5s |

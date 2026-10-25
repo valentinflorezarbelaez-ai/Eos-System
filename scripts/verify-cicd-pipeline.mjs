@@ -63,7 +63,11 @@ execFileSync(process.execPath, [path.join(root, "scripts/verify-landing.mjs")], 
   cwd: root,
   stdio: "inherit"
 });
-console.log("[PASS] Stage 2/7 — Constitutional SDD Package & Landing Invariants Gate.");
+execFileSync(process.execPath, [path.join(root, "scripts/verify-sri-integrity.mjs")], {
+  cwd: root,
+  stdio: "inherit"
+});
+console.log("[PASS] Stage 2/7 — Constitutional SDD, Landing Invariants & SRI Integrity Gate.");
 
 // ---------------------------------------------------------------------------
 // STAGE 3: HEXAGONAL L0 PURITY (0-DEPS) & SLSA LEVEL 4 SHA-256 SBOM MERKLE ROOT
@@ -113,6 +117,10 @@ console.log(`[PASS] Stage 4/7 — Static AST, Syntax, Unit & Chaos Gate (${jsFil
 // ---------------------------------------------------------------------------
 // STAGE 5: WCAG 2.1 AA ACCESSIBILITY, SEO & PERFORMANCE BUDGET GATE
 // ---------------------------------------------------------------------------
+execFileSync(process.execPath, [path.join(root, "scripts/verify-cwv-budget.mjs")], {
+  cwd: root,
+  stdio: "inherit"
+});
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 assert.ok(html.includes('class="skip-link"'), "Missing WCAG 2.1 AA skip-link");
 assert.ok(html.includes('aria-live="polite"'), "Missing aria-live polite regions");

@@ -7,6 +7,8 @@
     "test": "node scripts/verify-cicd-pipeline.mjs",
     "test:unit": "node --test test/eosCore.test.mjs",
     "test:chaos": "node --test test/chaosResilience.test.mjs",
+    "verify:cwv": "node scripts/verify-cwv-budget.mjs",
+    "verify:sri": "node scripts/verify-sri-integrity.mjs",
     "verify:strict": "node scripts/verify-cicd-pipeline.mjs",
     "cicd:gate": "node scripts/verify-cicd-pipeline.mjs",
     "ship:sovereign": "node scripts/ship-sovereign.mjs",
