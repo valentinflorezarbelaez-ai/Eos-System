@@ -26,8 +26,8 @@
       "lintErrors": 0,
       "lintWarnings": 0,
       "typeErrors": 0,
-      "latestEvidence": "docs/evidence/EVD-0002-BIBLIOTECA-GNOSTICA-PERFECTION.json",
-      "gitCommit": "b8457df"
+      "latestEvidence": "docs/evidence/EVD-0001-THOTH-PORTRAIT.json",
+      "gitCommit": "f814126"
     },
     {
       "id": "aberamentho-music",
@@ -63,11 +63,11 @@
       "id": "portafolio-valentin",
       "name": "Portafolio Personal Valentín",
       "path": "C:\\Users\\valen\\portafolio",
-      "url": "https://portafolio-ecru-xi-97.vercel.app/",
+      "url": "https://portafolio-valentin.vercel.app/",
       "description": "Personal Engineering & Creator Portfolio",
       "epistemicState": "PRODUCTION_READY",
       "rating": "10/10",
-      "gitCommit": "adce68c"
+      "gitCommit": "6f90ccc"
     },
     {
       "id": "kegel-ham-sah",
@@ -80,11 +80,14 @@
     },
     {
       "id": "donaciones-drab",
-      "name": "Portal de Donaciones (Fundación DRAB)",
+      "name": "Portal de Donaciones (Fundación DRAB / AGEAC / Luz y Sonrisas)",
+      "path": "C:\\Users\\valen\\Donaciones",
       "url": "https://donaciones-drab.vercel.app/",
-      "description": "Fundación DRAB Philanthropic Portal",
-      "epistemicState": "INTAKE_REQUIRED",
-      "rating": "PENDING_INTAKE"
+      "description": "Philanthropic & Mission Support Portal (0% Intermediaries)",
+      "epistemicState": "PRODUCTION_READY",
+      "rating": "10/10",
+      "latestEvidence": "docs/evidence/EVD-0001-DONACIONES-PASS.json",
+      "gitCommit": "6c73cc5"
     }
   ]
 }
