@@ -3,8 +3,8 @@
   "epistemicState": "VERIFIED",
   "stagesPassed": "7/7",
   "exitCode": 0,
-  "sbomMerkleRoot": "sha256:ae764d66f1591d3eef4a3bb301129b51431cf0efc2d1ea4ad390c47bbebf3e25",
-  "artifactCount": 88,
+  "sbomMerkleRoot": "sha256:3ea346c61a63b2f7d82284af2e0e691a00e46005577d1dbf8b449f51fb287bc8",
+  "artifactCount": 92,
   "serverlessEndpointsVerified": [
     "api/teurgia.js",
     "api/compile.js",
@@ -18,7 +18,8 @@
     "api/health.js",
     "api/graph.js",
     "api/amplify.js",
-    "api/eval.js"
+    "api/eval.js",
+    "api/titans.js"
   ],
   "enforcedHooks": [
     ".githooks/pre-commit",

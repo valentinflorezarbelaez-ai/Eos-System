@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "17.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Xirp Worktrees, Cognitive Evals & Living OpenSpec v17.0 (Multi-Agent Git Worktree Matrix, Google/Anthropic Cognitive Evaluation Harness, Living OpenSpec Architecture, Closed-Loop FDIR Healer, Semantic Symbol Graph, Predictive Test Selection)",
+  "version": "18.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Titans Matrix v18.0 (Spotify Xirp Backstage RFC-42, SpaceX 60Hz TMR Flight Computer, NVIDIA TensorRT SIMD Arena, Google Borg Reconciler, xAI Colossus Inter-Agent Fabric, Living OpenSpec Architecture, Closed-Loop FDIR Healer)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -12,6 +12,8 @@
     "worktree": "node bin/eos.mjs worktree",
     "eval": "node bin/eos.mjs eval",
     "spec": "node bin/eos.mjs spec",
+    "titans": "node bin/eos.mjs titan",
+    "reconcile": "node bin/eos.mjs reconcile",
     "test": "node scripts/verify-cicd-pipeline.mjs",
     "test:unit": "node --test test/eosCore.test.mjs",
     "test:chaos": "node --test test/chaosResilience.test.mjs",
@@ -22,6 +24,7 @@
     "test:worktree": "node --test test/eosWorktree.test.mjs",
     "test:eval": "node --test test/eosCognitiveEval.test.mjs",
     "test:spec": "node --test test/eosOpenSpec.test.mjs",
+    "test:titans": "node --test test/eosTitans.test.mjs",
     "verify:cwv": "node scripts/verify-cwv-budget.mjs",
     "verify:sri": "node scripts/verify-sri-integrity.mjs",
     "verify:strict": "node scripts/verify-cicd-pipeline.mjs",

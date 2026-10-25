@@ -1,5 +1,5 @@
 # EOS System — Engineering Operating System (Control Plane)
-> **Sovereign Tier-1 Nexus v17.0 · Google Kythe / Meta Glean / NASA FDIR Grade · SLSA Level 4 · Layer-0 Hexagonal (0-Deps)**
+> **Sovereign Titans Matrix v18.0 · Spotify Xirp / SpaceX TMR / NVIDIA SIMD / Google Borg / xAI Colossus Grade · SLSA Level 4 · Layer-0 Hexagonal (0-Deps)**
 
 ---
 
@@ -60,7 +60,9 @@ The sovereign CLI provides instant microsecond utilities across all development 
 | `eos worktree [list|add|rm]` | Manages isolated Git worktrees for concurrent AI agents (Xirp standard) | < 50 ms |
 | `eos eval <file>` | Executes 5-dimensional cognitive evaluation (Google Vertex / Anthropic Evals) | < 1 ms |
 | `eos spec [check|list]` | Audits Living OpenSpec specifications, deltas, and drift detection | < 5 ms |
-| `npm run test` | Full deterministic test suite: 65 suites + 7-stage CI/CD SecDevOps gate | ~1.8 s |
+| `eos titan [xirp|spacex|..]` | Benchmarks the 5 Titans: Spotify, SpaceX, NVIDIA, Google, xAI | < 15 ms |
+| `eos reconcile` | Continuous declarative state reconciliation loop (Google Borg style) | < 5 ms |
+| `npm run test` | Full deterministic test suite: 72 suites + 7-stage CI/CD SecDevOps gate | ~1.8 s |
 | `npm run test:unit` | Executes native `node:test` suite in `test/eosCore.test.mjs` | < 150 ms |
 | `npm run test:chaos` | Executes 10,000-burst fault injection in `test/chaosResilience.test.mjs` | < 200 ms |
 | `npm run verify:strict` | Executes all 7 fail-closed gates (SAST, SDD, SBOM, AST, 12 APIs Smoke) | ~1.5 s |
@@ -72,10 +74,11 @@ The sovereign CLI provides instant microsecond utilities across all development 
 
 ## 3. Serverless Edge API Endpoints (`/api/*`)
 
-All 13 serverless endpoints are deployed to Vercel Edge with zero runtime dependencies and military-grade HTTP security headers:
+All 14 serverless endpoints are deployed to Vercel Edge with zero runtime dependencies and military-grade HTTP security headers:
 
 | Endpoint | Subsystem | Query Parameters | Response Payload |
 |---|---|---|---|
+| `/api/titans` | Big Tech Titans Matrix | `?titan=all` or `?titan=xirp...` | Spotify Xirp RFC-42, SpaceX 60Hz TMR, NVIDIA SIMD, Google Borg reconcile, xAI RDMA. |
 | `/api/eval` | Cognitive Evaluation & Benchmark | `?target=...&code=...` | 5-dimensional breakdown, Composite Readiness Index (CRI), verdict, Merkle proof. |
 | `/api/graph` | Semantic Graph & Blast Radius | `?file=...&action=blast` | Transitive consumers, blast radius count, risk tier, PTS tests, and microsecond latency. |
 | `/api/amplify` | Prometheus Omni-Model Engine | `?prompt=...&model=...` | Formal EARS requirements, BDD scenarios, anti-hallucination contracts, and scaffolds. |
@@ -107,23 +110,25 @@ EOS System exposes a native Layer-0 MCP server over standard I/O (stdio). To con
 }
 ```
 
-### Sovereign MCP Tool Catalog (16 High-Assurance Tools)
-1. `eos_manage_worktree`: Manages Xirp-grade isolated Git worktrees for concurrent AI agents (list, create, remove).
-2. `eos_run_eval`: Executes 5-dimensional sovereign cognitive evaluation (Google Vertex / Anthropic Evals).
-3. `eos_check_openspec`: Audits living OpenSpec architecture and delta changes, certifying 0 drift.
-4. `eos_amplify_prompt`: Translates informal prompts into formal EARS/BDD specifications.
-5. `eos_check_architecture`: Validates Hexagonal domain purity and checks for dependency cycles.
-6. `eos_evaluate_decision`: Evaluates architectural decisions against the 7 Constitutional Commandments.
-7. `eos_turbo_verify`: Content-addressed in-memory verification in **27.7 ms**.
-8. `eos_get_blast_radius`: Calculates downstream transitive blast radius in **< 150 µs**.
-9. `eos_query_code_graph`: Queries symbols, exports, and dead code across the repository.
-10. `eos_autonomous_heal`: Self-heals detected violations with surgical AST patches and FDIR receipts.
-11. `eos_semantic_search`: High-dimensional hybrid RAG queries (vector cosine + BM25 RRF fusion).
-12. `eos_tmr_consensus`: Byzantine 3-sandbox evaluation for critical operations.
-13. `eos_validate_patch`: Pre-validates code in AST syntax sandbox to eliminate syntax errors and secrets.
-14. `eos_optimize_context`: Compresses source code into structural outlines, saving 70-85% of tokens.
-15. `eos_audit_fleet`: Cross-repository health and git status checks across all satellites.
-16. `eos_health_check`: CNCF / Google SRE observability telemetry.
+### Sovereign MCP Tool Catalog (18 High-Assurance Tools)
+1. `eos_titans_benchmark`: Benchmarks the 5 Big Tech archetypes: Spotify Xirp, SpaceX 60Hz TMR, NVIDIA SIMD, Google Borg, and xAI RDMA fabric.
+2. `eos_reconcile_state`: Runs continuous declarative state reconciliation loop (Google Borg style) over the EOS cluster.
+3. `eos_manage_worktree`: Manages Xirp-grade isolated Git worktrees for concurrent AI agents (list, create, remove).
+4. `eos_run_eval`: Executes 5-dimensional sovereign cognitive evaluation (Google Vertex / Anthropic Evals).
+5. `eos_check_openspec`: Audits living OpenSpec architecture and delta changes, certifying 0 drift.
+6. `eos_amplify_prompt`: Translates informal prompts into formal EARS/BDD specifications.
+7. `eos_check_architecture`: Validates Hexagonal domain purity and checks for dependency cycles.
+8. `eos_evaluate_decision`: Evaluates architectural decisions against the 7 Constitutional Commandments.
+9. `eos_turbo_verify`: Content-addressed in-memory verification in **27.7 ms**.
+10. `eos_get_blast_radius`: Calculates downstream transitive blast radius in **< 150 µs**.
+11. `eos_query_code_graph`: Queries symbols, exports, and dead code across the repository.
+12. `eos_autonomous_heal`: Self-heals detected violations with surgical AST patches and FDIR receipts.
+13. `eos_semantic_search`: High-dimensional hybrid RAG queries (vector cosine + BM25 RRF fusion).
+14. `eos_tmr_consensus`: Byzantine 3-sandbox evaluation for critical operations.
+15. `eos_validate_patch`: Pre-validates code in AST syntax sandbox to eliminate syntax errors and secrets.
+16. `eos_optimize_context`: Compresses source code into structural outlines, saving 70-85% of tokens.
+17. `eos_audit_fleet`: Cross-repository health and git status checks across all satellites.
+18. `eos_health_check`: CNCF / Google SRE observability telemetry.
 
 ---
 

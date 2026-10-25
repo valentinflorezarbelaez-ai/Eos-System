@@ -128,7 +128,11 @@ assert.ok(fs.existsSync(path.join(root, "test/eosAutonomousHealer.test.mjs")), "
 assert.ok(fs.existsSync(path.join(root, "test/eosWorktree.test.mjs")), "Missing test/eosWorktree.test.mjs");
 assert.ok(fs.existsSync(path.join(root, "test/eosCognitiveEval.test.mjs")), "Missing test/eosCognitiveEval.test.mjs");
 assert.ok(fs.existsSync(path.join(root, "test/eosOpenSpec.test.mjs")), "Missing test/eosOpenSpec.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "test/eosTitans.test.mjs")), "Missing test/eosTitans.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosTitansMatrix.ts")), "Missing src/core/eosTitansMatrix.ts");
+assert.ok(fs.existsSync(path.join(root, "catalog-info.yaml")), "Missing catalog-info.yaml Backstage descriptor");
 assert.ok(fs.existsSync(path.join(root, "api/eval.js")), "Missing api/eval.js serverless cognitive eval endpoint");
+assert.ok(fs.existsSync(path.join(root, "api/titans.js")), "Missing api/titans.js serverless titans endpoint");
 assert.ok(fs.existsSync(path.join(root, "openspec/specs/SPEC-001-CONSTITUTION.md")), "Missing openspec/specs/SPEC-001-CONSTITUTION.md");
 assert.ok(fs.existsSync(path.join(root, "README.md")), "Missing README.md");
 assert.ok(html.includes('id="jarvis-webgl-canvas"'), "Missing #jarvis-webgl-canvas 3D WebGL HUD");

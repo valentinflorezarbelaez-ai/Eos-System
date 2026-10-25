@@ -140,7 +140,7 @@ test("EOS MCP Native Server (Model Context Protocol) — JSON-RPC 2.0 Invariants
   });
   assert.equal(initRes.id, 1);
   assert.equal(initRes.result.serverInfo.name, "eos-system-mcp");
-  assert.equal(initRes.result.serverInfo.version, "17.0.0");
+  assert.equal(initRes.result.serverInfo.version, "18.0.0");
   assert.ok(initRes.result.capabilities.tools, "Must advertise tools capability");
 
   // 2. tools/list
@@ -156,6 +156,8 @@ test("EOS MCP Native Server (Model Context Protocol) — JSON-RPC 2.0 Invariants
   assert.ok(toolNames.includes("eos_tmr_consensus"), "Must expose eos_tmr_consensus");
   assert.ok(toolNames.includes("eos_audit_fleet"), "Must expose eos_audit_fleet");
   assert.ok(toolNames.includes("eos_health_check"), "Must expose eos_health_check");
+  assert.ok(toolNames.includes("eos_titans_benchmark"), "Must expose eos_titans_benchmark");
+  assert.ok(toolNames.includes("eos_reconcile_state"), "Must expose eos_reconcile_state");
 
   // 3. tools/call -> eos_semantic_search
   const callSearchRes = server.handleRequest({

@@ -79,6 +79,10 @@ import {
   EosOpenSpecSync
 } from "../core/eosOpenSpecSync.ts";
 
+import {
+  EosTitansMatrix
+} from "../core/eosTitansMatrix.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -129,7 +133,7 @@ export class EosMcpServer {
               },
               serverInfo: {
                 name: "eos-system-mcp",
-                version: "17.0.0",
+                version: "18.0.0",
                 description: "EOS Sovereign Engineering Operating System MCP Interface"
               }
             }
@@ -317,6 +321,24 @@ export class EosMcpServer {
                     properties: {
                       action: { type: "string", enum: ["audit", "list_specs", "list_changes"], description: "Action: audit (default), list_specs, or list_changes" }
                     }
+                  }
+                },
+                {
+                  name: "eos_titans_benchmark",
+                  description: "Executes apex Big Tech benchmarks: Spotify Xirp, SpaceX 60Hz TMR, NVIDIA SIMD Float32, Google Borg Reconciler, and xAI Colossus Fabric.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      titan: { type: "string", enum: ["all", "xirp", "spacex", "nvidia", "google", "xai"], description: "Titan subsystem to benchmark (default: all)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_reconcile_state",
+                  description: "Continuous declarative desired-state reconciliation loop inspired by Google Borg / Kubernetes, certifying 0.00% drift.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
                   }
                 }
               ]
@@ -567,6 +589,22 @@ export class EosMcpServer {
         if (action === "list_specs") return synchronizer.listSpecs();
         if (action === "list_changes") return synchronizer.listChanges();
         return synchronizer.audit();
+      }
+
+      case "eos_titans_benchmark": {
+        const matrix = new EosTitansMatrix(this.projectRoot);
+        const sub = String(args.titan || "all").toLowerCase();
+        if (sub === "xirp") return matrix.benchmarkSpotifyXirp();
+        if (sub === "spacex") return matrix.benchmarkSpaceXTmr();
+        if (sub === "nvidia") return matrix.benchmarkNvidiaSimd();
+        if (sub === "google") return matrix.reconcileGoogleBorg();
+        if (sub === "xai") return matrix.benchmarkXaiFabric();
+        return matrix.runAllTitans();
+      }
+
+      case "eos_reconcile_state": {
+        const matrix = new EosTitansMatrix(this.projectRoot);
+        return matrix.reconcileGoogleBorg();
       }
 
       default:

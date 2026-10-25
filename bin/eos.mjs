@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v17.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v18.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -135,7 +135,11 @@ switch (command) {
         cwd: root,
         stdio: "inherit"
       });
-      console.log("\n[PASS] All Unit, Chaos, Worktree, Eval & OpenSpec suites completed successfully (Exit 0).");
+      execFileSync(process.execPath, ["--test", path.join(root, "test/eosTitans.test.mjs")], {
+        cwd: root,
+        stdio: "inherit"
+      });
+      console.log("\n[PASS] All Unit, Chaos, Worktree, Eval, OpenSpec & Titans suites completed successfully (Exit 0).");
     } catch (err) {
       process.exit(1);
     }
@@ -474,6 +478,71 @@ switch (command) {
     break;
   }
 
+  case "titan":
+  case "titans": {
+    printBanner();
+    const sub = (args[1] || "all").toLowerCase();
+    const { EosTitansMatrix } = await import("../src/core/eosTitansMatrix.ts");
+    const matrix = new EosTitansMatrix(root);
+
+    console.log(`[EOS TITANS] Ejecutando Matriz de Ingeniería de Frontera (${sub.toUpperCase()})...\n`);
+    if (sub === "xirp") {
+      const res = matrix.benchmarkSpotifyXirp();
+      console.log(`Spotify Xirp Latencia : ${res.latencyUs.toFixed(2)} µs`);
+      console.log(`Rendimiento Anillo    : ${res.throughputOpsSec.toLocaleString()} ops/s`);
+      console.log(`Catálogo Backstage    : RFC-42 Valid (${res.metrics.hasBackstageCatalog})`);
+    } else if (sub === "spacex") {
+      const res = matrix.benchmarkSpaceXTmr();
+      console.log(`SpaceX Dragon TMR     : ${res.cycleHz} Hz (Frecuencia de Vuelo)`);
+      console.log(`Consenso Bizantino    : ${res.consensusReached ? "100.0% QUORUM" : "FALLA"}`);
+      console.log(`Fallas Bizantinas     : ${res.byzantineFaultsDetected}`);
+    } else if (sub === "nvidia") {
+      const res = matrix.benchmarkNvidiaSimd();
+      console.log(`NVIDIA SIMD Kernel    : ${res.throughputOpsSec.toLocaleString()} GFLOPS`);
+      console.log(`Latencia Producto Punto: ${res.latencyUs.toFixed(2)} µs (4096 elementos)`);
+      console.log(`Cero Asignaciones Heap: ${res.metrics.zeroAllocationVerified ? "VERIFICADO" : "FALLA"}`);
+    } else if (sub === "google") {
+      const res = matrix.reconcileGoogleBorg();
+      console.log(`Google Borg Reconciler: ${res.synchronized ? "SINCRONIZADO" : "DERIVA"}`);
+      console.log(`Deriva Detectada      : ${res.driftPercentage}%`);
+      console.log(`Nodos Convergidos     : ${res.actualStateCount}/${res.desiredStateCount}`);
+    } else if (sub === "xai") {
+      const res = matrix.benchmarkXaiFabric();
+      console.log(`xAI Colossus Fabric   : ${res.throughputOpsSec.toLocaleString()} paquetes/s`);
+      console.log(`Pérdida de Paquetes   : ${res.metrics.packetLossRate}%`);
+      console.log(`Latencia por Paquete  : ${res.metrics.averageLatencyPerPacketNs.toFixed(2)} ns`);
+    } else {
+      const report = matrix.runAllTitans();
+      console.log(`Estado General        : [${report.overallStatus}]`);
+      console.log(`Tiempo Total 5 Titanes: ${report.totalDurationUs.toFixed(2)} µs\n`);
+      console.log("=== RESULTADOS DE LA MATRIZ DE TITANES ===");
+      report.results.forEach((r) => {
+        console.log(`  ✔ [${r.titan}] ${r.status} en ${r.latencyUs.toFixed(2)} µs (${r.throughputOpsSec.toLocaleString()} ops/s)`);
+      });
+      console.log(`\nSello Criptográfico   : ${report.sha256Proof.slice(0, 32)}... (Exit Code 0)`);
+    }
+    break;
+  }
+
+  case "reconcile": {
+    printBanner();
+    console.log("[EOS RECONCILE] Ejecutando Reconciliador Declarativo de Estado Estilo Google Borg...\n");
+    const { EosTitansMatrix } = await import("../src/core/eosTitansMatrix.ts");
+    const matrix = new EosTitansMatrix(root);
+    const report = matrix.reconcileGoogleBorg();
+    console.log(`Estado Deseado        : ${report.desiredStateCount} módulos invariantes`);
+    console.log(`Estado Actual         : ${report.actualStateCount} módulos verificados`);
+    console.log(`Deriva (Drift)        : ${report.driftPercentage}%`);
+    console.log(`Tiempo de Convergencia: ${report.convergenceTimeUs.toFixed(2)} µs`);
+    if (report.synchronized) {
+      console.log("\n[PASS] Estado del plano de control 100% convergente con la Constitución (Exit Code 0).");
+    } else {
+      console.log("\n[FAIL] Deriva detectada en el plano de control.");
+      process.exit(1);
+    }
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -498,6 +567,8 @@ Uso Universal:
   eos worktree [list|add|rm] Gestiona Git Worktrees aislados para agentes estilo Xirp
   eos eval <archivo>         Ejecuta la evaluación cognitiva de 5 dimensiones (Google/Anthropic)
   eos spec [check|list]      Audita el sistema Living OpenSpec y previene deriva de Vibe Coding
+  eos titan [xirp|spacex|..] Ejecuta los benchmarks de los Titanes (Spotify, SpaceX, NVIDIA, Google, xAI)
+  eos reconcile              Reconcilia el estado declarativo estilo Google Borg sin deriva (0.00%)
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

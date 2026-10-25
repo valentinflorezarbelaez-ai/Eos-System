@@ -140,6 +140,10 @@ execFileSync(process.execPath, ["--test", path.join(root, "test/eosOpenSpec.test
   cwd: root,
   stdio: "pipe"
 });
+execFileSync(process.execPath, ["--test", path.join(root, "test/eosTitans.test.mjs")], {
+  cwd: root,
+  stdio: "pipe"
+});
 console.log(`[PASS] Stage 4/7 — Static AST, Syntax, Unit & Chaos Gate (${jsFilesToCheck.length} JS/MJS modules + ${tsCoreFiles.length} L0 TS modules + node:test passed).`);
 
 // ---------------------------------------------------------------------------
@@ -161,7 +165,7 @@ assert.ok(Number(cssSizeKb) < 120, `CSS bundle exceeded budget: ${cssSizeKb} KB`
 console.log(`[PASS] Stage 5/7 — WCAG 2.1 AA, SEO & Performance Budget Gate (JS: ${jsSizeKb} KB, CSS: ${cssSizeKb} KB).`);
 
 // ---------------------------------------------------------------------------
-// STAGE 6: IN-PROCESS SMOKE TESTS OF ALL 13 SERVERLESS API ENDPOINTS (/api/*)
+// STAGE 6: IN-PROCESS SMOKE TESTS OF ALL 14 SERVERLESS API ENDPOINTS (/api/*)
 // ---------------------------------------------------------------------------
 const apiEndpoints = [
   "api/teurgia.js",
@@ -176,7 +180,8 @@ const apiEndpoints = [
   "api/health.js",
   "api/graph.js",
   "api/amplify.js",
-  "api/eval.js"
+  "api/eval.js",
+  "api/titans.js"
 ];
 
 for (const relApi of apiEndpoints) {

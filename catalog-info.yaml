@@ -1,0 +1,49 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: eos-system-control-plane
+  title: EOS System (Engineering Operating System)
+  description: Sovereign deterministic control plane for AI-assisted engineering. Zero Vibe Coding, Layer-0 Hexagonal (0-Deps), Xirp Worktrees, and SpaceX/NVIDIA/Google/xAI Tier-1 Synthesis.
+  annotations:
+    github.com/project-slug: valentinflorezarbelaez-ai/Eos-System
+    backstage.io/techdocs-ref: dir:.
+    backstage.io/managed-by-location: url:https://github.com/valentinflorezarbelaez-ai/Eos-System/blob/main/catalog-info.yaml
+    vercel.com/project-url: https://eos-system-ten.vercel.app
+  tags:
+    - control-plane
+    - layer-0-sovereign
+    - zero-vibe-coding
+    - xirp-dx
+    - spacex-tmr
+    - nvidia-simd
+    - google-borg
+    - xai-fabric
+    - slsa-level-4
+  links:
+    - url: https://eos-system-ten.vercel.app
+      title: Production Control Plane
+      icon: dashboard
+    - url: https://github.com/valentinflorezarbelaez-ai/Eos-System
+      title: Source Code Repository
+      icon: github
+    - url: https://portafolio-valentin.vercel.app
+      title: Architect Portfolio
+      icon: user
+spec:
+  type: service
+  lifecycle: production
+  owner: user:valentin-florez-arbelaez
+  system: eos-sovereign-mesh
+  providesApis:
+    - eos-control-plane-api
+    - eos-health-api
+    - eos-titans-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: eos-sovereign-mesh
+  title: EOS Sovereign Fleet Mesh
+  description: Planetary network of sovereign applications governed by the EOS Agent Constitution.
+spec:
+  owner: user:valentin-florez-arbelaez
