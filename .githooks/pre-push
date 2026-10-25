@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "🛡️ [EOS pre-push Gate] Executing 7-Stage Sovereign SecDevOps, SAST & SBOM Gate before push..."
+node scripts/verify-cicd-pipeline.mjs
+exit $?

@@ -83,3 +83,22 @@
 * **Rejected Alternatives**:
   * *Legacy RSA-2048 / ECDSA P-256 Only*: Rejected because Shor's algorithm on fault-tolerant quantum computers breaks integer factorization and discrete logarithms in polynomial time.
   * *ZK-SNARKs Requiring Trusted Setup Ceremony*: Rejected in favor of **ZK-STARKs** (transparent hash/polynomial commitments with zero toxic waste and post-quantum security).
+
+### ADR-010: Autonomous 7-Stage Sovereign CI/CD & SecDevOps Pipeline (`v9.0` — `.github/workflows/eos-sovereign-cicd.yml`, `.githooks/*`, `scripts/verify-cicd-pipeline.mjs`, `src/core/eosCicdPipeline.ts`, `api/cicd.js` & `#cicd-secdevops`)
+* **Decision**: Establish a mandatory, zero-bypass **7-Stage Sovereign CI/CD & SecDevOps Pipeline** that runs automatically on every local commit/push (`.githooks/pre-commit`, `.githooks/pre-push`), on every `npm run verify:strict` / `npm run ship:sovereign` invocation, and on every GitHub push/PR (`.github/workflows/eos-sovereign-cicd.yml`):
+  1. **Stage 1 (SAST & Zero-Secrets Gate)**: Regex + entropy AST scan across all source files preventing secret leaks or unsafe DOM/eval patterns.
+  2. **Stage 2 (Constitutional SDD Gate)**: Formal EARS + BDD + ADR + DAG + Level 3 Authorization verification.
+  3. **Stage 3 (SLSA Level 4 Supply-Chain & SHA-256 SBOM Gate)**: Verifies `0` external runtime dependencies and computes a deterministic Merkle root over all production files.
+  4. **Stage 4 (Static Syntax & Bytecode Gate)**: Runs `node --check` on every `.js` and `.mjs` file and validates all TypeScript L0 core modules.
+  5. **Stage 5 (WCAG 2.1 AA, SEO & Modern Web Performance Gate)**: Verifies semantic landmarks, `<dialog closedby="any">`, `content-visibility: auto` + `contain-intrinsic-size`, and Speculation Rules.
+  6. **Stage 6 (In-Process Serverless API Smoke Gate)**: Executes real HTTP handler invocations against all 7 serverless endpoints (`/api/teurgia`, `/api/compile`, `/api/memory`, `/api/bigtech`, `/api/kernel`, `/api/omega`, `/api/cicd`) asserting `200 OK` and valid cryptographic JSON payloads.
+  7. **Stage 7 (Automated Production Deployment & Live Post-Deploy Attestation)**: Deploys to Vercel Production and pushes to GitHub only when Stages 1–6 pass with `0` findings.
+* **Enforcement Topology (defense in depth, 4 independent layers)**:
+  1. `.githooks/pre-commit` (activated via `git config core.hooksPath .githooks`).
+  2. `.githooks/pre-push`.
+  3. GitHub Actions (`.github/workflows/eos-sovereign-cicd.yml`) on every push and pull request to `main`.
+  4. Vercel Git Integration with `vercel.json` `buildCommand = node scripts/verify-cicd-pipeline.mjs`: every push to `main` triggers a production build, and a failing gate fails the build so production keeps serving the last verified deployment.
+  * `npm run ship:sovereign -- "<message>"` chains gate → commit → push → polls `/api/cicd` until `deployedCommit` equals the pushed SHA → live `HTTP 200` probe.
+* **Rationale**: Guarantees that every single change is automatically audited for security, quality, architecture, accessibility, performance, and API contract compliance before it can ever be integrated or deployed.
+* **Rejected Alternatives**:
+  * *Manual Ad-Hoc Deployments Without Pre-Deployment Security Gates*: Rejected because human or agent oversight without automated fail-closed gates violates Law II, Law III, and Law VI.

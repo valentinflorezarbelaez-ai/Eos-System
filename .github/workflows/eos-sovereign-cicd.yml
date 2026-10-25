@@ -1,0 +1,27 @@
+name: EOS Sovereign 7-Stage CI/CD & SecDevOps Gate
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sovereign-7-stage-gate:
+    name: "7-Stage SecDevOps Gate (SAST · SDD · SLSA L4 SBOM · AST · WCAG/CWV · Serverless Smoke)"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22 LTS (Zero External Deps)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Execute Stage 1–7 Strict SecDevOps & Constitutional Pipeline
+        run: node scripts/verify-cicd-pipeline.mjs

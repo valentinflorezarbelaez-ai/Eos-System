@@ -1,6 +1,8 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "buildCommand": "node scripts/verify-cicd-pipeline.mjs",
+  "outputDirectory": ".",
   "headers": [
     {
       "source": "/(assets/.*|favicon.*|icon.*)",

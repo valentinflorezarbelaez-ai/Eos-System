@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "🔒 [EOS pre-commit Gate] Executing 7-Stage Sovereign SecDevOps & SDD Verification..."
+node scripts/verify-cicd-pipeline.mjs
+exit $?

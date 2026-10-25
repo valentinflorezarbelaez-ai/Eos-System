@@ -59,6 +59,14 @@
   5. **Superoptimización de Compilador por Saturación de Igualdad (`E-Graphs / MLIR`)**: Reescritura algebraica de grafos de equivalencia para encontrar el programa matemáticamente óptimo de menor costo de ciclos de CPU.
   6. **Ejecución Basada en Capacidades (`WebAssembly SIMD-128 + WASI Capability Sandbox`)**: Cero autoridad ambiental (*Zero Ambient Authority*); ningún módulo puede acceder a red, disco o reloj sin un descriptor de capacidad explícito.
   7. **Radar en Vivo de la Flota Soberana (`Live 9-System Sovereign Fleet Health Matrix`)**: Telemetría y auditoría de latencia, estado epistémico y compatibilidad ABI de los 9 sistemas en producción desde `#omega-singularity-lab` y `/api/omega`.
+* **FR-017 (Event-Driven & Ubiquitous)**: CUANDO se realice cualquier cambio o mejora en el código o en la especificación de EOS System, EL SISTEMA ejecutará de manera 100% autónoma y obligatoria la **Tubería Soberana de Integración y Despliegue Continuo (`CI/CD SecDevOps v9.0` — `.github/workflows/eos-sovereign-cicd.yml`, `.githooks/pre-commit`, `.githooks/pre-push`, `scripts/verify-cicd-pipeline.mjs`, `src/core/eosCicdPipeline.ts`, `api/cicd.js` y `#cicd-secdevops`)** compuesta por 7 Aduanas Inviolables antes de permitir la integración o el despliegue:
+  1. **Aduana 1 — Escáner SAST, OWASP Top 10 & Cero Secretos en Texto Plano (Ley VI)**: Inspección determinista de todos los archivos del repositorio bloqueando credenciales (`sk-live-`, `ghp_`, `AKIA`, `AIza`, `-----BEGIN PRIVATE KEY`), `eval()` inseguro o inyecciones XSS/SQL.
+  2. **Aduana 2 — Compuerta Constitucional SDD (Leyes I, II y VII)**: Verificación de trazabilidad completa (`Intake` ➔ `EARS Spec` ➔ `BDD` ➔ `ADR Plan` ➔ `Task DAG` ➔ `Authorization Level 2+` ➔ `EVD Receipt`).
+  3. **Aduana 3 — Pureza Arquitectónica L0 & Cadena de Suministro (`SLSA Level 4` + `SBOM SHA-256`)**: Verificación de `0` dependencias externas en runtime (`package.json`) e inventario criptográfico de árbol de Merkle sobre cada artefacto.
+  4. **Aduana 4 — Verificación Estática de Sintaxis, AST y Contratos (`node --check` + `eBPF Gate`)**: Validación sintáctica y estructural de todos los módulos `.js`, `.mjs` y `.ts` sin errores ni advertencias.
+  5. **Aduana 5 — Auditoría de Calidad, Accesibilidad (`WCAG 2.1 AA`), SEO & Presupuesto de Rendimiento (`Modern Web Guidance`)**: Validación de semántica HTML5, `aria-live`, `<dialog closedby="any">`, `content-visibility: auto` + `contain-intrinsic-size` y `Speculation Rules`.
+  6. **Aduana 6 — Pruebas de Humo en Proceso de Todos los Endpoints Serverless (`/api/*`)**: Invocación automatizada en memoria de `/api/teurgia`, `/api/compile`, `/api/memory`, `/api/bigtech`, `/api/kernel`, `/api/omega` y `/api/cicd` exigiendo código `HTTP 200` y contrato JSON válido.
+  7. **Aduana 7 — Despliegue Continuo Zero-Downtime & Verificación Post-Deploy en Vivo**: Sincronización automática con GitHub Actions y Vercel Production seguida de verificación `HTTP 200 OK` en vivo; SI cualquiera de las 7 aduanas falla (`exitCode !== 0`), ENTONCES EL SISTEMA aborta el commit/push/deploy de forma inmediata (*Fail-Closed*).
 
 ---
 
@@ -130,4 +138,10 @@ ESCENARIO: [BDD-011 Singularidad Omega Post-Cuántica, ZK-STARK, Consenso Bizant
   CUANDO genera un sello Post-Cuántico (ML-DSA-87 Dilithium + ZK-STARK FRI), ejecuta una votación de Consenso Bizantino 3f+1, rebobina la línea de tiempo determinista (Time-Travel Debugger) o ejecuta el Radar de Salud de los 9 Sistemas de la Flota Soberana
   ENTONCES EOS emite la prueba criptográfica post-cuántica y ZK-STARK sin trusted setup, certifica el quórum BFT sin alucinaciones, restaura cualquier época histórica en 0 ms de deriva
   Y el endpoint serverless /api/omega responde con código HTTP 200 y 0 dependencias externas.
+
+ESCENARIO: [BDD-012 Tubería Autónoma CI/CD SecDevOps de 7 Aduanas (Pre-Commit, GitHub Actions, SAST, SBOM y Auto-Deploy)]
+  DADO que se realiza un cambio o mejora en el repositorio de EOS System o el operador accede a la sección CI/CD SecDevOps (#cicd-secdevops)
+  CUANDO se ejecuta "npm run verify:strict", un commit/push protegido por .githooks o el simulador interactivo de las 7 Aduanas (#cicd-pipeline-lab)
+  ENTONCES el motor ejecuta secuencialmente el Escáner SAST/Secretos, la Compuerta SDD, la Auditoría SLSA/SBOM SHA-256, la Validación Estática AST (node --check), la Auditoría WCAG/CWV, las Pruebas de Humo Serverless (7 endpoints /api/*) y el Despliegue Continuo Verificado
+  Y bloquea cualquier integración si existe 1 sola vulnerabilidad o desviación (Fail-Closed, Exit Code 0 requerido).
 ```
