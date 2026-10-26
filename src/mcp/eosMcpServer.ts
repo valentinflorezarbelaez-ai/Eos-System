@@ -939,6 +939,39 @@ export class EosMcpServer {
                     type: "object",
                     properties: {}
                   }
+                },
+                {
+                  name: "eos_wasm_benchmark",
+                  description: "Executes client/runtime benchmark in WebAssembly or Layer-0 TS measuring tokens/sec and memory allocations (0 B/op).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      iterations: { type: "number", description: "Number of benchmark iterations (default: 100000)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_wasm_compress",
+                  description: "Dual-mode WebAssembly / Layer-0 TypeScript AST outline compressor pruning bodies and blank lines while preserving signatures.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      sourceCode: { type: "string", description: "Source code to compress" },
+                      targetTokens: { type: "number", description: "Target tokens budget" }
+                    },
+                    required: ["sourceCode"]
+                  }
+                },
+                {
+                  name: "eos_topology_blast_radius",
+                  description: "Calculates the deterministic recursive blast radius, impacted node list, and propagation latency for any of the 14 Sovereign Fleet nodes.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      nodeId: { type: "string", description: "Target node identifier (e.g. 'eos-core', 'aberamentho', 'disruptor-ring')" }
+                    },
+                    required: ["nodeId"]
+                  }
                 }
               ]
             }
@@ -1506,6 +1539,18 @@ export class EosMcpServer {
       case "eos_apex_go_benchmark": {
         const router = new EosApexModelRouter(this.projectRoot);
         return router.runGoThroughputBenchmark();
+      }
+
+      case "eos_wasm_benchmark": {
+        return runBenchmark(Number(args.iterations || 100000));
+      }
+
+      case "eos_wasm_compress": {
+        return compressWasmContext(String(args.sourceCode || ""), Number(args.targetTokens || 200));
+      }
+
+      case "eos_topology_blast_radius": {
+        return calculateBlastRadius(String(args.nodeId || "eos-core"));
       }
 
       default:
