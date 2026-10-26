@@ -18,10 +18,19 @@ import path from "node:path";
 import {
   EosPerfBudgetGate,
   DEFAULT_PERF_BUDGETS,
+  createBaseline,
+  evaluateDrift,
   evaluateSample,
+  loadBaseline,
   median,
-  percentile
+  percentile,
+  renderPerfSummaryMarkdown,
+  writeBaseline
 } from "../src/core/eosPerfBudgetGate.ts";
+
+import { EosMcpServer } from "../src/mcp/eosMcpServer.ts";
+
+const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 
 const withFixtureRepo = async (callback) => {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "eos-perf-gate-"));
@@ -123,7 +132,7 @@ describe("EOS Performance Budget Gate Suite (SPEC-032, CHANGE-036)", () => {
     it("rejects budgets that are not wired to a measurement", async () => {
       await withFixtureRepo(async (tmpDir) => {
         const gate = new EosPerfBudgetGate(tmpDir, { iterations: 1, warmupIterations: 0 });
-        await assert.rejects(
+        assert.throws(
           () => gate.runDefaultSuite([{ id: "ghost_metric", description: "Not wired", budgetMs: 10 }]),
           /No measurement wired for performance budget target: ghost_metric/
         );
@@ -163,6 +172,111 @@ describe("EOS Performance Budget Gate Suite (SPEC-032, CHANGE-036)", () => {
         assert.ok(budget.budgetMs > 0, `${budget.id} must declare a positive budget`);
         assert.ok(budget.description.length > 0, `${budget.id} must be documented`);
       }
+    });
+  });
+
+  describe("Suite 5: PerfCI Drift Baseline", () => {
+    const makeReport = (medians) => ({
+      passed: true,
+      factor: 1,
+      samples: Object.entries(medians).map(([id, medianMs]) => ({
+        id,
+        description: id,
+        medianMs,
+        p95Ms: medianMs,
+        minMs: medianMs,
+        maxMs: medianMs,
+        iterations: 1,
+        budgetMs: 1000,
+        headroomRatio: 1,
+        status: "PASS"
+      })),
+      breaches: [],
+      totalDurationMs: 1,
+      sha256MerkleReceipt: "0".repeat(64),
+      timestamp: new Date().toISOString()
+    });
+
+    it("captures a baseline from the current medians", () => {
+      const baseline = createBaseline(makeReport({ repository_audit: 50.5 }), 30);
+
+      assert.equal(baseline.version, 1);
+      assert.equal(baseline.tolerancePct, 30);
+      assert.equal(baseline.mediansMs.repository_audit, 50.5);
+      assert.ok(!Number.isNaN(Date.parse(baseline.capturedAt)));
+    });
+
+    it("classifies regressions, improvements, stability and unknown targets", () => {
+      const baseline = { version: 1, tolerancePct: 25, capturedAt: new Date().toISOString(), mediansMs: { a: 50, b: 50, c: 50 } };
+
+      assert.equal(evaluateDrift(makeReport({ a: 100 }), baseline)[0].status, "REGRESSION");
+      assert.equal(evaluateDrift(makeReport({ b: 20 }), baseline)[0].status, "IMPROVEMENT");
+      assert.equal(evaluateDrift(makeReport({ c: 55 }), baseline)[0].status, "OK");
+      assert.equal(evaluateDrift(makeReport({ d: 10 }), baseline)[0].status, "NO_BASELINE");
+      assert.equal(evaluateDrift(makeReport({ d: 10 }), null)[0].status, "NO_BASELINE");
+    });
+
+    it("computes signed delta percentages against the baseline", () => {
+      const baseline = { version: 1, tolerancePct: 25, capturedAt: new Date().toISOString(), mediansMs: { audit: 40 } };
+
+      assert.equal(evaluateDrift(makeReport({ audit: 50 }), baseline)[0].deltaPct, 25);
+      assert.equal(evaluateDrift(makeReport({ audit: 20 }), baseline)[0].deltaPct, -50);
+    });
+
+    it("round-trips the baseline through disk and tolerates corrupt files", async () => {
+      await withFixtureRepo(async (tmpDir) => {
+        const baselinePath = path.join(tmpDir, "docs", "evidence", "perf-baseline.json");
+        const baseline = createBaseline(makeReport({ repository_audit: 42 }), 25);
+
+        writeBaseline(baseline, baselinePath);
+        const loaded = loadBaseline(baselinePath);
+
+        assert.deepEqual(loaded.mediansMs, { repository_audit: 42 });
+        assert.equal(loaded.tolerancePct, 25);
+
+        fs.writeFileSync(baselinePath, "{ not json", "utf8");
+        assert.equal(loadBaseline(baselinePath), null);
+        assert.equal(loadBaseline(path.join(tmpDir, "missing.json")), null);
+      });
+    });
+
+    it("renders a markdown summary table with drift telemetry", () => {
+      const baseline = { version: 1, tolerancePct: 25, capturedAt: new Date().toISOString(), mediansMs: { repository_audit: 25 } };
+      const report = makeReport({ repository_audit: 50 });
+      const markdown = renderPerfSummaryMarkdown(report, evaluateDrift(report, baseline));
+
+      assert.ok(markdown.includes("## EOS Critical-Path Performance Budgets"));
+      assert.ok(markdown.includes("| `repository_audit` |"));
+      assert.ok(markdown.includes("+100.0%"));
+      assert.ok(markdown.includes("PASS"));
+    });
+  });
+
+  describe("Suite 6: MCP eos_perf_budget Dispatch", () => {
+    it("advertises eos_perf_budget in tools/list", () => {
+      const server = new EosMcpServer(root);
+      const res = server.handleRequest({ jsonrpc: "2.0", id: 301, method: "tools/list" });
+
+      assert.ok(res?.result?.tools);
+      assert.ok(res.result.tools.map((tool) => tool.name).includes("eos_perf_budget"));
+    });
+
+    it("dispatches eos_perf_budget and returns a sealed report", () => {
+      const server = new EosMcpServer(root);
+      const res = server.handleRequest({
+        jsonrpc: "2.0",
+        id: 302,
+        method: "tools/call",
+        params: { name: "eos_perf_budget", arguments: { iterations: 1 } }
+      });
+
+      assert.ok(res?.result?.content?.[0]?.text);
+      const parsed = JSON.parse(res.result.content[0].text);
+
+      assert.equal(parsed.passed, true);
+      assert.equal(parsed.samples.length, DEFAULT_PERF_BUDGETS.length);
+      assert.match(parsed.sha256MerkleReceipt, /^[0-9a-f]{64}$/);
+      assert.ok(Array.isArray(parsed.drift));
     });
   });
 });

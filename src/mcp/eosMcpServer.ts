@@ -121,6 +121,12 @@ import {
 } from "../core/eosUniversalProjectAdapter.ts";
 
 import {
+  EosPerfBudgetGate,
+  evaluateDrift,
+  loadBaseline
+} from "../core/eosPerfBudgetGate.ts";
+
+import {
   detectPolyglotPlan
 } from "../core/eosPolyglotAdapter.ts";
 
@@ -553,6 +559,17 @@ export class EosMcpServer {
                   inputSchema: {
                     type: "object",
                     properties: {}
+                  }
+                },
+                {
+                  name: "eos_perf_budget",
+                  description: "Measures the critical-path performance budgets (audit, fingerprint, source enumeration, turbo pipeline) with warm-up + N samples, seals a SHA-256 receipt and reports PerfCI drift against the committed baseline. Fails closed when a median exceeds its budget.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      iterations: { type: "number", description: "Timed samples per target (1-20, default 3)" },
+                      factor: { type: "number", description: "Budget scaling factor for shared/slower runners (default 1)" }
+                    }
                   }
                 },
                 {
@@ -1976,6 +1993,16 @@ export class EosMcpServer {
 
       case "eos_turbo_verify": {
         return runTurboPipeline(this.projectRoot);
+      }
+
+      case "eos_perf_budget": {
+        const iterations = Math.min(20, Math.max(1, Number(args.iterations ?? 3) || 3));
+        const rawFactor = args.factor === undefined ? undefined : Number(args.factor);
+        const factor = rawFactor !== undefined && Number.isFinite(rawFactor) && rawFactor > 0 ? rawFactor : undefined;
+        const gate = new EosPerfBudgetGate(this.projectRoot, { iterations, warmupIterations: 1, factor });
+        const report = gate.runDefaultSuite();
+        const baseline = loadBaseline(path.join(this.projectRoot, "docs", "evidence", "perf-baseline.json"));
+        return { ...report, drift: evaluateDrift(report, baseline) };
       }
 
       case "eos_get_blast_radius": {

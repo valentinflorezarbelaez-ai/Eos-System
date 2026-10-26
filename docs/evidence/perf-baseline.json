@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "tolerancePct": 50,
+  "mediansMs": {
+    "repository_audit": 50.244,
+    "polyglot_fingerprint": 5.024,
+    "source_enumeration": 5.816,
+    "turbo_pipeline": 19.175
+  },
+  "capturedAt": "2026-10-26T22:06:34.955Z"
+}

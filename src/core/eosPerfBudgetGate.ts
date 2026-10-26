@@ -14,6 +14,9 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
+import { EosUniversalProjectAdapter } from "./eosUniversalProjectAdapter.ts";
+import { runTurboPipeline, collectSourceFiles } from "./eosTurboEngine.ts";
+
 export interface PerfBudgetTarget {
   readonly id: string;
   readonly description: string;
@@ -113,6 +116,108 @@ export function evaluateSample(
   };
 }
 
+export interface PerfBaseline {
+  readonly version: number;
+  readonly tolerancePct: number;
+  readonly mediansMs: Readonly<Record<string, number>>;
+  readonly capturedAt: string;
+}
+
+export interface PerfDriftEntry {
+  readonly id: string;
+  readonly baselineMs: number | null;
+  readonly currentMs: number;
+  readonly deltaPct: number | null;
+  readonly status: "OK" | "REGRESSION" | "IMPROVEMENT" | "NO_BASELINE";
+}
+
+const BASELINE_VERSION = 1;
+const round1 = (value: number): number => Math.round(value * 10) / 10;
+
+/**
+ * Captures the current medians as the drift baseline (PerfCI-style trend tracking).
+ */
+export function createBaseline(report: PerfBudgetReport, tolerancePct: number = 25): PerfBaseline {
+  const mediansMs: Record<string, number> = {};
+  for (const sample of report.samples) {
+    mediansMs[sample.id] = sample.medianMs;
+  }
+  return {
+    version: BASELINE_VERSION,
+    tolerancePct,
+    mediansMs,
+    capturedAt: new Date().toISOString()
+  };
+}
+
+/**
+ * Pure drift evaluation against a baseline. Drift is *telemetry*, never the gate criterion:
+ * the gate remains the absolute budget, so shared CI runners cannot fail a build on noise.
+ */
+export function evaluateDrift(
+  report: PerfBudgetReport,
+  baseline: PerfBaseline | null,
+  tolerancePct: number = baseline?.tolerancePct ?? 25
+): PerfDriftEntry[] {
+  return report.samples.map((sample) => {
+    const baselineMs = baseline?.mediansMs[sample.id];
+    if (baselineMs === undefined || baselineMs <= 0) {
+      return { id: sample.id, baselineMs: null, currentMs: sample.medianMs, deltaPct: null, status: "NO_BASELINE" };
+    }
+    const deltaPct = round1(((sample.medianMs - baselineMs) / baselineMs) * 100);
+    let status: PerfDriftEntry["status"] = "OK";
+    if (deltaPct > tolerancePct) status = "REGRESSION";
+    else if (deltaPct < -tolerancePct) status = "IMPROVEMENT";
+    return { id: sample.id, baselineMs, currentMs: sample.medianMs, deltaPct, status };
+  });
+}
+
+export function loadBaseline(filePath: string): PerfBaseline | null {
+  try {
+    if (!fs.existsSync(filePath)) return null;
+    const parsed = JSON.parse(fs.readFileSync(filePath, "utf8")) as PerfBaseline;
+    if (!parsed || typeof parsed !== "object" || !parsed.mediansMs) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+export function writeBaseline(baseline: PerfBaseline, targetPath: string): string {
+  const directory = path.dirname(targetPath);
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory, { recursive: true });
+  }
+  fs.writeFileSync(targetPath, `${JSON.stringify(baseline, null, 2)}\n`, "utf8");
+  return targetPath;
+}
+
+/**
+ * Renders the human-readable table published to `$GITHUB_STEP_SUMMARY` and the CLI.
+ */
+export function renderPerfSummaryMarkdown(report: PerfBudgetReport, drift: readonly PerfDriftEntry[] = []): string {
+  const driftById = new Map(drift.map((entry) => [entry.id, entry]));
+  const lines = [
+    "## EOS Critical-Path Performance Budgets",
+    "",
+    `Factor: \`${report.factor}x\` · Result: **${report.passed ? "PASS" : "BREACH"}** · Receipt: \`${report.sha256MerkleReceipt.slice(0, 16)}…\``,
+    "",
+    "| Target | Median | p95 | Budget | Headroom | Drift | Status |",
+    "|---|---:|---:|---:|---:|---:|---|"
+  ];
+  for (const sample of report.samples) {
+    const entry = driftById.get(sample.id);
+    const driftLabel =
+      entry && entry.deltaPct !== null ? `${entry.deltaPct > 0 ? "+" : ""}${entry.deltaPct.toFixed(1)}%` : "n/a";
+    const headroom = Number.isFinite(sample.headroomRatio) ? `${sample.headroomRatio.toFixed(1)}x` : "n/a";
+    lines.push(
+      `| \`${sample.id}\` | ${sample.medianMs.toFixed(1)} ms | ${sample.p95Ms.toFixed(1)} ms | ` +
+        `${sample.budgetMs.toFixed(1)} ms | ${headroom} | ${driftLabel} | ${sample.status} |`
+    );
+  }
+  return `${lines.join("\n")}\n`;
+}
+
 export class EosPerfBudgetGate {
   private readonly rootDir: string;
   private readonly iterations: number;
@@ -147,11 +252,8 @@ export class EosPerfBudgetGate {
   /**
    * Runs the default control-plane suite and seals a deterministic Merkle receipt.
    */
-  public async runDefaultSuite(budgets: readonly PerfBudgetTarget[] = DEFAULT_PERF_BUDGETS): Promise<PerfBudgetReport> {
+  public runDefaultSuite(budgets: readonly PerfBudgetTarget[] = DEFAULT_PERF_BUDGETS): PerfBudgetReport {
     const start = process.hrtime.bigint();
-    const { EosUniversalProjectAdapter } = await import("./eosUniversalProjectAdapter.ts");
-    const { runTurboPipeline, collectSourceFiles } = await import("./eosTurboEngine.ts");
-
     const adapter = new EosUniversalProjectAdapter(this.rootDir);
     const operations: Readonly<Record<string, () => unknown>> = {
       repository_audit: () => adapter.audit(),

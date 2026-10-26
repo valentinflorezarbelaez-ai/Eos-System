@@ -253,14 +253,20 @@ switch (command) {
   case "perf": {
     printBanner();
     console.log("\n[EOS PERF] Critical-Path Performance Budget Gate (SPEC-032 / FR-094)...");
-    const { EosPerfBudgetGate } = await import("../src/core/eosPerfBudgetGate.ts");
+    const { EosPerfBudgetGate, evaluateDrift, loadBaseline } = await import("../src/core/eosPerfBudgetGate.ts");
     const gate = new EosPerfBudgetGate(root, { iterations: 5, warmupIterations: 1 });
-    const report = await gate.runDefaultSuite();
+    const report = gate.runDefaultSuite();
+    const baseline = loadBaseline(path.join(root, "docs", "evidence", "perf-baseline.json"));
+    const driftById = new Map(evaluateDrift(report, baseline).map((entry) => [entry.id, entry]));
     for (const sample of report.samples) {
       const headroom = Number.isFinite(sample.headroomRatio) ? `${sample.headroomRatio.toFixed(1)}x` : "n/a";
+      const entry = driftById.get(sample.id);
+      const driftLabel =
+        entry && entry.deltaPct !== null ? `${entry.deltaPct > 0 ? "+" : ""}${entry.deltaPct.toFixed(1)}%` : "n/a";
       console.log(
         `  [${sample.status}] ${sample.id.padEnd(22)} mediana ${sample.medianMs.toFixed(1).padStart(7)} ms | ` +
-          `p95 ${sample.p95Ms.toFixed(1).padStart(7)} ms | presupuesto ${sample.budgetMs.toFixed(1).padStart(7)} ms | holgura ${headroom}`
+          `p95 ${sample.p95Ms.toFixed(1).padStart(7)} ms | presupuesto ${sample.budgetMs.toFixed(1).padStart(7)} ms | ` +
+          `holgura ${headroom} | drift ${driftLabel}`
       );
     }
     console.log(`\nSello Merkle SHA-256   : ${report.sha256MerkleReceipt}`);
