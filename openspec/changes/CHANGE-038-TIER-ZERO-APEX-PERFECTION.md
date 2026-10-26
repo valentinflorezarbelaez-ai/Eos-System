@@ -1,7 +1,7 @@
-# CHANGE-024: TIER-ZERO TRANSCENDENTAL APEX PERFECTION ENGINE
+# CHANGE-038: TIER-ZERO TRANSCENDENTAL APEX PERFECTION ENGINE
 
-- **Change ID**: `CHANGE-024`
-- **Spec ID**: `SPEC-031`
+- **Change ID**: `CHANGE-038`
+- **Spec ID**: `SPEC-043`
 - **Tribe**: `Core-Architecture`
 - **Squad**: `Sovereign-Platform`
 - **Author**: Valentín Flórez Arbeláez (Principal Architect)

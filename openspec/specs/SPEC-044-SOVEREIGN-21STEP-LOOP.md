@@ -1,12 +1,12 @@
-# SPEC-040: 21-STEP AUTONOMOUS SOVEREIGN ENGINEERING LOOP ENGINE (v46.0.0)
+# SPEC-044: 21-STEP AUTONOMOUS SOVEREIGN ENGINEERING LOOP ENGINE (v46.0.0)
 
 ## 1. Specification Metadata
-- **Spec ID**: `SPEC-040`
+- **Spec ID**: `SPEC-044`
 - **Title**: 21-Step Autonomous Sovereign Engineering Loop Engine
 - **Status**: `APPROVED`
 - **Tier**: `BIG_TECH_TIER_0`
 - **Applicable Standards**: EOS Constitution 7 Laws, IEEE 830, ISO 29148, Clean/Hexagonal Architecture
-- **Traceability**: `CHANGE-033`, `INTAKE-033`, `ADR-046`
+- **Traceability**: `CHANGE-039`, `INTAKE-033`, `ADR-046`
 
 ---
 

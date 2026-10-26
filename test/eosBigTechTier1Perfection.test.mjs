@@ -1,6 +1,6 @@
 /**
  * EOS SYSTEM — BIG TECH TIER-1 PERFECTION TEST SUITE
- * Governed by ADR-037, SPEC-030, FR-081..FR-085, BDD-070..BDD-073
+ * Governed by ADR-037, SPEC-042, FR-081..FR-085, BDD-070..BDD-073
  *
  * Verifies the 4 Apex Engineering Pillars:
  * 1. Cryptographic Binary WAL with hardware fsync & crash recovery (BDD-070)
@@ -24,7 +24,7 @@ import { EosHermeticSandbox } from "../src/core/eosHermeticSandbox.ts";
 import { EosMcpServer } from "../src/mcp/eosMcpServer.ts";
 import { EosMcpStreamServer } from "../src/mcp/eosMcpStreamServer.ts";
 
-describe("SPEC-030: Big Tech Tier-1 Apex Engineering Verification", () => {
+describe("SPEC-042: Big Tech Tier-1 Apex Engineering Verification", () => {
   let tempDir;
 
   before(() => {

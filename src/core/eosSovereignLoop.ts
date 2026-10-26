@@ -1,6 +1,6 @@
 /**
  * EosSovereignLoop (Layer 0 — Pure Domain & Autonomous Pipeline Orchestrator)
- * SPEC-040: 21-Step Autonomous Sovereign Engineering Loop Engine
+ * SPEC-044: 21-Step Autonomous Sovereign Engineering Loop Engine
  *
  * Implements the 21-step Master Engineering Pipeline and programmatic enforcement
  * of the 7 Inviolable Laws of the EOS Constitution.

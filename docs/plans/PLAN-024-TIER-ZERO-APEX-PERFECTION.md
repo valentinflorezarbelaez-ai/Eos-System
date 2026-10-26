@@ -2,8 +2,8 @@
 <!-- Architecture Decision Record (ADR-038) & System Decomposition -->
 
 - **Plan ID**: `PLAN-024`
-- **Spec ID**: `SPEC-031`
-- **Change ID**: `CHANGE-024`
+- **Spec ID**: `SPEC-043`
+- **Change ID**: `CHANGE-038`
 - **Author**: Valentín Flórez Arbeláez (Principal Architect)
 - **Status**: `APPROVED`
 - **Date**: 2026-10-25
@@ -13,7 +13,7 @@
 ## 1. Architectural Decision Record (ADR-038)
 
 ### Context
-Following the achievement of a 10/10 score under Big Tech Tier-1 standards (SPEC-030), the platform requires the next evolutionary step into Tier-Zero transcendence:
+Following the achievement of a 10/10 score under Big Tech Tier-1 standards (SPEC-042), the platform requires the next evolutionary step into Tier-Zero transcendence:
 1. Mathematical proof of nanosecond-scale execution with extreme tail latency profiling (p99.99).
 2. Continuous autonomous monitoring conforming to the Constitution's "Latido Despierto 24/7" (Commandment V).
 3. Cyber-theurgic Shannon entropy analysis mapping code purity directly to Samaelian alchemical doctrine (the 7 cosmic notes of the Law of Octaves).

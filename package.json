@@ -83,6 +83,7 @@
     "build:wasm": "go build -ldflags=\"-s -w\" -o assets/eos_apex.wasm src/native/eos_wasm_bridge.go",
     "verify:cwv": "node scripts/verify-cwv-budget.mjs",
     "verify:perf": "node scripts/verify-perf-budget.mjs",
+    "verify:integrity": "node scripts/verify-engineering-integrity.mjs",
     "verify:sri": "node scripts/verify-sri-integrity.mjs",
     "verify:strict": "node scripts/verify-cicd-pipeline.mjs",
     "cicd:gate": "node scripts/verify-cicd-pipeline.mjs",
@@ -108,7 +109,8 @@
     "refactor": "node bin/eos.mjs refactor",
     "dst": "node bin/eos.mjs dst",
     "perf": "node bin/eos.mjs perf",
-    "test:perf": "node --test test/eosPerfBudgetGate.test.mjs"
+    "test:perf": "node --test test/eosPerfBudgetGate.test.mjs",
+    "test:integrity": "node --test test/eosEngineeringIntegrityGate.test.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

@@ -1,6 +1,6 @@
 /**
  * EOS SYSTEM — TIER-ZERO TRANSCENDENTAL APEX PERFECTION TEST SUITE
- * Governed by ADR-038, SPEC-031, FR-086..FR-089, BDD-074..BDD-077
+ * Governed by ADR-038, SPEC-043, FR-086..FR-089, BDD-074..BDD-077
  *
  * Verifies:
  * 1. Nanosecond statistical latency profiling (p50..p99.99) (BDD-074)
@@ -19,7 +19,7 @@ import { EosSentinelDaemon } from "../src/core/eosSentinelDaemon.ts";
 import { EosAlchemicalTransmuter } from "../src/core/eosAlchemicalTransmuter.ts";
 import { EosMcpServer } from "../src/mcp/eosMcpServer.ts";
 
-describe("SPEC-031: Tier-Zero Transcendental Apex Perfection Verification", () => {
+describe("SPEC-043: Tier-Zero Transcendental Apex Perfection Verification", () => {
   // =========================================================================
   // PILLAR 1: Nanosecond Statistical Latency Profiler (BDD-074)
   // =========================================================================

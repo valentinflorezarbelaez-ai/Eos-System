@@ -141,6 +141,15 @@ execFileSync(process.execPath, [path.join(root, "scripts/verify-formal-tla.mjs")
 console.log(`[PASS] Stage 3.5/7 — TLA+ Formal Verification Gate (3/3 models, 800 states checked).`);
 
 // ---------------------------------------------------------------------------
+// STAGE 3.7: ENGINEERING INTEGRITY (GOVERNANCE IDS, DOC TRUTH, MCP CONTRACT)
+// ---------------------------------------------------------------------------
+execFileSync(process.execPath, [path.join(root, "scripts/verify-engineering-integrity.mjs")], {
+  cwd: root,
+  stdio: "inherit"
+});
+console.log("[PASS] Stage 3.7/7 — Engineering Integrity Gate (unique IDs, EARS, contracts, ratchets).");
+
+// ---------------------------------------------------------------------------
 // STAGE 4: STATIC AST, SYNTAX & BYTECODE VERIFICATION (node --check + L0 TS)
 // ---------------------------------------------------------------------------
 const jsFilesToCheck = allFiles.filter((f) => f.endsWith(".js") || f.endsWith(".mjs"));
@@ -197,7 +206,8 @@ const testFiles = [
   "test/eosSovereignLoop.test.mjs",
   "test/eosOmegaTranscendentalApex.test.mjs",
   "test/eosContinuousRefactorEngine.test.mjs",
-  "test/eosPerfBudgetGate.test.mjs"
+  "test/eosPerfBudgetGate.test.mjs",
+  "test/eosEngineeringIntegrityGate.test.mjs"
 ];
 
 const isPts = process.argv.includes("--pts");
