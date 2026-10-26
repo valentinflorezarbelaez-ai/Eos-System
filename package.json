@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "46.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v46.0 (21-Step Autonomous Sovereign Loop, Palantir Ontology Cyclotron, NIST Post-Quantum Cryptography ML-KEM-768 Lattice Shield & Autonomous Meta-Cognitive Synapse)",
+  "version": "47.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v47.0 (Autonomous Continuous Refactoring Engine, Design by Contract & FoundationDB/Antithesis Deterministic Simulation Testing)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -102,7 +102,10 @@
     "test:transcendental": "node --test test/eosOmegaTranscendentalApex.test.mjs",
     "ontology": "node bin/eos.mjs ontology",
     "quantum:seal": "node bin/eos.mjs quantum:seal",
-    "synapse": "node bin/eos.mjs synapse"
+    "synapse": "node bin/eos.mjs synapse",
+    "test:refactor": "node --test test/eosContinuousRefactorEngine.test.mjs",
+    "refactor": "node bin/eos.mjs refactor",
+    "dst": "node bin/eos.mjs dst"
   },
   "engines": {
     "node": ">=22.0.0"

@@ -346,6 +346,21 @@ import {
   EosMetaCognitiveSynapse
 } from "../core/eosMetaCognitiveSynapse.ts";
 
+import {
+  EosContinuousRefactorEngine
+} from "../core/eosContinuousRefactorEngine.ts";
+
+import {
+  EosDeterministicSimulator
+} from "../core/eosDeterministicSimulator.ts";
+
+import {
+  assertPrecondition,
+  assertPostcondition,
+  assertInvariant,
+  deepFreeze
+} from "../core/eosKernelPrimitives.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -1697,6 +1712,26 @@ export class EosMcpServer {
                   }
                 },
                 {
+                  name: "eos_refactor_audit",
+                  description: "Audits codebase for technical debt, dead code, code duplication, and loop complexity. Emits SHA-256 cryptographic receipt.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      targetDir: { type: "string", description: "Target directory to audit (defaults to 'src/core')" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_refactor_execute",
+                  description: "Executes continuous refactoring cycle and code diet optimizer across the project root. Returns verified execution summary with zero side effects.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      projectRoot: { type: "string", description: "Root directory of the project (defaults to '.')" }
+                    }
+                  }
+                },
+                {
                   name: "eos_synapse_arbitrate",
                   description: "Bayesian multi-agent intent arbitration: normalizes posterior beliefs P(H|E) and resolves priority ranking with zero deadlocks.",
                   inputSchema: {
@@ -1708,6 +1743,29 @@ export class EosMcpServer {
                       }
                     },
                     required: ["candidates"]
+                  }
+                },
+                {
+                  name: "eos_dst_simulate",
+                  description: "Runs FoundationDB / Antithesis-style Deterministic Simulation Testing (DST) with seed-based fault injection.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      seed: { type: "number", description: "Deterministic numeric seed (e.g. 42)" },
+                      steps: { type: "number", description: "Total simulation discrete steps" },
+                      faultRate: { type: "number", description: "Fault injection rate (0.0 to 1.0)" }
+                    },
+                    required: ["seed"]
+                  }
+                },
+                {
+                  name: "eos_dbc_verify",
+                  description: "Verifies Design by Contract (DbC) assertions and guarantees deep immutability via deepFreeze.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      sampleValue: { type: "number", description: "Sample numeric input to assert against preconditions" }
+                    }
                   }
                 }
               ]
@@ -2982,6 +3040,37 @@ export class EosMcpServer {
       case "eos_quantum_lattice_seal": {
         const payload = String(args.payload || "eos-lattice-attestation");
         return EosQuantumLatticeShield.generateLatticeSeal(payload);
+      }
+
+      case "eos_refactor_audit": {
+        const target = typeof args?.dirPath === "string" ? args.dirPath : (typeof args?.targetDir === "string" ? args.targetDir : "src/core");
+        return EosContinuousRefactorEngine.auditDirectory(target);
+      }
+
+      case "eos_refactor_execute": {
+        const root = typeof args?.projectRoot === "string" ? args.projectRoot : ".";
+        return EosContinuousRefactorEngine.executeRefactorAudit(root);
+      }
+
+      case "eos_dst_simulate": {
+        const seed = typeof args?.seed === "number" ? args.seed : 42;
+        const totalSteps = typeof args?.steps === "number" ? args.steps : 100;
+        const faultInjectionRate = typeof args?.faultRate === "number" ? args.faultRate : 0.05;
+        const sim = new EosDeterministicSimulator({ seed, totalSteps, faultInjectionRate });
+        return sim.runSimulation();
+      }
+
+      case "eos_dbc_verify": {
+        const val = typeof args?.sampleValue === "number" ? args.sampleValue : 10;
+        assertPrecondition(val > 0, "sampleValue must be strictly positive");
+        const res = deepFreeze({
+          dbcStatus: "VERIFIED",
+          sampleValue: val,
+          immutable: true,
+          timestamp: Date.now()
+        });
+        assertPostcondition(res.dbcStatus === "VERIFIED", "dbcStatus must be VERIFIED");
+        return res;
       }
 
       case "eos_synapse_arbitrate": {

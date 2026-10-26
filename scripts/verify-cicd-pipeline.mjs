@@ -167,7 +167,8 @@ const testFiles = [
   "test/eosHnswVectorEngine.test.mjs",
   "test/eosUniversalProductFoundry.test.mjs",
   "test/eosSovereignLoop.test.mjs",
-  "test/eosOmegaTranscendentalApex.test.mjs"
+  "test/eosOmegaTranscendentalApex.test.mjs",
+  "test/eosContinuousRefactorEngine.test.mjs"
 ];
 
 const isPts = process.argv.includes("--pts");

@@ -90,3 +90,16 @@
   - `openspec/specs/SPEC-040-OMEGA-TRANSCENDENTAL-APEX.md`
   - `docs/formal/OmegaTranscendentalApex.tla`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-26-REFACTOR-041
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-041 (v47.0.0)
+* **Scope**: Autonomous Continuous Refactoring Engine, Design by Contract & Deterministic Simulation Testing (DST) (`EosContinuousRefactorEngine`, `EosKernelPrimitives`, `EosDeterministicSimulator`)
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-034-CONTINUOUS-REFACTOR-ENGINE.md`
+  - `docs/plans/PLAN-034-CONTINUOUS-REFACTOR-ENGINE.md`
+  - `docs/tasks/TASKS-034-CONTINUOUS-REFACTOR-ENGINE.md`
+  - `openspec/changes/CHANGE-034-CONTINUOUS-REFACTOR-ENGINE.md`
+  - `openspec/specs/SPEC-041-CONTINUOUS-REFACTOR-ENGINE.md`
+  - `docs/formal/ContinuousRefactorEngine.tla`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
