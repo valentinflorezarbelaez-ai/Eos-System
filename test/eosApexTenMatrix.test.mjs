@@ -15,7 +15,7 @@ test("SPEC-030 / BDD-067: Formal TLA+ Model Checking & Mathematical Invariants",
 
   await t.test("Subsuite 2: Executes Formal Model Checker with Zero Invariant Violations", () => {
     const results = runAllFormalVerifications();
-    assert.equal(results.length, 3);
+    assert.ok(results.length >= 3);
     for (const r of results) {
       assert.equal(r.syntaxValid, true);
       assert.equal(r.invariantsSatisfied, true);

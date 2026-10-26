@@ -1,12 +1,14 @@
 package main
 
 import (
+	"bufio"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"sync"
 	"time"
@@ -231,7 +233,54 @@ func main() {
 	benchFlag := flag.Bool("benchmark", false, "Run high-throughput token benchmark")
 	routeFlag := flag.String("route", "", "Route a prompt to the best frontier model")
 	serverFlag := flag.Bool("server", false, "Start CNCF /healthz HTTP server on :8090")
+	daemonFlag := flag.Bool("daemon", false, "Start Citadel HFT persistent stdio IPC daemon")
 	flag.Parse()
+
+	if *daemonFlag {
+		scanner := bufio.NewScanner(os.Stdin)
+		for scanner.Scan() {
+			line := strings.TrimSpace(scanner.Text())
+			if line == "" {
+				continue
+			}
+			var req struct {
+				ID      string                 `json:"id"`
+				Action  string                 `json:"action"`
+				Payload map[string]interface{} `json:"payload"`
+			}
+			if err := json.Unmarshal([]byte(line), &req); err != nil {
+				continue
+			}
+			resp := map[string]interface{}{
+				"id":     req.ID,
+				"status": "PASS",
+			}
+			switch req.Action {
+			case "ping":
+				resp["data"] = map[string]interface{}{
+					"pong":      true,
+					"timestamp": time.Now().UTC().Format(time.RFC3339Nano),
+				}
+			case "benchmark":
+				resp["data"] = RunBenchmark(8, 16*1024*1024)
+			case "route":
+				task := "general"
+				if t, ok := req.Payload["task"].(string); ok && t != "" {
+					task = t
+				}
+				resp["data"] = RouteTask(task, "export interface SampleContract {}")
+			default:
+				resp["data"] = map[string]interface{}{
+					"status": "UP",
+					"tier":   "BIG_TECH_TIER_0",
+					"engine": "Citadel HFT Native Go Daemon (Shared Stdio)",
+				}
+			}
+			out, _ := json.Marshal(resp)
+			os.Stdout.Write(append(out, '\n'))
+		}
+		return
+	}
 
 	if *serverFlag {
 		http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
