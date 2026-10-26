@@ -240,6 +240,30 @@ import {
   EosFinOpsBudget
 } from "../core/eosFinOpsBudget.ts";
 
+import {
+  EosBitwiseAccelerator
+} from "../core/eosBitwiseAccelerator.ts";
+
+import {
+  EosBufferPool
+} from "../core/eosBufferPool.ts";
+
+import {
+  EosApexProfiler
+} from "../core/eosApexProfiler.ts";
+
+import {
+  EosMindLevelsIntrospector
+} from "../core/eosMindLevelsIntrospector.ts";
+
+import {
+  EosThreeMountainsCompass
+} from "../core/eosThreeMountainsCompass.ts";
+
+import {
+  EosAdaptiveL0Autotuner
+} from "../core/eosAdaptiveL0Autotuner.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -1242,6 +1266,67 @@ export class EosMcpServer {
                       relPath: { type: "string", description: "Target source code file path" }
                     }
                   }
+                },
+                {
+                  name: "eos_bitwise_accelerate",
+                  description: "Executes 4x unrolled IEEE 802.3 CRC32 and 64-bit FNV-1a superscalar hashing benchmarks.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      bufferSize: { type: "number", description: "Buffer size in bytes (default 65536)" },
+                      iterations: { type: "number", description: "Iterations (default 1000)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_buffer_pool_stats",
+                  description: "Inspects zero-allocation slab buffer pool statistics, hit rates, and GC elimination metrics.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
+                  }
+                },
+                {
+                  name: "eos_introspect_mind_levels",
+                  description: "Introspects psychological impressions across all 49 subconscious levels of the mind with Devi Kundalini dissolution formula and liberated essence metric (Samael Aun Weor standard).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      description: { type: "string", description: "Psychological reaction or impression text" },
+                      category: { type: "string", enum: ["ANGER", "PRIDE", "LUST", "GREED", "FEAR", "SLOTH", "GLUTTONY", "IMPATIENCE", "DISPERSAL"] },
+                      observedCenter: { type: "string", enum: ["INTELLECTUAL", "EMOTIONAL", "MOTOR", "INSTINCTIVE", "SEXUAL"] },
+                      consciousSelfObservation: { type: "boolean", description: "Clave de SOL active?" },
+                      deepMeditationPenetrationLevel: { type: "number", description: "Depth level 1 to 49" }
+                    },
+                    required: ["description", "category"]
+                  }
+                },
+                {
+                  name: "eos_three_mountains_status",
+                  description: "Evaluates daily life alignment against the Three Mountains of Gnosis, the Daily Trinity, El Refugio mortgage protection, and the Architect Codex of Valentin Florez Arbelaez.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      nutritiousFoodLogged: { type: "boolean" },
+                      impeccableCleanliness: { type: "boolean" },
+                      dailyExerciseCompleted: { type: "boolean" },
+                      layer0SoftwareFocusOnly: { type: "boolean" },
+                      cajitasBudgetRespected: { type: "boolean" },
+                      claveDeSolPracticed: { type: "boolean" },
+                      circadianScreenVetoRespected: { type: "boolean" },
+                      selflessServiceOrDonation: { type: "boolean" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_autotuner_tick",
+                  description: "Executes an adaptive Layer-0 autotuning tick: measures event-loop lag, evaluates V8 heap fragmentation, resizes ring buffers dynamically, and produces Prometheus metrics.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      queueDepth: { type: "number", description: "Instantaneous incoming queue depth (default: 0)" }
+                    }
+                  }
                 }
               ]
             }
@@ -2041,6 +2126,66 @@ export class EosMcpServer {
         const report = transmuter.analyzeFile(target);
         onProgress?.(100, 100, "Nous purity index & Octave note evaluated");
         return report;
+      }
+
+      case "eos_bitwise_accelerate": {
+        onProgress?.(30, 100, "Initializing 4x unrolled superscalar pipeline");
+        const bSize = typeof args.bufferSize === "number" ? args.bufferSize : 65536;
+        const iters = typeof args.iterations === "number" ? args.iterations : 1000;
+        const bench = EosBitwiseAccelerator.benchmarkSpeedup(bSize, iters);
+        onProgress?.(100, 100, "Bitwise acceleration benchmark completed");
+        return bench;
+      }
+
+      case "eos_buffer_pool_stats": {
+        onProgress?.(50, 100, "Auditing pre-allocated slab memory buffers");
+        const pool = new EosBufferPool({ slabSize: 4096, capacity: 64 });
+        for (let i = 0; i < 100; i++) {
+          const s = pool.acquire();
+          pool.release(s);
+        }
+        onProgress?.(100, 100, "Buffer pool metrics compiled");
+        return pool.getStats();
+      }
+
+      case "eos_introspect_mind_levels": {
+        onProgress?.(25, 100, "Scanning 49 subconscious levels of the mind");
+        const introspector = new EosMindLevelsIntrospector();
+        const res = introspector.introspectImpression({
+          description: String(args.description || "Self-observation"),
+          category: (args.category || "IMPATIENCE").toUpperCase(),
+          observedCenter: (args.observedCenter || "INTELLECTUAL").toUpperCase(),
+          consciousSelfObservation: args.consciousSelfObservation !== false,
+          deepMeditationPenetrationLevel: typeof args.deepMeditationPenetrationLevel === "number" ? args.deepMeditationPenetrationLevel : 49
+        });
+        onProgress?.(100, 100, "49 levels analyzed & Kundalini dissolution sealed");
+        return res;
+      }
+
+      case "eos_three_mountains_status": {
+        onProgress?.(30, 100, "Auditing Three Mountains & Architect Codex alignment");
+        const compass = new EosThreeMountainsCompass();
+        const res = compass.evaluateDailyAlignment({
+          nutritiousFoodLogged: args.nutritiousFoodLogged !== false,
+          impeccableCleanliness: args.impeccableCleanliness !== false,
+          dailyExerciseCompleted: args.dailyExerciseCompleted !== false,
+          layer0SoftwareFocusOnly: args.layer0SoftwareFocusOnly !== false,
+          cajitasBudgetRespected: args.cajitasBudgetRespected !== false,
+          claveDeSolPracticed: args.claveDeSolPracticed !== false,
+          circadianScreenVetoRespected: args.circadianScreenVetoRespected !== false,
+          selflessServiceOrDonation: args.selflessServiceOrDonation !== false
+        });
+        onProgress?.(100, 100, "Three Mountains alignment evaluated");
+        return res;
+      }
+
+      case "eos_autotuner_tick": {
+        onProgress?.(40, 100, "Running Layer-0 adaptive autotune micro-profiler");
+        const autotuner = new EosAdaptiveL0Autotuner();
+        const depth = typeof args.queueDepth === "number" ? args.queueDepth : 0;
+        const res = autotuner.runAutotuneTick(depth);
+        onProgress?.(100, 100, "Adaptive optimization tick completed");
+        return res;
       }
 
       default:

@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v39.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v40.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -279,6 +279,46 @@ switch (command) {
     console.log(`  Ramas Control    : ${rep.cyclomaticDensity} puntos de bifurcación`);
     console.log(`  Agregados (Ego)  : ${rep.agregadosDetectedCount} detectados`);
     console.log(`  Dictamen         : ${rep.transmutationAdvice}`);
+    break;
+  }
+
+  case "optimize:v8": {
+    printBanner();
+    console.log("\n[EOS V8] Big Tech Hyper-Optimization Suite (4x Unrolling & Slab Pool)...");
+    const { EosBitwiseAccelerator } = await import("../src/core/eosBitwiseAccelerator.ts");
+    const { EosBufferPool } = await import("../src/core/eosBufferPool.ts");
+    const { EosApexProfiler } = await import("../src/core/eosApexProfiler.ts");
+
+    // 1. Bitwise 4x Unrolled Benchmark
+    const bench = EosBitwiseAccelerator.benchmarkSpeedup(65536, 1000);
+    console.log(`\n--- 4x Loop Unrolling CRC32 Benchmark ---`);
+    console.log(`  Búfer de Prueba : ${bench.bufferSizeBytes} bytes (64 KB) x ${bench.iterations} iteraciones`);
+    console.log(`  Tiempo Total    : ${bench.unrolledDurationMs} ms`);
+    console.log(`  Throughput      : ${bench.unrolledThroughputMbSec} MB/s`);
+    console.log(`  Suma Verificada : ${bench.checksumsMatch ? "CORRECTA (IEEE 802.3)" : "FALLIDA"}`);
+
+    // 2. Slab Buffer Pool Test
+    const pool = new EosBufferPool({ slabSize: 4096, capacity: 64 });
+    for (let i = 0; i < 500; i++) {
+      const slab = pool.acquire();
+      pool.release(slab);
+    }
+    const poolStats = pool.getStats();
+    console.log(`\n--- Slab Buffer Pool (Zero-GC Allocator) ---`);
+    console.log(`  Capacidad Total : ${poolStats.totalCapacity} slabs (${(poolStats.totalCapacity * poolStats.slabSizeBytes) / 1024} KB)`);
+    console.log(`  Adquisiciones   : ${poolStats.totalAcquires} | Liberaciones: ${poolStats.totalReleases}`);
+    console.log(`  Tasa de Acierto : ${poolStats.poolHitRatePercent}% (0 Derrames de Memoria)`);
+
+    // 3. JIT TurboFan Profiler
+    const prof = EosApexProfiler.profileFunction("Bitwise FNV-1a 64-bit", () => {
+      EosBitwiseAccelerator.fnv1a64("eos-system-sovereign-control-plane-v40.0.0");
+    }, 20, 20000);
+    console.log(`\n--- V8 TurboFan Profile-Guided Optimization ---`);
+    console.log(`  Función         : ${prof.functionName}`);
+    console.log(`  Ejecución Fría  : ${prof.coldMeanNs} ns`);
+    console.log(`  Ejecución Hot   : ${prof.hotMeanNs} ns`);
+    console.log(`  Factor TurboFan : ${prof.jitSpeedupMultiplier}x aceleración JIT`);
+    console.log(`  Estado          : ${prof.status}`);
     break;
   }
 
@@ -1770,6 +1810,90 @@ switch (command) {
     break;
   }
 
+  case "mind": {
+    printBanner();
+    console.log("[EOS MIND] Introspección Psicológica en los 49 Niveles del Subconsciente (Samael Aun Weor)...\n");
+    const { EosMindLevelsIntrospector } = await import("../src/core/eosMindLevelsIntrospector.ts");
+    const introspector = new EosMindLevelsIntrospector();
+    const desc = args[1] || "Observación de impaciencia ante respuesta del entorno";
+    const category = (args[2] || "IMPATIENCE").toUpperCase();
+    const depth = parseInt(args[3] || "49", 10);
+
+    const report = introspector.introspectImpression({
+      description: desc,
+      category,
+      observedCenter: "INTELLECTUAL",
+      consciousSelfObservation: true,
+      deepMeditationPenetrationLevel: depth
+    });
+
+    console.log(`ID de Impresión      : ${report.impressionId}`);
+    console.log(`Estado Epistémico    : ${report.epistemicState}`);
+    console.log(`Profundidad Alcanzada: ${report.depthReached} / 49 niveles del subconsciente`);
+    console.log(`Ratio de Comprensión : ${(report.comprehensionRatio * 100).toFixed(1)}%`);
+    console.log(`Esencia Liberada     : ${report.liberatedEssencePercentage}% (Buddhata)`);
+    console.log(`Fórmula Alquímica    : ${report.alchemicalFormula}`);
+    console.log(`Sello SHA-256        : ${report.sha256Proof}\n`);
+    break;
+  }
+
+  case "mountains": {
+    printBanner();
+    console.log("[EOS MOUNTAINS] Brújula de Vida de las Tres Montañas & Propósitos de Valentín...\n");
+    const { EosThreeMountainsCompass } = await import("../src/core/eosThreeMountainsCompass.ts");
+    const compass = new EosThreeMountainsCompass();
+
+    const audit = compass.evaluateDailyAlignment({
+      nutritiousFoodLogged: true,
+      impeccableCleanliness: true,
+      dailyExerciseCompleted: true,
+      layer0SoftwareFocusOnly: true,
+      cajitasBudgetRespected: true,
+      claveDeSolPracticed: true,
+      circadianScreenVetoRespected: true,
+      selflessServiceOrDonation: true
+    });
+
+    console.log(`Arquitecto           : ${audit.architect} (Tony Stark)`);
+    console.log(`Co-Piloto            : ${audit.coPilot}`);
+    console.log(`Índice de Alineación : ${(audit.overallAlignmentIndex * 100).toFixed(1)}%`);
+    console.log(`Pacto Sagrado Activo : ${audit.sacredCovenantPreserved ? "PRESERVADO 100%" : "ALERTA"}\n`);
+
+    console.log("--- EVALUACIÓN DE LAS TRES MONTAÑAS ---");
+    audit.mountains.forEach((m) => {
+      console.log(`  ⛰️  ${m.title} [${(m.score * 100).toFixed(0)}%]: ${m.pillar} (${m.status})`);
+      if (m.insights.length > 0) {
+        m.insights.forEach((ins) => console.log(`     ↳ ${ins}`));
+      }
+    });
+
+    console.log("\n--- DIRECTIVAS TÁCTICAS JARVIS ---");
+    audit.tacticalDirectives.forEach((d) => console.log(`  🎯 ${d}`));
+    console.log(`\nSello Criptográfico  : ${audit.sha256Seal}\n`);
+    break;
+  }
+
+  case "autotune": {
+    printBanner();
+    console.log("[EOS AUTOTUNER] Micro-Profiling y Auto-Optimización Dinámica Capa 0...\n");
+    const { EosAdaptiveL0Autotuner } = await import("../src/core/eosAdaptiveL0Autotuner.ts");
+    const autotuner = new EosAdaptiveL0Autotuner();
+    const queueDepth = parseInt(args[1] || "3200", 10);
+    const report = autotuner.runAutotuneTick(queueDepth);
+
+    console.log(`Acción de Auto-Ajuste: ${report.actionTaken}`);
+    console.log(`Lag Event Loop       : ${report.eventLoopLagMs} ms`);
+    console.log(`Capacidad Ring Buffer: ${report.stateBefore.ringBufferCapacity} -> ${report.stateAfter.ringBufferCapacity} slots`);
+    console.log(`Batch Óptimo         : ${report.stateAfter.optimalBatchSize}`);
+    console.log(`Reconfiguraciones    : ${report.stateAfter.totalReconfigurations}`);
+    console.log(`Fragmentación Heap   : ${(report.heapFragmentationRatio * 100).toFixed(2)}%`);
+    console.log(`Sello SHA-256        : ${report.sha256Proof}\n`);
+    console.log("=== TELEMETRÍA PROMETHEUS ===");
+    console.log(report.prometheusMetrics);
+    console.log("");
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -1828,6 +1952,9 @@ Uso Universal:
   eos sol [s] [o] [l]        Evalúa la Clave de SOL (Sujeto, Objeto, Lugar) y auto-recuerdo
   eos diary [suceso] [yo]    Registra impresiones psicológicas y fórmula de muerte mística
   eos budget                 Muestra el estado del escudo FinOps de $15 USD y las Cajitas sagradas
+  eos mind [obs] [cat] [lvl] Introspección en los 49 niveles del subconsciente y disolución Kundalini
+  eos mountains              Evalúa la alineación diaria con las Tres Montañas y el Codex de Valentín
+  eos autotune [carga]       Micro-profiler y auto-tuning dinámico de ring buffers y heap en Capa 0
   eos mcp [--sse|status]     Servidor MCP bi-direccional en vivo para Cursor y Google Antigravity
   eos help                   Muestra este manual de operaciones
 

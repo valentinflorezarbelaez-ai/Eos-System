@@ -178,6 +178,14 @@ assert.ok(fs.existsSync(path.join(root, "src/core/eosNanoBenchmarkEngine.ts")), 
 assert.ok(fs.existsSync(path.join(root, "src/core/eosSentinelDaemon.ts")), "Missing src/core/eosSentinelDaemon.ts");
 assert.ok(fs.existsSync(path.join(root, "test/eosGnosticFinOps.test.mjs")), "Missing test/eosGnosticFinOps.test.mjs");
 assert.ok(fs.existsSync(path.join(root, "test/eosTierZeroApexPerfection.test.mjs")), "Missing test/eosTierZeroApexPerfection.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosMindLevelsIntrospector.ts")), "Missing src/core/eosMindLevelsIntrospector.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosThreeMountainsCompass.ts")), "Missing src/core/eosThreeMountainsCompass.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosAdaptiveL0Autotuner.ts")), "Missing src/core/eosAdaptiveL0Autotuner.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosBitwiseAccelerator.ts")), "Missing src/core/eosBitwiseAccelerator.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosBufferPool.ts")), "Missing src/core/eosBufferPool.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosApexProfiler.ts")), "Missing src/core/eosApexProfiler.ts");
+assert.ok(fs.existsSync(path.join(root, "test/eosMindMountainsAutotune.test.mjs")), "Missing test/eosMindMountainsAutotune.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "test/eosBigTechHyperOptimization.test.mjs")), "Missing test/eosBigTechHyperOptimization.test.mjs");
 assert.ok(html.includes('id="panel-nexus-blast"'), "Missing #panel-nexus-blast");
 assert.ok(html.includes('id="panel-nexus-prometheus"'), "Missing #panel-nexus-prometheus");
 assert.ok(html.includes('id="panel-nexus-turbo"'), "Missing #panel-nexus-turbo");
