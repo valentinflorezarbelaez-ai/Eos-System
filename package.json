@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "44.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v44.0 (Citadel HFT IPC Daemon, SpaceX Zero-Copy Mechanical Sympathy, Netflix Autonomous Chaos Runner, Amazon Dynamo Consistent Hashing, Anti-Entropy Merkle Sync, Google Spanner TrueTime & Planetary Consensus)",
+  "version": "45.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v45.0 (Universal Product Foundry Engine, Citadel HFT IPC Daemon, SpaceX Zero-Copy Mechanical Sympathy, Netflix Autonomous Chaos Runner, Amazon Dynamo Consistent Hashing & Planetary Consensus)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -53,6 +53,9 @@
     "test:consensus": "node --test test/eosPlanetaryConsensusAdaptiveConcurrency.test.mjs",
     "test:ring": "node --test test/eosConsistentHashingRateLimiter.test.mjs",
     "test:perfection": "node --test test/eosBigTechHyperPerfection.test.mjs",
+    "test:foundry": "node --test test/eosUniversalProductFoundry.test.mjs",
+    "product:create": "node bin/eos.mjs product:create",
+    "product:validate": "node bin/eos.mjs product:validate",
     "hft": "node bin/eos.mjs hft",
     "zerocopy": "node bin/eos.mjs zerocopy",
     "chaos:run": "node bin/eos.mjs chaos:run",
@@ -89,7 +92,11 @@
     "jarvis": "node scripts/eos-jarvis-daemon.mjs",
     "jarvis:daemon": "node scripts/eos-jarvis-daemon.mjs --loop",
     "loc": "node scripts/count-loc.mjs",
-    "mcp": "node src/mcp/eosMcpServer.ts"
+    "mcp": "node src/mcp/eosMcpServer.ts",
+    "test:hnsw": "node --test test/eosHnswVectorEngine.test.mjs",
+    "vector": "node bin/eos.mjs vector",
+    "risk": "node bin/eos.mjs risk",
+    "chain": "node bin/eos.mjs chain"
   },
   "engines": {
     "node": ">=22.0.0"

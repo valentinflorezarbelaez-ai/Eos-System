@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v44.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v45.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -2117,6 +2117,177 @@ switch (command) {
     break;
   }
 
+  case "vector": {
+    printBanner();
+    console.log("[EOS HNSW VECTOR] Motor de Razonamiento Vectorial Palantir / Apple (L0)...\n");
+    const { EosHnswVectorEngine } = await import("../src/core/eosHnswVectorEngine.ts");
+    const sub = (args[1] || "demo").toLowerCase();
+    const engine = new EosHnswVectorEngine({ dimensions: 128, m: 16 });
+
+    // Seed representative corporate knowledge documents
+    engine.addDocument("doc-palantir", "Palantir Foundry and Gotham semantic knowledge graph reasoning with HNSW index");
+    engine.addDocument("doc-aladdin", "BlackRock Aladdin institutional risk simulation with Monte Carlo Beta-PERT");
+    engine.addDocument("doc-spacex", "SpaceX Starship telemetry streaming with nanosecond monotonic cryptographic ledgers");
+    engine.addDocument("doc-nsa", "NSA CNSA 2.0 post-quantum encryption and zero-trust compartmentalization");
+    engine.addDocument("doc-netflix", "Netflix Chaos Monkey automated failure injection and resilience engineering");
+
+    if (sub === "search") {
+      const query = args.slice(2).join(" ") || "semantic risk graph";
+      console.log(`Consultando k-NN para: "${query}"`);
+      const t0 = performance.now();
+      const results = engine.searchByText(query, 3);
+      const elapsed = (performance.now() - t0).toFixed(3);
+      console.log(`Búsqueda completada en ${elapsed} ms:\n`);
+      results.forEach((r, idx) => {
+        console.log(`  [${idx + 1}] ID: ${r.id.padEnd(16)} | Similitud: ${(r.similarity * 100).toFixed(1)}% | Distancia: ${r.distance}`);
+        console.log(`      Texto: "${r.metadata?.text}"\n`);
+      });
+    } else {
+      const stats = engine.getStats();
+      console.log("Estado del Índice HNSW Multicapa:");
+      console.log(`  Nodos Totales      : ${stats.totalNodes}`);
+      console.log(`  Dimensiones        : ${stats.dimensions}`);
+      console.log(`  Nivel Máximo       : ${stats.maxLevel}`);
+      console.log(`  Métrico            : ${stats.metric}`);
+      console.log(`  Conexiones M       : ${stats.m} (M0 = ${stats.m * 2})`);
+      console.log("\nEjecuta 'eos vector search <consulta>' para probar la búsqueda semántica k-NN.");
+    }
+    break;
+  }
+
+  case "risk":
+  case "aladdin": {
+    printBanner();
+    console.log("[EOS ALADDIN RISK] Simulación Estocástica de Riesgo Monte Carlo BlackRock...\n");
+    const { EosMonteCarloEngine } = await import("../src/core/eosMonteCarloEngine.ts");
+    const iters = parseInt(args[1], 10) || 10000;
+    const deadline = parseFloat(args[2]) || 18.0;
+
+    const sampleTasks = [
+      { id: "T1", name: "HNSW Vector Engine Implementation", optimistic: 3, nominal: 6, pessimistic: 12 },
+      { id: "T2", name: "Monte Carlo Stochastic Risk Port", optimistic: 2, nominal: 4, pessimistic: 8 },
+      { id: "T3", name: "Monotonic Hash Chain Ledger Port", optimistic: 2, nominal: 3, pessimistic: 6 },
+      { id: "T4", name: "CI/CD Gate & Edge Verification", optimistic: 1, nominal: 2, pessimistic: 4 },
+    ];
+
+    console.log(`Ejecutando ${iters.toLocaleString()} iteraciones Beta-PERT sobre ${sampleTasks.length} tareas...`);
+    const t0 = performance.now();
+    const result = EosMonteCarloEngine.simulate(sampleTasks, {
+      iterations: iters,
+      seed: 1337,
+      deadlineHours: deadline,
+    });
+    const elapsed = (performance.now() - t0).toFixed(2);
+
+    console.log(`\nSimulación completada en ${elapsed} ms:`);
+    console.log(`  Iteraciones          : ${result.summary.iterations.toLocaleString()}`);
+    console.log(`  Media Esperada       : ${result.summary.mean} horas`);
+    console.log(`  Desviación Estándar  : ${result.summary.standardDeviation} horas`);
+    console.log(`  Rango Observado      : [${result.summary.min} h - ${result.summary.max} h]`);
+    console.log(`  Probabilidad SLA <=${deadline}h: ${result.summary.deadlineProbability}%\n`);
+
+    console.log("Distribución de Percentiles de Confianza:");
+    console.log(`  P10 (Agresivo)       : ${result.percentiles.p10} h`);
+    console.log(`  P50 (Nominal Mediana): ${result.percentiles.p50} h`);
+    console.log(`  P80 (Compromiso Com.): ${result.percentiles.p80} h`);
+    console.log(`  P90 (SLA Defensa)    : ${result.percentiles.p90} h`);
+    console.log(`  P95 (Techo Garantía) : ${result.percentiles.p95} h`);
+    console.log(`  P99 (Riesgo de Cola) : ${result.percentiles.p99} h\n`);
+    break;
+  }
+
+  case "chain": {
+    printBanner();
+    console.log("[EOS HASH-CHAIN] Ledger Criptográfico Monotónico SpaceX / NSA (SHA-256)...\n");
+    const { EosMonotonicHashChain } = await import("../src/core/eosMonotonicHashChain.ts");
+    const chain = new EosMonotonicHashChain();
+
+    // Append sample verifiable events
+    chain.append("SPEC-038", "SPEC_APPROVAL", "Palantir HNSW Vector Reasoning Approved");
+    chain.append("EVD-045", "VERIFY_GATE", "Unit test suite 100% passing across 6 tests");
+    chain.append("DEP-045", "DEPLOY_VERCEL", "Production landing page deployed at eos-system-ten.vercel.app");
+
+    const sub = (args[1] || "verify").toLowerCase();
+    if (sub === "status" || sub === "list") {
+      const blocks = chain.getBlocks();
+      console.log(`Bloques Registrados (${blocks.length}):\n`);
+      blocks.forEach(b => {
+        console.log(`  Bloque #${b.index} [${b.payload.type}]: ${b.payload.summary}`);
+        console.log(`    Hash Actual   : ${b.currentHash.slice(0, 32)}...`);
+        console.log(`    Hash Anterior : ${b.previousHash.slice(0, 32)}...`);
+        console.log(`    Monotónico Ns : ${b.monotonicNs} ns\n`);
+      });
+    } else {
+      const verification = chain.verify();
+      console.log("Verificación Criptográfica de la Cadena:");
+      console.log(`  Válida           : ${verification.valid ? "SÍ (INTEGRIDAD PERFECTA)" : "NO"}`);
+      console.log(`  Total Bloques    : ${verification.totalBlocks}`);
+      console.log(`  Invariante Tiempo: Estrictamente No-Decreciente (Monotónico Ns)`);
+      console.log(`  Algoritmo        : FIPS 180-4 SHA-256 Puro (Zero external crypto)`);
+    }
+    break;
+  }
+
+  case "product:create":
+  case "product": {
+    printBanner();
+    console.log("[EOS PRODUCT FOUNDRY] Síntesis Autónoma de Productos Soberanos (Cero Defectos)...\n");
+    const { EosUniversalProductFoundry } = await import("../src/core/eosUniversalProductFoundry.ts");
+    const name = args[1] || "Sovereign Apex Platform";
+    const domain = args[2] || "fintech";
+    const tier = (args[3] || "ENTERPRISE").toUpperCase();
+    console.log(`Sintetizando producto '${name}' | Dominio: ${domain} | Complejidad: ${tier}...`);
+    const manifest = {
+      id: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      name,
+      domain,
+      description: `Sovereign enterprise product: ${name}`,
+      tier: tier,
+      platforms: ["distributed-backend", "web"],
+      entities: ["Account", "Transaction", "AuditRecord"],
+      commands: ["ProcessTransaction", "AuditState", "Reconcile"],
+      compliance: ["PCI_DSS", "SLSA_4", "WCAG_2_1_AA"]
+    };
+    const blueprint = EosUniversalProductFoundry.createProductBlueprint(manifest);
+    const report = EosUniversalProductFoundry.validateProductTopology(blueprint);
+    console.log(`  Arquitectura     : Hexagonal Pura (Capa 0 - 0 dependencias externas)`);
+    console.log(`  Contextos Bounded: ${blueprint.boundedContexts.join(", ")}`);
+    console.log(`  Entidades Núcleo : ${blueprint.domainEntities.map(e => e.name).join(", ")}`);
+    console.log(`  Comandos / EARS  : ${blueprint.useCases.length} casos de uso formalizados`);
+    console.log(`  Trazabilidad BDD : ${report.earsBddCoveragePercent}% cobertura`);
+    console.log(`  Aislamiento L0   : ${report.hermeticIsolationPassed ? "VERIFICADO & PURO" : "FALLA"}`);
+    console.log(`  Grafo Acíclico   : ${report.acyclic ? "SÍ (0 ciclos)" : "NO"}`);
+    console.log(`  Aduanas SecDevOps: ${blueprint.secDevOpsGates.length} fases configuradas`);
+    console.log(`  Merkle SHA-256   : sha256:${blueprint.sha256MerkleRoot}\n`);
+    break;
+  }
+
+  case "product:validate": {
+    printBanner();
+    console.log("[EOS PRODUCT VALIDATE] Auditoría Topológica y Aislamiento Hexagonal...\n");
+    const { EosUniversalProductFoundry } = await import("../src/core/eosUniversalProductFoundry.ts");
+    const domain = args[1] || "general";
+    const tier = (args[2] || "MISSION_CRITICAL").toUpperCase();
+    const manifest = {
+      id: `${domain}-probe`,
+      name: `${domain} Probe`,
+      domain,
+      description: "Validation probe",
+      tier: tier,
+      platforms: ["distributed-backend"],
+      entities: ["PrimaryEntity"],
+      commands: ["ExecuteCommand"]
+    };
+    const blueprint = EosUniversalProductFoundry.createProductBlueprint(manifest);
+    const report = EosUniversalProductFoundry.validateProductTopology(blueprint);
+    console.log(`  Dominio          : ${domain} (${tier})`);
+    console.log(`  Válido           : ${report.valid ? "SÍ (100% CUMPLIMIENTO)" : "NO"}`);
+    console.log(`  Aislamiento L0   : ${report.hermeticIsolationPassed ? "APROBADO" : "RECHAZADO"}`);
+    console.log(`  Trazabilidad     : ${report.earsBddCoveragePercent}%`);
+    console.log(`  Prueba SHA-256   : sha256:${report.sha256Proof}\n`);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -2188,6 +2359,9 @@ Uso Universal:
   eos zerocopy [archivo]     Escáner de tokens SpaceX / ASML con 0 B/op heap allocation
   eos chaos:run [iteraciones] Batería de caos y evaluación de resiliencia Netflix con Circuit Breaker
   eos mcp [--sse|status]     Servidor MCP bi-direccional en vivo para Cursor y Google Antigravity
+  eos vector [search|stats]  Razonamiento vectorial HNSW Palantir/Apple y búsqueda k-NN semántica
+  eos risk [iter|deadline]   Simulación estocástica Monte Carlo BlackRock Aladdin con percentiles P10-P99
+  eos chain [verify|status]  Ledger criptográfico monotónico SpaceX / NSA con encadenamiento SHA-256
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:
