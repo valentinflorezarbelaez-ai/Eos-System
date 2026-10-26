@@ -6,7 +6,7 @@
  * Zero external runtime dependencies.
  */
 
-const CACHE_VERSION = 'v17-0-offline-pwa';
+const CACHE_VERSION = 'v33-0-offline-apex';
 const STATIC_CACHE = `eos-static-${CACHE_VERSION}`;
 const API_CACHE = `eos-api-${CACHE_VERSION}`;
 

@@ -137,7 +137,10 @@ const testFiles = [
   "test/eosGlobalEdgeArbiter.test.mjs",
   "test/eosSpotifyNubankDualEngine.test.mjs",
   "test/eosSamaelIbmNvidiaCore.test.mjs",
-  "test/eosDisruptorRingEngine.test.mjs"
+  "test/eosDisruptorRingEngine.test.mjs",
+  "test/eosNubankCodex.test.mjs",
+  "test/eosSpotifyInstitutionalCodex.test.mjs",
+  "test/eosApexModelRouter.test.mjs"
 ];
 
 for (const testFile of testFiles) {

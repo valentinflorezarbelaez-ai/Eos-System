@@ -1,0 +1,107 @@
+# ==============================================================================
+# EOS SYSTEM — CNCF PRODUCTION KUBERNETES MANIFEST (DISTROLESS & FINOPS)
+# Conforms to Spotify Golden Path & Nubank Resilient Microservices Doctrine
+# ==============================================================================
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eos-apex-orchestrator
+  namespace: eos-system
+  labels:
+    app.kubernetes.io/name: eos-apex-orchestrator
+    app.kubernetes.io/part-of: eos-sovereign-control-plane
+    app.kubernetes.io/version: "33.0.0"
+    tribe: core-experience
+    squad: core-platform
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: eos-apex-orchestrator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: eos-apex-orchestrator
+        app.kubernetes.io/version: "33.0.0"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8090"
+        prometheus.io/path: "/healthz"
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+      containers:
+        - name: orchestrator
+          image: gcr.io/eos-sovereign/eos-apex:v33.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: health
+              containerPort: 8090
+              protocol: TCP
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 100m
+              memory: 32Mi
+            limits:
+              cpu: 500m
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8090
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8090
+            initialDelaySeconds: 1
+            periodSeconds: 3
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eos-apex-service
+  namespace: eos-system
+  labels:
+    app.kubernetes.io/name: eos-apex-orchestrator
+spec:
+  type: ClusterIP
+  ports:
+    - name: http-health
+      port: 8090
+      targetPort: 8090
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: eos-apex-orchestrator
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: eos-apex-pdb
+  namespace: eos-system
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: eos-apex-orchestrator

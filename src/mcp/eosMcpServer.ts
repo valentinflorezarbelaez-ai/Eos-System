@@ -143,6 +143,25 @@ import {
   EosDisruptorRingEngine
 } from "../core/eosDisruptorRingEngine.ts";
 
+import {
+  evaluateNubankArchitectureHealth,
+  verifySachemContract,
+  synthesizeNubankBlamelessPostmortem,
+  transactDatomic,
+  createEmptyDatomicDb
+} from "../core/eosNubankCodex.ts";
+
+import {
+  evaluateSpotifyArchitectureHealth,
+  verifyBackstageGoldenPath,
+  evaluateCanaryStage,
+  planFleetshiftMigration
+} from "../core/eosSpotifyInstitutionalCodex.ts";
+
+import {
+  EosApexModelRouter
+} from "../core/eosApexModelRouter.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -728,6 +747,187 @@ export class EosMcpServer {
                       payloadBytes: { type: "number", description: "Payload size for structural delimiter scanning (default: 1,048,576)" }
                     }
                   }
+                },
+                {
+                  name: "eos_nubank_audit",
+                  description: "Audits any service or system against the 6 Building Nu institutional engineering pillars (https://building.nu.com/).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      hasMutableStateInDomain: { type: "boolean", description: "Whether mutable state exists in the domain layer" },
+                      usesHexagonalLayerIsolation: { type: "boolean", description: "Whether hexagonal isolation is enforced" },
+                      usesContractTestingInsteadOfE2E: { type: "boolean", description: "Whether consumer-driven contracts (Sachem) are used" },
+                      enforcesKafkaIdempotencyTokens: { type: "boolean", description: "Whether Kafka idempotency tokens are verified" },
+                      usesImmutableBitemporalLedgers: { type: "boolean", description: "Whether Datomic/append-only immutable ledgers are used" },
+                      hasBlamelessPostmortemProcess: { type: "boolean", description: "Whether Nu blameless postmortems are practiced" },
+                      unitTestCoveragePercent: { type: "number", description: "Pure domain unit test coverage percentage" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_nubank_sachem_verify",
+                  description: "Verifies consumer-driven contract schema backward and forward compatibility according to Nubank Sachem standards.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      previousSchema: { type: "object", description: "The active production schema definition" },
+                      proposedSchema: { type: "object", description: "The proposed evolution schema definition" }
+                    },
+                    required: ["previousSchema", "proposedSchema"]
+                  }
+                },
+                {
+                  name: "eos_nubank_postmortem",
+                  description: "Synthesizes an institutional, certified blameless postmortem adhering to Nu SRE guidelines (building.nu.com).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      incidentId: { type: "string", description: "Unique incident identifier (e.g. INC-2026-NU-001)" },
+                      title: { type: "string", description: "Incident title" },
+                      severity: { type: "string", enum: ["SEV1", "SEV2", "SEV3"], description: "Incident severity tier" },
+                      owningSquad: { type: "string", description: "Squad responsible for the impacted services" },
+                      affectedServices: { type: "array", items: { type: "string" }, description: "List of affected service names" },
+                      customerImpact: { type: "string", description: "Description and percentage of customer impact" },
+                      startTime: { type: "string", description: "UTC start timestamp" },
+                      resolutionTime: { type: "string", description: "UTC resolution timestamp" },
+                      durationMinutes: { type: "number", description: "Outage duration in minutes" },
+                      timeline: { type: "array", description: "Chronological timeline of events" },
+                      fiveWhys: { type: "array", items: { type: "string" }, description: "5 Whys root cause analysis" },
+                      cognitiveFactors: { type: "array", items: { type: "string" }, description: "Systemic/cognitive ergonomics observations" },
+                      systemicRemediations: { type: "array", description: "Action items with owners and deadlines" }
+                    },
+                    required: ["incidentId", "title", "severity", "owningSquad", "affectedServices", "customerImpact", "startTime", "resolutionTime", "durationMinutes", "timeline", "fiveWhys", "cognitiveFactors", "systemicRemediations"]
+                  }
+                },
+                {
+                  name: "eos_nubank_datomic_transact",
+                  description: "Executes an immutable Datomic bitemporal transaction simulation with Datom assertions/retractions and Merkle hashing.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      txData: {
+                        type: "array",
+                        description: "List of Datom operations to transact: [{ entityId, attribute, value, op? }]"
+                      }
+                    },
+                    required: ["txData"]
+                  }
+                },
+                {
+                  name: "eos_spotify_audit_institutional",
+                  description: "Audits a service against the 6 Spotify Institutional Engineering Pillars (https://engineering.atspotify.com/).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      usesGoldenPath: { type: "boolean", description: "Whether service adheres to a Backstage Golden Path" },
+                      hasCatalogInfoYaml: { type: "boolean", description: "Whether catalog-info.yaml is present" },
+                      hasTechDocsAndRunbook: { type: "boolean", description: "Whether TechDocs and on-call runbook are present" },
+                      compliesWithBS1770Loudness: { type: "boolean", description: "Whether audio complies with -14.0 LUFS and -1.0 dBTP" },
+                      hasProgressiveCanaryPipeline: { type: "boolean", description: "Whether progressive canary rollout is configured" },
+                      hasAutomatedKillSwitch: { type: "boolean", description: "Whether automated fail-closed rollback is configured" },
+                      hasBlamelessPostmortemProcess: { type: "boolean", description: "Whether blameless SRE postmortems are practiced" },
+                      unitTestCoveragePercent: { type: "number", description: "Unit test coverage percentage" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_spotify_golden_path_verify",
+                  description: "Validates repository metadata against Spotify Backstage RFC-42 Golden Path and Soundcheck standards.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      serviceName: { type: "string", description: "Name of the component" },
+                      filesPresent: { type: "array", items: { type: "string" }, description: "Files present in the repository" },
+                      catalogInfoContent: { type: "string", description: "Raw content of catalog-info.yaml" }
+                    },
+                    required: ["serviceName", "filesPresent"]
+                  }
+                },
+                {
+                  name: "eos_spotify_canary_gate",
+                  description: "Evaluates progressive canary rollout metrics and enforces automated kill-switch fail-closed thresholds.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      stage: { type: "string", enum: ["1%", "5%", "25%", "100%"], description: "Current canary stage" },
+                      trafficPercentage: { type: "number", description: "Active traffic percentage" },
+                      totalRequests: { type: "number", description: "Total requests evaluated" },
+                      errorCount: { type: "number", description: "Number of failed requests" },
+                      p99LatencyMs: { type: "number", description: "Observed p99 latency in milliseconds" },
+                      maxAllowedP99Ms: { type: "number", description: "Maximum allowed p99 latency budget" },
+                      observationWindowMinutes: { type: "number", description: "Observation window in minutes" }
+                    },
+                    required: ["stage", "trafficPercentage", "totalRequests", "errorCount", "p99LatencyMs", "maxAllowedP99Ms", "observationWindowMinutes"]
+                  }
+                },
+                {
+                  name: "eos_spotify_fleetshift_plan",
+                  description: "Generates an automated batch transformation plan for multi-repository fleets according to Spotify Fleetshift standards.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      migrationId: { type: "string", description: "Unique migration ID" },
+                      description: { type: "string", description: "Migration objective" },
+                      targetRepos: {
+                        type: "array",
+                        items: {
+                          type: "object",
+                          properties: {
+                            id: { type: "string" },
+                            name: { type: "string" }
+                          },
+                          required: ["id", "name"]
+                        },
+                        description: "Repositories targeted by the migration"
+                      },
+                      action: { type: "string", description: "Codemod or migration action identifier" }
+                    },
+                    required: ["migrationId", "description", "targetRepos", "action"]
+                  }
+                },
+                {
+                  name: "eos_apex_route_model",
+                  description: "Routes any engineering directive to the optimal frontier AI model (Gemini, Claude, GPT, DeepSeek, Grok) based on cognitive specialization and FinOps cost budgets.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      directivePrompt: { type: "string", description: "Engineering task prompt or directive" },
+                      sourceContext: { type: "string", description: "Optional source code context to compress and analyze" }
+                    },
+                    required: ["directivePrompt"]
+                  }
+                },
+                {
+                  name: "eos_apex_compress_context",
+                  description: "Compresses source code context by 70-85% using AST symbol outline extraction, keeping all public types, interfaces and signatures while pruning internal bodies.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      sourceContent: { type: "string", description: "Full source code to compress" },
+                      fileName: { type: "string", description: "Source file name or path" }
+                    },
+                    required: ["sourceContent"]
+                  }
+                },
+                {
+                  name: "eos_apex_autonomous_heal",
+                  description: "Closed-loop NASA FDIR / Meta SapFix autonomous self-healing: diagnoses trailing whitespace, CRLF or broken invariants, applies surgical fixes and verifies conformance.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      filePath: { type: "string", description: "Relative or absolute path to target file" },
+                      dryRun: { type: "boolean", description: "If true, simulates healing without modifying disk" }
+                    },
+                    required: ["filePath"]
+                  }
+                },
+                {
+                  name: "eos_apex_go_benchmark",
+                  description: "Executes the native Go high-concurrency token processing benchmark (> 50,000,000 tokens/sec across goroutines) with sub-microsecond telemetry.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
+                  }
                 }
               ]
             }
@@ -1204,6 +1404,97 @@ export class EosMcpServer {
         const events = Number(args.events) || 500_000;
         const bytes = Number(args.payloadBytes) || 1_048_576;
         return engine.runMasterSpeedBenchmark(events, bytes);
+      }
+
+      case "eos_nubank_audit": {
+        return evaluateNubankArchitectureHealth({
+          hasMutableStateInDomain: Boolean(args.hasMutableStateInDomain),
+          usesHexagonalLayerIsolation: args.usesHexagonalLayerIsolation !== false,
+          usesContractTestingInsteadOfE2E: args.usesContractTestingInsteadOfE2E !== false,
+          enforcesKafkaIdempotencyTokens: args.enforcesKafkaIdempotencyTokens !== false,
+          usesImmutableBitemporalLedgers: args.usesImmutableBitemporalLedgers !== false,
+          hasBlamelessPostmortemProcess: args.hasBlamelessPostmortemProcess !== false,
+          unitTestCoveragePercent: Number(args.unitTestCoveragePercent) || 90
+        });
+      }
+
+      case "eos_nubank_sachem_verify": {
+        if (!args.previousSchema || !args.proposedSchema) {
+          throw new Error("Missing previousSchema or proposedSchema argument");
+        }
+        return verifySachemContract(args.previousSchema, args.proposedSchema);
+      }
+
+      case "eos_nubank_postmortem": {
+        return synthesizeNubankBlamelessPostmortem(args as any);
+      }
+
+      case "eos_nubank_datomic_transact": {
+        const txData = Array.isArray(args.txData) ? args.txData : [];
+        const db = createEmptyDatomicDb();
+        return transactDatomic(db, txData);
+      }
+
+      case "eos_spotify_audit_institutional": {
+        return evaluateSpotifyArchitectureHealth({
+          usesGoldenPath: args.usesGoldenPath !== false,
+          hasCatalogInfoYaml: args.hasCatalogInfoYaml !== false,
+          hasTechDocsAndRunbook: args.hasTechDocsAndRunbook !== false,
+          compliesWithBS1770Loudness: args.compliesWithBS1770Loudness !== false,
+          hasProgressiveCanaryPipeline: args.hasProgressiveCanaryPipeline !== false,
+          hasAutomatedKillSwitch: args.hasAutomatedKillSwitch !== false,
+          hasBlamelessPostmortemProcess: args.hasBlamelessPostmortemProcess !== false,
+          unitTestCoveragePercent: Number(args.unitTestCoveragePercent) || 90
+        });
+      }
+
+      case "eos_spotify_golden_path_verify": {
+        return verifyBackstageGoldenPath({
+          serviceName: String(args.serviceName || "service"),
+          filesPresent: Array.isArray(args.filesPresent) ? args.filesPresent : [],
+          catalogInfoContent: args.catalogInfoContent ? String(args.catalogInfoContent) : undefined
+        });
+      }
+
+      case "eos_spotify_canary_gate": {
+        return evaluateCanaryStage({
+          stage: args.stage || "5%",
+          trafficPercentage: Number(args.trafficPercentage) || 5,
+          totalRequests: Number(args.totalRequests) || 10000,
+          errorCount: Number(args.errorCount) || 0,
+          p99LatencyMs: Number(args.p99LatencyMs) || 30,
+          maxAllowedP99Ms: Number(args.maxAllowedP99Ms) || 50,
+          observationWindowMinutes: Number(args.observationWindowMinutes) || 15
+        });
+      }
+
+      case "eos_spotify_fleetshift_plan": {
+        return planFleetshiftMigration({
+          migrationId: String(args.migrationId || "MIG-AUTO"),
+          description: String(args.description || "Automated Fleet Migration"),
+          targetRepos: Array.isArray(args.targetRepos) ? args.targetRepos : [],
+          action: String(args.action || "apply_golden_path")
+        });
+      }
+
+      case "eos_apex_route_model": {
+        const router = new EosApexModelRouter(this.projectRoot);
+        return router.routeTask(String(args.directivePrompt || ""), String(args.sourceContext || ""));
+      }
+
+      case "eos_apex_compress_context": {
+        const router = new EosApexModelRouter(this.projectRoot);
+        return router.compressContext(String(args.sourceContent || ""), String(args.fileName || "source.ts"));
+      }
+
+      case "eos_apex_autonomous_heal": {
+        const router = new EosApexModelRouter(this.projectRoot);
+        return router.healFile(String(args.filePath || ""), args.dryRun !== false);
+      }
+
+      case "eos_apex_go_benchmark": {
+        const router = new EosApexModelRouter(this.projectRoot);
+        return router.runGoThroughputBenchmark();
       }
 
       default:

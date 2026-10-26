@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "27.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Titans Matrix v27.0 (Universal Polyglot Adapter, Gapless DJ Mix Engine, Acoustic Feature Store, Apollo/Hermes Mesh, Audio DSP Kernel, Fleet Golden Path Elevator, Honk Agentic Factory, Go Titan Accelerator, SpaceX 60Hz TMR, NVIDIA SIMD, Google Borg Reconciler, xAI RDMA Fabric, Living OpenSpec, FDIR Healer)",
+  "version": "33.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v33.0 (Frontier Model Router, Token Squeezer, Go Native Orchestrator, Nubank & Spotify Institutional Dual-Engine Codex, LMAX Disruptor Nanosecond Engine, FDIR Closed-Loop Healer)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -37,7 +37,11 @@
     "test:mix": "node --test test/eosGaplessMixEngine.test.mjs",
     "test:features": "node --test test/eosAcousticFeatureStore.test.mjs",
     "test:adapt": "node --test test/eosUniversalProjectAdapter.test.mjs",
+    "test:nubank": "node --test test/eosNubankCodex.test.mjs",
+    "test:spotify:institutional": "node --test test/eosSpotifyInstitutionalCodex.test.mjs",
+    "test:apex": "node --test test/eosApexModelRouter.test.mjs",
     "build:go": "go build -o bin/eos-spotify.exe src/native/eos_spotify_engine.go",
+    "build:apex": "go build -ldflags=\"-s -w\" -o bin/eos-apex.exe src/native/eos_apex_orchestrator.go",
     "verify:cwv": "node scripts/verify-cwv-budget.mjs",
     "verify:sri": "node scripts/verify-sri-integrity.mjs",
     "verify:strict": "node scripts/verify-cicd-pipeline.mjs",
