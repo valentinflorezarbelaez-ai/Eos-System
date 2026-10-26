@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "37.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v37.0 (Bi-Directional SSE MCP Live Stream Server, Tier S-1 Omega Automated SDLC, Datalog Blast Radius, Mutation Testing, Time-Travel Simulation & JARVIS Soul Matrix)",
+  "version": "38.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v38.0 (10/10 Big Tech Perfection Standard, Smart Datalog PTS Runner, Formal TLA+ Mathematical Models, Jepsen Distributed Chaos Hypervisor & Hardened Pinned Memory Vault)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -45,6 +45,11 @@
     "test:omega": "node --test test/eosTierS1OmegaSdlc.test.mjs",
     "test:s1": "node --test test/eosTierS1OmegaSdlc.test.mjs",
     "test:mcp:stream": "node --test test/eosMcpStreamServer.test.mjs",
+    "test:ten": "node --test test/eosApexTenMatrix.test.mjs",
+    "test:tier1": "node --test test/eosBigTechTier1Perfection.test.mjs",
+    "formal": "node scripts/verify-formal-tla.mjs",
+    "jepsen": "node bin/eos.mjs jepsen",
+    "vault": "node bin/eos.mjs vault",
     "datalog": "node bin/eos.mjs datalog",
     "mutate": "node bin/eos.mjs mutate",
     "sim": "node bin/eos.mjs sim",

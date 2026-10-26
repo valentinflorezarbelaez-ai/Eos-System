@@ -15,6 +15,7 @@ import http from "node:http";
 import crypto from "node:crypto";
 import { URL } from "node:url";
 import { EosMcpServer, type JsonRpcRequest, type JsonRpcResponse } from "./eosMcpServer.ts";
+import { EosPrometheusExporter } from "../core/eosPrometheusExporter.ts";
 
 export interface ProgressNotificationParams {
   progressToken: string | number;
@@ -204,6 +205,18 @@ export class EosMcpStreamServer {
           transports: ["stdio", "sse", "http-jsonrpc"]
         })
       );
+      return;
+    }
+
+    // 2.5 Prometheus Observability Endpoint: GET /metrics
+    if (req.method === "GET" && pathname === "/metrics") {
+      const exporter = new EosPrometheusExporter(this.projectRoot);
+      const metricsText = exporter.formatPrometheusText();
+      res.writeHead(200, {
+        "Content-Type": "text/plain; version=0.0.4; charset=utf-8",
+        "Cache-Control": "no-cache"
+      });
+      res.end(metricsText);
       return;
     }
 

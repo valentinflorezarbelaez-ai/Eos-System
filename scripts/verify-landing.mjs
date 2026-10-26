@@ -159,6 +159,18 @@ assert.ok(fs.existsSync(path.join(root, "src/core/eosMicroScheduler.ts")), "Miss
 assert.ok(fs.existsSync(path.join(root, "test/eosTierS1OmegaSdlc.test.mjs")), "Missing test/eosTierS1OmegaSdlc.test.mjs");
 assert.ok(fs.existsSync(path.join(root, "src/mcp/eosMcpStreamServer.ts")), "Missing src/mcp/eosMcpStreamServer.ts");
 assert.ok(fs.existsSync(path.join(root, "test/eosMcpStreamServer.test.mjs")), "Missing test/eosMcpStreamServer.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "docs/formal/LmaxDisruptor.tla")), "Missing docs/formal/LmaxDisruptor.tla");
+assert.ok(fs.existsSync(path.join(root, "docs/formal/DatomicBitemporalLedger.tla")), "Missing docs/formal/DatomicBitemporalLedger.tla");
+assert.ok(fs.existsSync(path.join(root, "docs/formal/HermesConsensusMesh.tla")), "Missing docs/formal/HermesConsensusMesh.tla");
+assert.ok(fs.existsSync(path.join(root, "scripts/verify-formal-tla.mjs")), "Missing scripts/verify-formal-tla.mjs");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosSecureMemoryVault.ts")), "Missing src/core/eosSecureMemoryVault.ts");
+assert.ok(fs.existsSync(path.join(root, "test/eosApexTenMatrix.test.mjs")), "Missing test/eosApexTenMatrix.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosDurableWal.ts")), "Missing src/core/eosDurableWal.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosHermeticSandbox.ts")), "Missing src/core/eosHermeticSandbox.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosPrometheusExporter.ts")), "Missing src/core/eosPrometheusExporter.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosWebGpuTopology.ts")), "Missing src/core/eosWebGpuTopology.ts");
+assert.ok(fs.existsSync(path.join(root, "src/native/eos_topology_shader.wgsl")), "Missing src/native/eos_topology_shader.wgsl");
+assert.ok(fs.existsSync(path.join(root, "test/eosBigTechTier1Perfection.test.mjs")), "Missing test/eosBigTechTier1Perfection.test.mjs");
 assert.ok(html.includes('id="panel-nexus-blast"'), "Missing #panel-nexus-blast");
 assert.ok(html.includes('id="panel-nexus-prometheus"'), "Missing #panel-nexus-prometheus");
 assert.ok(html.includes('id="panel-nexus-turbo"'), "Missing #panel-nexus-turbo");
