@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v45.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v46.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -2288,6 +2288,54 @@ switch (command) {
     break;
   }
 
+  case "loop":
+  case "sovereign": {
+    printBanner();
+    console.log("[EOS SOVEREIGN LOOP] Motor Autónomo de Ciclo Completo de 21 Pasos (IEEE 830)...\n");
+    const { EosSovereignLoop, SOVEREIGN_21_STAGES } = await import("../src/core/eosSovereignLoop.ts");
+    const sub = (args[1] || "run").toLowerCase();
+
+    if (sub === "stages" || sub === "list") {
+      console.log(`Las 21 Fases Maestras del Pipeline Soberano (${SOVEREIGN_21_STAGES.length}):\n`);
+      SOVEREIGN_21_STAGES.forEach(s => {
+        console.log(`  [${String(s.id).padStart(2, "0")}] ${s.code.padEnd(24)} | ${s.phaseGroup.padEnd(12)} | ${s.name}`);
+        console.log(`       ${s.description}`);
+      });
+      console.log("");
+    } else {
+      const title = args[2] || "Sovereign Engineering Mission";
+      const prompt = args.slice(3).join(" ") || "Execute complete 21-step sovereign pipeline with zero vibe coding.";
+      console.log(`Iniciando ciclo autónomo para: "${title}"`);
+      console.log(`Directiva de Entrada          : "${prompt}"\n`);
+
+      const loop = new EosSovereignLoop();
+      const t0 = performance.now();
+      const summary = loop.runFullPipeline(
+        {
+          projectId: "eos-core",
+          title,
+          userPrompt: prompt,
+          authLevel: 3,
+          authorizedBy: "Valentín Flórez Arbeláez"
+        },
+        {
+          onStageProgress: (stageId, name) => {
+            console.log(`  ✓ Fase ${String(stageId).padStart(2, "0")}/21: ${name}`);
+          }
+        }
+      );
+      const elapsed = (performance.now() - t0).toFixed(2);
+
+      console.log(`\nCiclo completado en ${elapsed} ms:`);
+      console.log(`  ID de Ejecución      : ${summary.runId}`);
+      console.log(`  Fases Culminadas     : ${summary.completedStages} / ${summary.totalStages}`);
+      console.log(`  Estado Epistémico    : ${summary.epistemicState}`);
+      console.log(`  Recibo Criptográfico : sha256:${summary.sha256Receipt}`);
+      console.log(`  Integridad de Recibo : ${loop.verifyReceipt(summary) ? "VERIFICADO (100% AUTÉNTICO)" : "CORRUPTO"}\n`);
+    }
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -2362,6 +2410,7 @@ Uso Universal:
   eos vector [search|stats]  Razonamiento vectorial HNSW Palantir/Apple y búsqueda k-NN semántica
   eos risk [iter|deadline]   Simulación estocástica Monte Carlo BlackRock Aladdin con percentiles P10-P99
   eos chain [verify|status]  Ledger criptográfico monotónico SpaceX / NSA con encadenamiento SHA-256
+  eos loop [run|stages]      Ejecuta el ciclo de 21 pasos de ingeniería autónoma soberana
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

@@ -1,6 +1,6 @@
 {
   "name": "eos-system-landing",
-  "version": "45.0.0",
+  "version": "46.0.0",
   "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v45.0 (Universal Product Foundry Engine, Citadel HFT IPC Daemon, SpaceX Zero-Copy Mechanical Sympathy, Netflix Autonomous Chaos Runner, Amazon Dynamo Consistent Hashing & Planetary Consensus)",
   "type": "module",
   "bin": {
@@ -96,7 +96,9 @@
     "test:hnsw": "node --test test/eosHnswVectorEngine.test.mjs",
     "vector": "node bin/eos.mjs vector",
     "risk": "node bin/eos.mjs risk",
-    "chain": "node bin/eos.mjs chain"
+    "chain": "node bin/eos.mjs chain",
+    "test:loop": "node --test test/eosSovereignLoop.test.mjs",
+    "loop": "node bin/eos.mjs loop"
   },
   "engines": {
     "node": ">=22.0.0"

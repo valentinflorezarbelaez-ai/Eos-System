@@ -65,3 +65,15 @@
   - openspec/changes/CHANGE-031-PALANTIR-HNSW-VECTOR-REASONING.md
   - openspec/specs/SPEC-038-PALANTIR-HNSW-VECTOR-REASONING.md
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Chief Architect)
+
+## Authorization Record: AUTH-2026-10-26-SOVEREIGN-LOOP-040
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-040 (v46.0.0)
+* **Scope**: 21-Step Autonomous Sovereign Engineering Loop Engine (`EosSovereignLoop`)
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-033-SOVEREIGN-21STEP-LOOP.md`
+  - `docs/plans/PLAN-033-SOVEREIGN-21STEP-LOOP.md`
+  - `docs/tasks/TASKS-033-SOVEREIGN-21STEP-LOOP.md`
+  - `openspec/changes/CHANGE-033-SOVEREIGN-21STEP-LOOP.md`
+  - `openspec/specs/SPEC-040-SOVEREIGN-21STEP-LOOP.md`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)

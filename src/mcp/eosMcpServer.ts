@@ -329,6 +329,11 @@ import {
   EosMonotonicHashChain
 } from "../core/eosMonotonicHashChain.ts";
 
+import {
+  EosSovereignLoop,
+  SOVEREIGN_21_STAGES
+} from "../core/eosSovereignLoop.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -1632,6 +1637,28 @@ export class EosMcpServer {
                       tier: { type: "string", description: "Complexity tier" }
                     }
                   }
+                },
+                {
+                  name: "eos_sovereign_loop_run",
+                  description: "Executes the 21-Step Autonomous Sovereign Engineering Loop (IEEE 830, EARS, BDD, ADR, DAG, 7-Stage Gate, Evidence Sealing).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      projectId: { type: "string", description: "Project identifier" },
+                      title: { type: "string", description: "Feature or system title" },
+                      userPrompt: { type: "string", description: "User requirement description" },
+                      authLevel: { type: "number", description: "Authorization Level (default: 3)" }
+                    },
+                    required: ["projectId", "title", "userPrompt"]
+                  }
+                },
+                {
+                  name: "eos_sovereign_loop_stages",
+                  description: "Returns the complete definition of the 21 Master Engineering Pipeline stages and phase groups.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
+                  }
                 }
               ]
             }
@@ -2854,6 +2881,31 @@ export class EosMcpServer {
         const report = EosUniversalProductFoundry.validateProductTopology(blueprint);
         onProgress?.(100, 100, "Topology validation complete");
         return report;
+      }
+
+      case "eos_sovereign_loop_run": {
+        onProgress?.(10, 100, "Initializing 21-Step Sovereign Engineering Loop");
+        const loop = new EosSovereignLoop();
+        const request = {
+          projectId: String(args.projectId || "eos-core"),
+          title: String(args.title || "Autonomous Task Execution"),
+          userPrompt: String(args.userPrompt || "Execute sovereign engineering cycle"),
+          authLevel: typeof args.authLevel === "number" ? args.authLevel : 3,
+          authorizedBy: "Chief Architect (MCP)"
+        };
+        const summary = loop.runFullPipeline(request, {
+          onStageProgress: (stageId, name) => {
+            onProgress?.(Math.round((stageId / 21) * 100), 100, `[Stage ${stageId}/21] ${name}`);
+          }
+        });
+        return summary;
+      }
+
+      case "eos_sovereign_loop_stages": {
+        return {
+          totalStages: SOVEREIGN_21_STAGES.length,
+          stages: SOVEREIGN_21_STAGES
+        };
       }
 
       default:
