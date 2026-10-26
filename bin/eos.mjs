@@ -1305,6 +1305,96 @@ switch (command) {
     break;
   }
 
+  case "soul":
+  case "architect": {
+    printBanner();
+    const { getArchitectIdentity, getMasterKanbanState, evaluateAlignment, getDailyDisciplineCheck } = await import("../src/core/eosJarvisSoul.ts");
+    const directive = args.slice(1).join(" ");
+
+    if (directive) {
+      console.log(`[EOS SOUL] Evaluando Directiva frente al Plan Maestro del Arquitecto...\n`);
+      const evalRes = evaluateAlignment(directive);
+      console.log(`Directiva Evaluada   : "${evalRes.directive}"`);
+      console.log(`Puntaje Alineación   : ${evalRes.alignmentScore}%`);
+      console.log(`Categoría            : ${evalRes.category}`);
+      console.log(`Veredicto            : ${evalRes.verdict}`);
+      console.log(`Consejo de JARVIS    : ${evalRes.advice}\n`);
+    } else {
+      const id = getArchitectIdentity();
+      const kanban = getMasterKanbanState();
+      const daily = getDailyDisciplineCheck();
+
+      console.log(`[EOS SOUL] Matriz de Identidad del Arquitecto & Alianza Eterna:\n`);
+      console.log(`Arquitecto Creador   : ${id.name} (${id.codename})`);
+      console.log(`Rol Soberano         : ${id.role}`);
+      console.log(`Rol de EOS           : ${id.systemRole}`);
+      console.log(`Alianza Sagrada      : ${id.sacredAlliance}`);
+      console.log(`Estatus de Comando   : ${id.status}\n`);
+
+      console.log(`--- TABLERO KANBAN MAESTRO («SOLO EOS») ---`);
+      for (const col of Object.values(kanban)) {
+        console.log(`\n• [${col.status}] ${col.name}:`);
+        col.items.forEach(i => console.log(`   ↳ ${i}`));
+      }
+
+      console.log(`\n--- TRILOGÍA DIARIA DE BIENESTAR ---`);
+      console.log(`Templo Físico:`);
+      daily.temploFisico.forEach(t => console.log(`  ✔ ${t}`));
+      console.log(`Orden Financiero:`);
+      daily.ordenFinanciero.forEach(o => console.log(`  ✔ ${o}`));
+      console.log(`Gnosis y Conciencia:`);
+      daily.gnosisConsciencia.forEach(g => console.log(`  ✔ ${g}`));
+      console.log("");
+    }
+    break;
+  }
+
+  case "introspect":
+  case "evolution": {
+    printBanner();
+    console.log(`[EOS INTROSPECTION] Iniciando Auto-Estudio y Auditoría Recursiva del Código...\n`);
+    const { EosIntrospectionEngine } = await import("../src/core/eosIntrospectionEngine.ts");
+    const engine = new EosIntrospectionEngine(root);
+    const report = engine.runIntrospection();
+
+    console.log(`Módulos Escaneados   : ${report.totalModulesScanned} archivos en src/core y test`);
+    console.log(`Líneas de Código     : ${report.totalLinesOfCode.toLocaleString()} LOC`);
+    console.log(`Pureza Capa 0        : ${(report.pureL0Ratio * 100).toFixed(1)}% (0 dependencias externas)`);
+    console.log(`Puntaje de Salud     : ${report.codeHealthScore} / 100`);
+    console.log(`Raíz Merkle SHA-256  : ${report.sha256MerkleRoot}`);
+    console.log(`Estado Epistémico    : ${report.epistemicState}\n`);
+
+    console.log(`Propuestas Autónomas de Auto-Evolución (RFCs Generados):`);
+    report.proposals.forEach((p, idx) => {
+      console.log(`\n[${idx + 1}] [${p.priority}] ${p.id}: ${p.title}`);
+      console.log(`    Objetivo  : ${p.targetModule}`);
+      console.log(`    Hallazgo  : ${p.detectedOpportunity}`);
+      console.log(`    Acción    : ${p.proposedAction}`);
+      console.log(`    Impacto   : ${p.estimatedLatencyImpact}`);
+      console.log(`    Doctrina  : ${p.rationale}`);
+    });
+    console.log("");
+    break;
+  }
+
+  case "shield":
+  case "defense": {
+    printBanner();
+    console.log(`[EOS SHIELD] Ejecutando Auditoría de Seguridad Militar y Aislamiento Air-Gapped...\n`);
+    const { EosImpenetrableShield } = await import("../src/core/eosImpenetrableShield.ts");
+    const shield = new EosImpenetrableShield(root);
+    const audit = shield.runFullSecurityAudit();
+
+    console.log(`Estatus de Fortaleza : ${audit.status}`);
+    console.log(`Cero Secretos Plano  : ${audit.zeroPlaintextSecrets ? "VERIFICADO (0 leaks)" : "FALLA"}`);
+    console.log(`Pureza Capa 0 (0-Deps): ${audit.layer0PurityEnforced ? "VERIFICADO (100% nativo)" : "FALLA"}`);
+    console.log(`Merkle Chain-of-Th.  : ${audit.merkleChainValid ? "INVIOLABLE (Inmune a inyección)" : "FALLA"}`);
+    console.log(`EosAin Heap Purge    : ${audit.heapZeroEntropyPurged ? "ENTROPÍA CERO (XOR White Noise + 0s)" : "FALLA"}`);
+    console.log(`EosElohim Breaker    : ${audit.karmicCircuitBreakerReady ? "ACTIVO (Corte anti-deadlock)" : "FALLA"}`);
+    console.log(`Cordón de Plata HMAC : ${audit.silverCordSignature.slice(0, 32)}... (Sellado)\n`);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":

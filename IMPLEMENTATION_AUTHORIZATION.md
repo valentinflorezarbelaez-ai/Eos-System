@@ -28,3 +28,7 @@
   - Spotify Institutional Engineering Codex (v32.0.0): 6 Spotify Engineering Pillars (Golden Paths & Soundcheck, Aligned Autonomy, Event Delivery Infrastructure, Audio BS.1770 DSP, Progressive Canary Delivery, Fleetshift & Blameless SRE), Backstage Golden Path validator, and automated canary gate (CHANGE-017).
   - Apex Frontier Model Router, Token Compressor & Go-Scale Autonomous Self-Healing Engine (v33.0.0): Specialized model routing (Gemini, Claude, GPT, DeepSeek, Grok), extreme AST token compression (70-85%), NASA FDIR closed-loop self-correction, and native Go acceleration engine (CHANGE-018).
   - Client-Side Go WebAssembly (WASM) Engine & 3D Interactive Sovereign Topology Visualizer (v34.0.0): Client-side compiled Go routines (`assets/eos_apex.wasm`, `js/wasm_exec.js`), zero-latency token estimation, AST outline squeezing, 14-node 3D interactive Canvas graph with real-time blast-radius calculation and particle routing (CHANGE-019).
+  - Bi-Directional MCP Live Stream Server (SSE & Stdio) for Cursor & Antigravity (v35.0.0): Model Context Protocol (MCP v2024-11-05) JSON-RPC 2.0 streaming server over Server-Sent Events (SSE) and Stdio, persistent session management with keep-alive heartbeats, bi-directional tool invocation, and streaming progress notifications (CHANGE-020, SPEC-027).
+
+
+

@@ -142,6 +142,11 @@ assert.ok(fs.existsSync(path.join(root, "api/compile.js")), "Missing api/compile
 assert.ok(html.includes('id="tier1-control-nexus"'), "Missing #tier1-control-nexus Tier 1 section");
 assert.ok(html.includes('id="sovereign-fleet-topology"'), "Missing #sovereign-fleet-topology 3D Topology section");
 assert.ok(html.includes('id="eos-fleet-topology-canvas"'), "Missing #eos-fleet-topology-canvas 3D canvas");
+assert.ok(fs.existsSync(path.join(root, "docs/identity/VALENTIN_ARCHITECT_CODEX.md")), "Missing docs/identity/VALENTIN_ARCHITECT_CODEX.md");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosJarvisSoul.ts")), "Missing src/core/eosJarvisSoul.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosIntrospectionEngine.ts")), "Missing src/core/eosIntrospectionEngine.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosImpenetrableShield.ts")), "Missing src/core/eosImpenetrableShield.ts");
+assert.ok(fs.existsSync(path.join(root, "test/eosJarvisSoulIntrospection.test.mjs")), "Missing test/eosJarvisSoulIntrospection.test.mjs");
 assert.ok(fs.existsSync(path.join(root, "assets/eos_apex.wasm")), "Missing assets/eos_apex.wasm compiled WebAssembly kernel");
 assert.ok(fs.existsSync(path.join(root, "js/wasm_exec.js")), "Missing js/wasm_exec.js WebAssembly bridge");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosFleetTopology.ts")), "Missing src/core/eosFleetTopology.ts");

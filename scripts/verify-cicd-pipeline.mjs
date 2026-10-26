@@ -141,7 +141,8 @@ const testFiles = [
   "test/eosNubankCodex.test.mjs",
   "test/eosSpotifyInstitutionalCodex.test.mjs",
   "test/eosApexModelRouter.test.mjs",
-  "test/eosWasmTopology.test.mjs"
+  "test/eosWasmTopology.test.mjs",
+  "test/eosJarvisSoulIntrospection.test.mjs"
 ];
 
 for (const testFile of testFiles) {

@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "34.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v34.0 (Client-Side Go WebAssembly Engine, 3D Sovereign Topology Graph, Frontier Model Router, Token Squeezer, Nubank & Spotify Institutional Dual-Engine Codex, LMAX Disruptor Nanosecond Engine, FDIR Closed-Loop Healer)",
+  "version": "35.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v35.0 (JARVIS Soul Matrix, Valentín Flórez Arbeláez Master Kanban 'SOLO EOS', Autonomous Recursive Introspection, Impenetrable Military Shield, seL4 Formal Invariants & Zero-Entropy Purge)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -41,6 +41,10 @@
     "test:spotify:institutional": "node --test test/eosSpotifyInstitutionalCodex.test.mjs",
     "test:apex": "node --test test/eosApexModelRouter.test.mjs",
     "test:wasm": "node --test test/eosWasmTopology.test.mjs",
+    "test:soul": "node --test test/eosJarvisSoulIntrospection.test.mjs",
+    "soul": "node bin/eos.mjs soul",
+    "introspect": "node bin/eos.mjs introspect",
+    "shield": "node bin/eos.mjs shield",
     "build:go": "go build -o bin/eos-spotify.exe src/native/eos_spotify_engine.go",
     "build:apex": "go build -ldflags=\"-s -w\" -o bin/eos-apex.exe src/native/eos_apex_orchestrator.go",
     "build:wasm": "go build -ldflags=\"-s -w\" -o assets/eos_apex.wasm src/native/eos_wasm_bridge.go",

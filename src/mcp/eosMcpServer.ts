@@ -173,6 +173,20 @@ import {
   compressContext as compressWasmContext
 } from "../core/eosWasmEngine.ts";
 
+import {
+  evaluateAlignment as evaluateSoulAlignment,
+  getArchitectIdentity,
+  getMasterKanbanState
+} from "../core/eosJarvisSoul.ts";
+
+import {
+  EosIntrospectionEngine
+} from "../core/eosIntrospectionEngine.ts";
+
+import {
+  EosImpenetrableShield
+} from "../core/eosImpenetrableShield.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -972,6 +986,33 @@ export class EosMcpServer {
                     },
                     required: ["nodeId"]
                   }
+                },
+                {
+                  name: "eos_soul_alignment",
+                  description: "Evaluates an engineering directive against Valentín Flórez Arbeláez's Master Purpose Matrix and Kanban Plan ('SOLO EOS').",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      directive: { type: "string", description: "Directive or task description to evaluate" }
+                    },
+                    required: ["directive"]
+                  }
+                },
+                {
+                  name: "eos_autonomous_introspect",
+                  description: "Executes autonomous codebase self-study, calculating LOC, L0 purity, and synthesizing self-evolution improvement proposals (RFCs).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
+                  }
+                },
+                {
+                  name: "eos_military_shield_audit",
+                  description: "Executes top-tier military and air-gapped security audit: formal invariants, Merkle Chain-of-Thought, and EosAin zero-entropy heap wipe.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
+                  }
                 }
               ]
             }
@@ -1551,6 +1592,20 @@ export class EosMcpServer {
 
       case "eos_topology_blast_radius": {
         return calculateBlastRadius(String(args.nodeId || "eos-core"));
+      }
+
+      case "eos_soul_alignment": {
+        return evaluateSoulAlignment(String(args.directive || ""));
+      }
+
+      case "eos_autonomous_introspect": {
+        const engine = new EosIntrospectionEngine(this.projectRoot);
+        return engine.runIntrospection();
+      }
+
+      case "eos_military_shield_audit": {
+        const shield = new EosImpenetrableShield(this.projectRoot);
+        return shield.runFullSecurityAudit();
       }
 
       default:
