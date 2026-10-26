@@ -1,0 +1,210 @@
+/**
+ * EOS SYSTEM — PERFORMANCE BUDGET GATE (Layer 0)
+ * Governed by SPEC-032 (Big Tech Hyper-Optimization) & CHANGE-036
+ *
+ * Performance regressions are prevented by *budgets enforced in CI*, not by good intentions.
+ * This gate measures the critical control-plane operations (repository audit, polyglot
+ * fingerprint, source enumeration and the turbo verification pipeline) with a warm-up pass and
+ * nearest-rank percentiles, then fails closed when the median exceeds the declared budget.
+ *
+ * Zero external runtime dependencies.
+ */
+
+import crypto from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
+
+export interface PerfBudgetTarget {
+  readonly id: string;
+  readonly description: string;
+  readonly budgetMs: number;
+}
+
+export interface PerfBudgetSample {
+  readonly id: string;
+  readonly description: string;
+  readonly medianMs: number;
+  readonly p95Ms: number;
+  readonly minMs: number;
+  readonly maxMs: number;
+  readonly iterations: number;
+  readonly budgetMs: number;
+  readonly headroomRatio: number;
+  readonly status: "PASS" | "BREACH";
+}
+
+export interface PerfBudgetReport {
+  readonly passed: boolean;
+  readonly factor: number;
+  readonly samples: readonly PerfBudgetSample[];
+  readonly breaches: readonly string[];
+  readonly totalDurationMs: number;
+  readonly sha256MerkleReceipt: string;
+  readonly timestamp: string;
+}
+
+export interface PerfBudgetOptions {
+  readonly iterations?: number;
+  readonly warmupIterations?: number;
+  readonly factor?: number;
+}
+
+/** Critical-path budgets for the EOS control plane (measured on 4 vCPU, ~4x headroom). */
+export const DEFAULT_PERF_BUDGETS: readonly PerfBudgetTarget[] = [
+  {
+    id: "repository_audit",
+    description: "Universal polyglot audit (5 pillars + Merkle receipt)",
+    budgetMs: 400
+  },
+  {
+    id: "polyglot_fingerprint",
+    description: "Polyglot stack fingerprint (language, PM, tests, container, CI)",
+    budgetMs: 150
+  },
+  {
+    id: "source_enumeration",
+    description: "Git-visible source enumeration (SAST surface)",
+    budgetMs: 150
+  },
+  {
+    id: "turbo_pipeline",
+    description: "Whole-project turbo verification (SAST + architecture + SBOM + assets)",
+    budgetMs: 1200
+  }
+];
+
+const round3 = (value: number): number => Math.round(value * 1000) / 1000;
+
+/** Nearest-rank percentile (no interpolation, fully deterministic for small sample sets). */
+export function percentile(durations: readonly number[], rank: number): number {
+  if (durations.length === 0) return 0;
+  const sorted = [...durations].sort((a, b) => a - b);
+  const clamped = Math.min(1, Math.max(0, rank));
+  const index = Math.min(sorted.length - 1, Math.max(0, Math.ceil(clamped * sorted.length) - 1));
+  return round3(sorted[index]);
+}
+
+export function median(durations: readonly number[]): number {
+  return percentile(durations, 0.5);
+}
+
+/**
+ * Pure budget evaluation: the whole pass/fail decision is a function of the measurements.
+ */
+export function evaluateSample(
+  target: PerfBudgetTarget,
+  durations: readonly number[],
+  factor: number = 1
+): PerfBudgetSample {
+  const budgetMs = round3(target.budgetMs * factor);
+  const medianMs = median(durations);
+  const status: PerfBudgetSample["status"] = medianMs > budgetMs ? "BREACH" : "PASS";
+  return {
+    id: target.id,
+    description: target.description,
+    medianMs,
+    p95Ms: percentile(durations, 0.95),
+    minMs: durations.length > 0 ? round3(Math.min(...durations)) : 0,
+    maxMs: durations.length > 0 ? round3(Math.max(...durations)) : 0,
+    iterations: durations.length,
+    budgetMs,
+    headroomRatio: medianMs > 0 ? round3(budgetMs / medianMs) : Number.POSITIVE_INFINITY,
+    status
+  };
+}
+
+export class EosPerfBudgetGate {
+  private readonly rootDir: string;
+  private readonly iterations: number;
+  private readonly warmupIterations: number;
+  private readonly factor: number;
+
+  constructor(rootDir: string = process.cwd(), options: PerfBudgetOptions = {}) {
+    this.rootDir = path.resolve(rootDir);
+    this.iterations = Math.max(1, options.iterations ?? 5);
+    this.warmupIterations = Math.max(0, options.warmupIterations ?? 1);
+    const envFactor = Number.parseFloat(process.env.EOS_PERF_BUDGET_FACTOR ?? "1");
+    this.factor = options.factor ?? (Number.isFinite(envFactor) && envFactor > 0 ? envFactor : 1);
+  }
+
+  /**
+   * Measures a synchronous operation: warm-up passes (JIT + page cache) then N timed passes.
+   * The median is the gate criterion; p95 is reported for observability.
+   */
+  public measure(target: PerfBudgetTarget, operation: () => unknown): PerfBudgetSample {
+    for (let i = 0; i < this.warmupIterations; i += 1) {
+      operation();
+    }
+    const durations: number[] = [];
+    for (let i = 0; i < this.iterations; i += 1) {
+      const start = process.hrtime.bigint();
+      operation();
+      durations.push(round3(Number(process.hrtime.bigint() - start) / 1_000_000));
+    }
+    return evaluateSample(target, durations, this.factor);
+  }
+
+  /**
+   * Runs the default control-plane suite and seals a deterministic Merkle receipt.
+   */
+  public async runDefaultSuite(budgets: readonly PerfBudgetTarget[] = DEFAULT_PERF_BUDGETS): Promise<PerfBudgetReport> {
+    const start = process.hrtime.bigint();
+    const { EosUniversalProjectAdapter } = await import("./eosUniversalProjectAdapter.ts");
+    const { runTurboPipeline, collectSourceFiles } = await import("./eosTurboEngine.ts");
+
+    const adapter = new EosUniversalProjectAdapter(this.rootDir);
+    const operations: Readonly<Record<string, () => unknown>> = {
+      repository_audit: () => adapter.audit(),
+      polyglot_fingerprint: () => adapter.fingerprint(),
+      source_enumeration: () => collectSourceFiles(this.rootDir, this.rootDir),
+      turbo_pipeline: () => runTurboPipeline(this.rootDir)
+    };
+
+    const samples: PerfBudgetSample[] = [];
+    for (const budget of budgets) {
+      const operation = operations[budget.id];
+      if (!operation) {
+        throw new Error(`No measurement wired for performance budget target: ${budget.id}`);
+      }
+      samples.push(this.measure(budget, operation));
+    }
+
+    const breaches = samples.filter((sample) => sample.status === "BREACH").map((sample) => sample.id);
+    const payload = JSON.stringify({
+      factor: this.factor,
+      iterations: this.iterations,
+      samples: samples.map((sample) => ({
+        id: sample.id,
+        medianMs: sample.medianMs,
+        p95Ms: sample.p95Ms,
+        budgetMs: sample.budgetMs,
+        status: sample.status
+      })),
+      breaches
+    });
+    const totalDurationMs = round3(Number(process.hrtime.bigint() - start) / 1_000_000);
+
+    return {
+      passed: breaches.length === 0,
+      factor: this.factor,
+      samples,
+      breaches,
+      totalDurationMs,
+      sha256MerkleReceipt: crypto.createHash("sha256").update(payload).digest("hex"),
+      timestamp: new Date().toISOString()
+    };
+  }
+
+  /**
+   * Persists the sealed report as evidence (auditable, machine-readable).
+   */
+  public static writeEvidence(report: PerfBudgetReport, targetPath: string): string {
+    const directory = path.dirname(targetPath);
+    if (!fs.existsSync(directory)) {
+      fs.mkdirSync(directory, { recursive: true });
+    }
+    fs.writeFileSync(targetPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+    return targetPath;
+  }
+}
+

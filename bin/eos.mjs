@@ -250,6 +250,30 @@ switch (command) {
     }
     break;
   }
+  case "perf": {
+    printBanner();
+    console.log("\n[EOS PERF] Critical-Path Performance Budget Gate (SPEC-032 / FR-094)...");
+    const { EosPerfBudgetGate } = await import("../src/core/eosPerfBudgetGate.ts");
+    const gate = new EosPerfBudgetGate(root, { iterations: 5, warmupIterations: 1 });
+    const report = await gate.runDefaultSuite();
+    for (const sample of report.samples) {
+      const headroom = Number.isFinite(sample.headroomRatio) ? `${sample.headroomRatio.toFixed(1)}x` : "n/a";
+      console.log(
+        `  [${sample.status}] ${sample.id.padEnd(22)} mediana ${sample.medianMs.toFixed(1).padStart(7)} ms | ` +
+          `p95 ${sample.p95Ms.toFixed(1).padStart(7)} ms | presupuesto ${sample.budgetMs.toFixed(1).padStart(7)} ms | holgura ${headroom}`
+      );
+    }
+    console.log(`\nSello Merkle SHA-256   : ${report.sha256MerkleReceipt}`);
+    if (!report.passed) {
+      console.error(`[FAIL] Presupuestos excedidos: ${report.breaches.join(", ")}`);
+      process.exitCode = 1;
+      break;
+    }
+    console.log("[PASS] Todos los presupuestos de rutas críticas se cumplen.");
+    break;
+  }
+
+
 
   case "daemon": {
     printBanner();

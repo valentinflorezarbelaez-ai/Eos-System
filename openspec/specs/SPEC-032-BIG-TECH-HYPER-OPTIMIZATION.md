@@ -23,6 +23,9 @@
 - **FR-093 (Event-Driven - Multi-Channel CLI & MCP Tool Dispatching)**:
   `CUANDO un desarrollador invoque "eos optimize:v8" o la herramienta MCP "eos_bitwise_accelerate", EL SISTEMA retornará métricas de throughput, tasa de reciclaje de búferes y velocidad de hashing en menos de 500 milisegundos.`
 
+- **FR-094 (Ubiquitous - Critical-Path Performance Budgets Fail-Closed)**:
+  `EL SISTEMA medirá en cada ejecución del gate CI/CD los presupuestos de rendimiento de las rutas críticas del plano de control (auditoría poliglota, huella arquitectónica, enumeración de fuentes y pipeline turbo), aplicando una pasada de calentamiento y mediana sobre N muestras con percentil p95 de rango más cercano, y FALLARÁ CERRADO (exit code != 0 + evidencia sellada en docs/evidence/PERF-BUDGET.json) cuando la mediana exceda el presupuesto declarado, ajustable únicamente mediante el factor EOS_PERF_BUDGET_FACTOR para runners compartidos.`
+
 ---
 
 ## 2. BDD Acceptance Criteria (Gherkin Standard)
@@ -54,6 +57,13 @@ ESCENARIO: [BDD-081] Despacho Multi-Canal mediante CLI y Servidor MCP
   CUANDO se invoca "eos optimize:v8" o la herramienta MCP "eos_bitwise_accelerate"
   ENTONCES el sistema retorna métricas de rendimiento en formato JSON estructurado
   Y el comando finaliza con código de salida 0.
+
+ESCENARIO: [BDD-082] Presupuesto de Rendimiento de Rutas Críticas (Fail-Closed)
+  DADO el gate EosPerfBudgetGate con los presupuestos por defecto (SPEC-032 / FR-094)
+  CUANDO se ejecuta scripts/verify-perf-budget.mjs en el pipeline CI/CD
+  ENTONCES cada muestra reporta mediana, p95, presupuesto y factor de holgura
+  Y el proceso termina con código 0 únicamente si todas las medianas respetan su presupuesto
+  Y la evidencia sellada con Merkle SHA-256 se persiste en docs/evidence/PERF-BUDGET.json.
 ```
 
 ---

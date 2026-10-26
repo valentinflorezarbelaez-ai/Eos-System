@@ -196,7 +196,8 @@ const testFiles = [
   "test/eosUniversalProductFoundry.test.mjs",
   "test/eosSovereignLoop.test.mjs",
   "test/eosOmegaTranscendentalApex.test.mjs",
-  "test/eosContinuousRefactorEngine.test.mjs"
+  "test/eosContinuousRefactorEngine.test.mjs",
+  "test/eosPerfBudgetGate.test.mjs"
 ];
 
 const isPts = process.argv.includes("--pts");
@@ -243,6 +244,15 @@ for (const testFile of filesToRun) {
   });
 }
 console.log(`[PASS] Stage 4/7 — Static AST, Syntax, Unit & Chaos Gate (${jsFilesToCheck.length} JS/MJS modules + ${tsCoreFiles.length} L0 TS modules + node:test passed).`);
+
+// ---------------------------------------------------------------------------
+// STAGE 4.5: CRITICAL-PATH PERFORMANCE BUDGET GATE (FAIL-CLOSED)
+// ---------------------------------------------------------------------------
+execFileSync(process.execPath, [path.join(root, "scripts/verify-perf-budget.mjs")], {
+  cwd: root,
+  stdio: "inherit"
+});
+console.log("[PASS] Stage 4.5/7 — Critical-Path Performance Budget Gate (fail-closed).");
 
 // ---------------------------------------------------------------------------
 // STAGE 5: WCAG 2.1 AA ACCESSIBILITY, SEO & PERFORMANCE BUDGET GATE
