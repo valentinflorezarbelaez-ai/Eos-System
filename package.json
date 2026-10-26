@@ -13,7 +13,11 @@
     "fleet": "node ./scripts/verify-fleet.mjs",
     "fleet:verify": "node ./scripts/verify-fleet.mjs",
     "sentinel": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/run-sentinel.ps1",
-    "eos": "node ./scripts/eos-cli.mjs"
+    "dashboard": "node ./scripts/serve-dashboard.mjs",
+    "mcp": "node ./dist/mcp/eosMcpServer.js",
+    "eos": "node ./scripts/eos-cli.mjs",
+    "test:unit": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [
     "eos",
@@ -27,6 +31,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^26.6.5",
-    "typescript": "^5.7.0"
+    "@vitest/coverage-v8": "^5.0.5",
+    "typescript": "^5.7.0",
+    "vitest": "^5.0.5"
   }
 }

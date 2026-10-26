@@ -1,0 +1,187 @@
+/**
+ * PluginManager Application Service (Layer 1 — Application)
+ * SPEC-018: Plugin & Extension System
+ *
+ * Manages plugin lifecycle: discovery, registration, validation, activation,
+ * and defensive hook dispatching with isolated fault containment and telemetry.
+ */
+
+import { PluginManifest, type PluginHookType } from '../domain/models/PluginManifest.js';
+import type { TelemetryPipeline } from './TelemetryPipeline.js';
+
+export type PluginHookHandler = (payload: unknown) => Promise<unknown> | unknown;
+
+export type PluginStatus = 'REGISTERED' | 'ACTIVE' | 'DISABLED' | 'ERROR';
+
+export interface PluginInstance {
+  readonly manifest: PluginManifest;
+  readonly handlers: Readonly<Partial<Record<PluginHookType, PluginHookHandler>>>;
+  status: PluginStatus;
+  readonly registeredAt: string;
+}
+
+export interface HookDispatchResult {
+  readonly hook: PluginHookType;
+  readonly totalExecuted: number;
+  readonly errors: readonly { readonly pluginName: string; readonly error: string }[];
+}
+
+export interface PluginManagerOptions {
+  readonly telemetry?: TelemetryPipeline | undefined;
+}
+
+export class PluginManager {
+  private readonly telemetry?: TelemetryPipeline | undefined;
+  private readonly plugins: Map<string, PluginInstance> = new Map();
+
+  constructor(options: PluginManagerOptions = {}) {
+    this.telemetry = options.telemetry;
+  }
+
+  registerPlugin(
+    manifest: PluginManifest,
+    handlers: Partial<Record<PluginHookType, PluginHookHandler>> = {}
+  ): PluginInstance {
+    if (this.plugins.has(manifest.name)) {
+      throw new Error(`Plugin with name "${manifest.name}" is already registered.`);
+    }
+
+    const instance: PluginInstance = {
+      manifest,
+      handlers: Object.freeze({ ...handlers }),
+      status: 'ACTIVE',
+      registeredAt: new Date().toISOString(),
+    };
+
+    this.plugins.set(manifest.name, instance);
+
+    this.telemetry?.emit(
+      'INFO',
+      'PluginManager',
+      `Registered and activated plugin "${manifest.name}" (v${manifest.version.toString()}) with ${manifest.hooks.length} declared hooks.`,
+      { plugin: manifest.name, version: manifest.version.toString() }
+    );
+
+    return instance;
+  }
+
+  unregisterPlugin(name: string): boolean {
+    const existing = this.plugins.get(name);
+    if (!existing) {
+      return false;
+    }
+
+    this.plugins.delete(name);
+
+    this.telemetry?.emit('INFO', 'PluginManager', `Unregistered plugin "${name}".`, { plugin: name });
+
+    return true;
+  }
+
+  getPlugin(name: string): PluginInstance | undefined {
+    return this.plugins.get(name);
+  }
+
+  listPlugins(): readonly PluginInstance[] {
+    return Object.freeze(Array.from(this.plugins.values()));
+  }
+
+  enablePlugin(name: string): boolean {
+    const p = this.plugins.get(name);
+    if (!p) return false;
+    p.status = 'ACTIVE';
+    return true;
+  }
+
+  disablePlugin(name: string): boolean {
+    const p = this.plugins.get(name);
+    if (!p) return false;
+    p.status = 'DISABLED';
+    return true;
+  }
+
+  /**
+   * Dispatches a lifecycle hook across all active plugins with defensive fault containment.
+   * A failure in any single plugin hook does not abort other plugins or crash the caller.
+   */
+  async dispatchHook(hook: PluginHookType, payload: unknown = {}): Promise<HookDispatchResult> {
+    const errors: { pluginName: string; error: string }[] = [];
+    let executedCount = 0;
+
+    for (const plugin of this.plugins.values()) {
+      if (plugin.status !== 'ACTIVE') {
+        continue;
+      }
+
+      const handler = plugin.handlers[hook];
+      if (!handler) {
+        continue;
+      }
+
+      try {
+        await handler(payload);
+        executedCount++;
+      } catch (err) {
+        const errorMsg = err instanceof Error ? err.message : String(err);
+        plugin.status = 'ERROR';
+        errors.push({ pluginName: plugin.manifest.name, error: errorMsg });
+
+        this.telemetry?.emit(
+          'WARN',
+          'PluginManager',
+          `Plugin "${plugin.manifest.name}" failed executing hook "${hook}": ${errorMsg}`,
+          { plugin: plugin.manifest.name, hook, error: errorMsg }
+        );
+      }
+    }
+
+    return {
+      hook,
+      totalExecuted: executedCount,
+      errors: Object.freeze(errors),
+    };
+  }
+
+  /**
+   * Scaffolds a complete standard plugin manifest template.
+   */
+  static scaffoldTemplate(
+    name: string,
+    options: { description?: string | undefined; author?: string | undefined } = {}
+  ): Record<string, unknown> {
+    const description = options.description ?? `EOS sovereign extension plugin: ${name}`;
+    const author = options.author ?? 'EOS Developer';
+
+    const manifest = PluginManifest.create({
+      name,
+      version: '1.0.0',
+      description,
+      author,
+      entrypoint: './index.js',
+      capabilities: ['extension'],
+      dependencies: {},
+      hooks: ['preStep', 'postStep'],
+    });
+
+    return {
+      manifest: manifest.toJSON(),
+      sampleCode: `/**
+ * Plugin: ${name}
+ * Generated by EOS Plugin Manager
+ */
+
+export default {
+  onInit(context) {
+    console.log('[${name}] Initialized.');
+  },
+  preStep(step) {
+    console.log('[${name}] Pre-step:', step?.name);
+  },
+  postStep(result) {
+    console.log('[${name}] Post-step finished with status:', result?.status);
+  }
+};
+`,
+    };
+  }
+}

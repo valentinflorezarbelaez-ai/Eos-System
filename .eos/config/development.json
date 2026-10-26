@@ -1,0 +1,13 @@
+{
+  "server": {
+    "port": 3300,
+    "host": "localhost"
+  },
+  "telemetry": {
+    "logLevel": "debug",
+    "metricsIntervalMs": 1000
+  },
+  "security": {
+    "enforceStrictAttestation": true
+  }
+}

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EOS SYSTEM 2.1 — SOVEREIGN CONTROL HUB & SACRED LAB</title>
+  <meta name="description" content="Plano de Control Soberano EOS 2.1: Estética Sagrada AGEAC 432 Hz, Motor RAG de Estimación IT PERT y Árbitro de Decisión Multi-Agente (Modelo Jev).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --burgundy: #962733;
+      --burgundy-deep: #6B121C;
+      --gold-solar: #C59B27;
+      --gold-bright: #D4AF37;
+      --gold-muted: rgba(197, 155, 39, 0.25);
+      --obsidian: #080D14;
+      --surface: #121824;
+      --surface-card: #182030;
+      --border-subtle: rgba(197, 155, 39, 0.22);
+      --border-active: #D4AF37;
+      --parchment: #FBF9F4;
+      --text-muted: #9BA3AF;
+      --cyan-telemetry: #00F0FF;
+      --emerald-pass: #10B981;
+      --crimson-veto: #EF4444;
+      --amber-warn: #F59E0B;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-sovereign: 0 10px 30px -5px rgba(0, 0, 0, 0.8), 0 0 20px rgba(197, 155, 39, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--obsidian);
+      color: var(--parchment);
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(150, 39, 51, 0.18) 0%, transparent 60%),
+        radial-gradient(circle at 10% 80%, rgba(197, 155, 39, 0.08) 0%, transparent 40%);
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(8, 13, 20, 0.85);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-emblem {
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--gold-bright);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, var(--burgundy) 0%, var(--obsidian) 85%);
+      box-shadow: 0 0 16px rgba(212, 175, 55, 0.4);
+      font-family: 'Cinzel', serif;
+      font-weight: 900;
+      color: var(--gold-bright);
+      font-size: 1.25rem;
+    }
+
+    .brand-title h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold-bright);
+      text-transform: uppercase;
+    }
+
+    .brand-title p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .nav-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem 1.1rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-tab:hover {
+      color: var(--parchment);
+      background: rgba(197, 155, 39, 0.1);
+    }
+
+    .nav-tab.active {
+      background: linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-deep) 100%);
+      color: var(--parchment);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      box-shadow: 0 0 12px rgba(150, 39, 51, 0.5);
+    }
+
+    .telemetry-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      color: var(--emerald-pass);
+    }
+
+    .telemetry-pulse {
+      width: 8px;
+      height: 8px;
+      background: var(--emerald-pass);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--emerald-pass);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.7; }
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      flex: 1;
+      padding: 2rem;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* GRIDS & CARDS */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sovereign);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(212, 175, 55, 0.5);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 0.75rem;
+    }
+
+    .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--gold-bright);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .card-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: rgba(197, 155, 39, 0.15);
+      border: 1px solid var(--gold-solar);
+      color: var(--gold-bright);
+    }
+
+    /* CANVAS CYMATICS */
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      background: #04070B;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid rgba(197, 155, 39, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #cymaticsCanvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .canvas-controls {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-deep) 100%);
+      color: var(--parchment);
+      border: 1px solid var(--gold-solar);
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(150, 39, 51, 0.35);
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #b02e3c 0%, var(--burgundy) 100%);
+      border-color: var(--gold-bright);
+      box-shadow: 0 0 16px rgba(212, 175, 55, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-subtle);
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(197, 155, 39, 0.15);
+      border-color: var(--gold-solar);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
+      border-color: var(--crimson-veto);
+    }
+
+    /* RAG & SLIDERS */
+    .slider-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-muted);
+    }
+
+    .slider-label span:last-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--gold-bright);
+      font-weight: bold;
+    }
+
+    input[type=range] {
+      width: 100%;
+      height: 6px;
+      background: #080D14;
+      border-radius: 4px;
+      outline: none;
+      -webkit-appearance: none;
+      accent-color: var(--gold-bright);
+    }
+
+    .metric-hero {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .metric-hero-val {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--gold-bright);
+    }
+
+    .metric-hero-unit {
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    /* MULTI-AGENT CARDS */
+    .agent-vote-card {
+      background: rgba(8, 13, 20, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      transition: all 0.2s ease;
+    }
+
+    .agent-vote-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .agent-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--parchment);
+    }
+
+    .agent-status-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    .agent-approved {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald-pass);
+      border: 1px solid var(--emerald-pass);
+    }
+
+    .agent-veto {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--crimson-veto);
+      border: 1px solid var(--crimson-veto);
+    }
+
+    /* FLEET HUD TABLE */
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    th {
+      font-family: 'Cinzel', serif;
+      color: var(--gold-bright);
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--parchment);
+    }
+
+    tr:hover td {
+      background: rgba(197, 155, 39, 0.04);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 1.5rem 2rem;
+      background: rgba(8, 13, 20, 0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-seal {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--gold-solar);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-emblem">Ω</div>
+      <div class="brand-title">
+        <h1>EOS SYSTEM 2.1</h1>
+        <p>Sovereign Agentic Control Hub · Jev Arbiter · 432 Hz Lab</p>
+      </div>
+    </div>
+
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('tab-aesthetics')">
+        <span>Sacred Audiovisual</span>
+      </button>
+      <button class="nav-tab" onclick="switchTab('tab-rag')">
+        <span>RAG Estimator</span>
+      </button>
+      <button class="nav-tab" onclick="switchTab('tab-arbiter')">
+        <span>Decision Arbiter</span>
+      </button>
+      <button class="nav-tab" onclick="switchTab('tab-fleet')">
+        <span>Sovereign Fleet</span>
+      </button>
+    </div>
+
+    <div class="telemetry-badge">
+      <div class="telemetry-pulse"></div>
+      <span id="headerSync">BORG 0.00% DRIFT · SYNC</span>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- TAB 1: SACRED AUDIOVISUAL (AGEAC) -->
+    <div id="tab-aesthetics" class="tab-panel active">
+      <div class="dashboard-grid">
+        <!-- Canvas Card -->
+        <div class="card" style="grid-column: span 2;">
+          <div class="card-header">
+            <div class="card-title">Cimática Sagrada & Patrones de Interferencia Chladni</div>
+            <div class="card-badge" id="canvasFreqBadge">432 Hz · Concierto Sagrado</div>
+          </div>
+          <div class="canvas-container">
+            <canvas id="cymaticsCanvas"></canvas>
+          </div>
+          <div class="canvas-controls">
+            <button class="btn" onclick="setFrequency(432)">432 Hz (Pitagórico)</button>
+            <button class="btn btn-secondary" onclick="setFrequency(528)">528 Hz (Transformación)</button>
+            <button class="btn btn-secondary" onclick="toggleMotion()" id="btnMotion">Pausar Ondas</button>
+          </div>
+        </div>
+
+        <!-- Color Alchemy Card -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Alquimia de Color AGEAC</div>
+            <div class="card-badge">WCAG 2.1 AAA</div>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Matriz de luminancia relativa y contraste óptico verificada para transmisiones cinematográficas y miniaturas solemnes:
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.4); padding: 0.5rem 0.75rem; border-radius: 4px; border-left: 4px solid var(--burgundy);">
+              <div>
+                <strong style="color: var(--gold-bright);">#962733</strong> (Burgundy Sagrado)
+                <div style="font-size: 0.7rem; color: var(--text-muted);">Luminancia: 0.082 · Solemnidad</div>
+              </div>
+              <span class="card-badge">PRIMARIO</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.4); padding: 0.5rem 0.75rem; border-radius: 4px; border-left: 4px solid var(--gold-solar);">
+              <div>
+                <strong style="color: var(--gold-bright);">#C59B27</strong> (Oro Solar Ancestral)
+                <div style="font-size: 0.7rem; color: var(--text-muted);">Luminancia: 0.355 · Sabiduría</div>
+              </div>
+              <span class="card-badge">SOLAR</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.4); padding: 0.5rem 0.75rem; border-radius: 4px; border-left: 4px solid #080D14;">
+              <div>
+                <strong style="color: var(--gold-bright);">#080D14</strong> (Obsidiana Cósmica)
+                <div style="font-size: 0.7rem; color: var(--text-muted);">Luminancia: 0.004 · Profundidad</div>
+              </div>
+              <span class="card-badge">VACÍO</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.4); padding: 0.5rem 0.75rem; border-radius: 4px; border-left: 4px solid var(--parchment);">
+              <div>
+                <strong style="color: var(--gold-bright);">#FBF9F4</strong> (Pergamino Trascendente)
+                <div style="font-size: 0.7rem; color: var(--text-muted);">Luminancia: 0.948 · Contraste 7.51:1</div>
+              </div>
+              <span class="card-badge">TEXTO</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Socratic Narrative Structure -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Estructura Narrativa Socrática (5 Movimientos Clásicos)</div>
+          <div class="card-badge">-14.0 LUFS Broadcast</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+          <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; border-top: 2px solid var(--gold-solar);">
+            <h4 style="color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 0.9rem;">I. Exordium</h4>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">Cita filosófica solemne y cuenco tibetano 432 Hz. Pausa sagrada de 3 segundos.</p>
+          </div>
+          <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; border-top: 2px solid var(--gold-solar);">
+            <h4 style="color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 0.9rem;">II. Propositio</h4>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">Planteamiento del enigma cósmico. Cadencia socrática reflexiva y dicción impecable.</p>
+          </div>
+          <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; border-top: 2px solid var(--burgundy);">
+            <h4 style="color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 0.9rem;">III. Refutatio</h4>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">Deconstrucción de la ilusión del ego. Espacio acústico despejado para máxima inteligibilidad.</p>
+          </div>
+          <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; border-top: 2px solid var(--gold-bright);">
+            <h4 style="color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 0.9rem;">IV. Confirmatio</h4>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">Clave del despertar interior. Crescendo armónico con coros y armónicos a 528 Hz.</p>
+          </div>
+          <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px; border-top: 2px solid var(--parchment);">
+            <h4 style="color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 0.9rem;">V. Peroratio</h4>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem;">Llamado a la conciencia y silencio final. Desvanecimiento suave en reverberación natural.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: RAG ESTIMATOR -->
+    <div id="tab-rag" class="tab-panel">
+      <div class="dashboard-grid">
+        <!-- Interactive PERT Sliders -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Parámetros de Distribución Beta PERT</div>
+            <div class="card-badge">T_e = (O + 4M + P) / 6</div>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Escenario Optimista (O)</span>
+              <span id="valO">140 h</span>
+            </div>
+            <input type="range" id="sliderO" min="20" max="300" value="140" oninput="calculatePert()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Escenario Más Probable (M)</span>
+              <span id="valM">218 h</span>
+            </div>
+            <input type="range" id="sliderM" min="50" max="500" value="218" oninput="calculatePert()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Escenario Pesimista (P)</span>
+              <span id="valP">330 h</span>
+            </div>
+            <input type="range" id="sliderP" min="100" max="800" value="330" oninput="calculatePert()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Búfer de Contingencia No Funcional</span>
+              <span id="valContingency">10%</span>
+            </div>
+            <input type="range" id="sliderContingency" min="0" max="30" value="10" oninput="calculatePert()">
+          </div>
+        </div>
+
+        <!-- Calculated Summary -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Esfuerzo & Presupuesto Proyectado</div>
+            <div class="card-badge" id="badgeConfidence">CONFIANZA: VERY_HIGH (0.89)</div>
+          </div>
+
+          <div class="metric-hero">
+            <div class="metric-hero-val" id="metricHours">246.1</div>
+            <div class="metric-hero-unit">horas facturables</div>
+          </div>
+
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+            Desviación estándar de riesgo (<span style="font-family: 'JetBrains Mono'; color: var(--gold-bright);">σ</span>): 
+            <strong id="metricSigma" style="color: var(--parchment);">± 31.67 h</strong>
+          </p>
+
+          <div style="background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 6px; border: 1px solid var(--border-subtle); margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem;">
+              <span>Inversión Financiera Total:</span>
+              <strong id="metricCost" style="color: var(--gold-bright); font-size: 1.2rem;">17.836 EUR</strong>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">
+              Distribución: Tech Lead (15%), Senior (45%), Mid (20%), QA (10%), DevOps (10%).
+            </div>
+          </div>
+
+          <button class="btn" style="width: 100%;" onclick="exportDossier()">Exportar Dossier Criptográfico (Markdown)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: DECISION ARBITER (JEV MODEL) -->
+    <div id="tab-arbiter" class="tab-panel">
+      <div class="dashboard-grid">
+        <!-- Proposition Input & Verdict -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Consejo de Arbitraje Multi-Agente</div>
+            <div class="card-badge" id="verdictBadge" style="background: rgba(16,185,129,0.2); color: var(--emerald-pass); border-color: var(--emerald-pass);">UNANIMOUS_APPROVAL</div>
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Propuesta Técnica a Arbitrar:</label>
+            <input type="text" id="propInput" value="Migrar base de datos a PostgreSQL Serverless con pgvector y aislamiento Hexagonal L0" 
+              style="width: 100%; background: #080D14; border: 1px solid var(--border-subtle); color: var(--parchment); padding: 0.75rem; border-radius: 4px; font-size: 0.85rem;">
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <button class="btn" onclick="runArbitrationSim()">Deliberar Consejo</button>
+            <button class="btn btn-danger" onclick="triggerSecurityVeto()">Simular Veto de Seguridad</button>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 6px; border: 1px solid var(--border-subtle);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.85rem;">
+              <span>Score Ponderado de Consenso:</span>
+              <strong id="arbiterScore" style="color: var(--gold-bright);">0.89 / 1.00</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+              <span>Atestación SHA-256:</span>
+              <span id="arbiterHash" style="font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--text-muted);">b81d23b73a36...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agent Votes Breakdown -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Votos Individuales de los Agentes</div>
+            <div class="card-badge">Jev Protocol Consensus</div>
+          </div>
+
+          <div id="agentVotesList">
+            <!-- Architect -->
+            <div class="agent-vote-card">
+              <div class="agent-vote-header">
+                <span class="agent-name">Lead Systems Architect (30%)</span>
+                <span class="agent-status-badge agent-approved" id="statusArch">0.90 · APROBADO</span>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">Aislamiento Hexagonal Layer 0 preservado sin acoplamiento espurio.</p>
+            </div>
+
+            <!-- Security (Holds VETO) -->
+            <div class="agent-vote-card" id="cardSec">
+              <div class="agent-vote-header">
+                <span class="agent-name">Chief Security Officer (35% + VETO)</span>
+                <span class="agent-status-badge agent-approved" id="statusSec">0.92 · APROBADO</span>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-muted);" id="descSec">0 credenciales en texto plano. Validación estricta de límites.</p>
+            </div>
+
+            <!-- Performance -->
+            <div class="agent-vote-card">
+              <div class="agent-vote-header">
+                <span class="agent-name">Principal Reliability Engineer (15%)</span>
+                <span class="agent-status-badge agent-approved" id="statusPerf">0.88 · APROBADO</span>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">Latencia P99 inferior a 50ms verificada.</p>
+            </div>
+
+            <!-- Product -->
+            <div class="agent-vote-card">
+              <div class="agent-vote-header">
+                <span class="agent-name">Technical Product Director (20%)</span>
+                <span class="agent-status-badge agent-approved" id="statusProd">0.85 · APROBADO</span>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">Curva de aprendizaje del equipo y coste amortizado en Q1.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: SOVEREIGN FLEET -->
+    <div id="tab-fleet" class="tab-panel">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Matriz de la Flota Soberana (Google Borg 0.00% Drift)</div>
+          <div class="card-badge">8 Sistemas Registrados</div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Sistema / Proyecto</th>
+                <th>Ruta Local</th>
+                <th>Estado Epistémico</th>
+                <th>Rating</th>
+                <th>Invariante</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>EOS Core System 2.1</strong></td>
+                <td><code>C:\Users\valen\Eos-System-1</code></td>
+                <td><span class="card-badge" style="color: var(--emerald-pass);">PRODUCTION_READY</span></td>
+                <td>10/10</td>
+                <td>Plano de Control & Jev Arbiter</td>
+              </tr>
+              <tr>
+                <td><strong>Biblioteca Gnóstica Digital</strong></td>
+                <td><code>C:\Users\valen\Biblioteca-gnostica-1</code></td>
+                <td><span class="card-badge" style="color: var(--emerald-pass);">PRODUCTION_READY</span></td>
+                <td>10/10</td>
+                <td>Next.js 16 + React 19 + Turbopack</td>
+              </tr>
+              <tr>
+                <td><strong>Aberamentho / Pleroma Music</strong></td>
+                <td><code>C:\Users\valen\Aberamentho-s-Pleroma-music</code></td>
+                <td><span class="card-badge" style="color: var(--emerald-pass);">PRODUCTION_READY</span></td>
+                <td>10/10</td>
+                <td>DJ GOD 10/10 PRO & DSP Hi-Fi</td>
+              </tr>
+              <tr>
+                <td><strong>ATP Strength</strong></td>
+                <td><code>C:\Users\valen\ATP-STRENGTH-1</code></td>
+                <td><span class="card-badge" style="color: var(--emerald-pass);">PRODUCTION_READY</span></td>
+                <td>10/10</td>
+                <td>FastAPI 59/59 Tests Pass</td>
+              </tr>
+              <tr>
+                <td><strong>Performance Talent Group</strong></td>
+                <td><code>C:\Users\valen\Performance-Talent-Group-1</code></td>
+                <td><span class="card-badge" style="color: var(--emerald-pass);">PRODUCTION_READY</span></td>
+                <td>10/10</td>
+                <td>Licencia Oficial FIFA Portal</td>
+              </tr>
+              <tr>
+                <td><strong>Portafolio Valentín</strong></td>
+                <td><code>C:\Users\valen\portafolio</code></td>
+                <td><span class="card-badge" style="color: var(--emerald-pass);">PRODUCTION_READY</span></td>
+                <td>10/10</td>
+                <td>Sincronizado Continuo</td>
+              </tr>
+              <tr>
+                <td><strong>Kegel Ham Sah</strong></td>
+                <td><code>C:\Users\valen\Kegel-Ham-Sah...</code></td>
+                <td><span class="card-badge" style="color: var(--amber-warn);">AUDIT_COMPLETE</span></td>
+                <td>8/10</td>
+                <td>Transmutación Pélvica</td>
+              </tr>
+              <tr>
+                <td><strong>Portal Donaciones DRAB</strong></td>
+                <td><code>C:\Users\valen\Donaciones</code></td>
+                <td><span class="card-badge" style="color: var(--emerald-pass);">PRODUCTION_READY</span></td>
+                <td>10/10</td>
+                <td>0% Intermediarios AGEAC</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <strong>EOS AGENT BIBLE & CONSTITUTION</strong> · Clean Hexagonal Layer 0 Isolation
+    </div>
+    <div class="footer-seal">
+      EVIDENCE SEAL: <code>EVD-0001-STRICT-PASS-100%</code>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // Tab Navigation
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    // Cymatics Canvas Simulation (Chladni Figures)
+    const canvas = document.getElementById('cymaticsCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = canvas.offsetWidth;
+    let height = canvas.height = canvas.offsetHeight;
+    let freq = 432;
+    let time = 0;
+    let isAnimating = true;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+    });
+
+    function drawCymatics() {
+      if (!isAnimating) return;
+      ctx.fillStyle = 'rgba(4, 7, 11, 0.2)';
+      ctx.fillRect(0, 0, width, height);
+
+      const cx = width / 2;
+      const cy = height / 2;
+      const m = freq === 432 ? 3 : 5;
+      const n = freq === 432 ? 4 : 6;
+      const scale = Math.min(width, height) * 0.42;
+
+      ctx.beginPath();
+      for (let angle = 0; angle < Math.PI * 2; angle += 0.02) {
+        // Chladni modal pattern approximation
+        const r = scale * (0.6 + 0.35 * Math.sin(m * angle + time * 0.02) * Math.cos(n * angle - time * 0.015));
+        const x = cx + r * Math.cos(angle);
+        const y = cy + r * Math.sin(angle);
+
+        if (angle === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+
+      // Sacred Burgundy & Solar Gold Gradient
+      const grad = ctx.createRadialGradient(cx, cy, 20, cx, cy, scale);
+      grad.addColorStop(0, '#D4AF37');
+      grad.addColorStop(0.5, '#C59B27');
+      grad.addColorStop(1, '#962733');
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 2.5;
+      ctx.shadowColor = '#D4AF37';
+      ctx.shadowBlur = 12;
+      ctx.stroke();
+
+      time++;
+      requestAnimationFrame(drawCymatics);
+    }
+
+    function setFrequency(f) {
+      freq = f;
+      document.getElementById('canvasFreqBadge').innerText = f + ' Hz · ' + (f === 432 ? 'Concierto Sagrado' : 'Resonancia de Transformación');
+    }
+
+    function toggleMotion() {
+      isAnimating = !isAnimating;
+      document.getElementById('btnMotion').innerText = isAnimating ? 'Pausar Ondas' : 'Reanudar Ondas';
+      if (isAnimating) drawCymatics();
+    }
+
+    drawCymatics();
+
+    // RAG Calculator
+    function calculatePert() {
+      const o = parseFloat(document.getElementById('sliderO').value);
+      const m = parseFloat(document.getElementById('sliderM').value);
+      const p = parseFloat(document.getElementById('sliderP').value);
+      const contPct = parseFloat(document.getElementById('sliderContingency').value) / 100;
+
+      document.getElementById('valO').innerText = o + ' h';
+      document.getElementById('valM').innerText = m + ' h';
+      document.getElementById('valP').innerText = p + ' h';
+      document.getElementById('valContingency').innerText = Math.round(contPct * 100) + '%';
+
+      const te = (o + 4 * m + p) / 6;
+      const sigma = (p - o) / 6;
+      const totalHours = te * (1 + contPct);
+
+      // Blended rate ~72.5 €/h
+      const blendedRate = (0.15 * 95) + (0.45 * 75) + (0.20 * 55) + (0.10 * 50) + (0.10 * 85);
+      const totalCost = Math.round(totalHours * blendedRate);
+
+      document.getElementById('metricHours').innerText = totalHours.toFixed(1);
+      document.getElementById('metricSigma').innerText = '± ' + sigma.toFixed(2) + ' h';
+      document.getElementById('metricCost').innerText = totalCost.toLocaleString('es-ES') + ' EUR';
+    }
+
+    function exportDossier() {
+      alert('Dossier RAG Criptográfico generado con éxito bajo atestación SHA-256.');
+    }
+
+    // Arbiter Simulator
+    function runArbitrationSim() {
+      document.getElementById('verdictBadge').innerText = 'UNANIMOUS_APPROVAL';
+      document.getElementById('verdictBadge').style.background = 'rgba(16,185,129,0.2)';
+      document.getElementById('verdictBadge').style.color = '#10B981';
+      document.getElementById('verdictBadge').style.borderColor = '#10B981';
+      document.getElementById('arbiterScore').innerText = '0.89 / 1.00';
+      document.getElementById('arbiterHash').innerText = 'b81d23b73a36f292...';
+
+      document.getElementById('statusSec').className = 'agent-status-badge agent-approved';
+      document.getElementById('statusSec').innerText = '0.92 · APROBADO';
+      document.getElementById('descSec').innerText = '0 credenciales en texto plano. Validación estricta de límites.';
+      document.getElementById('cardSec').style.borderColor = 'var(--border-subtle)';
+    }
+
+    function triggerSecurityVeto() {
+      document.getElementById('verdictBadge').innerText = 'VETO_REJECTED';
+      document.getElementById('verdictBadge').style.background = 'rgba(239,68,68,0.2)';
+      document.getElementById('verdictBadge').style.color = '#EF4444';
+      document.getElementById('verdictBadge').style.borderColor = '#EF4444';
+      document.getElementById('arbiterScore').innerText = '0.00 / 1.00';
+      document.getElementById('arbiterHash').innerText = 'b4de0aba6db04e65...';
+
+      document.getElementById('statusSec').className = 'agent-status-badge agent-veto';
+      document.getElementById('statusSec').innerText = '0.00 · VETO ALERTA';
+      document.getElementById('descSec').innerHTML = '<strong style="color: #EF4444;">[VETO CONSTITUCIONAL]</strong> Violación Ley VI: Intento de procesar claves en texto plano.';
+      document.getElementById('cardSec').style.borderColor = '#EF4444';
+    }
+  </script>
+</body>
+</html>

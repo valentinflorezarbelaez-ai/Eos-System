@@ -1,0 +1,28 @@
+[
+  {
+    "index": 0,
+    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "currentHash": "0704c8345baf81c52a6e550fbdfc73e2b47a2003adea9c212823d9d757c28547",
+    "payload": {
+      "recordId": "GENESIS-0",
+      "type": "LEDGER_INITIALIZATION",
+      "payloadHash": "23b7fcd1fecb6c1ec3b1b36331f5c07caa69e79b8ada4202864c5b921b649d23",
+      "summary": "Eos Cryptographic Hash-Chain Root Block"
+    },
+    "wallClockIso": "2026-10-25T23:21:46.383Z",
+    "monotonicNs": "141351400"
+  },
+  {
+    "index": 1,
+    "previousHash": "0704c8345baf81c52a6e550fbdfc73e2b47a2003adea9c212823d9d757c28547",
+    "currentHash": "4781753d0e88ad8f161e9c8eff3ad5961b7898f1a13be48d6f063b72dc6e7902",
+    "payload": {
+      "recordId": "EVD-1793020020849",
+      "type": "OPERATOR_ATTESTATION",
+      "payloadHash": "c59e8bf2ce3e9f7b8a6f257e7d2d513271f3ab65ec6486f540238805ca56cd43",
+      "summary": "Milestone SPEC-019 and SPEC-020 verification"
+    },
+    "wallClockIso": "2026-10-26T13:07:00.850Z",
+    "monotonicNs": "1793020020850408960"
+  }
+]

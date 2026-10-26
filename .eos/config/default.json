@@ -1,0 +1,30 @@
+{
+  "system": {
+    "name": "EOS Core System",
+    "version": "2.1.0",
+    "architecture": "Hexagonal Clean Architecture L0"
+  },
+  "server": {
+    "port": 3300,
+    "host": "localhost"
+  },
+  "telemetry": {
+    "enabled": true,
+    "logLevel": "info",
+    "metricsIntervalMs": 5000
+  },
+  "security": {
+    "enforceStrictAttestation": true,
+    "zeroPlainSecrets": true,
+    "allowedAlgorithms": ["Ed25519"]
+  },
+  "providers": {
+    "gemini": {
+      "model": "gemini-2.0-flash",
+      "apiKey": "${GEMINI_API_KEY}"
+    },
+    "neon": {
+      "connectionString": "${DATABASE_URL}"
+    }
+  }
+}

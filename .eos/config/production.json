@@ -1,0 +1,14 @@
+{
+  "server": {
+    "port": 3300,
+    "host": "0.0.0.0"
+  },
+  "telemetry": {
+    "logLevel": "warn",
+    "metricsIntervalMs": 10000
+  },
+  "security": {
+    "enforceStrictAttestation": true,
+    "zeroPlainSecrets": true
+  }
+}

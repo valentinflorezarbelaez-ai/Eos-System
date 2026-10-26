@@ -10,6 +10,7 @@ import { Requirement } from '../domain/models/Requirement.js';
 import { TaskNode } from '../domain/models/TaskNode.js';
 import { EARSValidator } from '../domain/models/EARSValidator.js';
 import { CryptoService } from '../../infrastructure/CryptoService.js';
+import { MultiAgentDecisionService } from './MultiAgentDecisionService.js';
 
 export interface InstructionIntent {
   readonly rawInstruction: string;
@@ -97,15 +98,18 @@ export class UniversalDevelopmentEngine {
       outputSnippet: specPackage.requirement.rawText
     });
 
-    // Step 6: Architecture Plan
+    // Step 6: Architecture Plan & Multi-Agent Consensus (Jev Model)
+    const decisionService = new MultiAgentDecisionService(this.cryptoService);
+    const arbitration = decisionService.arbitrate(instruction);
+
     steps.push({
       stepNumber: 6,
-      name: 'ARCHITECTURE & ADRs',
+      name: 'ARCHITECTURE & MULTI-AGENT CONSENSUS (JEV MODEL)',
       persona: AgentRoleMatrix.getRoleForPhase(6),
-      status: 'PASS',
+      status: arbitration.consensus.verdict === 'VETO_REJECTED' ? 'FAIL' : 'PASS',
       durationMs: 18,
-      detail: 'Aislamiento Hexagonal L0 verificado (0 dependencias en dominio). 2 ADRs formuladas.',
-      outputSnippet: `ADR-001: ${specPackage.architecturalDecisions[0]}`
+      detail: `Consenso Multi-Agente: ${arbitration.consensus.verdict} (${arbitration.consensus.compositeScore}/1.00). ADR ${arbitration.adr.adrId} sellado.`,
+      outputSnippet: `VERDICT: ${arbitration.consensus.verdict} · ${arbitration.consensus.approvalPercentage}% Aprobación · ${arbitration.consensus.dissentCount} Disensos`
     });
 
     // Step 8-9: Specification Approval & Level 2 Gate
@@ -197,15 +201,19 @@ export class UniversalDevelopmentEngine {
     const dbKeywords = ['base de datos', 'database', 'sql', 'postgres', 'neon', 'tabla', 'schema', 'esquema', 'migración', 'migration'];
     const authKeywords = ['auth', 'autenticación', 'autenticacion', 'login', 'token', 'jwt', 'passkey', 'sesión', 'permiso'];
     const securityKeywords = ['seguridad', 'cripto', 'cifrado', 'crypto', 'acid', 'transacción', 'secreto', 'secret'];
+    const mediaKeywords = ['audiovisual', 'video', 'media', 'ageac', 'diseño', 'diseno', 'color', 'colores', 'estetica', 'estética', 'acústica', 'acustica', 'dsp', 'sonido', 'cine', 'cinematografía'];
+    const estimationKeywords = ['estimación', 'estimacion', 'esfuerzo', 'coste', 'costo', 'presupuesto', 'rag', 'pert', 'wbs', 'quote', 'tarifa', 'hours', 'horas'];
 
     const hasDb = dbKeywords.some(k => lower.includes(k));
     const hasAuth = authKeywords.some(k => lower.includes(k));
     const hasSec = securityKeywords.some(k => lower.includes(k));
+    const hasMedia = mediaKeywords.some(k => lower.includes(k));
+    const hasEstimation = estimationKeywords.some(k => lower.includes(k));
 
-    const matched = [...dbKeywords, ...authKeywords, ...securityKeywords].filter(k => lower.includes(k));
+    const matched = [...dbKeywords, ...authKeywords, ...securityKeywords, ...mediaKeywords, ...estimationKeywords].filter(k => lower.includes(k));
     const isHeavy = hasDb || hasAuth || hasSec || instruction.length > 120;
 
-    const score = Math.min(1.0, 0.2 + (matched.length * 0.2) + (isHeavy ? 0.3 : 0));
+    const score = Math.min(1.0, 0.2 + (matched.length * 0.12) + (isHeavy ? 0.3 : 0) + (hasMedia ? 0.15 : 0) + (hasEstimation ? 0.15 : 0));
 
     return {
       rawInstruction: instruction,
@@ -228,7 +236,16 @@ export class UniversalDevelopmentEngine {
     let pattern: EARSPattern = 'EVENT_DRIVEN';
     let statement = '';
 
-    if (intent.track === 'HEAVY_TRACK') {
+    const isMedia = intent.domainKeywords.some(k => ['audiovisual', 'video', 'media', 'ageac', 'diseño', 'color', 'colores', 'estetica', 'acústica'].includes(k));
+    const isEstimation = intent.domainKeywords.some(k => ['estimación', 'estimacion', 'esfuerzo', 'coste', 'costo', 'presupuesto', 'rag', 'pert', 'wbs', 'quote'].includes(k));
+
+    if (isEstimation) {
+      pattern = 'EVENT_DRIVEN';
+      statement = `WHEN the operator requests "${cleanPrompt}", THE SYSTEM SHALL execute the RAG-driven WBS decomposition, per-task parallel retrieval, and PERT financial costing pipeline.`;
+    } else if (isMedia) {
+      pattern = 'EVENT_DRIVEN';
+      statement = `WHEN the operator requests "${cleanPrompt}", THE SYSTEM SHALL synthesize an AGEAC-grade audiovisual blueprint with 432 Hz acoustic tuning, sacred color alchemy, and golden ratio framing.`;
+    } else if (intent.track === 'HEAVY_TRACK') {
       pattern = 'EVENT_DRIVEN';
       statement = `WHEN the user requests "${cleanPrompt}", THE SYSTEM SHALL execute the heavy transaction pipeline with strict invariant validation and transactional persistence.`;
     } else {
