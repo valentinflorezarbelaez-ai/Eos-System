@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
   "version": "46.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v45.0 (Universal Product Foundry Engine, Citadel HFT IPC Daemon, SpaceX Zero-Copy Mechanical Sympathy, Netflix Autonomous Chaos Runner, Amazon Dynamo Consistent Hashing & Planetary Consensus)",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v46.0 (21-Step Autonomous Sovereign Loop, Palantir Ontology Cyclotron, NIST Post-Quantum Cryptography ML-KEM-768 Lattice Shield & Autonomous Meta-Cognitive Synapse)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -98,7 +98,11 @@
     "risk": "node bin/eos.mjs risk",
     "chain": "node bin/eos.mjs chain",
     "test:loop": "node --test test/eosSovereignLoop.test.mjs",
-    "loop": "node bin/eos.mjs loop"
+    "loop": "node bin/eos.mjs loop",
+    "test:transcendental": "node --test test/eosOmegaTranscendentalApex.test.mjs",
+    "ontology": "node bin/eos.mjs ontology",
+    "quantum:seal": "node bin/eos.mjs quantum:seal",
+    "synapse": "node bin/eos.mjs synapse"
   },
   "engines": {
     "node": ">=22.0.0"

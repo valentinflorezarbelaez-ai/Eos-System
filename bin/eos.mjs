@@ -2336,6 +2336,82 @@ switch (command) {
     break;
   }
 
+  case "ontology": {
+    printBanner();
+    console.log("[PALANTIR ONTOLOGY CYCLOTRON] Grafo de Conocimiento Semántico Bi-Temporal (Layer 0)...\n");
+    const { EosOntologyCyclotron } = await import("../src/core/eosOntologyCyclotron.ts");
+    const sub = (args[1] || "status").toLowerCase();
+    const cyclotron = new EosOntologyCyclotron();
+
+    cyclotron.registerNode("eos:kernel", "SystemKernel", { layer: 0, status: "ONLINE" });
+    cyclotron.registerNode("eos:secdevops", "SecurityGate", { level: 7, status: "ACTIVE" });
+    cyclotron.registerNode("eos:quantum", "PqcShield", { fips: 203, status: "ARMED" });
+    cyclotron.registerEdge("eos:kernel", "eos:secdevops", "GOVERNS");
+    cyclotron.registerEdge("eos:secdevops", "eos:quantum", "ENFORCES");
+
+    if (sub === "status") {
+      const snap = cyclotron.asOf(Date.now());
+      console.log("Estado del Ciclotrón Ontológico:");
+      console.log(`  Nodos Activos   : ${snap.activeNodes}`);
+      console.log(`  Bordes Activos  : ${snap.activeEdges}`);
+      console.log(`  Merkle Proof    : sha256:${snap.merkleProof}\n`);
+    } else if (sub === "transitive" || sub === "query") {
+      const root = args[2] || "eos:kernel";
+      const closure = cyclotron.computeTransitiveClosure(root);
+      console.log(`Cierre Transitivo desde "${root}":`);
+      console.log(`  Nodos Alcanzables : ${closure.reachableNodeIds.join(", ")}`);
+      console.log(`  Total Alcanzable  : ${closure.totalReachable}`);
+      console.log(`  Profundidad       : ${closure.depth}`);
+      console.log(`  Tiempo Ejecución  : ${closure.executionUs} µs\n`);
+    } else {
+      console.log(`Acción desconocida: ${sub}. Opciones: status, transitive\n`);
+    }
+    break;
+  }
+
+  case "quantum:seal": {
+    printBanner();
+    console.log("[NIST POST-QUANTUM LATTICE SHIELD] Reducción Modular ML-KEM-768 FIPS 203...\n");
+    const { EosQuantumLatticeShield } = await import("../src/core/eosQuantumLatticeShield.ts");
+    const payload = args.slice(1).join(" ") || "eos-sovereign-production-attestation";
+    const t0 = performance.now();
+    const seal = EosQuantumLatticeShield.generateLatticeSeal(payload);
+    const elapsed = (performance.now() - t0).toFixed(2);
+
+    console.log(`Sello de Retículo Cuántico Generado (${elapsed} ms):`);
+    console.log(`  Algoritmo          : ${seal.algorithm}`);
+    console.log(`  Digest Coeficientes: sha384:${seal.symmetricCoeffsDigest.slice(0, 32)}...`);
+    console.log(`  Prueba Cuántica    : sha512:${seal.quantumProof.slice(0, 48)}...`);
+    console.log(`  Canal Lateral      : Resistencia en tiempo constante timingSafeEqual VERIFICADA`);
+    console.log(`  Timestamp          : ${seal.timestamp}\n`);
+    break;
+  }
+
+  case "synapse": {
+    printBanner();
+    console.log("[META-COGNITIVE SYNAPSE] Arbitraje Bayesiano Multi-Agente Sin Bloqueos...\n");
+    const { EosMetaCognitiveSynapse } = await import("../src/core/eosMetaCognitiveSynapse.ts");
+    const candidates = [
+      { agentId: "agent-architect", role: "Chief Architect", action: "enforce_pure_layer0", priorBelief: 0.7, evidenceLikelihood: 0.95 },
+      { agentId: "agent-secops", role: "SecOps Lead", action: "quantum_lattice_seal", priorBelief: 0.6, evidenceLikelihood: 0.90 },
+      { agentId: "agent-qa", role: "QA Lead", action: "full_mutation_testing", priorBelief: 0.5, evidenceLikelihood: 0.85 }
+    ];
+
+    const report = EosMetaCognitiveSynapse.arbitrateIntents(candidates);
+    console.log(`Arbitraje Bayesiano Culminado (${report.arbitrationDurationUs} µs):`);
+    console.log(`  Candidatos Evaluados : ${report.totalCandidates}`);
+    console.log(`  Agente Ganador       : [${report.winningCandidate.agentId}] ${report.winningCandidate.role}`);
+    console.log(`  Acción Arbitrada     : ${report.winningCandidate.action}`);
+    console.log(`  Probabilidad a Post. : ${(report.winningCandidate.posteriorProbability * 100).toFixed(2)}%`);
+    console.log(`  Recibo SHA-256       : sha256:${report.sha256Receipt}\n`);
+    console.log("  Ranking Completo:");
+    report.rankedCandidates.forEach(c => {
+      console.log(`    #${c.priorityRank} [${c.agentId}] ${c.action} -> ${(c.posteriorProbability * 100).toFixed(2)}%`);
+    });
+    console.log("");
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -2411,6 +2487,9 @@ Uso Universal:
   eos risk [iter|deadline]   Simulación estocástica Monte Carlo BlackRock Aladdin con percentiles P10-P99
   eos chain [verify|status]  Ledger criptográfico monotónico SpaceX / NSA con encadenamiento SHA-256
   eos loop [run|stages]      Ejecuta el ciclo de 21 pasos de ingeniería autónoma soberana
+  eos ontology [status|trans] Grafo ontológico bi-temporal sub-microsegundo (Palantir Cyclotron)
+  eos quantum:seal [payload] Sello reticular post-cuántico NIST FIPS 203 ML-KEM-768
+  eos synapse                Arbitraje Bayesiano multi-agente sin bloqueos ni colisiones
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

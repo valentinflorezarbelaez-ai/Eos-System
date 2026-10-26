@@ -334,6 +334,18 @@ import {
   SOVEREIGN_21_STAGES
 } from "../core/eosSovereignLoop.ts";
 
+import {
+  EosOntologyCyclotron
+} from "../core/eosOntologyCyclotron.ts";
+
+import {
+  EosQuantumLatticeShield
+} from "../core/eosQuantumLatticeShield.ts";
+
+import {
+  EosMetaCognitiveSynapse
+} from "../core/eosMetaCognitiveSynapse.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -1659,6 +1671,44 @@ export class EosMcpServer {
                     type: "object",
                     properties: {}
                   }
+                },
+                {
+                  name: "eos_ontology_query",
+                  description: "Palantir Bi-Temporal Ontology Cyclotron: sub-microsecond graph reachability, node status, and historical asOf(t) state.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", description: "Query action ('status', 'transitive', 'asOf')" },
+                      startId: { type: "string", description: "Root entity ID for transitive closure" },
+                      predicate: { type: "string", description: "Edge predicate filter" },
+                      timestamp: { type: "number", description: "Target historical timestamp for asOf(t)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_quantum_lattice_seal",
+                  description: "Generates NIST FIPS 203 ML-KEM-768 quantum-resistant lattice attestation seal with centered binomial polynomial reduction.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      payload: { type: "string", description: "Payload or attestation proof to seal" }
+                    },
+                    required: ["payload"]
+                  }
+                },
+                {
+                  name: "eos_synapse_arbitrate",
+                  description: "Bayesian multi-agent intent arbitration: normalizes posterior beliefs P(H|E) and resolves priority ranking with zero deadlocks.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      candidates: {
+                        type: "array",
+                        description: "List of agent intent candidates with priorBelief and evidenceLikelihood"
+                      }
+                    },
+                    required: ["candidates"]
+                  }
                 }
               ]
             }
@@ -2906,6 +2956,37 @@ export class EosMcpServer {
           totalStages: SOVEREIGN_21_STAGES.length,
           stages: SOVEREIGN_21_STAGES
         };
+      }
+
+      case "eos_ontology_query": {
+        const cyclotron = new EosOntologyCyclotron();
+        const action = String(args.action || "status");
+        if (action === "status") {
+          return {
+            status: "ONTOLOGY_ACTIVE",
+            timestamp: Date.now(),
+            snapshot: cyclotron.asOf(Date.now())
+          };
+        }
+        if (action === "transitive") {
+          const startId = String(args.startId || "root");
+          return cyclotron.computeTransitiveClosure(startId, args.predicate, args.maxDepth);
+        }
+        if (action === "asOf") {
+          const ts = typeof args.timestamp === "number" ? args.timestamp : Date.now();
+          return cyclotron.asOf(ts);
+        }
+        return { status: "ONTOLOGY_ACTIVE", action };
+      }
+
+      case "eos_quantum_lattice_seal": {
+        const payload = String(args.payload || "eos-lattice-attestation");
+        return EosQuantumLatticeShield.generateLatticeSeal(payload);
+      }
+
+      case "eos_synapse_arbitrate": {
+        const candidates = Array.isArray(args.candidates) ? args.candidates : [];
+        return EosMetaCognitiveSynapse.arbitrateIntents(candidates);
       }
 
       default:
