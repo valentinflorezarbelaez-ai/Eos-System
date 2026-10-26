@@ -6,7 +6,7 @@
  * Zero external runtime dependencies.
  */
 
-const CACHE_VERSION = 'v33-0-offline-apex';
+const CACHE_VERSION = 'v34-0-offline-wasm';
 const STATIC_CACHE = `eos-static-${CACHE_VERSION}`;
 const API_CACHE = `eos-api-${CACHE_VERSION}`;
 
@@ -15,6 +15,7 @@ const PRECACHE_ASSETS = [
   "/index.html",
   "/css/eos.css",
   "/js/eos.js",
+  "/js/wasm_exec.js",
   "/css/eos.css?v=12.0",
   "/js/eos.js?v=12.0",
   "/favicon.svg",

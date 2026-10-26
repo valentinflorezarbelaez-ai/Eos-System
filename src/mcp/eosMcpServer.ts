@@ -162,6 +162,17 @@ import {
   EosApexModelRouter
 } from "../core/eosApexModelRouter.ts";
 
+import {
+  calculateBlastRadius,
+  getFleetNodes,
+  getTopologyMetrics
+} from "../core/eosFleetTopology.ts";
+
+import {
+  runBenchmark,
+  compressContext as compressWasmContext
+} from "../core/eosWasmEngine.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;

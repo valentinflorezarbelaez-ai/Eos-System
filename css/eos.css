@@ -1575,3 +1575,88 @@ body {
   transition: width 0.4s ease;
 }
 
+/* ==========================================================================
+   SOVEREIGN FLEET 3D TOPOLOGY GRAPH & WASM CANVAS (SPEC-026, CHANGE-019)
+   ========================================================================== */
+.topology-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background: rgba(6, 11, 25, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.topology-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 440px;
+  background: radial-gradient(circle at center, rgba(14, 27, 54, 0.8) 0%, rgba(2, 6, 18, 0.98) 100%);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-subtle);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  contain-intrinsic-size: auto 440px;
+  content-visibility: auto;
+}
+
+#eos-fleet-topology-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+  touch-action: none;
+}
+
+#eos-fleet-topology-canvas:active {
+  cursor: grabbing;
+}
+
+.topology-hud {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(4, 9, 24, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-light);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.topology-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.topology-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.topology-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+

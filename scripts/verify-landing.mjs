@@ -140,6 +140,13 @@ assert.ok(fs.existsSync(path.join(root, "api/health.js")), "Missing api/health.j
 assert.ok(fs.existsSync(path.join(root, "api/graph.js")), "Missing api/graph.js serverless semantic graph endpoint");
 assert.ok(fs.existsSync(path.join(root, "api/compile.js")), "Missing api/compile.js serverless prompt amplifier & compiler endpoint");
 assert.ok(html.includes('id="tier1-control-nexus"'), "Missing #tier1-control-nexus Tier 1 section");
+assert.ok(html.includes('id="sovereign-fleet-topology"'), "Missing #sovereign-fleet-topology 3D Topology section");
+assert.ok(html.includes('id="eos-fleet-topology-canvas"'), "Missing #eos-fleet-topology-canvas 3D canvas");
+assert.ok(fs.existsSync(path.join(root, "assets/eos_apex.wasm")), "Missing assets/eos_apex.wasm compiled WebAssembly kernel");
+assert.ok(fs.existsSync(path.join(root, "js/wasm_exec.js")), "Missing js/wasm_exec.js WebAssembly bridge");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosFleetTopology.ts")), "Missing src/core/eosFleetTopology.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosWasmEngine.ts")), "Missing src/core/eosWasmEngine.ts");
+assert.ok(fs.existsSync(path.join(root, "test/eosWasmTopology.test.mjs")), "Missing test/eosWasmTopology.test.mjs");
 assert.ok(html.includes('id="panel-nexus-blast"'), "Missing #panel-nexus-blast");
 assert.ok(html.includes('id="panel-nexus-prometheus"'), "Missing #panel-nexus-prometheus");
 assert.ok(html.includes('id="panel-nexus-turbo"'), "Missing #panel-nexus-turbo");

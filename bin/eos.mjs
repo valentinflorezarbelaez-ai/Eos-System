@@ -1244,6 +1244,67 @@ switch (command) {
     break;
   }
 
+  case "topology":
+  case "wasm": {
+    printBanner();
+    const action = (args[1] || "status").toLowerCase();
+    const { getFleetNodes, calculateBlastRadius, getTopologyMetrics } = await import("../src/core/eosFleetTopology.ts");
+    const { runBenchmark, compressContext, estimateTokens } = await import("../src/core/eosWasmEngine.ts");
+
+    if (action === "bench" || action === "benchmark") {
+      const it = parseInt(args[2] || "100000", 10);
+      console.log(`[EOS WASM] Ejecutando Benchmark de Cómputo Cliente / Runtime (${it.toLocaleString()} ciclos)...\n`);
+      const bench = runBenchmark(it);
+      console.log(`Motor de Ejecución   : ${bench.engine}`);
+      console.log(`Iteraciones          : ${bench.iterations.toLocaleString()}`);
+      console.log(`Tokens Procesados    : ${bench.tokensAcc.toLocaleString()} tokens`);
+      console.log(`Tiempo Transcurrido  : ${bench.elapsedMs} ms`);
+      console.log(`Throughput Medido    : ${bench.tokensPerSec.toLocaleString()} tokens / segundo`);
+      console.log(`Presión de Memoria   : ${bench.allocations}\n`);
+    } else if (action === "compress") {
+      const targetFile = args[2] || "src/core/eosFleetTopology.ts";
+      const full = path.resolve(root, targetFile);
+      if (!fs.existsSync(full)) {
+        console.error(`Error: Archivo no encontrado: ${targetFile}`);
+        process.exit(1);
+      }
+      const raw = fs.readFileSync(full, "utf8");
+      const res = compressContext(raw);
+      console.log(`[EOS WASM] Compresor Dual-Mode AST Context Squeezer:\n`);
+      console.log(`Archivo Origen       : ${targetFile}`);
+      console.log(`Motor Activo         : ${res.engine}`);
+      console.log(`Tokens Originales    : ~${estimateTokens(raw)}`);
+      console.log(`Tokens Comprimidos   : ~${res.tokens}`);
+      console.log(`Ahorro de Tokens     : ${res.savingsPct}%`);
+      console.log(`Tiempo de Ejecución  : ${res.executionNs} ns\n`);
+    } else if (action === "blast") {
+      const targetNode = args[2] || "eos-core";
+      const blast = calculateBlastRadius(targetNode);
+      console.log(`[EOS TOPOLOGY] Cálculo Determinista de Radio de Explosión (Blast Radius):\n`);
+      console.log(`Nodo Evaluado        : ${blast.nodeId} (${blast.name})`);
+      console.log(`Salidas Directas     : ${blast.directDownstream.join(", ") || "Ninguna"}`);
+      console.log(`Nodos Afectados      : ${blast.blastRadiusCount} de ${blast.totalSystemNodes} (${(blast.blastRadiusRatio * 100).toFixed(1)}%)`);
+      console.log(`Lista Transitiva     : ${blast.transitiveBlastRadius.join(", ") || "Aislado"}`);
+      console.log(`Latencia Propagación : ${blast.estimatedLatencyUs} µs\n`);
+    } else {
+      const metrics = getTopologyMetrics();
+      const nodes = getFleetNodes();
+      console.log(`[EOS TOPOLOGY] Topología Soberana 3D — Estado del Grafo (v34.0):\n`);
+      console.log(`Total Nodos          : ${metrics.totalNodes} nodos`);
+      console.log(`Anillo 1 (Plataformas): ${metrics.ring1Count} plataformas`);
+      console.log(`Anillo 2 (Core L0)   : ${metrics.ring2Count} motores`);
+      console.log(`Anillo 3 (Runtime)   : ${metrics.ring3Count} kernels`);
+      console.log(`Total Aristas Deps   : ${metrics.totalEdges} conexiones`);
+      console.log(`Latencia Promedio    : ${metrics.averageLatencyUs} µs\n`);
+      console.log(`Nodos Soberanos Registrados:`);
+      nodes.forEach(n => {
+        console.log(`  ↳ [Anillo ${n.ring}] ${n.id.padEnd(16)} | ${n.name.padEnd(36)} | Latencia: ${n.latencyUs} µs`);
+      });
+      console.log("");
+    }
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
