@@ -14,6 +14,9 @@
  *      exact pushed commit SHA, then probe the root page for HTTP 200.
  */
 import { execSync } from "node:child_process";
+import dns from "node:dns";
+
+dns.setDefaultResultOrder("ipv4first");
 
 const PROD = "https://eos-system-ten.vercel.app";
 const message = process.argv.slice(2).join(" ").trim() || "chore(eos): verified continuous delivery";
