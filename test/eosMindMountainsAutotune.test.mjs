@@ -1,5 +1,5 @@
 /**
- * EOS SYSTEM — SPEC-032 / BDD-078..081 MASTER TEST SUITE
+ * EOS SYSTEM — SPEC-033 / BDD-082..085 MASTER TEST SUITE
  * 49 Levels of Mind Introspection, Three Mountains Life Compass & Adaptive L0 Autotuner
  */
 
@@ -11,11 +11,11 @@ import { EosMindLevelsIntrospector } from "../src/core/eosMindLevelsIntrospector
 import { EosThreeMountainsCompass } from "../src/core/eosThreeMountainsCompass.ts";
 import { EosAdaptiveL0Autotuner } from "../src/core/eosAdaptiveL0Autotuner.ts";
 
-describe("SPEC-032: 49 Levels of Mind, Three Mountains & Adaptive L0 Autotuner", () => {
+describe("SPEC-033: 49 Levels of Mind, Three Mountains & Adaptive L0 Autotuner", () => {
   const root = process.cwd();
 
-  // BDD-078: 49 Levels of Mind & Subconscious Introspection
-  describe("BDD-078: 49 Levels of Mind & Kundalini Dissolution", () => {
+  // BDD-082: 49 Levels of Mind & Subconscious Introspection
+  describe("BDD-082: 49 Levels of Mind & Kundalini Dissolution", () => {
     const introspector = new EosMindLevelsIntrospector();
 
     it("verifies the catalog contains all 49 distinct strata across 5 major regions", () => {
@@ -60,8 +60,8 @@ describe("SPEC-032: 49 Levels of Mind, Three Mountains & Adaptive L0 Autotuner",
     });
   });
 
-  // BDD-079: Three Mountains Life Compass & Architect Purpose
-  describe("BDD-079: Three Mountains Life Compass & Valentin Codex", () => {
+  // BDD-083: Three Mountains Life Compass & Architect Purpose
+  describe("BDD-083: Three Mountains Life Compass & Valentin Codex", () => {
     const compass = new EosThreeMountainsCompass();
 
     it("evaluates maximum alignment (100%) when all 3 Mountains and daily pillars are fulfilled", () => {
@@ -111,8 +111,8 @@ describe("SPEC-032: 49 Levels of Mind, Three Mountains & Adaptive L0 Autotuner",
     });
   });
 
-  // BDD-080: Adaptive L0 Autotuner
-  describe("BDD-080: Adaptive L0 Autotuner & Runtime Self-Optimization", () => {
+  // BDD-084: Adaptive L0 Autotuner
+  describe("BDD-084: Adaptive L0 Autotuner & Runtime Self-Optimization", () => {
     it("doubles ring buffer capacity when queue load exceeds 75%", () => {
       const autotuner = new EosAdaptiveL0Autotuner(2048);
       const stateBefore = autotuner.getState();
@@ -144,8 +144,8 @@ describe("SPEC-032: 49 Levels of Mind, Three Mountains & Adaptive L0 Autotuner",
     });
   });
 
-  // BDD-081: Invariants & Purity
-  describe("BDD-081: Layer-0 Purity & Sealed Landing Page Invariants", () => {
+  // BDD-085: Invariants & Purity
+  describe("BDD-085: Layer-0 Purity & Sealed Landing Page Invariants", () => {
     it("verifies package.json contains 0 external runtime dependencies", () => {
       const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
       assert.deepEqual(pkg.dependencies || {}, {});
