@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v18.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v37.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -1562,6 +1562,14 @@ Uso Universal:
   eos warp                   Ejecuta el planificador CUDA SIMT 32-hilos y Tensor MMA (0 B/op)
   eos apex                   Ejecuta la síntesis de cúspide Samael + IBM Sysplex + NVIDIA
   eos disruptor [eventos]    Ejecuta el ring buffer LMAX Disruptor (>10M ops/s) y escaneo de bytes
+  eos soul [directiva]       Evalúa directiva frente al Plan Maestro de Valentín Flórez Arbeláez
+  eos introspect             Auto-estudio recursivo del código y síntesis de RFCs de auto-evolución
+  eos shield                 Auditoría de escudo militar, invariantes seL4 y purga de entropía cero
+  eos datalog [modulo]       Análisis deductivo de radio de impacto en punto fijo (Google Piper / Mangle)
+  eos mutate [archivo]       Sabotaje de código automatizado en AST (Testing the Tests)
+  eos sim [semilla]          Hipervisor de simulación determinista de viaje en el tiempo (reproducible bit a bit)
+  eos schedule               Planificador cooperativo a 120Hz (<8.33ms) y aritmética branchless constante
+  eos mcp [--sse|status]     Servidor MCP bi-direccional en vivo para Cursor y Google Antigravity
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:
