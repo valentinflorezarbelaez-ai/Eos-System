@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "42.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v42.0 (Google Spanner TrueTime Linearizability, Planetary Raft Consensus, Netflix Vegas Adaptive Concurrency, NSA CNSA 2.0 AES-256-GCM, Red/Black Zero-Trust Isolation & 49 Levels of Mind Introspection)",
+  "version": "43.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v43.0 (Amazon Dynamo Consistent Hashing, Anti-Entropy Merkle Sync, Cloudflare Microsecond Rate Limiter, Google Spanner TrueTime, Planetary Consensus & NSA Zero-Trust Isolation)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -51,6 +51,7 @@
     "test:tier0": "node --test test/eosTierZeroApexPerfection.test.mjs",
     "test:opt": "node --test test/eosBigTechHyperOptimization.test.mjs",
     "test:consensus": "node --test test/eosPlanetaryConsensusAdaptiveConcurrency.test.mjs",
+    "test:ring": "node --test test/eosConsistentHashingRateLimiter.test.mjs",
     "optimize:v8": "node bin/eos.mjs optimize:v8",
     "bench:nano": "node bin/eos.mjs bench:nano",
     "daemon": "node bin/eos.mjs daemon",

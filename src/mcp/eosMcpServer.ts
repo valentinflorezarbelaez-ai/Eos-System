@@ -288,6 +288,18 @@ import {
   EosAdaptiveConcurrencyLimiter
 } from "../core/eosAdaptiveConcurrencyLimiter.ts";
 
+import {
+  EosConsistentHashRing
+} from "../core/eosConsistentHashRing.ts";
+
+import {
+  EosAntiEntropyMerkleSync
+} from "../core/eosAntiEntropyMerkleSync.ts";
+
+import {
+  EosTokenBucketRateLimiter
+} from "../core/eosTokenBucketRateLimiter.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -1413,6 +1425,40 @@ export class EosMcpServer {
                     type: "object",
                     properties: {}
                   }
+                },
+                {
+                  name: "eos_hash_ring_lookup",
+                  description: "Performs O(log(N*V)) Amazon Dynamo consistent hash ring lookup and multi-DC preference list calculation.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      key: { type: "string", description: "Partition key to route" },
+                      nodes: { type: "array", items: { type: "string" }, description: "Optional cluster nodes list" },
+                      replicas: { type: "number", description: "Replication factor R (default: 3)" }
+                    },
+                    required: ["key"]
+                  }
+                },
+                {
+                  name: "eos_merkle_sync_diff",
+                  description: "Compares hierarchical Dynamo Merkle trees to detect out-of-sync key ranges in O(log K).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
+                  }
+                },
+                {
+                  name: "eos_token_bucket_check",
+                  description: "Evaluates Cloudflare-grade nanosecond monotonic token-bucket edge rate limiting.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      clientId: { type: "string", description: "Client/tenant identifier" },
+                      cost: { type: "number", description: "Tokens requested (default 1)" },
+                      capacity: { type: "number", description: "Burst capacity (default 10)" },
+                      refillPerSecond: { type: "number", description: "Refill rate (default 20)" }
+                    }
+                  }
                 }
               ]
             }
@@ -2367,6 +2413,53 @@ export class EosMcpServer {
           metrics: limiter.getMetrics(),
           prometheusExposition: limiter.formatPrometheusMetrics()
         };
+      }
+
+      case "eos_hash_ring_lookup": {
+        onProgress?.(30, 100, "Calculating consistent hash ring partition & preference list");
+        const nodes = Array.isArray(args.nodes) && args.nodes.length > 0 ? args.nodes : ["node-us-east", "node-eu-west", "node-sa-east"];
+        const ring = new EosConsistentHashRing(nodes, 64);
+        const key = String(args.key || "default-key");
+        const r = typeof args.replicas === "number" ? args.replicas : 3;
+        const primary = ring.getNode(key);
+        const pref = ring.getPreferenceList(key, r);
+        onProgress?.(100, 100, "Routing partition calculated");
+        return {
+          key,
+          primaryNode: primary,
+          preferenceList: pref,
+          ringTotalVnodes: ring.getTotalVnodeCount()
+        };
+      }
+
+      case "eos_merkle_sync_diff": {
+        onProgress?.(30, 100, "Constructing replica Merkle trees for anti-entropy sync");
+        const repA = new EosAntiEntropyMerkleSync(16);
+        const repB = new EosAntiEntropyMerkleSync(16);
+        for (let i = 0; i < 30; i++) {
+          repA.put(`k-${i}`, `v-${i}`);
+          repB.put(`k-${i}`, `v-${i}`);
+        }
+        if (args.injectDrift !== false) {
+          repB.put("k-12", "MUTATED_VALUE");
+        }
+        const treeA = repA.buildMerkleTree();
+        const treeB = repB.buildMerkleTree();
+        const diff = EosAntiEntropyMerkleSync.compareTrees(treeA, treeB);
+        onProgress?.(100, 100, "Anti-entropy comparison completed");
+        return diff;
+      }
+
+      case "eos_token_bucket_check": {
+        onProgress?.(30, 100, "Evaluating microsecond token-bucket consumption");
+        const cap = typeof args.capacity === "number" ? args.capacity : 10;
+        const refill = typeof args.refillPerSecond === "number" ? args.refillPerSecond : 20;
+        const limiter = new EosTokenBucketRateLimiter({ capacity: cap, refillPerSecond: refill });
+        const clientId = String(args.clientId || "global-client");
+        const cost = typeof args.cost === "number" ? args.cost : 1;
+        const decision = limiter.consume(clientId, cost);
+        onProgress?.(100, 100, "Token decision evaluated");
+        return decision;
       }
 
       default:

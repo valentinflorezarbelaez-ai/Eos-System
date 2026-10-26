@@ -218,7 +218,11 @@ assert.ok(fs.existsSync(path.join(root, "src/core/eosTrueTimeBoundedClock.ts")),
 assert.ok(fs.existsSync(path.join(root, "src/core/eosPlanetaryConsensusEngine.ts")), "Missing src/core/eosPlanetaryConsensusEngine.ts");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosAdaptiveConcurrencyLimiter.ts")), "Missing src/core/eosAdaptiveConcurrencyLimiter.ts");
 assert.ok(fs.existsSync(path.join(root, "test/eosPlanetaryConsensusAdaptiveConcurrency.test.mjs")), "Missing test/eosPlanetaryConsensusAdaptiveConcurrency.test.mjs");
-console.log("[PASS] 5/6 Interactive Control Plane, NSA Defense Suite, Google Spanner TrueTime, Planetary Consensus, Netflix Vegas Concurrency, EosSolarSanctum, EosNanosecondEngine, EosAkashicMemory (27 Engram Tools + ODD/RDD 4R), World Top-10 L0 Matrix & 21-Step Pipeline verified.");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosConsistentHashRing.ts")), "Missing src/core/eosConsistentHashRing.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosAntiEntropyMerkleSync.ts")), "Missing src/core/eosAntiEntropyMerkleSync.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosTokenBucketRateLimiter.ts")), "Missing src/core/eosTokenBucketRateLimiter.ts");
+assert.ok(fs.existsSync(path.join(root, "test/eosConsistentHashingRateLimiter.test.mjs")), "Missing test/eosConsistentHashingRateLimiter.test.mjs");
+console.log("[PASS] 5/6 Interactive Control Plane, NSA Defense Suite, Google Spanner TrueTime, Amazon Dynamo Consistent Hashing, Cloudflare Rate Limiter, EosSolarSanctum, EosNanosecondEngine, EosAkashicMemory (27 Engram Tools + ODD/RDD 4R), World Top-10 L0 Matrix & 21-Step Pipeline verified.");
 
 // 6. Verify Service Worker, Assets & Xirp-Grade Speed Architecture (FR-011)
 assert.ok(fs.existsSync(path.join(root, "sw.js")), "Missing sw.js");

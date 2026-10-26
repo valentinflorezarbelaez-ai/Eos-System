@@ -3,8 +3,8 @@
   "epistemicState": "VERIFIED",
   "stagesPassed": "7/7",
   "exitCode": 0,
-  "sbomMerkleRoot": "sha256:9dcb3444a337354c63be9a64b9098833ad221c1bdf2ffcf30abc677ccf21e39c",
-  "artifactCount": 312,
+  "sbomMerkleRoot": "sha256:fd9270dc86f88c5804d0a5c57c894a85ac58998ca0d5a839aec7ba36ae282adb",
+  "artifactCount": 321,
   "serverlessEndpointsVerified": [
     "api/teurgia.js",
     "api/compile.js",

@@ -161,7 +161,8 @@ const testFiles = [
   "test/eosBigTechHyperOptimization.test.mjs",
   "test/eosMindMountainsAutotune.test.mjs",
   "test/eosNsaZeroTrustDefense.test.mjs",
-  "test/eosPlanetaryConsensusAdaptiveConcurrency.test.mjs"
+  "test/eosPlanetaryConsensusAdaptiveConcurrency.test.mjs",
+  "test/eosConsistentHashingRateLimiter.test.mjs"
 ];
 
 const isPts = process.argv.includes("--pts");

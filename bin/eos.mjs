@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v42.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v43.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -2002,6 +2002,60 @@ switch (command) {
     console.log(`RTT Suavizado (EWMA) : ${m.rttSmoothedMs} ms`);
     console.log(`Cola Estimada (Vegas): ${m.estimatedQueueSize}`);
     console.log(`Total Descartados    : ${m.totalShed} (Proactive Load-Shedding)\n`);
+    break;
+  }
+
+  case "hashring": {
+    printBanner();
+    console.log("[EOS HASHRING] Amazon Dynamo Consistent Hash Ring & Vnodes (O(log M))...\n");
+    const { EosConsistentHashRing } = await import("../src/core/eosConsistentHashRing.ts");
+    const ring = new EosConsistentHashRing(["node-us-east", "node-eu-west", "node-ap-southeast"], 64);
+    const key = args[1] || "user:valentin:portfolio";
+    const primary = ring.getNode(key);
+    const pref = ring.getPreferenceList(key, 3);
+    console.log(`Clave Solicitada     : ${key}`);
+    console.log(`Nodo Primario (Owner): ${primary}`);
+    console.log(`Lista de Preferencia : [${pref.join(", ")}] (Replicación Multi-DC)`);
+    console.log(`Nodos Virtuales (V)  : 64 por nodo (Total: ${ring.getTotalVnodeCount()})\n`);
+    break;
+  }
+
+  case "antientropy": {
+    printBanner();
+    console.log("[EOS ANTI-ENTROPY] Dynamo Merkle Tree State Synchronization...\n");
+    const { EosAntiEntropyMerkleSync } = await import("../src/core/eosAntiEntropyMerkleSync.ts");
+    const repA = new EosAntiEntropyMerkleSync(16);
+    const repB = new EosAntiEntropyMerkleSync(16);
+    for (let i = 0; i < 20; i++) {
+      repA.put(`fact-${i}`, `state-${i}`);
+      repB.put(`fact-${i}`, `state-${i}`);
+    }
+    // Inject delta in replica B
+    repB.put("fact-7", "MUTATED_STATE_DELTA");
+    const treeA = repA.buildMerkleTree();
+    const treeB = repB.buildMerkleTree();
+    const diff = EosAntiEntropyMerkleSync.compareTrees(treeA, treeB);
+    console.log(`Raíz Réplica A       : ${treeA.hash.slice(0, 32)}...`);
+    console.log(`Raíz Réplica B       : ${treeB.hash.slice(0, 32)}...`);
+    console.log(`Sincronizadas        : ${diff.inSync ? "SÍ" : "NO (Deriva Detectada)"}`);
+    console.log(`Rangos Divergentes   : ${diff.divergentRanges.length} cubetas aisladas`);
+    console.log(`Comparaciones O(log): ${diff.comparisonsCount} pasos de árbol\n`);
+    break;
+  }
+
+  case "ratelimit": {
+    printBanner();
+    console.log("[EOS RATELIMIT] Limitador de Tasa Token-Bucket Cloudflare a Escala Edge...\n");
+    const { EosTokenBucketRateLimiter } = await import("../src/core/eosTokenBucketRateLimiter.ts");
+    const limiter = new EosTokenBucketRateLimiter({ capacity: 5, refillPerSecond: 10 });
+    const clientId = args[1] || "edge-client-pop-bogota";
+    console.log(`Evaluando ráfaga de 6 peticiones consecutivas para '${clientId}':`);
+    for (let i = 1; i <= 6; i++) {
+      const decision = limiter.consume(clientId, 1);
+      const icon = decision.granted ? "✔ PERMITIDO" : "✖ DESCARTADO (429)";
+      console.log(`  Req #${i}: ${icon} | Tokens Restantes: ${decision.remainingTokens} | Retry-After: ${decision.retryAfterSeconds}s`);
+    }
+    console.log(`\nPrecisión Monotónica : Nanosegundos (process.hrtime.bigint)\n`);
     break;
   }
 
