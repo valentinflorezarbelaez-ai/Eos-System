@@ -264,6 +264,18 @@ import {
   EosAdaptiveL0Autotuner
 } from "../core/eosAdaptiveL0Autotuner.ts";
 
+import {
+  EosNsaCryptoSuite
+} from "../core/eosNsaCryptoSuite.ts";
+
+import {
+  EosNsaZeroTrustCompartment
+} from "../core/eosNsaZeroTrustCompartment.ts";
+
+import {
+  EosNsaAnomalyDetector
+} from "../core/eosNsaAnomalyDetector.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -1327,6 +1339,42 @@ export class EosMcpServer {
                       queueDepth: { type: "number", description: "Instantaneous incoming queue depth (default: 0)" }
                     }
                   }
+                },
+                {
+                  name: "eos_nsa_encrypt",
+                  description: "Encrypts payload using military-grade CNSA 2.0 AES-256-GCM with AAD binding for classification and compartment.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      plaintext: { type: "string", description: "Payload to encrypt" },
+                      classification: { type: "string", enum: ["UNCLASSIFIED", "CONFIDENTIAL", "SECRET", "TOP_SECRET"] },
+                      compartment: { type: "string", description: "Security compartment identifier" }
+                    },
+                    required: ["plaintext"]
+                  }
+                },
+                {
+                  name: "eos_nsa_zero_trust_check",
+                  description: "Audits Bell-LaPadula Simple Security (No Read-Up) and *-Property (No Write-Down) for a given subject and object.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      subjectClearance: { type: "string", enum: ["UNCLASSIFIED", "CONFIDENTIAL", "SECRET", "TOP_SECRET"] },
+                      subjectCompartments: { type: "array", items: { type: "string" } },
+                      objectClassification: { type: "string", enum: ["UNCLASSIFIED", "CONFIDENTIAL", "SECRET", "TOP_SECRET"] },
+                      objectCompartments: { type: "array", items: { type: "string" } },
+                      action: { type: "string", enum: ["READ", "WRITE"] }
+                    },
+                    required: ["subjectClearance", "objectClassification", "action"]
+                  }
+                },
+                {
+                  name: "eos_nsa_audit_logs",
+                  description: "Inspects the SHA-384 cryptographically sealed Red/Black Mandatory Access Control audit trail.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
+                  }
                 }
               ]
             }
@@ -2186,6 +2234,63 @@ export class EosMcpServer {
         const res = autotuner.runAutotuneTick(depth);
         onProgress?.(100, 100, "Adaptive optimization tick completed");
         return res;
+      }
+
+      case "eos_nsa_encrypt": {
+        onProgress?.(30, 100, "Deriving CNSA 2.0 256-bit symmetric key & IV");
+        const key = EosNsaCryptoSuite.generateKey256();
+        const pt = String(args.plaintext || "");
+        const cls = (args.classification || "TOP_SECRET").toUpperCase();
+        const comp = String(args.compartment || "EOS-NOUS");
+        const aad = `CLASS=${cls};COMP=${comp};TIMESTAMP=${new Date().toISOString()}`;
+        const envelope = EosNsaCryptoSuite.encryptAesGcm256(pt, key, aad);
+        onProgress?.(100, 100, "Payload encrypted with AES-256-GCM & sealed");
+        return {
+          algorithm: envelope.algorithm,
+          aad: envelope.aad,
+          iv: envelope.iv,
+          ciphertext: envelope.ciphertext,
+          authTag: envelope.authTag,
+          sha384Digest: envelope.sha384Digest
+        };
+      }
+
+      case "eos_nsa_zero_trust_check": {
+        onProgress?.(30, 100, "Evaluating Bell-LaPadula Simple Security and *-Property");
+        const compartment = new EosNsaZeroTrustCompartment();
+        const subject: any = {
+          subjectId: "SUBJECT_INSPECTOR",
+          clearance: (args.subjectClearance || "SECRET").toUpperCase(),
+          compartments: Array.isArray(args.subjectCompartments) ? args.subjectCompartments : []
+        };
+        const targetClass = (args.objectClassification || "SECRET").toUpperCase();
+        const targetComps = Array.isArray(args.objectCompartments) ? args.objectCompartments : [];
+        const action = String(args.action || "READ").toUpperCase();
+
+        const permitted = action === "READ"
+          ? compartment.canRead(subject, { classification: targetClass, compartments: targetComps })
+          : compartment.canWrite(subject, targetClass, targetComps);
+
+        onProgress?.(100, 100, "Zero-Trust authorization evaluated");
+        return {
+          subject,
+          targetClassification: targetClass,
+          targetCompartments: targetComps,
+          action,
+          permitted,
+          ruleEnforced: action === "READ" ? "Bell-LaPadula Simple Security (No Read-Up)" : "Bell-LaPadula *-Property (No Write-Down)"
+        };
+      }
+
+      case "eos_nsa_audit_logs": {
+        onProgress?.(50, 100, "Reading Red/Black cryptographically sealed audit trail");
+        const compartment = new EosNsaZeroTrustCompartment();
+        const trail = compartment.getAuditTrail();
+        onProgress?.(100, 100, "Audit trail retrieved");
+        return {
+          totalEntries: trail.length,
+          auditTrail: trail
+        };
       }
 
       default:

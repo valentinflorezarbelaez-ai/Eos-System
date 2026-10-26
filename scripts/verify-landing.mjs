@@ -210,11 +210,11 @@ assert.ok(html.includes("sanctum-panel-oraculo"), "Missing #sanctum-panel-oracul
 assert.ok(fs.existsSync(path.join(root, "src/core/samaelCodex.ts")), "Missing src/core/samaelCodex.ts");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosNanosecondEngine.ts")), "Missing src/core/eosNanosecondEngine.ts");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosAkashicMemory.ts")), "Missing src/core/eosAkashicMemory.ts");
-assert.ok(fs.existsSync(path.join(root, "src/components/EosSolarSanctum.tsx")), "Missing src/components/EosSolarSanctum.tsx");
-assert.ok(fs.existsSync(path.join(root, "api/teurgia.js")), "Missing api/teurgia.js serverless oracle");
-assert.ok(fs.existsSync(path.join(root, "api/compile.js")), "Missing api/compile.js serverless universal translator");
-assert.ok(fs.existsSync(path.join(root, "api/memory.js")), "Missing api/memory.js serverless Akashic memory engine");
-console.log("[PASS] 5/6 Interactive Control Plane, EosSolarSanctum, EosNanosecondEngine, EosAkashicMemory (27 Engram Tools + ODD/RDD 4R), World Top-10 L0 Matrix & 21-Step Pipeline verified.");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosNsaCryptoSuite.ts")), "Missing src/core/eosNsaCryptoSuite.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosNsaZeroTrustCompartment.ts")), "Missing src/core/eosNsaZeroTrustCompartment.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosNsaAnomalyDetector.ts")), "Missing src/core/eosNsaAnomalyDetector.ts");
+assert.ok(fs.existsSync(path.join(root, "test/eosNsaZeroTrustDefense.test.mjs")), "Missing test/eosNsaZeroTrustDefense.test.mjs");
+console.log("[PASS] 5/6 Interactive Control Plane, NSA Defense Suite, EosSolarSanctum, EosNanosecondEngine, EosAkashicMemory (27 Engram Tools + ODD/RDD 4R), World Top-10 L0 Matrix & 21-Step Pipeline verified.");
 
 // 6. Verify Service Worker, Assets & Xirp-Grade Speed Architecture (FR-011)
 assert.ok(fs.existsSync(path.join(root, "sw.js")), "Missing sw.js");

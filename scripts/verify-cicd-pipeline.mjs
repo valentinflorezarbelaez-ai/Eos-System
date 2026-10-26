@@ -159,7 +159,8 @@ const testFiles = [
   "test/eosGnosticFinOps.test.mjs",
   "test/eosTierZeroApexPerfection.test.mjs",
   "test/eosBigTechHyperOptimization.test.mjs",
-  "test/eosMindMountainsAutotune.test.mjs"
+  "test/eosMindMountainsAutotune.test.mjs",
+  "test/eosNsaZeroTrustDefense.test.mjs"
 ];
 
 const isPts = process.argv.includes("--pts");

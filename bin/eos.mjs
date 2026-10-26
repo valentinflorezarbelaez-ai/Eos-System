@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v40.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v41.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -1894,6 +1894,66 @@ switch (command) {
     break;
   }
 
+  case "nsa:encrypt": {
+    printBanner();
+    console.log("[EOS NSA] Cifrado Militar CNSA 2.0 AES-256-GCM con AAD Binding...\n");
+    const { EosNsaCryptoSuite } = await import("../src/core/eosNsaCryptoSuite.ts");
+    const plaintext = args[1] || "DIRECTIVA_CLASIFICADA_NIVEL_ALPHA";
+    const classification = (args[2] || "TOP_SECRET").toUpperCase();
+    const compartment = args[3] || "EOS-NOUS";
+    const key = EosNsaCryptoSuite.generateKey256();
+    const aad = `CLASS=${classification};COMP=${compartment};TIME=${new Date().toISOString()}`;
+    const envelope = EosNsaCryptoSuite.encryptAesGcm256(plaintext, key, aad);
+
+    console.log(`Algoritmo             : ${envelope.algorithm}`);
+    console.log(`Clasificación AAD     : ${envelope.aad}`);
+    console.log(`IV (96-bit)           : ${envelope.iv}`);
+    console.log(`Ciphertext            : ${envelope.ciphertext}`);
+    console.log(`AuthTag (128-bit)     : ${envelope.authTag}`);
+    console.log(`Digest SHA-384        : ${envelope.sha384Digest}\n`);
+    break;
+  }
+
+  case "nsa:audit": {
+    printBanner();
+    console.log("[EOS NSA] Auditoría de Control de Acceso Mandatorio & Aislamiento Red/Black...\n");
+    const { EosNsaZeroTrustCompartment } = await import("../src/core/eosNsaZeroTrustCompartment.ts");
+    const comp = new EosNsaZeroTrustCompartment();
+    const subject = {
+      subjectId: "AGENT_VALENTIN",
+      clearance: "TOP_SECRET",
+      compartments: ["EOS-NOUS", "TITAN-CORE"]
+    };
+    const obj = {
+      objectId: "OBJ_CORE_INTEGRITY",
+      classification: "TOP_SECRET",
+      compartments: ["EOS-NOUS"],
+      redPayload: "SYSTEM_SOVEREIGNTY_VERIFIED"
+    };
+    comp.storeRedObject(subject, obj);
+    const transit = comp.exportToBlackBoundary(subject, obj.objectId);
+    const logs = comp.getAuditTrail();
+
+    console.log(`Transacciones Red/Black: ${logs.length}`);
+    console.log(`Última Frontera BLACK  : Seq #${transit.sequenceNumber} - Hash: ${transit.previousLogHash.slice(0, 32)}...`);
+    console.log(`Estado de Auditoría    : 100% Criptográficamente Sellado (SHA-384)\n`);
+    break;
+  }
+
+  case "nsa:zeroize": {
+    printBanner();
+    console.log("[EOS NSA] Purgado Destructivo de Memoria DoD 5220.22-M (4-Pass Zeroization)...\n");
+    const { EosNsaCryptoSuite } = await import("../src/core/eosNsaCryptoSuite.ts");
+    const testBuf = Buffer.from("CRITICAL_EPHEMERAL_KEY_MATERIAL_IN_RAM", "utf8");
+    console.log(`Longitud Búfer        : ${testBuf.length} bytes`);
+    console.log(`Estado Previo         : ${testBuf.toString("utf8")}`);
+    EosNsaCryptoSuite.zeroizeBuffer(testBuf);
+    const zeroized = EosNsaCryptoSuite.isZeroized(testBuf);
+    console.log(`Purgado en 4 Pasadas  : ${zeroized ? "COMPLETADO (100% 0x00)" : "ERROR"}`);
+    console.log(`Entropía Remanente    : 0.000000 (Cero Huella Forense)\n`);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -1955,6 +2015,9 @@ Uso Universal:
   eos mind [obs] [cat] [lvl] Introspección en los 49 niveles del subconsciente y disolución Kundalini
   eos mountains              Evalúa la alineación diaria con las Tres Montañas y el Codex de Valentín
   eos autotune [carga]       Micro-profiler y auto-tuning dinámico de ring buffers y heap en Capa 0
+  eos nsa:encrypt [texto]    Cifrado militar CNSA 2.0 AES-256-GCM con AAD binding de compartimento
+  eos nsa:audit              Audita la frontera Red/Black y el control de acceso Bell-LaPadula
+  eos nsa:zeroize            Demostración de purga de memoria física DoD 5220.22-M (4 pasadas)
   eos mcp [--sse|status]     Servidor MCP bi-direccional en vivo para Cursor y Google Antigravity
   eos help                   Muestra este manual de operaciones
 

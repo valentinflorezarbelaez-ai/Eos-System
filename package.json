@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "40.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v40.0 (49 Levels of Mind Introspection, Three Mountains Life Compass, Adaptive L0 Autotuner, Gnostic Temple Sentinel, Three-Brain Triamonia, Inviolable FinOps Budget Shield, Clave de SOL, Formal TLA+ Models & Smart PTS Runner)",
+  "version": "41.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v41.0 (NSA Defense-in-Depth, CNSA 2.0 AES-256-GCM, Red/Black Zero-Trust Isolation, 49 Levels of Mind Introspection, Three Mountains Life Compass & Adaptive L0 Autotuner)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
