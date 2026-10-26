@@ -83,7 +83,7 @@ assert.ok(html.includes('id="bigtech-pantheon"'), "Missing #bigtech-pantheon Big
 assert.ok(html.includes('id="eos-cmdk-dialog"'), "Missing #eos-cmdk-dialog Omniscient Command Palette");
 assert.ok(html.includes('closedby="any"'), "Missing closedby=\"any\" declarative light-dismiss attribute");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosBigTechPantheon.ts")), "Missing src/core/eosBigTechPantheon.ts");
-assert.ok(fs.existsSync(path.join(root, "api/bigtech.js")), "Missing api/bigtech.js serverless Big Tech TLA+ endpoint");
+assert.ok(fs.existsSync(path.join(root, "api/_bigtech.js")), "Missing api/bigtech.js serverless Big Tech TLA+ endpoint");
 assert.ok(html.includes('id="linux-kernel-core"'), "Missing #linux-kernel-core Linux Kernel Ring-0 section");
 assert.ok(html.includes('id="linux-kernel-lab"'), "Missing #linux-kernel-lab interactive VFS & RCU laboratory");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosLinuxKernelCore.ts")), "Missing src/core/eosLinuxKernelCore.ts");

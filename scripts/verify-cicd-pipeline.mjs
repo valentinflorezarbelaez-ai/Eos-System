@@ -162,7 +162,8 @@ const testFiles = [
   "test/eosMindMountainsAutotune.test.mjs",
   "test/eosNsaZeroTrustDefense.test.mjs",
   "test/eosPlanetaryConsensusAdaptiveConcurrency.test.mjs",
-  "test/eosConsistentHashingRateLimiter.test.mjs"
+  "test/eosConsistentHashingRateLimiter.test.mjs",
+  "test/eosBigTechHyperPerfection.test.mjs"
 ];
 
 const isPts = process.argv.includes("--pts");
@@ -235,7 +236,6 @@ const apiEndpoints = [
   "api/teurgia.js",
   "api/compile.js",
   "api/memory.js",
-  "api/bigtech.js",
   "api/kernel.js",
   "api/cicd.js",
   "api/fleet.js",
@@ -292,7 +292,8 @@ for (const relApi of apiEndpoints) {
 const consolidatedModes = [
   { file: "api/compile.js", query: { mode: "amplify", prompt: "Test prompt amplification" }, desc: "compile?mode=amplify" },
   { file: "api/eval.js", query: { mode: "titans", titan: "all" }, desc: "eval?mode=titans" },
-  { file: "api/kernel.js", query: { mode: "omega" }, desc: "kernel?mode=omega" }
+  { file: "api/kernel.js", query: { mode: "omega" }, desc: "kernel?mode=omega" },
+  { file: "api/kernel.js", query: { module: "bigtech" }, desc: "kernel?module=bigtech" }
 ];
 
 for (const cm of consolidatedModes) {

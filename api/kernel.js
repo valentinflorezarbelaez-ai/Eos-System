@@ -1,3 +1,4 @@
+import handleBigTech from "./_bigtech.js";
 import { createHash } from "node:crypto";
 
 /**
@@ -196,6 +197,16 @@ export default function handler(req, res) {
   const query = req.query || {};
   const body = req.body && typeof req.body === "object" ? req.body : {};
   const url = req.url || "";
+
+  if (
+    url.includes("/api/bigtech") ||
+    query.module === "bigtech" ||
+    query.mode === "bigtech" ||
+    body.module === "bigtech" ||
+    body.mode === "bigtech"
+  ) {
+    return handleBigTech(req, res);
+  }
 
   if (
     url.includes("/api/omega") ||
