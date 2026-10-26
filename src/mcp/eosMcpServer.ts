@@ -200,7 +200,8 @@ import {
 } from "../core/eosTimeTravelSim.ts";
 
 import {
-  EosDurableWal
+  EosDurableWal,
+  computeCrc32
 } from "../core/eosDurableWal.ts";
 
 import {
@@ -218,6 +219,26 @@ import {
 import {
   EosSecureMemoryVault
 } from "../core/eosSecureMemoryVault.ts";
+
+import {
+  EosNanoBenchmarkEngine
+} from "../core/eosNanoBenchmarkEngine.ts";
+
+import {
+  EosSentinelDaemon
+} from "../core/eosSentinelDaemon.ts";
+
+import {
+  EosAlchemicalTransmuter
+} from "../core/eosAlchemicalTransmuter.ts";
+
+import {
+  EosGnosticTemple
+} from "../core/eosGnosticTemple.ts";
+
+import {
+  EosFinOpsBudget
+} from "../core/eosFinOpsBudget.ts";
 
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
@@ -1160,6 +1181,67 @@ export class EosMcpServer {
                       wipeAll: { type: "boolean", description: "Whether to execute in-place zero-entropy wipe on all stored tokens" }
                     }
                   }
+                },
+                {
+                  name: "eos_gnostic_temple_audit",
+                  description: "Audits Three-Brain energy distribution (Intellectual, Emotional, Motor) and verifies circadian nightly screen veto per V.M. Samael Aun Weor.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      intellectualHours: { type: "number", description: "Hours dedicated to intellectual coding/study" },
+                      emotionalHours: { type: "number", description: "Hours dedicated to high-vibration classical music/art" },
+                      motorHours: { type: "number", description: "Hours dedicated to physical gym/temple hygiene" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_finops_budget_check",
+                  description: "Audits real-time micro-cent LLM token spend, verifies remaining balance against the $15.00 USD monthly limit, and inspects sacred Cajitas partitions.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
+                  }
+                },
+                {
+                  name: "eos_clave_de_sol_evaluate",
+                  description: "Evaluates the Clave de SOL (Subject, Object, Place) and calculates consciousness awake score (0-100) with theurgic advice.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      subjectAware: { type: "boolean", description: "Awareness of oneself as the observer" },
+                      objectFocused: { type: "boolean", description: "Immersed in current action without mental wandering" },
+                      placePresent: { type: "boolean", description: "Grounded in physical body and physical space" }
+                    },
+                    required: ["subjectAware", "objectFocused", "placePresent"]
+                  }
+                },
+                {
+                  name: "eos_nano_benchmark",
+                  description: "Executes nanosecond-resolution statistical micro-benchmarks reporting p50, p90, p99, p99.99 latencies, jitter, and ops/sec.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      iterations: { type: "number", description: "Sample iterations (default 5000)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_sentinel_tick",
+                  description: "Executes a 24/7 sovereign heartbeat tick evaluating Merkle roots, memory pressure, and fleet FDIR graph topology.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {}
+                  }
+                },
+                {
+                  name: "eos_alchemical_transmute",
+                  description: "Computes Shannon character entropy, cyclomatic density, and certifies Nous purity score (0-100%) mapped to the 7 Cosmic Notes of the Law of Octaves.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      relPath: { type: "string", description: "Target source code file path" }
+                    }
+                  }
                 }
               ]
             }
@@ -1894,6 +1976,71 @@ export class EosMcpServer {
         }
         onProgress?.(100, 100, "Memory hygiene report generated");
         return vault.getAuditReport();
+      }
+
+      case "eos_gnostic_temple_audit": {
+        onProgress?.(50, 100, "Auditing Three-Brain balance and circadian health");
+        const temple = new EosGnosticTemple();
+        const intHours = typeof args.intellectualHours === "number" ? args.intellectualHours : 6;
+        const emoHours = typeof args.emotionalHours === "number" ? args.emotionalHours : 2;
+        const motHours = typeof args.motorHours === "number" ? args.motorHours : 2;
+        const brainReport = temple.auditThreeBrains(intHours, emoHours, motHours);
+        const circadian = temple.checkCircadianVeto();
+        onProgress?.(100, 100, "Gnostic temple audit completed");
+        return {
+          circadian,
+          threeBrains: brainReport,
+          doctrine: "V.M. Samael Aun Weor Triamonia Standard"
+        };
+      }
+
+      case "eos_finops_budget_check": {
+        onProgress?.(50, 100, "Auditing token spend ledger and Cajitas status");
+        const budget = new EosFinOpsBudget(15.00);
+        onProgress?.(100, 100, "FinOps report compiled");
+        return budget.getReport();
+      }
+
+      case "eos_clave_de_sol_evaluate": {
+        onProgress?.(50, 100, "Evaluating Subject-Object-Place consciousness metrics");
+        const temple = new EosGnosticTemple();
+        const result = temple.evaluateClaveDeSol({
+          subjectAware: Boolean(args.subjectAware),
+          objectFocused: Boolean(args.objectFocused),
+          placePresent: Boolean(args.placePresent)
+        });
+        onProgress?.(100, 100, "Consciousness evaluation sealed");
+        return result;
+      }
+
+      case "eos_nano_benchmark": {
+        onProgress?.(30, 100, "Priming V8 TurboFan optimizer & warming cache");
+        const iters = typeof args.iterations === "number" ? args.iterations : 5000;
+        const testBuf = new Uint8Array(1024);
+        for (let i = 0; i < 1024; i++) testBuf[i] = i & 0xff;
+        onProgress?.(70, 100, "Sampling execution iterations with hrtime.bigint()");
+        const report = EosNanoBenchmarkEngine.runBenchmark("IEEE 802.3 CRC32 (1KB)", () => {
+          computeCrc32(testBuf);
+        }, { iterations: iters });
+        onProgress?.(100, 100, "Percentiles & standard deviation computed");
+        return report;
+      }
+
+      case "eos_sentinel_tick": {
+        onProgress?.(30, 100, "Executing Merkle root & memory health pulse");
+        const daemon = new EosSentinelDaemon(this.projectRoot);
+        const report = daemon.tick();
+        onProgress?.(100, 100, "Sentinel heartbeat pulse completed");
+        return report;
+      }
+
+      case "eos_alchemical_transmute": {
+        onProgress?.(30, 100, "Scanning Shannon character entropy & cyclomatic density");
+        const target = String(args.relPath || "src/core/eosJarvisSoul.ts");
+        const transmuter = new EosAlchemicalTransmuter(this.projectRoot);
+        const report = transmuter.analyzeFile(target);
+        onProgress?.(100, 100, "Nous purity index & Octave note evaluated");
+        return report;
       }
 
       default:

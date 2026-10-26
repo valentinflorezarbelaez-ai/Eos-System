@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "38.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v38.0 (10/10 Big Tech Perfection Standard, Smart Datalog PTS Runner, Formal TLA+ Mathematical Models, Jepsen Distributed Chaos Hypervisor & Hardened Pinned Memory Vault)",
+  "version": "39.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v39.0 (Gnostic Temple Sentinel, Three-Brain Triamonia, Inviolable FinOps Budget Shield, Clave de SOL, Formal TLA+ Models & Smart PTS Runner)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -47,6 +47,15 @@
     "test:mcp:stream": "node --test test/eosMcpStreamServer.test.mjs",
     "test:ten": "node --test test/eosApexTenMatrix.test.mjs",
     "test:tier1": "node --test test/eosBigTechTier1Perfection.test.mjs",
+    "test:temple": "node --test test/eosGnosticFinOps.test.mjs",
+    "test:tier0": "node --test test/eosTierZeroApexPerfection.test.mjs",
+    "bench:nano": "node bin/eos.mjs bench:nano",
+    "daemon": "node bin/eos.mjs daemon",
+    "transmute": "node bin/eos.mjs transmute",
+    "temple": "node bin/eos.mjs temple",
+    "sol": "node bin/eos.mjs sol",
+    "diary": "node bin/eos.mjs diary",
+    "budget": "node bin/eos.mjs budget",
     "formal": "node scripts/verify-formal-tla.mjs",
     "jepsen": "node bin/eos.mjs jepsen",
     "vault": "node bin/eos.mjs vault",

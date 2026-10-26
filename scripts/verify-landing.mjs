@@ -171,6 +171,9 @@ assert.ok(fs.existsSync(path.join(root, "src/core/eosPrometheusExporter.ts")), "
 assert.ok(fs.existsSync(path.join(root, "src/core/eosWebGpuTopology.ts")), "Missing src/core/eosWebGpuTopology.ts");
 assert.ok(fs.existsSync(path.join(root, "src/native/eos_topology_shader.wgsl")), "Missing src/native/eos_topology_shader.wgsl");
 assert.ok(fs.existsSync(path.join(root, "test/eosBigTechTier1Perfection.test.mjs")), "Missing test/eosBigTechTier1Perfection.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosGnosticTemple.ts")), "Missing src/core/eosGnosticTemple.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosFinOpsBudget.ts")), "Missing src/core/eosFinOpsBudget.ts");
+assert.ok(fs.existsSync(path.join(root, "test/eosGnosticFinOps.test.mjs")), "Missing test/eosGnosticFinOps.test.mjs");
 assert.ok(html.includes('id="panel-nexus-blast"'), "Missing #panel-nexus-blast");
 assert.ok(html.includes('id="panel-nexus-prometheus"'), "Missing #panel-nexus-prometheus");
 assert.ok(html.includes('id="panel-nexus-turbo"'), "Missing #panel-nexus-turbo");

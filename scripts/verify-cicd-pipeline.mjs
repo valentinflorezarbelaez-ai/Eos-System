@@ -155,7 +155,9 @@ const testFiles = [
   "test/eosTierS1OmegaSdlc.test.mjs",
   "test/eosMcpStreamServer.test.mjs",
   "test/eosApexTenMatrix.test.mjs",
-  "test/eosBigTechTier1Perfection.test.mjs"
+  "test/eosBigTechTier1Perfection.test.mjs",
+  "test/eosGnosticFinOps.test.mjs",
+  "test/eosTierZeroApexPerfection.test.mjs"
 ];
 
 const isPts = process.argv.includes("--pts");

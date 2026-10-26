@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v38.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v39.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -232,6 +232,53 @@ switch (command) {
       console.log(`[EOS WAL] Format         : EOSW Binary v1`);
       console.log(`[EOS WAL] Durability     : HARDWARE_FSYNC (Linear Forward Crash Recovery)`);
     }
+    break;
+  }
+
+  case "bench:nano": {
+    printBanner();
+    console.log("\n[EOS APEX] Running Nanosecond Micro-Benchmarking Suite (Tier-0)...");
+    const { EosNanoBenchmarkEngine } = await import("../src/core/eosNanoBenchmarkEngine.ts");
+    const reports = await EosNanoBenchmarkEngine.runApexCoreSuite();
+    for (const r of reports) {
+      console.log(`\n--- ${r.name} (${r.iterations} iters) ---`);
+      console.log(`  Media        : ${r.meanNs} ns (${(r.meanNs / 1000).toFixed(3)} µs)`);
+      console.log(`  p50 / p90    : ${r.percentilesNs.p50} ns / ${r.percentilesNs.p90} ns`);
+      console.log(`  p99 / p99.99 : ${r.percentilesNs.p99} ns / ${r.percentilesNs.p99_99} ns`);
+      console.log(`  Throughput   : ${r.opsPerSec.toLocaleString()} ops/sec`);
+      console.log(`  Desviación   : ±${r.stdDevNs} ns | 0-Alloc: ${r.zeroAllocationVerified ? "VERIFIED" : "UNVERIFIED"}`);
+    }
+    break;
+  }
+
+  case "daemon": {
+    printBanner();
+    const { EosSentinelDaemon } = await import("../src/core/eosSentinelDaemon.ts");
+    const sentinel = new EosSentinelDaemon(root);
+    const report = sentinel.tick();
+    console.log("\n[EOS SENTINEL] 24/7 Sovereign Heartbeat Pulse (Tick)");
+    console.log(`  Estado           : ${report.status}`);
+    console.log(`  Merkle Root      : ${report.merkleRootHash.slice(0, 32)}...`);
+    console.log(`  Archivos Guía    : ${report.filesMonitoredCount} archivos críticos verificados`);
+    console.log(`  Memoria V8 Heap  : ${(report.memoryHealth.heapUsedBytes / (1024 * 1024)).toFixed(2)} MB (${(report.memoryHealth.utilizationRatio * 100).toFixed(1)}% uso)`);
+    console.log(`  Nodos de Flota   : ${report.fleetHealth.totalNodes} nodos activos en anillos [${report.fleetHealth.ringsActive.join(", ")}]`);
+    console.log(`  Enlaces Huérfanos: ${report.fleetHealth.orphanLinksDetected}`);
+    break;
+  }
+
+  case "transmute": {
+    printBanner();
+    const targetFile = args[1] || "src/core/eosJarvisSoul.ts";
+    const { EosAlchemicalTransmuter } = await import("../src/core/eosAlchemicalTransmuter.ts");
+    const transmuter = new EosAlchemicalTransmuter(root);
+    const rep = transmuter.analyzeFile(targetFile);
+    console.log(`\n[EOS ALQUIMIA] Análisis de Entropía & Pureza Nous: ${rep.target}`);
+    console.log(`  Nota Vibracional : ${rep.octaveVibrationalNote} (${rep.alchemicalState})`);
+    console.log(`  Pureza Nous      : ${rep.nousPurityPercent}%`);
+    console.log(`  Entropía Shannon : ${rep.shannonEntropyBits} bits/carácter`);
+    console.log(`  Ramas Control    : ${rep.cyclomaticDensity} puntos de bifurcación`);
+    console.log(`  Agregados (Ego)  : ${rep.agregadosDetectedCount} detectados`);
+    console.log(`  Dictamen         : ${rep.transmutationAdvice}`);
     break;
   }
 
@@ -1625,6 +1672,104 @@ switch (command) {
     break;
   }
 
+  case "temple": {
+    printBanner();
+    console.log(`[EOS GNOSTIC TEMPLE] Centinela del Templo Biológico & Armonización de los Tres Cerebros...\n`);
+    const { EosGnosticTemple } = await import("../src/core/eosGnosticTemple.ts");
+    const temple = new EosGnosticTemple();
+
+    const circadian = temple.checkCircadianVeto();
+    console.log(`Hora Local           : ${circadian.currentHour}:00`);
+    console.log(`Estatus Circadiano   : ${circadian.status}`);
+    console.log(`Mensaje del Templo   : ${circadian.message}`);
+    console.log(`Acción Prescrita     : ${circadian.suggestedAction}\n`);
+
+    // Default audit: 6h intellectual, 2h emotional, 2h motor
+    const intHours = args[1] ? parseFloat(args[1]) : 6;
+    const emoHours = args[2] ? parseFloat(args[2]) : 2;
+    const motHours = args[3] ? parseFloat(args[3]) : 2;
+
+    const report = temple.auditThreeBrains(intHours, emoHours, motHours);
+    console.log(`--- ARMONIZACIÓN DE LOS TRES CEREBROS ---`);
+    console.log(`Cerebro Intelectual  : ${(report.intellectualRatio * 100).toFixed(0)}% (${report.intellectualHours}h)`);
+    console.log(`Cerebro Emocional    : ${(report.emotionalRatio * 100).toFixed(0)}% (${report.emotionalHours}h)`);
+    console.log(`Cerebro Motor-Sexual : ${(report.motorRatio * 100).toFixed(0)}% (${report.motorHours}h)`);
+    console.log(`Diagnóstico          : ${report.status}`);
+    report.prescriptions.forEach((p) => console.log(`  ↳ ⚖️  ${p}`));
+    console.log("");
+    break;
+  }
+
+  case "sol": {
+    printBanner();
+    console.log(`[EOS CLAVE DE SOL] Práctica Gnóstica de Auto-Observación y Auto-Recuerdo...\n`);
+    const { EosGnosticTemple } = await import("../src/core/eosGnosticTemple.ts");
+    const temple = new EosGnosticTemple();
+
+    const subj = args[1] !== "0" && args[1] !== "false";
+    const obj = args[2] !== "0" && args[2] !== "false";
+    const plc = args[3] !== "0" && args[3] !== "false";
+
+    const res = temple.evaluateClaveDeSol({
+      subjectAware: subj,
+      objectFocused: obj,
+      placePresent: plc
+    });
+
+    console.log(`Puntuación Conciencia: ${res.consciousnessAwakeScore} / 100`);
+    console.log(`Estado Psicológico   : ${res.state}`);
+    console.log(`  1. SUJETO : ${res.subjectState}`);
+    console.log(`  2. OBJETO : ${res.objectState}`);
+    console.log(`  3. LUGAR  : ${res.placeState}`);
+    console.log(`\nConsejo Teúrgico: ${res.theurgicAdvice}\n`);
+    break;
+  }
+
+  case "diary": {
+    printBanner();
+    console.log(`[EOS GNOSTIC DIARY] Registro de Impresiones Psicológicas y Muerte Mística...\n`);
+    const { EosGnosticTemple } = await import("../src/core/eosGnosticTemple.ts");
+    const temple = new EosGnosticTemple();
+
+    const eventDesc = args[1] || "Observación de impaciencia en compilación";
+    const ego = (args[2] || "IMPACIENCIA").toUpperCase();
+    const intensity = args[3] ? parseInt(args[3], 10) : 5;
+
+    const validEgos = ["ORGULLO", "IRA", "PEREZA", "FASCINACION", "IMPACIENCIA", "LUJURIA", "CODICIA"];
+    const targetEgo = validEgos.includes(ego) ? ego : "IMPACIENCIA";
+
+    const entry = temple.recordImpression(eventDesc, targetEgo, intensity);
+    console.log(`Entrada Registrada   : ${entry.id}`);
+    console.log(`Suceso Detonante     : "${entry.triggerEvent}"`);
+    console.log(`Agregado Identificado: ${entry.identifiedEgo} (Intensidad: ${entry.intensity}/10)`);
+    console.log(`Fórmula de Disolución: "${entry.dissolutionFormula}"\n`);
+    break;
+  }
+
+  case "budget":
+  case "finops": {
+    printBanner();
+    console.log(`[EOS FINOPS] Escudo Inviolable de Presupuesto & Partición de Cajitas...\n`);
+    const { EosFinOpsBudget } = await import("../src/core/eosFinOpsBudget.ts");
+    const budget = new EosFinOpsBudget(15.00);
+
+    const report = budget.getReport();
+    console.log(`Tope Mensual IA      : $${report.monthlyCapUsd.toFixed(2)} USD (Inviolable)`);
+    console.log(`Gasto Acumulado      : $${report.accumulatedSpendUsd.toFixed(6)} USD`);
+    console.log(`Presupuesto Restante : $${report.remainingBudgetUsd.toFixed(6)} USD`);
+    console.log(`Utilización          : ${report.budgetUtilizationPercent}%`);
+    console.log(`Circuit Breaker      : ${report.circuitBreakerState}`);
+    console.log(`Garantía Anti-Cobro  : ${report.guarantee}\n`);
+
+    console.log("--- PARTICIÓN SAGRADA DE CAJITAS (VALENTÍN) ---");
+    report.cajitas.forEach((c) => {
+      const target = c.monthlyTargetUsd ? `$${c.monthlyTargetUsd} USD` : (c.monthlyTargetCop ? `$${c.monthlyTargetCop} COP` : "Prioridad Máxima");
+      console.log(`  📦 [${c.name}] (${target}): ${c.purpose} · ${c.notes}`);
+    });
+    console.log("");
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -1679,6 +1824,10 @@ Uso Universal:
   eos formal                 Verifica especificaciones matemáticas formales TLA+ (Disruptor, Datomic, Hermes)
   eos jepsen                 Inyecta particiones de red y pérdida de paquetes estilo Jepsen
   eos vault                  Audita la bóveda de memoria pinned y ejecuta purga de cero entropía
+  eos temple [int] [emo] [mot] Audita los Tres Cerebros y verifica el veto circadiano del templo
+  eos sol [s] [o] [l]        Evalúa la Clave de SOL (Sujeto, Objeto, Lugar) y auto-recuerdo
+  eos diary [suceso] [yo]    Registra impresiones psicológicas y fórmula de muerte mística
+  eos budget                 Muestra el estado del escudo FinOps de $15 USD y las Cajitas sagradas
   eos mcp [--sse|status]     Servidor MCP bi-direccional en vivo para Cursor y Google Antigravity
   eos help                   Muestra este manual de operaciones
 
