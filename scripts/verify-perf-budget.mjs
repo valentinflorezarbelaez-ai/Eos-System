@@ -25,10 +25,12 @@ const summaryPath = flagValue("--summary-file") ?? process.env.GITHUB_STEP_SUMMA
 const updateBaseline = argv.includes("--update-baseline");
 const emitJson = argv.includes("--json");
 const tolerancePct = Number.parseFloat(flagValue("--tolerance") ?? "25");
+// Machine-readable mode: suppress all human output so stdout is valid JSON for jq/CI consumers.
+const log = emitJson ? () => {} : console.log;
 
-console.log("==================================================================");
-console.log(" EOS SYSTEM — CRITICAL-PATH PERFORMANCE BUDGET GATE (FAIL-CLOSED) ");
-console.log("==================================================================");
+log("==================================================================");
+log(" EOS SYSTEM — CRITICAL-PATH PERFORMANCE BUDGET GATE (FAIL-CLOSED) ");
+log("==================================================================");
 
 const gate = new EosPerfBudgetGate(root, { iterations: 5, warmupIterations: 1 });
 const report = gate.runDefaultSuite(DEFAULT_PERF_BUDGETS);
@@ -42,7 +44,7 @@ for (const sample of report.samples) {
   const entry = driftById.get(sample.id);
   const driftLabel =
     entry && entry.deltaPct !== null ? `${entry.deltaPct > 0 ? "+" : ""}${entry.deltaPct.toFixed(1)}%` : "n/a";
-  console.log(
+  log(
     `[${sample.status}] ${sample.id.padEnd(22)} median ${sample.medianMs.toFixed(1).padStart(7)} ms | ` +
       `p95 ${sample.p95Ms.toFixed(1).padStart(7)} ms | budget ${sample.budgetMs.toFixed(1).padStart(7)} ms | ` +
       `headroom ${headroom.padStart(6)} | drift ${driftLabel.padStart(7)}`
@@ -56,14 +58,14 @@ const evidencePath = EosPerfBudgetGate.writeEvidence(
 
 if (updateBaseline) {
   const written = writeBaseline(createBaseline(report, Number.isFinite(tolerancePct) ? tolerancePct : 25), baselinePath);
-  console.log(`[INFO] Drift baseline updated: ${path.relative(root, written)}`);
+  log(`[INFO] Drift baseline updated: ${path.relative(root, written)}`);
 } else if (!previousBaseline) {
-  console.log("[INFO] No drift baseline found; drift reporting disabled until --update-baseline is run.");
+  log("[INFO] No drift baseline found; drift reporting disabled until --update-baseline is run.");
 }
 
 const regressions = drift.filter((entry) => entry.status === "REGRESSION");
 if (regressions.length > 0) {
-  console.log(
+  log(
     `[WARN] Performance drift above tolerance (telemetry only): ${regressions
       .map((entry) => `${entry.id} ${entry.deltaPct > 0 ? "+" : ""}${entry.deltaPct.toFixed(1)}%`)
       .join(", ")}`
@@ -71,17 +73,14 @@ if (regressions.length > 0) {
 }
 
 if (summaryPath) {
+  // Evidence publication must work even in --json mode: the JSON mode only silences stdout.
   const markdownPath = path.resolve(root, summaryPath);
   fs.appendFileSync(markdownPath, renderPerfSummaryMarkdown(report, drift), "utf8");
-  console.log(`[INFO] Markdown summary appended: ${path.relative(root, markdownPath)}`);
+  log(`[INFO] Markdown summary appended: ${path.relative(root, markdownPath)}`);
 }
 
-if (emitJson) {
-  console.log(JSON.stringify({ report, drift }, null, 2));
-}
-
-console.log(`[INFO] Budget factor: ${report.factor}x | evidence: ${path.relative(root, evidencePath)}`);
-console.log(`[INFO] Merkle receipt: ${report.sha256MerkleReceipt}`);
+log(`[INFO] Budget factor: ${report.factor}x | evidence: ${path.relative(root, evidencePath)}`);
+log(`[INFO] Merkle receipt: ${report.sha256MerkleReceipt}`);
 
 assert.equal(
   report.passed,
@@ -89,6 +88,10 @@ assert.equal(
   `Performance budget breached: ${report.breaches.join(", ")} (see docs/evidence/PERF-BUDGET.json)`
 );
 
-console.log("------------------------------------------------------------------");
-console.log(" CRITICAL-PATH PERFORMANCE BUDGETS: ALL WITHIN BUDGET (0 BREACHES) ");
-console.log("==================================================================");
+if (emitJson) {
+  console.log(JSON.stringify({ report, drift }, null, 2));
+}
+
+log("------------------------------------------------------------------");
+log(" CRITICAL-PATH PERFORMANCE BUDGETS: ALL WITHIN BUDGET (0 BREACHES) ");
+log("==================================================================");
