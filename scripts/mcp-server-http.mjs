@@ -1,60 +1,44 @@
 // scripts/mcp-server-http.mjs
-// EOS System — Local HTTP server for MCP tunneling
+// EOS System — Bi-Directional MCP Live Stream Server (SSE & Stdio)
+// Governed by ADR-034, SPEC-027, FR-066..FR-070
 // Zero external dependencies.
 
-import http from "node:http";
-import mcpHandler from "../api/mcp.js";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { EosMcpStreamServer } from "../src/mcp/eosMcpStreamServer.ts";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const projectRoot = path.resolve(__dirname, "..");
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3333;
+const HOST = process.env.HOST || "127.0.0.1";
 
-const server = http.createServer((req, res) => {
-  let body = "";
-  req.on("data", (chunk) => {
-    body += chunk;
+const streamServer = new EosMcpStreamServer(projectRoot);
+
+if (process.argv[1] && process.argv[1].replace(/\\/g, "/").endsWith("mcp-server-http.mjs")) {
+  await streamServer.listen(PORT, HOST);
+
+  console.log(`======================================================================`);
+  console.log(` EOS SYSTEM v35.0 — MCP BI-DIRECTIONAL LIVE STREAM SERVER             `);
+  console.log(` Spec: MCP 2024-11-05 | Transports: SSE & HTTP-JSONRPC | Port: ${PORT}  `);
+  console.log(`======================================================================`);
+  console.log(` [SSE Stream Endpoint]  : http://${HOST}:${PORT}/sse`);
+  console.log(` [Message Backchannel]  : http://${HOST}:${PORT}/message?sessionId=<id>`);
+  console.log(` [Health & Telemetry]   : http://${HOST}:${PORT}/health`);
+  console.log(` [Cursor / Antigravity] : Ready for bi-directional streaming`);
+  console.log(`======================================================================`);
+
+  process.on("SIGINT", async () => {
+    console.log("\n[EOS MCP] Shutting down live stream server...");
+    await streamServer.close();
+    process.exit(0);
   });
 
-  req.on("end", async () => {
-    const mockRes = {
-      statusCode: 200,
-      headers: {},
-      setHeader(k, v) {
-        this.headers[k] = v;
-        res.setHeader(k, v);
-      },
-      status(code) {
-        this.statusCode = code;
-        res.statusCode = code;
-        return this;
-      },
-      json(data) {
-        this.setHeader("Content-Type", "application/json");
-        res.end(JSON.stringify(data));
-        return this;
-      },
-      end(data) {
-        res.end(data);
-        return this;
-      },
-      write(data) {
-        res.write(data);
-        return this;
-      }
-    };
-
-    req.body = body;
-    try {
-      await mcpHandler(req, mockRes);
-    } catch (err) {
-      console.error("[EOS MCP Error]:", err);
-      if (!res.writableEnded) {
-        res.statusCode = 500;
-        res.setHeader("Content-Type", "application/json");
-        res.end(JSON.stringify({ error: err.message }));
-      }
-    }
+  process.on("SIGTERM", async () => {
+    await streamServer.close();
+    process.exit(0);
   });
-});
+}
 
-server.listen(PORT, "127.0.0.1", () => {
-  console.log(`[EOS MCP] HTTP bridge listening on http://127.0.0.1:${PORT}`);
-});
+export default streamServer;

@@ -142,7 +142,9 @@ const testFiles = [
   "test/eosSpotifyInstitutionalCodex.test.mjs",
   "test/eosApexModelRouter.test.mjs",
   "test/eosWasmTopology.test.mjs",
-  "test/eosJarvisSoulIntrospection.test.mjs"
+  "test/eosJarvisSoulIntrospection.test.mjs",
+  "test/eosTierS1OmegaSdlc.test.mjs",
+  "test/eosMcpStreamServer.test.mjs"
 ];
 
 for (const testFile of testFiles) {

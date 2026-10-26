@@ -9,7 +9,7 @@
 - **Tribe**: `Core-Experience`
 - **Lifecycle Tier**: `production`
 - **Registered Fleet Repositories**: 4
-- **Active Formal Architectural Specs (OpenSpec)**: 28
+- **Active Formal Architectural Specs (OpenSpec)**: 29
 
 ## 2. The Nubank Institutional Engineering Doctrine (building.nu.com Standard)
 1. **Fighting Complexity & Simplicity as Discipline**: Simplicity (unbraided, decoupled) over easiness (familiar but tangled). Out of the Tar Pit: separate essential business logic from state and control flow.

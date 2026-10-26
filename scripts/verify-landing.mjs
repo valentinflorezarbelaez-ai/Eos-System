@@ -152,6 +152,13 @@ assert.ok(fs.existsSync(path.join(root, "js/wasm_exec.js")), "Missing js/wasm_ex
 assert.ok(fs.existsSync(path.join(root, "src/core/eosFleetTopology.ts")), "Missing src/core/eosFleetTopology.ts");
 assert.ok(fs.existsSync(path.join(root, "src/core/eosWasmEngine.ts")), "Missing src/core/eosWasmEngine.ts");
 assert.ok(fs.existsSync(path.join(root, "test/eosWasmTopology.test.mjs")), "Missing test/eosWasmTopology.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosDatalogVerifier.ts")), "Missing src/core/eosDatalogVerifier.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosMutationTester.ts")), "Missing src/core/eosMutationTester.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosTimeTravelSim.ts")), "Missing src/core/eosTimeTravelSim.ts");
+assert.ok(fs.existsSync(path.join(root, "src/core/eosMicroScheduler.ts")), "Missing src/core/eosMicroScheduler.ts");
+assert.ok(fs.existsSync(path.join(root, "test/eosTierS1OmegaSdlc.test.mjs")), "Missing test/eosTierS1OmegaSdlc.test.mjs");
+assert.ok(fs.existsSync(path.join(root, "src/mcp/eosMcpStreamServer.ts")), "Missing src/mcp/eosMcpStreamServer.ts");
+assert.ok(fs.existsSync(path.join(root, "test/eosMcpStreamServer.test.mjs")), "Missing test/eosMcpStreamServer.test.mjs");
 assert.ok(html.includes('id="panel-nexus-blast"'), "Missing #panel-nexus-blast");
 assert.ok(html.includes('id="panel-nexus-prometheus"'), "Missing #panel-nexus-prometheus");
 assert.ok(html.includes('id="panel-nexus-turbo"'), "Missing #panel-nexus-turbo");

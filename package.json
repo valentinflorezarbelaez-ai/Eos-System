@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "35.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v35.0 (JARVIS Soul Matrix, Valentín Flórez Arbeláez Master Kanban 'SOLO EOS', Autonomous Recursive Introspection, Impenetrable Military Shield, seL4 Formal Invariants & Zero-Entropy Purge)",
+  "version": "36.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v36.0 (Tier S-1 & Omega Autonomous SDLC, Datalog Blast Radius, Mutation Testing, Time-Travel Simulation, Bi-Directional SSE MCP Stream Server & JARVIS Soul Matrix)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -42,6 +42,14 @@
     "test:apex": "node --test test/eosApexModelRouter.test.mjs",
     "test:wasm": "node --test test/eosWasmTopology.test.mjs",
     "test:soul": "node --test test/eosJarvisSoulIntrospection.test.mjs",
+    "test:omega": "node --test test/eosTierS1OmegaSdlc.test.mjs",
+    "test:s1": "node --test test/eosTierS1OmegaSdlc.test.mjs",
+    "test:mcp:stream": "node --test test/eosMcpStreamServer.test.mjs",
+    "datalog": "node bin/eos.mjs datalog",
+    "mutate": "node bin/eos.mjs mutate",
+    "sim": "node bin/eos.mjs sim",
+    "schedule": "node bin/eos.mjs schedule",
+    "mcp:stream": "node bin/eos.mjs mcp --sse 3333",
     "soul": "node bin/eos.mjs soul",
     "introspect": "node bin/eos.mjs introspect",
     "shield": "node bin/eos.mjs shield",

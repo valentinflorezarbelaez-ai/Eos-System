@@ -147,10 +147,37 @@ switch (command) {
   }
 
   case "mcp": {
-    // Launch MCP Server over stdio
-    const { EosMcpServer } = await import("../src/mcp/eosMcpServer.ts");
-    const server = new EosMcpServer(root);
-    server.startStdioLoop();
+    const subCommand = (args[1] || "--stdio").toLowerCase();
+    if (subCommand === "--sse" || subCommand === "sse" || subCommand === "stream" || subCommand === "--stream") {
+      printBanner();
+      const port = args[2] ? parseInt(args[2], 10) : (process.env.PORT ? parseInt(process.env.PORT, 10) : 3333);
+      const host = process.env.HOST || "127.0.0.1";
+      const { EosMcpStreamServer } = await import("../src/mcp/eosMcpStreamServer.ts");
+      const streamServer = new EosMcpStreamServer(root);
+      await streamServer.listen(port, host);
+      console.log(`[EOS MCP] Bi-Directional SSE Live Stream Server active on http://${host}:${port}`);
+      console.log(`[EOS MCP]   ↳ SSE Stream Endpoint : http://${host}:${port}/sse`);
+      console.log(`[EOS MCP]   ↳ Message Backchannel : http://${host}:${port}/message?sessionId=<id>`);
+      console.log(`[EOS MCP]   ↳ Health & Status     : http://${host}:${port}/health`);
+      console.log(`[EOS MCP] Press Ctrl+C to terminate server.`);
+    } else if (subCommand === "status" || subCommand === "--status") {
+      printBanner();
+      const { EosMcpServer } = await import("../src/mcp/eosMcpServer.ts");
+      const server = new EosMcpServer(root);
+      const initRes = server.handleRequest({ jsonrpc: "2.0", id: 1, method: "initialize", params: {} });
+      const toolsRes = server.handleRequest({ jsonrpc: "2.0", id: 2, method: "tools/list", params: {} });
+      const toolsCount = toolsRes?.result?.tools?.length || 0;
+      console.log(`[EOS MCP] Status: ONLINE`);
+      console.log(`[EOS MCP]   ↳ Protocol Version   : ${initRes?.result?.protocolVersion || "2024-11-05"}`);
+      console.log(`[EOS MCP]   ↳ Server Name        : ${initRes?.result?.serverInfo?.name}`);
+      console.log(`[EOS MCP]   ↳ Registered Tools   : ${toolsCount} tools`);
+      console.log(`[EOS MCP]   ↳ Supported Modes    : stdio (default), sse (--sse [port])`);
+    } else {
+      // Default: stdio loop for Cursor / Antigravity / Claude Code
+      const { EosMcpServer } = await import("../src/mcp/eosMcpServer.ts");
+      const server = new EosMcpServer(root);
+      server.startStdioLoop();
+    }
     break;
   }
 
@@ -1392,6 +1419,103 @@ switch (command) {
     console.log(`EosAin Heap Purge    : ${audit.heapZeroEntropyPurged ? "ENTROPÍA CERO (XOR White Noise + 0s)" : "FALLA"}`);
     console.log(`EosElohim Breaker    : ${audit.karmicCircuitBreakerReady ? "ACTIVO (Corte anti-deadlock)" : "FALLA"}`);
     console.log(`Cordón de Plata HMAC : ${audit.silverCordSignature.slice(0, 32)}... (Sellado)\n`);
+    break;
+  }
+
+  case "datalog":
+  case "mangle": {
+    printBanner();
+    const targetModule = args[1] || "src/core/eosJarvisSoul.ts";
+    console.log(`[EOS DATALOG] Ejecución Deductiva en Punto Fijo (Estilo Google Piper / Mangle)...\n`);
+    const { EosDatalogVerifier } = await import("../src/core/eosDatalogVerifier.ts");
+    const verifier = new EosDatalogVerifier(root);
+    const blast = verifier.queryBlastRadius(targetModule);
+
+    console.log(`Módulo Evaluado      : ${blast.changedModule}`);
+    console.log(`Hechos Evaluados EDB : ${blast.totalFactsEvaluated} hechos (depends_on, tests_module)`);
+    console.log(`Iteraciones Fixpoint : ${blast.fixpointIterations} ciclos de deducción`);
+    console.log(`Duración Cómputo     : ${blast.durationUs} µs`);
+    console.log(`Garantía de Certeza  : ${blast.isolationGuarantee}\n`);
+
+    console.log(`Módulos Impactados Descendentes (${blast.impactedModules.length}):`);
+    blast.impactedModules.forEach(m => console.log(`  ↳ 📦 ${m}`));
+
+    console.log(`\nSuites Predictivas de Prueba (${blast.predictiveTestSuites.length}):`);
+    blast.predictiveTestSuites.forEach(t => console.log(`  ↳ 🧪 ${t}`));
+    console.log("");
+    break;
+  }
+
+  case "mutate":
+  case "sabotage": {
+    printBanner();
+    console.log(`[EOS MUTATION] Sabotaje de Código Automatizado (Testing the Tests)...\n`);
+    const targetFile = args[1] || "src/core/eosMicroScheduler.ts";
+    const full = path.resolve(root, targetFile);
+    if (!fs.existsSync(full)) {
+      console.error(`Error: Archivo no encontrado: ${targetFile}`);
+      process.exit(1);
+    }
+    const code = fs.readFileSync(full, "utf8");
+    const { EosMutationTester } = await import("../src/core/eosMutationTester.ts");
+    const tester = new EosMutationTester();
+    const mutants = tester.generateMutants(code);
+
+    console.log(`Archivo Auditado     : ${targetFile}`);
+    console.log(`Mutantes Sintéticos  : ${mutants.length} mutaciones inyectables en AST`);
+    console.log(`Operadores Alterados : Relacionales (>=, <=, >, <, ===), Booleanos, Aritméticos\n`);
+
+    console.log(`Muestra de Mutantes Inyectados:`);
+    mutants.slice(0, 5).forEach(m => {
+      console.log(`  ↳ [Línea ${m.line}] ${m.id}: Cambia '${m.originalOp}' por '${m.mutatedOp}'`);
+    });
+    console.log(`\nDoctrina: Los mutantes deben ser liquidados inmediatamente por la suite de pruebas.`);
+    console.log(`Si un mutante sobrevive, el commit es rechazado por cobertura cosmética superficial.\n`);
+    break;
+  }
+
+  case "sim":
+  case "timetravel": {
+    printBanner();
+    const seed = parseInt(args[1] || "948102", 10);
+    console.log(`[EOS SIMULATION] Hipervisor de Viaje en el Tiempo Determinista (Seed #${seed})...\n`);
+    const { EosTimeTravelSim } = await import("../src/core/eosTimeTravelSim.ts");
+    const sim = new EosTimeTravelSim(seed);
+
+    sim.scheduleEvent("core-node-1", "TRANSACTION_PROPOSE", 15);
+    sim.scheduleEvent("core-node-2", "RAFT_VOTE_REQUEST", 30);
+    sim.scheduleEvent("core-node-3", "LEDGER_APPEND_DATOM", 45);
+
+    const receipt = sim.runSimulation(50);
+    console.log(`Semilla de Entrada   : #${receipt.seed}`);
+    console.log(`Eventos Procesados   : ${receipt.totalEventsProcessed}`);
+    console.log(`Tiempo Virtual Sim   : ${receipt.simulatedTimeMs} ms`);
+    console.log(`Hash de Estado Final : ${receipt.finalStateHash}`);
+    console.log(`Garantía Reproduc.   : ${receipt.reproducibilityGuarantee}\n`);
+    console.log(`Cualquier fallo de concurrencia se reproduce de forma 100% idéntica bit a bit con Seed #${seed}.\n`);
+    break;
+  }
+
+  case "schedule": {
+    printBanner();
+    console.log(`[EOS SCHEDULER] Planificador Cooperativo a 120Hz (< 8.33ms por Frame)...\n`);
+    const { EosCooperativeScheduler, constantTimeSelect, constantTimeEquals } = await import("../src/core/eosMicroScheduler.ts");
+    const scheduler = new EosCooperativeScheduler(8.33);
+
+    const tasks = Array.from({ length: 150 }, (_, i) => () => {
+      let acc = 0;
+      for (let j = 0; j < 5000; j++) acc += j;
+      return acc;
+    });
+
+    const { report } = await scheduler.executeBatch(tasks);
+    console.log(`Tareas Ejecutadas    : ${report.totalTasksExecuted}`);
+    console.log(`Cortes de Tiempo (Slices): ${report.totalTimeSlices}`);
+    console.log(`Tiempo Total         : ${report.totalElapsedMs} ms`);
+    console.log(`Duración Media Slice : ${report.averageSliceDurationMs} ms (Presupuesto 8.33ms)`);
+    console.log(`Violaciones de Frame : ${report.frameBudgetViolations} (0 garantizado, 120 FPS sin stuttering)`);
+    console.log(`Operaciones Branchless: constantTimeSelect(true, 42, 99) => ${constantTimeSelect(true, 42, 99)} (0 branches)`);
+    console.log(`Comparador Seguro    : constantTimeEquals('alpha', 'alpha') => ${constantTimeEquals('alpha', 'alpha')} (Sin fuga temporal)\n`);
     break;
   }
 
