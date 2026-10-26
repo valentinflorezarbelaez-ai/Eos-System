@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
-  "version": "41.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v41.0 (NSA Defense-in-Depth, CNSA 2.0 AES-256-GCM, Red/Black Zero-Trust Isolation, 49 Levels of Mind Introspection, Three Mountains Life Compass & Adaptive L0 Autotuner)",
+  "version": "42.0.0",
+  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v42.0 (Google Spanner TrueTime Linearizability, Planetary Raft Consensus, Netflix Vegas Adaptive Concurrency, NSA CNSA 2.0 AES-256-GCM, Red/Black Zero-Trust Isolation & 49 Levels of Mind Introspection)",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"
@@ -50,6 +50,7 @@
     "test:temple": "node --test test/eosGnosticFinOps.test.mjs",
     "test:tier0": "node --test test/eosTierZeroApexPerfection.test.mjs",
     "test:opt": "node --test test/eosBigTechHyperOptimization.test.mjs",
+    "test:consensus": "node --test test/eosPlanetaryConsensusAdaptiveConcurrency.test.mjs",
     "optimize:v8": "node bin/eos.mjs optimize:v8",
     "bench:nano": "node bin/eos.mjs bench:nano",
     "daemon": "node bin/eos.mjs daemon",

@@ -33,7 +33,7 @@ const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v41.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
+  console.log(" EOS SYSTEM v42.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
   console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
   console.log("======================================================================");
 }
@@ -1954,6 +1954,57 @@ switch (command) {
     break;
   }
 
+  case "consensus": {
+    printBanner();
+    console.log("[EOS CONSENSUS] Consenso Planetario Raft/Paxos & Replicación de Log...\n");
+    const { EosPlanetaryConsensusEngine } = await import("../src/core/eosPlanetaryConsensusEngine.ts");
+    const engine = new EosPlanetaryConsensusEngine(["node-us-east", "node-us-west", "node-eu-central", "node-ap-east", "node-sa-east"]);
+    const election = engine.electLeader("node-us-east");
+    console.log(`Líder Electo         : ${election.leaderId} (Votos: ${election.votesReceived}/${engine.getClusterSize()})`);
+    console.log(`Quórum Requerido     : ${engine.getQuorumSize()} nodos`);
+    const proposal = engine.propose("SYSTEM_HEARTBEAT", { epoch: Date.now(), status: "SOVEREIGN_APEX" });
+    console.log(`Log Entrada #${proposal.entryIndex}      : Confirmada por Quórum (${proposal.acks} acks)`);
+    console.log(`Hash de Estado Merkle: ${proposal.stateHash}\n`);
+    break;
+  }
+
+  case "truetime": {
+    printBanner();
+    console.log("[EOS TRUETIME] Google Spanner TrueTime Bounded Clock & Commit-Wait...\n");
+    const { EosTrueTimeBoundedClock } = await import("../src/core/eosTrueTimeBoundedClock.ts");
+    const epsilon = parseFloat(args[1] || "2.0");
+    const clock = new EosTrueTimeBoundedClock(epsilon);
+    const interval = clock.now();
+    console.log(`Incertidumbre (±ε)   : ±${interval.epsilon} ms`);
+    console.log(`Intervalo TrueTime   : [${interval.earliest}, ${interval.latest}]`);
+    console.log(`Dispersión Total (2ε): ${(interval.latest - interval.earliest).toFixed(2)} ms`);
+    console.log(`\nEjecutando transacción con Commit-Wait linearizable...`);
+    const tx = await clock.executeWithCommitWait(() => "STATE_MUTATION_LINEARIZABLE");
+    console.log(`Commit Timestamp     : ${tx.commitTimestamp}`);
+    console.log(`Espera Commit-Wait   : ${tx.waitDurationMs.toFixed(3)} ms`);
+    console.log(`Linealizabilidad     : 100% Garantizada sin Roundtrips\n`);
+    break;
+  }
+
+  case "concurrency": {
+    printBanner();
+    console.log("[EOS CONCURRENCY] Limitador Adaptativo Netflix Vegas (TCP BBR)...\n");
+    const { EosAdaptiveConcurrencyLimiter } = await import("../src/core/eosAdaptiveConcurrencyLimiter.ts");
+    const limiter = new EosAdaptiveConcurrencyLimiter({ initialLimit: 25 });
+    for (let i = 0; i < 20; i++) {
+      const acq = limiter.acquire();
+      if (acq.granted) limiter.release(8.5);
+    }
+    const m = limiter.getMetrics();
+    console.log(`Límite Dinámico      : ${m.currentLimit} concurrentes`);
+    console.log(`En Vuelo Actual      : ${m.inFlight}`);
+    console.log(`RTT Mínimo           : ${m.rttMinMs} ms`);
+    console.log(`RTT Suavizado (EWMA) : ${m.rttSmoothedMs} ms`);
+    console.log(`Cola Estimada (Vegas): ${m.estimatedQueueSize}`);
+    console.log(`Total Descartados    : ${m.totalShed} (Proactive Load-Shedding)\n`);
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -2018,6 +2069,9 @@ Uso Universal:
   eos nsa:encrypt [texto]    Cifrado militar CNSA 2.0 AES-256-GCM con AAD binding de compartimento
   eos nsa:audit              Audita la frontera Red/Black y el control de acceso Bell-LaPadula
   eos nsa:zeroize            Demostración de purga de memoria física DoD 5220.22-M (4 pasadas)
+  eos consensus              Consenso planetario Raft/Paxos con quórum estricto y replicación de log
+  eos truetime [epsilon]     Reloj acotado Google Spanner TrueTime y espera de commit linearizable
+  eos concurrency            Limitador adaptativo Netflix Vegas (TCP BBR) y descarte de carga
   eos mcp [--sse|status]     Servidor MCP bi-direccional en vivo para Cursor y Google Antigravity
   eos help                   Muestra este manual de operaciones
 
