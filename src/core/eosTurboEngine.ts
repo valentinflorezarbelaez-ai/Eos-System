@@ -14,6 +14,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 
 import { scanArchitecture } from "./eosArchitectureGuard.ts";
 
@@ -98,27 +99,66 @@ export function checkFileSecretsCached(filePath: string): { isClean: boolean; fi
 /**
  * Collects all project source files recursively, ignoring node_modules, .git, and transient build dirs.
  */
+/**
+ * Enumerates the source-controlled surface of the project.
+ *
+ * Returning `null` signals "not a Git work tree" so callers fall back to a filesystem walk.
+ * Git mode is mandatory for correctness: local tool state (agent session transcripts under
+ * `.cline-home/`, `.env` files, caches, virtualenvs) is git-ignored and must never be scanned
+ * for secrets, otherwise every developer machine produces phantom SAST violations.
+ */
+function listGitVisibleFiles(projectRoot: string): Set<string> | null {
+  if (!fs.existsSync(path.join(projectRoot, ".git"))) return null;
+  try {
+    const output = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], {
+      cwd: projectRoot,
+      encoding: "utf8",
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ["ignore", "pipe", "ignore"]
+    });
+    return new Set(
+      output
+        .split("\0")
+        .filter(Boolean)
+        .map((file) => path.resolve(projectRoot, file))
+    );
+  } catch {
+    return null; // Git unavailable: degrade gracefully to the filesystem walker.
+  }
+}
+
+const BINARY_EXTENSIONS = new Set([".exe", ".bin", ".dll", ".so", ".dylib", ".wasm", ".png", ".jpg", ".jpeg", ".ico", ".webp", ".pdf"]);
+
+function isScannableFile(fullPath: string): boolean {
+  return !BINARY_EXTENSIONS.has(path.extname(fullPath).toLowerCase()) && fs.existsSync(fullPath);
+}
+
 export function collectSourceFiles(dir: string, projectRoot: string = dir): string[] {
   const results: string[] = [];
-  if (!fs.existsSync(dir)) return results;
+  const absDir = path.resolve(dir);
+  if (!fs.existsSync(absDir)) return results;
+
+  const gitVisible = listGitVisibleFiles(projectRoot);
+  if (gitVisible) {
+    for (const file of gitVisible) {
+      if (file.startsWith(absDir + path.sep) && isScannableFile(file)) results.push(file);
+    }
+    return results.sort();
+  }
 
   const ignoredDirs = new Set(["node_modules", ".git", "dist", ".next", "_sandbox", ".turbo", "target"]);
-  const binaryExtensions = new Set([".exe", ".bin", ".dll", ".so", ".dylib", ".wasm", ".png", ".jpg", ".jpeg", ".ico", ".webp", ".pdf"]);
-
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      if (!ignoredDirs.has(entry.name)) {
-        results.push(...collectSourceFiles(full, projectRoot));
-      }
-    } else if (entry.isFile()) {
-      const ext = path.extname(entry.name).toLowerCase();
-      if (!binaryExtensions.has(ext)) {
+  const walk = (current: string): void => {
+    const entries = fs.readdirSync(current, { withFileTypes: true });
+    for (const entry of entries) {
+      const full = path.join(current, entry.name);
+      if (entry.isDirectory()) {
+        if (!ignoredDirs.has(entry.name)) walk(full);
+      } else if (entry.isFile() && !BINARY_EXTENSIONS.has(path.extname(entry.name).toLowerCase())) {
         results.push(full);
       }
     }
-  }
+  };
+  walk(absDir);
   return results;
 }
 

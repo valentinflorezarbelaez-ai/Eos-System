@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
+import { execFileSync } from "node:child_process";
 import { EosUniversalProjectAdapter } from "../src/core/eosUniversalProjectAdapter.ts";
 
 describe("EOS Universal Polyglot Repository Adapter Suite (SPEC-019, BDD-049)", () => {
@@ -183,4 +184,151 @@ describe("EOS Universal Polyglot Repository Adapter Suite (SPEC-019, BDD-049)", 
       }
     });
   });
+  describe("Suite 4: Manifest-First Repository Identity & Path Integrity", () => {
+    const withTmpRepo = (files, assertion) => {
+      const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "eos-identity-mock-"));
+      try {
+        for (const [relativePath, content] of Object.entries(files)) {
+          const full = path.join(tmpDir, relativePath);
+          fs.mkdirSync(path.dirname(full), { recursive: true });
+          fs.writeFileSync(full, content);
+        }
+        assertion(new EosUniversalProjectAdapter(tmpDir).audit(), tmpDir);
+      } finally {
+        fs.rmSync(tmpDir, { recursive: true, force: true });
+      }
+    };
+
+    it("prefers the Backstage metadata.name over package.json and the checkout folder name", () => {
+      withTmpRepo(
+        {
+          "catalog-info.yaml":
+            "apiVersion: backstage.io/v1alpha1\nkind: Component\nmetadata:\n  name: payments-ledger\n  title: Payments\nspec:\n  type: service\n",
+          "package.json": JSON.stringify({ name: "internal-payments-pkg", version: "1.0.0" })
+        },
+        (report) => assert.equal(report.projectName, "payments-ledger")
+      );
+    });
+
+    it("falls back to package.json name when no Backstage descriptor exists", () => {
+      withTmpRepo(
+        { "package.json": JSON.stringify({ name: "recommendations-api", version: "2.3.0" }) },
+        (report) => assert.equal(report.projectName, "recommendations-api")
+      );
+    });
+
+    it("resolves the Go module final segment as the project identity", () => {
+      withTmpRepo({ "go.mod": "module github.com/spotify/recommend\n\ngo 1.24\n", "main.go": "package main\n" }, (report) =>
+        assert.equal(report.projectName, "recommend")
+      );
+    });
+
+    it("resolves the Cargo [package] name and never a dependency name", () => {
+      withTmpRepo(
+        {
+          "Cargo.toml": '[package]\nname = "loudness-core"\nversion = "0.1.0"\n\n[dependencies]\nname = "serde"\n'
+        },
+        (report) => assert.equal(report.projectName, "loudness-core")
+      );
+    });
+
+    it("resolves the PEP 621 [project] name before the Poetry table", () => {
+      withTmpRepo(
+        {
+          "pyproject.toml": '[project]\nname = "royalty-pipeline"\n\n[tool.poetry]\nname = "legacy-name"\n'
+        },
+        (report) => assert.equal(report.projectName, "royalty-pipeline")
+      );
+    });
+
+    it("falls back to the directory name when no manifest declares an identity", () => {
+      withTmpRepo({ "README.md": "# bare repo\n" }, (report, tmpDir) => {
+        assert.equal(report.projectName, path.basename(tmpDir));
+      });
+    });
+
+    it("keeps relative scan paths anchored to the audited repository (nested Dockerfile detection)", () => {
+      withTmpRepo(
+        {
+          "go.mod": "module github.com/spotify/fleet-agent\n",
+          "cmd/agent/main.go": "package main\n",
+          "deploy/Dockerfile": "FROM gcr.io/distroless/static-debian12\n"
+        },
+        (report) => {
+          assert.equal(report.fingerprint.containerization, "distroless");
+          assert.equal(report.fingerprint.totalSourceFiles, 3, "Directories must not be counted as source files");
+        }
+      );
+    });
+
+    it("enumerates only the git-visible surface and never secret-scans ignored files", (t) => {
+      const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "eos-git-mock-"));
+      try {
+        try {
+          execFileSync("git", ["init", "-q"], { cwd: tmpDir, stdio: "ignore" });
+        } catch {
+          t.skip("git binary unavailable in this environment");
+          return;
+        }
+        // Fixture secrets are assembled at runtime so this test file never trips the repo's own
+        // pre-commit / turbo secret scanners (which operate on literal source text).
+        const fakeGithubToken = ["ghp", "a".repeat(24)].join("_");
+        const fakeAwsKeyId = ["AKIA", "IOSFODNN7EXAMPLE"].join("");
+        fs.writeFileSync(path.join(tmpDir, ".gitignore"), "ignored/\nlocal.env\n.env\n");
+        fs.writeFileSync(path.join(tmpDir, "index.ts"), "export const boot = (): void => undefined;\n");
+        fs.mkdirSync(path.join(tmpDir, "ignored"), { recursive: true });
+        fs.writeFileSync(path.join(tmpDir, "ignored", "dump.env"), `GITHUB_TOKEN=${fakeGithubToken}\n`);
+        fs.writeFileSync(path.join(tmpDir, "local.env"), `AWS=${fakeAwsKeyId}\n`);
+        execFileSync("git", ["add", ".gitignore", "index.ts"], { cwd: tmpDir, stdio: "ignore" });
+
+        const report = new EosUniversalProjectAdapter(tmpDir).audit();
+
+        assert.equal(report.fingerprint.totalSourceFiles, 2, "Only .gitignore and index.ts are git-visible");
+        assert.equal(report.pillars.secretSecurity.score, 20, "Ignored files must never be secret-scanned");
+        assert.ok(
+          report.pillars.secretSecurity.findings.every((finding) => !finding.includes("local.env") && !finding.includes("dump.env")),
+          "Secret findings must not reference git-ignored paths"
+        );
+      } finally {
+        fs.rmSync(tmpDir, { recursive: true, force: true });
+      }
+    });
+  });
+
+  describe("Suite 5: Shift-Left Static Analysis Toolchain Detection", () => {
+    const fingerprintOf = (files) => {
+      const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "eos-linter-mock-"));
+      try {
+        for (const [relativePath, content] of Object.entries(files)) {
+          const full = path.join(tmpDir, relativePath);
+          fs.mkdirSync(path.dirname(full), { recursive: true });
+          fs.writeFileSync(full, content);
+        }
+        return new EosUniversalProjectAdapter(tmpDir).fingerprint();
+      } finally {
+        fs.rmSync(tmpDir, { recursive: true, force: true });
+      }
+    };
+
+    it("detects ESLint from a flat config file", () => {
+      assert.equal(fingerprintOf({ "package.json": "{}", "eslint.config.mjs": "export default [];\n" }).linter, "eslint");
+    });
+
+    it("detects Biome from biome.json", () => {
+      assert.equal(fingerprintOf({ "package.json": "{}", "biome.json": "{}\n" }).linter, "biome");
+    });
+
+    it("detects golangci-lint for Go engineering fleets", () => {
+      assert.equal(fingerprintOf({ "go.mod": "module github.com/spotify/x\n", "main.go": "package main\n", ".golangci.yml": "run: {}\n" }).linter, "golangci-lint");
+    });
+
+    it("falls back to gofmt for Go repositories without an explicit linter config", () => {
+      assert.equal(fingerprintOf({ "go.mod": "module github.com/spotify/x\n", "main.go": "package main\n" }).linter, "gofmt");
+    });
+
+    it("reports none when no toolchain is declared", () => {
+      assert.equal(fingerprintOf({ "README.md": "# repo\n" }).linter, "none");
+    });
+  });
+
 });

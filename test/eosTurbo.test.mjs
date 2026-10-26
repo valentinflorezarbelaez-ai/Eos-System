@@ -12,7 +12,9 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import {
@@ -52,6 +54,32 @@ describe("EOS Turbo Engine & Nanosecond Precision Suite", () => {
 
       const afterClear = checkFileSecretsCached(target);
       assert.equal(afterClear.fromCache, false);
+    });
+
+    it("excludes git-ignored local state from the SAST surface", (t) => {
+      const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "eos-turbo-git-"));
+      try {
+        try {
+          execFileSync("git", ["init", "-q"], { cwd: tmpDir, stdio: "ignore" });
+        } catch {
+          t.skip("git binary unavailable in this environment");
+          return;
+        }
+        fs.writeFileSync(path.join(tmpDir, ".gitignore"), "local-state/\n");
+        fs.writeFileSync(path.join(tmpDir, "index.ts"), "export const ok = true;\n");
+        fs.mkdirSync(path.join(tmpDir, "local-state"), { recursive: true });
+        fs.writeFileSync(
+          path.join(tmpDir, "local-state", "session.json"),
+          JSON.stringify({ token: ["ghp", "b".repeat(24)].join("_") })
+        );
+        execFileSync("git", ["add", ".gitignore", "index.ts"], { cwd: tmpDir, stdio: "ignore" });
+
+        const collected = collectSourceFiles(tmpDir, tmpDir).map((f) => path.relative(tmpDir, f).replace(/\\/g, "/"));
+
+        assert.deepEqual(collected, [".gitignore", "index.ts"], "Only git-visible files may be scanned for secrets");
+      } finally {
+        fs.rmSync(tmpDir, { recursive: true, force: true });
+      }
     });
 
     it("recursively collects project source files excluding node_modules and .git", () => {

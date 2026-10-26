@@ -15,6 +15,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import { execFileSync } from "node:child_process";
 
 export type PolyglotLanguage =
   | "typescript"
@@ -100,6 +101,7 @@ export interface PolyglotFingerprint {
   readonly hasAgentScaffolding: boolean;
   readonly hasBackstageDescriptor: boolean;
   readonly totalSourceFiles: number;
+  readonly linter: string;
   readonly structureArchetype: "MONOREPO" | "STANDARD_SERVICE" | "MODULAR_LIBRARY" | "EMBEDDED_MINIMAL";
 }
 
@@ -141,6 +143,57 @@ export interface ElevateResult {
   readonly sha256Proof: string;
 }
 
+/** Source-extension index used for weighted polyglot detection (SPEC-019). */
+const EXTENSION_TO_LANGUAGE: Readonly<Record<string, PolyglotLanguage>> = {
+  ".ts": "typescript",
+  ".tsx": "typescript",
+  ".mts": "typescript",
+  ".cts": "typescript",
+  ".js": "javascript",
+  ".jsx": "javascript",
+  ".mjs": "javascript",
+  ".cjs": "javascript",
+  ".go": "go",
+  ".rs": "rust",
+  ".py": "python",
+  ".pyi": "python",
+  ".dart": "flutter_dart",
+  ".java": "java_kotlin",
+  ".kt": "java_kotlin",
+  ".kts": "java_kotlin",
+  ".c": "cpp_c",
+  ".h": "cpp_c",
+  ".cc": "cpp_c",
+  ".cpp": "cpp_c",
+  ".cxx": "cpp_c",
+  ".hpp": "cpp_c",
+  ".cs": "csharp",
+  ".rb": "ruby",
+  ".php": "php",
+  ".ex": "elixir",
+  ".exs": "elixir"
+};
+
+/** Deterministic tie-breaker order for languages with identical weight. */
+const LANGUAGE_PRIORITY: readonly PolyglotLanguage[] = [
+  "typescript",
+  "javascript",
+  "go",
+  "rust",
+  "python",
+  "java_kotlin",
+  "cpp_c",
+  "csharp",
+  "flutter_dart",
+  "ruby",
+  "php",
+  "elixir",
+  "unknown"
+];
+
+/** Baseline weight granted by an explicit build manifest (equivalent to 4 real source files). */
+const MANIFEST_LANGUAGE_WEIGHT = 4;
+
 export class EosUniversalProjectAdapter {
   private readonly rootDir: string;
 
@@ -157,13 +210,7 @@ export class EosUniversalProjectAdapter {
       throw new Error(`Target path does not exist: ${resolvedPath}`);
     }
 
-    let projectName = path.basename(resolvedPath);
-    if (projectName === "path0" || projectName.startsWith("tmp")) {
-      const catalogPath = path.join(resolvedPath, "catalog-info.yaml");
-      if (fs.existsSync(catalogPath)) {
-        projectName = "Eos-System";
-      }
-    }
+    const projectName = this.deriveProjectName(resolvedPath);
     const files = this.scanDir(resolvedPath, 3);
     const fingerprint = this.fingerprintRepo(resolvedPath, files);
 
@@ -343,7 +390,189 @@ export class EosUniversalProjectAdapter {
   // PRIVATE HELPER ENGINES
   // ---------------------------------------------------------------------------
 
-  private scanDir(baseDir: string, maxDepth: number, currentDepth: number = 0): string[] {
+  /**
+   * Resolves the canonical repository identity from the repository manifests themselves,
+   * in strict priority order (Backstage descriptor -> package.json -> go.mod -> Cargo.toml
+   * -> pyproject.toml -> pubspec.yaml -> pom.xml -> build.gradle) and only falls back to the
+   * checkout directory name when no manifest declares an identity.
+   *
+   * Manifest-first resolution keeps reports deterministic and reproducible across CI runners,
+   * ephemeral sandboxes (/workspace, /tmp/...) and local clones with arbitrary folder names.
+   */
+  private deriveProjectName(baseDir: string): string {
+    // 1. Backstage catalog descriptor: metadata.name (canonical software identity).
+    const catalog = this.readTextFile(path.join(baseDir, "catalog-info.yaml"));
+    if (catalog) {
+      const catalogName = this.extractYamlBlockScalar(catalog, "metadata", "name");
+      if (catalogName) return catalogName;
+    }
+
+    // 2. Node.js / TypeScript: package.json "name".
+    const pkgRaw = this.readTextFile(path.join(baseDir, "package.json"));
+    if (pkgRaw) {
+      try {
+        const parsed = JSON.parse(pkgRaw) as { name?: unknown };
+        const pkgName = this.normalizeIdentity(parsed.name);
+        if (pkgName) return pkgName;
+      } catch {
+        // Malformed manifest: continue with the next identity source.
+      }
+    }
+
+    // 3. Go: module path, reduced to its final segment.
+    const goMod = this.readTextFile(path.join(baseDir, "go.mod"));
+    if (goMod) {
+      const moduleMatch = goMod.match(/^\s*module\s+(\S+)/m);
+      if (moduleMatch) {
+        const lastSegment = moduleMatch[1].replace(/\.git$/, "").split("/").filter(Boolean).pop();
+        const goName = this.normalizeIdentity(lastSegment);
+        if (goName) return goName;
+      }
+    }
+
+    // 4. Rust: Cargo.toml [package] name.
+    const cargoToml = this.readTextFile(path.join(baseDir, "Cargo.toml"));
+    if (cargoToml) {
+      for (const section of ["[package]", "[workspace.package]"]) {
+        const cargoName = this.normalizeIdentity(this.extractTomlScalar(cargoToml, "name", section));
+        if (cargoName) return cargoName;
+      }
+    }
+
+    // 5. Python: pyproject.toml (PEP 621 [project] then Poetry [tool.poetry]).
+    const pyproject = this.readTextFile(path.join(baseDir, "pyproject.toml"));
+    if (pyproject) {
+      for (const section of ["[project]", "[tool.poetry]", "[tool.hatch.project]"]) {
+        const pyName = this.normalizeIdentity(this.extractTomlScalar(pyproject, "name", section));
+        if (pyName) return pyName;
+      }
+    }
+
+    // 6. Dart / Flutter: pubspec.yaml name.
+    const pubspec = this.readTextFile(path.join(baseDir, "pubspec.yaml"));
+    if (pubspec) {
+      const dartName = this.normalizeIdentity(this.extractYamlBlockScalar(pubspec, "", "name"));
+      if (dartName) return dartName;
+    }
+
+    // 7. JVM: pom.xml <name>/<artifactId> or build.gradle rootProject.name.
+    const pomXml = this.readTextFile(path.join(baseDir, "pom.xml"));
+    if (pomXml) {
+      const pomMatch = pomXml.match(/<name>\s*([^<]+?)\s*<\/name>/i) ?? pomXml.match(/<artifactId>\s*([^<]+?)\s*<\/artifactId>/i);
+      const pomName = this.normalizeIdentity(pomMatch?.[1]);
+      if (pomName) return pomName;
+    }
+    const gradle = this.readTextFile(path.join(baseDir, "build.gradle")) ?? this.readTextFile(path.join(baseDir, "build.gradle.kts"));
+    if (gradle) {
+      const gradleMatch = gradle.match(/rootProject\.name\s*=\s*["']([^"']+)["']/);
+      const gradleName = this.normalizeIdentity(gradleMatch?.[1]);
+      if (gradleName) return gradleName;
+    }
+
+    // 8. Last resort: the checkout directory name.
+    return path.basename(baseDir);
+  }
+
+  private readTextFile(filePath: string): string | null {
+    try {
+      if (!fs.existsSync(filePath)) return null;
+      const stat = fs.statSync(filePath);
+      if (!stat.isFile() || stat.size > 262_144) return null;
+      return fs.readFileSync(filePath, "utf8");
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Extracts `key: value` nested under a top-level YAML block (pass "" to scan the document root).
+   */
+  private extractYamlBlockScalar(text: string, block: string, key: string): string | null {
+    let blockIndent = block ? -1 : 0;
+    for (const rawLine of text.split(/\r?\n/)) {
+      const trimmed = rawLine.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const indent = rawLine.length - rawLine.trimStart().length;
+
+      if (block && blockIndent === -1) {
+        if (indent === 0 && new RegExp(`^${block}\\s*:`).test(trimmed)) blockIndent = indent;
+        continue;
+      }
+      if (block && indent <= blockIndent) break; // A sibling top-level key closes the block.
+
+      const match = trimmed.match(new RegExp(`^${key}\\s*:\\s*(.+)$`));
+      if (match) return this.normalizeIdentity(match[1]);
+    }
+    return null;
+  }
+
+  /**
+   * Extracts `key = value` from a TOML section header (e.g. "[package]").
+   */
+  private extractTomlScalar(text: string, key: string, section: string): string | null {
+    let inSection = false;
+    for (const rawLine of text.split(/\r?\n/)) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith("#")) continue;
+      if (line.startsWith("[")) {
+        inSection = line === section;
+        continue;
+      }
+      if (!inSection) continue;
+      const match = line.match(new RegExp(`^${key}\\s*=\\s*(.+)$`));
+      if (match) return this.normalizeIdentity(match[1]);
+    }
+    return null;
+  }
+
+  /**
+   * Cleans a manifest-declared identity: strips quotes/comments and rejects empty or template values.
+   */
+  private normalizeIdentity(raw: unknown): string | null {
+    if (typeof raw !== "string") return null;
+    const cleaned = raw
+      .replace(/\s+#.*$/, "")
+      .trim()
+      .replace(/^["']|["']$/g, "")
+      .trim();
+    if (!cleaned || cleaned.length > 120) return null;
+    if (cleaned.includes("${") || /[\r\n]/.test(cleaned)) return null;
+    return cleaned;
+  }
+
+  /**
+   * Enumerates the source-controlled surface of a repository.
+   *
+   * When the target is a Git work tree, `git ls-files` is the single source of truth: it returns
+   * tracked files plus untracked-but-not-ignored files, so local tool state (`.cline-home`, `.env`,
+   * build caches, virtualenvs) is never fingerprinted or secret-scanned. Paths are sorted for
+   * deterministic Merkle receipts. Non-Git targets fall back to the bounded filesystem walk.
+   */
+  private listGitVisibleFiles(baseDir: string, maxDepth: number): string[] | null {
+    if (!fs.existsSync(path.join(baseDir, ".git"))) return null;
+    try {
+      const output = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], {
+        cwd: baseDir,
+        encoding: "utf8",
+        maxBuffer: 32 * 1024 * 1024,
+        stdio: ["ignore", "pipe", "ignore"]
+      });
+      return output
+        .split("\0")
+        .filter(Boolean)
+        .map((file) => file.replace(/\\/g, "/"))
+        .filter((file) => file.split("/").length - 1 <= maxDepth)
+        .sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+    } catch {
+      return null; // Git unavailable or not a work tree: use the filesystem walker.
+    }
+  }
+
+  private scanDir(baseDir: string, maxDepth: number, currentDepth: number = 0, scanRoot: string = baseDir): string[] {
+    if (currentDepth === 0) {
+      const gitFiles = this.listGitVisibleFiles(baseDir, maxDepth);
+      if (gitFiles) return gitFiles;
+    }
     if (currentDepth > maxDepth || !fs.existsSync(baseDir)) return [];
     const results: string[] = [];
     try {
@@ -361,10 +590,12 @@ export class EosUniversalProjectAdapter {
         }
 
         const full = path.join(baseDir, entry.name);
-        results.push(path.relative(this.rootDir, full).replace(/\\/g, "/"));
-
         if (entry.isDirectory()) {
-          results.push(...this.scanDir(full, maxDepth, currentDepth + 1));
+          results.push(...this.scanDir(full, maxDepth, currentDepth + 1, scanRoot));
+          continue;
+        }
+        if (entry.isFile()) {
+          results.push(path.relative(scanRoot, full).replace(/\\/g, "/"));
         }
       }
     } catch {
@@ -394,21 +625,37 @@ export class EosUniversalProjectAdapter {
     const hasComposer = fs.existsSync(path.join(baseDir, "composer.json"));
     const hasMix = fs.existsSync(path.join(baseDir, "mix.exs"));
 
-    if (hasTsConfig) languages.push("typescript");
-    else if (hasPkgJson) languages.push("javascript");
+    // Weighted polyglot detection: manifest declarations seed the score, real source files dominate it.
+    const languageWeights = new Map<PolyglotLanguage, number>();
+    const weigh = (lang: PolyglotLanguage, weight: number): void => {
+      languageWeights.set(lang, (languageWeights.get(lang) ?? 0) + weight);
+    };
 
-    if (hasGoMod || files.some((f) => f.endsWith(".go"))) languages.push("go");
-    if (hasCargo || files.some((f) => f.endsWith(".rs"))) languages.push("rust");
-    if (hasPyProject || files.some((f) => f.endsWith(".py"))) languages.push("python");
-    if (hasPubspec || files.some((f) => f.endsWith(".dart"))) languages.push("flutter_dart");
-    if (hasPom || files.some((f) => f.endsWith(".java") || f.endsWith(".kt"))) languages.push("java_kotlin");
-    if (hasCMake || files.some((f) => f.endsWith(".cpp") || f.endsWith(".c"))) languages.push("cpp_c");
-    if (hasCsproj) languages.push("csharp");
-    if (hasGemfile) languages.push("ruby");
-    if (hasComposer) languages.push("php");
-    if (hasMix) languages.push("elixir");
+    if (hasTsConfig) weigh("typescript", MANIFEST_LANGUAGE_WEIGHT);
+    else if (hasPkgJson) weigh("javascript", MANIFEST_LANGUAGE_WEIGHT);
+    if (hasGoMod) weigh("go", MANIFEST_LANGUAGE_WEIGHT);
+    if (hasCargo) weigh("rust", MANIFEST_LANGUAGE_WEIGHT);
+    if (hasPyProject) weigh("python", MANIFEST_LANGUAGE_WEIGHT);
+    if (hasPubspec) weigh("flutter_dart", MANIFEST_LANGUAGE_WEIGHT);
+    if (hasPom) weigh("java_kotlin", MANIFEST_LANGUAGE_WEIGHT);
+    if (hasCMake) weigh("cpp_c", MANIFEST_LANGUAGE_WEIGHT);
+    if (hasCsproj) weigh("csharp", MANIFEST_LANGUAGE_WEIGHT);
+    if (hasGemfile) weigh("ruby", MANIFEST_LANGUAGE_WEIGHT);
+    if (hasComposer) weigh("php", MANIFEST_LANGUAGE_WEIGHT);
+    if (hasMix) weigh("elixir", MANIFEST_LANGUAGE_WEIGHT);
 
-    const primaryLanguage: PolyglotLanguage = languages.length > 0 ? languages[0] : "unknown";
+    for (const file of files) {
+      const language = EXTENSION_TO_LANGUAGE[path.extname(file).toLowerCase()];
+      if (language) weigh(language, 1);
+    }
+
+    languages.push(
+      ...[...languageWeights.entries()]
+        .sort((a, b) => b[1] - a[1] || LANGUAGE_PRIORITY.indexOf(a[0]) - LANGUAGE_PRIORITY.indexOf(b[0]))
+        .map(([language]) => language)
+    );
+
+    const primaryLanguage: PolyglotLanguage = languages[0] ?? "unknown";
 
     // Package Managers
     if (fs.existsSync(path.join(baseDir, "pnpm-lock.yaml"))) pkgMgr = "pnpm";
@@ -488,8 +735,69 @@ export class EosUniversalProjectAdapter {
       hasAgentScaffolding,
       hasBackstageDescriptor,
       totalSourceFiles: files.length,
+      linter: this.detectLinter(baseDir, primaryLanguage),
       structureArchetype
     };
+  }
+
+  /**
+   * Detects the enforced static-analysis / formatting toolchain (the "shift-left" gate of the repo).
+   */
+  private detectLinter(baseDir: string, primaryLanguage: PolyglotLanguage): string {
+    const hasFile = (candidate: string): boolean => fs.existsSync(path.join(baseDir, candidate));
+
+    const jsTooling: ReadonlyArray<readonly [string, readonly string[]]> = [
+      ["eslint", ["eslint.config.js", "eslint.config.mjs", "eslint.config.cjs", "eslint.config.ts", ".eslintrc", ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json", ".eslintrc.yml"]],
+      ["biome", ["biome.json", "biome.jsonc"]],
+      ["prettier", [".prettierrc", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", "prettier.config.js", "prettier.config.mjs"]],
+      ["deno", ["deno.json", "deno.jsonc"]]
+    ];
+    for (const [tool, configs] of jsTooling) {
+      if (configs.some(hasFile)) return tool;
+    }
+
+    const polyglotTooling: ReadonlyArray<readonly [string, readonly string[]]> = [
+      ["golangci-lint", [".golangci.yml", ".golangci.yaml", ".golangci.toml", ".golangci.json"]],
+      ["rustfmt", ["rustfmt.toml", ".rustfmt.toml"]],
+      ["ruff", ["ruff.toml", ".ruff.toml"]],
+      ["flake8", [".flake8"]],
+      ["pylint", [".pylintrc", "pylintrc"]],
+      ["rubocop", [".rubocop.yml"]],
+      ["clang-format", [".clang-format", "_clang-format"]],
+      ["checkstyle", ["checkstyle.xml"]],
+      ["editorconfig", [".editorconfig"]]
+    ];
+    for (const [tool, configs] of polyglotTooling) {
+      if (configs.some(hasFile)) return tool;
+    }
+
+    // Manifest-declared tooling (package.json devDependencies or pyproject [tool.*] tables).
+    const pkgRaw = this.readTextFile(path.join(baseDir, "package.json"));
+    if (pkgRaw) {
+      try {
+        const pkg = JSON.parse(pkgRaw) as { devDependencies?: Record<string, string>; scripts?: Record<string, string> };
+        const declared = { ...(pkg.devDependencies ?? {}), ...(pkg.scripts ?? {}) };
+        const haystack = Object.keys(declared).join(" ");
+        if (/\beslint\b/.test(haystack)) return "eslint";
+        if (/\bbiome\b/.test(haystack)) return "biome";
+        if (/\bprettier\b/.test(haystack)) return "prettier";
+      } catch {
+        // Malformed manifest: fall through to the language heuristics below.
+      }
+    }
+
+    const pyproject = this.readTextFile(path.join(baseDir, "pyproject.toml"));
+    if (pyproject) {
+      if (/^\s*\[tool\.ruff(\.|])/m.test(pyproject)) return "ruff";
+      if (/^\s*\[tool\.black(\.|])/m.test(pyproject)) return "black";
+      if (/^\s*\[tool\.pylint(\.|])/m.test(pyproject)) return "pylint";
+    }
+
+    // Language-native defaults enforced by the compiler / formatter itself.
+    if (primaryLanguage === "go") return "gofmt";
+    if (primaryLanguage === "rust") return "rustfmt";
+    if (primaryLanguage === "flutter_dart") return "dart_analyze";
+    return "none";
   }
 
   private evaluateLayerPurity(baseDir: string, files: string[], fp: PolyglotFingerprint): PillarEvaluation {

@@ -13,8 +13,36 @@ console.log(" EOS SYSTEM v9.0 — 7-STAGE SOVEREIGN CI/CD & SECDEVOPS GATE (STRI
 console.log(` [INFO] Node: ${process.version} | Platform: ${process.platform} | Arch: ${process.arch}`);
 console.log("======================================================================");
 
+// Lists the source-controlled surface of the repository.
+// Git-ignored local state (.cline-home agent transcripts, .env files, caches, virtualenvs) is
+// never part of the audited surface: scanning it produces phantom secret violations on any
+// developer machine and on every agent-enabled runner.
+function listGitFiles(baseDir) {
+  if (!fs.existsSync(path.join(baseDir, ".git"))) return null;
+  try {
+    const output = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], {
+      cwd: baseDir,
+      encoding: "utf8",
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ["ignore", "pipe", "ignore"]
+    });
+    return output
+      .split("\0")
+      .filter(Boolean)
+      .map((file) => path.join(baseDir, file))
+      .filter((full) => fs.existsSync(full) && fs.statSync(full).isFile())
+      .sort();
+  } catch {
+    return null; // Git unavailable: degrade gracefully to the filesystem walker.
+  }
+}
+
 // Helper to recursively list tracked project files
 function listRepoFiles(dir, acc = []) {
+  if (acc.length === 0 && dir === root) {
+    const gitFiles = listGitFiles(root);
+    if (gitFiles) return gitFiles;
+  }
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
     if (
