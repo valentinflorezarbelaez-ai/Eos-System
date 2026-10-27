@@ -19,6 +19,7 @@ EOS es un toolkit local de ingeniería de software compuesto por una interfaz we
 * **FR-009 — Evidencia local.** La compuerta puede emitir un digest SHA-256 del inventario local, un recibo de comprobaciones configuradas y un reporte SARIF de esos asserts. Estos artefactos no son un SBOM estándar, una atestación firmada, un análisis SAST general, una verificación TLC/TLA+ ni prueba de despliegue.
 * **FR-010 — Flujo local de proyecto.** `eos flow` integra inspección y plan local, creación de un worktree desde un checkout limpio, validación sin red en Docker, revisión de diff y fast-forward local condicionado a un SHA-256 aprobado. No implementa edición autónoma, commit automático, push ni despliegue.
 * **FR-011 — Estado y cierre de workflow.** `flow status` reporta el estado local guardado. `flow close` elimina el worktree limpio, preserva la rama y rechaza archivos sin commit salvo que se solicite `--force` explícitamente.
+* **FR-012 — Portabilidad del flujo central.** CI ejecuta las pruebas de ciclo de vida y CLI de `eos flow` en Windows, macOS y Linux. Esta matriz valida el CLI central; el sandbox Docker y la suite completa permanecen en Linux.
 
 ## Límites y estados de capacidad
 

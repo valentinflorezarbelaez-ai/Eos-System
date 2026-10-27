@@ -44,6 +44,7 @@ For a first-time-user evaluation, task script, and qualitative launch gate, see 
 | `npm run mcp` | Start the local MCP stdio server; each request is limited to 1 MiB. |
 | `npm run mcp:stream` | Start authenticated local MCP HTTP/SSE on `127.0.0.1:3333`; exposes a read-only HTTP tool allowlist. |
 | `npm run typecheck` | Strictly type-check `src/**/*.ts` with the locked TypeScript compiler. |
+| `npm run test:workflow` | Test the core approval-gated workflow and CLI entry point; CI runs this subset on Windows, macOS, and Linux. |
 | `npm run verify:strict` | Run the configured credential-pattern scan, static checks, bounded simulations, TypeScript check, all discovered Node suites, and mocked handler smoke checks. It writes a local-check receipt and configured-checks SARIF; it does not deploy, perform general SAST, produce an SBOM, run TLC, or sign an attestation. |
 | `npm run test:unit` | Run the Node test file named in `package.json`. |
 
