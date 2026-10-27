@@ -29,10 +29,10 @@
   <!-- Typography & Critical Asset Preload -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" href="/css/eos.css?v=12.0" as="style" />
-  <link rel="preload" href="/js/eos.js?v=12.0" as="script" />
+  <link rel="preload" href="/css/eos.css?v=13.0" as="style" />
+  <link rel="preload" href="/js/eos.js?v=13.0" as="script" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/eos.css?v=12.0" integrity="sha384-Eu+G7zoY69hoSjcjK+ZC5kaPR8A8CbwOBAVNb7zeSoBSAheQZ0DUDxTd0T1/9iVb" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/eos.css?v=13.0" integrity="sha384-dIGNu2Fj7xYwEd236md5pVPyLLBuhXoHDbT0uF95gpYTNfM2OFzcZpe0vyQLkFRZ" crossorigin="anonymous" />
 
   <!-- Xirp-Grade Speculative Prerendering (0ms Instant Navigation) -->
   <script type="speculationrules">
@@ -119,7 +119,7 @@
       <nav aria-label="Navegación principal">
         <ul class="nav-links">
           <li><a href="#tier1-control-nexus">Herramientas locales</a></li>
-          <li><a href="#sovereign-fleet-topology">Topología 3D</a></li>
+          <li><a href="#sovereign-fleet-topology">Grafo 3D de ejemplo</a></li>
           <li><a href="#consola">Consola</a></li>
           <li><a href="#eos-jarvis-nexus">JARVIS</a></li>
           <li><a href="#templo-solar">Templo Solar</a></li>
@@ -945,33 +945,33 @@ Esta muestra no contiene resultados, fingerprints ni códigos de salida.</pre>
       </div>
     </section>
 
-    <!-- SECCIÓN SOVEREIGN FLEET 3D TOPOLOGY GRAPH & GO WEB-ASSEMBLY ENGINE (SPEC-026) -->
+    <!-- SECCIÓN DE VISUALIZACIÓN LOCAL DE GRAFO -->
     <section class="section deferred-section" id="sovereign-fleet-topology">
       <div class="container">
         <div class="section__head">
-          <div class="eyebrow">🌐 SOVEREIGN TOPOLOGY ENGINE · GO 1.27 WEB-ASSEMBLY · 14 NODOS SOBERANOS · SPEC-026 · v34.0</div>
-          <h2 class="section__title">EOS · Grafo de Topología Soberana 3D &amp; Motor Go WebAssembly</h2>
+          <div class="eyebrow">VISUALIZACIÓN LOCAL · CANVAS Y JAVASCRIPT · GRAFO DE EJEMPLO</div>
+          <h2 class="section__title">Visor interactivo de un grafo de ejemplo</h2>
           <p class="section__sub">
-            Visualizador orbital tridimensional interactivo de los 14 nodos soberanos en 3 anillos concéntricos (Plataformas Soberanas, Motores Core L0 y Nodos Runtime). Procesamiento nativo en <strong>WebAssembly (WASM)</strong> compilado desde Go 1.27, cálculo de Radio de Explosión (Blast Radius &lt; 150 µs), enrutamiento de pulsos y compresión AST de ultra-baja latencia en el navegador.
+            El navegador dibuja una fixture local de 14 nodos en tres anillos y calcula nodos alcanzables a partir de sus enlaces de ejemplo. No representa la arquitectura real del repositorio, no mide latencia ni usa Go/WASM.
           </p>
         </div>
 
-        <div class="topology-container" role="region" aria-label="Visualizador 3D de la Topología Soberana de EOS">
+        <div class="topology-container" role="region" aria-label="Visualizador Canvas de un grafo de ejemplo local">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
             <div style="display: flex; align-items: center; gap: 0.75rem;">
-              <span id="topology-wasm-badge" class="badge-status" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #10b981; font-family: var(--font-mono); font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px;">
-                ● GO 1.27 WASM NATIVE ACTIVE
+              <span id="topology-renderer-badge" class="badge-status" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #10b981; font-family: var(--font-mono); font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 4px;">
+                ● CANVAS JAVASCRIPT · DATOS LOCALES
               </span>
               <span style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-muted);">
-                3 Anillos Concéntricos · 14 Nodos · Proyección 3D Ortográfica
+                3 anillos · 14 nodos de ejemplo · proyección Canvas
               </span>
             </div>
             <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-              <button type="button" id="btn-topology-wasm-squeeze" class="btn btn--primary" style="padding: 0.42rem 0.85rem; font-size: 0.76rem;">
-                ⚡ Comprimir Contexto (WASM)
+              <button type="button" id="btn-topology-text-demo" class="btn btn--primary" style="padding: 0.42rem 0.85rem; font-size: 0.76rem;">
+                Quitar comentarios de un ejemplo
               </button>
-              <button type="button" id="btn-topology-wasm-bench" class="btn btn--gold" style="padding: 0.42rem 0.85rem; font-size: 0.76rem;">
-                🚀 Benchmark Go WASM (100k)
+              <button type="button" id="btn-topology-loop-bench" class="btn btn--gold" style="padding: 0.42rem 0.85rem; font-size: 0.76rem;">
+                Medir bucle JavaScript local
               </button>
               <button type="button" id="btn-topology-reset-cam" class="btn btn--ghost" style="padding: 0.42rem 0.85rem; font-size: 0.76rem;">
                 🔄 Resetear Rotación 3D
@@ -980,13 +980,13 @@ Esta muestra no contiene resultados, fingerprints ni códigos de salida.</pre>
           </div>
 
           <div class="topology-canvas-wrap">
-            <canvas id="eos-fleet-topology-canvas" width="800" height="440" aria-label="Lienzo interactivo 3D del grafo de topología soberana"></canvas>
+            <canvas id="eos-fleet-topology-canvas" width="800" height="440" aria-label="Lienzo interactivo de un grafo local de ejemplo"></canvas>
             <div class="topology-hud" id="topology-hud-box">
-              <div style="font-weight: 700; color: var(--cyan); margin-bottom: 0.25rem;">[TELEMETRÍA ORBITAL 3D]</div>
-              <div>Nodo: <strong id="topology-hud-node" style="color: #fff;">EOS System Control Plane</strong></div>
-              <div>Anillo: <span id="topology-hud-ring" style="color: #38bdf8;">Anillo 1 (Plataforma Soberana)</span></div>
-              <div>Radio de Explosión: <span id="topology-hud-blast" style="color: #fbbf24;">3 Nodos Transitivos</span></div>
-              <div>Latencia Estimada: <span id="topology-hud-lat" style="color: #10b981;">12.4 µs</span></div>
+              <div style="font-weight: 700; color: var(--cyan); margin-bottom: 0.25rem;">[GRAFO DE EJEMPLO]</div>
+              <div>Nodo: <strong id="topology-hud-node" style="color: #fff;">EOS System</strong></div>
+              <div>Anillo: <span id="topology-hud-ring" style="color: #38bdf8;">Anillo 1 (Plataforma de ejemplo)</span></div>
+              <div>Nodos alcanzables en la fixture: <span id="topology-hud-blast" style="color: #fbbf24;">3</span></div>
+              <div>Latencia: <span id="topology-hud-lat" style="color: #10b981;">No medida</span></div>
               <div style="font-size: 0.68rem; color: var(--text-muted); margin-top: 0.25rem;">Arrastra el ratón o toca para rotar en 3D</div>
             </div>
           </div>
@@ -994,15 +994,15 @@ Esta muestra no contiene resultados, fingerprints ni códigos de salida.</pre>
           <div class="topology-legend" aria-label="Leyenda de anillos de topología">
             <div class="topology-legend-item">
               <span class="topology-legend-dot" style="background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
-              <span>Anillo 1: Plataformas Soberanas (Aberamentho, Portafolio, PTG, EOS System)</span>
+              <span>Anillo 1: plataformas de ejemplo (Aberamentho, Portafolio, PTG, EOS System)</span>
             </div>
             <div class="topology-legend-item">
               <span class="topology-legend-dot" style="background: #06b6d4; box-shadow: 0 0 8px #06b6d4;"></span>
-              <span>Anillo 2: Motores Core L0 (EosCore, EosAin, EosAstral, EosElohim, Velo de Isis, Apex Router)</span>
+              <span>Anillo 2: módulos de ejemplo (EosCore, EosAin, EosAstral, EosElohim, Velo de Isis, Apex Router)</span>
             </div>
             <div class="topology-legend-item">
               <span class="topology-legend-dot" style="background: #f59e0b; box-shadow: 0 0 8px #f59e0b;"></span>
-              <span>Anillo 3: Nodos Runtime (Go WASM Kernel, Disruptor, BS.1770 DSP, Datomic Ledger)</span>
+              <span>Anillo 3: conceptos runtime (Go, Disruptor, DSP, ledger)</span>
             </div>
           </div>
 
@@ -1012,30 +1012,25 @@ Esta muestra no contiene resultados, fingerprints ni códigos de salida.</pre>
               <div class="tier1-metric-lbl">Nodo en Foco</div>
             </div>
             <div class="tier1-metric-box">
-              <div class="tier1-metric-val" id="topology-metric-blast" style="color: #fbbf24;">3 Nodos (21.4%)</div>
-              <div class="tier1-metric-lbl">Impacto / Blast Radius</div>
+              <div class="tier1-metric-val" id="topology-metric-blast" style="color: #fbbf24;">3 nodos</div>
+              <div class="tier1-metric-lbl">Alcanzables en el grafo de ejemplo</div>
             </div>
             <div class="tier1-metric-box">
-              <div class="tier1-metric-val" id="topology-metric-lat" style="color: #10b981;">12.4 µs</div>
-              <div class="tier1-metric-lbl">Latencia de Propagación</div>
+              <div class="tier1-metric-val" id="topology-metric-lat" style="color: #10b981;">No medida</div>
+              <div class="tier1-metric-lbl">Latencia</div>
             </div>
             <div class="tier1-metric-box">
-              <div class="tier1-metric-val" id="topology-metric-engine" style="color: #a855f7;">Go 1.27 WASM</div>
-              <div class="tier1-metric-lbl">Motor de Cómputo Cliente</div>
+              <div class="tier1-metric-val" id="topology-metric-engine" style="color: #a855f7;">Canvas / JS</div>
+              <div class="tier1-metric-lbl">Renderizador del visor</div>
             </div>
           </div>
 
           <div style="background: rgba(4, 9, 24, 0.95); border: 1px solid var(--line-subtle); border-radius: var(--radius-sm); padding: 1rem; font-family: var(--font-mono); font-size: 0.76rem; max-height: 200px; overflow-y: auto;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-              <span style="color: var(--cyan); font-weight: 700;">[CONSOLA DE TELEMETRÍA WASM Y TOPOLOGÍA]</span>
-              <span id="topology-log-timestamp" style="color: var(--text-muted); font-size: 0.7rem;">LIVE STREAMING</span>
+              <span style="color: var(--cyan); font-weight: 700;">[SALIDA DEL GRAFO LOCAL]</span>
+              <span id="topology-log-timestamp" style="color: var(--text-muted); font-size: 0.7rem;">FIXTURE ESTÁTICA</span>
             </div>
-            <pre id="topology-console-log" style="margin: 0; white-space: pre-wrap; color: var(--text-light); line-height: 1.5;">🌐 INICIALIZACIÓN DE TOPOLOGÍA SOBERANA 3D v34.0:
-• Grafo Cargado        : 14 nodos soberanos mapeados en 3 anillos orbitales ortográficos
-• Motor WebAssembly   : assets/eos_apex.wasm compilado con Go 1.27 (-ldflags="-s -w")
-• Puente JS/WASM       : js/wasm_exec.js montado en window.eosGoWasm
-• Radio de Explosión   : Cálculo determinista O(V + E) con resolución sub-microsegundo
-• Invariante L0 Purity : 0 dependencias externas en tiempo de ejecución (dependencies: {})</pre>
+            <pre id="topology-console-log" role="status" aria-live="polite" style="margin: 0; white-space: pre-wrap; color: var(--text-light); line-height: 1.5;">La visualización usa una fixture JavaScript de 14 nodos. No consulta el grafo del repositorio ni informa estado o rendimiento de producción.</pre>
           </div>
         </div>
       </div>
@@ -2916,6 +2911,6 @@ No se ejecutan comandos, auditorías, sondeos ni despliegues.</pre>
     </div>
   </dialog>
 
-  <script src="/js/eos.js?v=12.0" integrity="sha384-vI0Ee7xwqnS8HMWmLpGd4FEsrofQIGaqyZloN1Sg/T4riGv55La6iaobOWZXxZzg" crossorigin="anonymous" defer></script>
+  <script src="/js/eos.js?v=13.0" integrity="sha384-jAU8cq7A6oqadUtkRUcQYMwul1CtmYmjxQTpZf90HgbPJTJR9qUjlEoyubMCI3Qg" crossorigin="anonymous" defer></script>
 </body>
 </html>

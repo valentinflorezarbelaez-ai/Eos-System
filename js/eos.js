@@ -3203,7 +3203,7 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
   }
 
   // ---------------------------------------------------------------------------
-  // 22. SOVEREIGN FLEET 3D TOPOLOGY GRAPH & GO WEB-ASSEMBLY RUNTIME (SPEC-026)
+  // 22. Local sample-graph Canvas visualization and browser micro-demos
   // ---------------------------------------------------------------------------
   function initSovereignFleetTopology() {
     const canvas = document.getElementById("eos-fleet-topology-canvas");
@@ -3223,22 +3223,22 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     window.addEventListener("resize", resizeCanvas);
 
     const nodes = [
-      { id: "aberamentho", name: "Aberamentho", tier: "Sovereign Fleet", ring: 1, angle: 0, elevation: 15, color: "#ec4899", deps: ["dsp-bs1770", "apollo-mesh", "eos-core"], down: ["client-web", "audio-dsp"], lat: 24.5 },
-      { id: "portafolio", name: "Portafolio", tier: "Sovereign Fleet", ring: 1, angle: Math.PI / 2, elevation: -15, color: "#a855f7", deps: ["eos-core", "disruptor-ring"], down: ["global-anycast"], lat: 18.2 },
-      { id: "ptg", name: "PTG Talent", tier: "Sovereign Fleet", ring: 1, angle: Math.PI, elevation: 15, color: "#3b82f6", deps: ["eos-core", "datomic-ledger"], down: ["talent-mesh"], lat: 21.0 },
-      { id: "eos-system", name: "EOS System", tier: "Sovereign Fleet", ring: 1, angle: (3 * Math.PI) / 2, elevation: -15, color: "#10b981", deps: ["eos-core", "eos-ain", "eos-astral", "eos-elohim", "velo-isis", "apex-router"], down: ["aberamentho", "portafolio", "ptg"], lat: 12.4 },
+      { id: "aberamentho", name: "Aberamentho", tier: "Plataforma de ejemplo", ring: 1, angle: 0, elevation: 15, color: "#ec4899", deps: ["dsp-bs1770", "apollo-mesh", "eos-core"], down: ["client-web", "audio-dsp"] },
+      { id: "portafolio", name: "Portafolio", tier: "Plataforma de ejemplo", ring: 1, angle: Math.PI / 2, elevation: -15, color: "#a855f7", deps: ["eos-core", "disruptor-ring"], down: ["global-anycast"] },
+      { id: "ptg", name: "PTG Talent", tier: "Plataforma de ejemplo", ring: 1, angle: Math.PI, elevation: 15, color: "#3b82f6", deps: ["eos-core", "datomic-ledger"], down: ["talent-mesh"] },
+      { id: "eos-system", name: "EOS System", tier: "Plataforma de ejemplo", ring: 1, angle: (3 * Math.PI) / 2, elevation: -15, color: "#10b981", deps: ["eos-core", "eos-ain", "eos-astral", "eos-elohim", "velo-isis", "apex-router"], down: ["aberamentho", "portafolio", "ptg"] },
 
-      { id: "eos-core", name: "EosCore L0", tier: "Core Engine", ring: 2, angle: 0, elevation: 20, color: "#06b6d4", deps: ["disruptor-ring", "go-wasm-kernel"], down: ["eos-system", "aberamentho", "portafolio", "ptg"], lat: 5.1 },
-      { id: "eos-ain", name: "EosAin", tier: "Core Engine", ring: 2, angle: Math.PI / 3, elevation: -20, color: "#6366f1", deps: ["datomic-ledger"], down: ["eos-system"], lat: 6.2 },
-      { id: "eos-astral", name: "EosAstral", tier: "Core Engine", ring: 2, angle: (2 * Math.PI) / 3, elevation: 20, color: "#8b5cf6", deps: ["apollo-mesh"], down: ["eos-system"], lat: 7.8 },
-      { id: "eos-elohim", name: "EosElohim", tier: "Core Engine", ring: 2, angle: Math.PI, elevation: -20, color: "#f59e0b", deps: ["disruptor-ring"], down: ["eos-system"], lat: 4.9 },
-      { id: "velo-isis", name: "Velo de Isis", tier: "Core Engine", ring: 2, angle: (4 * Math.PI) / 3, elevation: 20, color: "#ef4444", deps: ["datomic-ledger"], down: ["eos-system"], lat: 8.5 },
-      { id: "apex-router", name: "Apex Router", tier: "Core Engine", ring: 2, angle: (5 * Math.PI) / 3, elevation: -20, color: "#14b8a6", deps: ["go-wasm-kernel"], down: ["eos-system"], lat: 3.2 },
+      { id: "eos-core", name: "EosCore L0", tier: "Módulo de ejemplo", ring: 2, angle: 0, elevation: 20, color: "#06b6d4", deps: ["disruptor-ring", "go-wasm-kernel"], down: ["eos-system", "aberamentho", "portafolio", "ptg"] },
+      { id: "eos-ain", name: "EosAin", tier: "Módulo de ejemplo", ring: 2, angle: Math.PI / 3, elevation: -20, color: "#6366f1", deps: ["datomic-ledger"], down: ["eos-system"] },
+      { id: "eos-astral", name: "EosAstral", tier: "Módulo de ejemplo", ring: 2, angle: (2 * Math.PI) / 3, elevation: 20, color: "#8b5cf6", deps: ["apollo-mesh"], down: ["eos-system"] },
+      { id: "eos-elohim", name: "EosElohim", tier: "Módulo de ejemplo", ring: 2, angle: Math.PI, elevation: -20, color: "#f59e0b", deps: ["disruptor-ring"], down: ["eos-system"] },
+      { id: "velo-isis", name: "Velo de Isis", tier: "Módulo de ejemplo", ring: 2, angle: (4 * Math.PI) / 3, elevation: 20, color: "#ef4444", deps: ["datomic-ledger"], down: ["eos-system"] },
+      { id: "apex-router", name: "Apex Router", tier: "Módulo de ejemplo", ring: 2, angle: (5 * Math.PI) / 3, elevation: -20, color: "#14b8a6", deps: ["go-wasm-kernel"], down: ["eos-system"] },
 
-      { id: "go-wasm-kernel", name: "Go WASM", tier: "Runtime Kernel", ring: 3, angle: Math.PI / 4, elevation: 0, color: "#00add8", deps: [], down: ["eos-core", "apex-router"], lat: 0.8 },
-      { id: "disruptor-ring", name: "Disruptor Ring", tier: "Runtime Kernel", ring: 3, angle: (3 * Math.PI) / 4, elevation: 0, color: "#f97316", deps: [], down: ["eos-core", "eos-elohim"], lat: 0.15 },
-      { id: "dsp-bs1770", name: "DSP BS.1770", tier: "Runtime Kernel", ring: 3, angle: (5 * Math.PI) / 4, elevation: 0, color: "#84cc16", deps: [], down: ["aberamentho"], lat: 1.1 },
-      { id: "datomic-ledger", name: "Datomic Ledger", tier: "Runtime Kernel", ring: 3, angle: (7 * Math.PI) / 4, elevation: 0, color: "#eab308", deps: [], down: ["ptg", "eos-ain", "velo-isis"], lat: 1.4 }
+      { id: "go-wasm-kernel", name: "Concepto Go/WASM", tier: "Concepto runtime", ring: 3, angle: Math.PI / 4, elevation: 0, color: "#00add8", deps: [], down: ["eos-core", "apex-router"] },
+      { id: "disruptor-ring", name: "Disruptor Ring", tier: "Concepto runtime", ring: 3, angle: (3 * Math.PI) / 4, elevation: 0, color: "#f97316", deps: [], down: ["eos-core", "eos-elohim"] },
+      { id: "dsp-bs1770", name: "DSP BS.1770", tier: "Concepto runtime", ring: 3, angle: (5 * Math.PI) / 4, elevation: 0, color: "#84cc16", deps: [], down: ["aberamentho"] },
+      { id: "datomic-ledger", name: "Ledger", tier: "Concepto runtime", ring: 3, angle: (7 * Math.PI) / 4, elevation: 0, color: "#eab308", deps: [], down: ["ptg", "eos-ain", "velo-isis"] }
     ];
 
     const nodeMap = new Map();
@@ -3251,7 +3251,7 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
       const queue = [...start.down];
       while (queue.length > 0) {
         const curr = queue.shift();
-        if (!visited.has(curr)) {
+        if (nodeMap.has(curr) && !visited.has(curr)) {
           visited.add(curr);
           const n = nodeMap.get(curr);
           if (n) queue.push(...n.down);
@@ -3338,24 +3338,23 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
 
       if (hudNode) hudNode.textContent = n.name;
       if (hudRing) hudRing.textContent = `Anillo ${n.ring} (${n.tier})`;
-      if (hudBlast) hudBlast.textContent = `${br.length} Nodos Transitivos (${((br.length / 14) * 100).toFixed(1)}%)`;
-      if (hudLat) hudLat.textContent = `${n.lat} µs`;
+      if (hudBlast) hudBlast.textContent = `${br.length} nodos del ejemplo (${((br.length / nodes.length) * 100).toFixed(1)}%)`;
+      if (hudLat) hudLat.textContent = "No medida";
 
       if (metricNode) metricNode.textContent = n.id;
-      if (metricBlast) metricBlast.textContent = `${br.length} Nodos (${((br.length / 14) * 100).toFixed(1)}%)`;
-      if (metricLat) metricLat.textContent = `${n.lat} µs`;
-
-      const engineName = (typeof window !== "undefined" && window.eosGoWasm) ? "Go 1.27 WASM" : "TypeScript L0";
-      if (metricEngine) metricEngine.textContent = engineName;
+      if (metricBlast) metricBlast.textContent = `${br.length} nodos (${((br.length / nodes.length) * 100).toFixed(1)}%)`;
+      if (metricLat) metricLat.textContent = "No medida";
+      if (metricEngine) metricEngine.textContent = "Canvas / JS";
 
       if (logBox) {
         logBox.textContent = `🔍 SELECCIÓN DE NODO: [${n.name.toUpperCase()}]
 • Nivel / Anillo      : Anillo ${n.ring} (${n.tier})
 • Dependencias        : ${n.deps.length > 0 ? n.deps.join(", ") : "Ninguna (Hoja / Runtime Base)"}
 • Salidas Directas    : ${n.down.length > 0 ? n.down.join(", ") : "Ninguna"}
-• Radio de Explosión  : ${br.length} nodos alcanzados (${br.join(", ") || "Aislado"})
-• Latencia de Impacto : ${n.lat} microsegundos (Resolución determinista O(V+E))
-• Motor de Análisis   : ${engineName} (0 B/op)`;
+• Nodos alcanzables   : ${br.length} en esta fixture (${br.join(", ") || "ninguno"})
+• Latencia            : No medida
+• Alcance             : Datos locales de ejemplo; no es un análisis del repositorio ni de producción
+• Motor de dibujo     : Canvas / JavaScript`;
       }
     }
 
@@ -3363,8 +3362,8 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     for (let i = 0; i < 30; i++) {
       particles.push({
         sourceIdx: i % nodes.length,
-        progress: Math.random(),
-        speed: 0.004 + Math.random() * 0.004
+        progress: ((i * 17) % 31) / 31,
+        speed: 0.004 + (i % 5) * 0.001
       });
     }
 
@@ -3498,8 +3497,8 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     }
     requestAnimationFrame(render);
 
-    const btnSqueeze = document.getElementById("btn-topology-wasm-squeeze");
-    const btnBench = document.getElementById("btn-topology-wasm-bench");
+    const btnSqueeze = document.getElementById("btn-topology-text-demo");
+    const btnBench = document.getElementById("btn-topology-loop-bench");
     const btnResetCam = document.getElementById("btn-topology-reset-cam");
     const logBox = document.getElementById("topology-console-log");
 
@@ -3520,64 +3519,37 @@ func SovereignTransaction(ctx context.Context, id string) (*Receipt, error) {
     }
     return &Receipt{ID: id, Status: "CONFIRMED"}, nil
 }`;
-        const start = performance.now();
-        let compressed = sampleCode.replace(/\/\/.*$/gm, "").replace(/\/\*[\s\S]*?\*\//g, "").split("\n").filter(l => l.trim().length > 0).join("\n");
-        const elapsed = (performance.now() - start).toFixed(2);
+        const startedAt = performance.now();
+        const compactedText = sampleCode
+          .replace(/\/\/.*$/gm, "")
+          .replace(/\/\*[\s\S]*?\*\//g, "")
+          .split("\n")
+          .filter((line) => line.trim().length > 0)
+          .join("\n");
+        const elapsedMs = performance.now() - startedAt;
+        const removedCharacters = sampleCode.length - compactedText.length;
 
         if (logBox) {
-          logBox.textContent = `⚡ COMPRESIÓN AST EJECUTADA EN EL CLIENTE:
-• Código Original     : 247 caracteres (~61 tokens)
-• Código Comprimido   : 148 caracteres (~37 tokens)
-• Reducción de Tokens : 39.3% Ahorro neto en el prompt
-• Tiempo de Ejecución : ${elapsed} ms
-• Motor Activo        : ${window.eosGoWasm ? "Go 1.27 WebAssembly (Native)" : "TypeScript Layer-0 Fallback"}
-• Preservación        : 100% de firmas de funciones y tipos estructurales preservados`;
+          logBox.textContent = `Demostración textual sobre una cadena fija\nCaracteres originales: ${sampleCode.length}\nCaracteres tras quitar comentarios y líneas vacías: ${compactedText.length}\nCaracteres retirados: ${removedCharacters}\nDuración observada: ${elapsedMs.toFixed(3)} ms\n\nNo se analizó AST, no se contaron tokens y no se leyó ni modificó un archivo. La transformación no garantiza preservar código ejecutable.`;
         }
       });
     }
 
     if (btnBench) {
       btnBench.addEventListener("click", () => {
-        const it = 100000;
-        const start = performance.now();
+        const iterations = 100_000;
+        const startedAt = performance.now();
         let acc = 0;
-        for (let i = 0; i < it; i++) {
+        for (let i = 0; i < iterations; i += 1) {
           acc += 12;
         }
-        const elapsedMs = performance.now() - start;
-        const tokPerSec = Math.round((acc / (elapsedMs / 1000))).toLocaleString();
+        const elapsedMs = performance.now() - startedAt;
+        const iterationsPerSecond = elapsedMs > 0 ? Math.round(iterations / (elapsedMs / 1000)) : null;
 
         if (logBox) {
-          logBox.textContent = `🚀 BENCHMARK DE CÓMPUTO CLIENTE (100,000 ITERACIONES):
-• Iteraciones         : 100,000 ciclos
-• Tokens Evaluados    : ${acc.toLocaleString()} tokens
-• Tiempo Transcurrido : ${elapsedMs.toFixed(3)} ms
-• Throughput Cliente  : ${tokPerSec} tokens / segundo
-• Presión de GC       : 0 B / op (Cero asignaciones en heap durante el bucle)
-• Estatus Motor       : ${window.eosGoWasm ? "Go 1.27 WebAssembly" : "TypeScript Layer-0 Native"}`;
+          logBox.textContent = `Bucle JavaScript local\nIteraciones: ${iterations.toLocaleString("es-CO")}\nAcumulador: ${acc.toLocaleString("es-CO")}\nDuración observada: ${elapsedMs.toFixed(3)} ms\nIteraciones por segundo derivadas: ${iterationsPerSecond === null ? "N/D (resolución del reloj)" : iterationsPerSecond.toLocaleString("es-CO")}\n\nNo mide Go, WASM, tokens, asignaciones de memoria ni rendimiento de producción.`;
         }
       });
-    }
-
-    if (typeof WebAssembly !== "undefined" && typeof Go !== "undefined") {
-      try {
-        const go = new Go();
-        WebAssembly.instantiateStreaming(fetch("assets/eos_apex.wasm"), go.importObject)
-          .then((res) => {
-            go.run(res.instance);
-            const badge = document.getElementById("topology-wasm-badge");
-            if (badge) {
-              badge.textContent = "● GO 1.27 WASM NATIVE ACTIVE (0 B/op)";
-              badge.style.color = "#10b981";
-              badge.style.borderColor = "#10b981";
-            }
-          })
-          .catch((_e) => {
-            // Graceful fallback to TypeScript L0
-          });
-      } catch (_e) {
-        // Fallback
-      }
     }
   }
 
