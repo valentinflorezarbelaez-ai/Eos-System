@@ -46,7 +46,7 @@ Commands that write files, change Git configuration, commit, or push should be r
 
 ### Approval-gated project workflow
 
-`flow` joins the local repository audit, Honk draft, Git worktrees, and the Docker sandbox into one lifecycle. Inspection and planning do not write to the target repository. The plan and health index are local heuristics, not an AI-generated implementation or certification.
+`flow` joins the local repository audit, Honk draft, Git worktrees, and the Docker sandbox into one lifecycle. Inspection and planning do not write to the target repository. The audit score counts bounded local structural signals; it does not assess production readiness, execute tests, verify CI results, or replace security scanners.
 
 ```sh
 node bin/eos.mjs flow inspect "<repo-path>"

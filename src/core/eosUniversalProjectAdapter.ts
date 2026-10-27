@@ -108,10 +108,20 @@ export type CiCdPlatform =
 
 export interface PillarEvaluation {
   readonly name: string;
-  readonly score: number; // 0 to 20
+  readonly score: number; // Weighted local structural signals, 0 to 20; not a quality rating.
   readonly maxScore: number;
-  readonly status: "EXCELLENT" | "SATISFACTORY" | "NEEDS_IMPROVEMENT" | "CRITICAL";
+  readonly signalBand: "MANY_SIGNALS" | "SOME_SIGNALS" | "FEW_SIGNALS";
   readonly findings: readonly string[];
+}
+
+export type LocalSignalBand = "MANY_SIGNALS" | "SOME_SIGNALS" | "FEW_SIGNALS";
+
+function classifySignalBand(score: number, maxScore: number): LocalSignalBand {
+  if (maxScore <= 0) return "FEW_SIGNALS";
+  const ratio = score / maxScore;
+  if (ratio >= 0.75) return "MANY_SIGNALS";
+  if (ratio >= 0.5) return "SOME_SIGNALS";
+  return "FEW_SIGNALS";
 }
 
 export interface PolyglotFingerprint {
@@ -138,12 +148,14 @@ export interface PolyglotAuditReport {
     readonly ciCdGateways: PillarEvaluation;
     readonly aiScaffolding: PillarEvaluation;
   };
-  readonly healthIndex: number; // 0 - 100
+  /** Weighted count of local structural indicators; it is not a health or readiness score. */
+  readonly localSignalScore: number; // 0 - 100
+  readonly localSignalBand: LocalSignalBand;
+  readonly productionReadiness: "NOT_ASSESSED";
   readonly scoreScope: "LOCAL_FILE_AND_PATTERN_HEURISTICS";
-  readonly tierIsCertification: false;
-  readonly tier: "TIER_1_SOVEREIGN" | "TIER_2_PRODUCTION" | "TIER_3_DEVELOPMENT" | "TIER_4_LEGACY";
+  readonly assessmentLimitations: readonly string[];
   readonly recommendations: readonly string[];
-  readonly sha256MerkleReceipt: string;
+  readonly sha256ReportDigest: string;
   readonly timestamp: string;
 }
 
@@ -212,7 +224,7 @@ export class EosUniversalProjectAdapter {
     // Pillar 5: AI Context & Golden Path
     const aiScaffolding = this.evaluateAiScaffolding(resolvedPath, files);
 
-    const healthIndex = Math.min(
+    const localSignalScore = Math.min(
       100,
       layerPurity.score +
         testInfrastructure.score +
@@ -220,11 +232,13 @@ export class EosUniversalProjectAdapter {
         ciCdGateways.score +
         aiScaffolding.score
     );
-
-    let tier: PolyglotAuditReport["tier"] = "TIER_4_LEGACY";
-    if (healthIndex >= 90) tier = "TIER_1_SOVEREIGN";
-    else if (healthIndex >= 75) tier = "TIER_2_PRODUCTION";
-    else if (healthIndex >= 50) tier = "TIER_3_DEVELOPMENT";
+    const localSignalBand = classifySignalBand(localSignalScore, 100);
+    const assessmentLimitations = [
+      "Production readiness is not assessed; this report cannot certify security, reliability, or deployment suitability.",
+      "Tests and CI workflows are detected from local files only; EOS does not execute them or verify their latest results here.",
+      "The credential check scans at most 50 discovered paths for three token patterns; it is not a secrets scanner, SAST, or dependency audit.",
+      "Inventory is bounded to directory depth 3; it skips symlinks and excludes .git, node_modules, .vercel, target, vendor, and worktree directories."
+    ] as const;
 
     const recommendations: string[] = [];
     if (layerPurity.score < 15) recommendations.push(...layerPurity.findings);
@@ -237,10 +251,11 @@ export class EosUniversalProjectAdapter {
       resolvedPath,
       projectName,
       fingerprint,
-      healthIndex,
+      localSignalScore,
+      localSignalBand,
+      productionReadiness: "NOT_ASSESSED",
       scoreScope: "LOCAL_FILE_AND_PATTERN_HEURISTICS",
-      tierIsCertification: false,
-      tier,
+      assessmentLimitations,
       scores: [
         layerPurity.score,
         testInfrastructure.score,
@@ -249,7 +264,7 @@ export class EosUniversalProjectAdapter {
         aiScaffolding.score
       ]
     });
-    const sha256MerkleReceipt = crypto.createHash("sha256").update(payload).digest("hex");
+    const sha256ReportDigest = crypto.createHash("sha256").update(payload).digest("hex");
 
     return {
       projectPath: resolvedPath,
@@ -262,12 +277,13 @@ export class EosUniversalProjectAdapter {
         ciCdGateways,
         aiScaffolding
       },
-      healthIndex,
+      localSignalScore,
+      localSignalBand,
+      productionReadiness: "NOT_ASSESSED",
       scoreScope: "LOCAL_FILE_AND_PATTERN_HEURISTICS",
-      tierIsCertification: false,
-      tier,
+      assessmentLimitations,
       recommendations,
-      sha256MerkleReceipt,
+      sha256ReportDigest,
       timestamp: new Date().toISOString()
     };
   }
@@ -379,13 +395,19 @@ export class EosUniversalProjectAdapter {
   // PRIVATE HELPER ENGINES
   // ---------------------------------------------------------------------------
 
-  private scanDir(baseDir: string, maxDepth: number, currentDepth: number = 0): string[] {
+  private scanDir(
+    baseDir: string,
+    maxDepth: number,
+    currentDepth: number = 0,
+    scanRoot: string = baseDir
+  ): string[] {
     if (currentDepth > maxDepth || !fs.existsSync(baseDir)) return [];
     const results: string[] = [];
     try {
       const entries = fs.readdirSync(baseDir, { withFileTypes: true });
       for (const entry of entries) {
         if (
+          entry.isSymbolicLink() ||
           entry.name === ".git" ||
           entry.name === "node_modules" ||
           entry.name === ".vercel" ||
@@ -397,10 +419,10 @@ export class EosUniversalProjectAdapter {
         }
 
         const full = path.join(baseDir, entry.name);
-        results.push(path.relative(this.rootDir, full).replace(/\\/g, "/"));
+        results.push(path.relative(scanRoot, full).replace(/\\/g, "/"));
 
         if (entry.isDirectory()) {
-          results.push(...this.scanDir(full, maxDepth, currentDepth + 1));
+          results.push(...this.scanDir(full, maxDepth, currentDepth + 1, scanRoot));
         }
       }
     } catch {
@@ -563,16 +585,11 @@ export class EosUniversalProjectAdapter {
       score += 10; // Standard parity for non-JS languages
     }
 
-    let status: PillarEvaluation["status"] = "EXCELLENT";
-    if (score < 10) status = "CRITICAL";
-    else if (score < 15) status = "NEEDS_IMPROVEMENT";
-    else if (score < 18) status = "SATISFACTORY";
-
     return {
-      name: "Layer Purity & Architecture Separation",
+      name: "Source Organization & Dependency Signals",
       score,
       maxScore: 20,
-      status,
+      signalBand: classifySignalBand(score, 20),
       findings
     };
   }
@@ -613,16 +630,11 @@ export class EosUniversalProjectAdapter {
       findings.push("Expand automated test coverage across edge cases and invariants.");
     }
 
-    let status: PillarEvaluation["status"] = "EXCELLENT";
-    if (score < 10) status = "CRITICAL";
-    else if (score < 15) status = "NEEDS_IMPROVEMENT";
-    else if (score < 18) status = "SATISFACTORY";
-
     return {
-      name: "Test Infrastructure & Concurrency Safety",
+      name: "Test Setup Signals (execution and coverage are not measured)",
       score,
       maxScore: 20,
-      status,
+      signalBand: classifySignalBand(score, 20),
       findings
     };
   }
@@ -662,16 +674,11 @@ export class EosUniversalProjectAdapter {
     }
 
     score = Math.max(0, score);
-    let status: PillarEvaluation["status"] = "EXCELLENT";
-    if (score < 10) status = "CRITICAL";
-    else if (score < 15) status = "NEEDS_IMPROVEMENT";
-    else if (score < 18) status = "SATISFACTORY";
-
     return {
-      name: "Secret Security & Zero Plaintext Leaks",
+      name: "Credential Protection Signals (limited local pattern check)",
       score,
       maxScore: 20,
-      status,
+      signalBand: classifySignalBand(score, 20),
       findings
     };
   }
@@ -701,16 +708,11 @@ export class EosUniversalProjectAdapter {
       findings.push("Provide standardized containerization (Dockerfile or distroless image).");
     }
 
-    let status: PillarEvaluation["status"] = "EXCELLENT";
-    if (score < 10) status = "CRITICAL";
-    else if (score < 15) status = "NEEDS_IMPROVEMENT";
-    else if (score < 18) status = "SATISFACTORY";
-
     return {
-      name: "CI/CD Gateways & Continuous Verification",
+      name: "CI/CD Configuration Signals (execution status is not checked)",
       score,
       maxScore: 20,
-      status,
+      signalBand: classifySignalBand(score, 20),
       findings
     };
   }
@@ -740,16 +742,11 @@ export class EosUniversalProjectAdapter {
       findings.push("Provide comprehensive technical documentation (README.md / docs/).");
     }
 
-    let status: PillarEvaluation["status"] = "EXCELLENT";
-    if (score < 10) status = "CRITICAL";
-    else if (score < 15) status = "NEEDS_IMPROVEMENT";
-    else if (score < 18) status = "SATISFACTORY";
-
     return {
-      name: "AI Context Scaffolding & Golden Path Readiness",
+      name: "Documentation & Agent Context Signals",
       score,
       maxScore: 20,
-      status,
+      signalBand: classifySignalBand(score, 20),
       findings
     };
   }

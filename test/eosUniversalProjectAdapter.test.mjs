@@ -5,10 +5,10 @@ import fs from "node:fs";
 import os from "node:os";
 import { EosUniversalProjectAdapter } from "../src/core/eosUniversalProjectAdapter.ts";
 
-describe("EOS Universal Polyglot Repository Adapter Suite (SPEC-019, BDD-049)", () => {
+describe("EOS Universal Polyglot Repository Inventory Suite (SPEC-019, BDD-049)", () => {
   const adapter = new EosUniversalProjectAdapter(process.cwd());
 
-  describe("Suite 1: Polyglot Stack Fingerprinting & Live Repository Audit", () => {
+  describe("Suite 1: Polyglot Stack Fingerprinting & Local Signal Inventory", () => {
     it("fingerprints current EOS repository with high architectural fidelity", () => {
       const report = adapter.audit();
 
@@ -25,7 +25,7 @@ describe("EOS Universal Polyglot Repository Adapter Suite (SPEC-019, BDD-049)", 
       assert.equal(report.fingerprint.ciCd, "github_actions");
     });
 
-    it("evaluates all 5 Core Architectural Pillars with deterministic bounds", () => {
+    it("reports bounded signal groups and states that production readiness is not assessed", () => {
       const report = adapter.audit();
       const { pillars } = report;
 
@@ -35,14 +35,15 @@ describe("EOS Universal Polyglot Repository Adapter Suite (SPEC-019, BDD-049)", 
         assert.ok(pillar, `Missing pillar: ${pillarKey}`);
         assert.ok(pillar.score >= 0 && pillar.score <= 20, `Score out of bounds for ${pillarKey}: ${pillar.score}`);
         assert.equal(pillar.maxScore, 20);
-        assert.ok(["EXCELLENT", "SATISFACTORY", "NEEDS_IMPROVEMENT", "CRITICAL"].includes(pillar.status));
+        assert.ok(["MANY_SIGNALS", "SOME_SIGNALS", "FEW_SIGNALS"].includes(pillar.signalBand));
         assert.ok(Array.isArray(pillar.findings));
       }
 
-      // EOS System should achieve TIER_1_SOVEREIGN or TIER_2_PRODUCTION
-      assert.ok(report.healthIndex >= 80, `Expected high health index for EOS, got ${report.healthIndex}`);
-      assert.ok(["TIER_1_SOVEREIGN", "TIER_2_PRODUCTION"].includes(report.tier));
-      assert.ok(typeof report.sha256MerkleReceipt === "string" && report.sha256MerkleReceipt.length === 64);
+      assert.ok(report.localSignalScore >= 0 && report.localSignalScore <= 100);
+      assert.ok(["MANY_SIGNALS", "SOME_SIGNALS", "FEW_SIGNALS"].includes(report.localSignalBand));
+      assert.equal(report.productionReadiness, "NOT_ASSESSED");
+      assert.ok(report.assessmentLimitations.some((item) => item.includes("does not execute")));
+      assert.ok(typeof report.sha256ReportDigest === "string" && report.sha256ReportDigest.length === 64);
     });
   });
 

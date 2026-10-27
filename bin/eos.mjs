@@ -956,7 +956,8 @@ switch (command) {
         console.log(`Repositorio       : ${report.audit.projectPath}`);
         console.log(`Rama / HEAD       : ${report.branch} / ${report.headCommit.slice(0, 12)}`);
         console.log(`Archivos sin commit: ${report.dirtyFiles.length}`);
-        console.log(`Índice heurístico : ${report.audit.healthIndex}/100 (${report.audit.tier}; no es certificación)`);
+        console.log(`Señales locales   : ${report.audit.localSignalScore}/100 (${report.audit.localSignalBand})`);
+        console.log("Preparación prod. : No evaluada");
         for (const [pillar, result] of Object.entries(report.audit.pillars)) {
           console.log(`  ${pillar}: ${result.score}/20`);
           result.findings.slice(0, 5).forEach((finding) => console.log(`    - ${finding}`));
@@ -970,7 +971,8 @@ switch (command) {
           console.log(`Estado            : ${report.planStatus}; ejecución: no realizada`);
           console.log(`Stack sugerido    : ${report.suggestedStack}`);
           console.log(`Stack detectado   : ${report.detectedStack}`);
-          console.log(`Índice heurístico : ${report.audit.healthIndex}/100 (no es certificación)`);
+          console.log(`Señales locales   : ${report.audit.localSignalScore}/100 (${report.audit.localSignalBand})`);
+          console.log("Preparación prod. : No evaluada");
           report.audit.recommendations.forEach((item) => console.log(`  - ${item}`));
           console.log(`Inventario de plantilla: ${report.templateInventorySummary}`);
           report.proposedSteps.forEach((step, index) => console.log(`  ${index + 1}. ${step}`));
@@ -1323,14 +1325,15 @@ switch (command) {
     const adapter = new EosUniversalProjectAdapter(target);
     const report = adapter.audit(target);
 
-    console.log(`[EOS UNIVERSAL ADAPTER] Auditoría de Madurez de Proyecto (${report.projectName}):\n`);
+    console.log(`[EOS UNIVERSAL ADAPTER] Inventario de señales locales (${report.projectName}):\n`);
     console.log(`Lenguaje / Stack       : ${report.fingerprint.primaryLanguage} (${report.fingerprint.packageManager})`);
-    console.log(`Índice de Salud        : ${report.healthIndex}/100 [${report.tier}]`);
-    console.log(`Sello Merkle SHA-256   : ${report.sha256MerkleReceipt}\n`);
+    console.log(`Señales estructurales  : ${report.localSignalScore}/100 [${report.localSignalBand}]`);
+    console.log("Preparación productiva : No evaluada");
+    console.log(`Digest del reporte SHA-256: ${report.sha256ReportDigest}\n`);
 
-    console.log("=== PILARES ARQUITECTÓNICOS ===");
+    console.log("=== GRUPOS DE SEÑALES LOCALES ===");
     for (const [key, p] of Object.entries(report.pillars)) {
-      console.log(`  • [${p.status}] ${p.name || key}: ${p.score}/${p.maxScore}`);
+      console.log(`  • [${p.signalBand}] ${p.name || key}: ${p.score}/${p.maxScore}`);
       p.findings.forEach((f) => console.log(`      ↳ ${f}`));
     }
 
@@ -1339,8 +1342,11 @@ switch (command) {
       report.recommendations.forEach((r) => console.log(`  ⚡ ${r}`));
     }
 
+    console.log("\n=== LÍMITES DE ESTA EVALUACIÓN ===");
+    report.assessmentLimitations.forEach((limitation) => console.log(`  • ${limitation}`));
+
     if (doScaffold) {
-      console.log("\n[EOS GOLDEN PATH] Aplicando elevación y scaffolding universal de producción...");
+      console.log("\n[EOS GOLDEN PATH] Aplicando plantillas locales de proyecto...");
       const res = adapter.elevate(target, { dryRun: false });
       console.log(`  Archivos creados/actualizados: ${res.appliedActions.join(", ") || "Ninguno"}`);
     }
