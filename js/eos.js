@@ -2889,7 +2889,7 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
         }
       });
     }
-    // 7. Spotify Engineering Codex Studio
+    // 7. Local audio and data examples returned by the repository endpoint.
     const btnRunSpotify = document.getElementById("btn-run-spotify");
     const selectSpotify = document.getElementById("select-spotify-module");
     const spotifyLufs = document.getElementById("spotify-metric-lufs");
@@ -2897,95 +2897,35 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     const spotifyCircuit = document.getElementById("spotify-metric-circuit");
     const spotifyGolden = document.getElementById("spotify-metric-golden");
     const spotifyLog = document.getElementById("spotify-output-log");
-
     if (btnRunSpotify && selectSpotify && spotifyLog) {
       btnRunSpotify.addEventListener("click", async () => {
-        const mod = selectSpotify.value;
-        btnRunSpotify.textContent = "⚡ Procesando...";
+        const action = selectSpotify.value;
         btnRunSpotify.disabled = true;
-
+        btnRunSpotify.textContent = "Ejecutando demo local...";
         try {
-          const res = await fetch(`/api/spotify?action=${encodeURIComponent(mod)}`);
-          if (res.ok) {
-            const json = await res.json();
-            const d = json.data;
-
-            if (mod === "dsp") {
-              if (spotifyLufs) spotifyLufs.textContent = `${d.truePeakOutputDb} dBTP`;
-              if (spotifyThroughput) spotifyThroughput.textContent = `${(d.throughputSamplesSec / 1000000).toFixed(1)}M m/s`;
-              if (spotifyCircuit) spotifyCircuit.textContent = d.limiterClamped ? "CLAMPED" : "NOMINAL";
-              if (spotifyGolden) spotifyGolden.textContent = `${d.realTimeSpeedFactor}x RT`;
-              spotifyLog.textContent = `🎛️ DEMOSTRACIÓN LOCAL DE DSP (datos sintéticos):
-• Frecuencia Muestreo : ${d.sampleRateHz} Hz (PCM Float32 contiguo)
-• Cuadros Procesados  : ${d.bufferFrames.toLocaleString()} muestras por búfer
-• Muestras Totales    : ${d.totalSamplesProcessed.toLocaleString()}
-• Rendimiento DSP     : ${d.throughputSamplesSec.toLocaleString()} muestras/seg (${d.realTimeSpeedFactor}x Tiempo Real)
-• Pico de salida      : ${d.truePeakOutputDb} dBTP (muestra local; no es certificación)
-• Limitador Lookahead : Activado (${d.limiterClamped ? "Picos atenuados con tanh" : "Señal nominal"})
-• Duración de Proceso : ${d.durationUs.toFixed(2)} µs
-• Fingerprint SHA256  : ${d.resultFingerprintSha256 || "no disponible"} (no es firma)`;
-            } else if (mod === "camelot") {
-              if (spotifyLufs) spotifyLufs.textContent = "8A (Am)";
-              if (spotifyThroughput) spotifyThroughput.textContent = "24 Keys";
-              if (spotifyCircuit) spotifyCircuit.textContent = "HARMONIC";
-              if (spotifyGolden) spotifyGolden.textContent = "100% MATCH";
-              spotifyLog.textContent = `🎡 RUEDA DE CAMELOT SPOTIFY DJ HARMONIC MIXING:
-• Clave Activa        : 8A (La Menor / A minor)
-• Modulación de Energía:
-  ↳ Misma Clave       : ${d.sameKey} (Transición idéntica)
-  ↳ Relativo Mayor    : ${d.relativeMajorMinor} (Cambio emocional de modo)
-  ↳ Subir Energía (+1): ${d.energyUp} (Subidón de tensión armónica)
-  ↳ Bajar Energía (-1): ${d.energyDown} (Enfriamiento y relajación)
-• Invariante Acústico : Compatibilidad armónica certificada para mezcla continua sin disonancia`;
-            } else if (mod === "mesh") {
-              if (spotifyLufs) spotifyLufs.textContent = "-14.0 LUFS";
-              if (spotifyThroughput) spotifyThroughput.textContent = `${d.rateLimiterAvailableTokens} tok/s`;
-              if (spotifyCircuit) spotifyCircuit.textContent = d.activeCircuitBreakers[0]?.state || "CLOSED";
-              if (spotifyGolden) spotifyGolden.textContent = "W3C TRACE";
-              spotifyLog.textContent = `🛰️ SPOTIFY APOLLO / HERMES ASYNC RPC & EVENT MESH:
-• Invocaciones RPC    : ${d.totalRpcInvocations} llamadas completadas con microsegundos
-• Eventos Publicados  : ${d.totalEventsPublished} eventos enrutados con hash FNV-1a de 32 bits
-• Token Bucket Limiter: ${d.rateLimiterAvailableTokens} tokens disponibles
-• Circuit Breakers    : ${d.activeCircuitBreakers.length > 0 ? d.activeCircuitBreakers.map(c => `${c.serviceName}: ${c.state}`).join(", ") : "audio-service: CLOSED (Nominal)"}
-• Trazabilidad W3C    : Encabezados traceparent (00-{traceId}-{spanId}-01) propagados determinísticamente`;
-            } else if (mod === "bart") {
-              if (spotifyLufs) spotifyLufs.textContent = "Arm #2";
-              if (spotifyThroughput) spotifyThroughput.textContent = "45.2M ops/s";
-              if (spotifyCircuit) spotifyCircuit.textContent = "BETA/GAMMA";
-              if (spotifyGolden) spotifyGolden.textContent = "CONVERGED";
-              spotifyLog.textContent = `🎰 SPOTIFY BaRT CONTEXTUAL MULTI-ARMED BANDITS (THOMPSON SAMPLING):
-• Modelo Matemático   : Bandits for Recommendations as Treatments (BaRT)
-• Distribución a Priori: Gamma(α, β) -> Muestreo Posterior de Poisson
-• Convergencia        : Brazo óptimo seleccionado con > 99.4% de confianza bayesiana
-• Tiempo de Decisión  : < 1.2 µs por recomendación (SIMD dot-product acelerado)
-• Saldo Explora/Explota: Balance de entropía adaptativo según propensión de omisión de usuario`;
-            } else {
-              if (spotifyLufs) spotifyLufs.textContent = "100% RFC-42";
-              if (spotifyThroughput) spotifyThroughput.textContent = "4 Repos";
-              if (spotifyCircuit) spotifyCircuit.textContent = "NOMINAL";
-              if (spotifyGolden) spotifyGolden.textContent = "ELEVATED";
-              spotifyLog.textContent = `🏛️ SPOTIFY BACKSTAGE RFC-42 GOLDEN PATH ELEVATOR:
-• Repositorios Flota  : 4 proyectos soberanos escaneados y alineados
-• Catálogo Backstage  : catalog-info.yaml, .github/workflows/ci.yml, AGENTS.md sincronizados
-• Pureza Arquitectura : 100% Capa 0 Hexagonal con dependencies: {}
-• Estándares Audio    : Target -14.0 LUFS integrado con -1.0 dBTP ceiling verificado`;
-            }
-
-            btnRunSpotify.textContent = "⚡ Ejecutar Spotify Studio";
-            btnRunSpotify.disabled = false;
-            return;
+          const response = await fetch('/api/spotify?action=' + encodeURIComponent(action));
+          const result = await response.json();
+          if (!response.ok || result.status !== "LOCAL_DEMO_EXECUTED") {
+            throw new Error(result.error || result.status || 'HTTP ' + response.status);
           }
-        } catch (_err) {
-          // Fallback UI
+          if (spotifyLufs) spotifyLufs.textContent = result.status;
+          if (spotifyThroughput) spotifyThroughput.textContent = result.externalServicesCalled === false ? "NO" : "NO DECLARADO";
+          if (spotifyCircuit) spotifyCircuit.textContent = action.toUpperCase();
+          if (spotifyGolden) spotifyGolden.textContent = Number(result.durationUs).toFixed(2) + ' µs';
+          spotifyLog.textContent = JSON.stringify(result, null, 2);
+        } catch (error) {
+          if (spotifyLufs) spotifyLufs.textContent = "NO DISPONIBLE";
+          if (spotifyThroughput) spotifyThroughput.textContent = "—";
+          if (spotifyCircuit) spotifyCircuit.textContent = action.toUpperCase();
+          if (spotifyGolden) spotifyGolden.textContent = "—";
+          spotifyLog.textContent = 'No se produjo resultado local.\n' + (error instanceof Error ? error.message : String(error));
+        } finally {
+          btnRunSpotify.textContent = "⚡ Ejecutar demo local";
+          btnRunSpotify.disabled = false;
         }
-
-        spotifyLog.textContent = `🎧 SPOTIFY ENGINEERING CODEX v25.0 — EJECUCIÓN LOCAL VERIFICADA:\n• Modo Seleccionado: ${mod.toUpperCase()}\n• Estándar Audio: -14.0 LUFS / -1.0 dBTP ceiling\n• Estado: NOMINAL (Exit Code 0)`;
-        btnRunSpotify.textContent = "⚡ Ejecutar Spotify Studio";
-        btnRunSpotify.disabled = false;
       });
     }
-
-    // 7. Global Anycast Edge & Hedged Requests Controller
+    // 8. Local location fixtures and a deterministic synthetic tail-latency model.
     const btnRunEdgeRoute = document.getElementById("btn-run-edge-route");
     const btnRunHedgedBench = document.getElementById("btn-run-hedged-bench");
     const selectEdgeCity = document.getElementById("select-edge-city");
@@ -2993,40 +2933,29 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     const edgePopPrimaryDetails = document.getElementById("edge-pop-primary-details");
     const edgeHedgedReduction = document.getElementById("edge-hedged-reduction");
     const edgeHedgedDetails = document.getElementById("edge-hedged-details");
-    const edgeHlcStamp = document.getElementById("edge-hlc-stamp");
+    const edgeLocalTime = document.getElementById("edge-local-time");
     const edgeOutputLog = document.getElementById("edge-output-log");
-
-    const popData = {
-      bogota: { id: "BOG-01", name: "Bogotá Sovereign Command", km: 0, rtt: 2.1, backup: "IAD-01 Virginia" },
-      stockholm: { id: "STO-01", name: "Stockholm Nordic Apex", km: 0, rtt: 1.8, backup: "FRA-01 Frankfurt" },
-      saopaulo: { id: "GRU-01", name: "São Paulo LATAM Spine", km: 0, rtt: 2.0, backup: "BOG-01 Bogotá" },
-      virginia: { id: "IAD-01", name: "Virginia Cloud Backbone", km: 0, rtt: 1.5, backup: "SFO-01 Silicon Valley" },
-      siliconvalley: { id: "SFO-01", name: "Silicon Valley AI Spine", km: 0, rtt: 1.6, backup: "IAD-01 Virginia" },
-      london: { id: "LHR-01", name: "London Atlantic Bridge", km: 0, rtt: 1.7, backup: "FRA-01 Frankfurt" },
-      frankfurt: { id: "FRA-01", name: "Frankfurt EU Core", km: 0, rtt: 1.6, backup: "LHR-01 London" },
-      tokyo: { id: "TYO-01", name: "Tokyo APAC Edge", km: 0, rtt: 1.9, backup: "SFO-01 Silicon Valley" }
+    const locationExamples = {
+      bogota: { id: "BOG-01", name: "Bogotá", backup: "Virginia" },
+      stockholm: { id: "STO-01", name: "Estocolmo", backup: "Fráncfort" },
+      saopaulo: { id: "GRU-01", name: "São Paulo", backup: "Bogotá" },
+      virginia: { id: "IAD-01", name: "Virginia", backup: "Silicon Valley" },
+      siliconvalley: { id: "SFO-01", name: "Silicon Valley", backup: "Virginia" },
+      london: { id: "LHR-01", name: "Londres", backup: "Fráncfort" },
+      frankfurt: { id: "FRA-01", name: "Fráncfort", backup: "Londres" },
+      tokyo: { id: "TYO-01", name: "Tokio", backup: "Silicon Valley" }
     };
 
     if (btnRunEdgeRoute) {
       btnRunEdgeRoute.addEventListener("click", () => {
         const city = selectEdgeCity ? selectEdgeCity.value : "bogota";
-        const pop = popData[city] || popData.bogota;
-        const now = Date.now();
-        const hlc = `hlc:${now}-0:eos-edge-${pop.id.toLowerCase()}`;
-
-        if (edgePopPrimary) edgePopPrimary.textContent = `[${pop.id}] ${pop.name}`;
-        if (edgePopPrimaryDetails) edgePopPrimaryDetails.textContent = `Distancia Geodésica: ${pop.km} km | RTT Fibra: ${pop.rtt} ms (Backup: ${pop.backup})`;
-        if (edgeHlcStamp) edgeHlcStamp.textContent = hlc;
-
+        const location = locationExamples[city] || locationExamples.bogota;
+        const localTimestamp = new Date().toISOString();
+        if (edgePopPrimary) edgePopPrimary.textContent = '[' + location.id + '] ' + location.name;
+        if (edgePopPrimaryDetails) edgePopPrimaryDetails.textContent = 'Fixture local; no se consulta ni resuelve una ruta de red.';
+        if (edgeLocalTime) edgeLocalTime.textContent = localTimestamp;
         if (edgeOutputLog) {
-          edgeOutputLog.textContent = `🌐 RESOLUCIÓN ANYCAST GLOBAL DETERMINISTA (${city.toUpperCase()}):
-• Nodo Primario Asignado : [${pop.id}] ${pop.name}
-• Distancia Geodésica    : ${pop.km} km (Fórmula de Haversine R=6371km)
-• Latencia Fibra Óptica  : ${pop.rtt} ms RTT estimado (c_fiber ≈ 200,000 km/s)
-• Nodo de Respaldo HLC   : ${pop.backup}
-• Reloj Lógico Híbrido   : ${hlc} (Orden Causal Total sin Drift)
-• Sello Merkle SHA-256   : e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-• Estado de Enrutamiento : Cero contención en memoria (< 15 µs de caché L0)`;
+          edgeOutputLog.textContent = 'Ejemplo de catálogo local\nUbicación seleccionada: [' + location.id + '] ' + location.name + '\nUbicación de respaldo ilustrativa: ' + location.backup + '\nHora local del navegador: ' + localTimestamp + '\nNo hubo resolución Anycast, medición de latencia, sincronización distribuida ni atestación.';
         }
       });
     }
@@ -3034,36 +2963,40 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     if (btnRunHedgedBench) {
       btnRunHedgedBench.addEventListener("click", () => {
         btnRunHedgedBench.disabled = true;
-        btnRunHedgedBench.textContent = "⚡ Simulando...";
-
-        setTimeout(() => {
-          const p50 = (12 + Math.random() * 5).toFixed(2);
-          const baseP99 = (160 + Math.random() * 40).toFixed(2);
-          const hedgedP99 = (48 + Math.random() * 8).toFixed(2);
-          const reduction = (((baseP99 - hedgedP99) / baseP99) * 100).toFixed(1);
-
-          if (edgeHedgedReduction) edgeHedgedReduction.textContent = `${reduction}% Reducción`;
-          if (edgeHedgedDetails) edgeHedgedDetails.textContent = `P99 Base: ${baseP99} ms ➔ Hedged: ${hedgedP99} ms (< 7% Peticiones Extra)`;
-
-          if (edgeOutputLog) {
-            edgeOutputLog.textContent = `⚡ BENCHMARK JEFF DEAN HEDGED REQUESTS (1,200 PETICIONES SIMULADAS):
-• Muestra de Tráfico     : 1,200 transacciones simuladas (Distribución Log-Normal)
-• Umbral P95 SLA         : 28.00 ms (Disparo condicional de réplica especulativa)
-• Réplicas Disparadas    : 74 de 1,200 (6.17% de sobrecosto de red)
-• Latencia P50 Base      : ${p50} ms
-• Latencia P95 Base/Edge : 86.98 ms ➔ 42.90 ms (50.7% recorte)
-• Latencia P99 Base/Edge : ${baseP99} ms ➔ ${hedgedP99} ms (${reduction}% truncamiento)
-• Conclusión Científica  : La cola de latencia se trunca en un ${reduction}% sin duplicar costos cloud.
-• Estado Epistémico      : VERIFIED (Exit Code 0)`;
+        btnRunHedgedBench.textContent = "Calculando datos sintéticos...";
+        try {
+          const sampleCount = 1200;
+          const hedgeDelayMs = 50;
+          const baseline = [];
+          const hedged = [];
+          let extraRequests = 0;
+          for (let i = 0; i < sampleCount; i += 1) {
+            const primaryMs = 8 + ((i * 37) % 213) + ((i * 13) % 19) * 1.7;
+            const backupMs = 12 + ((i * 17) % 127) + ((i * 7) % 23) * 2.3;
+            baseline.push(primaryMs);
+            if (primaryMs > hedgeDelayMs) extraRequests += 1;
+            hedged.push(Math.min(primaryMs, hedgeDelayMs + backupMs));
           }
-
+          const percentile = (values, fraction) => {
+            const sorted = [...values].sort((a, b) => a - b);
+            return sorted[Math.min(sorted.length - 1, Math.floor(fraction * (sorted.length - 1)))];
+          };
+          const baseP99 = percentile(baseline, 0.99);
+          const hedgedP99 = percentile(hedged, 0.99);
+          const reduction = ((baseP99 - hedgedP99) / baseP99) * 100;
+          const extraPct = (extraRequests / sampleCount) * 100;
+          if (edgeHedgedReduction) edgeHedgedReduction.textContent = 'P99 sintético: ' + hedgedP99.toFixed(1) + ' ms';
+          if (edgeHedgedDetails) edgeHedgedDetails.textContent = 'Base: ' + baseP99.toFixed(1) + ' ms; reducción calculada: ' + reduction.toFixed(1) + '%; solicitudes extra: ' + extraPct.toFixed(1) + '%';
+          if (edgeOutputLog) {
+            edgeOutputLog.textContent = 'Modelo local de colas con valores deterministas sintéticos\nMuestras: ' + sampleCount + '\nRetraso de réplica asumido: ' + hedgeDelayMs + ' ms\nP99 sintético sin réplica: ' + baseP99.toFixed(1) + ' ms\nP99 sintético con réplica: ' + hedgedP99.toFixed(1) + ' ms\nSolicitudes extra por umbral del modelo: ' + extraRequests + ' de ' + sampleCount + ' (' + extraPct.toFixed(1) + '%)\n\nNo se enviaron solicitudes de red; estos valores no estiman la latencia de EOS ni de ningún proveedor.';
+          }
+        } finally {
           btnRunHedgedBench.disabled = false;
-          btnRunHedgedBench.textContent = "⚡ Simular Hedged Requests (Jeff Dean)";
-        }, 180);
+          btnRunHedgedBench.textContent = "Ejecutar modelo de cola sintético";
+        }
       });
     }
-
-    // 8. Nubank & Spotify Apex Dual-Engine (SPEC-023 & SPEC-024)
+    // 9. Static engineering examples; no bank, music service, or deployment integration.
     const btnNuTxSim = document.getElementById("btn-nubank-tx-sim");
     const btnSpotifyCanarySim = document.getElementById("btn-spotify-canary-sim");
     const btnNuPostmortemSim = document.getElementById("btn-nubank-postmortem-sim");
@@ -3073,114 +3006,33 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     const spotifyLufsVal = document.getElementById("spotify-lufs-val");
     const nuSpotifyOutputLog = document.getElementById("nubank-spotify-output-log");
     const dualEngineBadge = document.getElementById("dual-engine-badge");
-
-    let txCounter = 42918;
-
+    const showEngineeringScenario = (scenarioTitle, scenarioText) => {
+      if (nuDatomicStatus) nuDatomicStatus.textContent = "EJEMPLO LOCAL";
+      if (nuSachemStatus) nuSachemStatus.textContent = "NO CONECTADA";
+      if (spotifySoundcheckVal) spotifySoundcheckVal.textContent = "NO MEDIDO";
+      if (spotifyLufsVal) spotifyLufsVal.textContent = "NO APLICA";
+      if (dualEngineBadge) dualEngineBadge.textContent = "● ESCENARIO ILUSTRATIVO";
+      if (nuSpotifyOutputLog) nuSpotifyOutputLog.textContent = scenarioTitle + '\n\n' + scenarioText + '\n\nNo se accedió a una base de datos, cuenta, flota, canal de despliegue o incidente real.';
+    };
     if (btnNuTxSim) {
-      btnNuTxSim.addEventListener("click", () => {
-        btnNuTxSim.disabled = true;
-        btnNuTxSim.textContent = "🏦 Ejecutando Tx...";
-        txCounter++;
-
-        setTimeout(() => {
-          const txTime = Date.now();
-          const amount = (Math.random() * 5000 + 1000).toFixed(2);
-          const txHash = Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
-
-          if (nuDatomicStatus) {
-            nuDatomicStatus.textContent = `TX ${txCounter} OK`;
-            nuDatomicStatus.style.color = "#10b981";
-          }
-          if (nuSachemStatus) {
-            nuSachemStatus.textContent = "100% COMPAT";
-            nuSachemStatus.style.color = "#10b981";
-          }
-          if (dualEngineBadge) {
-            dualEngineBadge.textContent = "● DATOMIC TX COMMITTED";
-            dualEngineBadge.style.color = "#10b981";
-          }
-
-          if (nuSpotifyOutputLog) {
-            nuSpotifyOutputLog.textContent = `🏦 NUBANK DATOMIC BITEMPORAL TRANSACTION COMMITTED:
-• Transacción ID      : tx-${txCounter} (Tiempo T: ${txTime})
-• Invariante Datomic  : Append-only sin sobreescritura destructiva (Rich Hickey doctrine)
-• Datoms Afirmados   :
-  1. [:account/valentin-florez :account/balance ${amount} COP tx-${txCounter} :assert]
-  2. [:account/valentin-florez :account/status :active tx-${txCounter} :assert]
-  3. [:account/valentin-florez :account/idempotency-token "idem-${txHash.slice(0, 12)}" tx-${txCounter} :assert]
-• Time-Travel Query   : (d/as-of db ${txTime - 1000}) ➔ Saldo previo verificado sin locks
-• Contrato Sachem     : Schema Kafka topic 'nu.pix.authorizations.v2' 100% backward-compatible
-• Sello Merkle Tx     : ${txHash}`;
-          }
-
-          btnNuTxSim.disabled = false;
-          btnNuTxSim.textContent = "🏦 Simular Datomic Tx";
-        }, 120);
-      });
+      btnNuTxSim.addEventListener("click", () => showEngineeringScenario(
+        "Caso conceptual: transacción append-only",
+        "Describe una operación como nuevos hechos y conserva el historial para consultas temporales. En esta página no hay ledger, balance ni clave de idempotencia ejecutados."
+      ));
     }
-
     if (btnSpotifyCanarySim) {
-      btnSpotifyCanarySim.addEventListener("click", () => {
-        btnSpotifyCanarySim.disabled = true;
-        btnSpotifyCanarySim.textContent = "🎧 Rollout...";
-        
-        let step = 0;
-        const steps = [
-          { pct: 1, err: "0.001%", lufs: -14.0, status: "STAGE 1 (1%) PASS" },
-          { pct: 5, err: "0.001%", lufs: -14.0, status: "STAGE 2 (5%) PASS" },
-          { pct: 25, err: "0.002%", lufs: -14.0, status: "STAGE 3 (25%) PASS" },
-          { pct: 100, err: "0.001%", lufs: -14.0, status: "STAGE 4 (100% FLEET) ELEVATED" }
-        ];
-
-        const interval = setInterval(() => {
-          const current = steps[step];
-          if (spotifySoundcheckVal) spotifySoundcheckVal.textContent = "100 / 100";
-          if (spotifyLufsVal) spotifyLufsVal.textContent = "-14.00 LUFS";
-          if (dualEngineBadge) {
-            dualEngineBadge.textContent = `● CANARY ${current.pct}% OK`;
-            dualEngineBadge.style.color = "#1ed760";
-          }
-
-          if (nuSpotifyOutputLog) {
-            nuSpotifyOutputLog.textContent = `🎧 SPOTIFY PROGRESSIVE CANARY ROLLOUT PIPELINE:
-• Etapa Activa        : Tráfico al ${current.pct}% de la flota global (SPEC-024 / ADR-031)
-• Tasa de Error       : ${current.err} (Umbral Kill-Switch Fail-Closed: 0.100%)
-• Normalización Audio : ${current.lufs} LUFS integrado | -1.0 dBTP True Peak Ceiling (ITU-R BS.1770)
-• Golden Path Status  : Backstage RFC-42 Soundcheck 100/100 (CI/CD, Distroless < 12MB, OpenTelemetry)
-• Decisión SRE        : ${current.status} ➔ Continúa despliegue progresivo autónomo.`;
-          }
-
-          step++;
-          if (step >= steps.length) {
-            clearInterval(interval);
-            btnSpotifyCanarySim.disabled = false;
-            btnSpotifyCanarySim.textContent = "🎧 Rollout Canary 1%➔100%";
-          }
-        }, 180);
-      });
+      btnSpotifyCanarySim.addEventListener("click", () => showEngineeringScenario(
+        "Plan conceptual de despliegue progresivo",
+        "Las etapas 1%, 5%, 25% y 100% son una secuencia de ejemplo. No se envió tráfico, ejecutó un gate, observó errores ni promovió una versión."
+      ));
     }
-
     if (btnNuPostmortemSim) {
-      btnNuPostmortemSim.addEventListener("click", () => {
-        if (nuSpotifyOutputLog) {
-          nuSpotifyOutputLog.textContent = `📜 NUBANK INSTITUTIONAL BLAMELESS POSTMORTEM (BUILDING NU STANDARD):
-• Incidente           : INC-2026-1025-LATENCY-SPIKE (Severity: SEV-2)
-• Squad Responsable   : Core-Banking-Ledger (São Paulo & Bogotá)
-• Duración            : 3 minutos y 14 segundos | Impacto: 0 transacciones duplicadas (Idempotencia O(1))
-• Análisis de 5 Whys  :
-  1. ¿Por qué aumentó la latencia en Kafka? Un microservicio acumuló lag en el topic de autorizaciones.
-  2. ¿Por qué acumuló lag? La validación de contrato Sachem requirió recompilar el esquema Avro.
-  3. ¿Por qué recompiló? La caché local LRU en memoria se invalidó tras un reinicio de pod.
-  4. ¿Por qué se reinició el pod? El límite de memoria de Kubernetes era restrictivo (256MB).
-  5. ¿Por qué era restrictivo? La cuota no se actualizó tras la migración a Go Distroless.
-• Factores Ergonómicos: Cero error humano; deficiencia en la plantilla de Helm del Golden Path.
-• Acciones Correctivas: Aumentar memoria a 512MB e integrar comprobación en Soundcheck (Owner: Core Squad).
-• Cultura Nu          : Foco estricto en la resiliencia del sistema sin señalamientos individuales.`;
-        }
-      });
+      btnNuPostmortemSim.addEventListener("click", () => showEngineeringScenario(
+        "Plantilla de retrospectiva sin culpa",
+        "Registra el impacto observado, la línea temporal, las causas que la evidencia respalda, las incertidumbres y las acciones con responsables. Esta plantilla no describe un incidente real."
+      ));
     }
-
-    // 9. LMAX Disruptor Nanosecond Engine Controller (SPEC-022)
+    // 10. Browser loop and text-count demonstrations, without native/SIMD claims.
     const btnDisruptorBurstSim = document.getElementById("btn-disruptor-burst-sim");
     const btnDisruptorSimdSim = document.getElementById("btn-disruptor-simd-sim");
     const disruptorTputVal = document.getElementById("disruptor-tput-val");
@@ -3189,73 +3041,52 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     const disruptorPaddingVal = document.getElementById("disruptor-padding-val");
     const disruptorOutputLog = document.getElementById("disruptor-output-log");
     const disruptorStatusBadge = document.getElementById("disruptor-status-badge");
-
     if (btnDisruptorBurstSim) {
       btnDisruptorBurstSim.addEventListener("click", () => {
         btnDisruptorBurstSim.disabled = true;
-        btnDisruptorBurstSim.textContent = "⚡ Ráfaga...";
-
-        setTimeout(() => {
-          const opsPerSec = (14200000 + Math.random() * 1200000).toFixed(0);
-          const nsPerOp = (1000000000 / Number(opsPerSec)).toFixed(1);
-          const tputM = (Number(opsPerSec) / 1000000).toFixed(2);
-
-          if (disruptorTputVal) disruptorTputVal.textContent = `${Number(opsPerSec).toLocaleString()}`;
-          if (disruptorLatVal) disruptorLatVal.textContent = `${nsPerOp} ns`;
-          if (disruptorAllocVal) disruptorAllocVal.textContent = "0 B / op";
-          if (disruptorPaddingVal) disruptorPaddingVal.textContent = "64 BYTES";
-          if (disruptorStatusBadge) {
-            disruptorStatusBadge.textContent = "● 1M EVENTS PROCESSED";
-            disruptorStatusBadge.style.color = "#fbbf24";
-          }
-
-          if (disruptorOutputLog) {
-            disruptorOutputLog.textContent = `⚡ BENCHMARK LMAX DISRUPTOR RING BUFFER (1,000,000 EVENTOS EN MEMORIA):
-• Eventos Inyectados  : 1,000,000 transacciones bursátiles / fintech simuladas
-• Capacidad de Ring   : 4,096 ranuras contiguas (indexación bitwise: sequence & 4095)
-• Secuenciador Padded : Cursor en byte 64 con 7 longs de relleno (0 false sharing de CPU L1)
-• Rendimiento Medido  : ${Number(opsPerSec).toLocaleString()} eventos/seg (${tputM} M ops/s)
-• Latencia Promedio   : ${nsPerOp} nanosegundos por evento
-• Pausas GC (Garbage) : 0 ms (Zero heap allocations, memoria pre-asignada ArrayBuffer)
-• Estrategia Espera   : YieldingWaitStrategy con ordenamiento causal estricto
-• Certificación L0    : Simpatía mecánica 100% conforme a los principios de Martin Thompson.`;
-          }
-
+        try {
+          const iterations = 250_000;
+          let checksum = 0;
+          const startedAt = performance.now();
+          for (let i = 0; i < iterations; i += 1) checksum = (checksum + Math.imul(i, 2654435761)) | 0;
+          const elapsedMs = performance.now() - startedAt;
+          const rate = elapsedMs > 0 ? Math.round(iterations / (elapsedMs / 1000)) : null;
+          if (disruptorTputVal) disruptorTputVal.textContent = rate === null ? "N/D" : rate.toLocaleString("es-CO");
+          if (disruptorLatVal) disruptorLatVal.textContent = elapsedMs.toFixed(3) + ' ms';
+          if (disruptorAllocVal) disruptorAllocVal.textContent = "NO MEDIDO";
+          if (disruptorPaddingVal) disruptorPaddingVal.textContent = "NO APLICA";
+          if (disruptorStatusBadge) disruptorStatusBadge.textContent = "● BUCLE LOCAL COMPLETADO";
+          if (disruptorOutputLog) disruptorOutputLog.textContent = 'Bucle JavaScript local\nIteraciones: ' + iterations.toLocaleString("es-CO") + '\nDuración en este navegador: ' + elapsedMs.toFixed(3) + ' ms\nIteraciones por segundo derivadas: ' + (rate === null ? 'no disponible (resolución del reloj)' : rate.toLocaleString("es-CO")) + '\nChecksum: ' + (checksum >>> 0) + '\nNo mide memoria, concurrencia, cache lines, latencia de hardware ni una implementación LMAX.';
+        } finally {
           btnDisruptorBurstSim.disabled = false;
-          btnDisruptorBurstSim.textContent = "⚡ Disparar Ráfaga 1,000,000 Eventos";
-        }, 120);
+        }
       });
     }
-
     if (btnDisruptorSimdSim) {
       btnDisruptorSimdSim.addEventListener("click", () => {
         btnDisruptorSimdSim.disabled = true;
-        btnDisruptorSimdSim.textContent = "🔍 Escaneando...";
-
-        setTimeout(() => {
-          const throughputMb = (1680 + Math.random() * 120).toFixed(1);
-          if (disruptorStatusBadge) {
-            disruptorStatusBadge.textContent = `● SIMD ${throughputMb} MB/s`;
-            disruptorStatusBadge.style.color = "#38bdf8";
+        try {
+          const payload = ('EOS sample payload: key:value, [item]\n').repeat(1200);
+          let delimiterCount = 0;
+          const startedAt = performance.now();
+          for (let i = 0; i < payload.length; i += 1) {
+            const char = payload.charCodeAt(i);
+            if (char === 58 || char === 44 || char === 91 || char === 93 || char === 123 || char === 125) delimiterCount += 1;
           }
-
-          if (disruptorOutputLog) {
-            disruptorOutputLog.textContent = `🔍 ESCÁNER DE BYTES ESTRUCTURALES SIMD 64-BYTE CHUNK:
-• Bloque Analizado    : 1,048,576 bytes de payload en memoria contigua
-• Tamaño de Bloque    : 64 bytes por vector (AVX-512 / ARM NEON / WebAssembly SIMD128)
-• Delimitadores ':'   : 16,384 tokens identificados sin saltos de predicción
-• Rendimiento Escáner : ${throughputMb} MB / segundo
-• Aceleración         : 4.8x frente a la iteración tradicional carácter por carácter
-• Sello Criptográfico : 8f4b23c91a0e77d29bc5618f0a2e3d994e1b7c2a38416d8e03f5a2b1c4e6f9a0`;
-          }
-
+          const elapsedMs = performance.now() - startedAt;
+          const charsPerSecond = elapsedMs > 0 ? Math.round(payload.length / (elapsedMs / 1000)) : null;
+          if (disruptorTputVal) disruptorTputVal.textContent = charsPerSecond === null ? "N/D" : charsPerSecond.toLocaleString("es-CO");
+          if (disruptorLatVal) disruptorLatVal.textContent = elapsedMs.toFixed(3) + ' ms';
+          if (disruptorAllocVal) disruptorAllocVal.textContent = 'MUESTRA: ' + payload.length.toLocaleString("es-CO") + ' chars';
+          if (disruptorPaddingVal) disruptorPaddingVal.textContent = "NO APLICA";
+          if (disruptorStatusBadge) disruptorStatusBadge.textContent = "● CONTEO LOCAL COMPLETADO";
+          if (disruptorOutputLog) disruptorOutputLog.textContent = 'Conteo de caracteres en texto sintético\nLongitud de muestra: ' + payload.length.toLocaleString("es-CO") + ' caracteres\nDelimitadores contados: ' + delimiterCount.toLocaleString("es-CO") + '\nDuración en este navegador: ' + elapsedMs.toFixed(3) + ' ms\nCaracteres por segundo derivados: ' + (charsPerSecond === null ? 'no disponible (resolución del reloj)' : charsPerSecond.toLocaleString("es-CO")) + '\nNo usa SIMD; no compara hardware ni mide asignaciones.';
+        } finally {
           btnDisruptorSimdSim.disabled = false;
-          btnDisruptorSimdSim.textContent = "🔍 SIMD 64-Byte Scanner";
-        }, 120);
+        }
       });
     }
-
-    // 10. Apex Frontier Model Router & Token Squeezer (SPEC-025)
+    // 11. Local keyword categorization; no external model, AST compressor, or Go benchmark.
     const btnFrontierRouteSim = document.getElementById("btn-frontier-route-sim");
     const btnFrontierCompressSim = document.getElementById("btn-frontier-compress-sim");
     const btnFrontierGoBenchSim = document.getElementById("btn-frontier-gobench-sim");
@@ -3265,107 +3096,49 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     const frontierFdirStatus = document.getElementById("frontier-fdir-status");
     const frontierOutputLog = document.getElementById("frontier-output-log");
     const frontierEngineBadge = document.getElementById("frontier-engine-badge");
-
     const samplePrompts = [
-      {
-        prompt: "Verificar prueba formal de invariantes TLA+ para ledgers concurrentes",
-        model: "o3-mini (OpenAI)",
-        category: "formal-verification",
-        color: "#10b981",
-        reasoning: "Requiere rigor matemático formal, verificación de estados y juez bayesiano."
-      },
-      {
-        prompt: "Minimizar presupuesto de tokens FinOps y optimizar complejidad Big-O en 500 tests",
-        model: "deepseek-r1 (DeepSeek)",
-        category: "finops-algorithmic",
-        color: "#fbbf24",
-        reasoning: "Optimizada para máxima frugality de tokens y complejidad algorítmica mínima."
-      },
-      {
-        prompt: "Ingerir repositorio completo de 80,000 líneas y sintetizar grafo de dependencias",
-        model: "gemini-2.0-flash (Google)",
-        category: "massive-context-multimodal",
-        color: "#38bdf8",
-        reasoning: "Requiere ventana masiva de 2M+ tokens e ingestión multimodal ultrarrápida."
-      },
-      {
-        prompt: "Implementar pipeline de goroutines Go con canales lock-free y sincronización CSP",
-        model: "grok-2 (xAI)",
-        category: "low-level-systems",
-        color: "#a855f7",
-        reasoning: "Demanda simpatía mecánica de hardware y programación concurrente de bajo nivel."
-      },
-      {
-        prompt: "Diseñar arquitectura hexagonal pura en Capa 0 con cero dependencias externas",
-        model: "claude-3-7-sonnet (Anthropic)",
-        category: "architectural-synthesis",
-        color: "#f59e0b",
-        reasoning: "Especialista en código limpio, modularidad hexagonal y fidelidad de tipos AST."
-      }
+      "Optimizar el consumo de memoria en una rutina local",
+      "Diseñar un endpoint HTTP para consultar un recurso",
+      "Proteger un token y validar entradas sensibles",
+      "Escribir pruebas para un módulo existente",
+      "Revisar una arquitectura de software"
     ];
     let promptIndex = 0;
-
+    const classifyLocalPrompt = (prompt) => {
+      const normalized = prompt.toLowerCase();
+      if (/optimizar|rendimiento|memoria|costo/.test(normalized)) return "optimización";
+      if (/endpoint|http|api|ruta/.test(normalized)) return "API";
+      if (/token|seguridad|secreto|validar/.test(normalized)) return "seguridad";
+      if (/test|prueba|assert/.test(normalized)) return "pruebas";
+      return "ingeniería general";
+    };
     if (btnFrontierRouteSim) {
       btnFrontierRouteSim.addEventListener("click", () => {
-        const item = samplePrompts[promptIndex % samplePrompts.length];
-        promptIndex++;
-
-        if (frontierModelName) {
-          frontierModelName.textContent = item.model;
-          frontierModelName.style.color = item.color;
-        }
-        if (frontierTokenSavings) {
-          frontierTokenSavings.textContent = "78.2% AHORRO";
-          frontierTokenSavings.style.color = "#10b981";
-        }
-        if (frontierEngineBadge) {
-          frontierEngineBadge.textContent = `● ROUTED TO ${item.category.toUpperCase()}`;
-          frontierEngineBadge.style.color = item.color;
-        }
-
-        if (frontierOutputLog) {
-          frontierOutputLog.textContent = `🧠 ENRUTAMIENTO INTELIGENTE DE MODELOS DE FRONTERA (SPEC-025):
-• Directiva Analizada : "${item.prompt}"
-• Modelo Asignado     : ${item.model}
-• Categoría Cognitiva : ${item.category}
-• Criterio Decisión   : ${item.reasoning}
-• Ahorro de Tokens    : AST Squeezer redujo 4,200 tokens a 920 tokens (78.2% de economía)
-• Costo Estimado      : $0.00101 USD / invocación (FinOps Ultra-Economy)
-• Aceleración         : Motor Go nativo validó sintaxis en 2.4 µs`;
-        }
+        const prompt = samplePrompts[promptIndex % samplePrompts.length];
+        promptIndex += 1;
+        const category = classifyLocalPrompt(prompt);
+        if (frontierModelName) frontierModelName.textContent = category.toUpperCase();
+        if (frontierTokenSavings) frontierTokenSavings.textContent = "NO MEDIDO";
+        if (frontierGoThroughput) frontierGoThroughput.textContent = "NO MEDIDO";
+        if (frontierFdirStatus) frontierFdirStatus.textContent = "NO EJECUTADO";
+        if (frontierEngineBadge) frontierEngineBadge.textContent = "● CLASIFICACIÓN POR REGLAS";
+        if (frontierOutputLog) frontierOutputLog.textContent = 'Ejemplo de clasificación local\nEntrada: ' + prompt + '\nCategoría asignada por reglas de palabras clave: ' + category + '\nNo se seleccionó ni llamó a un modelo y no se enrutó una solicitud.';
       });
     }
-
     if (btnFrontierCompressSim) {
       btnFrontierCompressSim.addEventListener("click", () => {
-        if (frontierTokenSavings) frontierTokenSavings.textContent = "81.5% AHORRO";
-        if (frontierOutputLog) {
-          frontierOutputLog.textContent = `⚡ COMPRESIÓN DE CONTEXTO AST SQUEEZER (EJECUCIÓN EN VIVO):
-• Archivo Fuente      : src/core/eosApexModelRouter.ts (415 líneas originales)
-• Tokens Originales   : 3,420 tokens (Código completo con implementaciones internas)
-• Tokens Comprimidos  : 632 tokens (Interfaces, firmas y docstrings preservados 100%)
-• Reducción Lograda   : 81.5% de ahorro de tokens sin perder contratos ni seguridad de tipos
-• Impacto FinOps      : Ahorro de ~$2.80 USD por cada 100 consultas complejas a Claude/GPT
-• Sello Criptográfico : 3f8a91b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1`;
-        }
+        if (frontierEngineBadge) frontierEngineBadge.textContent = "● COMPRESIÓN NO EJECUTADA";
+        if (frontierTokenSavings) frontierTokenSavings.textContent = "NO EJECUTADA";
+        if (frontierOutputLog) frontierOutputLog.textContent = 'Compresión AST no ejecutada.\nEste panel no recibe un archivo ni aplica una transformación; no hay porcentaje de ahorro medido.';
       });
     }
-
     if (btnFrontierGoBenchSim) {
       btnFrontierGoBenchSim.addEventListener("click", () => {
-        if (frontierGoThroughput) frontierGoThroughput.textContent = "1.06B TOK/S";
-        if (frontierOutputLog) {
-          frontierOutputLog.textContent = `🚀 BENCHMARK DE CONCURRENCIA GO NATIVO (16 GOROUTINES):
-• Carga de Trabajo    : 67,108,864 bytes de payload escaneados concurrentemente
-• Hilos Paralelos     : 16 Goroutines sincronizadas con sync.WaitGroup
-• Tiempo Transcurrido : 15.8 milisegundos (15,813 µs)
-• Throughput Medido   : 1,060,915,776 tokens / segundo (> 1 MIL MILLONES TOKENS/SEG)
-• Presión de GC       : 0 B / op (Cero recolección de basura, memoria contigua en stack/arenas)
-• Sonda CNCF          : /healthz respondiendo 200 OK con estatus UP en puerto :8090`;
-        }
+        if (frontierEngineBadge) frontierEngineBadge.textContent = "● BENCHMARK NO EJECUTADO";
+        if (frontierGoThroughput) frontierGoThroughput.textContent = "NO MEDIDO";
+        if (frontierOutputLog) frontierOutputLog.textContent = 'Benchmark Go no ejecutado.\nEste panel de navegador no inicia goroutines ni reporta throughput de Go. Consulta un comando de benchmark real y su salida si necesitas una medición.';
       });
     }
-
     // 11. Subtle Web Audio Tactile Feedback & Live FPS Monitor
     let audioCtx = null;
     let audioMuted = false;
