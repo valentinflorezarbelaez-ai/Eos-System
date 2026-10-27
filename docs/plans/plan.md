@@ -60,31 +60,13 @@
 * **Rejected Alternatives**:
   * *Custom Non-Semantic `<div>` Modal Overlay*: Rejected in favor of native `<dialog closedby="any">` + `showModal()` for top-layer rendering, built-in focus trapping, `Esc` handling, and declarative light-dismiss.
 
-### ADR-008: Linux Kernel (`v6.x PREEMPT_RT`) Ring-0 Architecture in EOS (`src/core/eosLinuxKernelCore.ts` + `api/kernel.js` + `#linux-kernel-core`)
-* **Decision**: Codify and implement the 7 foundational subsystems of the Linux Kernel inside EOS System:
-  1. **RCU (Read-Copy-Update)** for zero-contention lockless reads and atomic pointer publication (`rcu_assign_pointer` + `synchronize_rcu`).
-  2. **eBPF Static Verifier** for compile-time/pre-execution verification of bounded loops, valid memory access, and Constitutional Law conformance.
-  3. **EEVDF (`Earliest Eligible Virtual Deadline First`) + `PREEMPT_RT` Scheduler** for deterministic virtual-deadline task dispatch.
-  4. **SLUB (`kmem_cache`) 64-Byte Cache-Line Allocator** over the L1 SoA Arena (`0%` fragmentation).
-  5. **VFS (`/proc/eos/*`, `/sys/kernel/eos/*`, `/dev/anubis`)** virtual filesystem introspection.
-  6. **`cgroups v2` + `Namespaces` + `Seccomp-BPF`** subagent syscall/resource isolation.
-  7. **Linus Torvalds's `"Good Taste"` (Branchless Data Structures) & `"Never Break Userspace"` ABI Invariant**.
-* **Rationale**: The Linux Kernel is the gold standard of reliability, scalability, and low-level elegance on Earth; embedding its exact architectural primitives into EOS elevates the Control Plane to Ring-0 systems perfection.
-* **Rejected Alternatives**:
-  * *Coarse-Grained Reader-Writer Locks (`rwlock`)*: Rejected in favor of `RCU` because reader locks cause cache-line bouncing across CPU cores.
+### ADR-008: Linux concept demonstration (`src/core/eosLinuxKernelCore.ts` + `api/kernel.js` + `#linux-kernel-core`)
+* **Decision**: Keep the Linux section educational. `api/kernel.js` serves static explanatory fixtures, and the browser measurement reports only a local JavaScript loop duration. EOS does not implement a kernel, RCU, eBPF verifier, EEVDF scheduler, VFS nodes, or ABI auditor.
+* **Rationale**: Clearly distinguish references to operating-system concepts from EOS capabilities and measured behavior.
 
-### ADR-009: The Omega Singularity (`v8.0` — Post-Quantum FIPS 203/204/205, ZK-STARKs, Byzantine Consensus `3f+1`, Deterministic Time-Travel Replay & Live 9-System Fleet Radar)
-* **Decision**: Implement `src/core/eosOmegaSingularity.ts`, serverless endpoint `api/omega.js`, and interactive Control Plane section `#omega-singularity` integrating:
-  1. **NIST Post-Quantum Cryptography (`ML-KEM-1024`, `ML-DSA-87 / Dilithium-5`, `SLH-DSA / SPHINCS+`)** for quantum-resistant artifact sealing.
-  2. **Transparent Zero-Knowledge Proofs (`ZK-STARK` FRI Polynomial Commitment)** to prove Law I–VII compliance without revealing proprietary source code.
-  3. **Byzantine Fault-Tolerant (`BFT 3f+1`) Multi-Auditor Quorum** to eliminate single-agent hallucination or Byzantine drift.
-  4. **Deterministic Time-Travel Debugging (`Mozilla rr` / `FoundationDB DST`)** for nanosecond-exact state replay and karmic retrocognition.
-  5. **E-Graph Equality Saturation Superoptimization (`MLIR` / `Souper`)** & **`WASI` Capability-Based Sandbox**.
-  6. **Live 9-System Sovereign Fleet Health Matrix** inside `#omega-singularity-lab`.
-* **Rationale**: Future-proofs EOS against quantum cryptanalysis (Shor's/Grover's algorithms), multi-agent Byzantine faults, and non-deterministic heisenbugs while providing a unified real-time command radar across all 9 Sovereign Fleet repositories.
-* **Rejected Alternatives**:
-  * *Legacy RSA-2048 / ECDSA P-256 Only*: Rejected because Shor's algorithm on fault-tolerant quantum computers breaks integer factorization and discrete logarithms in polynomial time.
-  * *ZK-SNARKs Requiring Trusted Setup Ceremony*: Rejected in favor of **ZK-STARKs** (transparent hash/polynomial commitments with zero toxic waste and post-quantum security).
+### ADR-009: Omega concept demonstration (`src/core/eosOmegaSingularity.ts` + `/api/omega` + `#omega-singularity`)
+* **Decision**: Keep PQC, ZK, BFT, deterministic replay, E-Graphs, and WASI as references and local UI examples. `/api/omega` routes to the kernel handler's static demo and returns a SHA-256 text fingerprint; it does not implement or certify any of those technologies. The project list is sourced from `/api/fleet`.
+* **Rationale**: Avoid representing illustrative data or a text fingerprint as cryptographic operations, consensus, replay, or live fleet health.
 
 ### ADR-010: Autonomous 7-Stage Sovereign CI/CD & SecDevOps Pipeline (`v9.0` — `.github/workflows/eos-sovereign-cicd.yml`, `.githooks/*`, `scripts/verify-cicd-pipeline.mjs`, `src/core/eosCicdPipeline.ts`, `api/cicd.js` & `#cicd-secdevops`)
 * **Decision**: Establish a mandatory, zero-bypass **7-Stage Sovereign CI/CD & SecDevOps Pipeline** that runs automatically on every local commit/push (`.githooks/pre-commit`, `.githooks/pre-push`), on every `npm run verify:strict` / `npm run ship:sovereign` invocation, and on every GitHub push/PR (`.github/workflows/eos-sovereign-cicd.yml`):
@@ -93,7 +75,7 @@
   3. **Stage 3 (SLSA Level 4 Supply-Chain & SHA-256 SBOM Gate)**: Verifies `0` external runtime dependencies and computes a deterministic Merkle root over all production files.
   4. **Stage 4 (Static Syntax & Bytecode Gate)**: Runs `node --check` on every `.js` and `.mjs` file and validates all TypeScript L0 core modules.
   5. **Stage 5 (WCAG 2.1 AA, SEO & Modern Web Performance Gate)**: Verifies semantic landmarks, `<dialog closedby="any">`, `content-visibility: auto` + `contain-intrinsic-size`, and Speculation Rules.
-  6. **Stage 6 (In-Process Serverless API Smoke Gate)**: Executes real HTTP handler invocations against all 7 serverless endpoints (`/api/teurgia`, `/api/compile`, `/api/memory`, `/api/bigtech`, `/api/kernel`, `/api/omega`, `/api/cicd`) asserting `200 OK` and valid cryptographic JSON payloads.
+  6. **Stage 6 (In-Process Serverless API Smoke Gate)**: Invokes configured handlers and checks their declared response contracts. A successful handler response does not establish cryptographic validity, production health, or deployment status.
   7. **Stage 7 (Automated Production Deployment & Live Post-Deploy Attestation)**: Deploys to Vercel Production and pushes to GitHub only when Stages 1–6 pass with `0` findings.
 * **Enforcement Topology (defense in depth, 4 independent layers)**:
   1. `.githooks/pre-commit` (activated via `git config core.hooksPath .githooks`).

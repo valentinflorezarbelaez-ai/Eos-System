@@ -70,7 +70,7 @@ Commands that write files, change Git configuration, commit, or push should be r
 | `/api/fleet` | Static project registry; no health, CI, hook, or deployment probes. |
 | `/api/cicd` | Bounded CI/CD simulation; no checks, SBOM generation, or deployment. |
 | `/api/bigtech` | Static scenario fixtures; no model checking or fault injection. |
-| `/api/kernel` | Read-only kernel-themed fixtures; no kernel telemetry. `/api/omega` follows the rewrite configured in `vercel.json`. |
+| `/api/kernel` | Read-only Linux concept fixtures; no kernel telemetry. `/api/omega` serves a text fingerprint and concept metadata through this handler; no cryptographic proof or consensus runs. |
 | `/api/memory` | Static sample records and action previews; no server persistence or FTS5. |
 | `/api/eval` | Local evaluator with project-root confinement and a 100 KiB source limit. Evaluator load errors return a non-success status. |
 | `/api/titans` | Local benchmark code through the evaluator route; results do not describe Spotify, SpaceX, NVIDIA, Google, or xAI services. |

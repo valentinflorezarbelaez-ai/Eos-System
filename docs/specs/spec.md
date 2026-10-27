@@ -41,24 +41,8 @@
      - **Linear / Raycast / Vercel (`Sub-8ms Command Palette & Local-First Sync`)** ➔ Paleta de Comandos Nativa `<dialog closedby="any">` activada con `Ctrl+K` / `Cmd+K` o el botón `⌘K Comandos`.
   2. CUANDO el operador presione `Ctrl+K` / `Cmd+K` o haga clic en `#btn-open-cmdk`, EL SISTEMA abrirá la Paleta de Comandos con `dialog.showModal()`, filtrado instantáneo en `< 2 ms`, navegación por teclado y cierre ligero (*light-dismiss*) con `closedby="any"` y fallback para navegadores sin soporte nativo.
   3. CUANDO el operador ejecute una simulación en el **Laboratorio Chaos Monkey & Verificador Formal TLA+ (`#bigtech-chaos-lab`)**, EL SISTEMA inyectará la anomalía seleccionada, verificará las fórmulas temporales TLA+ (`□ TypeOK ∧ □ LawVI_ZeroPlainSecrets ∧ ◇ FdirHealed`) y emitirá el recibo de auto-sanación en `< 5 ms`.
-* **FR-015 (Event-Driven & Ubiquitous)**: EL SISTEMA integrará la arquitectura del **Kernel de Linux (`v6.x PREEMPT_RT`) en el Núcleo Soberano de EOS (`src/core/eosLinuxKernelCore.ts`, `api/kernel.js` y `#linux-kernel-core`)**:
-  1. **Los 7 Pilares Inmortales del Kernel de Linux Transmutados en EOS**:
-     - **1. `RCU` (Read-Copy-Update — Sincronización Lockless):** Lecturas concurrentes en `0 ns` de contención sin bloqueos (`rcu_read_lock` / `rcu_dereference`) y actualización atómica de punteros con periodo de gracia (`synchronize_rcu`).
-     - **2. `eBPF` (Extended Berkeley Packet Filter & Static Verifier):** Verificador estático en anillo 0 que demuestra matemáticamente terminación (0 bucles infinitos), límites de memoria seguros y cumplimiento de las 7 Leyes antes de ejecutar cualquier instrucción.
-     - **3. `EEVDF` (Earliest Eligible Virtual Deadline First Scheduler + `PREEMPT_RT`):** Planificador determinista por fecha límite virtual (`vruntime` + `latency-nice`) con preempción en tiempo real estilo SpaceX Falcon 9 Linux.
-     - **4. `SLUB Allocator` + `Buddy System`:** Cachés de objetos pre-alineados a líneas de caché de `64 bytes` (`kmem_cache`) con `0%` fragmentación de memoria.
-     - **5. `VFS` (Virtual File System — `/proc/eos`, `/sys/kernel/eos`, `/dev/anubis`):** Todo subsistema de EOS se expone como un descriptor de archivo uniforme inspeccionable en vivo (`open`, `read`, `write`, `ioctl`).
-     - **6. `cgroups v2` + `Namespaces` + `Seccomp-BPF`:** Aislamiento estricto de recursos y lista blanca de llamadas al sistema para cada subagente y Git Worktree.
-     - **7. Filosofía de Linus Torvalds (`"Good Taste in Code"` + `"Never Break Userspace"` + `Git Content-Addressable Merkle DAG`):** Eliminación de casos especiales (`if` redundantes) mediante diseño de estructuras de datos sin ramificaciones (*branchless good taste*) y estabilidad absoluta de ABI (`0` regresiones).
-  2. CUANDO el operador interactúe con el **Laboratorio en Vivo del Kernel EOS (`#linux-kernel-lab`)**, EL SISTEMA permitirá inspeccionar los nodos virtuales `/proc/eos/*` y `/sys/kernel/*`, ejecutar el verificador estático `eBPF` + planificador `EEVDF` y correr un benchmark real `RCU Lockless Read-Copy-Update` en el navegador y vía `/api/kernel`.
-* **FR-016 (Event-Driven & Ubiquitous)**: EL SISTEMA integrará la **Singularidad Soberana Omega (`v8.0` — `src/core/eosOmegaSingularity.ts`, `api/omega.js` y `#omega-singularity`)** con las 7 fronteras supremas de la computación post-cuántica y distribuida:
-  1. **Criptografía Post-Cuántica Soberana (NIST FIPS 203 / 204 / 205: `ML-KEM-1024 / Kyber`, `ML-DSA-87 / Dilithium-5`, `SLH-DSA / SPHINCS+`)**: Sellado híbrido reticular (*Module-LWE*) + hash sin estado inmune al algoritmo cuántico de Shor (**El Sello Diamantino de la Mónada**).
-  2. **Pruebas de Conocimiento Cero Transparentes (`ZK-STARKs` — *Zero-Knowledge Scalable Transparent Arguments of Knowledge*)**: Demostración polinómica FRI sin *trusted setup* de que un artefacto cumple el 100% de las 7 Leyes de EOS sin revelar secretos propietarios ni código privado (**El Velo de Isis Criptográfico**).
-  3. **Consenso Tolerante a Fallas Bizantinas (`HotStuff / Raft BFT Quorum 3f+1`)**: Quórum criptográfico entre 4 Auditores Soberanos independientes (`architecture-auditor`, `security-auditor`, `quality-auditor`, `evidence-auditor`) que neutraliza cualquier alucinación o nodo bizantino antes de hacer commit (**El Concilio Solar de los Cosmocrátores**).
-  4. **Depuración en el Tiempo Determinista (`Time-Travel Debugging / Mozilla rr & FoundationDB DST`)**: Registro determinista de semillas, relojes lógicos y transiciones de estado con rebobinado exacto (`⏪ Step Back` / `⏩ Step Forward`) a nivel de nanosegundo (**Retrocognición Akáshica Consciente**).
-  5. **Superoptimización de Compilador por Saturación de Igualdad (`E-Graphs / MLIR`)**: Reescritura algebraica de grafos de equivalencia para encontrar el programa matemáticamente óptimo de menor costo de ciclos de CPU.
-  6. **Ejecución Basada en Capacidades (`WebAssembly SIMD-128 + WASI Capability Sandbox`)**: Cero autoridad ambiental (*Zero Ambient Authority*); ningún módulo puede acceder a red, disco o reloj sin un descriptor de capacidad explícito.
-  7. **Radar en Vivo de la Flota Soberana (`Live 9-System Sovereign Fleet Health Matrix`)**: Telemetría y auditoría de latencia, estado epistémico y compatibilidad ABI de los 9 sistemas en producción desde `#omega-singularity-lab` y `/api/omega`.
+* **FR-015 (Ubiquitous, demonstration scope)**: La sección `#linux-kernel-core` presenta referencias educativas de RCU, eBPF, EEVDF, SLUB, VFS, cgroups y diseño de interfaces. `/api/kernel` devuelve fixtures de texto marcados como estáticos. El control de medición ejecuta únicamente un bucle JavaScript local y muestra el tiempo observado sin compararlo con RCU o mutex. El producto no implementa un kernel Linux, nodos `/proc`, verificación eBPF, planificación EEVDF ni auditoría ABI.
+* **FR-016 (Ubiquitous, demonstration scope)**: La sección `#omega-singularity` presenta referencias de PQC, ZK-STARK/FRI, BFT, reproducción determinista, E-Graphs y WASI. Los controles muestran texto, una fórmula de ejemplo, etiquetas precargadas y datos del registro estático de `/api/fleet`. `/api/omega` devuelve un fingerprint SHA-256 de texto con indicadores explícitos de que no es firma ni prueba. No se implementan primitivas criptográficas, consenso, reproducción de ejecución ni sondas de producción.
 * **FR-017 (Event-Driven & Ubiquitous)**: CUANDO el usuario abra el panel CI/CD del navegador, EL SISTEMA consultará la simulación acotada de `/api/cicd` y marcará sus resultados como simulados; el panel NO declarará que se ejecutaron gates, se generó un SBOM, se instalaron hooks o se desplegó código.
 * **FR-018 (Event-Driven & Ubiquitous)**: CUANDO el usuario consulte la flota en el navegador, EL SISTEMA mostrará el registro estático de `/api/fleet`, identificará estados operativos como no sondeados y limitará las acciones del navegador a consultas y vistas previas. El modo CLI `fleet:ship` requiere un único proyecto seleccionado y una confirmación coincidente antes de operaciones de escritura.
 * **FR-020 (Ubiquitous & Universal Model Context Protocol)**: EL SISTEMA expondrá un servidor nativo MCP sobre stdio (`src/mcp/eosMcpServer.ts`) con herramientas soberanas (`eos_semantic_search`, `eos_tmr_consensus`, `eos_audit_fleet`, `eos_health_check`, `eos_validate_patch`, `eos_optimize_context`) sin librerías externas de runtime.
@@ -143,17 +127,17 @@ ESCENARIO: [BDD-009 Panteón Big Tech (TLA+ / Chaos Monkey / TrueTime) y Paleta 
   ENTONCES la paleta modal <dialog closedby="any"> permite buscar y disparar cualquier comando o sección en < 2ms, y el verificador formal TLA+ + FDIR neutraliza cualquier anomalía inyectada en < 5ms con 0% downtime
   Y el endpoint serverless /api/bigtech certifica las 7 joyas de ingeniería Big Tech con código HTTP 200.
 
-ESCENARIO: [BDD-010 Perfección Nivel Kernel de Linux (RCU Lockless, eBPF Verifier, EEVDF PREEMPT_RT y VFS /proc/eos)]
-  DADO que el Arquitecto Soberano accede a la sección de Arquitectura Kernel de Linux (#linux-kernel-core) o ejecuta el comando "eos kernel --linux" en la terminal
-  CUANDO inspecciona un nodo del sistema de archivos virtual (/proc/eos/version, /proc/eos/rcu_stats, /proc/eos/eevdf_sched, /sys/kernel/ebpf_verifier) o ejecuta el Benchmark RCU Lockless + Verificador eBPF
-  ENTONCES EOS verifica el programa bajo el estándar de "Buen Gusto" de Linus Torvalds (0 casos especiales, 0 bucles infinitos, ABI estable "Never Break Userspace"), ejecuta lecturas RCU sin bloqueos en nanosegundos
-  Y el endpoint serverless /api/kernel responde con código HTTP 200 y firma SHA-256.
+ESCENARIO: [BDD-010 Demo educativa de conceptos Linux]
+  DADO que el usuario accede a #linux-kernel-core o consulta /api/kernel
+  CUANDO selecciona una ruta de concepto o mide el bucle JavaScript local
+  ENTONCES la interfaz etiqueta las rutas como fixtures y aclara que el tiempo observado no es una medición RCU ni una garantía de rendimiento
+  Y el endpoint informa que no consultó un kernel, eBPF, ABI ni control de seguridad.
 
-ESCENARIO: [BDD-011 Singularidad Omega Post-Cuántica, ZK-STARK, Consenso Bizantino 3f+1, Time-Travel Debugging y Radar de Flota Soberana]
-  DADO que el Arquitecto Soberano accede a la sección de Singularidad Soberana Omega (#omega-singularity) o ejecuta el comando "eos omega --quantum" en la terminal
-  CUANDO genera un sello Post-Cuántico (ML-DSA-87 Dilithium + ZK-STARK FRI), ejecuta una votación de Consenso Bizantino 3f+1, rebobina la línea de tiempo determinista (Time-Travel Debugger) o ejecuta el Radar de Salud de los 9 Sistemas de la Flota Soberana
-  ENTONCES EOS emite la prueba criptográfica post-cuántica y ZK-STARK sin trusted setup, certifica el quórum BFT sin alucinaciones, restaura cualquier época histórica en 0 ms de deriva
-  Y el endpoint serverless /api/omega responde con código HTTP 200 y 0 dependencias externas.
+ESCENARIO: [BDD-011 Demo conceptual Omega]
+  DADO que el usuario accede a #omega-singularity o consulta /api/omega
+  CUANDO recorre una etiqueta de ejemplo, muestra la fórmula de quórum o consulta el registro estático de proyectos
+  ENTONCES la interfaz identifica el contenido como referencia o dato configurado y declara que no ejecutó criptografía, prueba, consenso, replay ni sondas de producción
+  Y la respuesta de /api/omega indica que su fingerprint de texto no es una firma ni una prueba verificada.
 
 ESCENARIO: [BDD-012 Simulación CI/CD y verificación local]
   DADO que el operador abre el panel #cicd-secdevops o solicita la simulación en /api/cicd

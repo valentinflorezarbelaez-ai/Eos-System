@@ -233,36 +233,17 @@ STATUS: AKASHIC_MEMORY_SOVEREIGN | 27/27 TOOLS ACTIVE | MERKLE_SHA256_SEALED | E
 
 STATUS: BIGTECH_10_OF_10_VERIFIED | TLA_PLUS_PASS | MTTR < 5MS | EXIT CODE: 0`,
 
-  "kernel:linux": `$ eos kernel --linux
-> Inspecting EosLinuxKernelCore Ring-0 Monolithic Modular Kernel (src/core/eosLinuxKernelCore.ts + /api/kernel)...
+  "kernel:linux": `Conceptos de Linux · muestra informativa
 
-[1] THE 7 IMMORTAL PILLARS OF THE LINUX KERNEL (v6.x PREEMPT_RT) IN EOS v7.0:
-  ├─ 1. RCU (Read-Copy-Update)   : 0 ns Lockless Readers (rcu_read_lock/dereference) + Grace-Period Pointer Swap
-  ├─ 2. eBPF Verifier + XDP      : Static DAG Termination Proof (<= 4096 insns) + Law I–VII Pre-Execution Filter
-  ├─ 3. EEVDF + PREEMPT_RT       : Earliest Eligible Virtual Deadline First (Lag-Bounded Real-Time Preemption)
-  ├─ 4. SLUB kmem_cache          : 64-Byte L1 Cache-Line Aligned Object Slabs (0% Heap Fragmentation)
-  ├─ 5. VFS (/proc/eos & /sys)   : Everything-is-a-File Virtual Introspection (/proc/eos/version, /dev/anubis_law_gate)
-  ├─ 6. cgroups v2 + Seccomp-BPF : Strict Memory/CPU Budgets & Syscall Whitelisting per Subagent Worktree
-  └─ 7. Linus's 2 Supreme Laws   : "Good Taste in Code" (**indirect pointer-to-pointer) + "Never Break Userspace" (0 ABI Regressions)
+EOS no es un kernel y esta consola no consulta Linux, verifica eBPF ni audita ABI.
+La sección presenta fixtures locales y un ejemplo de medición de un bucle JavaScript.
+`,
 
-[2] LIVE VFS /proc/eos/version BANNER:
-  EOS version 7.0.0-samael-rt1 (root@logos-solar-monad) (eos-clang 19.1.0, LLD 19.1.0) #1 SMP PREEMPT_RT
+  "omega:quantum": `Muestra conceptual de PQC, ZK-STARK y consenso BFT
 
-STATUS: LINUX_RING0_VERIFIED | RCU_0NS_LOCKLESS | EBPF_SAFE | ABI_REGRESSIONS: 0 | EXIT CODE: 0`,
-
-  "omega:quantum": `$ eos omega --quantum --zk-stark --bft-quorum
-> Executing EosOmegaSingularity v8.0 (src/core/eosOmegaSingularity.ts + /api/omega)...
-
-[1] THE 7 OMEGA SINGULARITY FRONTIERS (BEYOND BIG TECH & RING-0 LINUX):
-  ├─ 1. Post-Quantum Crypto (NIST): FIPS 203 ML-KEM-1024 (Kyber) + FIPS 204 ML-DSA-87 (Dilithium-5) + FIPS 205 SPHINCS+
-  ├─ 2. Zero-Knowledge STARKs     : Transparent FRI Polynomial Commitment (0 Trusted Setup · 0 Private Code Leaked)
-  ├─ 3. Byzantine Consensus (BFT) : HotStuff 3f+1 Quorum (4 Independent Auditors · 0% AI Hallucinations)
-  ├─ 4. Time-Travel Debugging     : Mozilla rr / FoundationDB DST Deterministic Seed & Epoch Replay (⏪ / ⏩)
-  ├─ 5. E-Graph Superoptimizer    : Equality Saturation (MLIR / Souper) Algebraic Cycle Minimization
-  ├─ 6. WASI Capability Sandbox   : WebAssembly SIMD-128 with Zero Ambient Authority
-  └─ 7. Planetary Fleet Radar     : 9/9 Sovereign Systems PRODUCTION_READY (100% ABI Stability)
-
-STATUS: OMEGA_SINGULARITY_CROWNED | QUANTUM_SAFE_LEVEL_5 | ZK_STARK_VALID | BFT_4_OF_4 | EXIT CODE: 0`,
+Referencias: NIST FIPS 203/204/205 · FRI · regla N = 3f + 1
+Esta consola no ejecutó criptografía, generó pruebas, inició nodos o consultó la flota.
+Consulta la demo Omega para ver el alcance real de cada control.`,
 
   "cicd:pipeline": `$ npm run cicd:gate
 
@@ -2042,8 +2023,8 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
     { label: "🤖 Abrir clasificador de solicitudes JARVIS", badge: "CLASIFICADOR", href: "#eos-jarvis-nexus" },
     { label: "🚀 Ir a Orquestador CI/CD Autónomo de Flota v10.0 (Despachador Multi-Repositorio)", badge: "FLOTA v10.0", href: "#fleet-cicd-orchestrator" },
     { label: "🛡️ Ir a Tubería Autónoma CI/CD SecDevOps v9.0 (7 Aduanas Fail-Closed + SAST + SBOM)", badge: "CI/CD v9.0", href: "#cicd-secdevops" },
-    { label: "🌌 Ir a Singularidad Soberana Omega v8.0 (Post-Cuántica NIST + ZK-STARK + BFT 3f+1 + Time-Travel)", badge: "OMEGA v8.0", href: "#omega-singularity" },
-    { label: "🐧 Ir a Núcleo Monolítico-Modular Ring-0 (Kernel Linux: RCU + eBPF + EEVDF + VFS)", badge: "LINUX RING-0", href: "#linux-kernel-core" },
+    { label: "🌌 Ver demo Omega: conceptos PQC, ZK, BFT y registro de proyectos", badge: "OMEGA DEMO", href: "#omega-singularity" },
+    { label: "🐧 Ver conceptos de Linux: RCU, eBPF, EEVDF y VFS", badge: "DEMO LINUX", href: "#linux-kernel-core" },
     { label: "⚡ Ir a Traductor Técnico Universal & Nanosegundos (Caché L1 SoA)", badge: "NANOSEGUNDOS", href: "#nanosecond-engine" },
     { label: "🧠 Ir a Bóveda de Memoria Akáshica Soberana (27 Tools Engram + ODD/RDD)", badge: "MEMORIA L0", href: "#memoria-akashica" },
     { label: "🏆 Ir a Panteón Big Tech 10/10 & Verificador Formal TLA+ / Chaos Monkey", badge: "BIG TECH 10/10", href: "#bigtech-pantheon" },
@@ -2144,7 +2125,7 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
   }
 
   // ---------------------------------------------------------------------------
-  // 16. LINUX KERNEL RING-0 LAB (/proc/eos VFS, RCU Lockless Benchmark, Linus Good Taste)
+  // 16. LINUX CONCEPT DEMOS (static fixtures and a local JavaScript loop measurement)
   // ---------------------------------------------------------------------------
   const linuxKernelOutput = document.getElementById("linux-kernel-output");
   const vfsNodeButtons = document.querySelectorAll(".vfs-node-btn");
@@ -2153,47 +2134,30 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
 
   const LOCAL_VFS_SNAPSHOTS = {
     "/proc/eos/version": [
-      "$ cat /proc/eos/version",
-      "EOS version 7.0.0-samael-rt1 (root@logos-solar-monad) (eos-clang 19.1.0, LLD 19.1.0) #1 SMP PREEMPT_RT 2026-10-25 UTC",
-      "Architecture        : Ring-0 Monolithic Modular Kernel (Clean/Hexagonal L0 + eBPF Verifier)",
-      "Preemption Model    : Full Real-Time Preemption (PREEMPT_RT · Sub-Microsecond FDIR)",
-      "Userspace ABI Policy: LINUS_LAW_1_NEVER_BREAK_USERSPACE (0 Regressions across 9 Sovereign Fleet Systems)"
+      "Concepto: versión de kernel Linux",
+      "Fixture informativo. EOS no incluye un kernel Linux ni una ABI de usuario propia."
     ].join("\n"),
     "/proc/eos/rcu_stats": [
-      "$ cat /proc/eos/rcu_stats",
-      "rcu_flavor          : rcu_preempt (Tree RCU Lockless Read-Copy-Update)",
-      "completed_gp_seq    : 108",
-      "reader_lock_ns      : 0.00 ns (Zero Spinlocks · Zero Atomic RMW Contention)",
-      "active_epoch_hash   : sha256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
-      "grace_period_state  : RCU_QUIESCENT_CLEAN"
+      "Concepto: RCU (Read-Copy-Update)",
+      "Fixture informativo. No se mide concurrencia ni se ejecuta una implementación RCU."
     ].join("\n"),
     "/proc/eos/eevdf_sched": [
-      "$ cat /proc/eos/eevdf_sched",
-      "scheduler           : EEVDF (Earliest Eligible Virtual Deadline First · Linux 6.6+)",
-      "PID   TASK_ROLE                         WEIGHT   LAG_NS   VDEADLINE_NS   SLICE_NS   ELIGIBLE",
-      "0001  EOSSentinelDaemon (FDIR Pulse)    4096     +120     100450         10000      TRUE  [NEXT_PICK]",
-      "0002  AnubisLawGate (Strict Gate VII)   3072     +85      100820         15000      TRUE",
-      "0003  AkashicMemoryNous (RCU Sync)      2048     +10      101900         25000      TRUE",
-      "0004  SubagentWorker (Worktree Builder) 1024     -40      104200         50000      FALSE"
+      "Concepto: EEVDF (Earliest Eligible Virtual Deadline First)",
+      "Fixture informativo. No se programan tareas ni se ofrecen garantías de tiempo real."
     ].join("\n"),
     "/sys/kernel/ebpf_verifier": [
-      "$ cat /sys/kernel/ebpf_verifier",
-      "ebpf_jit_enable     : 1 (Native Ring-0 Bytecode Verification Active)",
-      "max_instructions    : 4096 (Guaranteed Termination · 0 Unbounded Loops)",
-      "stack_frame_limit   : 512 bytes (Zero Stack Overflow / Out-Of-Bounds Pointers)",
-      "xdp_fast_path       : XDP_PASS on Valid EARS Spec | XDP_DROP on Vibe-Coding / Plaintext Secrets"
+      "Concepto: verificador eBPF",
+      "Fixture informativo. No se analiza bytecode, prueba seguridad ni ejecuta JIT."
     ].join("\n"),
     "/dev/anubis_law_gate": [
-      "$ cat /dev/anubis_law_gate",
-      "device_node         : /dev/anubis_law_gate (Character Device 10:240)",
-      "enforced_laws       : I (SSOT EARS), II (Strict Gate), III (Evidence), IV (Write Barrier), V (Clean L0), VI (Zero Secrets), VII (English Artifacts)",
-      "verdict             : RING0_SOVEREIGN_SEAL_ACTIVE (Exit Code: 0)"
+      "Concepto: dispositivo de caracteres de ejemplo",
+      "Fixture informativo. No existe /dev/anubis_law_gate en este sistema."
     ].join("\n")
   };
 
   async function inspectVfsNode(vfsPath) {
     if (!linuxKernelOutput) return;
-    linuxKernelOutput.textContent = `> Reading VFS node ${vfsPath} from Ring-0 Kernel...`;
+    linuxKernelOutput.textContent = `Consultando fixture estático ${vfsPath}…`;
     try {
       const res = await fetch(`/api/kernel?action=vfs&path=${encodeURIComponent(vfsPath)}`);
       if (res.ok) {
@@ -2227,33 +2191,22 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
       if (!linuxKernelOutput) return;
       playSacredTone([432, 648, 864], 0.65);
       const iterations = 100000;
-      const SharedMemoryCtor = window["Shared" + "ArrayBuffer"];
-      const rawBuffer =
-        typeof SharedMemoryCtor !== "undefined"
-          ? new SharedMemoryCtor(64)
-          : new ArrayBuffer(64);
-      const rcuPointerView = new Int32Array(rawBuffer);
-      rcuPointerView[0] = 108;
+      const sample = new Int32Array([108]);
 
       const t0 = performance.now();
       let acc = 0;
       for (let i = 0; i < iterations; i++) {
-        // rcu_dereference(): single aligned memory load without lock contention
-        acc += rcuPointerView[0];
+        acc += sample[0];
       }
-      const rcuElapsedMs = Math.max(0.01, performance.now() - t0);
-      const rcuNsPerRead = ((rcuElapsedMs * 1e6) / iterations).toFixed(2);
-      const simulatedMutexNsPerRead = (Number(rcuNsPerRead) * 42.5 + 18.4).toFixed(2);
+      const elapsedMs = performance.now() - t0;
+      const nsPerRead = ((elapsedMs * 1e6) / iterations).toFixed(2);
 
       linuxKernelOutput.textContent = [
-        `$ eos kernel --benchmark-rcu --readers=${iterations.toLocaleString()}`,
+        `Medición local · bucle JavaScript · ${iterations.toLocaleString()} iteraciones`,
         `${"─".repeat(78)}`,
-        `[RCU LOCKLESS READ-COPY-UPDATE vs TRADITIONAL RW-MUTEX CONTENTION]`,
-        `  ├─ Concurrent Read Operations   : ${iterations.toLocaleString()} rcu_read_lock() + rcu_dereference() calls`,
-        `  ├─ RCU Lockless Read Latency    : ${rcuNsPerRead} ns/op (Total: ${rcuElapsedMs.toFixed(3)} ms · 0 Spinlocks · 0 Cache-Line Bouncing)`,
-        `  ├─ Traditional RW-Mutex Latency : ${simulatedMutexNsPerRead} ns/op (Atomic CAS + Cache Invalidation Stalls)`,
-        `  ├─ RCU Scalability Speedup      : ~43.8x faster under multi-agent read concurrency (Accumulator checksum: ${acc})`,
-        `  └─ Samaelian Synthesis          : La Mente Líquida lee el Átomo Nous instantáneamente sin fricción egoica.`
+        `Tiempo observado: ${elapsedMs.toFixed(3)} ms · promedio por lectura: ${nsPerRead} ns`,
+        `Acumulador: ${acc}`,
+        "Esta medición depende del navegador y la máquina; no es un benchmark de RCU ni compara con un mutex."
       ].join("\n");
     });
   }
@@ -2263,28 +2216,15 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
       if (!linuxKernelOutput) return;
       playSacredTone([528, 660, 792], 0.65);
       linuxKernelOutput.textContent = [
-        `$ eos kernel --verify-good-taste --check-userspace-abi`,
+        "Ejemplo ilustrativo · no se ejecuta auditoría de ABI",
         `${"─".repeat(78)}`,
-        `[1] LINUS TORVALDS'S "GOOD TASTE IN CODE" (BRANCHLESS POINTER-TO-POINTER):`,
-        `  ❌ Bad Taste (10 lines, special-case 'if (prev == NULL)' branch):`,
-        `     if (prev) prev->next = entry->next; else *head = entry->next;`,
+        "Eliminar un nodo de una lista enlazada con puntero indirecto:",
         ``,
-        `  ✅ Good Taste in EOS Ring-0 (4 lines, 0 special-case branches, unified **indirect):`,
-        `     while ((*indirect) != target) indirect = &(*indirect)->next;`,
-        `     *indirect = target->next; // Zero special cases: head & interior nodes are identical!`,
+        `  struct node **link = head;`,
+        `     while (*link && *link != target) link = &(*link)->next;`,
+        `     *link = target->next;`,
         ``,
-        `[2] LINUS'S FIRST COMMANDMENT: "WE DO NOT BREAK USERSPACE" (ABI STABILITY AUDIT):`,
-        `  ├─ 01. Aberamentho v8.0        : ABI v1.0->v7.0 COMPATIBLE (0 Breaking Changes)`,
-        `  ├─ 02. Portafolio Valentín     : ABI v1.0->v7.0 COMPATIBLE (0 Breaking Changes)`,
-        `  ├─ 03. La Suplidora            : ABI v1.0->v7.0 COMPATIBLE (0 Breaking Changes)`,
-        `  ├─ 04. Chavela                 : ABI v1.0->v7.0 COMPATIBLE (0 Breaking Changes)`,
-        `  ├─ 05. Gödel Imperium          : ABI v1.0->v7.0 COMPATIBLE (0 Breaking Changes)`,
-        `  ├─ 06. Traductor Universal     : ABI v1.0->v7.0 COMPATIBLE (0 Breaking Changes)`,
-        `  ├─ 07. Fundación               : ABI v1.0->v7.0 COMPATIBLE (0 Breaking Changes)`,
-        `  ├─ 08. Viasek                  : ABI v1.0->v7.0 COMPATIBLE (0 Breaking Changes)`,
-        `  └─ 09. Eos-System v7.0 Ring-0  : ABI v1.0->v7.0 COMPATIBLE (0 Breaking Changes)`,
-        ``,
-        `VERDICT: GOOD_TASTE_BRANCHLESS_VERIFIED | USERSPACE_ABI_REGRESSIONS: 0 | EXIT CODE: 0`
+        "El fragmento es texto de ejemplo. No se modifica código ni se inspeccionan interfaces del sistema."
       ].join("\n");
     });
   }
@@ -2302,60 +2242,12 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
   const inputOmegaZkStatement = document.getElementById("input-omega-zk-statement");
 
   const OMEGA_EPOCHS = [
-    {
-      tick: 1,
-      label: "ÉPOCA 1 / 6 · v1.0 GENESIS CONSTITUTION",
-      seed: "0x00000108A11F0001",
-      event: "GENESIS_CONSTITUTION_SEALED",
-      subsystem: "EosCore (Kether · 7 Inviolable Commandments)",
-      merkle: "sha256:4a11b009c882d714e095a332f118c776b002e554d991a003c778b112e445f001",
-      dharma: "+108.0"
-    },
-    {
-      tick: 2,
-      label: "ÉPOCA 2 / 6 · v4.0 NANOSECOND L1 SOA",
-      seed: "0x00000108A11F0002",
-      event: "NANOSECOND_L1_SOA_ARENA_MOUNTED",
-      subsystem: "EosNanosecondEngine (Tiphereth · 0.5 ns L1 Cache)",
-      merkle: "sha256:6b22c110d993e825f106b443a229d887c113f665e002b114d889c223f556a112",
-      dharma: "+144.0"
-    },
-    {
-      tick: 3,
-      label: "ÉPOCA 3 / 6 · v5.0 AKASHIC MEMORY (27 ENGRAM TOOLS)",
-      seed: "0x00000108A11F0003",
-      event: "AKASHIC_MEMORY_27_ENGRAM_TOOLS_FUSED",
-      subsystem: "EosAkashicMemory (Daath / Átomo Maestro Nous)",
-      merkle: "sha256:7c33d221e004f936a217c554b330e998d224a776f113c225e990d334a667b223",
-      dharma: "+216.0"
-    },
-    {
-      tick: 4,
-      label: "ÉPOCA 4 / 6 · v6.0 BIG TECH 10/10 & TLA+",
-      seed: "0x00000108A11F0004",
-      event: "BIGTECH_TLA_PLUS_AND_CHAOS_FDIR_VERIFIED",
-      subsystem: "EosBigTechPantheon (Geburah · Spanner/Bazel/TLA+/⌘K)",
-      merkle: "sha256:8d44e332f115a047b328d665c441f009e335b887a224d336f001e445b778c334",
-      dharma: "+333.0"
-    },
-    {
-      tick: 5,
-      label: "ÉPOCA 5 / 6 · v7.0 LINUX KERNEL RING-0",
-      seed: "0x00000108A11F0005",
-      event: "LINUX_KERNEL_RING0_RCU_EBPF_EEVDF_SEALED",
-      subsystem: "EosLinuxKernelCore (Chokmah · RCU 0ns + eBPF + EEVDF)",
-      merkle: "sha256:9e55f443a226b158c439e776d552a110f446c998b335e447a112f556c889d445",
-      dharma: "+432.0"
-    },
-    {
-      tick: 6,
-      label: "ÉPOCA 6 / 6 · v8.0 OMEGA SINGULARITY",
-      seed: "0x00000108A11F0006",
-      event: "OMEGA_PQC_ZKSTARK_BFT_SINGULARITY_CROWNED",
-      subsystem: "EosOmegaSingularity (Ain Soph Aur · PQC + ZK-STARK + BFT)",
-      merkle: "sha256:af66a554b337c269d540f887e663b221a557d009c446f558b223a667d990e556",
-      dharma: "+777.0"
-    }
+    { tick: 1, label: "Muestra 1 / 6 · Inicio", event: "Inicio del recorrido", subsystem: "CLI Node.js" },
+    { tick: 2, label: "Muestra 2 / 6 · Análisis", event: "Inspección local", subsystem: "Herramientas de repositorio" },
+    { tick: 3, label: "Muestra 3 / 6 · Requisitos", event: "Borrador EARS", subsystem: "Generador de borradores" },
+    { tick: 4, label: "Muestra 4 / 6 · Validación", event: "Validación propuesta", subsystem: "Herramientas de patch" },
+    { tick: 5, label: "Muestra 5 / 6 · MCP", event: "Solicitud de herramienta", subsystem: "Servidor MCP" },
+    { tick: 6, label: "Muestra 6 / 6 · Demo", event: "Fin del recorrido", subsystem: "Interfaz del navegador" }
   ];
 
   let currentOmegaEpochIdx = OMEGA_EPOCHS.length - 1;
@@ -2368,16 +2260,11 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
     }
     if (omegaOutput) {
       omegaOutput.textContent = [
-        `$ eos omega --time-travel --goto-tick=${ep.tick} --seed=${ep.seed}`,
-        `${"─".repeat(78)}`,
-        `[TIME-TRAVEL DETERMINISTIC DEBUGGER · MOZILLA RR / FOUNDATIONDB DST]`,
-        `  ├─ Active Epoch Tick   : ${ep.tick} / ${OMEGA_EPOCHS.length} (${ep.label})`,
-        `  ├─ Deterministic Seed  : ${ep.seed} (100% Bit-Exact Replay · 0 Heisenbugs)`,
-        `  ├─ Event Transition    : ${ep.event}`,
-        `  ├─ Active Subsystem    : ${ep.subsystem}`,
-        `  ├─ State Merkle Root   : ${ep.merkle}`,
-        `  ├─ Cosmic Dharma Delta : ${ep.dharma}`,
-        `  └─ Samaelian Synthesis : Retrocognición Akáshica completada en 0.00 ms sin deriva de estado.`
+        "MUESTRA LOCAL · selector de etiquetas precargadas",
+        `Muestra: ${ep.tick} / ${OMEGA_EPOCHS.length} · ${ep.label}`,
+        `Evento de ejemplo: ${ep.event}`,
+        `Área representada: ${ep.subsystem}`,
+        "No se consultó historial, no se reprodujeron eventos ni se midió deriva."
       ].join("\n");
     }
   }
@@ -2397,34 +2284,15 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
   }
 
   if (btnOmegaPqcZk) {
-    btnOmegaPqcZk.addEventListener("click", async () => {
+    btnOmegaPqcZk.addEventListener("click", () => {
       if (!omegaOutput) return;
       playSacredTone([528, 792, 1056], 0.7);
-      const statement =
-        (inputOmegaZkStatement && inputOmegaZkStatement.value.trim()) ||
-        "EOS_V8_CUMPLIMIENTO_100_POR_CIENTO_7_LEYES_Y_FLOTA_SOBERANA";
-      let hash = 0x811c9dc5;
-      for (let i = 0; i < statement.length; i++) {
-        hash ^= statement.charCodeAt(i);
-        hash = Math.imul(hash, 0x01000193) >>> 0;
-      }
-      const hex = hash.toString(16).padStart(8, "0");
-
+      const statement = (inputOmegaZkStatement && inputOmegaZkStatement.value.trim()) || "(sin texto)";
       omegaOutput.textContent = [
-        `$ eos omega --seal-pqc --prove-zk-stark --statement="${statement}"`,
-        `${"─".repeat(78)}`,
-        `[1] NIST POST-QUANTUM CRYPTOGRAPHIC SEAL (FIPS 203 / 204 / 205):`,
-        `  ├─ Seal Identifier     : PQC-ZK-${hex.toUpperCase()}-108`,
-        `  ├─ Key Encapsulation   : NIST-FIPS-203 ML-KEM-1024 (Kyber · Lattice k=8, n=256, q=8380417)`,
-        `  ├─ Digital Signature   : NIST-FIPS-204 ML-DSA-87 (Dilithium-5) + FIPS-205 SLH-DSA (SPHINCS+)`,
-        `  └─ Quantum Resistance  : IMMUNE to Shor's & Grover's Quantum Algorithms (Security Level 5)`,
-        ``,
-        `[2] ZERO-KNOWLEDGE STARK COMPLIANCE PROOF (FRI POLYNOMIAL IOP):`,
-        `  ├─ Public Statement    : ${statement}`,
-        `  ├─ FRI Merkle Root     : fri_stark_sha3_${hex}e9a144c802f771b993d045a112c668f0`,
-        `  ├─ Trusted Setup       : NONE (100% Transparent · Zero Toxic Waste)`,
-        `  ├─ Private Secrets     : 0 Bytes Leaked (El Velo de Isis Criptográfico)`,
-        `  └─ Verification Time   : 0.42 ms · Verdict: ZK_STARK_VALID_EXIT_0`
+        "RESUMEN CONCEPTUAL · no se ejecutó criptografía",
+        `Texto de ejemplo: ${statement}`,
+        "Referencias: ML-KEM (FIPS 203), ML-DSA (FIPS 204), SLH-DSA (FIPS 205), ZK-STARK y FRI.",
+        "No se generaron claves, firmas, cifrado ni pruebas; no hubo verificación o certificación."
       ].join("\n");
     });
   }
@@ -2433,47 +2301,43 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
     btnOmegaBftQuorum.addEventListener("click", () => {
       if (!omegaOutput) return;
       playSacredTone([432, 540, 648, 864], 0.7);
+      const faults = 1;
+      const nodes = 3 * faults + 1;
+      const threshold = 2 * faults + 1;
       omegaOutput.textContent = [
-        `$ eos omega --bft-quorum --protocol=HotStuff-3f+1 --round=108`,
-        `${"─".repeat(78)}`,
-        `[BYZANTINE FAULT-TOLERANT CONSENSUS · CONCILIO SOLAR DE COSMOCRÁTORES]`,
-        `  ├─ Node 01 (architecture-auditor · Binah)    : COMMIT_APPROVED [dilithium5:9a88c112f004]`,
-        `  ├─ Node 02 (security-auditor · Geburah)      : COMMIT_APPROVED [dilithium5:7b44d223a115]`,
-        `  ├─ Node 03 (quality-auditor · Tiphereth)     : COMMIT_APPROVED [dilithium5:5c22e334b226]`,
-        `  └─ Node 04 (evidence-auditor · Yesod)        : COMMIT_APPROVED [dilithium5:3d11f445c337]`,
-        ``,
-        `  ├─ Quorum Formula      : N = 3f + 1 = 4 Nodes | Threshold >= 2f + 1 = 3 Signatures`,
-        `  ├─ Votes Collected     : 4 / 4 Unanimous Post-Quantum Signatures`,
-        `  ├─ Hallucination Rate  : 0.00% (Byzantine Drift Mathematically Neutralized)`,
-        `  └─ Verdict             : BFT_CONSENSUS_SEALED | EXIT CODE: 0`
+        "EJEMPLO MATEMÁTICO · no se ejecutó consenso",
+        `Supuesto de ejemplo: f = ${faults} fallos tolerados`,
+        `N = 3f + 1 = ${nodes} nodos`,
+        `Quorum de referencia: 2f + 1 = ${threshold} votos`,
+        "No hay nodos activos, votos, firmas ni resultado de auditoría en esta demo."
       ].join("\n");
     });
   }
 
   if (btnOmegaFleetRadar) {
-    btnOmegaFleetRadar.addEventListener("click", () => {
+    btnOmegaFleetRadar.addEventListener("click", async () => {
       if (!omegaOutput) return;
       playSacredTone([528, 660, 792, 990], 0.7);
-      omegaOutput.textContent = [
-        `$ eos omega --fleet-radar --verify-abi-all`,
-        `${"─".repeat(78)}`,
-        `[PLANETARY SOVEREIGN FLEET RADAR · 9/9 SYSTEMS PRODUCTION_READY]`,
-        `  01. EOS System v8.0 Omega      │ https://eos-system-ten.vercel.app                 │ ABI: 100% │ PRODUCTION_READY`,
-        `  02. Aberamentho v8.0 Pleroma   │ https://aberamentosprelomamusic.vercel.app        │ ABI: 100% │ GOLDEN_SEAL_LOCKED`,
-        `  03. Portafolio Valentín Flórez │ https://portafolio-valentin.vercel.app            │ ABI: 100% │ PRODUCTION_READY`,
-        `  04. PTG Performance Talent     │ https://ptg-performance-talent-group.vercel.app   │ ABI: 100% │ PRODUCTION_READY`,
-        `  05. La Suplidora               │ Sovereign Fleet Registry (#flota)                 │ ABI: 100% │ PRODUCTION_READY`,
-        `  06. Chavela                    │ Sovereign Fleet Registry (#flota)                 │ ABI: 100% │ PRODUCTION_READY`,
-        `  07. Gödel Imperium             │ Formal Metamathematics Engine (#flota)            │ ABI: 100% │ PRODUCTION_READY`,
-        `  08. Traductor Universal        │ Nanosecond Compiler (#nanosecond-engine)          │ ABI: 100% │ PRODUCTION_READY`,
-        `  09. Fundación & Viasek         │ Strict Gate Protected (#flota)                    │ ABI: 100% │ PRODUCTION_READY`,
-        ``,
-        `VERDICT: 9/9 SOVEREIGN SYSTEMS ONLINE | 0 ABI REGRESSIONS | PQC_SEALED | EXIT CODE: 0`
-      ].join("\n");
+      omegaOutput.textContent = "Consultando el registro estático /api/fleet…";
+      try {
+        const response = await fetch("/api/fleet", { headers: { Accept: "application/json" } });
+        const data = await response.json();
+        if (!response.ok || !Array.isArray(data.projects)) throw new Error("Invalid fleet registry response");
+        omegaOutput.textContent = [
+          `status: ${data.status}`,
+          `proyectosConfigurados: ${data.fleetSize}`,
+          `healthProbesRun: ${data.healthProbesRun}`,
+          `dispatchExecuted: ${data.dispatchExecuted}`,
+          "",
+          ...data.projects.map((project) => `${project.id}: registry=${project.registryStatus}; producción=${project.productionProbe}; CI=${project.cicdGateStatus}; hooks=${project.localHooksStatus}`),
+          "",
+          "Consulta del registro únicamente: no se sondeó producción ni se verificó ABI."
+        ].join("\n");
+      } catch {
+        omegaOutput.textContent = "No se pudo consultar el registro. No se infiere salud de proyectos ni estado de producción.";
+      }
     });
   }
-
-  // ---------------------------------------------------------------------------
   // 18. CI/CD simulation panel (#cicd-pipeline-lab)
   // ---------------------------------------------------------------------------
   const cicdOutput = document.getElementById("cicd-pipeline-output");

@@ -2203,141 +2203,95 @@ Tiempo MTTR  : 1.4 ms · Downtime: 0.00% · Estado: HEALED_AND_TLA_VERIFIED</pre
       </div>
     </section>
 
-    <!-- LINUX KERNEL RING-0 ARCHITECTURE (RCU, eBPF, EEVDF PREEMPT_RT, SLUB, VFS /proc/eos, LINUS GOOD TASTE) -->
+    <!-- LINUX CONCEPT WALKTHROUGH AND STATIC FIXTURES -->
     <section class="section deferred-section" id="linux-kernel-core">
       <div class="container">
         <div class="section__head">
-          <div class="eyebrow">🐧 ARQUITECTURA DE ANILLO 0 NIVEL KERNEL DE LINUX (v6.x PREEMPT_RT) · LINUS TORVALDS GOOD TASTE</div>
-          <h2 class="section__title">Perfección de Sistemas Nivel Kernel de Linux: <code>RCU</code>, <code>eBPF</code>, <code>EEVDF</code>, <code>SLUB</code> y <code>VFS (/proc/eos)</code></h2>
+          <div class="eyebrow">LINUX · CONCEPTOS Y DEMOS LOCALES</div>
+          <h2 class="section__title">Conceptos de Linux y ejemplos locales</h2>
           <p class="section__sub">
-            El <strong>Kernel de Linux</strong> gobierna el 100% de las 500 supercomputadoras más rápidas del planeta, los cohetes <strong>SpaceX Falcon 9 (<code>PREEMPT_RT</code>)</strong> y toda la infraestructura global porque aplica siete leyes de ingeniería de Anillo 0. <strong>EOS System (<code>src/core/eosLinuxKernelCore.ts</code> + <code>/api/kernel</code>)</strong> encarna estas siete primitivas exactas junto con las dos reglas supremas de <strong>Linus Torvalds</strong>: <strong>1) «Buen Gusto en Código» (eliminar casos especiales mediante estructuras de datos sin ramificaciones)</strong> y <strong>2) «Never Break Userspace» (<code>0</code> regresiones de ABI en toda la Flota Soberana)</strong>.
+            Esta página explica conceptos asociados al kernel de Linux mediante ejemplos estáticos. EOS no es un kernel: no expone <code>/proc</code>, no ejecuta eBPF o EEVDF y no verifica ABI. El endpoint <code>/api/kernel</code> devuelve fixtures; el botón de medición solo observa un bucle JavaScript local.
           </p>
         </div>
 
-        <!-- TABLA DE LOS 7 PILARES DEL KERNEL DE LINUX EN EOS -->
-        <div class="table-wrap" role="region" aria-label="Tabla de los 7 Pilares del Kernel de Linux en EOS System" tabindex="0" style="margin-bottom: 2.25rem;">
+        <!-- REFERENCIAS DE CONCEPTOS LINUX Y ALCANCE DE LA DEMO -->
+        <div class="table-wrap" role="region" aria-label="Conceptos de Linux y alcance de las demos" tabindex="0" style="margin-bottom: 2.25rem;">
           <table class="eos-table">
-            <thead>
-              <tr>
-                <th>Subsistema del Kernel de Linux</th>
-                <th>Mecanismo de Anillo 0 (Ring-0)</th>
-                <th>Implementación Soberana en <code>EOS Kernel v7.0</code></th>
-                <th>Anatomía Samaeliana &amp; Hito</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Concepto</th><th>Referencia</th><th>Qué muestra EOS</th><th>Alcance real</th></tr></thead>
             <tbody>
-              <tr>
-                <td><strong>1. <code>RCU</code> (Read-Copy-Update)</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Sincronización sin Bloqueos</span></td>
-                <td>Lecturas concurrentes con <code>0 ns</code> de contención (<code>rcu_read_lock</code> / <code>rcu_dereference</code>) y actualización por cambio atómico de puntero (<code>rcu_assign_pointer</code>).</td>
-                <td><strong><code>EosRcuCell</code>:</strong> Las lecturas sobre las 27 herramientas de la Memoria Akáshica y el grafo RTM escalan linealmente sin bloquear jamás a los escritores.</td>
-                <td><strong>Intuición Directa Solar</strong><br /><code>0.00 ns Reader Lock Overhead</code></td>
-              </tr>
-              <tr>
-                <td><strong>2. <code>eBPF</code> Static Verifier &amp; <code>XDP</code></strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Sandbox Matemático en Ring-0</span></td>
-                <td>El Verificador Estático recorre el DAG de instrucciones probando ausencia de bucles infinitos y accesos fuera de rango antes de compilar por JIT.</td>
-                <td><strong><code>EosEbpfStaticVerifier</code>:</strong> Verifica terminación finita, límites de la Arena de 64 KB y cumplimiento de las 7 Leyes antes de ejecutar cualquier tarea.</td>
-                <td><strong>Guardián del Umbral</strong><br /><code>100% Termination &amp; Bounds Proof</code></td>
-              </tr>
-              <tr>
-                <td><strong>3. Planificador <code>EEVDF</code> + <code>PREEMPT_RT</code></strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Linux 6.6+ &amp; SpaceX Falcon 9 RTOS</span></td>
-                <td><em>Earliest Eligible Virtual Deadline First</em> calcula fecha límite virtual (<code>vruntime + slice/weight</code>) y preempciona tareas pesadas en microsegundos.</td>
-                <td><strong><code>EosEevdfScheduler</code>:</strong> Asigna prioridad por <code>latency-nice</code> para que el <code>FAST_TRACK</code> (inline ODD) y el DSP de audio jamás sufran inanición.</td>
-                <td><strong>Ley de Balanza Kármica</strong><br /><code>&lt; 3 µs Preemption · 0 Starvation</code></td>
-              </tr>
-              <tr>
-                <td><strong>4. <code>SLUB Allocator</code> (<code>kmem_cache</code>)</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Cero Fragmentación de Memoria</span></td>
-                <td>Pre-asigna losas (<em>slabs</em>) de objetos del kernel (<code>task_struct</code>, <code>inode</code>) alineados a líneas físicas de caché L1 (<code>64 bytes</code>).</td>
-                <td><strong><code>EosSlubCache</code> sobre <code>EosL1SoAArena</code>:</strong> Recicla descriptores de tareas, observaciones y buffers en <code>O(1)</code> con <code>0%</code> de fragmentación.</td>
-                <td><strong>Cuerpo Vital Etérico (Yesod)</strong><br /><code>0% Fragmentation · 64B Aligned</code></td>
-              </tr>
-              <tr>
-                <td><strong>5. <code>VFS</code> (Virtual File System)</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">«Todo es un Descriptor de Archivo»</span></td>
-                <td>Unifica hardware, procesos y configuración (<code>/proc</code>, <code>/sys</code>, <code>/dev</code>) bajo la misma tabla de punteros a funciones <code>file_operations</code>.</td>
-                <td><strong><code>EosVfsNamespace</code>:</strong> Expone en vivo <code>/proc/eos/version</code>, <code>/proc/eos/rcu_stats</code>, <code>/proc/eos/eevdf_sched</code>, <code>/sys/kernel/ebpf_verifier</code> y <code>/dev/anubis_law_gate</code>.</td>
-                <td><strong>Ley de Correspondencias</strong><br /><code>Unified O(1) VFS Dispatch</code></td>
-              </tr>
-              <tr>
-                <td><strong>6. <code>cgroups v2</code> + <code>Namespaces</code> + <code>Seccomp</code></strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Aislamiento Férreo de Procesos</span></td>
-                <td>Cuotas estrictas de CPU/RAM/IO, vistas aisladas de sistema de archivos/red y filtrado de syscalls por lista blanca en anillo 0.</td>
-                <td><strong><code>EosCgroupSeccompGate</code>:</strong> Cada subagente corre aislado en su Git Worktree + tmux con lista blanca MCP y barrera externa Ley IV <em>fail-closed</em>.</td>
-                <td><strong>Círculo Mágico &amp; Belilin</strong><br /><code>Blast Radius = 0 · Whitelist Only</code></td>
-              </tr>
-              <tr>
-                <td><strong>7. Filosofía de Linus Torvalds</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">«Good Taste» &amp; «Never Break Userspace»</span></td>
-                <td>Eliminar casos especiales (<code>if (head == NULL)</code>) mediante punteros indirectos <code>**pp</code> sin ramificaciones y prohibición absoluta de romper el espacio de usuario.</td>
-                <td><strong>Código Branchless + Árbol Merkle Git:</strong> Estructuras sin ramificaciones superfluas y estabilidad ABI 100% (<code>Δ = 0</code> en los 9 sistemas de la flota).</td>
-                <td><strong>Síntesis Crística Solar</strong><br /><code>0 Special Cases · 0 Regressions</code></td>
-              </tr>
+              <tr><td><strong>RCU</strong></td><td>Read-Copy-Update</td><td>Explicación y ejemplo de lectura de memoria JavaScript.</td><td>No es una implementación RCU ni mide concurrencia del kernel.</td></tr>
+              <tr><td><strong>eBPF</strong></td><td>Extended Berkeley Packet Filter</td><td>Texto informativo sobre verificación de programas.</td><td>No analiza bytecode, no demuestra seguridad y no compila JIT.</td></tr>
+              <tr><td><strong>EEVDF</strong></td><td>Earliest Eligible Virtual Deadline First</td><td>Descripción estática del planificador.</td><td>No agenda tareas ni ofrece garantías de tiempo real.</td></tr>
+              <tr><td><strong>SLUB</strong></td><td>Linux slab allocator</td><td>Referencia a la asignación de objetos en Linux.</td><td>EOS no implementa un allocator SLUB ni mide fragmentación.</td></tr>
+              <tr><td><strong>VFS</strong></td><td><code>/proc</code> · <code>/sys</code> · <code>/dev</code></td><td>Rutas con fixtures servidos por <code>/api/kernel</code>.</td><td>No son nodos montados ni lecturas de un sistema operativo.</td></tr>
+              <tr><td><strong>cgroups y seccomp</strong></td><td>Controles de aislamiento Linux</td><td>Documentación del sandbox local basado en Docker, cuando está configurado.</td><td>La demo web no crea cgroups, namespaces ni filtros seccomp.</td></tr>
+              <tr><td><strong>Diseño sin casos especiales</strong></td><td>Ejemplo de estructura de datos</td><td>Fragmento ilustrativo de eliminación en una lista enlazada.</td><td>No es un verificador de estilo ni una auditoría de ABI.</td></tr>
             </tbody>
           </table>
         </div>
 
-        <!-- LABORATORIO INTERACTIVO DE ANILLO 0: VFS /PROC/EOS + VERIFICADOR eBPF + RCU LOCKLESS (#linux-kernel-lab) -->
+        <!-- DEMOS LOCALES DE CONCEPTOS LINUX (#linux-kernel-lab) -->
         <div class="sanctum-shell" id="linux-kernel-lab" style="border-color: rgba(245, 158, 11, 0.5);">
           <div class="sanctum-header" style="background: linear-gradient(90deg, rgba(15,23,42,0.9) 0%, rgba(245,158,11,0.16) 50%, rgba(16,185,129,0.16) 100%);">
             <div class="sanctum-status">
-              <span class="sanctum-badge sanctum-badge--gold">🐧 EOS RING-0 KERNEL 7.0.0-PREEMPT_RT</span>
-              <span class="sanctum-badge sanctum-badge--emerald">eBPF VERIFIER: SAFE (0 UNBOUNDED LOOPS)</span>
-              <span class="sanctum-badge sanctum-badge--cyan">VFS: /PROC/EOS &amp; /API/KERNEL ONLINE</span>
+              <span class="sanctum-badge sanctum-badge--gold">DEMO LOCAL · NO ES UN KERNEL LINUX</span>
+              <span class="sanctum-badge sanctum-badge--emerald">eBPF: NO SE EJECUTA NI VERIFICA</span>
+              <span class="sanctum-badge sanctum-badge--cyan">FIXTURES ESTÁTICOS · /API/KERNEL</span>
             </div>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
               <button type="button" id="btn-run-rcu-benchmark" class="btn btn--primary" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                ⚡ Ejecutar Benchmark RCU Lockless (rcu_read_lock)
+                ⚡ Medir bucle JavaScript local (no es RCU)
               </button>
               <button type="button" id="btn-verify-linus-taste" class="btn btn--gold" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                🧬 Ver Prueba «Good Taste» de Linus Torvalds (**indirect)
+                🧬 Ver ejemplo de estructura sin caso especial
               </button>
             </div>
           </div>
 
           <div class="sanctum-body">
             <div class="sanctum-grid-2">
-              <!-- Columna Izquierda: Explorador VFS (/proc/eos, /sys/kernel, /dev/anubis) -->
+              <!-- Rutas ilustrativas con fixtures estáticos -->
               <div class="sanctum-box sanctum-box--gold">
                 <div>
-                  <span class="arch-card__tag arch-card__tag--gold">SISTEMA DE ARCHIVOS VIRTUAL (VFS) · TODO ES UN DESCRIPTOR</span>
-                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Inspeccionar Nodos En Vivo del Kernel (<code>/proc/eos</code>, <code>/sys</code>, <code>/dev</code>)</h3>
+                  <span class="arch-card__tag arch-card__tag--gold">RUTAS DE EJEMPLO · TEXTO INFORMATIVO</span>
+                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Consultar fixtures de conceptos (<code>/proc/eos</code>, <code>/sys</code>, <code>/dev</code>)</h3>
                   <p style="font-size: 0.8rem; color: var(--text-muted);">
-                    Selecciona cualquier nodo del Sistema de Archivos Virtual de EOS para ejecutar una llamada <code>vfs_read()</code> en tiempo real sobre el estado del planificador <code>EEVDF</code>, las estadísticas <code>RCU</code>, el verificador estático <code>eBPF</code> o el dispositivo de caracteres del Tribunal de Anubis.
+                    Selecciona una ruta de ejemplo para ver texto estático sobre el concepto asociado. No se ejecuta <code>vfs_read()</code> ni se inspecciona un kernel real.
                   </p>
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 0.45rem;" role="group" aria-label="Nodos del sistema de archivos virtual VFS de EOS">
                   <button type="button" class="cmdk-item vfs-node-btn" data-vfs="/proc/eos/version">
-                    <span>📄 <code>cat /proc/eos/version</code> — Versión Ring-0 PREEMPT_RT &amp; ABI</span>
-                    <span class="sanctum-badge sanctum-badge--emerald">RO · PROCFS</span>
+                    <span>📄 <code>/proc/eos/version</code> — Concepto de versión del kernel</span>
+                    <span class="sanctum-badge sanctum-badge--emerald">FIXTURE</span>
                   </button>
                   <button type="button" class="cmdk-item vfs-node-btn" data-vfs="/proc/eos/rcu_stats">
-                    <span>⚡ <code>cat /proc/eos/rcu_stats</code> — Telemetría Read-Copy-Update (0ns Lock)</span>
-                    <span class="sanctum-badge sanctum-badge--cyan">RO · RCU</span>
+                    <span>⚡ <code>/proc/eos/rcu_stats</code> — Concepto RCU</span>
+                    <span class="sanctum-badge sanctum-badge--cyan">FIXTURE</span>
                   </button>
                   <button type="button" class="cmdk-item vfs-node-btn" data-vfs="/proc/eos/eevdf_sched">
-                    <span>⏱️ <code>cat /proc/eos/eevdf_sched</code> — Planificador EEVDF Virtual Deadline</span>
-                    <span class="sanctum-badge sanctum-badge--gold">RO · SCHED</span>
+                    <span>⏱️ <code>/proc/eos/eevdf_sched</code> — Concepto de planificación EEVDF</span>
+                    <span class="sanctum-badge sanctum-badge--gold">FIXTURE</span>
                   </button>
                   <button type="button" class="cmdk-item vfs-node-btn" data-vfs="/sys/kernel/ebpf_verifier">
-                    <span>🛡️ <code>cat /sys/kernel/ebpf_verifier</code> — Verificador Estático eBPF en Ring-0</span>
-                    <span class="sanctum-badge sanctum-badge--emerald">RO · SYSFS</span>
+                    <span>🛡️ <code>/sys/kernel/ebpf_verifier</code> — Concepto del verificador eBPF</span>
+                    <span class="sanctum-badge sanctum-badge--emerald">FIXTURE</span>
                   </button>
                   <button type="button" class="cmdk-item vfs-node-btn" data-vfs="/dev/anubis_law_gate">
-                    <span>⚖️ <code>ioctl /dev/anubis_law_gate</code> — Dispositivo de Caracteres (Major 42, Minor 7)</span>
-                    <span class="sanctum-badge sanctum-badge--gold">DEVFS · CHAR</span>
+                    <span>⚖️ <code>/dev/anubis_law_gate</code> — Ejemplo de dispositivo</span>
+                    <span class="sanctum-badge sanctum-badge--gold">FIXTURE</span>
                   </button>
                 </div>
               </div>
 
-              <!-- Columna Derecha: Salida del Descriptor VFS / eBPF / RCU / Good Taste -->
+              <!-- Resultado de la demo local -->
               <div class="sanctum-box" style="border-color: rgba(56, 189, 248, 0.42);">
                 <div>
-                  <span class="arch-card__tag">SALIDA DEL KERNEL DE ANILLO 0 (VFS_READ / EBPF_VERIFY / RCU_BENCH)</span>
-                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Buffer de Anillo del Kernel (<code>dmesg / vfs_read</code>)</h3>
+                  <span class="arch-card__tag">SALIDA DE LA DEMO LOCAL</span>
+                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Fixture o medición JavaScript</h3>
                 </div>
-                <pre id="linux-kernel-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(56, 189, 248, 0.35); font-family: var(--font-mono); font-size: 0.75rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 340px; overflow-y: auto;" aria-live="polite">$ cat /proc/eos/version
-EOS Sovereign Kernel version 7.0.0-PREEMPT_RT-Samaelian (valentin@eos-control-plane)
-Compiler   : EosNanosecondEngine L0 (Zero-Deps · SoA 64KB L1 Arena · AVX-512/SIMD128)
-Preemption : Full Deterministic Real-Time (PREEMPT_RT · EEVDF Virtual Deadline Scheduler)
-ABI Policy : NEVER_BREAK_USERSPACE (9/9 Sovereign Fleet Systems · Δ = 0.00%)
-Linus Rule : "Talk is cheap. Show me the verified EARS spec and SHA-256 receipt."</pre>
+                <pre id="linux-kernel-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(56, 189, 248, 0.35); font-family: var(--font-mono); font-size: 0.75rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 340px; overflow-y: auto;" aria-live="polite">FIXTURE · EOS no es un kernel Linux
+/api/kernel devuelve texto estático; no consulta /proc, no sondea ABI ni confirma procesos.</pre>
               </div>
             </div>
           </div>
@@ -2345,154 +2299,100 @@ Linus Rule : "Talk is cheap. Show me the verified EARS spec and SHA-256 receipt.
       </div>
     </section>
 
-    <!-- THE OMEGA SINGULARITY v8.0 (POST-QUANTUM FIPS 203/204/205, ZK-STARKs, BFT 3f+1 QUORUM, TIME-TRAVEL DST & LIVE FLEET RADAR) -->
+    <!-- OMEGA CONCEPT WALKTHROUGH AND LOCAL DEMOS -->
     <section class="section deferred-section" id="omega-singularity">
       <div class="container">
         <div class="section__head">
-          <div class="eyebrow">🌌 SINGULARIDAD SOBERANA OMEGA v8.0 · MÁS ALLÁ DE BIG TECH Y DEL KERNEL DE LINUX (ERA POST-CUÁNTICA)</div>
-          <h2 class="section__title">Las 7 Fronteras Supremas del Futuro: Criptografía Post-Cuántica NIST, <code>ZK-STARKs</code>, Consenso Bizantino <code>3f+1</code> y <code>Time-Travel DST</code></h2>
+          <div class="eyebrow">OMEGA · CONCEPTOS DE ARQUITECTURA Y DEMOS LOCALES</div>
+          <h2 class="section__title">PQC, pruebas ZK, consenso y reproducción determinista: conceptos y límites</h2>
           <p class="section__sub">
-            ¿Qué sigue después de alcanzar la velocidad de nanosegundos HFT (<code>v4.0</code>), la Memoria Akáshica de 27 herramientas (<code>v5.0</code>), las 7 joyas de Big Tech (<code>v6.0</code>) y el Anillo 0 del Kernel de Linux (<code>v7.0</code>)? Sigue <strong>la Inmunidad para los próximos 50 años de la computación (<code>src/core/eosOmegaSingularity.ts</code> + <code>/api/omega</code>)</strong>: resistencia matemática contra ordenadores cuánticos (<strong>NIST FIPS 203/204/205</strong>), pruebas de conocimiento cero sin ceremonia de confianza (<strong><code>ZK-STARK FRI</code></strong>), consenso bizantino contra alucinaciones de IA (<strong><code>HotStuff BFT 3f+1</code></strong>), rebobinado temporal determinista (<strong><code>Mozilla rr / FoundationDB DST</code></strong>) y radar planetario en vivo de los 9 sistemas soberanos.
+            Esta sección presenta referencias y controles de interfaz. No implementa algoritmos PQC, genera pruebas ZK, ejecuta consenso ni reproduce historiales. El control de flota consulta el registro estático y no mide salud o producción.
           </p>
         </div>
 
-        <!-- TABLA DE LAS 7 FRONTERAS DE LA SINGULARIDAD OMEGA v8.0 -->
-        <div class="table-wrap" role="region" aria-label="Tabla de las 7 Fronteras de la Singularidad Omega v8.0" tabindex="0" style="margin-bottom: 2.25rem;">
+        <!-- REFERENCIAS CON ALCANCE IMPLEMENTADO -->
+        <div class="table-wrap" role="region" aria-label="Conceptos de arquitectura y alcance implementado" tabindex="0" style="margin-bottom: 2.25rem;">
           <table class="eos-table">
             <thead>
-              <tr>
-                <th>Frontera Suprema (v8.0 Omega)</th>
-                <th>Estándar Matemático / Criptográfico</th>
-                <th>Transmutación en <code>EOS Omega Singularity</code></th>
-                <th>Correspondencia Samaeliana &amp; Garantía</th>
-              </tr>
+              <tr><th>Concepto</th><th>Referencia</th><th>Qué hace esta demo</th><th>Qué no implementa</th></tr>
             </thead>
             <tbody>
-              <tr>
-                <td><strong>1. Criptografía Post-Cuántica (PQC)</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">NIST FIPS 203 / 204 / 205</span></td>
-                <td>Retículos algebraicos <code>ML-KEM-1024 (Kyber)</code>, firmas <code>ML-DSA-87 (Dilithium-5)</code> y árboles hash <code>SLH-DSA (SPHINCS+)</code>.</td>
-                <td>Cada recibo de evidencia <code>EVD</code> y cada nodo del Átomo <em>Nous</em> se sella con criptografía inmune al algoritmo cuántico de Shor.</td>
-                <td><strong>El Sello Diamantino de la Mónada</strong><br /><code>NIST Security Level 5 (Quantum-Safe)</code></td>
-              </tr>
-              <tr>
-                <td><strong>2. Pruebas de Conocimiento Cero (<code>ZK-STARKs</code>)</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">StarkWare FRI Polynomial IOP</span></td>
-                <td>Compromisos polinómicos Reed-Solomon (<code>FRI</code>) transparentes (sin <em>trusted setup</em>) y resistentes a ataques cuánticos.</td>
-                <td>Demuestra ante cualquier auditor que el código cumple el 100% de las 7 Leyes de EOS sin exponer una sola línea de secreto industrial.</td>
-                <td><strong>El Velo de Isis Criptográfico</strong><br /><code>0 Bytes Private Code Leaked · &lt; 1ms Verify</code></td>
-              </tr>
-              <tr>
-                <td><strong>3. Consenso Tolerante a Fallas Bizantinas</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">HotStuff / Raft BFT Quorum (3f+1)</span></td>
-                <td>Tolerancia matemática a nodos arbitrarios o maliciosos mediante quórum firmado de <code>&gt;= 2f + 1</code> validadores independientes.</td>
-                <td>Concilio de 4 Auditores Soberanos (<code>architecture</code>, <code>security</code>, <code>quality</code>, <code>evidence</code>) que erradica el 100% de las alucinaciones antes del commit.</td>
-                <td><strong>El Concilio Solar de Cosmocrátores</strong><br /><code>4/4 Quorum · 0% AI Hallucinations</code></td>
-              </tr>
-              <tr>
-                <td><strong>4. Depuración en el Tiempo Determinista</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Mozilla rr · FoundationDB DST</span></td>
-                <td>Captura determinista de semillas PRNG, relojes lógicos y eventos de E/S para reproducir o rebobinar cualquier ejecución bit por bit.</td>
-                <td>Línea de tiempo interactiva con rebobinado exacto (<code>⏪ Step Back</code> / <code>⏩ Step Forward</code>) sobre las 6 épocas evolutivas de EOS.</td>
-                <td><strong>Retrocognición Akáshica Consciente</strong><br /><code>100% Bit-Exact Replay · 0 Heisenbugs</code></td>
-              </tr>
-              <tr>
-                <td><strong>5. Superoptimización por <code>E-Graphs</code></strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Equality Saturation · LLVM MLIR</span></td>
-                <td>Saturación de igualdad sobre grafos de equivalencia algebraica para extraer el AST/IR de mínimo costo computacional.</td>
-                <td>Reescritura automática de rutas críticas para minimizar ciclos de CPU preservando 100% la semántica formal EARS.</td>
-                <td><strong>Transmutación Alquímica en Oro Puro</strong><br /><code>Mathematical Cycle Optimality</code></td>
-              </tr>
-              <tr>
-                <td><strong>6. Sandbox Basado en Capacidades (<code>WASI</code>)</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">WebAssembly SIMD-128 Object-Capability</span></td>
-                <td>Seguridad por capacidades de objeto (<em>Zero Ambient Authority</em>): ningún binario posee permisos implícitos de red, reloj o archivos.</td>
-                <td>Ejecución vectorial <code>SIMD-128</code> aislada donde cada herramienta opera únicamente con descriptores explícitamente otorgados.</td>
-                <td><strong>El Círculo Mágico de Belilin</strong><br /><code>0 Ambient Authority · Native Speed</code></td>
-              </tr>
-              <tr>
-                <td><strong>7. Radar Planetario de la Flota Soberana</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">9 Sistemas en Producción · ABI 100%</span></td>
-                <td>Matriz de telemetría distribuida que verifica salud, estado epistémico y contrato ABI de todos los sistemas desplegados.</td>
-                <td>Auditoría en un clic de los 9 sistemas soberanos (<em>EOS, Aberamentho v8.0, Portafolio, PTG, La Suplidora, Chavela, Gödel, Traductor, Fundación/Viasek</em>).</td>
-                <td><strong>La Cadena Áurea Solar (9 Soles)</strong><br /><code>9/9 Systems PRODUCTION_READY</code></td>
-              </tr>
+              <tr><td><strong>Criptografía post-cuántica</strong></td><td>ML-KEM, ML-DSA, SLH-DSA · NIST FIPS 203/204/205</td><td>Muestra nombres de estándares como material informativo.</td><td>No genera claves, cifra, firma, verifica ni certifica una implementación.</td></tr>
+              <tr><td><strong>Pruebas de conocimiento cero</strong></td><td>ZK-STARK · FRI</td><td>Permite editar y mostrar una declaración de ejemplo.</td><td>No construye ni verifica una prueba criptográfica.</td></tr>
+              <tr><td><strong>Consenso BFT</strong></td><td>Regla de quorum <code>N = 3f + 1</code></td><td>Presenta una fórmula con valores de ejemplo.</td><td>No ejecuta nodos, recopila votos ni verifica firmas.</td></tr>
+              <tr><td><strong>Reproducción determinista</strong></td><td>Mozilla rr · FoundationDB DST</td><td>Permite recorrer etiquetas de épocas precargadas en la página.</td><td>No graba eventos ni reproduce una ejecución previa.</td></tr>
+              <tr><td><strong>Optimizadores E-Graph</strong></td><td>Equality saturation · MLIR</td><td>Describe el patrón de optimización como referencia.</td><td>No transforma ni optimiza el código del repositorio.</td></tr>
+              <tr><td><strong>Sandbox por capacidades</strong></td><td>WASI · WebAssembly</td><td>Describe el modelo de permisos como referencia.</td><td>No ejecuta un módulo WASM ni aplica aislamiento WASI.</td></tr>
+              <tr><td><strong>Registro de proyectos</strong></td><td><code>/api/fleet</code> · <code>docs/projects/registry.json</code></td><td>Consulta proyectos configurados y sus URLs.</td><td>No sondea disponibilidad, CI, ABI, hooks ni producción.</td></tr>
             </tbody>
           </table>
         </div>
 
-        <!-- LABORATORIO INTERACTIVO OMEGA v8.0 (#omega-singularity-lab) -->
+        <!-- DEMOS LOCALES DE CONCEPTOS OMEGA -->
         <div class="sanctum-shell" id="omega-singularity-lab" style="border-color: rgba(16, 185, 129, 0.55);">
           <div class="sanctum-header" style="background: linear-gradient(90deg, rgba(16,185,129,0.16) 0%, rgba(56,189,248,0.16) 50%, rgba(245,158,11,0.16) 100%);">
             <div class="sanctum-status">
-              <span class="sanctum-badge sanctum-badge--emerald">🌌 EOS OMEGA SINGULARITY v8.0 ACTIVE</span>
-              <span class="sanctum-badge sanctum-badge--gold">PQC: ML-DSA-87 DILITHIUM + ZK-STARK FRI</span>
-              <span class="sanctum-badge sanctum-badge--cyan">BFT QUORUM: 4/4 AUDITORS · /API/OMEGA READY</span>
+              <span class="sanctum-badge sanctum-badge--emerald">DEMO LOCAL · SIN CRIPTOGRAFÍA EJECUTADA</span>
+              <span class="sanctum-badge sanctum-badge--gold">REFERENCIAS: PQC · ZK-STARK</span>
+              <span class="sanctum-badge sanctum-badge--cyan">CONSENSO Y ESTADO DE FLOTA: NO EJECUTADOS</span>
             </div>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
               <button type="button" id="btn-omega-pqc-zk" class="btn btn--primary" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                🛡️ Generar Sello Post-Cuántico + Prueba ZK-STARK
+                🛡️ Ver resumen de conceptos criptográficos
               </button>
               <button type="button" id="btn-omega-bft-quorum" class="btn btn--gold" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                ⚖️ Ejecutar Quórum Bizantino 3f+1 (0 Alucinaciones)
+                ⚖️ Ver fórmula de quorum de ejemplo
               </button>
               <button type="button" id="btn-omega-fleet-radar" class="btn btn--ghost" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                📡 Radar en Vivo: 9/9 Sistemas de la Flota
+                📋 Consultar registro estático de proyectos
               </button>
             </div>
           </div>
 
           <div class="sanctum-body">
             <div class="sanctum-grid-2">
-              <!-- Columna Izquierda: Controles de Depuración en el Tiempo (Time-Travel DST) y Declaración ZK-STARK -->
+              <!-- Selector de etiquetas de ejemplo y texto informativo -->
               <div class="sanctum-box sanctum-box--gold">
                 <div>
-                  <span class="arch-card__tag arch-card__tag--gold">RETROCOGNICIÓN AKÁSHICA · TIME-TRAVEL DETERMINISTIC DEBUGGER</span>
-                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Máquina del Tiempo Determinista (<code>Mozilla rr / FoundationDB DST</code>)</h3>
+                  <span class="arch-card__tag arch-card__tag--gold">SELECTOR DE ETIQUETAS DE EJEMPLO</span>
+                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Recorrido local de estados ilustrativos</h3>
                   <p style="font-size: 0.8rem; color: var(--text-muted);">
-                    Rebobina o avanza por las <strong>6 Épocas Evolutivas de EOS System</strong> con reproducción exacta de semilla (<code>PRNG Seed</code>), raíz de Merkle y delta de Dharma.
+                    Los botones cambian entre seis etiquetas precargadas; no leen historial, semillas o eventos del sistema.
                   </p>
                 </div>
 
                 <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.8); border: 1px solid rgba(245, 158, 11, 0.3);">
                   <button type="button" id="btn-omega-tt-prev" class="btn btn--ghost" style="padding: 0.35rem 0.75rem; font-size: 0.74rem;">
-                    ⏪ Rebobinar Época (-1 Tick)
+                    ⏪ Ejemplo anterior
                   </button>
                   <span id="omega-tt-epoch-indicator" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--gold-bright); font-weight: 700;">
-                    ÉPOCA 6 / 6 · v8.0 OMEGA SINGULARITY
+                    MUESTRA 6 / 6
                   </span>
                   <button type="button" id="btn-omega-tt-next" class="btn btn--ghost" style="padding: 0.35rem 0.75rem; font-size: 0.74rem;">
-                    Avanzar Época (+1 Tick) ⏩
+                    Ejemplo siguiente ⏩
                   </button>
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.35rem;">
                   <label for="input-omega-zk-statement" style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--cyan-bright);">
-                    DECLARACIÓN PÚBLICA A DEMOSTRAR VÍA ZK-STARK (0 SECRETOS EXPUESTOS):
+                    TEXTO DE EJEMPLO · NO SE GENERA UNA PRUEBA ZK:
                   </label>
                   <input
                     type="text"
                     id="input-omega-zk-statement"
                     class="sanctum-input"
-                    value="EOS_V8_CUMPLIMIENTO_100_POR_CIENTO_7_LEYES_Y_FLOTA_SOBERANA"
+                    value="Declaración de ejemplo para una demo conceptual"
                   />
                 </div>
               </div>
 
-              <!-- Columna Derecha: Consola Criptográfica Post-Cuántica, ZK-STARK, BFT y Radar de Flota -->
+              <!-- Resumen conceptual y consulta al registro estático -->
               <div class="sanctum-box" style="border-color: rgba(16, 185, 129, 0.45);">
                 <div>
-                  <span class="arch-card__tag arch-card__tag--emerald">CERTIFICACIÓN POST-CUÁNTICA NIST · ZK-STARK FRI · HOTSTUFF BFT</span>
-                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Registro Criptográfico de la Singularidad Omega (<code>/api/omega</code>)</h3>
+                  <span class="arch-card__tag arch-card__tag--emerald">RESUMEN DE LA DEMO · SIN CERTIFICACIÓN</span>
+                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Conceptos y respuesta del registro (<code>/api/fleet</code>)</h3>
                 </div>
-                <pre id="omega-singularity-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(16, 185, 129, 0.38); font-family: var(--font-mono); font-size: 0.75rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 340px; overflow-y: auto;" aria-live="polite">$ eos omega --quantum --zk-stark --bft-quorum
-──────────────────────────────────────────────────────────────────────────────
-[1] NIST POST-QUANTUM SEAL (FIPS 203 / 204 / 205):
-  ├─ KEM Encapsulation : ML-KEM-1024 (Kyber · Lattice Module-LWE k=8, n=256, q=8380417)
-  ├─ Digital Signature : ML-DSA-87 (Dilithium-5) + SLH-DSA (SPHINCS+ Stateless Hash)
-  └─ Quantum Immunity  : RESISTANT to Shor's &amp; Grover's Algorithms (NIST Level 5)
-
-[2] ZERO-KNOWLEDGE STARK COMPLIANCE PROOF (FRI IOP):
-  ├─ Public Statement  : EOS_V8_CUMPLIMIENTO_100_POR_CIENTO_7_LEYES_Y_FLOTA_SOBERANA
-  ├─ Trusted Setup     : NONE (100% Transparent Hash/Polynomial Commitment)
-  ├─ Private Code Leak : 0 Bytes Exposed (El Velo de Isis Criptográfico)
-  └─ Verification Time : 0.42 ms · Verdict: ZK_STARK_VALID
-
-[3] BYZANTINE FAULT-TOLERANT CONSENSUS (HotStuff 3f+1 · 4/4 Unanimous):
-  └─ Architecture + Security + Quality + Evidence Auditors: 4/4 APPROVED (0 Hallucinations)</pre>
+                <pre id="omega-singularity-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(16, 185, 129, 0.38); font-family: var(--font-mono); font-size: 0.75rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 340px; overflow-y: auto;" aria-live="polite">Demo conceptual. No se ejecutan algoritmos criptográficos, consenso, reproducción de eventos ni sondas de producción.</pre>
               </div>
             </div>
           </div>
