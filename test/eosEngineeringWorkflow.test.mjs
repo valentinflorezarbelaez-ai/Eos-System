@@ -81,7 +81,7 @@ test("flow start creates an isolated worktree without dirtying the target checko
   assert.equal(started.baseBranch, "main");
   assert.equal(started.baseCommit, originalHead);
   assert.equal(started.localExcludeUpdated, true);
-  assert.ok(started.worktreePath.startsWith(path.join(repoRoot, ".worktrees")));
+  assert.equal(path.dirname(started.worktreePath), path.join(fs.realpathSync(repoRoot), ".worktrees"));
   assert.equal(git(started.worktreePath, ["branch", "--show-current"]), started.branchName);
   assert.equal(git(repoRoot, ["rev-parse", "HEAD"]), originalHead);
   assert.equal(git(repoRoot, ["status", "--porcelain", "--untracked-files=all"]), "");
