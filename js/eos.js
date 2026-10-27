@@ -349,6 +349,39 @@ const PIPELINE_STEPS = [
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
+  function openHashTarget(hash, scroll = false) {
+    if (!hash || hash === "#") return;
+
+    let targetId;
+    try {
+      targetId = decodeURIComponent(hash.slice(1));
+    } catch {
+      return;
+    }
+
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    let disclosure = target.closest("details");
+    while (disclosure) {
+      disclosure.open = true;
+      disclosure = disclosure.parentElement?.closest("details") ?? null;
+    }
+
+    if (scroll) {
+      requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    }
+  }
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest('a[href^="#"]');
+    if (link) openHashTarget(link.hash);
+  }, true);
+
+  window.addEventListener("hashchange", () => openHashTarget(window.location.hash, true));
+  openHashTarget(window.location.hash, true);
+
   // 1. Terminal Command Switching
   const terminalOutput = document.getElementById("terminal-output");
   const activeCmdLabel = document.getElementById("active-cmd-label");

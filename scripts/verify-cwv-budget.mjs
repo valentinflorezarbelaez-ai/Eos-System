@@ -54,7 +54,10 @@ assert.ok(css.includes("prefers-reduced-motion: reduce"), "Usability Violation: 
 assert.ok(js.includes('quickstartCopyStatus.textContent = "Comando copiado al portapapeles."'), "Usability Violation: Copy action needs success feedback");
 assert.ok(js.includes('quickstartCopyStatus.textContent = "No se pudo copiar automáticamente.'), "Usability Violation: Copy failure needs recovery guidance");
 assert.ok(!html.includes('id="live-fps-pill"'), "Usability Violation: Unvalidated frame-rate telemetry should not compete with product status");
-console.log("[PASS] 5/5 First-use, copy feedback, demo disclosure, and status-honesty assertions passed.");
+assert.ok(html.includes('<details class="labs-disclosure" id="eos-laboratories">'), "Usability Violation: Secondary modules must be collapsed by default");
+assert.ok(js.includes("function openHashTarget(hash, scroll = false)"), "Usability Violation: Deep links must reveal targets inside collapsed disclosures");
+assert.ok(js.includes('event.target.closest(\'a[href^="#"]\')'), "Usability Violation: Internal links must open their disclosure before navigation");
+console.log("[PASS] 6/6 First-use, disclosures, deep links, feedback, and status-honesty assertions passed.");
 
 console.log("------------------------------------------------------------------");
 console.log(" STATIC ASSERTIONS PASSED; NO USER STUDY, BROWSER CWV MEASUREMENT OR FULL WCAG AUDIT WAS RUN  ");

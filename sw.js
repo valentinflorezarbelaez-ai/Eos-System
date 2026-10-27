@@ -6,7 +6,7 @@
  * Zero external runtime dependencies.
  */
 
-const CACHE_VERSION = 'v38-guided-quickstart';
+const CACHE_VERSION = 'v39-focused-labs';
 const STATIC_CACHE = `eos-static-${CACHE_VERSION}`;
 const API_CACHE = `eos-api-${CACHE_VERSION}`;
 
@@ -16,8 +16,8 @@ const PRECACHE_ASSETS = [
   "/css/eos.css",
   "/js/eos.js",
   "/js/wasm_exec.js",
-  "/css/eos.css?v=14.0",
-  "/js/eos.js?v=17.0",
+  "/css/eos.css?v=15.0",
+  "/js/eos.js?v=18.0",
   "/favicon.svg",
   "/manifest.webmanifest",
   "/assets/eos-system.webp"
