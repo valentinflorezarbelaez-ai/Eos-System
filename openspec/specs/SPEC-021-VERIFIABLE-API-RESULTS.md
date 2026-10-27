@@ -18,6 +18,9 @@ Governs client-controlled input and reported evaluation, simulation, registry, a
 - **UBIQUITOUS**: THE kernel and Omega endpoints SHALL identify kernel-themed data as fixtures and SHALL distinguish a SHA-256 text fingerprint from a cryptographic signature or proof.
 - **UBIQUITOUS**: THE browser command console SHALL show supported local commands without claiming to execute them; unsupported command labels SHALL state that no CLI handler exists.
 - **UBIQUITOUS**: WHEN the browser scaffold generator creates text, THE SYSTEM SHALL label it as an unverified draft held in browser memory and SHALL NOT claim that files were written, tests passed, or deployment occurred.
+- **UBIQUITOUS**: THE HTTP MCP adapter SHALL expose only bounded read-only tools, SHALL reject filesystem reads and mutations, and SHALL limit request and response bodies to 1 MiB.
+- **UBIQUITOUS**: THE HTTP MCP adapter SHALL identify local execution scope and SHALL NOT claim external service calls, deployment, or certification that did not occur.
+- **EVENT-DRIVEN**: WHEN a client requests an unsupported server-sent event stream, THE HTTP MCP adapter SHALL return HTTP 405 and document stateless JSON-RPC POST as its supported transport.
 
 ## 3. Invariants
 - API input is untrusted, including file paths and code payloads.

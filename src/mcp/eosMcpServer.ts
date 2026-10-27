@@ -441,6 +441,7 @@ export class EosMcpServer {
   private static globalHashChain = new EosMonotonicHashChain();
   private readonly knowledgeStore = createDefaultEosKnowledgeStore();
   private readonly projectRoot: string;
+  private readonly serverVersion: string;
 
   constructor(projectRoot?: string) {
     const currentDir = typeof __dirname !== "undefined"
@@ -459,6 +460,15 @@ export class EosMcpServer {
     } else {
       this.projectRoot = repoCandidate;
     }
+
+    let version = "unknown";
+    try {
+      const packageInfo = JSON.parse(fs.readFileSync(path.join(this.projectRoot, "package.json"), "utf8"));
+      if (typeof packageInfo.version === "string" && packageInfo.version.length <= 64) version = packageInfo.version;
+    } catch {
+      // The MCP server can still operate when package metadata is unavailable.
+    }
+    this.serverVersion = version;
   }
 
   private resolveProjectPath(value: unknown, kind: "file" | "directory", defaultPath?: string): string {
@@ -549,8 +559,8 @@ export class EosMcpServer {
               },
               serverInfo: {
                 name: "eos-system-mcp",
-                version: "18.0.0",
-                description: "EOS Sovereign Engineering Operating System MCP Interface"
+                version: this.serverVersion,
+                description: "Local software engineering tools with bounded request validation."
               }
             }
           };
@@ -617,7 +627,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_optimize_context",
-                  description: "Compresses source code into a high-density structural outline (extracting interfaces, types, and function signatures), saving 70-85% of tokens while retaining full architectural contracts.",
+                  description: "Extracts a local structural outline from source text or a project file. Compression savings vary by input and do not guarantee preservation of every architectural detail.",
                   inputSchema: {
                     type: "object",
                     properties: {
@@ -629,7 +639,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_amplify_prompt",
-                  description: "Amplifies an informal prompt into a zero-vibe ISO 29148 EARS specification, BDD acceptance scenarios, boundary invariants, and model-specific cognitive scaffolding.",
+                  description: "Creates a local EARS/BDD prompt draft. The model name selects formatting metadata only; no remote model is called and the draft is not verified.",
                   inputSchema: {
                     type: "object",
                     properties: {
@@ -652,7 +662,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_evaluate_decision",
-                  description: "Evaluates an architectural or implementation choice against the 7 Inviolable Commandments using a multi-dimensional Bayesian matrix.",
+                  description: "Applies deterministic keyword heuristics to an architectural proposal. The score is a local screening signal, not Bayesian inference, verification, or approval authority.",
                   inputSchema: {
                     type: "object",
                     properties: {
@@ -742,7 +752,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_titans_benchmark",
-                  description: "Executes apex Big Tech benchmarks: Spotify Xirp, SpaceX 60Hz TMR, NVIDIA SIMD Float32, Google Borg Reconciler, and xAI Colossus Fabric.",
+                  description: "Runs local engineering simulations and arithmetic benchmarks inspired by vendor scenarios. No vendor systems are queried and results do not represent vendor performance.",
                   inputSchema: {
                     type: "object",
                     properties: {
@@ -1007,7 +1017,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_spotify_shuffle",
-                  description: "Executes Spotify deterministic Smart Shuffle with jittered proportional spacing and Camelot harmonic routing in < 100 µs.",
+                  description: "Runs a deterministic local track-ordering algorithm. It does not call Spotify; runtime depends on input size and hardware.",
                   inputSchema: {
                     type: "object",
                     properties: {

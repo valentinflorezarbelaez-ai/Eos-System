@@ -66,6 +66,7 @@ Commands that write files, change Git configuration, commit, or push should be r
 | Route | Scope |
 |---|---|
 | `/api/health` | Handler liveness and process data. Subsystems are marked not probed. |
+| `/api/mcp` | Stateless JSON-RPC over POST with a bounded read-only tool allowlist. File reads, mutations, sessions, and SSE are not exposed over HTTP. |
 | `/api/fleet` | Static project registry; no health, CI, hook, or deployment probes. |
 | `/api/cicd` | Bounded CI/CD simulation; no checks, SBOM generation, or deployment. |
 | `/api/bigtech` | Static scenario fixtures; no model checking or fault injection. |
