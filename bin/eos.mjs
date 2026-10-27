@@ -920,6 +920,109 @@ switch (command) {
     break;
   }
 
+  case "flow": {
+    printBanner();
+    const action = (args[1] || "help").toLowerCase();
+    if (action === "help") {
+      console.log(["", "Uso del flujo de ingeniería con revisión humana:",
+        "  eos flow inspect <repo>",
+        "  eos flow plan <repo> <tarea>",
+        "  eos flow start <repo> <tarea>",
+        "  eos flow validate <repo> <workflow-id> -- <comando> [argumentos...]",
+        "  eos flow review <repo> <workflow-id>",
+        "  eos flow apply <repo> <workflow-id> --confirm-diff=<sha256>",
+        "",
+        "Inspect y plan son de solo lectura. Start crea un worktree local. Validate ejecuta",
+        "en el sandbox Docker y descarta sus escrituras. Review presenta el diff comprometido.",
+        "Apply exige el hash revisado y hace fast-forward local; nunca publica ni despliega."].join("\n"));
+      break;
+    }
+
+    const repoArgument = args[2];
+    if (!repoArgument) {
+      console.error("Falta la ruta del repositorio.");
+      process.exitCode = 2;
+      break;
+    }
+    const repoPath = path.resolve(process.cwd(), repoArgument);
+    const { EosEngineeringWorkflow } = await import("../src/core/eosEngineeringWorkflow.ts");
+    const workflow = new EosEngineeringWorkflow();
+
+    try {
+      if (action === "inspect") {
+        const report = workflow.inspect(repoPath);
+        console.log(`Repositorio       : ${report.audit.projectPath}`);
+        console.log(`Rama / HEAD       : ${report.branch} / ${report.headCommit.slice(0, 12)}`);
+        console.log(`Archivos sin commit: ${report.dirtyFiles.length}`);
+        console.log(`Índice heurístico : ${report.audit.healthIndex}/100 (${report.audit.tier}; no es certificación)`);
+        for (const [pillar, result] of Object.entries(report.audit.pillars)) {
+          console.log(`  ${pillar}: ${result.score}/20`);
+          result.findings.slice(0, 5).forEach((finding) => console.log(`    - ${finding}`));
+        }
+      } else if (action === "plan" || action === "start") {
+        const task = args.slice(3).join(" ");
+        if (!task) throw new Error("Indica la tarea después de la ruta del repositorio.");
+        if (action === "plan") {
+          const report = workflow.plan(repoPath, task);
+          console.log(`Tarea             : ${report.task}`);
+          console.log(`Estado            : ${report.planStatus}; ejecución: no realizada`);
+          console.log(`Stack sugerido    : ${report.suggestedStack}`);
+          console.log(`Stack detectado   : ${report.detectedStack}`);
+          console.log(`Índice heurístico : ${report.audit.healthIndex}/100 (no es certificación)`);
+          report.audit.recommendations.forEach((item) => console.log(`  - ${item}`));
+          console.log(`Inventario de plantilla: ${report.templateInventorySummary}`);
+          report.proposedSteps.forEach((step, index) => console.log(`  ${index + 1}. ${step}`));
+          console.log(report.note);
+        } else {
+          const result = workflow.start(repoPath, task);
+          console.log(`Workflow ID : ${result.workflowId}`);
+          console.log(`Rama        : ${result.branchName} (base ${result.baseBranch}@${result.baseCommit.slice(0, 12)})`);
+          console.log(`Worktree    : ${result.worktreePath}`);
+          if (result.localExcludeUpdated) console.log("Exclusión local: añadí .worktrees/ y .eos/ a .git/info/exclude; no edité archivos versionados.");
+          console.log("Siguiente: trabaja en ese worktree y crea un commit local con los cambios revisados.");
+          console.log(`Después valida con: node bin/eos.mjs flow validate "${repoPath}" ${result.workflowId} -- <comando> [argumentos...]`);
+        }
+      } else if (action === "validate") {
+        const workflowId = args[3];
+        const separator = args.indexOf("--", 4);
+        if (!workflowId || separator < 0 || separator === args.length - 1) {
+          throw new Error("Uso: eos flow validate <repo> <workflow-id> -- <comando> [argumentos...]");
+        }
+        const report = await workflow.validate(repoPath, workflowId, args[separator + 1], args.slice(separator + 2));
+        console.log(`Validación: ${report.status}; exit=${report.exitCode ?? "N/D"}; cambios descartados en sandbox=${report.changedFiles.length}`);
+        if (report.receiptPath) console.log(`Recibo local: ${report.receiptPath}`);
+        if (!report.success) {
+          if (report.error) console.error(report.error);
+          process.exitCode = report.status === "COMMAND_FAILED" ? (report.exitCode || 1) : 1;
+        }
+      } else if (action === "review") {
+        const workflowId = args[3];
+        if (!workflowId) throw new Error("Falta el workflow-id.");
+        const review = workflow.review(repoPath, workflowId);
+        console.log(`Archivos revisados (${review.changedFiles.length}):`);
+        review.changedFiles.forEach((file) => console.log(`  ${file}`));
+        console.log(`\nSHA-256 del diff: ${review.diffSha256}`);
+        console.log("\n===== DIFF =====");
+        process.stdout.write(review.diff);
+        console.log("\n===== FIN DEL DIFF =====");
+        console.log(`\nPara aplicar este diff revisado: ${review.approvalCommand}`);
+      } else if (action === "apply") {
+        const workflowId = args[3];
+        const approval = args.slice(4).find((value) => value.startsWith("--confirm-diff="));
+        if (!workflowId || !approval) throw new Error("Se requiere --confirm-diff=<sha256> del último flow review.");
+        const appliedHead = workflow.apply(repoPath, workflowId, approval.slice("--confirm-diff=".length));
+        console.log(`Aplicado por fast-forward local: ${appliedHead}`);
+        console.log("No se hizo push ni despliegue.");
+      } else {
+        throw new Error(`Acción desconocida: ${action}. Ejecuta eos flow help.`);
+      }
+    } catch (error) {
+      console.error(`[EOS FLOW] ${error instanceof Error ? error.message : String(error)}`);
+      process.exitCode = 1;
+    }
+    break;
+  }
+
   case "sandbox": {
     printBanner();
     const { EosContainerSandbox } = await import("../src/core/eosContainerSandbox.ts");
@@ -2648,6 +2751,7 @@ Uso Universal:
   eos spotify [audit|standup|postmortem|experiment|squad|scaffold] Herramientas universales de ingeniería y cultura Spotify
   eos go [benchmark|bandit]  Acelerador nativo en Go (goroutines, streaming, BaRT Thompson sampling)
   eos honk [directiva]       Bucle autónomo de codificación y self-healing estilo Spotify Honk
+  eos flow [acción]          Flujo de proyecto con worktree, validación aislada y aprobación por hash
   eos xirp [sync|inspect]    Motor de contexto Xirp para eliminar alucinaciones vía Backstage RFC-42
   eos fleetshift [accion]    Migración y refactorización masiva de flotas de repositorios
   eos dsp [benchmark]        Benchmark de filtros Biquad y Limitador ITU-R BS.1770 (-1.0 dBTP)

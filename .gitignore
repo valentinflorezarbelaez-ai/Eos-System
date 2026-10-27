@@ -1,5 +1,7 @@
 .vercel
 node_modules/
+.eos/
+.worktrees/
 docs/evidence/LOCAL-CHECKS-RECEIPT.json
 docs/evidence/local-checks.sarif
 docs/evidence/HEAL-*.json

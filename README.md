@@ -35,6 +35,7 @@ The root `index.html` is the browser UI. The routes under `api/` use Vercel's se
 | `node bin/eos.mjs sandbox doctor` | Check for a local Linux Docker Engine, seccomp, cgroup v2, and the configured pinned image. |
 | `node bin/eos.mjs sandbox run .worktrees/task -- node --version` | Run a command offline in a filtered temporary worktree copy; discard its edits. Add `--apply` to request conflict-checked writeback after exit code 0. |
 | `node bin/eos.mjs honk "<task>"` | Produce a bounded local task draft; it does not edit code, create a branch, run tests, or open a PR. |
+| `node bin/eos.mjs flow <action> ...` | Run the inspect → plan → worktree → isolated validation → diff review → approval-hash flow described below. |
 | `npm run mcp` | Start the local MCP stdio server; each request is limited to 1 MiB. |
 | `npm run mcp:stream` | Start authenticated local MCP HTTP/SSE on `127.0.0.1:3333`; exposes a read-only HTTP tool allowlist. |
 | `npm run typecheck` | Strictly type-check `src/**/*.ts` with the locked TypeScript compiler. |
@@ -42,6 +43,22 @@ The root `index.html` is the browser UI. The routes under `api/` use Vercel's se
 | `npm run test:unit` | Run the Node test file named in `package.json`. |
 
 Commands that write files, change Git configuration, commit, or push should be reviewed before use. In particular, fleet ship mode can stage, commit, and push to `origin` for one explicitly selected project.
+
+### Approval-gated project workflow
+
+`flow` joins the local repository audit, Honk draft, Git worktrees, and the Docker sandbox into one lifecycle. Inspection and planning do not write to the target repository. The plan and health index are local heuristics, not an AI-generated implementation or certification.
+
+```sh
+node bin/eos.mjs flow inspect "<repo-path>"
+node bin/eos.mjs flow plan "<repo-path>" "<change to make>"
+node bin/eos.mjs flow start "<repo-path>" "<change to make>"
+# Edit only in the printed worktree, then commit the reviewed changes on that branch.
+node bin/eos.mjs flow validate "<repo-path>" <workflow-id> -- npm test
+node bin/eos.mjs flow review "<repo-path>" <workflow-id>
+node bin/eos.mjs flow apply "<repo-path>" <workflow-id> --confirm-diff=<sha256-from-review>
+```
+
+`start` requires a clean, named base branch and creates `.worktrees/flow-<uuid>` plus ignored state under `.eos/workflows/`. If needed, it appends those two directory patterns to the repository's local `.git/info/exclude`, without editing tracked project files. `validate` requires a committed branch and runs the supplied executable in the existing network-disabled Docker sandbox; the command must be present in the locally available immutable image, since the sandbox cannot install dependencies from the network. `review` requires successful validation of the exact branch HEAD, a clean worktree, and an unchanged base; it prints the committed diff and its SHA-256. `apply` accepts only that hash, rechecks the diff and base, then fast-forwards the base branch locally. It never commits, pushes, deploys, or deletes the isolated branch. An external project pilot is still needed to measure acceptance, false positives, failures, time, and reversibility.
 
 ### Local MCP HTTP/SSE security
 

@@ -17,6 +17,7 @@ EOS es un toolkit local de ingeniería de software compuesto por una interfaz we
 * **FR-007 — Ejemplos poliglotas.** La CI comprueba formato, tests y compilación del módulo Go en `templates/spotify-go-microservice` y formato, tests y build release del crate Rust en `templates/spotify-rust-audio-core`. Son plantillas de ejemplo, no servicios de producción de EOS.
 * **FR-008 — Versionado.** `package.json` es la fuente de versión de EOS. La API de salud y los servidores MCP deben reportar esa versión, no constantes independientes.
 * **FR-009 — Evidencia local.** La compuerta puede emitir un digest SHA-256 del inventario local, un recibo de comprobaciones configuradas y un reporte SARIF de esos asserts. Estos artefactos no son un SBOM estándar, una atestación firmada, un análisis SAST general, una verificación TLC/TLA+ ni prueba de despliegue.
+* **FR-010 — Flujo local de proyecto.** `eos flow` integra inspección y plan local, creación de un worktree desde un checkout limpio, validación sin red en Docker, revisión de diff y fast-forward local condicionado a un SHA-256 aprobado. No implementa edición autónoma, commit automático, push ni despliegue.
 
 ## Límites y estados de capacidad
 
@@ -27,6 +28,7 @@ EOS es un toolkit local de ingeniería de software compuesto por una interfaz we
 | MCP stdio | Implementado | Mantiene el catálogo de herramientas locales; cada integración cliente requiere su configuración |
 | MCP HTTP/SSE | Implementado con política HTTP de solo lectura | Token local y allowlist de origen son configuración operativa necesaria para clientes de navegador |
 | Aislamiento de ejecución | Requiere Docker Linux y una imagen local fijada por digest | Defensa en profundidad sobre Docker/host; no es una microVM |
+| Flujo `eos flow` | Inspección, plan heurístico, worktree, validación en sandbox, diff y aprobación por hash implementados | Requiere una imagen Docker local con las herramientas/dependencias del proyecto; falta piloto externo y métricas de operación |
 | SAST general, SBOM CycloneDX, atestación firmada, TLC | No implementados por la compuerta actual | No deben afirmarse como ejecutados hasta integrar herramientas reales y guardar sus resultados |
 | Integraciones con Cursor, Antigravity, Palantir, Spotify u otros proveedores | No implicadas por referencias o fixtures | Se necesita integración real, credenciales y pruebas específicas para afirmar conectividad |
 
@@ -41,7 +43,7 @@ EOS es un toolkit local de ingeniería de software compuesto por una interfaz we
 
 ## Flujo central de ingeniería
 
-El flujo objetivo para proyectos reales es: inspeccionar el repositorio → presentar hallazgos y un plan → trabajar en un worktree aislado → ejecutar validaciones → mostrar el diff → aplicar solo después de aprobación humana. EOS ya ofrece partes de este flujo mediante análisis local, worktrees, sandbox Docker opcional y validaciones; todavía no existe un orquestador único que implemente todos los pasos. La adopción en repositorios de terceros y las métricas de aceptación, falsos positivos, fallos, tiempo y reversión requieren pilotos y deben quedar como trabajo futuro.
+El flujo local implementado es: `flow inspect` → `flow plan` → `flow start` → trabajo y commit en el worktree → `flow validate` → `flow review` → `flow apply --confirm-diff=<sha256>`. El plan es heurístico y no edita código. La validación corre en el sandbox Docker sin red y descarta las escrituras de la ejecución. Review solo acepta el HEAD que pasó validación, exige worktree limpio y presenta el diff comprometido. Apply vuelve a verificar el hash, exige base sin cambios y limpia, y hace únicamente fast-forward local. No hace push ni despliegue. La adopción en repositorios externos y las métricas de aceptación, falsos positivos, fallos, tiempo y reversión requieren pilotos.
 
 ## Criterios de aceptación
 
@@ -72,7 +74,15 @@ ESCENARIO: Un análisis de proyecto no cambia archivos
   DADO un repositorio local elegido por el usuario
   CUANDO EOS inspecciona o propone un plan
   ENTONCES la inspección deja intacto el working tree
-  Y una ejecución aislada presenta validaciones y diff antes de cualquier aplicación.
+  Y el plan queda marcado como heurístico y de solo lectura.
+
+ESCENARIO: La integración local requiere revisar la misma versión que pasó validación
+  DADO un workflow creado desde una rama base limpia y nombrada
+  CUANDO se valida un commit en el worktree aislado y se revisa su diff
+  ENTONCES validate no conserva escrituras de la prueba
+  Y review exige que HEAD coincida con el commit validado y presenta el SHA-256 del diff
+  Y apply requiere ese hash, confirma que la base no cambió y hace solo fast-forward local
+  Y ninguna etapa hace commit automático, push o despliegue.
 
 ESCENARIO: Los ejemplos de Go y Rust permanecen construibles
   DADO un cambio en cualquiera de las plantillas
