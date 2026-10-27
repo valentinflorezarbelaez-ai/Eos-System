@@ -294,37 +294,25 @@ ITU-R BS.1770 NORMAL. : -14.0 LUFS (-1.0 dBTP True Peak Ceiling)
 FLEETSHIFT MIGRATIONS : Concurrently verified across fleet
 EXIT CODE             : 0`,
 
-  "disruptor:nanosecond": `$ eos disruptor --benchmark 500000
-> Initializing LMAX Disruptor Lock-Free Circular Ring Buffer (src/core/eosDisruptorRingEngine.ts)...
-[HOT-PATH SPEED TELEMETRY]
-  ├─ Ring Buffer Capacity       : 4,096 Slots (2^12 Power-of-2 Masking)
-  ├─ False-Sharing Padding      : 64-Byte Cache Line Spacing VERIFIED
-  ├─ Events Processed           : 500,000 events in 38.2 ms
-  ├─ Throughput Achieved        : 13,089,005 ops/sec (13.08 MOps/s)
-  ├─ Hot-Path Per-Event Latency : 76.4 nanoseconds / op (< 100ns budget)
-  ├─ Heap Allocations           : 0 B/op (Zero Garbage Collector Pressure)
-  ├─ Structural Byte Scanner    : 1,048,576 bytes scanned at 1,842.6 MB/s
-  └─ JSON Structural Delimiters : 65,536 delimiters indexed without string decoding
+  "disruptor:nanosecond": `$ eos disruptor 500000
+VISTA PREVIA ESTÁTICA · NO ES LA SALIDA DE UN COMANDO EJECUTADO
 
-STATUS: DISRUPTOR_NANOSECOND_OPTIMAL | 0_ALLOCS_VERIFIED | EXIT CODE: 0`,
+Al ejecutar este comando en el repositorio, la CLI mide un bucle local del ring
+buffer y un escaneo de un búfer sintético. Los tiempos y el throughput se
+generan en ese momento y dependen del hardware y de la carga del proceso.
 
-  "frontier:router": `$ eos frontier --benchmark
-> Initializing EOS Apex Frontier Model Router & Token Squeezer (src/core/eosApexModelRouter.ts)...
-[FRONTIER MODEL SPECIALIZATION MATRIX]
-  ├─ Google Gemini 2.0 Flash    : 2M+ Context Window, Multimodal & Developer Doc Grounding
-  ├─ Anthropic Claude 3.7       : Surgical AST Synthesis, Hexagonal L0 & Clean Refactoring
-  ├─ OpenAI o3-mini             : Formal Mathematical Reasoning, TLA+ & Bayesian Judge
-  ├─ DeepSeek R1 / V3           : Extreme FinOps Token Economy & Algorithmic Minimum Big-O
-  └─ xAI Grok-2                 : Low-Level Concurrency, Go Goroutines & Hardware Telemetry
+Esta vista web no ejecuta el comando. No se midieron aquí asignaciones de heap,
+latencia de hardware ni rendimiento de producción.`,
 
-[NATIVE GO ENGINE PERFORMANCE]
-  ├─ Goroutines Concurrently    : 16 Workers (sync.WaitGroup + CSP Channels)
-  ├─ Memory Scanned             : 67,108,864 bytes in 15.8 ms
-  ├─ Measured Throughput        : 1,060,915,776 tokens / sec (> 1 BILLION TOK/S)
-  ├─ AST Squeezer Token Savings : 76.4% Context Reduction with 100% Type Preservation
-  └─ Closed-Loop FDIR Healer    : NASA FDIR L4 / Meta SapFix Automated Correction Ready
+  "frontier:router": `$ eos frontier benchmark
+VISTA PREVIA ESTÁTICA · NO ES LA SALIDA DE UN COMANDO EJECUTADO
 
-STATUS: FRONTIER_ROUTER_ACTIVE | GO_SCALE_VERIFIED | EXIT CODE: 0`
+La CLI intenta usar el binario Go local si está disponible; si no, ejecuta un
+bucle TypeScript de respaldo sobre un búfer de prueba. El resultado real indica
+qué ruta se usó y reporta sus mediciones observadas.
+
+Esta vista no ejecuta el benchmark, no llama a un modelo externo y no demuestra
+throughput de tokens ni compresión AST.`
 };
 
 const PIPELINE_STEPS = [
