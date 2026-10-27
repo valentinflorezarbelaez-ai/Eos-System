@@ -1074,7 +1074,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_disruptor_benchmark",
-                  description: "Executes the LMAX Disruptor lock-free circular ring buffer throughput benchmark (> 10M events/sec, 0 B/op) and zero-copy 64-byte structural byte scanner.",
+                  description: "Runs a single-threaded typed-array ring loop and JavaScript delimiter scan. Returns observed elapsed time; heap allocations, cache behavior, and cross-thread performance are not measured.",
                   inputSchema: {
                     type: "object",
                     properties: {

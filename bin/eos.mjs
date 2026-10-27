@@ -1326,22 +1326,29 @@ switch (command) {
   case "disruptor":
   case "ring": {
     printBanner();
-    const count = Number(args[1]) || 500_000;
+    const count = args[1] === undefined ? 500_000 : Number(args[1]);
+    if (!Number.isSafeInteger(count) || count < 1 || count > 10_000_000) {
+      console.error("Error: eventos debe ser un entero entre 1 y 10,000,000.");
+      process.exitCode = 2;
+      break;
+    }
     const { EosDisruptorRingEngine } = await import("../src/core/eosDisruptorRingEngine.ts");
     const engine = new EosDisruptorRingEngine(12);
     const rep = engine.runMasterSpeedBenchmark(count, 1024 * 1024);
-    console.log(`[EOS LMAX DISRUPTOR] Buffer Circular Lock-Free & Escaneo de Nanosegundos:\n`);
+    console.log(`[EOS Disruptor-style ring] Benchmark local de JavaScript, un solo hilo:\n`);
     console.log(`Eventos Procesados      : ${rep.disruptorReport.totalEvents.toLocaleString()}`);
     console.log(`Capacidad Ring Buffer   : ${rep.disruptorReport.capacity.toLocaleString()} slots (Potencia de 2)`);
-    console.log(`Latencia Hot-Path       : ${rep.disruptorReport.nanosecondsPerEvent.toFixed(2)} ns/evento`);
-    console.log(`Throughput Eventos/Seg  : ${rep.disruptorReport.eventsPerSecond.toLocaleString()} ops/s (${rep.disruptorReport.megaEventsPerSecond} MOps/s)`);
-    console.log(`Cero Asignaciones Heap  : ${rep.disruptorReport.zeroAllocationVerified ? '0 B/op VERIFICADO' : 'FALLA'}`);
-    console.log(`Acolchado 64-Byte Cache : ${rep.disruptorReport.falseSharingPadded ? 'VERIFICADO (Anti-False-Sharing)' : 'FALLA'}\n`);
-    console.log(`Escaneo Estructural 64B : ${(rep.byteScanReport.totalBytesScanned / (1024 * 1024)).toFixed(2)} MB escaneados`);
-    console.log(`Throughput Escaneo Bytes: ${rep.byteScanReport.throughputMbSec.toLocaleString()} MB/s`);
+    console.log(`Duración observada      : ${rep.disruptorReport.durationUs.toFixed(2)} µs`);
+    console.log(`Promedio derivado       : ${rep.disruptorReport.nanosecondsPerEvent.toFixed(2)} ns/evento`);
+    console.log(`Throughput derivado     : ${rep.disruptorReport.eventsPerSecond.toLocaleString()} eventos/s`);
+    console.log(`Asignaciones de heap    : ${rep.disruptorReport.heapAllocationMeasurement}`);
+    console.log(`Padding del cursor      : configurado en el ArrayBuffer; no prueba aislamiento entre hilos\n`);
+    console.log(`Bytes escaneados        : ${rep.byteScanReport.totalBytesScanned.toLocaleString()}`);
+    console.log(`Throughput observado    : ${rep.byteScanReport.throughputMiBPerSecond.toLocaleString()} MiB/s (bucle JS)`);
+    console.log(`Ancho desenrollado      : ${rep.byteScanReport.unrolledWidthBytes} bytes (no SIMD)`);
     console.log(`Delimitadores JSON      : ${rep.byteScanReport.structuralDelimitersFound.toLocaleString()} encontrados`);
-    console.log(`Sello Unificado Merkle  : ${rep.unifiedSpeedProof}\n`);
-    console.log(`[PASS] Velocidad extrema LMAX Disruptor y escaneo de bytes verificado.`);
+    console.log(`Huella SHA-256 combinada: ${rep.combinedFingerprintSha256} (no es firma ni prueba)`);
+    console.log(`Estado                  : ${rep.status} (no ejecuta pruebas ni mide heap)\n`);
     break;
   }
 
@@ -2651,7 +2658,7 @@ Uso Universal:
   eos octave [meta]          Ejecuta la Ley de las Octavas Samaeliana con los 2 Shocks Conscientes
   eos warp                   Ejecuta el planificador CUDA SIMT 32-hilos y Tensor MMA (0 B/op)
   eos apex                   Ejecuta la síntesis de cúspide Samael + IBM Sysplex + NVIDIA
-  eos disruptor [eventos]    Ejecuta el ring buffer LMAX Disruptor (>10M ops/s) y escaneo de bytes
+  eos disruptor [eventos]    Mide un ring buffer local de un hilo y un escaneo JS; no mide heap
   eos soul [directiva]       Evalúa directiva frente al Plan Maestro de Valentín Flórez Arbeláez
   eos introspect             Auto-estudio recursivo del código y síntesis de RFCs de auto-evolución
   eos shield                 Auditoría de escudo militar, invariantes seL4 y purga de entropía cero
