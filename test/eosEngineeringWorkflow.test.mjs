@@ -133,4 +133,30 @@ test("flow only fast-forwards the exact validated and hash-approved diff", async
   assert.equal(git(repoRoot, ["rev-parse", "HEAD"]), review.headCommit);
   assert.equal(git(repoRoot, ["status", "--porcelain", "--untracked-files=all"]), "");
   assert.throws(() => workflow.apply(repoRoot, started.workflowId, review.diffSha256), /already been applied/);
+
+  const appliedStatus = workflow.status(repoRoot, started.workflowId);
+  assert.equal(appliedStatus.appliedHead, review.headCommit);
+  assert.equal(appliedStatus.validationStatus, "COMPLETED");
+  assert.equal(appliedStatus.worktreeAvailable, true);
+  assert.match(workflow.close(repoRoot, started.workflowId), /branch preserved/);
+  const closedStatus = workflow.status(repoRoot, started.workflowId);
+  assert.equal(closedStatus.worktreeAvailable, false);
+  assert.equal(closedStatus.closedAt !== null, true);
+  assert.equal(closedStatus.branchHead, review.headCommit);
+});
+
+test("flow close refuses dirty worktrees unless force is explicit and preserves the branch", (t) => {
+  const repoRoot = createFixtureRepository(t);
+  const workflow = new EosEngineeringWorkflow();
+  const started = workflow.start(repoRoot, "document cleanup behavior");
+  fs.writeFileSync(path.join(started.worktreePath, "uncommitted.txt"), "preserve unless forced\n", "utf8");
+
+  assert.throws(() => workflow.close(repoRoot, started.workflowId), /uncommitted path/);
+  assert.equal(fs.existsSync(started.worktreePath), true);
+  assert.equal(git(repoRoot, ["branch", "--show-current"]), "main");
+
+  assert.match(workflow.close(repoRoot, started.workflowId, true), /discarded; branch preserved/);
+  assert.equal(fs.existsSync(started.worktreePath), false);
+  assert.equal(git(repoRoot, ["show-ref", "--verify", `refs/heads/${started.branchName}`]).length > 0, true);
+  assert.equal(workflow.status(repoRoot, started.workflowId).closedAt !== null, true);
 });

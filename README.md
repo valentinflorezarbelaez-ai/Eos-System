@@ -56,9 +56,11 @@ node bin/eos.mjs flow start "<repo-path>" "<change to make>"
 node bin/eos.mjs flow validate "<repo-path>" <workflow-id> -- npm test
 node bin/eos.mjs flow review "<repo-path>" <workflow-id>
 node bin/eos.mjs flow apply "<repo-path>" <workflow-id> --confirm-diff=<sha256-from-review>
+node bin/eos.mjs flow status "<repo-path>" <workflow-id>
+node bin/eos.mjs flow close "<repo-path>" <workflow-id>
 ```
 
-`start` requires a clean, named base branch and creates `.worktrees/flow-<uuid>` plus ignored state under `.eos/workflows/`. If needed, it appends those two directory patterns to the repository's local `.git/info/exclude`, without editing tracked project files. `validate` requires a committed branch and runs the supplied executable in the existing network-disabled Docker sandbox; the command must be present in the locally available immutable image, since the sandbox cannot install dependencies from the network. `review` requires successful validation of the exact branch HEAD, a clean worktree, and an unchanged base; it prints the committed diff and its SHA-256. `apply` accepts only that hash, rechecks the diff and base, then fast-forwards the base branch locally. It never commits, pushes, deploys, or deletes the isolated branch. An external project pilot is still needed to measure acceptance, false positives, failures, time, and reversibility.
+`start` requires a clean, named base branch and creates `.worktrees/flow-<uuid>` plus ignored state under `.eos/workflows/`. If needed, it appends those two directory patterns to the repository's local `.git/info/exclude`, without editing tracked project files. `validate` requires a committed branch and runs the supplied executable in the existing network-disabled Docker sandbox; the command must be present in the locally available immutable image, since the sandbox cannot install dependencies from the network. `review` requires successful validation of the exact branch HEAD, a clean worktree, and an unchanged base; it prints the committed diff and its SHA-256. `apply` accepts only that hash, rechecks the diff and base, then fast-forwards the base branch locally. `status` shows validation, review, apply, and worktree state. `close` removes the worktree only if clean by default, preserves the branch, and requires `--force` to discard uncommitted files. None of these commands pushes or deploys. An external project pilot is still needed to measure acceptance, false positives, failures, time, and reversibility.
 
 ### Local MCP HTTP/SSE security
 

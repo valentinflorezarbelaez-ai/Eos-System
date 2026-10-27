@@ -18,6 +18,7 @@ EOS es un toolkit local de ingeniería de software compuesto por una interfaz we
 * **FR-008 — Versionado.** `package.json` es la fuente de versión de EOS. La API de salud y los servidores MCP deben reportar esa versión, no constantes independientes.
 * **FR-009 — Evidencia local.** La compuerta puede emitir un digest SHA-256 del inventario local, un recibo de comprobaciones configuradas y un reporte SARIF de esos asserts. Estos artefactos no son un SBOM estándar, una atestación firmada, un análisis SAST general, una verificación TLC/TLA+ ni prueba de despliegue.
 * **FR-010 — Flujo local de proyecto.** `eos flow` integra inspección y plan local, creación de un worktree desde un checkout limpio, validación sin red en Docker, revisión de diff y fast-forward local condicionado a un SHA-256 aprobado. No implementa edición autónoma, commit automático, push ni despliegue.
+* **FR-011 — Estado y cierre de workflow.** `flow status` reporta el estado local guardado. `flow close` elimina el worktree limpio, preserva la rama y rechaza archivos sin commit salvo que se solicite `--force` explícitamente.
 
 ## Límites y estados de capacidad
 
@@ -43,7 +44,7 @@ EOS es un toolkit local de ingeniería de software compuesto por una interfaz we
 
 ## Flujo central de ingeniería
 
-El flujo local implementado es: `flow inspect` → `flow plan` → `flow start` → trabajo y commit en el worktree → `flow validate` → `flow review` → `flow apply --confirm-diff=<sha256>`. El plan es heurístico y no edita código. La validación corre en el sandbox Docker sin red y descarta las escrituras de la ejecución. Review solo acepta el HEAD que pasó validación, exige worktree limpio y presenta el diff comprometido. Apply vuelve a verificar el hash, exige base sin cambios y limpia, y hace únicamente fast-forward local. No hace push ni despliegue. La adopción en repositorios externos y las métricas de aceptación, falsos positivos, fallos, tiempo y reversión requieren pilotos.
+El flujo local implementado es: `flow inspect` → `flow plan` → `flow start` → trabajo y commit en el worktree → `flow validate` → `flow review` → `flow apply --confirm-diff=<sha256>` → `flow status`/`flow close`. El plan es heurístico y no edita código. La validación corre en el sandbox Docker sin red y descarta las escrituras de la ejecución. Review solo acepta el HEAD que pasó validación, exige worktree limpio y presenta el diff comprometido. Apply vuelve a verificar el hash, exige base sin cambios y limpia, y hace únicamente fast-forward local. Close elimina el worktree, pero conserva la rama; las modificaciones sin commit se conservan por defecto y solo pueden descartarse con una opción explícita. El flujo no hace push ni despliegue. La adopción en repositorios externos y las métricas de aceptación, falsos positivos, fallos, tiempo y reversión requieren pilotos.
 
 ## Criterios de aceptación
 

@@ -34,6 +34,7 @@ interface WorkflowRecord {
   readonly reviewedAt?: string;
   readonly appliedHead?: string;
   readonly appliedAt?: string;
+  readonly closedAt?: string;
 }
 
 export interface EngineeringWorkflowPlan {
@@ -69,6 +70,23 @@ export interface EngineeringWorkflowReview {
   readonly diffSha256: string;
   readonly diff: string;
   readonly approvalCommand: string;
+}
+
+export interface EngineeringWorkflowStatus {
+  readonly workflowId: string;
+  readonly task: string;
+  readonly branchName: string;
+  readonly branchHead: string | null;
+  readonly baseBranch: string;
+  readonly baseCommit: string;
+  readonly worktreePath: string;
+  readonly worktreeAvailable: boolean;
+  readonly worktreeDirtyFiles: readonly string[];
+  readonly validationStatus: SandboxRunReport["status"] | "NOT_RUN";
+  readonly validationHead: string | null;
+  readonly reviewedDiffSha256: string | null;
+  readonly appliedHead: string | null;
+  readonly closedAt: string | null;
 }
 
 function isWithin(root: string, candidate: string): boolean {
@@ -340,6 +358,7 @@ export class EosEngineeringWorkflow {
 
   public async validate(targetPath: string, workflowId: string, command: string, commandArgs: readonly string[] = []): Promise<SandboxRunReport> {
     const record = this.readRecord(targetPath, workflowId);
+    if (record.closedAt) throw new Error("This workflow is closed.");
     if (record.appliedAt) throw new Error("This workflow has already been applied to its base branch.");
     this.assertRegisteredWorktree(record);
     const branchHead = this.assertWorkflowBranch(record);
@@ -364,6 +383,7 @@ export class EosEngineeringWorkflow {
 
   public review(targetPath: string, workflowId: string): EngineeringWorkflowReview {
     const record = this.readRecord(targetPath, workflowId);
+    if (record.closedAt) throw new Error("This workflow is closed.");
     if (record.appliedAt) throw new Error("This workflow has already been applied.");
     this.assertRegisteredWorktree(record);
     if (record.validationStatus !== "COMPLETED" || !record.validationHead) {
@@ -407,6 +427,7 @@ export class EosEngineeringWorkflow {
   public apply(targetPath: string, workflowId: string, confirmedDiffSha256: string): string {
     if (!/^[a-f0-9]{64}$/.test(confirmedDiffSha256)) throw new Error("Approval requires the 64-character SHA-256 printed by flow review.");
     const record = this.readRecord(targetPath, workflowId);
+    if (record.closedAt) throw new Error("This workflow is closed.");
     if (record.appliedAt) throw new Error("This workflow has already been applied.");
     if (record.reviewedDiffSha256 !== confirmedDiffSha256 || !record.reviewedHead) {
       throw new Error("Approval hash does not match the last reviewed diff.");
@@ -432,6 +453,54 @@ export class EosEngineeringWorkflow {
     if (appliedHead !== branchHead) throw new Error("Fast-forward result did not match the reviewed commit.");
     this.writeRecord({ ...record, appliedHead, appliedAt: new Date().toISOString() });
     return appliedHead;
+  }
+
+  public status(targetPath: string, workflowId: string): EngineeringWorkflowStatus {
+    const record = this.readRecord(targetPath, workflowId);
+    const worktreeAvailable = fs.existsSync(record.worktreePath);
+    let worktreeDirtyFiles: string[] = [];
+    if (worktreeAvailable) {
+      this.assertRegisteredWorktree(record);
+      worktreeDirtyFiles = this.gitStatus(record.worktreePath).map((line) => line.slice(3));
+    }
+    let branchHead: string | null = null;
+    try { branchHead = this.gitText(record.repoRoot, ["rev-parse", `refs/heads/${record.branchName}`]); }
+    catch {}
+    return {
+      workflowId,
+      task: record.task,
+      branchName: record.branchName,
+      branchHead,
+      baseBranch: record.baseBranch,
+      baseCommit: record.baseCommit,
+      worktreePath: record.worktreePath,
+      worktreeAvailable,
+      worktreeDirtyFiles,
+      validationStatus: record.validationStatus || "NOT_RUN",
+      validationHead: record.validationHead || null,
+      reviewedDiffSha256: record.reviewedDiffSha256 || null,
+      appliedHead: record.appliedHead || null,
+      closedAt: record.closedAt || null
+    };
+  }
+
+  public close(targetPath: string, workflowId: string, force = false): string {
+    const record = this.readRecord(targetPath, workflowId);
+    if (record.closedAt) throw new Error("This workflow is already closed.");
+    let removalMessage = "Worktree was already absent.";
+    if (fs.existsSync(record.worktreePath)) {
+      this.assertRegisteredWorktree(record);
+      this.assertWorkflowBranch(record);
+      const dirtyFiles = this.gitStatus(record.worktreePath);
+      if (dirtyFiles.length > 0 && !force) {
+        throw new Error(`Worktree has ${dirtyFiles.length} uncommitted path(s); preserve them or close with --force to discard them. The branch will be preserved.`);
+      }
+      const result = new EosWorktreeOrchestrator(record.repoRoot).removeWorktree(record.worktreePath, { force });
+      if (!result.success) throw new Error(`Could not close workflow worktree: ${result.error || "git worktree remove failed"}`);
+      removalMessage = dirtyFiles.length > 0 ? "Uncommitted worktree files discarded; branch preserved." : "Clean worktree removed; branch preserved.";
+    }
+    this.writeRecord({ ...record, closedAt: new Date().toISOString() });
+    return removalMessage;
   }
 
   private workflowDirectory(repoRoot: string, create: boolean): string {

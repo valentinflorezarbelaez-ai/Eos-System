@@ -929,8 +929,10 @@ switch (command) {
         "  eos flow plan <repo> <tarea>",
         "  eos flow start <repo> <tarea>",
         "  eos flow validate <repo> <workflow-id> -- <comando> [argumentos...]",
+        "  eos flow status <repo> <workflow-id>",
         "  eos flow review <repo> <workflow-id>",
         "  eos flow apply <repo> <workflow-id> --confirm-diff=<sha256>",
+        "  eos flow close <repo> <workflow-id> [--force]",
         "",
         "Inspect y plan son de solo lectura. Start crea un worktree local. Validate ejecuta",
         "en el sandbox Docker y descarta sus escrituras. Review presenta el diff comprometido.",
@@ -1006,6 +1008,19 @@ switch (command) {
         process.stdout.write(review.diff);
         console.log("\n===== FIN DEL DIFF =====");
         console.log(`\nPara aplicar este diff revisado: ${review.approvalCommand}`);
+      } else if (action === "status") {
+        const workflowId = args[3];
+        if (!workflowId) throw new Error("Falta el workflow-id.");
+        const status = workflow.status(repoPath, workflowId);
+        console.log(`Workflow   : ${status.workflowId} — ${status.task}`);
+        console.log(`Rama       : ${status.branchName} @ ${status.branchHead?.slice(0, 12) || "NO EXISTE"}`);
+        console.log(`Base       : ${status.baseBranch} @ ${status.baseCommit.slice(0, 12)}`);
+        console.log(`Worktree   : ${status.worktreeAvailable ? status.worktreePath : "CERRADO / AUSENTE"}`);
+        console.log(`Cambios sin commit: ${status.worktreeDirtyFiles.length}`);
+        console.log(`Validación : ${status.validationStatus}${status.validationHead ? ` @ ${status.validationHead.slice(0, 12)}` : ""}`);
+        console.log(`Diff visto : ${status.reviewedDiffSha256 || "NO"}`);
+        console.log(`Aplicado   : ${status.appliedHead || "NO"}`);
+        if (status.closedAt) console.log(`Cerrado    : ${status.closedAt}`);
       } else if (action === "apply") {
         const workflowId = args[3];
         const approval = args.slice(4).find((value) => value.startsWith("--confirm-diff="));
@@ -1013,6 +1028,12 @@ switch (command) {
         const appliedHead = workflow.apply(repoPath, workflowId, approval.slice("--confirm-diff=".length));
         console.log(`Aplicado por fast-forward local: ${appliedHead}`);
         console.log("No se hizo push ni despliegue.");
+      } else if (action === "close") {
+        const workflowId = args[3];
+        if (!workflowId) throw new Error("Falta el workflow-id.");
+        const result = workflow.close(repoPath, workflowId, args.includes("--force"));
+        console.log(`[EOS FLOW] ${result}`);
+        console.log("La rama permanece disponible para recuperación o limpieza manual posterior.");
       } else {
         throw new Error(`Acción desconocida: ${action}. Ejecuta eos flow help.`);
       }
