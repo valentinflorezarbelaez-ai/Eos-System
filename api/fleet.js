@@ -1,54 +1,23 @@
 import crypto from "node:crypto";
+import registry from "../docs/projects/registry.json" with { type: "json" };
 
 /**
- * EOS SYSTEM — FLEET AUTONOMOUS CI/CD DISPATCHER SERVERLESS ENDPOINT (/api/fleet)
+ * EOS SYSTEM — STATIC FLEET REGISTRY SERVERLESS ENDPOINT (/api/fleet)
  * Exposes the public fleet registry. This endpoint does not probe deployments,
  * inspect local Git hooks, or dispatch builds.
  * Zero external dependencies.
  */
 
-const FLEET_PROJECTS = [
-  {
-    id: "eos-system",
-    name: "EOS System v10.0 (Control Plane Core)",
-    remote: "https://github.com/valentinflorezarbelaez-ai/Eos-System.git",
-    url: "https://eos-system-ten.vercel.app",
-    registryStatus: "REGISTERED",
-    productionProbe: "NOT_PROBED",
-    cicdGateStatus: "NOT_PROBED",
-    localHooksStatus: "NOT_PROBED"
-  },
-  {
-    id: "aberamentho",
-    name: "Aberamentho Pleroma Music v8.0",
-    remote: "https://github.com/valentinflorezarbelaez-ai/Aberamentho-s-Pleroma-music.git",
-    url: "https://aberamentosprelomamusic.vercel.app",
-    registryStatus: "REGISTERED",
-    productionProbe: "NOT_PROBED",
-    cicdGateStatus: "NOT_PROBED",
-    localHooksStatus: "NOT_PROBED"
-  },
-  {
-    id: "portafolio",
-    name: "Portafolio Oficial — Valentín Flórez",
-    remote: "https://github.com/valentinflorezarbelaez-ai/portafolio.git",
-    url: "https://portafolio-valentin.vercel.app",
-    registryStatus: "REGISTERED",
-    productionProbe: "NOT_PROBED",
-    cicdGateStatus: "NOT_PROBED",
-    localHooksStatus: "NOT_PROBED"
-  },
-  {
-    id: "performance-talent-group",
-    name: "PTG — Performance Talent Group",
-    remote: "https://github.com/valentinflorezarbelaez-ai/Performance-Talent-Group.git",
-    url: "https://ptg-performance-talent-group.vercel.app",
-    registryStatus: "REGISTERED",
-    productionProbe: "NOT_PROBED",
-    cicdGateStatus: "NOT_PROBED",
-    localHooksStatus: "NOT_PROBED"
-  }
-];
+const FLEET_PROJECTS = registry.projects.map((project) => ({
+  id: project.id,
+  name: project.name,
+  remote: project.remoteUrl,
+  url: project.productionUrl,
+  registryStatus: project.status || "UNKNOWN",
+  productionProbe: "NOT_PROBED",
+  cicdGateStatus: "NOT_PROBED",
+  localHooksStatus: "NOT_PROBED"
+}));
 
 export default function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -72,8 +41,9 @@ export default function handler(req, res) {
 
   return res.status(200).json({
     status: "FLEET_REGISTRY_AVAILABLE",
-    version: "10.0.0-sovereign-fleet-dispatcher",
-    masterOrchestrator: "eos-system-control-plane",
+    version: registry.version,
+    updatedAt: registry.updatedAt,
+    masterOrchestrator: registry.masterOrchestrator,
     registrySource: "docs/projects/registry.json",
     fleetSize: FLEET_PROJECTS.length,
     healthProbesRun: false,
@@ -84,6 +54,6 @@ export default function handler(req, res) {
       fleetInjectHooks: "npm run fleet:hooks"
     },
     projects: FLEET_PROJECTS,
-    registrySha256: `sha256:${digest}`
+    registryFingerprintSha256: `sha256:${digest}`
   });
 }

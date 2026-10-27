@@ -117,22 +117,13 @@ chrome-devtools-mcp      WCAG 2.1 AA, CWV (LCP/CLS) & DOM Audit    Browser QA & 
 
 [CONTRACT GATE] Every agent session receives full architectural context BEFORE writing a single line of code.`,
 
-  "fleet:status": `$ eos fleet --status
-> Auditing Sovereign Production Fleet (9 Systems Under EOS Governance)...
+  "fleet:status": `GET /api/fleet
 
-#  PROJECT                                 TIER / GOVERNANCE                  EPISTEMIC STATE     HTTP
----------------------------------------------------------------------------------------------------------
-1  EOS System (Solar Samaelian Core v4.0)  SOLE_SUPREME_EVOLUTION_CORE        PRODUCTION_READY (NANOSECOND TRANSLATOR + 6-PART SDD)       200 OK
-2  Aberamentho / Pleroma Music (v8.0)      GOLDEN_SEAL_LOCKED (DSP 10/10)     VERIFIED 10/10 (IN-APP FULL-TRACK PLAYER + 8 LISTS + 49 L.) 200 OK
-3  Portafolio — Valentín Flórez            SPORADIC_CONTINUOUS_10X10          PRODUCTION_READY (EOS 2.1 TELEMETRY SYNCED)                 200 OK
-4  PTG — Performance Talent Group (FIFA)   SPORADIC_CONTINUOUS_10X10          PRODUCTION_READY    200 OK
-5  S.A.W — Potencia Máxima (ATP-Strength)  GOLDEN_SEAL_LOCKED (59/59 Tests)   VERIFIED 10/10      200 OK
-6  Biblioteca Gnóstica Universal           GOLDEN_SEAL_LOCKED (7/7 Tests)     VERIFIED 10/10      200 OK
-7  Portal de Donaciones (Sede AGEAC)       GOLDEN_SEAL_LOCKED                 VERIFIED 10/10      200 OK
-8  HAM-SAH + Kegel                         GOLDEN_SEAL_LOCKED                 VERIFIED 10/10      200 OK
-9  Alexander Rodríguez Remodelaciones      GOLDEN_SEAL_LOCKED                 VERIFIED 10/10      200 OK
-
-RESULT: 9/9 Sovereign Systems Conforming | Drift (Δ) = 0 | Exit Code: 0`,
+Muestra estática; esta consola no consultó el endpoint.
+Fuente configurada: docs/projects/registry.json
+Los proyectos se muestran como REGISTERED si así figuran en el registro.
+Salud, CI, hooks y producción: NOT_PROBED.
+No se inspeccionan checkouts ni se ejecutan acciones.`,
 
   "olympus:l0": `$ eos olimpo --l0
 > Auditing 5 Supreme L0 Engines & World Top-10 Critical Systems Parity (seL4 / ASML EUV / F-35 / Aladdin)...
