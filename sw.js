@@ -6,7 +6,7 @@
  * Zero external runtime dependencies.
  */
 
-const CACHE_VERSION = 'v36-cli-previews';
+const CACHE_VERSION = 'v37-browser-local-memory';
 const STATIC_CACHE = `eos-static-${CACHE_VERSION}`;
 const API_CACHE = `eos-api-${CACHE_VERSION}`;
 
@@ -17,7 +17,7 @@ const PRECACHE_ASSETS = [
   "/js/eos.js",
   "/js/wasm_exec.js",
   "/css/eos.css?v=13.0",
-  "/js/eos.js?v=15.0",
+  "/js/eos.js?v=16.0",
   "/favicon.svg",
   "/manifest.webmanifest",
   "/assets/eos-system.png"
