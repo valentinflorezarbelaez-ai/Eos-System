@@ -537,23 +537,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderPipeline("all");
 
-  // 3. Fleet Tier Filter
-  const fleetFilterBtns = document.querySelectorAll("[data-fleet-filter]");
-  const fleetCards = document.querySelectorAll("[data-fleet-tier]");
-
-  fleetFilterBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const tier = btn.getAttribute("data-fleet-filter") || "all";
-      fleetFilterBtns.forEach((b) => b.classList.toggle("is-active", b === btn));
-      fleetCards.forEach((card) => {
-        const cardTier = card.getAttribute("data-fleet-tier");
-        const visible = tier === "all" || cardTier === tier;
-        card.style.display = visible ? "flex" : "none";
-      });
-    });
-  });
-
-  // 4. EOS Solar Sanctum Interactive Controller (EosSolarSanctum + Web Audio API + Cosmic Time + /api/teurgia + localStorage)
+  // 3. EOS Solar Sanctum Interactive Controller (EosSolarSanctum + Web Audio API + Cosmic Time + /api/teurgia + localStorage)
   const sanctumTabs = document.querySelectorAll("[data-sanctum-tab]");
   const sanctumPanels = {
     mandato: document.getElementById("sanctum-panel-mandato"),

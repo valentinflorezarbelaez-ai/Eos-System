@@ -843,42 +843,6 @@ body {
 }
 
 /* ==========================================================================
-   SOVEREIGN FLEET REGISTRY CARDS
-   ========================================================================== */
-.fleet-card {
-  padding: 1.5rem;
-  border-radius: var(--radius-md);
-  background: var(--bg-card);
-  border: 1px solid var(--line-subtle);
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.fleet-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--cyan);
-}
-
-.fleet-card__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.fleet-card__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  margin-top: auto;
-  padding-top: 0.85rem;
-  border-top: 1px solid var(--line-subtle);
-}
-
-/* ==========================================================================
    FOOTER
    ========================================================================== */
 .site-footer {
