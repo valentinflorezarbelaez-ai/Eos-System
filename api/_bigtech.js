@@ -225,6 +225,7 @@ export default function handler(req, res) {
       scope: "Three locally constructed example records; not a deployment record, trusted timestamp, or external attestation.",
       engine: "Local SHA-256 hash-chain example",
       valid: true,
+      externalSystemsQueried: false,
       externalAttestation: false,
       deploymentVerified: false,
       totalBlocks: 3,

@@ -249,83 +249,29 @@ repositoriesRead: false
 El endpoint clasifica texto por palabras clave; no ejecuta una auditoría ni usa un modelo de IA.`,
 
   "prometheus:omni": `$ eos amplify "Diseñar módulo de pagos con Stripe y webhooks" --model claude
-> Initializing EOS Prometheus Omni-Model Prompt Amplification Engine (src/core/eosPromptAmplifier.ts)...
 
-[1] PROMPT ANALYSIS & DOMAIN HEURISTICS:
-  ├─ Raw Prompt        : "Diseñar módulo de pagos con Stripe y webhooks"
-  ├─ Detected Domain   : FINTECH_PAYMENTS_SECURITY
-  ├─ Strictness Level  : SOVEREIGN (Zero Vibe Coding)
-  └─ Target Model      : Anthropic Claude 3.7 Sonnet
-
-[2] FORMAL EARS SPECIFICATION (ISO 29148 / IEEE 830):
-  ├─ FR-001 (EVENT)    : CUANDO el webhook de Stripe entregue un evento payment_intent.succeeded, EL SISTEMA validará la firma HMAC SHA-256.
-  ├─ FR-002 (UNWANTED) : SI la firma HMAC o la clave de idempotencia fallan, ENTONCES EL SISTEMA rechazará el evento con HTTP 400.
-  └─ FR-003 (STATE)    : MIENTRAS la transacción se procese, EL SISTEMA mantendrá estado ACID y registro inmutable en Ledger.
-
-[3] BDD ACCEPTANCE CRITERIA (GIVEN-WHEN-THEN):
-  ├─ ESCENARIO 1       : DADO un webhook firmado legítimamente CUANDO llega la notificación ENTONCES acredita el saldo en sub-10ms.
-  └─ ESCENARIO 2       : DADO un reintento de webhook duplicado CUANDO se detecta idempotency_key ENTONCES devuelve HTTP 200 sin doble cobro.
-
-[4] COGNITIVE REASONING SCAFFOLD:
-  ├─ Model Scaffold    : Claude 3.7 Sonnet XML Scaffolding + Anti-Hallucination Guardrails
-  ├─ Invariants        : 0 External Runtime Dependencies · 100% Strict Type Safety
-  └─ SHA-256 Receipt   : 9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a
-
-STATUS: PROMETHEUS_AMPLIFIED | ZERO_HALLUCINATIONS | EXIT CODE: 0`,
-
+Vista previa estática del comando; esta consola no lo ejecutó.
+La herramienta local genera una plantilla EARS/BDD determinista y editable.
+El nombre de modelo es una etiqueta: no se consulta un modelo externo.
+La plantilla no es una especificación aprobada y no verifica código ni pruebas.`,
   "turbo:engine": `$ eos turbo
-> Initializing EOS Turbo Engine & Microsecond Content-Addressed Verifier (src/core/eosTurboEngine.ts)...
 
-[CONTENT-ADDRESSED CACHE AUDIT]
-  ├─ Index Status      : 18 / 18 Files Cached (size, mtimeMs, sha256)
-  ├─ Cache Hits        : 100.0% (Zero Cache Misses)
-  └─ Telemetry Mode    : Microsecond High-Resolution Timer (process.hrtime.bigint)
-
-[STAGE BREAKDOWN]
-  ├─ Stage 1 (SAST & Zero Secrets)  :   1,240 µs [PASS]
-  ├─ Stage 2 (SDD Constitutional)   :     820 µs [PASS]
-  ├─ Stage 3 (SLSA L4 SBOM & Deps)  :     510 µs [PASS]
-  ├─ Stage 4 (Static AST Syntax)    :   4,120 µs [PASS]
-  ├─ Stage 5 (Hexagonal Architecture):  1,630 µs [PASS]
-  ├─ Stage 6 (Semantic Code Graph)  :   2,100 µs [PASS]
-  └─ Stage 7 (Predictive Tests PTS) :  17,331 µs [PASS]
-
-TOTAL ELAPSED TIME : 27.751 ms (100x acceleration vs 2800ms standard pipeline)
-EPISTEMIC STATE    : VERIFIED | FALSE NEGATIVES: 0 | EXIT CODE: 0`,
-
+Vista previa estática del comando; esta consola no ejecutó la CLI.
+El botón del navegador mide un bucle JavaScript local y muestra su checksum.
+Para ejecutar la compuerta del repositorio, usa npm run verify:strict en la raíz.
+La duración y salida de la compuerta deben leerse de esa ejecución real.`,
   "graph:blast": `$ eos blast src/core/eosPromptAmplifier.ts
-> Initializing EOS Big Tech Tier 1 Semantic Graph (src/core/eosSemanticGraph.ts)...
 
-[SEMANTIC CODE GRAPH TOPOLOGY]
-  ├─ Target Module     : src/core/eosPromptAmplifier.ts
-  ├─ Direct Consumers  : 2 files [src/core/eosMcpServer.ts, bin/eos.mjs]
-  ├─ Transitive Closure: 4 files [scripts/verify-cicd-pipeline.mjs, test/eosPrometheus.test.mjs]
-  ├─ Total Impacted    : 4 / 24 files (16.7% of codebase)
-  ├─ Risk Tier         : ELEVATED (Core Domain Boundary)
-  └─ Execution Speed   : 94 µs (0.094 ms)
+Vista previa estática del comando; esta consola no leyó el repositorio.
+La herramienta analiza imports relativos estáticos y recomienda suites de tests.
+No resuelve imports dinámicos o aliases y no ejecuta tests.
+Consulta la salida real de la CLI para ver el grafo de este checkout.`,
+  "healer:fdir": `$ node bin/eos.mjs heal src/core/eosAutonomousHealer.ts --dry-run
 
-[PREDICTIVE TEST SELECTION (PTS)]
-  └─ test/eosPrometheus.test.mjs (100% targeted coverage for affected symbols)
-
-STATUS: BLAST_RADIUS_COMPUTED | PTS_OPTIMIZED | EXIT CODE: 0`,
-
-  "healer:fdir": `$ eos heal --dry-run
-> Initializing Sovereign Autonomous Healer & NASA FDIR Engine (src/core/eosAutonomousHealer.ts)...
-
-[1] SYSTEM HEALTH AUDIT:
-  ├─ Inspected Files   : 24 Core Modules, Adapters & Scripts
-  ├─ Violations Found  : 0 Active Faults Detected
-  └─ Diagnostic Health : 100% NOMINAL (Zero Drift)
-
-[2] CLOSED-LOOP FDIR DRILL (SIMULATION):
-  ├─ Fault Injected    : Circular Dependency in Hexagonal Domain
-  ├─ Causal Analysis   : Graph Cycle DFS Detected (core -> ui -> core)
-  ├─ AST Surgical Patch: Dependency Inversion Interface Applied
-  ├─ Sandbox Validation: validatePatch(patch) passed with exit code 0
-  └─ Merkle Receipt    : Sealed in docs/evidence/HEAL-0001.json (SHA-256)
-
-STATUS: AUTONOMOUS_HEALER_VERIFIED | FDIR_CLOSED_LOOP_READY | EXIT CODE: 0`,
-
+Vista previa estática del comando; esta consola no ejecutó el sanador.
+La CLI puede elaborar un informe local en modo dry-run.
+No implica que el proyecto haya sido inspeccionado ni reparado.
+Revisa el informe antes de tomarlo como evidencia.`,
   "nubank:codex": `$ eos nubank --audit
 > Initializing Nubank Institutional Codex (src/core/eosNubankCodex.ts)...
 [AUDIT] Evaluated against 6 Building Nu Pillars (https://building.nu.com/):
@@ -1986,11 +1932,11 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
   const btnTriggerCmdkFromLab = document.getElementById("btn-trigger-cmdk-from-lab");
 
   const CMDK_ITEMS = [
-    { label: "🏛️ Ir a Centro de Mando Soberano Tier 1 (Blast Radius, Prometheus EARS, Turbo 27ms & FDIR)", badge: "TIER 1 NEXUS", href: "#tier1-control-nexus" },
-    { label: "🌐 Calcular Blast Radius & Grafo Semántico (Google Kythe / Meta Buck2)", badge: "CLI COMMAND", cmd: "graph:blast" },
-    { label: "⚡ Amplificar Directriz con Prometheus Omni-Model (EARS + BDD)", badge: "CLI COMMAND", cmd: "prometheus:omni" },
-    { label: "🚀 Verificación Turbo 27ms (100x Aceleración en Nanosegundos)", badge: "CLI COMMAND", cmd: "turbo:engine" },
-    { label: "🩺 Auto-Sanador Soberano & FDIR en Bucle Cerrado (NASA Level 4)", badge: "CLI COMMAND", cmd: "healer:fdir" },
+    { label: "🏛️ Abrir herramientas locales de ingeniería EOS", badge: "HERRAMIENTAS LOCALES", href: "#tier1-control-nexus" },
+    { label: "🌐 Analizar imports relativos y recomendaciones de tests", badge: "VISTA CLI", cmd: "graph:blast" },
+    { label: "⚡ Generar borrador local EARS / BDD", badge: "VISTA CLI", cmd: "prometheus:omni" },
+    { label: "🚀 Medir bucle JavaScript local", badge: "DEMO LOCAL", cmd: "turbo:engine" },
+    { label: "🩺 Consultar vista previa local del sanador", badge: "VISTA CLI", cmd: "healer:fdir" },
     { label: "🤖 Abrir clasificador de solicitudes JARVIS", badge: "CLASIFICADOR", href: "#eos-jarvis-nexus" },
     { label: "🚀 Ir a Orquestador CI/CD Autónomo de Flota v10.0 (Despachador Multi-Repositorio)", badge: "FLOTA v10.0", href: "#fleet-cicd-orchestrator" },
     { label: "🛡️ Ir a Tubería Autónoma CI/CD SecDevOps v9.0 (7 Aduanas Fail-Closed + SAST + SBOM)", badge: "CI/CD v9.0", href: "#cicd-secdevops" },
@@ -2780,40 +2726,37 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
       btnCalcBlast.addEventListener("click", async () => {
         const selectedFile = selectBlastFile.value;
         btnCalcBlast.textContent = "Calculando...";
-        const start = performance.now();
-
         try {
           const res = await fetch(`/api/graph?file=${encodeURIComponent(selectedFile)}`);
-          if (res.ok) {
-            const data = await res.json();
-            const br = data.blastRadius;
-            if (blastRisk) {
-              blastRisk.textContent = br.riskLevel;
-              blastRisk.style.color = br.riskLevel === "CRITICAL" ? "#f43f5e" : br.riskLevel === "HIGH" ? "#f97316" : br.riskLevel === "ELEVATED" ? "#f59e0b" : "#10b981";
-            }
-            if (blastImpacted) blastImpacted.textContent = `${br.totalImpactedFiles} Módulos`;
-            if (blastPct) blastPct.textContent = `${br.impactPercentage}%`;
-            if (blastLat) blastLat.textContent = `${Math.round(br.durationUs)} µs`;
-
-            if (blastTree) {
-              const directLines = br.directConsumers.map(c => `│   ├─ ${c}`).join("\n");
-              const transLines = br.transitiveConsumers.map(c => `│   ├─ ${c}`).join("\n");
-              const ptsLines = br.predictiveTestSuites.map(t => `    └─ ${t}`).join("\n");
-              blastTree.textContent = `Target: ${br.targetFile}\n├── Consumidores Directos (${br.directConsumers.length}):\n${directLines || "│   └─ (Ninguno directo)"}\n├── Cierre Transitivo en Cascada (${br.transitiveConsumers.length}):\n${transLines || "│   └─ (Ninguno)"}\n└── Selección Predictiva de Tests (PTS):\n${ptsLines || "    └─ test/eosCore.test.mjs"}`;
-            }
-            btnCalcBlast.textContent = "Calcular Blast Radius";
-            return;
+          const data = await res.json();
+          if (!res.ok || data.status !== "LOCAL_GRAPH_ANALYSIS_COMPLETED" || !data.blastRadius) {
+            throw new Error(data.error || data.status || `HTTP ${res.status}`);
           }
-        } catch (_e) {
-          // Fallback offline calculation
-        }
+          const br = data.blastRadius;
+          if (blastRisk) {
+            blastRisk.textContent = br.riskLevel;
+            blastRisk.style.color = br.riskLevel === "CRITICAL" ? "#f43f5e" : br.riskLevel === "HIGH" ? "#f97316" : br.riskLevel === "MEDIUM" ? "#f59e0b" : "#10b981";
+          }
+          if (blastImpacted) blastImpacted.textContent = `${br.totalImpactedFiles} archivos`;
+          if (blastPct) blastPct.textContent = `${br.impactPercentage}%`;
+          if (blastLat) blastLat.textContent = `${Number(br.durationUs).toFixed(2)} µs`;
 
-        const elapsed = (performance.now() - start).toFixed(2);
-        if (blastLat) blastLat.textContent = `${Math.round(elapsed * 1000)} µs`;
-        if (blastTree) {
-          blastTree.textContent = `Target: ${selectedFile}\n├── Consumidores Directos:\n│   ├─ src/core/eosMcpServer.ts\n│   └─ bin/eos.mjs\n├── Cierre Transitivo en Cascada:\n│   ├─ scripts/verify-cicd-pipeline.mjs\n│   └─ test/eosPrometheus.test.mjs\n└── Selección Predictiva de Tests (PTS):\n    └─ test/eosPrometheus.test.mjs`;
+          if (blastTree) {
+            const directLines = br.directConsumers.map((consumer) => `│   ├─ ${consumer}`).join("\n");
+            const transitiveLines = br.transitiveConsumers.map((consumer) => `│   ├─ ${consumer}`).join("\n");
+            const suiteLines = br.predictiveTestSuites.map((suite) => `    └─ ${suite}`).join("\n");
+            blastTree.textContent = `Target: ${br.targetFile}\nAlcance: ${data.analysisScope}\nDuración del análisis: ${Number(data.durationMicroseconds).toFixed(2)} µs\n\n├── Consumidores directos (${br.directConsumers.length}):\n${directLines || "│   └─ Ninguno"}\n├── Consumidores transitivos (${br.transitiveConsumers.length}):\n${transitiveLines || "│   └─ Ninguno"}\n└── Suites recomendadas (no ejecutadas):\n${suiteLines || "    └─ Ninguna"}\n\nRecomendaciones de tests, no ejecución de tests: ${data.predictiveTestSuitesAreRecommendations === true ? "confirmado" : "no declarado"}.`;
+          }
+        } catch (error) {
+          if (blastRisk) blastRisk.textContent = "NO DISPONIBLE";
+          if (blastImpacted) blastImpacted.textContent = "—";
+          if (blastPct) blastPct.textContent = "—";
+          if (blastLat) blastLat.textContent = "—";
+          if (blastTree) blastTree.textContent = `No se produjo un análisis para ${selectedFile}.\nEstado: ${error instanceof Error ? error.message : String(error)}\nNo se muestran resultados de respaldo.`;
+        } finally {
+          btnCalcBlast.textContent = "Calcular Blast Radius";
+          btnCalcBlast.disabled = false;
         }
-        btnCalcBlast.textContent = "Calcular Blast Radius";
       });
     }
 
@@ -2842,87 +2785,76 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
 
         btnAmplify.textContent = "⚡ Amplificando...";
         try {
-          const res = await fetch(`/api/amplify?prompt=${encodeURIComponent(prompt)}&model=${encodeURIComponent(model)}`);
-          if (res.ok) {
-            const result = await res.json();
-            const d = result.data;
-            if (outputAmplified) {
-              const earsText = d.earsRequirements.map((r, i) => `${i + 1}. ${r.type}: ${r.syntax}`).join("\n");
-              const bddText = d.bddScenarios.map(s => `ESCENARIO: ${s.title}\n  DADO ${s.given}\n  CUANDO ${s.when}\n  ENTONCES ${s.then}\n  ${s.and.map(a => `Y ${a}`).join("\n  ")}`).join("\n\n");
-              outputAmplified.textContent = `[REQUISITOS FORMALES EARS (ISO 29148 / IEEE 830)]\n${earsText}\n\n[CRITERIOS DE ACEPTACIÓN BDD (GIVEN-WHEN-THEN)]\n${bddText}\n\n[CONTRATO ANTI-ALUCINACIÓN & SCAFFOLD COGNITIVO]\n• Familia: ${model.toUpperCase()} | Dominio: ${d.detectedDomain}\n• Invariantes: ${d.invariants.join(" · ")}\n• SHA-256 Proof: ${d.sha256Proof || "VERIFIED"}`;
-            }
-            btnAmplify.textContent = "⚡ Amplificar Directriz";
-            return;
+          const res = await fetch("/api/amplify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt, model })
+          });
+          const result = await res.json();
+          if (!res.ok || result.status !== "LOCAL_DRAFT_GENERATED" || !result.amplification) {
+            throw new Error(result.error || result.status || `HTTP ${res.status}`);
           }
-        } catch (_err) {
-          // Offline fallback
-        }
-
-        if (outputAmplified) {
-          outputAmplified.textContent = `[REQUISITOS FORMALES EARS (ISO 29148 / IEEE 830)]\n1. EVENT-DRIVEN: CUANDO se reciba la petición para [${prompt}], EL SISTEMA validará invariantes de entrada.\n2. UNWANTED-CONDITION: SI los parámetros violan el contrato de tipos, ENTONCES EL SISTEMA rechazará con error determinista.\n3. STATE-DRIVEN: MIENTRAS la operación esté en progreso, EL SISTEMA mantendrá estado consistente en memoria.\n\n[CRITERIOS DE ACEPTACIÓN BDD (GIVEN-WHEN-THEN)]\nESCENARIO: Ejecución conforme a especificación para ${prompt}\n  DADO el plano de control EOS en estado PRODUCTION_READY\n  CUANDO se despacha la directriz de ingeniería\n  ENTONCES se verifican los 7 invariantes constitucionales sin divergencias.\n\n[SCAFFOLD COGNITIVO]\n• Modelo: ${model.toUpperCase()} | Modo: Zero Vibe Coding | Salida Criptográfica Inmutable`;
+          const draft = result.amplification;
+          if (outputAmplified) {
+            const earsText = draft.earsRequirements.map((requirement, index) => `${index + 1}. ${requirement.type}: ${requirement.syntax}`).join("\n");
+            const bddText = draft.bddScenarios.map((scenario) => `ESCENARIO: ${scenario.title}\n  DADO ${scenario.given}\n  CUANDO ${scenario.when}\n  ENTONCES ${scenario.then}\n  ${scenario.and.map((item) => `Y ${item}`).join("\n  ")}`).join("\n\n");
+            outputAmplified.textContent = `[BORRADOR LOCAL EARS · NO APROBADO]\n${earsText}\n\n[ESCENARIOS BDD · NO EJECUTADOS]\n${bddText}\n\n[ALCANCE]\n• Estado: ${result.status} | Dominio heurístico: ${draft.detectedDomain}\n• Etiqueta seleccionada: ${model.toUpperCase()} | Motor: ${result.engine}\n• Modelo externo llamado: ${result.remoteModelCalled === true ? "sí" : "no"}\n• El borrador no verifica requisitos, código ni pruebas.\n• Recordatorios sugeridos: ${draft.invariants.join(" · ")}`;
+          }
+        } catch (error) {
+          if (outputAmplified) {
+            outputAmplified.textContent = `[BORRADOR ESTÁTICO GENÉRICO · API NO DISPONIBLE]\nObjetivo proporcionado: ${prompt}\n\nEARS: WHEN se invoque la capacidad descrita, THE SYSTEM SHALL aplicar el comportamiento definido por el requisito revisado.\nBDD: GIVEN precondiciones acordadas, WHEN se invoque la capacidad, THEN el resultado deberá cumplir los criterios acordados.\n\nNo se llamó a un modelo, no se verificó esta plantilla y no se generó evidencia criptográfica. Error de API: ${error instanceof Error ? error.message : String(error)}`;
+          }
         }
         btnAmplify.textContent = "⚡ Amplificar Directriz";
+        btnAmplify.disabled = false;
       });
     }
 
-    // 4. Turbo Engine Simulator
+    // 4. Local browser loop micro-demo; it is not the repository CI gate.
     const btnRunTurbo = document.getElementById("btn-run-turbo");
     const valTurboTotal = document.getElementById("turbo-val-total");
+    const turboIterations = document.getElementById("turbo-iterations");
+    const turboOutput = document.getElementById("turbo-output");
     if (btnRunTurbo) {
       btnRunTurbo.addEventListener("click", () => {
-        btnRunTurbo.textContent = "Ejecutando...";
         btnRunTurbo.disabled = true;
-
-        setTimeout(() => {
-          const totalMs = (27.2 + Math.random() * 0.9).toFixed(2);
-          if (valTurboTotal) valTurboTotal.textContent = `${totalMs} ms`;
-          btnRunTurbo.textContent = "▶ Ejecutar Verificación Turbo";
+        btnRunTurbo.textContent = "Midiendo bucle...";
+        try {
+          const iterations = 250_000;
+          let checksum = 0;
+          const startedAt = performance.now();
+          for (let i = 0; i < iterations; i += 1) checksum = (checksum + Math.imul(i, 31)) | 0;
+          const elapsedMs = performance.now() - startedAt;
+          if (valTurboTotal) valTurboTotal.textContent = `${elapsedMs.toFixed(3)} ms`;
+          if (turboIterations) turboIterations.textContent = iterations.toLocaleString("es-CO");
+          if (turboOutput) turboOutput.textContent = `Bucle local completado.\nIteraciones: ${iterations.toLocaleString("es-CO")}\nChecksum: ${checksum >>> 0}\nAlcance: solo JavaScript del navegador; no ejecutó tests, SAST ni la compuerta CI.`;
+        } catch (error) {
+          if (turboOutput) turboOutput.textContent = `La medición local falló: ${error instanceof Error ? error.message : String(error)}`;
+        } finally {
+          btnRunTurbo.textContent = "▶ Medir bucle local";
           btnRunTurbo.disabled = false;
-        }, 120);
+        }
       });
     }
 
-    // 5. Autonomous Healer Simulator
+    // 5. Static scenario preview; actual healer use is explicit through the CLI.
     const btnRunHealer = document.getElementById("btn-run-healer");
     const selectScenario = document.getElementById("select-healer-scenario");
     const healerLog = document.getElementById("healer-output-log");
 
     if (btnRunHealer && selectScenario && healerLog) {
       btnRunHealer.addEventListener("click", () => {
-        const scenario = selectScenario.value;
-        btnRunHealer.textContent = "Diagnosticando...";
-        btnRunHealer.disabled = true;
-
-        setTimeout(() => {
-          if (scenario === "circular") {
-            healerLog.textContent = `1. DIAGNÓSTICO CAUSAL : Ciclo DFS detectado: src/core/domain -> src/adapters/ui -> src/core/domain.
-2. AISLAMIENTO       : Nodo UI aislado del grafo de compilación mediante cortafuegos FDIR.
-3. PARCHE QUIRÚRGICO : Generada interfaz pura en src/core/ports/IView.ts (Dependency Inversion).
-4. VALIDACIÓN CIEGA  : validatePatch(patch): Compilación sintáctica PASS | Exit Code 0 en sandbox temporal.
-5. RECIBO SELLADO    : Generado docs/evidence/HEAL-0001.json con firma SHA-256 e invariantes intactos.
-ESTADO EPISTÉMICO    : PRODUCTION_READY | MTTR: 1.8 ms | SALUD DEL SISTEMA: 100%`;
-          } else if (scenario === "secret") {
-            healerLog.textContent = `1. DIAGNÓSTICO CAUSAL : Detectado patrón de secreto en claro 'ghp_live_...' en commit staged.
-2. AISLAMIENTO       : Intercepción en pre-commit hook (Velo de Isis / Ley VI). Escritura bloqueada.
-3. PARCHE QUIRÚRGICO : Redactado secreto, reemplazado por variable de entorno tipada 'process.env.GITHUB_TOKEN'.
-4. VALIDACIÓN CIEGA  : validatePatch(patch): 0 secretos detectados en escaneo SAST regex.
-5. RECIBO SELLADO    : Generado docs/evidence/HEAL-0002.json con atestación de cuarentena.
-ESTADO EPISTÉMICO    : PRODUCTION_READY | MTTR: 1.2 ms | VULNERABILIDADES: 0`;
-          } else {
-            healerLog.textContent = `1. DIAGNÓSTICO CAUSAL : Detectado enlace huérfano ORPHAN_LINK_DETECTED en docs/tasks/tasks.md.
-2. AISLAMIENTO       : Grafo relacional pausado temporalmente en memoria para evitar cascada.
-3. PARCHE QUIRÚRGICO : Reconstruida arista hacia docs/specs/spec.md desde el Árbol de Merkle del Ledger.
-4. VALIDACIÓN CIEGA  : validatePatch(patch): Verificación de consistencia del grafo 100% harmonizada.
-5. RECIBO SELLADO    : Generado docs/evidence/HEAL-0003.json con firma criptográfica.
-ESTADO EPISTÉMICO    : PRODUCTION_READY | MTTR: 2.1 ms | ENLACES HUÉRFANOS: 0`;
-          }
-          btnRunHealer.textContent = "🩺 Diagnosticar & Auto-Reparar";
-          btnRunHealer.disabled = false;
-        }, 180);
+        const scenarios = {
+          circular: "Ciclo entre dependencias de capas.",
+          secret: "Posible secreto expuesto en un cambio.",
+          orphan: "Referencia a un requisito inexistente."
+        };
+        const description = scenarios[selectScenario.value] || "Escenario desconocido.";
+        healerLog.textContent = `Escenario ilustrativo: ${description}\n\nEste panel no inspeccionó el proyecto y no produjo diagnóstico, parche, pruebas ni recibo.\n\nPara solicitar un informe local sin escritura: node bin/eos.mjs heal src/core/eosAutonomousHealer.ts --dry-run\nRevisa el informe antes de usarlo como evidencia.`;
       });
     }
 
-    // 6. Big Tech Titans Matrix Simulator
+    // 6. Bounded local algorithm demonstrations; no third-party telemetry.
     const btnRunTitans = document.getElementById("btn-run-titans");
     const selectTitans = document.getElementById("select-titans-target");
     const titansRate = document.getElementById("titans-metric-rate");
@@ -2930,83 +2862,33 @@ ESTADO EPISTÉMICO    : PRODUCTION_READY | MTTR: 2.1 ms | ENLACES HUÉRFANOS: 0`
     const titansLoss = document.getElementById("titans-metric-loss");
     const titansLat = document.getElementById("titans-metric-lat");
     const titansLog = document.getElementById("titans-output-log");
-
     if (btnRunTitans && selectTitans && titansLog) {
-      btnRunTitans.addEventListener("click", () => {
-        const titan = selectTitans.value;
-        btnRunTitans.textContent = "Ejecutando...";
+      btnRunTitans.addEventListener("click", async () => {
         btnRunTitans.disabled = true;
-
-        setTimeout(() => {
-          const latMs = (1.5 + Math.random() * 2.8).toFixed(2);
-          if (titansLat) titansLat.textContent = `${latMs} ms`;
-
-          if (titan === "all") {
-            if (titansRate) titansRate.textContent = "60 Hz";
-            if (titansConsensus) titansConsensus.textContent = "3/3 TMR";
-            if (titansLoss) titansLoss.textContent = "0.00%";
-            titansLog.textContent = `🏛️ SUITE COMPLETA DE TITANES BIG TECH (v18.0) VERIFICADA:
-[1/5] Spotify Xirp   : Backstage RFC-42 Validated | 1,000 events committed to Circular Ring | Status: HEALTHY
-[2/5] SpaceX Dragon  : 60Hz Flight Loop (16.67ms tick) | 3-Channel TMR Consensus: 100% agreement | Faults: 0
-[3/5] NVIDIA TensorRT: 65,536-dim Float32 Contiguous SIMD Buffer | Dot-Product executed in 4.2 µs | Memory Alignment: 64-byte
-[4/5] Google Borg    : State Reconciliation Loop | Desired: 5 replicas | Actual: 5 replicas | Drift: 0.00% (CONVERGED)
-[5/5] xAI Colossus   : Inter-Agent RDMA Fabric | 10,000 packets delivered across 8 nodes | Drop Rate: 0.000%
-ESTADO EPISTÉMICO    : PRODUCTION_READY | CONFORMIDAD ARQUETÍPICA: 100%`;
-          } else if (titan === "xirp") {
-            if (titansRate) titansRate.textContent = "1,000 ev/s";
-            if (titansConsensus) titansConsensus.textContent = "RFC-42 PASS";
-            if (titansLoss) titansLoss.textContent = "0.00%";
-            titansLog.textContent = `🟢 SPOTIFY XIRP BACKSTAGE RFC-42 BENCHMARK:
-• Deserialized Backstage RFC-42 entity: 'component:default/eos-system'
-• Lifecycle: production | Owner: Valentín Flórez Arbeláez | Type: service
-• Ingestion into 1024-slot Circular Event Ring: 1,000 events ingested without dropping head
-• Telemetry Sink: All 1,000 events drained deterministically. Status: HEALTHY`;
-          } else if (titan === "spacex") {
-            if (titansRate) titansRate.textContent = "60.00 Hz";
-            if (titansConsensus) titansConsensus.textContent = "3/3 UNÁNIME";
-            if (titansLoss) titansLoss.textContent = "0.00%";
-            titansLog.textContent = `🚀 SPACEX DRAGON / STARSHIP 60Hz TMR FLIGHT COMPUTER:
-• Flight Clock: 60.00 Hz (16.67 ms per discrete tick)
-• Redundancy Channels: Channel A (Nominal), Channel B (Nominal), Channel C (Nominal)
-• Fault Injection: 1 Byzantine bit-flip injected into Channel C
-• Majority Voting: Channel A (Hash: 9a2f...) == Channel B (Hash: 9a2f...)
-• Action Executed: Vector nominal emitido. Canal C aislado y marcado para FDIR. Consenso: 100%`;
-          } else if (titan === "nvidia") {
-            if (titansRate) titansRate.textContent = "15.6M fl/s";
-            if (titansConsensus) titansConsensus.textContent = "SIMD PASS";
-            if (titansLoss) titansLoss.textContent = "0.00%";
-            titansLog.textContent = `⚡ NVIDIA TENSORRT / CUDA CONTIGUOUS FLAT-BUFFER KERNEL:
-• Buffer Allocation: 65,536 elements Float32Array (256 KB contiguous memory)
-• Memory Layout: 64-byte aligned (Cache Line optimal)
-• 4-Way Loop Unrolling Kernel: Vector Dot-Product (a · b)
-• Cómputo Final: Sum = 65536.0000 | Latencia de Kernel: 4.1 µs | Throughput: 15.6 Million Flops/s`;
-          } else if (titan === "google") {
-            if (titansRate) titansRate.textContent = "200 iter/s";
-            if (titansConsensus) titansConsensus.textContent = "0% DRIFT";
-            if (titansLoss) titansLoss.textContent = "0.00%";
-            titansLog.textContent = `🌐 GOOGLE BORG DECLARATIVE RECONCILIATION LOOP:
-• Desired State: 5 worker replicas, minMemoryMb: 256, maxCpuPercent: 80
-• Observed State: 3 worker replicas (2 pods missing / crashed)
-• Causal Diff: Detected drift of -2 replicas
-• Borg Controller: Scaled up cluster +2 replicas into healthy slot
-• New Observed State: 5 worker replicas | Drift: 0.00% (CONVERGED) | Time to Heal: 0.8 ms`;
-          } else if (titan === "xai") {
-            if (titansRate) titansRate.textContent = "10k pkts";
-            if (titansConsensus) titansConsensus.textContent = "RDMA ZERO-LOSS";
-            if (titansLoss) titansLoss.textContent = "0.000%";
-            titansLog.textContent = `🧠 xAI COLOSSUS RDMA INTER-AGENT MESSAGING FABRIC:
-• Topología: 8 Agentes Autónomos con buffers circulares dedicados
-• Inyección de Carga: 10,000 paquetes distribuidos mediante Knuth Multiplicative Hashing
-• Paquetes Enviados: 10,000 | Paquetes Entregados: 10,000
-• Paquetes Perdidos: 0 (0.000% Drop Rate) | Rendimiento: Zero-Loss Congestion Control`;
-          }
-
-          btnRunTitans.textContent = "▶ Ejecutar Benchmark Titán";
+        btnRunTitans.textContent = "Ejecutando demo local...";
+        if (titansRate) titansRate.textContent = "EN CURSO";
+        try {
+          const action = selectTitans.value;
+          const response = await fetch('/api/bigtech?action=' + encodeURIComponent(action));
+          const result = await response.json();
+          if (!response.ok || !result.status) throw new Error(result.error || result.status || 'HTTP ' + response.status);
+          if (titansRate) titansRate.textContent = result.status;
+          if (titansConsensus) titansConsensus.textContent = result.externalSystemsQueried === false ? "NO" : "NO DECLARADO";
+          if (titansLoss) titansLoss.textContent = result.externalAttestation === false ? "NO" : "NO DECLARADA";
+          if (titansLat) titansLat.textContent = "NO MEDIDA";
+          titansLog.textContent = JSON.stringify(result, null, 2);
+        } catch (error) {
+          if (titansRate) titansRate.textContent = "NO DISPONIBLE";
+          if (titansConsensus) titansConsensus.textContent = "—";
+          if (titansLoss) titansLoss.textContent = "—";
+          if (titansLat) titansLat.textContent = "NO MEDIDA";
+          titansLog.textContent = 'La demo local no devolvió resultado.\n' + (error instanceof Error ? error.message : String(error));
+        } finally {
+          btnRunTitans.textContent = "▶ Ejecutar demo local";
           btnRunTitans.disabled = false;
-        }, 150);
+        }
       });
     }
-
     // 7. Spotify Engineering Codex Studio
     const btnRunSpotify = document.getElementById("btn-run-spotify");
     const selectSpotify = document.getElementById("select-spotify-module");
