@@ -2,7 +2,7 @@
 
 ## 1. Functional Requirements (EARS Syntax)
 
-* **FR-001 (Ubiquitous)**: EL SISTEMA exhibirá la arquitectura soberana de **EOS System (Engineering Operating System)**, incluyendo las 7 Leyes Inviolables, el Pipeline Maestro de 21 Pasos, el patrón de aislamiento físico por Git Worktrees + tmux inspirado en Xirp, el Grafo de Contexto vía MCP y la capa de concurrencia en Go.
+* **FR-001 (Ubiquitous)**: EL SISTEMA describirá las capacidades verificables del repositorio: CLI Node.js, servidor MCP, herramientas locales de análisis/validación, registro configurado de proyectos y demostraciones de navegador. Los ejemplos estáticos se identificarán como tales y no se presentarán como métricas o estados operativos.
 * **FR-002 (Event-Driven)**: CUANDO el usuario seleccione un comando o envíe una instrucción desde el panel del navegador, EL SISTEMA mostrará una muestra estática o generará borradores EARS/TypeScript en memoria; EL SISTEMA NO ejecutará comandos, guardará archivos, ejecutará pruebas, validará resultados, verificará el repositorio, producirá una atestación ni afirmará un código de salida.
 * **FR-003 (Event-Driven)**: CUANDO el usuario consulte el catálogo de flota, EL SISTEMA mostrará únicamente proyectos, repositorios y URLs configurados y marcará salud, CI, hooks y sondas de producción como `NOT_PROBED` mientras no se ejecuten esas comprobaciones.
 * **FR-004 (Ubiquitous)**: EL SISTEMA proveerá un manifiesto Web App (`manifest.webmanifest`) con `"name": "EOS System"` y `"short_name": "EOS System"`, garantizando que el ícono de acceso directo en el escritorio nunca sufra truncamiento tipográfico.
@@ -89,11 +89,11 @@
 ## 2. Acceptance Criteria (BDD — GIVEN / WHEN / THEN)
 
 ```gherkin
-ESCENARIO: [BDD-001 Renderizado Inicial e Integridad Arquitectónica]
-  DADO que un usuario o auditor accede a la URL de producción de EOS System
-  CUANDO el documento principal termina de cargar
-  ENTONCES se visualiza el Hero Soberano de EOS System, las métricas de ingeniería (0-Deps Hexagonal, 21-Step Pipeline, SHA-256 Sentinel, Xirp Worktree + MCP) y la Consola Interactiva
-  Y todas las secciones bajo el pliegue emplean content-visibility: auto con contain-intrinsic-size sin desplazamientos de diseño (CLS = 0).
+ESCENARIO: [BDD-001 Presentación de capacidades y mediciones]
+  DADO que un usuario abre la página principal de EOS System
+  CUANDO se carga la sección inicial
+  ENTONCES se describen las herramientas locales y las demostraciones del repositorio sin afirmar capacidades no implementadas
+  Y las métricas de renderizado que se muestran se calculan en el navegador y no se etiquetan como latencia del producto.
 
 ESCENARIO: [BDD-002 Ejecución en la Consola Interactiva de Telemetría]
   DADO que el usuario se encuentra en la sección de Terminal del Plano de Control

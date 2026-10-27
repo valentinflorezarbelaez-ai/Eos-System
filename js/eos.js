@@ -3718,7 +3718,7 @@ ESTADO EPISTÉMICO    : PRODUCTION_READY | CONFORMIDAD ARQUETÍPICA: 100%`;
         if (now - lastFrame >= 1000) {
           const fps = Math.round((frameCount * 1000) / (now - lastFrame));
           const reactionMs = (1000 / fps).toFixed(1);
-          liveFpsPill.innerHTML = `Latencia UI: <strong style="color: #38bdf8;">${reactionMs} ms (${fps} FPS)</strong>`;
+          liveFpsPill.innerHTML = `Renderizado UI: <strong style="color: #38bdf8;">${fps} FPS · ${reactionMs} ms/frame</strong>`;
           frameCount = 0;
           lastFrame = now;
         }
