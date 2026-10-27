@@ -3,8 +3,8 @@
 ## 1. Functional Requirements (EARS Syntax)
 
 * **FR-001 (Ubiquitous)**: EL SISTEMA exhibirá la arquitectura soberana de **EOS System (Engineering Operating System)**, incluyendo las 7 Leyes Inviolables, el Pipeline Maestro de 21 Pasos, el patrón de aislamiento físico por Git Worktrees + tmux inspirado en Xirp, el Grafo de Contexto vía MCP y la capa de concurrencia en Go.
-* **FR-002 (Event-Driven)**: CUANDO el usuario seleccione un comando en la Consola Interactiva del Plano de Control (`eos verify:strict`, `eos sentinel --status`, `eos fleet --audit`, `eos mcp --graph`), EL SISTEMA ejecutará una simulación determinista en tiempo real mostrando la telemetría criptográfica SHA-256, el estado epistémico (`VERIFIED` / `PRODUCTION_READY`) y el código de salida `0`.
-* **FR-003 (Event-Driven)**: CUANDO el usuario filtre o explore el **Catálogo de la Flota Soberana (Fleet Registry)**, EL SISTEMA mostrará las plataformas gobernadas por EOS (`Aberamentho / Pleroma Music`, `Portafolio Valentín Flórez`, `PTG Performance Talent Group`, `S.A.W / ATP-Strength`, `Biblioteca Gnóstica Universal`, `Portal de Donaciones AGEAC`, `HAM-SAH + Kegel` y `Alexander Rodríguez Remodelaciones`) con su estado epistémico y enlaces directos a producción.
+* **FR-002 (Event-Driven)**: CUANDO el usuario seleccione un comando o envíe una instrucción desde el panel del navegador, EL SISTEMA mostrará una muestra estática o generará borradores EARS/TypeScript en memoria; EL SISTEMA NO ejecutará comandos, guardará archivos, ejecutará pruebas, validará resultados, verificará el repositorio, producirá una atestación ni afirmará un código de salida.
+* **FR-003 (Event-Driven)**: CUANDO el usuario consulte el catálogo de flota, EL SISTEMA mostrará únicamente proyectos, repositorios y URLs configurados y marcará salud, CI, hooks y sondas de producción como `NOT_PROBED` mientras no se ejecuten esas comprobaciones.
 * **FR-004 (Ubiquitous)**: EL SISTEMA proveerá un manifiesto Web App (`manifest.webmanifest`) con `"name": "EOS System"` y `"short_name": "EOS System"`, garantizando que el ícono de acceso directo en el escritorio nunca sufra truncamiento tipográfico.
 * **FR-005 (State-Driven)**: MIENTRAS las secciones fuera del viewport inicial (`below-the-fold`) no sean visibles, EL SISTEMA aplicará `content-visibility: auto` junto con `contain-intrinsic-size` (conforme a `modern-web-guidance: defer-rendering-heavy-content`) para asegurar un LCP < 1.2s y CLS = 0.
 * **FR-006 (Error / Unwanted Condition)**: SI el navegador pierde conectividad de red tras la primera carga, ENTONCES EL SISTEMA servirá la aplicación completa desde la caché del Service Worker (`sw.js`) sin degradación funcional.
@@ -59,18 +59,8 @@
   5. **Superoptimización de Compilador por Saturación de Igualdad (`E-Graphs / MLIR`)**: Reescritura algebraica de grafos de equivalencia para encontrar el programa matemáticamente óptimo de menor costo de ciclos de CPU.
   6. **Ejecución Basada en Capacidades (`WebAssembly SIMD-128 + WASI Capability Sandbox`)**: Cero autoridad ambiental (*Zero Ambient Authority*); ningún módulo puede acceder a red, disco o reloj sin un descriptor de capacidad explícito.
   7. **Radar en Vivo de la Flota Soberana (`Live 9-System Sovereign Fleet Health Matrix`)**: Telemetría y auditoría de latencia, estado epistémico y compatibilidad ABI de los 9 sistemas en producción desde `#omega-singularity-lab` y `/api/omega`.
-* **FR-017 (Event-Driven & Ubiquitous)**: CUANDO se realice cualquier cambio o mejora en el código o en la especificación de EOS System, EL SISTEMA ejecutará de manera 100% autónoma y obligatoria la **Tubería Soberana de Integración y Despliegue Continuo (`CI/CD SecDevOps v9.0` — `.github/workflows/eos-sovereign-cicd.yml`, `.githooks/pre-commit`, `.githooks/pre-push`, `scripts/verify-cicd-pipeline.mjs`, `src/core/eosCicdPipeline.ts`, `api/cicd.js` y `#cicd-secdevops`)** compuesta por 7 Aduanas Inviolables antes de permitir la integración o el despliegue:
-  1. **Aduana 1 — Escáner SAST, OWASP Top 10 & Cero Secretos en Texto Plano (Ley VI)**: Inspección determinista de todos los archivos del repositorio bloqueando credenciales (`sk-live-`, `ghp_`, `AKIA`, `AIza`, `-----BEGIN PRIVATE KEY`), `eval()` inseguro o inyecciones XSS/SQL.
-  2. **Aduana 2 — Compuerta Constitucional SDD (Leyes I, II y VII)**: Verificación de trazabilidad completa (`Intake` ➔ `EARS Spec` ➔ `BDD` ➔ `ADR Plan` ➔ `Task DAG` ➔ `Authorization Level 2+` ➔ `EVD Receipt`).
-  3. **Aduana 3 — Pureza Arquitectónica L0 & Cadena de Suministro (`SLSA Level 4` + `SBOM SHA-256`)**: Verificación de `0` dependencias externas en runtime (`package.json`) e inventario criptográfico de árbol de Merkle sobre cada artefacto.
-  4. **Aduana 4 — Verificación Estática de Sintaxis, AST y Contratos (`node --check` + `eBPF Gate`)**: Validación sintáctica y estructural de todos los módulos `.js`, `.mjs` y `.ts` sin errores ni advertencias.
-  5. **Aduana 5 — Auditoría de Calidad, Accesibilidad (`WCAG 2.1 AA`), SEO & Presupuesto de Rendimiento (`Modern Web Guidance`)**: Validación de semántica HTML5, `aria-live`, `<dialog closedby="any">`, `content-visibility: auto` + `contain-intrinsic-size` y `Speculation Rules`.
-  6. **Aduana 6 — Pruebas de Humo en Proceso de Todos los Endpoints Serverless (`/api/*`)**: Invocación automatizada en memoria de `/api/teurgia`, `/api/compile`, `/api/memory`, `/api/bigtech`, `/api/kernel`, `/api/omega` y `/api/cicd` exigiendo código `HTTP 200` y contrato JSON válido.
-  7. **Aduana 7 — Despliegue Continuo Zero-Downtime & Verificación Post-Deploy en Vivo**: Sincronización automática con GitHub Actions y Vercel Production seguida de verificación `HTTP 200 OK` en vivo; SI cualquiera de las 7 aduanas falla (`exitCode !== 0`), ENTONCES EL SISTEMA aborta el commit/push/deploy de forma inmediata (*Fail-Closed*).
-* **FR-018 (Event-Driven & Ubiquitous)**: CUANDO se modifique o mejore cualquier proyecto perteneciente a la Flota Soberana (registrado en `docs/projects/registry.json`), EL SISTEMA **orquestará de forma autónoma el pipeline CI/CD SecDevOps federado (`v10.0` — `src/core/eosFleetDispatcher.ts`, `api/fleet.js`, `scripts/fleet-autonomous-cicd.mjs`, `scripts/install-fleet-cicd-hooks.mjs` y `#fleet-cicd-orchestrator`)**:
-  1. **Instalación y Propagación Federada de Git Hooks**: EL SISTEMA inyectará automáticamente los hooks `.githooks/pre-commit` y `.githooks/pre-push` en todos los repositorios locales de la flota (`Aberamentho-s-Pleroma-music`, `portafolio`, etc.) para que ninguna mejora en ningún proyecto pueda comitearse o pushearse sin pasar las 7 aduanas de seguridad (SAST, 0 secretos, SDD, AST, WCAG).
-  2. **Monitoreo y Despacho Autónomo Multi-Repositorio**: El despachador autónomo (`npm run fleet:ship` o `eos fleet --dispatch`) detectará automáticamente qué proyectos de la flota tienen cambios no comiteados o pendientes de push, ejecutará sus pruebas y compuertas locales, realizará el commit y push firmado, activará su despliegue en Vercel y sondeará que su URL de producción responda `HTTP 200 OK`.
-  3. **Registro Criptográfico Centralizado en EOS**: La telemetría en vivo de toda la flota se publicará en el endpoint `/api/fleet` y en la sección `#fleet-cicd-orchestrator` de EOS System con estado epistémico consolidado.
+* **FR-017 (Event-Driven & Ubiquitous)**: CUANDO el usuario abra el panel CI/CD del navegador, EL SISTEMA consultará la simulación acotada de `/api/cicd` y marcará sus resultados como simulados; el panel NO declarará que se ejecutaron gates, se generó un SBOM, se instalaron hooks o se desplegó código.
+* **FR-018 (Event-Driven & Ubiquitous)**: CUANDO el usuario consulte la flota en el navegador, EL SISTEMA mostrará el registro estático de `/api/fleet`, identificará estados operativos como no sondeados y limitará las acciones del navegador a consultas y vistas previas. El modo CLI `fleet:ship` requiere un único proyecto seleccionado y una confirmación coincidente antes de operaciones de escritura.
 * **FR-020 (Ubiquitous & Universal Model Context Protocol)**: EL SISTEMA expondrá un servidor nativo MCP sobre stdio (`src/mcp/eosMcpServer.ts`) con herramientas soberanas (`eos_semantic_search`, `eos_tmr_consensus`, `eos_audit_fleet`, `eos_health_check`, `eos_validate_patch`, `eos_optimize_context`) sin librerías externas de runtime.
 * **FR-021 (Ubiquitous & Multi-IDE Universal CLI)**: EL SISTEMA proveerá un punto de entrada CLI universal (`bin/eos.mjs`) ejecutable en cualquier terminal de Windows, Linux o macOS, ofreciendo comandos unificados (`verify`, `audit`, `test`, `mcp`, `jarvis`, `health`, `optimize`, `amplify`, `guard`, `judge`).
 * **FR-022 (Event-Driven & In-Memory AST Sandbox)**: CUANDO se proponga una mutación o parche de código, EL SISTEMA ejecutará `validatePatch` en `src/core/eosPatchValidator.ts` para verificar sintaxis AST, escaneo de secretos y ausencia de patrones destructivos antes de tocar el sistema de archivos.
@@ -108,8 +98,8 @@ ESCENARIO: [BDD-001 Renderizado Inicial e Integridad Arquitectónica]
 ESCENARIO: [BDD-002 Ejecución en la Consola Interactiva de Telemetría]
   DADO que el usuario se encuentra en la sección de Terminal del Plano de Control
   CUANDO hace clic en cualquiera de los comandos ("verify:strict", "sentinel:fdir", "fleet:status", "mcp:context") o copia el comando CLI
-  ENTONCES la terminal renderiza la traza de auditoría determinista con hashes SHA-256, estado epistémico VERIFIED y exit code 0
-  Y el estado de los indicadores del sistema permanece sincronizado.
+  ENTONCES la consola muestra una salida ilustrativa o borradores locales e indica que el navegador no ejecutó comandos, guardó archivos ni verificó resultados
+  Y no presenta muestras o borradores como evidencia, estado de producción o código de salida real.
 
 ESCENARIO: [BDD-003 Instalación PWA sin Truncamiento en Escritorio]
   DADO que el usuario instala EOS System como aplicación de escritorio (PWA)
@@ -165,17 +155,17 @@ ESCENARIO: [BDD-011 Singularidad Omega Post-Cuántica, ZK-STARK, Consenso Bizant
   ENTONCES EOS emite la prueba criptográfica post-cuántica y ZK-STARK sin trusted setup, certifica el quórum BFT sin alucinaciones, restaura cualquier época histórica en 0 ms de deriva
   Y el endpoint serverless /api/omega responde con código HTTP 200 y 0 dependencias externas.
 
-ESCENARIO: [BDD-012 Tubería Autónoma CI/CD SecDevOps de 7 Aduanas (Pre-Commit, GitHub Actions, SAST, SBOM y Auto-Deploy)]
-  DADO que se realiza un cambio o mejora en el repositorio de EOS System o el operador accede a la sección CI/CD SecDevOps (#cicd-secdevops)
-  CUANDO se ejecuta "npm run verify:strict", un commit/push protegido por .githooks o el simulador interactivo de las 7 Aduanas (#cicd-pipeline-lab)
-  ENTONCES el motor ejecuta secuencialmente el Escáner SAST/Secretos, la Compuerta SDD, la Auditoría SLSA/SBOM SHA-256, la Validación Estática AST (node --check), la Auditoría WCAG/CWV, las Pruebas de Humo Serverless (7 endpoints /api/*) y el Despliegue Continuo Verificado
-  Y bloquea cualquier integración si existe 1 sola vulnerabilidad o desviación (Fail-Closed, Exit Code 0 requerido).
+ESCENARIO: [BDD-012 Simulación CI/CD y verificación local]
+  DADO que el operador abre el panel #cicd-secdevops o solicita la simulación en /api/cicd
+  CUANDO elige un escenario limpio o envía una muestra sintética
+  ENTONCES cada etapa de la respuesta se marca como simulada y el panel indica que no escaneó el repositorio, ejecutó pruebas, generó un SBOM ni desplegó
+  Y las comprobaciones reales solo se reportan después de ejecutar el comando local correspondiente.
 
-ESCENARIO: [BDD-013 Orquestación Autónoma CI/CD SecDevOps de Toda la Flota Soberana (v10.0)]
-  DADO que existen múltiples proyectos soberanos registrados en docs/projects/registry.json (EOS System, Aberamentho, Portafolio, etc.)
-  CUANDO el Arquitecto Soberano ejecuta "npm run fleet:ship", "npm run fleet:verify" o interactúa con el Orquestador de Flota (#fleet-cicd-orchestrator)
-  ENTONCES EOS escanea todos los repositorios locales, inyecta las aduanas SecDevOps en sus .git/hooks, ejecuta la suite de verificación en cada proyecto modificado, comitea, pushea a sus respectivos remotos de GitHub, y sondea en vivo cada URL de producción
-  Y el endpoint serverless /api/fleet reporta el estado 100% verificado y la salud de los 9 proyectos de la flota.
+ESCENARIO: [BDD-013 Registro de flota y vista previa de acciones]
+  DADO que /api/fleet publica proyectos y URLs configurados
+  CUANDO el usuario carga la tabla o solicita el registro desde el navegador
+  ENTONCES EOS muestra `REGISTERED` y marca sondas, CI y hooks como `NOT_PROBED`
+  Y los botones del navegador no modifican checkouts ni ejecutan commits, pushes, gates o despliegues.
 
 ESCENARIO: [BDD-014 Operación Cognitiva Autónoma JARVIS (Voz, Metas, Reactor Arc y Daemon 24/7)]
   DADO que el Arquitecto Soberano interactúa con el Núcleo JARVIS (#eos-jarvis-nexus), ejecuta "npm run jarvis" o la pestaña CLI "eos jarvis --monad"

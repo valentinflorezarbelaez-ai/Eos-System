@@ -229,10 +229,10 @@
     <section class="section" id="consola">
       <div class="container">
         <div class="section__head">
-          <div class="eyebrow"> TELEMETRÍA EJECUTABLE · LEY III: EVIDENCIA SOBRE AFIRMACIONES</div>
-          <h2 class="section__title">Consola Interactiva del Plano de Control EOS</h2>
+          <div class="eyebrow">MUESTRAS DE CONSOLA · NINGÚN COMANDO EJECUTADO</div>
+          <h2 class="section__title">Ejemplos de salida CLI de EOS</h2>
           <p class="section__sub">
-            Inspecciona en vivo las puertas de verificación determinista de EOS System: validación estricta de invariantes, centinela criptográfico 24/7, aislamiento multi-agente estilo Xirp, grafo MCP y estado de la flota soberana.
+            Explora ejemplos estáticos de comandos y subsistemas. El generador de abajo crea borradores EARS y TypeScript en la memoria del navegador; no guarda archivos ni ejecuta pruebas. La consola no ejecuta la CLI ni valida los resultados de las muestras.
           </p>
         </div>
 
@@ -243,9 +243,9 @@
               <span class="terminal-dot terminal-dot--amber"></span>
               <span class="terminal-dot terminal-dot--green"></span>
             </div>
-            <span class="terminal-title">eos-control-plane — zsh / WSL2 tmux — 120×38</span>
+            <span class="terminal-title">EOS System — muestras CLI ilustrativas</span>
             <button type="button" class="btn btn--ghost" id="copy-cmd-btn" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;">
-              Copiar Comando CLI
+              Copiar Comando de Ejemplo
             </button>
           </div>
 
@@ -346,8 +346,8 @@
               />
               <span class="prompt-suffix">&quot;</span>
             </div>
-            <button type="button" id="eos-run-pipeline-btn" class="prompt-run-btn" title="Ejecutar tubería autónoma de 21 pasos">
-              ⚡ EJECUTAR 21 PASOS
+            <button type="button" id="eos-run-pipeline-btn" class="prompt-run-btn" title="Generar borradores locales en memoria; no ejecuta pruebas ni escribe archivos">
+              ⚡ GENERAR BORRADORES
             </button>
           </div>
 
@@ -361,17 +361,19 @@
             <button type="button" class="preset-chip" data-preset="Microservicio de matching algorítmico ultrarrápido en Go L0">⚡ Microservicio Go</button>
           </div>
 
-          <!-- Artifact Sub-tabs: Log | EARS Spec | Domain Entity | Use Case | Unit Test -->
+          <!-- Artifact Sub-tabs: local draft artifacts; no files are written -->
           <div class="terminal-artifact-tabs" id="terminal-artifact-tabs" role="tablist" aria-label="Vistas del artefacto">
-            <button type="button" class="artifact-tab is-active" data-view="pipeline-log">📋 Pipeline Log (21 Pasos)</button>
-            <button type="button" class="artifact-tab" data-view="ears-spec">📐 Requisito EARS &amp; BDD</button>
-            <button type="button" class="artifact-tab" data-view="code-entity">📦 Entidad Dominio L0 (.ts)</button>
-            <button type="button" class="artifact-tab" data-view="code-usecase">⚙️ Caso de Uso (.ts)</button>
-            <button type="button" class="artifact-tab" data-view="code-test">🧪 Test Determinista (.ts)</button>
+            <button type="button" class="artifact-tab is-active" data-view="pipeline-log">📋 Resumen del borrador</button>
+            <button type="button" class="artifact-tab" data-view="ears-spec">📐 Borrador EARS &amp; BDD</button>
+            <button type="button" class="artifact-tab" data-view="code-entity">📦 Borrador de entidad (.ts)</button>
+            <button type="button" class="artifact-tab" data-view="code-usecase">⚙️ Borrador de caso de uso (.ts)</button>
+            <button type="button" class="artifact-tab" data-view="code-test">🧪 Borrador de test (.ts)</button>
           </div>
 
 
-          <pre class="terminal-body" id="terminal-output" aria-live="polite">$ npm run verify:strict
+          <pre class="terminal-body" id="terminal-output" aria-live="polite">MUESTRA ILUSTRATIVA · No se ejecutó el comando ni se verificaron estos resultados.
+
+$ npm run verify:strict
 &gt; eos-system@2.5.0 verify:strict
 &gt; Executing 19-Point Deterministic Invariant &amp; Epistemic Gate Suite...
 
@@ -389,8 +391,8 @@ SHA-256 SEAL    : e9c4a81f3b720d49108a7f63c1e5b90284716d3f8a92c04b15d6e7f8a9b0c1
 EXIT CODE       : 0</pre>
 
           <div class="terminal-footer">
-            <span id="active-cmd-label" style="color: #10b981;">Modo activo: verify:strict · EXIT CODE 0</span>
-            <span>Firma Ed25519: VALIDATED · Custody Ledger: INTACT</span>
+            <span id="active-cmd-label" style="color: #10b981;">Muestra: verify:strict · NO EJECUTADO</span>
+            <span>Salida ilustrativa · sin verificación ni atestación</span>
           </div>
         </div>
       </div>
@@ -2499,70 +2501,70 @@ Linus Rule : "Talk is cheap. Show me the verified EARS spec and SHA-256 receipt.
       </div>
     </section>
 
-    <!-- AUTONOMOUS 7-STAGE SOVEREIGN CI/CD & SECDEVOPS PIPELINE v9.0 (#cicd-secdevops) -->
+    <!-- CI/CD SIMULATION AND LOCAL PIPELINE DOCUMENTATION (#cicd-secdevops) -->
     <section class="section deferred-section" id="cicd-secdevops">
       <div class="container">
         <div class="section__head">
-          <div class="eyebrow">🛡️ INTEGRACIÓN Y DESPLIEGUE CONTINUO AUTÓNOMO (CI/CD SECDEVOPS v9.0) · 7 ADUANAS FAIL-CLOSED</div>
-          <h2 class="section__title">Tubería Autónoma <code>CI/CD SecDevOps</code>: Cada Cambio se Audita en 7 Aduanas de Seguridad y Calidad Antes de Integrarse y Desplegarse</h2>
+          <div class="eyebrow">🧪 DEMOSTRACIÓN LOCAL DE ETAPAS CI/CD · RESULTADOS SIMULADOS</div>
+          <h2 class="section__title">CI/CD en EOS: etapas documentadas y un simulador transparente</h2>
           <p class="section__sub">
-            Ninguna línea de código puede hacer <code>commit</code>, <code>push</code> ni desplegarse a producción sin atravesar automáticamente las <strong>7 Aduanas Inviolables de EOS v9.0 (<code>scripts/verify-cicd-pipeline.mjs</code> + <code>.githooks/pre-commit</code> + <code>.githooks/pre-push</code> + <code>.github/workflows/eos-sovereign-cicd.yml</code> + <code>npm run ship:sovereign</code>)</strong>. Si se detecta <strong>un solo secreto en claro, un error de sintaxis AST, una dependencia externa no autorizada o un fallo en cualquiera de los 7 endpoints serverless</strong>, el pipeline aborta instantáneamente en modo <strong><em>Fail-Closed</em></strong>.
+            El botón usa <code>/api/cicd</code>, que simula una máquina de estados y puede analizar una muestra de texto con patrones limitados. No escanea este repositorio, no genera un SBOM, no ejecuta pruebas, no instala hooks ni hace <code>commit</code>, <code>push</code> o despliegues. Para ejecutar verificaciones locales, revisa <code>npm run verify:strict</code> y sus límites antes de usarlo.
           </p>
         </div>
 
         <!-- TABLA DE LAS 7 ADUANAS CI/CD SECDEVOPS -->
-        <div class="table-wrap" role="region" aria-label="Tabla de las 7 Aduanas del Pipeline CI/CD SecDevOps de EOS" tabindex="0" style="margin-bottom: 2.25rem;">
+        <div class="table-wrap" role="region" aria-label="Etapas ilustrativas del simulador CI/CD de EOS" tabindex="0" style="margin-bottom: 2.25rem;">
           <table class="eos-table">
             <thead>
               <tr>
-                <th>Aduana del Pipeline CI/CD</th>
-                <th>Dominio de Seguridad &amp; Calidad</th>
-                <th>Verificación Ejecutable Automatizada</th>
-                <th>Política Fail-Closed &amp; Estado</th>
+                <th>Etapa ilustrativa</th>
+                <th>Qué representa</th>
+                <th>Qué hace realmente el panel</th>
+                <th>Estado actual</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Aduana 1: Escáner SAST &amp; Cero Secretos</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Ley VI · OWASP Top 10</span></td>
-                <td>Static Application Security Testing (SAST) y detección de credenciales.</td>
-                <td>Escanea el 100% de los archivos de texto bloqueando llaves (<code>sk-live-</code>, <code>ghp_</code>, <code>AKIA</code>, <code>AIza</code>, <code>PRIVATE KEY</code>) e inyecciones.</td>
-                <td><strong>ABORT_ON_SECRET_LEAK</strong><br /><code>0 Leaks · PASSED (Exit 0)</code></td>
+                <td><strong>Etapa 1: patrones de credenciales</strong></td>
+                <td>Un filtro de muestra puede ilustrar un bloqueo.</td>
+                <td>Compara solo el texto enviado a <code>/api/cicd</code> con unos pocos patrones; no inspecciona archivos.</td>
+                <td><strong>REPOSITORIO NO ESCANEADO</strong></td>
               </tr>
               <tr>
-                <td><strong>Aduana 2: Compuerta Constitucional SDD</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Leyes I, II y VII · Zero Vibe Coding</span></td>
-                <td>Trazabilidad bidireccional RTM (Intake ➔ EARS ➔ BDD ➔ ADR ➔ DAG ➔ Auth).</td>
-                <td>Ejecuta <code>scripts/verify-landing.mjs</code> validando especificaciones formales y autorización Nivel 3.</td>
-                <td><strong>ABORT_ON_SPEC_DRIFT</strong><br /><code>6/6 Invariants · PASSED</code></td>
+                <td><strong>Etapa 2: revisión de especificaciones</strong></td>
+                <td>Una etapa hipotética de revisión de requisitos.</td>
+                <td>El simulador no analiza trazabilidad ni autorización.</td>
+                <td><strong>NO EJECUTADA</strong></td>
               </tr>
               <tr>
-                <td><strong>Aduana 3: Pureza L0 &amp; SBOM <code>SLSA L4</code></strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Ley V · Supply-Chain Security</span></td>
-                <td>Inmunidad total contra envenenamiento de paquetes <code>npm</code> y árbol de Merkle.</td>
-                <td>Verifica <code>0</code> dependencias externas en <code>package.json</code> y sella el <code>SBOM-CICD-RECEIPT.json</code> con hash <code>SHA-256</code> de cada archivo.</td>
-                <td><strong>ABORT_ON_EXTERNAL_DEP</strong><br /><code>0 External Deps · SBOM Sealed</code></td>
+                <td><strong>Etapa 3: inventario de dependencias</strong></td>
+                <td>Un control de dependencias y cadena de suministro.</td>
+                <td>El simulador no genera SBOM ni una certificación SLSA.</td>
+                <td><strong>NO EJECUTADA</strong></td>
               </tr>
               <tr>
-                <td><strong>Aduana 4: Sintaxis Estática AST &amp; Bytecode</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Calidad &amp; eBPF Ring-0</span></td>
-                <td>Validación del compilador de Node.js y contratos puros TypeScript L0.</td>
-                <td>Ejecuta <code>node --check</code> sobre todos los módulos <code>.js</code> / <code>.mjs</code> y verifica los motores L0 en <code>src/core/*.ts</code>.</td>
-                <td><strong>ABORT_ON_SYNTAX_ERROR</strong><br /><code>100% Modules Validated</code></td>
+                <td><strong>Etapa 4: sintaxis y arquitectura</strong></td>
+                <td>Verificaciones estáticas locales.</td>
+                <td>El simulador no ejecuta <code>node --check</code> ni inspecciona el grafo de código.</td>
+                <td><strong>NO EJECUTADA</strong></td>
               </tr>
               <tr>
-                <td><strong>Aduana 5: WCAG 2.1 AA, SEO &amp; Presupuesto CWV</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Modern Web Guidance</span></td>
-                <td>Accesibilidad universal, semántica JSON-LD y presupuesto de KB/nanosegundos.</td>
-                <td>Verifica <code>skip-link</code>, <code>aria-live</code>, <code>&lt;dialog closedby="any"&gt;</code>, <code>content-visibility: auto</code> y presupuesto de JS/CSS.</td>
-                <td><strong>ABORT_ON_BUDGET_BREACH</strong><br /><code>CLS = 0 · INP &lt; 8ms · PASSED</code></td>
+                <td><strong>Etapa 5: accesibilidad y rendimiento web</strong></td>
+                <td>Auditorías de accesibilidad y mediciones de campo.</td>
+                <td>El simulador no ejecuta auditorías ni mide Core Web Vitals.</td>
+                <td><strong>NO EJECUTADA</strong></td>
               </tr>
               <tr>
-                <td><strong>Aduana 6: Pruebas de Humo Serverless En-Proceso</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Contratos ABI / API</span></td>
-                <td>Ejecución real en memoria de las 7 funciones serverless antes de desplegar.</td>
-                <td>Invoca <code>/api/teurgia</code>, <code>/api/compile</code>, <code>/api/memory</code>, <code>/api/bigtech</code>, <code>/api/kernel</code>, <code>/api/omega</code> y <code>/api/cicd</code> exigiendo <code>HTTP 200</code>.</td>
-                <td><strong>ABORT_ON_API_REGRESSION</strong><br /><code>7/7 Endpoints HTTP 200 OK</code></td>
+                <td><strong>Etapa 6: comprobación de APIs</strong></td>
+                <td>Pruebas de humo de rutas desplegadas.</td>
+                <td>El botón consulta solo <code>/api/cicd</code>; no prueba las demás rutas.</td>
+                <td><strong>OTRAS RUTAS NO SONDEADAS</strong></td>
               </tr>
               <tr>
-                <td><strong>Aduana 7: Auto-Deploy &amp; Sondeo Post-Deploy</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">GitHub Actions + Vercel Prod</span></td>
-                <td>Despliegue continuo Zero-Downtime y verificación en vivo sobre la URL de producción.</td>
-                <td>Ejecuta <code>npx vercel --prod --yes</code>, push a <code>origin/main</code> y comprueba <code>HTTP 200 OK</code> en vivo con <code>curl.exe</code>.</td>
-                <td><strong>INSTANT_ALIAS_ROLLBACK</strong><br /><code>LIVE 200 OK · PRODUCTION_READY</code></td>
+                <td><strong>Etapa 7: despliegue y sonda</strong></td>
+                <td>Publicación de una versión y comprobación de su URL.</td>
+                <td>El simulador no hace commit, push, deploy ni sondas en producción.</td>
+                <td><strong>NO EJECUTADA</strong></td>
               </tr>
             </tbody>
           </table>
@@ -2572,87 +2574,58 @@ Linus Rule : "Talk is cheap. Show me the verified EARS spec and SHA-256 receipt.
         <div class="sanctum-shell" id="cicd-pipeline-lab" style="border-color: rgba(56, 189, 248, 0.55);">
           <div class="sanctum-header" style="background: linear-gradient(90deg, rgba(56,189,248,0.16) 0%, rgba(16,185,129,0.16) 50%, rgba(245,158,11,0.16) 100%);">
             <div class="sanctum-status">
-              <span class="sanctum-badge sanctum-badge--emerald">🛡️ CI/CD SECDEVOPS v9.0: 7/7 GATES ARMED</span>
-              <span class="sanctum-badge sanctum-badge--gold">GIT HOOKS: PRE-COMMIT + PRE-PUSH ACTIVE</span>
-              <span class="sanctum-badge sanctum-badge--cyan">GITHUB ACTIONS + VERCEL CD: SYNCED</span>
+              <span class="sanctum-badge sanctum-badge--cyan">SIMULADOR LOCAL · SIN GATES EJECUTADOS</span>
+              <span class="sanctum-badge sanctum-badge--gold">HOOKS LOCALES: NO SONDEADOS</span>
+              <span class="sanctum-badge sanctum-badge--emerald">COMMIT / PUSH / DEPLOY: NO EJECUTADOS</span>
             </div>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
               <button type="button" id="btn-cicd-run-all" class="btn btn--primary" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                🚀 Ejecutar las 7 Aduanas CI/CD + Auto-Deploy Check
+                🧪 Ver simulación CI/CD
               </button>
               <button type="button" id="btn-cicd-test-sast-block" class="btn btn--gold" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                🚨 Simular Bloqueo Fail-Closed (Inyección de Secreto en Pre-Commit)
+                🚨 Simular bloqueo con una muestra sintética
               </button>
-              <button type="button" id="btn-cicd-inspect-sbom" class="btn btn--ghost" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                📦 Inspeccionar SBOM SHA-256 &amp; 7 Endpoints (/api/cicd)
+              <button type="button" id="btn-cicd-show-response" class="btn btn--ghost" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
+                📄 Ver respuesta del simulador
               </button>
             </div>
           </div>
 
           <div class="sanctum-body">
-            <pre id="cicd-pipeline-output" style="margin: 0; padding: 1.1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(56, 189, 248, 0.38); font-family: var(--font-mono); font-size: 0.75rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.55; max-height: 350px; overflow-y: auto;" aria-live="polite">$ npm run ship:sovereign
-──────────────────────────────────────────────────────────────────────────────
-[STAGE 1/7] SAST &amp; Zero-Plaintext-Secrets Gate    : PASSED (0 Leaks across all tracked files)
-[STAGE 2/7] Constitutional SDD &amp; 7 Laws Gate      : PASSED (EARS + BDD + ADRs + DAG + Level 3 Auth)
-[STAGE 3/7] Hexagonal L0 (0-Deps) &amp; SLSA L4 SBOM  : PASSED (0 External Runtime Deps · Merkle SHA-256 Sealed)
-[STAGE 4/7] Static AST &amp; Bytecode (node --check)  : PASSED (All JS/MJS + 7 L0 TS Modules Verified)
-[STAGE 5/7] WCAG 2.1 AA, SEO &amp; CWV Budget Gate    : PASSED (CLS = 0 · INP &lt; 8ms · &lt;dialog closedby="any"&gt;)
-[STAGE 6/7] In-Process Serverless API Smoke Gate  : PASSED (7/7 Endpoints /api/* returned HTTP 200 OK)
-[STAGE 7/7] Zero-Downtime CD &amp; Live Smoke Probe   : PASSED (GitHub Actions + Vercel Production HTTP 200 OK)
-──────────────────────────────────────────────────────────────────────────────
-VERDICT: 7/7 SECDEVOPS GATES PASSED | AUTO-DEPLOY AUTHORIZED | EXIT CODE: 0</pre>
+            <pre id="cicd-pipeline-output" style="margin: 0; padding: 1.1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(56, 189, 248, 0.38); font-family: var(--font-mono); font-size: 0.75rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.55; max-height: 350px; overflow-y: auto;" aria-live="polite">CI/CD demo — no repository checks have run.
+
+Click “Ver simulación CI/CD” to request the bounded /api/cicd scenario.
+This panel does not create an SBOM, run tests, commit, push, deploy, or probe production.</pre>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SOVEREIGN FLEET AUTONOMOUS CI/CD ORCHESTRATOR v10.0 (#fleet-cicd-orchestrator) -->
+    <!-- STATIC FLEET REGISTRY AND SAFE ACTION PREVIEWS (#fleet-cicd-orchestrator) -->
     <section class="section deferred-section" id="fleet-cicd-orchestrator">
       <div class="container">
         <div class="section__head">
-          <div class="eyebrow">🚀 ORQUESTADOR CI/CD AUTÓNOMO FEDERADO DE TODA LA FLOTA SOBERANA (v10.0)</div>
-          <h2 class="section__title">Despachador Autónomo Multi-Proyecto: Cada Cambio en la Flota se Audita, Comitea, Pushea y Despliega de Forma 100% Autónoma</h2>
+          <div class="eyebrow">REGISTRO ESTÁTICO DE PROYECTOS · ESTADOS OPERATIVOS NO SONDEADOS</div>
+          <h2 class="section__title">Proyectos configurados en la flota</h2>
           <p class="section__sub">
-            EOS System actúa como la <strong>Mónada Central y Orquestador Supremo de CI/CD</strong> para todos los repositorios de la Flota Soberana (<code>docs/projects/registry.json</code> + <code>src/core/eosFleetDispatcher.ts</code> + <code>/api/fleet</code>). Inyecta automáticamente los hooks <code>pre-commit</code> y <code>pre-push</code> con escáner SAST y cero secretos en cada repositorio local (<strong>Aberamentho, Portafolio, PTG, EOS</strong>), y despacha con un solo comando (<code>npm run fleet:ship</code> o <code>eos fleet --dispatch</code>) la suite completa de verificación, commit, push a GitHub y despliegue continuo en Vercel con sondeo live <code>HTTP 200 OK</code>.
+            <code>/api/fleet</code> publica una lista configurada de repositorios y URLs. No inspecciona checkouts locales, Git hooks, CI, estado de producción, ni ejecuta commits, pushes o despliegues. Los botones de esta página consultan el registro o muestran una vista previa; no cambian repositorios.
           </p>
         </div>
 
         <!-- TABLA DEL REGISTRO DE FLOTA FEDERADO -->
-        <div class="table-wrap" role="region" aria-label="Tabla de Proyectos Federados en el Registro de Flota de EOS" tabindex="0" style="margin-bottom: 2.25rem;">
+        <div class="table-wrap" role="region" aria-label="Registro configurado de proyectos de EOS" tabindex="0" style="margin-bottom: 2.25rem;">
           <table class="eos-table">
             <thead>
               <tr>
-                <th>Proyecto de la Flota</th>
-                <th>Ruta Local &amp; Repositorio GitHub</th>
-                <th>Aduanas SecDevOps &amp; Git Hooks</th>
-                <th>Despliegue &amp; URL de Producción</th>
+                <th>Proyecto configurado</th>
+                <th>Repositorio remoto</th>
+                <th>Estado del registro</th>
+                <th>Estado operativo</th>
+                <th>URL configurada</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><strong>01. EOS System</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Control Plane Core v10.0</span></td>
-                <td><code>c:\Users\valen\Eos-System</code><br /><span style="font-size:0.74rem;color:var(--text-muted);">valentinflorezarbelaez-ai/Eos-System</span></td>
-                <td><strong>7/7 Aduanas Activas</strong><br /><code>pre-commit + pre-push + GH Actions</code></td>
-                <td><a href="https://eos-system-ten.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--cyan-bright);">eos-system-ten.vercel.app</a><br /><span class="sanctum-badge sanctum-badge--emerald">200 OK · PRODUCTION_READY</span></td>
-              </tr>
-              <tr>
-                <td><strong>02. Aberamentho Pleroma</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Acoustic App v8.0</span></td>
-                <td><code>c:\Users\valen\Aberamentho-s-Pleroma-music</code><br /><span style="font-size:0.74rem;color:var(--text-muted);">valentinflorezarbelaez-ai/Aberamentho-s-Pleroma-music</span></td>
-                <td><strong>Hooks Federados Inyectados</strong><br /><code>SAST + Zero-Secrets Gate Active</code></td>
-                <td><a href="https://aberamentosprelomamusic.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--gold-bright);">aberamentosprelomamusic.vercel.app</a><br /><span class="sanctum-badge sanctum-badge--emerald">GOLDEN_SEAL_LOCKED</span></td>
-              </tr>
-              <tr>
-                <td><strong>03. Portafolio Oficial</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Valentín Flórez Showcase</span></td>
-                <td><code>c:\Users\valen\portafolio</code><br /><span style="font-size:0.74rem;color:var(--text-muted);">valentinflorezarbelaez-ai/portafolio</span></td>
-                <td><strong>Hooks Federados Inyectados</strong><br /><code>SAST + Zero-Secrets Gate Active</code></td>
-                <td><a href="https://portafolio-valentin.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--cyan-bright);">portafolio-valentin.vercel.app</a><br /><span class="sanctum-badge sanctum-badge--emerald">200 OK · PRODUCTION_READY</span></td>
-              </tr>
-              <tr>
-                <td><strong>04. Performance Talent Group</strong><br /><span style="font-size:0.74rem;color:var(--text-muted);">Enterprise Operations (PTG)</span></td>
-                <td><code>c:\Users\valen\Performance-Talent-Group-1</code><br /><span style="font-size:0.74rem;color:var(--text-muted);">Federated Operations Monorepo</span></td>
-                <td><strong>Aduanas de Integración L2</strong><br /><code>SecDevOps Strict Verification</code></td>
-                <td><a href="https://ptg-performance-talent-group.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--gold-bright);">ptg-performance-talent-group.vercel.app</a><br /><span class="sanctum-badge sanctum-badge--emerald">ENTERPRISE_VERIFIED</span></td>
-              </tr>
+            <tbody id="fleet-registry-body">
+              <tr><td colspan="5">Consultando el registro estático…</td></tr>
             </tbody>
           </table>
         </div>
@@ -2661,33 +2634,27 @@ VERDICT: 7/7 SECDEVOPS GATES PASSED | AUTO-DEPLOY AUTHORIZED | EXIT CODE: 0</pre
         <div class="sanctum-shell" id="fleet-orchestrator-lab" style="border-color: rgba(245, 158, 11, 0.55);">
           <div class="sanctum-header" style="background: linear-gradient(90deg, rgba(245,158,11,0.16) 0%, rgba(56,189,248,0.16) 50%, rgba(16,185,129,0.16) 100%);">
             <div class="sanctum-status">
-              <span class="sanctum-badge sanctum-badge--gold">🚀 FLEET DISPATCHER v10.0 ACTIVE</span>
-              <span class="sanctum-badge sanctum-badge--emerald">FEDERATED HOOKS: INJECTED IN LOCAL REPOS</span>
-              <span class="sanctum-badge sanctum-badge--cyan">ORCHESTRATION: /API/FLEET ONLINE</span>
+              <span class="sanctum-badge sanctum-badge--cyan">REGISTRO: ESTÁTICO</span>
+              <span class="sanctum-badge sanctum-badge--gold">HOOKS / CI / PRODUCCIÓN: NO SONDEADOS</span>
+              <span class="sanctum-badge sanctum-badge--emerald">ACCIONES EN NAVEGADOR: SOLO VISTA PREVIA</span>
             </div>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
               <button type="button" id="btn-fleet-audit-all" class="btn btn--primary" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                🩺 Auditar Toda la Flota (Fleet Verify)
+                📋 Consultar registro de flota
               </button>
               <button type="button" id="btn-fleet-inject-hooks" class="btn btn--gold" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                🛡️ Propagar Hooks SecDevOps a Todos los Repos
+                🔎 Ver vista previa de hooks locales
               </button>
               <button type="button" id="btn-fleet-ship-all" class="btn btn--ghost" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
-                ⚡ Despachar Cambios Autónomos (Fleet Ship)
+                ⚠️ Ver vista previa de Fleet Ship
               </button>
             </div>
           </div>
 
           <div class="sanctum-body">
-            <pre id="fleet-orchestrator-output" style="margin: 0; padding: 1.1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(245, 158, 11, 0.38); font-family: var(--font-mono); font-size: 0.75rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.55; max-height: 350px; overflow-y: auto;" aria-live="polite">$ npm run fleet:verify
-──────────────────────────────────────────────────────────────────────────────
-[FLEET AUTONOMOUS ORCHESTRATOR · 4/4 FEDERATED REPOSITORIES REGISTERED]
-  ▶ 01. EOS System Control Plane : c:\Users\valen\Eos-System                │ 7/7 GATES PASSED │ 200 OK
-  ▶ 02. Aberamentho Pleroma      : c:\Users\valen\Aberamentho-s-Pleroma-music│ HOOKS INJECTED  │ GOLDEN_SEAL
-  ▶ 03. Portafolio Valentín      : c:\Users\valen\portafolio               │ HOOKS INJECTED  │ 200 OK
-  ▶ 04. Performance Talent Group : c:\Users\valen\Performance-Talent-Group-1 │ REGISTERED L2   │ ENTERPRISE
-──────────────────────────────────────────────────────────────────────────────
-VERDICT: FEDERATED SECDEVOPS HOOKS ACTIVE ACROSS ALL PROJECTS | 0 SECRET LEAKS TOLERATED (EXIT 0)</pre>
+            <pre id="fleet-orchestrator-output" style="margin: 0; padding: 1.1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(245, 158, 11, 0.38); font-family: var(--font-mono); font-size: 0.75rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.55; max-height: 350px; overflow-y: auto;" aria-live="polite">GET /api/fleet
+Registry: not yet loaded.
+Probes, hooks, gates, commits, pushes, and deployments are not run by this page.</pre>
           </div>
         </div>
       </div>

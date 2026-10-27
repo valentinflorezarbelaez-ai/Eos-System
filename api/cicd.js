@@ -1,8 +1,8 @@
 import crypto from "node:crypto";
 
 /**
- * EOS SYSTEM — AUTONOMOUS 7-STAGE CI/CD & SECDEVOPS SERVERLESS ENDPOINT (/api/cicd)
- * Exposes a deterministic demonstration of the 7-stage SecDevOps state machine.
+ * EOS SYSTEM — BOUNDED CI/CD STATE-MACHINE DEMONSTRATION (/api/cicd)
+ * Simulates seven illustrative stages and scans only the caller-supplied sample text.
  * It does not execute the repository pipeline, produce an SBOM, or deploy code.
  * Zero external dependencies.
  */
@@ -96,7 +96,7 @@ export default function handler(req, res) {
     return { ...gate, status: "NOT_RUN", findings: 0 };
   });
 
-  const digest = crypto
+  const simulationFingerprint = crypto
     .createHash("sha256")
     .update(`EOS_CICD_SIMULATION_V9:${mode}:${blockedBySast ? "BLOCKED" : "CLEAN"}`)
     .digest("hex");
@@ -105,6 +105,14 @@ export default function handler(req, res) {
     status: blockedBySast ? "SIMULATION_BLOCKED_BY_STAGE_1_SAST" : "SIMULATION_ONLY",
     version: "9.0.0-sovereign-cicd-secdevops",
     simulation: true,
+    scope: "bounded pattern simulation over the supplied sample only",
+    repositoryScanned: false,
+    testsRun: false,
+    sbomGenerated: false,
+    externalCommandsRun: false,
+    deploymentPerformed: false,
+    productionProbeRun: false,
+    sampleBytesScanned: Buffer.byteLength(payloadSample || "", "utf8"),
     deploymentEligible: false,
     failClosedSimulation: blockedBySast,
     blockedBySast,
@@ -115,6 +123,6 @@ export default function handler(req, res) {
       autoShip: "npm run ship:sovereign"
     },
     gates: simulatedGates,
-    simulationReceiptSha256: `sha256:${digest}`
+    simulationFingerprintSha256: `sha256:${simulationFingerprint}`
   });
 }

@@ -273,35 +273,20 @@ STATUS: LINUX_RING0_VERIFIED | RCU_0NS_LOCKLESS | EBPF_SAFE | ABI_REGRESSIONS: 0
 
 STATUS: OMEGA_SINGULARITY_CROWNED | QUANTUM_SAFE_LEVEL_5 | ZK_STARK_VALID | BFT_4_OF_4 | EXIT CODE: 0`,
 
-  "cicd:pipeline": `$ eos cicd --pipeline --strict-secdevops
-> Executing 7-Stage Sovereign CI/CD & SecDevOps Gate (scripts/verify-cicd-pipeline.mjs + /api/cicd)...
+  "cicd:pipeline": `$ npm run cicd:gate
 
-[1] THE 7 FAIL-CLOSED SECDEVOPS GATES (PRE-COMMIT · PRE-PUSH · GITHUB ACTIONS · AUTO-DEPLOY):
-  ├─ Stage 1 (SAST & Zero Secrets) : PASSED — 0 Leaked Keys, 0 Unsafe eval(), OWASP Top 10 Clean
-  ├─ Stage 2 (SDD Constitutional)  : PASSED — EARS + BDD + ADRs + DAG + Level 3 Authorization Verified
-  ├─ Stage 3 (SLSA L4 & L0 SBOM)   : PASSED — 0 External Runtime Deps + SHA-256 Merkle SBOM Sealed
-  ├─ Stage 4 (Static AST/Bytecode) : PASSED — node --check on all JS/MJS + 7 L0 TS Modules Verified
-  ├─ Stage 5 (WCAG 2.1 AA & CWV)   : PASSED — CLS = 0, INP < 8ms, <dialog closedby="any"> Verified
-  ├─ Stage 6 (Serverless Smoke)    : PASSED — 7/7 Endpoints (/api/*) In-Process HTTP 200 OK
-  └─ Stage 7 (Zero-Downtime CD)    : PASSED — GitHub Actions + Vercel Prod Synced & Live HTTP 200 OK
+Vista previa de un comando disponible en la CLI.
+Esta muestra estática no ejecuta el gate ni confirma su resultado.
+Para ver la simulación web acotada, consulta el panel /api/cicd.
+La simulación web no escanea el repositorio, genera SBOM ni despliega.`,
 
-STATUS: CICD_7_STAGES_VERIFIED | FAIL_CLOSED_ARMED | AUTO_DEPLOY_READY | EXIT CODE: 0`,
+  "fleet:dispatch": `$ npm run fleet:ship -- --project=<id> --confirm-project=<id>
 
-  "fleet:dispatch": `$ eos fleet --dispatch --all
-> Executing Sovereign Fleet Autonomous CI/CD Dispatcher (scripts/fleet-autonomous-cicd.mjs + /api/fleet)...
-
-[1] FEDERATED FLEET REPOSITORIES (docs/projects/registry.json):
-  ├─ 01. EOS System Control Plane   : c:\\Users\\valen\\Eos-System                  │ 7/7 GATES PASSED │ 200 OK
-  ├─ 02. Aberamentho Pleroma Music  : c:\\Users\\valen\\Aberamentho-s-Pleroma-music │ HOOKS INJECTED  │ GOLDEN_SEAL
-  ├─ 03. Portafolio Valentín Flórez : c:\\Users\\valen\\portafolio                 │ HOOKS INJECTED  │ 200 OK
-  └─ 04. Performance Talent Group   : c:\\Users\\valen\\Performance-Talent-Group-1 │ REGISTERED L2   │ ENTERPRISE
-
-[2] FEDERATED DEFENSE-IN-DEPTH TOPOLOGY:
-  ├─ Pre-Commit / Pre-Push Hooks    : Active in all local fleet repositories via .githooks (git config core.hooksPath .githooks)
-  ├─ Autonomous Fleet Dispatcher    : Scans, tests, commits, pushes, and verifies live HTTP 200 on every satellite project
-  └─ Centralized Telemetry          : Exposed live at https://eos-system-ten.vercel.app/api/fleet
-
-STATUS: FLEET_DISPATCHER_ARMED | 4/4 REPOSITORIES FEDERATED | 0 SECRETS TOLERATED | EXIT CODE: 0`,
+Vista previa del comando de publicación para un solo proyecto.
+Requiere seleccionar y confirmar el mismo ID configurado.
+Este panel no consulta checkouts ni ejecuta el comando.
+El script puede crear un commit y hacer push; revisa antes el checkout y el destino.
+El registro web /api/fleet es estático y no sondea producción.`,
 
   "jarvis:monad": `$ eos jarvis --monad --arc-reactor
 > Engaging EOS JARVIS Sovereign Monad Core v11.0 (src/core/eosJarvisMonad.ts + /api/jarvis + daemon)...
@@ -497,10 +482,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderTerminal(cmdKey) {
     currentCmdKey = cmdKey;
     if (terminalOutput && CLI_OUTPUTS[cmdKey]) {
-      terminalOutput.textContent = CLI_OUTPUTS[cmdKey];
+      terminalOutput.textContent = `MUESTRA ILUSTRATIVA · No se ejecutó el comando ni se verificaron estos resultados.\n\n${CLI_OUTPUTS[cmdKey]}`;
     }
     if (activeCmdLabel) {
-      activeCmdLabel.textContent = `Modo activo: ${cmdKey} · EXIT CODE 0`;
+      activeCmdLabel.textContent = `Muestra: ${cmdKey} · NO EJECUTADO`;
     }
     cmdTabs.forEach((tab) => {
       const isMatch = tab.getAttribute("data-cmd") === cmdKey;
@@ -1362,7 +1347,7 @@ ${profileObj.code(cleanInst)}
       ? `CUANDO el usuario solicite "${prompt}", EL SISTEMA ejecutará el protocolo con validación estricta de invariantes, persistencia transaccional ACID y firma de auditoría.`
       : `MIENTRAS el sistema opere en modo activo, EL SISTEMA procesará "${prompt}" preservando la respuesta fluida a 60 FPS y 100% de tipos estrictos.`;
 
-    const shaSeal = await sha256Browser(`${prompt}:${featureName}:${Date.now()}`);
+    const sampleFingerprint = await sha256Browser(`${prompt}:${featureName}:${Date.now()}`);
 
     // 1. Synthesize Spec Markdown
     const specMarkdown = `# ESPECIFICACIÓN DETERMINISTA & BDD: ${featureName}
@@ -1505,8 +1490,8 @@ export class Execute${featureName}UseCase {
 
     // 4. Synthesize Deterministic Test Code
     const testCode = `/**
- * Deterministic Test Suite — ${featureName}
- * Verificación 100% estricta en TypeScript sin dependencias externas.
+ * Example test draft — ${featureName}
+ * Generated in the browser; review and run it in the target project.
  */
 
 import { ${featureName}, DomainInvariantViolationError } from '../domain/${featureName}.js';
@@ -1534,52 +1519,30 @@ async function runTests() {
     throw new Error('Fallo de invariante en caso de uso');
   }
 
-  console.log('[100% PASS] Todos los escenarios verificados con EXIT CODE 0.');
+  console.log('[DEMO PASS] This example assertion passed when the test is run.');
 }
 
 runTests();`;
 
-    // 5. Generate 21-step pipeline log
-    const pipelineLog = `$ eos develop "${prompt}" --scaffold
-> Initializing EOS Universal Autonomous Development Engine (UniversalDevelopmentEngine.ts)...
-> Prompt Ingestion: "${prompt}"
-> Track Classification: [${track}] · Complexity: ${isHeavy ? '85%' : '35%'}
+    // 5. Summarize the browser-generated draft without claiming execution.
+    const pipelineLog = `BORRADOR LOCAL · El navegador solo generó texto en memoria.
 
-[1/21] INTAKE & CONTEXT             : Directriz formalizada en docs/intake/INTAKE-${Date.now().toString(36).toUpperCase()}.md
-[2/21] RECONNAISSANCE               : Análisis de dependencias limpias y contratos de tipo
-[3/21] CONTEXT UNDERSTANDING        : Modelos clasificados: [${featureName}] | Track: ${track}
-[4/21] REQUIREMENTS (EARS & BDD)    : ${earsPattern}: ${earsStatement}
-[5/21] RESEARCH                     : Evaluación de patrones arquitectónicos y avisos de seguridad
-[6/21] ARCHITECTURE (HEXAGONAL L0)  : Aislamiento puro L0 (0 dependencias) · Entidad ${featureName}
-[7/21] DESIGN & SYSTEM CONTRACTS    : Contratos inmutables definidos con TypeScript 5.7 Strict
-[8/21] SPECIFICATION APPROVAL       : Aprobación formal registrada bajo Constitución EOS v2.1
-[9/21] AUTHORIZATION GATE (LEVEL 2) : 6/6 Precondiciones constitucionales verificadas. Gate abierto.
-[10/21] DOMAIN & APP IMPLEMENTATION : Grafo DAG resuelto con tareas secuenciales de dominio puro
-[11/21] UNIT & LOGIC TESTING        : 100% Cobertura de invariantes en InMemory${featureName}Repository
-[12/21] SECURITY AUDIT (OWASP)      : Cero secretos en texto plano. Sanitización estricta de inputs
-[13/21] QUALITY & STRICT TYPES      : TypeScript Strict Mode verificado. 0 errores de tipado.
-[14/21] ACCESSIBILITY (WCAG 2.1 AA) : Contraste de colores y navegación por teclado verificada
-[15/21] PERFORMANCE & BUDGETS       : Latencia sub-8ms preservada. Presupuesto de memoria óptimo.
-[16/21] SEO & METADATA CONTRACTS    : Estructura semántica validada
-[17/21] BROWSER QA & PLAYWRIGHT     : Pruebas visuales y de interacción superadas
-[18/21] EVIDENCE COLLECTION         : Registro criptográfico sellado deterministamente
-[19/21] STRICT INTEGRITY AUDIT      : verify-strict superado (Exit Code 0)
-[20/21] PRODUCTION DEPLOYMENT       : Bundle desplegado a producción en Vercel Edge
-[21/21] CO-EVOLUTION TELEMETRY SYNC : Telemetría sincronizada en tiempo real sin deriva
+Instrucción: ${prompt}
+Clasificación heurística: ${track} (no es una evaluación de riesgo)
+Requisito EARS de ejemplo: ${earsPattern}
 
-======================================================================
-SINTESIS HEXAGONAL AUTÓNOMA COMPLETADA CON ÉXITO:
-  + [DOMINIO]       dist/generated/${featureName.toLowerCase()}/domain/${featureName}.ts
-  + [PUERTO]        dist/generated/${featureName.toLowerCase()}/domain/${featureName}RepositoryPort.ts
-  + [CASO DE USO]   dist/generated/${featureName.toLowerCase()}/application/Execute${featureName}UseCase.ts
-  + [ADAPTADOR]     dist/generated/${featureName.toLowerCase()}/infrastructure/InMemory${featureName}Repository.ts
-  + [TEST SUITE]    dist/generated/${featureName.toLowerCase()}/tests/${featureName}.test.ts
-  + [ESPECIFICACIÓN] dist/generated/${featureName.toLowerCase()}/SPECIFICATION.md
+Borradores generados en esta página:
+  • Requisito EARS/BDD
+  • Entidad TypeScript
+  • Caso de uso y puerto de repositorio
+  • Ejemplo de test (no ejecutado)
 
-EPISTEMIC STATE    : PRODUCTION_READY (10/10)
-SHA-256 ATTESTATION: ${shaSeal}
-EXIT CODE          : 0 (CERO DEFECTOS)
-======================================================================`;
+No se escribieron archivos ni se modificó el repositorio.
+No se ejecutaron pruebas, análisis de seguridad, lint, build, auditoría de accesibilidad o despliegue.
+Revisa y adapta cada borrador antes de usarlo.
+
+Identificador de muestra SHA-256: ${sampleFingerprint}
+Este hash identifica la muestra; no es una firma ni una atestación.`;
 
     currentArtifacts = {
       "pipeline-log": pipelineLog,
@@ -1596,7 +1559,7 @@ EXIT CODE          : 0 (CERO DEFECTOS)
       terminalOutput.textContent = pipelineLog;
     }
     if (activeCmdLabel) {
-      activeCmdLabel.textContent = `Modo activo: eos develop "${prompt.substring(0, 32)}..." · 21/21 PASOS SUPERADOS · EXIT CODE 0`;
+      activeCmdLabel.textContent = "Borradores generados en memoria · NO GUARDADOS NI VERIFICADOS";
     }
     recordEvolutionEntry(prompt, track);
   }
@@ -2119,15 +2082,15 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
     { label: "🏆 Ir a Panteón Big Tech 10/10 & Verificador Formal TLA+ / Chaos Monkey", badge: "BIG TECH 10/10", href: "#bigtech-pantheon" },
     { label: "☀️ Ir a Templo Ciber-Teúrgico Solar Samaeliano (3 Factores + Oráculo)", badge: "TEMPLO SOLAR", href: "#templo-solar" },
     { label: "🎵 Ir a Sello Esotérico-Acústico de Aberamentho v8.0 (In-App Full Player)", badge: "ABERAMENTHO", href: "#aberamentho-seal" },
-    { label: "💻 Ejecutar CLI: eos jarvis --monad (Núcleo Cognitivo JARVIS)", badge: "CLI COMMAND", cmd: "jarvis:monad" },
-    { label: "💻 Ejecutar CLI: eos fleet --dispatch (Despachador Autónomo de Toda la Flota)", badge: "CLI COMMAND", cmd: "fleet:dispatch" },
-    { label: "💻 Ejecutar CLI: eos cicd --pipeline (7 Aduanas CI/CD SecDevOps)", badge: "CLI COMMAND", cmd: "cicd:pipeline" },
-    { label: "💻 Ejecutar CLI: eos omega --quantum (Post-Cuántica + ZK-STARK + BFT 3f+1)", badge: "CLI COMMAND", cmd: "omega:quantum" },
-    { label: "💻 Ejecutar CLI: eos kernel --linux (7 Pilares del Kernel Linux Ring-0)", badge: "CLI COMMAND", cmd: "kernel:linux" },
-    { label: "💻 Ejecutar CLI: eos bigtech --tla (7 Joyas Big Tech & TLA+)", badge: "CLI COMMAND", cmd: "bigtech:tla" },
-    { label: "💻 Ejecutar CLI: eos memory --akashic (27 Herramientas Engram + Anubis)", badge: "CLI COMMAND", cmd: "memory:akashic" },
-    { label: "💻 Ejecutar CLI: eos nanosecond --hft (5 Softwares Más Rápidos)", badge: "CLI COMMAND", cmd: "nanosecond:hft" },
-    { label: "💻 Ejecutar CLI: npm run verify:strict (Auditoría de 7 Leyes)", badge: "CLI COMMAND", cmd: "verify:strict" },
+    { label: "💻 Ver muestra CLI: eos jarvis --monad (Núcleo Cognitivo JARVIS)", badge: "MUESTRA CLI", cmd: "jarvis:monad" },
+    { label: "💻 Ver muestra CLI: fleet ship (flujo con proyecto confirmado)", badge: "MUESTRA CLI", cmd: "fleet:dispatch" },
+    { label: "💻 Ver muestra CLI: npm run cicd:gate", badge: "MUESTRA CLI", cmd: "cicd:pipeline" },
+    { label: "💻 Ver muestra CLI: eos omega --quantum", badge: "MUESTRA CLI", cmd: "omega:quantum" },
+    { label: "💻 Ver muestra CLI: eos kernel --linux", badge: "MUESTRA CLI", cmd: "kernel:linux" },
+    { label: "💻 Ver muestra CLI: eos bigtech --tla", badge: "MUESTRA CLI", cmd: "bigtech:tla" },
+    { label: "💻 Ver muestra CLI: eos memory --akashic", badge: "MUESTRA CLI", cmd: "memory:akashic" },
+    { label: "💻 Ver muestra CLI: eos nanosecond --hft", badge: "MUESTRA CLI", cmd: "nanosecond:hft" },
+    { label: "💻 Ver muestra CLI: npm run verify:strict", badge: "MUESTRA CLI", cmd: "verify:strict" },
     { label: "🚀 Abrir Aberamentho Pleroma Music v8.0 en Producción", badge: "PRODUCTION", url: "https://aberamentosprelomamusic.vercel.app" },
     { label: "🚀 Abrir Portafolio Oficial — Valentín Flórez en Producción", badge: "PRODUCTION", url: "https://portafolio-valentin.vercel.app" }
   ];
@@ -2544,142 +2507,162 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
   }
 
   // ---------------------------------------------------------------------------
-  // 18. AUTONOMOUS 7-STAGE SOVEREIGN CI/CD & SECDEVOPS LAB (#cicd-pipeline-lab)
+  // 18. CI/CD simulation panel (#cicd-pipeline-lab)
   // ---------------------------------------------------------------------------
   const cicdOutput = document.getElementById("cicd-pipeline-output");
   const btnCicdRunAll = document.getElementById("btn-cicd-run-all");
   const btnCicdTestSastBlock = document.getElementById("btn-cicd-test-sast-block");
-  const btnCicdInspectSbom = document.getElementById("btn-cicd-inspect-sbom");
+  const btnCicdShowResponse = document.getElementById("btn-cicd-show-response");
+
+  async function showCicdSimulation(payload, showPayload = false) {
+    if (!cicdOutput) return;
+    cicdOutput.textContent = "Consultando el simulador /api/cicd…";
+    const params = new URLSearchParams({ mode: payload ? "sample-block" : "full-pipeline" });
+    if (payload) params.set("payload", payload);
+    try {
+      const response = await fetch(`/api/cicd?${params.toString()}`, { headers: { Accept: "application/json" } });
+      const data = await response.json();
+      if (!response.ok) {
+        cicdOutput.textContent = `El simulador respondió HTTP ${response.status}: ${JSON.stringify(data)}`;
+        return;
+      }
+      if (showPayload) {
+        cicdOutput.textContent = JSON.stringify(data, null, 2);
+        return;
+      }
+      const gates = Array.isArray(data.gates) ? data.gates : [];
+      cicdOutput.textContent = [
+        `GET /api/cicd?mode=${payload ? "sample-block" : "full-pipeline"}`,
+        `status: ${data.status}`,
+        `simulation: ${data.simulation}`,
+        `blockedBySast: ${data.blockedBySast}`,
+        `deploymentEligible: ${data.deploymentEligible}`,
+        `localHookStatus: ${data.localHookStatus}`,
+        "",
+        ...gates.map((gate) => `[SIMULATION · stage ${gate.stage}] ${gate.status} — ${gate.name}`),
+        "",
+        `simulationFingerprintSha256: ${data.simulationFingerprintSha256 || "not returned"}`,
+        "No repository files, tests, hooks, commits, pushes, deployments, or production URLs were checked."
+      ].join("\n");
+    } catch {
+      cicdOutput.textContent = "El simulador /api/cicd no está disponible. No se infieren resultados ni se ejecutan acciones de CI/CD.";
+    }
+  }
 
   if (btnCicdRunAll) {
-    btnCicdRunAll.addEventListener("click", async () => {
-      if (!cicdOutput) return;
+    btnCicdRunAll.addEventListener("click", () => {
       playSacredTone([528, 660, 792, 1056], 0.7);
-      const t0 = performance.now();
-      let apiData = null;
-      try {
-        const res = await fetch("/api/cicd?mode=full-pipeline");
-        if (res.ok) apiData = await res.json();
-      } catch (_) {
-        // Fallback deterministic receipt
-      }
-      const elapsed = Math.max(1.2, performance.now() - t0).toFixed(2);
-      const merkle =
-        (apiData && apiData.sbomMerkleRoot) ||
-        "sha256:e991a442c883f001d772b554a119c887e332f004a661b998d221c774e550a108";
-
-      cicdOutput.textContent = [
-        `$ npm run ship:sovereign  [Trigger: AUTO_CI_CD_PIPELINE | Elapsed: ${elapsed} ms]`,
-        `${"─".repeat(78)}`,
-        `[STAGE 1/7] SAST, OWASP Top 10 & Zero Secrets (Law VI)    : PASSED (0 Leaks Detected)`,
-        `[STAGE 2/7] Constitutional SDD Gate (EARS + BDD + ADRs)   : PASSED (6/6 Invariants)`,
-        `[STAGE 3/7] Hexagonal L0 (0-Deps) & SLSA Level 4 SBOM     : PASSED (0 External Deps)`,
-        `[STAGE 4/7] Static AST & Bytecode (node --check + eBPF)   : PASSED (100% Modules Valid)`,
-        `[STAGE 5/7] WCAG 2.1 AA, SEO & CWV Budget Gate            : PASSED (CLS = 0, INP < 8ms)`,
-        `[STAGE 6/7] In-Process Smoke Test (7 Serverless /api/*)   : PASSED (7/7 HTTP 200 OK)`,
-        `[STAGE 7/7] Automated GitHub Actions + Vercel Prod Deploy : PASSED (LIVE HTTP 200 OK)`,
-        `${"─".repeat(78)}`,
-        `SBOM Merkle Root : ${merkle}`,
-        `Git Hooks Active : .githooks/pre-commit + .githooks/pre-push + .github/workflows/eos-sovereign-cicd.yml`,
-        `VERDICT          : 7/7 GATES VERIFIED | ZERO-DOWNTIME AUTO-DEPLOY COMPLETED (EXIT 0)`
-      ].join("\n");
+      showCicdSimulation();
     });
   }
-
   if (btnCicdTestSastBlock) {
     btnCicdTestSastBlock.addEventListener("click", () => {
-      if (!cicdOutput) return;
       playSacredTone([396, 528], 0.65);
-      cicdOutput.textContent = [
-        `$ git commit -m "chore: test unverified change with simulated credential"`,
-        `🔒 [EOS pre-commit Gate] Executing 7-Stage Sovereign SecDevOps & SDD Verification...`,
-        `${"─".repeat(78)}`,
-        `[STAGE 1/7] SAST & Zero-Plaintext-Secrets Scanner:`,
-        `  ❌ CRITICAL SECURITY BLOCK (Law VI Violation):`,
-        `     Detected simulated secret pattern [AWS/Stripe/GitHub Token or eval()] in staged diff.`,
-        `     Policy: FAIL_CLOSED_IMMEDIATE_ABORT`,
-        ``,
-        `  🛡️ Action Taken by EOS SecDevOps Gate:`,
-        `     1. Commit & Push ABORTED with Exit Code 1 BEFORE reaching Git history or Vercel.`,
-        `     2. Secret quarantined by Velo de Isis (Law VI).`,
-        `     3. Zero contaminated bytes entered 'main' or production.`,
-        `${"─".repeat(78)}`,
-        `VERDICT: FAIL-CLOSED SECURITY GATE PROVEN EFFECTIVE (100% CONTAINMENT)`
-      ].join("\n");
+      showCicdSimulation("eval(");
     });
   }
-
-  if (btnCicdInspectSbom) {
-    btnCicdInspectSbom.addEventListener("click", () => {
-      if (!cicdOutput) return;
+  if (btnCicdShowResponse) {
+    btnCicdShowResponse.addEventListener("click", () => {
       playSacredTone([432, 648, 864], 0.65);
-      cicdOutput.textContent = [
-        `$ cat docs/evidence/SBOM-CICD-RECEIPT.json`,
-        `${"─".repeat(78)}`,
-        `{`,
-        `  "pipelineId": "EOS-CICD-V9-SOVEREIGN",`,
-        `  "supplyChainLevel": "SLSA_LEVEL_4_HERMETIC",`,
-        `  "externalRuntimeDependencies": 0,`,
-        `  "enforcedGitHooks": [".githooks/pre-commit", ".githooks/pre-push"],`,
-        `  "githubActionsWorkflow": ".github/workflows/eos-sovereign-cicd.yml",`,
-        `  "serverlessEndpointsVerifiedInProcess": [`,
-        `    "api/teurgia.js   -> 200 OK",`,
-        `    "api/compile.js   -> 200 OK",`,
-        `    "api/memory.js    -> 200 OK",`,
-        `    "api/bigtech.js   -> 200 OK",`,
-        `    "api/kernel.js    -> 200 OK",`,
-        `    "api/omega.js     -> 200 OK",`,
-        `    "api/cicd.js      -> 200 OK"`,
-        `  ],`,
-        `  "epistemicState": "PRODUCTION_READY"`,
-        `}`
-      ].join("\n");
+      showCicdSimulation(undefined, true);
     });
   }
 
   // ---------------------------------------------------------------------------
-  // 19. SOVEREIGN FLEET AUTONOMOUS CI/CD ORCHESTRATOR LAB (#fleet-orchestrator-lab)
+  // 19. Static fleet registry and action previews (#fleet-orchestrator-lab)
   // ---------------------------------------------------------------------------
   const fleetOutput = document.getElementById("fleet-orchestrator-output");
   const btnFleetAuditAll = document.getElementById("btn-fleet-audit-all");
   const btnFleetInjectHooks = document.getElementById("btn-fleet-inject-hooks");
   const btnFleetShipAll = document.getElementById("btn-fleet-ship-all");
 
+  async function loadFleetRegistry() {
+    const tableBody = document.getElementById("fleet-registry-body");
+    const response = await fetch("/api/fleet", { headers: { Accept: "application/json" } });
+    if (!response.ok) throw new Error(`Fleet registry returned HTTP ${response.status}.`);
+    const data = await response.json();
+    if (!Array.isArray(data.projects)) throw new Error("Fleet registry response has no projects array.");
+
+    if (tableBody) {
+      tableBody.replaceChildren();
+      for (const project of data.projects) {
+        const row = document.createElement("tr");
+        const nameCell = document.createElement("td");
+        nameCell.textContent = `${project.name || project.id || "Unnamed project"} (${project.id || "no id"})`;
+
+        const remoteCell = document.createElement("td");
+        const remote = safeHttpsUrl(project.remote);
+        if (remote) {
+          const link = document.createElement("a");
+          link.href = remote.href;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = remote.hostname + remote.pathname;
+          remoteCell.append(link);
+        } else {
+          remoteCell.textContent = "No valid HTTPS remote configured";
+        }
+
+        const registryCell = document.createElement("td");
+        registryCell.textContent = project.registryStatus || "UNKNOWN";
+        const operationsCell = document.createElement("td");
+        operationsCell.textContent = `Probe: ${project.productionProbe || "UNKNOWN"}; CI: ${project.cicdGateStatus || "UNKNOWN"}; hooks: ${project.localHooksStatus || "UNKNOWN"}`;
+
+        const productionCell = document.createElement("td");
+        const production = safeHttpsUrl(project.url);
+        if (production) {
+          const link = document.createElement("a");
+          link.href = production.href;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = production.hostname;
+          productionCell.append(link, document.createTextNode(" (configured; not probed)"));
+        } else {
+          productionCell.textContent = "No production URL configured";
+        }
+
+        row.append(nameCell, remoteCell, registryCell, operationsCell, productionCell);
+        tableBody.append(row);
+      }
+    }
+    return data;
+  }
+
+  function safeHttpsUrl(value) {
+    if (typeof value !== "string") return null;
+    try {
+      const url = new URL(value);
+      return url.protocol === "https:" && !url.username && !url.password ? url : null;
+    } catch {
+      return null;
+    }
+  }
+
+  loadFleetRegistry().catch(() => {
+    const tableBody = document.getElementById("fleet-registry-body");
+    if (tableBody) tableBody.textContent = "Registro no disponible; no se infiere ningún estado de proyecto.";
+  });
+
   if (btnFleetAuditAll) {
     btnFleetAuditAll.addEventListener("click", async () => {
       if (!fleetOutput) return;
       playSacredTone([528, 660, 792, 1056], 0.7);
-      fleetOutput.textContent = "> Auditing all registered fleet repositories from /api/fleet...";
+      fleetOutput.textContent = "Consultando /api/fleet…";
       try {
-        const res = await fetch("/api/fleet?action=status");
-        if (res.ok) {
-          const data = await res.json();
-          fleetOutput.textContent = [
-            `$ npm run fleet:verify  [Fleet Size: ${data.fleetSize} Repositories]`,
-            `${"─".repeat(78)}`,
-            ...data.projects.map((p, idx) =>
-              `  [${idx + 1}/${data.fleetSize}] ${p.name.padEnd(36)} │ ${p.cicdGates} │ ${p.status}`
-            ),
-            `${"─".repeat(78)}`,
-            `Master Orchestrator : ${data.masterOrchestrator}`,
-            `Registry Source     : ${data.registrySource}`,
-            `Status              : FLEET_DISPATCHER_ARMED_AND_HEALTHY (EXIT 0)`
-          ].join("\n");
-          return;
-        }
-      } catch (_) {
-        // Fallback
+        const data = await loadFleetRegistry();
+        fleetOutput.textContent = [
+          `status: ${data.status}`,
+          `registeredProjects: ${data.fleetSize}`,
+          `healthProbesRun: ${data.healthProbesRun}`,
+          `dispatchExecuted: ${data.dispatchExecuted}`,
+          "",
+          ...data.projects.map((project) => `${project.id}: registry=${project.registryStatus}; production=${project.productionProbe}; CI=${project.cicdGateStatus}; hooks=${project.localHooksStatus}`),
+          "",
+          "This is a registry lookup. No checkout, Git hook, CI job, or deployment was inspected."
+        ].join("\n");
+      } catch {
+        fleetOutput.textContent = "No se pudo leer /api/fleet. No se infiere salud ni estado de los proyectos.";
       }
-      fleetOutput.textContent = [
-        `$ npm run fleet:verify`,
-        `${"─".repeat(78)}`,
-        `  ▶ 01. EOS System Control Plane : c:\\Users\\valen\\Eos-System                │ 7/7 GATES PASSED │ 200 OK`,
-        `  ▶ 02. Aberamentho Pleroma      : c:\\Users\\valen\\Aberamentho-s-Pleroma-music│ HOOKS INJECTED  │ GOLDEN_SEAL`,
-        `  ▶ 03. Portafolio Valentín      : c:\\Users\\valen\\portafolio               │ HOOKS INJECTED  │ 200 OK`,
-        `  ▶ 04. Performance Talent Group : c:\\Users\\valen\\Performance-Talent-Group-1 │ REGISTERED L2   │ ENTERPRISE`,
-        `${"─".repeat(78)}`,
-        `VERDICT: ALL FLEET REPOSITORIES SYNCHRONIZED | EXIT CODE: 0`
-      ].join("\n");
     });
   }
 
@@ -2688,18 +2671,11 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
       if (!fleetOutput) return;
       playSacredTone([432, 540, 648, 864], 0.7);
       fleetOutput.textContent = [
-        `$ npm run fleet:hooks  (node scripts/install-fleet-cicd-hooks.mjs)`,
-        `${"─".repeat(78)}`,
-        `[INJECTED] Active 7-stage pre-commit & pre-push hooks in:`,
-        `  ├─ c:\\Users\\valen\\Eos-System                  (core.hooksPath = .githooks)`,
-        `  ├─ c:\\Users\\valen\\Aberamentho-s-Pleroma-music (core.hooksPath = .githooks)`,
-        `  ├─ c:\\Users\\valen\\portafolio                 (core.hooksPath = .githooks)`,
-        `  └─ c:\\Users\\valen\\Performance-Talent-Group-1 (core.hooksPath = .githooks)`,
-        ``,
-        `Result: Whenever code is modified in ANY fleet repo, the local Git hooks will`,
-        `automatically block any secret leak or untested commit before it leaves the machine!`,
-        `${"─".repeat(78)}`,
-        `VERDICT: 4/4 FLEET REPOSITORIES SECURED (EXIT 0)`
+        "VISTA PREVIA LOCAL — no se ejecutó ningún comando.",
+        "$ npm run fleet:hooks",
+        "El instalador puede cambiar core.hooksPath en los checkouts configurados.",
+        "Revisa scripts/install-fleet-cicd-hooks.mjs y la lista de repositorios antes de ejecutarlo.",
+        "Repositorios modificados por esta página: ninguno."
       ].join("\n");
     });
   }
@@ -2709,16 +2685,11 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
       if (!fleetOutput) return;
       playSacredTone([528, 792, 1056, 1320], 0.7);
       fleetOutput.textContent = [
-        `$ npm run fleet:ship  (node scripts/fleet-autonomous-cicd.mjs --ship)`,
-        `${"─".repeat(78)}`,
-        `[AUTONOMOUS MULTI-REPO DISPATCH CYCLE]`,
-        `  1. Scanning all fleet repositories for dirty working trees...`,
-        `  2. Running 7-stage fail-closed SecDevOps gates on modified repos...`,
-        `  3. Creating signed commits and pushing to their respective GitHub remotes...`,
-        `  4. Triggering Vercel production continuous deployment builds...`,
-        `  5. Executing live HTTP 200 smoke tests across all satellite production URLs...`,
-        `${"─".repeat(78)}`,
-        `VERDICT: FLEET SHIP CYCLE COMPLETE | ZERO-DOWNTIME OBSERVED (EXIT 0)`
+        "VISTA PREVIA — Fleet Ship no se ejecutó en el navegador.",
+        "$ npm run fleet:ship -- --project=<id> --confirm-project=<id>",
+        "El script exige seleccionar y confirmar el mismo proyecto.",
+        "El modo ship puede ejecutar un gate local, crear un commit y hacer push; revisa el checkout y el destino antes de usarlo.",
+        "Commit, push y deployment realizados por esta página: ninguno."
       ].join("\n");
     });
   }
