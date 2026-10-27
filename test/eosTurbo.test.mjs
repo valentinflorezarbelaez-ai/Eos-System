@@ -62,16 +62,16 @@ describe("EOS Turbo Engine & Nanosecond Precision Suite", () => {
   });
 
   describe("Suite 2: Turbo Pipeline & Microsecond Telemetry (BDD-022)", () => {
-    it("completes full project verification in under 350 ms", () => {
+    it("completes the configured local checks", () => {
       const result = runTurboPipeline(root);
 
       assert.equal(result.success, true);
-      assert.equal(result.epistemicState, "VERIFIED");
+      assert.equal(result.epistemicState, "LOCAL_CHECKS_PASSED");
       assert.equal(result.violations.length, 0);
       assert.ok(result.totalDurationMs < 1500, `Expected <1500ms, got ${result.totalDurationMs}ms`);
       assert.ok(result.totalDurationUs > 0);
       assert.ok(result.totalFilesChecked > 20);
-      assert.ok(result.sbomMerkleRoot.startsWith("sha256:"));
+      assert.ok(result.sourceInventoryDigest.startsWith("sha256:"));
     });
 
     it("provides microsecond-level telemetry for each verification stage", () => {
@@ -81,7 +81,7 @@ describe("EOS Turbo Engine & Nanosecond Precision Suite", () => {
       const stageIds = result.stages.map((s) => s.stageId);
       assert.ok(stageIds.includes("STAGE_1_SAST"));
       assert.ok(stageIds.includes("STAGE_2_ARCH"));
-      assert.ok(stageIds.includes("STAGE_3_SLSA_L0"));
+      assert.ok(stageIds.includes("STAGE_3_INVENTORY"));
       assert.ok(stageIds.includes("STAGE_4_ASSETS"));
 
       for (const stage of result.stages) {
@@ -116,7 +116,7 @@ describe("EOS Turbo Engine & Nanosecond Precision Suite", () => {
       assert.ok(names.includes("eos_turbo_verify"));
     });
 
-    it("dispatches eos_turbo_verify returning instant verified telemetry", () => {
+    it("dispatches eos_turbo_verify with local-check telemetry", () => {
       const server = new EosMcpServer(root);
       const res = server.handleRequest({
         jsonrpc: "2.0",
@@ -131,7 +131,7 @@ describe("EOS Turbo Engine & Nanosecond Precision Suite", () => {
       assert.ok(res?.result?.content?.[0]?.text);
       const parsed = JSON.parse(res.result.content[0].text);
       assert.equal(parsed.success, true);
-      assert.equal(parsed.epistemicState, "VERIFIED");
+      assert.equal(parsed.epistemicState, "LOCAL_CHECKS_PASSED");
       assert.ok(parsed.totalDurationMs < 350);
       assert.equal(parsed.stages.length, 4);
     });

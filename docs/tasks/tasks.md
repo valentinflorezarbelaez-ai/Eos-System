@@ -1,5 +1,7 @@
 # ATOMIC TASK DAG (TASKS-0001) — EOS SYSTEM LANDING PAGE
 
+> **Estado documental:** lista histórica de trabajo. Las casillas completadas conservan el estado registrado entonces; no certifican que esas funciones, pruebas o despliegues sigan presentes o hayan sido verificados de forma reproducible.
+
 - [x] **TASK-001**: Record Intake, EARS Spec, BDD Criteria, Architecture Plan, and Level 2 Authorization (`docs/`).
 - [x] **TASK-002**: Generate high-resolution SVG & PNG icons (`icon.svg`, `icon-192.png`, `icon-512.png`), `manifest.webmanifest` (`"name": "EOS System"`, `"short_name": "EOS System"`), `sw.js`, `robots.txt`, `sitemap.xml`, and `vercel.json`.
 - [x] **TASK-003**: Implement `index.html`, `css/eos.css`, and `js/eos.js` featuring:
@@ -143,3 +145,11 @@
   - [x] **TASK-035-C**: Expose CLI commands `eos adapt` and `eos fingerprint` in `bin/eos.mjs`, and MCP tools `eos_universal_adapt`, `eos_universal_fingerprint`, and `eos_universal_scaffold` in `src/mcp/eosMcpServer.ts`.
   - [x] **TASK-035-D**: Formalize Living OpenSpec `SPEC-019-UNIVERSAL-POLYGLOT-ADAPTER.md` and change delta `CHANGE-012-UNIVERSAL-POLYGLOT-ADAPTER.md`.
   - [x] **TASK-035-E**: Run full 137-test suite across 76 suites, execute 7/7 SecDevOps gates (`npm run verify:strict`), seal Merkle receipt, commit, and push (`exit 0`).
+- [ ] **TASK-036**: Harden browser-backed UI rendering against persistent DOM injection and malformed local storage:
+  - [x] **TASK-036-A**: Add the EARS requirement, BDD-050, SPEC-020, CHANGE-013, and ADR-031.
+  - [x] **TASK-036-B**: Validate stored records and escape user-controlled text and attribute values in the Akashic vault, Solar Sanctum, and evolution log.
+  - [ ] **TASK-036-C**: Run browser regression checks and the strict integrity pipeline; update the evidence receipt after successful verification.
+- [ ] **TASK-037**: Harden API boundaries and make operational status truthful:
+  - [x] **TASK-037-A**: Add SPEC-021, CHANGE-014, FR-040/041, BDD-051–054, and ADR-032.
+  - [x] **TASK-037-B**: Confine evaluator file reads, limit source payloads, fail closed on evaluator errors, label CI/CD and Big Tech routes as simulations/fixtures, mark kernel and Omega boundaries, classify JARVIS without fabricated execution/health, remove canned terminal output and deployment claims, label generated browser text as unverified drafts, omit host paths from fleet output, and mark health probes as unmeasured.
+  - [ ] **TASK-037-C**: Run endpoint regression checks and the strict integrity pipeline; update evidence only after successful execution.

@@ -98,6 +98,9 @@ export class EosWorktreeOrchestrator {
     options: CreateWorktreeOptions = {}
   ): WorktreeInfo {
     const sanitizedBranch = branchName.replace(/[^a-zA-Z0-9_\-./]/g, "-");
+    if (!sanitizedBranch || sanitizedBranch.startsWith("-") || sanitizedBranch.startsWith("/") || sanitizedBranch.endsWith("/")) {
+      throw new Error("Branch name must be a non-empty relative Git branch name.");
+    }
     const targetPath = customPath
       ? path.resolve(this.rootDir, customPath)
       : path.join(this.rootDir, ".worktrees", sanitizedBranch.replace(/\//g, "-"));
@@ -143,8 +146,8 @@ export class EosWorktreeOrchestrator {
       throw new Error(`Failed to create worktree: ${err.message || String(err)}`);
     }
 
-    // Mirror essential configuration if requested
-    if (options.copyEnv !== false) {
+    // Environment files can contain secrets; never copy them unless requested.
+    if (options.copyEnv === true) {
       const envSource = path.join(this.rootDir, ".env");
       const envExample = path.join(this.rootDir, ".env.example");
       const envTarget = path.join(targetPath, ".env");
@@ -194,6 +197,16 @@ export class EosWorktreeOrchestrator {
         removedPath: resolved,
         pruned: false,
         error: "Cannot remove primary repository root worktree"
+      };
+    }
+
+    const registered = this.listWorktrees().some((worktree) => path.resolve(worktree.path) === resolved);
+    if (!registered) {
+      return {
+        success: false,
+        removedPath: resolved,
+        pruned: false,
+        error: "Target is not a registered worktree of this repository."
       };
     }
 

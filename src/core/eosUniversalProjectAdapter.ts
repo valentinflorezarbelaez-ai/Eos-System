@@ -1,20 +1,44 @@
 /**
- * EOS SYSTEM — UNIVERSAL POLYGLOT REPOSITORY ADAPTER (Layer 0)
- * Governed by ADR-030, SPEC-019 & BDD-049
- *
- * Provides universal architectural intelligence for ANY software repository
- * across 20+ languages and frameworks (TypeScript, Go, Rust, Python, Flutter, Java, C/C++):
- * 1. Deep polyglot stack fingerprinting (language, package manager, test framework, container, CI/CD).
- * 2. 5-Pillar Architectural Health Index (Layer Purity, Test Infra, Secret Security, CI/CD, AI Context).
- * 3. Stack-tailored Golden Path synthesis (Backstage RFC-42 catalog, CI workflows, AGENTS.md context).
- * 4. Safe dry-run evaluation with zero-mutation guarantee and immutable SHA-256 Merkle receipts.
- *
- * Zero external runtime dependencies.
+ * Local repository inventory heuristics and optional template scaffolding.
+ * Detection is based on selected filenames and source patterns; scores do not
+ * establish security, standards compliance, production readiness, or test coverage.
  */
 
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+
+function isPathWithin(root: string, candidate: string): boolean {
+  const relative = path.relative(root, candidate);
+  return relative === "" || (relative !== ".." && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative));
+}
+
+function writeNewProjectFile(rootPath: string, relativePath: string, content: string): void {
+  const root = fs.realpathSync(rootPath);
+  const fullPath = path.resolve(root, relativePath);
+  if (!isPathWithin(root, fullPath)) throw new Error("Generated file path escapes the selected project.");
+
+  let existingAncestor = path.dirname(fullPath);
+  while (!fs.existsSync(existingAncestor)) {
+    const parent = path.dirname(existingAncestor);
+    if (parent === existingAncestor) throw new Error("Could not find a safe existing project directory.");
+    existingAncestor = parent;
+  }
+  const realAncestor = fs.realpathSync(existingAncestor);
+  if (!isPathWithin(root, realAncestor)) throw new Error("Generated file parent resolves outside the selected project.");
+
+  const parentPath = path.dirname(fullPath);
+  fs.mkdirSync(parentPath, { recursive: true });
+  const realParent = fs.realpathSync(parentPath);
+  if (!isPathWithin(root, realParent)) throw new Error("Generated file parent resolves outside the selected project.");
+
+  const descriptor = fs.openSync(fullPath, "wx");
+  try {
+    fs.writeFileSync(descriptor, content, "utf8");
+  } finally {
+    fs.closeSync(descriptor);
+  }
+}
 
 export type PolyglotLanguage =
   | "typescript"
@@ -115,6 +139,8 @@ export interface PolyglotAuditReport {
     readonly aiScaffolding: PillarEvaluation;
   };
   readonly healthIndex: number; // 0 - 100
+  readonly scoreScope: "LOCAL_FILE_AND_PATTERN_HEURISTICS";
+  readonly tierIsCertification: false;
   readonly tier: "TIER_1_SOVEREIGN" | "TIER_2_PRODUCTION" | "TIER_3_DEVELOPMENT" | "TIER_4_LEGACY";
   readonly recommendations: readonly string[];
   readonly sha256MerkleReceipt: string;
@@ -135,7 +161,10 @@ export interface ScaffoldedFile {
 
 export interface ElevateResult {
   readonly dryRun: boolean;
+  readonly writeApplied: boolean;
   readonly filesScaffolded: readonly ScaffoldedFile[];
+  readonly plannedPaths: readonly string[];
+  readonly writtenPaths: readonly string[];
   readonly appliedActions: readonly string[];
   readonly message: string;
   readonly sha256Proof: string;
@@ -149,13 +178,14 @@ export class EosUniversalProjectAdapter {
   }
 
   /**
-   * Performs an exhaustive non-invasive architectural audit of the target repository.
+   * Performs a bounded inventory and heuristic source review of the target repository.
    */
   public audit(targetPath?: string): PolyglotAuditReport {
     const resolvedPath = path.resolve(targetPath || this.rootDir);
     if (!fs.existsSync(resolvedPath)) {
       throw new Error(`Target path does not exist: ${resolvedPath}`);
     }
+    if (!fs.statSync(resolvedPath).isDirectory()) throw new Error(`Target path is not a directory: ${resolvedPath}`);
 
     let projectName = path.basename(resolvedPath);
     if (projectName === "path0" || projectName.startsWith("tmp")) {
@@ -208,6 +238,8 @@ export class EosUniversalProjectAdapter {
       projectName,
       fingerprint,
       healthIndex,
+      scoreScope: "LOCAL_FILE_AND_PATTERN_HEURISTICS",
+      tierIsCertification: false,
       tier,
       scores: [
         layerPurity.score,
@@ -231,6 +263,8 @@ export class EosUniversalProjectAdapter {
         aiScaffolding
       },
       healthIndex,
+      scoreScope: "LOCAL_FILE_AND_PATTERN_HEURISTICS",
+      tierIsCertification: false,
       tier,
       recommendations,
       sha256MerkleReceipt,
@@ -314,14 +348,11 @@ export class EosUniversalProjectAdapter {
 
     if (!dryRun) {
       for (const item of filesToScaffold) {
-        const full = path.join(resolvedPath, item.path);
-        const parent = path.dirname(full);
-        if (!fs.existsSync(parent)) {
-          fs.mkdirSync(parent, { recursive: true });
-        }
-        fs.writeFileSync(full, item.content, "utf8");
+        writeNewProjectFile(resolvedPath, item.path, item.content);
       }
     }
+
+    const writtenPaths = dryRun ? [] : filesToScaffold.map((file) => file.path);
 
     const proof = crypto
       .createHash("sha256")
@@ -330,11 +361,16 @@ export class EosUniversalProjectAdapter {
 
     return {
       dryRun,
+      writeApplied: writtenPaths.length > 0,
       filesScaffolded: filesToScaffold,
-      appliedActions: filesToScaffold.map((f) => f.path),
+      plannedPaths: filesToScaffold.map((f) => f.path),
+      writtenPaths,
+      appliedActions: writtenPaths,
       message: dryRun
-        ? `[DRY-RUN] ${filesToScaffold.length} Golden Path artifacts prepared for synthesis with zero disk mutations.`
-        : `[APPLIED] Successfully scaffolded ${filesToScaffold.length} Golden Path artifacts in ${resolvedPath}.`,
+        ? `[PLAN ONLY] ${filesToScaffold.length} template files prepared; no disk writes were performed.`
+        : writtenPaths.length > 0
+          ? `[WRITE COMPLETED] Wrote ${writtenPaths.length} local template files in ${resolvedPath}; contents were not validated.`
+          : `[NO CHANGES] No missing template files were found in ${resolvedPath}.`,
       sha256Proof: proof
     };
   }

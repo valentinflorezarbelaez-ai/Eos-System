@@ -1,175 +1,118 @@
-# EOS System — Engineering Operating System (Control Plane)
-> **Sovereign Titans Matrix v18.0 · Spotify Xirp / SpaceX TMR / NVIDIA SIMD / Google Borg / xAI Colossus Grade · SLSA Level 4 · Layer-0 Hexagonal (0-Deps)**
+# EOS System
 
----
+EOS System is a repository of browser UI, Node.js command-line utilities, local analysis modules, and Vercel serverless routes for software-engineering workflows.
 
-## 1. Architectural Overview
+Some pages and endpoints are demonstrations. Static fixtures, generated drafts, local benchmarks, and project registry entries are not evidence of production health, external vendor integrations, formal verification, or deployment. The site does not connect AI agents or probe production systems by default.
 
-EOS System is an autonomous, deterministic control plane for AI-assisted software engineering. Governed by formal specifications (**EARS / BDD**) and strict constitutional invariants (**Zero Vibe Coding**), EOS eliminates unverified prompt-driven drift and guarantees cryptographic supply-chain integrity from human intent to production deployment.
+## Requirements
 
-```mermaid
-flowchart TD
-    subgraph CognitiveLayer["Tier 1: Cognitive & Intent Layer (v13.0 Prometheus)"]
-        UserDirective["Human Directive / AI Agent Prompt"] --> Prometheus["eosPromptAmplifier.ts\n(EARS + BDD + Anti-Hallucination)"]
-        Prometheus --> ArchGuard["eosArchitectureGuard.ts\n(Hexagonal L0 Purity & DFS Cycles)"]
-        ArchGuard --> Judge["eosCognitiveJudge.ts\n(Bayesian Multi-Criteria Scoring)"]
-    end
+- Node.js 22 or newer.
+- No third-party runtime dependencies are listed in `package.json`.
 
-    subgraph TurboGraph["Tier 2: High-Speed Verification & Semantic Graph (v14.0 & v15.0)"]
-        Judge --> Turbo["eosTurboEngine.ts\n(27ms Content-Addressed Verification Cache)"]
-        Turbo --> Graph["eosSemanticGraph.ts\n(Transitive Blast Radius < 150µs & PTS)"]
-    end
+## Start here
 
-    subgraph FDIRLayer["Tier 3: Autonomous Self-Healing & Closed-Loop FDIR (v16.0)"]
-        Graph --> Healer["eosAutonomousHealer.ts\n(Causal Diagnosis & AST Surgical Patching)"]
-        Healer --> DoubleBlind["eosPatchValidator.ts\n(Double-Blind Sandbox Syntax & Safety Gate)"]
-        DoubleBlind --> Receipt["Merkle Proof Receipt\n(docs/evidence/HEAL-0001.json)"]
-    end
-
-    subgraph DeliveryMesh["Tier 4: SecDevOps CI/CD & Sovereign Fleet Mesh"]
-        Receipt --> SecDevOps["verify-cicd-pipeline.mjs\n(7 Fail-Closed Sovereign Gates)"]
-        SecDevOps --> Fleet["eosFleetDispatcher.ts\n(Federated Git Worktrees & Live Deployments)"]
-        SecDevOps --> Edge["12 Serverless Edge APIs\n(/api/health, /api/graph, /api/amplify, ...)"]
-    end
+```sh
+node --version
+node bin/eos.mjs help
+node bin/eos.mjs guard src
+node bin/eos.mjs amplify "Describe the change to plan"
 ```
 
-### Core Tenets & Big Tech Standards
-1. **Zero Runtime Dependencies (`dependencies: {}`)**: Built exclusively with native Node.js APIs and modern web standards.
-2. **Prometheus Omni-Model Scaffolding**: Formal ISO 29148 / IEEE 830 EARS requirements and BDD scenarios tailored for the Sovereign Five: Grok, Gemini, Claude, GPT, and DeepSeek.
-3. **27ms Nanosecond Turbo Verification**: Content-addressed in-memory cache indexes (`size`, `mtimeMs`, `sha256`), accelerating validation by **100x** (from 2800ms to 27.7ms) with zero false negatives.
-4. **Google Kythe / Meta Glean Code Graph**: Transitive downstream Blast Radius calculation executed in **< 150 µs**, providing instantaneous situational awareness and Predictive Test Selection (PTS).
-5. **Meta SapFix / NASA FDIR Level 4 Closed-Loop Healer**: Automated root-cause isolation, AST surgical patch synthesis, double-blind sandbox validation, and cryptographic Merkle receipts.
-6. **Triple-Modular Redundancy (TMR)**: Critical operations are evaluated across 3 independent sandboxes requiring Byzantine quorum before execution.
-7. **SLSA Level 4 Supply-Chain Provenance**: Every artifact, test run, and deployment generates a cryptographically sealed Merkle root.
-8. **Global Anycast Edge Arbiter & Hedged Requests**: 8 Apex POPs with Haversine geodesic routing, sub-millisecond arbitration, and Google Jeff Dean speculative execution truncating p99 tail latency by 70.2%.
-9. **Samaelian Cyber-Theurgic Synthesis (IBM & NVIDIA)**: Law of the Octaves with 2 Conscious Shocks, IBM Mainframe Parallel Sysplex Seven-Nines (99.99999% availability, $\le 3.15$ s/yr), and NVIDIA CUDA 32-thread SIMT warp scheduler with Tensor Core matrix operations.
-10. **LMAX Disruptor Lock-Free Ring Buffer & Nanosecond Speed Engine**: Power-of-2 circular buffer with 64-byte padded sequencer (preventing CPU cache-line false sharing), delivering > 10,000,000 ops/s at < 100ns latency with 0 heap allocations, plus branchless structural byte scanning (> 1,500 MB/s).
+The root `index.html` is the browser UI. The routes under `api/` use Vercel's serverless-function conventions. Static file opening can show the page, but API-backed controls need a compatible function host.
 
----
+## Useful commands
 
-## 2. Universal CLI Operations Manual (`bin/eos.mjs`)
+| Command | Behavior |
+|---|---|
+| `node bin/eos.mjs help` | Show the CLI help. |
+| `node bin/eos.mjs guard [directory]` | Inspect local source dependencies and report architecture findings. |
+| `node bin/eos.mjs amplify "prompt"` | Generate a local EARS/BDD prompt scaffold. Review it before use. |
+| `node bin/eos.mjs eval <file>` | Run the repository's local cognitive-evaluation heuristics on a file. This is not an external model evaluation. |
+| `node bin/eos.mjs graph` / `blast <file>` | Build a local source graph and report dependencies. |
+| `node bin/eos.mjs heal src/core/eosAutonomousHealer.ts --dry-run` | Ask the local healer for a dry-run report. Inspect the implementation and report before relying on it. |
+| `node bin/eos.mjs worktree list` | List Git worktrees for this repository. |
+| `node bin/eos.mjs sandbox doctor` | Check for a local Linux Docker Engine, seccomp, cgroup v2, and the configured pinned image. |
+| `node bin/eos.mjs sandbox run .worktrees/task -- node --version` | Run a command offline in a filtered temporary worktree copy; discard its edits. Add `--apply` to request conflict-checked writeback after exit code 0. |
+| `node bin/eos.mjs honk "<task>"` | Produce a bounded local task draft; it does not edit code, create a branch, run tests, or open a PR. |
+| `npm run mcp` | Start the local MCP stdio server; each request is limited to 1 MiB. |
+| `npm run verify:strict` | Run `scripts/verify-cicd-pipeline.mjs`, including its configured Node test suites; it writes evidence artifacts under `docs/evidence/` and does not deploy. Read the script to understand its checks and limits. |
+| `npm run test:unit` | Run the Node test file named in `package.json`. |
 
-The sovereign CLI provides instant microsecond utilities across all development lifecycle stages:
+Commands that write files, change Git configuration, commit, or push should be reviewed before use. In particular, fleet ship mode can stage, commit, and push to `origin` for one explicitly selected project.
 
-| Command | Action / Subsystem | Benchmark / Latency |
-|---|---|---|
-| `eos amplify "<prompt>"` | Amplifies open-ended directive into formal EARS and BDD scenarios | < 1 ms |
-| `eos guard` | Enforces Hexagonal Domain purity and verifies 0 dependency cycles via DFS | < 5 ms |
-| `eos judge <file>` | Evaluates proposal against the 7 Constitutional Laws (Bayesian score) | < 2 ms |
-| `eos turbo` | Executes full 7-stage project validation using content-addressed cache | **27.7 ms** |
-| `eos blast <file>` | Computes downstream transitive blast radius and selects predictive tests | **< 150 µs** |
-| `eos graph` | Outputs high-level semantic code graph summary and dead code count | < 10 ms |
-| `eos heal [--dry-run]` | Autonomous causal diagnostic, AST patch synthesis, and FDIR receipt | < 5 ms |
-| `eos worktree [list|add|rm]` | Manages isolated Git worktrees for concurrent AI agents (Xirp standard) | < 50 ms |
-| `eos eval <file>` | Executes 5-dimensional cognitive evaluation (Google Vertex / Anthropic Evals) | < 1 ms |
-| `eos spec [check|list]` | Audits Living OpenSpec specifications, deltas, and drift detection | < 5 ms |
-| `eos titan [xirp|spacex|..]` | Benchmarks the 8 Titans: Spotify, SpaceX, NVIDIA, Google, xAI, IBM... | < 15 ms |
-| `eos reconcile` | Continuous declarative state reconciliation loop (Google Borg style) | < 5 ms |
-| `eos edge [city|bench|topo]` | Global Anycast Arbiter & Jeff Dean Hedged Requests (70.2% p99 reduction) | < 1 ms |
-| `eos apex` | Master Cyber-Theurgic Apex Synthesis (Samael + IBM Sysplex + NVIDIA) | < 20 ms |
-| `eos octave` | Samaelian Law of Octaves & 2 Conscious Shocks (Shock 1 & Shock 2) | < 2 ms |
-| `eos warp` | NVIDIA CUDA 32-Thread SIMT Warp Scheduler & Tensor Core MMA | < 15 ms |
-| `eos disruptor [events]` | LMAX Disruptor Lock-Free Ring Buffer (> 10M ops/s, 0 B/op) | **< 100 ns** |
-| `npm run test` | Full deterministic test suite: 72 suites + 7-stage CI/CD SecDevOps gate | ~1.8 s |
-| `npm run test:unit` | Executes native `node:test` suite in `test/eosCore.test.mjs` | < 150 ms |
-| `npm run test:chaos` | Executes 10,000-burst fault injection in `test/chaosResilience.test.mjs` | < 200 ms |
-| `npm run verify:strict` | Executes all 7 fail-closed gates (SAST, SDD, SBOM, AST, 12 APIs Smoke) | ~1.5 s |
-| `npm run fleet:verify` | Audits git cleanliness, secrets, and live HTTP 200 across all fleet repos | ~2.5 s |
-| `npm run fleet:ship` | Automatically tests, commits, pushes, and releases the entire fleet | ~4.0 s |
-| `npm run mcp` | Starts native Layer-0 Model Context Protocol (MCP) server over stdio | Continuous |
+## Agent-tool boundaries
 
----
+- Honk and Xirp provide local planning and context generation. They do not run a model or autonomous code-editing loop. Repository context is marked as untrusted data.
+- The Honk GitHub Actions workflow is a manually invoked, read-only plan generator restricted to `main`. It does not consume issue comments, commit, push, or open pull requests; directive text and repository metadata are redacted from its logs.
+- Git worktrees isolate branches and working files; they do not sandbox processes, network access, or credentials. EOS does not provide Devin-style microVM isolation.
+- `eos sandbox run` uses a local Linux Docker Engine only. It requires `EOS_SANDBOX_IMAGE` to reference a locally available immutable `repository@sha256:...` image, the built-in seccomp profile, and cgroup v2 with resource controllers. The container has no network, a read-only root filesystem, dropped Linux capabilities, no-new-privileges, a non-root UID, CPU/memory/process/time/file-size limits, and a monitored 512 MiB workspace copy. It never mounts `.git`, the Docker socket, ignored files, or host credential directories. The copy also filters common secret paths; review the exclusions and image before use. Container isolation still depends on the local Docker daemon and host kernel, so this is defense in depth, not a microVM boundary. The workspace-size watchdog polls once per second and may briefly exceed its budget before stopping the container.
+- Sandbox output is discarded by default. `--apply` writes only after the command exits successfully; it rejects symlink output and checks that each target still matches the copied baseline. Multi-file writeback is conflict-aware, not a single atomic transaction. Run `node bin/eos.mjs sandbox doctor` before use.
+- MCP mutating options require JSON booleans set to `true`; strings such as `"true"` do not enable writes. File and resource reads are confined to the configured repository after symlink resolution.
+- Fleetshift can create a missing `catalog-info.yaml` only for one registered Git checkout whose `origin` matches the registry. Dependency upgrades and custom codemods are plans only.
+- Fleet ship runs the registered project gate before committing and pushing. Its HTTP 200 probe does not establish which commit is live.
 
-## 3. Serverless Edge API Endpoints (`/api/*`)
+## Browser demonstrations
 
-All 14 serverless endpoints are deployed to Vercel Edge with zero runtime dependencies and military-grade HTTP security headers:
+- The command console previews commands; it does not execute a shell. Only commands with an implemented CLI handler can be copied.
+- The development form generates generic text drafts in browser memory. It does not write files, compile, run tests, scan security, or deploy.
+- The memory page stores user-created notes in this browser's `localStorage`, filters text locally, and can export a Markdown file. Its initial records and API data are examples; there is no server persistence, FTS5, Engram integration, or conflict tribunal.
+- The kernel page shows static fixtures and a JavaScript loop measurement. It is not a Linux kernel, eBPF verifier, RCU implementation, or ABI test.
+- The Big Tech page returns a scenario fixture. It does not run TLA+, inject faults, or repair a system.
+- The Omega page fingerprints text with SHA-256 and reads a static project registry. It does not implement PQC signatures, ZK proofs, BFT consensus, deterministic replay, or production probes.
+- The CI/CD page shows a simulation. It does not run repository checks or deploy.
 
-| Endpoint | Subsystem | Query Parameters | Response Payload |
-|---|---|---|---|
-| `/api/titans` | Big Tech Titans Matrix | `?titan=all` or `?titan=xirp...` | Spotify Xirp RFC-42, SpaceX 60Hz TMR, NVIDIA SIMD, Google Borg reconcile, xAI RDMA. |
-| `/api/eval` | Cognitive Evaluation & Benchmark | `?target=...&code=...` | 5-dimensional breakdown, Composite Readiness Index (CRI), verdict, Merkle proof. |
-| `/api/graph` | Semantic Graph & Blast Radius | `?file=...&action=blast` | Transitive consumers, blast radius count, risk tier, PTS tests, and microsecond latency. |
-| `/api/amplify` | Prometheus Omni-Model Engine | `?prompt=...&model=...` | Formal EARS requirements, BDD scenarios, anti-hallucination contracts, and scaffolds. |
-| `/api/health` | CNCF & Google SRE Observability | None (W3C traceparent) | CNCF status UP, memory footprint, subsystem matrix, and SLI/SLO report (99.995%). |
-| `/api/jarvis` | JARVIS Autonomous Cognition | `?directive=...` | Cognitive DAG, TMR consensus, voice response, action command, Merkle digest. |
-| `/api/fleet` | Federated Fleet Dispatcher | `?action=audit` | Health status of all registered fleet repositories (Aberamentho, Portafolio, PTG). |
-| `/api/cicd` | 7-Stage SecDevOps Gate | `?stage=all` | Stage breakdown, SBOM count, SAST zero-leak confirmation. |
-| `/api/bigtech` | Pantheon 10/10 Formal Verifier| `?module=...` | TLA+ specification checks (□ Safety ∧ ◇ Liveness) and chaos drill results. |
-| `/api/kernel` | Linux Monolithic Core | `?syscall=...` | VFS virtual filesystem operations (/proc/eos) and RCU lockless sync logs. |
-| `/api/omega` | Omega Singularity Core | `?epoch=...` | Post-quantum cryptography (Kyber/Dilithium) and ZK-STARK proofs. |
-| `/api/compile` | Nanosecond Compiler | `?code=...` | Micro-benchmark AST compilation and Struct-of-Arrays metrics. |
-| `/api/memory` | Sovereign Akashic Memory | `?q=...` | Knowledge nodes and 27 Engram memory persistence records. |
-| `/api/teurgia` | Solar Sanctum Oracle | `?key=...` | Theurgic Belilin protection circle and Anubis Hall balance. |
+## API routes
 
----
+| Route | Scope |
+|---|---|
+| `/api/health` | Handler liveness and process data. Subsystems are marked not probed. |
+| `/api/fleet` | Static project registry; no health, CI, hook, or deployment probes. |
+| `/api/cicd` | Bounded CI/CD simulation; no checks, SBOM generation, or deployment. |
+| `/api/bigtech` | Static scenario fixtures; no model checking or fault injection. |
+| `/api/kernel` | Read-only kernel-themed fixtures; no kernel telemetry. `/api/omega` follows the rewrite configured in `vercel.json`. |
+| `/api/memory` | Static sample records and action previews; no server persistence or FTS5. |
+| `/api/eval` | Local evaluator with project-root confinement and a 1 MiB source limit. Evaluator load errors return a non-success status. |
+| `/api/titans` | Local benchmark code through the evaluator route; results do not describe Spotify, SpaceX, NVIDIA, Google, or xAI services. |
+| `/api/graph` | Local source graph when the engine loads; otherwise returns an explicit unavailable error. |
+| `/api/amplify` | Prompt-scaffolding route backed by `api/compile.js`; it does not call a remote language model. |
+| `/api/compile` | Local JavaScript benchmark and text transformation; no hardware or vendor benchmark. |
+| `/api/jarvis`, `/api/spotify`, `/api/teurgia` | Deterministic application responses. No external AI, Spotify, or production control-plane connection is implied. |
 
-## 4. Model Context Protocol (MCP) Integration (Cursor & Antigravity)
+All API responses should be interpreted according to their `status`, `note`, and execution flags. A successful HTTP response alone does not mean a subsystem or deployment was verified.
 
-EOS System exposes a native Layer-0 MCP server over standard I/O (stdio). To connect EOS sovereign tools into **Cursor**, **Antigravity**, **Claude Code**, or **Gemini CLI**, configure `.cursor/mcp.json`:
+## Fleet paths
 
-```json
-{
-  "mcpServers": {
-    "eos-system": {
-      "command": "node",
-      "args": ["./src/mcp/eosMcpServer.ts"]
-    }
-  }
-}
+The registry stores environment-variable names instead of workstation-specific paths. Set a variable only when you want a local fleet command to inspect that checkout:
+
+| Project | Variable |
+|---|---|
+| EOS System | `EOS_FLEET_EOS_SYSTEM_PATH` |
+| Aberamentho | `EOS_FLEET_ABERAMENTHO_PATH` |
+| Portafolio | `EOS_FLEET_PORTAFOLIO_PATH` |
+| PTG | `EOS_FLEET_PTG_PATH` |
+
+Fleet audit mode checks configured local Git roots and probes each configured HTTPS production URL. Hook installation changes Git hooks and `core.hooksPath`; it requires one project ID plus a matching confirmation. Installed `pre-commit` and `pre-push` hooks run that project's configured `cicdGateScript`.
+
+### Sandbox image setup (PowerShell)
+
+The example below pins Docker Official Image `node:22-bookworm-slim` to the multi-platform digest currently published by Docker Hub. Verify the digest against the [official image page](https://hub.docker.com/_/node/tags?name=22-bookworm&page=&page_size=) when refreshing it. The sandbox runner never pulls images itself.
+
+```powershell
+docker pull node:22-bookworm-slim@sha256:de170b39439eb0e5a3444ad7d60b015614a381e10fecae2e30ec9e735122f38d
+$env:EOS_SANDBOX_IMAGE = "node:22-bookworm-slim@sha256:de170b39439eb0e5a3444ad7d60b015614a381e10fecae2e30ec9e735122f38d"
+node bin/eos.mjs sandbox doctor
+node bin/eos.mjs worktree add task
+node bin/eos.mjs sandbox run .worktrees/task -- node --version
 ```
 
-### Sovereign MCP Tool Catalog (24 High-Assurance Tools)
-1. `eos_titans_benchmark`: Benchmarks Big Tech archetypes: Spotify Xirp, SpaceX 60Hz TMR, NVIDIA SIMD, Google Borg, xAI RDMA, Nubank Datomic Ledger, and Spotify Smart Shuffle.
-2. `eos_reconcile_state`: Runs continuous declarative state reconciliation loop (Google Borg style) over the EOS cluster.
-3. `eos_manage_worktree`: Manages Xirp-grade isolated Git worktrees for concurrent AI agents (list, create, remove).
-4. `eos_run_eval`: Executes 5-dimensional sovereign cognitive evaluation (Google Vertex / Anthropic Evals).
-5. `eos_check_openspec`: Audits living OpenSpec architecture and delta changes, certifying 0 drift.
-6. `eos_amplify_prompt`: Translates informal prompts into formal EARS/BDD specifications for the Sovereign Five (Grok, Gemini, Claude, GPT, DeepSeek).
-7. `eos_check_architecture`: Validates Hexagonal domain purity and checks for dependency cycles.
-8. `eos_evaluate_decision`: Evaluates architectural decisions against the 7 Constitutional Commandments.
-9. `eos_turbo_verify`: Content-addressed in-memory verification in **27.7 ms**.
-10. `eos_get_blast_radius`: Calculates downstream transitive blast radius in **< 150 µs**.
-11. `eos_query_code_graph`: Queries symbols, exports, and dead code across the repository.
-12. `eos_autonomous_heal`: Self-heals detected violations with surgical AST patches and FDIR receipts.
-13. `eos_validate_patch`: Validates proposed code patches in a balanced AST token sandbox before disk persistence.
-14. `eos_optimize_context`: Compresses source code into structural outlines, saving 70-85% of tokens.
-15. `eos_polyglot_bridge`: Detects Go, Rust, Clojure (Nubank), Node.js, Python, or Flutter repositories and synthesizes deterministic Soundcheck plans.
-16. `eos_bitemporal_ledger`: Commits or queries immutable bitemporal facts with idempotency-key deduplication and Datomic-style time-travel.
-17. `eos_spotify_shuffle`: Executes Spotify deterministic Smart Shuffle with jittered proportional spacing and Camelot harmonic routing in < 100 µs.
-18. `eos_universal_adapt`: Audits architectural health (0-100), layer purity, and security posture of ANY software repository.
-19. `eos_universal_fingerprint`: Fingerprints programming language, frameworks, test runners, and LoC scale of ANY project.
-20. `eos_universal_scaffold`: Synthesizes stack-tailored Backstage RFC-42 catalog, CI/CD workflow, and AGENTS.md codex for ANY project.
-13. `eos_semantic_search`: High-dimensional hybrid RAG queries (vector cosine + BM25 RRF fusion).
-14. `eos_tmr_consensus`: Byzantine 3-sandbox evaluation for critical operations.
-15. `eos_validate_patch`: Pre-validates code in AST syntax sandbox to eliminate syntax errors and secrets.
-16. `eos_optimize_context`: Compresses source code into structural outlines, saving 70-85% of tokens.
-17. `eos_audit_fleet`: Cross-repository health and git status checks across all satellites.
-18. `eos_health_check`: CNCF / Google SRE observability telemetry.
+To preserve successful edits from the temporary copy, include `--apply` before `--`. Supply a trusted image built for the project when more tools are needed. The container gets no network, so dependencies and compilers must already be inside the pinned image or copied workspace.
 
----
+Ship mode requires one project ID plus matching `--confirm-project=<id>`, a valid HTTPS production URL, a configured in-repository gate (`.js`, `.mjs`, or `.ps1`), a valid local Git root, and an `origin` matching the registered repository. It runs the gate before staging, committing, and pushing the selected checkout. It then checks the configured URL for HTTP 200; that probe does not confirm which commit is serving in production. Ship mode stages all changes in the selected checkout, so review its working tree before invoking it.
 
-## 5. Software Engineering Standards (EARS & BDD)
+## Deployment
 
-- **EARS Patterns (ISO 29148 / IEEE 830)**:
-  - *Event-Driven*: `WHEN <event>, THE SYSTEM SHALL <action>`
-  - *State-Driven*: `WHILE <state>, THE SYSTEM SHALL <action>`
-  - *Unwanted Condition*: `IF <condition>, THEN THE SYSTEM SHALL <action>`
-  - *Ubiquitous*: `THE SYSTEM SHALL <continuous action>`
-- **BDD Acceptance Criteria**: Gherkin scenarios (`GIVEN <state> WHEN <trigger> THEN <outcome> AND <invariant>`).
-- **Epistemic States**: No task is marked `DONE` without executable cryptographic proof (`docs/evidence/SBOM-CICD-RECEIPT.json`).
+`vercel.json` points Vercel at the project root and runs `node scripts/verify-cicd-pipeline.mjs` as the build command. Deployment and live health are separate operations; this repository does not claim either has happened just because a build command or API returns successfully.
 
----
+## License
 
-## 6. Security & Invariant Barriers
-
-- **OWASP Top 10 & Zero Plaintext Secrets**: Scans all source files for private keys, AWS tokens, GitHub PATs, and credentials.
-- **Fail-Closed Git Hooks**: Commits or pushes with unverified code or broken syntax are blocked at the workstation level.
-- **External Write Barrier (Law IV)**: Writing to external project directories is strictly blocked unless all 6 preconditions in `IMPLEMENTATION_AUTHORIZATION.md` are formally satisfied.
-
----
-
-## License & Attribution
-
-- **Author**: Valentín Flórez Arbeláez
-- **Location**: Medellín, Colombia (100% Remote Global Operations)
-- **License**: MIT
+MIT.

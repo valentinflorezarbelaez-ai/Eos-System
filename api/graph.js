@@ -1,100 +1,71 @@
-import fs from "node:fs";
-import path from "node:path";
-import crypto from "node:crypto";
-
 /**
- * ============================================================================
- * EOS BIG TECH TIER 1 SEMANTIC GRAPH & BLAST RADIUS API (/api/graph)
- * ============================================================================
- * Inspired by Google Kythe / Meta Glean & Buck2.
- * Calculates transitive blast radius, Predictive Test Selection (PTS),
- * and dead-code detection with sub-millisecond execution.
- *
- * Zero external runtime dependencies.
- * ============================================================================
+ * Local static-import graph endpoint.
+ * It reports repository source relationships and recommended test files; it does
+ * not execute tests, resolve every JavaScript/TypeScript import form, or model
+ * runtime behavior.
  */
 
 export default async function handler(req, res) {
-  const startTime = process.hrtime.bigint();
-
   res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
+  res.setHeader("Cache-Control", "no-store");
 
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "GET") {
+    res.setHeader("Allow", "GET, OPTIONS");
+    return res.status(405).json({ status: "METHOD_NOT_ALLOWED" });
   }
 
-  const query = req.query || {};
-  const body = req.body || {};
-  const targetFile = query.file || body.file || "src/core/eosPromptAmplifier.ts";
-  const action = query.action || body.action || "blast";
+  const query = req.query && typeof req.query === "object" ? req.query : {};
+  const action = query.action === undefined ? "blast" : query.action;
+  if (typeof action !== "string" || !["blast", "summary"].includes(action)) {
+    return res.status(400).json({ status: "INVALID_ACTION", allowedActions: ["blast", "summary"] });
+  }
 
-  let blastResult = null;
-  let summaryResult = null;
+  const rawTarget = query.file === undefined ? "src/core/eosPromptAmplifier.ts" : query.file;
+  if (action === "blast" && (typeof rawTarget !== "string" || rawTarget.length === 0 || rawTarget.length > 256)) {
+    return res.status(400).json({ status: "INVALID_FILE", maxLength: 256 });
+  }
 
-  try {
-    // Attempt dynamic load of TypeScript engine (Node 24 native type stripping)
-    const { EosSemanticGraph } = await import("../src/core/eosSemanticGraph.ts");
-    const rootDir = process.cwd();
-    const graph = new EosSemanticGraph(rootDir);
-    graph.build();
-
-    if (action === "summary" || !targetFile) {
-      summaryResult = graph.getSummary();
-    } else {
-      blastResult = graph.getBlastRadius(targetFile);
-      summaryResult = graph.getSummary();
+  let normalizedTarget = null;
+  if (action === "blast") {
+    const slashPath = rawTarget.replace(/\\/g, "/").replace(/^(?:\.\/)+/, "");
+    if (slashPath.startsWith("/") || /^[A-Za-z]:/.test(slashPath) || slashPath.split("/").includes("..")) {
+      return res.status(400).json({ status: "INVALID_FILE", error: "Use a project-relative source path." });
     }
-  } catch (_err) {
-    // Resilient Layer-0 fallback for environments without TypeScript runtime loading
-    const defaultConsumers = [
-      "src/core/eosMcpServer.ts",
-      "bin/eos.mjs",
-      "scripts/verify-cicd-pipeline.mjs"
-    ];
-    blastResult = {
-      targetFile,
-      directConsumers: defaultConsumers.slice(0, 2),
-      transitiveConsumers: defaultConsumers,
-      totalImpactedFiles: defaultConsumers.length,
-      impactPercentage: 16.7,
-      riskLevel: "MEDIUM",
-      affectedLayers: ["core", "cli", "cicd"],
-      predictiveTestSuites: [
-        "test/eosCore.test.mjs",
-        "test/eosPrometheus.test.mjs"
-      ],
-      durationUs: 120
-    };
-    summaryResult = {
-      totalFiles: 18,
-      totalExports: 142,
-      totalEdges: 58,
-      deadCodeCount: 0,
-      deadSymbols: []
-    };
+    normalizedTarget = slashPath;
   }
 
-  const endTime = process.hrtime.bigint();
-  const latencyMicros = Number(endTime - startTime) / 1000;
+  const start = process.hrtime.bigint();
+  try {
+    const { EosSemanticGraph } = await import("../src/core/eosSemanticGraph.ts");
+    const graph = new EosSemanticGraph(process.cwd());
+    let blastRadius = null;
 
-  const responsePayload = {
-    status: "SUCCESS",
-    version: "16.0.0",
-    tier: "BIG_TECH_TIER_1",
-    engine: "Google Kythe / Meta Buck2 Semantic Direct Graph",
-    action,
-    timestamp: new Date().toISOString(),
-    telemetry: {
-      latencyMicroseconds: latencyMicros,
-      algorithm: "Transitive BFS with Cycle Detection & In-Memory Inverted Index"
-    },
-    blastRadius: blastResult,
-    summary: summaryResult
-  };
+    if (action === "blast") {
+      if (!graph.nodes.has(normalizedTarget)) {
+        return res.status(404).json({ status: "SOURCE_FILE_NOT_IN_GRAPH", file: normalizedTarget });
+      }
+      blastRadius = graph.calculateBlastRadius(normalizedTarget);
+    }
 
-  return res.status(200).json(responsePayload);
+    const summary = graph.getSummary();
+    const durationMicroseconds = Number(process.hrtime.bigint() - start) / 1000;
+    return res.status(200).json({
+      status: "LOCAL_GRAPH_ANALYSIS_COMPLETED",
+      action,
+      analysisScope: "static relative-import graph; dynamic imports, aliases, runtime calls, and test execution are not analyzed",
+      predictiveTestSuitesAreRecommendations: true,
+      durationMicroseconds,
+      blastRadius,
+      summary
+    });
+  } catch {
+    return res.status(503).json({
+      status: "GRAPH_ENGINE_UNAVAILABLE",
+      error: "The local source graph could not be loaded. No analysis result was produced.",
+      retryable: true
+    });
+  }
 }

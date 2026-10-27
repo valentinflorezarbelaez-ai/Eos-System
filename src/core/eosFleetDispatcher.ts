@@ -1,18 +1,12 @@
 /**
- * EOS SYSTEM — SOVEREIGN FLEET AUTONOMOUS CI/CD DISPATCHER (Layer 0)
- * Governed by ADR-011, FR-018 & BDD-013
- *
- * Provides central orchestration of the 7-Stage SecDevOps Gate across
- * all projects in the Sovereign Fleet, with automated git hook propagation
- * and multi-repo continuous delivery.
- *
- * Zero external runtime dependencies.
+ * Portable fleet registry snapshot. This module reports configured metadata;
+ * it does not probe repositories, hooks, CI, or production endpoints.
  */
 
 export interface FleetProjectManifest {
   readonly id: string;
   readonly name: string;
-  readonly localPath: string;
+  readonly localPathEnv: string;
   readonly remoteUrl: string;
   readonly productionUrl: string;
   readonly type: string;
@@ -23,20 +17,19 @@ export interface FleetProjectManifest {
 export interface FleetProjectStatusReport {
   readonly id: string;
   readonly name: string;
-  readonly pathExists: boolean;
-  readonly isGitRepo: boolean;
-  readonly hooksInjected: boolean;
-  readonly workingTreeClean: boolean;
-  readonly productionHealth: "HEALTHY_200" | "UNREACHABLE" | "PENDING";
-  readonly epistemicState: "PRODUCTION_READY" | "VERIFIED" | "NEEDS_AUDIT";
+  readonly registryStatus: "REGISTERED";
+  readonly repositoryStatus: "NOT_PROBED";
+  readonly hooksStatus: "NOT_PROBED";
+  readonly productionHealth: "NOT_PROBED";
+  readonly epistemicState: "NEEDS_AUDIT";
 }
 
 export interface FleetDispatchResult {
   readonly dispatchId: string;
-  readonly version: "10.0.0-sovereign-fleet-dispatcher";
+  readonly version: "10.1.0-portable-fleet-registry";
   readonly timestamp: string;
-  readonly projectsAudited: number;
-  readonly allPassFailClosed: boolean;
+  readonly projectsRegistered: number;
+  readonly checksRun: false;
   readonly reports: readonly FleetProjectStatusReport[];
 }
 
@@ -44,7 +37,7 @@ export const CANONICAL_FLEET_PROJECTS: readonly FleetProjectManifest[] = [
   {
     id: "eos-system",
     name: "EOS System (Control Plane Core)",
-    localPath: "c:\\Users\\valen\\Eos-System",
+    localPathEnv: "EOS_FLEET_EOS_SYSTEM_PATH",
     remoteUrl: "https://github.com/valentinflorezarbelaez-ai/Eos-System.git",
     productionUrl: "https://eos-system-ten.vercel.app",
     type: "control-plane-monolith",
@@ -54,7 +47,7 @@ export const CANONICAL_FLEET_PROJECTS: readonly FleetProjectManifest[] = [
   {
     id: "aberamentho",
     name: "Aberamentho Pleroma Music",
-    localPath: "c:\\Users\\valen\\Aberamentho-s-Pleroma-music",
+    localPathEnv: "EOS_FLEET_ABERAMENTHO_PATH",
     remoteUrl: "https://github.com/valentinflorezarbelaez-ai/Aberamentho-s-Pleroma-music.git",
     productionUrl: "https://aberamentosprelomamusic.vercel.app",
     type: "sacred-acoustic-app",
@@ -64,7 +57,7 @@ export const CANONICAL_FLEET_PROJECTS: readonly FleetProjectManifest[] = [
   {
     id: "portafolio",
     name: "Portafolio Oficial — Valentín Flórez",
-    localPath: "c:\\Users\\valen\\portafolio",
+    localPathEnv: "EOS_FLEET_PORTAFOLIO_PATH",
     remoteUrl: "https://github.com/valentinflorezarbelaez-ai/portafolio.git",
     productionUrl: "https://portafolio-valentin.vercel.app",
     type: "executive-showcase",
@@ -72,9 +65,9 @@ export const CANONICAL_FLEET_PROJECTS: readonly FleetProjectManifest[] = [
     authorization: "LEVEL_3_PRODUCTION_AUTHORIZED"
   },
   {
-    id: "ptg",
+    id: "performance-talent-group",
     name: "PTG — Performance Talent Group",
-    localPath: "c:\\Users\\valen\\Performance-Talent-Group-1",
+    localPathEnv: "EOS_FLEET_PTG_PATH",
     remoteUrl: "https://github.com/valentinflorezarbelaez-ai/Performance-Talent-Group.git",
     productionUrl: "https://ptg-performance-talent-group.vercel.app",
     type: "enterprise-operations",
@@ -84,23 +77,22 @@ export const CANONICAL_FLEET_PROJECTS: readonly FleetProjectManifest[] = [
 ] as const;
 
 export function evaluateFleetStatusSnapshot(): FleetDispatchResult {
-  const reports: FleetProjectStatusReport[] = CANONICAL_FLEET_PROJECTS.map((p) => ({
-    id: p.id,
-    name: p.name,
-    pathExists: true,
-    isGitRepo: true,
-    hooksInjected: true,
-    workingTreeClean: true,
-    productionHealth: "HEALTHY_200",
-    epistemicState: "PRODUCTION_READY"
+  const reports: FleetProjectStatusReport[] = CANONICAL_FLEET_PROJECTS.map((project) => ({
+    id: project.id,
+    name: project.name,
+    registryStatus: "REGISTERED",
+    repositoryStatus: "NOT_PROBED",
+    hooksStatus: "NOT_PROBED",
+    productionHealth: "NOT_PROBED",
+    epistemicState: "NEEDS_AUDIT"
   }));
 
   return {
-    dispatchId: "FLEET-DISPATCH-V10-108",
-    version: "10.0.0-sovereign-fleet-dispatcher",
+    dispatchId: "FLEET-REGISTRY-SNAPSHOT",
+    version: "10.1.0-portable-fleet-registry",
     timestamp: new Date().toISOString(),
-    projectsAudited: CANONICAL_FLEET_PROJECTS.length,
-    allPassFailClosed: true,
+    projectsRegistered: CANONICAL_FLEET_PROJECTS.length,
+    checksRun: false,
     reports
   };
 }

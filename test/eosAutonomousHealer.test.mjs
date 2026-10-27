@@ -1,11 +1,10 @@
 /**
- * EOS SYSTEM — AUTONOMOUS HEALER & FDIR TEST SUITE (Layer 0)
- * Governed by ADR-022, BDD-026 & BDD-027
+ * EOS SYSTEM — Local remediation suggestions test suite
  *
  * Verifies:
  * 1. Root-cause localization and surgical AST remediation diff synthesis.
- * 2. Closed-loop FDIR healing with sandbox pre-validation.
- * 3. Cryptographic healing receipt generation (HEAL-0001.json).
+ * 2. Read-only-by-default behavior and opt-in file writes.
+ * 3. Local check status without production verification claims.
  * 4. Model Context Protocol (MCP) tool dispatch.
  */
 
@@ -65,26 +64,29 @@ describe("EOS Sovereign Autonomous Healer & FDIR Suite", () => {
   });
 
   describe("Suite 2: Closed-Loop FDIR Healing & Cryptographic Ledger (BDD-027)", () => {
-    it("simulates healing in dryRun mode without modifying disk", () => {
+    it("defaults to a read-only proposal without modifying disk", () => {
       const healer = new EosAutonomousHealer(root);
       const relPath = path.relative(root, testFile).replace(/\\/g, "/");
       const beforeContent = fs.readFileSync(testFile, "utf8");
 
-      const report = healer.executeHealing({ targetFile: relPath, dryRun: true });
+      const report = healer.executeHealing({ targetFile: relPath });
       assert.equal(report.success, true);
-      assert.equal(report.remediatedCount, 1);
+      assert.equal(report.remediatedCount, 0);
+      assert.equal(report.candidateCount, 1);
+      assert.equal(report.changesApplied, false);
 
       const afterContent = fs.readFileSync(testFile, "utf8");
       assert.equal(afterContent, beforeContent, "Dry run must not touch disk");
     });
 
-    it("applies healing to disk, re-verifies via turbo pipeline, and emits receipt", () => {
+    it("writes changes and emits a local result record only after explicit opt-in", () => {
       const healer = new EosAutonomousHealer(root);
       const relPath = path.relative(root, testFile).replace(/\\/g, "/");
 
-      const report = healer.executeHealing({ targetFile: relPath, dryRun: false });
+      const report = healer.executeHealing({ targetFile: relPath, autoApply: true });
       assert.equal(report.success, true);
-      assert.equal(report.epistemicState, "VERIFIED");
+      assert.equal(report.epistemicState, "LOCAL_CHECKS_PASSED");
+      assert.equal(report.changesApplied, true);
       assert.ok(report.receiptPath !== null);
       assert.ok(report.receiptSha256 !== null);
       assert.ok(fs.existsSync(report.receiptPath));
@@ -126,7 +128,7 @@ describe("EOS Sovereign Autonomous Healer & FDIR Suite", () => {
       assert.ok(res?.result?.content?.[0]?.text);
       const report = JSON.parse(res.result.content[0].text);
       assert.equal(report.success, true);
-      assert.equal(report.epistemicState, "VERIFIED");
+      assert.equal(report.epistemicState, "LOCAL_CHECKS_PASSED");
     });
   });
 });

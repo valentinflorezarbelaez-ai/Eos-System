@@ -2055,25 +2055,28 @@ EXIT CODE          : 0 (CERO DEFECTOS)
 
   async function runChaosTlaDrill(scenarioKey) {
     const drill = CHAOS_DRILLS[scenarioKey] || CHAOS_DRILLS["secret-leak-attempt"];
-    const seal = await sha256Browser(`TLA_CHAOS:${scenarioKey}:${Date.now()}`);
+    const fingerprint = await sha256Browser(`EOS_LOCAL_SCENARIO:${scenarioKey}:${Date.now()}`);
+    let apiStatus = "API no disponible; se muestran datos locales de ejemplo";
 
     try {
-      await fetch(`/api/bigtech?scenario=${encodeURIComponent(scenarioKey)}`);
+      const res = await fetch(`/api/bigtech?scenario=${encodeURIComponent(scenarioKey)}`);
+      const data = await res.json();
+      apiStatus = `${data.status || "RESPUESTA SIN ESTADO"}${res.ok ? "" : ` (HTTP ${res.status})`}`;
     } catch {
-      // Offline / static fallback
+      // The page remains usable offline with local scenario descriptions.
     }
 
     if (bigTechChaosOutput) {
-      bigTechChaosOutput.textContent = `[EOS TLA+ MODEL CHECKER & CHAOS FDIR ENGINE v6.0 · VERIFIED]
+      bigTechChaosOutput.textContent = `[CATÁLOGO LOCAL DE ESCENARIOS · NO VERIFICADO]
 Escenario    : ${drill.title}
-Anomalía     : ${drill.fault}
-Fórmula TLA+ : ${drill.tla}
-Estados TLA+ : ${drill.states} estados alcanzables verificados (0 contraejemplos)
-Acción FDIR  : ${drill.action}
-Tiempo MTTR  : ${drill.mttr} · Downtime: 0.00% · Estado: HEALED_AND_TLA_VERIFIED
-Sello SHA256 : ${seal.slice(0, 40)}...`;
+Descripción  : ${drill.fault}
+Fórmula      : ${drill.tla} (referencia ilustrativa; no se ejecutó TLC)
+Respuesta API: ${apiStatus}
+Acción       : texto de ejemplo; no se inyectó una falla ni se ejecutó FDIR
+MTTR         : no medido
+Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación)`;
     }
-    recordEvolutionEntry(`TLA+ & Chaos Drill: ${drill.title}`, "BIGTECH-10X10");
+    recordEvolutionEntry(`Local scenario example: ${drill.title}`, "LOCAL-DEMO");
   }
 
   if (formBigTechChaos) {
@@ -2265,18 +2268,18 @@ Sello SHA256 : ${seal.slice(0, 40)}...`;
       const res = await fetch(`/api/kernel?action=vfs&path=${encodeURIComponent(vfsPath)}`);
       if (res.ok) {
         const data = await res.json();
-        if (data && data.node && data.node.content) {
+        if (data && typeof data.content === "string") {
           linuxKernelOutput.textContent =
-            `$ cat ${vfsPath} [Permissions: ${data.node.permissions} | Subsystem: ${data.node.subsystem}]\n` +
+            `> STATIC SAMPLE DATA · no se consultó un kernel real\n$ cat ${vfsPath}\n` +
             `${"─".repeat(78)}\n` +
-            data.node.content;
+            data.content;
           return;
         }
       }
     } catch (_) {
-      // Fallback to deterministic local Ring-0 VFS snapshot
+      // Offline fallback to the bundled static sample.
     }
-    linuxKernelOutput.textContent = LOCAL_VFS_SNAPSHOTS[vfsPath] || LOCAL_VFS_SNAPSHOTS["/proc/eos/version"];
+    linuxKernelOutput.textContent = `> STATIC SAMPLE DATA · no se consultó un kernel real\n${LOCAL_VFS_SNAPSHOTS[vfsPath] || LOCAL_VFS_SNAPSHOTS["/proc/eos/version"]}`;
   }
 
   vfsNodeButtons.forEach((btn) => {
@@ -3257,15 +3260,15 @@ ESTADO EPISTÉMICO    : PRODUCTION_READY | CONFORMIDAD ARQUETÍPICA: 100%`;
               if (spotifyThroughput) spotifyThroughput.textContent = `${(d.throughputSamplesSec / 1000000).toFixed(1)}M m/s`;
               if (spotifyCircuit) spotifyCircuit.textContent = d.limiterClamped ? "CLAMPED" : "NOMINAL";
               if (spotifyGolden) spotifyGolden.textContent = `${d.realTimeSpeedFactor}x RT`;
-              spotifyLog.textContent = `🎛️ SPOTIFY AUDIO DSP KERNEL DIRECT FORM II (v25.0):
+              spotifyLog.textContent = `🎛️ DEMOSTRACIÓN LOCAL DE DSP (datos sintéticos):
 • Frecuencia Muestreo : ${d.sampleRateHz} Hz (PCM Float32 contiguo)
 • Cuadros Procesados  : ${d.bufferFrames.toLocaleString()} muestras por búfer
 • Muestras Totales    : ${d.totalSamplesProcessed.toLocaleString()}
 • Rendimiento DSP     : ${d.throughputSamplesSec.toLocaleString()} muestras/seg (${d.realTimeSpeedFactor}x Tiempo Real)
-• Techo True Peak     : -1.0 dBTP (${d.truePeakOutputDb} dB medido)
+• Pico de salida      : ${d.truePeakOutputDb} dBTP (muestra local; no es certificación)
 • Limitador Lookahead : Activado (${d.limiterClamped ? "Picos atenuados con tanh" : "Señal nominal"})
 • Duración de Proceso : ${d.durationUs.toFixed(2)} µs
-• Sello Merkle SHA256 : ${d.sha256Proof.slice(0, 32)}...`;
+• Fingerprint SHA256  : ${d.resultFingerprintSha256 || "no disponible"} (no es firma)`;
             } else if (mod === "camelot") {
               if (spotifyLufs) spotifyLufs.textContent = "8A (Am)";
               if (spotifyThroughput) spotifyThroughput.textContent = "24 Keys";

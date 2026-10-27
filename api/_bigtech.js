@@ -142,27 +142,29 @@ function runMonteCarloJs(tasks, iterations = 5000, deadlineHours = 18.0) {
 }
 
 export default function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
+  res.setHeader("Cache-Control", "no-store");
 
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-  let body = {};
-  if (req.method === "POST" && req.body) {
-    try {
-      body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body;
-    } catch {
-      body = {};
-    }
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "GET") {
+    res.setHeader("Allow", "GET, OPTIONS");
+    return res.status(405).json({ status: "METHOD_NOT_ALLOWED" });
   }
 
-  const action = String(body.action || (req.query && req.query.action) || "").trim().toLowerCase();
+  const queryParams = req.query && typeof req.query === "object" ? req.query : {};
+  const action = typeof queryParams.action === "string" ? queryParams.action.trim().toLowerCase() : "";
+  const allowedActions = new Set(["vector", "hnsw", "risk", "aladdin", "chain", "ledger", "scenario", ""]);
+  if (action.length > 32 || !allowedActions.has(action)) {
+    return res.status(400).json({ status: "INVALID_ACTION", allowedActions: [...allowedActions].filter(Boolean) });
+  }
 
   if (action === "vector" || action === "hnsw") {
-    const query = String(body.query || (req.query && req.query.query) || "semantic risk graph").trim();
+    const query = queryParams.query === undefined ? "semantic risk graph" : queryParams.query;
+    if (typeof query !== "string" || Buffer.byteLength(query, "utf8") > 4096) {
+      return res.status(400).json({ status: "INVALID_QUERY", maximumBytes: 4096 });
+    }
     const docs = [
       { id: "doc-palantir", text: "Palantir Foundry and Gotham semantic knowledge graph reasoning with HNSW index" },
       { id: "doc-aladdin", text: "BlackRock Aladdin institutional risk simulation with Monte Carlo Beta-PERT" },
@@ -185,8 +187,10 @@ export default function handler(req, res) {
     scored.sort((a, b) => a.distance - b.distance);
 
     return res.status(200).json({
-      status: "HNSW_VECTOR_SEARCH_SUCCESS",
-      engine: "Palantir HNSW / Apple Spotlight Layer-0 Vector Reasoning (v45.0.0)",
+      status: "LOCAL_VECTOR_DEMO",
+      scope: "Toy in-memory vector projection over five embedded sample texts; no HNSW index or external data source is used.",
+      engine: "Local cosine-distance demonstration",
+      externalSystemsQueried: false,
       query,
       dimensions: 64,
       metric: "cosine",
@@ -195,8 +199,19 @@ export default function handler(req, res) {
   }
 
   if (action === "risk" || action === "aladdin") {
-    const iters = parseInt(body.iterations || (req.query && req.query.iterations), 10) || 5000;
-    const deadline = parseFloat(body.deadline || (req.query && req.query.deadline)) || 18.0;
+    const rawIterations = queryParams.iterations === undefined ? "5000" : queryParams.iterations;
+    const rawDeadline = queryParams.deadline === undefined ? "18" : queryParams.deadline;
+    if (typeof rawIterations !== "string" || !/^\d{1,6}$/.test(rawIterations)) {
+      return res.status(400).json({ status: "INVALID_ITERATIONS" });
+    }
+    if (typeof rawDeadline !== "string" || rawDeadline.length > 32 || !Number.isFinite(Number(rawDeadline))) {
+      return res.status(400).json({ status: "INVALID_DEADLINE" });
+    }
+    const iters = Number(rawIterations);
+    const deadline = Number(rawDeadline);
+    if (iters < 1 || iters > 100000 || deadline < 0 || deadline > 100000) {
+      return res.status(400).json({ status: "PARAMETER_OUT_OF_RANGE" });
+    }
     const tasks = [
       { id: "T1", name: "HNSW Vector Engine Implementation", optimistic: 3, nominal: 6, pessimistic: 12 },
       { id: "T2", name: "Monte Carlo Stochastic Risk Port", optimistic: 2, nominal: 4, pessimistic: 8 },
@@ -205,8 +220,11 @@ export default function handler(req, res) {
     ];
     const riskReport = runMonteCarloJs(tasks, iters, deadline);
     return res.status(200).json({
-      status: "ALADDIN_RISK_SIMULATION_SUCCESS",
-      engine: "BlackRock Aladdin Quantitative PERT Risk Engine (v45.0.0)",
+      status: "LOCAL_MONTE_CARLO_DEMO",
+      scope: "Synthetic task estimates and local random sampling; not financial advice or a BlackRock service.",
+      engine: "Local PERT-style demonstration",
+      iterations: iters,
+      externalSystemsQueried: false,
       summary: riskReport
     });
   }
@@ -218,9 +236,12 @@ export default function handler(req, res) {
     const b2Hash = computeSha256(`2:${b1Hash}:VERCEL_PROD_DEPLOY:1793022200000000000`);
 
     return res.status(200).json({
-      status: "HASH_CHAIN_VERIFIED",
-      engine: "SpaceX / NSA Nanosecond Monotonic Hash-Chain Ledger (v45.0.0)",
+      status: "LOCAL_HASH_CHAIN_DEMO",
+      scope: "Three locally constructed example records; not a deployment record, trusted timestamp, or external attestation.",
+      engine: "Local SHA-256 hash-chain example",
       valid: true,
+      externalAttestation: false,
+      deploymentVerified: false,
       totalBlocks: 3,
       blocks: [
         { index: 0, type: "SPEC_APPROVAL", hash: b0Hash, prevHash: genesisPrev, monotonicNs: "1793022000000000000" },
@@ -233,22 +254,24 @@ export default function handler(req, res) {
 
 
 
-  const scenarioKey = String(
-    body.scenario || (req.query && req.query.scenario) || "secret-leak-attempt"
-  ).trim();
+  const scenarioKey = queryParams.scenario === undefined ? "secret-leak-attempt" : queryParams.scenario;
+  if (typeof scenarioKey !== "string" || scenarioKey.length > 64 || !Object.hasOwn(SCENARIOS, scenarioKey)) {
+    return res.status(400).json({ status: "INVALID_SCENARIO", availableScenarios: Object.keys(SCENARIOS) });
+  }
 
-  const drill = SCENARIOS[scenarioKey] || SCENARIOS["secret-leak-attempt"];
+  const drill = SCENARIOS[scenarioKey];
   const sha256Seal = computeSha256(
     `EOS_BIGTECH_TLA_CHAOS:${drill.scenarioId}:${drill.tlaPlusFormula}:${Date.now()}`
   );
 
   return res.status(200).json({
-    status: "VERIFIED_10_OF_10",
-    engine: "EOS Big Tech 10/10 Pantheon & TLA+ / Chaos FDIR Engine v6.0",
-    bigTechPillarsCount: 7,
-    downtimePercent: 0,
-    epistemicState: "HEALED_AND_TLA_VERIFIED",
-    sha256Seal,
+    status: "LOCAL_SCENARIO_DESCRIPTION",
+    scope: "Static scenario description only; no TLA+ model checker, fault injection, remediation, or external service was run.",
+    engine: "Local scenario catalog",
+    formalModelChecked: false,
+    chaosRun: false,
+    resultFingerprintSha256: `sha256:${sha256Seal}`,
+    fingerprintIsSignature: false,
     drill
   });
 }

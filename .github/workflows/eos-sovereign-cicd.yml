@@ -1,4 +1,4 @@
-name: EOS Sovereign 7-Stage CI/CD & SecDevOps Gate
+name: EOS Repository CI
 
 on:
   push:
@@ -7,21 +7,32 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
-  sovereign-7-stage-gate:
-    name: "7-Stage SecDevOps Gate (SAST · SDD · SLSA L4 SBOM · AST · WCAG/CWV · Serverless Smoke)"
+  repository-checks:
+    name: "Configured local checks and test suites"
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["22", "24"]
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js 22 LTS (Zero External Deps)
-        uses: actions/setup-node@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version: "22"
+          persist-credentials: false
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ matrix.node-version }}
 
       - name: Execute Stage 1–7 Strict SecDevOps & Constitutional Pipeline
         run: node scripts/verify-cicd-pipeline.mjs

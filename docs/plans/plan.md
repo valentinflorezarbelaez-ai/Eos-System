@@ -1,5 +1,7 @@
 # ARCHITECTURE PLAN & ADRs (PLAN-0001) — EOS SYSTEM LANDING PAGE
 
+> **Estado documental:** plan histórico. Las métricas, certificaciones, integraciones y estados de producción descritos aquí son objetivos o afirmaciones del plan, no evidencia de implementación actual.
+
 ## 1. Hexagonal Web Architecture
 * **Domain Layer (Pure Data & Telemetry Contracts)**: Embedded deterministic data structures defining the 7 Inviolable Commandments, the 21-Step Pipeline phases, Epistemic States, CLI command outputs, and the Sovereign Fleet Registry.
 * **Application Layer (Interactive Controllers)**: Zero-dependency ES6 controller managing the Interactive Control Plane Terminal, Pipeline Phase Filter, Fleet Category Filter, and Clipboard Copy actions.
@@ -106,20 +108,19 @@
 ### ADR-011: Sovereign Fleet Autonomous CI/CD Dispatcher & Hook Propagator (`v10.0` — `docs/projects/registry.json`, `src/core/eosFleetDispatcher.ts`, `api/fleet.js`, `scripts/fleet-autonomous-cicd.mjs`, `scripts/install-fleet-cicd-hooks.mjs` & `#fleet-cicd-orchestrator`)
 * **Decision**: Expand EOS from a single-project CI/CD engine into the **Federated Master CI/CD & SecDevOps Orchestrator for all repositories in the Sovereign Fleet**:
   1. **Canonical Fleet Registry (`docs/projects/registry.json`)**: Formally registers each fleet repository (`EOS System`, `Aberamentho Pleroma Music`, `Portafolio Valentín Flórez`, `PTG`, etc.) with local path, GitHub remote, Vercel production URL, and verification state per Law IV.
-  2. **Federated Hook Propagator (`scripts/install-fleet-cicd-hooks.mjs`)**: Injects and activates identical 7-stage pre-commit and pre-push Git hooks into every local fleet project, guaranteeing zero secrets and zero broken invariants across all repositories on the workstation.
-  3. **Autonomous Fleet Dispatcher (`scripts/fleet-autonomous-cicd.mjs` / `npm run fleet:ship`)**: Scans all fleet projects, detects modifications or unpushed commits, executes their respective test suites, commits, pushes to origin, triggers production builds, and asserts live `HTTP 200 OK` health.
-  4. **Live Fleet Control HUD & API (`#fleet-cicd-orchestrator` + `api/fleet.js`)**: Real-time multi-repo CI/CD telemetry directly inside the EOS Control Plane.
-* **Rationale**: Satisfies the Sovereign Architect's direct mandate: whenever a change or improvement is made to *any* project in the ecosystem, EOS autonomously audits, tests, secures, and ships it to production without manual overhead.
+  2. **Explicit Hook Installer (`scripts/install-fleet-cicd-hooks.mjs`)**: Configures the selected repository's `pre-commit` and `pre-push` hooks to run its registered gate. Installation requires a matching project confirmation and does not propagate to other repositories.
+  3. **Selected Project Dispatcher (`scripts/fleet-autonomous-cicd.mjs` / `npm run fleet:ship`)**: Requires one confirmed project, validates its Git root, HTTPS production URL, and in-repository gate, runs that gate, then commits and pushes the selected checkout. It probes for HTTP 200 but does not verify the deployed commit or sign commits.
+  4. **Fleet Status HUD & API (`#fleet-cicd-orchestrator` + `api/fleet.js`)**: Presents the local registry and the checks that are explicitly implemented; it is not complete live CI/CD telemetry.
+* **Rationale**: Keep fleet operations scoped, inspectable, and fail-closed before an explicitly selected repository is changed or pushed.
 * **Rejected Alternatives**:
   * *Maintaining Disconnected Manual Deployments Per Project*: Rejected because lack of unified gate propagation leads to drift, configuration rot, and potential secret leaks in satellite repos.
 
-### ADR-012: EOS JARVIS Sovereign Monad & Cognitive Voice/Action Orchestrator (`v11.0` — `src/core/eosJarvisMonad.ts`, `api/jarvis.js`, `scripts/eos-jarvis-daemon.mjs` & `#eos-jarvis-nexus`)
-* **Decision**: Elevate EOS into **JARVIS** — an omnipotent, autonomous Cognitive AI System that listens, speaks, plans, and executes the entire engineering lifecycle across all projects:
-  1. **Cognitive Voice Nexus**: Native Web Speech API integration (Speech Recognition & Neural Speech Synthesis) paired with Web Audio API Belilin sacred acoustic formants.
-  2. **Intent Parser & Atomic Goal DAG Generator**: Translates any natural-language command from Valentín into deterministic system actions (running audits, executing nanosecond benchmarks, querying Akashic memory, deploying to production).
-  3. **Visual Arc-Reactor Holographic HUD (`#eos-jarvis-nexus`)**: Audio-reactive SVG/CSS visualization reflecting cognitive state transitions (`IDLE`, `LISTENING`, `THINKING_SAMAELIAN`, `SECURING_GATES`, `DEPLOYING`).
-  4. **Autonomous Sentinel Watcher Daemon (`scripts/eos-jarvis-daemon.mjs` / `npm run jarvis`)**: Continuous background watcher that monitors repos, executes FDIR self-healing, and enforces autonomous fleet-wide delivery.
-* **Rationale**: Directly realizes the user's vision: "todo lo debe hacer eos todo eos debe ser jarvis todo" — transforming EOS from an operating system dashboard into a proactive, sovereign autonomous partner.
+### ADR-012: JARVIS Local Classification and Status Monitor (`api/jarvis.js`, `scripts/eos-jarvis-daemon.mjs`)
+* **Decision**: Keep JARVIS actions bounded and report their evidence explicitly:
+  1. The API classifies a limited directive using keyword rules; it does not call a language model, execute commands, read repositories, or deploy.
+  2. The daemon runs bounded local repository checks, the read-only fleet verifier, and a time-limited HTTP probe of the configured process-liveness endpoint.
+  3. `npm run jarvis:daemon` repeats cycles serially at 60-second intervals and reports each check as pass or fail. It does not heal files or ship projects.
+* **Rationale**: Provide an inspectable monitor with truthful scope and keep repository writes and deployment in separately confirmed workflows.
 * **Rejected Alternatives**:
   * *Proprietary Cloud-Only Voice Assistants (Alexa/Siri)*: Rejected due to vendor lock-in, latency, plaintext telemetry risks (Law VI), and inability to execute low-level compiler/Git/Vercel operations.
 
@@ -252,3 +253,18 @@
 * **Rationale**: Directly operationalizes the sovereign mandate for EOS System to operate on ANY external target project with mathematical perfection, zero vibe coding, and complete architectural purity.
 * **Rejected Alternatives**:
   * *Invoking external CLIs (SonarQube, Snyk, Semgrep)*: Rejected to preserve Layer-0 zero-dependency portability and instant (< 50ms) execution time.
+
+### ADR-031: Context-Safe Rendering of Browser-Backed User Data (`js/eos.js`)
+* **Decision**: Treat user input and browser storage as untrusted at every DOM rendering boundary. Validate persisted record shapes, discard invalid records, and encode dynamic text and attribute values before interpolating them into existing templates. Keep canonical stored values unescaped so valid data remains readable and portable.
+* **Rationale**: The static landing page has no framework or runtime sanitization dependency. Contextual escaping and validation close persistent DOM injection paths while preserving its zero-dependency architecture.
+* **Rejected Alternatives**:
+  * *Trusting values because they originated in same-origin `localStorage`*: Rejected because users can enter attacker-controlled markup and local storage can be modified or corrupted.
+  * *Adding a third-party HTML sanitizer*: Rejected to preserve the zero-runtime-dependency browser bundle.
+
+### ADR-032: Project-Bounded Evaluation and Honest Operational Reporting (`api/eval.js`, `api/cicd.js`, `api/fleet.js`, `api/health.js`)
+* **Decision**: Resolve requested evaluation paths against the real project root and reject paths or symlinks that escape it. Bound submitted source code to 100 KiB, use `Cache-Control: no-store`, and return `503` when the evaluator is unavailable. Label CI/CD output as a simulation, report blocked or unrun stages accurately, omit local host paths from fleet responses, and mark subsystem/availability data as unprobed or unmeasured.
+* **Rationale**: The API accepts untrusted input, and an evaluator failure must never become a false readiness claim. The interactive control plane should distinguish demonstrations and registry metadata from repository verification, live health measurements, or deployment.
+* **Rejected Alternatives**:
+  * *Returning a synthetic passing evaluation when runtime loading fails*: Rejected because failure is not evidence of correctness or readiness.
+  * *Showing every pipeline stage as passed after an early SAST block*: Rejected because it contradicts fail-closed behavior and gives operators a false deployment signal.
+  * *Publishing workstation paths or declaring fleet health from static registry data*: Rejected because it exposes host details and presents unverified metadata as operational evidence.

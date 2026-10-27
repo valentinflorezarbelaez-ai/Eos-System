@@ -7,9 +7,12 @@ import { pathToFileURL } from "node:url";
 
 const root = process.cwd();
 const startTime = Date.now();
+const MAX_REPO_FILES = 20_000;
+const MAX_SINGLE_REPO_FILE_BYTES = 64 * 1024 * 1024;
+const MAX_REPO_INVENTORY_BYTES = 512 * 1024 * 1024;
 
 console.log("======================================================================");
-console.log(" EOS SYSTEM v9.0 — 7-STAGE SOVEREIGN CI/CD & SECDEVOPS GATE (STRICT)  ");
+console.log(" EOS SYSTEM — LOCAL REPOSITORY CHECKS (NO DEPLOYMENT)  ");
 console.log(` [INFO] Node: ${process.version} | Platform: ${process.platform} | Arch: ${process.arch}`);
 console.log("======================================================================");
 
@@ -29,14 +32,25 @@ function listRepoFiles(dir, acc = []) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       listRepoFiles(full, acc);
-    } else {
+    } else if (entry.isFile()) {
       acc.push(full);
+      if (acc.length > MAX_REPO_FILES) {
+        throw new RangeError(`Repository scan exceeds its ${MAX_REPO_FILES}-file limit.`);
+      }
     }
   }
   return acc;
 }
 
 const allFiles = listRepoFiles(root);
+let inventoryBytes = 0;
+for (const file of allFiles) {
+  const stat = fs.lstatSync(file);
+  assert.ok(stat.isFile() && !stat.isSymbolicLink(), `[STAGE 1 FAIL] Refusing a non-regular or symbolic-link file: ${path.relative(root, file)}`);
+  assert.ok(stat.size <= MAX_SINGLE_REPO_FILE_BYTES, `[STAGE 1 FAIL] File exceeds the 64 MiB limit: ${path.relative(root, file)}`);
+  inventoryBytes += stat.size;
+  assert.ok(inventoryBytes <= MAX_REPO_INVENTORY_BYTES, "[STAGE 1 FAIL] Repository scan exceeds its 512 MiB inventory limit.");
+}
 
 // ---------------------------------------------------------------------------
 // STAGE 1: SAST, OWASP TOP 10 & ZERO PLAINTEXT SECRETS GATE (LAW VI)
@@ -63,7 +77,7 @@ for (const file of allFiles) {
     );
   }
 }
-console.log(`[PASS] Stage 1/7 — SAST & Zero-Plaintext-Secrets Gate (${scannedTextFiles} files scanned, 0 leaks).`);
+console.log(`[PASS] Stage 1/7 — Configured credential-pattern scan (${scannedTextFiles} text files scanned; no configured patterns matched).`);
 
 // ---------------------------------------------------------------------------
 // STAGE 2: CONSTITUTIONAL SDD & 7 INVIOLABLE LAWS GATE (LAWS I, II, VII)
@@ -76,10 +90,10 @@ execFileSync(process.execPath, [path.join(root, "scripts/verify-sri-integrity.mj
   cwd: root,
   stdio: "inherit"
 });
-console.log("[PASS] Stage 2/7 — Constitutional SDD, Landing Invariants & SRI Integrity Gate.");
+console.log("[PASS] Stage 2/7 — Landing-page assertions and SRI integrity check.");
 
 // ---------------------------------------------------------------------------
-// STAGE 3: HEXAGONAL L0 PURITY (0-DEPS) & SLSA LEVEL 4 SHA-256 SBOM MERKLE ROOT
+// STAGE 3: runtime dependency check and a digest of the source-file inventory
 // ---------------------------------------------------------------------------
 const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
 const runtimeDeps = Object.keys(pkg.dependencies || {});
@@ -89,19 +103,19 @@ assert.equal(
   `[STAGE 3 FAIL] Law V violation: Expected 0 external runtime dependencies, found: ${runtimeDeps.join(", ")}`
 );
 
-const sbomEntries = [];
-const merkleHasher = crypto.createHash("sha256");
+const fileInventory = [];
+const inventoryHasher = crypto.createHash("sha256");
 for (const file of allFiles.sort()) {
   if (!fs.existsSync(file)) continue;
   const rel = path.relative(root, file).replace(/\\/g, "/");
   if (rel === "docs/evidence/SBOM-CICD-RECEIPT.json" || rel === "docs/evidence/eos-audit.sarif") continue;
   const bytes = fs.readFileSync(file);
   const sha256 = crypto.createHash("sha256").update(bytes).digest("hex");
-  sbomEntries.push({ path: rel, bytes: bytes.length, sha256 });
-  merkleHasher.update(`${rel}:${sha256}\n`);
+  fileInventory.push({ path: rel, bytes: bytes.length, sha256 });
+  inventoryHasher.update(`${rel}:${sha256}\n`);
 }
-const sbomMerkleRoot = `sha256:${merkleHasher.digest("hex")}`;
-console.log(`[PASS] Stage 3/7 — Hexagonal L0 (0-Deps) & SLSA L4 SBOM (${sbomEntries.length} artifacts, Merkle: ${sbomMerkleRoot.slice(0, 24)}...).`);
+const sourceInventoryDigest = `sha256:${inventoryHasher.digest("hex")}`;
+console.log(`[PASS] Stage 3/7 — Runtime dependency check and source-file inventory (${fileInventory.length} files; SHA-256 digest: ${sourceInventoryDigest.slice(0, 24)}...).`);
 
 // ---------------------------------------------------------------------------
 // STAGE 3.5: FORMAL TLA+ SPECIFICATION & MATHEMATICAL INVARIANT GATE (seL4)
@@ -214,7 +228,7 @@ for (const testFile of filesToRun) {
     stdio: "inherit"
   });
 }
-console.log(`[PASS] Stage 4/7 — Static AST, Syntax, Unit & Chaos Gate (${jsFilesToCheck.length} JS/MJS modules + ${tsCoreFiles.length} L0 TS modules + node:test passed).`);
+console.log(`[PASS] Stage 4/7 — JavaScript syntax and configured Node test suites (${jsFilesToCheck.length} JS/MJS modules; ${tsCoreFiles.length} core TS files counted, not type-checked).`);
 
 // ---------------------------------------------------------------------------
 // STAGE 5: WCAG 2.1 AA ACCESSIBILITY, SEO & PERFORMANCE BUDGET GATE
@@ -232,7 +246,7 @@ const jsSizeKb = (fs.statSync(path.join(root, "js/eos.js")).size / 1024).toFixed
 const cssSizeKb = (fs.statSync(path.join(root, "css/eos.css")).size / 1024).toFixed(1);
 assert.ok(Number(jsSizeKb) < 250, `JS bundle exceeded budget: ${jsSizeKb} KB`);
 assert.ok(Number(cssSizeKb) < 120, `CSS bundle exceeded budget: ${cssSizeKb} KB`);
-console.log(`[PASS] Stage 5/7 — WCAG 2.1 AA, SEO & Performance Budget Gate (JS: ${jsSizeKb} KB, CSS: ${cssSizeKb} KB).`);
+console.log(`[PASS] Stage 5/7 — Static markup assertions and bundle-size checks (no browser CWV or full WCAG audit; JS: ${jsSizeKb} KB, CSS: ${cssSizeKb} KB).`);
 
 // ---------------------------------------------------------------------------
 // STAGE 6: IN-PROCESS SMOKE TESTS OF ALL 11 SERVERLESS API ENDPOINTS (/api/*)
@@ -320,7 +334,7 @@ for (const cm of consolidatedModes) {
   assert.ok(capturedBody && typeof capturedBody === "object", `[STAGE 6 FAIL] Consolidated mode ${cm.desc} did not return valid JSON`);
 }
 
-console.log(`[PASS] Stage 6/7 — In-Process Serverless API Smoke Gate (${apiEndpoints.length}/${apiEndpoints.length} endpoints + 3 Edge rewrites returned 200 OK).`);
+console.log(`[PASS] Stage 6/7 — In-process handler smoke checks (${apiEndpoints.length} routes + 3 consolidated modes returned mocked HTTP 200 responses).`);
 
 // ---------------------------------------------------------------------------
 // STAGE 7: CRYPTOGRAPHIC SBOM & CI/CD ATTESTATION RECEIPT
@@ -329,14 +343,17 @@ const elapsedMs = Date.now() - startTime;
 // Receipt is deterministic for a given source tree (no timestamps/durations),
 // so re-running the gate inside git hooks never leaves the working tree dirty.
 const receipt = {
-  pipelineId: "EOS-CICD-V9-SOVEREIGN",
-  epistemicState: "VERIFIED",
+  pipelineId: "EOS-LOCAL-CHECKS",
+  epistemicState: "LOCAL_CHECKS_EXECUTED",
   stagesPassed: "7/7",
   exitCode: 0,
-  sbomMerkleRoot,
-  artifactCount: sbomEntries.length,
-  serverlessEndpointsVerified: apiEndpoints,
-  enforcedHooks: [".githooks/pre-commit", ".githooks/pre-push", ".github/workflows/eos-sovereign-cicd.yml"]
+  sourceInventoryDigest,
+  sourceFileCount: fileInventory.length,
+  serverlessHandlerSmokeChecks: apiEndpoints,
+  referencedHookArtifacts: [".githooks/pre-commit", ".githooks/pre-push", ".github/workflows/eos-sovereign-cicd.yml"],
+  hookConfigurationProbed: false,
+  deploymentRun: false,
+  liveHealthProbeRun: false
 };
 
 fs.writeFileSync(path.join(root, "docs/evidence/SBOM-CICD-RECEIPT.json"), JSON.stringify(receipt, null, 2) + "\n", "utf8");
@@ -355,14 +372,14 @@ const sarifReport = {
           rules: [
             {
               id: "EOS-SEC-001",
-              name: "ZeroPlaintextSecrets",
-              shortDescription: { text: "No plaintext credentials or tokens detected." },
+              name: "ConfiguredCredentialPatternScan",
+              shortDescription: { text: "No matches for the configured credential patterns were found in scanned text files." },
               defaultConfiguration: { level: "error" }
             },
             {
               id: "EOS-SDD-002",
-              name: "SpecificationConformance",
-              shortDescription: { text: "All SDD formal artifacts must be present and verified." },
+              name: "LandingAndSRIAssertions",
+              shortDescription: { text: "Configured landing-page and subresource-integrity assertions passed." },
               defaultConfiguration: { level: "error" }
             },
             {
@@ -379,7 +396,7 @@ const sarifReport = {
   ]
 };
 fs.writeFileSync(path.join(root, "docs/evidence/eos-audit.sarif"), JSON.stringify(sarifReport, null, 2) + "\n", "utf8");
-console.log(`[PASS] Stage 7/7 — Cryptographic SBOM, CI/CD Receipt & SARIF v2.1.0 sealed in ${elapsedMs} ms.`);
+console.log(`[PASS] Stage 7/7 — Local source-inventory digest, receipt & SARIF written in ${elapsedMs} ms.`);
 console.log("======================================================================");
-console.log(" SOVEREIGN CI/CD GATE: 7/7 STAGES PASSED | DEPLOYMENT AUTHORIZED (0)  ");
+console.log(" LOCAL CHECKS: 7/7 STAGES PASSED | NO DEPLOYMENT OR LIVE PROBE RUN  ");
 console.log("======================================================================");

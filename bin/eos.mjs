@@ -27,14 +27,15 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const root = path.resolve(__dirname, "..");
+const packageMetadata = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
 
 const args = process.argv.slice(2);
 const command = (args[0] || "help").toLowerCase();
 
 function printBanner() {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v47.0 — SOVEREIGN CONTROL PLANE CLI (UNIVERSAL)            ");
-  console.log(" Zero Vibe Coding · Layer-0 Hexagonal · Big Tech Tier 1 · SLSA Level 4");
+  console.log(` EOS SYSTEM v${packageMetadata.version} — LOCAL ENGINEERING TOOLKIT`);
+  console.log(" Local checks · drafts · repository tools · bounded sandbox");
   console.log("======================================================================");
 }
 
@@ -874,29 +875,123 @@ switch (command) {
     const { EosSpotifyAgenticFactory } = await import("../src/core/eosSpotifyAgenticFactory.ts");
     const factory = new EosSpotifyAgenticFactory(root);
 
-    const directiveText = args.slice(1).join(" ") || "feat: autonomous audio pipeline optimization";
-    console.log(`[EOS HONK AGENT] Iniciando Bucle de Programación Autónomo Spotify Honk...\n`);
-    console.log(`Directiva de Tarea    : "${directiveText}"`);
+    let directiveIndex = 1;
+    let redactDirective = false;
+    let quietOutput = false;
+    while (args[directiveIndex] === "--redact-directive" || args[directiveIndex] === "--quiet") {
+      if (args[directiveIndex] === "--redact-directive") redactDirective = true;
+      if (args[directiveIndex] === "--quiet") quietOutput = true;
+      directiveIndex += 1;
+    }
+    const directiveText = args.slice(directiveIndex).join(" ") || "prepare a bounded local task plan";
+    if (Buffer.byteLength(directiveText, "utf8") > 512) {
+      console.error("La directiva Honk debe caber en 512 bytes UTF-8.");
+      process.exitCode = 2;
+      break;
+    }
+    console.log("[EOS HONK] Preparando un borrador local; no se modificará el repositorio.\n");
+    if (redactDirective) {
+      console.log(`Directiva             : [oculta; ${Buffer.byteLength(directiveText, "utf8")} bytes]`);
+    } else {
+      console.log(`Directiva de tarea    : "${directiveText}"`);
+    }
 
     const report = factory.dispatchHonk({
       taskName: directiveText,
       specDescription: directiveText,
-      dryRun: false
+      dryRun: true
     });
 
     console.log(`Task ID               : ${report.taskId}`);
-    console.log(`Rama Virtual Worktree : ${report.branchName}`);
+    console.log(`Rama propuesta        : ${redactDirective ? "[oculta]" : report.branchNameProposal}`);
     console.log(`Stack Tecnológico     : ${report.stack.toUpperCase()}`);
-    console.log(`Estado Epistémico     : ${report.epistemicState} (${report.status})`);
-    console.log(`Duración Total        : ${report.totalDurationMs} ms`);
-    console.log(`Prueba Merkle         : ${report.merkleProof.slice(0, 32)}...\n`);
+    console.log(`Resultado             : ${report.status} (${report.epistemicState})`);
+    console.log(`Duración local        : ${report.totalDurationMs} ms`);
+    console.log(`Huella SHA-256        : ${redactDirective ? "[omitida para proteger la directiva]" : `${report.reportFingerprintSha256.slice(0, 32)}... (no es firma)`}\n`);
 
-    console.log("=== TELEMETRÍA DE PASOS HONK ===");
-    report.steps.forEach((s) => {
-      console.log(`  [${s.status}] ${s.name} (${s.durationMs}ms) — ${s.details}`);
-    });
+    if (!quietOutput) {
+      console.log("=== PASOS DEL BORRADOR LOCAL ===");
+      report.steps.forEach((s) => console.log(`  [${s.status}] ${s.name} (${s.durationMs}ms) — ${s.details}`));
+    }
 
-    console.log(`\n[PASS] Pull Request generado autónomamente con éxito (Exit Code 0).`);
+    console.log("[PLAN ONLY] No se creó rama, commit, pull request ni se modificaron archivos.");
+    break;
+  }
+
+  case "sandbox": {
+    printBanner();
+    const { EosContainerSandbox } = await import("../src/core/eosContainerSandbox.ts");
+    const sandbox = new EosContainerSandbox(root);
+    const subcommand = (args[1] || "help").toLowerCase();
+
+    if (subcommand === "doctor") {
+      const report = sandbox.doctor();
+      console.log(`[EOS SANDBOX] ${report.ready ? "READY" : "NOT READY"}`);
+      console.log(report.message);
+      if (report.image) console.log(`Imagen fijada: ${report.image}`);
+      if (!report.ready) process.exitCode = 1;
+      break;
+    }
+
+    if (subcommand !== "run") {
+      console.log("Uso: eos sandbox doctor | eos sandbox run <worktree> [--apply] [--timeout SEGUNDOS] -- <comando> [argumentos...]");
+      break;
+    }
+
+    const separator = args.indexOf("--", 2);
+    const worktreePath = args[2];
+    if (!worktreePath || separator < 0 || separator === args.length - 1) {
+      console.error("Falta <worktree> o el comando posterior a `--`.");
+      process.exitCode = 2;
+      break;
+    }
+    const runOptions = args.slice(3, separator);
+    const commandArgs = args.slice(separator + 1);
+    const applyChanges = runOptions.includes("--apply");
+    let timeoutMs;
+    const timeoutIndex = runOptions.indexOf("--timeout");
+    if (timeoutIndex >= 0) {
+      const seconds = Number(runOptions[timeoutIndex + 1]);
+      if (!Number.isInteger(seconds) || seconds < 1 || seconds > 900) {
+        console.error("--timeout debe ser un número entero entre 1 y 900 segundos.");
+        process.exitCode = 2;
+        break;
+      }
+      timeoutMs = seconds * 1000;
+    }
+    const unknownOptions = runOptions.filter((option, index) =>
+      option !== "--apply" && option !== "--timeout" && (index === 0 || runOptions[index - 1] !== "--timeout")
+    );
+    if (unknownOptions.length > 0) {
+      console.error(`Opción no reconocida: ${unknownOptions.join(" ")}`);
+      process.exitCode = 2;
+      break;
+    }
+
+    try {
+      console.log("[EOS SANDBOX] Ejecución local sin red en una copia filtrada del worktree.");
+      console.log(`Salida a Git: ${applyChanges ? "solicitada; requiere salida 0 y revisión de conflictos" : "desactivada; se descartarán los cambios"}`);
+      const report = await sandbox.run({
+        worktreePath,
+        command: commandArgs[0],
+        commandArgs: commandArgs.slice(1),
+        applyChanges,
+        ...(timeoutMs === undefined ? {} : { timeoutMs })
+      });
+      console.log(`Estado: ${report.status}; código: ${report.exitCode ?? "N/D"}; archivos cambiados en copia: ${report.changedFiles.length}`);
+      if (report.appliedChanges) console.log(`Archivos escritos en el worktree: ${report.changedFiles.filter((file) => !report.conflicts.includes(file)).length}`);
+      report.changedFiles.slice(0, 100).forEach((file) => console.log(`  ${report.appliedChanges && !report.conflicts.includes(file) ? "ESCRITO" : "CAMBIO EN COPIA"} ${file}`));
+      if (report.changedFiles.length > 100) console.log(`  ... y ${report.changedFiles.length - 100} más`);
+      report.conflicts.forEach((file) => console.log(`[CONFLICTO] ${file}`));
+      report.excludedPaths.slice(0, 50).forEach((file) => console.log(`[EXCLUIDO] ${file}`));
+      if (report.excludedPaths.length > 50) console.log(`  ... y ${report.excludedPaths.length - 50} rutas excluidas más`);
+      if (report.error) console.error(`[SANDBOX] ${report.error}`);
+      if (report.receiptPath) console.log(`Recibo local: ${report.receiptPath}`);
+      if (!report.success) process.exitCode = report.status === "CONFLICT" ? 2 : (report.exitCode || 1);
+    } catch (error) {
+      console.error(`[EOS SANDBOX] ${error instanceof Error ? error.message : String(error)}`);
+      process.exitCode = 1;
+    }
     break;
   }
 
@@ -910,8 +1005,8 @@ switch (command) {
       const res = factory.syncXirpContextFiles();
       console.log(`[EOS XIRP CONTEXT] Contexto de Arquitectura Spotify Sincronizado:\n`);
       res.writtenFiles.forEach((f) => console.log(`  ✔ Archivo Sincronizado: ${path.relative(root, f)}`));
-      console.log(`\nSello Criptográfico SHA-256: ${res.sha256}`);
-      console.log(`[PASS] AGENTS.md y CLAUDE.md actualizados sin alucinaciones (Exit Code 0).`);
+      console.log(`\nFingerprint SHA-256: ${res.sha256} (no es firma ni atestación)`);
+      console.log("[LOCAL] AGENTS.md y CLAUDE.md generados desde metadatos del checkout.");
       break;
     }
 
@@ -2533,6 +2628,9 @@ Uso Universal:
   eos graph                  Muestra el grafo semántico, topología de módulos y código huérfano
   eos heal [archivo]         Ejecuta el bucle de auto-sanación FDIR (Meta SapFix) con recibo sellado
   eos worktree [list|add|rm] Gestiona Git Worktrees aislados para agentes estilo Xirp
+  eos sandbox doctor        Verifica que Docker local y la imagen fijada estén disponibles
+  eos sandbox run <worktree> [--apply] [--timeout SEGUNDOS] -- <cmd> [args...]
+                              Ejecuta sin red en copia filtrada; escribir requiere --apply
   eos eval <archivo>         Ejecuta la evaluación cognitiva de 5 dimensiones (Google/Anthropic)
   eos spec [check|list]      Audita el sistema Living OpenSpec y previene deriva de Vibe Coding
   eos titan [xirp|spacex|..] Ejecuta los benchmarks de los Titanes (Spotify, SpaceX, NVIDIA, Google, xAI)

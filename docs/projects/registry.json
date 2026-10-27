@@ -1,13 +1,13 @@
 {
-  "version": "10.0.0-sovereign-fleet-registry",
+  "version": "10.1.0-portable-fleet-registry",
   "updatedAt": "2026-10-25T09:46:00-05:00",
-  "masterOrchestrator": "EOS System (c:\\Users\\valen\\Eos-System)",
+  "masterOrchestrator": "EOS System control plane",
   "complianceStandard": "EOS_CONSTITUTION_LAW_IV_EXTERNAL_WRITE_BARRIER",
   "projects": [
     {
       "id": "eos-system",
       "name": "EOS System (Control Plane Core)",
-      "localPath": "c:\\Users\\valen\\Eos-System",
+      "localPathEnv": "EOS_FLEET_EOS_SYSTEM_PATH",
       "remoteUrl": "https://github.com/valentinflorezarbelaez-ai/Eos-System.git",
       "productionUrl": "https://eos-system-ten.vercel.app",
       "type": "control-plane-monolith",
@@ -22,7 +22,7 @@
     {
       "id": "aberamentho",
       "name": "Aberamentho Pleroma Music",
-      "localPath": "c:\\Users\\valen\\Aberamentho-s-Pleroma-music",
+      "localPathEnv": "EOS_FLEET_ABERAMENTHO_PATH",
       "remoteUrl": "https://github.com/valentinflorezarbelaez-ai/Aberamentho-s-Pleroma-music.git",
       "productionUrl": "https://aberamentosprelomamusic.vercel.app",
       "type": "sacred-acoustic-app",
@@ -37,7 +37,7 @@
     {
       "id": "portafolio",
       "name": "Portafolio Oficial — Valentín Flórez",
-      "localPath": "c:\\Users\\valen\\portafolio",
+      "localPathEnv": "EOS_FLEET_PORTAFOLIO_PATH",
       "remoteUrl": "https://github.com/valentinflorezarbelaez-ai/portafolio.git",
       "productionUrl": "https://portafolio-valentin.vercel.app",
       "type": "executive-showcase",
@@ -52,7 +52,7 @@
     {
       "id": "performance-talent-group",
       "name": "PTG — Performance Talent Group",
-      "localPath": "c:\\Users\\valen\\Performance-Talent-Group-1",
+      "localPathEnv": "EOS_FLEET_PTG_PATH",
       "remoteUrl": "https://github.com/valentinflorezarbelaez-ai/Performance-Talent-Group.git",
       "productionUrl": "https://ptg-performance-talent-group.vercel.app",
       "type": "enterprise-operations",

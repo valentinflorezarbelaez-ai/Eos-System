@@ -1,7 +1,9 @@
 # IMPLEMENTATION AUTHORIZATION — LEVEL 3 (FULL PRODUCTION & EDGE DEPLOYMENT)
 
+> **Límite:** este registro describe un alcance autorizado, no confirma que sus elementos se hayan implementado, probado o desplegado. Las capacidades, versiones, métricas y certificaciones enumeradas deben comprobarse contra el código y registros reproducibles actuales.
+
 * **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
-* **Project**: `EOS System — Sovereign Landing Page & Interactive Control Plane` (`C:\Users\valen\Eos-System`)
+* **Project**: `EOS System — Sovereign Landing Page & Interactive Control Plane` (repository root)
 * **Authorized By**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
 * **Date**: 2026-10-25
 * **Scope**: Creation and continuous sovereign elevation of EOS System:

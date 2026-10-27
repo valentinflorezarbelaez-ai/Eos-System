@@ -1,7 +1,7 @@
 {
   "name": "eos-system-landing",
   "version": "47.0.0",
-  "description": "EOS System (Engineering Operating System) — Sovereign Apex Matrix v47.0 (Autonomous Continuous Refactoring Engine, Design by Contract & FoundationDB/Antithesis Deterministic Simulation Testing)",
+  "description": "Local software engineering toolkit with a Node.js CLI, MCP server, repository analysis, templates, and bounded demonstrations.",
   "type": "module",
   "bin": {
     "eos": "./bin/eos.mjs"

@@ -155,55 +155,42 @@ const SOVEREIGN_FLEET = [
 ];
 
 function handleOmega(req, res) {
-  const statement =
-    (req.query && req.query.statement) ||
-    (req.body && req.body.statement) ||
-    "EOS_V8_OMEGA_7_LAWS_100_PERCENT_VERIFIED";
-  const digest = computeSha256(String(statement));
+  const input = req.query && req.query.statement;
+  if (input !== undefined && (typeof input !== "string" || Buffer.byteLength(input, "utf8") > 4096)) {
+    return res.status(400).json({ status: "INVALID_STATEMENT", maximumBytes: 4096 });
+  }
+  const digest = computeSha256(typeof input === "string" ? input : "EOS_LOCAL_DEMO");
 
   return res.status(200).json({
-    status: "OMEGA_SINGULARITY_VERIFIED",
-    version: "8.0.0-omega-pqc-zkstark-bft",
-    postQuantumSeal: {
-      kem: "NIST-FIPS-203-ML-KEM-1024 (Kyber)",
-      signature: "NIST-FIPS-204-ML-DSA-87 (Dilithium-5) + FIPS-205-SLH-DSA (SPHINCS+)",
-      zkStarkProof: `fri_stark_merkle_${digest.slice(0, 32)}`,
-      trustedSetupRequired: false,
-      privateSecretsExposed: 0
-    },
-    bftConsensus: {
-      protocol: "HotStuff-BFT-3f+1",
-      quorum: "4/4 Auditors Approved (0 Hallucinations)",
-      verdict: "COMMIT_SEALED"
-    },
-    timeTravelEpochs: TIME_TRAVEL_EPOCHS,
-    sovereignFleet: SOVEREIGN_FLEET,
-    pillars: OMEGA_PILLARS,
-    sha256Receipt: `sha256:${digest}`
+    status: "LOCAL_DEMONSTRATION",
+    scope: "Static in-process example; no post-quantum cryptography, zero-knowledge proof, BFT consensus, or external fleet was run.",
+    displayedTopics: ["post-quantum cryptography", "zero-knowledge proofs", "BFT consensus", "deterministic simulation"],
+    statementFingerprintSha256: `sha256:${digest}`,
+    fingerprintIsSignature: false,
+    proofVerified: false,
+    cryptographicOperationPerformed: false
   });
 }
 
 export default function handler(req, res) {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
+  res.setHeader("Cache-Control", "no-store");
 
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "GET") {
+    res.setHeader("Allow", "GET, OPTIONS");
+    return res.status(405).json({ status: "METHOD_NOT_ALLOWED" });
   }
 
   const query = req.query || {};
-  const body = req.body && typeof req.body === "object" ? req.body : {};
   const url = req.url || "";
 
   if (
     url.includes("/api/bigtech") ||
     query.module === "bigtech" ||
-    query.mode === "bigtech" ||
-    body.module === "bigtech" ||
-    body.mode === "bigtech"
+    query.mode === "bigtech"
   ) {
     return handleBigTech(req, res);
   }
@@ -212,36 +199,25 @@ export default function handler(req, res) {
     url.includes("/api/omega") ||
     query.mode === "omega" ||
     query.module === "omega" ||
-    query.action === "omega" ||
-    query.epoch ||
-    query.statement ||
-    body.mode === "omega" ||
-    body.module === "omega" ||
-    body.action === "omega" ||
-    body.epoch ||
-    body.statement
+    query.action === "omega"
   ) {
     return handleOmega(req, res);
   }
 
-  const vfsPath = String(query.path || body.path || "/proc/eos/version").trim();
-  const content = VFS_NODES[vfsPath] || VFS_NODES["/proc/eos/version"];
-  const sha256Seal = computeSha256(`EOS_LINUX_KERNEL_V7:${vfsPath}:${content}`);
+  const vfsPath = query.path === undefined ? "/proc/eos/version" : query.path;
+  if (typeof vfsPath !== "string" || vfsPath.length > 128 || !Object.hasOwn(VFS_NODES, vfsPath)) {
+    return res.status(404).json({ status: "DEMO_NODE_NOT_FOUND", availableNodes: Object.keys(VFS_NODES) });
+  }
+  const content = VFS_NODES[vfsPath];
+  const outputFingerprintSha256 = computeSha256(`EOS_LOCAL_KERNEL_DEMO:${vfsPath}:${content}`);
 
   return res.status(200).json({
-    status: "RING0_KERNEL_VERIFIED",
-    kernelVersion: "7.0.0-PREEMPT_RT-Samaelian",
+    status: "LOCAL_STATIC_DEMONSTRATION",
+    scope: "Static sample data; this endpoint is not a Linux kernel, eBPF verifier, real-time scheduler, or security control.",
     vfsPath,
     content,
-    pillarsVerified: [
-      "RCU Lockless Synchronization",
-      "eBPF In-Kernel Static Verifier",
-      "EEVDF + PREEMPT_RT Virtual Deadline Scheduler",
-      "SLUB 64B Cache-Line Allocator",
-      "VFS Unified Namespace (/proc/eos)",
-      "cgroups v2 + Seccomp-BPF Isolation",
-      "Linus Torvalds Good Taste & Never Break Userspace ABI"
-    ],
-    sha256Seal
+    outputFingerprintSha256,
+    fingerprintIsSignature: false,
+    kernelOperationsPerformed: false
   });
 }
