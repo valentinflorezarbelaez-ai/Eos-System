@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const MAX_EVALUATION_INPUT_BYTES = 1024 * 1024;
+const MAX_EVALUATION_INPUT_BYTES = 100 * 1024;
 const MAX_TARGET_PATH_BYTES = 1024;
 const TITAN_ACTIONS = new Set([
   "all", "xirp", "spacex", "nvidia", "google", "reconcile", "xai",

@@ -71,7 +71,7 @@ Commands that write files, change Git configuration, commit, or push should be r
 | `/api/bigtech` | Static scenario fixtures; no model checking or fault injection. |
 | `/api/kernel` | Read-only kernel-themed fixtures; no kernel telemetry. `/api/omega` follows the rewrite configured in `vercel.json`. |
 | `/api/memory` | Static sample records and action previews; no server persistence or FTS5. |
-| `/api/eval` | Local evaluator with project-root confinement and a 1 MiB source limit. Evaluator load errors return a non-success status. |
+| `/api/eval` | Local evaluator with project-root confinement and a 100 KiB source limit. Evaluator load errors return a non-success status. |
 | `/api/titans` | Local benchmark code through the evaluator route; results do not describe Spotify, SpaceX, NVIDIA, Google, or xAI services. |
 | `/api/graph` | Local source graph when the engine loads; otherwise returns an explicit unavailable error. |
 | `/api/amplify` | Prompt-scaffolding route backed by `api/compile.js`; it does not call a remote language model. |

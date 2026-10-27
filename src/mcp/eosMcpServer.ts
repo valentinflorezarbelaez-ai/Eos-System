@@ -15,7 +15,6 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import readline from "node:readline";
 import { fileURLToPath } from "node:url";
 
 import {
@@ -379,6 +378,64 @@ export interface JsonRpcResponse {
   };
 }
 
+const MAX_MCP_REQUEST_BYTES = 1024 * 1024;
+const MAX_MCP_STRING_BYTES = 256 * 1024;
+const MAX_MCP_READ_FILE_BYTES = 1024 * 1024;
+const MAX_MCP_NESTING_DEPTH = 24;
+const MAX_MCP_VALUE_COUNT = 20_000;
+
+function isPlainRecord(value: unknown): value is Record<string, unknown> {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) return false;
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === Object.prototype || prototype === null;
+}
+
+function validateBoundedJson(value: unknown): void {
+  const pending: Array<{ value: unknown; depth: number }> = [{ value, depth: 0 }];
+  let visited = 0;
+
+  while (pending.length > 0) {
+    const current = pending.pop()!;
+    visited += 1;
+    if (visited > MAX_MCP_VALUE_COUNT) throw new RangeError("MCP arguments exceed the item-count limit.");
+    if (current.depth > MAX_MCP_NESTING_DEPTH) throw new RangeError("MCP arguments exceed the nesting-depth limit.");
+
+    if (typeof current.value === "string") {
+      if (Buffer.byteLength(current.value, "utf8") > MAX_MCP_STRING_BYTES) {
+        throw new RangeError("An MCP string argument exceeds the 256 KiB limit.");
+      }
+      continue;
+    }
+    if (current.value === null || typeof current.value === "boolean") continue;
+    if (typeof current.value === "number") {
+      if (!Number.isFinite(current.value)) throw new TypeError("MCP numeric arguments must be finite.");
+      continue;
+    }
+    if (Array.isArray(current.value)) {
+      if (current.value.length > MAX_MCP_VALUE_COUNT) throw new RangeError("An MCP array exceeds the item-count limit.");
+      for (const item of current.value) pending.push({ value: item, depth: current.depth + 1 });
+      continue;
+    }
+    if (isPlainRecord(current.value)) {
+      const entries = Object.entries(current.value);
+      for (const [key, child] of entries) {
+        if (Buffer.byteLength(key, "utf8") > 1024) throw new RangeError("An MCP object key exceeds the 1 KiB limit.");
+        if (key === "__proto__" || key === "prototype" || key === "constructor") {
+          throw new TypeError("MCP arguments cannot contain prototype-control keys.");
+        }
+        pending.push({ value: child, depth: current.depth + 1 });
+      }
+      continue;
+    }
+    throw new TypeError("MCP arguments must contain JSON values only.");
+  }
+}
+
+function isPathWithin(rootPath: string, candidatePath: string): boolean {
+  const relative = path.relative(rootPath, candidatePath);
+  return relative === "" || (relative !== ".." && !relative.startsWith(`..${path.sep}`) && !path.isAbsolute(relative));
+}
+
 export class EosMcpServer {
   private static globalHnsw = new EosHnswVectorEngine({ dimensions: 128, m: 16 });
   private static globalHashChain = new EosMonotonicHashChain();
@@ -392,22 +449,83 @@ export class EosMcpServer {
     const repoCandidate = path.resolve(currentDir, "../../");
 
     if (projectRoot && fs.existsSync(path.join(projectRoot, "package.json"))) {
-      this.projectRoot = projectRoot;
+      this.projectRoot = fs.realpathSync(projectRoot);
     } else if (process.env.EOS_PROJECT_ROOT && fs.existsSync(path.join(process.env.EOS_PROJECT_ROOT, "package.json"))) {
-      this.projectRoot = process.env.EOS_PROJECT_ROOT;
+      this.projectRoot = fs.realpathSync(process.env.EOS_PROJECT_ROOT);
     } else if (fs.existsSync(path.join(repoCandidate, "package.json"))) {
-      this.projectRoot = repoCandidate;
+      this.projectRoot = fs.realpathSync(repoCandidate);
     } else if (fs.existsSync(path.join(process.cwd(), "package.json"))) {
-      this.projectRoot = process.cwd();
+      this.projectRoot = fs.realpathSync(process.cwd());
     } else {
       this.projectRoot = repoCandidate;
     }
+  }
+
+  private resolveProjectPath(value: unknown, kind: "file" | "directory", defaultPath?: string): string {
+    const requested = value === undefined || value === null || value === "" ? defaultPath : value;
+    if (typeof requested !== "string" || Buffer.byteLength(requested, "utf8") > 4096) {
+      throw new TypeError("A local path must be a string no longer than 4096 UTF-8 bytes.");
+    }
+    const root = fs.realpathSync(this.projectRoot);
+    const candidate = path.resolve(root, requested);
+    if (!isPathWithin(root, candidate)) throw new Error("Requested path is outside the configured project root.");
+    const realPath = fs.realpathSync(candidate);
+    if (!isPathWithin(root, realPath)) throw new Error("Requested path resolves outside the configured project root.");
+    const stat = fs.lstatSync(candidate);
+    if (stat.isSymbolicLink()) throw new Error("Symbolic-link targets are not accepted by this MCP operation.");
+    if (kind === "file" && !stat.isFile()) throw new Error("Requested path is not a regular file.");
+    if (kind === "directory" && !stat.isDirectory()) throw new Error("Requested path is not a directory.");
+    if (kind === "file" && stat.size > MAX_MCP_READ_FILE_BYTES) {
+      throw new RangeError("MCP file reads are limited to 1 MiB.");
+    }
+    return realPath;
   }
 
   public handleRequest(
     req: JsonRpcRequest,
     onProgress?: (progress: number, total?: number, message?: string) => void
   ): JsonRpcResponse | null {
+    const fallbackId = isPlainRecord(req) && (
+      (typeof req.id === "string" && Buffer.byteLength(req.id, "utf8") <= 128) ||
+      (typeof req.id === "number" && Number.isFinite(req.id)) || req.id === null
+    )
+      ? req.id as string | number | null
+      : null;
+    if (!isPlainRecord(req)) {
+      return { jsonrpc: "2.0", id: null, error: { code: -32600, message: "Invalid JSON-RPC request." } };
+    }
+    let serializedRequest: string;
+    try {
+      const serialized = JSON.stringify(req);
+      if (typeof serialized !== "string") throw new TypeError("Request did not serialize to JSON.");
+      serializedRequest = serialized;
+    } catch {
+      return { jsonrpc: "2.0", id: fallbackId, error: { code: -32600, message: "Invalid JSON-RPC request." } };
+    }
+    if (Buffer.byteLength(serializedRequest, "utf8") > MAX_MCP_REQUEST_BYTES) {
+      return { jsonrpc: "2.0", id: fallbackId, error: { code: -32600, message: "MCP request exceeds the 1 MiB limit." } };
+    }
+    if (req.jsonrpc !== "2.0" || typeof req.method !== "string" || req.method.length > 128) {
+      return { jsonrpc: "2.0", id: fallbackId, error: { code: -32600, message: "Invalid JSON-RPC request." } };
+    }
+    if (req.id !== undefined && req.id !== null &&
+      ((typeof req.id !== "string" || Buffer.byteLength(req.id, "utf8") > 128) &&
+        (typeof req.id !== "number" || !Number.isFinite(req.id)))) {
+      return { jsonrpc: "2.0", id: null, error: { code: -32600, message: "Invalid JSON-RPC request ID." } };
+    }
+    if (req.params !== undefined && !isPlainRecord(req.params)) {
+      return { jsonrpc: "2.0", id: fallbackId, error: { code: -32602, message: "MCP params must be a JSON object." } };
+    }
+    try {
+      validateBoundedJson(req.params ?? {});
+    } catch (error) {
+      return {
+        jsonrpc: "2.0",
+        id: fallbackId,
+        error: { code: -32602, message: error instanceof Error ? error.message : "MCP params are invalid." }
+      };
+    }
+
     const { id, method, params } = req;
 
     // Notifications (no id)
@@ -479,7 +597,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_health_check",
-                  description: "Retrieves CNCF / Google SRE observability telemetry, process memory RSS, and subsystem health.",
+                  description: "Reports MCP handler liveness and process memory. It does not probe dependent subsystems or external services.",
                   inputSchema: {
                     type: "object",
                     properties: {}
@@ -487,7 +605,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_validate_patch",
-                  description: "Pre-validates proposed code modifications in an in-memory AST sandbox to detect syntax errors, plaintext secrets, and destructive commands before touching disk.",
+                  description: "Locally checks a proposed file's content for syntax issues, likely secrets, and destructive-command patterns. It does not write the file; the target must stay inside the configured project root.",
                   inputSchema: {
                     type: "object",
                     properties: {
@@ -576,24 +694,25 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_autonomous_heal",
-                  description: "Executes closed-loop FDIR autonomous healing (Meta SapFix / NASA FDIR), synthesizing and validating AST patches for detected code and invariant anomalies.",
+                  description: "Produces local formatting-remediation suggestions. File writes require apply=true; checks are local heuristics and do not certify production readiness.",
                   inputSchema: {
                     type: "object",
                     properties: {
                       targetFile: { type: "string", description: "Optional specific file to diagnose and heal" },
-                      dryRun: { type: "boolean", description: "If true, simulates remediation without touching disk (default: false)" }
+                      apply: { type: "boolean", description: "Only the JSON boolean true requests local file writes; defaults to a read-only report." }
                     }
                   }
                 },
                 {
                   name: "eos_manage_worktree",
-                  description: "Manages Xirp-grade isolated Git worktrees for concurrent AI agents. Supports actions: list, create, remove.",
+                  description: "Lists local Git worktrees. Create and remove are plan-only unless apply=true; worktrees do not sandbox processes, network access, or credentials.",
                   inputSchema: {
                     type: "object",
                     properties: {
                       action: { type: "string", enum: ["list", "create", "remove"], description: "Action to perform" },
                       branch: { type: "string", description: "Branch name for create action" },
                       targetPath: { type: "string", description: "Target path for remove action" },
+                      apply: { type: "boolean", description: "Only the JSON boolean true performs create or remove." },
                       force: { type: "boolean", description: "Force removal if modified" }
                     },
                     required: ["action"]
@@ -651,13 +770,14 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_spotify_scaffold",
-                  description: "Scaffolds a compliant Spotify Backstage RFC-42 descriptor (catalog-info.yaml) on any target project, immediately unlocking Golden Path conformance.",
+                  description: "Prepares a local catalog-info.yaml template. Writing requires apply=true; a generated template does not establish Backstage conformance.",
                   inputSchema: {
                     type: "object",
                     properties: {
                       targetPath: { type: "string", description: "Path to project root (default: current project)" },
                       name: { type: "string", description: "Component name" },
-                      owner: { type: "string", description: "Component owner" }
+                      owner: { type: "string", description: "Component owner" },
+                      apply: { type: "boolean", description: "Only the JSON boolean true writes the new file." }
                     }
                   }
                 },
@@ -730,7 +850,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_spotify_xirp_context",
-                  description: "Assembles Spotify Xirp architecture context from Backstage catalogs, OpenSpec ADRs, and repo topologies to prevent agent hallucination.",
+                  description: "Reads local catalog and specification metadata. Context is untrusted input; syncing AGENTS.md and CLAUDE.md requires syncFiles=true.",
                   inputSchema: {
                     type: "object",
                     properties: {
@@ -740,14 +860,14 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_spotify_fleetshift_batch",
-                  description: "Executes Spotify Fleetshift mass refactoring, dependency upgrades, or RFC-42 Backstage conformance across all registered fleet projects.",
+                  description: "Plans a bounded local catalog-template action. Applying requires apply=true and exactly one registered checkout whose Git origin matches the registry.",
                   inputSchema: {
                     type: "object",
                     properties: {
                       migrationId: { type: "string", description: "Identifier for the migration batch" },
                       action: { type: "string", enum: ["apply_backstage_rfc42", "enforce_strict_sre", "upgrade_dependencies"], description: "Migration action" },
                       targetFleet: { type: "array", items: { type: "string" }, description: "Optional project IDs to target" },
-                      dryRun: { type: "boolean", description: "Simulate without modifying files" }
+                      apply: { type: "boolean", description: "Only the JSON boolean true requests one bounded local write." }
                     },
                     required: ["migrationId", "action"]
                   }
@@ -779,11 +899,12 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_fleet_elevate",
-                  description: "Audits and elevates all fleet repositories in docs/projects/registry.json to Spotify Backstage RFC-42 Golden Path standards.",
+                  description: "Inventories registered local checkouts. Applying a missing catalog template requires apply=true and one targetProjectId.",
                   inputSchema: {
                     type: "object",
                     properties: {
-                      dryRun: { type: "boolean", description: "Simulate elevation without modifying disk files" }
+                      apply: { type: "boolean", description: "Only the JSON boolean true requests a write." },
+                      targetProjectId: { type: "string", description: "Single registered project ID to update when apply=true." }
                     }
                   }
                 },
@@ -828,12 +949,12 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_universal_adapt",
-                  description: "Audits architectural health (0-100), layer purity, test coverage, and security posture of ANY software project.",
+                  description: "Runs local inventory heuristics inside the configured project root. Optional scaffolding is a template draft; writing requires apply=true.",
                   inputSchema: {
                     type: "object",
                     properties: {
-                      targetPath: { type: "string", description: "Path to project root (default: current project)" },
-                      scaffold: { type: "boolean", description: "Apply Golden Path manifests to disk (default: false)" }
+                      targetPath: { type: "string", description: "Project-relative path inside the configured project root" },
+                      apply: { type: "boolean", description: "Only the JSON boolean true writes scaffold files." }
                     }
                   }
                 },
@@ -849,7 +970,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_universal_scaffold",
-                  description: "Synthesizes stack-tailored Backstage RFC-42 catalog, CI/CD workflow, git hooks, and AGENTS.md codex for ANY project.",
+                  description: "Prepares local scaffold templates inside the configured project root. Writing requires applyToDisk=true; templates are not validated or installed.",
                   inputSchema: {
                     type: "object",
                     properties: {
@@ -1115,12 +1236,12 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_apex_autonomous_heal",
-                  description: "Closed-loop NASA FDIR / Meta SapFix autonomous self-healing: diagnoses trailing whitespace, CRLF or broken invariants, applies surgical fixes and verifies conformance.",
+                  description: "Checks one local file for trailing whitespace and CRLF. It returns a local heuristic report; writing requires apply=true and is limited to files inside the configured project root.",
                   inputSchema: {
                     type: "object",
                     properties: {
-                      filePath: { type: "string", description: "Relative or absolute path to target file" },
-                      dryRun: { type: "boolean", description: "If true, simulates healing without modifying disk" }
+                      filePath: { type: "string", description: "Project-relative path to a regular file" },
+                      apply: { type: "boolean", description: "Only the JSON boolean true writes local formatting fixes." }
                     },
                     required: ["filePath"]
                   }
@@ -1774,8 +1895,16 @@ export class EosMcpServer {
 
         case "tools/call": {
           const toolName = params?.name;
-          const args = params?.arguments || {};
+          const args = params?.arguments === undefined ? {} : params.arguments;
+          if (typeof toolName !== "string" || toolName.length < 1 || toolName.length > 128) {
+            throw new TypeError("Tool name must contain 1 to 128 characters.");
+          }
+          if (!isPlainRecord(args)) throw new TypeError("Tool arguments must be a JSON object.");
           const result = this.dispatchTool(toolName, args, onProgress);
+          const resultText = typeof result === "string" ? result : JSON.stringify(result, null, 2) ?? "null";
+          if (Buffer.byteLength(resultText, "utf8") > MAX_MCP_REQUEST_BYTES - 4096) {
+            throw new RangeError("MCP tool output exceeds the 1 MiB response limit.");
+          }
           return {
             jsonrpc: "2.0",
             id,
@@ -1783,7 +1912,7 @@ export class EosMcpServer {
               content: [
                 {
                   type: "text",
-                  text: typeof result === "string" ? result : JSON.stringify(result, null, 2)
+                  text: resultText
                 }
               ]
             }
@@ -1818,7 +1947,7 @@ export class EosMcpServer {
         case "resources/read": {
           const uri = params?.uri;
           const content = this.readResource(uri);
-          return {
+          const response: JsonRpcResponse = {
             jsonrpc: "2.0",
             id,
             result: {
@@ -1831,6 +1960,10 @@ export class EosMcpServer {
               ]
             }
           };
+          if (Buffer.byteLength(JSON.stringify(response), "utf8") > MAX_MCP_REQUEST_BYTES) {
+            throw new RangeError("MCP resource output exceeds the 1 MiB response limit.");
+          }
+          return response;
         }
 
         default:
@@ -1849,8 +1982,8 @@ export class EosMcpServer {
         id,
         error: {
           code: -32603,
-          message: err.message || "Internal error",
-          data: String(err.stack || err)
+          message: err instanceof Error ? err.message.slice(0, 512) : "MCP operation failed.",
+          data: "Stack traces are not exposed by the MCP server."
         }
       };
     }
@@ -1898,52 +2031,95 @@ export class EosMcpServer {
       }
 
       case "eos_audit_fleet": {
-        const registryPath = path.join(this.projectRoot, "docs/projects/registry.json");
+        const registryCandidate = path.join(this.projectRoot, "docs/projects/registry.json");
         let registry = { projects: [] };
-        if (fs.existsSync(registryPath)) {
+        if (fs.existsSync(registryCandidate)) {
+          const registryPath = this.resolveProjectPath("docs/projects/registry.json", "file");
           registry = JSON.parse(fs.readFileSync(registryPath, "utf8"));
         }
+        const registeredProjects = Array.isArray(registry.projects) ? registry.projects : [];
         return {
-          fleetStatus: "ONLINE",
-          totalRegisteredProjects: registry.projects.length,
-          projects: registry.projects,
-          enforcedStandards: ["SLSA Level 4", "Pre-Commit Secret Scanner", "Pre-Push CI/CD Gate"]
+          scope: "LOCAL_REGISTRY_ONLY",
+          externalProbesRun: false,
+          fleetStatus: "NOT_PROBED",
+          totalRegisteredProjects: registeredProjects.length,
+          projects: registeredProjects.filter(isPlainRecord).map((project) => ({
+            id: typeof project.id === "string" ? project.id : null,
+            name: typeof project.name === "string" ? project.name : null,
+            remoteUrl: typeof project.remoteUrl === "string" ? project.remoteUrl : null,
+            health: "NOT_PROBED",
+            ci: "NOT_PROBED",
+            hooks: "NOT_PROBED"
+          }))
         };
       }
 
       case "eos_health_check": {
         const mem = process.memoryUsage();
         return {
-          status: "UP",
-          tier: "BIG_TECH_TIER_1",
+          status: "HANDLER_ALIVE",
+          scope: "Process liveness only; no subsystem checks or external probes ran.",
           uptimeSeconds: Math.floor(process.uptime()),
           memoryRssMb: (mem.rss / (1024 * 1024)).toFixed(2),
           heapUsedMb: (mem.heapUsed / (1024 * 1024)).toFixed(2),
-          subsystems: [
-            "JarvisSovereignMonad",
-            "NeuralVectorCore",
-            "LinuxKernelCore",
-            "NanosecondEngine",
-            "AkashicMemory",
-            "SecDevOpsSevenGates"
-          ]
+          subsystemProbes: "NOT_RUN"
         };
       }
 
       case "eos_validate_patch": {
-        const filePath = String(args.filePath || "");
-        const content = String(args.content || "");
-        return validatePatch(filePath, content, this.projectRoot);
+        if (typeof args.filePath !== "string" || !args.filePath || Buffer.byteLength(args.filePath, "utf8") > 4096) {
+          throw new TypeError("A project-relative target file path no longer than 4096 bytes is required.");
+        }
+        if (path.isAbsolute(args.filePath)) throw new Error("Patch validation accepts project-relative paths only.");
+        if (typeof args.content !== "string" || Buffer.byteLength(args.content, "utf8") > MAX_MCP_STRING_BYTES) {
+          throw new RangeError("Patch content must be a string no larger than 256 KiB.");
+        }
+        const root = fs.realpathSync(this.projectRoot);
+        const candidate = path.resolve(root, args.filePath);
+        if (candidate === root || !isPathWithin(root, candidate)) {
+          throw new Error("Patch target must stay inside the configured project root.");
+        }
+        let ancestor = path.dirname(candidate);
+        const missingSegments: string[] = [];
+        while (true) {
+          try {
+            fs.lstatSync(ancestor);
+            break;
+          } catch (error) {
+            if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+            const parent = path.dirname(ancestor);
+            if (parent === ancestor) throw new Error("Unable to resolve the patch target's parent directory.");
+            missingSegments.unshift(path.basename(ancestor));
+            ancestor = parent;
+          }
+        }
+        const ancestorStat = fs.statSync(ancestor);
+        if (!ancestorStat.isDirectory()) throw new Error("Patch target parent must be a directory.");
+        const realAncestor = fs.realpathSync(ancestor);
+        if (!isPathWithin(root, realAncestor)) throw new Error("Patch target parent resolves outside the configured project root.");
+        const realParent = path.join(realAncestor, ...missingSegments);
+        const safeTarget = path.join(realParent, path.basename(candidate));
+        if (!isPathWithin(root, safeTarget)) throw new Error("Patch target must stay inside the configured project root.");
+        try {
+          const stat = fs.lstatSync(safeTarget);
+          if (stat.isSymbolicLink() || !stat.isFile()) throw new Error("Patch target must be a regular non-symlink file.");
+          const realTarget = fs.realpathSync(safeTarget);
+          if (!isPathWithin(root, realTarget)) throw new Error("Patch target resolves outside the configured project root.");
+        } catch (error) {
+          if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+        }
+        return validatePatch(path.relative(root, safeTarget), args.content, root);
       }
 
       case "eos_optimize_context": {
-        const filePath = String(args.filePath || "");
+        const filePath = typeof args.filePath === "string" ? args.filePath : "";
         let content = typeof args.content === "string" ? args.content : "";
+        if (Buffer.byteLength(content, "utf8") > MAX_MCP_STRING_BYTES) {
+          throw new RangeError("Context input exceeds the 256 KiB limit.");
+        }
         if (!content && filePath) {
-          const full = path.resolve(this.projectRoot, filePath);
-          if (fs.existsSync(full)) {
-            content = fs.readFileSync(full, "utf8");
-          }
+          const full = this.resolveProjectPath(filePath, "file");
+          content = fs.readFileSync(full, "utf8");
         }
         return compressSourceContext(content, filePath);
       }
@@ -1960,7 +2136,7 @@ export class EosMcpServer {
       }
 
       case "eos_check_architecture": {
-        const targetDir = args.targetDir ? path.resolve(this.projectRoot, String(args.targetDir)) : path.resolve(this.projectRoot, "src");
+        const targetDir = this.resolveProjectPath(args.targetDir, "directory", "src");
         return scanArchitecture(targetDir, this.projectRoot);
       }
 
@@ -1992,8 +2168,9 @@ export class EosMcpServer {
       case "eos_autonomous_heal": {
         const healer = new EosAutonomousHealer(this.projectRoot);
         return healer.executeHealing({
-          targetFile: args.targetFile ? String(args.targetFile) : undefined,
-          dryRun: Boolean(args.dryRun)
+          targetFile: args.targetFile === undefined ? undefined : String(args.targetFile),
+          dryRun: args.apply !== true,
+          autoApply: args.apply === true
         });
       }
 
@@ -2001,17 +2178,42 @@ export class EosMcpServer {
         const orchestrator = new EosWorktreeOrchestrator(this.projectRoot);
         const action = String(args.action || "list");
         if (action === "create") {
-          return orchestrator.createWorktree(String(args.branch || `agent-${Date.now()}`));
+          const branch = typeof args.branch === "string" ? args.branch : `agent-${Date.now()}`;
+          if (Buffer.byteLength(branch, "utf8") > 256) throw new RangeError("Worktree branch names are limited to 256 UTF-8 bytes.");
+          if (!/^[A-Za-z0-9][A-Za-z0-9._/-]*$/.test(branch) || branch.includes("..") || branch.includes("//") ||
+            branch.endsWith("/") || branch.endsWith(".") || /(^|\/)\./.test(branch) || /(^|\/)[^/]+\.lock(\/|$)/.test(branch)) {
+            throw new Error("Worktree branch must be a valid, project-relative Git branch name.");
+          }
+          if (args.apply !== true) return { status: "PLAN_ONLY", action, branch, writeRequired: true };
+          const worktreeRoot = path.join(this.projectRoot, ".worktrees");
+          try {
+            const worktreeStat = fs.lstatSync(worktreeRoot);
+            if (worktreeStat.isSymbolicLink() || !worktreeStat.isDirectory() || !isPathWithin(this.projectRoot, fs.realpathSync(worktreeRoot))) {
+              throw new Error("The .worktrees directory must be a regular directory inside the configured project root.");
+            }
+          } catch (error) {
+            if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+          }
+          return orchestrator.createWorktree(branch);
         } else if (action === "remove") {
-          return orchestrator.removeWorktree(String(args.targetPath || ""), { force: Boolean(args.force) });
+          const targetPath = this.resolveProjectPath(args.targetPath, "directory");
+          if (args.apply !== true) return { status: "PLAN_ONLY", action, targetPath, force: args.force === true, writeRequired: true };
+          return orchestrator.removeWorktree(targetPath, { force: args.force === true });
         }
+        if (action !== "list") throw new Error("Unsupported worktree action.");
         return orchestrator.listWorktrees();
       }
 
       case "eos_run_eval": {
         const evaluator = new EosCognitiveEval();
-        const target = String(args.target || "");
-        return evaluator.evaluate(target, { isText: Boolean(args.isText) });
+        if (args.isText === true) {
+          if (typeof args.target !== "string" || Buffer.byteLength(args.target, "utf8") > 100 * 1024) {
+            throw new RangeError("Text evaluation input must be a string no larger than 100 KiB.");
+          }
+          return { scope: "LOCAL_HEURISTIC", certificationIssued: false, result: evaluator.evaluate(args.target, { isText: true }) };
+        }
+        const target = this.resolveProjectPath(args.target, "file");
+        return { scope: "LOCAL_HEURISTIC", certificationIssued: false, result: evaluator.evaluate(target) };
       }
 
       case "eos_check_openspec": {
@@ -2040,16 +2242,17 @@ export class EosMcpServer {
 
       case "eos_spotify_audit": {
         const codex = new EosSpotifyCodex(this.projectRoot);
-        const targetPath = args.targetPath ? String(args.targetPath) : undefined;
+        const targetPath = this.resolveProjectPath(args.targetPath, "directory", ".");
         return codex.auditUniversalProject(targetPath);
       }
 
       case "eos_spotify_scaffold": {
         const codex = new EosSpotifyCodex(this.projectRoot);
-        const targetPath = args.targetPath ? String(args.targetPath) : undefined;
+        const targetPath = this.resolveProjectPath(args.targetPath, "directory", ".");
         return codex.scaffoldBackstageCatalog(targetPath, {
           name: args.name ? String(args.name) : undefined,
-          owner: args.owner ? String(args.owner) : undefined
+          owner: args.owner ? String(args.owner) : undefined,
+          write: args.apply === true
         });
       }
 
@@ -2083,13 +2286,13 @@ export class EosMcpServer {
           taskName: String(args.taskName || "Autonomous task"),
           stack: args.stack,
           specDescription: String(args.specDescription || ""),
-          dryRun: Boolean(args.dryRun)
+          dryRun: true
         });
       }
 
       case "eos_spotify_xirp_context": {
         const factory = new EosSpotifyAgenticFactory(this.projectRoot);
-        if (args.syncFiles) {
+        if (args.syncFiles === true) {
           return factory.syncXirpContextFiles();
         }
         return factory.compileXirpContext();
@@ -2102,7 +2305,7 @@ export class EosMcpServer {
           description: `Fleetshift migration batch`,
           action: args.action || "apply_backstage_rfc42",
           targetFleet: Array.isArray(args.targetFleet) ? args.targetFleet : undefined,
-          dryRun: Boolean(args.dryRun)
+          dryRun: args.apply !== true
         });
       }
 
@@ -2122,8 +2325,21 @@ export class EosMcpServer {
       }
 
       case "eos_fleet_elevate": {
-        const elevator = new EosFleetElevator(this.projectRoot);
-        return elevator.elevateFleet({ dryRun: Boolean(args.dryRun) });
+        const inventory = new EosFleetElevator(this.projectRoot).elevateFleet({ dryRun: true });
+        if (args.apply !== true) return { status: "LOCAL_INVENTORY_ONLY", inventory, writeApplied: false };
+        const targetProject = typeof args.targetProjectId === "string" ? args.targetProjectId : "";
+        if (!targetProject || Buffer.byteLength(targetProject, "utf8") > 128) {
+          throw new Error("Applying requires one registered targetProjectId no longer than 128 bytes.");
+        }
+        const factory = new EosSpotifyAgenticFactory(this.projectRoot);
+        const result = factory.executeFleetshift({
+          migrationId: `MCP-${Date.now()}`,
+          description: "Create one missing local catalog-info.yaml template after checkout verification.",
+          action: "apply_backstage_rfc42",
+          targetFleet: [targetProject],
+          dryRun: false
+        });
+        return { status: "SINGLE_PROJECT_ACTION", inventory, result };
       }
 
       case "eos_apollo_rpc": {
@@ -2162,29 +2378,27 @@ export class EosMcpServer {
       }
 
       case "eos_universal_adapt": {
-        const target = path.resolve(String(args.targetPath || this.projectRoot));
+        const target = this.resolveProjectPath(args.targetPath, "directory", ".");
         const adapter = new EosUniversalProjectAdapter(target);
         const report = adapter.audit(target);
-        if (args.scaffold) {
-          adapter.elevate(target, { dryRun: false });
-        }
-        return report;
+        if (args.apply !== true) return { status: "LOCAL_INVENTORY_ONLY", report, writeApplied: false };
+        return { status: "LOCAL_SCAFFOLD_REQUESTED", report, scaffold: adapter.elevate(target, { dryRun: false }) };
       }
 
       case "eos_universal_fingerprint": {
-        const target = path.resolve(String(args.targetPath || this.projectRoot));
+        const target = this.resolveProjectPath(args.targetPath, "directory", ".");
         const adapter = new EosUniversalProjectAdapter(target);
-        return adapter.audit(target).fingerprint;
+        return { scope: "LOCAL_INVENTORY", fingerprint: adapter.audit(target).fingerprint };
       }
 
       case "eos_universal_scaffold": {
-        const target = path.resolve(String(args.targetPath || this.projectRoot));
+        const target = this.resolveProjectPath(args.targetPath, "directory", ".");
         const adapter = new EosUniversalProjectAdapter(target);
-        return adapter.elevate(target, { dryRun: !Boolean(args.applyToDisk) });
+        return adapter.elevate(target, { dryRun: args.applyToDisk !== true });
       }
 
       case "eos_polyglot_bridge": {
-        const target = path.resolve(String(args.targetPath || this.projectRoot));
+        const target = this.resolveProjectPath(args.targetPath, "directory", ".");
         return detectPolyglotPlan(target);
       }
 
@@ -2251,12 +2465,12 @@ export class EosMcpServer {
 
       case "eos_nubank_audit": {
         return evaluateNubankArchitectureHealth({
-          hasMutableStateInDomain: Boolean(args.hasMutableStateInDomain),
-          usesHexagonalLayerIsolation: args.usesHexagonalLayerIsolation !== false,
-          usesContractTestingInsteadOfE2E: args.usesContractTestingInsteadOfE2E !== false,
-          enforcesKafkaIdempotencyTokens: args.enforcesKafkaIdempotencyTokens !== false,
-          usesImmutableBitemporalLedgers: args.usesImmutableBitemporalLedgers !== false,
-          hasBlamelessPostmortemProcess: args.hasBlamelessPostmortemProcess !== false,
+          hasMutableStateInDomain: args.hasMutableStateInDomain === true,
+          usesHexagonalLayerIsolation: args.usesHexagonalLayerIsolation === undefined || args.usesHexagonalLayerIsolation === true,
+          usesContractTestingInsteadOfE2E: args.usesContractTestingInsteadOfE2E === undefined || args.usesContractTestingInsteadOfE2E === true,
+          enforcesKafkaIdempotencyTokens: args.enforcesKafkaIdempotencyTokens === undefined || args.enforcesKafkaIdempotencyTokens === true,
+          usesImmutableBitemporalLedgers: args.usesImmutableBitemporalLedgers === undefined || args.usesImmutableBitemporalLedgers === true,
+          hasBlamelessPostmortemProcess: args.hasBlamelessPostmortemProcess === undefined || args.hasBlamelessPostmortemProcess === true,
           unitTestCoveragePercent: Number(args.unitTestCoveragePercent) || 90
         });
       }
@@ -2332,7 +2546,8 @@ export class EosMcpServer {
 
       case "eos_apex_autonomous_heal": {
         const router = new EosApexModelRouter(this.projectRoot);
-        return router.healFile(String(args.filePath || ""), args.dryRun !== false);
+        const filePath = this.resolveProjectPath(args.filePath, "file");
+        return router.healFile(filePath, args.apply !== true);
       }
 
       case "eos_apex_go_benchmark": {
@@ -2402,8 +2617,13 @@ export class EosMcpServer {
         onProgress?.(30, 100, "Analyzing AST and injecting synthetic bug mutants");
         const target = String(args.targetSnippet || "");
         let code = target;
-        if (fs.existsSync(path.resolve(this.projectRoot, target))) {
-          code = fs.readFileSync(path.resolve(this.projectRoot, target), "utf8");
+        if (target && Buffer.byteLength(target, "utf8") <= 4096) {
+          try {
+            const filePath = this.resolveProjectPath(target, "file");
+            code = fs.readFileSync(filePath, "utf8");
+          } catch {
+            // Treat a non-file value as a source snippet; never read outside the project root.
+          }
         }
         const tester = new EosMutationTester();
         const mutants = tester.generateMutants(code);
@@ -2433,7 +2653,15 @@ export class EosMcpServer {
       case "eos_wal_status": {
         onProgress?.(30, 100, "Reading binary WAL header and frames");
         const defaultPath = path.join(this.projectRoot, "data/eos_bitemporal.wal");
-        const walPath = args.walPath ? path.resolve(this.projectRoot, String(args.walPath)) : defaultPath;
+        const requestedPath = args.walPath === undefined ? defaultPath : args.walPath;
+        if (typeof requestedPath !== "string" || Buffer.byteLength(requestedPath, "utf8") > 4096) {
+          throw new TypeError("WAL path must be a local path string no longer than 4096 UTF-8 bytes.");
+        }
+        const unresolvedWalPath = path.resolve(this.projectRoot, requestedPath);
+        if (!isPathWithin(fs.realpathSync(this.projectRoot), unresolvedWalPath)) throw new Error("WAL path is outside the configured project root.");
+        const walPath = fs.existsSync(unresolvedWalPath)
+          ? this.resolveProjectPath(unresolvedWalPath, "file")
+          : unresolvedWalPath;
         const exists = fs.existsSync(walPath);
         onProgress?.(100, 100, "WAL statistics gathered");
         return {
@@ -2530,9 +2758,9 @@ export class EosMcpServer {
         onProgress?.(50, 100, "Evaluating Subject-Object-Place consciousness metrics");
         const temple = new EosGnosticTemple();
         const result = temple.evaluateClaveDeSol({
-          subjectAware: Boolean(args.subjectAware),
-          objectFocused: Boolean(args.objectFocused),
-          placePresent: Boolean(args.placePresent)
+          subjectAware: args.subjectAware === true,
+          objectFocused: args.objectFocused === true,
+          placePresent: args.placePresent === true
         });
         onProgress?.(100, 100, "Consciousness evaluation sealed");
         return result;
@@ -2789,10 +3017,13 @@ export class EosMcpServer {
       case "eos_zero_copy_scan": {
         onProgress?.(30, 100, "Executing SpaceX/ASML Zero-Copy scan");
         let buf: Buffer;
-        if (args.filePath && typeof args.filePath === "string" && fs.existsSync(args.filePath)) {
-          buf = fs.readFileSync(args.filePath);
+        if (typeof args.filePath === "string" && args.filePath.length > 0) {
+          const filePath = this.resolveProjectPath(args.filePath, "file");
+          buf = fs.readFileSync(filePath);
         } else {
-          buf = Buffer.from(String(args.code || "export const x = 42;"));
+          const code = typeof args.code === "string" ? args.code : "export const x = 42;";
+          if (Buffer.byteLength(code, "utf8") > MAX_MCP_STRING_BYTES) throw new RangeError("Scan input exceeds the 256 KiB limit.");
+          buf = Buffer.from(code);
         }
         const result = EosZeroCopyScanner.scan(buf);
         onProgress?.(100, 100, "Zero-copy scan completed (0 B/op)");
@@ -3084,20 +3315,26 @@ export class EosMcpServer {
   }
 
   private readResource(uri: string): string {
+    if (typeof uri !== "string" || Buffer.byteLength(uri, "utf8") > 256) {
+      throw new TypeError("Resource URI must be a string no longer than 256 UTF-8 bytes.");
+    }
     switch (uri) {
       case "eos://specs/constitution": {
-        const specPath = path.join(this.projectRoot, "docs/specs/spec.md");
-        if (fs.existsSync(specPath)) return fs.readFileSync(specPath, "utf8");
+        const specCandidate = path.join(this.projectRoot, "docs/specs/spec.md");
+        const specPath = fs.existsSync(specCandidate) ? this.resolveProjectPath("docs/specs/spec.md", "file") : null;
+        if (specPath) return fs.readFileSync(specPath, "utf8");
         return "# EOS Constitution\nZero Vibe Coding & 7 Inviolable Laws active.";
       }
       case "eos://evidence/receipt": {
-        const receiptPath = path.join(this.projectRoot, "docs/evidence/SBOM-CICD-RECEIPT.json");
-        if (fs.existsSync(receiptPath)) return fs.readFileSync(receiptPath, "utf8");
+        const receiptCandidate = path.join(this.projectRoot, "docs/evidence/SBOM-CICD-RECEIPT.json");
+        const receiptPath = fs.existsSync(receiptCandidate) ? this.resolveProjectPath("docs/evidence/SBOM-CICD-RECEIPT.json", "file") : null;
+        if (receiptPath) return fs.readFileSync(receiptPath, "utf8");
         return JSON.stringify({ status: "NO_RECEIPT" });
       }
       case "eos://projects/registry": {
-        const regPath = path.join(this.projectRoot, "docs/projects/registry.json");
-        if (fs.existsSync(regPath)) return fs.readFileSync(regPath, "utf8");
+        const regCandidate = path.join(this.projectRoot, "docs/projects/registry.json");
+        const regPath = fs.existsSync(regCandidate) ? this.resolveProjectPath("docs/projects/registry.json", "file") : null;
+        if (regPath) return fs.readFileSync(regPath, "utf8");
         return JSON.stringify({ projects: [] });
       }
       default:
@@ -3106,13 +3343,7 @@ export class EosMcpServer {
   }
 
   public startStdioLoop(): void {
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-      terminal: false
-    });
-
-    rl.on("line", (line: string) => {
+    const processLine = (line: string): void => {
       const trimmed = line.trim();
       if (!trimmed) return;
       try {
@@ -3130,18 +3361,48 @@ export class EosMcpServer {
         if (res) {
           process.stdout.write(JSON.stringify(res) + "\n");
         }
-      } catch (err: any) {
+      } catch {
         const errorRes: JsonRpcResponse = {
           jsonrpc: "2.0",
           id: null,
           error: {
             code: -32700,
-            message: "Parse error: Invalid JSON",
-            data: String(err)
+            message: "Parse error: Invalid JSON"
           }
         };
         process.stdout.write(JSON.stringify(errorRes) + "\n");
       }
+    };
+
+    let pending = "";
+    let discardingOversizedLine = false;
+    process.stdin.setEncoding("utf8");
+    process.stdin.on("data", (chunk: string) => {
+      let start = 0;
+      while (start <= chunk.length) {
+        const newline = chunk.indexOf("\n", start);
+        const end = newline < 0 ? chunk.length : newline;
+        if (!discardingOversizedLine) {
+          pending += chunk.slice(start, end);
+          if (Buffer.byteLength(pending, "utf8") > MAX_MCP_REQUEST_BYTES) {
+            process.stdout.write(JSON.stringify({
+              jsonrpc: "2.0",
+              id: null,
+              error: { code: -32700, message: "MCP request exceeds the 1 MiB limit." }
+            }) + "\n");
+            pending = "";
+            discardingOversizedLine = true;
+          }
+        }
+        if (newline < 0) break;
+        if (!discardingOversizedLine) processLine(pending);
+        pending = "";
+        discardingOversizedLine = false;
+        start = newline + 1;
+      }
+    });
+    process.stdin.on("end", () => {
+      if (!discardingOversizedLine && pending) processLine(pending);
     });
   }
 }
