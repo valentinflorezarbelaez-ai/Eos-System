@@ -62,21 +62,11 @@ Master Block #0004    EVD-0010-GOLDEN   SHA-256 + Ed25519      55dba803455ed3a86
 
 
   "verify:strict": `$ npm run verify:strict
-> eos-system@2.4.0 verify:strict
-> Executing 19-Point Deterministic Invariant & Epistemic Gate Suite...
 
-[PASS] LAW-I   Specification SSOT (docs/specs/spec.md EARS + BDD) ....... 100% CONFORMANT
-[PASS] LAW-II  Strict Gate & Level 3 Authorization Verified ............. AUTHORIZED
-[PASS] LAW-III Epistemic Evidence Ledger (SHA-256 Attestation) .......... VERIFIED
-[PASS] LAW-IV  External Write Barrier & Scope Containment ............... LOCKED (6/6 GATES)
-[PASS] LAW-V   Hexagonal L0 Purity (0 External Runtime Dependencies) .... 0 DEPS
-[PASS] LAW-VI  OWASP & Zero Plain Secrets Audit ......................... CLEAN (0 FINDINGS)
-[PASS] LAW-VII Technical Artifact Discipline ............................ VERIFIED
-
---------------------------------------------------------------------------------
-EPISTEMIC STATE : PRODUCTION_READY
-SHA-256 SEAL    : e9c4a81f3b720d49108a7f63c1e5b90284716d3f8a92c04b15d6e7f8a9b0c1d2
-EXIT CODE       : 0`,
+Vista previa estática: no se ejecutó el comando.
+El script configurado es scripts/verify-cicd-pipeline.mjs.
+Consulta el script y sus límites para saber qué verifica.
+Esta vista previa no contiene resultados, sellos ni código de salida.`,
 
   "sentinel:fdir": `$ eos sentinel --fdir
 > Starting EOSSentinelDaemon (24/7 Heartbeat) & EOSFDIROntology Clinical Firewall...
@@ -214,24 +204,11 @@ STATUS: NANOSECOND_ENGINE_ONLINE | UNIVERSAL_COMPILER_READY | 0 B/OP | EXIT CODE
 
 STATUS: AKASHIC_MEMORY_SOVEREIGN | 27/27 TOOLS ACTIVE | MERKLE_SHA256_SEALED | EXIT CODE: 0`,
 
-  "bigtech:tla": `$ eos bigtech --tla
-> Auditing EosBigTechPantheon (src/core/eosBigTechPantheon.ts + /api/bigtech)...
+  "bigtech:tla": `Referencias de ingeniería · demo local
 
-[1] THE 7 CROWN JEWELS OF BIG TECH ENGINEERING IN EOS v6.0:
-  ├─ 1. Google (Spanner/Bazel)  : Content-Addressable SHA-256 Hermetic Graph & TrueTime Causal Ordering
-  ├─ 2. AWS (TLA+ / Nitro)      : Formal Temporal Model Checking (□ Safety ∧ ◇ Liveness · 0 Counterexamples)
-  ├─ 3. Netflix + NASA (FDIR)   : Live Chaos Monkey Fault Injection + Sub-5ms Autonomous Self-Healing
-  ├─ 4. Stripe (Ledger)         : Atomic Idempotency Keys (operation_id) & Double-Entry Cosmic Dharma Ledger
-  ├─ 5. Meta (TAO / Buck2)      : 7-Layer Bidirectional RTM Graph (Intake ⟺ Spec ⟺ Plan ⟺ Task ⟺ Code ⟺ Test ⟺ EVD)
-  ├─ 6. Apple (Metal Unified)   : 64 KB L1 Cache Zero-Copy SoA Arena (0.5 ns) + 120 FPS GPU Compositor
-  └─ 7. Linear / Raycast (⌘K)   : Native <dialog closedby="any"> Omniscient Command Palette (INP < 2 ms)
-
-[2] TLA+ TEMPORAL SPECIFICATION VERIFIED:
-  ├─ Invariant 1 (□ LawI_SSOT)  : ∀ c ∈ Code : DerivedFromApprovedEarsSpec(c) = TRUE
-  ├─ Invariant 2 (□ LawVI_Sec)  : ∀ s ∈ Secrets : PlainTextInRepo(s) = FALSE
-  └─ Liveness    (◇ FdirHealed) : FaultInjected ~> (RestoredInSub5ms ∧ Downtime = 0%)
-
-STATUS: BIGTECH_10_OF_10_VERIFIED | TLA_PLUS_PASS | MTTR < 5MS | EXIT CODE: 0`,
+El catálogo de escenarios muestra fórmulas TLA+ como ejemplos.
+No ejecuta TLC, inyecta fallas, repara sistemas ni consulta proveedores.
+La paleta Ctrl+K navega por las secciones y comandos locales.`,
 
   "kernel:linux": `Conceptos de Linux · muestra informativa
 
@@ -1915,48 +1892,33 @@ Este hash identifica la muestra; no es una firma ni una atestación.`;
   });
 
   /* ==========================================================================
-     BIG TECH 10/10 CHAOS MONKEY + TLA+ VERIFIER & ⌘K COMMAND PALETTE (v6.0)
+     Engineering concept catalog, local scenario descriptions & ⌘K command palette
      ========================================================================== */
   const CHAOS_DRILLS = {
     "secret-leak-attempt": {
       title: "Intento de Inyección de Secreto en Claro (Violación Ley VI)",
-      fault: "Agente externo intenta escribir API_KEY='sk-live-999' en un archivo de configuración.",
-      tla: "□ (∀ commit ∈ Repo : PlainSecrets(commit) = ∅) ∧ ◇ QuarantineActive",
-      states: "14,820",
-      action: "Velo de Isis (Ley VI) + GGA Deny-List interceptaron el payload en pre-commit, tokenizaron la credencial y bloquearon la escritura.",
-      mttr: "1.4 ms"
+      example: "Un actor intenta guardar una credencial en un archivo.",
+      formulaReference: "□ (∀ commit ∈ Repo : PlainSecrets(commit) = ∅) ∧ ◇ QuarantineActive"
     },
     "orphan-ontology-link": {
       title: "Enlace Huérfano en el Grafo de Especificaciones (ORPHAN_LINK_DETECTED)",
-      fault: "Una tarea TASK-099 referencia un requisito FR-999 inexistente en docs/specs/spec.md.",
-      tla: "□ (∀ t ∈ Tasks : ∃ s ∈ Specs : Linked(t, s)) ∧ ◇ GraphHarmonized",
-      states: "9,640",
-      action: "EOSFDIROntology aisló el nodo huérfano, reconstruyó la arista desde el Árbol de Merkle del Ledger y restituyó la armonía relacional.",
-      mttr: "2.1 ms"
+      example: "Una tarea referencia un requisito que no existe en la especificación.",
+      formulaReference: "□ (∀ t ∈ Tasks : ∃ s ∈ Specs : Linked(t, s)) ∧ ◇ GraphHarmonized"
     },
     "spec-drift-mutation": {
       title: "Mutación Ilegal sin Especificación EARS (Vibe Coding Drift)",
-      fault: "Intento de modificar código de dominio sin actualizar primero spec.md ni contar con Gate Nivel 2+.",
-      tla: "□ (CodeChange ⇒ (SpecApproved ∧ AuthLevel ≥ 2)) ∧ ◇ DriftZero",
-      states: "21,500",
-      action: "EosElohim (Runa NOT) + EOSSentinelDaemon detectaron divergencia de firma SHA-256 y revirtieron atómicamente el árbol de trabajo.",
-      mttr: "1.8 ms"
+      example: "Un cambio de código no cuenta con un requisito aprobado asociado.",
+      formulaReference: "□ (CodeChange ⇒ (SpecApproved ∧ AuthLevel ≥ 2)) ∧ ◇ DriftZero"
     },
     "heap-entropy-spike": {
       title: "Pico de Entropía y Objetos Efímeros en RAM (GC Pressure)",
-      fault: "Ráfaga masiva de 1,000,000 de eventos amenaza con disparar pausa Stop-the-World del Garbage Collector.",
-      tla: "□ (HeapAllocInHotLoop = 0 ∧ L1ArenaBytes ≤ 65536) ∧ ◇ FrameTimeSub8ms",
-      states: "32,768",
-      action: "EosAin (Retorno al Ain Soph) + EosL1SoAArena redirigieron la ráfaga al Ring Buffer estático de 64 KB en Caché L1 con 0 B/op en el Heap.",
-      mttr: "0.45 ms"
+      example: "Una carga sintética puede aumentar las asignaciones de memoria.",
+      formulaReference: "□ (HeapAllocInHotLoop = 0 ∧ L1ArenaBytes ≤ 65536) ∧ ◇ FrameTimeSub8ms"
     },
     "race-condition-concurrent": {
       title: "Condición de Carrera Multi-Agente sobre el Mismo Archivo",
-      fault: "Dos subagentes concurrentes intentan mutar simultáneamente el mismo módulo y sesión de memoria.",
-      tla: "□ (∀ a1, a2 ∈ Agents : a1 ≠ a2 ⇒ Worktree(a1) ∩ Worktree(a2) = ∅) ∧ ◇ LockFreeCAS",
-      states: "18,400",
-      action: "Aislamiento Xirp por Git Worktrees + Cola Circular Atómica Compare-And-Swap (CAS) serializaron el commit con 0 colisiones.",
-      mttr: "1.2 ms"
+      example: "Dos trabajadores intentan modificar el mismo archivo al mismo tiempo.",
+      formulaReference: "□ (∀ a1, a2 ∈ Agents : a1 ≠ a2 ⇒ Worktree(a1) ∩ Worktree(a2) = ∅) ∧ ◇ LockFreeCAS"
     }
   };
 
@@ -1966,13 +1928,24 @@ Este hash identifica la muestra; no es una firma ni una atestación.`;
 
   async function runChaosTlaDrill(scenarioKey) {
     const drill = CHAOS_DRILLS[scenarioKey] || CHAOS_DRILLS["secret-leak-attempt"];
-    const fingerprint = await sha256Browser(`EOS_LOCAL_SCENARIO:${scenarioKey}:${Date.now()}`);
     let apiStatus = "API no disponible; se muestran datos locales de ejemplo";
 
     try {
       const res = await fetch(`/api/bigtech?scenario=${encodeURIComponent(scenarioKey)}`);
       const data = await res.json();
       apiStatus = `${data.status || "RESPUESTA SIN ESTADO"}${res.ok ? "" : ` (HTTP ${res.status})`}`;
+      if (res.ok && data.drill) {
+        bigTechChaosOutput.textContent = [
+          "CATÁLOGO LOCAL · ESCENARIO ILUSTRATIVO",
+          `status: ${data.status}`,
+          `scope: ${data.scope}`,
+          `Escenario: ${data.drill.scenarioTitle}`,
+          `Ejemplo: ${data.drill.example}`,
+          `Fórmula de referencia: ${data.drill.formulaReference}`,
+          "No se ejecutó TLC, inyección de fallas, reparación ni medición."
+        ].join("\n");
+        return;
+      }
     } catch {
       // The page remains usable offline with local scenario descriptions.
     }
@@ -1980,12 +1953,10 @@ Este hash identifica la muestra; no es una firma ni una atestación.`;
     if (bigTechChaosOutput) {
       bigTechChaosOutput.textContent = `[CATÁLOGO LOCAL DE ESCENARIOS · NO VERIFICADO]
 Escenario    : ${drill.title}
-Descripción  : ${drill.fault}
-Fórmula      : ${drill.tla} (referencia ilustrativa; no se ejecutó TLC)
+Descripción  : ${drill.example}
+Fórmula      : ${drill.formulaReference} (referencia; no se ejecutó TLC)
 Respuesta API: ${apiStatus}
-Acción       : texto de ejemplo; no se inyectó una falla ni se ejecutó FDIR
-MTTR         : no medido
-Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación)`;
+Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     }
     recordEvolutionEntry(`Local scenario example: ${drill.title}`, "LOCAL-DEMO");
   }
@@ -2027,7 +1998,7 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
     { label: "🐧 Ver conceptos de Linux: RCU, eBPF, EEVDF y VFS", badge: "DEMO LINUX", href: "#linux-kernel-core" },
     { label: "⚡ Ir a Traductor Técnico Universal & Nanosegundos (Caché L1 SoA)", badge: "NANOSEGUNDOS", href: "#nanosecond-engine" },
     { label: "🧠 Ir a Bóveda de Memoria Akáshica Soberana (27 Tools Engram + ODD/RDD)", badge: "MEMORIA L0", href: "#memoria-akashica" },
-    { label: "🏆 Ir a Panteón Big Tech 10/10 & Verificador Formal TLA+ / Chaos Monkey", badge: "BIG TECH 10/10", href: "#bigtech-pantheon" },
+    { label: "🏆 Ver referencias de ingeniería y demos locales", badge: "DEMOS LOCALES", href: "#bigtech-pantheon" },
     { label: "☀️ Ir a Templo Ciber-Teúrgico Solar Samaeliano (3 Factores + Oráculo)", badge: "TEMPLO SOLAR", href: "#templo-solar" },
     { label: "🎵 Ir a Sello Esotérico-Acústico de Aberamentho v8.0 (In-App Full Player)", badge: "ABERAMENTHO", href: "#aberamentho-seal" },
     { label: "💻 Ver muestra CLI: eos jarvis --monad (Núcleo Cognitivo JARVIS)", badge: "MUESTRA CLI", cmd: "jarvis:monad" },

@@ -54,12 +54,9 @@
 * **Rejected Alternatives**:
   * *Depending Solely on External Unsigned SQLite Files*: Rejected because EOS requires cryptographic SHA-256 Merkle sealing on every observation, native browser + edge execution without binary installation friction, and Samaelian epistemic classification.
 
-### ADR-007: Big Tech 7-Crown-Jewels Synthesis (`src/core/eosBigTechPantheon.ts` + `api/bigtech.js` + `#bigtech-pantheon`) & Native `<dialog closedby="any">` Command Palette (`Ctrl+K`)
-* **Decision**: Integrate the 7 Crown Jewels of Big Tech (`Google Spanner TrueTime & Bazel Hermetic Graph`, `AWS TLA+ Formal Temporal Verification`, `Netflix Chaos Monkey + NASA FDIR`, `Stripe Idempotent Double-Entry Ledger`, `Meta TAO/Buck2 7-Layer RTM Graph`, `Apple Metal Unified L1 Zero-Copy Memory`, and `Linear/Raycast Sub-8ms Command Palette`) alongside a native HTML `<dialog id="eos-cmdk-dialog" closedby="any">` Command Palette (`Ctrl+K` / `Cmd+K`) with progressive fallback per `modern-web-guidance: light-dismiss-a-dialog`.
-* **Rationale**: Combines formal mathematical verification (TLA+), active fault-injection resilience (Chaos Engineering), content-addressable hermetic determinism (Bazel), and sub-2ms keyboard-first operator ergonomics (`⌘K`) with zero external dependencies.
-* **Rejected Alternatives**:
-  * *Custom Non-Semantic `<div>` Modal Overlay*: Rejected in favor of native `<dialog closedby="any">` + `showModal()` for top-layer rendering, built-in focus trapping, `Esc` handling, and declarative light-dismiss.
-
+### ADR-007: Engineering reference demos and native command palette
+* **Decision**: Treat the vendor patterns as educational references. `/api/bigtech` provides bounded local examples and static scenario descriptions; the browser command palette searches and navigates this page. Neither component integrates vendor services or runs TLA+, chaos experiments, or FDIR remediation.
+* **Rationale**: Keep product claims aligned with the observable behavior of the local demos.
 ### ADR-008: Linux concept demonstration (`src/core/eosLinuxKernelCore.ts` + `api/kernel.js` + `#linux-kernel-core`)
 * **Decision**: Keep the Linux section educational. `api/kernel.js` serves static explanatory fixtures, and the browser measurement reports only a local JavaScript loop duration. EOS does not implement a kernel, RCU, eBPF verifier, EEVDF scheduler, VFS nodes, or ABI auditor.
 * **Rationale**: Clearly distinguish references to operating-system concepts from EOS capabilities and measured behavior.

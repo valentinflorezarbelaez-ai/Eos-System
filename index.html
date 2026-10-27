@@ -370,24 +370,12 @@
           </div>
 
 
-          <pre class="terminal-body" id="terminal-output" aria-live="polite">MUESTRA ILUSTRATIVA · No se ejecutó el comando ni se verificaron estos resultados.
+          <pre class="terminal-body" id="terminal-output" aria-live="polite">Vista previa estática · no se ejecutó el comando.
 
 $ npm run verify:strict
-&gt; eos-system@2.5.0 verify:strict
-&gt; Executing 19-Point Deterministic Invariant &amp; Epistemic Gate Suite...
-
-[PASS] LAW-I   Specification SSOT (docs/specs/spec.md EARS + BDD) ....... 100% CONFORMANT
-[PASS] LAW-II  Strict Gate &amp; Level 3 Authorization Verified ............. AUTHORIZED
-[PASS] LAW-III Epistemic Evidence Ledger (SHA-256 Attestation) .......... VERIFIED
-[PASS] LAW-IV  External Write Barrier &amp; Scope Containment ............... LOCKED (6/6 GATES)
-[PASS] LAW-V   Hexagonal L0 Purity (0 External Runtime Dependencies) .... 0 DEPS
-[PASS] LAW-VI  OWASP &amp; Zero Plain Secrets Audit ......................... CLEAN (0 FINDINGS)
-[PASS] LAW-VII Technical Artifact Discipline ............................ VERIFIED
-
---------------------------------------------------------------------------------
-EPISTEMIC STATE : PRODUCTION_READY
-SHA-256 SEAL    : e9c4a81f3b720d49108a7f63c1e5b90284716d3f8a92c04b15d6e7f8a9b0c1d2
-EXIT CODE       : 0</pre>
+Script configurado: scripts/verify-cicd-pipeline.mjs
+Lee el script para conocer las verificaciones que realiza y sus límites.
+Esta muestra no contiene resultados, fingerprints ni códigos de salida.</pre>
 
           <div class="terminal-footer">
             <span id="active-cmd-label" style="color: #10b981;">Muestra: verify:strict · NO EJECUTADO</span>
@@ -2057,82 +2045,40 @@ pub struct GlyphSoABatch {
       </div>
     </section>
 
-    <!-- BIG TECH 10/10 PANTHEON: GOOGLE, AWS TLA+, NETFLIX CHAOS, STRIPE, META, APPLE & LINEAR ⌘K -->
+    <!-- ENGINEERING CONCEPT REFERENCES AND LOCAL DEMOS -->
     <section class="section deferred-section" id="bigtech-pantheon">
       <div class="container">
         <div class="section__head">
-          <div class="eyebrow">🏆 PANTEÓN BIG TECH 10/10 · GOOGLE BAZEL/SPANNER · AWS TLA+ · NETFLIX CHAOS · STRIPE · META · APPLE · LINEAR ⌘K</div>
-          <h2 class="section__title">Las 7 Joyas de Ingeniería de las Grandes Big Tech Transmutadas en EOS System</h2>
+          <div class="eyebrow">REFERENCIAS DE INGENIERÍA · DEMOS LOCALES</div>
+          <h2 class="section__title">Patrones de ingeniería y alcance de las demos EOS</h2>
           <p class="section__sub">
-            Para alcanzar el <strong>10/10 de Perfección Absoluta</strong>, <strong>EOS System (<code>src/core/eosBigTechPantheon.ts</code> + <code>/api/bigtech</code>)</strong> sintetiza las siete cumbres tecnológicas de Silicon Valley con la <strong>Matemática Sagrada Pitagórica-Samaeliana</strong>: compilación hermética direccionada por contenido (<code>Google Bazel/Spanner</code>), verificación formal de modelos temporales (<code>AWS TLA+</code>), ingeniería del caos con auto-reparación en milisegundos (<code>Netflix Chaos Monkey + NASA FDIR</code>), contabilidad idempotente de doble partida (<code>Stripe</code>), grafos bidireccionales en memoria (<code>Meta TAO/Buck2</code>), memoria unificada cero-copias (<code>Apple Metal</code>) y paleta de comandos omnisciente <code>⌘K / Ctrl+K</code> (<code>Linear / Raycast</code>).
+            Esta sección usa tecnologías conocidas como referencias. Las demos ejecutan solo cálculos locales acotados o muestran escenarios estáticos; no se conectan a esos proveedores ni replican sus sistemas. La paleta <code>Ctrl+K</code> sí navega la interfaz local.
           </p>
         </div>
 
-        <!-- TABLA DE LAS 7 JOYAS BIG TECH EN EOS -->
-        <div class="table-wrap" role="region" aria-label="Tabla de las 7 Joyas de Ingeniería Big Tech en EOS System" tabindex="0" style="margin-bottom: 2.25rem;">
+        <!-- REFERENCIAS Y LÍMITES DE IMPLEMENTACIÓN -->
+        <div class="table-wrap" role="region" aria-label="Referencias de ingeniería y límites de las demos EOS" tabindex="0" style="margin-bottom: 2.25rem;">
           <table class="eos-table">
-            <thead>
-              <tr>
-                <th>Big Tech &amp; Sistema Insignia</th>
-                <th>Hito de Ingeniería Mundial</th>
-                <th>Transmutación Soberana en <code>EOS System v6.0</code></th>
-                <th>Correspondencia Samaeliana &amp; Meta</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Referencia</th><th>Patrón</th><th>Qué ofrece EOS</th><th>Qué no ofrece</th></tr></thead>
             <tbody>
-              <tr>
-                <td><strong>1. Google</strong><br /><code>Spanner TrueTime · Bazel · Borg · Monarch</code></td>
-                <td>Consenso global con incertidumbre de reloj acotada (<code>TrueTime ε</code>) y compilación 100% hermética direccionada por hash <code>SHA-256</code>.</td>
-                <td><strong><code>EosTrueTimeHermetic</code>:</strong> Árboles de artefactos direccionados por contenido <code>SHA-256</code> (0 rebuilds innecesarios) y ordenamiento causal entre agentes.</td>
-                <td><strong>Kether (Orden Cósmico)</strong><br /><code>100% Hermetic Cache · ε = 0</code></td>
-              </tr>
-              <tr>
-                <td><strong>2. Amazon Web Services</strong><br /><code>TLA+ Formal Methods · Nitro</code></td>
-                <td>Model Checking matemático con <strong>TLA+ (Leslie Lamport)</strong> en S3 y DynamoDB para atrapar bugs concurrentes de 35 pasos antes de escribir código.</td>
-                <td><strong><code>EosTlaPlusVerifier</code>:</strong> Verificación de fórmulas temporales (<code>□ Safety ∧ ◇ Liveness</code>) sobre los 7 Mandamientos e invariantes de dominio.</td>
-                <td><strong>Chokmah (Ecuación Exacta)</strong><br /><code>0 Contrajemplos · □ TypeOK</code></td>
-              </tr>
-              <tr>
-                <td><strong>3. Netflix + NASA</strong><br /><code>Chaos Monkey / Simian Army + FDIR</code></td>
-                <td>Inyección deliberada de fallas en vivo para probar que el sistema se auto-repara sin intervención humana ni caída de servicio.</td>
-                <td><strong><code>EOSSentinelDaemon</code> + <code>EOSFDIROntology</code> + <code>EosAin</code>:</strong> Cuarentena instantánea de mutaciones, poda de enlaces huérfanos y purga a Entropía Cero en <code>&lt; 5 ms</code>.</td>
-                <td><strong>Geburah (Espada de la Justicia)</strong><br /><code>MTTR &lt; 5 ms · 0.00% Downtime</code></td>
-              </tr>
-              <tr>
-                <td><strong>4. Stripe</strong><br /><code>Idempotency Keys · Double-Entry Ledger</code></td>
-                <td>Claves de idempotencia atómicas y libro mayor contable de doble partida donde ningún reintento duplica efectos ni corrompe saldos.</td>
-                <td><strong>Balanza Cósmica del Dharma &amp; <code>eos_mem_save</code>:</strong> <code>operation_id</code> + <code>topic_key</code> idempotente con sellado criptográfico en Árbol de Merkle.</td>
-                <td><strong>Jerarca Anubis (42 Jueces)</strong><br /><code>100% Idempotent · Δ = 0</code></td>
-              </tr>
-              <tr>
-                <td><strong>5. Meta</strong><br /><code>TAO Graph · Sapling · Buck2</code></td>
-                <td>Grafo distribuido en memoria de billones de aristas (<code>TAO</code>) y control de versiones escalable sin bloqueos para repositorios masivos.</td>
-                <td><strong>Matriz Bidireccional RTM de 7 Capas:</strong> <code>Intake ⟺ Spec ⟺ Plan ⟺ Task ⟺ Code ⟺ Test ⟺ EVD</code> + Git Worktrees estilo Xirp.</td>
-                <td><strong>Netzach (Mente Solar)</strong><br /><code>7-Layer Traceability &lt; 0.5 ms</code></td>
-              </tr>
-              <tr>
-                <td><strong>6. Apple</strong><br /><code>Metal Unified Memory · GCD</code></td>
-                <td>Memoria física unificada entre CPU, GPU y Neural Engine con cero copias de búfer y planificación por calidad de servicio (QoS).</td>
-                <td><strong><code>EosL1SoAArena</code> (64 KB en Caché L1):</strong> <code>Struct of Arrays</code> a <code>0.5 ns</code> con <code>0 Bytes</code> en el Heap + Composición GPU a <code>120 FPS</code>.</td>
-                <td><strong>Yesod (Fundamento Etérico)</strong><br /><code>0.5 ns L1 Hit · 120 FPS GPU</code></td>
-              </tr>
-              <tr>
-                <td><strong>7. Linear · Raycast · Vercel</strong><br /><code>⌘K Command Palette &amp; Local-First Sync</code></td>
-                <td>Interacción por teclado en sub-8ms mediante paleta universal (<code>Cmd+K / Ctrl+K</code>), Speculation Rules y sincronización local-first.</td>
-                <td><strong>Paleta Omnisciente <code>&lt;dialog id="eos-cmdk-dialog" closedby="any"&gt;</code>:</strong> Activación global con <code>Ctrl+K / Cmd+K</code> o botón <code>⌘K Comandos</code> en <code>&lt; 2 ms</code>.</td>
-                <td><strong>Tiphereth (Voluntad Thelema)</strong><br /><code>INP &lt; 2 ms · 0 ms Nav</code></td>
-              </tr>
+              <tr><td><strong>Google Bazel / Spanner</strong></td><td>Builds herméticos y orden temporal distribuido</td><td>El proyecto calcula fingerprints SHA-256 de algunos datos locales.</td><td>No implementa Bazel, Spanner, TrueTime ni builds distribuidos.</td></tr>
+              <tr><td><strong>AWS TLA+</strong></td><td>Especificación y model checking</td><td>La documentación puede incluir fórmulas como ejemplos.</td><td>No ejecuta TLC ni explora estados con un model checker.</td></tr>
+              <tr><td><strong>Netflix Chaos Monkey / NASA FDIR</strong></td><td>Inyección de fallas y recuperación</td><td>El panel muestra un catálogo de escenarios ilustrativos.</td><td>No inyecta fallas, repara sistemas ni mide MTTR.</td></tr>
+              <tr><td><strong>Stripe</strong></td><td>Idempotencia y libro contable de doble partida</td><td>La memoria local y sus previews ofrecen ejemplos de datos.</td><td>No implementa pagos, ledger contable ni garantías transaccionales de Stripe.</td></tr>
+              <tr><td><strong>Meta TAO / Buck2</strong></td><td>Grafo de datos y builds escalables</td><td>La CLI ofrece análisis local de dependencias del código.</td><td>No replica TAO, Buck2 ni opera a escala de Meta.</td></tr>
+              <tr><td><strong>Apple Metal</strong></td><td>GPU y memoria compartida</td><td>La página incluye operaciones y mediciones locales de JavaScript.</td><td>No ejecuta Metal, CUDA, SIMD garantizado ni benchmarking GPU.</td></tr>
+              <tr><td><strong>Linear / Raycast</strong></td><td>Paleta de comandos</td><td><code>Ctrl+K</code> busca y navega comandos y secciones de esta página.</td><td>No ofrece sincronización local-first ni integra servicios externos.</td></tr>
             </tbody>
           </table>
         </div>
 
-        <!-- LABORATORIO INTERACTIVO CHAOS MONKEY + VERIFICADOR FORMAL TLA+ (#bigtech-chaos-lab) -->
+        <!-- CATÁLOGO ESTÁTICO DE ESCENARIOS (#bigtech-chaos-lab) -->
         <div class="sanctum-shell" id="bigtech-chaos-lab" style="border-color: rgba(16, 185, 129, 0.45);">
           <div class="sanctum-header" style="background: linear-gradient(90deg, rgba(16,185,129,0.14) 0%, rgba(56,189,248,0.14) 100%);">
             <div class="sanctum-status">
-              <span class="sanctum-badge sanctum-badge--emerald">🛡️ AWS TLA+ MODEL CHECKER + NETFLIX CHAOS MONKEY FDIR</span>
-              <span class="sanctum-badge sanctum-badge--gold">INVARIANTES: □ SAFETY ∧ ◇ LIVENESS</span>
-              <span class="sanctum-badge sanctum-badge--cyan">ENDPOINT: /API/BIGTECH READY</span>
+              <span class="sanctum-badge sanctum-badge--emerald">CATÁLOGO LOCAL · SIN TLA+ NI CHAOS MONKEY</span>
+              <span class="sanctum-badge sanctum-badge--gold">FÓRMULAS MOSTRADAS COMO REFERENCIAS</span>
+              <span class="sanctum-badge sanctum-badge--cyan">/API/BIGTECH · DESCRIPCIONES ESTÁTICAS</span>
             </div>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
               <button type="button" id="btn-trigger-cmdk-from-lab" class="btn btn--gold" style="padding: 0.4rem 0.85rem; font-size: 0.74rem;">
@@ -2146,39 +2092,39 @@ pub struct GlyphSoABatch {
               <!-- Columna Izquierda: Selector de Inyección de Fallas (Chaos Engineering) -->
               <div class="sanctum-box sanctum-box--gold">
                 <div>
-                  <span class="arch-card__tag arch-card__tag--gold">SIMULADOR DE INGENIERÍA DEL CAOS &amp; MÉTODOS FORMALES TLA+</span>
-                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Inyectar Anomalía en Vivo y Verificar Auto-Sanación FDIR</h3>
+                  <span class="arch-card__tag arch-card__tag--gold">EJEMPLOS DE INGENIERÍA DEL CAOS Y MÉTODOS FORMALES</span>
+                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Consultar un escenario ilustrativo</h3>
                   <p style="font-size: 0.8rem; color: var(--text-muted);">
-                    Al igual que <strong>Netflix Chaos Monkey</strong> y el verificador formal <strong>TLA+ de AWS</strong>, selecciona un vector de falla crítica para comprobar cómo EOS lo intercepta, verifica matemáticamente sus invariantes temporales y restaura el sistema en <code>&lt; 5 ms</code> con <code>0.00% Downtime</code>.
+                    Selecciona una descripción de escenario y una fórmula de referencia. No se modifica el repositorio, no se inyecta una falla y no se ejecuta TLC o reparación automática.
                   </p>
                 </div>
 
                 <form id="form-bigtech-chaos" class="sanctum-form" style="flex-direction: column;">
                   <label for="select-chaos-scenario" style="font-size: 0.74rem; font-family: var(--font-mono); color: var(--gold-bright);">
-                    VECTOR DE INYECCIÓN CHAOS MONKEY / TLA+:
+                    ESCENARIO DE EJEMPLO:
                   </label>
                   <select id="select-chaos-scenario" class="sanctum-select" style="width: 100%;">
-                    <option value="secret-leak-attempt">1. Fuga de Secreto en Claro (API_KEY en código) — Violación Ley VI</option>
-                    <option value="orphan-ontology-link">2. Enlace Huérfano en Ontología (TASK -> FR inexistente) — FDIR Graph</option>
-                    <option value="spec-drift-mutation">3. Mutación sin Especificación EARS (Vibe Coding Drift) — Ley I &amp; II</option>
-                    <option value="heap-entropy-spike">4. Pico Masivo de Entropía en RAM (1M eventos / GC Spike) — EosAin L1 SoA</option>
-                    <option value="race-condition-concurrent">5. Condición de Carrera Multi-Agente sobre el mismo archivo — Xirp Worktree CAS</option>
+                    <option value="secret-leak-attempt">1. Ejemplo: credencial guardada en un archivo</option>
+                    <option value="orphan-ontology-link">2. Ejemplo: tarea enlazada a un requisito inexistente</option>
+                    <option value="spec-drift-mutation">3. Ejemplo: cambio sin requisito aprobado</option>
+                    <option value="heap-entropy-spike">4. Ejemplo: carga con alta asignación de memoria</option>
+                    <option value="race-condition-concurrent">5. Ejemplo: dos cambios sobre el mismo archivo</option>
                   </select>
 
                   <button type="submit" class="btn btn--primary" style="margin-top: 0.35rem;">
-                    🌪️ Inyectar Falla &amp; Ejecutar Verificador Formal TLA+ + FDIR
+                    Ver descripción del escenario
                   </button>
                 </form>
 
                 <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
                   <button type="button" class="btn btn--ghost chaos-quick-btn" data-scenario="secret-leak-attempt" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">
-                    Test Ley VI (Secret Leak)
+                    Ver ejemplo de secreto
                   </button>
                   <button type="button" class="btn btn--ghost chaos-quick-btn" data-scenario="orphan-ontology-link" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">
-                    Test FDIR (Orphan Link)
+                    Ver ejemplo de enlace
                   </button>
                   <button type="button" class="btn btn--ghost chaos-quick-btn" data-scenario="heap-entropy-spike" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;">
-                    Test L1 SoA (0 GC Spike)
+                    Ver ejemplo de memoria
                   </button>
                 </div>
               </div>
@@ -2186,16 +2132,10 @@ pub struct GlyphSoABatch {
               <!-- Columna Derecha: Salida del Verificador Formal TLA+ y Recibo FDIR -->
               <div class="sanctum-box" style="border-color: rgba(16, 185, 129, 0.42);">
                 <div>
-                  <span class="arch-card__tag arch-card__tag--emerald">DICTAMEN FORMAL TLA+ (LESLIE LAMPORT) &amp; AUTO-REPARACIÓN FDIR</span>
-                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Prueba Temporal <code>□ Safety ∧ ◇ Liveness</code> en Vivo</h3>
+                  <span class="arch-card__tag arch-card__tag--emerald">DESCRIPCIÓN ESTÁTICA · SIN MODEL CHECKER</span>
+                  <h3 class="arch-card__title" style="margin-top: 0.45rem;">Fórmula y escenario de referencia</h3>
                 </div>
-                <pre id="bigtech-chaos-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.94); border: 1px solid rgba(16, 185, 129, 0.35); font-family: var(--font-mono); font-size: 0.75rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 320px; overflow-y: auto;" aria-live="polite">[EOS TLA+ MODEL CHECKER &amp; CHAOS FDIR ENGINE v6.0 · READY]
-Escenario    : Intento de Inyección de Secreto en Claro (Violación Ley VI)
-Anomalía     : Agente externo intenta escribir API_KEY='sk-live-999' en configuración.
-Fórmula TLA+ : □ (∀ commit ∈ Repo : PlainSecrets(commit) = ∅) ∧ ◇ QuarantineActive
-Estados TLA+ : 14,820 estados alcanzables verificados (0 contraejemplos)
-Acción FDIR  : Velo de Isis (Ley VI) + GGA Deny-List interceptaron el payload en pre-commit, tokenizaron la credencial y bloquearon la escritura.
-Tiempo MTTR  : 1.4 ms · Downtime: 0.00% · Estado: HEALED_AND_TLA_VERIFIED</pre>
+                <pre id="bigtech-chaos-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.94); border: 1px solid rgba(16, 185, 129, 0.35); font-family: var(--font-mono); font-size: 0.75rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 320px; overflow-y: auto;" aria-live="polite">Escenario ilustrativo. No se ejecutó TLA+, inyección de fallas, reparación o medición.</pre>
               </div>
             </div>
           </div>
