@@ -46,6 +46,8 @@ console.log("[PASS] 4/4 Selected accessibility and semantic-markup assertions pa
 // 5. First-use path and truthful demo affordances
 assert.ok(html.includes('id="primeros-pasos"'), "Usability Violation: Guided first-use section is required");
 assert.ok(html.includes('id="quickstart-inspect"'), "Usability Violation: Read-only inspection command must be visible");
+assert.ok(html.includes("Ejecuta este comando desde la carpeta clonada"), "Usability Violation: The CLI working directory must be clear");
+assert.ok(html.includes("no evalúa preparación para producción ni seguridad"), "Usability Violation: Heuristic inspection results need clear limits");
 assert.ok(html.includes('data-quickstart-copy="quickstart-inspect"'), "Usability Violation: Inspection command needs a copy action");
 assert.ok(html.includes("demo-disclosure"), "Usability Violation: Optional command demos should be collapsed by default");
 assert.ok(html.includes('aria-label="Navegación principal"'), "Usability Violation: Primary navigation needs an accessible name");

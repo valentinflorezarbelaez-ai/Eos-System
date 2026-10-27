@@ -58,6 +58,18 @@ test("flow inspect and plan are read-only and clearly scoped as heuristics", (t)
   assert.equal(fs.existsSync(path.join(repoRoot, ".worktrees")), false);
 });
 
+test("flow gives actionable guidance for invalid repository paths", (t) => {
+  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), "eos-invalid-repo-path-"));
+  t.after(() => fs.rmSync(temporaryRoot, { recursive: true, force: true, maxRetries: 3, retryDelay: 50 }));
+  const filePath = path.join(temporaryRoot, "README.md");
+  fs.writeFileSync(filePath, "not a repository folder\n", "utf8");
+  const workflow = new EosEngineeringWorkflow();
+
+  assert.throws(() => workflow.inspect(path.join(temporaryRoot, "missing")), /Repository path not found.*Check the path/);
+  assert.throws(() => workflow.inspect(filePath), /is a file, not a folder.*repository folder/);
+  assert.throws(() => workflow.inspect(temporaryRoot), /Could not find a Git repository.*initialized Git working tree/);
+});
+
 test("flow start creates an isolated worktree without dirtying the target checkout", (t) => {
   const repoRoot = createFixtureRepository(t);
   const workflow = new EosEngineeringWorkflow();

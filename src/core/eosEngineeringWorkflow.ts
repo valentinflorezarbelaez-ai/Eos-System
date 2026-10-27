@@ -124,13 +124,48 @@ export class EosEngineeringWorkflow {
     if (typeof targetPath !== "string" || !targetPath.trim() || Buffer.byteLength(targetPath, "utf8") > 4096) {
       throw new TypeError("A repository path of 1 to 4096 UTF-8 bytes is required.");
     }
-    const candidate = fs.realpathSync(path.resolve(targetPath));
-    if (!fs.statSync(candidate).isDirectory()) throw new Error("Repository path must be a directory.");
-    const gitRoot = execFileSync("git", ["rev-parse", "--show-toplevel"], {
-      cwd: candidate,
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"]
-    }).trim();
+    const requestedPath = path.resolve(targetPath);
+    let candidate: string;
+    try {
+      candidate = fs.realpathSync(requestedPath);
+    } catch (error) {
+      const code = error instanceof Error && "code" in error
+        ? (error as NodeJS.ErrnoException).code
+        : undefined;
+      if (code === "ENOENT" || code === "ENOTDIR") {
+        throw new Error(`Repository path not found: ${requestedPath}. Check the path and try again.`, { cause: error });
+      }
+      if (code === "EACCES" || code === "EPERM") {
+        throw new Error(`Cannot access repository path: ${requestedPath}. Check the folder permissions and try again.`, { cause: error });
+      }
+      throw error;
+    }
+    if (!fs.statSync(candidate).isDirectory()) {
+      throw new Error(`Repository path is a file, not a folder: ${candidate}. Pass the repository folder instead.`);
+    }
+
+    let gitRoot: string;
+    try {
+      gitRoot = execFileSync("git", ["rev-parse", "--show-toplevel"], {
+        cwd: candidate,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"]
+      }).trim();
+    } catch (error) {
+      const code = error instanceof Error && "code" in error
+        ? (error as NodeJS.ErrnoException).code
+        : undefined;
+      const status = error instanceof Error && "status" in error
+        ? (error as NodeJS.ErrnoException & { status?: number }).status
+        : undefined;
+      if (code === "ENOENT") {
+        throw new Error("Git was not found on PATH. Install Git, restart the terminal, and try again.", { cause: error });
+      }
+      if (status === 128) {
+        throw new Error(`Could not find a Git repository from ${candidate}. Pass a folder inside an initialized Git working tree.`, { cause: error });
+      }
+      throw error;
+    }
     const resolvedRoot = fs.realpathSync(gitRoot);
     // Linked worktrees use a regular .git file rather than a directory.
     const gitMarker = path.join(resolvedRoot, ".git");
