@@ -288,24 +288,16 @@ Este panel no consulta checkouts ni ejecuta el comando.
 El script puede crear un commit y hacer push; revisa antes el checkout y el destino.
 El registro web /api/fleet es estático y no sondea producción.`,
 
-  "jarvis:monad": `$ eos jarvis --monad --arc-reactor
-> Engaging EOS JARVIS Sovereign Monad Core v11.0 (src/core/eosJarvisMonad.ts + /api/jarvis + daemon)...
+  "jarvis:monad": `POST /api/jarvis
+{"directive":"JARVIS, audita la flota"}
 
-[1] JARVIS AUTONOMOUS AGI ENGINEERING NEXUS:
-  ├─ Cognitive Engine    : Átomo Maestro Nous (Left Ventricle of the Heart · Samaelian Monad)
-  ├─ Arc-Reactor Pulse   : 528 Hz Harmonic Resonance (Online Max Power)
-  ├─ Voice Telemetry     : Web Speech API Neural Synthesis + Speech Recognition Active
-  ├─ Autonomous Mandate  : "Todo lo debe hacer EOS, todo EOS debe ser JARVIS."
-  └─ Background Daemon   : scripts/eos-jarvis-daemon.mjs (Active 24/7 Watcher)
+Respuesta ilustrativa (esta consola no envió la solicitud):
+status: INTENT_CLASSIFIED
+intent: AUDIT_REQUEST_NOT_EXECUTED
+commandsRun: false
+repositoriesRead: false
 
-[2] JARVIS DIRECTIVE HANDLERS:
-  ├─ 1. "JARVIS, audita la flota"     ➔ npm run fleet:verify (Multi-Repo Inspection)
-  ├─ 2. "JARVIS, despacha a prod"     ➔ npm run fleet:ship (7 Gates + Commit + Push + Live 200)
-  ├─ 3. "JARVIS, aduanas SecDevOps"   ➔ npm run cicd:gate (SAST, 0 Secrets, SLSA L4 SBOM)
-  ├─ 4. "JARVIS, activa Belilin"      ➔ /api/teurgia (Theurgic Circle & Dharma Balance)
-  └─ 5. "JARVIS, nanosegundos L1 SoA" ➔ EosNanosecondEngine (< 100ns Zero-Alloc Benchmark)
-
-STATUS: JARVIS_MONAD_ONLINE | SOVEREIGN_AGI_ENGAGED | PEACE_INVERENCIAL | EXIT CODE: 0`,
+El endpoint clasifica texto por palabras clave; no ejecuta una auditoría ni usa un modelo de IA.`,
 
   "prometheus:omni": `$ eos amplify "Diseñar módulo de pagos con Stripe y webhooks" --model claude
 > Initializing EOS Prometheus Omni-Model Prompt Amplification Engine (src/core/eosPromptAmplifier.ts)...
@@ -2072,7 +2064,7 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
     { label: "⚡ Amplificar Directriz con Prometheus Omni-Model (EARS + BDD)", badge: "CLI COMMAND", cmd: "prometheus:omni" },
     { label: "🚀 Verificación Turbo 27ms (100x Aceleración en Nanosegundos)", badge: "CLI COMMAND", cmd: "turbo:engine" },
     { label: "🩺 Auto-Sanador Soberano & FDIR en Bucle Cerrado (NASA Level 4)", badge: "CLI COMMAND", cmd: "healer:fdir" },
-    { label: "🤖 Hablar con JARVIS v11.0 (Núcleo Autónomo, Telemetría por Voz & Arc-Reactor)", badge: "JARVIS v11.0", href: "#eos-jarvis-nexus" },
+    { label: "🤖 Abrir clasificador de solicitudes JARVIS", badge: "CLASIFICADOR", href: "#eos-jarvis-nexus" },
     { label: "🚀 Ir a Orquestador CI/CD Autónomo de Flota v10.0 (Despachador Multi-Repositorio)", badge: "FLOTA v10.0", href: "#fleet-cicd-orchestrator" },
     { label: "🛡️ Ir a Tubería Autónoma CI/CD SecDevOps v9.0 (7 Aduanas Fail-Closed + SAST + SBOM)", badge: "CI/CD v9.0", href: "#cicd-secdevops" },
     { label: "🌌 Ir a Singularidad Soberana Omega v8.0 (Post-Cuántica NIST + ZK-STARK + BFT 3f+1 + Time-Travel)", badge: "OMEGA v8.0", href: "#omega-singularity" },
@@ -2705,7 +2697,7 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
   const jarvisStateBadge = document.getElementById("jarvis-state-badge");
 
   function speakJarvisVoice(text) {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+    if (typeof window !== "undefined" && "speechSynthesis" in window && typeof SpeechSynthesisUtterance !== "undefined") {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = "es-ES";
@@ -2718,54 +2710,50 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
   async function executeJarvisGoal(directive) {
     if (!jarvisOutput) return;
     playSacredTone([528, 660, 792, 1056], 0.7);
+    const normalizedDirective = typeof directive === "string" ? directive.trim() : "";
     if (jarvisStateBadge) {
-      jarvisStateBadge.textContent = "⚡ JARVIS: PROCESANDO INTENCIÓN (ÁTOMO NOUS)...";
+      jarvisStateBadge.textContent = "CLASIFICADOR: PROCESANDO TEXTO…";
     }
-    jarvisOutput.textContent = `> JARVIS Cognition: Analizando directriz "${directive}"...`;
+    if (!normalizedDirective) {
+      if (jarvisStateBadge) jarvisStateBadge.textContent = "ESCRIBE UNA DIRECTIVA";
+      jarvisOutput.textContent = "Escribe una solicitud para clasificar. No se ejecutan acciones.";
+      return;
+    }
+    jarvisOutput.textContent = "Enviando la directiva para clasificarla por palabras clave…";
 
     try {
-      const res = await fetch(`/api/jarvis?directive=${encodeURIComponent(directive)}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (jarvisStateBadge) {
-          jarvisStateBadge.textContent = "⚡ JARVIS: ORDEN EJECUTADA (528 Hz)";
-        }
-        jarvisOutput.textContent = [
-          `[JARVIS SOVEREIGN MONAD v11.0 · COGNICIÓN ACTIVA]`,
-          `${"─".repeat(78)}`,
-          `Directiva    : "${data.directiveReceived}"`,
-          `Intención    : ${data.intent}`,
-          `Respuesta    : "${data.voiceResponseText}"`,
-          `Acción Run   : ${data.actionCommand}`,
-          `Modo AGI     : ${data.telemetry.cognitiveMode}`,
-          `Sello Merkle : ${data.merkleReceipt}`,
-          `${"─".repeat(78)}`,
-          `VERDICT      : ACCIÓN AUTÓNOMA COORDINADA CON ÉXITO (EXIT CODE: 0)`
-        ].join("\n");
-
-        speakJarvisVoice(data.voiceResponseText);
+      const res = await fetch("/api/jarvis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ directive: normalizedDirective })
+      });
+      const data = await res.json().catch(() => ({ status: "INVALID_RESPONSE" }));
+      if (!res.ok) {
+        if (jarvisStateBadge) jarvisStateBadge.textContent = `CLASIFICADOR: HTTP ${res.status}`;
+        jarvisOutput.textContent = `No se pudo clasificar la solicitud (HTTP ${res.status}). No se ejecutó ninguna acción.`;
         return;
       }
-    } catch (_) {
-      // Local fallback
-    }
 
-    const fallbackSpoken = "A la orden, Arquitecto Valentín. Directriz recibida y despachada por el núcleo monádico de EOS.";
-    jarvisOutput.textContent = [
-      `[JARVIS SOVEREIGN MONAD v11.0 · MODO LOCAL]`,
-      `${"─".repeat(78)}`,
-      `Directiva : "${directive}"`,
-      `Respuesta : "${fallbackSpoken}"`,
-      `Estado    : AUTONOMOUS_GOAL_ENGAGED (EXIT CODE: 0)`
-    ].join("\n");
-    speakJarvisVoice(fallbackSpoken);
+      if (jarvisStateBadge) jarvisStateBadge.textContent = "INTENCIÓN CLASIFICADA · SIN EJECUCIÓN";
+      jarvisOutput.textContent = [
+        "Clasificador EOS · reglas de palabras clave",
+        `Estado: ${data.status || "UNKNOWN"}`,
+        `Directiva: ${data.directiveReceived || normalizedDirective}`,
+        `Intención: ${data.intent || "UNCLASSIFIED_DIRECTIVE"}`,
+        `Alcance: ${data.scope || "No informado"}`,
+        `Respuesta: ${data.responseText || "Sin respuesta de texto."}`,
+        `Acciones ejecutadas: ${JSON.stringify(data.execution || {})}`
+      ].join("\n");
+      if (data.responseText) speakJarvisVoice(data.responseText);
+    } catch {
+      if (jarvisStateBadge) jarvisStateBadge.textContent = "API NO DISPONIBLE · SIN ACCIONES";
+      jarvisOutput.textContent = "No se pudo contactar /api/jarvis. No se clasificó la solicitud ni se ejecutó ninguna acción.";
+    }
   }
 
   if (btnJarvisSpeakStatus) {
     btnJarvisSpeakStatus.addEventListener("click", () => {
-      const statusText = "Arquitecto Valentín, todos los sistemas del núcleo EOS, las siete aduanas de seguridad y la Flota Soberana operan con latencia de nanosegundos y cero hallazgos.";
-      speakJarvisVoice(statusText);
-      executeJarvisGoal("JARVIS, vocaliza el estado general de toda la flota");
+      executeJarvisGoal("JARVIS, consulta el estado general de la flota");
     });
   }
 
@@ -2783,7 +2771,7 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
       recognition.maxAlternatives = 1;
 
       if (jarvisStateBadge) {
-        jarvisStateBadge.textContent = "🎙️ JARVIS: ESCUCHANDO AL ARQUITECTO VALENTÍN...";
+        jarvisStateBadge.textContent = "RECONOCIMIENTO DE VOZ: ESCUCHANDO…";
       }
       playSacredTone([432, 528], 0.5);
 
@@ -2797,11 +2785,15 @@ Fingerprint  : sha256:${fingerprint.slice(0, 40)}... (no es firma ni atestación
 
       recognition.onerror = () => {
         if (jarvisStateBadge) {
-          jarvisStateBadge.textContent = "⚡ JARVIS ARC-REACTOR: ONLINE (528 Hz)";
+          jarvisStateBadge.textContent = "RECONOCIMIENTO DE VOZ: ERROR";
         }
       };
 
-      recognition.start();
+      try {
+        recognition.start();
+      } catch {
+        if (jarvisStateBadge) jarvisStateBadge.textContent = "RECONOCIMIENTO DE VOZ: NO DISPONIBLE";
+      }
     });
   }
 

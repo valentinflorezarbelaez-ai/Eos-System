@@ -167,11 +167,11 @@ ESCENARIO: [BDD-013 Registro de flota y vista previa de acciones]
   ENTONCES EOS muestra `REGISTERED` y marca sondas, CI y hooks como `NOT_PROBED`
   Y los botones del navegador no modifican checkouts ni ejecutan commits, pushes, gates o despliegues.
 
-ESCENARIO: [BDD-014 Operación Cognitiva Autónoma JARVIS (Voz, Metas, Reactor Arc y Daemon 24/7)]
-  DADO que el Arquitecto Soberano interactúa con el Núcleo JARVIS (#eos-jarvis-nexus), ejecuta "npm run jarvis" o la pestaña CLI "eos jarvis --monad"
-  CUANDO emite una directriz verbal o escrita ("JARVIS, audita la flota", "JARVIS, ejecuta nanosegundos", "JARVIS, despliega todo a producción")
-  ENTONCES JARVIS reconoce la intención, vocaliza la confirmación de la orden, ejecuta el plan atómico correspondiente contra las aduanas de seguridad, actualiza el estado holográfico del Reactor Arc y emite el informe de ejecución con código de salida 0
-  Y el endpoint serverless /api/jarvis responde con el contrato cognitivo, transcripción y dictamen en tiempo real.
+ESCENARIO: [BDD-014 Clasificador de solicitudes JARVIS]
+  DADO que el usuario escribe o dicta una solicitud en #eos-jarvis-nexus
+  CUANDO el navegador envía el texto a POST /api/jarvis
+  ENTONCES EOS clasifica la solicitud con reglas de palabras clave y muestra la respuesta real del endpoint
+  Y el panel indica que no llamó a un modelo, no leyó repositorios, no sondeó servicios y no ejecutó acciones.
 
 ESCENARIO: [BDD-015 Servidor Nativo Model Context Protocol (MCP) e Integración con IDEs]
   DADO que un asistente de IA (Cursor, Antigravity, Claude, Copilot) se conecta vía MCP sobre stdio
