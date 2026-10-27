@@ -3,6 +3,24 @@
    ========================================================================== */
 
 const CLI_OUTPUTS = {
+  "flow:inspect": `$ node bin/eos.mjs flow inspect "<repo-path>"
+
+Guía de uso: lee el repositorio local y muestra una huella y señales heurísticas.
+No cambia archivos, no ejecuta pruebas y no evalúa preparación productiva.
+Este panel no ejecutó el comando ni contiene resultados de un repositorio.`,
+
+  "flow:plan": `$ node bin/eos.mjs flow plan "<repo-path>" "Describir el cambio deseado"
+
+Guía de uso: prepara pasos y comandos candidatos a partir del inventario local.
+El plan es heurístico; no llama a un modelo ni escribe en el repositorio.
+Este panel no ejecutó el comando ni contiene resultados de un repositorio.`,
+
+  "sandbox:doctor": `$ node bin/eos.mjs sandbox doctor
+
+Guía de uso: comprueba los requisitos locales de Docker y del sandbox.
+No ejecuta una validación de proyecto ni modifica archivos.
+Este panel no ejecutó el comando ni contiene resultados del equipo.`,
+
   "develop:universal": `$ eos develop "Cualquier instrucción de desarrollo del usuario"
 > Initializing EOS Universal Autonomous Development Engine (UniversalDevelopmentEngine.ts)...
 
@@ -336,7 +354,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const activeCmdLabel = document.getElementById("active-cmd-label");
   const cmdTabs = document.querySelectorAll(".cmd-tab");
   const copyCmdBtn = document.getElementById("copy-cmd-btn");
-  let currentCmdKey = "verify:strict";
+  const sampleCopyStatus = document.getElementById("sample-copy-status");
+  let currentCmdKey = "flow:inspect";
 
   function renderTerminal(cmdKey) {
     currentCmdKey = cmdKey;
@@ -344,12 +363,12 @@ document.addEventListener("DOMContentLoaded", () => {
       terminalOutput.textContent = `MUESTRA ILUSTRATIVA · No se ejecutó el comando ni se verificaron estos resultados.\n\n${CLI_OUTPUTS[cmdKey]}`;
     }
     if (activeCmdLabel) {
-      activeCmdLabel.textContent = `Muestra: ${cmdKey} · NO EJECUTADO`;
+      activeCmdLabel.textContent = `Guía: ${cmdKey} · NO EJECUTADO`;
     }
     cmdTabs.forEach((tab) => {
       const isMatch = tab.getAttribute("data-cmd") === cmdKey;
       tab.classList.toggle("is-active", isMatch);
-      tab.setAttribute("aria-selected", isMatch ? "true" : "false");
+      tab.setAttribute("aria-pressed", isMatch ? "true" : "false");
     });
   }
 
@@ -365,16 +384,28 @@ document.addEventListener("DOMContentLoaded", () => {
       const firstLine = (CLI_OUTPUTS[currentCmdKey] || "").split("\n")[0].replace(/^\$\s*/, "");
       try {
         await navigator.clipboard.writeText(firstLine);
-        const original = copyCmdBtn.textContent;
-        copyCmdBtn.textContent = "✓ Comando Copiado";
-        setTimeout(() => {
-          copyCmdBtn.textContent = original;
-        }, 1800);
+        if (sampleCopyStatus) sampleCopyStatus.textContent = "Comando copiado.";
       } catch {
-        // Fallback ignored if clipboard blocked
+        if (sampleCopyStatus) sampleCopyStatus.textContent = "No se pudo copiar. Selecciona el comando y cópialo manualmente.";
       }
     });
   }
+
+  const quickstartCopyStatus = document.getElementById("quickstart-copy-status");
+  document.querySelectorAll("[data-quickstart-copy]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const commandId = button.getAttribute("data-quickstart-copy");
+      const commandElement = commandId ? document.getElementById(commandId) : null;
+      if (!commandElement) return;
+
+      try {
+        await navigator.clipboard.writeText(commandElement.textContent.trim());
+        if (quickstartCopyStatus) quickstartCopyStatus.textContent = "Comando copiado al portapapeles.";
+      } catch {
+        if (quickstartCopyStatus) quickstartCopyStatus.textContent = "No se pudo copiar automáticamente. Selecciona el comando y cópialo manualmente.";
+      }
+    });
+  });
 
   // 2. Render & Filter 21-Step Pipeline
   const pipelineContainer = document.getElementById("pipeline-grid");
@@ -1260,7 +1291,11 @@ Este hash identifica la muestra; no es una firma ni una atestación.`;
     };
 
     activeArtifactView = "pipeline-log";
-    artifactTabs.forEach(t => t.classList.toggle("is-active", t.getAttribute("data-view") === "pipeline-log"));
+    artifactTabs.forEach((tab) => {
+      const isActive = tab.getAttribute("data-view") === "pipeline-log";
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
 
     if (terminalOutput) {
       terminalOutput.textContent = pipelineLog;
@@ -1299,7 +1334,11 @@ Este hash identifica la muestra; no es una firma ni una atestación.`;
       const viewKey = tab.getAttribute("data-view");
       if (viewKey && currentArtifacts[viewKey]) {
         activeArtifactView = viewKey;
-        artifactTabs.forEach(t => t.classList.toggle("is-active", t === tab));
+        artifactTabs.forEach((item) => {
+          const isActive = item === tab;
+          item.classList.toggle("is-active", isActive);
+          item.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
         if (terminalOutput) {
           terminalOutput.textContent = currentArtifacts[viewKey];
         }
@@ -3072,67 +3111,6 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
         if (frontierGoThroughput) frontierGoThroughput.textContent = "NO MEDIDO";
         if (frontierOutputLog) frontierOutputLog.textContent = 'Benchmark Go no ejecutado.\nEste panel de navegador no inicia goroutines ni reporta throughput de Go. Consulta un comando de benchmark real y su salida si necesitas una medición.';
       });
-    }
-    // 11. Subtle Web Audio Tactile Feedback & Live FPS Monitor
-    let audioCtx = null;
-    let audioMuted = false;
-
-    function playSoftUiPing(freq = 880, duration = 0.03) {
-      if (audioMuted) return;
-      try {
-        if (!audioCtx) {
-          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        if (audioCtx.state === "suspended") {
-          audioCtx.resume();
-        }
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-      } catch (_e) {
-        // Silent fallback
-      }
-    }
-
-    document.querySelectorAll(".btn, .cmd-tab, .tier1-tab-btn").forEach((el) => {
-      el.addEventListener("click", () => playSoftUiPing(880, 0.035));
-    });
-
-    const btnToggleAudio = document.getElementById("btn-toggle-audio");
-    if (btnToggleAudio) {
-      btnToggleAudio.addEventListener("click", (e) => {
-        e.stopPropagation();
-        audioMuted = !audioMuted;
-        btnToggleAudio.textContent = audioMuted ? "🔈 Audio: OFF" : "🔊 Audio: ON";
-        if (!audioMuted) playSoftUiPing(1100, 0.05);
-      });
-    }
-
-    // Live FPS & Reaction Time Monitor
-    const liveFpsPill = document.getElementById("live-fps-pill");
-    if (liveFpsPill) {
-      let lastFrame = performance.now();
-      let frameCount = 0;
-      function tickFps() {
-        frameCount++;
-        const now = performance.now();
-        if (now - lastFrame >= 1000) {
-          const fps = Math.round((frameCount * 1000) / (now - lastFrame));
-          const reactionMs = (1000 / fps).toFixed(1);
-          liveFpsPill.innerHTML = `Renderizado UI: <strong style="color: #38bdf8;">${fps} FPS · ${reactionMs} ms/frame</strong>`;
-          frameCount = 0;
-          lastFrame = now;
-        }
-        requestAnimationFrame(tickFps);
-      }
-      requestAnimationFrame(tickFps);
     }
   }
 

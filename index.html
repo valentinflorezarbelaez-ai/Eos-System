@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EOS System — Local Engineering Toolkit</title>
+  <title>EOS System — Flujo local para revisar cambios de código</title>
   <meta name="description" content="Herramientas locales de ingeniería de software: CLI de Node.js, servidor MCP, análisis de repositorios, plantillas y demostraciones reproducibles. Las métricas mostradas son ejemplos locales, no certificaciones ni datos de producción." />
   <meta name="application-name" content="EOS System" />
   <meta name="apple-mobile-web-app-title" content="EOS System" />
@@ -17,22 +17,22 @@
   <!-- OpenGraph / Twitter -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_CO" />
-  <meta property="og:title" content="EOS System — Local Engineering Toolkit" />
-  <meta property="og:description" content="CLI local, servidor MCP, análisis de repositorios, plantillas y demostraciones reproducibles. Sin afirmaciones de certificación o datos de producción." />
+  <meta property="og:title" content="EOS System — Flujo local para revisar cambios de código" />
+  <meta property="og:description" content="Inspecciona un repositorio, prepara un cambio aislado, valida en un contenedor sin red y revisa el diff antes de aplicarlo." />
   <meta property="og:url" content="https://eos-system.vercel.app/" />
-  <meta property="og:image" content="https://eos-system.vercel.app/assets/eos-system.png" />
+  <meta property="og:image" content="https://eos-system.vercel.app/assets/eos-system.webp" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="EOS System — Engineering Operating System" />
-  <meta name="twitter:description" content="CLI local, servidor MCP, análisis de repositorios y demostraciones. Las métricas son ejemplos locales." />
-  <meta name="twitter:image" content="https://eos-system.vercel.app/assets/eos-system.png" />
+  <meta name="twitter:title" content="EOS System — Flujo local para revisar cambios de código" />
+  <meta name="twitter:description" content="Inspecciona un repositorio, prepara un cambio aislado, valida en un contenedor sin red y revisa el diff antes de aplicarlo." />
+  <meta name="twitter:image" content="https://eos-system.vercel.app/assets/eos-system.webp" />
 
   <!-- Typography & Critical Asset Preload -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" href="/css/eos.css?v=13.0" as="style" />
-  <link rel="preload" href="/js/eos.js?v=16.0" as="script" />
+  <link rel="preload" href="/css/eos.css?v=14.0" as="style" />
+  <link rel="preload" href="/js/eos.js?v=17.0" as="script" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/eos.css?v=13.0" integrity="sha384-dIGNu2Fj7xYwEd236md5pVPyLLBuhXoHDbT0uF95gpYTNfM2OFzcZpe0vyQLkFRZ" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/eos.css?v=14.0" integrity="sha384-BShQzYZc4UrEtAmeUnPi1mVfuE/BRiptcXpOGfBKvQ/gD9oxtRIP5Kh3AwBmPeDd" crossorigin="anonymous" />
 
   <!-- Xirp-Grade Speculative Prerendering (0ms Instant Navigation) -->
   <script type="speculationrules">
@@ -62,42 +62,26 @@
       "name": "Valentín Flórez Arbeláez",
       "url": "https://portafolio-valentin.vercel.app"
     },
-    "description": "Plano de control soberano y determinista para ingeniería de software asistida por agentes IA: Zero Vibe Coding, EARS/BDD, Arquitectura Hexagonal L0 sin dependencias externas, aislamiento físico por Git Worktrees + tmux inspirado en Xirp, servidores MCP y concurrencia en Go."
+    "description": "Herramientas locales para inspeccionar repositorios, preparar cambios en Git worktrees, ejecutar validaciones en un sandbox Docker sin red y revisar diffs con aprobación explícita. Incluye una CLI Node.js, un servidor MCP local y demostraciones de navegador."
   }
   </script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
 
-  <!-- TOP TELEMETRY RIBBON -->
-  <div class="telemetry-ribbon" role="region" aria-label="Telemetría en vivo del Plano de Control EOS">
+  <!-- PRODUCT STATUS RIBBON -->
+  <div class="telemetry-ribbon" role="region" aria-label="Alcance del producto EOS">
     <div class="container telemetry-ribbon__inner">
       <div class="telemetry-group">
         <span class="telemetry-pill">
-          <span class="pulse-dot" aria-hidden="true"></span>
-          Estado del sitio: <strong>DEMOSTRACIÓN LOCAL</strong>
+          Producto: <strong>HERRAMIENTAS LOCALES</strong>
         </span>
         <span class="telemetry-pill">
-          <span class="pulse-dot pulse-dot--gold" aria-hidden="true"></span>
-          Servicios externos: <strong>NO CONSULTADOS</strong>
+          Web: <strong>CATÁLOGO Y DEMOSTRACIONES</strong>
         </span>
         <span class="telemetry-pill">
-          Núcleo: <strong>HERRAMIENTAS NODE.JS</strong>
+          Modelos externos: <strong>NO CONECTADOS</strong>
         </span>
-      </div>
-      <div class="telemetry-group">
-        <span class="telemetry-pill">
-          Estado del producto: <strong style="color: #38bdf8;">HERRAMIENTAS Y SIMULACIONES</strong>
-        </span>
-        <span class="telemetry-pill">
-          Métricas: <strong>FPS LOCAL · SIN SONDEO EXTERNO</strong>
-        </span>
-        <span class="telemetry-pill" id="live-fps-pill">
-          Renderizado UI: <strong style="color: #38bdf8;">Midiendo…</strong>
-        </span>
-        <button type="button" id="btn-toggle-audio" class="btn btn--ghost" style="padding: 0.18rem 0.55rem; font-size: 0.7rem; border-radius: 9999px;">
-          🔊 Audio: ON
-        </button>
       </div>
     </div>
   </div>
@@ -112,38 +96,28 @@
             EOS SYSTEM
             <span class="brand__badge">LOCAL TOOLKIT</span>
           </span>
-          <span class="brand__sub">Node.js CLI · MCP · Repository Tools · Local Demos</span>
+          <span class="brand__sub">Flujo local · CLI · MCP</span>
         </div>
       </a>
 
       <nav aria-label="Navegación principal">
         <ul class="nav-links">
-          <li><a href="#tier1-control-nexus">Herramientas locales</a></li>
-          <li><a href="#sovereign-fleet-topology">Grafo 3D de ejemplo</a></li>
-          <li><a href="#consola">Consola</a></li>
-          <li><a href="#eos-jarvis-nexus">JARVIS</a></li>
-          <li><a href="#templo-solar">Templo Solar</a></li>
-          <li><a href="#performance-guide">Plan de rendimiento</a></li>
-          <li><a href="#memoria-akashica">Memoria Akáshica</a></li>
-          <li><a href="#bigtech-pantheon">Ejemplos técnicos</a></li>
-          <li><a href="#linux-kernel-core">Kernel Linux</a></li>
-          <li><a href="#omega-singularity">Omega demo</a></li>
-          <li><a href="#cicd-secdevops">CI/CD demo</a></li>
-          <li><a href="#fleet-cicd-orchestrator">Proyectos</a></li>
-          <li><a href="#olimpo">Conceptos de arquitectura</a></li>
-          <li><a href="#aberamentho-seal">Aberamentho</a></li>
+          <li><a href="#primeros-pasos">Primeros pasos</a></li>
+          <li><a href="#tier1-control-nexus">Herramientas</a></li>
+          <li><a href="#performance-guide">Guía técnica</a></li>
+          <li><a href="#consola">Laboratorio</a></li>
         </ul>
       </nav>
 
       <div class="header-actions">
-        <button type="button" class="btn btn--gold" id="btn-open-cmdk" title="Abrir Paleta de Comandos (Ctrl+K / Cmd+K)" style="padding: 0.45rem 0.85rem; font-family: var(--font-mono); font-size: 0.76rem;">
-          ⌘K Comandos
+        <button type="button" class="btn btn--gold" id="btn-open-cmdk" title="Abrir paleta de comandos (Ctrl+K / Cmd+K)" style="padding: 0.45rem 0.85rem; font-family: var(--font-mono); font-size: 0.76rem;">
+          ⌘K Buscar
         </button>
         <a class="btn btn--ghost" href="https://github.com/valentinflorezarbelaez-ai/Eos-System" target="_blank" rel="noopener noreferrer">
           GitHub Repo
         </a>
-        <a class="btn btn--primary" href="#consola">
-          Ver ejemplos de consola
+        <a class="btn btn--primary" href="#primeros-pasos">
+          Empezar
         </a>
       </div>
     </div>
@@ -154,63 +128,45 @@
     <section class="hero" id="top">
       <div class="container hero__grid">
         <div>
-          <!-- Big Tech Announcement Chip (Cursor / Devin / DeepSeek Standard) -->
           <div class="announcement-chip">
-            <span class="announcement-chip__sparkle" aria-hidden="true">✦</span>
-            <span class="announcement-chip__text">CLI Node.js · MCP · análisis local · demos de navegador</span>
-            <a href="#fleet-cicd-orchestrator" class="announcement-chip__link">Ver proyectos configurados →</a>
+            <span class="announcement-chip__text">CLI Node.js · MCP local · cambios revisables</span>
+            <a href="#primeros-pasos" class="announcement-chip__link">Cómo empezar →</a>
           </div>
 
           <div class="eyebrow">
-            <span>◆</span>
-            <span>VISIÓN GNÓSTICA ESOTÉRICA SOLAR SAMAELIANA · ZERO VIBE CODING (EARS + BDD)</span>
+            <span>HERRAMIENTAS LOCALES PARA REPOSITORIOS</span>
           </div>
           <h1 class="hero__title">
-            Herramientas locales para <span class="text-gradient-cyan">ingeniería de software asistida por IA</span>
+            Revisa cambios de código con un <span class="text-gradient-cyan">flujo local y controlado</span>
           </h1>
           <p class="hero__lead">
-            <strong>EOS System (Engineering Operating System)</strong> reúne una CLI de Node.js, un servidor MCP, herramientas locales para analizar y validar cambios en repositorios, y demostraciones en el navegador. Las demos se identifican como muestras o simulaciones; los cambios de Git y los despliegues se realizan desde herramientas CLI explícitas.
+            <strong>EOS System</strong> inspecciona repositorios, prepara un worktree aislado, valida cambios en un contenedor sin red y muestra el diff antes de aplicarlo. Tú mantienes el control de cada paso. La página web presenta ejemplos y demostraciones; no ejecuta comandos en tu equipo.
           </p>
 
           <div class="hero__actions">
-            <a class="btn btn--primary" href="#consola">Ver ejemplos de consola</a>
-            <a class="btn btn--gold" href="#fleet-cicd-orchestrator">Ver proyectos configurados</a>
-            <a class="btn btn--ghost" href="https://portafolio-valentin.vercel.app" target="_blank" rel="noopener noreferrer">
-              Arquitecto: Valentín Flórez →
-            </a>
+            <a class="btn btn--primary" href="#primeros-pasos">Empezar con una inspección</a>
+            <a class="btn btn--gold" href="#tier1-control-nexus">Explorar herramientas</a>
           </div>
 
           <div class="hero__kpis">
             <div class="kpi-card">
-              <div class="kpi-card__val">CLI</div>
-              <div class="kpi-card__lbl">Herramientas de terminal en Node.js</div>
+              <div class="kpi-card__val">01 · LEE</div>
+              <div class="kpi-card__lbl">Solo lectura; no cambia el repositorio</div>
             </div>
             <div class="kpi-card">
-              <div class="kpi-card__val kpi-card__val--gold">MCP</div>
-              <div class="kpi-card__lbl">Servidor de herramientas para asistentes</div>
+              <div class="kpi-card__val kpi-card__val--gold">02 · VALIDA</div>
+              <div class="kpi-card__lbl">Worktree y Docker local sin red</div>
             </div>
             <div class="kpi-card">
-              <div class="kpi-card__val kpi-card__val--emerald">LOCAL</div>
-              <div class="kpi-card__lbl">Análisis y validación de repositorios</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-card__val" style="color: #a855f7;">DEMO</div>
-              <div class="kpi-card__lbl">Simulaciones y borradores en navegador</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-card__val" style="color: #fbbf24;">PATCH</div>
-              <div class="kpi-card__lbl">Validación de propuestas de cambio</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-card__val" style="color: #38bdf8;">GIT</div>
-              <div class="kpi-card__lbl">Operaciones explícitas y acotadas</div>
+              <div class="kpi-card__val kpi-card__val--emerald">03 · APRUEBA</div>
+              <div class="kpi-card__lbl">Diff con aprobación explícita</div>
             </div>
           </div>
         </div>
 
         <div class="hero__visual">
           <img
-            src="/assets/eos-system.png"
+            src="/assets/eos-system.webp"
             alt="Ilustración conceptual del proyecto EOS System"
             width="1200"
             height="750"
@@ -224,112 +180,82 @@
       </div>
     </section>
 
-    <!-- INTERACTIVE CONTROL PLANE TERMINAL -->
+    <section class="section quickstart-section" id="primeros-pasos">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow">EMPIEZA AQUÍ · SIN CAMBIOS EN TU PROYECTO</div>
+          <h2 class="section__title">Tu primera inspección es de solo lectura</h2>
+          <p class="section__sub">EOS funciona desde una terminal local. Sigue estos pasos; la página web no ejecuta ni instala nada en tu equipo.</p>
+        </div>
+
+        <div class="quickstart__steps">
+          <article class="quickstart-card">
+            <span class="quickstart-card__step">PASO 1</span>
+            <h3>Instala EOS</h3>
+            <p>Necesitas Node.js 22 o posterior y Git instalado. Clonar requiere acceso a GitHub.</p>
+            <pre class="quickstart-command"><code id="quickstart-install">git clone https://github.com/valentinflorezarbelaez-ai/Eos-System.git
+cd Eos-System
+npm ci</code></pre>
+            <button type="button" class="btn btn--ghost quickstart-copy" data-quickstart-copy="quickstart-install">Copiar instalación</button>
+          </article>
+
+          <article class="quickstart-card">
+            <span class="quickstart-card__step">PASO 2</span>
+            <h3>Inspecciona tu repositorio</h3>
+            <p>Usa la ruta de un repositorio Git local. Este comando lee su inventario; no escribe archivos.</p>
+            <pre class="quickstart-command"><code id="quickstart-inspect">node bin/eos.mjs flow inspect "&lt;ruta-de-tu-repositorio&gt;"</code></pre>
+            <button type="button" class="btn btn--ghost quickstart-copy" data-quickstart-copy="quickstart-inspect">Copiar inspección</button>
+          </article>
+
+          <article class="quickstart-card">
+            <span class="quickstart-card__step">PASO 3</span>
+            <h3>Obtén un plan revisable</h3>
+            <p>El plan usa heurísticas locales, no llama a un modelo y tampoco modifica el repositorio.</p>
+            <pre class="quickstart-command"><code id="quickstart-plan">node bin/eos.mjs flow plan "&lt;ruta-de-tu-repositorio&gt;" "Mejorar el manejo de errores"</code></pre>
+            <button type="button" class="btn btn--ghost quickstart-copy" data-quickstart-copy="quickstart-plan">Copiar plan</button>
+          </article>
+        </div>
+
+        <p id="quickstart-copy-status" class="quickstart-copy-status" aria-live="polite"></p>
+        <div class="quickstart-note">
+          <strong>¿Quieres validar o aplicar un cambio?</strong>
+          Para eso necesitas Docker local, una rama limpia y revisar el diff. Consulta el <a href="https://github.com/valentinflorezarbelaez-ai/Eos-System/blob/main/README.md#approval-gated-project-workflow">flujo completo y sus requisitos</a> antes de continuar.
+        </div>
+      </div>
+    </section>
+
+    <!-- OPTIONAL LOCAL EXAMPLES AND DEMONSTRATIONS -->
     <section class="section" id="consola">
       <div class="container">
         <div class="section__head">
-          <div class="eyebrow">MUESTRAS DE CONSOLA · NINGÚN COMANDO EJECUTADO</div>
-          <h2 class="section__title">Ejemplos de salida CLI de EOS</h2>
+          <div class="eyebrow">LABORATORIO OPCIONAL · NINGÚN COMANDO EJECUTADO</div>
+          <h2 class="section__title">Muestras y borradores locales</h2>
           <p class="section__sub">
-            Explora ejemplos estáticos de comandos y subsistemas. El generador de abajo crea borradores EARS y TypeScript en la memoria del navegador; no guarda archivos ni ejecuta pruebas. La consola no ejecuta la CLI ni valida los resultados de las muestras.
+            Si solo buscas usar EOS, puedes saltarte esta sección. Las muestras son ilustrativas; el generador crea borradores en la memoria del navegador y no ejecuta comandos ni usa modelos externos.
           </p>
         </div>
 
-        <div class="terminal-shell" role="region" aria-label="Simulador de terminal de EOS System">
+        <details class="demo-disclosure">
+          <summary>Explorar comandos y demostraciones</summary>
+        <div class="terminal-shell" role="region" aria-label="Muestras locales de comandos y borradores de EOS System">
           <div class="terminal-topbar">
             <div class="terminal-dots" aria-hidden="true">
               <span class="terminal-dot terminal-dot--red"></span>
               <span class="terminal-dot terminal-dot--amber"></span>
               <span class="terminal-dot terminal-dot--green"></span>
             </div>
-            <span class="terminal-title">EOS System — muestras CLI ilustrativas</span>
+            <span class="terminal-title">Comandos de referencia — sin ejecución</span>
             <button type="button" class="btn btn--ghost" id="copy-cmd-btn" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;">
-              Copiar Comando de Ejemplo
+              Copiar comando mostrado
             </button>
+            <span id="sample-copy-status" aria-live="polite"></span>
           </div>
 
-          <div class="terminal-tabs" role="tablist" aria-label="Comandos del plano de control">
-            <button type="button" role="tab" aria-selected="true" class="cmd-tab is-active" data-cmd="verify:strict">
-              1. npm run verify:strict
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="sentinel:fdir">
-              2. eos sentinel --fdir
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="worktree:xirp">
-              3. eos worktree --xirp
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="mcp:graph">
-              4. eos mcp --graph
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="fleet:status">
-              5. eos fleet --status
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="olympus:l0">
-              6. eos olimpo --l0
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="aberamentho:dsp">
-              7. eos aberamentho --dsp
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="sanctum:thelema">
-              8. eos sanctum --thelema
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="performance:guide">
-              9. Guía de rendimiento
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="dualtrack:orchestrator">
-              10. eos dual-track
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="attestation:chain">
-              11. eos attestation --chain
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="develop:universal">
-              12. eos develop &lt;prompt&gt;
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="memory:akashic">
-              13. eos memory --akashic
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="bigtech:tla">
-              14. eos bigtech --tla
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="kernel:linux">
-              15. eos kernel --linux
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="omega:quantum">
-              16. eos omega --quantum
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="cicd:pipeline">
-              17. eos cicd --pipeline
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="fleet:dispatch">
-              18. eos fleet --dispatch
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="jarvis:monad">
-              19. eos jarvis --monad
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="prometheus:omni">
-              20. eos amplify &lt;prompt&gt;
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="turbo:engine">
-              21. eos turbo
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="graph:blast">
-              22. eos blast &lt;file&gt;
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="healer:fdir">
-              23. eos heal
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="nubank:codex">
-              24. eos nubank --audit
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="spotify:codex">
-              25. eos spotify --canary
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="disruptor:nanosecond">
-              26. Vista previa: eos disruptor 500000
-            </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="frontier:router">
-              27. Vista previa: eos frontier benchmark
-            </button>
+          <div class="terminal-tabs" role="group" aria-label="Comandos de referencia">
+            <button type="button" aria-pressed="true" class="cmd-tab is-active" data-cmd="flow:inspect">Inspeccionar repositorio</button>
+            <button type="button" aria-pressed="false" class="cmd-tab" data-cmd="flow:plan">Crear plan</button>
+            <button type="button" aria-pressed="false" class="cmd-tab" data-cmd="sandbox:doctor">Revisar requisitos de sandbox</button>
+            <button type="button" aria-pressed="false" class="cmd-tab" data-cmd="verify:strict">Ver guía de verify:strict</button>
           </div>
           <!-- Terminal Live Prompt Bar & Universal Development Engine Lab -->
           <div class="terminal-prompt-bar" role="search" aria-label="Laboratorio de Desarrollo Universal">
@@ -361,27 +287,27 @@
           </div>
 
           <!-- Artifact Sub-tabs: local draft artifacts; no files are written -->
-          <div class="terminal-artifact-tabs" id="terminal-artifact-tabs" role="tablist" aria-label="Vistas del artefacto">
-            <button type="button" class="artifact-tab is-active" data-view="pipeline-log">📋 Resumen del borrador</button>
-            <button type="button" class="artifact-tab" data-view="ears-spec">📐 Borrador EARS &amp; BDD</button>
-            <button type="button" class="artifact-tab" data-view="code-entity">📦 Borrador de entidad (.ts)</button>
-            <button type="button" class="artifact-tab" data-view="code-usecase">⚙️ Borrador de caso de uso (.ts)</button>
-            <button type="button" class="artifact-tab" data-view="code-test">🧪 Borrador de test (.ts)</button>
+          <div class="terminal-artifact-tabs" id="terminal-artifact-tabs" role="group" aria-label="Vistas del borrador">
+            <button type="button" aria-pressed="true" class="artifact-tab is-active" data-view="pipeline-log">📋 Resumen del borrador</button>
+            <button type="button" aria-pressed="false" class="artifact-tab" data-view="ears-spec">📐 Borrador EARS &amp; BDD</button>
+            <button type="button" aria-pressed="false" class="artifact-tab" data-view="code-entity">📦 Borrador de entidad (.ts)</button>
+            <button type="button" aria-pressed="false" class="artifact-tab" data-view="code-usecase">⚙️ Borrador de caso de uso (.ts)</button>
+            <button type="button" aria-pressed="false" class="artifact-tab" data-view="code-test">🧪 Borrador de test (.ts)</button>
           </div>
 
 
-          <pre class="terminal-body" id="terminal-output" aria-live="polite">Vista previa estática · no se ejecutó el comando.
+          <pre class="terminal-body" id="terminal-output" aria-live="polite">Guía de uso · no se ejecutó el comando.
 
-$ npm run verify:strict
-Script configurado: scripts/verify-cicd-pipeline.mjs
-Lee el script para conocer las verificaciones que realiza y sus límites.
-Esta muestra no contiene resultados, fingerprints ni códigos de salida.</pre>
+$ node bin/eos.mjs flow inspect "&lt;repo-path&gt;"
+Lee el inventario local y muestra señales heurísticas.
+No cambia archivos ni contiene resultados de un repositorio.</pre>
 
           <div class="terminal-footer">
-            <span id="active-cmd-label" style="color: #10b981;">Muestra: verify:strict · NO EJECUTADO</span>
+            <span id="active-cmd-label" aria-live="polite" style="color: #10b981;">Guía: flow:inspect · NO EJECUTADO</span>
             <span>Salida ilustrativa · sin verificación ni atestación</span>
           </div>
         </div>
+        </details>
       </div>
     </section>
 
@@ -2721,6 +2647,6 @@ No se ejecutan comandos, auditorías, sondeos ni despliegues.</pre>
     </div>
   </dialog>
 
-  <script src="/js/eos.js?v=16.0" integrity="sha384-M/ZhavWNFkdXaYA9wE85D8zCzmnQpgs5dOcXTdOG9gBoKIDR3AxlzUvSmMhwVo9b" crossorigin="anonymous" defer></script>
+  <script src="/js/eos.js?v=17.0" integrity="sha384-PIiKckN3U6Tqfd/u3K6AkZjebDUBd6QAO79wVL5jJ5DAl8QfZ5PfjWA/HNDdcSqR" crossorigin="anonymous" defer></script>
 </body>
 </html>

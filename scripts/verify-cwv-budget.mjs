@@ -43,6 +43,19 @@ assert.ok(html.includes('closedby="any"'), "A11y Violation: Native light-dismiss
 assert.ok(html.includes('integrity="sha384-'), "Security Violation: Subresource Integrity (SRI) SHA-384 required");
 console.log("[PASS] 4/4 Selected accessibility and semantic-markup assertions passed; this is not a full WCAG audit.");
 
+// 5. First-use path and truthful demo affordances
+assert.ok(html.includes('id="primeros-pasos"'), "Usability Violation: Guided first-use section is required");
+assert.ok(html.includes('id="quickstart-inspect"'), "Usability Violation: Read-only inspection command must be visible");
+assert.ok(html.includes('data-quickstart-copy="quickstart-inspect"'), "Usability Violation: Inspection command needs a copy action");
+assert.ok(html.includes("demo-disclosure"), "Usability Violation: Optional command demos should be collapsed by default");
+assert.ok(html.includes('aria-label="Navegación principal"'), "Usability Violation: Primary navigation needs an accessible name");
+assert.ok(css.includes(":focus-visible"), "Usability Violation: Keyboard focus must be visible");
+assert.ok(css.includes("prefers-reduced-motion: reduce"), "Usability Violation: Respect the reduced-motion preference");
+assert.ok(js.includes('quickstartCopyStatus.textContent = "Comando copiado al portapapeles."'), "Usability Violation: Copy action needs success feedback");
+assert.ok(js.includes('quickstartCopyStatus.textContent = "No se pudo copiar automáticamente.'), "Usability Violation: Copy failure needs recovery guidance");
+assert.ok(!html.includes('id="live-fps-pill"'), "Usability Violation: Unvalidated frame-rate telemetry should not compete with product status");
+console.log("[PASS] 5/5 First-use, copy feedback, demo disclosure, and status-honesty assertions passed.");
+
 console.log("------------------------------------------------------------------");
-console.log(" STATIC ASSERTIONS PASSED; NO BROWSER CWV MEASUREMENT OR FULL WCAG AUDIT WAS RUN  ");
+console.log(" STATIC ASSERTIONS PASSED; NO USER STUDY, BROWSER CWV MEASUREMENT OR FULL WCAG AUDIT WAS RUN  ");
 console.log("==================================================================");
