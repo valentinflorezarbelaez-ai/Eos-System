@@ -165,24 +165,17 @@ STATUS: GOLDEN_SEAL_LOCKED_V8 | RTOS_SAMPLE_ACCURATE | EXIT CODE: 0`,
 
 STATUS: SANCTUM_OPERATIONAL | THELEMA_ACTIVE | EXIT CODE: 0`,
 
-  "nanosecond:hft": `$ eos nanosecond --hft
-> Auditing EosNanosecondEngine (src/core/eosNanosecondEngine.ts + /api/compile)...
+  "performance:guide": `$ eos performance --guide
+VISTA PREVIA ESTÁTICA · NO ES LA SALIDA DE UN COMANDO EJECUTADO
 
-[1] WORLD TOP-5 FASTEST SOFTWARE BENCHMARK MATRIX:
-  ├─ 1. Citadel / Jump HFT      : < 100 ns Market Order Response (C++20/23, ASM, FPGA VHDL)
-  ├─ 2. kdb+ (KX Systems)       : Billions of rows in microseconds (C + Vector q inside CPU L1/L2 Cache)
-  ├─ 3. Zed IDE                 : 120 FPS Constant (< 8 ms file open · Pure Rust + GPUI 3D Shaders)
-  ├─ 4. ScyllaDB / TigerBeetle  : Millions TPS · 0 GC Pauses (C++ Seastar & Zig + io_uring NVMe)
-  └─ 5. Bun Runtime             : 4x faster boot / 20x faster pkg install (Zig + Apple JavaScriptCore)
+Guía local: criterios para evaluar I/O, disposición de datos, asignaciones,
+concurrencia, SIMD y GPU.
 
-[2] THE 5 SECRETS OF NANOSECOND ENGINEERING IN EOS:
-  ├─ Secret 1 (Kernel Bypass)   : DPDK / io_uring / SharedArrayBuffer Zero-Copy + Edge Speculation Rules
-  ├─ Secret 2 (DoD & L1 Cache)  : Struct of Arrays (SoA) packed in contiguous 64 KB L1 Cache Arena (0.5 ns hit)
-  ├─ Secret 3 (Zero-Allocation) : Pre-allocated Arena & Ring Buffer at boot (0 B/op heap · 0 GC pauses)
-  ├─ Secret 4 (Lock-Free CAS)   : Thread-per-Core + LMAX Disruptor / Atomic Compare-And-Swap (0 Mutex)
-  └─ Secret 5 (SIMD & 120 FPS)  : 8-way unrolled AVX-512/SIMD128 vector loops + GPU Compositor Shaders
+No ejecuta un benchmark, no consulta empresas externas y no afirma que EOS
+implemente esas técnicas. Define la carga y el entorno, mide una línea base,
+introduce un cambio cada vez y compara resultados reproducibles.
 
-STATUS: NANOSECOND_ENGINE_ONLINE | UNIVERSAL_COMPILER_READY | 0 B/OP | EXIT CODE: 0`,
+STATUS: PREVIEW_ONLY | NO COMMAND EXECUTED`,
 
   "memory:akashic": `$ eos memory --akashic
 > Auditing EosAkashicMemoryEngine (src/core/eosAkashicMemory.ts + /api/memory)...
@@ -811,315 +804,183 @@ AMÉN... AMÉN... AMÉN... PAZ INVERENCIAL.`;
     });
   }
 
-  // 5. EOS Nanosecond Engineering Engine & Universal Technical Translator (#nanosecond-engine)
-  // Pre-allocate 64 KB L1 Cache Arena at boot (Zero-Allocation in hot loop)
-  const L1_ARENA_BYTES = 65536;
-  const SOA_LEN = 2048;
-  const l1RawBuffer = new ArrayBuffer(L1_ARENA_BYTES);
-  const soaPrices = new Float64Array(l1RawBuffer, 0, SOA_LEN);
-  const soaVolumes = new Float64Array(l1RawBuffer, 16384, SOA_LEN);
-  const soaOut = new Float64Array(l1RawBuffer, 32768, SOA_LEN);
-  const soaAtomicCursor = new Int32Array(l1RawBuffer, 57344, SOA_LEN);
-
-  for (let i = 0; i < SOA_LEN; i++) {
-    soaPrices[i] = 349.23 + (i & 255) * 0.5;
-    soaVolumes[i] = 0.85 + (i & 15) * 0.01;
-  }
-
-  function executeL1SoABenchmark(iterations = 500) {
-    const t0 = performance.now();
-    for (let iter = 0; iter < iterations; iter++) {
-      const gain = 1.0001 + (iter & 7) * 0.0001;
-      for (let i = 0; i < SOA_LEN; i += 8) {
-        soaOut[i]     = soaPrices[i]     * soaVolumes[i]     * gain;
-        soaOut[i + 1] = soaPrices[i + 1] * soaVolumes[i + 1] * gain;
-        soaOut[i + 2] = soaPrices[i + 2] * soaVolumes[i + 2] * gain;
-        soaOut[i + 3] = soaPrices[i + 3] * soaVolumes[i + 3] * gain;
-        soaOut[i + 4] = soaPrices[i + 4] * soaVolumes[i + 4] * gain;
-        soaOut[i + 5] = soaPrices[i + 5] * soaVolumes[i + 5] * gain;
-        soaOut[i + 6] = soaPrices[i + 6] * soaVolumes[i + 6] * gain;
-        soaOut[i + 7] = soaPrices[i + 7] * soaVolumes[i + 7] * gain;
-      }
-      soaAtomicCursor[0] = (soaAtomicCursor[0] + SOA_LEN) | 0;
-    }
-    const elapsedMs = Math.max(0.04, performance.now() - t0);
-    const totalOps = iterations * SOA_LEN;
-    const nsPerOp = (elapsedMs * 1000000) / totalOps;
-    const mOpsPerSec = totalOps / (elapsedMs * 1000);
-    return {
-      totalOps,
-      elapsedMs: elapsedMs.toFixed(3),
-      nsPerOp: nsPerOp.toFixed(2),
-      mOpsPerSec: mOpsPerSec.toFixed(1)
-    };
-  }
-
-  const EOS_COMPILER_PROFILES = {
-    "zed-gpui-120fps": {
-      title: "Zed GPUI Architecture (Rust / WebGPU · 120 FPS Constantes · < 8 ms INP)",
-      s1: "Mapeo Zero-Copy de archivos en memoria (mmap / SharedArrayBuffer) sin serialización intermedia.",
-      s2: "Struct of Arrays (SoA) contiguo en Caché L1/L2 para coordenadas X/Y, glifos y colores RGBA (0 Pointer Chasing).",
-      s3: "Frame Arena Allocator pre-reservado y reiniciado en O(1) cada 8.33 ms (0 objetos efímeros en el Heap).",
-      s4: "Canal atómico SPSC Lock-Free (Compare-And-Swap CAS) entre el hilo de IA/LSP y el hilo de GPU de 120 FPS.",
-      s5: "Escaneo léxico AVX-512/SIMD128 + Shaders GPU directos (Metal / Vulkan / DirectX / WebGPU).",
-      code: (inst) => `// [EOS COMPILER -> ZED GPUI 120FPS ZERO-ALLOCATION ARENA (Rust)]
-// Directiva del Arquitecto: "${inst}"
-#[repr(C, align(64))] // Alineado a línea física de Caché L1 (64 bytes)
-pub struct GlyphSoABatch {
-    pub x_pos: [f32; 1024],      // Contiguo en L1 (0.5 ns hit)
-    pub y_pos: [f32; 1024],
-    pub color_rgba: [u32; 1024],
-}
-
-pub fn render_frame_120fps(arena: &mut GlyphSoABatch, count: usize) {
-    for i in (0..count).step_by(8) {
-        for lane in 0..8 {
-            arena.x_pos[i + lane] = arena.x_pos[i + lane].mul_add(1.0, 0.5);
-        }
-    }
-}`
+  // 5. Local architecture-planning template and optional API benchmark.
+  const LOCAL_PLAN_PROFILES = {
+    "interface-rendering": {
+      title: "Interfaz y renderizado",
+      focus: ["Dispositivo y navegadores objetivo", "Presupuesto de respuesta y método de medición", "Accesibilidad y comportamiento ante carga alta"]
     },
-    "tigerbeetle-zig-backend": {
-      title: "TigerBeetle / ScyllaDB Architecture (Zig / C++ Seastar · Millones de TPS · io_uring)",
-      s1: "Kernel Bypass por Linux io_uring + DMA directo a NVMe y red sin cambios de contexto al Sistema Operativo.",
-      s2: "Lotes contiguos de transacciones de 128 bytes alineados a líneas de caché L1/L2 (Struct of Arrays).",
-      s3: "Asignación 100% estática en el arranque (0 malloc/free después de init · 0 Garbage Collector).",
-      s4: "Arquitectura Thread-per-Core con afinidad física de CPU y Ring Buffer atómico LMAX Disruptor (0 Mutex).",
-      s5: "Verificación criptográfica y contable vectorizada por SIMD (16-32 datos por ciclo de reloj).",
-      code: (inst) => `// [EOS COMPILER -> TIGERBEETLE / ZIG STATIC ARENA & IO_URING]
-// Directiva del Arquitecto: "${inst}"
-const std = @import("std");
-
-pub const TransferBatchSoA = extern struct {
-    debit_accounts:  [1024]u128 align(64),
-    credit_accounts: [1024]u128 align(64),
-    amounts:         [1024]u64  align(64),
-};
-
-pub fn commitBatchLockFree(batch: *TransferBatchSoA, count: usize) void {
-    var i: usize = 0;
-    while (i < count) : (i += 8) {
-        inline for (0..8) |lane| {
-            batch.amounts[i + lane] +|= 1; // 0 GC · Ejecución determinista en L1
-        }
-    }
-}`
+    "transactional-backend": {
+      title: "Backend transaccional",
+      focus: ["Consistencia, idempotencia y orden de operaciones", "Durabilidad, recuperación y comportamiento ante fallos", "Perfil de carga y objetivos que deben definirse"]
     },
-    "citadel-kdb-hft": {
-      title: "Citadel HFT / kdb+ Architecture (C++23 / Vector q · < 100 Nanosegundos · L1 Cache)",
-      s1: "Kernel Bypass por DPDK / Solarflare OpenOnload directo a los pines físicos de la tarjeta de red (NIC).",
-      s2: "Motor columnar vectorial en memoria L1/L2 (Struct of Arrays estilo kdb+ q sin punteros ni objetos OOP).",
-      s3: "Ring Buffer pre-calentado sobre HugePages (2MB/1GB) con 0 Page Faults y 0 asignaciones en vivo.",
-      s4: "Spin-loop atómico Compare-And-Swap (std::atomic CAS) anclado a un núcleo físico aislado (isolcpus).",
-      s5: "Intrínsecos vectoriales AVX-512 (_mm512_mul_pd) procesando 8 doubles / 16 floats en 1 solo ciclo de reloj.",
-      code: (inst) => `// [EOS COMPILER -> CITADEL HFT / KDB+ SUB-100NS ENGINE (C++23 AVX-512)]
-// Directiva del Arquitecto: "${inst}"
-#include <immintrin.h>
-
-alignas(64) double prices_soa[2048];
-alignas(64) double volumes_soa[2048];
-alignas(64) double signals_out[2048];
-
-inline void execute_hft_tick_sub100ns() noexcept {
-    for (size_t i = 0; i < 2048; i += 8) {
-        __m512d p = _mm512_load_pd(&prices_soa[i]);
-        __m512d v = _mm512_load_pd(&volumes_soa[i]);
-        _mm512_store_pd(&signals_out[i], _mm512_mul_pd(p, v));
-    }
-}`
+    "event-processing": {
+      title: "Procesamiento de eventos y series temporales",
+      focus: ["Forma y orden de los eventos de entrada", "Distribución p95/p99 medida en hardware identificado", "Backpressure, pérdida de datos y recuperación"]
     },
-    "xirp-bun-edge": {
-      title: "Xirp / Bun Edge Architecture (Zero-JS Hydration · Speculation Rules · Edge CDN)",
-      s1: "HTML pre-renderizado en nodos Edge CDN globales (TTFB ~0ms) + Speculation Rules (0ms en navegación).",
-      s2: "Estado plano en TypedArrays y atributos data-* sin árboles Virtual-DOM pesados en RAM.",
-      s3: "Caché O(1) de recursos y referencias DOM (_dom cache + dirty-checking con 0 basura por frame).",
-      s4: "Despacho asíncrono no bloqueante (requestAnimationFrame / Web Workers con SharedArrayBuffer).",
-      s5: "Animaciones exclusivas en GPU (transform: scale3d/scaleX/scaleY, opacity, touch-action: manipulation).",
-      code: (inst) => `// [EOS COMPILER -> XIRP / BUN EDGE ZERO-ALLOCATION WEB CONTROLLER]
-// Directiva del Arquitecto: "${inst}"
-const L1_ARENA = new ArrayBuffer(65536); // 64 KB fijos en Caché L1
-const STATE_SOA = new Float64Array(L1_ARENA, 0, 2048);
-
-export function updateEdgeHudZeroJank(el, nextScale) {
-  if (el._lastScale !== nextScale) {
-    el._lastScale = nextScale;
-    el.style.transform = \`scale3d(\${nextScale}, 1, 1)\`; // 120 FPS GPU Compositor
-  }
-}`
+    "web-saas": {
+      title: "Aplicación web y SaaS",
+      focus: ["Presupuesto de payload y condiciones de red", "Navegación, caché e invalidación", "Navegadores compatibles y observabilidad"]
     },
-    "aberamentho-rtos-dsp": {
-      title: "Aberamentho RTOS Audio DSP (WebAudio / Float32 SoA · Sample-Accurate · 0 Glitches)",
-      s1: "Escritura directa sobre los canales PCM Float32Array del AudioBuffer nativo sin decodificación intermedia.",
-      s2: "Canales L/R separados en arreglos contiguos Float32Array para la Fuga Alquímica de 3 Voces (FA 349.23Hz).",
-      s3: "SoundGenerator._bufferCache O(1) + Uint8Array(128) pre-asignado en el analizador espectral de 60fps.",
-      s4: "Planificación sample-accurate en el reloj de hardware de audio (ctx.currentTime + scheduleBassKill).",
-      s5: "Síntesis vectorial de 7 Octavas Planetarias (DO-SI) + vúmetros en GPU con transform: scaleY().",
-      code: (inst) => `// [EOS COMPILER -> ABERAMENTHO RTOS ZERO-ALLOCATION DSP ENGINE]
-// Directiva del Arquitecto: "${inst}"
-const PCM_RING_ARENA = new Float32Array(44100 * 4); // Pre-asignado (0 GC en audio)
-
-export function synthesizeHarmonicBlockSoA(sampleRate, freqFa = 349.23) {
-  const step = (2 * Math.PI * freqFa) / sampleRate;
-  for (let i = 0; i < PCM_RING_ARENA.length; i += 4) {
-    PCM_RING_ARENA[i]     = Math.sin(i * step);
-    PCM_RING_ARENA[i + 1] = Math.sin((i + 1) * step);
-    PCM_RING_ARENA[i + 2] = Math.sin((i + 2) * step);
-    PCM_RING_ARENA[i + 3] = Math.sin((i + 3) * step);
-  }
-  return PCM_RING_ARENA;
-}`
+    "audio-processing": {
+      title: "Procesamiento de audio",
+      focus: ["Frecuencia de muestreo y tamaño del búfer", "Criterio medible de cortes en los dispositivos objetivo", "Presupuesto de CPU y memoria por dispositivo"]
     }
   };
-
-  const formEosCompiler = document.getElementById("form-eos-compiler");
-  const inputEosInstruction = document.getElementById("input-eos-instruction");
-  const selectEosProfile = document.getElementById("select-eos-profile");
-  const eosCompilerOutput = document.getElementById("eos-compiler-output");
-  const soaBenchmarkReadout = document.getElementById("soa-benchmark-readout");
-  const btnRunSoaBenchmark = document.getElementById("btn-run-soa-benchmark");
-  const btnCopyEosBlueprint = document.getElementById("btn-copy-eos-blueprint");
-  const btnDownloadEosSpec = document.getElementById("btn-download-eos-spec");
+  const formLocalPlan = document.getElementById("form-eos-plan");
+  const planObjectiveInput = document.getElementById("plan-objective-input");
+  const selectPlanProfile = document.getElementById("plan-profile-select");
+  const localPlanOutput = document.getElementById("local-plan-output");
+  const endpointBenchmarkReadout = document.getElementById("endpoint-benchmark-readout");
+  const btnRunEndpointBenchmark = document.getElementById("btn-run-endpoint-benchmark");
+  const btnCopyLocalPlan = document.getElementById("btn-copy-local-plan");
+  const btnDownloadLocalPlan = document.getElementById("btn-download-local-plan");
   const eosEvolutionLogEl = document.getElementById("eos-evolution-log");
   const eosEvolutionCounterEl = document.getElementById("eos-evolution-counter");
 
-  const EVOLUTION_LOG_KEY = "eos_supreme_evolution_log_v4";
-  let evolutionEntries = [
-    {
-      ts: new Date().toISOString().slice(11, 19),
-      profile: "v4.0-SUPREME",
-      inst: "Motor Universal de Traducción Técnica + 5 Secretos de Nanosegundos + Aberamentho v8.0 In-App Full-Track Player sellados."
-    }
-  ];
+  const EVOLUTION_LOG_KEY = "eos_local_blueprint_history_v1";
+  let evolutionEntries = [];
   try {
     const savedLog = localStorage.getItem(EVOLUTION_LOG_KEY);
     if (savedLog) {
       const parsed = JSON.parse(savedLog);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        evolutionEntries = parsed.slice(0, 12);
+      if (Array.isArray(parsed)) {
+        evolutionEntries = parsed
+          .filter((item) => item && typeof item.ts === "string" && typeof item.profile === "string" && typeof item.inst === "string")
+          .slice(0, 12);
       }
     }
   } catch {
-    // Ignore storage restriction
+    // Local history is optional when storage is unavailable.
   }
 
   function renderEvolutionLog() {
     if (eosEvolutionCounterEl) {
-      eosEvolutionCounterEl.textContent = `Directivas compiladas: ${evolutionEntries.length}`;
+      eosEvolutionCounterEl.textContent = `Borradores guardados: ${evolutionEntries.length}`;
     }
-    if (eosEvolutionLogEl) {
-      eosEvolutionLogEl.innerHTML = evolutionEntries
-        .map(
-          (item) =>
-            `<div>• <span style="color:#38bdf8;">[${item.ts} · ${item.profile}]</span> ${item.inst.replace(/</g, "&lt;")}</div>`
-        )
-        .join("");
+    if (!eosEvolutionLogEl) return;
+    eosEvolutionLogEl.replaceChildren();
+    if (evolutionEntries.length === 0) {
+      eosEvolutionLogEl.textContent = "Los borradores que generes aquí se guardan solo en este navegador.";
+      return;
+    }
+    for (const item of evolutionEntries) {
+      const row = document.createElement("div");
+      row.textContent = `• [${item.ts} · ${item.profile}] ${item.inst}`;
+      eosEvolutionLogEl.appendChild(row);
     }
   }
   renderEvolutionLog();
 
-  function recordEvolutionEntry(inst, profileKey) {
+  function recordEvolutionEntry(instruction, profileKey) {
     const entry = {
-      ts: new Date().toISOString().slice(11, 19),
+      ts: new Intl.DateTimeFormat("es-CO", { hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(new Date()),
       profile: profileKey,
-      inst: inst.length > 96 ? inst.slice(0, 96) + "..." : inst
+      inst: instruction.length > 96 ? `${instruction.slice(0, 96)}...` : instruction
     };
-    evolutionEntries = [entry, ...evolutionEntries.filter((e) => e.inst !== entry.inst)].slice(0, 12);
+    evolutionEntries = [entry, ...evolutionEntries.filter((item) => item.inst !== entry.inst)].slice(0, 12);
     try {
       localStorage.setItem(EVOLUTION_LOG_KEY, JSON.stringify(evolutionEntries));
     } catch {
-      // Ignore storage quota error
+      // The draft remains usable when local storage is unavailable.
     }
     renderEvolutionLog();
   }
 
-  async function compileInstructionWithEos(instructionText, profileKey) {
-    const cleanInst = (instructionText || "").trim() || "Construir sistema de ultra-baja latencia a 120 FPS y 0 pausas de GC";
-    const profileObj = EOS_COMPILER_PROFILES[profileKey] || EOS_COMPILER_PROFILES["zed-gpui-120fps"];
-    const bench = executeL1SoABenchmark(600);
+  function createLocalBlueprint(instructionText, profileKey) {
+    const instruction = (instructionText || "").trim().slice(0, 1000);
+    const profile = LOCAL_PLAN_PROFILES[profileKey] || LOCAL_PLAN_PROFILES["interface-rendering"];
+    const focusItems = profile.focus.map((item) => `- ${item}`).join("\n");
+    const blueprint = [
+      "BORRADOR LOCAL DE PLANIFICACIÓN · NO ES UNA COMPILACIÓN",
+      "",
+      `Objetivo proporcionado: ${instruction || "(vacío)"}`,
+      `Perfil de trabajo: ${profile.title}`,
+      "",
+      "Aspectos que deben definirse y validarse para este perfil:",
+      focusItems,
+      "",
+      "Siguientes pasos sugeridos (no ejecutados):",
+      "- Acordar criterios de aceptación medibles para este objetivo.",
+      "- Inspeccionar la arquitectura y las dependencias reales del repositorio.",
+      "- Implementar en cambios pequeños y revisar cada diff.",
+      "- Ejecutar las validaciones pertinentes y registrar sus salidas reales.",
+      "",
+      "Estado: no se llamó a un modelo, no se compiló código, no se ejecutaron pruebas ni se modificaron archivos.",
+      "Esta plantilla no valida viabilidad, rendimiento, seguridad ni compatibilidad."
+    ].join("\n");
 
-    if (soaBenchmarkReadout) {
-      soaBenchmarkReadout.innerHTML = `Operaciones Vectoriales: <strong>${bench.totalOps.toLocaleString()} ops (${bench.elapsedMs} ms)</strong> · Velocidad: <strong style="color:#f59e0b;">${bench.nsPerOp} ns/op (${bench.mOpsPerSec} Mops/s)</strong> · Heap: <strong style="color:#10b981;">0 Bytes (Zero-Allocation)</strong>`;
-    }
-
-    let remoteSeal = "LOCAL-L0-DETERMINISTIC-SEAL";
-    try {
-      const res = await fetch("/api/compile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ instruction: cleanInst, profile: profileKey })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.sha256Seal) remoteSeal = data.sha256Seal.slice(0, 32) + "...";
-      }
-    } catch {
-      // Offline / static fallback preserves 100% deterministic behavior
-    }
-
-    const compiledText = `[EOS UNIVERSAL COMPILER v4.0 · VERIFIED · ${bench.nsPerOp} ns/op · 0 B/OP HEAP]
-Instrucción : ${cleanInst}
-Perfil      : ${profileObj.title}
-Sello SHA256: ${remoteSeal}
-
-1. INTAKE & CLASIFICACIÓN DUAL-TRACK (PASOS 1–3):
-  • Track Asignado : HEAVY_TRACK (Compuerta Constitucional Nivel 2+ Verificada)
-  • Dominio L0     : Pure Hexagonal Core (0 Dependencias Externas en Runtime)
-
-2. ESPECIFICACIÓN FORMAL EARS & BDD (LEY I & II · PASOS 4–8):
-  • FR-EOS-01 (Ubiquitous): EL SISTEMA ejecutará "${cleanInst}" sobre un Struct of Arrays (SoA) contiguo de 64 KB en Caché L1 con 0 asignaciones dinámicas en el Heap.
-  • FR-EOS-02 (Event-Driven): CUANDO ingrese una orden o evento, EL SISTEMA despachará por cola circular Lock-Free (CAS atómico) y renderizará en GPU en < 8 ms (120 FPS).
-  • BDD: DADO un Arena pre-reservado de 64 KB, CUANDO corre la carga bajo ${profileKey}, ENTONCES logra ${bench.mOpsPerSec} millones de ops/seg con 0 ms de Garbage Collector.
-
-3. LOS 5 SECRETOS DE VELOCIDAD EXTREMA APLICADOS (ARQUITECTURA):
-  • [1] Kernel Bypass : ${profileObj.s1}
-  • [2] Caché L1 SoA  : ${profileObj.s2}
-  • [3] Zero-Alloc    : ${profileObj.s3}
-  • [4] Lock-Free CAS : ${profileObj.s4}
-  • [5] SIMD & GPU    : ${profileObj.s5}
-
-4. GRAFO DE TAREAS ATÓMICAS (DAG DE EJECUCIÓN · PASOS 9–17):
-  • [TASK-01] Reservar Arena SoA de 64 KB alineada a 64B en Caché L1
-  • [TASK-02] Configurar anillo atómico SPSC Lock-Free (Compare-And-Swap CAS)
-  • [TASK-03] Compilar bucle vectorial desenrollado x8 (SIMD / GPU 120 FPS)
-  • [TASK-04] Ejecutar verify:strict (Exit Code 0) y sellar recibo EVD SHA-256
-
-5. CÓDIGO FUENTE GENERADO (ZERO-ALLOCATION / SOA / SIMD):
-${profileObj.code(cleanInst)}
-
-6. RECIBO CRIPTOGRÁFICO DE EVIDENCIA (PASOS 18–21):
-  • Estado Epistémico : PRODUCTION_READY · L1 Footprint: 65,536 Bytes · Heap: 0 Bytes`;
-
-    if (eosCompilerOutput) {
-      eosCompilerOutput.textContent = compiledText;
-    }
-    recordEvolutionEntry(cleanInst, profileKey);
+    if (localPlanOutput) localPlanOutput.textContent = blueprint;
+    recordEvolutionEntry(instruction, profile.title);
   }
 
-  if (btnCopyEosBlueprint && eosCompilerOutput) {
-    btnCopyEosBlueprint.addEventListener("click", () => {
-      const text = eosCompilerOutput.textContent || "";
+  async function runEndpointBenchmark() {
+    if (endpointBenchmarkReadout) endpointBenchmarkReadout.textContent = "Consultando /api/compile…";
+    if (btnRunEndpointBenchmark) btnRunEndpointBenchmark.disabled = true;
+    try {
+      const response = await fetch("/api/compile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ instruction: "Float64Array local benchmark", profile: "endpoint-demo" })
+      });
+      const data = await response.json().catch(() => null);
+      const benchmark = data && data.benchmark;
+      const elapsed = benchmark && benchmark.elapsedNanoseconds;
+      const processed = benchmark && benchmark.elementsProcessed;
+      const throughput = benchmark && benchmark.throughputMillionElementsPerSecond;
+      const bufferBytes = benchmark && benchmark.typedArrayBufferBytes;
+      const numericFieldsAreValid = [elapsed, processed, throughput, bufferBytes]
+        .every((value) => typeof value === "number" && Number.isFinite(value));
+      if (!response.ok || !data || data.status !== "LOCAL_BENCHMARK_EXECUTED" ||
+          !numericFieldsAreValid || elapsed <= 0 || processed <= 0 || throughput < 0 || bufferBytes < 0 ||
+          typeof benchmark.benchmarkScope !== "string") {
+        throw new Error("La API no devolvió una medición válida.");
+      }
+      const fingerprint = typeof data.resultFingerprintSha256 === "string" ? data.resultFingerprintSha256 : "No disponible";
+      if (endpointBenchmarkReadout) endpointBenchmarkReadout.textContent = [
+        "Resultado de /api/compile (runtime del servidor):",
+        `Elementos procesados: ${processed.toLocaleString("es-CO")}`,
+        `Duración observada: ${elapsed.toLocaleString("es-CO")} ns`,
+        `Rendimiento derivado: ${throughput.toLocaleString("es-CO")} millones de elementos/s`,
+        `ArrayBuffer reutilizado por el proceso: ${bufferBytes.toLocaleString("es-CO")} bytes`,
+        `Asignaciones de heap: ${benchmark.heapAllocationMeasurement === "NOT_MEASURED" ? "No medidas" : "Estado no reconocido"}`,
+        `Alcance: ${benchmark.benchmarkScope}`,
+        `Huella informativa: ${fingerprint} (no es firma ni prueba de rendimiento)`,
+        `Compilador nativo: ${data.execution && data.execution.nativeCompilerInvoked ? "sí" : "no"} · GPU: ${data.execution && data.execution.gpuUsed ? "sí" : "no"} · Caché: ${data.execution && data.execution.cacheBehaviorMeasured ? "medida" : "no medida"}`
+      ].join("\n");
+    } catch (_error) {
+      if (endpointBenchmarkReadout) {
+        endpointBenchmarkReadout.textContent = "No se obtuvo una medición. El endpoint /api/compile no está disponible o devolvió una respuesta inválida; no se muestra una cifra de respaldo.";
+      }
+    } finally {
+      if (btnRunEndpointBenchmark) btnRunEndpointBenchmark.disabled = false;
+    }
+  }
+  if (btnCopyLocalPlan && localPlanOutput) {
+    btnCopyLocalPlan.addEventListener("click", () => {
+      const text = localPlanOutput.textContent || "";
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(() => {
-          const prev = btnCopyEosBlueprint.textContent;
-          btnCopyEosBlueprint.textContent = "✅ Blueprint Copiado";
+          const prev = btnCopyLocalPlan.textContent;
+          btnCopyLocalPlan.textContent = "✅ Borrador copiado";
           setTimeout(() => {
-            btnCopyEosBlueprint.textContent = prev;
+            btnCopyLocalPlan.textContent = prev;
           }, 1800);
         });
       }
     });
   }
 
-  if (btnDownloadEosSpec && eosCompilerOutput) {
-    btnDownloadEosSpec.addEventListener("click", () => {
-      const text = eosCompilerOutput.textContent || "";
-      const blob = new Blob([`# PAQUETE SDD & NANOSECOND BLUEPRINT — EOS SYSTEM v4.0\n\n\`\`\`text\n${text}\n\`\`\`\n`], {
+  if (btnDownloadLocalPlan && localPlanOutput) {
+    btnDownloadLocalPlan.addEventListener("click", () => {
+      const text = localPlanOutput.textContent || "";
+      const blob = new Blob([`# BORRADOR LOCAL DE PLANIFICACIÓN — EOS SYSTEM\n\n\`\`\`text\n${text}\n\`\`\`\n`], {
         type: "text/markdown;charset=utf-8"
       });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `EOS-SDD-BLUEPRINT-${Date.now()}.md`;
+      a.download = `EOS-LOCAL-PLAN-${Date.now()}.md`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -1127,35 +988,31 @@ ${profileObj.code(cleanInst)}
     });
   }
 
-  if (formEosCompiler) {
-    formEosCompiler.addEventListener("submit", (e) => {
+  if (formLocalPlan) {
+    formLocalPlan.addEventListener("submit", (e) => {
       e.preventDefault();
       playSacredTone([349.23, 440.0, 523.25], 0.9);
-      compileInstructionWithEos(
-        inputEosInstruction ? inputEosInstruction.value : "",
-        selectEosProfile ? selectEosProfile.value : "zed-gpui-120fps"
+      createLocalBlueprint(
+        planObjectiveInput ? planObjectiveInput.value : "",
+        selectPlanProfile ? selectPlanProfile.value : "interface-rendering"
       );
     });
   }
 
-  if (btnRunSoaBenchmark) {
-    btnRunSoaBenchmark.addEventListener("click", () => {
+  if (btnRunEndpointBenchmark) {
+    btnRunEndpointBenchmark.addEventListener("click", () => {
       playSacredTone([523.25, 659.25], 0.7);
-      compileInstructionWithEos(
-        inputEosInstruction ? inputEosInstruction.value : "",
-        selectEosProfile ? selectEosProfile.value : "zed-gpui-120fps"
-      );
+      runEndpointBenchmark();
     });
   }
-
   document.querySelectorAll(".eos-preset-prompt").forEach((btn) => {
     btn.addEventListener("click", () => {
       const promptText = btn.getAttribute("data-prompt") || "";
-      const profileVal = btn.getAttribute("data-profile") || "zed-gpui-120fps";
-      if (inputEosInstruction) inputEosInstruction.value = promptText;
-      if (selectEosProfile) selectEosProfile.value = profileVal;
+      const profileVal = btn.getAttribute("data-profile") || "interface-rendering";
+      if (planObjectiveInput) planObjectiveInput.value = promptText;
+      if (selectPlanProfile) selectPlanProfile.value = profileVal;
       playSacredTone([349.23, 523.25], 0.7);
-      compileInstructionWithEos(promptText, profileVal);
+      createLocalBlueprint(promptText, profileVal);
     });
   });
 
@@ -1942,7 +1799,7 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     { label: "🛡️ Ir a Tubería Autónoma CI/CD SecDevOps v9.0 (7 Aduanas Fail-Closed + SAST + SBOM)", badge: "CI/CD v9.0", href: "#cicd-secdevops" },
     { label: "🌌 Ver demo Omega: conceptos PQC, ZK, BFT y registro de proyectos", badge: "OMEGA DEMO", href: "#omega-singularity" },
     { label: "🐧 Ver conceptos de Linux: RCU, eBPF, EEVDF y VFS", badge: "DEMO LINUX", href: "#linux-kernel-core" },
-    { label: "⚡ Ir a Traductor Técnico Universal & Nanosegundos (Caché L1 SoA)", badge: "NANOSEGUNDOS", href: "#nanosecond-engine" },
+    { label: "Plan de rendimiento y arquitectura local", badge: "PLAN", href: "#performance-guide" },
     { label: "🧠 Ir a Bóveda de Memoria Akáshica Soberana (27 Tools Engram + ODD/RDD)", badge: "MEMORIA L0", href: "#memoria-akashica" },
     { label: "🏆 Ver referencias de ingeniería y demos locales", badge: "DEMOS LOCALES", href: "#bigtech-pantheon" },
     { label: "☀️ Ir a Templo Ciber-Teúrgico Solar Samaeliano (3 Factores + Oráculo)", badge: "TEMPLO SOLAR", href: "#templo-solar" },
@@ -1954,7 +1811,7 @@ Alcance       : no se inyectó una falla, ejecutó FDIR ni midió MTTR`;
     { label: "💻 Ver muestra CLI: eos kernel --linux", badge: "MUESTRA CLI", cmd: "kernel:linux" },
     { label: "💻 Ver muestra CLI: eos bigtech --tla", badge: "MUESTRA CLI", cmd: "bigtech:tla" },
     { label: "💻 Ver muestra CLI: eos memory --akashic", badge: "MUESTRA CLI", cmd: "memory:akashic" },
-    { label: "💻 Ver muestra CLI: eos nanosecond --hft", badge: "MUESTRA CLI", cmd: "nanosecond:hft" },
+    { label: "Plan de rendimiento y arquitectura local", badge: "PLAN", href: "#performance-guide" },
     { label: "💻 Ver muestra CLI: npm run verify:strict", badge: "MUESTRA CLI", cmd: "verify:strict" },
     { label: "🚀 Abrir Aberamentho Pleroma Music v8.0 en Producción", badge: "PRODUCTION", url: "https://aberamentosprelomamusic.vercel.app" },
     { label: "🚀 Abrir Portafolio Oficial — Valentín Flórez en Producción", badge: "PRODUCTION", url: "https://portafolio-valentin.vercel.app" }

@@ -6,7 +6,7 @@
  * Zero external runtime dependencies.
  */
 
-const CACHE_VERSION = 'v34-0-offline-wasm';
+const CACHE_VERSION = 'v35-local-planning';
 const STATIC_CACHE = `eos-static-${CACHE_VERSION}`;
 const API_CACHE = `eos-api-${CACHE_VERSION}`;
 
@@ -16,8 +16,8 @@ const PRECACHE_ASSETS = [
   "/css/eos.css",
   "/js/eos.js",
   "/js/wasm_exec.js",
-  "/css/eos.css?v=12.0",
-  "/js/eos.js?v=12.0",
+  "/css/eos.css?v=13.0",
+  "/js/eos.js?v=14.0",
   "/favicon.svg",
   "/manifest.webmanifest",
   "/assets/eos-system.png"
@@ -88,7 +88,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // 2. Static Assets (CSS, JS, Fonts, Images): Stale-While-Revalidate (Instant < 1ms load)
+  // 2. Static assets use stale-while-revalidate; cached responses have no timing guarantee.
   const isStatic =
     url.pathname.endsWith(".css") ||
     url.pathname.endsWith(".js") ||

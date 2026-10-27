@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" href="/css/eos.css?v=13.0" as="style" />
-  <link rel="preload" href="/js/eos.js?v=13.0" as="script" />
+  <link rel="preload" href="/js/eos.js?v=14.0" as="script" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/eos.css?v=13.0" integrity="sha384-dIGNu2Fj7xYwEd236md5pVPyLLBuhXoHDbT0uF95gpYTNfM2OFzcZpe0vyQLkFRZ" crossorigin="anonymous" />
 
@@ -123,7 +123,7 @@
           <li><a href="#consola">Consola</a></li>
           <li><a href="#eos-jarvis-nexus">JARVIS</a></li>
           <li><a href="#templo-solar">Templo Solar</a></li>
-          <li><a href="#nanosecond-engine">Nanosegundos</a></li>
+          <li><a href="#performance-guide">Plan de rendimiento</a></li>
           <li><a href="#memoria-akashica">Memoria Akáshica</a></li>
           <li><a href="#bigtech-pantheon">Ejemplos técnicos</a></li>
           <li><a href="#linux-kernel-core">Kernel Linux</a></li>
@@ -273,8 +273,8 @@
             <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="sanctum:thelema">
               8. eos sanctum --thelema
             </button>
-            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="nanosecond:hft">
-              9. eos nanosecond --hft
+            <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="performance:guide">
+              9. Guía de rendimiento
             </button>
             <button type="button" role="tab" aria-selected="false" class="cmd-tab" data-cmd="dualtrack:orchestrator">
               10. eos dual-track
@@ -1403,137 +1403,119 @@ Dictamen        : «Al León de la Ley se le combate con la Balanza». Realiza l
       </div>
     </section>
 
-    <!-- NANOSECOND ENGINEERING ENGINE & EOS UNIVERSAL TECHNICAL TRANSLATOR -->
-    <section class="section deferred-section" id="nanosecond-engine">
+    <!-- PERFORMANCE DESIGN GUIDE AND LOCAL PLANNING TEMPLATE -->
+    <section class="section deferred-section" id="performance-guide">
       <div class="container">
         <div class="section__head">
-          <div class="eyebrow"> INGENIERÍA DE NANOSEGUNDOS (HFT · KDB+ · ZED · TIGERBEETLE · BUN) · TRADUCTOR TÉCNICO UNIVERSAL</div>
-          <h2 class="section__title">Los 5 Softwares Más Rápidos del Planeta &amp; Compilador de Instrucciones EOS</h2>
+          <div class="eyebrow">DISEÑO DE RENDIMIENTO · CRITERIOS DE MEDICIÓN · PLANIFICACIÓN LOCAL</div>
+          <h2 class="section__title">Diseñar rendimiento con evidencia</h2>
           <p class="section__sub">
-            El software más veloz del planeta no mide su rendimiento en milisegundos, sino en <strong>nanosegundos (milmillonésimas de segundo)</strong>, operando al límite físico de la luz en la fibra óptica y de los electrones en el silicio. <strong>EOS System</strong> absorbe estos <strong>5 Secretos de Ingeniería Extrema</strong> y traduce cualquier instrucción tuya en especificaciones EARS/BDD, arquitectura orientada a datos (Caché L1) y código <strong>Zero-Allocation / Lock-Free / SIMD</strong> del más alto nivel mundial.
+            Las técnicas de bajo nivel solo ayudan cuando encajan con la carga, el hardware y el perfil medido. Esta guía resume decisiones para evaluar; EOS no afirma que esta página implemente esas optimizaciones ni promete cifras de latencia o throughput.
           </p>
         </div>
 
-        <!-- TABLA: LOS 5 SOFTWARES MÁS RÁPIDOS DEL MUNDO -->
-        <div class="table-wrap" role="region" aria-label="Los 5 Softwares Más Rápidos del Mundo por Categoría" tabindex="0" style="margin-bottom: 2rem;">
+        <!-- MATRIZ DE DECISIONES PARA INGENIERÍA DE RENDIMIENTO -->
+        <div class="table-wrap" role="region" aria-label="Matriz de decisiones de ingeniería de rendimiento" tabindex="0" style="margin-bottom: 2rem;">
           <table class="eos-table">
             <thead>
               <tr>
-                <th>Software Élite Mundial</th>
-                <th>Categoría</th>
-                <th>Velocidad / Hito Físico</th>
-                <th>En qué está construido</th>
-                <th>Asimilación e Implementación en EOS System</th>
+                <th>Área</th>
+                <th>Preguntas de diseño</th>
+                <th>Evidencia que conviene reunir</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>1. Motores HFT (Citadel / Jump Trading)</strong></td>
-                <td>Finanzas Cuantitativas</td>
-                <td><strong style="color:#f59e0b;">&lt; 100 nanosegundos</strong> de respuesta a una orden de mercado.</td>
-                <td><code>C++20/23</code>, Ensamblador <code>x86_64</code> y <code>VHDL/Verilog</code> (grabado directo en chips <code>FPGA</code>).</td>
-                <td>Pipeline determinista Zero-Copy en <code>EosCore</code> con 0 asignaciones en vivo en la ruta crítica.</td>
+                <td><strong>Entrada y salida</strong></td>
+                <td>¿Dónde están las copias, esperas y llamadas al sistema en la ruta crítica?</td>
+                <td>Perfil de CPU, bytes transferidos y distribución de latencia en el entorno objetivo.</td>
               </tr>
               <tr>
-                <td><strong>2. kdb+ (KX Systems)</strong></td>
-                <td>Base de Datos / Series de Tiempo</td>
-                <td>Analiza miles de millones de registros en memoria en <strong style="color:#38bdf8;">microsegundos</strong>.</td>
-                <td><code>C</code> ultra-optimizado y lenguaje vectorial <code>q</code> (el binario entero cabe en la <strong>Caché L1/L2 del CPU</strong>).</td>
-                <td><code>EosL1SoAArena</code>: Arreglos contiguos <em>Struct of Arrays (SoA)</em> en un bloque único de <strong>64 KB</strong> dentro de la Caché L1 (<code>0.5 ns</code>).</td>
+                <td><strong>Disposición de datos</strong></td>
+                <td>¿La carga recorre todos los campos o solo algunas columnas de muchos registros?</td>
+                <td>Accesos por operación, fallos de caché cuando se midan y comparación AoS/SoA con la misma carga.</td>
               </tr>
               <tr>
-                <td><strong>3. Zed</strong></td>
-                <td>Editor de Código / IDE con IA</td>
-                <td>Renderiza la pantalla a <strong style="color:#10b981;">120 FPS constantes</strong> (&lt; 8 ms en abrir archivos gigantes).</td>
-                <td><code>Rust</code> puro desde cero + librería propia de GPU (<code>GPUI</code>) que dibuja el texto como un videojuego 3D (Metal/Vulkan).</td>
-                <td>Composición 100% acelerada por GPU (<code>transform: scale3d/scaleX/scaleY</code>), <code>INP &lt; 8 ms</code> y <code>CLS = 0</code>.</td>
+                <td><strong>Memoria y concurrencia</strong></td>
+                <td>¿Hay asignaciones o contención observables que justifiquen estructuras especializadas?</td>
+                <td>Perfil de heap/GC, saturación, equidad y resultados bajo carga representativa.</td>
               </tr>
               <tr>
-                <td><strong>4. ScyllaDB / TigerBeetle</strong></td>
-                <td>Bases de Datos Distribuidas / Contabilidad</td>
-                <td><strong style="color:#f59e0b;">Millones de transacciones/seg</strong> sin pausas de sistema.</td>
-                <td><code>C++ (Seastar)</code> y <code>Zig</code> (sin recolector de basura, acceso directo DMA / <code>io_uring</code> al disco NVMe).</td>
-                <td>Arena Allocator estático pre-reservado en el arranque (<code>0 Garbage Collector pauses</code>) + sellado Merkle SHA-256.</td>
-              </tr>
-              <tr>
-                <td><strong>5. Bun</strong></td>
-                <td>Runtime de JavaScript / Empaquetador</td>
-                <td>Arranca <strong style="color:#38bdf8;">4x más rápido</strong> que Node.js e instala paquetes <strong style="color:#10b981;">20x más rápido</strong> que npm.</td>
-                <td><code>Zig</code> y el motor <code>JavaScriptCore</code> (de Apple WebKit) en lugar de V8, con syscalls directas.</td>
-                <td>Pureza Hexagonal L0 (<code>0 dependencias NPM externas</code>), Speculative Prerendering y caché O(1).</td>
+                <td><strong>SIMD y GPU</strong></td>
+                <td>¿El trabajo se puede paralelizar y compensa el coste de transferir y coordinarlo?</td>
+                <td>Tiempo extremo a extremo, precisión y resultados en los dispositivos que se soportan.</td>
               </tr>
             </tbody>
           </table>
         </div>
-
-        <!-- LOS 5 SECRETOS DE LA VELOCIDAD EXTREMA -->
+        <!-- ÁREAS DE DISEÑO DE RENDIMIENTO -->
         <div class="grid-3" style="margin-bottom: 2.25rem;">
           <article class="arch-card arch-card--gold">
-            <span class="arch-card__tag arch-card__tag--gold">SECRETO 01 · KERNEL BYPASS</span>
-            <h3 class="arch-card__title">1. Saltarse al Sistema Operativo (<code>DPDK / io_uring</code>)</h3>
+            <span class="arch-card__tag arch-card__tag--gold">ÁREA 01 · I/O Y RED</span>
+            <h3 class="arch-card__title">1. Reducir trabajo en la ruta de I/O</h3>
             <p class="arch-card__desc">
-              En lugar de que el SO (Linux/Windows) detenga el CPU y copie paquetes de la red al Kernel y luego al usuario, se conecta directamente a los pines físicos de la tarjeta de red (NIC) en espacio de usuario (<code>DPDK</code>, <code>io_uring</code>, <code>Solarflare OpenOnload</code> o <code>SharedArrayBuffer Zero-Copy</code>).
+              Tecnologías como <code>io_uring</code> o <code>DPDK</code> cambian cómo una aplicación envía y recibe datos. Su utilidad depende del sistema operativo, el hardware, el volumen y el perfil de la carga; <code>SharedArrayBuffer</code> no es un mecanismo de acceso directo a una NIC.
             </p>
-            <div class="arch-card__meta">Latencia: &lt; 150 ns NIC-a-Usuario · 0 Context Switches</div>
+            <div class="arch-card__meta">Evaluar: CPU, copias, syscalls y latencias p50/p95/p99</div>
           </article>
 
           <article class="arch-card">
-            <span class="arch-card__tag">SECRETO 02 · DATA-ORIENTED DESIGN (DoD)</span>
-            <h3 class="arch-card__title">2. <code>Struct of Arrays (SoA)</code> &amp; Caché L1 (<code>0.5 ns</code>)</h3>
+            <span class="arch-card__tag">ÁREA 02 · DISPOSICIÓN DE DATOS</span>
+            <h3 class="arch-card__title">2. Elegir entre <code>Array of Structs</code> y <code>Struct of Arrays</code></h3>
             <p class="arch-card__desc">
-              Pedir un dato a la RAM tarda ~100 ns. En lugar de Programación Orientada a Objetos tradicional (que dispersa punteros por toda la RAM), usamos arreglos contiguos de bytes alineados a 64 bytes para que todo el programa y sus datos quepan en la <strong>Caché L1/L2 del CPU (0.5 ns)</strong>.
+              <code>SoA</code> puede ayudar cuando se recorren columnas específicas de muchos registros; <code>AoS</code> puede ser más claro o eficiente en otros accesos. La disposición por sí sola no garantiza que los datos quepan en caché ni fija su latencia.
             </p>
-            <div class="arch-card__meta">Caché L1 Hit: 0.5 ns (200x más rápido que RAM)</div>
+            <div class="arch-card__meta">Evaluar: bytes leídos, patrón de acceso y tasa de aciertos de caché</div>
           </article>
 
           <article class="arch-card arch-card--gold">
-            <span class="arch-card__tag arch-card__tag--emerald">SECRETO 03 · ZERO-ALLOCATION</span>
-            <h3 class="arch-card__title">3. Cero Asignación en Vivo &amp; Sin Garbage Collector</h3>
+            <span class="arch-card__tag arch-card__tag--emerald">ÁREA 03 · ASIGNACIONES</span>
+            <h3 class="arch-card__title">3. Controlar asignaciones en rutas calientes</h3>
             <p class="arch-card__desc">
-              Al arrancar el programa en <code>Rust</code>, <code>Zig</code>, <code>C++</code> o <code>TypedArrays L0</code>, se reserva un bloque fijo de memoria (<strong>Arena Allocator</strong> o <strong>Ring Buffer</strong>) y jamás se vuelve a pedir ni liberar memoria mientras el software corre en su ruta crítica.
+              Arenas, pools y buffers reutilizables pueden reducir presión de asignación en secciones acotadas. No implican cero asignaciones en todo el proceso ni eliminan pausas de un runtime que use recolector.
             </p>
-            <div class="arch-card__meta">Asignaciones en Vivo: 0 B/op · Pausas de GC: 0 ms</div>
+            <div class="arch-card__meta">Evaluar: perfil de memoria, pausas y ciclo de vida de buffers</div>
           </article>
 
           <article class="arch-card">
-            <span class="arch-card__tag">SECRETO 04 · LOCK-FREE CONCURRENCY</span>
-            <h3 class="arch-card__title">4. Programación Lock-Free (<code>LMAX Disruptor / CAS</code>)</h3>
+            <span class="arch-card__tag">ÁREA 04 · CONCURRENCIA</span>
+            <h3 class="arch-card__title">4. Elegir el modelo de sincronización</h3>
             <p class="arch-card__desc">
-              Cero <code>Mutex</code> que pongan hilos en pausa. Se emplean arquitecturas <strong>Thread-per-Core</strong> (un hilo amarrado físicamente a un núcleo del CPU) y colas circulares atómicas con instrucciones de procesador <code>CAS (Compare-And-Swap)</code> donde ningún hilo espera jamás a otro.
+              Colas lock-free pueden ser útiles bajo contención, pero son difíciles de verificar y no garantizan que ningún hilo espere. Compara primero una solución simple con mutex frente a la carga real y el modelo de memoria requerido.
             </p>
-            <div class="arch-card__meta">Sincronización: &lt; 5 ns CAS Atómico · 0 Contención</div>
+            <div class="arch-card__meta">Evaluar: contención, equidad, complejidad y corrección</div>
           </article>
 
           <article class="arch-card arch-card--gold">
-            <span class="arch-card__tag arch-card__tag--gold">SECRETO 05 · SIMD &amp; GPU 120 FPS</span>
-            <h3 class="arch-card__title">5. Vectorización <code>SIMD</code> y Shaders GPU Directos</h3>
+            <span class="arch-card__tag arch-card__tag--gold">ÁREA 05 · PARALELISMO</span>
+            <h3 class="arch-card__title">5. Usar SIMD o GPU cuando la carga lo permita</h3>
             <p class="arch-card__desc">
-              Con instrucciones <strong>SIMD</strong> (<code>AVX-512</code> en Intel/AMD, <code>NEON</code> en ARM o <code>WASM SIMD128</code>), un solo ciclo de reloj calcula 16 o 32 datos simultáneamente. Y en la interfaz (como <code>Zed GPUI</code>), los Shaders de GPU pintan cada elemento a <strong>120 FPS constantes</strong>.
+              SIMD puede procesar varios valores por instrucción si el algoritmo y los tipos lo permiten. GPU añade costes de transferencia y coordinación; mide el tiempo total en los dispositivos objetivo antes de elegirla.
             </p>
-            <div class="arch-card__meta">Cálculo: 16-32 datos/ciclo · Renderizado: 120 FPS GPU</div>
+            <div class="arch-card__meta">Evaluar: vectorización efectiva, transferencias y tiempo de extremo a extremo</div>
           </article>
 
           <article class="arch-card">
-            <span class="arch-card__tag arch-card__tag--emerald">EVOLUCIÓN CONTINUA DE EOS</span>
-            <h3 class="arch-card__title">Traductor Técnico Universal de Instrucciones</h3>
+            <span class="arch-card__tag arch-card__tag--emerald">HERRAMIENTA LOCAL</span>
+            <h3 class="arch-card__title">Plantilla de planificación técnica</h3>
             <p class="arch-card__desc">
-              Cada instrucción que dictas a <strong>EOS System</strong> es traducida automáticamente a especificación formal <strong>EARS + BDD</strong>, arquitectura de 5 Secretos de Nanosegundos y código fuente verificado del más alto nivel mundial, actualizando en sincronía este Plano de Control.
+              Genera un borrador con preguntas de diseño y próximos pasos a partir de tu objetivo y un perfil. No llama a un modelo, no genera ni compila código y no certifica arquitectura.
             </p>
-            <div class="arch-card__meta">Módulo L0: src/core/eosNanosecondEngine.ts + /api/compile</div>
+            <div class="arch-card__meta">El borrador se guarda en el almacenamiento local del navegador</div>
           </article>
         </div>
 
-        <!-- TRADUCTOR TÉCNICO UNIVERSAL DE EOS & BENCHMARK EN VIVO L1 SOA -->
+        <!-- PLANTILLA LOCAL DE PLANIFICACIÓN Y BENCHMARK DEL ENDPOINT -->
         <div class="sanctum-shell" style="border-color: rgba(56, 189, 248, 0.45);">
           <div class="sanctum-header" style="background: linear-gradient(90deg, rgba(56,189,248,0.12) 0%, rgba(245,158,11,0.12) 100%);">
             <div class="sanctum-status">
-              <span class="sanctum-badge sanctum-badge--emerald">⚡ EOS UNIVERSAL TECHNICAL TRANSLATOR &amp; L1 SOA ARENA</span>
-              <span class="sanctum-badge sanctum-badge--cyan" id="soa-live-badge">ARENA L1: 64 KB PRE-ALLOCATED · 0 B/OP HEAP</span>
-              <span class="sanctum-badge sanctum-badge--gold">ENDPOINT: /API/COMPILE READY</span>
+              <span class="sanctum-badge sanctum-badge--emerald">PLANTILLA LOCAL DE PLANIFICACIÓN</span>
+              <span class="sanctum-badge sanctum-badge--cyan">El plan no compila ni valida código</span>
+              <span class="sanctum-badge sanctum-badge--gold">Medición opcional: /api/compile</span>
             </div>
             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-              <button type="button" id="btn-run-soa-benchmark" class="btn btn--gold" style="padding: 0.42rem 0.9rem; font-size: 0.76rem;">
-                🚀 Ejecutar Benchmark L1 SoA (Zero-Alloc)
+              <button type="button" id="btn-run-endpoint-benchmark" class="btn btn--gold" style="padding: 0.42rem 0.9rem; font-size: 0.76rem;">
+                Medir bucle Float64Array del endpoint
               </button>
             </div>
           </div>
@@ -1543,126 +1525,100 @@ Dictamen        : «Al León de la Ley se le combate con la Balanza». Realiza l
               <!-- Columna Izquierda: Formulario de Instrucción del Arquitecto -->
               <div class="sanctum-box sanctum-box--gold">
                 <div>
-                  <span class="arch-card__tag arch-card__tag--gold">PASO 1 · INSTRUCCIÓN DEL ARQUITECTO SOBERANO</span>
-                  <h3 class="arch-card__title" style="margin-top: 0.5rem;">Traductor de Instrucciones a Ingeniería de Élite Mundial</h3>
+                  <span class="arch-card__tag arch-card__tag--gold">PASO 1 · OBJETIVO Y PERFIL</span>
+                  <h3 class="arch-card__title" style="margin-top: 0.5rem;">Crear un borrador de planificación</h3>
                   <p style="font-size: 0.82rem; color: var(--text-muted);">
-                    Escribe cualquier requerimiento o idea en lenguaje natural. EOS lo traduce técnicamente en Especificación Formal EARS/BDD, los 5 Secretos de Nanosegundos y código ultra-optimizado (Zero-Allocation / SoA / Lock-Free / SIMD).
+                    La plantilla organiza preguntas y próximos pasos. Revisa los supuestos y define criterios medibles antes de implementar; no genera especificaciones verificadas ni código ejecutable.
                   </p>
                 </div>
 
-                <form id="form-eos-compiler" class="sanctum-form" style="flex-direction: column;">
-                  <label for="input-eos-instruction" style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--cyan-bright);">
-                    INSTRUCCIÓN EN LENGUAJE NATURAL PARA EOS:
+                <form id="form-eos-plan" class="sanctum-form" style="flex-direction: column;">
+                  <label for="plan-objective-input" style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--cyan-bright);">
+                    OBJETIVO DEL PROYECTO:
                   </label>
                   <input
                     type="text"
-                    id="input-eos-instruction"
+                    id="plan-objective-input"
                     class="sanctum-input"
-                    value="Crear interfaz a 120 FPS estilo Zed y motor de transacciones de millones de ops/seg sin pausas de Garbage Collector"
-                    placeholder="Escribe cualquier sistema, app o módulo que desees construir con EOS..."
+                    value="Diseñar una interfaz de escritorio fluida para una aplicación financiera"
+                    maxlength="1000"
+                    placeholder="Describe el objetivo que quieres planificar..."
                     required
                   />
 
-                  <label for="select-eos-profile" style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--gold-bright); margin-top: 0.35rem;">
-                    PERFIL DE ARQUITECTURA DE VELOCIDAD EXTREMA:
+                  <label for="plan-profile-select" style="font-size: 0.76rem; font-family: var(--font-mono); color: var(--gold-bright); margin-top: 0.35rem;">
+                    ÁREA TÉCNICA PARA EXPLORAR:
                   </label>
-                  <select id="select-eos-profile" class="sanctum-select" style="width: 100%;">
-                    <option value="zed-gpui-120fps">1. Desktop / UI a 120 FPS Constantes — Estilo Zed (Rust + GPUI Shaders + Arena)</option>
-                    <option value="tigerbeetle-zig-backend">2. Backend / DB Millones de TPS — Estilo TigerBeetle &amp; ScyllaDB (Zig + io_uring + 0 GC)</option>
-                    <option value="citadel-kdb-hft">3. Motor Cuantitativo &lt; 100ns &amp; Series de Tiempo — Estilo Citadel HFT &amp; kdb+ (C++23 AVX-512 + L1 SoA)</option>
-                    <option value="xirp-bun-edge">4. Web / SaaS Instantáneo (0ms Nav) — Estilo Xirp &amp; Bun (Zero-Hydration + Speculation Rules + GPU)</option>
-                    <option value="aberamentho-rtos-dsp">5. Motor Acústico / DSP Sample-Accurate — Estilo Aberamentho (Float32 SoA + O(1) Cache)</option>
+                  <select id="plan-profile-select" class="sanctum-select" style="width: 100%;">
+                    <option value="interface-rendering">Interfaz y renderizado</option>
+                    <option value="transactional-backend">Backend transaccional</option>
+                    <option value="event-processing">Procesamiento de eventos y series temporales</option>
+                    <option value="web-saas">Aplicación web y SaaS</option>
+                    <option value="audio-processing">Procesamiento de audio</option>
                   </select>
 
                   <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.35rem;">
                     <button type="submit" class="btn btn--primary" style="flex: 1;">
-                      ⚡ Traducir &amp; Compilar Instrucción con EOS
+                      Crear borrador local
                     </button>
                   </div>
                 </form>
 
-                <!-- Botones rápidos de presets de traducción -->
+                <!-- Ejemplos de objetivos de planificación -->
                 <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
-                  <button type="button" class="btn btn--ghost eos-preset-prompt" data-profile="zed-gpui-120fps" data-prompt="Construir IDE y panel financiero a 120 FPS con renderizado directo en GPU y apertura de archivos en < 4 ms" style="padding: 0.32rem 0.65rem; font-size: 0.72rem;">
-                    Preset: IDE 120 FPS (Zed)
+                  <button type="button" class="btn btn--ghost eos-preset-prompt" data-profile="interface-rendering" data-prompt="Planificar una interfaz de escritorio y definir cómo medir su respuesta" style="padding: 0.32rem 0.65rem; font-size: 0.72rem;">
+                    Ejemplo: interfaz
                   </button>
-                  <button type="button" class="btn btn--ghost eos-preset-prompt" data-profile="tigerbeetle-zig-backend" data-prompt="Diseñar libro mayor contable distribuido capaz de procesar 2 millones de transacciones por segundo con io_uring y 0 pausas de GC" style="padding: 0.32rem 0.65rem; font-size: 0.72rem;">
-                    Preset: Ledger Millones TPS (TigerBeetle)
+                  <button type="button" class="btn btn--ghost eos-preset-prompt" data-profile="transactional-backend" data-prompt="Planificar un servicio transaccional y definir requisitos de consistencia y recuperación" style="padding: 0.32rem 0.65rem; font-size: 0.72rem;">
+                    Ejemplo: backend
                   </button>
-                  <button type="button" class="btn btn--ghost eos-preset-prompt" data-profile="citadel-kdb-hft" data-prompt="Ejecutar motor de señales en tiempo real en < 100 nanosegundos usando Struct of Arrays en Caché L1 y vectorización AVX-512" style="padding: 0.32rem 0.65rem; font-size: 0.72rem;">
-                    Preset: Motor &lt;100ns (HFT / kdb+)
+                  <button type="button" class="btn btn--ghost eos-preset-prompt" data-profile="event-processing" data-prompt="Definir cómo medir p95 y p99 para un procesador de eventos" style="padding: 0.32rem 0.65rem; font-size: 0.72rem;">
+                    Ejemplo: eventos
                   </button>
                 </div>
 
-                <!-- Telemetría en vivo del Benchmark L1 SoA -->
+                <!-- Resultados observados por el endpoint de benchmark -->
                 <div style="margin-top: auto; padding: 0.9rem; border-radius: var(--radius-sm); background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35);">
                   <div style="font-family: var(--font-mono); font-size: 0.74rem; color: #6ee7b7; margin-bottom: 0.35rem;">
-                    TELEMETRÍA EN VIVO · ARENA SOA DE 64 KB EN CACHÉ L1 (EJECUTADO EN TU CPU):
+                    RESULTADO DEL ENDPOINT · PROCESO DEL SERVIDOR · NO ES UNA MEDICIÓN DE CACHÉ:
                   </div>
-                  <div id="soa-benchmark-readout" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-main);">
-                    Operaciones Vectoriales: <strong>1,024,000 ops</strong> · Latencia: <strong style="color:#f59e0b;">~0.42 ns/op</strong> · Asignación Heap: <strong style="color:#10b981;">0 Bytes (Zero-Allocation)</strong>
+                  <div id="endpoint-benchmark-readout" role="status" aria-live="polite" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-main); white-space: pre-wrap;">
+                    Sin medir. Pulsa el botón para consultar /api/compile. Si el endpoint no está disponible, no se mostrará un resultado estimado.
                   </div>
                 </div>
               </div>
 
-              <!-- Columna Derecha: Salida Compilada por EOS (Paquete SDD 6 Partes + 5 Secretos + Código Zero-Alloc) -->
+              <!-- Columna derecha: borrador local de planificación -->
               <div class="sanctum-box" style="border-color: rgba(56, 189, 248, 0.38);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap;">
                   <div>
-                    <span class="arch-card__tag">PASO 2 · PAQUETE SDD DE 6 PARTES COMPILADO POR EOS (EARS + BDD + DAG + CÓDIGO)</span>
-                    <h3 class="arch-card__title" style="margin-top: 0.5rem;">Blueprint Técnico Traducido &amp; Código Zero-Allocation / SIMD</h3>
+                    <span class="arch-card__tag">PASO 2 · PLANTILLA DE PLANIFICACIÓN</span>
+                    <h3 class="arch-card__title" style="margin-top: 0.5rem;">Borrador para revisar y completar</h3>
                   </div>
                   <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
-                    <button type="button" id="btn-copy-eos-blueprint" class="btn btn--ghost" style="padding: 0.35rem 0.7rem; font-size: 0.72rem;">
-                      📋 Copiar Blueprint SDD
+                    <button type="button" id="btn-copy-local-plan" class="btn btn--ghost" style="padding: 0.35rem 0.7rem; font-size: 0.72rem;">
+                      Copiar borrador
                     </button>
-                    <button type="button" id="btn-download-eos-spec" class="btn btn--gold" style="padding: 0.35rem 0.7rem; font-size: 0.72rem;">
-                      💾 Descargar Paquete (.md)
+                    <button type="button" id="btn-download-local-plan" class="btn btn--gold" style="padding: 0.35rem 0.7rem; font-size: 0.72rem;">
+                      Descargar Markdown
                     </button>
                   </div>
                 </div>
-                <pre id="eos-compiler-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.92); border: 1px solid rgba(56, 189, 248, 0.3); font-family: var(--font-mono); font-size: 0.76rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 430px; overflow-y: auto;" aria-live="polite">[EOS UNIVERSAL COMPILER v4.0 · READY · 6-PART SDD PACKAGE]
-Instrucción : Crear interfaz a 120 FPS estilo Zed y motor de transacciones de millones de ops/seg sin pausas de Garbage Collector
-Perfil      : Zed GPUI Architecture (Rust / WebGPU · 120 FPS Constantes · &lt; 8 ms INP)
+                <pre id="local-plan-output" style="margin: 0; padding: 1rem; border-radius: var(--radius-sm); background: rgba(2, 6, 23, 0.92); border: 1px solid rgba(56, 189, 248, 0.3); font-family: var(--font-mono); font-size: 0.76rem; color: #e2e8f0; white-space: pre-wrap; line-height: 1.5; max-height: 430px; overflow-y: auto;" aria-live="polite">BORRADOR LOCAL DE PLANIFICACIÓN · NO ES UNA COMPILACIÓN
 
-1. INTAKE &amp; CLASIFICACIÓN DUAL-TRACK:
-  • Track Asignado : HEAVY_TRACK (Level 2 Constitutional Gate Verified)
-  • Dominio L0     : Pure Hexagonal Core (0 External NPM Runtime Dependencies)
-
-2. ESPECIFICACIÓN FORMAL EARS &amp; BDD (LEY I &amp; II):
-  • FR-EOS-01 (Ubiquitous): EL SISTEMA ejecutará la carga sobre un Struct of Arrays (SoA) contiguo de 64 KB en Caché L1 con 0 asignaciones en el Heap.
-  • FR-EOS-02 (Event-Driven): CUANDO ocurra un evento, EL SISTEMA despachará por cola circular Lock-Free (CAS atómico) y pintará en GPU en &lt; 8 ms (120 FPS).
-  • BDD: DADO un Arena de 64 KB en L1, CUANDO corre la carga, ENTONCES logra &gt; 1,500 Mops/s con 0 ms de Garbage Collector.
-
-3. APLICACIÓN DE LOS 5 SECRETOS DE NANOSEGUNDOS:
-  • [1] Kernel Bypass : Mapeo Zero-Copy (mmap / SharedArrayBuffer) sin serialización intermedia.
-  • [2] Caché L1 SoA  : Vectores contiguos alineados a 64 bytes (0 Pointer Chasing · 0.5 ns L1 Hit).
-  • [3] Zero-Alloc    : Arena Allocator fijo reiniciado en O(1) por frame (0 Garbage Collector).
-  • [4] Lock-Free CAS : Cola circular atómica SPSC (Compare-And-Swap sin Mutex).
-  • [5] SIMD &amp; GPU    : Bucle vectorial desenrollado x8 (AVX-512 / SIMD128) + Shaders GPU a 120 FPS.
-
-4. GRAFO DE TAREAS ATÓMICAS (DAG DE EJECUCIÓN):
-  • [TASK-01] Reservar Arena SoA de 64 KB alineada a 64B ➔ [TASK-02] Implementar anillo SPSC Lock-Free CAS ➔ [TASK-03] Compilar bucle SIMD x8 ➔ [TASK-04] Sellar recibo EVD SHA-256.
-
-5. CÓDIGO FUENTE GENERADO (ZERO-ALLOCATION / SOA / SIMD):
-#[repr(C, align(64))] // Alineación exacta a línea de Caché L1 (64 bytes)
-pub struct GlyphSoABatch {
-    pub x_pos: [f32; 1024],      // Contiguo en L1 (0 Pointer Chasing)
-    pub y_pos: [f32; 1024],
-    pub color_rgba: [u32; 1024],
-}</pre>
-                <!-- Bitácora de Evolución Continua de EOS en Vivo -->
+Escribe un objetivo, elige un perfil y crea un borrador. El contenido se genera con una plantilla local; no se llama a un modelo, no se compila ni se valida código.</pre>
+                <!-- Historial local de borradores -->
                 <div style="margin-top: 0.75rem; padding: 0.75rem 0.9rem; border-radius: var(--radius-sm); background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(245, 158, 11, 0.3);">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
                     <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #fbbf24; font-weight: 700;">
-                      📜 BITÁCORA VIVA DE CO-EVOLUCIÓN DE EOS (SINCRONIZADA EN TIEMPO REAL)
+                      Historial de borradores en este navegador
                     </span>
                     <span id="eos-evolution-counter" style="font-family: var(--font-mono); font-size: 0.68rem; color: #38bdf8;">
-                      Directivas compiladas: 1
+                      Borradores guardados: 0
                     </span>
                   </div>
                   <div id="eos-evolution-log" style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); max-height: 92px; overflow-y: auto; line-height: 1.45;">
-                    <div>• [v5.0 AKASHIC SUPREME] Memoria Akáshica Soberana (27 herramientas Engram + Gentle-AI ODD/RDD 4R + Tribunal de Anubis) integrada.</div>
+                    <div>Los borradores que generes aquí se guardan solo en este navegador.</div>
                   </div>
                 </div>
               </div>
@@ -2911,6 +2867,6 @@ No se ejecutan comandos, auditorías, sondeos ni despliegues.</pre>
     </div>
   </dialog>
 
-  <script src="/js/eos.js?v=13.0" integrity="sha384-jAU8cq7A6oqadUtkRUcQYMwul1CtmYmjxQTpZf90HgbPJTJR9qUjlEoyubMCI3Qg" crossorigin="anonymous" defer></script>
+  <script src="/js/eos.js?v=14.0" integrity="sha384-J4Ailj39KNdV//gE8bQpAytRJt8ZxINS9BLL3OpBYd2tgp/uDUEFU8DFibyyb0dG" crossorigin="anonymous" defer></script>
 </body>
 </html>
