@@ -141,7 +141,7 @@ describe("EOS Universal Polyglot Repository Adapter Suite (SPEC-019, BDD-049)", 
 
         assert.equal(result.dryRun, true);
         assert.ok(result.filesScaffolded.length >= 3, "Expected at least 3 files to be proposed");
-        assert.ok(result.message.includes("[DRY-RUN]"));
+        assert.ok(result.message.includes("[PLAN ONLY]"));
 
         // Verify NO files were actually written to disk
         assert.equal(fs.existsSync(path.join(tmpDir, "catalog-info.yaml")), false);
@@ -161,7 +161,7 @@ describe("EOS Universal Polyglot Repository Adapter Suite (SPEC-019, BDD-049)", 
         const result = mockAdapter.elevate(tmpDir, { dryRun: false });
 
         assert.equal(result.dryRun, false);
-        assert.ok(result.message.includes("[APPLIED]"));
+        assert.ok(result.message.includes("[WRITE COMPLETED]"));
 
         // Verify files were written
         assert.ok(fs.existsSync(path.join(tmpDir, "catalog-info.yaml")), "Missing catalog-info.yaml");

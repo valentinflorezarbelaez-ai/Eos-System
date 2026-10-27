@@ -7,7 +7,7 @@
  * - eos_semantic_search: High-dimensional vector space queries.
  * - eos_tmr_consensus: Triple-Modular Redundancy Byzantine evaluation of directives.
  * - eos_audit_fleet: Cross-repository health and git status checks.
- * - eos_verify_gates: 7-stage fail-closed SecDevOps security gates.
+ * - eos_simulate_bounded_models: bounded JavaScript simulations associated with TLA+ text files.
  * - eos_health_check: CNCF / Google SRE observability telemetry.
  *
  * Zero external runtime dependencies.
@@ -677,7 +677,7 @@ export class EosMcpServer {
                 },
                 {
                   name: "eos_turbo_verify",
-                  description: "Executes ultra-fast sub-350ms verification of SAST, clean hexagonal boundaries, 0-runtime dependencies, and critical assets with microsecond telemetry.",
+                  description: "Runs bounded local checks: five configured credential patterns, static architecture, declared runtime dependencies, required paths, and local timings. This is not general SAST, an SBOM, or a release certification.",
                   inputSchema: {
                     type: "object",
                     properties: {}
@@ -1408,8 +1408,8 @@ export class EosMcpServer {
                   }
                 },
                 {
-                  name: "eos_verify_formal_models",
-                  description: "Formally checks TLA+ mathematical models (LMAX Disruptor, Datomic bitemporal ledger, Hermes consensus) verifying state invariants, lock-freedom, and safety.",
+                  name: "eos_simulate_bounded_models",
+                  description: "Runs bounded JavaScript simulations and extracts candidate names from TLA+ text files. It does not parse TLA+ syntax or run TLC model checking.",
                   inputSchema: {
                     type: "object",
                     properties: {}
@@ -1942,7 +1942,7 @@ export class EosMcpServer {
                 },
                 {
                   uri: "eos://evidence/receipt",
-                  name: "Cryptographic SBOM & CI/CD Receipt",
+                  name: "Local Repository Checks Receipt",
                   mimeType: "application/json"
                 },
                 {
@@ -1956,6 +1956,7 @@ export class EosMcpServer {
 
         case "resources/read": {
           const uri = params?.uri;
+          if (typeof uri !== "string") throw new TypeError("Resource URI must be a string.");
           const content = this.readResource(uri);
           const response: JsonRpcResponse = {
             jsonrpc: "2.0",
@@ -2042,7 +2043,7 @@ export class EosMcpServer {
 
       case "eos_audit_fleet": {
         const registryCandidate = path.join(this.projectRoot, "docs/projects/registry.json");
-        let registry = { projects: [] };
+        let registry: { projects?: unknown } = { projects: [] };
         if (fs.existsSync(registryCandidate)) {
           const registryPath = this.resolveProjectPath("docs/projects/registry.json", "file");
           registry = JSON.parse(fs.readFileSync(registryPath, "utf8"));
@@ -2705,15 +2706,17 @@ export class EosMcpServer {
         return report;
       }
 
-      case "eos_verify_formal_models": {
-        onProgress?.(30, 100, "Parsing TLA+ specifications and building state models");
+      case "eos_simulate_bounded_models": {
+        onProgress?.(30, 100, "Reading TLA+ text and running bounded JavaScript simulations");
         const results = runAllFormalVerifications();
-        onProgress?.(100, 100, "All formal models verified (0 violations)");
+        onProgress?.(100, 100, "Bounded simulations completed; no formal model checking was run");
         return {
           totalModels: results.length,
           models: results,
-          epistemicState: "VERIFIED",
-          guarantee: "seL4 / ASML MATHEMATICALLY BOUNDED"
+          simulationOnly: true,
+          executionMode: "bounded-javascript-simulation",
+          formalModelCheckingRun: false,
+          epistemicState: "LOCAL_SIMULATIONS_COMPLETED"
         };
       }
 
@@ -3336,8 +3339,8 @@ export class EosMcpServer {
         return "# EOS Constitution\nZero Vibe Coding & 7 Inviolable Laws active.";
       }
       case "eos://evidence/receipt": {
-        const receiptCandidate = path.join(this.projectRoot, "docs/evidence/SBOM-CICD-RECEIPT.json");
-        const receiptPath = fs.existsSync(receiptCandidate) ? this.resolveProjectPath("docs/evidence/SBOM-CICD-RECEIPT.json", "file") : null;
+        const receiptCandidate = path.join(this.projectRoot, "docs/evidence/LOCAL-CHECKS-RECEIPT.json");
+        const receiptPath = fs.existsSync(receiptCandidate) ? this.resolveProjectPath("docs/evidence/LOCAL-CHECKS-RECEIPT.json", "file") : null;
         if (receiptPath) return fs.readFileSync(receiptPath, "utf8");
         return JSON.stringify({ status: "NO_RECEIPT" });
       }

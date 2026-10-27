@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   repository-checks:
-    name: "Configured local checks and test suites"
+    name: "Full Node repository checks"
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
@@ -34,5 +34,57 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Execute Stage 1–7 Strict SecDevOps & Constitutional Pipeline
+      - name: Install locked development toolchain
+        run: npm ci
+
+      - name: Run all repository checks and discovered Node test suites before build
         run: node scripts/verify-cicd-pipeline.mjs
+
+  go-template-checks:
+    name: Go example module tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Go from module contract
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: templates/spotify-go-microservice/go.mod
+          cache-dependency-path: templates/spotify-go-microservice/go.mod
+
+      - name: Check formatting, tests, and build
+        working-directory: templates/spotify-go-microservice
+        run: |
+          test -z "$(gofmt -l .)"
+          go test -race ./...
+          go build ./...
+
+  rust-template-checks:
+    name: Rust example crate tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup pinned Rust toolchain
+        uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # pinned action revision
+        with:
+          toolchain: 1.99.1
+
+      - name: Check formatting, tests, and release build
+        working-directory: templates/spotify-rust-audio-core
+        run: |
+          cargo fmt --check
+          cargo test --locked
+          cargo build --locked --release

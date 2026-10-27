@@ -27,6 +27,7 @@ const __dirname = path.dirname(__filename);
 const root = path.resolve(__dirname, "..");
 const testDir = path.join(root, "test/_sandbox");
 const testFile = path.join(testDir, "anomalousFile.ts");
+const generatedReceipts = [];
 
 describe("EOS Sovereign Autonomous Healer & FDIR Suite", () => {
   before(() => {
@@ -39,6 +40,9 @@ describe("EOS Sovereign Autonomous Healer & FDIR Suite", () => {
   after(() => {
     if (fs.existsSync(testFile)) fs.unlinkSync(testFile);
     if (fs.existsSync(testDir)) fs.rmdirSync(testDir);
+    for (const receiptPath of generatedReceipts) {
+      if (fs.existsSync(receiptPath)) fs.unlinkSync(receiptPath);
+    }
   });
 
   describe("Suite 1: Diagnostic & Remediation Synthesis (BDD-026)", () => {
@@ -90,6 +94,7 @@ describe("EOS Sovereign Autonomous Healer & FDIR Suite", () => {
       assert.ok(report.receiptPath !== null);
       assert.ok(report.receiptSha256 !== null);
       assert.ok(fs.existsSync(report.receiptPath));
+      generatedReceipts.push(report.receiptPath);
 
       const healedContent = fs.readFileSync(testFile, "utf8");
       assert.ok(!healedContent.includes("\r\n"), "File on disk must now have LF line endings");

@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import packageMetadata from "../package.json" with { type: "json" };
 
 /**
  * EOS SYSTEM — PROCESS LIVENESS ENDPOINT (/api/health)
@@ -49,7 +50,7 @@ export default function handler(req, res) {
     uptimeSeconds: Math.floor(process.uptime()),
     service: {
       name: "eos-system-control-plane",
-      version: "27.0.0",
+      version: packageMetadata.version,
       runtime: `Node.js ${process.version} (${process.platform}-${process.arch})`,
       verificationScope: "PROCESS_LIVENESS_ONLY"
     },

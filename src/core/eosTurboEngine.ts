@@ -150,7 +150,7 @@ export function runTurboPipeline(projectRoot: string = process.cwd()): TurboPipe
   const endStage1 = process.hrtime.bigint();
   const durStage1Us = Number((endStage1 - startStage1) / 1000n);
   stages.push({
-    stageId: "STAGE_1_SAST",
+    stageId: "STAGE_1_CREDENTIAL_PATTERNS",
     name: "Configured credential-pattern scan (content-hash cache)",
     durationUs: durStage1Us,
     durationMs: Number((durStage1Us / 1000).toFixed(3)),

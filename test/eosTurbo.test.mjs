@@ -79,7 +79,7 @@ describe("EOS Turbo Engine & Nanosecond Precision Suite", () => {
 
       assert.equal(result.stages.length, 4);
       const stageIds = result.stages.map((s) => s.stageId);
-      assert.ok(stageIds.includes("STAGE_1_SAST"));
+      assert.ok(stageIds.includes("STAGE_1_CREDENTIAL_PATTERNS"));
       assert.ok(stageIds.includes("STAGE_2_ARCH"));
       assert.ok(stageIds.includes("STAGE_3_INVENTORY"));
       assert.ok(stageIds.includes("STAGE_4_ASSETS"));

@@ -8,7 +8,7 @@
  * VS Code, JetBrains, Neovim, and CI/CD pipelines.
  *
  * Usage:
- *   eos verify               - Run 7-stage fail-closed SecDevOps pipeline
+ *   eos verify               - Run configured local repository checks
  *   eos audit                - Audit sovereign fleet repositories
  *   eos test                 - Run unit tests and chaos resilience suite
  *   eos mcp                  - Launch native Model Context Protocol (MCP) server
@@ -42,7 +42,7 @@ function printBanner() {
 switch (command) {
   case "verify": {
     printBanner();
-    console.log("[EOS] Executing 7-Stage Sovereign SecDevOps Gate...\n");
+    console.log("[EOS] Executing configured local repository checks...\n");
     try {
       execFileSync(process.execPath, [path.join(root, "scripts/verify-cicd-pipeline.mjs")], {
         cwd: root,
@@ -64,7 +64,7 @@ switch (command) {
     console.log(`Estado Epistémico    : ${result.epistemicState}`);
     console.log(`Tiempo Total         : ${result.totalDurationMs} ms (${result.totalDurationUs} µs)`);
     console.log(`Archivos Analizados  : ${result.totalFilesChecked} (${result.cacheHits} en caché, ${result.freshScans} frescos)`);
-    console.log(`Merkle SBOM Root     : ${result.sbomMerkleRoot.slice(0, 32)}...\n`);
+    console.log(`Source Inventory SHA-256: ${result.sourceInventoryDigest}\n`);
     console.log("=== TELEMETRÍA DE ALTA PRECISIÓN POR ADUANA ===");
     result.stages.forEach((s) => {
       const icon = s.status === "PASS" ? "✔" : "✖";
@@ -160,6 +160,8 @@ switch (command) {
       console.log(`[EOS MCP]   ↳ SSE Stream Endpoint : http://${host}:${port}/sse`);
       console.log(`[EOS MCP]   ↳ Message Backchannel : http://${host}:${port}/message?sessionId=<id>`);
       console.log(`[EOS MCP]   ↳ Health & Status     : http://${host}:${port}/health`);
+      console.error(`[EOS MCP] Bearer token (local only; configure your MCP client with Authorization: Bearer <token>): ${streamServer.authToken}`);
+      console.error(`[EOS MCP] Browser clients require exact origins in EOS_MCP_ALLOWED_ORIGINS; requests without Origin still require the bearer token.`);
       console.log(`[EOS MCP] Press Ctrl+C to terminate server.`);
     } else if (subCommand === "status" || subCommand === "--status") {
       printBanner();
@@ -1745,10 +1747,11 @@ switch (command) {
     break;
   }
 
+  case "simulate:models":
   case "formal":
   case "tla": {
     printBanner();
-    console.log(`[EOS FORMAL] Verificación Matemática Formal en TLA+ (seL4 / ASML Integrity)...\n`);
+    console.log(`[EOS MODEL SIMULATION] Extracción de texto TLA+ y simulaciones JavaScript acotadas; no ejecuta TLC ni model checking formal.\n`);
     try {
       execFileSync(process.execPath, [path.join(root, "scripts/verify-formal-tla.mjs")], {
         cwd: root,
@@ -1763,7 +1766,7 @@ switch (command) {
   case "jepsen":
   case "chaos:net": {
     printBanner();
-    console.log(`[EOS JEPSEN] Inyector de Caos de Partición de Red y Pérdida de Paquetes (Estilo Jepsen)...\n`);
+    console.log(`[EOS NETWORK SIMULATION] Escenario local de partición y pérdida de paquetes; no es una prueba Jepsen distribuida.\n`);
     const { EosTimeTravelSim } = await import("../src/core/eosTimeTravelSim.ts");
     const sim = new EosTimeTravelSim(774411);
 
@@ -1785,7 +1788,7 @@ switch (command) {
     sim.scheduleEvent("replica-1", "RECONCILE_STATE", 10, {}, "replica-3");
     const healedReceipt = sim.runSimulation(40);
     console.log(`Hash de Estado Convergido     : ${healedReceipt.finalStateHash}`);
-    console.log(`Garantía de Certeza Jepsen    : JEPSEN_LINEARIZABLE_QUORUM_PRESERVED\n`);
+    console.log(`Resultado del escenario       : simulación local completada; no prueba linearizability de un clúster real.\n`);
     break;
   }
 
@@ -2667,7 +2670,7 @@ Uso Universal:
   eos sim [semilla]          Hipervisor de simulación determinista de viaje en el tiempo (reproducible bit a bit)
   eos schedule               Planificador cooperativo a 120Hz (<8.33ms) y aritmética branchless constante
   eos pts                    Ejecuta selección predictiva inteligente de pruebas (PTS) basada en Datalog
-  eos formal                 Verifica especificaciones matemáticas formales TLA+ (Disruptor, Datomic, Hermes)
+  eos simulate:models        Extrae nombres TLA+ y ejecuta simulaciones JS acotadas; no corre TLC
   eos jepsen                 Inyecta particiones de red y pérdida de paquetes estilo Jepsen
   eos vault                  Audita la bóveda de memoria pinned y ejecuta purga de cero entropía
   eos temple [int] [emo] [mot] Audita los Tres Cerebros y verifica el veto circadiano del templo

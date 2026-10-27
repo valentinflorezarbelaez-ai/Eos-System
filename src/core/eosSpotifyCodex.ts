@@ -158,13 +158,13 @@ export interface BlamelessPostMortemOptions {
   readonly fiveWhys?: readonly string[];
   readonly whatWentWell?: readonly string[];
   readonly whereWeGotLucky?: readonly string[];
-  readonly actionItems?: readonly Array<{
+  readonly actionItems?: ReadonlyArray<{
     readonly action: string;
     readonly owner: string;
     readonly priority: "P0" | "P1" | "P2";
     readonly jiraTicket: string;
   }>;
-  readonly timeline?: readonly Array<{ readonly time: string; readonly event: string }>;
+  readonly timeline?: ReadonlyArray<{ readonly time: string; readonly event: string }>;
 }
 
 export interface BlamelessPostMortem {
@@ -175,13 +175,13 @@ export interface BlamelessPostMortem {
   readonly durationMinutes: number | null;
   readonly userImpact: string;
   readonly trigger: string;
-  readonly timeline: readonly Array<{ time: string; event: string }>;
+  readonly timeline: ReadonlyArray<{ time: string; event: string }>;
   readonly fiveWhys: readonly string[];
   readonly rootCauseSummary: string;
   readonly systemicWeakness: string;
   readonly whatWentWell: readonly string[];
   readonly whereWeGotLucky: readonly string[];
-  readonly actionItems: readonly Array<{
+  readonly actionItems: ReadonlyArray<{
     readonly action: string;
     readonly owner: string;
     readonly priority: "P0" | "P1" | "P2";
@@ -197,7 +197,7 @@ export interface CanaryExperimentOptions {
   readonly hypothesis?: string;
   readonly squad?: string;
   readonly primaryMetric?: string;
-  readonly guardrails?: readonly Array<{
+  readonly guardrails?: ReadonlyArray<{
     readonly metric: string;
     readonly maxThreshold: string;
     readonly autoRevert: boolean;
@@ -210,14 +210,14 @@ export interface CanaryExperimentSpec {
   readonly featureName: string;
   readonly hypothesis: string;
   readonly ownerSquad: string;
-  readonly rolloutStages: readonly Array<{
+  readonly rolloutStages: ReadonlyArray<{
     readonly stage: string;
     readonly trafficPercentage: number;
     readonly minimumObservationHours: number;
     readonly passCriteria: string;
   }>;
   readonly primaryMetric: string;
-  readonly guardrails: readonly Array<{
+  readonly guardrails: ReadonlyArray<{
     readonly metric: string;
     readonly maxThreshold: string;
     readonly autoRevert: boolean;

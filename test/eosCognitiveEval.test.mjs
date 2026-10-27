@@ -5,7 +5,7 @@ import { EosCognitiveEval } from "../src/core/eosCognitiveEval.ts";
 describe("EOS Sovereign Cognitive Evaluation & Benchmark Suite", () => {
   const evaluator = new EosCognitiveEval();
 
-  describe("Suite 1: 5-Dimensional Evaluation & Security SAST (BDD-030)", () => {
+  describe("Suite 1: 5-Dimensional Local Evaluation & Credential Heuristics (BDD-030)", () => {
     it("evaluates compliant clean code and achieves high composite score", () => {
       const cleanCode = `
         // CUANDO se reciba la petición, EL SISTEMA validará invariantes

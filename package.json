@@ -67,7 +67,7 @@
     "sol": "node bin/eos.mjs sol",
     "diary": "node bin/eos.mjs diary",
     "budget": "node bin/eos.mjs budget",
-    "formal": "node scripts/verify-formal-tla.mjs",
+    "simulate:models": "node scripts/verify-formal-tla.mjs",
     "jepsen": "node bin/eos.mjs jepsen",
     "vault": "node bin/eos.mjs vault",
     "datalog": "node bin/eos.mjs datalog",
@@ -84,6 +84,7 @@
     "verify:cwv": "node scripts/verify-cwv-budget.mjs",
     "verify:sri": "node scripts/verify-sri-integrity.mjs",
     "verify:strict": "node scripts/verify-cicd-pipeline.mjs",
+    "typecheck": "tsc --project tsconfig.typecheck.json",
     "cicd:gate": "node scripts/verify-cicd-pipeline.mjs",
     "ship:sovereign": "node scripts/ship-sovereign.mjs",
     "fleet:verify": "node scripts/fleet-autonomous-cicd.mjs",
@@ -109,6 +110,10 @@
   },
   "engines": {
     "node": ">=22.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2"
   },
   "author": "Valentín Flórez Arbeláez",
   "license": "MIT"

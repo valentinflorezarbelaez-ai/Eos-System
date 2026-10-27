@@ -53,7 +53,7 @@ for (const file of allFiles) {
 }
 
 // ---------------------------------------------------------------------------
-// STAGE 1: SAST, OWASP TOP 10 & ZERO PLAINTEXT SECRETS GATE (LAW VI)
+// STAGE 1: CONFIGURED CREDENTIAL-PATTERN SCAN (NOT GENERAL SAST)
 // ---------------------------------------------------------------------------
 const secretPatterns = [
   { name: "Live Stripe/OpenAI Key", regex: new RegExp("sk-" + "live-[0-9a-zA-Z]{16,}") },
@@ -108,7 +108,7 @@ const inventoryHasher = crypto.createHash("sha256");
 for (const file of allFiles.sort()) {
   if (!fs.existsSync(file)) continue;
   const rel = path.relative(root, file).replace(/\\/g, "/");
-  if (rel === "docs/evidence/SBOM-CICD-RECEIPT.json" || rel === "docs/evidence/eos-audit.sarif") continue;
+  if (rel === "docs/evidence/LOCAL-CHECKS-RECEIPT.json" || rel === "docs/evidence/local-checks.sarif" || /^docs\/evidence\/HEAL-.*\.json$/.test(rel)) continue;
   const bytes = fs.readFileSync(file);
   const sha256 = crypto.createHash("sha256").update(bytes).digest("hex");
   fileInventory.push({ path: rel, bytes: bytes.length, sha256 });
@@ -118,13 +118,13 @@ const sourceInventoryDigest = `sha256:${inventoryHasher.digest("hex")}`;
 console.log(`[PASS] Stage 3/7 — Runtime dependency check and source-file inventory (${fileInventory.length} files; SHA-256 digest: ${sourceInventoryDigest.slice(0, 24)}...).`);
 
 // ---------------------------------------------------------------------------
-// STAGE 3.5: FORMAL TLA+ SPECIFICATION & MATHEMATICAL INVARIANT GATE (seL4)
+// STAGE 3.5: BOUNDED JAVASCRIPT SIMULATIONS ASSOCIATED WITH TLA+ FILES
 // ---------------------------------------------------------------------------
 execFileSync(process.execPath, [path.join(root, "scripts/verify-formal-tla.mjs")], {
   cwd: root,
   stdio: "inherit"
 });
-console.log(`[PASS] Stage 3.5/7 — TLA+ Formal Verification Gate (3/3 models, 800 states checked).`);
+console.log("[PASS] Stage 3.5/7 — Bounded JavaScript simulations and text extraction from TLA+ files (not TLC model checking).");
 
 // ---------------------------------------------------------------------------
 // STAGE 4: STATIC AST, SYNTAX & BYTECODE VERIFICATION (node --check + L0 TS)
@@ -133,57 +133,21 @@ const jsFilesToCheck = allFiles.filter((f) => f.endsWith(".js") || f.endsWith(".
 for (const jsFile of jsFilesToCheck) {
   execFileSync(process.execPath, ["--check", jsFile], { cwd: root, stdio: "pipe" });
 }
+const typeScriptCompiler = path.join(root, "node_modules", "typescript", "bin", "tsc");
+assert.ok(fs.existsSync(typeScriptCompiler), "TypeScript compiler is missing; install the locked dev toolchain with npm ci.");
+execFileSync(process.execPath, [typeScriptCompiler, "--project", path.join(root, "tsconfig.typecheck.json")], {
+  cwd: root,
+  stdio: "inherit"
+});
 const tsCoreFiles = fs.readdirSync(path.join(root, "src/core")).filter((f) => f.endsWith(".ts"));
 assert.ok(tsCoreFiles.length >= 6, "Expected at least 6 Layer-0 TypeScript core modules in src/core/");
 
 // Execute formal native unit test suite, chaos resilience suite, and prometheus omni-model suite (node:test)
-const testFiles = [
-  "test/eosCore.test.mjs",
-  "test/chaosResilience.test.mjs",
-  "test/eosPrometheus.test.mjs",
-  "test/eosTurbo.test.mjs",
-  "test/eosSemanticGraph.test.mjs",
-  "test/eosAutonomousHealer.test.mjs",
-  "test/eosWorktree.test.mjs",
-  "test/eosCognitiveEval.test.mjs",
-  "test/eosOpenSpec.test.mjs",
-  "test/eosTitans.test.mjs",
-  "test/eosSpotify.test.mjs",
-  "test/eosGoAccelerator.test.mjs",
-  "test/eosAudioDsp.test.mjs",
-  "test/eosFleetElevator.test.mjs",
-  "test/eosSpotifyFactory.test.mjs",
-  "test/eosApolloHermesMesh.test.mjs",
-  "test/eosGaplessMixEngine.test.mjs",
-  "test/eosAcousticFeatureStore.test.mjs",
-  "test/eosUniversalProjectAdapter.test.mjs",
-  "test/eosGlobalEdgeArbiter.test.mjs",
-  "test/eosSpotifyNubankDualEngine.test.mjs",
-  "test/eosSamaelIbmNvidiaCore.test.mjs",
-  "test/eosDisruptorRingEngine.test.mjs",
-  "test/eosNubankCodex.test.mjs",
-  "test/eosSpotifyInstitutionalCodex.test.mjs",
-  "test/eosApexModelRouter.test.mjs",
-  "test/eosWasmTopology.test.mjs",
-  "test/eosJarvisSoulIntrospection.test.mjs",
-  "test/eosTierS1OmegaSdlc.test.mjs",
-  "test/eosMcpStreamServer.test.mjs",
-  "test/eosApexTenMatrix.test.mjs",
-  "test/eosBigTechTier1Perfection.test.mjs",
-  "test/eosGnosticFinOps.test.mjs",
-  "test/eosTierZeroApexPerfection.test.mjs",
-  "test/eosBigTechHyperOptimization.test.mjs",
-  "test/eosMindMountainsAutotune.test.mjs",
-  "test/eosNsaZeroTrustDefense.test.mjs",
-  "test/eosPlanetaryConsensusAdaptiveConcurrency.test.mjs",
-  "test/eosConsistentHashingRateLimiter.test.mjs",
-  "test/eosBigTechHyperPerfection.test.mjs",
-  "test/eosHnswVectorEngine.test.mjs",
-  "test/eosUniversalProductFoundry.test.mjs",
-  "test/eosSovereignLoop.test.mjs",
-  "test/eosOmegaTranscendentalApex.test.mjs",
-  "test/eosContinuousRefactorEngine.test.mjs"
-];
+const testFiles = fs.readdirSync(path.join(root, "test"))
+  .filter((file) => file.endsWith(".test.mjs"))
+  .map((file) => `test/${file}`)
+  .sort();
+assert.ok(testFiles.length > 0, "No Node test suites were found under test/.");
 
 const isPts = process.argv.includes("--pts");
 let filesToRun = testFiles;
@@ -228,7 +192,7 @@ for (const testFile of filesToRun) {
     stdio: "inherit"
   });
 }
-console.log(`[PASS] Stage 4/7 — JavaScript syntax and configured Node test suites (${jsFilesToCheck.length} JS/MJS modules; ${tsCoreFiles.length} core TS files counted, not type-checked).`);
+console.log(`[PASS] Stage 4/7 — JavaScript syntax, TypeScript type-check, and all discovered Node test suites (${jsFilesToCheck.length} JS/MJS modules; ${tsCoreFiles.length} core TS modules; ${testFiles.length} suites).`);
 
 // ---------------------------------------------------------------------------
 // STAGE 5: WCAG 2.1 AA ACCESSIBILITY, SEO & PERFORMANCE BUDGET GATE
@@ -249,24 +213,35 @@ assert.ok(Number(cssSizeKb) < 120, `CSS bundle exceeded budget: ${cssSizeKb} KB`
 console.log(`[PASS] Stage 5/7 — Static markup assertions and bundle-size checks (no browser CWV or full WCAG audit; JS: ${jsSizeKb} KB, CSS: ${cssSizeKb} KB).`);
 
 // ---------------------------------------------------------------------------
-// STAGE 6: IN-PROCESS SMOKE TESTS OF ALL 11 SERVERLESS API ENDPOINTS (/api/*)
+// STAGE 6: IN-PROCESS SMOKE TESTS OF THE SERVERLESS API HANDLERS (/api/*)
 // ---------------------------------------------------------------------------
 const apiEndpoints = [
-  "api/teurgia.js",
-  "api/compile.js",
-  "api/memory.js",
-  "api/kernel.js",
-  "api/cicd.js",
-  "api/fleet.js",
-  "api/jarvis.js",
-  "api/health.js",
-  "api/graph.js",
-  "api/eval.js",
-  "api/spotify.js",
-  "api/mcp.js"
+  { file: "api/teurgia.js" },
+  { file: "api/compile.js" },
+  { file: "api/memory.js" },
+  { file: "api/kernel.js" },
+  { file: "api/cicd.js" },
+  { file: "api/fleet.js" },
+  { file: "api/jarvis.js", method: "POST", body: { directive: "status check" } },
+  { file: "api/health.js" },
+  { file: "api/graph.js" },
+  { file: "api/eval.js" },
+  { file: "api/spotify.js" },
+  {
+    file: "api/mcp.js",
+    method: "POST",
+    headers: { "content-type": "application/json", accept: "application/json" },
+    body: {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "initialize",
+      params: { protocolVersion: "2024-11-05", capabilities: {}, clientInfo: { name: "eos-local-check", version: "1.0.0" } }
+    }
+  }
 ];
 
-for (const relApi of apiEndpoints) {
+for (const endpoint of apiEndpoints) {
+  const { file: relApi } = endpoint;
   const modUrl = pathToFileURL(path.join(root, relApi)).href;
   const mod = await import(modUrl);
   assert.equal(typeof mod.default, "function", `Default export in ${relApi} must be a handler function`);
@@ -274,9 +249,10 @@ for (const relApi of apiEndpoints) {
   let capturedStatus = 200;
   let capturedBody = null;
   const mockReq = {
-    method: "GET",
+    method: endpoint.method || "GET",
     query: {},
-    body: {}
+    body: endpoint.body || {},
+    headers: endpoint.headers || {}
   };
   const mockRes = {
     statusCode: 200,
@@ -334,29 +310,30 @@ for (const cm of consolidatedModes) {
   assert.ok(capturedBody && typeof capturedBody === "object", `[STAGE 6 FAIL] Consolidated mode ${cm.desc} did not return valid JSON`);
 }
 
-console.log(`[PASS] Stage 6/7 — In-process handler smoke checks (${apiEndpoints.length} routes + 3 consolidated modes returned mocked HTTP 200 responses).`);
+console.log(`[PASS] Stage 6/7 — In-process handler smoke checks (${apiEndpoints.length} handlers + ${consolidatedModes.length} consolidated modes returned mocked HTTP 200 responses).`);
 
 // ---------------------------------------------------------------------------
-// STAGE 7: CRYPTOGRAPHIC SBOM & CI/CD ATTESTATION RECEIPT
+// STAGE 7: LOCAL CHECK RECEIPT AND CONFIGURED-CHECKS SARIF REPORT
 // ---------------------------------------------------------------------------
 const elapsedMs = Date.now() - startTime;
 // Receipt is deterministic for a given source tree (no timestamps/durations),
 // so re-running the gate inside git hooks never leaves the working tree dirty.
 const receipt = {
-  pipelineId: "EOS-LOCAL-CHECKS",
+  pipelineId: "EOS-LOCAL-REPOSITORY-CHECKS",
   epistemicState: "LOCAL_CHECKS_EXECUTED",
+  evidenceType: "source-inventory-digest-and-mocked-handler-smoke-checks",
   stagesPassed: "7/7",
   exitCode: 0,
   sourceInventoryDigest,
   sourceFileCount: fileInventory.length,
-  serverlessHandlerSmokeChecks: apiEndpoints,
-  referencedHookArtifacts: [".githooks/pre-commit", ".githooks/pre-push", ".github/workflows/eos-sovereign-cicd.yml"],
+  inProcessHandlerSmokeChecks: apiEndpoints.map(({ file }) => file),
+  hookFilesReferencedButNotProbed: [".githooks/pre-commit", ".githooks/pre-push", ".github/workflows/eos-sovereign-cicd.yml"],
   hookConfigurationProbed: false,
   deploymentRun: false,
   liveHealthProbeRun: false
 };
 
-fs.writeFileSync(path.join(root, "docs/evidence/SBOM-CICD-RECEIPT.json"), JSON.stringify(receipt, null, 2) + "\n", "utf8");
+fs.writeFileSync(path.join(root, "docs/evidence/LOCAL-CHECKS-RECEIPT.json"), JSON.stringify(receipt, null, 2) + "\n", "utf8");
 
 // Emit OASIS SARIF v2.1.0 diagnostic report for Cursor, VS Code, and GitHub Code Scanning
 const sarifReport = {
@@ -366,14 +343,13 @@ const sarifReport = {
     {
       tool: {
         driver: {
-          name: "EOS-SecDevOps-Scanner",
-          version: "12.0.0",
-          informationUri: "https://eos-system-ten.vercel.app",
+          name: "EOS-Configured-Repository-Checks",
+          version: "1.0.0",
           rules: [
             {
               id: "EOS-SEC-001",
               name: "ConfiguredCredentialPatternScan",
-              shortDescription: { text: "No matches for the configured credential patterns were found in scanned text files." },
+              shortDescription: { text: "No matches for the five configured credential patterns were found in scanned text files." },
               defaultConfiguration: { level: "error" }
             },
             {
@@ -395,8 +371,8 @@ const sarifReport = {
     }
   ]
 };
-fs.writeFileSync(path.join(root, "docs/evidence/eos-audit.sarif"), JSON.stringify(sarifReport, null, 2) + "\n", "utf8");
-console.log(`[PASS] Stage 7/7 — Local source-inventory digest, receipt & SARIF written in ${elapsedMs} ms.`);
+fs.writeFileSync(path.join(root, "docs/evidence/local-checks.sarif"), JSON.stringify(sarifReport, null, 2) + "\n", "utf8");
+console.log(`[PASS] Stage 7/7 — Local source-inventory digest, check receipt & configured-checks SARIF written in ${elapsedMs} ms.`);
 console.log("======================================================================");
 console.log(" LOCAL CHECKS: 7/7 STAGES PASSED | NO DEPLOYMENT OR LIVE PROBE RUN  ");
 console.log("======================================================================");

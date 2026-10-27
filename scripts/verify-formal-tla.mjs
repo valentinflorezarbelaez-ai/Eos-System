@@ -1,11 +1,9 @@
 /**
- * EOS SYSTEM — FORMAL TLA+ SPECIFICATION VERIFIER & STATE MODEL CHECKER
- * Pure Layer-0 Node.js verification engine for formal specifications (SPEC-030).
+ * EOS SYSTEM — TLA+ SOURCE INVENTORY & BOUNDED JAVASCRIPT SIMULATIONS
+ * This script extracts text from TLA+ files and runs separate, bounded JS simulations.
+ * It does not parse TLA+ syntax or perform exhaustive TLC model checking.
  *
- * Mathematically validates:
- * 1. LmaxDisruptor.tla: Lock-freedom, monotonic sequences, 0-overrun invariant.
- * 2. DatomicBitemporalLedger.tla: Monotonic bitemporal clock, append-only immutability.
- * 3. HermesConsensusMesh.tla: 3-state Circuit Breaker & Quorum consensus.
+ * The simulation assertions are useful regression checks, not proofs of the TLA+ models.
  *
  * Invariant: Zero external dependencies (dependencies: {}).
  */
@@ -59,19 +57,19 @@ export function verifyLmaxDisruptorModel(capacity = 8, totalEvents = 500) {
   let producerSeq = 0;
   let consumerSeq = 0;
   const ringBuffer = new Int32Array(capacity);
-  let statesExplored = 0;
+  let stepsExecuted = 0;
 
   for (let step = 0; step < totalEvents; step++) {
-    statesExplored++;
+    stepsExecuted++;
     // Invariant checks before transition
     assert.ok(producerSeq - consumerSeq <= capacity, "VIOLATION: Buffer overrun detected!");
     assert.ok(consumerSeq <= producerSeq, "VIOLATION: Consumer read ahead of producer!");
 
-    // Non-deterministic state transition: Publish vs Consume
+    // Deterministic bounded schedule: Publish vs Consume
     const canPublish = (producerSeq - consumerSeq) < capacity;
     const canConsume = consumerSeq < producerSeq;
 
-    if (canPublish && (Math.random() > 0.4 || !canConsume)) {
+    if (canPublish && ((step * 7 + 3) % 10 > 4 || !canConsume)) {
       // Publish
       const slot = producerSeq % capacity;
       ringBuffer[slot] = producerSeq + 1;
@@ -85,12 +83,12 @@ export function verifyLmaxDisruptorModel(capacity = 8, totalEvents = 500) {
   return {
     specification: "LmaxDisruptor.tla",
     moduleName: parsed.moduleName,
-    syntaxValid: true,
-    variables: parsed.variables,
-    invariants: parsed.invariants,
-    statesExplored,
-    invariantsSatisfied: true,
-    modelCheckPassed: true
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
   };
 }
 
@@ -101,10 +99,10 @@ export function verifyDatomicLedgerModel(maxTx = 100) {
   const ledger = [];
   let currentTx = 0;
   const idempotencyMap = new Map();
-  let statesExplored = 0;
+  let stepsExecuted = 0;
 
   for (let i = 1; i <= maxTx; i++) {
-    statesExplored++;
+    stepsExecuted++;
     // Generate transactions with 30% duplicate idempotency keys
     const key = `KEY-${Math.floor(i / 1.4)}`;
     const prevLen = ledger.length;
@@ -124,12 +122,12 @@ export function verifyDatomicLedgerModel(maxTx = 100) {
   return {
     specification: "DatomicBitemporalLedger.tla",
     moduleName: parsed.moduleName,
-    syntaxValid: true,
-    variables: parsed.variables,
-    invariants: parsed.invariants,
-    statesExplored,
-    invariantsSatisfied: true,
-    modelCheckPassed: true
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
   };
 }
 
@@ -142,14 +140,14 @@ export function verifyHermesConsensusModel(steps = 200) {
   let successCounter = 0;
   const failureThreshold = 5;
   const recoveryProbes = 3;
-  let statesExplored = 0;
+  let stepsExecuted = 0;
 
   for (let i = 0; i < steps; i++) {
-    statesExplored++;
+    stepsExecuted++;
     assert.ok(["CLOSED", "OPEN", "HALF_OPEN"].includes(circuitState));
 
     if (circuitState === "CLOSED") {
-      if (Math.random() < 0.3) {
+      if ((i * 7 + 3) % 10 < 3) {
         failureCounter++;
         if (failureCounter >= failureThreshold) {
           circuitState = "OPEN";
@@ -163,7 +161,7 @@ export function verifyHermesConsensusModel(steps = 200) {
       circuitState = "HALF_OPEN";
       successCounter = 0;
     } else if (circuitState === "HALF_OPEN") {
-      if (Math.random() < 0.2) {
+      if ((i * 11 + 5) % 10 < 2) {
         // Failed probe -> return to OPEN
         circuitState = "OPEN";
         failureCounter = failureThreshold;
@@ -182,12 +180,12 @@ export function verifyHermesConsensusModel(steps = 200) {
   return {
     specification: "HermesConsensusMesh.tla",
     moduleName: parsed.moduleName,
-    syntaxValid: true,
-    variables: parsed.variables,
-    invariants: parsed.invariants,
-    statesExplored,
-    invariantsSatisfied: true,
-    modelCheckPassed: true
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
   };
 }
 
@@ -199,10 +197,10 @@ export function verifyChaosDisruptorModel(maxTokens = 200) {
   let tokensRecorded = 0;
   let faultCounter = 0;
   let circuitState = "CLOSED";
-  let statesExplored = 0;
+  let stepsExecuted = 0;
 
   for (let i = 0; i < maxTokens; i++) {
-    statesExplored++;
+    stepsExecuted++;
     // Invariant: Safety & Bounds
     assert.ok(scanPosition >= 0 && tokensRecorded <= maxTokens, "VIOLATION: Scan buffer overrun");
     assert.ok(["CLOSED", "OPEN", "HALF_OPEN"].includes(circuitState), "VIOLATION: Invalid circuit state");
@@ -231,12 +229,12 @@ export function verifyChaosDisruptorModel(maxTokens = 200) {
   return {
     specification: "AutonomousChaosDisruptor.tla",
     moduleName: parsed.moduleName,
-    syntaxValid: true,
-    variables: parsed.variables,
-    invariants: parsed.invariants,
-    statesExplored,
-    invariantsSatisfied: true,
-    modelCheckPassed: true
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
   };
 }
 
@@ -249,10 +247,10 @@ export function verifyProductFoundryModel(maxModules = 200) {
   let infraModules = 0;
   let contractCount = 0;
   let cyclicDependencies = 0;
-  let statesExplored = 0;
+  let stepsExecuted = 0;
 
   for (let i = 0; i < maxModules; i++) {
-    statesExplored++;
+    stepsExecuted++;
     assert.equal(cyclicDependencies, 0, "VIOLATION: Cyclic dependency in product topology");
     assert.ok(domainModules >= 0 && appModules >= 0 && infraModules >= 0);
 
@@ -271,12 +269,12 @@ export function verifyProductFoundryModel(maxModules = 200) {
   return {
     specification: "UniversalProductFoundry.tla",
     moduleName: parsed.moduleName,
-    syntaxValid: true,
-    variables: parsed.variables,
-    invariants: parsed.invariants,
-    statesExplored,
-    invariantsSatisfied: true,
-    modelCheckPassed: true
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
   };
 }
 
@@ -289,10 +287,10 @@ export function verifyOmegaTranscendentalModel(steps = 200) {
   let latticeSealsComputed = 0;
   let synapseBeliefUpdates = 0;
   let deadlocksDetected = 0;
-  let statesExplored = 0;
+  let stepsExecuted = 0;
 
   for (let i = 0; i < steps; i++) {
-    statesExplored++;
+    stepsExecuted++;
     assert.equal(deadlocksDetected, 0, "VIOLATION: Deadlock detected in Omega kernel");
     assert.ok(nodesIndexed >= 0 && edgesIndexed >= 0 && latticeSealsComputed >= 0);
 
@@ -312,12 +310,12 @@ export function verifyOmegaTranscendentalModel(steps = 200) {
   return {
     specification: "OmegaTranscendentalApex.tla",
     moduleName: parsed.moduleName,
-    syntaxValid: true,
-    variables: parsed.variables,
-    invariants: parsed.invariants,
-    statesExplored,
-    invariantsSatisfied: true,
-    modelCheckPassed: true
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
   };
 }
 
@@ -330,10 +328,10 @@ export function verifyContinuousRefactorModel(steps = 200) {
   let deadCodePruned = 0;
   let dstStepsSimulated = 0;
   let invariantsBreached = 0;
-  let statesExplored = 0;
+  let stepsExecuted = 0;
 
   for (let i = 0; i < steps; i++) {
-    statesExplored++;
+    stepsExecuted++;
     assert.ok(auditCycles >= 0, "VIOLATION: Negative audit cycles");
     assert.ok(duplicationsFound >= 0, "VIOLATION: Negative duplications");
     assert.ok(deadCodePruned >= 0, "VIOLATION: Negative pruned count");
@@ -358,12 +356,12 @@ export function verifyContinuousRefactorModel(steps = 200) {
   return {
     specification: "ContinuousRefactorEngine.tla",
     moduleName: parsed.moduleName,
-    syntaxValid: true,
-    variables: parsed.variables,
-    invariants: parsed.invariants,
-    statesExplored,
-    invariantsSatisfied: true,
-    modelCheckPassed: true
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
   };
 }
 
@@ -381,23 +379,23 @@ export function runAllFormalVerifications() {
 
 if (process.argv[1] && process.argv[1].replace(/\\/g, "/").endsWith("verify-formal-tla.mjs")) {
   console.log("======================================================================");
-  console.log(" EOS SYSTEM — TLA+ FORMAL SPECIFICATION & INVARIANT MODEL CHECKER     ");
-  console.log(" Mathematical State-Space Verification · seL4 / ASML Integrity Standard");
+  console.log(" EOS SYSTEM — TLA+ SOURCE INVENTORY & BOUNDED JS SIMULATIONS          ");
+  console.log(" TLA+ text is not parsed or model-checked by TLC in this command.       ");
   console.log("======================================================================\n");
 
   const results = runAllFormalVerifications();
-  let totalStates = 0;
+  let totalSteps = 0;
 
   results.forEach(res => {
-    totalStates += res.statesExplored;
-    console.log(`[TLA+ SPEC] ${res.specification} (Module: ${res.moduleName})`);
-    console.log(`  ↳ Variables Checked : ${res.variables.join(", ")}`);
-    console.log(`  ↳ Formal Invariants : ${res.invariants.join(", ")}`);
-    console.log(`  ↳ States Explored   : ${res.statesExplored} states`);
-    console.log(`  ↳ Invariants Status : VERIFIED & MATHEMATICALLY BOUNDED (0 Violations)\n`);
+    totalSteps += res.stepsExecuted;
+    console.log(`[SOURCE + SIMULATION] ${res.specification} (module label: ${res.moduleName})`);
+    console.log(`  ↳ Variable names extracted : ${res.extractedVariables.join(", ") || "none"}`);
+    console.log(`  ↳ Invariant names extracted: ${res.extractedInvariantNames.join(", ") || "none"}`);
+    console.log(`  ↳ JS simulation steps       : ${res.stepsExecuted}`);
+    console.log(`  ↳ Simulation assertions     : ${res.simulationAssertionsPassed ? "PASS" : "FAIL"}\n`);
   });
 
   console.log(`----------------------------------------------------------------------`);
-  console.log(`EPISTEMIC STATE: VERIFIED | 7/7 FORMAL TLA+ MODELS CHECKED (${totalStates} states)`);
+  console.log(`RESULT: ${results.length} bounded JS simulations passed (${totalSteps} steps); no formal model checking was run.`);
   console.log(`======================================================================`);
 }

@@ -1,3 +1,7 @@
 .vercel
+node_modules/
+docs/evidence/LOCAL-CHECKS-RECEIPT.json
+docs/evidence/local-checks.sarif
+docs/evidence/HEAL-*.json
 bin/*.exe
 *.exe

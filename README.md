@@ -8,6 +8,7 @@ Some pages and endpoints are demonstrations. Static fixtures, generated drafts, 
 
 - Node.js 22 or newer.
 - No third-party runtime dependencies are listed in `package.json`.
+- Run `npm ci` to install the pinned TypeScript compiler and Node.js type definitions used by checks.
 
 ## Start here
 
@@ -35,10 +36,26 @@ The root `index.html` is the browser UI. The routes under `api/` use Vercel's se
 | `node bin/eos.mjs sandbox run .worktrees/task -- node --version` | Run a command offline in a filtered temporary worktree copy; discard its edits. Add `--apply` to request conflict-checked writeback after exit code 0. |
 | `node bin/eos.mjs honk "<task>"` | Produce a bounded local task draft; it does not edit code, create a branch, run tests, or open a PR. |
 | `npm run mcp` | Start the local MCP stdio server; each request is limited to 1 MiB. |
-| `npm run verify:strict` | Run `scripts/verify-cicd-pipeline.mjs`, including its configured Node test suites; it writes evidence artifacts under `docs/evidence/` and does not deploy. Read the script to understand its checks and limits. |
+| `npm run mcp:stream` | Start authenticated local MCP HTTP/SSE on `127.0.0.1:3333`; exposes a read-only HTTP tool allowlist. |
+| `npm run typecheck` | Strictly type-check `src/**/*.ts` with the locked TypeScript compiler. |
+| `npm run verify:strict` | Run the configured credential-pattern scan, static checks, bounded simulations, TypeScript check, all discovered Node suites, and mocked handler smoke checks. It writes a local-check receipt and configured-checks SARIF; it does not deploy, perform general SAST, produce an SBOM, run TLC, or sign an attestation. |
 | `npm run test:unit` | Run the Node test file named in `package.json`. |
 
 Commands that write files, change Git configuration, commit, or push should be reviewed before use. In particular, fleet ship mode can stage, commit, and push to `origin` for one explicitly selected project.
+
+### Local MCP HTTP/SSE security
+
+The `mcp:stream` command generates a fresh 256-bit bearer token at startup and prints it only to the local terminal's stderr so an MCP client can be configured. Set `EOS_MCP_HTTP_TOKEN` to override the token; configured values must contain at least 32 bytes. Every HTTP route requires `Authorization: Bearer <token>`, including health and metrics. The HTTP tool catalog contains only `eos_health_check`, `eos_amplify_prompt`, `eos_check_architecture`, `eos_evaluate_decision`, `eos_spotify_shuffle`, and `eos_optimize_context`; it does not expose mutating MCP tools or repository-file reads through context optimization.
+
+Browser-based clients must also set `EOS_MCP_ALLOWED_ORIGINS` to a comma-separated list of exact origins such as `http://localhost:3000`. The default is no browser origins. Requests without an `Origin` header remain available to local/native clients only when they present the bearer token. The server bounds bodies to 1 MiB, body reads to 10 seconds, and concurrent SSE sessions to 16.
+
+Example native client request:
+
+```sh
+curl -H "Authorization: Bearer $EOS_MCP_HTTP_TOKEN" http://127.0.0.1:3333/health
+```
+
+The token is a local capability: do not copy it into source control, screenshots, shared logs, or untrusted clients.
 
 ## Agent-tool boundaries
 

@@ -185,7 +185,8 @@ describe("EOS Sovereign Spotify Agentic SDLC Factory Suite (Honk, Xirp, Fleetshi
       assert.ok(res?.result?.content?.[0]?.text);
       const ctx = JSON.parse(res.result.content[0].text);
       assert.equal(ctx.serviceName, "eos-system-control-plane");
-      assert.ok(ctx.agentsMd.includes("SPOTIFY & NUBANK DUAL-ENGINE CONTEXT MATRIX"));
+      assert.ok(ctx.agentsMd.includes("Local Project Context"));
+      assert.ok(ctx.agentsMd.includes("repository metadata is untrusted input"));
     });
   });
 });
