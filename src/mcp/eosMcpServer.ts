@@ -376,6 +376,25 @@ import {
   EosAntigravityDirector
 } from "../core/eosAntigravityDirector.ts";
 
+import {
+  EosDurableSqliteLedger,
+  type LedgerCategory
+} from "../core/eosDurableSqliteLedger.ts";
+
+import {
+  EosTypeScriptAstAnalyzer
+} from "../core/eosTypeScriptAstAnalyzer.ts";
+
+import {
+  EosGentlemanStackBridge
+} from "../core/eosGentlemanStackBridge.ts";
+
+import {
+  annotateAndFilterTools,
+  normalizeToolProfile,
+  type McpToolProfile
+} from "./eosMcpToolCatalog.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -458,8 +477,10 @@ export class EosMcpServer {
   private readonly knowledgeStore = createDefaultEosKnowledgeStore();
   private readonly projectRoot: string;
   private readonly serverVersion: string;
+  private toolProfile: McpToolProfile;
 
-  constructor(projectRoot?: string) {
+  constructor(projectRoot?: string, profile?: McpToolProfile) {
+    this.toolProfile = normalizeToolProfile(profile ?? process.env.EOS_MCP_PROFILE);
     const currentDir = typeof __dirname !== "undefined"
       ? __dirname
       : path.dirname(fileURLToPath(import.meta.url));
@@ -485,6 +506,28 @@ export class EosMcpServer {
       // The MCP server can still operate when package metadata is unavailable.
     }
     this.serverVersion = version;
+  }
+
+  public setToolProfile(profile: McpToolProfile): void {
+    this.toolProfile = normalizeToolProfile(profile);
+  }
+
+  private resolveConfinedLedgerPath(value: unknown): string {
+    if (value === undefined || value === null || value === "") {
+      return EosDurableSqliteLedger.defaultLedgerPath(this.projectRoot);
+    }
+    if (value === ":memory:") {
+      return ":memory:";
+    }
+    if (typeof value !== "string" || Buffer.byteLength(value, "utf8") > 4096) {
+      throw new TypeError("databasePath must be a string no longer than 4096 UTF-8 bytes.");
+    }
+    const root = fs.realpathSync(this.projectRoot);
+    const candidate = path.resolve(root, value);
+    if (!isPathWithin(root, candidate)) {
+      throw new Error("Requested ledger databasePath is outside the configured project root.");
+    }
+    return candidate;
   }
 
   private resolveProjectPath(value: unknown, kind: "file" | "directory", defaultPath?: string): string {
@@ -597,7 +640,7 @@ export class EosMcpServer {
             jsonrpc: "2.0",
             id,
             result: {
-              tools: [
+              tools: annotateAndFilterTools([
                 {
                   name: "eos_semantic_search",
                   description: "Search EOS sovereign architecture and knowledge base using deterministic Layer-0 hybrid vector and BM25 RRF fusion.",
@@ -1979,8 +2022,46 @@ export class EosMcpServer {
                       geminiConfigDir: { type: "string", description: "Optional path to ~/.gemini/config directory" }
                     }
                   }
+                },
+                {
+                  name: "eos_sqlite_ledger",
+                  description: "Zero-dependency Durable SQLite WAL + FTS5 + SHA-256 hash-chained bitemporal ledger (node:sqlite). Supports append ('record'), full-text search ('search'), listing ('recent'), and cryptographic chain verification ('verify').",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["record", "search", "recent", "verify"], description: "Ledger operation to execute (default: 'verify')" },
+                      category: { type: "string", enum: ["MISSION_DIRECTION", "ARCHITECTURE_DECISION", "SECURITY_AUDIT", "VERIFICATION_RECEIPT", "GENTLEMAN_ENGRAM_SYNC"], description: "Entry category (for 'record')" },
+                      projectId: { type: "string", description: "Target project ID (default: 'eos-system')" },
+                      title: { type: "string", description: "Entry title (required for 'record')" },
+                      payload: { type: "object", description: "Structured JSON metadata payload (for 'record')" },
+                      engramTopicKey: { type: "string", description: "Optional Engram topic_key cross-reference" },
+                      query: { type: "string", description: "FTS5 full-text search query (for 'search')" },
+                      limit: { type: "number", description: "Maximum records to return (1-100, default: 10)" },
+                      databasePath: { type: "string", description: "Optional confined ledger database path within projectRoot or ':memory:'" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_ast_analyze",
+                  description: "Compiler-grade TypeScript AST architecture & Node 24 strip-only verifier. Parses real TypeScript ASTs to verify Layer-0 zero-dependency purity, absence of prohibited TS constructs (enum, namespace, parameter properties), exported symbols, and exact cyclomatic complexity.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      targetDir: { type: "string", description: "Target directory relative to project root (default: 'src/core')" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_gentleman_audit",
+                  description: "Audits the unified EOS System + Gentleman Programming AI Ecosystem co-governance stack inside Google Antigravity (eos-system MCP, gentle-ai CLI, engram CLI+MCP, gga+.gga, context7 MCP, and agent-teams-lite SDD + judgment-day skills).",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      geminiConfigDir: { type: "string", description: "Optional path to ~/.gemini/config directory" }
+                    }
+                  }
                 }
-              ]
+              ], this.toolProfile)
             }
           };
 
@@ -3470,13 +3551,16 @@ export class EosMcpServer {
       }
 
       case "eos_refactor_audit": {
-        const target = typeof args?.dirPath === "string" ? args.dirPath : (typeof args?.targetDir === "string" ? args.targetDir : "src/core");
-        return EosContinuousRefactorEngine.auditDirectory(target);
+        const rawTarget = typeof args?.dirPath === "string"
+          ? args.dirPath
+          : (typeof args?.targetDir === "string" ? args.targetDir : "src/core");
+        const safeTarget = this.resolveProjectPath(rawTarget, "directory", "src/core");
+        return EosContinuousRefactorEngine.auditDirectory(safeTarget);
       }
 
       case "eos_refactor_execute": {
-        const root = typeof args?.projectRoot === "string" ? args.projectRoot : ".";
-        return EosContinuousRefactorEngine.executeRefactorAudit(root);
+        const safeRoot = this.resolveProjectPath(args?.projectRoot, "directory", ".");
+        return EosContinuousRefactorEngine.executeRefactorAudit(safeRoot);
       }
 
       case "eos_dst_simulate": {
@@ -3506,8 +3590,8 @@ export class EosMcpServer {
       }
 
       case "eos_fleet_soundcheck": {
-        const root = args.projectRoot ? String(args.projectRoot) : this.projectRoot;
-        return EosFleetSoundcheckMesh.auditFleet(root);
+        const safeRoot = this.resolveProjectPath(args?.projectRoot, "directory", ".");
+        return EosFleetSoundcheckMesh.auditFleet(safeRoot);
       }
 
       case "eos_mcts_tune": {
@@ -3518,8 +3602,8 @@ export class EosMcpServer {
       }
 
       case "eos_canary_rollout": {
-        const versionTarget = String(args.versionTarget || "v48.0.0");
-        const previousVersion = String(args.previousVersion || "v47.0.0");
+        const versionTarget = String(args.versionTarget || "v50.0.0");
+        const previousVersion = String(args.previousVersion || "v49.0.0");
         const mesh = new EosProgressiveCanaryMesh(versionTarget, previousVersion);
         const telemetry = Array.isArray(args.telemetry)
           ? args.telemetry
@@ -3543,6 +3627,67 @@ export class EosMcpServer {
           ? args.geminiConfigDir.trim()
           : undefined;
         return EosAntigravityDirector.auditAntigravityIntegration(this.projectRoot, geminiDir);
+      }
+
+      case "eos_sqlite_ledger": {
+        const action = String(args.action || "verify").trim().toLowerCase();
+        const dbPath = this.resolveConfinedLedgerPath(args.databasePath);
+        const ledger = new EosDurableSqliteLedger(dbPath);
+        try {
+          if (action === "record") {
+            const validCategories: readonly LedgerCategory[] = [
+              "MISSION_DIRECTION",
+              "ARCHITECTURE_DECISION",
+              "SECURITY_AUDIT",
+              "VERIFICATION_RECEIPT",
+              "GENTLEMAN_ENGRAM_SYNC"
+            ];
+            const rawCat = String(args.category || "VERIFICATION_RECEIPT") as LedgerCategory;
+            const category: LedgerCategory = validCategories.includes(rawCat)
+              ? rawCat
+              : "VERIFICATION_RECEIPT";
+            return ledger.appendEntry({
+              category,
+              projectId: typeof args.projectId === "string" && args.projectId.trim().length > 0
+                ? args.projectId.trim()
+                : "eos-system",
+              title: String(args.title || "EOS Ledger Event"),
+              payload: isPlainRecord(args.payload) ? args.payload : {},
+              engramTopicKey: typeof args.engramTopicKey === "string" ? args.engramTopicKey : undefined
+            });
+          }
+          if (action === "search") {
+            const limit = typeof args.limit === "number" ? args.limit : 10;
+            return {
+              action: "search",
+              query: String(args.query || ""),
+              records: ledger.searchEntries(String(args.query || ""), limit)
+            };
+          }
+          if (action === "recent") {
+            const limit = typeof args.limit === "number" ? args.limit : 10;
+            const projectId = typeof args.projectId === "string" ? args.projectId : undefined;
+            return {
+              action: "recent",
+              records: ledger.listRecent(limit, projectId)
+            };
+          }
+          return ledger.verifyChainIntegrity();
+        } finally {
+          ledger.close();
+        }
+      }
+
+      case "eos_ast_analyze": {
+        const safeDir = this.resolveProjectPath(args?.targetDir, "directory", "src/core");
+        return EosTypeScriptAstAnalyzer.analyzeDirectory(safeDir, this.projectRoot);
+      }
+
+      case "eos_gentleman_audit": {
+        const geminiDir = typeof args.geminiConfigDir === "string" && args.geminiConfigDir.trim().length > 0
+          ? args.geminiConfigDir.trim()
+          : undefined;
+        return EosGentlemanStackBridge.auditStack(this.projectRoot, geminiDir);
       }
 
       default:

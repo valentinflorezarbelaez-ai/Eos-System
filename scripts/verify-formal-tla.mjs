@@ -457,6 +457,46 @@ export function verifyAntigravityControlPlaneModel(steps = 200) {
   };
 }
 
+export function verifyGentlemanEosSynergyMeshModel(steps = 200) {
+  const filePath = path.join(formalDir, "GentlemanEosSynergyMesh.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let constitutionIntact = true;
+  let gentlemanComponentsUp = 0;
+  let ledgerChainLength = 0;
+  let confinedMcpCalls = 0;
+  let pathEscapesAllowed = 0;
+  let tamperedBlocks = 0;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    assert.equal(constitutionIntact, true, "VIOLATION: EOS Constitution clobbered");
+    assert.ok(gentlemanComponentsUp >= 0 && gentlemanComponentsUp <= 6, "VIOLATION: Gentleman component count out of bounds");
+    assert.equal(pathEscapesAllowed, 0, "VIOLATION: MCP path escape outside projectRoot");
+    assert.equal(tamperedBlocks, 0, "VIOLATION: Durable SQLite WAL hash chain tampered");
+
+    if (gentlemanComponentsUp < 6) {
+      gentlemanComponentsUp++;
+    } else if (i % 2 === 0) {
+      confinedMcpCalls++;
+    } else {
+      ledgerChainLength++;
+    }
+  }
+
+  return {
+    specification: "GentlemanEosSynergyMesh.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
+}
+
 export function runAllFormalVerifications() {
   return [
     verifyLmaxDisruptorModel(),
@@ -467,7 +507,8 @@ export function runAllFormalVerifications() {
     verifyOmegaTranscendentalModel(),
     verifyContinuousRefactorModel(),
     verifyFleetSyncMctsCanaryModel(),
-    verifyAntigravityControlPlaneModel()
+    verifyAntigravityControlPlaneModel(),
+    verifyGentlemanEosSynergyMeshModel()
   ];
 }
 

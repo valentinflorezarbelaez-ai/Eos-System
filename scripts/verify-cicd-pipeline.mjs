@@ -29,6 +29,7 @@ function listRepoFiles(dir, acc = []) {
   for (const entry of entries) {
     if (
       entry.name === ".git" ||
+      entry.name === ".eos" ||
       entry.name === ".vercel" ||
       entry.name === "node_modules" ||
       entry.name === "_sandbox" ||

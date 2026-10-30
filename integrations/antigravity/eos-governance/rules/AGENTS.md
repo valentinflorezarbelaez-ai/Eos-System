@@ -27,5 +27,16 @@ Use the `eos-system` MCP server tools at the corresponding lifecycle gates:
   - `eos_validate_patch`: Scan proposed file contents for syntax errors, secret leaks, and destructive patterns.
 - **Epistemic Evidence & Fleet Delivery (Law III)**:
   - `eos_turbo_verify`: Run fast in-memory credential, architecture, and inventory checks before claiming `VERIFIED`.
+  - `eos_ast_analyze`: Parse real TypeScript Compiler ASTs to verify Layer-0 zero-dependency purity, Node 24 strip-only compliance, and cyclomatic complexity.
+  - `eos_sqlite_ledger`: Append, FTS5-search, and cryptographically verify SHA-256 hash-chained records in the zero-dependency `node:sqlite` WAL ledger.
   - `eos_fleet_soundcheck` / `eos_mcts_tune` / `eos_canary_rollout`: Audit Spotify Soundcheck scores across the sovereign fleet, tune parameters via UCT MCTS, and validate progressive canary rollouts.
-  - `eos_antigravity_doctor`: Diagnose Antigravity MCP config, plugin, hooks, skills, and NTFS junction health.
+  - `eos_antigravity_doctor` / `eos_gentleman_audit`: Diagnose Antigravity MCP config, Gentleman AI stack co-governance, plugins, hooks, skills, and NTFS junction health.
+
+## 3. Unified EOS + Gentleman AI Stack Co-Governance (`eos-gentleman-synergy`)
+
+Google Antigravity is co-governed by **EOS System** and the **Gentleman Programming AI Stack** (`gentle-ai`, `engram`, `gga`, `context7`, and `agent-teams-lite`):
+
+1. **Episodic Memory (`engram` MCP + `eos_sqlite_ledger`)**: Recall prior context via `mem_context` / `mem_search` at mission start and persist verified decisions via `mem_save` alongside `eos_sqlite_ledger`.
+2. **Live Framework Docs (`context7` MCP)**: Resolve external library documentation via `resolve-library-id` + `query-docs` instead of relying on stale training weights.
+3. **Sub-Agent SDD Orchestration (`sdd-*` + `eos-sdd-pipeline`)**: Combine Gentleman's `agent-teams-lite` phase skills (`sdd-init`, `sdd-explore`, `sdd-propose`, `sdd-spec`, `sdd-design`, `sdd-tasks`, `sdd-apply`, `sdd-verify`, `sdd-archive`) with EOS formal EARS/BDD/TLA+ gates.
+4. **Adversarial Dual Review (`judgment-day` + `gga`)**: Pair parallel blind sub-agent reviews (`judgment-day`) and Gentleman Guardian Angel (`.gga` -> `AGENTS.md`) with `eos_ast_analyze` and `npm run verify:strict`.

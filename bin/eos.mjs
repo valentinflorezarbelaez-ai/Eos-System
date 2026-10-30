@@ -2870,6 +2870,101 @@ switch (command) {
     break;
   }
 
+  case "gentleman":
+  case "gentle-ai": {
+    printBanner();
+    const { EosGentlemanStackBridge } = await import("../src/core/eosGentlemanStackBridge.ts");
+    const report = EosGentlemanStackBridge.auditStack(root);
+    console.log("[EOS + GENTLEMAN AI STACK CO-GOVERNANCE DOCTOR]\n");
+    console.log(`  Estado Co-Gobernanza   : ${report.status}`);
+    console.log(`  Puntaje de Sinergia    : ${report.readinessScore}/100`);
+    console.log(`  Constitución Intacta   : ${report.constitutionPreserved ? "VERIFIED (7 Mandamientos)" : "MISSING"}`);
+    console.log(`  Skills SDD Activos     : ${report.activeSddSkills.length}/11 (${report.activeSddSkills.join(", ")})`);
+    console.log(`  Recibo Criptográfico   : sha256:${report.sha256Receipt}\n`);
+    console.log("  Pilares del Stack Auditados:");
+    report.pillars.forEach((p) => {
+      console.log(`    • [${p.passed ? "PASS" : "FAIL"}] ${p.label.padEnd(54)} (${p.score}/${p.maxScore}) — ${p.versionOrPath}`);
+    });
+    console.log("\n  Protocolo Operativo de Co-Gobernanza:");
+    report.coGovernanceProtocol.forEach((step) => console.log(`    ${step}`));
+    console.log("");
+    if (report.readinessScore < 95) process.exit(1);
+    break;
+  }
+
+  case "ledger": {
+    printBanner();
+    const sub = (args[1] || "verify").toLowerCase();
+    const { EosDurableSqliteLedger } = await import("../src/core/eosDurableSqliteLedger.ts");
+    const dbPath = EosDurableSqliteLedger.defaultLedgerPath(root);
+    const ledger = new EosDurableSqliteLedger(dbPath);
+    try {
+      if (sub === "record") {
+        const title = args.slice(2).join(" ").trim() || "EOS CLI Ledger Checkpoint";
+        const rec = ledger.appendEntry({
+          category: "VERIFICATION_RECEIPT",
+          projectId: "eos-system",
+          title,
+          payload: { source: "eos-cli", version: packageMetadata.version }
+        });
+        console.log(`[EOS SQLITE WAL LEDGER] Entrada sellada #${rec.seq}: ${rec.entryId}`);
+        console.log(`  Título      : ${rec.title}`);
+        console.log(`  Prev Hash   : ${rec.prevHash}`);
+        console.log(`  Entry Hash  : ${rec.entryHash}\n`);
+      } else if (sub === "search") {
+        const query = args.slice(2).join(" ").trim();
+        const records = ledger.searchEntries(query, 10);
+        console.log(`[EOS SQLITE FTS5 SEARCH] Consulta: "${query}" (${records.length} resultados)\n`);
+        records.forEach((r) => console.log(`  #${r.seq} [${r.category}] ${r.title} (${r.entryHash.slice(0, 16)}...)`));
+        console.log("");
+      } else if (sub === "recent") {
+        const records = ledger.listRecent(10);
+        console.log(`[EOS SQLITE WAL LEDGER] Últimas ${records.length} entradas:\n`);
+        records.forEach((r) => console.log(`  #${r.seq} [${r.category}] ${r.title} (${r.createdAtIso})`));
+        console.log("");
+      } else {
+        const integrity = ledger.verifyChainIntegrity();
+        console.log("[EOS SQLITE WAL LEDGER] Verificación Criptográfica Monotónica:\n");
+        console.log(`  Base de Datos          : ${integrity.databasePath}`);
+        console.log(`  Modo Journal           : ${integrity.journalMode.toUpperCase()}`);
+        console.log(`  Total Entradas         : ${integrity.totalEntries}`);
+        console.log(`  Cadena SHA-256 Intacta : ${integrity.intact ? "VERIFIED" : "CORRUPTED"}`);
+        console.log(`  Head Hash              : ${integrity.headHash}`);
+        console.log(`  Recibo Criptográfico   : sha256:${integrity.sha256Receipt}\n`);
+        if (!integrity.intact) process.exit(1);
+      }
+    } finally {
+      ledger.close();
+    }
+    break;
+  }
+
+  case "ast": {
+    printBanner();
+    const targetRel = args[1] || "src/core";
+    const targetDir = path.resolve(root, targetRel);
+    const { EosTypeScriptAstAnalyzer } = await import("../src/core/eosTypeScriptAstAnalyzer.ts");
+    const report = EosTypeScriptAstAnalyzer.analyzeDirectory(targetDir, root);
+    console.log("[EOS COMPILER-GRADE TYPESCRIPT AST ANALYZER]\n");
+    console.log(`  Directorio Auditado    : ${report.targetDir}`);
+    console.log(`  Motor AST              : ${report.engineMode}`);
+    console.log(`  Archivos Analizados    : ${report.filesAnalyzed}`);
+    console.log(`  Símbolos Exportados    : ${report.totalExportedSymbols}`);
+    console.log(`  Complejidad Promedio   : ${report.averageCyclomaticComplexity}`);
+    console.log(`  Complejidad Máxima     : ${report.maxCyclomaticComplexity} (${report.maxCyclomaticFile || "n/a"})`);
+    console.log(`  Pureza Layer-0         : ${report.layer0Pure ? "VERIFIED (0 deps externas)" : "VIOLATED"}`);
+    console.log(`  Node 24 Strip-Only     : ${report.stripOnlyCompatible ? "VERIFIED (0 enum/namespace/param-props)" : "VIOLATED"}`);
+    console.log(`  Violaciones            : ${report.violations.length}`);
+    console.log(`  Recibo Criptográfico   : sha256:${report.sha256Receipt}\n`);
+    if (report.violations.length > 0) {
+      report.violations.forEach((v) => {
+        console.log(`    ! [${v.code}] ${v.file}:${v.line}:${v.column} — ${v.message}`);
+      });
+      process.exit(1);
+    }
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -2958,6 +3053,9 @@ Uso Universal:
   eos mcts:tune [iter]       Hiper-optimización MCTS con política UCT de exploración/explotación
   eos canary:rollout [ver]   Despliegue canario progresivo (1% -> 5% -> 25% -> 100%) con circuit breaker
   eos antigravity [doctor|install|direct] Conecta, audita y dirige Google Antigravity vía EOS MCP Control Plane
+  eos gentleman [doctor]     Audita la co-gobernanza EOS + Gentleman AI Stack (gentle-ai, engram, gga, context7, sdd)
+  eos ledger [verify|record|search|recent] Ledger durable SQLite WAL + FTS5 + cadena SHA-256 (0 dependencias)
+  eos ast [directorio]       Analizador AST real del compilador TypeScript (pureza L0, strip-only Node 24, complejidad)
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

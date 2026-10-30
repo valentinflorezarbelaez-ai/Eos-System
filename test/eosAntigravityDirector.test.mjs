@@ -68,8 +68,9 @@ test("BDD-125: EosMcpServer negotiates 2024-11-05 & 2025-03-26, serves instructi
     method: "initialize",
     params: { protocolVersion: "2024-11-05", capabilities: {}, clientInfo: { name: "antigravity", version: "1.0" } }
   });
+  const pkg = JSON.parse(fs.readFileSync(path.join(projectRoot, "package.json"), "utf8"));
   assert.equal(init2024?.result?.protocolVersion, "2024-11-05");
-  assert.equal(init2024?.result?.serverInfo?.version, "49.0.0");
+  assert.equal(init2024?.result?.serverInfo?.version, pkg.version);
   assert.ok(init2024?.result?.capabilities?.prompts);
   assert.ok(
     typeof init2024?.result?.instructions === "string" &&

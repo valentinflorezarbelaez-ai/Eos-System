@@ -201,6 +201,82 @@ export function installAntigravityIntegration(options = {}) {
           },
           type: "object"
         }
+      },
+      {
+        name: "eos_sqlite_ledger",
+        description:
+          "Zero-dependency Durable SQLite WAL + FTS5 + SHA-256 hash-chained bitemporal ledger (node:sqlite). Supports append ('record'), full-text search ('search'), listing ('recent'), and cryptographic chain verification ('verify').",
+        parameters: {
+          properties: {
+            action: {
+              description: "Ledger operation to execute (default: 'verify')",
+              enum: ["record", "search", "recent", "verify"],
+              type: "string"
+            },
+            category: {
+              description: "Entry category (for 'record')",
+              enum: ["MISSION_DIRECTION", "ARCHITECTURE_DECISION", "SECURITY_AUDIT", "VERIFICATION_RECEIPT", "GENTLEMAN_ENGRAM_SYNC"],
+              type: "string"
+            },
+            projectId: {
+              description: "Target project ID (default: 'eos-system')",
+              type: "string"
+            },
+            title: {
+              description: "Entry title (required for 'record')",
+              type: "string"
+            },
+            payload: {
+              description: "Structured JSON metadata payload (for 'record')",
+              type: "object"
+            },
+            engramTopicKey: {
+              description: "Optional Engram topic_key cross-reference",
+              type: "string"
+            },
+            query: {
+              description: "FTS5 full-text search query (for 'search')",
+              type: "string"
+            },
+            limit: {
+              description: "Maximum records to return (1-100, default: 10)",
+              type: "number"
+            },
+            databasePath: {
+              description: "Optional confined ledger database path within projectRoot or ':memory:'",
+              type: "string"
+            }
+          },
+          type: "object"
+        }
+      },
+      {
+        name: "eos_ast_analyze",
+        description:
+          "Compiler-grade TypeScript AST architecture & Node 24 strip-only verifier. Parses real TypeScript ASTs to verify Layer-0 zero-dependency purity, absence of prohibited TS constructs (enum, namespace, parameter properties), exported symbols, and exact cyclomatic complexity.",
+        parameters: {
+          properties: {
+            targetDir: {
+              description: "Target directory relative to project root (default: 'src/core')",
+              type: "string"
+            }
+          },
+          type: "object"
+        }
+      },
+      {
+        name: "eos_gentleman_audit",
+        description:
+          "Audits the unified EOS System + Gentleman Programming AI Ecosystem co-governance stack inside Google Antigravity (eos-system MCP, gentle-ai CLI, engram CLI+MCP, gga+.gga, context7 MCP, and agent-teams-lite SDD + judgment-day skills).",
+        parameters: {
+          properties: {
+            geminiConfigDir: {
+              description: "Optional path to ~/.gemini/config directory",
+              type: "string"
+            }
+          },
+          type: "object"
+        }
       }
     ];
     for (const schema of toolSchemas) {
@@ -224,7 +300,7 @@ export function installAntigravityIntegration(options = {}) {
 if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
   const result = installAntigravityIntegration();
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v49.0.0 — ANTIGRAVITY SOVEREIGN MCP INSTALLER");
+  console.log(" EOS SYSTEM v50.0.0 — ANTIGRAVITY SOVEREIGN MCP INSTALLER");
   console.log("======================================================================");
   for (const action of result.actions) {
     console.log(`  [+] ${action}`);

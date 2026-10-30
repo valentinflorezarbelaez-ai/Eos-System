@@ -18,8 +18,16 @@ import { scanArchitecture } from "./eosArchitectureGuard.ts";
 
 export interface CacheEntry {
   readonly sha256: string;
+  readonly mtimeNs?: bigint;
+  readonly size?: number;
   readonly isClean: boolean;
   readonly findings: readonly string[];
+}
+
+interface InventoryHashCacheEntry {
+  readonly mtimeNs: bigint;
+  readonly size: number;
+  readonly sha256: string;
 }
 
 export interface StageTelemetry {
@@ -44,8 +52,9 @@ export interface TurboPipelineResult {
   readonly sourceInventoryDigest: string;
 }
 
-// In-memory cache keyed by path and validated against the current content hash.
+// In-memory cache keyed by path and validated against nanosecond stat + content hash.
 const VERIFICATION_CACHE = new Map<string, CacheEntry>();
+const INVENTORY_HASH_CACHE = new Map<string, InventoryHashCacheEntry>();
 
 const SECRET_PATTERNS = [
   { name: "Live Stripe/OpenAI Key", regex: new RegExp("sk-" + "live-[0-9a-zA-Z]{16,}") },
@@ -60,11 +69,21 @@ const SECRET_PATTERNS = [
  */
 export function checkFileSecretsCached(filePath: string): { isClean: boolean; findings: string[]; fromCache: boolean } {
   try {
+    const stat = fs.statSync(filePath, { bigint: true });
+    const cached = VERIFICATION_CACHE.get(filePath);
+    if (cached && cached.mtimeNs === stat.mtimeNs && cached.size === Number(stat.size)) {
+      return { isClean: cached.isClean, findings: [...cached.findings], fromCache: true };
+    }
+
     const content = fs.readFileSync(filePath, "utf8");
     const sha256 = crypto.createHash("sha256").update(content, "utf8").digest("hex");
-    const cached = VERIFICATION_CACHE.get(filePath);
 
     if (cached && cached.sha256 === sha256) {
+      VERIFICATION_CACHE.set(filePath, {
+        ...cached,
+        mtimeNs: stat.mtimeNs,
+        size: Number(stat.size)
+      });
       return { isClean: cached.isClean, findings: [...cached.findings], fromCache: true };
     }
 
@@ -78,6 +97,8 @@ export function checkFileSecretsCached(filePath: string): { isClean: boolean; fi
     const isClean = findings.length === 0;
     VERIFICATION_CACHE.set(filePath, {
       sha256,
+      mtimeNs: stat.mtimeNs,
+      size: Number(stat.size),
       isClean,
       findings
     });
@@ -89,14 +110,30 @@ export function checkFileSecretsCached(filePath: string): { isClean: boolean; fi
 }
 
 /**
- * Collects all project source files recursively, ignoring node_modules, .git, and transient build dirs.
+ * Collects all project source files recursively, ignoring node_modules, .git, .eos, and transient build dirs.
  */
 export function collectSourceFiles(dir: string, projectRoot: string = dir): string[] {
   const results: string[] = [];
   if (!fs.existsSync(dir)) return results;
 
-  const ignoredDirs = new Set(["node_modules", ".git", "dist", ".next", "_sandbox", ".turbo", "target"]);
-  const binaryExtensions = new Set([".exe", ".bin", ".dll", ".so", ".dylib", ".wasm", ".png", ".jpg", ".jpeg", ".ico", ".webp", ".pdf"]);
+  const ignoredDirs = new Set(["node_modules", ".git", ".eos", ".worktrees", "dist", ".next", "_sandbox", ".turbo", "target"]);
+  const binaryExtensions = new Set([
+    ".exe",
+    ".bin",
+    ".dll",
+    ".so",
+    ".dylib",
+    ".wasm",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".ico",
+    ".webp",
+    ".pdf",
+    ".sqlite",
+    ".sqlite-wal",
+    ".sqlite-shm"
+  ]);
 
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
@@ -194,10 +231,19 @@ export function runTurboPipeline(projectRoot: string = process.cwd()): TurboPipe
   const inventoryHasher = crypto.createHash("sha256");
   for (const f of files.sort()) {
     const rel = path.relative(projectRoot, f).replace(/\\/g, "/");
-    if (rel.includes("node_modules") || rel.includes(".git")) continue;
-    const bytes = fs.readFileSync(f);
-    const fileSha256 = crypto.createHash("sha256").update(bytes).digest("hex");
-    inventoryHasher.update(`${rel}:${bytes.length}:${fileSha256}\n`);
+    if (rel.includes("node_modules") || rel.includes(".git") || rel.startsWith(".eos/")) continue;
+    const stat = fs.statSync(f, { bigint: true });
+    const size = Number(stat.size);
+    const cachedInv = INVENTORY_HASH_CACHE.get(f);
+    let fileSha256: string;
+    if (cachedInv && cachedInv.mtimeNs === stat.mtimeNs && cachedInv.size === size) {
+      fileSha256 = cachedInv.sha256;
+    } else {
+      const bytes = fs.readFileSync(f);
+      fileSha256 = crypto.createHash("sha256").update(bytes).digest("hex");
+      INVENTORY_HASH_CACHE.set(f, { mtimeNs: stat.mtimeNs, size: bytes.length, sha256: fileSha256 });
+    }
+    inventoryHasher.update(`${rel}:${size}:${fileSha256}\n`);
   }
   const sourceInventoryDigest = `sha256:${inventoryHasher.digest("hex")}`;
   const endStage3 = process.hrtime.bigint();
@@ -266,4 +312,5 @@ export function runTurboPipeline(projectRoot: string = process.cwd()): TurboPipe
  */
 export function clearVerificationCache(): void {
   VERIFICATION_CACHE.clear();
+  INVENTORY_HASH_CACHE.clear();
 }

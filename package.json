@@ -1,6 +1,6 @@
 {
   "name": "eos-system-landing",
-  "version": "49.0.0",
+  "version": "50.0.0",
   "description": "Local software engineering toolkit with a Node.js CLI, MCP server, repository analysis, templates, and bounded demonstrations.",
   "type": "module",
   "bin": {
@@ -110,7 +110,11 @@
     "dst": "node bin/eos.mjs dst",
     "antigravity:install": "node bin/eos.mjs antigravity install",
     "antigravity:doctor": "node bin/eos.mjs antigravity doctor",
-    "test:antigravity": "node --test test/eosAntigravityDirector.test.mjs"
+    "test:antigravity": "node --test test/eosAntigravityDirector.test.mjs",
+    "gentleman:doctor": "node bin/eos.mjs gentleman doctor",
+    "ledger": "node bin/eos.mjs ledger",
+    "ast": "node bin/eos.mjs ast",
+    "test:gentleman": "node --test test/eosTier0GentlemanSynergy.test.mjs"
   },
   "engines": {
     "node": ">=22.0.0"
