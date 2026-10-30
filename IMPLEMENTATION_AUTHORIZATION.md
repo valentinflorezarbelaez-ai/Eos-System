@@ -105,3 +105,30 @@
   - `openspec/specs/SPEC-041-CONTINUOUS-REFACTOR-ENGINE.md`
   - `docs/formal/ContinuousRefactorEngine.tla`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-26-FLEET-SYNC-CANARY-042
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-042 (v48.0.0)
+* **Scope**: Sovereign Fleet Soundcheck Mesh, MCTS Hyper-Tuning & Progressive Canary Delivery (`EosFleetSoundcheckMesh`, `EosMctsHyperTuner`, `EosProgressiveCanaryMesh`)
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-035-FLEET-SYNC-MCTS-CANARY.md`
+  - `docs/plans/PLAN-035-FLEET-SYNC-MCTS-CANARY.md`
+  - `docs/tasks/TASKS-035-FLEET-SYNC-MCTS-CANARY.md`
+  - `openspec/changes/CHANGE-035-FLEET-SYNC-MCTS-CANARY.md`
+  - `openspec/specs/SPEC-042-FLEET-SYNC-MCTS-CANARY.md`
+  - `docs/formal/FleetSyncMctsCanary.tla`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-30-CRUD-SLACK-001
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Project**: `crud-slack` (`c:\Users\valen\Crud-slack` -> `https://github.com/valentinflorezarbelaez-ai/Crud-slack.git`)
+* **Owner Approval**: `OWNER_APPROVAL` GRANTED (Explicit owner directive on 2026-10-30)
+* **Scope**: End-to-end 21-step engineering, verification, GitHub push, and Vercel production deployment of TaskFlow AI (Omnichannel Request-to-Task CRUD & Anti-Hallucination Triage Workspace).
+* **Artifacts Approved**:
+  - `docs/intake/crud-slack/PROJECT_CONTEXT.md`
+  - `docs/intake/crud-slack/inventory.json`
+  - `docs/audits/AUDIT-CRUD-SLACK-001.md`
+  - `docs/specs/SPEC-CRUD-SLACK-001.md`
+  - `docs/plans/PLAN-CRUD-SLACK-001.md`
+  - `docs/tasks/TASKS-CRUD-SLACK-001.md`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)

@@ -7,6 +7,13 @@ import { pathToFileURL } from "node:url";
 
 const root = process.cwd();
 const startTime = Date.now();
+
+// Sanitize Git hook environment variables so nested git operations in test suites and worktree tooling are isolated
+delete process.env.GIT_DIR;
+delete process.env.GIT_INDEX_FILE;
+delete process.env.GIT_WORK_TREE;
+delete process.env.GIT_PREFIX;
+
 const MAX_REPO_FILES = 20_000;
 const MAX_SINGLE_REPO_FILE_BYTES = 64 * 1024 * 1024;
 const MAX_REPO_INVENTORY_BYTES = 512 * 1024 * 1024;

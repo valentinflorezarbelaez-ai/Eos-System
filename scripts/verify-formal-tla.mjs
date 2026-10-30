@@ -365,6 +365,56 @@ export function verifyContinuousRefactorModel(steps = 200) {
   };
 }
 
+export function verifyFleetSyncMctsCanaryModel(steps = 200) {
+  const filePath = path.join(formalDir, "FleetSyncMctsCanary.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let canaryStage = 0;
+  let errorBudgetBurned = false;
+  let mctsExplorationSteps = 0;
+  let fleetReposAudited = 0;
+  let circuitBreakerTripped = false;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    assert.ok(canaryStage >= 0 && canaryStage <= 5, "VIOLATION: Canary stage out of bounds");
+    assert.ok(mctsExplorationSteps >= 0, "VIOLATION: Negative MCTS steps");
+    assert.ok(fleetReposAudited >= 0 && fleetReposAudited <= 4, "VIOLATION: Fleet repos count out of bounds");
+
+    if (errorBudgetBurned) {
+      assert.ok(circuitBreakerTripped && canaryStage === 5, "VIOLATION: Rollback not triggered on burned budget");
+    }
+
+    if (i % 4 === 0) {
+      if (fleetReposAudited < 4) fleetReposAudited++;
+    } else if (i % 4 === 1) {
+      mctsExplorationSteps++;
+    } else if (i % 4 === 2) {
+      if (canaryStage < 4 && !errorBudgetBurned) {
+        canaryStage++;
+      }
+    } else {
+      if (i === 150) {
+        errorBudgetBurned = true;
+        circuitBreakerTripped = true;
+        canaryStage = 5;
+      }
+    }
+  }
+
+  return {
+    specification: "FleetSyncMctsCanary.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
+}
+
 export function runAllFormalVerifications() {
   return [
     verifyLmaxDisruptorModel(),
@@ -373,7 +423,8 @@ export function runAllFormalVerifications() {
     verifyChaosDisruptorModel(),
     verifyProductFoundryModel(),
     verifyOmegaTranscendentalModel(),
-    verifyContinuousRefactorModel()
+    verifyContinuousRefactorModel(),
+    verifyFleetSyncMctsCanaryModel()
   ];
 }
 

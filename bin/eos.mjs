@@ -2746,6 +2746,78 @@ switch (command) {
     break;
   }
 
+  case "fleet:soundcheck": {
+    printBanner();
+    console.log("[FLEET SOUNDCHECK] Auditoría de Dimensiones de Salud de la Flota (Spotify Backstage)...\n");
+    const { EosFleetSoundcheckMesh } = await import("../src/core/eosFleetSoundcheckMesh.ts");
+    const report = EosFleetSoundcheckMesh.auditFleet(root);
+    console.log(`Reporte de Soundcheck Culminado:`);
+    console.log(`  Repositorios Auditados : ${report.totalRepositories}`);
+    console.log(`  Puntaje Promedio Flota : ${report.fleetAverageScore}/100`);
+    console.log(`  Repos Grado A (>=85)   : ${report.reposAtGradeA}/${report.totalRepositories}`);
+    console.log(`  Quórum de Despliegue   : ${report.deploymentAuthorizedQuorum ? "AUTORIZADO (>=70)" : "DENEGADO (<70)"}`);
+    console.log(`  Recibo Criptográfico   : sha256:${report.sha256Receipt}\n`);
+    console.log("  Detalle por Repositorio:");
+    report.reports.forEach((r) => {
+      console.log(`    • [${r.grade}] ${r.name} (${r.id}): ${r.totalScore}/100 | Clean: ${r.workingTreeClean} | Deploy: ${r.eligibleForAutonomousDeploy}`);
+      if (r.remediationAction) {
+        console.log(`        ↳ Remedación recomendada: ${r.remediationAction}`);
+      }
+    });
+    console.log("");
+    break;
+  }
+
+  case "mcts:tune": {
+    printBanner();
+    const iters = Number(args[1]) || 120;
+    console.log(`[MCTS HYPER-TUNING] Optimizador Monte Carlo Tree Search (UCT Exploration, ${iters} iteraciones)...\n`);
+    const { EosMctsHyperTuner } = await import("../src/core/eosMctsHyperTuner.ts");
+    const tuner = new EosMctsHyperTuner(42);
+    const report = tuner.tuneParameters(iters);
+    console.log(`Convergencia MCTS Completada:`);
+    console.log(`  Iteraciones Simuladas  : ${report.totalIterations}`);
+    console.log(`  Nodos Explorados       : ${report.exploredNodesCount}`);
+    console.log(`  Fitness Base           : ${report.baselineFitness.toFixed(4)}`);
+    console.log(`  Fitness Óptimo         : ${report.optimalFitness.toFixed(4)}`);
+    console.log(`  Mejora Obtenida        : +${report.improvementPercent.toFixed(2)}%`);
+    console.log(`  Recibo Criptográfico   : sha256:${report.sha256Receipt}\n`);
+    console.log("  Parámetros Óptimos Convergidos:");
+    Object.entries(report.optimalConfig).forEach(([k, v]) => {
+      console.log(`    • ${k.padEnd(26)}: ${v}`);
+    });
+    console.log("");
+    break;
+  }
+
+  case "canary:rollout": {
+    printBanner();
+    const versionTarget = args[1] || "v48.0.0";
+    const previousVersion = args[2] || "v47.0.0";
+    console.log(`[PROGRESSIVE CANARY] Despliegue Progresivo Automatizado: ${previousVersion} -> ${versionTarget}...\n`);
+    const { EosProgressiveCanaryMesh } = await import("../src/core/eosProgressiveCanaryMesh.ts");
+    const mesh = new EosProgressiveCanaryMesh(versionTarget, previousVersion);
+    const report = mesh.executeRollout([
+      { stage: "CANARY_1_PCT", sampleRequests: 10000, failedRequests: 0, p99LatencyMs: 45, baselineP99LatencyMs: 44 },
+      { stage: "CANARY_5_PCT", sampleRequests: 50000, failedRequests: 1, p99LatencyMs: 46, baselineP99LatencyMs: 44 },
+      { stage: "CANARY_25_PCT", sampleRequests: 250000, failedRequests: 2, p99LatencyMs: 47, baselineP99LatencyMs: 44 },
+      { stage: "FULL_PRODUCTION_100_PCT", sampleRequests: 1000000, failedRequests: 5, p99LatencyMs: 48, baselineP99LatencyMs: 44 }
+    ]);
+    console.log(`Resultado del Rollout Canario:`);
+    console.log(`  Versión Objetivo       : ${report.versionTarget} (desde ${report.previousStableVersion})`);
+    console.log(`  Estado Final           : ${report.finalStage}`);
+    console.log(`  Completado Seguro      : ${report.verifiedSafe ? "VERIFICADO_SEGURO" : "FALLIDO"}`);
+    console.log(`  Circuit Breaker        : ${report.rollbackExecuted ? "DISPARADO (ROLLBACK EJECUTADO)" : "INTACTO (0 ROLLBACKS)"}`);
+    console.log(`  Transiciones Exitosas  : ${report.totalStagesCompleted}`);
+    console.log(`  Recibo Criptográfico   : sha256:${report.sha256Receipt}\n`);
+    console.log("  Detalle de Transiciones:");
+    report.transitions.forEach((t) => {
+      console.log(`    • ${t.fromStage} ➔ ${t.toStage} | ErrRate: ${(t.errorRate * 100).toFixed(4)}% | Latency Δ: +${t.latencyIncreasePercent.toFixed(1)}% | ${t.reason}`);
+    });
+    console.log("");
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -2830,6 +2902,9 @@ Uso Universal:
   eos refactor [audit|dbc]   Auditoría de deuda técnica, código muerto, DRY y dieta de código
   eos dst [seed] [steps]     Pruebas de Simulación Determinista FoundationDB / Antithesis con inyección de fallos
   eos synapse                Arbitraje Bayesiano multi-agente sin bloqueos ni colisiones
+  eos fleet:soundcheck       Audita la flota soberana con dimensiones Spotify Soundcheck y quórum
+  eos mcts:tune [iter]       Hiper-optimización MCTS con política UCT de exploración/explotación
+  eos canary:rollout [ver]   Despliegue canario progresivo (1% -> 5% -> 25% -> 100%) con circuit breaker
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

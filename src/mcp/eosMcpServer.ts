@@ -360,6 +360,18 @@ import {
   deepFreeze
 } from "../core/eosKernelPrimitives.ts";
 
+import {
+  EosFleetSoundcheckMesh
+} from "../core/eosFleetSoundcheckMesh.ts";
+
+import {
+  EosMctsHyperTuner
+} from "../core/eosMctsHyperTuner.ts";
+
+import {
+  EosProgressiveCanaryMesh
+} from "../core/eosProgressiveCanaryMesh.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -1898,6 +1910,38 @@ export class EosMcpServer {
                       sampleValue: { type: "number", description: "Sample numeric input to assert against preconditions" }
                     }
                   }
+                },
+                {
+                  name: "eos_fleet_soundcheck",
+                  description: "Audits registered sovereign fleet repositories against Spotify Backstage Soundcheck dimensions (L0 purity, SAST 0 leaks, working tree cleanliness) and outputs a scored report.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      projectRoot: { type: "string", description: "Optional project root path" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_mcts_tune",
+                  description: "Executes Monte Carlo Tree Search (MCTS) with UCT exploration over multidimensional parameter space to converge to optimal system fitness.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      iterations: { type: "number", description: "Total MCTS simulation discrete iterations (default: 120)" },
+                      seed: { type: "number", description: "Deterministic PRNG seed (default: 42)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_canary_rollout",
+                  description: "Executes progressive canary rollout (1% -> 5% -> 25% -> 100%) with fail-closed circuit breaker rollback upon error budget breach.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      versionTarget: { type: "string", description: "Target deployment version" },
+                      previousVersion: { type: "string", description: "Previous stable version" }
+                    }
+                  }
                 }
               ]
             }
@@ -3320,6 +3364,33 @@ export class EosMcpServer {
       case "eos_synapse_arbitrate": {
         const candidates = Array.isArray(args.candidates) ? args.candidates : [];
         return EosMetaCognitiveSynapse.arbitrateIntents(candidates);
+      }
+
+      case "eos_fleet_soundcheck": {
+        const root = args.projectRoot ? String(args.projectRoot) : this.projectRoot;
+        return EosFleetSoundcheckMesh.auditFleet(root);
+      }
+
+      case "eos_mcts_tune": {
+        const iterations = Number(args.iterations) || 120;
+        const seed = Number(args.seed) || 42;
+        const tuner = new EosMctsHyperTuner(seed);
+        return tuner.tuneParameters(iterations);
+      }
+
+      case "eos_canary_rollout": {
+        const versionTarget = String(args.versionTarget || "v48.0.0");
+        const previousVersion = String(args.previousVersion || "v47.0.0");
+        const mesh = new EosProgressiveCanaryMesh(versionTarget, previousVersion);
+        const telemetry = Array.isArray(args.telemetry)
+          ? args.telemetry
+          : [
+              { stage: "CANARY_1_PCT", sampleRequests: 10000, failedRequests: 0, p99LatencyMs: 45, baselineP99LatencyMs: 44 },
+              { stage: "CANARY_5_PCT", sampleRequests: 50000, failedRequests: 1, p99LatencyMs: 46, baselineP99LatencyMs: 44 },
+              { stage: "CANARY_25_PCT", sampleRequests: 250000, failedRequests: 2, p99LatencyMs: 47, baselineP99LatencyMs: 44 },
+              { stage: "FULL_PRODUCTION_100_PCT", sampleRequests: 1000000, failedRequests: 5, p99LatencyMs: 48, baselineP99LatencyMs: 44 }
+            ];
+        return mesh.executeRollout(telemetry as any);
       }
 
       default:

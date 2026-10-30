@@ -7,11 +7,22 @@ import test from "node:test";
 import { EosEngineeringWorkflow } from "../src/core/eosEngineeringWorkflow.ts";
 import { EosWorktreeOrchestrator } from "../src/core/eosWorktreeOrchestrator.ts";
 
+delete process.env.GIT_DIR;
+delete process.env.GIT_INDEX_FILE;
+delete process.env.GIT_WORK_TREE;
+delete process.env.GIT_PREFIX;
+
 function git(directory, args) {
+  const env = { ...process.env };
+  delete env.GIT_DIR;
+  delete env.GIT_INDEX_FILE;
+  delete env.GIT_WORK_TREE;
+  delete env.GIT_PREFIX;
   return execFileSync("git", args, {
     cwd: directory,
     encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"]
+    stdio: ["ignore", "pipe", "pipe"],
+    env
   }).trim();
 }
 

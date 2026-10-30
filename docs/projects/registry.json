@@ -63,6 +63,22 @@
       "authorization": "LEVEL_2_AUTHORIZED",
       "cicdGateScript": "scripts/smoke-test.ps1",
       "autoShipScript": "git push origin main"
+    },
+    {
+      "id": "crud-slack",
+      "name": "TaskFlow AI — Omnichannel Request-to-Task CRUD & Triage",
+      "localPath": "c:\\Users\\valen\\Crud-slack",
+      "remoteUrl": "https://github.com/valentinflorezarbelaez-ai/Crud-slack.git",
+      "productionUrl": "https://crud-slack.vercel.app",
+      "type": "ai-productivity-workspace",
+      "status": "REGISTERED",
+      "intake": "INTAKE_COMPLETE",
+      "specification": "SPECIFICATION_APPROVED",
+      "audit": "AUDIT_COMPLETE",
+      "ownerApproval": "OWNER_APPROVAL",
+      "authorization": "LEVEL_3_PRODUCTION_AUTHORIZED",
+      "cicdGateScript": "scripts/verify-strict.mjs",
+      "autoShipScript": "git push origin main"
     }
   ]
 }

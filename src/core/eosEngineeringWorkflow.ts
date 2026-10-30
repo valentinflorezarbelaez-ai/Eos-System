@@ -110,6 +110,15 @@ function safeTaskSlug(task: string): string {
   return task.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 36) || "task";
 }
 
+function getCleanGitEnv(): NodeJS.ProcessEnv {
+  const env = { ...process.env };
+  delete env.GIT_DIR;
+  delete env.GIT_INDEX_FILE;
+  delete env.GIT_WORK_TREE;
+  delete env.GIT_PREFIX;
+  return env;
+}
+
 export class EosEngineeringWorkflow {
   private readonly sandboxFactory: (repoRoot: string) => Pick<EosContainerSandbox, "run">;
 
@@ -149,7 +158,8 @@ export class EosEngineeringWorkflow {
       gitRoot = execFileSync("git", ["rev-parse", "--show-toplevel"], {
         cwd: candidate,
         encoding: "utf8",
-        stdio: ["ignore", "pipe", "pipe"]
+        stdio: ["ignore", "pipe", "pipe"],
+        env: getCleanGitEnv()
       }).trim();
     } catch (error) {
       const code = error instanceof Error && "code" in error
@@ -182,7 +192,8 @@ export class EosEngineeringWorkflow {
       encoding: "utf8",
       stdio: ["ignore", "pipe", "pipe"],
       maxBuffer,
-      windowsHide: true
+      windowsHide: true,
+      env: getCleanGitEnv()
     }).trimEnd();
   }
 
@@ -191,7 +202,8 @@ export class EosEngineeringWorkflow {
       cwd: repoRoot,
       stdio: ["ignore", "pipe", "pipe"],
       maxBuffer: MAX_DIFF_BYTES + 1,
-      windowsHide: true
+      windowsHide: true,
+      env: getCleanGitEnv()
     });
   }
 
