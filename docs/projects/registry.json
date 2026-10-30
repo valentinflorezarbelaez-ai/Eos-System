@@ -67,7 +67,7 @@
     {
       "id": "crud-slack",
       "name": "TaskFlow AI — Omnichannel Request-to-Task CRUD & Triage",
-      "localPath": "c:\\Users\\valen\\Crud-slack",
+      "localPathEnv": "EOS_FLEET_CRUD_SLACK_PATH",
       "remoteUrl": "https://github.com/valentinflorezarbelaez-ai/Crud-slack.git",
       "productionUrl": "https://crud-slack.vercel.app",
       "type": "ai-productivity-workspace",

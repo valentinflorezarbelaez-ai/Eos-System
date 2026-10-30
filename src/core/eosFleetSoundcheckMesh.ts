@@ -72,6 +72,12 @@ export class EosFleetSoundcheckMesh {
       name: "PTG — Performance Talent Group",
       localPath: "c:\\Users\\valen\\Performance-Talent-Group-1",
       productionUrl: "https://ptg-performance-talent-group.vercel.app"
+    },
+    {
+      id: "crud-slack",
+      name: "TaskFlow AI — Omnichannel Request-to-Task CRUD & Triage",
+      localPath: "c:\\Users\\valen\\Crud-slack",
+      productionUrl: "https://crud-slack.vercel.app"
     }
   ];
 

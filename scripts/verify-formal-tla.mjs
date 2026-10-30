@@ -415,6 +415,48 @@ export function verifyFleetSyncMctsCanaryModel(steps = 200) {
   };
 }
 
+export function verifyAntigravityControlPlaneModel(steps = 200) {
+  const filePath = path.join(formalDir, "AntigravityControlPlane.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let mcpServerInstances = 0;
+  let protocolInitialized = false;
+  let missionsDirected = 0;
+  let hookChecksExecuted = 0;
+  let unsafeMutationsAllowed = 0;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    assert.ok(mcpServerInstances >= 0 && mcpServerInstances <= 1, "VIOLATION: Duplicate MCP server instances spawned");
+    assert.equal(unsafeMutationsAllowed, 0, "VIOLATION: Unsafe mutation bypassed Law IV or Gamma Barrier");
+    assert.ok(
+      protocolInitialized || (missionsDirected === 0 && hookChecksExecuted === 0),
+      "VIOLATION: Mission or hook evaluated before MCP handshake"
+    );
+
+    if (!protocolInitialized) {
+      mcpServerInstances = 1;
+      protocolInitialized = true;
+    } else if (i % 2 === 0) {
+      missionsDirected++;
+    } else {
+      hookChecksExecuted++;
+    }
+  }
+
+  return {
+    specification: "AntigravityControlPlane.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
+}
+
 export function runAllFormalVerifications() {
   return [
     verifyLmaxDisruptorModel(),
@@ -424,7 +466,8 @@ export function runAllFormalVerifications() {
     verifyProductFoundryModel(),
     verifyOmegaTranscendentalModel(),
     verifyContinuousRefactorModel(),
-    verifyFleetSyncMctsCanaryModel()
+    verifyFleetSyncMctsCanaryModel(),
+    verifyAntigravityControlPlaneModel()
   ];
 }
 

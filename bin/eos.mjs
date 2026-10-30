@@ -2818,6 +2818,58 @@ switch (command) {
     break;
   }
 
+  case "antigravity": {
+    printBanner();
+    const subAction = (args[1] || "doctor").toLowerCase();
+    const { EosAntigravityDirector } = await import("../src/core/eosAntigravityDirector.ts");
+
+    if (subAction === "install" || subAction === "setup") {
+      const { installAntigravityIntegration } = await import("../scripts/install-antigravity-mcp.mjs");
+      const result = installAntigravityIntegration({ projectRoot: root });
+      console.log("[EOS ANTIGRAVITY] Sincronización e Instalación del Plano de Control MCP:\n");
+      result.actions.forEach((a) => console.log(`  [+] ${a}`));
+      console.log(`\n  Estado de Dirección    : ${result.doctorReport.status}`);
+      console.log(`  Puntaje de Salud       : ${result.doctorReport.readinessScore}/100`);
+      console.log(`  SingleServerInvariant  : ${result.doctorReport.singleServerInvariantVerified ? "VERIFIED" : "VIOLATED"}`);
+      console.log(`  Recibo Criptográfico   : sha256:${result.doctorReport.sha256Receipt}\n`);
+      if (!result.installed) process.exit(1);
+    } else if (subAction === "direct") {
+      const directive = args.slice(2).join(" ") || "Auditar y verificar invariantes del repositorio actual";
+      const plan = EosAntigravityDirector.directMission(directive, "eos-system", root);
+      console.log("[EOS ANTIGRAVITY DIRECTOR] Plan de Dirección de Misión Soberana:\n");
+      console.log(`  Directiva              : ${plan.directive}`);
+      console.log(`  Perfil Operativo       : ${plan.profile}`);
+      console.log(`  Proyecto Objetivo      : ${plan.matchedProjectId || plan.targetIdentifier}`);
+      console.log(`  Barrera Ley IV         : ${plan.writeBarrierStatus}`);
+      console.log(`  Skills Requeridos      : ${plan.requiredSkills.join(", ")}`);
+      console.log(`  Recibo Criptográfico   : sha256:${plan.sha256Receipt}\n`);
+      console.log("  DAG de Herramientas MCP Prescritas:");
+      plan.prescribedMcpDag.forEach((step) => {
+        console.log(`    ${step.order}. [${step.phase}] ${step.toolName} (${step.mandatory ? "MANDATORY" : "OPTIONAL"}) — ${step.purpose}`);
+      });
+      console.log("");
+    } else {
+      const report = EosAntigravityDirector.auditAntigravityIntegration(root);
+      console.log("[EOS ANTIGRAVITY DOCTOR] Diagnóstico Integral del Plano de Control MCP:\n");
+      console.log(`  Estado de Dirección    : ${report.status}`);
+      console.log(`  Puntaje de Salud       : ${report.readinessScore}/100`);
+      console.log(`  SingleServerInvariant  : ${report.singleServerInvariantVerified ? "VERIFIED" : "VIOLATED"}`);
+      console.log(`  Directorio Global      : ${report.geminiConfigDir}`);
+      console.log(`  Recibo Criptográfico   : sha256:${report.sha256Receipt}\n`);
+      console.log("  Dimensiones Auditadas:");
+      report.checks.forEach((c) => {
+        console.log(`    • [${c.passed ? "PASS" : "FAIL"}] ${c.label.padEnd(52)} (${c.score}/${c.maxScore}) — ${c.detail}`);
+      });
+      if (report.remediationCommands.length > 0) {
+        console.log("\n  Comandos de Remediación:");
+        report.remediationCommands.forEach((cmd) => console.log(`    $ ${cmd}`));
+      }
+      console.log("");
+      if (report.readinessScore < 95) process.exit(1);
+    }
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -2905,6 +2957,7 @@ Uso Universal:
   eos fleet:soundcheck       Audita la flota soberana con dimensiones Spotify Soundcheck y quórum
   eos mcts:tune [iter]       Hiper-optimización MCTS con política UCT de exploración/explotación
   eos canary:rollout [ver]   Despliegue canario progresivo (1% -> 5% -> 25% -> 100%) con circuit breaker
+  eos antigravity [doctor|install|direct] Conecta, audita y dirige Google Antigravity vía EOS MCP Control Plane
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

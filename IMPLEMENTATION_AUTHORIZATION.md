@@ -132,3 +132,17 @@
   - `docs/plans/PLAN-CRUD-SLACK-001.md`
   - `docs/tasks/TASKS-CRUD-SLACK-001.md`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-30-ANTIGRAVITY-MCP-DIRECTOR-043
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-043 (v49.0.0)
+* **Owner Approval**: `OWNER_APPROVAL` GRANTED (Explicit owner directive on 2026-10-30)
+* **Scope**: Sovereign Antigravity MCP Control Plane, Active Mission Director (`EosAntigravityDirector`), Full MCP Handshake/Instructions/Prompts, Gamma Hook Barrier (`eos-governance` plugin), Progressive-Disclosure Skills (`eos-director`, `eos-sdd-pipeline`, `eos-fleet-ops`), and Idempotent Antigravity Installer.
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-036-ANTIGRAVITY-MCP-DIRECTOR.md`
+  - `docs/plans/PLAN-036-ANTIGRAVITY-MCP-DIRECTOR.md`
+  - `docs/tasks/TASKS-036-ANTIGRAVITY-MCP-DIRECTOR.md`
+  - `openspec/changes/CHANGE-036-ANTIGRAVITY-MCP-DIRECTOR.md`
+  - `openspec/specs/SPEC-043-ANTIGRAVITY-MCP-DIRECTOR.md`
+  - `docs/formal/AntigravityControlPlane.tla`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)

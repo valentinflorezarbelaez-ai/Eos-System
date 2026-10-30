@@ -372,6 +372,10 @@ import {
   EosProgressiveCanaryMesh
 } from "../core/eosProgressiveCanaryMesh.ts";
 
+import {
+  EosAntigravityDirector
+} from "../core/eosAntigravityDirector.ts";
+
 export interface JsonRpcRequest {
   jsonrpc: "2.0";
   id?: string | number | null;
@@ -559,22 +563,33 @@ export class EosMcpServer {
 
     try {
       switch (method) {
-        case "initialize":
+        case "initialize": {
+          const negotiatedProtocol = params?.protocolVersion === "2025-03-26" ? "2025-03-26" : "2024-11-05";
           return {
             jsonrpc: "2.0",
             id,
             result: {
-              protocolVersion: "2024-11-05",
+              protocolVersion: negotiatedProtocol,
               capabilities: {
                 tools: {},
-                resources: {}
+                resources: {},
+                prompts: {}
               },
               serverInfo: {
                 name: "eos-system-mcp",
                 version: this.serverVersion,
-                description: "Local software engineering tools with bounded request validation."
-              }
+                description: "Sovereign Engineering Operating System Control Plane & Active Antigravity Mission Director."
+              },
+              instructions: EosAntigravityDirector.DIRECTOR_INSTRUCTIONS_PLAYBOOK
             }
+          };
+        }
+
+        case "ping":
+          return {
+            jsonrpc: "2.0",
+            id,
+            result: {}
           };
 
         case "tools/list":
@@ -1942,6 +1957,28 @@ export class EosMcpServer {
                       previousVersion: { type: "string", description: "Previous stable version" }
                     }
                   }
+                },
+                {
+                  name: "eos_antigravity_direct",
+                  description: "Primary Antigravity Mission Director: classifies an engineering directive into its EOS execution profile, checks Law IV External Write Barrier preconditions against registry.json, prescribes the ordered DAG of EOS MCP tools to run, and returns a SHA-256 receipt.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      directive: { type: "string", description: "User request or engineering mission directive to direct" },
+                      target: { type: "string", description: "Target registered project ID or workspace path (default: 'eos-system')" }
+                    },
+                    required: ["directive"]
+                  }
+                },
+                {
+                  name: "eos_antigravity_doctor",
+                  description: "Audits the end-to-end Antigravity <-> EOS MCP integration health: global mcp_config.json fleet env bindings, SingleServerInvariant, native eos-governance plugin, hooks, progressive-disclosure skills, and NTFS junction integrity.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      geminiConfigDir: { type: "string", description: "Optional path to ~/.gemini/config directory" }
+                    }
+                  }
                 }
               ]
             }
@@ -1993,10 +2030,112 @@ export class EosMcpServer {
                   uri: "eos://projects/registry",
                   name: "Sovereign Fleet Project Registry",
                   mimeType: "application/json"
+                },
+                {
+                  uri: "eos://antigravity/director-playbook",
+                  name: "EOS Sovereign Antigravity MCP Director Playbook",
+                  mimeType: "text/markdown"
                 }
               ]
             }
           };
+
+        case "prompts/list":
+          return {
+            jsonrpc: "2.0",
+            id,
+            result: {
+              prompts: [
+                {
+                  name: "eos-direct-mission",
+                  description: "Classify and orchestrate an engineering mission in Antigravity under EOS Seven Inviolable Commandments.",
+                  arguments: [
+                    { name: "directive", description: "Mission goal or user prompt", required: true },
+                    { name: "target", description: "Registered project ID or workspace path", required: false }
+                  ]
+                },
+                {
+                  name: "eos-sdd-gate",
+                  description: "Generate formal IEEE 830 EARS requirements, BDD acceptance criteria, and ADR plan prior to implementation.",
+                  arguments: [
+                    { name: "feature", description: "Feature or specification title", required: true }
+                  ]
+                },
+                {
+                  name: "eos-fleet-audit",
+                  description: "Run Spotify Soundcheck, MCTS parameter tuning, and canary readiness audit across the sovereign fleet.",
+                  arguments: []
+                }
+              ]
+            }
+          };
+
+        case "prompts/get": {
+          const promptName = params?.name;
+          const promptArgs = isPlainRecord(params?.arguments) ? params!.arguments : {};
+          if (typeof promptName !== "string" || promptName.length < 1 || promptName.length > 128) {
+            throw new TypeError("Prompt name must be a non-empty string.");
+          }
+          if (promptName === "eos-direct-mission") {
+            const directive = String(promptArgs.directive || "Audit and verify current workspace invariants");
+            const target = String(promptArgs.target || "eos-system");
+            const plan = EosAntigravityDirector.directMission(directive, target, this.projectRoot);
+            return {
+              jsonrpc: "2.0",
+              id,
+              result: {
+                description: `EOS Sovereign Mission Plan (${plan.profile})`,
+                messages: [
+                  {
+                    role: "user",
+                    content: {
+                      type: "text",
+                      text: `Execute mission under EOS Control Plane:\n${JSON.stringify(plan, null, 2)}`
+                    }
+                  }
+                ]
+              }
+            };
+          }
+          if (promptName === "eos-sdd-gate") {
+            const feature = String(promptArgs.feature || "New Feature");
+            return {
+              jsonrpc: "2.0",
+              id,
+              result: {
+                description: `EOS Strict SDD Gate for ${feature}`,
+                messages: [
+                  {
+                    role: "user",
+                    content: {
+                      type: "text",
+                      text: `Call eos_amplify_prompt for "${feature}", formalize INTAKE, SPEC (EARS + BDD), PLAN (ADRs), TASKS (DAG), and verify LEVEL 2+ authorization before writing implementation code.`
+                    }
+                  }
+                ]
+              }
+            };
+          }
+          if (promptName === "eos-fleet-audit") {
+            return {
+              jsonrpc: "2.0",
+              id,
+              result: {
+                description: "EOS Sovereign Fleet Soundcheck & Canary Readiness",
+                messages: [
+                  {
+                    role: "user",
+                    content: {
+                      type: "text",
+                      text: "Execute eos_fleet_soundcheck, eos_turbo_verify, and eos_antigravity_doctor, then report scores with SHA-256 receipts."
+                    }
+                  }
+                ]
+              }
+            };
+          }
+          throw new Error(`Unknown prompt: ${promptName}`);
+        }
 
         case "resources/read": {
           const uri = params?.uri;
@@ -3393,6 +3532,19 @@ export class EosMcpServer {
         return mesh.executeRollout(telemetry as any);
       }
 
+      case "eos_antigravity_direct": {
+        const directive = String(args.directive || "");
+        const target = args.target ? String(args.target) : "eos-system";
+        return EosAntigravityDirector.directMission(directive, target, this.projectRoot);
+      }
+
+      case "eos_antigravity_doctor": {
+        const geminiDir = typeof args.geminiConfigDir === "string" && args.geminiConfigDir.trim().length > 0
+          ? args.geminiConfigDir.trim()
+          : undefined;
+        return EosAntigravityDirector.auditAntigravityIntegration(this.projectRoot, geminiDir);
+      }
+
       default:
         throw new Error(`Unknown tool: ${toolName}`);
     }
@@ -3403,6 +3555,8 @@ export class EosMcpServer {
       throw new TypeError("Resource URI must be a string no longer than 256 UTF-8 bytes.");
     }
     switch (uri) {
+      case "eos://antigravity/director-playbook":
+        return EosAntigravityDirector.DIRECTOR_INSTRUCTIONS_PLAYBOOK;
       case "eos://specs/constitution": {
         const specCandidate = path.join(this.projectRoot, "docs/specs/spec.md");
         const specPath = fs.existsSync(specCandidate) ? this.resolveProjectPath("docs/specs/spec.md", "file") : null;
