@@ -461,6 +461,10 @@ import {
 } from "../core/eosSamaelUnitotalNexus.ts";
 
 import {
+  EosPropertyFuzzingHypervisor
+} from "../core/eosPropertyFuzzingHypervisor.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2346,6 +2350,20 @@ export class EosMcpServer {
                       action: { type: "string", enum: ["evaluate", "audit_fleet", "heal_drift"], description: "Evaluation action" },
                       repoId: { type: "string", description: "Target repository ID for heal_drift action" },
                       recordToLedger: { type: "boolean", description: "Whether to persist attestation receipt in SQLite WAL ledger" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_fuzz_hypervisor",
+                  description: "Autonomous Property-Based Fuzzing & Time-Travel Replay Hypervisor (SPEC-058, v64.0.0): Deterministic Mulberry32 seeded fuzzing, boundary mutations, Delta Shrinkage, SQLite WAL state time-travel replay, and 49 Levels of Subconscious Introspection.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["fuzz", "time_travel", "introspection", "fuzz_and_replay"], description: "Action to perform" },
+                      seed: { type: "number", description: "Deterministic integer seed for pseudo-random reproduction" },
+                      iterations: { type: "number", description: "Number of fuzzing iterations (default: 1000)" },
+                      targetHeight: { type: "number", description: "Target ledger transaction height for time-travel replay" },
+                      recordToLedger: { type: "boolean", description: "Whether to commit cryptographic verification receipt into SQLite WAL ledger" }
                     }
                   }
                 }
@@ -4490,6 +4508,39 @@ export class EosMcpServer {
         }
 
         return report;
+      }
+
+      case "eos_fuzz_hypervisor": {
+        const action = String(args?.action || "fuzz_and_replay").trim().toLowerCase();
+        const seed = typeof args?.seed === "number" ? args.seed : 0xdeadbeef;
+        const iterations = typeof args?.iterations === "number" ? args.iterations : 1000;
+        const targetHeight = typeof args?.targetHeight === "number" ? args.targetHeight : undefined;
+        const recordToLedger = args?.recordToLedger === true;
+
+        const hypervisor = new EosPropertyFuzzingHypervisor(this.projectRoot);
+
+        if (action === "fuzz") {
+          return hypervisor.runFuzzCampaign({
+            seed,
+            iterations,
+            testJsonRpc: true,
+            testDeltaShrinkage: true
+          });
+        }
+
+        if (action === "time_travel") {
+          return hypervisor.runTimeTravelSession(undefined, targetHeight);
+        }
+
+        if (action === "introspection") {
+          return hypervisor.evaluate49Levels();
+        }
+
+        return hypervisor.executeComprehensiveVerification({
+          seed,
+          iterations,
+          recordToLedger
+        });
       }
 
       default:

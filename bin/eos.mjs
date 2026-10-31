@@ -3494,6 +3494,82 @@ switch (command) {
     break;
   }
 
+  case "fuzz:hypervisor": {
+    printBanner();
+    const { EosPropertyFuzzingHypervisor } = await import("../src/core/eosPropertyFuzzingHypervisor.ts");
+    console.log("[EOS PROPERTY-BASED FUZZING & TIME-TRAVEL HYPERVISOR — SPEC-058 v64.0.0]\n");
+
+    const hypervisor = new EosPropertyFuzzingHypervisor(root);
+    const subAction = (args[1] || "all").toLowerCase();
+
+    if (subAction === "introspection") {
+      const intro = hypervisor.evaluate49Levels();
+      console.log(`[LOS 49 NIVELES DE INTROSPECCIÓN SUBCONSCIENTE — SAMAEL AUN WEOR]`);
+      console.log(`  Estado General: ${intro.status} (Cociente: ${intro.overallQuotient}/100)`);
+      console.log(`  Niveles Pasados: ${intro.passedLevels}/${intro.totalLevels}\n`);
+      for (const oct of intro.octaves) {
+        console.log(`  ▸ ${oct.octaveName} (Promedio: ${oct.averageScore}/100)`);
+        for (const lvl of oct.levels) {
+          console.log(`    ↳ [${lvl.passed ? "✔ PASS" : "✖ FAIL"}] ${lvl.name} (${lvl.score}/100)`);
+        }
+      }
+    } else {
+      const res = hypervisor.executeComprehensiveVerification({
+        seed: 0xdeadbeef,
+        iterations: 1000,
+        recordToLedger: true
+      });
+
+      console.log(`[CAMPAÑA DE FUZZING DETERMINISTA (Google Atheris / Hypothesis Standard)]`);
+      console.log(`  Semilla PRNG    : 0x${res.fuzzResults.seed.toString(16).toUpperCase()}`);
+      console.log(`  Iteraciones     : ${res.fuzzResults.iterations}`);
+      console.log(`  Invariantes OK  : ${res.fuzzResults.invariantsViolated === 0 ? "100% INTACTAS" : `${res.fuzzResults.invariantsViolated} VIOLACIONES`}`);
+      console.log(`  Delta Shrinkage : ${res.fuzzResults.shrunkCounterexamples.length} muestras reducidas con éxito`);
+      if (res.fuzzResults.shrunkCounterexamples.length > 0) {
+        const sc = res.fuzzResults.shrunkCounterexamples[0];
+        console.log(`    ↳ Reducción : ${sc.initialLength} bytes ➔ ${sc.minimalLength} bytes`);
+      }
+
+      console.log(`\n[HIPERVISOR DE REPLAY TIME-TRAVEL (Antithesis / FoundationDB Standard)]`);
+      console.log(`  Total Frames    : ${res.timeTravelResults.totalFrames} bloques en ledger`);
+      console.log(`  Cadena WAL      : ${res.timeTravelResults.chainVerified ? "VERIFICADA INTEGRIDAD TOTAL" : "DIVERGENCIA DETECTADA"}`);
+      console.log(`  Altura Final    : #${res.timeTravelResults.finalHeight}`);
+
+      console.log(`\n[COCIENTE DE INTROSPECCIÓN SUBCONSCIENTE (49 Niveles de la Mente)]`);
+      console.log(`  Cociente Global : ${res.introspectionResults.overallQuotient}/100 (${res.introspectionResults.status})`);
+      console.log(`  Veredicto Final : ${res.verdict}`);
+
+      if (res.ledgerReceipt) {
+        console.log(`\n✔ Recibo criptográfico registrado en SQLite WAL Ledger (Seq: #${res.ledgerReceipt.id}, Hash: ${res.ledgerReceipt.hash.slice(0, 16)}...).`);
+      }
+    }
+    console.log();
+    break;
+  }
+
+  case "replay:ledger": {
+    printBanner();
+    const { EosPropertyFuzzingHypervisor } = await import("../src/core/eosPropertyFuzzingHypervisor.ts");
+    console.log("[EOS TIME-TRAVEL EVENT REPLAY HYPERVISOR — SPEC-058 v64.0.0]\n");
+
+    const hypervisor = new EosPropertyFuzzingHypervisor(root);
+    const targetHeight = args[1] ? parseInt(args[1], 10) : undefined;
+    const session = hypervisor.runTimeTravelSession(undefined, targetHeight);
+
+    console.log(`  Ledger Path     : ${session.ledgerPath}`);
+    console.log(`  Total Bloques   : ${session.totalFrames}`);
+    console.log(`  Integridad WAL  : ${session.chainVerified ? "INTACTA" : "CORROMPIDA"}`);
+    console.log(`  Altura Replay   : #${session.finalHeight}`);
+    if (session.currentFrame) {
+      console.log(`  Frame Hash      : ${session.currentFrame.entryHash}`);
+      console.log(`  State Digest    : ${session.currentFrame.stateDigest}`);
+      console.log(`  Categoría       : ${session.currentFrame.category}`);
+      console.log(`  Timestamp       : ${session.currentFrame.timestamp}`);
+    }
+    console.log();
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3672,6 +3748,8 @@ Uso Universal:
   eos dashboard [start|status] Panel visual de telemetría y topología en tiempo real (localhost:4321)
   eos fleet:verify [target|all] Auditoría y bautismo de fuego en producción real (WCAG/CWV/TLS)
   eos unitotal:audit         Auditoría unitotal gnóstica-samaeliana de las 10 Sephiroth y la flota
+  eos fuzz:hypervisor        Fuzzing de propiedades estocásticas, Delta Shrinkage y 49 Niveles
+  eos replay:ledger [height] Replay determinista time-travel de estados sobre el Ledger SQLite WAL
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

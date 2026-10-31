@@ -342,3 +342,17 @@
   - `openspec/specs/SPEC-057-UNITOTAL-NEXUS.md`
   - `docs/formal/SamaelUnitotalNexus.tla`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-30-PROPERTY-FUZZING-058
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-058 (v64.0.0)
+* **Owner Approval**: `OWNER_APPROVAL` GRANTED (Explicit owner directive on 2026-10-30)
+* **Scope**: Autonomous Property-Based Fuzzing & Time-Travel Replay Hypervisor (`EosPropertyFuzzingHypervisor`), Deterministic Mulberry32 Seeded PRNG, Boundary Mutations, Delta Shrinkage, SQLite WAL Event-Sourcing Replay, 49 Levels of Subconscious Introspection (Samael Aun Weor standard), and unified `eos_fuzz_hypervisor` core MCP tool & CLI surfaces (`eos fuzz:hypervisor`, `eos replay:ledger`).
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-051-PROPERTY-FUZZING-TIME-TRAVEL-HYPERVISOR.md`
+  - `docs/plans/PLAN-051-PROPERTY-FUZZING-TIME-TRAVEL-HYPERVISOR.md`
+  - `docs/tasks/TASKS-051-PROPERTY-FUZZING-TIME-TRAVEL-HYPERVISOR.md`
+  - `openspec/changes/CHANGE-051-PROPERTY-FUZZING-TIME-TRAVEL-HYPERVISOR.md`
+  - `openspec/specs/SPEC-058-PROPERTY-FUZZING-TIME-TRAVEL-HYPERVISOR.md`
+  - `docs/formal/PropertyFuzzingTimeTravelHypervisor.tla`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)

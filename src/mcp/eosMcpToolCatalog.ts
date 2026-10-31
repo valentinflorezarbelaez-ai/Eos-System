@@ -66,6 +66,7 @@ export const CORE_TIER0_TOOL_NAMES: ReadonlySet<string> = new Set([
   "eos_dashboard_status",
   "eos_fleet_verify",
   "eos_unitotal_evaluate",
+  "eos_fuzz_hypervisor",
   "eos_health_check"
 ]);
 
