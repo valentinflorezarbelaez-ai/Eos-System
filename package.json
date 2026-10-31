@@ -1,6 +1,6 @@
 {
   "name": "eos-system-landing",
-  "version": "67.0.0",
+  "version": "68.0.0",
   "description": "Local software engineering toolkit with a Node.js CLI, MCP server, repository analysis, templates, and bounded demonstrations.",
   "type": "module",
   "bin": {
@@ -9,6 +9,10 @@
   "scripts": {
     "quickstart": "node scripts/quickstart.mjs",
     "guide": "node bin/eos.mjs guide",
+    "mmr": "node bin/eos.mjs mmr",
+    "raft": "node bin/eos.mjs raft:elect",
+    "fuzzer": "node bin/eos.mjs fuzzer",
+    "seccomp": "node bin/eos.mjs sandbox:profile",
     "aca": "node bin/eos.mjs aca",
     "release:seal": "node bin/eos.mjs release:seal",
     "timetravel": "node bin/eos.mjs timetravel",

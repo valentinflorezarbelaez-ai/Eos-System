@@ -3766,6 +3766,118 @@ switch (command) {
     break;
   }
 
+  case "mmr": {
+    printBanner();
+    const { EosMerkleMountainRange } = await import("../src/core/eosMerkleMountainRange.ts");
+    console.log("[EOS MERKLE MOUNTAIN RANGE (MMR) & O(LOG N) INCLUSION PROOFS — SPEC-070 v68.0.0]\n");
+
+    const mmr = new EosMerkleMountainRange();
+    const items = args.slice(1).length > 0 ? args.slice(1) : ["genesis_event", "git_commit", "deploy_receipt", "audit_pass", "canary_ok"];
+    for (const item of items) {
+      mmr.appendLeaf(item);
+    }
+
+    const peaks = mmr.getPeaks();
+    const baggedRoot = mmr.getBaggedRoot();
+    console.log(`  Total Leaves    : ${mmr.getLeafCount()}`);
+    console.log(`  Peak Count      : ${peaks.length}`);
+    console.log(`  Peak Heights    : ${peaks.map((p) => p.height).join(", ")}`);
+    console.log(`  Bagged Root     : sha256:${baggedRoot}\n`);
+
+    const proof = mmr.generateInclusionProof(0);
+    const isValid = EosMerkleMountainRange.verifyInclusionProof(items[0], proof, baggedRoot);
+    console.log(`  Inclusion Proof : Leaf #0 (${items[0]}) -> ${isValid ? "PROVED VALID (O(log N))" : "INVALID"}`);
+    console.log(`  Proof Siblings  : ${proof.siblingHashes.length} hashes`);
+
+    mmr.recordRootInLedger(path.join(root, ".eos", "sovereign_ledger.sqlite"));
+    console.log(`\n✔ Raíz MMR atestada en SQLite WAL Ledger.\n`);
+    break;
+  }
+
+  case "raft":
+  case "raft:elect": {
+    printBanner();
+    const { EosRaftWalReplicator } = await import("../src/core/eosRaftWalReplicator.ts");
+    console.log("[EOS DISTRIBUTED RAFT WAL REPLICATOR — SPEC-071 v68.0.0]\n");
+
+    const members = ["eos-node-1", "eos-node-2", "eos-node-3"];
+    const node1 = new EosRaftWalReplicator("eos-node-1", members);
+    const node2 = new EosRaftWalReplicator("eos-node-2", members);
+
+    console.log(`Iniciando elección en clúster Raft de 3 nodos...`);
+    const voteReq = node1.startElection();
+    const voteReply = node2.handleRequestVote(voteReq);
+    const res = node1.recordVote("eos-node-2", voteReply.voteGranted);
+
+    console.log(`  Cluster Nodes   : ${members.join(", ")}`);
+    console.log(`  Quorum Size     : ${node1.getQuorumSize()}/3 nodes`);
+    console.log(`  Elected Leader  : ${res.isLeaderNow ? "eos-node-1" : "NONE"}`);
+    console.log(`  Term Monotonic  : Term #${node1.getCurrentTerm()}\n`);
+
+    const { entry, appendArgs } = node1.proposeCommand({ action: "SYNC_WAL_FRAME", frame: "00000042" });
+    const appendReply = node2.handleAppendEntries(appendArgs);
+    const commit = node1.recordAppendEntriesAck("eos-node-2", appendReply);
+
+    console.log(`  Proposed Entry  : Index #${entry.index} (Digest: sha256:${entry.digest.slice(0, 16)}...)`);
+    console.log(`  Quorum Commit   : Index #${commit.newCommitIndex} (Advanced: ${commit.commitAdvanced})\n`);
+
+    node1.recordStateInLedger(path.join(root, ".eos", "sovereign_ledger.sqlite"));
+    console.log(`✔ Estado de quórum Raft registrado en SQLite WAL Ledger.\n`);
+    break;
+  }
+
+  case "fuzzer":
+  case "fuzz": {
+    printBanner();
+    const { EosGeneticCoverageFuzzer } = await import("../src/core/eosGeneticCoverageFuzzer.ts");
+    const cycles = Number.parseInt(args[1] || "50", 10);
+    console.log(`[EOS CONTINUOUS GENETIC COVERAGE-GUIDED FUZZER — SPEC-072 v68.0.0]\n`);
+    console.log(`Ejecutando campaña de mutaciones genéticas (${cycles} ciclos)...`);
+
+    const fuzzer = new EosGeneticCoverageFuzzer([{ count: 1, text: "alpha" }]);
+    const target = (input) => {
+      if (typeof input === "number" && input === -1) {
+        throw new Error("Simulated edge-case mutation crash");
+      }
+      return { status: "OK", hash: String(input).length };
+    };
+
+    const report = fuzzer.fuzzTarget(target, cycles);
+    console.log(`  Total Cycles    : ${report.totalCycles}`);
+    console.log(`  Initial Corpus  : ${report.initialCorpusSize}`);
+    console.log(`  Final Corpus    : ${report.finalCorpusSize} seeds (+${report.finalCorpusSize - report.initialCorpusSize} novel states)`);
+    console.log(`  Unique States   : ${report.uniqueStatesDiscovered}`);
+    console.log(`  Crashes Found   : ${report.crashesCount}`);
+    console.log(`  Duration        : ${report.durationMs} ms`);
+    console.log(`  Receipt SHA-256 : sha256:${report.sha256Receipt}\n`);
+
+    fuzzer.recordCampaignInLedger(report, path.join(root, ".eos", "sovereign_ledger.sqlite"));
+    console.log(`✔ Campaña de fuzzing atestada en SQLite WAL Ledger.\n`);
+    break;
+  }
+
+  case "seccomp":
+  case "sandbox:profile": {
+    printBanner();
+    const { EosKernelSyscallSandbox } = await import("../src/core/eosKernelSyscallSandbox.ts");
+    console.log("[EOS KERNEL-GRADE SECCOMP & SYSCALL SANDBOX GENERATOR — SPEC-073 v68.0.0]\n");
+
+    const profile = EosKernelSyscallSandbox.generateSandboxProfile("eos-agent-production-enclave");
+    const isPure = EosKernelSyscallSandbox.validateWhitelistPurity(profile);
+
+    console.log(`  Profile Name    : ${profile.profileName}`);
+    console.log(`  Default Action  : ${profile.linuxSeccomp.defaultAction} (Fail-Closed)`);
+    console.log(`  Architectures   : ${profile.linuxSeccomp.architectures.join(", ")}`);
+    console.log(`  Whitelisted Sys : ${profile.linuxSeccomp.syscalls[0].names.length} safe calls`);
+    console.log(`  Whitelist Pure  : ${isPure ? "YES (ZERO DANGEROUS SYSCALLS)" : "COMPROMISED"}`);
+    console.log(`  Windows Commit  : ${profile.windowsJobObject.commitLimitBytes / (1024 * 1024)} MiB`);
+    console.log(`  Profile SHA-256 : sha256:${profile.profileSha256}\n`);
+
+    EosKernelSyscallSandbox.recordProfileInLedger(profile, path.join(root, ".eos", "sovereign_ledger.sqlite"));
+    console.log(`✔ Perfil de contención de kernel registrado en SQLite WAL Ledger.\n`);
+    break;
+  }
+
   case "unitotal:audit": {
     printBanner();
     const { EosSamaelUnitotalNexus } = await import("../src/core/eosSamaelUnitotalNexus.ts");
@@ -4037,13 +4149,13 @@ switch (command) {
     if (!showAll) {
       console.log(`
 ======================================================================
- EOS SYSTEM — MANUAL RÁPIDO Y ERGONOMÍA DE DESARROLLO (v67.0.0)
+ EOS SYSTEM — MANUAL RÁPIDO Y ERGONOMÍA DE DESARROLLO (v68.0.0)
 ======================================================================
 
 🎯 DESARROLLO RÁPIDO & PRUEBAS (DAILY WORKFLOW):
   eos pts                    Corre únicamente las pruebas impactadas por el diff (~350ms)
   eos search <termino>       Búsqueda instantánea FTS5 en specs, plans y ADRs (~100ms)
-  eos test                   Ejecuta las 82 suites de prueba automatizadas (node:test)
+  eos test                   Ejecuta las 86 suites de prueba automatizadas (node:test)
   eos turbo                  Verificación en memoria con telemetría en microsegundos (<350ms)
   eos coverage               Reporte de cobertura nativa V8 sin dependencias externas
   eos quickstart             Sanity check de 6 subsistemas en <200ms
@@ -4053,10 +4165,14 @@ switch (command) {
   eos slsa [commit]          Emite declaración de procedencia in-toto SLSA Nivel 4
   eos release:seal [commit]  Sello hermético de release con SLSA v1.0 y digests (Meta/Piper)
   eos intercept [tool]       Guardián constitucional pre/post-ejecución anti-fugas (Anthropic)
+  eos seccomp                Generador de perfiles de kernel Seccomp-BPF y jaulas (AWS Nitro)
   eos smt                    Demostrador matemático formal de seguridad ABAC (AWS DPLL/SAT)
   eos verify                 Ejecuta las 7 aduanas de seguridad SecDevOps (fail-closed)
 
 ⚡ RESILIENCIA BIG TECH & AUTO-REPARACIÓN:
+  eos mmr                    Merkle Mountain Range con pruebas de inclusión O(log N) (Stripe)
+  eos raft                   Consenso distribuido Raft y sincronización WAL multi-nodo (Spanner)
+  eos fuzzer [ciclos]        Fuzzing genético guiado por cobertura continuo 24/7 (OSS-Fuzz)
   eos aca [metrica]          Análisis canario estadístico Mann-Whitney U (Netflix Kayenta)
   eos sapfix                 Bucle FDIR de auto-reparación AST y generación de PR (Meta SapFix)
   eos cas                    Estadísticas de Content-Addressable Storage (Google Bazel)
