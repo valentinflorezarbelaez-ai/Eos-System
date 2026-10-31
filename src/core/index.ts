@@ -1,13 +1,13 @@
 /**
  * EOS SYSTEM — CORE LAYER-0 UNIFIED EXPORT BARREL
- * Governed by SPEC-085, CHANGE-063, ADR-087 (v71.0.0)
+ * Governed by SPEC-085..SPEC-089, CHANGE-064, ADR-088 (v72.0.0)
  *
  * Exposes the Supreme Theurgic Trilogy:
  * - EosAstral: 5D Molecular Projection & Silver Cord HMAC-SHA256
  * - EosElohim: Runa NOT & Karmic Circuit Breaker SHA-384
  * - EosAin / EosAbsoluto: The Two Octavic Shocks & Radical Void Zero Entropy
  *
- * Alongside foundational Layer-0 sovereign engines and Zenith Hyperscaler modules.
+ * Alongside foundational Layer-0 sovereign engines, Zenith and Frontier Hyperscaler modules.
  * Invariant: Pure Layer-0 TypeScript (dependencies: {}).
  */
 
@@ -51,3 +51,9 @@ export * from "./eosLsmTreeStorageEngine.ts";
 export * from "./eosThresholdCryptography.ts";
 export * from "./eosMicroVmEnclaveLauncher.ts";
 export * from "./eosPeerNetworkMesh.ts";
+
+// Planetary Frontier Hyperscaler Modules (v72.0.0)
+export * from "./eosFirecrackerDaemonSupervisor.ts";
+export * from "./eosEventLoopSaturationGovernor.ts";
+export * from "./eosTlsPeerTransport.ts";
+export * from "./eosMemoryZeroizer.ts";

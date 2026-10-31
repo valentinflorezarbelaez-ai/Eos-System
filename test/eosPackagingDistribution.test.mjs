@@ -11,12 +11,18 @@ const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
 
 test("BDD-245: Integridad del punto de entrada unificado src/index.ts (SPEC-085)", () => {
-  // 1. Verify Zenith Hyperscaler core classes exist in root export
+  // 1. Verify Zenith and Frontier Hyperscaler core classes exist in root export
   assert.equal(typeof EosRoot.EosTrueTimeEngine, "function");
   assert.equal(typeof EosRoot.EosLsmTreeStorageEngine, "function");
   assert.equal(typeof EosRoot.EosThresholdCryptography, "function");
   assert.equal(typeof EosRoot.EosMicroVmEnclaveLauncher, "function");
   assert.equal(typeof EosRoot.EosPeerNode, "function");
+
+  // Frontier Hyperscaler Modules (v72.0.0)
+  assert.equal(typeof EosRoot.EosFirecrackerDaemonSupervisor, "function");
+  assert.equal(typeof EosRoot.EosEventLoopSaturationGovernor, "function");
+  assert.equal(typeof EosRoot.EosTlsPeerTransport, "function");
+  assert.equal(typeof EosRoot.secureZeroizeBuffer, "function");
 
   // 2. Verify MCP Server and Catalog tools
   assert.equal(typeof EosRoot.EosMcpServer, "function");
@@ -34,7 +40,7 @@ test("BDD-246: Verificación de empaquetado OCI y manifiesto de distribución (S
   const pkgPath = path.join(projectRoot, "package.json");
   const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
 
-  assert.equal(pkg.version, "71.0.0");
+  assert.equal(pkg.version, "72.0.0");
   assert.equal(pkg.type, "module");
   assert.equal(pkg.main, "./src/index.ts");
   assert.equal(pkg.types, "./src/index.ts");
