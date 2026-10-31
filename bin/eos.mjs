@@ -3322,6 +3322,43 @@ switch (command) {
     break;
   }
 
+  case "pr:check": {
+    printBanner();
+    const { EosGithubPrGate } = await import("../src/core/eosGithubPrGate.ts");
+    const evalResult = EosGithubPrGate.evaluatePr({ projectRoot: root });
+
+    console.log("[EOS NATIVE GITHUB ACTIONS PR GATE & ATTESTATION BOT]\n");
+    console.log(`  Repository Scope     : ${evalResult.context.owner}/${evalResult.context.repo}`);
+    console.log(`  Commit SHA           : ${evalResult.context.commitSha.slice(0, 10)}`);
+    console.log(`  Target Branches      : ${evalResult.context.baseRef} ⟵ ${evalResult.context.headRef}`);
+    console.log(`  Gate Conclusion      : [${evalResult.conclusion.toUpperCase()}]`);
+    console.log(`  7-Stage Pipeline     : ${evalResult.allStagesPassed ? "7/7 PASSED" : "FAILED"}`);
+    console.log(`  Contract Evolution   : ${evalResult.contractEvolutionVerdict}`);
+    console.log(`  Receipt SHA-256      : sha256:${evalResult.sha256Receipt}\n`);
+
+    EosGithubPrGate.recordReceiptInLedger(evalResult, root);
+    console.log(`✔ Atestación de PR Gate registrada en SQLite WAL Ledger.`);
+
+    if (process.env.GITHUB_TOKEN && evalResult.context.commitSha !== "0000000000000000000000000000000000000000") {
+      const payload = EosGithubPrGate.formatCheckRunPayload(evalResult);
+      console.log(`[INFO] Publicando Check-Run a GitHub REST API...`);
+      const pub = await EosGithubPrGate.publishCheckRun(process.env.GITHUB_TOKEN, payload, evalResult.context);
+      if (pub.success) {
+        console.log(`✔ Check-Run publicado exitosamente en GitHub.`);
+      } else {
+        console.log(`[WARN] No se pudo publicar Check-Run: ${pub.error}`);
+      }
+    }
+
+    if (evalResult.conclusion === "failure") {
+      console.error(`\n[FAIL-CLOSED] PR Gate detectó violaciones de calidad o de contrato. Integración bloqueada.`);
+      process.exit(1);
+    } else {
+      console.log(`\n[PASS] PR Gate aprobado con éxito (Exit Code 0).`);
+    }
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3495,6 +3532,7 @@ Uso Universal:
   eos contract [diff|lint]   Gobernanza de evolución de contratos y detector de breaking changes Nubank/Buf
   eos heal:surgical [diagnose|patch|verify] Núcleo FDIR de auto-sanación quirúrgica en bucle cerrado (Meta SapFix)
   eos tlc [check|status|install] Verificador formal TLC (Leslie Lamport) y exploración exhaustiva de estados
+  eos pr:check               Compuerta nativa de GitHub Actions y bot de atestación de Check-Runs
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

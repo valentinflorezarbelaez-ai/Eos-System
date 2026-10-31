@@ -272,3 +272,17 @@
   - `openspec/specs/SPEC-052-TLC-FORMAL-MODEL-CHECKER.md`
   - `docs/formal/TlcFormalModelChecker.tla`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-30-GITHUB-ACTIONS-PR-GATE-053
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-053 (v59.0.0)
+* **Owner Approval**: `OWNER_APPROVAL` GRANTED (Explicit owner directive on 2026-10-30)
+* **Scope**: Native GitHub Actions PR Gate & Check-Runs Attestation Bot (`EosGithubPrGate`), `.github/workflows/eos-gate.yml`, Fail-Closed Pre-Merge Breaking-Change Guard, Native Node HTTPS Checks REST API Client, and unified `eos_github_gate` core MCP tool & CLI surfaces.
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-046-GITHUB-ACTIONS-PR-GATE.md`
+  - `docs/plans/PLAN-046-GITHUB-ACTIONS-PR-GATE.md`
+  - `docs/tasks/TASKS-046-GITHUB-ACTIONS-PR-GATE.md`
+  - `openspec/changes/CHANGE-046-GITHUB-ACTIONS-PR-GATE.md`
+  - `openspec/specs/SPEC-053-GITHUB-ACTIONS-PR-GATE.md`
+  - `docs/formal/GithubActionsPrGate.tla`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)

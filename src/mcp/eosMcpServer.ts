@@ -433,6 +433,12 @@ import {
 } from "../core/eosTlcFormalChecker.ts";
 
 import {
+  EosGithubPrGate,
+  type GithubPrContext,
+  type PrEvaluationResult
+} from "../core/eosGithubPrGate.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2255,6 +2261,19 @@ export class EosMcpServer {
                       specification: { type: "string", description: "Target TLA+ specification name or path (e.g. AgentTopologyMesh.tla)" },
                       steps: { type: "number", description: "Simulation steps for bounded fallback (default: 200)" },
                       recordToLedger: { type: "boolean", description: "Whether to record verification receipt in SQLite WAL ledger" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_github_gate",
+                  description: "Native GitHub Actions PR Gate (SPEC-053, v59.0.0): Evaluates 7 SecDevOps quality dimensions, runs contract compatibility checks, formats GitHub Check-Run payload and Markdown attestations.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["evaluate", "context", "format_payload"], description: "Gate operation action" },
+                      simulateFailureStage: { type: "number", description: "Simulate failure in specific stage (1-7) for testing" },
+                      simulateContractBreach: { type: "boolean", description: "Simulate contract breaking changes for testing" },
+                      recordToLedger: { type: "boolean", description: "Whether to record PR evaluation receipt in SQLite WAL ledger" }
                     }
                   }
                 }
@@ -4298,6 +4317,29 @@ export class EosMcpServer {
         }
 
         return result;
+      }
+
+      case "eos_github_gate": {
+        const action = String(args?.action || "evaluate").trim().toLowerCase();
+        if (action === "context") {
+          return EosGithubPrGate.extractContext();
+        }
+
+        const evalResult = EosGithubPrGate.evaluatePr({
+          projectRoot: this.projectRoot,
+          simulateFailureStage: typeof args?.simulateFailureStage === "number" ? Math.floor(args.simulateFailureStage) : undefined,
+          simulateContractBreach: args?.simulateContractBreach === true
+        });
+
+        if (action === "format_payload") {
+          return EosGithubPrGate.formatCheckRunPayload(evalResult);
+        }
+
+        if (args?.recordToLedger === true) {
+          EosGithubPrGate.recordReceiptInLedger(evalResult, this.projectRoot);
+        }
+
+        return evalResult;
       }
 
       default:

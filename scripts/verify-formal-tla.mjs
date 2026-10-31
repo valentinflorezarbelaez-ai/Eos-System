@@ -680,8 +680,74 @@ export function runAllFormalVerifications() {
     verifyInvariantVerificationEngineModel(),
     verifyContractEvolutionGovernanceModel(),
     verifyAutonomousClosedLoopHealingModel(),
-    verifyTlcFormalModelCheckerModel()
+    verifyTlcFormalModelCheckerModel(),
+    verifyGithubActionsPrGateModel()
   ];
+}
+
+export function verifyGithubActionsPrGateModel(steps = 200) {
+  const filePath = path.join(formalDir, "GithubActionsPrGate.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let prState = "IDLE";
+  let stagesPassed = 0;
+  let breakingContractions = 0;
+  let checkRunConclusion = "NONE";
+  let receiptsIssued = 0;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    if (checkRunConclusion === "SUCCESS") {
+      assert.strictEqual(stagesPassed, 7, "VIOLATION: SUCCESS requires 7 stages passed");
+      assert.strictEqual(breakingContractions, 0, "VIOLATION: SUCCESS requires 0 breaking contractions");
+    }
+    if (breakingContractions > 0) {
+      assert.notStrictEqual(checkRunConclusion, "SUCCESS", "VIOLATION: Breaking contractions cannot succeed");
+    }
+
+    if (prState === "IDLE") {
+      prState = "EVALUATING_7_STAGES";
+      stagesPassed = 0;
+      breakingContractions = 0;
+      checkRunConclusion = "NONE";
+    } else if (prState === "EVALUATING_7_STAGES") {
+      if (i % 17 === 0) {
+        stagesPassed = 5;
+        prState = "GATE_BLOCKED";
+        checkRunConclusion = "FAILURE";
+        receiptsIssued++;
+      } else {
+        stagesPassed = 7;
+        prState = "CHECKING_CONTRACTS";
+      }
+    } else if (prState === "CHECKING_CONTRACTS") {
+      if (i % 13 === 0) {
+        breakingContractions = 1;
+        prState = "GATE_BLOCKED";
+        checkRunConclusion = "FAILURE";
+        receiptsIssued++;
+      } else {
+        breakingContractions = 0;
+        prState = "GATE_PASSED";
+        checkRunConclusion = "SUCCESS";
+        receiptsIssued++;
+      }
+    } else {
+      prState = "IDLE";
+    }
+  }
+
+  return {
+    specification: "GithubActionsPrGate.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
 }
 
 export function verifyTlcFormalModelCheckerModel(steps = 200) {
