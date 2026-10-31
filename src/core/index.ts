@@ -64,3 +64,8 @@ export * from "./eosEbpfKernelProbeEngine.ts";
 export * from "./eosWanKademliaMesh.ts";
 export * from "./eosUnboundedFormalProver.ts";
 export * from "./eosKubernetesFleetOperator.ts";
+
+// Planetary Scale & Enterprise Standard Maturation Modules (v75.0.0)
+export * from "./eosSingleExecutablePackager.ts";
+export * from "./eosOtlpTelemetryEngine.ts";
+export * from "./eosFleetDogfoodingEngine.ts";

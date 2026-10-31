@@ -55,8 +55,8 @@ const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
 
 reportCheck(
   "Package Version",
-  pkg.version === "74.0.0",
-  `Expected v74.0.0, found v${pkg.version}`
+  pkg.version === "75.0.0",
+  `Expected v75.0.0, found v${pkg.version}`
 );
 
 reportCheck(

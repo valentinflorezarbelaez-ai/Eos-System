@@ -1,6 +1,6 @@
 {
   "name": "eos-system-landing",
-  "version": "74.0.0",
+  "version": "75.0.0",
   "description": "Local software engineering toolkit with a Node.js CLI, MCP server, repository analysis, templates, and bounded demonstrations.",
   "type": "module",
   "main": "./src/index.ts",
@@ -14,6 +14,8 @@
   },
   "scripts": {
     "quickstart": "node scripts/quickstart.mjs",
+    "sea:build": "node scripts/build-sea-binary.mjs",
+    "fleet:audit": "node scripts/eos-fleet-dogfood-audit.mjs",
     "attest": "node scripts/eos-github-pr-attestation.mjs",
     "guide": "node bin/eos.mjs guide",
     "truetime": "node bin/eos.mjs truetime",

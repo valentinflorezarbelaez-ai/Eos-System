@@ -31,6 +31,11 @@ test("BDD-245: Integridad del punto de entrada unificado src/index.ts (SPEC-085)
   assert.equal(typeof EosRoot.EosUnboundedFormalProver, "function");
   assert.equal(typeof EosRoot.EosKubernetesFleetOperator, "function");
 
+  // Planetary Scale & Enterprise Standard Maturation Modules (v75.0.0)
+  assert.equal(typeof EosRoot.EosSingleExecutablePackager, "function");
+  assert.equal(typeof EosRoot.EosOtlpTelemetryEngine, "function");
+  assert.equal(typeof EosRoot.EosFleetDogfoodingEngine, "function");
+
   // 2. Verify MCP Server and Catalog tools
   assert.equal(typeof EosRoot.EosMcpServer, "function");
   assert.ok(EosRoot.CORE_TIER0_TOOL_NAMES instanceof Set);
@@ -47,7 +52,7 @@ test("BDD-246: Verificación de empaquetado OCI y manifiesto de distribución (S
   const pkgPath = path.join(projectRoot, "package.json");
   const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
 
-  assert.equal(pkg.version, "74.0.0");
+  assert.equal(pkg.version, "75.0.0");
   assert.equal(pkg.type, "module");
   assert.equal(pkg.main, "./src/index.ts");
   assert.equal(pkg.types, "./src/index.ts");
