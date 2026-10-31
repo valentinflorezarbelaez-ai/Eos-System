@@ -3915,13 +3915,61 @@ switch (command) {
     break;
   }
 
+  case "guide":
+  case "cheat-sheet": {
+    printBanner();
+    const glossaryPath = path.join(root, "docs", "ARCHITECTURE_GLOSSARY.md");
+    if (fs.existsSync(glossaryPath)) {
+      console.log(fs.readFileSync(glossaryPath, "utf8"));
+    } else {
+      console.log("No se encontró docs/ARCHITECTURE_GLOSSARY.md.");
+    }
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
   default: {
     printBanner();
-    console.log(`
-Uso Universal:
+    const showAll = args.includes("--all");
+    if (!showAll) {
+      console.log(`
+======================================================================
+ EOS SYSTEM — MANUAL RÁPIDO Y ERGONOMÍA DE DESARROLLO (v66.0.0)
+======================================================================
+
+🎯 DESARROLLO RÁPIDO & PRUEBAS (DAILY WORKFLOW):
+  eos pts                    Corre únicamente las pruebas impactadas por el diff (~350ms)
+  eos search <termino>       Búsqueda instantánea FTS5 en specs, plans y ADRs (~100ms)
+  eos test                   Ejecuta las 77 suites de prueba automatizadas (node:test)
+  eos turbo                  Verificación en memoria con telemetría en microsegundos (<350ms)
+  eos coverage               Reporte de cobertura nativa V8 sin dependencias externas
+
+🛡️ SEGURIDAD, CADENA DE SUMINISTRO & FORMAL METHODS:
+  eos sbom                   Genera inventario CycloneDX v1.5 con atestación SHA-256
+  eos slsa [commit]          Emite declaración de procedencia in-toto SLSA Nivel 4
+  eos smt                    Demostrador matemático formal de seguridad ABAC (AWS DPLL/SAT)
+  eos verify                 Ejecuta las 7 aduanas de seguridad SecDevOps (fail-closed)
+
+⚡ RESILIENCIA BIG TECH & AUTO-REPARACIÓN:
+  eos sapfix                 Bucle FDIR de auto-reparación AST y generación de PR (Meta SapFix)
+  eos cas                    Estadísticas de Content-Addressable Storage (Google Bazel)
+  eos chaos:live [url]       Inyección de caos en producción con circuit breaker (Netflix)
+  eos swarm                  Consenso BFT (3f+1) con veto de seguridad y slashing (DeepMind)
+
+📊 OBSERVABILIDAD & ESTADO:
+  eos dashboard [start]      Inicia el panel visual de telemetría en tiempo real (localhost:4321)
+  eos ledger recent          Consulta los últimos eventos y recibos criptográficos SHA-256
+  eos health                 Muestra el estado de salud SRE / CNCF del sistema
+
+📖 AYUDA Y GLOSARIO:
+  eos guide                  Muestra el glosario de arquitectura y equivalencias de la industria
+  eos help --all             Muestra la lista exhaustiva de todos los subcomandos avanzados
+`);
+    } else {
+      console.log(`
+Uso Universal Exhaustivo:
   eos turbo                  Verificación ultrarrápida en memoria con telemetría en microsegundos (<350ms)
   eos verify                 Ejecuta las 7 aduanas de seguridad SecDevOps (fail-closed)
   eos audit                  Audita en paralelo todos los repositorios de la flota
@@ -3938,13 +3986,11 @@ Uso Universal:
   eos heal [archivo]         Ejecuta el bucle de auto-sanación FDIR (Meta SapFix) con recibo sellado
   eos worktree [list|add|rm] Gestiona Git Worktrees aislados para agentes estilo Xirp
   eos sandbox doctor        Verifica que Docker local y la imagen fijada estén disponibles
-  eos sandbox run <worktree> [--apply] [--timeout SEGUNDOS] -- <cmd> [args...]
-                              Ejecuta sin red en copia filtrada; escribir requiere --apply
   eos eval <archivo>         Ejecuta la evaluación cognitiva de 5 dimensiones (Google/Anthropic)
   eos spec [check|list]      Audita el sistema Living OpenSpec y previene deriva de Vibe Coding
   eos titan [xirp|spacex|..] Ejecuta los benchmarks de los Titanes (Spotify, SpaceX, NVIDIA, Google, xAI)
   eos reconcile              Reconcilia el estado declarativo estilo Google Borg sin deriva (0.00%)
-  eos spotify [audit|standup|postmortem|experiment|squad|scaffold] Herramientas universales de ingeniería y cultura Spotify
+  eos spotify                Herramientas universales de ingeniería y cultura Spotify
   eos go [benchmark|bandit]  Acelerador nativo en Go (goroutines, streaming, BaRT Thompson sampling)
   eos honk [directiva]       Bucle autónomo de codificación y self-healing estilo Spotify Honk
   eos flow [acción]          Flujo de proyecto con worktree, validación aislada y aprobación por hash
@@ -3957,77 +4003,24 @@ Uso Universal:
   eos features [usuario]     Centroide de gustos acústicos 8D en tiempo real con decaimiento EWMA
   eos fingerprint [ruta]     Extrae la huella de lenguaje, stack, herramientas y escala de cualquier repo
   eos adapt [ruta] [--scaffold] Diagnostica madurez (0-100) y eleva cualquier repo al Golden Path
-  eos edge [ciudad|bench|topology] Arbitro Anycast global, cálculo Haversine y Hedged Requests
-  eos octave [meta]          Ejecuta la Ley de las Octavas Samaeliana con los 2 Shocks Conscientes
-  eos warp                   Ejecuta el planificador CUDA SIMT 32-hilos y Tensor MMA (0 B/op)
-  eos apex                   Ejecuta la síntesis de cúspide Samael + IBM Sysplex + NVIDIA
-  eos disruptor [eventos]    Mide un ring buffer local de un hilo y un escaneo JS; no mide heap
-  eos soul [directiva]       Evalúa directiva frente al Plan Maestro de Valentín Flórez Arbeláez
-  eos introspect             Auto-estudio recursivo del código y síntesis de RFCs de auto-evolución
-  eos shield                 Auditoría de escudo militar, invariantes seL4 y purga de entropía cero
+  eos edge                   Arbitro Anycast global, cálculo Haversine y Hedged Requests
   eos datalog [modulo]       Análisis deductivo de radio de impacto en punto fijo (Google Piper / Mangle)
   eos mutate [archivo]       Sabotaje de código automatizado en AST (Testing the Tests)
   eos sim [semilla]          Hipervisor de simulación determinista de viaje en el tiempo (reproducible bit a bit)
   eos schedule               Planificador cooperativo a 120Hz (<8.33ms) y aritmética branchless constante
   eos pts                    Ejecuta selección predictiva inteligente de pruebas (PTS) basada en Datalog
-  eos simulate:models        Extrae nombres TLA+ y ejecuta simulaciones JS acotadas; no corre TLC
-  eos jepsen                 Inyecta particiones de red y pérdida de paquetes estilo Jepsen
-  eos vault                  Audita la bóveda de memoria pinned y ejecuta purga de cero entropía
-  eos temple [int] [emo] [mot] Audita los Tres Cerebros y verifica el veto circadiano del templo
-  eos sol [s] [o] [l]        Evalúa la Clave de SOL (Sujeto, Objeto, Lugar) y auto-recuerdo
-  eos diary [suceso] [yo]    Registra impresiones psicológicas y fórmula de muerte mística
-  eos budget                 Muestra el estado del escudo FinOps de $15 USD y las Cajitas sagradas
-  eos mind [obs] [cat] [lvl] Introspección en los 49 niveles del subconsciente y disolución Kundalini
-  eos mountains              Evalúa la alineación diaria con las Tres Montañas y el Codex de Valentín
-  eos autotune [carga]       Micro-profiler y auto-tuning dinámico de ring buffers y heap en Capa 0
-  eos nsa:encrypt [texto]    Cifrado militar CNSA 2.0 AES-256-GCM con AAD binding de compartimento
-  eos nsa:audit              Audita la frontera Red/Black y el control de acceso Bell-LaPadula
-  eos nsa:zeroize            Demostración de purga de memoria física DoD 5220.22-M (4 pasadas)
-  eos consensus              Consenso planetario Raft/Paxos con quórum estricto y replicación de log
-  eos truetime [epsilon]     Reloj acotado Google Spanner TrueTime y espera de commit linearizable
-  eos concurrency            Limitador adaptativo Netflix Vegas (TCP BBR) y descarte de carga
-  eos hft [accion]           Despacho Citadel HFT Resident Daemon IPC a sub-milisegundo (<200µs)
-  eos zerocopy [archivo]     Escáner de tokens SpaceX / ASML con 0 B/op heap allocation
-  eos chaos:run [iteraciones] Batería de caos y evaluación de resiliencia Netflix con Circuit Breaker
-  eos mcp [--sse|status]     Servidor MCP bi-direccional en vivo para Cursor y Google Antigravity
-  eos vector [search|stats]  Razonamiento vectorial HNSW Palantir/Apple y búsqueda k-NN semántica
-  eos risk [iter|deadline]   Simulación estocástica Monte Carlo BlackRock Aladdin con percentiles P10-P99
-  eos chain [verify|status]  Ledger criptográfico monotónico SpaceX / NSA con encadenamiento SHA-256
-  eos loop [run|stages]      Ejecuta el ciclo de 21 pasos de ingeniería autónoma soberana
-  eos ontology [status|trans] Grafo ontológico bi-temporal sub-microsegundo (Palantir Cyclotron)
-  eos quantum:seal [payload] Sello reticular post-cuántico NIST FIPS 203 ML-KEM-768
-  eos refactor [audit|dbc]   Auditoría de deuda técnica, código muerto, DRY y dieta de código
-  eos dst [seed] [steps]     Pruebas de Simulación Determinista FoundationDB / Antithesis con inyección de fallos
-  eos synapse                Arbitraje Bayesiano multi-agente sin bloqueos ni colisiones
-  eos fleet:soundcheck       Audita la flota soberana con dimensiones Spotify Soundcheck y quórum
-  eos mcts:tune [iter]       Hiper-optimización MCTS con política UCT de exploración/explotación
-  eos canary:rollout [ver]   Despliegue canario progresivo (1% -> 5% -> 25% -> 100%) con circuit breaker
-  eos antigravity [doctor|install|direct] Conecta, audita y dirige Google Antigravity vía EOS MCP Control Plane
-  eos gentleman [doctor|update|autoupdate:install|autoupdate:status] Co-gobernanza y auto-actualización Evergreen del stack Gentleman AI
-  eos ledger [verify|record|search|recent] Ledger durable SQLite WAL + FTS5 + cadena SHA-256 (0 dependencias)
-  eos ast [directorio]       Analizador AST real del compilador TypeScript (pureza L0, strip-only Node 24, complejidad)
-  eos project [list|inspect|verify|onboard] Gobernador empresarial multi-proyecto, monorepos políglotas, contratos y Ley IV
-  eos mesh [compile|efficiency] Compilador de topología acíclica de subagentes y malla zero-copy DeepMind
-  eos invariant [explore|verify] Motor de verificación de invariantes y exploración exhaustiva de estados
-  eos contract [diff|lint]   Gobernanza de evolución de contratos y detector de breaking changes Nubank/Buf
-  eos heal:surgical [diagnose|patch|verify] Núcleo FDIR de auto-sanación quirúrgica en bucle cerrado (Meta SapFix)
-  eos tlc [check|status|install] Verificador formal TLC (Leslie Lamport) y exploración exhaustiva de estados
-  eos pr:check               Compuerta nativa de GitHub Actions y bot de atestación de Check-Runs
-  eos sandbox:vm [doctor|run] Aislamiento físico de hipervisor / MicroVM (Firecracker/gVisor/NodeVM)
-  eos dashboard [start|status] Panel visual de telemetría y topología en tiempo real (localhost:4321)
-  eos fleet:verify [target|all] Auditoría y bautismo de fuego en producción real (WCAG/CWV/TLS)
-  eos unitotal:audit         Auditoría unitotal gnóstica-samaeliana de las 10 Sephiroth y la flota
-  eos fuzz:hypervisor        Fuzzing de propiedades estocásticas, Delta Shrinkage y 49 Niveles
-  eos replay:ledger [height] Replay determinista time-travel de estados sobre el Ledger SQLite WAL
-  eos sync-stack             Sincronización hermética del stack Gentle-AI, Engram, GGA y MCP (80+ tools)
-  eos witness:interrogate    Interrogación metacognitiva del Testigo de la Conciencia (anti-alucinación)
-  eos hotpatch               Micro-parcheo atómico en memoria sin reinicio de proceso (Erlang/Ksplice)
-  eos help                   Muestra este manual de operaciones
-
-Integración con IDEs:
-  Cursor / Antigravity       Configurable vía .cursor/mcp.json y .cursor/rules/
-  VS Code / JetBrains        Ejecutable directamente desde cualquier terminal o tarea
+  eos sbom                   Genera inventario CycloneDX v1.5 con atestación SHA-256
+  eos slsa [commit]          Emite declaración de procedencia in-toto SLSA Nivel 4
+  eos cas                    Estadísticas de Content-Addressable Storage (Google Bazel)
+  eos smt                    Demostrador matemático formal de seguridad ABAC (AWS DPLL/SAT)
+  eos chaos:live [url]       Inyección de caos en producción con circuit breaker (Netflix)
+  eos swarm                  Consenso BFT (3f+1) con veto de seguridad y slashing (DeepMind)
+  eos search <query>         Búsqueda de texto completo SQLite FTS5 en specs, plans y ADRs
+  eos guide                  Muestra el glosario de arquitectura y equivalencias de la industria
+  eos dashboard [start]      Inicia el panel visual de telemetría en tiempo real (localhost:4321)
+  eos ledger recent          Consulta los últimos eventos y recibos criptográficos SHA-256
 `);
+    }
     break;
   }
 }

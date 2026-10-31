@@ -7,6 +7,8 @@
     "eos": "./bin/eos.mjs"
   },
   "scripts": {
+    "quickstart": "node scripts/quickstart.mjs",
+    "guide": "node bin/eos.mjs guide",
     "turbo": "node bin/eos.mjs turbo",
     "heal": "node bin/eos.mjs heal",
     "worktree": "node bin/eos.mjs worktree",

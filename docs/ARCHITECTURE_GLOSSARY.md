@@ -1,0 +1,43 @@
+# 📖 EOS System — Architecture & Industry-Standard Glossary
+
+> **Purpose**: This document maps internal EOS System architectural components, modules, and terminology to recognized industry standards (Cloud Native, SRE, Clean Architecture, Distributed Systems, and Formal Methods).
+
+---
+
+## 🏛️ Core Engines & Module Translation Matrix
+
+| EOS Component | File Location | Industry-Standard Pattern | Real-World Equivalent / Reference |
+|---|---|---|---|
+| **`EosAstral`** | `src/core/EosAstral.ts` | **Ephemeral Workspace & Sandbox Isolation** | Git Worktrees / Firecracker MicroVM Sandboxes |
+| **`EosElohim`** | `src/core/EosElohim.ts` | **Deadlock Circuit Breaker & Resource Governor** | Envoy / Netflix Hystrix Circuit Breaker |
+| **`EosAin`** | `src/core/EosAin.ts` | **State Purge & Zero-Entropy Reconciler** | Deterministic Garbage Collection & Cache Eviction |
+| **`EosSapFixAutoshipper`** | `src/core/eosSapFixAutoshipper.ts` | **Automated AST Patch Synthesis & PR Engine** | Meta SapFix & GitHub Copilot Autofix |
+| **`EosSlsaProvenanceSbom`** | `src/core/eosSlsaProvenanceSbom.ts` | **Software Supply Chain Security & SBOM Generator** | OpenSSF SLSA Level 4 & CycloneDX v1.5 |
+| **`EosContentAddressableCache`** | `src/core/eosContentAddressableCache.ts` | **Content-Addressable Storage (CAS) & Action Cache** | Google Bazel CAS & Remote Build Execution (RBE) |
+| **`EosSmtAutomatedReasoningProver`** | `src/core/eosSmtAutomatedReasoningProver.ts` | **Formal Automated Reasoning & SAT/SMT Prover** | AWS Zelkova & Z3 Theorem Prover |
+| **`EosProductionChaosMonkey`** | `src/core/eosProductionChaosMonkey.ts` | **Production Resilience & Chaos Injector** | Netflix Simian Army (Chaos Monkey) |
+| **`EosBftAgentSwarmSlashing`** | `src/core/eosBftAgentSwarmSlashing.ts` | **Byzantine Fault Tolerant Consensus & Slashing** | Practical Byzantine Fault Tolerance (PBFT) & Tendermint |
+| **`EosDurableSqliteLedger`** | `src/core/eosDurableSqliteLedger.ts` | **Append-Only WAL Ledger with SHA-256 Chaining** | Datomic Bitemporal DB / Event Sourcing Log |
+| **`EosDocumentationSearch`** | `src/core/eosDocumentationSearch.ts` | **Full-Text Architecture Search Engine** | SQLite FTS5 Unicode Tokenizer / Algolia-style search |
+| **`EosBenchmarkTracker`** | `src/core/eosBenchmarkTracker.ts` | **Continuous Performance & Latency Regression Sentinel** | Google PerfFuzz / Meta Continuous Profiling |
+| **`EosMcpSchemaValidator`** | `src/core/eosMcpSchemaValidator.ts` | **Strict JSON Schema Contract Validator** | Contract-First API Governance (Buf / OpenAPI Validator) |
+| **`EosDisruptorRingEngine`** | `src/core/eosDisruptorRingEngine.ts` | **Lock-Free Ring Buffer & Zero-Allocation Dispatcher** | LMAX Disruptor High-Frequency Trading Pattern |
+| **`EosConsciousWitness`** | `src/core/eosConsciousWitness.ts` | **Metacognitive Pre-Tool Verification Guard** | Pre-Execution Guardrail & Hallucination Filter |
+| **`EosHotPatchEngine`** | `src/core/eosHotPatchEngine.ts` | **In-Memory Hot Module Replacement & Atomic Swap** | Erlang/OTP Hot Code Swapping |
+
+---
+
+## 🛠️ CLI Quick Reference
+
+| Standard Workflow Task | Command | Typical Execution Time |
+|---|---|---|
+| **Predictive Test Selection (Impacted Suites)** | `npm run pts` | **~350 ms** |
+| **Instant Architecture Documentation Search** | `npm run search <query>` | **~100 ms** |
+| **Full Security Bill of Materials (CycloneDX)** | `npm run sbom` | **~150 ms** |
+| **Software Supply Chain Provenance (SLSA)** | `npm run slsa` | **~150 ms** |
+| **Content-Addressable Storage Stats** | `npm run cas` | **~50 ms** |
+| **SMT Mathematical ABAC Policy Proof** | `npm run smt` | **< 1 ms** |
+| **Byzantine Swarm Consensus Round** | `npm run swarm` | **< 5 ms** |
+| **Native V8 Code Coverage Report** | `npm run coverage` | **~400 ms** |
+| **Formal MCP Contract Validation** | `npm run mcp:verify` | **~60 ms** |
+| **Full 7-Stage Strict CI/CD Pipeline** | `npm run verify:strict` | **~55–70 s** |
