@@ -3634,6 +3634,37 @@ switch (command) {
     break;
   }
 
+  case "search": {
+    printBanner();
+    const { EosDocumentationSearch } = await import("../src/core/eosDocumentationSearch.ts");
+    const query = args.slice(1).join(" ") || "SPEC";
+    console.log(`[EOS ARCHITECTURE & SPECIFICATION FULL-TEXT SEARCH (FTS5)]\n`);
+    console.log(`Buscando: "${query}"...\n`);
+
+    const searchEngine = new EosDocumentationSearch(root);
+    try {
+      const indexed = searchEngine.indexDocumentation();
+      if (indexed > 0) {
+        console.log(`[INDEX] ${indexed} documentos nuevos o actualizados indexados en SQLite FTS5.`);
+      }
+
+      const results = searchEngine.search(query, 10);
+      if (results.length === 0) {
+        console.log(`No se encontraron coincidencias para: "${query}".`);
+      } else {
+        console.log(`Encontrados ${results.length} resultados:\n`);
+        for (const res of results) {
+          console.log(`  • [${res.docType}] ${res.title}`);
+          console.log(`    Ruta: ${res.path}`);
+          console.log(`    Fragmento: ${res.snippet}\n`);
+        }
+      }
+    } finally {
+      searchEngine.close();
+    }
+    break;
+  }
+
   case "unitotal:audit": {
     printBanner();
     const { EosSamaelUnitotalNexus } = await import("../src/core/eosSamaelUnitotalNexus.ts");

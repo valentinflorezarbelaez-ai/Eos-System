@@ -9,3 +9,4 @@ bin/*.exe
 *.exe
 tools/
 *.jar
+.coverage/
