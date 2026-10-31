@@ -3359,6 +3359,45 @@ switch (command) {
     break;
   }
 
+  case "sandbox:vm": {
+    printBanner();
+    const subAction = (args[1] || "doctor").toLowerCase();
+    const { EosMicroVmSandbox } = await import("../src/core/eosMicroVmSandbox.ts");
+
+    if (subAction === "doctor" || subAction === "status") {
+      const diag = EosMicroVmSandbox.diagnoseHost();
+      console.log("[EOS HERMETIC MICROVM & HYPERVISOR SANDBOX — HOST DOCTOR]\n");
+      console.log(`  Virtualization Tier  : ${diag.tier}`);
+      console.log(`  Docker Daemon        : ${diag.dockerAvailable ? "ONLINE" : "OFFLINE"}`);
+      console.log(`  Google gVisor (runsc): ${diag.gVisorAvailable ? "ACTIVE" : "NOT_DETECTED"}`);
+      console.log(`  AWS Firecracker      : ${diag.firecrackerAvailable ? "ACTIVE" : "NOT_DETECTED"}`);
+      console.log(`  Memory Limit Ceiling : ${diag.memoryLimitMb} MB`);
+      console.log(`  Timeout Kill Barrier : ${diag.timeoutLimitMs} ms`);
+      console.log(`  Zero-Network Policy  : ${diag.networkIsolated ? "ENFORCED (No Sockets)" : "OPEN"}`);
+      console.log(`  Recommendation       : ${diag.recommendation}\n`);
+    } else {
+      const snippet = args[2] || "console.log('EOS Isolated MicroVM Execution Complete');";
+      console.log(`[EOS SANDBOX] Ejecutando código de forma aislada...\n`);
+      const res = EosMicroVmSandbox.runIsolated({
+        codeOrCommand: snippet,
+        timeoutMs: 10000
+      });
+      console.log(`  Execution ID    : ${res.executionId}`);
+      console.log(`  Status          : ${res.status}`);
+      console.log(`  Tier Used       : ${res.tierUsed}`);
+      console.log(`  Exit Code       : ${res.exitCode}`);
+      console.log(`  Duration        : ${res.durationMs} ms`);
+      console.log(`  Memory Peak     : ${(res.memoryPeakBytes / 1024 / 1024).toFixed(2)} MB`);
+      console.log(`  Attestation SHA : sha256:${res.sha256Attestation}\n`);
+      if (res.stdout) console.log(`[STDOUT]\n${res.stdout}\n`);
+      if (res.stderr) console.log(`[STDERR]\n${res.stderr}\n`);
+
+      EosMicroVmSandbox.recordReceiptInLedger(res, root);
+      console.log(`✔ Recibo de ejecución en Sandbox registrado en SQLite WAL Ledger.`);
+    }
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3533,6 +3572,7 @@ Uso Universal:
   eos heal:surgical [diagnose|patch|verify] Núcleo FDIR de auto-sanación quirúrgica en bucle cerrado (Meta SapFix)
   eos tlc [check|status|install] Verificador formal TLC (Leslie Lamport) y exploración exhaustiva de estados
   eos pr:check               Compuerta nativa de GitHub Actions y bot de atestación de Check-Runs
+  eos sandbox:vm [doctor|run] Aislamiento físico de hipervisor / MicroVM (Firecracker/gVisor/NodeVM)
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

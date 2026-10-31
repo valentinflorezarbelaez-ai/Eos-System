@@ -286,3 +286,17 @@
   - `openspec/specs/SPEC-053-GITHUB-ACTIONS-PR-GATE.md`
   - `docs/formal/GithubActionsPrGate.tla`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-30-MICROVM-SANDBOX-ENGINE-054
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-054 (v60.0.0)
+* **Owner Approval**: `OWNER_APPROVAL` GRANTED (Explicit owner directive on 2026-10-30)
+* **Scope**: Hermetic MicroVM & Isolated Hypervisor Sandbox Engine (`EosMicroVmSandbox`), Multi-Tier Virtualization Detection (Firecracker / Docker gVisor / Ephemeral VM), Hard 512MB Memory & Timeout Confinement, Zero-Network Barrier, and unified `eos_microvm_sandbox` core MCP tool & CLI surfaces.
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-047-MICROVM-SANDBOX-ENGINE.md`
+  - `docs/plans/PLAN-047-MICROVM-SANDBOX-ENGINE.md`
+  - `docs/tasks/TASKS-047-MICROVM-SANDBOX-ENGINE.md`
+  - `openspec/changes/CHANGE-047-MICROVM-SANDBOX-ENGINE.md`
+  - `openspec/specs/SPEC-054-MICROVM-SANDBOX-ENGINE.md`
+  - `docs/formal/MicroVmSandbox.tla`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)

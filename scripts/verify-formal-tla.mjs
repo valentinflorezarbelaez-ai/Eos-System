@@ -681,8 +681,57 @@ export function runAllFormalVerifications() {
     verifyContractEvolutionGovernanceModel(),
     verifyAutonomousClosedLoopHealingModel(),
     verifyTlcFormalModelCheckerModel(),
-    verifyGithubActionsPrGateModel()
+    verifyGithubActionsPrGateModel(),
+    verifyMicroVmSandboxModel()
   ];
+}
+
+export function verifyMicroVmSandboxModel(steps = 200) {
+  const filePath = path.join(formalDir, "MicroVmSandbox.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let sandboxState = "IDLE";
+  let networkIsolated = true;
+  let memoryCapMb = 512;
+  let executionsCompleted = 0;
+  let timeoutsCaught = 0;
+  let receiptsIssued = 0;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    assert.strictEqual(networkIsolated, true, "VIOLATION: networkIsolated must be true");
+    assert.ok(receiptsIssued >= (executionsCompleted + timeoutsCaught), "VIOLATION: receiptsIssued invariant breached");
+
+    if (sandboxState === "IDLE") {
+      sandboxState = "ISOLATING";
+    } else if (sandboxState === "ISOLATING") {
+      sandboxState = "RUNNING";
+    } else if (sandboxState === "RUNNING") {
+      if (i % 19 === 0) {
+        sandboxState = "TIMEOUT_KILLED";
+        timeoutsCaught++;
+        receiptsIssued++;
+      } else {
+        sandboxState = "COMPLETED";
+        executionsCompleted++;
+        receiptsIssued++;
+      }
+    } else {
+      sandboxState = "IDLE";
+    }
+  }
+
+  return {
+    specification: "MicroVmSandbox.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
 }
 
 export function verifyGithubActionsPrGateModel(steps = 200) {

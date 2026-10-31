@@ -62,6 +62,7 @@ export const CORE_TIER0_TOOL_NAMES: ReadonlySet<string> = new Set([
   "eos_surgical_healing",
   "eos_tlc_checker",
   "eos_github_gate",
+  "eos_microvm_sandbox",
   "eos_health_check"
 ]);
 

@@ -439,6 +439,12 @@ import {
 } from "../core/eosGithubPrGate.ts";
 
 import {
+  EosMicroVmSandbox,
+  type SandboxDoctorReport,
+  type SandboxRunResult
+} from "../core/eosMicroVmSandbox.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2274,6 +2280,20 @@ export class EosMcpServer {
                       simulateFailureStage: { type: "number", description: "Simulate failure in specific stage (1-7) for testing" },
                       simulateContractBreach: { type: "boolean", description: "Simulate contract breaking changes for testing" },
                       recordToLedger: { type: "boolean", description: "Whether to record PR evaluation receipt in SQLite WAL ledger" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_microvm_sandbox",
+                  description: "Hermetic MicroVM & Isolated Hypervisor Sandbox Engine (SPEC-054, v60.0.0): Multi-tier isolation (Firecracker, Docker gVisor, Ephemeral Node VM), 512MB RAM ceiling, 15s timeout kill, and zero-network barrier.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["run", "doctor"], description: "Sandbox operation mode" },
+                      codeOrCommand: { type: "string", description: "Code snippet or command to execute in sandbox" },
+                      memoryLimitMb: { type: "number", description: "Memory limit in MB (default 512)" },
+                      timeoutMs: { type: "number", description: "Timeout limit in ms (default 15000)" },
+                      recordToLedger: { type: "boolean", description: "Whether to record execution receipt in SQLite WAL ledger" }
                     }
                   }
                 }
@@ -4340,6 +4360,29 @@ export class EosMcpServer {
         }
 
         return evalResult;
+      }
+
+      case "eos_microvm_sandbox": {
+        const action = String(args?.action || "doctor").trim().toLowerCase();
+        if (action === "doctor" || action === "status") {
+          return EosMicroVmSandbox.diagnoseHost();
+        }
+
+        const codeOrCommand = String(args?.codeOrCommand || "console.log('EOS Sandbox Nominal');").trim();
+        const memoryLimitMb = typeof args?.memoryLimitMb === "number" ? Math.floor(args.memoryLimitMb) : undefined;
+        const timeoutMs = typeof args?.timeoutMs === "number" ? Math.floor(args.timeoutMs) : undefined;
+
+        const runResult = EosMicroVmSandbox.runIsolated({
+          codeOrCommand,
+          memoryLimitMb,
+          timeoutMs
+        });
+
+        if (args?.recordToLedger === true) {
+          EosMicroVmSandbox.recordReceiptInLedger(runResult, this.projectRoot);
+        }
+
+        return runResult;
       }
 
       default:
