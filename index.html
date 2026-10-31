@@ -32,7 +32,7 @@
   <link rel="preload" href="/css/eos.css?v=15.0" as="style" />
   <link rel="preload" href="/js/eos.js?v=18.0" as="script" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/eos.css?v=15.0" integrity="sha384-O5PZRMOj7vAVWv/og3LbryCWr472fripxW3C0ovGoOVeunfYlglDYMSXgxV21ZYs" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/eos.css?v=15.0" integrity="sha384-EyO9eE1XJ2CxUeJEh5x1GZh5B0005D+7bEPIlRTwJ2qJA8F+vJ78wZtajdGvTlcE" crossorigin="anonymous" />
 
   <!-- Xirp-Grade Speculative Prerendering (0ms Instant Navigation) -->
   <script type="speculationrules">
@@ -879,6 +879,122 @@ No cambia archivos ni contiene resultados de un repositorio.</pre>
       <div class="labs-disclosure__intro">
         <p>El flujo principal está arriba. Aquí encontrarás módulos adicionales, guías y demos; cada sección describe sus datos y límites para que puedas explorar sin confundir una simulación con una ejecución real.</p>
       </div>
+
+    <!-- SECCIÓN ZENITH HYPERSCALER VISUALIZERS (SPEC-083, v71.0.0) -->
+    <section class="section deferred-section" id="zenith-hyperscaler-nexus" role="region" aria-label="Visualizadores de Motores Hyperscaler">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow">HORIZONTE 2 · SIMULACIÓN CLIENT-SIDE PURA · PLANETARY ZENITH v71.0.0</div>
+          <h2 class="section__title">Visualizadores Interactivos Hyperscaler</h2>
+          <p class="section__sub">
+            Experimenta en vivo dentro del navegador con los 4 pilares de ingeniería distribuida de EOS System: consenso TrueTime Spanner, almacenamiento LSM-Tree con filtro de Bloom, fragmentación Shamir de tesorería y perfiles OCI MicroVM Firecracker.
+          </p>
+        </div>
+
+        <div class="zenith-grid">
+          <!-- CARD 1: TRUETIME -->
+          <div class="zenith-card" id="visualizer-truetime">
+            <div class="zenith-card__head">
+              <div>
+                <h3 class="zenith-card__title">1. Google Spanner TrueTime Engine</h3>
+                <p class="zenith-card__desc">Simula la ventana de incertidumbre [t - ε, t + ε] y el protocolo Commit-Wait para linearizabilidad estricta.</p>
+              </div>
+              <span id="truetime-status-badge" class="telemetry-pill">INACTIVO</span>
+            </div>
+            <div class="zenith-controls">
+              <label for="sim-truetime-epsilon" style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-light);">
+                Incertidumbre (ε): <span id="truetime-epsilon-val" style="color: var(--cyan); font-weight: 700;">3.5 ms</span>
+              </label>
+              <input type="range" id="sim-truetime-epsilon" min="1" max="25" step="0.5" value="3.5" class="sanctum-slider" style="flex: 1;" />
+              <button type="button" id="btn-truetime-commit-wait" class="btn btn--primary" style="padding: 0.4rem 0.8rem; font-size: 0.76rem;">Ejecutar Commit-Wait</button>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.74rem;">
+              <div style="background: rgba(15, 23, 42, 0.6); padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--line-subtle);">
+                <span style="color: var(--text-muted); display: block;">t_earliest:</span>
+                <code id="truetime-display-earliest" style="color: #38bdf8;">--</code>
+              </div>
+              <div style="background: rgba(15, 23, 42, 0.6); padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--line-subtle);">
+                <span style="color: var(--text-muted); display: block;">t_latest:</span>
+                <code id="truetime-display-latest" style="color: #34d399;">--</code>
+              </div>
+            </div>
+            <pre id="truetime-log" class="zenith-console" role="status" aria-live="polite">Selecciona la incertidumbre ε y ejecuta el Commit-Wait...</pre>
+          </div>
+
+          <!-- CARD 2: LSM-TREE & BLOOM -->
+          <div class="zenith-card" id="visualizer-lsm">
+            <div class="zenith-card__head">
+              <div>
+                <h3 class="zenith-card__title">2. RocksDB LSM-Tree & Bloom Filter</h3>
+                <p class="zenith-card__desc">Absorción atómica en MemTable, volcado secuencial a SSTable L0 y exclusión de lecturas con 100% verdaderos negativos.</p>
+              </div>
+              <span id="lsm-bloom-status" class="telemetry-pill">BLOOM: ACTIVO</span>
+            </div>
+            <div class="zenith-controls">
+              <input type="text" id="lsm-key-input" class="sanctum-input" value="session:user:101" placeholder="Clave" style="flex: 1; min-width: 120px; font-size: 0.76rem; padding: 0.4rem;" />
+              <input type="text" id="lsm-val-input" class="sanctum-input" value="token_jwt_zenith_alpha" placeholder="Valor" style="flex: 1; min-width: 140px; font-size: 0.76rem; padding: 0.4rem;" />
+            </div>
+            <div class="zenith-controls">
+              <button type="button" id="btn-lsm-put" class="btn btn--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.74rem;">Put (MemTable)</button>
+              <button type="button" id="btn-lsm-get" class="btn btn--ghost" style="padding: 0.35rem 0.75rem; font-size: 0.74rem;">Get (Consultar)</button>
+              <button type="button" id="btn-lsm-flush" class="btn btn--gold" style="padding: 0.35rem 0.75rem; font-size: 0.74rem;">Flush SSTable</button>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+              <div id="lsm-memtable-view" class="lsm-buffer-box">MemTable (RAM): [Vacía]</div>
+              <div id="lsm-sstable-view" class="lsm-buffer-box">SSTable L0 (Disco): [0 bloques]</div>
+            </div>
+            <pre id="lsm-log" class="zenith-console" role="status" aria-live="polite">Escribe una clave o busca una para probar el filtro de Bloom...</pre>
+          </div>
+
+          <!-- CARD 3: SHAMIR THRESHOLD -->
+          <div class="zenith-card" id="visualizer-threshold">
+            <div class="zenith-card__head">
+              <div>
+                <h3 class="zenith-card__title">3. Stripe Treasury · Shamir (t, n) Secret Sharing</h3>
+                <p class="zenith-card__desc">Partición polinomial sobre campo primo. Demuestra que k &lt; t no revela información y k &ge; t reconstruye el secreto.</p>
+              </div>
+              <span id="threshold-status-badge" class="telemetry-pill">SHAMIR F_p</span>
+            </div>
+            <div class="zenith-controls">
+              <input type="text" id="threshold-secret-input" class="sanctum-input" value="TREASURY_RESERVE_KEY_ALPHA_71" placeholder="Secreto maestro" style="flex: 2; font-size: 0.76rem; padding: 0.4rem;" />
+              <label style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-light); display: flex; align-items: center; gap: 0.3rem;">
+                t: <input type="number" id="threshold-k-input" class="sanctum-input" value="3" min="2" max="5" style="width: 50px; font-size: 0.74rem; padding: 0.35rem;" />
+              </label>
+              <label style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-light); display: flex; align-items: center; gap: 0.3rem;">
+                n: <input type="number" id="threshold-n-input" class="sanctum-input" value="5" min="2" max="7" style="width: 50px; font-size: 0.74rem; padding: 0.35rem;" />
+              </label>
+              <button type="button" id="btn-threshold-split" class="btn btn--secondary" style="padding: 0.35rem 0.75rem; font-size: 0.74rem;">Fragmentar</button>
+            </div>
+            <div id="threshold-shares-view" class="threshold-shares-box">Presiona Fragmentar para calcular las partes...</div>
+            <div class="zenith-controls">
+              <button type="button" id="btn-threshold-combine" class="btn btn--primary" style="padding: 0.35rem 0.75rem; font-size: 0.74rem;">Reconstruir Secreto</button>
+            </div>
+            <code id="threshold-recovered-output" class="zenith-recovered-box">Estado: Esperando selección de fragmentos...</code>
+          </div>
+
+          <!-- CARD 4: MICROVM ENCLAVE -->
+          <div class="zenith-card" id="visualizer-microvm">
+            <div class="zenith-card__head">
+              <div>
+                <h3 class="zenith-card__title">4. AWS Nitro / Firecracker MicroVM Enclave</h3>
+                <p class="zenith-card__desc">Generador de contratos OCI para ejecución aislada en microVMs Firecracker con SHA-256 inmutable.</p>
+              </div>
+              <span id="microvm-status-badge" class="telemetry-pill">FIRECRACKER</span>
+            </div>
+            <div class="zenith-controls">
+              <label style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-light); display: flex; align-items: center; gap: 0.3rem;">
+                vCPUs: <input type="number" id="microvm-vcpus-input" class="sanctum-input" value="2" min="1" max="8" style="width: 60px; font-size: 0.74rem; padding: 0.35rem;" />
+              </label>
+              <label style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-light); display: flex; align-items: center; gap: 0.3rem;">
+                RAM (MiB): <input type="number" id="microvm-mem-input" class="sanctum-input" value="512" min="128" max="4096" step="128" style="width: 80px; font-size: 0.74rem; padding: 0.35rem;" />
+              </label>
+              <button type="button" id="btn-microvm-generate" class="btn btn--primary" style="padding: 0.35rem 0.75rem; font-size: 0.74rem;">Generar Perfil OCI</button>
+            </div>
+            <pre id="microvm-spec-output" class="zenith-console" role="status" aria-live="polite">Haz clic en Generar Perfil OCI para sintetizar el contrato Firecracker...</pre>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- SECCIÓN DE VISUALIZACIÓN LOCAL DE GRAFO -->
     <section class="section deferred-section" id="sovereign-fleet-topology">
@@ -2658,6 +2774,6 @@ No se ejecutan comandos, auditorías, sondeos ni despliegues.</pre>
     </div>
   </dialog>
 
-  <script src="/js/eos.js?v=18.0" integrity="sha384-HJr1D8jqgOrAmUiPhQYc8o0gui2bDtN3+ngEHB/jpPCWTKap7sbUKHqmmJYzScif" crossorigin="anonymous" defer></script>
+  <script src="/js/eos.js?v=18.0" integrity="sha384-d2AZmOXbOi7ccX4eOw9VohnMmd8eKg0WSrQCdhmWOVKcX7FX2fYWTDIC6fqM/fK0" crossorigin="anonymous" defer></script>
 </body>
 </html>

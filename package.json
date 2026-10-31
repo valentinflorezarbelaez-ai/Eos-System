@@ -1,8 +1,14 @@
 {
   "name": "eos-system-landing",
-  "version": "70.0.0",
+  "version": "71.0.0",
   "description": "Local software engineering toolkit with a Node.js CLI, MCP server, repository analysis, templates, and bounded demonstrations.",
   "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
   "bin": {
     "eos": "./bin/eos.mjs"
   },
@@ -42,6 +48,7 @@
     "swarm": "node bin/eos.mjs swarm",
     "search": "node bin/eos.mjs search",
     "coverage": "node scripts/run-coverage.mjs",
+    "packaging:verify": "node scripts/verify-packaging.mjs",
     "mcp:verify": "node --test test/eosMcpSchemaValidator.test.mjs",
     "test": "node scripts/verify-cicd-pipeline.mjs",
     "test:workflow": "node --test test/eosEngineeringWorkflow.test.mjs test/eosFlowCliSmoke.test.mjs",

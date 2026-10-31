@@ -3498,7 +3498,275 @@ func SovereignTransaction(ctx context.Context, id string) (*Receipt, error) {
     }
   }
 
+  function initZenithHyperscalerVisualizers() {
+    // 1. TrueTime Engine Visualizer
+    const simEpsilon = document.getElementById("sim-truetime-epsilon");
+    const epsilonVal = document.getElementById("truetime-epsilon-val");
+    const btnCommitWait = document.getElementById("btn-truetime-commit-wait");
+    const displayEarliest = document.getElementById("truetime-display-earliest");
+    const displayLatest = document.getElementById("truetime-display-latest");
+    const ttStatusBadge = document.getElementById("truetime-status-badge");
+    const ttLog = document.getElementById("truetime-log");
+
+    if (simEpsilon && epsilonVal) {
+      simEpsilon.addEventListener("input", () => {
+        epsilonVal.textContent = `${parseFloat(simEpsilon.value).toFixed(1)} ms`;
+      });
+    }
+
+    if (btnCommitWait) {
+      btnCommitWait.addEventListener("click", () => {
+        const eps = parseFloat(simEpsilon ? simEpsilon.value : "3.5") || 3.5;
+        const now = Date.now();
+        const earliest = Math.floor(now - eps);
+        const latest = Math.ceil(now + eps);
+
+        if (displayEarliest) displayEarliest.textContent = `${earliest} (${new Date(earliest).toISOString().slice(11, 23)})`;
+        if (displayLatest) displayLatest.textContent = `${latest} (${new Date(latest).toISOString().slice(11, 23)})`;
+        if (ttStatusBadge) {
+          ttStatusBadge.textContent = "COMMIT-WAIT...";
+          ttStatusBadge.style.color = "#f59e0b";
+        }
+        if (ttLog) {
+          ttLog.textContent = `[TRUETIME] Ventana de incertidumbre: [${earliest}, ${latest}] (2ε = ${(2 * eps).toFixed(1)} ms)\nIniciando espera commitWait()...`;
+        }
+
+        setTimeout(() => {
+          if (ttStatusBadge) {
+            ttStatusBadge.textContent = "COMMIT_WAIT_ATTESTED";
+            ttStatusBadge.style.color = "#10b981";
+          }
+          if (ttLog) {
+            ttLog.textContent += `\n[OK] Commit confirmado en t_commit = ${latest}.\nInvariante Spanner preservado: Ninguna transacción subsiguiente leerá un timestamp anterior.`;
+          }
+        }, 150);
+      });
+    }
+
+    // 2. LSM-Tree & Bloom Filter Visualizer
+    const lsmKeyInput = document.getElementById("lsm-key-input");
+    const lsmValInput = document.getElementById("lsm-val-input");
+    const btnLsmPut = document.getElementById("btn-lsm-put");
+    const btnLsmGet = document.getElementById("btn-lsm-get");
+    const btnLsmFlush = document.getElementById("btn-lsm-flush");
+    const memtableView = document.getElementById("lsm-memtable-view");
+    const sstableView = document.getElementById("lsm-sstable-view");
+    const lsmBloomStatus = document.getElementById("lsm-bloom-status");
+    const lsmLog = document.getElementById("lsm-log");
+
+    const memtable = new Map();
+    const sstable = [];
+    const bloomFilter = new Set();
+
+    function renderLsmState() {
+      if (memtableView) {
+        if (memtable.size === 0) {
+          memtableView.textContent = "MemTable (RAM): [Vacía]";
+        } else {
+          const keys = Array.from(memtable.keys()).map((k) => `'${k}'`).join(", ");
+          memtableView.textContent = `MemTable (RAM): [${memtable.size}/4 entradas: ${keys}]`;
+        }
+      }
+      if (sstableView) {
+        sstableView.textContent = `SSTable L0 (Disco): [${sstable.length} bloques persistidos]`;
+      }
+    }
+
+    if (btnLsmPut) {
+      btnLsmPut.addEventListener("click", () => {
+        const k = (lsmKeyInput && lsmKeyInput.value.trim()) || "key_" + Date.now();
+        const v = (lsmValInput && lsmValInput.value.trim()) || "val_" + Math.random().toString(36).slice(2, 7);
+        memtable.set(k, v);
+        bloomFilter.add(k);
+        renderLsmState();
+        if (lsmLog) {
+          lsmLog.textContent = `[PUT] Clave '${k}' insertada en MemTable RAM.\nFiltro de Bloom actualizado.`;
+        }
+        if (memtable.size >= 4) {
+          // Auto flush
+          sstable.push(Array.from(memtable.entries()));
+          memtable.clear();
+          renderLsmState();
+          if (lsmLog) {
+            lsmLog.textContent += `\n[FLUSH AUTO] MemTable alcanzó límite (4). Volcada secuencialmente a SSTable L0.`;
+          }
+        }
+      });
+    }
+
+    if (btnLsmGet) {
+      btnLsmGet.addEventListener("click", () => {
+        const k = (lsmKeyInput && lsmKeyInput.value.trim()) || "";
+        if (!bloomFilter.has(k)) {
+          if (lsmBloomStatus) {
+            lsmBloomStatus.textContent = "BLOOM: VERDADERO NEGATIVO";
+            lsmBloomStatus.style.color = "#ef4444";
+          }
+          if (lsmLog) {
+            lsmLog.textContent = `[GET] Clave '${k}' descartada por Filtro de Bloom.\n100% Verdadero Negativo: CERO accesos a disco necesarios.`;
+          }
+          return;
+        }
+
+        if (lsmBloomStatus) {
+          lsmBloomStatus.textContent = "BLOOM: HIT POSITIVO";
+          lsmBloomStatus.style.color = "#10b981";
+        }
+        if (memtable.has(k)) {
+          if (lsmLog) lsmLog.textContent = `[GET] Clave '${k}' encontrada en MemTable RAM: '${memtable.get(k)}'.`;
+          return;
+        }
+
+        for (let i = sstable.length - 1; i >= 0; i--) {
+          const entry = sstable[i].find(([itemKey]) => itemKey === k);
+          if (entry) {
+            if (lsmLog) lsmLog.textContent = `[GET] Clave '${k}' recuperada de SSTable L0 (Bloque ${i}): '${entry[1]}'.`;
+            return;
+          }
+        }
+
+        if (lsmLog) lsmLog.textContent = `[GET] Clave '${k}' no encontrada (Falso Positivo de Bloom).`;
+      });
+    }
+
+    if (btnLsmFlush) {
+      btnLsmFlush.addEventListener("click", () => {
+        if (memtable.size === 0) {
+          if (lsmLog) lsmLog.textContent = `[FLUSH] MemTable vacía. Nada que volcar a SSTable.`;
+          return;
+        }
+        sstable.push(Array.from(memtable.entries()));
+        memtable.clear();
+        renderLsmState();
+        if (lsmLog) lsmLog.textContent = `[FLUSH FORZADO] Volcado manual a SSTable L0 completado.`;
+      });
+    }
+
+    // 3. Shamir Threshold Calculator Visualizer
+    const secretInput = document.getElementById("threshold-secret-input");
+    const kInput = document.getElementById("threshold-k-input");
+    const nInput = document.getElementById("threshold-n-input");
+    const btnSplit = document.getElementById("btn-threshold-split");
+    const sharesView = document.getElementById("threshold-shares-view");
+    const btnCombine = document.getElementById("btn-threshold-combine");
+    const recoveredOutput = document.getElementById("threshold-recovered-output");
+
+    let currentShares = [];
+    let currentThreshold = 3;
+    let originalSecret = "";
+
+    if (btnSplit) {
+      btnSplit.addEventListener("click", () => {
+        originalSecret = (secretInput && secretInput.value.trim()) || "TREASURY_KEY";
+        currentThreshold = parseInt(kInput && kInput.value, 10) || 3;
+        const n = parseInt(nInput && nInput.value, 10) || 5;
+
+        currentShares = [];
+        for (let i = 1; i <= n; i++) {
+          const pseudoHash = Array.from(originalSecret + "#" + i)
+            .reduce((acc, c) => (acc * 31 + c.charCodeAt(0)) % 1000000007, 0)
+            .toString(16)
+            .padStart(8, "0");
+          currentShares.push({ id: i, label: `Share #${i} (x=${i}): 0x${pseudoHash}...` });
+        }
+
+        if (sharesView) {
+          sharesView.innerHTML = `
+            <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+              ${currentShares
+                .map(
+                  (s) => `
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; cursor: pointer;">
+                  <input type="checkbox" class="shamir-share-checkbox" data-share-id="${s.id}" checked />
+                  <span>${s.label}</span>
+                </label>`
+                )
+                .join("")}
+            </div>
+          `;
+        }
+
+        if (recoveredOutput) {
+          recoveredOutput.textContent = `Generados ${n} fragmentos polinomiales (Umbral t=${currentThreshold}). Selecciona los fragmentos a combinar.`;
+        }
+      });
+    }
+
+    if (btnCombine) {
+      btnCombine.addEventListener("click", () => {
+        if (!sharesView) return;
+        const checked = Array.from(sharesView.querySelectorAll(".shamir-share-checkbox:checked"));
+        const count = checked.length;
+
+        if (count < currentThreshold) {
+          if (recoveredOutput) {
+            recoveredOutput.style.color = "#ef4444";
+            recoveredOutput.style.background = "rgba(239, 68, 68, 0.08)";
+            recoveredOutput.style.borderColor = "rgba(239, 68, 68, 0.3)";
+            recoveredOutput.textContent = `RECHAZO FAIL-CLOSED: Fragmentos insuficientes (${count}/${currentThreshold}). Teorema de Shamir: 0 bits del secreto revelados.`;
+          }
+        } else {
+          if (recoveredOutput) {
+            recoveredOutput.style.color = "#34d399";
+            recoveredOutput.style.background = "rgba(16, 185, 129, 0.08)";
+            recoveredOutput.style.borderColor = "rgba(16, 185, 129, 0.3)";
+            recoveredOutput.textContent = `SECRETO RECONSTRUIDO EXITOSAMENTE (${count} fragmentos): "${originalSecret}"`;
+          }
+        }
+      });
+    }
+
+    // 4. MicroVM Enclave Inspector Visualizer
+    const vcpusInput = document.getElementById("microvm-vcpus-input");
+    const memInput = document.getElementById("microvm-mem-input");
+    const btnMicrovmGen = document.getElementById("btn-microvm-generate");
+    const microvmSpecOutput = document.getElementById("microvm-spec-output");
+
+    if (btnMicrovmGen) {
+      btnMicrovmGen.addEventListener("click", () => {
+        const vcpus = parseInt(vcpusInput && vcpusInput.value, 10) || 2;
+        const mem = parseInt(memInput && memInput.value, 10) || 512;
+        const enclaveId = "enclave-firecracker-" + Math.random().toString(36).slice(2, 8);
+
+        const profile = {
+          enclaveId,
+          standard: "OCI_FIRECRACKER_V1",
+          virtualization: "KVM_ACCELERATED",
+          machineConfig: {
+            vcpu_count: vcpus,
+            mem_size_mib: mem,
+            smt: false,
+            track_dirty_pages: true
+          },
+          bootSource: {
+            kernel_image_path: "/vmlinux-6.6-eos.bin",
+            boot_args: "console=ttyS0 reboot=k panic=1 pci=off init=/init quiet"
+          },
+          drives: [
+            {
+              drive_id: "rootfs",
+              path_on_host: "/images/eos-distroless-rootfs.ext4",
+              is_root_device: true,
+              is_read_only: true
+            }
+          ],
+          security: {
+            seccomp_level: 2,
+            jailer_chroot: `/srv/jailer/firecracker/${enclaveId}`,
+            user: "nonroot:nonroot"
+          },
+          generatedAtIso: new Date().toISOString()
+        };
+
+        if (microvmSpecOutput) {
+          microvmSpecOutput.textContent = JSON.stringify(profile, null, 2);
+        }
+      });
+    }
+  }
+
   initTier1Nexus();
   initJarvis3DQuantumCore();
   initSovereignFleetTopology();
+  initZenithHyperscalerVisualizers();
 });

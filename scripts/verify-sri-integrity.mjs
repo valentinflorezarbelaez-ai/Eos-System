@@ -25,7 +25,7 @@ const shouldFix = process.argv.includes("--fix");
 if (shouldFix) {
   html = html.replace(
     /<link rel="stylesheet" href="\/css\/eos\.css[^"]*"( integrity="[^"]*")?( crossorigin="[^"]*")? \/>/,
-    `<link rel="stylesheet" href="/css/eos.css?v=13.0" integrity="${cssSri}" crossorigin="anonymous" />`
+    `<link rel="stylesheet" href="/css/eos.css?v=15.0" integrity="${cssSri}" crossorigin="anonymous" />`
   );
   html = html.replace(
     /<script src="(\/js\/eos\.js(?:\?[^\"]*)?)"(?: integrity="[^\"]*")?(?: crossorigin="[^\"]*")? defer><\/script>/,
