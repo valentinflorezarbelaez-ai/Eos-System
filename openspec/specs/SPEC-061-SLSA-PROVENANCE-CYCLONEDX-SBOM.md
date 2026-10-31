@@ -1,7 +1,7 @@
 # SPEC-061 — SLSA LEVEL 4 PROVENANCE & CYCLONEDX v1.5 SBOM ENGINE
 **Version**: 66.0.0  
 **Status**: APPROVED  
-**Change Reference**: CHANGE-053  
+**Change Reference**: CHANGE-054  
 **Architecture Decision Record**: ADR-066  
 **Domain Layer**: Layer-0 System Core (`src/core/eosSlsaProvenanceSbom.ts`)
 

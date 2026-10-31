@@ -67,11 +67,11 @@ export class EosSapFixAutoshipper {
   /**
    * Executes full autonomous SapFix cycle: isolate, synthesize, verify, and generate PR manifest.
    */
-  public static async executeCycle(
+  public static executeCycle(
     fault: SapFixFaultInput,
     projectRoot: string = process.cwd(),
     options: SapFixOptions = {}
-  ): Promise<SapFixRemediationReport> {
+  ): SapFixRemediationReport {
     assertPrecondition(Boolean(fault && fault.faultId), "faultId is required");
     assertPrecondition(Boolean(fault.targetFilePath), "targetFilePath is required");
     assertPrecondition(typeof fault.failingLine === "number" && fault.failingLine > 0, "failingLine must be positive");

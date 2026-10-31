@@ -1,6 +1,6 @@
 # EOS SYSTEM — RELEASE CAPABILITY MATRIX
 
-**Version**: v64.0.0 (Sovereign DeepMind & Samaelian Theurgic Edition)  
+**Version**: v66.0.0 (Frontier Big Tech & Theurgic Singularity Edition)  
 **Governing Standard**: IEEE 830 / ISO 29148 / RFC 9110 / Clean Hexagonal Architecture  
 **Active Gate**: GATE-13 (`LADDER-13`)  
 
@@ -39,7 +39,20 @@
 
 ---
 
-## 3. RTM (Requirements Traceability Matrix) 7-Layer Continuum
+## 3. The 6 Frontier Big Tech Pillars (v66.0.0)
+
+| Pillar | Frontier Tech | Module | Specification | Formal / Verification Anchor |
+|---|---|---|---|---|
+| **Pillar 1** | Meta SapFix Autonomous PR Engine | [`src/core/eosSapFixAutoshipper.ts`](file:///c:/Users/valen/Eos-System/src/core/eosSapFixAutoshipper.ts) | SPEC-060 | [`test/eosSapFixAutoshipper.test.mjs`](file:///c:/Users/valen/Eos-System/test/eosSapFixAutoshipper.test.mjs) |
+| **Pillar 2** | CycloneDX 1.5 SBOM & In-Toto SLSA 4 | [`src/core/eosSlsaProvenanceSbom.ts`](file:///c:/Users/valen/Eos-System/src/core/eosSlsaProvenanceSbom.ts) | SPEC-061 | [`test/eosSlsaProvenanceSbom.test.mjs`](file:///c:/Users/valen/Eos-System/test/eosSlsaProvenanceSbom.test.mjs) |
+| **Pillar 3** | Google Bazel CAS & Action Cache | [`src/core/eosContentAddressableCache.ts`](file:///c:/Users/valen/Eos-System/src/core/eosContentAddressableCache.ts) | SPEC-062 | [`test/eosContentAddressableCache.test.mjs`](file:///c:/Users/valen/Eos-System/test/eosContentAddressableCache.test.mjs) |
+| **Pillar 4** | AWS SMT Automated Reasoning DPLL | [`src/core/eosSmtAutomatedReasoningProver.ts`](file:///c:/Users/valen/Eos-System/src/core/eosSmtAutomatedReasoningProver.ts) | SPEC-063 | [`test/eosSmtAutomatedReasoningProver.test.mjs`](file:///c:/Users/valen/Eos-System/test/eosSmtAutomatedReasoningProver.test.mjs) |
+| **Pillar 5** | Netflix Production Chaos Monkey | [`src/core/eosProductionChaosMonkey.ts`](file:///c:/Users/valen/Eos-System/src/core/eosProductionChaosMonkey.ts) | SPEC-064 | [`test/eosProductionChaosMonkey.test.mjs`](file:///c:/Users/valen/Eos-System/test/eosProductionChaosMonkey.test.mjs) |
+| **Pillar 6** | DeepMind BFT Swarm & Quadratic Slashing | [`src/core/eosBftAgentSwarmSlashing.ts`](file:///c:/Users/valen/Eos-System/src/core/eosBftAgentSwarmSlashing.ts) | SPEC-065 | [`docs/formal/BftAgentSwarmSlashing.tla`](file:///c:/Users/valen/Eos-System/docs/formal/BftAgentSwarmSlashing.tla) |
+
+---
+
+## 4. RTM (Requirements Traceability Matrix) 7-Layer Continuum
 
 ```text
 Layer 1: INTAKE       ➔ docs/intake/eos-system/INTAKE-XXX.md

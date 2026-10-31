@@ -1,7 +1,7 @@
 # SPEC-062 — CONTENT-ADDRESSABLE STORAGE (CAS) & TEST ACTION CACHE ENGINE
 **Version**: 66.0.0  
 **Status**: APPROVED  
-**Change Reference**: CHANGE-054  
+**Change Reference**: CHANGE-055  
 **Architecture Decision Record**: ADR-067  
 **Domain Layer**: Layer-0 System Core (`src/core/eosContentAddressableCache.ts`)
 

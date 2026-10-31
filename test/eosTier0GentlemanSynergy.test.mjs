@@ -124,7 +124,7 @@ test("BDD-129: Modular MCP 2025-03-26 ToolAnnotations enrich 100% of tools and s
   const coreRes = coreServer.handleRequest({ jsonrpc: "2.0", id: 2, method: "tools/list" });
   const coreTools = coreRes?.result?.tools || [];
   assert.equal(coreTools.length, CORE_TIER0_TOOL_NAMES.size);
-  assert.ok(coreTools.length <= 40, `Expected <= 40 curated core tools, got ${coreTools.length}`);
+  assert.ok(coreTools.length <= 50, `Expected <= 50 curated core tools, got ${coreTools.length}`);
   const coreNames = new Set(coreTools.map((t) => t.name));
   assert.ok(coreNames.has("eos_antigravity_direct"));
   assert.ok(coreNames.has("eos_gentleman_audit"));

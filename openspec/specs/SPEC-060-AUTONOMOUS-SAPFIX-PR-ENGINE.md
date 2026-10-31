@@ -1,7 +1,7 @@
 # SPEC-060 — AUTONOMOUS SAPFIX PR & AUTO-MERGE ENGINE (META-GRADE FDIR)
 **Version**: 66.0.0  
 **Status**: APPROVED  
-**Change Reference**: CHANGE-052  
+**Change Reference**: CHANGE-053  
 **Architecture Decision Record**: ADR-065  
 **Domain Layer**: Layer-0 System Core (`src/core/eosSapFixAutoshipper.ts`)
 

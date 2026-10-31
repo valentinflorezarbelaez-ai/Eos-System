@@ -1,7 +1,7 @@
 # SPEC-064 — PRODUCTION CHAOS MONKEY & RESILIENCE HYPERVISOR (NETFLIX-GRADE)
 **Version**: 66.0.0  
 **Status**: APPROVED  
-**Change Reference**: CHANGE-056  
+**Change Reference**: CHANGE-057  
 **Architecture Decision Record**: ADR-069  
 **Domain Layer**: Layer-0 System Core (`src/core/eosProductionChaosMonkey.ts`)
 

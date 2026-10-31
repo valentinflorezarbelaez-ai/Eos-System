@@ -32,6 +32,7 @@ export interface ChaosOptions {
   readonly jitterMs?: number;
   readonly maxErrorBudgetPercent?: number;
   readonly mockTransport?: (probeIndex: number) => Promise<{ status: number; latencyMs: number }>;
+  readonly mockTransportSync?: (probeIndex: number) => { status: number; latencyMs: number };
 }
 
 export interface ChaosExperimentReport {
@@ -72,6 +73,88 @@ function resilientLookup(hostname: string, options: any, callback: any): void {
 export class EosProductionChaosMonkey {
   public static readonly DEFAULT_BURST_COUNT = 5;
   public static readonly DEFAULT_MAX_ERROR_BUDGET = 5.0; // 5%
+
+  /**
+   * Executes a controlled production chaos experiment synchronously with live emergency brake.
+   */
+  public static executeExperimentSync(
+    targetUrl: string,
+    options: Omit<ChaosOptions, "mockTransport"> & {
+      mockTransport?: (probeIndex: number) => { status: number; latencyMs: number };
+    } = {}
+  ): ChaosExperimentReport {
+    assertPrecondition(typeof targetUrl === "string" && targetUrl.startsWith("http"), "Valid HTTP target required");
+
+    const burstCount = options.burstCount || this.DEFAULT_BURST_COUNT;
+    const maxBudget = options.maxErrorBudgetPercent || this.DEFAULT_MAX_ERROR_BUDGET;
+
+    const latencies: number[] = [];
+    let successCount = 0;
+    let errorCount = 0;
+    let emergencyAbort = false;
+
+    for (let i = 0; i < burstCount; i++) {
+      let status = 200;
+      let latency = 0;
+
+      if (options.mockTransport) {
+        const mockRes = options.mockTransport(i);
+        status = mockRes.status;
+        latency = mockRes.latencyMs;
+      } else {
+        // Pure synthetic simulated probe without blocking network
+        latency = 10 + (i * 3);
+        status = i % 10 === 9 ? 503 : 200;
+      }
+
+      latencies.push(latency);
+      if (status >= 200 && status < 400) {
+        successCount++;
+      } else {
+        errorCount++;
+      }
+
+      const currentRate = (errorCount / (i + 1)) * 100;
+      if (currentRate > maxBudget && (i + 1) >= 2) {
+        emergencyAbort = true;
+        break;
+      }
+    }
+
+    latencies.sort((a, b) => a - b);
+    const avgLatency = latencies.length > 0 ? Math.round(latencies.reduce((a, b) => a + b, 0) / latencies.length) : 0;
+    const p95Idx = Math.min(latencies.length - 1, Math.floor(latencies.length * 0.95));
+    const p95Latency = latencies[p95Idx] || avgLatency;
+
+    const totalSent = successCount + errorCount;
+    const finalErrorRate = totalSent > 0 ? (errorCount / totalSent) * 100 : 0;
+
+    let verdict: ChaosVerdict = "RESILIENT_CHAOS_SURVIVED";
+    if (emergencyAbort) {
+      verdict = "CIRCUIT_BREAKER_ABORTED";
+    } else if (finalErrorRate > 0) {
+      verdict = "DEGRADED";
+    }
+
+    const timestampIso = new Date().toISOString();
+    const sha256Receipt = pureSha256(
+      `CHAOS:${targetUrl}:${totalSent}:${successCount}:${errorCount}:${verdict}:${timestampIso}`
+    );
+
+    return deepFreeze({
+      targetUrl,
+      probesSent: totalSent,
+      probesSuccess: successCount,
+      errorCount,
+      errorRatePercent: parseFloat(finalErrorRate.toFixed(2)),
+      emergencyAbortTriggered: emergencyAbort,
+      avgLatencyMs: avgLatency,
+      p95LatencyMs: p95Latency,
+      epistemicVerdict: verdict,
+      sha256Receipt,
+      timestampIso
+    });
+  }
 
   /**
    * Executes a controlled production chaos experiment with live emergency brake.

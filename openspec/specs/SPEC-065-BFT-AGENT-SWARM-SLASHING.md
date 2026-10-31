@@ -1,7 +1,7 @@
 # SPEC-065 — BYZANTINE FAULT TOLERANT (BFT) AGENT SWARM & SLASHING HYPERVISOR
 **Version**: 66.0.0  
 **Status**: APPROVED  
-**Change Reference**: CHANGE-057  
+**Change Reference**: CHANGE-058  
 **Architecture Decision Record**: ADR-070  
 **Domain Layer**: Layer-0 System Core (`src/core/eosBftAgentSwarmSlashing.ts`)
 

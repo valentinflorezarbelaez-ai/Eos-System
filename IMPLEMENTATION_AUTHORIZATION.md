@@ -370,3 +370,23 @@
   - `openspec/specs/SPEC-059-CONSCIOUS-WITNESS-HOTPATCHING.md`
   - `docs/formal/ConsciousWitnessHotPatching.tla`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-31-FRONTIER-PILLARS-060-065
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-060 to SPEC-065 (v66.0.0)
+* **Owner Approval**: `OWNER_APPROVAL` GRANTED (Explicit owner directive on 2026-10-31)
+* **Scope**: 6 Frontier Big Tech Pillars:
+  1. Meta SapFix Autonomous PR Engine (`EosSapFixAutoshipper`, SPEC-060, CHANGE-053, ADR-065).
+  2. CycloneDX v1.5 SBOM & in-toto SLSA Level 4 Provenance (`EosSlsaProvenanceSbom`, SPEC-061, CHANGE-054, ADR-066).
+  3. Google Bazel-Grade Content-Addressable Storage & Action Cache (`EosContentAddressableCache`, SPEC-062, CHANGE-055, ADR-067).
+  4. AWS-Grade SMT Automated Reasoning & Formal Logic Prover (`EosSmtAutomatedReasoningProver`, SPEC-063, CHANGE-056, ADR-068).
+  5. Netflix-Grade Production Chaos Monkey & Resilience Hypervisor (`EosProductionChaosMonkey`, SPEC-064, CHANGE-057, ADR-069).
+  6. DeepMind-Grade Byzantine Fault Tolerant Agent Swarm & Quadratic Slashing (`EosBftAgentSwarmSlashing`, SPEC-065, CHANGE-058, ADR-070, `docs/formal/BftAgentSwarmSlashing.tla`).
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-053-AUTONOMOUS-SAPFIX-PR-ENGINE.md` to `INTAKE-058-BFT-AGENT-SWARM-SLASHING.md`
+  - `docs/plans/PLAN-053-AUTONOMOUS-SAPFIX-PR-ENGINE.md` to `PLAN-058-BFT-AGENT-SWARM-SLASHING.md`
+  - `docs/tasks/TASKS-053-AUTONOMOUS-SAPFIX-PR-ENGINE.md` to `TASKS-058-BFT-AGENT-SWARM-SLASHING.md`
+  - `openspec/changes/CHANGE-053-AUTONOMOUS-SAPFIX-PR-ENGINE.md` to `CHANGE-058-BFT-AGENT-SWARM-SLASHING.md`
+  - `openspec/specs/SPEC-060-AUTONOMOUS-SAPFIX-PR-ENGINE.md` to `SPEC-065-BFT-AGENT-SWARM-SLASHING.md`
+  - `docs/formal/BftAgentSwarmSlashing.tla`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)

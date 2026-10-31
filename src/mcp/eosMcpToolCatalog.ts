@@ -68,6 +68,12 @@ export const CORE_TIER0_TOOL_NAMES: ReadonlySet<string> = new Set([
   "eos_unitotal_evaluate",
   "eos_fuzz_hypervisor",
   "eos_conscious_witness",
+  "eos_sapfix_autoshipper",
+  "eos_slsa_provenance_sbom",
+  "eos_content_addressable_cache",
+  "eos_smt_reasoning_prover",
+  "eos_chaos_monkey_live",
+  "eos_bft_swarm_consensus",
   "eos_health_check"
 ]);
 
@@ -91,7 +97,10 @@ const MUTATION_CAPABLE_TOOLS: ReadonlySet<string> = new Set([
   "eos_enterprise_workspace",
   "eos_evolve_module",
   "eos_agent_topology_mesh",
-  "eos_surgical_healing"
+  "eos_surgical_healing",
+  "eos_sapfix_autoshipper",
+  "eos_content_addressable_cache",
+  "eos_chaos_monkey_live"
 ]);
 
 const DESTRUCTIVE_CAPABLE_TOOLS: ReadonlySet<string> = new Set([
@@ -102,7 +111,7 @@ function humanizeToolTitle(toolName: string): string {
   return toolName
     .replace(/^eos_/, "EOS ")
     .split("_")
-    .map((part) => (part.length <= 3 && /^(mcp|sdd|ast|hft|dsp|nsa|tmr|wal|dst|dbc)$/i.test(part)
+    .map((part) => (part.length <= 3 && /^(mcp|sdd|ast|hft|dsp|nsa|tmr|wal|dst|dbc|cas|smt|bft)$/i.test(part)
       ? part.toUpperCase()
       : part.charAt(0).toUpperCase() + part.slice(1)))
     .join(" ");

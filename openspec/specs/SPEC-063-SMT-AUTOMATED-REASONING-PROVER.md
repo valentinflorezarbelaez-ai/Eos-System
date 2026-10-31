@@ -1,7 +1,7 @@
 # SPEC-063 — SMT AUTOMATED REASONING & FORMAL LOGIC PROVER ENGINE
 **Version**: 66.0.0  
 **Status**: APPROVED  
-**Change Reference**: CHANGE-055  
+**Change Reference**: CHANGE-056  
 **Architecture Decision Record**: ADR-068  
 **Domain Layer**: Layer-0 System Core (`src/core/eosSmtAutomatedReasoningProver.ts`)
 
