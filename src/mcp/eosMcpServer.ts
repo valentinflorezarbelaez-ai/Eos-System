@@ -456,6 +456,11 @@ import {
 } from "../core/eosFleetProductionVerifier.ts";
 
 import {
+  EosSamaelUnitotalNexus,
+  type UnitotalAuditReport
+} from "../core/eosSamaelUnitotalNexus.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2329,6 +2334,18 @@ export class EosMcpServer {
                       target: { type: "string", description: "Target URL to verify or 'all' for entire registered fleet" },
                       timeoutMs: { type: "number", description: "Timeout limit in ms (default 10000)" },
                       recordToLedger: { type: "boolean", description: "Whether to persist attestation receipts in SQLite WAL ledger" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_unitotal_evaluate",
+                  description: "EOS Sovereign Unitotal Nexus & Universal Fleet Mesh (SPEC-057, v63.0.0): Evaluates the Gnostic 10-Sephiroth Architectural Vector (Kether to Malkuth) alongside multi-fleet governance and tooling drift across all registered repositories.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["evaluate", "audit_fleet", "heal_drift"], description: "Evaluation action" },
+                      repoId: { type: "string", description: "Target repository ID for heal_drift action" },
+                      recordToLedger: { type: "boolean", description: "Whether to persist attestation receipt in SQLite WAL ledger" }
                     }
                   }
                 }
@@ -4449,6 +4466,30 @@ export class EosMcpServer {
           recordToLedger,
           simulateDegraded
         });
+      }
+
+      case "eos_unitotal_evaluate": {
+        const action = String(args?.action || "evaluate").trim().toLowerCase();
+        const recordToLedger = args?.recordToLedger === true;
+
+        if (action === "audit_fleet") {
+          return {
+            status: "NOMINAL",
+            repositories: EosSamaelUnitotalNexus.auditFleetRepositories(this.projectRoot)
+          };
+        }
+
+        if (action === "heal_drift") {
+          const repoId = String(args?.repoId || "performance-talent-group").trim();
+          return EosSamaelUnitotalNexus.remediateFleetDrift(repoId, this.projectRoot, false);
+        }
+
+        const report = EosSamaelUnitotalNexus.evaluateUnitotalPerfection(this.projectRoot);
+        if (recordToLedger) {
+          EosSamaelUnitotalNexus.recordReceiptInLedger(report, this.projectRoot);
+        }
+
+        return report;
       }
 
       default:

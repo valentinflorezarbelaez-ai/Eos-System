@@ -3464,6 +3464,36 @@ switch (command) {
     break;
   }
 
+  case "unitotal:audit": {
+    printBanner();
+    const { EosSamaelUnitotalNexus } = await import("../src/core/eosSamaelUnitotalNexus.ts");
+    console.log("[EOS SAMAELIAN UNITOTAL NEXUS & UNIVERSAL FLEET MESH — SPEC-057 v63.0.0]\n");
+
+    const report = EosSamaelUnitotalNexus.evaluateUnitotalPerfection(root);
+    console.log(`  Unitotal Status : ${report.status}`);
+    console.log(`  Unitotal Score  : ${report.unitotalScore}/100`);
+    console.log(`  Active Specs    : ${report.activeSpecsCount} formal specifications`);
+    console.log(`  TLA+ Models     : ${report.formalTlaModelsCount} mathematical models verified`);
+    console.log(`  Fleet Health    : ${report.healthyFleetRepos}/${report.totalFleetRepos} repositories nominal\n`);
+
+    console.log("[VECTOR ARQUITECTÓNICO DE LAS 10 SEPHIROTH — ÁRBOL DE LA VIDA]");
+    for (const s of report.sephirothVector) {
+      console.log(`  • ${s.sephirah.padEnd(10)} [${s.score}/100 - ${s.status}] : ${s.bigTechEquivalent}`);
+      console.log(`    ↳ Gnosis: ${s.esotericPrinciple}`);
+      console.log(`    ↳ Evidencia: ${s.verificationEvidence}`);
+    }
+
+    console.log("\n[ESTADO DE GOBERNANZA DE LA FLOTA]");
+    for (const r of report.fleetRepositories) {
+      console.log(`  • ${r.id.padEnd(25)} [${r.status}] : ${r.title}`);
+      console.log(`    ↳ Path: ${r.localPath} (Disk: ${r.diskPresent}, MCP: ${r.hasMcpConfig ? "OK" : "DRIFT"})`);
+    }
+
+    EosSamaelUnitotalNexus.recordReceiptInLedger(report, root);
+    console.log(`\n✔ Recibo de perfección unitotal registrado en SQLite WAL Ledger (SHA-256: sha256:${report.sha256Receipt}).\n`);
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3641,6 +3671,7 @@ Uso Universal:
   eos sandbox:vm [doctor|run] Aislamiento físico de hipervisor / MicroVM (Firecracker/gVisor/NodeVM)
   eos dashboard [start|status] Panel visual de telemetría y topología en tiempo real (localhost:4321)
   eos fleet:verify [target|all] Auditoría y bautismo de fuego en producción real (WCAG/CWV/TLS)
+  eos unitotal:audit         Auditoría unitotal gnóstica-samaeliana de las 10 Sephiroth y la flota
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:
