@@ -3588,6 +3588,56 @@ switch (command) {
     break;
   }
 
+  case "witness:interrogate": {
+    printBanner();
+    const { EosConsciousWitness } = await import("../src/core/eosConsciousWitness.ts");
+    console.log("[EOS SOVEREIGN CONSCIOUS WITNESS — SPEC-059 v65.0.0]\n");
+
+    const witness = new EosConsciousWitness(root);
+    const specId = args[1] || "SPEC-059";
+    const receipt = witness.interrogateAgentIntention({
+      declaredSpecId: specId,
+      targetFiles: ["src/core/eosConsciousWitness.ts", "src/core/eosHotPatchEngine.ts"],
+      proposedAction: "Integrate Sovereign Conscious Witness and Hot-Patching Engine",
+      affirmedSymbols: ["EosConsciousWitness", "EosHotPatchEngine"]
+    });
+
+    console.log(`  Veredicto      : ${receipt.verdict}`);
+    console.log(`  Alineación     : ${receipt.alignmentScore}/100`);
+    console.log(`  Spec Verificada: ${receipt.specVerified ? "SÍ (" + specId + ")" : "NO (FASCINACIÓN)"}`);
+    console.log(`  Sello Testigo  : sha384:${receipt.sha384WitnessSeal.slice(0, 24)}...`);
+    console.log(`  Mensaje        : ${receipt.message}\n`);
+    break;
+  }
+
+  case "hotpatch": {
+    printBanner();
+    const { EosHotPatchEngine } = await import("../src/core/eosHotPatchEngine.ts");
+    console.log("[EOS ATOMIC ZERO-DOWNTIME HOT-PATCHING ENGINE — SPEC-059 v65.0.0]\n");
+
+    const engine = new EosHotPatchEngine();
+    const mockTarget = {
+      version: "64.0.0",
+      ping: () => "v64-pong"
+    };
+    engine.registerTarget("mock-core-service", mockTarget);
+
+    console.log(`  Estado previo  : ping() => "${mockTarget.ping()}"`);
+    const patchRes = engine.applyHotPatch({
+      patchId: "PATCH-HOT-001",
+      targetName: "mock-core-service",
+      methods: {
+        ping: () => "v65-sovereign-pong"
+      }
+    });
+
+    console.log(`  Hot-Patch ID   : ${patchRes.patchId}`);
+    console.log(`  Métodos Swapped: ${patchRes.methodsPatched.join(", ")}`);
+    console.log(`  Sello SHA-384  : sha384:${patchRes.sha384Receipt.slice(0, 24)}...`);
+    console.log(`  Estado en vivo : ping() => "${mockTarget.ping()}" (Swapped sin restart)\n`);
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3769,6 +3819,8 @@ Uso Universal:
   eos fuzz:hypervisor        Fuzzing de propiedades estocásticas, Delta Shrinkage y 49 Niveles
   eos replay:ledger [height] Replay determinista time-travel de estados sobre el Ledger SQLite WAL
   eos sync-stack             Sincronización hermética del stack Gentle-AI, Engram, GGA y MCP (80+ tools)
+  eos witness:interrogate    Interrogación metacognitiva del Testigo de la Conciencia (anti-alucinación)
+  eos hotpatch               Micro-parcheo atómico en memoria sin reinicio de proceso (Erlang/Ksplice)
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

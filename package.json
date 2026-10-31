@@ -1,6 +1,6 @@
 {
   "name": "eos-system-landing",
-  "version": "64.0.0",
+  "version": "65.0.0",
   "description": "Local software engineering toolkit with a Node.js CLI, MCP server, repository analysis, templates, and bounded demonstrations.",
   "type": "module",
   "bin": {

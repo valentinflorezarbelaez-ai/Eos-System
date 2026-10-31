@@ -465,6 +465,14 @@ import {
 } from "../core/eosPropertyFuzzingHypervisor.ts";
 
 import {
+  EosConsciousWitness
+} from "../core/eosConsciousWitness.ts";
+
+import {
+  EosHotPatchEngine
+} from "../core/eosHotPatchEngine.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2364,6 +2372,20 @@ export class EosMcpServer {
                       iterations: { type: "number", description: "Number of fuzzing iterations (default: 1000)" },
                       targetHeight: { type: "number", description: "Target ledger transaction height for time-travel replay" },
                       recordToLedger: { type: "boolean", description: "Whether to commit cryptographic verification receipt into SQLite WAL ledger" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_conscious_witness",
+                  description: "Sovereign Conscious Witness & Hot-Patching Core (SPEC-059, v65.0.0): Metacognitive anti-hallucination gatekeeper, intention interrogation against formal EARS specs, and atomic in-memory hot-patching.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["interrogate", "hotpatch"], description: "Action to execute" },
+                      declaredSpecId: { type: "string", description: "Formal specification identifier (e.g. SPEC-059)" },
+                      targetFiles: { type: "array", items: { type: "string" }, description: "List of files to be inspected or modified" },
+                      proposedAction: { type: "string", description: "Clear description of the proposed modification" },
+                      affirmedSymbols: { type: "array", items: { type: "string" }, description: "Specific code symbols claimed to exist or be modified" }
                     }
                   }
                 }
@@ -4540,6 +4562,21 @@ export class EosMcpServer {
           seed,
           iterations,
           recordToLedger
+        });
+      }
+
+      case "eos_conscious_witness": {
+        const witness = new EosConsciousWitness(this.projectRoot);
+        const declaredSpecId = args?.declaredSpecId ? String(args.declaredSpecId) : undefined;
+        const targetFiles = Array.isArray(args?.targetFiles) ? args.targetFiles.map(String) : [];
+        const proposedAction = String(args?.proposedAction || "Inspect and verify");
+        const affirmedSymbols = Array.isArray(args?.affirmedSymbols) ? args.affirmedSymbols.map(String) : [];
+
+        return witness.interrogateAgentIntention({
+          targetFiles,
+          proposedAction,
+          declaredSpecId,
+          affirmedSymbols
         });
       }
 

@@ -31,3 +31,5 @@ export * from "./eosEvolutionaryHarness.ts";
 export * from "./eosEnterpriseWorkspaceGovernor.ts";
 export * from "./eosTypeScriptAstAnalyzer.ts";
 export * from "./eosGentlemanStackBridge.ts";
+export * from "./eosConsciousWitness.ts";
+export * from "./eosHotPatchEngine.ts";
