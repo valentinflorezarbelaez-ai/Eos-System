@@ -3465,6 +3465,175 @@ switch (command) {
     break;
   }
 
+  case "sapfix": {
+    printBanner();
+    const faultId = args[1] || `FAULT-${Date.now().toString(36).toUpperCase()}`;
+    const targetFile = args[2] || "src/core/eosKernelPrimitives.ts";
+    const line = Number.parseInt(args[3] || "10", 10);
+    const msg = args[4] || "Cannot read properties of undefined";
+
+    console.log(`[EOS META-GRADE AUTONOMOUS SAPFIX ENGINE — SPEC-060 v66.0.0]\n`);
+    const { EosSapFixAutoshipper } = await import("../src/core/eosSapFixAutoshipper.ts");
+
+    const report = await EosSapFixAutoshipper.executeCycle({
+      faultId,
+      targetFilePath: targetFile,
+      failingLine: line,
+      errorMessage: msg
+    }, root);
+
+    console.log(`  Fault ID        : ${report.faultId}`);
+    console.log(`  Status          : ${report.status}`);
+    console.log(`  Target File     : ${report.targetFile}`);
+    console.log(`  Branch Prepared : ${report.branchName}`);
+    console.log(`  Zero-Regression : ${report.verificationPassed ? "VERIFIED (100% PASS)" : "FAILED"}`);
+    console.log(`  PR Title        : ${report.prTitle}`);
+    console.log(`  Receipt SHA-256 : sha256:${report.sha256Receipt}\n`);
+
+    EosSapFixAutoshipper.recordReceiptInLedger(report, root);
+    console.log(`✔ Manifiesto de PR generado y registrado en SQLite WAL Ledger.\n`);
+    break;
+  }
+
+  case "sbom": {
+    printBanner();
+    const { EosSlsaProvenanceSbom } = await import("../src/core/eosSlsaProvenanceSbom.ts");
+    console.log("[EOS CYCLONEDX v1.5 SOFTWARE BILL OF MATERIALS — SPEC-061 v66.0.0]\n");
+
+    const sbom = EosSlsaProvenanceSbom.generateCycloneDxSbom(root);
+    console.log(`  BOM Format      : ${sbom.bomFormat} (v${sbom.specVersion})`);
+    console.log(`  Serial Number   : ${sbom.serialNumber}`);
+    console.log(`  Main Component  : ${sbom.metadata.component.name} v${sbom.metadata.component.version}`);
+    console.log(`  Core Modules    : ${sbom.components.length} pure Layer-0 modules cataloged`);
+    console.log(`  Runtime Deps    : ${sbom.metadata.runtimeDependenciesCount} (Strict Layer-0 Pure)`);
+    console.log(`  Receipt SHA-256 : sha256:${sbom.sha256Receipt}\n`);
+
+    EosSlsaProvenanceSbom.recordReceiptInLedger(sbom, root);
+    console.log(`✔ Atestación de SBOM CycloneDX registrada en SQLite WAL Ledger.\n`);
+    break;
+  }
+
+  case "slsa": {
+    printBanner();
+    const { EosSlsaProvenanceSbom } = await import("../src/core/eosSlsaProvenanceSbom.ts");
+    console.log("[EOS IN-TOTO SLSA LEVEL 4 PROVENANCE STATEMENT — SPEC-061 v66.0.0]\n");
+
+    const commitSha = args[1] || "HEAD";
+    const slsa = EosSlsaProvenanceSbom.generateSlsaProvenance(root, commitSha);
+    console.log(`  Statement Type  : ${slsa._type}`);
+    console.log(`  Predicate Type  : ${slsa.predicateType}`);
+    console.log(`  Build Type      : ${slsa.predicate.buildDefinition.buildType}`);
+    console.log(`  Builder ID      : ${slsa.predicate.runDetails.builder.id}`);
+    console.log(`  Artifacts Signed: ${slsa.subject.length} binary subjects`);
+    console.log(`  Receipt SHA-256 : sha256:${slsa.sha256Receipt}\n`);
+
+    EosSlsaProvenanceSbom.recordReceiptInLedger(slsa, root);
+    console.log(`✔ Atestación de procedencia SLSA v1.0 registrada en SQLite WAL Ledger.\n`);
+    break;
+  }
+
+  case "cas": {
+    printBanner();
+    const { EosContentAddressableCache } = await import("../src/core/eosContentAddressableCache.ts");
+    console.log("[EOS GOOGLE BAZEL-GRADE CAS & ACTION CACHE — SPEC-062 v66.0.0]\n");
+
+    const cas = new EosContentAddressableCache(root);
+    const stats = cas.getStats();
+    console.log(`  Total Blobs CAS : ${stats.totalBlobs}`);
+    console.log(`  Total Actions AC: ${stats.totalActions}`);
+    console.log(`  Cache Hits      : ${stats.cacheHits}`);
+    console.log(`  Cache Misses    : ${stats.cacheMisses}`);
+    console.log(`  Hit Ratio       : ${(stats.hitRatio * 100).toFixed(1)}%`);
+    console.log(`  Saved CPU Time  : ${stats.estimatedSavedMs} ms`);
+    console.log(`  Receipt SHA-256 : sha256:${stats.sha256Receipt}\n`);
+
+    cas.recordReceiptInLedger(root);
+    console.log(`✔ Estadísticas de CAS registradas en SQLite WAL Ledger.\n`);
+    break;
+  }
+
+  case "smt": {
+    printBanner();
+    const { EosSmtAutomatedReasoningProver } = await import("../src/core/eosSmtAutomatedReasoningProver.ts");
+    console.log("[EOS AWS-GRADE SMT AUTOMATED REASONING PROVER — SPEC-063 v66.0.0]\n");
+
+    const rules = [
+      { role: "guest", action: "ledger_read", allow: true },
+      { role: "guest", action: "ledger_write", allow: false },
+      { role: "admin", action: "ledger_write", allow: true }
+    ];
+
+    const proof = EosSmtAutomatedReasoningProver.proveAbacSafety(rules, "guest", "ledger_write");
+    console.log(`  Theorem Name    : ${proof.theoremName}`);
+    console.log(`  SMT Verdict     : ${proof.verdict}`);
+    console.log(`  Satisfiable     : ${proof.isSatisfiable ? "YES (BREACH MODEL FOUND)" : "NO (MATHEMATICALLY SECURE)"}`);
+    console.log(`  Clauses Checked : ${proof.evaluatedClausesCount}`);
+    console.log(`  Duration        : ${proof.durationUs} µs`);
+    console.log(`  Receipt SHA-256 : sha256:${proof.sha256Receipt}\n`);
+
+    EosSmtAutomatedReasoningProver.recordReceiptInLedger(proof, root);
+    console.log(`✔ Demostración formal SMT registrada en SQLite WAL Ledger.\n`);
+    break;
+  }
+
+  case "chaos:live": {
+    printBanner();
+    const { EosProductionChaosMonkey } = await import("../src/core/eosProductionChaosMonkey.ts");
+    const target = args[1] || "https://portafolio-valentin.vercel.app";
+    console.log(`[EOS NETFLIX-GRADE PRODUCTION CHAOS MONKEY — SPEC-064 v66.0.0]\n`);
+    console.log(`Inyectando batería de caos controlado en: ${target}...`);
+
+    const report = await EosProductionChaosMonkey.executeExperiment(target, {
+      burstCount: 5,
+      jitterMs: 50
+    });
+
+    console.log(`  Target URL      : ${report.targetUrl}`);
+    console.log(`  Probes Sent     : ${report.probesSent}`);
+    console.log(`  Success Count   : ${report.probesSuccess}`);
+    console.log(`  Error Count     : ${report.errorCount} (${report.errorRatePercent}%)`);
+    console.log(`  Avg Latency     : ${report.avgLatencyMs} ms (P95: ${report.p95LatencyMs} ms)`);
+    console.log(`  Emergency Abort : ${report.emergencyAbortTriggered ? "TRIPPED" : "NO"}`);
+    console.log(`  Epistemic Status: ${report.epistemicVerdict}`);
+    console.log(`  Receipt SHA-256 : sha256:${report.sha256Receipt}\n`);
+
+    EosProductionChaosMonkey.recordReceiptInLedger(report, root);
+    console.log(`✔ Atestación de experimento de caos registrada en SQLite WAL Ledger.\n`);
+    break;
+  }
+
+  case "swarm": {
+    printBanner();
+    const { EosBftAgentSwarmSlashing } = await import("../src/core/eosBftAgentSwarmSlashing.ts");
+    console.log("[EOS DEEPMIND-GRADE BFT AGENT SWARM & SLASHING HYPERVISOR — SPEC-065 v66.0.0]\n");
+
+    const swarm = EosBftAgentSwarmSlashing.createDefaultSwarm();
+    const proposal = {
+      proposalId: args[1] || `PROP-${Date.now().toString(36).toUpperCase()}`,
+      patchHash: "sha256:44332211aabbccddeeff00112233445566778899aabbccddeeff001122334455",
+      authorAgentId: "agent_architect",
+      testsExitCode: 0,
+      conformsToConstitution: true
+    };
+
+    const report = EosBftAgentSwarmSlashing.evaluateConsensus(swarm, proposal);
+    console.log(`  Proposal ID     : ${report.proposalId}`);
+    console.log(`  BFT Verdict     : ${report.verdict}`);
+    console.log(`  Votes For/Total : ${report.votesFor}/${report.totalAgents} (Threshold: ${report.quorumThreshold})`);
+    console.log(`  Security Veto   : ${report.vetoTriggered ? "VETO TRIGGERED" : "NO"}`);
+    console.log(`  Slashed Agents  : ${report.slashedAgents.length > 0 ? report.slashedAgents.join(", ") : "NONE (All Conforming)"}`);
+    console.log(`  Receipt SHA-256 : sha256:${report.sha256Receipt}\n`);
+
+    console.log(`[REPUTATION STAKES]`);
+    for (const [id, stake] of Object.entries(report.agentStakes)) {
+      console.log(`  • ${id.padEnd(20)}: ${stake} tokens`);
+    }
+
+    EosBftAgentSwarmSlashing.recordReceiptInLedger(report, root);
+    console.log(`\n✔ Acta de consenso BFT registrada en SQLite WAL Ledger.\n`);
+    break;
+  }
+
   case "unitotal:audit": {
     printBanner();
     const { EosSamaelUnitotalNexus } = await import("../src/core/eosSamaelUnitotalNexus.ts");
