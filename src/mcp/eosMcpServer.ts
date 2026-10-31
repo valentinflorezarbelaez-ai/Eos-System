@@ -450,6 +450,12 @@ import {
 } from "../core/eosTelemetryDashboard.ts";
 
 import {
+  EosFleetProductionVerifier,
+  REGISTERED_FLEET_TARGETS,
+  type ProbeResult
+} from "../core/eosFleetProductionVerifier.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2311,6 +2317,18 @@ export class EosMcpServer {
                       action: { type: "string", enum: ["snapshot", "start", "stop"], description: "Action to perform on dashboard" },
                       port: { type: "number", description: "Port for dashboard server (default 4321)" },
                       recordToLedger: { type: "boolean", description: "Whether to record snapshot receipt in SQLite WAL ledger" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_fleet_verify",
+                  description: "Fleet Production Living Verification & Bautismo de Fuego Engine (SPEC-056, v62.0.0): Executes live synthetic quality & security audits on deployed production targets (portafolio-valentin.vercel.app, ptg-performance-talent-group.vercel.app), auditing TLS headers, WCAG 2.1 AA landmarks, and CWV.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      target: { type: "string", description: "Target URL to verify or 'all' for entire registered fleet" },
+                      timeoutMs: { type: "number", description: "Timeout limit in ms (default 10000)" },
+                      recordToLedger: { type: "boolean", description: "Whether to persist attestation receipts in SQLite WAL ledger" }
                     }
                   }
                 }
@@ -4418,6 +4436,19 @@ export class EosMcpServer {
           port,
           snapshot
         };
+      }
+
+      case "eos_fleet_verify": {
+        const target = typeof args?.target === "string" ? args.target.trim() : "all";
+        const recordToLedger = args?.recordToLedger === true;
+        const simulateDegraded = args?.simulateDegraded === true;
+
+        return EosFleetProductionVerifier.evaluateFleetSync({
+          target,
+          projectRoot: this.projectRoot,
+          recordToLedger,
+          simulateDegraded
+        });
       }
 
       default:

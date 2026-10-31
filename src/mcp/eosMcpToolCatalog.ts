@@ -64,6 +64,7 @@ export const CORE_TIER0_TOOL_NAMES: ReadonlySet<string> = new Set([
   "eos_github_gate",
   "eos_microvm_sandbox",
   "eos_dashboard_status",
+  "eos_fleet_verify",
   "eos_health_check"
 ]);
 

@@ -3434,6 +3434,36 @@ switch (command) {
     break;
   }
 
+  case "fleet:verify": {
+    printBanner();
+    const targetArg = args[1] || "all";
+    const { EosFleetProductionVerifier, REGISTERED_FLEET_TARGETS } = await import("../src/core/eosFleetProductionVerifier.ts");
+
+    console.log("[EOS FLEET PRODUCTION LIVING VERIFICATION & BAUTISMO DE FUEGO — SPEC-056 v62.0.0]\n");
+
+    const targets = targetArg === "all"
+      ? REGISTERED_FLEET_TARGETS
+      : [targetArg];
+
+    for (const target of targets) {
+      console.log(`[SONDA EN VIVO] Auditando objetivo: ${target}...`);
+      const res = await EosFleetProductionVerifier.probeTarget(target);
+      console.log(`  HTTP Status     : ${res.httpStatus} ${res.ok ? "OK" : "ERROR"}`);
+      console.log(`  Latencia Total  : ${res.durationMs} ms (TTFB: ${res.ttfbMs} ms)`);
+      console.log(`  Payload Recibido: ${(res.payloadBytes / 1024).toFixed(1)} KB`);
+      console.log(`  Cabeceras TLS   : ${res.securityHeaders.passedCount}/${res.securityHeaders.totalCount} verificadas (HSTS: ${res.securityHeaders.strictTransportSecurity ? "SI" : "NO"}, nosniff: ${res.securityHeaders.xContentTypeOptions ? "SI" : "NO"})`);
+      console.log(`  Hitos WCAG 2.1  : ${res.semanticLandmarks.passedCount}/${res.semanticLandmarks.totalCount} presentes (main: ${res.semanticLandmarks.hasMain ? "SI" : "NO"}, header: ${res.semanticLandmarks.hasHeader ? "SI" : "NO"}, viewport: ${res.semanticLandmarks.hasResponsiveViewport ? "SI" : "NO"})`);
+      console.log(`  Metadatos SEO   : "${res.seoMetadata.title}" (OG: ${res.seoMetadata.hasOgTitle ? "SI" : "NO"}, Favicon: ${res.seoMetadata.hasFavicon ? "SI" : "NO"})`);
+      console.log(`  Puntaje Salud   : ${res.performanceScore}/100`);
+      console.log(`  Estado Epistémico: ${res.epistemicStatus}`);
+      console.log(`  Atestación SHA  : sha256:${res.sha256Attestation}\n`);
+
+      EosFleetProductionVerifier.recordReceiptInLedger(res, root);
+      console.log(`✔ Recibo criptográfico de auditoría en producción registrado en SQLite WAL Ledger.\n`);
+    }
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3610,6 +3640,7 @@ Uso Universal:
   eos pr:check               Compuerta nativa de GitHub Actions y bot de atestación de Check-Runs
   eos sandbox:vm [doctor|run] Aislamiento físico de hipervisor / MicroVM (Firecracker/gVisor/NodeVM)
   eos dashboard [start|status] Panel visual de telemetría y topología en tiempo real (localhost:4321)
+  eos fleet:verify [target|all] Auditoría y bautismo de fuego en producción real (WCAG/CWV/TLS)
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:
