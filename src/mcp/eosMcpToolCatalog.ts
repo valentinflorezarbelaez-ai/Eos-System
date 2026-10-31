@@ -56,6 +56,7 @@ export const CORE_TIER0_TOOL_NAMES: ReadonlySet<string> = new Set([
   "eos_audit_fleet",
   "eos_mcts_tune",
   "eos_canary_rollout",
+  "eos_agent_topology_mesh",
   "eos_health_check"
 ]);
 
@@ -77,7 +78,8 @@ const MUTATION_CAPABLE_TOOLS: ReadonlySet<string> = new Set([
   "eos_sqlite_ledger",
   "eos_gentleman_update",
   "eos_enterprise_workspace",
-  "eos_evolve_module"
+  "eos_evolve_module",
+  "eos_agent_topology_mesh"
 ]);
 
 const DESTRUCTIVE_CAPABLE_TOOLS: ReadonlySet<string> = new Set([

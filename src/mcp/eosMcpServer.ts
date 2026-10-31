@@ -404,6 +404,12 @@ import {
 } from "../core/eosEvolutionaryHarness.ts";
 
 import {
+  EosAgentTopologyMesh,
+  type AgentNode,
+  type MeshEventType
+} from "../core/eosAgentTopologyMesh.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -488,6 +494,7 @@ function isPathWithin(rootPath: string, candidatePath: string): boolean {
 export class EosMcpServer {
   private static globalHnsw = new EosHnswVectorEngine({ dimensions: 128, m: 16 });
   private static globalHashChain = new EosMonotonicHashChain();
+  private static globalMeshRing = EosAgentTopologyMesh.createRingBufferMesh(256);
   private readonly knowledgeStore = createDefaultEosKnowledgeStore();
   private readonly projectRoot: string;
   private readonly serverVersion: string;
@@ -2123,6 +2130,43 @@ export class EosMcpServer {
                           contractComplianceScore: { type: "number" }
                         }
                       }
+                    }
+                  }
+                },
+                {
+                  name: "eos_agent_topology_mesh",
+                  description: "Agent Topology Compiler & Zero-Copy Communication Mesh (SPEC-048, v54.0.0): compiles acyclic subagent DAGs with cycle detection, dispatches zero-copy ring-buffer mesh events, and meters >70% token coordination savings.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["compile", "publish", "read", "efficiency"], description: "Topology mesh operation mode" },
+                      dagId: { type: "string", description: "DAG identifier (e.g. DAG-ALPHA-001)" },
+                      nodes: {
+                        type: "array",
+                        items: {
+                          type: "object",
+                          properties: {
+                            id: { type: "string" },
+                            name: { type: "string" },
+                            assignedModulePath: { type: "string" },
+                            dependencies: { type: "array", items: { type: "string" } }
+                          },
+                          required: ["id", "assignedModulePath", "dependencies"]
+                        },
+                        description: "Subagent task nodes for topology compilation"
+                      },
+                      emitterAgentId: { type: "string", description: "Source agent ID (for publish)" },
+                      targetNodeId: { type: "string", description: "Target node ID (for publish)" },
+                      eventType: {
+                        type: "string",
+                        enum: ["AST_MUTATION_DELTA", "CONTRACT_ATTESTATION", "VERIFICATION_SIGNAL", "HANDOFF_PROBE"],
+                        description: "Mesh event type"
+                      },
+                      compactPayload: { type: "object", description: "Compact payload dictionary" },
+                      sinceSequence: { type: "number", description: "Starting sequence number to read from" },
+                      compactBytes: { type: "number", description: "Compact envelope byte length" },
+                      fullFileContextBytes: { type: "number", description: "Full-file baseline context byte length" },
+                      recordToLedger: { type: "boolean", description: "Whether to record cryptographic batch attestation in SQLite WAL ledger" }
                     }
                   }
                 }
@@ -3878,6 +3922,54 @@ export class EosMcpServer {
           return EosEvolutionaryHarness.evaluateTokenCircuitBreaker([]);
         }
         throw new Error(`Unsupported eos_evolve_module action: ${action}`);
+      }
+
+      case "eos_agent_topology_mesh": {
+        const action = String(args?.action || "compile").trim().toLowerCase();
+        if (action === "compile") {
+          const dagId = String(args?.dagId || `DAG-${Date.now()}`);
+          const rawNodes = Array.isArray(args?.nodes) ? args.nodes : [];
+          const nodes: AgentNode[] = rawNodes.map((n: any) => ({
+            id: String(n.id || ""),
+            name: String(n.name || n.id || ""),
+            assignedModulePath: String(n.assignedModulePath || ""),
+            dependencies: Array.isArray(n.dependencies) ? n.dependencies.map(String) : [],
+            status: n.status
+          }));
+          const compiled = EosAgentTopologyMesh.compileTopology(dagId, nodes);
+          if (args?.recordToLedger === true) {
+            const attestationReceipt = EosAgentTopologyMesh.recordMeshAttestation(compiled, [], {
+              ledgerDbPath: EosDurableSqliteLedger.defaultLedgerPath(this.projectRoot),
+              projectId: "eos-system"
+            });
+            return {
+              ...compiled,
+              ledgerAttestationReceipt: attestationReceipt
+            };
+          }
+          return compiled;
+        }
+        if (action === "publish") {
+          const emitterAgentId = String(args?.emitterAgentId || "");
+          const targetNodeId = String(args?.targetNodeId || "");
+          const eventType = (args?.eventType || "AST_MUTATION_DELTA") as MeshEventType;
+          const compactPayload = isPlainRecord(args?.compactPayload) ? args.compactPayload : {};
+          return EosMcpServer.globalMeshRing.publish(emitterAgentId, targetNodeId, eventType, compactPayload);
+        }
+        if (action === "read") {
+          const sinceSequence = Number(args?.sinceSequence) || 0;
+          return {
+            events: EosMcpServer.globalMeshRing.readSince(sinceSequence),
+            cursor: EosMcpServer.globalMeshRing.getCursor(),
+            capacity: EosMcpServer.globalMeshRing.getCapacity()
+          };
+        }
+        if (action === "efficiency") {
+          const compactBytes = Number(args?.compactBytes) || 0;
+          const fullFileContextBytes = Number(args?.fullFileContextBytes) || 1;
+          return EosAgentTopologyMesh.calculateTokenEfficiency(compactBytes, fullFileContextBytes);
+        }
+        throw new Error(`Unsupported eos_agent_topology_mesh action: ${action}`);
       }
 
       default:

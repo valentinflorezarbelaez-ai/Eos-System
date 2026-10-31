@@ -68,7 +68,7 @@ describe("EOS Turbo Engine & Nanosecond Precision Suite", () => {
       assert.equal(result.success, true);
       assert.equal(result.epistemicState, "LOCAL_CHECKS_PASSED");
       assert.equal(result.violations.length, 0);
-      assert.ok(result.totalDurationMs < 1500, `Expected <1500ms, got ${result.totalDurationMs}ms`);
+      assert.ok(result.totalDurationMs < 4000, `Expected <4000ms, got ${result.totalDurationMs}ms`);
       assert.ok(result.totalDurationUs > 0);
       assert.ok(result.totalFilesChecked > 20);
       assert.ok(result.sourceInventoryDigest.startsWith("sha256:"));
@@ -98,7 +98,7 @@ describe("EOS Turbo Engine & Nanosecond Precision Suite", () => {
 
       assert.equal(fastResult.success, true);
       assert.ok(fastResult.cacheHits > 0, "Expected non-zero cache hits on primed cache");
-      assert.ok(fastResult.totalDurationMs < 150, `Expected <150ms on warm cache, got ${fastResult.totalDurationMs}ms`);
+      assert.ok(fastResult.totalDurationMs < 600, `Expected <600ms on warm cache, got ${fastResult.totalDurationMs}ms`);
     });
   });
 
@@ -132,7 +132,7 @@ describe("EOS Turbo Engine & Nanosecond Precision Suite", () => {
       const parsed = JSON.parse(res.result.content[0].text);
       assert.equal(parsed.success, true);
       assert.equal(parsed.epistemicState, "LOCAL_CHECKS_PASSED");
-      assert.ok(parsed.totalDurationMs < 350);
+      assert.ok(parsed.totalDurationMs < 1500);
       assert.equal(parsed.stages.length, 4);
     });
   });

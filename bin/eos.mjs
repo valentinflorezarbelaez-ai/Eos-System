@@ -3089,6 +3089,41 @@ switch (command) {
     break;
   }
 
+  case "mesh":
+  case "agent-topology": {
+    printBanner();
+    const subAction = (args[1] || "compile").toLowerCase();
+    const { EosAgentTopologyMesh } = await import("../src/core/eosAgentTopologyMesh.ts");
+
+    if (subAction === "compile") {
+      const demoNodes = [
+        { id: "NODE-1-INTERFACE", name: "Contract Spec", assignedModulePath: "src/core/interface.ts", dependencies: [] },
+        { id: "NODE-2-DOMAIN", name: "Domain Logic", assignedModulePath: "src/core/domain.ts", dependencies: ["NODE-1-INTERFACE"] },
+        { id: "NODE-3-TESTS", name: "Property Tests", assignedModulePath: "test/domain.test.ts", dependencies: ["NODE-2-DOMAIN"] }
+      ];
+      const dagId = args[2] || "DAG-DEEPMIND-ALPHA";
+      const compiled = EosAgentTopologyMesh.compileTopology(dagId, demoNodes);
+      console.log("[EOS AGENT TOPOLOGY COMPILER — ZERO-COPY MESH]\n");
+      console.log(`  DAG ID               : ${compiled.dagId}`);
+      console.log(`  Total Nodes          : ${compiled.totalNodes}`);
+      console.log(`  Topological Order    : ${compiled.topologicalOrder.join(" -> ")}`);
+      console.log(`  Acyclic Guarantee    : ${compiled.isAcyclic ? "YES (Deadlock-Free)" : "NO"}`);
+      console.log(`  Plan Receipt SHA-256 : sha256:${compiled.sha256PlanReceipt}\n`);
+    } else if (subAction === "efficiency") {
+      const compactBytes = Number(args[2]) || 512;
+      const fullContextBytes = Number(args[3]) || 8192;
+      const eff = EosAgentTopologyMesh.calculateTokenEfficiency(compactBytes, fullContextBytes);
+      console.log("[EOS AGENT MESH TOKEN EFFICIENCY METER]\n");
+      console.log(`  Compact Envelope     : ${eff.compactBytes} bytes`);
+      console.log(`  Full Context Baseline: ${eff.fullFileContextBytes} bytes`);
+      console.log(`  Reduction Ratio      : ${eff.reductionRatioPct}% token savings`);
+      console.log(`  Estimated Tokens Saved: ~${eff.coordinationTokensSaved} tokens\n`);
+    } else {
+      console.log(`[EOS MESH] Uso: eos mesh [compile|efficiency]`);
+    }
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3257,6 +3292,7 @@ Uso Universal:
   eos ledger [verify|record|search|recent] Ledger durable SQLite WAL + FTS5 + cadena SHA-256 (0 dependencias)
   eos ast [directorio]       Analizador AST real del compilador TypeScript (pureza L0, strip-only Node 24, complejidad)
   eos project [list|inspect|verify|onboard] Gobernador empresarial multi-proyecto, monorepos políglotas, contratos y Ley IV
+  eos mesh [compile|efficiency] Compilador de topología acíclica de subagentes y malla zero-copy DeepMind
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:
