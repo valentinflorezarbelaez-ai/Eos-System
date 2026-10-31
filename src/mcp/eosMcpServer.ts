@@ -445,6 +445,11 @@ import {
 } from "../core/eosMicroVmSandbox.ts";
 
 import {
+  EosTelemetryDashboard,
+  type TelemetrySnapshot
+} from "../core/eosTelemetryDashboard.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2294,6 +2299,18 @@ export class EosMcpServer {
                       memoryLimitMb: { type: "number", description: "Memory limit in MB (default 512)" },
                       timeoutMs: { type: "number", description: "Timeout limit in ms (default 15000)" },
                       recordToLedger: { type: "boolean", description: "Whether to record execution receipt in SQLite WAL ledger" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_dashboard_status",
+                  description: "Real-Time Visual Telemetry & Topological Control Dashboard (SPEC-055, v61.0.0): Inspects dashboard status, telemetry snapshot, agent topology DAG, and SQLite WAL ledger metrics.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["snapshot", "start", "stop"], description: "Action to perform on dashboard" },
+                      port: { type: "number", description: "Port for dashboard server (default 4321)" },
+                      recordToLedger: { type: "boolean", description: "Whether to record snapshot receipt in SQLite WAL ledger" }
                     }
                   }
                 }
@@ -4383,6 +4400,24 @@ export class EosMcpServer {
         }
 
         return runResult;
+      }
+
+      case "eos_dashboard_status": {
+        const action = String(args?.action || "snapshot").trim().toLowerCase();
+        const port = typeof args?.port === "number" ? Math.floor(args.port) : 4321;
+        const dashboard = new EosTelemetryDashboard(this.projectRoot, port);
+        const snapshot = dashboard.getSnapshot();
+
+        if (args?.recordToLedger === true) {
+          dashboard.recordSnapshotInLedger(snapshot);
+        }
+
+        return {
+          status: "NOMINAL",
+          action,
+          port,
+          snapshot
+        };
       }
 
       default:

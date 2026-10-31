@@ -3398,6 +3398,42 @@ switch (command) {
     break;
   }
 
+  case "dashboard": {
+    printBanner();
+    const subAction = (args[1] || "status").toLowerCase();
+    const portArgIdx = args.findIndex((a) => a === "--port");
+    const port = portArgIdx !== -1 && args[portArgIdx + 1] ? Number.parseInt(args[portArgIdx + 1], 10) : 4321;
+    const { EosTelemetryDashboard } = await import("../src/core/eosTelemetryDashboard.ts");
+    const dashboard = new EosTelemetryDashboard(root, port);
+
+    if (subAction === "start") {
+      console.log(`[EOS REAL-TIME VISUAL TELEMETRY DASHBOARD — SPEC-055 v61.0.0]\n`);
+      await dashboard.start();
+      console.log(`  Dashboard UI   : http://localhost:${port}/`);
+      console.log(`  Telemetry API  : http://localhost:${port}/api/telemetry`);
+      console.log(`  Topology API   : http://localhost:${port}/api/topology`);
+      console.log(`  Ledger API     : http://localhost:${port}/api/ledger`);
+      console.log(`\n  Presiona Ctrl+C para detener el servidor de telemetría.\n`);
+      // Keep process alive for CLI daemon mode unless interrupted
+      await new Promise(() => {});
+    } else {
+      const snap = dashboard.getSnapshot();
+      console.log(`[EOS REAL-TIME VISUAL TELEMETRY DASHBOARD — STATUS SNAPSHOT]\n`);
+      console.log(`  Timestamp       : ${snap.timestamp}`);
+      console.log(`  Active Agents   : ${snap.topology.activeAgents}`);
+      console.log(`  Topology Edges  : ${snap.topology.totalEdges}`);
+      console.log(`  Topology Cycle  : ${snap.topology.cycleDetected ? "CYCLE DETECTED" : "ACYCLIC (VALID)"}`);
+      console.log(`  Zero-Copy Events: ${snap.topology.totalEvents}`);
+      console.log(`  Tokens Saved    : ${snap.tokenEfficiency.totalSavedTokens.toLocaleString()}`);
+      console.log(`  Efficiency Ratio: ${(snap.tokenEfficiency.savedRatio * 100).toFixed(1)}%`);
+      console.log(`  Ledger Entries  : ${snap.ledger.totalEntries}`);
+      console.log(`  Ledger Status   : ${snap.ledger.chainIntact ? "INTACT (SHA-256)" : "TAMPERED"}`);
+      console.log(`  Health Status   : ${snap.health.status}`);
+      console.log(`\n  Inicia el servidor interactivo con: eos dashboard start --port ${port}\n`);
+    }
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3573,6 +3609,7 @@ Uso Universal:
   eos tlc [check|status|install] Verificador formal TLC (Leslie Lamport) y exploración exhaustiva de estados
   eos pr:check               Compuerta nativa de GitHub Actions y bot de atestación de Check-Runs
   eos sandbox:vm [doctor|run] Aislamiento físico de hipervisor / MicroVM (Firecracker/gVisor/NodeVM)
+  eos dashboard [start|status] Panel visual de telemetría y topología en tiempo real (localhost:4321)
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

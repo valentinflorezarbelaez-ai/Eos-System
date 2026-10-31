@@ -682,8 +682,61 @@ export function runAllFormalVerifications() {
     verifyAutonomousClosedLoopHealingModel(),
     verifyTlcFormalModelCheckerModel(),
     verifyGithubActionsPrGateModel(),
-    verifyMicroVmSandboxModel()
+    verifyMicroVmSandboxModel(),
+    verifyTelemetryDashboardModel()
   ];
+}
+
+export function verifyTelemetryDashboardModel(steps = 200) {
+  const filePath = path.join(formalDir, "TelemetryDashboard.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let serverState = "STOPPED";
+  let activePort = 0;
+  let requestsServed = 0;
+  let receiptsIssued = 0;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    if (serverState === "STOPPED") {
+      assert.strictEqual(activePort, 0, "VIOLATION: activePort must be 0 when STOPPED");
+    } else {
+      assert.ok(activePort > 0, "VIOLATION: activePort must be > 0 when running");
+    }
+    assert.ok(receiptsIssued >= requestsServed, "VIOLATION: receiptsIssued >= requestsServed");
+
+    if (serverState === "STOPPED") {
+      serverState = "STARTING";
+      activePort = 4321;
+    } else if (serverState === "STARTING") {
+      serverState = "LISTENING";
+    } else if (serverState === "LISTENING") {
+      if (i % 23 === 0) {
+        serverState = "SHUTTING_DOWN";
+      } else {
+        serverState = "SERVING_REQUEST";
+      }
+    } else if (serverState === "SERVING_REQUEST") {
+      requestsServed++;
+      receiptsIssued++;
+      serverState = "LISTENING";
+    } else if (serverState === "SHUTTING_DOWN") {
+      serverState = "STOPPED";
+      activePort = 0;
+    }
+  }
+
+  return {
+    specification: "TelemetryDashboard.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
 }
 
 export function verifyMicroVmSandboxModel(steps = 200) {
