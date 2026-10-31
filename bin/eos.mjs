@@ -3236,6 +3236,54 @@ switch (command) {
     break;
   }
 
+  case "heal:surgical": {
+    printBanner();
+    const subAction = (args[1] || "diagnose").toLowerCase();
+    const { EosSurgicalSelfHealingKernel } = await import("../src/core/eosSurgicalSelfHealingKernel.ts");
+
+    if (subAction === "diagnose") {
+      const sampleTrace = args[2] || `TypeError: Cannot read properties of undefined (reading 'toUpperCase')
+    at formatUser (src/users.ts:4:18)
+    at Object.process (src/app.ts:12:5)`;
+      const sampleCode = `export function formatUser(user?: { name: string }) {\n  return user.name.toUpperCase();\n}`;
+      const fault = EosSurgicalSelfHealingKernel.diagnoseFault(sampleTrace, sampleCode);
+      console.log("[EOS SURGICAL SELF-HEALING KERNEL — FDIR FAULT DIAGNOSIS]\n");
+      console.log(`  Fault ID        : ${fault.faultId}`);
+      console.log(`  File Path       : ${fault.filePath}`);
+      console.log(`  Line Number     : ${fault.lineNumber}`);
+      console.log(`  Symbol Name     : ${fault.symbolName}`);
+      console.log(`  Exception Type  : ${fault.exceptionType}`);
+      console.log(`  Context Snippet :\n${fault.codeContextSnippet}\n`);
+    } else if (subAction === "patch") {
+      const sampleCode = `export function formatUser(user?: { name: string }) {\n  return user.name.toUpperCase();\n}`;
+      const sampleTrace = `TypeError: Cannot read properties of undefined (reading 'toUpperCase')\n    at formatUser (src/users.ts:2:10)`;
+      const fault = EosSurgicalSelfHealingKernel.diagnoseFault(sampleTrace, sampleCode);
+      const patch = EosSurgicalSelfHealingKernel.synthesizeSurgicalPatch(fault, sampleCode);
+      console.log("[EOS SURGICAL SELF-HEALING KERNEL — MINIMAL AST SURGICAL PATCH]\n");
+      console.log(`  Patch ID        : ${patch.patchId}`);
+      console.log(`  Target Line     : ${patch.targetLineNumber}`);
+      console.log(`  Strategy        : ${patch.strategy}`);
+      console.log(`  Lines Changed   : ${patch.linesChanged}`);
+      console.log(`  AST Mutation Diff:\n${patch.astMutationDiff}\n`);
+    } else {
+      const sampleCode = `export function formatUser(user) {\n  return user.name.toUpperCase();\n}`;
+      const sampleTrace = `TypeError: Cannot read properties of undefined (reading 'toUpperCase')\n    at formatUser (src/users.ts:2:10)`;
+      const receipt = EosSurgicalSelfHealingKernel.executeHealingCycle({
+        stackTrace: sampleTrace,
+        sourceCode: sampleCode,
+        regressionTestCode: `assert.strictEqual(typeof formatUser, 'function');`,
+        reason: "CLI demonstration of NASA FDIR + Meta SapFix closed-loop healing"
+      });
+      console.log("[EOS SURGICAL SELF-HEALING KERNEL — CLOSED-LOOP CYCLE RESULT]\n");
+      console.log(`  Receipt ID      : ${receipt.receiptId}`);
+      console.log(`  Verdict         : ${receipt.verdict}`);
+      console.log(`  Patch ID        : ${receipt.patch.patchId}`);
+      console.log(`  Zero-Regression : ${receipt.verification.zeroRegressionPreserved}`);
+      console.log(`  Receipt SHA-256 : sha256:${receipt.sha256Receipt}\n`);
+    }
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3407,6 +3455,7 @@ Uso Universal:
   eos mesh [compile|efficiency] Compilador de topología acíclica de subagentes y malla zero-copy DeepMind
   eos invariant [explore|verify] Motor de verificación de invariantes y exploración exhaustiva de estados
   eos contract [diff|lint]   Gobernanza de evolución de contratos y detector de breaking changes Nubank/Buf
+  eos heal:surgical [diagnose|patch|verify] Núcleo FDIR de auto-sanación quirúrgica en bucle cerrado (Meta SapFix)
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

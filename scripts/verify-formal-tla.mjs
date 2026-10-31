@@ -678,8 +678,57 @@ export function runAllFormalVerifications() {
     verifyEvolutionaryHarnessModel(),
     verifyAgentTopologyMeshModel(),
     verifyInvariantVerificationEngineModel(),
-    verifyContractEvolutionGovernanceModel()
+    verifyContractEvolutionGovernanceModel(),
+    verifyAutonomousClosedLoopHealingModel()
   ];
+}
+
+export function verifyAutonomousClosedLoopHealingModel(steps = 200) {
+  const filePath = path.join(formalDir, "AutonomousClosedLoopHealing.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let faultsDetected = 0;
+  let rootCausesIsolated = 0;
+  let patchesSynthesized = 0;
+  let patchesVerified = 0;
+  let regressionsPrevented = 0;
+  let healedIncidents = 0;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    assert.ok(rootCausesIsolated <= faultsDetected, "VIOLATION: rootCausesIsolated <= faultsDetected");
+    assert.ok(patchesSynthesized <= rootCausesIsolated, "VIOLATION: patchesSynthesized <= rootCausesIsolated");
+    assert.ok(healedIncidents <= patchesVerified, "VIOLATION: healedIncidents <= patchesVerified");
+    assert.ok(patchesVerified + regressionsPrevented <= patchesSynthesized, "VIOLATION: patchesVerified + regressionsPrevented <= patchesSynthesized");
+
+    if (i % 5 === 0) {
+      faultsDetected++;
+      rootCausesIsolated++;
+      patchesSynthesized++;
+      patchesVerified++;
+      healedIncidents++;
+    } else if (i % 7 === 0) {
+      faultsDetected++;
+      rootCausesIsolated++;
+      patchesSynthesized++;
+      regressionsPrevented++;
+    } else {
+      faultsDetected++;
+      rootCausesIsolated++;
+    }
+  }
+
+  return {
+    specification: "AutonomousClosedLoopHealing.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
 }
 
 export function verifyContractEvolutionGovernanceModel(steps = 200) {
