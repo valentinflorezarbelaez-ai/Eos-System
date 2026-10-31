@@ -2872,6 +2872,100 @@ switch (command) {
 
   case "gentleman":
   case "gentle-ai": {
+    const subAction = (args[1] || "doctor").toLowerCase();
+    const isJson = args.includes("--json");
+    const isQuiet = args.includes("--quiet");
+
+    if (subAction === "update" || subAction === "upgrade") {
+      const shouldApply = args.includes("--apply") || subAction === "upgrade";
+      const shouldForce = args.includes("--force");
+      const { EosGentlemanAutoUpdater } = await import("../src/core/eosGentlemanAutoUpdater.ts");
+      const cycleReport = await EosGentlemanAutoUpdater.runUpdateCycle({
+        projectRoot: root,
+        apply: shouldApply,
+        force: shouldForce
+      });
+
+      // Bounded 512 KiB operational log for unattended scheduled runs
+      try {
+        const logPath = path.join(root, ".eos", "state", "gentleman-autoupdate.log");
+        fs.mkdirSync(path.dirname(logPath), { recursive: true });
+        if (fs.existsSync(logPath) && fs.statSync(logPath).size > 512 * 1024) {
+          fs.writeFileSync(logPath, "", "utf8");
+        }
+        const summaryLine = `[${cycleReport.executedAtIso}] mode=${cycleReport.mode} detected=${cycleReport.updatesDetected} applied=${cycleReport.updatesApplied} rollbacks=${cycleReport.rollbacksTriggered} receipt=${cycleReport.sha256Receipt.slice(0, 16)}\n`;
+        fs.appendFileSync(logPath, summaryLine, "utf8");
+      } catch {
+        // Non-fatal logging
+      }
+
+      if (isJson) {
+        process.stdout.write(JSON.stringify(cycleReport) + "\n");
+      } else if (!isQuiet) {
+        printBanner();
+        console.log(`[EOS + GENTLEMAN EVERGREEN AUTO-UPDATER] Modo: ${cycleReport.mode}\n`);
+        console.log(`  Ejecutado              : ${cycleReport.executedAtIso}`);
+        console.log(`  Actualizaciones Vistas : ${cycleReport.updatesDetected}`);
+        console.log(`  Actualizaciones Aplic. : ${cycleReport.updatesApplied}`);
+        console.log(`  Rollbacks Disparados   : ${cycleReport.rollbacksTriggered}`);
+        console.log(`  Constitución Intacta   : ${cycleReport.constitutionPreserved ? "VERIFIED" : "VIOLATED"} (sha256:${cycleReport.constitutionSha256.slice(0, 16)}...)`);
+        if (cycleReport.ledgerEntryId) {
+          console.log(`  Recibo SQLite Ledger   : ${cycleReport.ledgerEntryId}`);
+        }
+        console.log(`  Recibo Criptográfico   : sha256:${cycleReport.sha256Receipt}\n`);
+        console.log("  Estado por Componente Upstream:");
+        cycleReport.components.forEach((c) => {
+          console.log(`    • [${c.status.padEnd(16)}] ${c.componentId.padEnd(18)} local=${c.installedVersion.padEnd(12)} upstream=${c.latestVersion.padEnd(12)} — ${c.detail}`);
+        });
+        console.log("");
+      }
+      if (cycleReport.rollbacksTriggered > 0 || !cycleReport.constitutionPreserved) {
+        process.exit(1);
+      }
+      break;
+    }
+
+    if (subAction === "autoupdate:install" || subAction === "schedule") {
+      printBanner();
+      const { installGentlemanAutoUpdateSchedule, queryGentlemanAutoUpdateSchedule } = await import(
+        "../scripts/install-gentleman-autoupdate.mjs"
+      );
+      const installed = installGentlemanAutoUpdateSchedule({ projectRoot: root, intervalHours: 6 });
+      const status = queryGentlemanAutoUpdateSchedule();
+      console.log("[EOS GENTLEMAN EVERGREEN SCHEDULER] Automatización Desatendida Instalada:\n");
+      console.log(`  Planificador SO        : ${installed.scheduler}`);
+      console.log(`  Tarea Programada       : ${installed.taskName}`);
+      console.log(`  Frecuencia             : Cada ${installed.intervalHours} horas (100% silencioso en segundo plano)`);
+      console.log(`  Lanzador Silencioso    : ${installed.launcherPath}`);
+      console.log(`  Hook Antigravity       : SessionStart oportunista (>6h TTL) ACTIVO`);
+      console.log(`  Verificación SO        : ${status.registered ? "REGISTERED & ACTIVE" : "UNVERIFIED"}\n`);
+      if (!status.registered) process.exit(1);
+      break;
+    }
+
+    if (subAction === "autoupdate:status") {
+      printBanner();
+      const { queryGentlemanAutoUpdateSchedule } = await import("../scripts/install-gentleman-autoupdate.mjs");
+      const { EosGentlemanAutoUpdater } = await import("../src/core/eosGentlemanAutoUpdater.ts");
+      const status = queryGentlemanAutoUpdateSchedule();
+      const state = EosGentlemanAutoUpdater.readState(root);
+      const due = EosGentlemanAutoUpdater.isAutoUpdateDue(root);
+      console.log("[EOS GENTLEMAN EVERGREEN SCHEDULER — ESTADO]\n");
+      console.log(`  Tarea Programada (${status.taskName}) : ${status.registered ? "ACTIVE" : "NOT_REGISTERED"}`);
+      console.log(`  Última Verificación                   : ${state?.lastCheckedAtIso || "never"}`);
+      console.log(`  Última Aplicación                     : ${state?.lastAppliedAtIso || "never"}`);
+      console.log(`  TTL Expirado (>6h)                    : ${due ? "YES (due now)" : "NO (fresh)"}\n`);
+      break;
+    }
+
+    if (subAction === "autoupdate:uninstall") {
+      printBanner();
+      const { uninstallGentlemanAutoUpdateSchedule } = await import("../scripts/install-gentleman-autoupdate.mjs");
+      const removed = uninstallGentlemanAutoUpdateSchedule();
+      console.log(`[EOS GENTLEMAN EVERGREEN SCHEDULER] Tarea ${removed.taskName}: ${removed.uninstalled ? "REMOVED" : "NOT_FOUND"}\n`);
+      break;
+    }
+
     printBanner();
     const { EosGentlemanStackBridge } = await import("../src/core/eosGentlemanStackBridge.ts");
     const report = EosGentlemanStackBridge.auditStack(root);
@@ -3053,7 +3147,7 @@ Uso Universal:
   eos mcts:tune [iter]       Hiper-optimización MCTS con política UCT de exploración/explotación
   eos canary:rollout [ver]   Despliegue canario progresivo (1% -> 5% -> 25% -> 100%) con circuit breaker
   eos antigravity [doctor|install|direct] Conecta, audita y dirige Google Antigravity vía EOS MCP Control Plane
-  eos gentleman [doctor]     Audita la co-gobernanza EOS + Gentleman AI Stack (gentle-ai, engram, gga, context7, sdd)
+  eos gentleman [doctor|update|autoupdate:install|autoupdate:status] Co-gobernanza y auto-actualización Evergreen del stack Gentleman AI
   eos ledger [verify|record|search|recent] Ledger durable SQLite WAL + FTS5 + cadena SHA-256 (0 dependencias)
   eos ast [directorio]       Analizador AST real del compilador TypeScript (pureza L0, strip-only Node 24, complejidad)
   eos help                   Muestra este manual de operaciones

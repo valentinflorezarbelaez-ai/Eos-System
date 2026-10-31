@@ -13,6 +13,7 @@
  * Zero external runtime dependencies.
  */
 
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -388,6 +389,10 @@ import {
 import {
   EosGentlemanStackBridge
 } from "../core/eosGentlemanStackBridge.ts";
+
+import {
+  EosGentlemanAutoUpdater
+} from "../core/eosGentlemanAutoUpdater.ts";
 
 import {
   annotateAndFilterTools,
@@ -2060,6 +2065,17 @@ export class EosMcpServer {
                       geminiConfigDir: { type: "string", description: "Optional path to ~/.gemini/config directory" }
                     }
                   }
+                },
+                {
+                  name: "eos_gentleman_update",
+                  description: "Autonomous Evergreen Auto-Updater for Gentle-AI and the complete Gentleman Programming AI Stack (gentle-ai, engram, gga, agent-teams-lite skills). Checks upstream SemVer tags & commits, verifies SHA-256 checksums, hot-swaps binaries with rollback, and preserves the EOS Constitution.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["status", "check", "apply"], description: "Operation mode: 'status' (fast state read), 'check' (upstream SemVer check), or 'apply' (download, verify SHA-256 & hot-swap upgrades)" },
+                      force: { type: "boolean", description: "Force re-verification/re-sync even when versions match" }
+                    }
+                  }
                 }
               ], this.toolProfile)
             }
@@ -3688,6 +3704,36 @@ export class EosMcpServer {
           ? args.geminiConfigDir.trim()
           : undefined;
         return EosGentlemanStackBridge.auditStack(this.projectRoot, geminiDir);
+      }
+
+      case "eos_gentleman_update": {
+        const action = String(args.action || "status").trim().toLowerCase();
+        if (action === "status") {
+          return {
+            action: "status",
+            isDue: EosGentlemanAutoUpdater.isAutoUpdateDue(this.projectRoot),
+            state: EosGentlemanAutoUpdater.readState(this.projectRoot),
+            constitutionSha256: EosGentlemanAutoUpdater.computeConstitutionDigest(this.projectRoot)
+          };
+        }
+        const cliArgs = [
+          path.join(this.projectRoot, "bin", "eos.mjs"),
+          "gentleman",
+          "update",
+          action === "apply" ? "--apply" : "--check",
+          "--json"
+        ];
+        if (args.force === true) {
+          cliArgs.push("--force");
+        }
+        const out = execFileSync(process.execPath, cliArgs, {
+          cwd: this.projectRoot,
+          encoding: "utf8",
+          timeout: 180000,
+          stdio: ["ignore", "pipe", "pipe"],
+          windowsHide: true
+        });
+        return JSON.parse(out.trim());
       }
 
       default:

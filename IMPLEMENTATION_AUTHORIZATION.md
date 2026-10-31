@@ -160,3 +160,17 @@
   - `openspec/specs/SPEC-044-TIER0-APEX-GENTLEMAN-SYNERGY.md`
   - `docs/formal/GentlemanEosSynergyMesh.tla`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-30-GENTLEMAN-EVERGREEN-AUTOUPDATE-045
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-045 (v51.0.0)
+* **Owner Approval**: `OWNER_APPROVAL` GRANTED (Explicit owner directive on 2026-10-30)
+* **Scope**: Autonomous Evergreen Auto-Updater for Gentle-AI & Gentleman Programming AI Stack (`gentle-ai`, `engram`, `gga`, `agent-teams-lite` skills) with rate-limit-free `git ls-remote` SemVer discovery, `checksums.txt` SHA-256 verification, Windows NTFS running-binary `.bak` hot-swap + rollback, EOS Constitution SHA-256 preservation, Antigravity `SessionStart` detached stale-TTL background check, and silent 6-hour Windows Scheduled Task (`EOS-Gentleman-Stack-AutoUpdate`).
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-038-GENTLEMAN-EVERGREEN-AUTOUPDATE.md`
+  - `docs/plans/PLAN-038-GENTLEMAN-EVERGREEN-AUTOUPDATE.md`
+  - `docs/tasks/TASKS-038-GENTLEMAN-EVERGREEN-AUTOUPDATE.md`
+  - `openspec/changes/CHANGE-038-GENTLEMAN-EVERGREEN-AUTOUPDATE.md`
+  - `openspec/specs/SPEC-045-GENTLEMAN-EVERGREEN-AUTOUPDATE.md`
+  - `docs/formal/GentlemanAutoUpdateEngine.tla`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)

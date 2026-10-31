@@ -170,7 +170,7 @@ export class EosGentlemanStackBridge {
       passed: eosOk,
       score: eosOk ? 20 : constitutionPreserved ? 10 : 0,
       maxScore: 20,
-      versionOrPath: eosMcpRegistered ? "mcp:eos-system (v50.0.0)" : "unregistered",
+      versionOrPath: eosMcpRegistered ? "mcp:eos-system (v51.0.0)" : "unregistered",
       detail: eosOk
         ? "eos-system MCP active and Seven Inviolable Commandments preserved intact."
         : "eos-system MCP or EOS Constitution rule missing in Antigravity config."

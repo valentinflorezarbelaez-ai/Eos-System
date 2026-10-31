@@ -277,6 +277,25 @@ export function installAntigravityIntegration(options = {}) {
           },
           type: "object"
         }
+      },
+      {
+        name: "eos_gentleman_update",
+        description:
+          "Autonomous Evergreen Auto-Updater for Gentle-AI and the complete Gentleman Programming AI Stack (gentle-ai, engram, gga, agent-teams-lite skills). Checks upstream SemVer tags & commits, verifies SHA-256 checksums, hot-swaps binaries with rollback, and preserves the EOS Constitution.",
+        parameters: {
+          properties: {
+            action: {
+              description: "Operation mode: 'status' (fast state read), 'check' (upstream SemVer check), or 'apply' (download, verify SHA-256 & hot-swap upgrades)",
+              enum: ["status", "check", "apply"],
+              type: "string"
+            },
+            force: {
+              description: "Force re-verification/re-sync even when versions match",
+              type: "boolean"
+            }
+          },
+          type: "object"
+        }
       }
     ];
     for (const schema of toolSchemas) {
@@ -300,7 +319,7 @@ export function installAntigravityIntegration(options = {}) {
 if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
   const result = installAntigravityIntegration();
   console.log("======================================================================");
-  console.log(" EOS SYSTEM v50.0.0 — ANTIGRAVITY SOVEREIGN MCP INSTALLER");
+  console.log(" EOS SYSTEM v51.0.0 — ANTIGRAVITY SOVEREIGN MCP INSTALLER");
   console.log("======================================================================");
   for (const action of result.actions) {
     console.log(`  [+] ${action}`);

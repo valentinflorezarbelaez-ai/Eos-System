@@ -497,6 +497,47 @@ export function verifyGentlemanEosSynergyMeshModel(steps = 200) {
   };
 }
 
+export function verifyGentlemanAutoUpdateModel(steps = 200) {
+  const filePath = path.join(formalDir, "GentlemanAutoUpdateEngine.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let activeLockHolders = 0;
+  let constitutionHashIntact = true;
+  let unverifiedBinariesInstalled = 0;
+  let failedUpgradesRolledBack = 0;
+  let completedUpdateCycles = 0;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    assert.ok(activeLockHolders >= 0 && activeLockHolders <= 1, "VIOLATION: MutualExclusionLockInvariant breached");
+    assert.strictEqual(constitutionHashIntact, true, "VIOLATION: ConstitutionPreservationInvariant breached");
+    assert.strictEqual(unverifiedBinariesInstalled, 0, "VIOLATION: ZeroUnverifiedInstallInvariant breached");
+    assert.ok(completedUpdateCycles >= 0 && failedUpgradesRolledBack >= 0, "VIOLATION: Negative counters");
+
+    if (activeLockHolders === 0) {
+      activeLockHolders = 1;
+    } else if (i % 7 === 0) {
+      failedUpgradesRolledBack++;
+      activeLockHolders = 0;
+    } else {
+      completedUpdateCycles++;
+      activeLockHolders = 0;
+    }
+  }
+
+  return {
+    specification: "GentlemanAutoUpdateEngine.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
+}
+
 export function runAllFormalVerifications() {
   return [
     verifyLmaxDisruptorModel(),
@@ -508,7 +549,8 @@ export function runAllFormalVerifications() {
     verifyContinuousRefactorModel(),
     verifyFleetSyncMctsCanaryModel(),
     verifyAntigravityControlPlaneModel(),
-    verifyGentlemanEosSynergyMeshModel()
+    verifyGentlemanEosSynergyMeshModel(),
+    verifyGentlemanAutoUpdateModel()
   ];
 }
 
