@@ -123,7 +123,9 @@
     "evolve:eval": "node bin/eos.mjs evolve evaluate",
     "project:list": "node bin/eos.mjs project list",
     "project:inspect": "node bin/eos.mjs project inspect .",
-    "project:verify": "node bin/eos.mjs project verify ."
+    "project:verify": "node bin/eos.mjs project verify .",
+    "sync:stack": "node scripts/sync-gentle-ai-stack.mjs",
+    "mcp:sync": "node scripts/sync-gentle-ai-stack.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

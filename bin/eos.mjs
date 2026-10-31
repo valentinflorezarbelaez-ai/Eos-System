@@ -3570,6 +3570,24 @@ switch (command) {
     break;
   }
 
+  case "sync-stack": {
+    printBanner();
+    const { syncGentleAiStack } = await import("../scripts/sync-gentle-ai-stack.mjs");
+    console.log("[EOS GENTLEMAN AI STACK HERMETIC SYNC DAEMON — PELDAÑO 3]\n");
+    const receipt = syncGentleAiStack({ projectRoot: root });
+    console.log(`  Estado Global  : ${receipt.status}`);
+    console.log(`  Componentes    : ${receipt.synchronizedComponents}/${receipt.totalComponents} sincronizados`);
+    console.log(`  Catálogo MCP   : ${receipt.mcpToolCount.fullProfile} herramientas (Full) / ${receipt.mcpToolCount.coreProfile} (Core)`);
+    console.log(`  Sello EVD      : sha256:${receipt.sha256EvidenceSeal}\n`);
+    for (const c of receipt.components) {
+      console.log(`  • [${c.verified ? "PASS" : "WARN"}] ${c.name}`);
+      console.log(`    ↳ SHA-256: ${c.sha256.slice(0, 16)}...`);
+      console.log(`    ↳ Detalle: ${c.details}`);
+    }
+    console.log(`\n✔ Recibo sellado en docs/evidence/EVD-GENTLE-STACK-SYNC.json\n`);
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3750,6 +3768,7 @@ Uso Universal:
   eos unitotal:audit         Auditoría unitotal gnóstica-samaeliana de las 10 Sephiroth y la flota
   eos fuzz:hypervisor        Fuzzing de propiedades estocásticas, Delta Shrinkage y 49 Niveles
   eos replay:ledger [height] Replay determinista time-travel de estados sobre el Ledger SQLite WAL
+  eos sync-stack             Sincronización hermética del stack Gentle-AI, Engram, GGA y MCP (80+ tools)
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:
