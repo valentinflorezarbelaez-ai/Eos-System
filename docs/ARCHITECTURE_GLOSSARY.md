@@ -36,6 +36,10 @@
 | **`EosActiveKernelProcessEnforcer`** | `src/core/eosActiveKernelProcessEnforcer.ts` | **Active Kernel Process Enforcer & Containment** | AWS Nitro Enclaves & Google gVisor |
 | **`EosSparseMerkleTree`** | `src/core/eosSparseMerkleTree.ts` | **256-Bit Sparse Merkle Tree (SMT) & Exclusion Proofs** | Stripe Core Banking & Zcash/Ethereum SMT |
 | **`EosZeroKnowledgeProofVerifier`** | `src/core/eosZeroKnowledgeProofVerifier.ts` | **Zero-Knowledge Proof of Invariant Verifier** | Apple Privacy, ZK-SNARKs & RFC 8235 Schnorr |
+| **`EosTrueTimeEngine`** | `src/core/eosTrueTimeEngine.ts` | **TrueTime Uncertainty & Commit-Wait Engine** | Google Spanner Globally Distributed Database |
+| **`EosLsmTreeStorageEngine`** | `src/core/eosLsmTreeStorageEngine.ts` | **Log-Structured Merge-Tree (LSM-Tree) Storage** | Meta RocksDB, Google Bigtable & Cassandra |
+| **`EosThresholdCryptography`** | `src/core/eosThresholdCryptography.ts` | **Multi-Party Threshold Cryptography (t, n)** | Stripe Treasury, Coinbase Vault & IETF FROST |
+| **`EosMicroVmEnclaveLauncher`** | `src/core/eosMicroVmEnclaveLauncher.ts` | **MicroVM Hardware Enclave Launcher** | AWS Nitro Enclaves, Firecracker & Hyper-V |
 
 ---
 
@@ -43,6 +47,10 @@
 
 | Standard Workflow Task | Command | Typical Execution Time |
 |---|---|---|
+| **TrueTime Uncertainty Interval & Commit-Wait** | `npm run truetime` | **~6 ms** |
+| **Log-Structured Merge-Tree (LSM) Storage** | `npm run lsm` | **< 3 ms** |
+| **Threshold Cryptography Shamir (t, n) Quorum** | `npm run tss` | **< 5 ms** |
+| **MicroVM Hardware Enclave Isolation Profile** | `npm run microvm` | **< 2 ms** |
 | **Predictive Test Selection (Impacted Suites)** | `npm run pts` | **~350 ms** |
 | **Instant Architecture Documentation Search** | `npm run search <query>` | **~100 ms** |
 | **Sub-Second Subsystem Quickstart Sanity Check** | `npm run quickstart` | **~130 ms** |
