@@ -427,6 +427,12 @@ import {
 } from "../core/eosSurgicalSelfHealingKernel.ts";
 
 import {
+  EosTlcFormalChecker,
+  type TlcRuntimeDiagnostic,
+  type TlcVerificationResult
+} from "../core/eosTlcFormalChecker.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2236,6 +2242,19 @@ export class EosMcpServer {
                         description: "Preferred surgical repair strategy"
                       },
                       recordToLedger: { type: "boolean", description: "Whether to record healing receipt in SQLite WAL ledger" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_tlc_checker",
+                  description: "Leslie Lamport TLC Formal Model Checker (SPEC-052, v58.0.0): Dual-Mode execution (TLC model check when Java runtime is present; bounded JS simulation fallback when offline), deadlock detection, and SQLite WAL ledger recording.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["check", "status", "detect"], description: "TLC operation mode" },
+                      specification: { type: "string", description: "Target TLA+ specification name or path (e.g. AgentTopologyMesh.tla)" },
+                      steps: { type: "number", description: "Simulation steps for bounded fallback (default: 200)" },
+                      recordToLedger: { type: "boolean", description: "Whether to record verification receipt in SQLite WAL ledger" }
                     }
                   }
                 }
@@ -4258,6 +4277,27 @@ export class EosMcpServer {
         );
 
         return report;
+      }
+
+      case "eos_tlc_checker": {
+        const action = String(args?.action || "check").trim().toLowerCase();
+        const specName = String(args?.specification || "TlcFormalModelChecker.tla").trim();
+        const steps = typeof args?.steps === "number" ? Math.floor(args.steps) : 200;
+
+        if (action === "detect" || action === "status") {
+          return EosTlcFormalChecker.detectRuntime(this.projectRoot);
+        }
+
+        const result = EosTlcFormalChecker.verifyModel(specName, {
+          projectRoot: this.projectRoot,
+          steps
+        });
+
+        if (args?.recordToLedger === true) {
+          EosTlcFormalChecker.recordReceiptInLedger(result, this.projectRoot);
+        }
+
+        return result;
       }
 
       default:

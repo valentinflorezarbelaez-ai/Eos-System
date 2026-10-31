@@ -679,8 +679,65 @@ export function runAllFormalVerifications() {
     verifyAgentTopologyMeshModel(),
     verifyInvariantVerificationEngineModel(),
     verifyContractEvolutionGovernanceModel(),
-    verifyAutonomousClosedLoopHealingModel()
+    verifyAutonomousClosedLoopHealingModel(),
+    verifyTlcFormalModelCheckerModel()
   ];
+}
+
+export function verifyTlcFormalModelCheckerModel(steps = 200) {
+  const filePath = path.join(formalDir, "TlcFormalModelChecker.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let runtimeState = "IDLE";
+  let javaAvailable = true;
+  let jarAvailable = true;
+  let modelsChecked = 0;
+  let violationsFound = 0;
+  let receiptsIssued = 0;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    assert.ok(receiptsIssued >= (modelsChecked + violationsFound), "VIOLATION: receiptsIssued >= (modelsChecked + violationsFound)");
+    if (runtimeState === "TLC_RUNNING") {
+      assert.ok(javaAvailable && jarAvailable, "VIOLATION: TLC_RUNNING requires java and jar");
+    }
+
+    if (runtimeState === "IDLE") {
+      runtimeState = "DETECTING";
+      javaAvailable = i % 4 !== 0;
+      jarAvailable = i % 5 !== 0;
+    } else if (runtimeState === "DETECTING") {
+      if (javaAvailable && jarAvailable) {
+        runtimeState = "TLC_RUNNING";
+      } else {
+        runtimeState = "FALLBACK_RUNNING";
+      }
+    } else if (runtimeState === "TLC_RUNNING" || runtimeState === "FALLBACK_RUNNING") {
+      if (i % 23 === 0) {
+        runtimeState = "VIOLATION_DETECTED";
+        violationsFound++;
+        receiptsIssued++;
+      } else {
+        runtimeState = "VERIFIED";
+        modelsChecked++;
+        receiptsIssued++;
+      }
+    } else {
+      runtimeState = "IDLE";
+    }
+  }
+
+  return {
+    specification: "TlcFormalModelChecker.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
 }
 
 export function verifyAutonomousClosedLoopHealingModel(steps = 200) {

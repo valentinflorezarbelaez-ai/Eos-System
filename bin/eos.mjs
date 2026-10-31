@@ -3284,6 +3284,44 @@ switch (command) {
     break;
   }
 
+  case "tlc": {
+    printBanner();
+    const subAction = (args[1] || "status").toLowerCase();
+    const { EosTlcFormalChecker } = await import("../src/core/eosTlcFormalChecker.ts");
+
+    if (subAction === "status" || subAction === "detect") {
+      const diag = EosTlcFormalChecker.detectRuntime(root);
+      console.log("[EOS LESLIE LAMPORT TLC FORMAL MODEL CHECKER — ENVIRONMENT DIAGNOSTIC]\n");
+      console.log(`  Java Installed       : ${diag.javaInstalled ? "YES" : "NO"} ${diag.javaVersion ? `(${diag.javaVersion})` : ""}`);
+      console.log(`  tla2tools.jar Present: ${diag.tlaJarPresent ? "YES" : "NO"} ${diag.tlaJarPath ? `(${diag.tlaJarPath})` : ""}`);
+      console.log(`  Execution Mode       : ${diag.executionMode}`);
+      console.log(`  Recommendation       : ${diag.recommendation}\n`);
+    } else if (subAction === "install") {
+      console.log("[EOS TLC] Descargando versión oficial de tla2tools.jar desde GitHub...");
+      try {
+        const dl = await EosTlcFormalChecker.downloadTlaJar(path.join(root, "tools"));
+        console.log(`✔ Archivo descargado exitosamente: ${dl.jarPath} (${(dl.bytesDownloaded / 1024 / 1024).toFixed(2)} MB)\n`);
+      } catch (err) {
+        console.log(`✖ Error descargando tla2tools.jar: ${err.message}\n`);
+      }
+    } else {
+      const spec = args[1] || "TlcFormalModelChecker.tla";
+      console.log(`[EOS TLC] Verificando modelo formal: ${spec}...\n`);
+      const res = EosTlcFormalChecker.verifyModel(spec, { projectRoot: root, steps: 200 });
+      console.log(`  Specification  : ${res.specification}`);
+      console.log(`  Status         : ${res.status}`);
+      console.log(`  Execution Mode : ${res.executionMode}`);
+      console.log(`  Explored States: ${res.exploredStates} (Distinct: ${res.distinctStates})`);
+      console.log(`  Duration       : ${res.durationMs} ms`);
+      console.log(`  Receipt SHA-256: sha256:${res.sha256Receipt}\n`);
+      if (args.includes("--record")) {
+        EosTlcFormalChecker.recordReceiptInLedger(res, root);
+        console.log(`✔ Recibo registrado en SQLite WAL Ledger.`);
+      }
+    }
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3456,6 +3494,7 @@ Uso Universal:
   eos invariant [explore|verify] Motor de verificación de invariantes y exploración exhaustiva de estados
   eos contract [diff|lint]   Gobernanza de evolución de contratos y detector de breaking changes Nubank/Buf
   eos heal:surgical [diagnose|patch|verify] Núcleo FDIR de auto-sanación quirúrgica en bucle cerrado (Meta SapFix)
+  eos tlc [check|status|install] Verificador formal TLC (Leslie Lamport) y exploración exhaustiva de estados
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

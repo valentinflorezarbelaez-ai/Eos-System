@@ -258,3 +258,17 @@
   - `openspec/specs/SPEC-051-AUTONOMOUS-CLOSED-LOOP-HEALING.md`
   - `docs/formal/AutonomousClosedLoopHealing.tla`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-30-TLC-FORMAL-MODEL-CHECKER-052
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-052 (v58.0.0)
+* **Owner Approval**: `OWNER_APPROVAL` GRANTED (Explicit owner directive on 2026-10-30)
+* **Scope**: Leslie Lamport TLC Formal Model Checker & Exhaustive State Space Verification (`EosTlcFormalChecker`), Dual-Mode TLC/Bounded-JS Execution, Deadlock & Safety Invariant Enforcement, Native Node HTTPS Jar Downloader, and unified `eos_tlc_checker` core MCP tool & CLI surfaces.
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-045-TLC-FORMAL-MODEL-CHECKER.md`
+  - `docs/plans/PLAN-045-TLC-FORMAL-MODEL-CHECKER.md`
+  - `docs/tasks/TASKS-045-TLC-FORMAL-MODEL-CHECKER.md`
+  - `openspec/changes/CHANGE-045-TLC-FORMAL-MODEL-CHECKER.md`
+  - `openspec/specs/SPEC-052-TLC-FORMAL-MODEL-CHECKER.md`
+  - `docs/formal/TlcFormalModelChecker.tla`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
