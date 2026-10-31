@@ -410,6 +410,11 @@ import {
 } from "../core/eosAgentTopologyMesh.ts";
 
 import {
+  EosInvariantVerificationEngine,
+  type StateMachineModel
+} from "../core/eosInvariantVerificationEngine.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2167,6 +2172,22 @@ export class EosMcpServer {
                       compactBytes: { type: "number", description: "Compact envelope byte length" },
                       fullFileContextBytes: { type: "number", description: "Full-file baseline context byte length" },
                       recordToLedger: { type: "boolean", description: "Whether to record cryptographic batch attestation in SQLite WAL ledger" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_invariant_engine",
+                  description: "Invariant Verification Engine & Exhaustive Property-Based State Exploration (SPEC-049, v55.0.0): executes seeded state exploration (TLA+ / Antithesis DST), Byzantine chaos fault injection, and automatic failure trace shrinking.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["explore", "verify", "shrink"], description: "Verification engine mode" },
+                      model: { type: "string", enum: ["transfer", "counter", "consensus", "custom"], description: "State machine model template" },
+                      seed: { type: "number", description: "Deterministic 32-bit PRNG seed (default: 42)" },
+                      maxSteps: { type: "number", description: "Maximum state transitions to explore (default: 500)" },
+                      faultInjectionRate: { type: "number", description: "Stochastic chaos fault rate (0.0 to 1.0, default: 0)" },
+                      enableShrinking: { type: "boolean", description: "Whether to shrink failing traces to minimal steps (default: true)" },
+                      recordToLedger: { type: "boolean", description: "Whether to record attestation in SQLite WAL durable ledger" }
                     }
                   }
                 }
@@ -3970,6 +3991,95 @@ export class EosMcpServer {
           return EosAgentTopologyMesh.calculateTokenEfficiency(compactBytes, fullFileContextBytes);
         }
         throw new Error(`Unsupported eos_agent_topology_mesh action: ${action}`);
+      }
+
+      case "eos_invariant_engine": {
+        const action = String(args?.action || "explore").trim().toLowerCase();
+        const modelType = String(args?.model || "transfer").trim().toLowerCase();
+        const seed = Number(args?.seed !== undefined ? args.seed : 42);
+        const maxSteps = Number(args?.maxSteps || 500);
+        const faultInjectionRate = Number(args?.faultInjectionRate || 0);
+        const enableShrinking = args?.enableShrinking !== false;
+
+        let model: StateMachineModel<any>;
+        if (modelType === "counter") {
+          model = {
+            name: "BoundedCounter",
+            initialState: { count: 0, maxAllowed: 1000 },
+            actions: [
+              { name: "inc", apply: (s) => ({ ...s, count: s.count + 1 }) },
+              { name: "dec", apply: (s) => ({ ...s, count: Math.max(0, s.count - 1) }) }
+            ],
+            invariants: [
+              { name: "non_negative", check: (s) => s.count >= 0 },
+              { name: "within_bounds", check: (s) => s.count <= s.maxAllowed }
+            ]
+          };
+        } else if (modelType === "consensus") {
+          model = {
+            name: "RaftQuorumConsensus",
+            initialState: { term: 1, leader: "node-1", activeNodes: 3 },
+            actions: [
+              { name: "heartbeat", apply: (s) => ({ ...s, term: s.term }) },
+              { name: "step_down", apply: (s) => ({ ...s, leader: "node-2" }) },
+              { name: "failover", apply: (s) => ({ ...s, term: s.term + 1, leader: "node-3" }) }
+            ],
+            invariants: [
+              { name: "valid_term", check: (s) => s.term >= 1 },
+              { name: "single_leader_present", check: (s) => typeof s.leader === "string" && s.leader.length > 0 }
+            ]
+          };
+        } else {
+          // Default: transfer ledger model
+          model = {
+            name: "TransferLedger",
+            initialState: { a: 100, b: 100, c: 100, total: 300 },
+            actions: [
+              {
+                name: "transfer_a_b",
+                apply: (s, prng) => {
+                  const amt = prng.nextInt(1, 10);
+                  if (s.a < amt) return s;
+                  return { ...s, a: s.a - amt, b: s.b + amt };
+                }
+              },
+              {
+                name: "transfer_b_c",
+                apply: (s, prng) => {
+                  const amt = prng.nextInt(1, 10);
+                  if (s.b < amt) return s;
+                  return { ...s, b: s.b - amt, c: s.c + amt };
+                }
+              },
+              {
+                name: "transfer_c_a",
+                apply: (s, prng) => {
+                  const amt = prng.nextInt(1, 10);
+                  if (s.c < amt) return s;
+                  return { ...s, c: s.c - amt, a: s.a + amt };
+                }
+              }
+            ],
+            invariants: [
+              { name: "conservation_of_money", check: (s) => s.a + s.b + s.c === s.total },
+              { name: "no_negative_balances", check: (s) => s.a >= 0 && s.b >= 0 && s.c >= 0 }
+            ]
+          };
+        }
+
+        const options = {
+          seed,
+          maxSteps,
+          faultInjectionRate,
+          enableShrinking,
+          ledgerDbPath: args?.recordToLedger === true ? EosDurableSqliteLedger.defaultLedgerPath(this.projectRoot) : undefined,
+          projectId: "eos-system"
+        };
+
+        if (action === "explore" || action === "verify" || action === "shrink") {
+          return EosInvariantVerificationEngine.verifyModel(model, options);
+        }
+        throw new Error(`Unsupported eos_invariant_engine action: ${action}`);
       }
 
       default:

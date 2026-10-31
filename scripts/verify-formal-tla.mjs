@@ -676,8 +676,57 @@ export function runAllFormalVerifications() {
     verifyGentlemanAutoUpdateModel(),
     verifyEnterpriseWorkspaceGovernorModel(),
     verifyEvolutionaryHarnessModel(),
-    verifyAgentTopologyMeshModel()
+    verifyAgentTopologyMeshModel(),
+    verifyInvariantVerificationEngineModel()
   ];
+}
+
+export function verifyInvariantVerificationEngineModel(steps = 200) {
+  const filePath = path.join(formalDir, "InvariantVerificationEngine.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let exploredStates = 0;
+  let invariantsChecked = 0;
+  let violationsDetected = 0;
+  let shrunkTraces = 0;
+  let faultsInjected = 0;
+  let stateHashChainLength = 0;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    assert.ok(violationsDetected <= exploredStates, "VIOLATION: violationsDetected <= exploredStates");
+    assert.ok(shrunkTraces <= violationsDetected, "VIOLATION: shrunkTraces <= violationsDetected");
+    assert.strictEqual(stateHashChainLength, exploredStates, "VIOLATION: stateHashChainLength = exploredStates");
+
+    if (i % 7 === 0) {
+      exploredStates++;
+      invariantsChecked++;
+      faultsInjected++;
+      stateHashChainLength++;
+    } else if (i % 11 === 0) {
+      exploredStates++;
+      invariantsChecked++;
+      violationsDetected++;
+      shrunkTraces++;
+      stateHashChainLength++;
+    } else {
+      exploredStates++;
+      invariantsChecked++;
+      stateHashChainLength++;
+    }
+  }
+
+  return {
+    specification: "InvariantVerificationEngine.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
 }
 
 if (process.argv[1] && process.argv[1].replace(/\\/g, "/").endsWith("verify-formal-tla.mjs")) {

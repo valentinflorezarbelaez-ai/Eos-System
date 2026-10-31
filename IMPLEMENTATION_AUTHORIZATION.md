@@ -216,3 +216,17 @@
   - `openspec/specs/SPEC-048-AGENT-TOPOLOGY-ZERO-COPY-MESH.md`
   - `docs/formal/AgentTopologyMesh.tla`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-30-INVARIANT-VERIFICATION-ENGINE-049
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-049 (v55.0.0)
+* **Owner Approval**: `OWNER_APPROVAL` GRANTED (Explicit owner directive on 2026-10-30)
+* **Scope**: Invariant Verification Engine & Exhaustive Property-Based State Exploration (`EosInvariantVerificationEngine`), Xorshift32 PRNG Seed Reproducibility, Deterministic Simulation Testing (DST), Byzantine Chaos Fault Hypervisor, Minimal Reproducible Failure Shrinking, and unified `eos_invariant_engine` core MCP tool & CLI surfaces.
+* **Artifacts Approved**:
+  - `docs/intake/eos-system/INTAKE-042-INVARIANT-VERIFICATION-ENGINE.md`
+  - `docs/plans/PLAN-042-INVARIANT-VERIFICATION-ENGINE.md`
+  - `docs/tasks/TASKS-042-INVARIANT-VERIFICATION-ENGINE.md`
+  - `openspec/changes/CHANGE-042-INVARIANT-VERIFICATION-ENGINE.md`
+  - `openspec/specs/SPEC-049-INVARIANT-VERIFICATION-ENGINE.md`
+  - `docs/formal/InvariantVerificationEngine.tla`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)

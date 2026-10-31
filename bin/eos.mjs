@@ -3124,6 +3124,71 @@ switch (command) {
     break;
   }
 
+  case "invariant": {
+    printBanner();
+    const subAction = (args[1] || "explore").toLowerCase();
+    const { EosInvariantVerificationEngine } = await import("../src/core/eosInvariantVerificationEngine.ts");
+
+    const sampleModel = {
+      name: "TransferLedger",
+      initialState: { a: 100, b: 100, c: 100, total: 300 },
+      actions: [
+        {
+          name: "transfer_a_b",
+          apply: (s, prng) => {
+            const amt = prng.nextInt(1, 10);
+            if (s.a < amt) return s;
+            return { ...s, a: s.a - amt, b: s.b + amt };
+          }
+        },
+        {
+          name: "transfer_b_c",
+          apply: (s, prng) => {
+            const amt = prng.nextInt(1, 10);
+            if (s.b < amt) return s;
+            return { ...s, b: s.b - amt, c: s.c + amt };
+          }
+        },
+        {
+          name: "transfer_c_a",
+          apply: (s, prng) => {
+            const amt = prng.nextInt(1, 10);
+            if (s.c < amt) return s;
+            return { ...s, c: s.c - amt, a: s.a + amt };
+          }
+        }
+      ],
+      invariants: [
+        { name: "conservation_of_money", check: (s) => s.a + s.b + s.c === s.total },
+        { name: "no_negative_balances", check: (s) => s.a >= 0 && s.b >= 0 && s.c >= 0 }
+      ]
+    };
+
+    const steps = Number(args[2]) || 1000;
+    const seed = Number(args[3]) || 42;
+    const res = EosInvariantVerificationEngine.verifyModel(sampleModel, {
+      maxSteps: steps,
+      seed,
+      enableShrinking: true
+    });
+
+    console.log("[EOS INVARIANT VERIFICATION ENGINE — TLA+ / ANTITHESIS DST]\n");
+    console.log(`  Model Name           : ${res.modelName}`);
+    console.log(`  Engine Status        : ${res.status}`);
+    console.log(`  Exploration Seed     : ${res.seed}`);
+    console.log(`  Explored States      : ${res.exploredStates}`);
+    console.log(`  Invariants Evaluated : ${res.invariantsEvaluated}`);
+    console.log(`  Faults Injected      : ${res.faultsInjected}`);
+    console.log(`  State Hash Chain     : sha256:${res.stateHashChain}`);
+    if (res.failingInvariant) {
+      console.log(`  Failing Invariant    : ${res.failingInvariant}`);
+      console.log(`  Original Trace Steps : ${res.originalTraceLength}`);
+      console.log(`  Shrunk Trace Steps   : ${res.shrunkTrace?.length || 0}`);
+    }
+    console.log("");
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3293,6 +3358,7 @@ Uso Universal:
   eos ast [directorio]       Analizador AST real del compilador TypeScript (pureza L0, strip-only Node 24, complejidad)
   eos project [list|inspect|verify|onboard] Gobernador empresarial multi-proyecto, monorepos políglotas, contratos y Ley IV
   eos mesh [compile|efficiency] Compilador de topología acíclica de subagentes y malla zero-copy DeepMind
+  eos invariant [explore|verify] Motor de verificación de invariantes y exploración exhaustiva de estados
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

@@ -57,6 +57,7 @@ export const CORE_TIER0_TOOL_NAMES: ReadonlySet<string> = new Set([
   "eos_mcts_tune",
   "eos_canary_rollout",
   "eos_agent_topology_mesh",
+  "eos_invariant_engine",
   "eos_health_check"
 ]);
 
