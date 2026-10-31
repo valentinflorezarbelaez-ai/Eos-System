@@ -47,7 +47,7 @@ test("BDD-246: Verificación de empaquetado OCI y manifiesto de distribución (S
   const pkgPath = path.join(projectRoot, "package.json");
   const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
 
-  assert.equal(pkg.version, "73.0.0");
+  assert.equal(pkg.version, "74.0.0");
   assert.equal(pkg.type, "module");
   assert.equal(pkg.main, "./src/index.ts");
   assert.equal(pkg.types, "./src/index.ts");

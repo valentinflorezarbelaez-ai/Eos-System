@@ -1990,5 +1990,42 @@ body {
   word-break: break-all;
 }
 
+/* ==========================================================================
+   MISSION CONTROL IN-BROWSER INTERACTIVE TERMINAL & CHAOS ARENA (SPEC-095, v74.0.0)
+   ========================================================================== */
+.btn--danger {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  color: #ffffff;
+  border: 1px solid #dc2626;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.16s ease;
+}
+
+.btn--danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px -6px rgba(239, 68, 68, 0.65);
+}
+
+.terminal-quick-cmd {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.55rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  transition: all 0.15s ease;
+}
+
+.terminal-quick-cmd:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+
 
 

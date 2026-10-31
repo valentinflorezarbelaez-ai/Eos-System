@@ -443,3 +443,18 @@
   - `openspec/specs/SPEC-093-UNBOUNDED-FORMAL-SMT-PROVER.md`
   - `openspec/specs/SPEC-094-KUBERNETES-CRD-FLEET-OPERATOR.md`
 * **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)
+
+## Authorization Record: AUTH-2026-10-31-PLANETARY-ADOPTION-095-097
+* **Status**: `IMPLEMENTATION_AUTHORIZED` (`LEVEL 3`)
+* **Milestone**: SPEC-095 to SPEC-097 (v74.0.0)
+* **Owner Approval**: `OWNER_APPROVAL` GRANTED (Explicit owner directive "dale con todos a toda" on 2026-10-31)
+* **Scope**: 3 Planetary Adoption & Enterprise Standard Maturation Moves:
+  1. Move 1: Mission Control In-Browser Interactive Terminal Emulator & Chaos Arena (`SPEC-095`).
+  2. Move 2: Universal GitHub Actions Reusable Workflow & Criterial PR Gate (`.github/workflows/eos-strict-gate.yml`, `scripts/eos-github-pr-attestation.mjs`, `SPEC-096`).
+  3. Move 3: IEEE / ACM Formal Architectural Whitepaper & Specification Standard (`docs/whitepaper/EOS_SYSTEM_IEEE_FORMAL_SPECIFICATION.md`, `SPEC-097`).
+* **Artifacts Approved**:
+  - `openspec/changes/CHANGE-066-PLANETARY-ADOPTION-ENTERPRISE-STANDARD.md`
+  - `openspec/specs/SPEC-095-MISSION-CONTROL-INTERACTIVE-TERMINAL.md`
+  - `openspec/specs/SPEC-096-GITHUB-ACTIONS-REUSABLE-GATE.md`
+  - `openspec/specs/SPEC-097-IEEE-ACM-ARCHITECTURAL-WHITEPAPER.md`
+* **Authorized Sign-off**: Valentín Flórez Arbeláez (Principal Architect & System Owner)

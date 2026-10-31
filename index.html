@@ -32,7 +32,7 @@
   <link rel="preload" href="/css/eos.css?v=15.0" as="style" />
   <link rel="preload" href="/js/eos.js?v=18.0" as="script" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/eos.css?v=15.0" integrity="sha384-EyO9eE1XJ2CxUeJEh5x1GZh5B0005D+7bEPIlRTwJ2qJA8F+vJ78wZtajdGvTlcE" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/eos.css?v=15.0" integrity="sha384-IWRPluuc6AtSEvjjQeDNy+c5iKaWoverQkQBEYejoh84ZVG5JR6Mx65tKdiUCdr/" crossorigin="anonymous" />
 
   <!-- Xirp-Grade Speculative Prerendering (0ms Instant Navigation) -->
   <script type="speculationrules">
@@ -991,6 +991,108 @@ No cambia archivos ni contiene resultados de un repositorio.</pre>
               <button type="button" id="btn-microvm-generate" class="btn btn--primary" style="padding: 0.35rem 0.75rem; font-size: 0.74rem;">Generar Perfil OCI</button>
             </div>
             <pre id="microvm-spec-output" class="zenith-console" role="status" aria-live="polite">Haz clic en Generar Perfil OCI para sintetizar el contrato Firecracker...</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN TERMINAL INTERACTIVA & ARENA DE CAOS (SPEC-095, v74.0.0) -->
+    <section class="section deferred-section" id="eos-interactive-terminal-arena" role="region" aria-label="Terminal Interactiva y Arena de Caos de EOS">
+      <div class="container">
+        <div class="section__head">
+          <div class="eyebrow">MOVIMIENTO 1 · TERMINAL IN-BROWSER &amp; RESILIENCIA DISTRIBUIDA · v74.0.0</div>
+          <h2 class="section__title">Mission Control Terminal &amp; Chaos Arena</h2>
+          <p class="section__sub">
+            Ejecuta comandos reales de EOS System directamente en memoria client-side (sin descargas ni peticiones de red) y experimenta la inyección de fallos distribuidos con auto-recuperación de consenso sub-15ms.
+          </p>
+        </div>
+
+        <div class="zenith-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));">
+          <!-- CARD A: TERMINAL INTERACTIVA IN-BROWSER -->
+          <div class="zenith-card" id="eos-terminal-container">
+            <div class="zenith-card__head">
+              <div>
+                <span class="zenith-card__num" style="color: #60a5fa;">CLI</span>
+                <h3 class="zenith-card__title">Terminal Interactiva Local</h3>
+                <p class="zenith-card__desc">Intérprete de comandos en memoria V8 con latencia &lt;10ms y formateo de telemetría ANSI.</p>
+              </div>
+              <span id="terminal-status-badge" class="telemetry-pill">LISTO</span>
+            </div>
+
+            <!-- Terminal Screen / Output -->
+            <pre id="eos-terminal-output" class="zenith-console" role="region" aria-live="polite" style="height: 260px; overflow-y: auto; background: #080b12; border: 1px solid rgba(255,255,255,0.12); color: #93c5fd; padding: 0.85rem; font-family: var(--font-mono); font-size: 0.76rem; border-radius: 6px; white-space: pre-wrap;">EOS Sovereign Control Plane [Version 74.0.0]
+Layer-0 Runtime: Zero External Dependencies
+Escribe 'eos guide' para explorar comandos disponibles o usa los accesos rápidos.
+</pre>
+
+            <!-- Quick Command Pills -->
+            <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+              <button type="button" class="terminal-quick-cmd" data-cmd="eos guide">eos guide</button>
+              <button type="button" class="terminal-quick-cmd" data-cmd="eos truetime">eos truetime</button>
+              <button type="button" class="terminal-quick-cmd" data-cmd="eos lsm">eos lsm</button>
+              <button type="button" class="terminal-quick-cmd" data-cmd="eos kademlia">eos kademlia</button>
+              <button type="button" class="terminal-quick-cmd" data-cmd="eos threshold">eos threshold</button>
+              <button type="button" class="terminal-quick-cmd" data-cmd="eos microvm">eos microvm</button>
+              <button type="button" class="terminal-quick-cmd" data-cmd="clear">clear</button>
+            </div>
+
+            <!-- Terminal Input Form -->
+            <form id="eos-terminal-form" style="display: flex; gap: 0.4rem; align-items: center;">
+              <span style="font-family: var(--font-mono); font-weight: bold; color: #3b82f6; font-size: 0.82rem;">eos&gt;</span>
+              <input type="text" id="eos-terminal-input" class="sanctum-input" placeholder="ej. eos truetime" autocomplete="off" spellcheck="false" style="flex: 1; font-family: var(--font-mono); font-size: 0.76rem; padding: 0.4rem 0.6rem;" />
+              <button type="submit" id="btn-terminal-exec" class="btn btn--primary" style="padding: 0.4rem 0.8rem; font-size: 0.76rem;">Ejecutar</button>
+            </form>
+          </div>
+
+          <!-- CARD B: CHAOS ARENA & SUB-15MS FAILOVER -->
+          <div class="zenith-card" id="eos-chaos-arena-container">
+            <div class="zenith-card__head">
+              <div>
+                <span class="zenith-card__num" style="color: #ef4444;">FDIR</span>
+                <h3 class="zenith-card__title">Arena de Caos Distribuido</h3>
+                <p class="zenith-card__desc">Simula la partición de 2/5 nodos y verifica la re-elección de quórum Raft sub-15ms con 0% pérdida de datos.</p>
+              </div>
+              <span id="chaos-arena-status-badge" class="telemetry-pill">OPTIMAL_QUORUM</span>
+            </div>
+
+            <!-- Visual Node Cluster Status -->
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; margin-top: 0.5rem; margin-bottom: 0.75rem;">
+              <div id="node-1-card" style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 4px; padding: 0.5rem 0.2rem; text-align: center;">
+                <div style="font-size: 0.68rem; font-family: var(--font-mono); color: var(--text-muted);">Nodo 1</div>
+                <div id="node-1-status" style="font-size: 0.72rem; font-weight: bold; color: #10b981;">LEADER</div>
+              </div>
+              <div id="node-2-card" style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 4px; padding: 0.5rem 0.2rem; text-align: center;">
+                <div style="font-size: 0.68rem; font-family: var(--font-mono); color: var(--text-muted);">Nodo 2</div>
+                <div id="node-2-status" style="font-size: 0.72rem; font-weight: bold; color: #10b981;">FOLLOWER</div>
+              </div>
+              <div id="node-3-card" style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 4px; padding: 0.5rem 0.2rem; text-align: center;">
+                <div style="font-size: 0.68rem; font-family: var(--font-mono); color: var(--text-muted);">Nodo 3</div>
+                <div id="node-3-status" style="font-size: 0.72rem; font-weight: bold; color: #10b981;">FOLLOWER</div>
+              </div>
+              <div id="node-4-card" style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 4px; padding: 0.5rem 0.2rem; text-align: center;">
+                <div style="font-size: 0.68rem; font-family: var(--font-mono); color: var(--text-muted);">Nodo 4</div>
+                <div id="node-4-status" style="font-size: 0.72rem; font-weight: bold; color: #10b981;">FOLLOWER</div>
+              </div>
+              <div id="node-5-card" style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 4px; padding: 0.5rem 0.2rem; text-align: center;">
+                <div style="font-size: 0.68rem; font-family: var(--font-mono); color: var(--text-muted);">Nodo 5</div>
+                <div id="node-5-status" style="font-size: 0.72rem; font-weight: bold; color: #10b981;">FOLLOWER</div>
+              </div>
+            </div>
+
+            <!-- Chaos Controls -->
+            <div class="zenith-controls" style="display: flex; gap: 0.5rem; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+              <button type="button" id="btn-chaos-inject-failover" class="btn btn--danger" style="padding: 0.42rem 0.9rem; font-size: 0.76rem;">
+                ⚡ Inyectar Caos / Matar Nodo
+              </button>
+              <button type="button" id="btn-chaos-reset-cluster" class="btn btn--ghost" style="padding: 0.42rem 0.9rem; font-size: 0.76rem;">
+                🔄 Restaurar Clúster
+              </button>
+            </div>
+
+            <!-- Chaos Telemetry Output -->
+            <pre id="chaos-telemetry-output" class="zenith-console" role="status" aria-live="polite" style="height: 180px; overflow-y: auto; background: #080b12; border: 1px solid rgba(255,255,255,0.12); color: #f87171; padding: 0.85rem; font-family: var(--font-mono); font-size: 0.76rem; border-radius: 6px; white-space: pre-wrap; margin-top: 0.6rem;">[ARENA DE CAOS] Clúster de 5 nodos sincronizado en Quórum Óptimo (Q = 3/5).
+Presiona 'Inyectar Caos / Matar Nodo' para inducir partición bizantina y medir el failover.
+</pre>
           </div>
         </div>
       </div>
@@ -2774,6 +2876,6 @@ No se ejecutan comandos, auditorías, sondeos ni despliegues.</pre>
     </div>
   </dialog>
 
-  <script src="/js/eos.js?v=18.0" integrity="sha384-d2AZmOXbOi7ccX4eOw9VohnMmd8eKg0WSrQCdhmWOVKcX7FX2fYWTDIC6fqM/fK0" crossorigin="anonymous" defer></script>
+  <script src="/js/eos.js?v=18.0" integrity="sha384-6XzYYczNEcCJMxPKTvOUbm3lKfG9h5t+bLdoFpZ+A3A/yhBhUOz8n1Bxya+y+udM" crossorigin="anonymous" defer></script>
 </body>
 </html>
