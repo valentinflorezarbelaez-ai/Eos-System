@@ -415,6 +415,12 @@ import {
 } from "../core/eosInvariantVerificationEngine.ts";
 
 import {
+  EosContractEvolutionGovernor,
+  type SchemaContract,
+  type SchemaField
+} from "../core/eosContractEvolutionGovernor.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2188,6 +2194,23 @@ export class EosMcpServer {
                       faultInjectionRate: { type: "number", description: "Stochastic chaos fault rate (0.0 to 1.0, default: 0)" },
                       enableShrinking: { type: "boolean", description: "Whether to shrink failing traces to minimal steps (default: true)" },
                       recordToLedger: { type: "boolean", description: "Whether to record attestation in SQLite WAL durable ledger" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_contract_governor",
+                  description: "Contract Evolution Governor & Breaking-Change Detector (SPEC-050, v56.0.0): executes Nubank Sachem semantic contract diffing, Buf backward-compatibility pre-merge gate, and SQL migration hazard scanning.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["diff", "verify", "sql_lint"], description: "Contract governance action mode" },
+                      baseSchema: { type: "object", description: "Baseline schema contract object { contractId, fields: [{ name, type, optional }] }" },
+                      candidateSchema: { type: "object", description: "Candidate schema contract object { contractId, fields: [{ name, type, optional }] }" },
+                      baseInterfaceSnippet: { type: "string", description: "Baseline TypeScript interface snippet" },
+                      candidateInterfaceSnippet: { type: "string", description: "Candidate TypeScript interface snippet" },
+                      ddlSql: { type: "string", description: "SQL DDL migration script to scan for hazards" },
+                      allowBreakingChanges: { type: "boolean", description: "Explicit override for authorized breaking changes" },
+                      recordToLedger: { type: "boolean", description: "Whether to persist attestation into SQLite WAL ledger" }
                     }
                   }
                 }
@@ -4080,6 +4103,74 @@ export class EosMcpServer {
           return EosInvariantVerificationEngine.verifyModel(model, options);
         }
         throw new Error(`Unsupported eos_invariant_engine action: ${action}`);
+      }
+
+      case "eos_contract_governor": {
+        const action = String(args?.action || "diff").trim().toLowerCase();
+
+        if (action === "sql_lint") {
+          const ddlSql = String(args?.ddlSql || "");
+          const hazards = EosContractEvolutionGovernor.scanSqlMigrationHazards(ddlSql);
+          return {
+            hazardsCount: hazards.length,
+            hazards
+          };
+        }
+
+        let baseContract: SchemaContract;
+        if (typeof args?.baseInterfaceSnippet === "string" && args.baseInterfaceSnippet.trim().length > 0) {
+          baseContract = EosContractEvolutionGovernor.parseTypeScriptContract(args.baseInterfaceSnippet, "BaseInterface");
+        } else if (isPlainRecord(args?.baseSchema)) {
+          const s = args.baseSchema;
+          const rawFields = Array.isArray(s.fields) ? s.fields : [];
+          baseContract = {
+            contractId: String(s.contractId || "BaseContract"),
+            version: String(s.version || "1.0.0"),
+            fields: rawFields.map((f: any) => ({
+              name: String(f.name || ""),
+              type: String(f.type || "unknown"),
+              optional: Boolean(f.optional)
+            }))
+          };
+        } else {
+          baseContract = { contractId: "EmptyBase", version: "0.0.0", fields: [] };
+        }
+
+        let candidateContract: SchemaContract;
+        if (typeof args?.candidateInterfaceSnippet === "string" && args.candidateInterfaceSnippet.trim().length > 0) {
+          candidateContract = EosContractEvolutionGovernor.parseTypeScriptContract(args.candidateInterfaceSnippet, "CandidateInterface");
+        } else if (isPlainRecord(args?.candidateSchema)) {
+          const s = args.candidateSchema;
+          const rawFields = Array.isArray(s.fields) ? s.fields : [];
+          candidateContract = {
+            contractId: String(s.contractId || "CandidateContract"),
+            version: String(s.version || "1.1.0"),
+            fields: rawFields.map((f: any) => ({
+              name: String(f.name || ""),
+              type: String(f.type || "unknown"),
+              optional: Boolean(f.optional)
+            }))
+          };
+        } else {
+          candidateContract = { contractId: "EmptyCandidate", version: "0.0.0", fields: [] };
+        }
+
+        const report = EosContractEvolutionGovernor.compareContracts(baseContract, candidateContract, {
+          allowBreakingChanges: args?.allowBreakingChanges === true
+        });
+
+        if (args?.recordToLedger === true) {
+          const entryId = EosContractEvolutionGovernor.recordEvolutionAttestation(report, {
+            ledgerDbPath: EosDurableSqliteLedger.defaultLedgerPath(this.projectRoot),
+            projectId: "eos-system"
+          });
+          return {
+            ...report,
+            ledgerEntryId: entryId
+          };
+        }
+
+        return report;
       }
 
       default:

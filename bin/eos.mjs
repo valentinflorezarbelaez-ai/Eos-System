@@ -3189,6 +3189,53 @@ switch (command) {
     break;
   }
 
+  case "contract": {
+    printBanner();
+    const subAction = (args[1] || "diff").toLowerCase();
+    const { EosContractEvolutionGovernor } = await import("../src/core/eosContractEvolutionGovernor.ts");
+
+    if (subAction === "lint" || subAction === "sql") {
+      const sqlSnippet = args[2] || "ALTER TABLE users ADD COLUMN age INT NOT NULL; DROP COLUMN legacy_id;";
+      const hazards = EosContractEvolutionGovernor.scanSqlMigrationHazards(sqlSnippet);
+      console.log("[EOS CONTRACT EVOLUTION — SQL MIGRATION HAZARD LINTER]\n");
+      console.log(`  Total Hazards Detected: ${hazards.length}`);
+      for (const h of hazards) {
+        console.log(`    ! [${h.ruleId}] Line ${h.lineNumber}: ${h.statement}`);
+        console.log(`      ↳ Risk: ${h.riskExplanation}`);
+        console.log(`      ↳ Fix : ${h.remediation}`);
+      }
+      console.log("");
+    } else {
+      const baseSnippet = `
+        export interface UserV1 {
+          id: string;
+          username: string;
+          email?: string;
+        }
+      `;
+      const candSnippet = `
+        export interface UserV2 {
+          id: string;
+          username: string;
+          email?: string;
+          avatarUrl?: string;
+        }
+      `;
+      const base = EosContractEvolutionGovernor.parseTypeScriptContract(baseSnippet, "UserV1");
+      const cand = EosContractEvolutionGovernor.parseTypeScriptContract(candSnippet, "UserV2");
+      const report = EosContractEvolutionGovernor.compareContracts(base, cand);
+
+      console.log("[EOS CONTRACT EVOLUTION GOVERNOR — NUBANK SACHEM / BUF]\n");
+      console.log(`  Base Contract        : ${report.baseContractId}`);
+      console.log(`  Candidate Contract   : ${report.candidateContractId}`);
+      console.log(`  Gate Verdict         : ${report.gateVerdict}`);
+      console.log(`  Compatible Expansions: ${report.compatibleExpansionsCount}`);
+      console.log(`  Breaking Contractions: ${report.breakingContractionsCount}`);
+      console.log(`  Receipt SHA-256      : sha256:${report.sha256Receipt}\n`);
+    }
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
@@ -3359,6 +3406,7 @@ Uso Universal:
   eos project [list|inspect|verify|onboard] Gobernador empresarial multi-proyecto, monorepos políglotas, contratos y Ley IV
   eos mesh [compile|efficiency] Compilador de topología acíclica de subagentes y malla zero-copy DeepMind
   eos invariant [explore|verify] Motor de verificación de invariantes y exploración exhaustiva de estados
+  eos contract [diff|lint]   Gobernanza de evolución de contratos y detector de breaking changes Nubank/Buf
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:
