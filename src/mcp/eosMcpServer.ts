@@ -395,6 +395,10 @@ import {
 } from "../core/eosGentlemanAutoUpdater.ts";
 
 import {
+  EosEnterpriseWorkspaceGovernor
+} from "../core/eosEnterpriseWorkspaceGovernor.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2052,7 +2056,8 @@ export class EosMcpServer {
                   inputSchema: {
                     type: "object",
                     properties: {
-                      targetDir: { type: "string", description: "Target directory relative to project root (default: 'src/core')" }
+                      targetDir: { type: "string", description: "Target directory relative to workspace root (default: 'src/core')" },
+                      projectId: { type: "string", description: "Optional registered fleet projectId from docs/projects/registry.json" }
                     }
                   }
                 },
@@ -2074,6 +2079,22 @@ export class EosMcpServer {
                     properties: {
                       action: { type: "string", enum: ["status", "check", "apply"], description: "Operation mode: 'status' (fast state read), 'check' (upstream SemVer check), or 'apply' (download, verify SHA-256 & hot-swap upgrades)" },
                       force: { type: "boolean", description: "Force re-verification/re-sync even when versions match" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_enterprise_workspace",
+                  description: "Enterprise Multi-Project Workspace Governor: inspects polyglot monorepo topologies, workspace members, OpenAPI/Protobuf/GraphQL/Prisma/TLA+ contracts & lockfile posture ('inspect'), lists registered fleet projects & Law IV status ('list'), safely onboards external repositories at LEVEL_1_READ_ONLY_AUDIT with zero external writes ('onboard'), and executes bounded structural verification gates ('verify').",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["list", "inspect", "onboard", "verify"], description: "Operation mode (default: 'list')" },
+                      projectId: { type: "string", description: "Registered fleet projectId (for 'inspect'/'verify') or new project slug (for 'onboard')" },
+                      subPath: { type: "string", description: "Optional confined relative subdirectory inside the registered project" },
+                      targetPath: { type: "string", description: "Candidate local directory path (used when onboarding a new repository)" },
+                      projectName: { type: "string", description: "Human-readable project name (for 'onboard')" },
+                      remoteUrl: { type: "string", description: "Optional Git remote URL (for 'onboard')" },
+                      dryRun: { type: "boolean", description: "Preview onboarding artifacts without writing to control-plane disk (default: true)" }
                     }
                   }
                 }
@@ -3695,6 +3716,15 @@ export class EosMcpServer {
       }
 
       case "eos_ast_analyze": {
+        if (typeof args?.projectId === "string" && args.projectId.trim().length > 0 && args.projectId.trim().toLowerCase() !== "eos-system") {
+          const resolved = EosEnterpriseWorkspaceGovernor.resolveAuthorizedWorkspace(
+            args.projectId.trim(),
+            typeof args?.targetDir === "string" && args.targetDir.trim().length > 0 ? args.targetDir.trim() : ".",
+            "READ_ONLY",
+            this.projectRoot
+          );
+          return EosTypeScriptAstAnalyzer.analyzeDirectory(resolved.resolvedTargetPath, resolved.workspaceRoot);
+        }
         const safeDir = this.resolveProjectPath(args?.targetDir, "directory", "src/core");
         return EosTypeScriptAstAnalyzer.analyzeDirectory(safeDir, this.projectRoot);
       }
@@ -3734,6 +3764,58 @@ export class EosMcpServer {
           windowsHide: true
         });
         return JSON.parse(out.trim());
+      }
+
+      case "eos_enterprise_workspace": {
+        const action = String(args?.action || "list").trim().toLowerCase();
+        if (action === "list") {
+          return {
+            action: "list",
+            workspaces: EosEnterpriseWorkspaceGovernor.listRegisteredWorkspaces(this.projectRoot)
+          };
+        }
+        if (action === "inspect") {
+          const rawProjectId = typeof args?.projectId === "string" && args.projectId.trim().length > 0
+            ? args.projectId.trim()
+            : "eos-system";
+          const subPath = typeof args?.subPath === "string" ? args.subPath : ".";
+          const resolved = EosEnterpriseWorkspaceGovernor.resolveAuthorizedWorkspace(
+            rawProjectId,
+            subPath,
+            "READ_ONLY",
+            this.projectRoot
+          );
+          return EosEnterpriseWorkspaceGovernor.inspectWorkspace(resolved.resolvedTargetPath);
+        }
+        if (action === "verify") {
+          const rawProjectId = typeof args?.projectId === "string" && args.projectId.trim().length > 0
+            ? args.projectId.trim()
+            : "eos-system";
+          const subPath = typeof args?.subPath === "string" ? args.subPath : ".";
+          const resolved = EosEnterpriseWorkspaceGovernor.resolveAuthorizedWorkspace(
+            rawProjectId,
+            subPath,
+            "READ_ONLY",
+            this.projectRoot
+          );
+          return EosEnterpriseWorkspaceGovernor.verifyWorkspace(resolved.resolvedTargetPath, {
+            controlPlaneRoot: this.projectRoot,
+            projectId: resolved.projectId
+          });
+        }
+        if (action === "onboard") {
+          const targetPath = typeof args?.targetPath === "string" ? args.targetPath.trim() : "";
+          assertPrecondition(targetPath.length > 0, "targetPath is required for action='onboard'");
+          return EosEnterpriseWorkspaceGovernor.onboardWorkspace({
+            targetPath,
+            projectId: typeof args?.projectId === "string" ? args.projectId : undefined,
+            projectName: typeof args?.projectName === "string" ? args.projectName : undefined,
+            remoteUrl: typeof args?.remoteUrl === "string" ? args.remoteUrl : undefined,
+            controlPlaneRoot: this.projectRoot,
+            dryRun: args?.dryRun !== false
+          });
+        }
+        throw new Error(`Unsupported eos_enterprise_workspace action: ${action}`);
       }
 
       default:

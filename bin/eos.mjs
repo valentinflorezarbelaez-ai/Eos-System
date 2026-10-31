@@ -3059,6 +3059,82 @@ switch (command) {
     break;
   }
 
+  case "project": {
+    printBanner();
+    const subAction = (args[1] || "list").toLowerCase();
+    const { EosEnterpriseWorkspaceGovernor } = await import("../src/core/eosEnterpriseWorkspaceGovernor.ts");
+
+    if (subAction === "list") {
+      const fleet = EosEnterpriseWorkspaceGovernor.listRegisteredWorkspaces(root);
+      console.log("[EOS ENTERPRISE MULTI-PROJECT WORKSPACE GOVERNOR — REGISTERED FLEET]\n");
+      for (const w of fleet) {
+        console.log(
+          `  [${w.writeAuthorizedUnderLawIV ? "LAW-IV:AUTHORIZED" : "LAW-IV:READ-ONLY"}] ${w.id} (${w.name})`
+        );
+        console.log(`    ↳ Authorization : ${w.authorization} | Disk Present: ${w.pathExistsOnDisk}`);
+        console.log(`    ↳ Resolved Path : ${w.resolvedLocalPath || "NOT_CONFIGURED"}`);
+      }
+      console.log("");
+    } else if (subAction === "inspect") {
+      const targetArg = args[2] || ".";
+      const resolvedPath = path.resolve(targetArg);
+      const topo = EosEnterpriseWorkspaceGovernor.inspectWorkspace(resolvedPath);
+      if (args.includes("--json")) {
+        console.log(JSON.stringify(topo, null, 2));
+      } else {
+        console.log("[EOS ENTERPRISE WORKSPACE TOPOLOGY REPORT]\n");
+        console.log(`  Workspace         : ${topo.workspaceName} (${topo.archetype})`);
+        console.log(`  Orchestrators     : ${topo.orchestrators.join(", ")}`);
+        console.log(`  Languages         : ${topo.languages.join(", ") || "none"}`);
+        console.log(`  Members           : ${topo.members.length} package(s)/service(s)`);
+        console.log(`  Formal Contracts  : ${topo.contracts.length} artifact(s)`);
+        console.log(`  Lockfiles         : ${topo.supplyChain.lockfiles.join(", ") || "none"}`);
+        console.log(`  Secret Hygiene    : ${topo.supplyChain.secretHygieneClean ? "CLEAN (0 findings)" : "FINDINGS_IDENTIFIED"}`);
+        console.log(`  Signals Score     : ${topo.enterpriseReadinessSignalsScore}/100 (bounded local signals)`);
+        console.log(`  SHA-256 Receipt   : sha256:${topo.sha256TopologyReceipt}\n`);
+      }
+    } else if (subAction === "verify") {
+      const targetArg = args[2] || ".";
+      const resolvedPath = path.resolve(targetArg);
+      const report = EosEnterpriseWorkspaceGovernor.verifyWorkspace(resolvedPath, {
+        controlPlaneRoot: root
+      });
+      console.log(`[EOS ENTERPRISE WORKSPACE VERIFICATION — ${report.epistemicState}]\n`);
+      for (const g of report.gates) {
+        console.log(`  [${g.passed ? "PASS" : "FAIL"}] ${g.gateId} — ${g.detail}`);
+      }
+      console.log(`\n  Ledger Entry      : ${report.ledgerEntryId || "n/a"}`);
+      console.log(`  SHA-256 Receipt   : sha256:${report.sha256VerificationReceipt}\n`);
+      if (!report.overallPassed) process.exit(1);
+    } else if (subAction === "onboard") {
+      const targetArg = args[2];
+      if (!targetArg) {
+        console.error("[FAIL] Uso: eos project onboard <ruta-proyecto> [--id <slug>] [--apply]");
+        process.exit(1);
+      }
+      const idIdx = args.indexOf("--id");
+      const customId = idIdx >= 0 && args[idIdx + 1] ? args[idIdx + 1] : undefined;
+      const dryRun = !args.includes("--apply");
+      const res = EosEnterpriseWorkspaceGovernor.onboardWorkspace({
+        targetPath: path.resolve(targetArg),
+        projectId: customId,
+        controlPlaneRoot: root,
+        dryRun
+      });
+      console.log(`[EOS ENTERPRISE ONBOARDING — ${res.dryRun ? "DRY-RUN PREVIEW" : "REGISTERED IN CONTROL PLANE"}]\n`);
+      console.log(`  Project ID        : ${res.projectId} (${res.topology.archetype})`);
+      console.log(`  Authorization     : ${res.initialAuthorization}`);
+      console.log(`  External Writes   : ${res.externalBytesWritten} bytes (Law IV Zero-External-Write Guarantee)`);
+      console.log(`  Dossier Artifacts : ${res.generatedArtifacts.length} file(s) inside EOS Control Plane`);
+      console.log(`  Ledger Entry      : ${res.ledgerEntryId || "dry-run"}`);
+      console.log(`  SHA-256 Receipt   : sha256:${res.sha256OnboardReceipt}\n`);
+    } else {
+      console.error(`[FAIL] Subcomando desconocido '${subAction}'. Use: list | inspect | verify | onboard`);
+      process.exit(1);
+    }
+    break;
+  }
+
   case "help":
   case "--help":
   case "-h":
@@ -3150,6 +3226,7 @@ Uso Universal:
   eos gentleman [doctor|update|autoupdate:install|autoupdate:status] Co-gobernanza y auto-actualización Evergreen del stack Gentleman AI
   eos ledger [verify|record|search|recent] Ledger durable SQLite WAL + FTS5 + cadena SHA-256 (0 dependencias)
   eos ast [directorio]       Analizador AST real del compilador TypeScript (pureza L0, strip-only Node 24, complejidad)
+  eos project [list|inspect|verify|onboard] Gobernador empresarial multi-proyecto, monorepos políglotas, contratos y Ley IV
   eos help                   Muestra este manual de operaciones
 
 Integración con IDEs:

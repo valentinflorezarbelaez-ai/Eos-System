@@ -33,6 +33,7 @@ export const CORE_TIER0_TOOL_NAMES: ReadonlySet<string> = new Set([
   "eos_antigravity_doctor",
   "eos_gentleman_audit",
   "eos_gentleman_update",
+  "eos_enterprise_workspace",
   "eos_sqlite_ledger",
   "eos_ast_analyze",
   "eos_amplify_prompt",
@@ -73,7 +74,8 @@ const MUTATION_CAPABLE_TOOLS: ReadonlySet<string> = new Set([
   "eos_hnsw_index_add",
   "eos_product_foundry_create",
   "eos_sqlite_ledger",
-  "eos_gentleman_update"
+  "eos_gentleman_update",
+  "eos_enterprise_workspace"
 ]);
 
 const DESTRUCTIVE_CAPABLE_TOOLS: ReadonlySet<string> = new Set([

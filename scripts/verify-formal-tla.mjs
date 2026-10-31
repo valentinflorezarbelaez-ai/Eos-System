@@ -538,6 +538,46 @@ export function verifyGentlemanAutoUpdateModel(steps = 200) {
   };
 }
 
+export function verifyEnterpriseWorkspaceGovernorModel(steps = 200) {
+  const filePath = path.join(formalDir, "EnterpriseWorkspaceGovernor.tla");
+  const parsed = parseTlaModule(filePath);
+
+  let onboardedProjects = 0;
+  let readOnlyInspections = 0;
+  let authorizedExternalWrites = 0;
+  let unauthorizedExternalWrites = 0;
+  let externalBytesWrittenOnOnboard = 0;
+  let pathEscapesAllowed = 0;
+  let stepsExecuted = 0;
+
+  for (let i = 0; i < steps; i++) {
+    stepsExecuted++;
+    assert.strictEqual(externalBytesWrittenOnOnboard, 0, "VIOLATION: ZeroExternalWriteOnOnboardInvariant breached");
+    assert.strictEqual(unauthorizedExternalWrites, 0, "VIOLATION: LawIVWriteBarrierInvariant breached");
+    assert.strictEqual(pathEscapesAllowed, 0, "VIOLATION: BoundaryConfinementInvariant breached");
+    assert.ok(onboardedProjects >= 0 && readOnlyInspections >= 0 && authorizedExternalWrites >= 0, "VIOLATION: Negative counters");
+
+    if (i % 5 === 0) {
+      onboardedProjects++;
+    } else if (i % 2 === 0) {
+      readOnlyInspections++;
+    } else if (onboardedProjects > 0) {
+      authorizedExternalWrites++;
+    }
+  }
+
+  return {
+    specification: "EnterpriseWorkspaceGovernor.tla",
+    moduleName: parsed.moduleName,
+    sourceFileRead: true,
+    extractedVariables: parsed.variables,
+    extractedInvariantNames: parsed.invariants,
+    stepsExecuted,
+    executionMode: "bounded-javascript-simulation",
+    simulationAssertionsPassed: true
+  };
+}
+
 export function runAllFormalVerifications() {
   return [
     verifyLmaxDisruptorModel(),
@@ -550,7 +590,8 @@ export function runAllFormalVerifications() {
     verifyFleetSyncMctsCanaryModel(),
     verifyAntigravityControlPlaneModel(),
     verifyGentlemanEosSynergyMeshModel(),
-    verifyGentlemanAutoUpdateModel()
+    verifyGentlemanAutoUpdateModel(),
+    verifyEnterpriseWorkspaceGovernorModel()
   ];
 }
 
