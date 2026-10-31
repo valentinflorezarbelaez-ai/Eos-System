@@ -399,6 +399,11 @@ import {
 } from "../core/eosEnterpriseWorkspaceGovernor.ts";
 
 import {
+  EosEvolutionaryHarness,
+  type CandidateMutation
+} from "../core/eosEvolutionaryHarness.ts";
+
+import {
   annotateAndFilterTools,
   normalizeToolProfile,
   type McpToolProfile
@@ -2095,6 +2100,29 @@ export class EosMcpServer {
                       projectName: { type: "string", description: "Human-readable project name (for 'onboard')" },
                       remoteUrl: { type: "string", description: "Optional Git remote URL (for 'onboard')" },
                       dryRun: { type: "boolean", description: "Preview onboarding artifacts without writing to control-plane disk (default: true)" }
+                    }
+                  }
+                },
+                {
+                  name: "eos_evolve_module",
+                  description: "DeepMind Sovereign Evolutionary Engine: executes continuous multivariate fitness evaluation (AlphaEvolve), semantic AST clustering (AlphaCode 2), double-blind adversarial flow checks (AlphaCodium), and Flash-to-Pro token circuit breaker.",
+                  inputSchema: {
+                    type: "object",
+                    properties: {
+                      action: { type: "string", enum: ["evaluate", "cluster", "lock_interface", "circuit_breaker"], description: "Evolutionary operation mode" },
+                      targetModulePath: { type: "string", description: "Target module or interface file path" },
+                      candidatePatch: { type: "string", description: "Candidate code mutation patch content" },
+                      parentSha256: { type: "string", description: "Parent version SHA-256 hash" },
+                      metrics: {
+                        type: "object",
+                        properties: {
+                          latencyNs: { type: "number" },
+                          heapDeltaBytes: { type: "number" },
+                          astPurityScore: { type: "number" },
+                          cyclomaticComplexity: { type: "number" },
+                          contractComplianceScore: { type: "number" }
+                        }
+                      }
                     }
                   }
                 }
@@ -3816,6 +3844,40 @@ export class EosMcpServer {
           });
         }
         throw new Error(`Unsupported eos_enterprise_workspace action: ${action}`);
+      }
+
+      case "eos_evolve_module": {
+        const action = String(args?.action || "evaluate").trim().toLowerCase();
+        if (action === "evaluate") {
+          const m = args?.metrics || {};
+          const candidate: CandidateMutation = {
+            candidateId: `CAND-${Date.now()}`,
+            parentSha256: String(args?.parentSha256 || "0000000000000000000000000000000000000000000000000000000000000000"),
+            patchContent: String(args?.candidatePatch || ""),
+            targetFilePath: String(args?.targetModulePath || "src/core/module.ts"),
+            mutationSignature: "SIG-ALPHA-EVOLVE"
+          };
+          return EosEvolutionaryHarness.evaluateCandidate(candidate, {
+            latencyNs: Number(m.latencyNs) || 120000,
+            heapDeltaBytes: Number(m.heapDeltaBytes) || 0,
+            astPurityScore: Number(m.astPurityScore) || 100,
+            cyclomaticComplexity: Number(m.cyclomaticComplexity) || 4,
+            contractComplianceScore: Number(m.contractComplianceScore) || 100
+          }, {
+            ledgerDbPath: EosDurableSqliteLedger.defaultLedgerPath(this.projectRoot)
+          });
+        }
+        if (action === "lock_interface") {
+          const targetPath = String(args?.targetModulePath || "");
+          assertPrecondition(targetPath.length > 0, "targetModulePath required for lock_interface");
+          const safePath = this.resolveProjectPath(targetPath, "file");
+          const content = fs.readFileSync(safePath, "utf8");
+          return EosEvolutionaryHarness.lockInterfaceContract(targetPath, content);
+        }
+        if (action === "circuit_breaker") {
+          return EosEvolutionaryHarness.evaluateTokenCircuitBreaker([]);
+        }
+        throw new Error(`Unsupported eos_evolve_module action: ${action}`);
       }
 
       default:

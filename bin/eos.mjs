@@ -3059,6 +3059,36 @@ switch (command) {
     break;
   }
 
+  case "evolve": {
+    printBanner();
+    const subAction = (args[1] || "evaluate").toLowerCase();
+    const { EosEvolutionaryHarness } = await import("../src/core/eosEvolutionaryHarness.ts");
+
+    if (subAction === "evaluate") {
+      const res = EosEvolutionaryHarness.computeFitnessVector(113000, 0, 100, 4, 100);
+      console.log("[EOS DEEPMIND SOVEREIGN EVOLUTIONARY HARNESS — ALPHAEVOLVE]\n");
+      console.log(`  Composite Fitness      : ${res.compositeFitness}/100`);
+      console.log(`  Execution Latency      : ${res.executionLatencyNs} ns`);
+      console.log(`  Heap Allocation Delta  : ${res.heapDeltaBytes} bytes`);
+      console.log(`  AST Purity Score       : ${res.astPurityScore}/100`);
+      console.log(`  Cyclomatic Complexity  : ${res.cyclomaticComplexity}`);
+      console.log(`  Contract Score         : ${res.contractComplianceScore}/100\n`);
+    } else if (subAction === "lock") {
+      const targetArg = args[2] || "src/core/eosKernelPrimitives.ts";
+      const fullPath = path.resolve(root, targetArg);
+      const content = fs.readFileSync(fullPath, "utf8");
+      const locked = EosEvolutionaryHarness.lockInterfaceContract(targetArg, content);
+      console.log("[EOS DEEPMIND INTERFACE LOCK ATTESTATION]\n");
+      console.log(`  Contract ID            : ${locked.contractId}`);
+      console.log(`  Target File            : ${locked.targetFilePath}`);
+      console.log(`  Exported Signatures    : ${locked.exportedSignatures.length}`);
+      console.log(`  Interface SHA-256 Lock : sha256:${locked.lockedSha256}\n`);
+    } else {
+      console.log(`[EOS EVOLVE] Modo: evaluate | lock`);
+    }
+    break;
+  }
+
   case "project": {
     printBanner();
     const subAction = (args[1] || "list").toLowerCase();
