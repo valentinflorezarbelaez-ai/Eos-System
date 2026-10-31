@@ -27,6 +27,15 @@ jobs:
         with:
           node-version: 24
 
+      - name: Setup Java 21 (for Leslie Lamport TLC Formal Model Checker)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Ensure TLC Formal Tools Jar is Installed
+        run: node bin/eos.mjs tlc install
+
       - name: Verify Layer-0 Purity & Typecheck
         run: npm run typecheck
 

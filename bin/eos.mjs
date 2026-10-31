@@ -3376,7 +3376,8 @@ switch (command) {
       console.log(`  Zero-Network Policy  : ${diag.networkIsolated ? "ENFORCED (No Sockets)" : "OPEN"}`);
       console.log(`  Recommendation       : ${diag.recommendation}\n`);
     } else {
-      const snippet = args[2] || "console.log('EOS Isolated MicroVM Execution Complete');";
+      const codeArgIdx = args.findIndex((a) => a === "--code");
+      const snippet = codeArgIdx !== -1 && args[codeArgIdx + 1] ? args[codeArgIdx + 1] : args[2] || "console.log('EOS Isolated MicroVM Execution Complete');";
       console.log(`[EOS SANDBOX] Ejecutando código de forma aislada...\n`);
       const res = EosMicroVmSandbox.runIsolated({
         codeOrCommand: snippet,

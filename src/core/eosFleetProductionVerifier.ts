@@ -19,7 +19,39 @@
 import https from "node:https";
 import http from "node:http";
 import path from "node:path";
+import dns from "node:dns";
 import { URL } from "node:url";
+
+const fallbackResolver = new dns.Resolver();
+try {
+  fallbackResolver.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch {
+  // Graceful fallback if network sockets are restricted
+}
+
+function resilientLookup(
+  hostname: string,
+  options: any,
+  callback: any
+): void {
+  const cb = typeof options === "function" ? options : callback;
+  const opts = typeof options === "object" && options !== null ? options : {};
+
+  dns.lookup(hostname, opts, (err: NodeJS.ErrnoException | null, address: any, family: any) => {
+    if (!err && address) {
+      return cb(null, address, family);
+    }
+    fallbackResolver.resolve4(hostname, (rErr: NodeJS.ErrnoException | null, addresses: string[]) => {
+      if (rErr || !addresses || addresses.length === 0) {
+        return cb(err || rErr, "", 4);
+      }
+      if (opts.all) {
+        return cb(null, addresses.map((a) => ({ address: a, family: 4 })));
+      }
+      return cb(null, addresses[0], 4);
+    });
+  });
+}
 
 import {
   assertPrecondition,
@@ -337,6 +369,7 @@ export class EosFleetProductionVerifier {
       const req = client.get(
         normalizedUrl,
         {
+          lookup: resilientLookup,
           headers: {
             "User-Agent": "EOS-System-Control-Plane/v62.0.0 (Living Verification Probe; WCAG/CWV Audit)",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
