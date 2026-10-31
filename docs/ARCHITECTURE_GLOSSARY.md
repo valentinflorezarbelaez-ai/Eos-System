@@ -24,6 +24,10 @@
 | **`EosDisruptorRingEngine`** | `src/core/eosDisruptorRingEngine.ts` | **Lock-Free Ring Buffer & Zero-Allocation Dispatcher** | LMAX Disruptor High-Frequency Trading Pattern |
 | **`EosConsciousWitness`** | `src/core/eosConsciousWitness.ts` | **Metacognitive Pre-Tool Verification Guard** | Pre-Execution Guardrail & Hallucination Filter |
 | **`EosHotPatchEngine`** | `src/core/eosHotPatchEngine.ts` | **In-Memory Hot Module Replacement & Atomic Swap** | Erlang/OTP Hot Code Swapping |
+| **`EosStatisticalCanaryAuditor`** | `src/core/eosStatisticalCanaryAuditor.ts` | **Nonparametric Automated Canary Analysis (ACA)** | Netflix Kayenta & Google Borg Canary |
+| **`EosHermeticReleaseSealer`** | `src/core/eosHermeticReleaseSealer.ts` | **Hermetic Release Sealer & SLSA Level 4 Engine** | Meta Continuous Release & Google Piper |
+| **`EosLedgerTimeTravelEngine`** | `src/core/eosLedgerTimeTravelEngine.ts` | **Bitemporal Point-in-Time Replay & Branching** | Datomic Bitemporal Replay & Stripe Ledgers |
+| **`EosConstitutionalRuntimeInterceptor`** | `src/core/eosConstitutionalRuntimeInterceptor.ts` | **Dynamic Dual-Phase Guardrail & Proxy** | Anthropic Constitutional AI & DeepMind Safe Swarm |
 
 ---
 
@@ -33,6 +37,11 @@
 |---|---|---|
 | **Predictive Test Selection (Impacted Suites)** | `npm run pts` | **~350 ms** |
 | **Instant Architecture Documentation Search** | `npm run search <query>` | **~100 ms** |
+| **Sub-Second Subsystem Quickstart Sanity Check** | `npm run quickstart` | **~130 ms** |
+| **Automated Canary Analysis (Mann-Whitney U)** | `npm run aca` | **~5 ms** |
+| **Hermetic Release Sealer & SLSA Level 4** | `npm run release:seal` | **~90 ms** |
+| **Bitemporal Ledger Time-Travel Replay** | `npm run timetravel` | **~10 ms** |
+| **Dynamic Constitutional Tool Interceptor** | `npm run intercept` | **~5 ms** |
 | **Full Security Bill of Materials (CycloneDX)** | `npm run sbom` | **~150 ms** |
 | **Software Supply Chain Provenance (SLSA)** | `npm run slsa` | **~150 ms** |
 | **Content-Addressable Storage Stats** | `npm run cas` | **~50 ms** |

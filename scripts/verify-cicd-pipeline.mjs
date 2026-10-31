@@ -32,6 +32,7 @@ function listRepoFiles(dir, acc = []) {
       entry.name === ".eos" ||
       entry.name === ".vercel" ||
       entry.name === "node_modules" ||
+      entry.name === "dist" ||
       entry.name === "_sandbox" ||
       entry.name.startsWith(".worktree")
     ) {

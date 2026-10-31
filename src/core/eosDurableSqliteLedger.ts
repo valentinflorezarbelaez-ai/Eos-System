@@ -291,6 +291,23 @@ export class EosDurableSqliteLedger {
     return deepFreeze(rows.map((r) => this.mapRow(r)));
   }
 
+  public getEntriesUpTo(maxSeq: number): readonly DurableLedgerRecord[] {
+    assertPrecondition(!this.closed, "Cannot query a closed SQLite ledger");
+    assertPrecondition(maxSeq >= 1, "maxSeq must be >= 1");
+
+    const rows = this.db
+      .prepare(
+        `SELECT seq, entry_id, category, project_id, title, payload_json,
+                engram_topic_key, created_at_iso, prev_hash, entry_hash
+         FROM eos_ledger_entries
+         WHERE seq <= ?
+         ORDER BY seq ASC`
+      )
+      .all(maxSeq) as Array<Record<string, unknown>>;
+
+    return deepFreeze(rows.map((r) => this.mapRow(r)));
+  }
+
   public verifyChainIntegrity(): LedgerIntegrityReport {
     assertPrecondition(!this.closed, "Cannot verify a closed SQLite ledger");
 

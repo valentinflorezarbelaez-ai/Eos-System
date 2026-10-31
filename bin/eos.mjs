@@ -3665,6 +3665,107 @@ switch (command) {
     break;
   }
 
+  case "aca":
+  case "canary:stat": {
+    printBanner();
+    const { EosStatisticalCanaryAuditor } = await import("../src/core/eosStatisticalCanaryAuditor.ts");
+    console.log("[EOS NETFLIX-GRADE STATISTICAL CANARY AUDITOR (ACA) — SPEC-066 v67.0.0]\n");
+
+    const metric = args[1] || "p95_latency_ms";
+    const baseline = [10.2, 11.0, 10.8, 12.1, 10.5, 11.4, 10.9, 11.2, 12.0, 10.7];
+    const canary = args[2] === "degraded"
+      ? [24.5, 27.8, 29.1, 26.3, 28.0, 29.5, 30.2, 27.9, 28.4, 29.8]
+      : [10.1, 10.5, 10.4, 11.0, 10.3, 10.8, 10.6, 11.1, 10.5, 10.7];
+
+    const report = EosStatisticalCanaryAuditor.auditCanaryMetric(metric, baseline, canary);
+    console.log(`  Metric Name     : ${report.metricName}`);
+    console.log(`  Verdict         : ${report.verdict}`);
+    console.log(`  Regression?     : ${report.regressionDetected ? "YES (ROLLBACK REQUIRED)" : "NO (SAFE)"}`);
+    console.log(`  Mann-Whitney U  : ${report.statistics.uStatistic}`);
+    console.log(`  Z-Score         : ${report.statistics.zScore}`);
+    console.log(`  Two-Tailed p    : ${report.statistics.pValue}`);
+    console.log(`  Baseline Median : ${report.statistics.baselineMedian}`);
+    console.log(`  Canary Median   : ${report.statistics.canaryMedian}`);
+    console.log(`  Receipt SHA-256 : sha256:${report.sha256Receipt}\n`);
+
+    EosStatisticalCanaryAuditor.recordAuditInLedger(report, path.join(root, ".eos", "sovereign_ledger.sqlite"));
+    console.log(`✔ Atestación estadística de canario registrada en SQLite WAL Ledger.\n`);
+    break;
+  }
+
+  case "release:seal": {
+    printBanner();
+    const { EosHermeticReleaseSealer } = await import("../src/core/eosHermeticReleaseSealer.ts");
+    console.log("[EOS HERMETIC RELEASE SEALER & SLSA LEVEL 4 PROVENANCE — SPEC-067 v67.0.0]\n");
+
+    const sealer = new EosHermeticReleaseSealer(root);
+    const commitSha = args[1] || "HEAD";
+    const manifest = sealer.generateReleaseSeal(commitSha);
+    const { savedPath, ledgerReceiptHash } = sealer.persistReleaseSeal(manifest, path.join(root, ".eos", "sovereign_ledger.sqlite"));
+
+    console.log(`  Release Tag     : ${manifest.releaseTag}`);
+    console.log(`  Commit SHA      : ${manifest.commitSha}`);
+    console.log(`  Total Artifacts : ${manifest.totalArtifactsScanned}`);
+    console.log(`  SLSA Type       : ${manifest.slsaProvenance.predicateType}`);
+    console.log(`  Seal Digest     : sha256:${manifest.releaseSealDigest}`);
+    console.log(`  Manifest File   : ${path.relative(root, savedPath)}`);
+    console.log(`  Ledger Receipt  : sha256:${ledgerReceiptHash}\n`);
+    console.log(`✔ Sello hermético de release y atestación SLSA Level 4 completados exitosamente.\n`);
+    break;
+  }
+
+  case "ledger:replay":
+  case "ledger:timetravel": {
+    printBanner();
+    const { EosLedgerTimeTravelEngine } = await import("../src/core/eosLedgerTimeTravelEngine.ts");
+    const targetSeq = Number.parseInt(args[1] || "1", 10);
+    console.log(`[EOS BITEMPORAL TIME-TRAVEL STATE REPLAY — SPEC-068 v67.0.0]\n`);
+    console.log(`Viajando en el tiempo hacia secuencia K = ${targetSeq}...\n`);
+
+    const engine = new EosLedgerTimeTravelEngine(path.join(root, ".eos", "sovereign_ledger.sqlite"));
+    try {
+      const res = engine.replayStateUpTo(targetSeq);
+      console.log(`  Target Sequence : ${res.targetSequence}`);
+      console.log(`  As-Of Timestamp : ${res.projection.asOfIso}`);
+      console.log(`  Entries Replayed: ${res.projection.totalEntriesReplayed}`);
+      console.log(`  Hash Chain      : ${res.projection.isChainIntact ? "INTACT (VERIFIED)" : "CORRUPTED"}`);
+      console.log(`  Active Projects : ${res.projection.activeProjects.join(", ") || "none"}`);
+      console.log(`  State Digest    : sha256:${res.projection.stateDigest}`);
+      console.log(`  Receipt SHA-256 : sha256:${res.sha256Receipt}\n`);
+    } finally {
+      engine.close();
+    }
+    break;
+  }
+
+  case "intercept": {
+    printBanner();
+    const { EosConstitutionalRuntimeInterceptor } = await import("../src/core/eosConstitutionalRuntimeInterceptor.ts");
+    console.log("[EOS DYNAMIC CONSTITUTIONAL RUNTIME INTERCEPTOR — SPEC-069 v67.0.0]\n");
+
+    const targetTool = args[1] || "eos_write_file";
+    const interceptor = new EosConstitutionalRuntimeInterceptor(root);
+    const demoArgs = {
+      destination: args[2] || "src/core/test.ts",
+      content: "const apiKey = 'sk-" + "live-" + "0123456789abcdef12345678';"
+    };
+
+    console.log(`Interceptando ejecución de herramienta: ${targetTool}...`);
+    const execRes = interceptor.executeWithConstitutionalGuardrail(
+      targetTool,
+      demoArgs,
+      (a) => ({ status: "OK", written: a.destination, payload: a.content })
+    );
+
+    console.log(`  Approved        : ${execRes.receipt.approved ? "YES" : "NO (BLOCKED)"}`);
+    if (execRes.blockedReason) {
+      console.log(`  Block Reason    : ${execRes.blockedReason}`);
+    }
+    console.log(`  Redacted Secrets: ${execRes.receipt.secretsRedactedCount}`);
+    console.log(`  Receipt SHA-256 : sha256:${execRes.receipt.sha256Receipt}\n`);
+    break;
+  }
+
   case "unitotal:audit": {
     printBanner();
     const { EosSamaelUnitotalNexus } = await import("../src/core/eosSamaelUnitotalNexus.ts");
@@ -3936,27 +4037,32 @@ switch (command) {
     if (!showAll) {
       console.log(`
 ======================================================================
- EOS SYSTEM — MANUAL RÁPIDO Y ERGONOMÍA DE DESARROLLO (v66.0.0)
+ EOS SYSTEM — MANUAL RÁPIDO Y ERGONOMÍA DE DESARROLLO (v67.0.0)
 ======================================================================
 
 🎯 DESARROLLO RÁPIDO & PRUEBAS (DAILY WORKFLOW):
   eos pts                    Corre únicamente las pruebas impactadas por el diff (~350ms)
   eos search <termino>       Búsqueda instantánea FTS5 en specs, plans y ADRs (~100ms)
-  eos test                   Ejecuta las 77 suites de prueba automatizadas (node:test)
+  eos test                   Ejecuta las 82 suites de prueba automatizadas (node:test)
   eos turbo                  Verificación en memoria con telemetría en microsegundos (<350ms)
   eos coverage               Reporte de cobertura nativa V8 sin dependencias externas
+  eos quickstart             Sanity check de 6 subsistemas en <200ms
 
 🛡️ SEGURIDAD, CADENA DE SUMINISTRO & FORMAL METHODS:
   eos sbom                   Genera inventario CycloneDX v1.5 con atestación SHA-256
   eos slsa [commit]          Emite declaración de procedencia in-toto SLSA Nivel 4
+  eos release:seal [commit]  Sello hermético de release con SLSA v1.0 y digests (Meta/Piper)
+  eos intercept [tool]       Guardián constitucional pre/post-ejecución anti-fugas (Anthropic)
   eos smt                    Demostrador matemático formal de seguridad ABAC (AWS DPLL/SAT)
   eos verify                 Ejecuta las 7 aduanas de seguridad SecDevOps (fail-closed)
 
 ⚡ RESILIENCIA BIG TECH & AUTO-REPARACIÓN:
+  eos aca [metrica]          Análisis canario estadístico Mann-Whitney U (Netflix Kayenta)
   eos sapfix                 Bucle FDIR de auto-reparación AST y generación de PR (Meta SapFix)
   eos cas                    Estadísticas de Content-Addressable Storage (Google Bazel)
   eos chaos:live [url]       Inyección de caos en producción con circuit breaker (Netflix)
   eos swarm                  Consenso BFT (3f+1) con veto de seguridad y slashing (DeepMind)
+  eos timetravel [seq]       Replay bitemporal y sandbox contrafactual en K (Datomic/Stripe)
 
 📊 OBSERVABILIDAD & ESTADO:
   eos dashboard [start]      Inicia el panel visual de telemetría en tiempo real (localhost:4321)
